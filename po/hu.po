@@ -4494,7 +4494,7 @@ msgstr "_Cél megjelenítő:"
 
 #: ../src/orca/orca-setup.glade.h:143
 msgid "Te_xt cursor:"
-msgstr "_Szöveg kurzor:"
+msgstr "_Szövegkurzor:"
 
 #: ../src/orca/orca-setup.glade.h:144
 msgid "Text Attributes"
