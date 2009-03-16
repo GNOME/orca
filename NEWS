@@ -1,3 +1,38 @@
+2.26.0 - 15-Mar-2009
+
+NOTE - these are the changes since 2.25.92.  For a summary of changes over 
+the 2.24.x release series, please refer to the following URL:
+
+    http://live.gnome.org/TwoPointTwentyfive/ReleaseNotes
+
+General:
+
+* Updates to regression tests, mainly to work with Firefox 3.1 Beta 3.
+
+Firefox:
+
+* Fix for bug #570557 - (ARIA) List items not presented.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    da 	     Danish		  Kenneth Nielsen
+    de       German               Simon Bienlein and Mario Blättermann
+    es       Spanish              Francisco Javier Dorado Martinez and 
+                                  Jorge Gonzalez
+    hi       Hindi                Rajesh Ranjan
+    hu       Hungarian            Gabor Kelemen
+    it       Italian              Luca Ferretti and Milo Casagrande
+    ml       Malayalam            Harivishnu and Ani Peter
+    or       Oriya                Manoj Kumar Giri
+    pl       Polish               Wadim Dziedzic
+    ru       Russian              Nickolay V. Shmyre
+    ta       Tamil                I. Felix
+    te       Telugu               Krishnababu K
+
+==========
 2.25.92 - 02-Mar-2009
 
 General:
