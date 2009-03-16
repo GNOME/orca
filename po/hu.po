@@ -6326,7 +6326,7 @@ msgstr "Asszisztens"
 #.
 #: ../src/orca/scripts/apps/evolution/where_am_i.py:77
 msgid "Read"
-msgstr "Olvasás"
+msgstr "Olvasott"
 
 #. Translators: this is an indication that Orca is unable to
 #. obtain the display of the gcalctool calculator, which is
