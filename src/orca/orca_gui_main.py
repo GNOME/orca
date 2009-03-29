@@ -47,7 +47,6 @@ class OrcaMainGUI(orca_glade.GladeWrapper):
         """
 
         mainWindow = self.get_widget("mainWindow")
-        self.set_orca_icon(mainWindow)
         mainWindow.show()
 
     def hideGUI(self):

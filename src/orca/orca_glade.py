@@ -45,22 +45,34 @@ class GladeWrapper:
         self.widgets = gtk.glade.XML(fileName, windowName, gettext.textdomain())
         self.gtkWindow = getattr(self, windowName)
 
+        # Set default application icon.
+        self.set_orca_icon()
+
         instance_attributes = {}
         for attribute in dir(self.__class__):
             instance_attributes[attribute] = getattr(self, attribute)
         self.widgets.signal_autoconnect(instance_attributes)
 
-    def set_orca_icon(self, window):
-        """Set the "orca.png" icon as the icon for the Orca configuration
-        window."""
+    def set_orca_icon(self):
+        """Get the icon in all sizes from the current theme and set them as
+        default for all application windows.
+        """
 
         icon_theme = gtk.icon_theme_get_default()
         try:
-            icon = icon_theme.load_icon("orca", 48, 0)
+            icon16 = icon_theme.load_icon("orca", 16, 0)
+            icon22 = icon_theme.load_icon("orca", 22, 0)
+            icon24 = icon_theme.load_icon("orca", 24, 0)
+            icon32 = icon_theme.load_icon("orca", 32, 0)
+            icon48 = icon_theme.load_icon("orca", 48, 0)
         except:
             return
         else:
-            window.set_icon(icon)
+            gtk.window_set_default_icon_list(icon16,
+                                             icon22,
+                                             icon24,
+                                             icon32,
+                                             icon48)
 
     def get_widget(self, attribute):
         """Return the requested widget. This routine has been introduced

@@ -1,3 +1,14 @@
+2009-03-29  Stephen Brandt (via william.walker@sun.com>
+
+        * src/orca/orca_glade.py:
+          src/orca/orca_quit.py:
+          src/orca/orca_gui_find.py:
+          src/orca/orca_gui_main.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #573535 - Orca should use the 16x16 pixels
+          application icon for Main and Preferences windows.
+          Thank Stephen!
+
 2009-03-15  Willie Walker <william.walker@sun.com>
 
         * configure.in, README:
