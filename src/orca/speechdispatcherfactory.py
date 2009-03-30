@@ -1,4 +1,4 @@
-# Copyright 2006, 2007, 2008 Brailcom, o.p.s.
+# Copyright 2006, 2007, 2008, 2009 Brailcom, o.p.s.
 #
 # Author: Tomas Cerha <cerha@brailcom.org>
 #
@@ -90,10 +90,12 @@ class SpeechServer(speechserver.SpeechServer):
     getFactoryName = staticmethod(getFactoryName)
 
     def getSpeechServers():
+        servers = []
         default = SpeechServer._getSpeechServer(SpeechServer.DEFAULT_SERVER_ID)
-        servers = [default]
-        for module in default.list_output_modules():
-            servers.append(SpeechServer._getSpeechServer(module))
+        if default is not None:
+            servers.append(default)
+            for module in default.list_output_modules():
+                servers.append(SpeechServer._getSpeechServer(module))
         return servers
     getSpeechServers = staticmethod(getSpeechServers)
 
