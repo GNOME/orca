@@ -1,3 +1,12 @@
+2009-04-04  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/line_nav_bug_577239.py: (new)
+          test/html/bug-577239.html: (new)
+          Fix for bug #577239 - Cannot navigate by line through multi-line
+          HTML list items in Firefox/Thunderbird when arrowToLineBeginning
+          is False.
+
 2009-03-30  Tomas Cerha (via william.walker@sun.com>
 
         * src/orca/speechdispatcherfactory.py:

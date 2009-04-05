@@ -5785,7 +5785,7 @@ class Script(default.Script):
                 extents = self.getExtents(item[0], item[1], item[2])
                 newX1 = extents[0]
                 newX2 = newX1 + extents[2]
-                if newX1 <= oldX <= newX2:
+                if newX1 < oldX <= newX2:
                     newObj = item[0]
                     newOffset = 0
                     text = self.queryNonEmptyText(prevObj)
@@ -5896,7 +5896,7 @@ class Script(default.Script):
                 extents = self.getExtents(item[0], item[1], item[2])
                 newX1 = extents[0]
                 newX2 = newX1 + extents[2]
-                if newX1 <= oldX <= newX2:
+                if newX1 < oldX <= newX2:
                     newObj = item[0]
                     newOffset = 0
                     text = self.queryNonEmptyText(nextObj)
