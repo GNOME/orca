@@ -1945,6 +1945,16 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         orcaSetupWindow = self.get_widget("orcaSetupWindow")
         self.set_orca_icon(orcaSetupWindow)
 
+        accelGroup = gtk.AccelGroup()
+        orcaSetupWindow.add_accel_group(accelGroup)
+        helpButton = self.get_widget("helpButton")
+        (keyVal, modifierMask) = gtk.accelerator_parse("F1")
+        helpButton.add_accelerator("clicked",
+                                   accelGroup,
+                                   keyVal,
+                                   modifierMask,
+                                   0)
+
         # We want the Orca preferences window to have focus when it is
         # shown. First try using the present() call. If this isn't present
         # in the version of pygtk that the user is using, just catch the

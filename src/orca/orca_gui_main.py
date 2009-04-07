@@ -48,6 +48,17 @@ class OrcaMainGUI(orca_glade.GladeWrapper):
 
         mainWindow = self.get_widget("mainWindow")
         self.set_orca_icon(mainWindow)
+
+        accelGroup = gtk.AccelGroup()
+        mainWindow.add_accel_group(accelGroup)
+        helpButton = self.get_widget("helpButton")
+        (keyVal, modifierMask) = gtk.accelerator_parse("F1")
+        helpButton.add_accelerator("clicked",
+                                   accelGroup,
+                                   keyVal,
+                                   modifierMask,
+                                   0)
+
         mainWindow.show()
 
     def hideGUI(self):
