@@ -1,3 +1,9 @@
+2009-04-07  Willie Walker <william.walker@sun.com>
+
+   	* src/orca/orca_gui_main.py:
+          src/orca/orca_gui_prefs.py:
+          Fix for bug #576037 - Bind F1 key to help page
+
 2009-04-04  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
