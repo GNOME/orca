@@ -2137,7 +2137,26 @@ class Script(default.Script):
         """
         rv, start, end = \
             default.Script.getTextAttributes(self, acc, offset, get_defaults)
-        return rv, start, end - 1
+
+        # If there are no text attributes associated with the text at a
+        # given offset, we might get some seriously bogus offsets, in
+        # particular, an extremely large start offset and an extremely
+        # large, but negative end offset. As a result, any text attributes
+        # which are present on the line after the specified offset will
+        # not be indicated by braille.py's getAttributeMask. Therefore,
+        # we'll set the start offset to the character being examined,
+        # and the end offset to the next character.
+        #
+        start = min(start, offset)
+        if end < 0:
+            debug.println(debug.LEVEL_WARNING,
+                "soffice.script.py:getTextAttributes: detected a bogus " +
+                "end offset. Start offset: %s, end offset: %s" % (start, end))
+            end = offset + 1
+        else:
+            end -= 1
+
+        return rv, start, end
 
     def getDisplayedText(self, obj):
         """Returns the text being displayed for an object. Overridden here
