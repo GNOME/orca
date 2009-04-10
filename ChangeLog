@@ -1,4 +1,12 @@
-2009-04-08 Joanmarie Diggs <joanmarie.diggs@gmail.com>
+2009-04-10  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/apps/gcalctool/script.py:
+          src/orca/input_event.py:
+          Fix for bug #575921 - When I working with the gcalctool
+          application, Orca says too lot of the result of the mathematic
+          operations
+
+2009-04-08  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/soffice/script.py:
           Fix for bug #578072 - Orca does not always present text attributes
