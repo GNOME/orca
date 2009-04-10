@@ -3120,6 +3120,20 @@ class Script(script.Script):
         if not self.isSameObject(obj, orca_state.locusOfFocus):
             return
 
+        # Radio buttons normally change their state when you arrow to them,
+        # so we handle the announcement of their state changes in the focus
+        # handling code.  However, we do need to handle radio buttons where
+        # the user needs to press the space key so select them.  We see this
+        # in the disk selection area of the OpenSolaris gui-install application
+        # for example.
+        #
+        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON \
+           and orca_state.lastNonModifierKeyEvent \
+           and orca_state.lastNonModifierKeyEvent.event_string == "space":
+            pass
+        else:
+            return
+
         if event:
             debug.println(debug.LEVEL_FINE,
                           "VISUAL CHANGE: '%s' '%s' (event='%s')" \
@@ -7800,6 +7814,7 @@ state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked",
                                                         None)
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
+state_change_notifiers[pyatspi.ROLE_RADIO_BUTTON]    = ("checked", None)
 state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("checked",
                                                         "pressed",
                                                         None)
