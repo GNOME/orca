@@ -87,6 +87,7 @@ class KeyboardEvent(InputEvent):
         self.event_string = event_string
         self.is_text = event.is_text
         self.time = time.time()
+        self.timestamp = event.timestamp
 
 class BrailleEvent(InputEvent):
 

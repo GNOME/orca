@@ -56,6 +56,8 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+        self._lastProcessedKeyEvent = None
+        self._lastSpokenContents = None
         self._resultsDisplay = None
 
     def getWhereAmI(self):
@@ -119,19 +121,13 @@ class Script(default.Script):
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into gcalctool's text display.
-        If the object is an instant message or chat, speak the text If we're
-        not watching anything, do the default behavior.
 
         Arguments:
         - event: the text inserted Event
         """
 
-        # This is an attempt to only read the display when enter or equals is
-        # pressed - so when we get text insertions to the display, speak
-        # them if the last key pressed was enter or equals.
-        #
         # Always update the Braille display but only speak if the last
-        # key pressed was enter or equals
+        # key pressed was Return, space, or equals.
         #
         if event.source == self._resultsDisplay:
             contents = self.getText(self._resultsDisplay, 0, -1)
@@ -147,4 +143,53 @@ class Script(default.Script):
                    or (orca_state.lastNonModifierKeyEvent.event_string \
                        == "Return") \
                    or (orca_state.lastNonModifierKeyEvent.event_string == "="):
-                speech.speak(contents)
+
+                # gcalctool issues several identical text inserted events
+                # for a single press of keys such as enter, space, or equals.
+                # In fact, it's usually about 4, but we cannot depend upon
+                # that.  In addition, keyboard events are decoupled from
+                # text insertion events, so we may get key press/release
+                # events before an insertion occurs, or we might get a 
+                # press, an insertion, and then a release.
+                #
+                # So, what we do is try to infer that an insertion event
+                # was the cause of a single key event.
+                #
+                speakIt = True
+                if self._lastProcessedKeyEvent:
+                    # This catches text insertion events where the last
+                    # keyboard event we looked at was the key release event.
+                    #
+                    if self._lastProcessedKeyEvent.timestamp \
+                       == orca_state.lastNonModifierKeyEvent.timestamp:
+                        speakIt = False
+                    # This catches text insertion events where the last
+                    # keyboard event we looked at was the key press event,
+                    # but the current one is now the associated key release
+                    # event.  We infer they are the same by looking at the
+                    # hardware code, the time delta between the press and
+                    # the release, and that we are on the verge of repeating
+                    # something we just spoke.
+                    #
+                    # It would be tempting to look at just the contents that
+                    # we previous spoke, but a use case we need to handle is
+                    # when the user enters a number (e.g., "666") and then
+                    # presses Return several times.  In this case, we get
+                    # the text insertion events and they are all "666".
+                    #
+                    elif (self._lastProcessedKeyEvent.type \
+                          == pyatspi.KEY_PRESSED_EVENT) \
+                          and (orca_state.lastNonModifierKeyEvent.type \
+                               == pyatspi.KEY_RELEASED_EVENT) \
+                          and (orca_state.lastNonModifierKeyEvent.hw_code \
+                               == self._lastProcessedKeyEvent.hw_code) \
+                          and (orca_state.lastNonModifierKeyEvent.timestamp \
+                               - self._lastProcessedKeyEvent.timestamp) < 1000 \
+                          and (contents == self._lastSpokenContents):
+                        speakIt = False
+                if speakIt:
+                    speech.speak(contents)
+                    self._lastSpokenContents = contents
+
+        self._lastProcessedKeyEvent = \
+            input_event.KeyboardEvent(orca_state.lastNonModifierKeyEvent)
