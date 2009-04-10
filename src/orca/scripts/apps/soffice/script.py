@@ -112,18 +112,14 @@ class Script(default.Script):
         #
         self.commFailureAttemptLimit = 1
 
-        # The default set of text attributes to speak to the user. The
-        # only difference over the default set in settings.py is to add
-        # in "left-margin:" and "right-margin:".
-
-        self.enabledBrailledTextAttributes = \
-          "size:; family-name:; weight:400; indent:0mm; left-margin:0mm; " \
-          "right-margin:0mm; underline:none; strikethrough:none; " \
-          "justification:left; style:normal;"
-        self.enabledSpokenTextAttributes = \
-          "size:; family-name:; weight:400; indent:0mm; left-margin:0mm; " \
-          "right-margin:0mm; underline:none; strikethrough:none; " \
-          "justification:left; style:normal;"
+        # Additional default set of text attributes to present to the
+        # user. The only difference over the default set in
+        # settings.py is to add in "left-margin:" and "right-margin:".
+        #
+        self.additionalBrailledTextAttributes = \
+          " left-margin:0mm; right-margin:0mm;"
+        self.additionalSpokenTextAttributes = \
+          " left-margin:0mm; right-margin:0mm;"
 
     def activate(self):
         """Called when this script is activated."""
@@ -132,12 +128,34 @@ class Script(default.Script):
 
         self.savedEnabledBrailledTextAttributes = \
             settings.enabledBrailledTextAttributes
-        settings.enabledBrailledTextAttributes = \
-            self.enabledBrailledTextAttributes
+        settings.enabledBrailledTextAttributes += \
+            self.additionalBrailledTextAttributes
 
         self.savedEnabledSpokenTextAttributes = \
             settings.enabledSpokenTextAttributes
-        settings.enabledSpokenTextAttributes = self.enabledSpokenTextAttributes
+        settings.enabledSpokenTextAttributes += \
+            self.additionalSpokenTextAttributes
+
+        # Account for the differences in how OOo expresses indent and
+        # strikethrough.
+        #
+        settings.enabledBrailledTextAttributes = \
+            settings.enabledBrailledTextAttributes.replace(
+            "strikethrough:false;",
+            "strikethrough:none;")
+        settings.enabledSpokenTextAttributes = \
+            settings.enabledSpokenTextAttributes.replace(
+            "strikethrough:false;",
+            "strikethrough:none;")
+
+        settings.enabledBrailledTextAttributes = \
+            settings.enabledBrailledTextAttributes.replace(
+            "indent:0;",
+            "indent:0mm;")
+        settings.enabledSpokenTextAttributes = \
+            settings.enabledSpokenTextAttributes.replace(
+            "indent:0;",
+            "indent:0mm;")
 
     def deactivate(self):
         """Called when this script is deactivated."""

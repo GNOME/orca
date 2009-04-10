@@ -158,6 +158,8 @@ class WhereAmI:
         if basicOnly:
             self._speakObjDescription(obj)
 
+        self._lastAttributeString = ""
+
         return True
 
     def _speakCheckBox(self, obj, basicOnly):
@@ -1652,49 +1654,69 @@ class WhereAmI:
             debug.println(self._debugLevel,
                           "line attribs <%s>" % (attribs))
             if attribs:
-                newLine += " ; "
+                if newLine:
+                    newLine += " ; "
                 newLine += attribs
                 newLine += " "
 
             newLine += line[i]
             textOffset += 1
 
+        attribs = self._getAttributesForChar(obj,
+                                             text,
+                                             startOffset,
+                                             line,
+                                             0,
+                                             ["paragraph-style"])
+        if attribs:
+            if newLine:
+                newLine += " ; "
+            newLine += attribs
+
         debug.println(self._debugLevel, "newLine: <%s>" % (newLine))
 
         return newLine
 
-    def _getAttributesForChar(self, obj, text, textOffset, line, lineIndex):
+    def _getAttributesForChar(self,
+                              obj,
+                              text,
+                              textOffset,
+                              line,
+                              lineIndex,
+                              keys=["style", "weight", "underline"]):
 
-        keys = [ "style", "weight", "underline" ]
         attribStr = ""
-        charAttributes = text.getAttributes(textOffset)
 
+        defaultAttributes = text.getDefaultAttributes()
+        attributesDictionary = self._stringToDictionary(defaultAttributes)
+
+        charAttributes = text.getAttributes(textOffset)
         if charAttributes[0]:
             charDict = self._stringToDictionary(charAttributes[0])
-            debug.println(self._debugLevel,
-                          "charDict: %s" % (charDict))
+            for key in charDict.keys():
+                attributesDictionary[key] = charDict[key]
 
+        if attributesDictionary:
             for key in keys:
                 localizedKey = text_attribute_names.getTextAttributeName(key)
-                if key in charDict:
-                    attribute = charDict[key]
+                if key in attributesDictionary:
+                    attribute = attributesDictionary[key]
                     localizedValue = \
                         text_attribute_names.getTextAttributeName(attribute)
                     if attribute:
                         # If it's the 'weight' attribute and greater than 400,
                         # just speak it as bold, otherwise speak the weight.
                         #
-                        if key == "weight" and int(attribute) > 400:
-                            attribStr += " "
-                            # Translators: bold as in the font sense.
-                            #
-                            attribStr += _("bold")
-
+                        if key == "weight":
+                            if int(attribute) > 400:
+                                attribStr += " "
+                                # Translators: bold as in the font sense.
+                                #
+                                attribStr += _("bold")
                         elif key == "underline":
                             if attribute != "none":
                                 attribStr += " "
                                 attribStr += localizedKey
-
                         elif key == "style":
                             if attribute != "normal":
                                 attribStr += " "
@@ -1712,8 +1734,9 @@ class WhereAmI:
                 #
                 attribStr += _("link")
 
-            debug.println(self._debugLevel,
-                          "char <%s>: %s" % (line[lineIndex], attribStr))
+            if line:
+                debug.println(self._debugLevel,
+                              "char <%s>: %s" % (line[lineIndex], attribStr))
 
         # Only return attributes for the beginning of an attribute run.
         if attribStr != self._lastAttributeString:

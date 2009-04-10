@@ -687,7 +687,8 @@ allTextAttributes = \
 
 enabledSpokenTextAttributes = \
     "size:; family-name:; weight:400; indent:0; underline:none; " \
-    "strikethrough:false; justification:left; style:normal;"
+    "strikethrough:false; justification:left; style:normal; " \
+    "paragraph-style:;"
 
 # The default set of text attributes to be brailled for the user. Specific
 # application scripts (or individual users can override these values if
