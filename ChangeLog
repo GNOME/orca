@@ -1,3 +1,9 @@
+2009-04-11  Willie Walker <william.walker@sun.com>
+
+        * src/orca/default.py:
+          ReFix for bug #576438 - Provide state change information for
+          radio buttons that require you to press space to select them
+
 2009-04-10  Willie Walker <william.walker@sun.com>
 
         * src/orca/scripts/apps/soffice/script.py:
