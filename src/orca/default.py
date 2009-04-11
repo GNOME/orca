@@ -3127,12 +3127,12 @@ class Script(script.Script):
         # in the disk selection area of the OpenSolaris gui-install application
         # for example.
         #
-        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON \
-           and orca_state.lastNonModifierKeyEvent \
-           and orca_state.lastNonModifierKeyEvent.event_string == "space":
-            pass
-        else:
-            return
+        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+            if orca_state.lastNonModifierKeyEvent \
+               and orca_state.lastNonModifierKeyEvent.event_string == "space":
+                pass
+            else:
+                return
 
         if event:
             debug.println(debug.LEVEL_FINE,
