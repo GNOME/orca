@@ -1,3 +1,11 @@
+2009-04-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/toolkits/Gecko/script.py:
+          test/keystrokes/firefox/line_nav_bug_577979.py: (new)
+          Fix for bug #577979 - Pressing Down Arrow from the middle of a
+          multi-line HTML list item initially moves to the beginning of the
+          line when arrowToLineBeginning is False.
+
 2009-04-11  Willie Walker <william.walker@sun.com>
 
         * src/orca/default.py:

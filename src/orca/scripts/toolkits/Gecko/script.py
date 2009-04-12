@@ -5782,7 +5782,7 @@ class Script(default.Script):
                                       characterOffset + 1)
             oldX = extents[0]
             for item in prevLine:
-                extents = self.getExtents(item[0], item[1], item[2])
+                extents = self.getExtents(item[0], item[1], item[1] + 1)
                 newX1 = extents[0]
                 newX2 = newX1 + extents[2]
                 if newX1 < oldX <= newX2:
@@ -5893,7 +5893,7 @@ class Script(default.Script):
                                       characterOffset + 1)
             oldX = extents[0]
             for item in nextLine:
-                extents = self.getExtents(item[0], item[1], item[2])
+                extents = self.getExtents(item[0], item[1], item[1] + 1)
                 newX1 = extents[0]
                 newX2 = newX1 + extents[2]
                 if newX1 < oldX <= newX2:
