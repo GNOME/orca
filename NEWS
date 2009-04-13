@@ -1,3 +1,51 @@
+2.26.1 - 13-Apr-2009
+
+General:
+
+* Fix for bug #575921 - When I working with the gcalctool application,
+  Orca says too lot of the result of the mathematic operations
+
+* Fix for bug #576037 - Bind F1 key to help page
+
+* Fix for bug #576438 - Provide state change information for radio
+  buttons that require you to press space to select them
+
+* Fix for bug #577330 - Detect whether speech dispatcher is installed
+  or not
+
+OpenOffice:
+
+* Fix for bug #577245 - Present paragraph-style information in
+  OpenOffice
+
+* Fix for bug #578072 - Orca does not always present text attributes
+  in braille in OOo documents
+
+Firefox/Thunderbird:
+
+* Fix for bug #577239 - Cannot navigate by line through multi-line
+  HTML list items in Firefox/Thunderbird when arrowToLineBeginning is
+  False
+
+* Fix for bug #577979 - Pressing Down Arrow from the middle of a
+  multi-line HTML list item initially moves to the beginning of the
+  line when arrowToLineBeginning is False
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    ar      Arabic               Djihed Afifi
+    bg      Bulgarian            Alexander Shopov
+    cs      Czech                Lucas Lommer and Petr Kovar
+    el      Greek                Jennie Petoumenou and Kostas Papadimas
+    hu      Hungarian            Gabor Kelemen
+    ml      Malayalam            Harivishnu and Ani Peter
+    ru      Russian              Nickolay V. Shmyrev
+        
+==========
+
 2.26.0 - 15-Mar-2009
 
 NOTE - these are the changes since 2.25.92.  For a summary of changes over 
@@ -18,7 +66,7 @@ New and updated translations (THANKS EVERYONE!!!):
   See also the overall translation status:
   http://l10n.gnome.org/module/orca
 
-    da 	     Danish		  Kenneth Nielsen
+    da       Danish               Kenneth Nielsen
     de       German               Simon Bienlein and Mario Blättermann
     es       Spanish              Francisco Javier Dorado Martinez and 
                                   Jorge Gonzalez
@@ -163,7 +211,7 @@ New and updated translations (THANKS EVERYONE!!!):
   http://l10n.gnome.org/module/orca
 
     ca       Catalan              Gil Forcada
-    da 	     Danish		  Kenneth Nielsen
+    da       Danish               Kenneth Nielsen
     es       Spanish              Francisco Javier Dorado Martinez and
                                   Jorge Gonzalez
     he       Hebrew               Mark Krapivner
@@ -516,7 +564,7 @@ New and updated translations (THANKS EVERYONE!!!):
   See also the overall translation status:
   http://l10n.gnome.org/module/orca
 
-    da	    Danish		 Kenneth Nielsen
+    da      Danish               Kenneth Nielsen
     it      Italian              Luca Ferretti
     pt_BR   Brazilian Portuguese Vladimir Melo and Og Maciel
 
@@ -586,9 +634,9 @@ New and updated translations (THANKS EVERYONE!!!):
 
     ar      Arabic               Youssef Chahibi and Djihed Afifi
     cs      Czech                Lucas Lommer and Petr Kovar
-    da	    Danish		 Kenneth Nielsen
+    da      Danish               Kenneth Nielsen
     et      Estonian             Ivar Smolin and Priit Laes
-    fr	    French		 Bruno Brouard and Claude Paroz
+    fr      French               Bruno Brouard and Claude Paroz
     hi      Hindi                Rajesh Ranjan
     hu      Hungarian            Atilla Hammer and Gabor Kelemen
     it      Italian              Luca Ferretti
