@@ -36,6 +36,19 @@ import time
 import bonobo
 import ORBit
 
+# Init the ORB if we need to.  With AT-SPI/CORBA, we depend upon the pyatspi
+# implementation to init the ORB for us.  [[[WDW: With AT-SPI/D-Bus, we need
+# to do it ourselves.  I'm not sure how to ask ORBit itself if it's been
+# init'ed yet, so I do so indirectly by looking for an attribute of pyatspi.
+# This attribute has been set if AT-SPI/CORBA is in use and it not set if
+# AT-SPI/D-Bus is in use.]]]
+#
+try:
+    import pyatspi
+    poa = pyatspi.Accessibility__POA
+except AttributeError:
+    orb = ORBit.CORBA.ORB_init()
+
 import chnames
 import debug
 import orca
