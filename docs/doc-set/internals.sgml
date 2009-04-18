@@ -1,6 +1,6 @@
 <!-- Copyright 2005-2008, Sun Microsystems, Inc. -->
 
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.0//EN"
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.0//EN" "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"
 [
 <!ENTITY blurb SYSTEM "blurb.sgml">
 <!ENTITY legal SYSTEM "legal.sgml">

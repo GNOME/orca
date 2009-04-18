@@ -12,3 +12,7 @@ To generate the HTML docs:
 
 The HTML will be generated in a subdirectory.  You need to copy
 it to the current directory or the image links will not work.
+
+On OpenSolaris:
+
+xsltproc --nonet -xinclude -o internals.html /usr/share/sgml/docbook/xsl-stylesheets-1.69.1-5.1/html/docbook.xsl internals.sgml 

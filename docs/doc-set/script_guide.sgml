@@ -297,7 +297,7 @@
       <title>Orca Script Diagram</title>
         <mediaobject>
           <imageobject>
-            <imagedata fileref="script.jpg" format="JPEG">
+            <imagedata fileref="script.jpg" format="JPEG"/>
           </imageobject>
           <textobject>
             <phrase>Orca Script Diagram</phrase>
@@ -468,8 +468,8 @@ def reviewHome(self, inputEvent):
 <programlisting>
 self.keybindings.add(
     keybindings.KeyBinding("KP_7",
-                           1 << orca.MODIFIER_ORCA,
-                           1 << orca.MODIFIER_ORCA,
+                           1 &lt;&lt; orca.MODIFIER_ORCA,
+                           1 &lt;&lt; orca.MODIFIER_ORCA,
                            reviewHomeHandler))
 </programlisting>
 

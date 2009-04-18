@@ -58,7 +58,7 @@
         the components is depicted.</title>
       <mediaobject>
         <imageobject>
-          <imagedata fileref="architecture.jpg" format="JPEG">
+          <imagedata fileref="architecture.jpg" format="JPEG"/>
         </imageobject>
         <textobject>
           <phrase>High Level Orca Architecture</phrase>

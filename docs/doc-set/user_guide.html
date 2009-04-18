@@ -1,211 +1,36 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
-<HTML
-><HEAD
-><TITLE
->Orca User's Guide</TITLE
-><META
-NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.79"></HEAD
-><BODY
-CLASS="BOOK"
-BGCOLOR="#FFFFFF"
-TEXT="#000000"
-LINK="#0000FF"
-VLINK="#840084"
-ALINK="#0000FF"
-><DIV
-CLASS="BOOK"
-><A
-NAME="USERGUIDE"
-></A
-><DIV
-CLASS="TITLEPAGE"
-><H1
-CLASS="TITLE"
-><A
-NAME="USERGUIDE"
->Orca User's Guide</A
-></H1
-><DIV
-CLASS="LEGALNOTICE"
-><P
-></P
-><A
-NAME="AEN4"
-></A
-><P
->Copyright 2005-2008, Sun Microsystems, Inc.</P
-><P
-></P
-></DIV
-><HR></DIV
-><DIV
-CLASS="TOC"
-><DL
-><DT
-><B
->Table of Contents</B
-></DT
-><DT
-><A
-HREF="#UGFORWARD"
->Foreword</A
-></DT
-><DT
->1. <A
-HREF="#UGINTRODUCTION"
->Introduction</A
-></DT
-><DT
->2. <A
-HREF="#UGRUNNING"
->Running Orca</A
-></DT
-><DT
->3. <A
-HREF="#UGCUSTOMIZATION"
->Customizing Orca</A
-></DT
-><DD
-><DL
-><DT
->3.1. <A
-HREF="#UGMODKEYS"
-><TT
-CLASS="LITERAL"
->orcaModifierKeys</TT
-> - Override "Insert" as Orca Modifier Key</A
-></DT
-></DL
-></DD
-></DL
-></DIV
-><DIV
-CLASS="PREFACE"
-><HR><H1
-><A
-NAME="UGFORWARD"
-></A
->Foreword</H1
-><P
->Orca is a flexible, extensible, and powerful assistive
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Orca User's Guide</title><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="userguide"></a>Orca User's Guide</h1></div><div><div class="legalnotice"><a name="id2488892"></a><p>Copyright 2005-2008, Sun Microsystems, Inc.</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#ugforward">Foreword</a></span></dt><dt><span class="chapter"><a href="#ugintroduction">1. Introduction</a></span></dt><dt><span class="chapter"><a href="#ugrunning">2. Running Orca</a></span></dt><dt><span class="chapter"><a href="#ugcustomization">3. Customizing Orca</a></span></dt><dd><dl><dt><span class="section"><a href="#ugmodkeys"><code class="literal">orcaModifierKeys</code> - Override "Insert" as Orca Modifier Key</a></span></dt></dl></dd></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ugforward"></a>Foreword</h2></div></div></div><p>Orca is a flexible, extensible, and powerful assistive
   technology that provides end-user access to applications and
   toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
   early input from and continued engagement with its end users, Orca 
   has been designed and implemented by the Sun Microsystems, Inc.,
-  Accessibility Program Office.</P
-><P
-><SPAN
-CLASS="emphasis"
-><I
-CLASS="EMPHASIS"
->NOTE:</I
-></SPAN
-> Orca is currently a work in progress.  As a result, this
+  Accessibility Program Office.</p><p><span class="emphasis"><em>NOTE:</em></span> Orca is currently a work in progress.  As a result, this
   and other books in the Orca Documentation Series are under
   continuous modification and are also in various states of
-  completeness.</P
-><P
->This book provides a guide for the installation, configuration
+  completeness.</p><p>This book provides a guide for the installation, configuration
       and use of Orca.  It also includes details on how users can customize 
       the keyboard and braille input mappings of Orca.
-    </P
-></DIV
-><DIV
-CLASS="CHAPTER"
-><HR><H1
-><A
-NAME="UGINTRODUCTION"
-></A
->Chapter 1. Introduction</H1
-><P
-><SPAN
-CLASS="emphasis"
-><I
-CLASS="EMPHASIS"
->TODO:</I
-></SPAN
-> To be written.  This currently contains just the most
+    </p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ugintroduction"></a>Chapter 1. Introduction</h2></div></div></div><p><span class="emphasis"><em>TODO:</em></span> To be written.  This currently contains just the most
       important stuff you need to know.  In addition, you should always
-      visit <A
-HREF="http://live.gnome.org/Orca"
-TARGET="_top"
->        http://live.gnome.org/Orca</A
-> for the
-      latest information and hints on using Orca.</P
-></DIV
-><DIV
-CLASS="CHAPTER"
-><HR><H1
-><A
-NAME="UGRUNNING"
-></A
->Chapter 2. Running Orca</H1
-><P
->You can run Orca in many ways:</P
-><P
-></P
-><UL
-><LI
-><P
->Using the <TT
-CLASS="LITERAL"
->orca</TT
-> command from a terminal
+      visit <a href="http://live.gnome.org/Orca" target="_top">
+        http://live.gnome.org/Orca</a> for the
+      latest information and hints on using Orca.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ugrunning"></a>Chapter 2. Running Orca</h2></div></div></div><p>You can run Orca in many ways:</p><div class="itemizedlist"><ul type="disc"><li><p>Using the <code class="literal">orca</code> command from a terminal
 	  or virtual console.  For many users, this is the easiest and
-	  most accessible way to launch Orca.</P
-></LI
-><LI
-><P
->Via the "Run Application" dialog that you can bring up
-	  by pressing <TT
-CLASS="LITERAL"
->Alt+F2</TT
->.  In this dialog, type
-	  <TT
-CLASS="LITERAL"
->orca</TT
-> and press
-	  <TT
-CLASS="LITERAL"
->Return</TT
->.</P
-></LI
-><LI
-><P
->Via the "Orca Screen Reader and Magnifier" menu item
+	  most accessible way to launch Orca.</p></li><li><p>Via the "Run Application" dialog that you can bring up
+	  by pressing <code class="literal">Alt+F2</code>.  In this dialog, type
+	  <code class="literal">orca</code> and press
+	  <code class="literal">Return</code>.</p></li><li><p>Via the "Orca Screen Reader and Magnifier" menu item
 	  available from the "Accessibility" submenu off of the
-	  "Applications" menu on some systems.</P
-></LI
-><LI
-><P
->For GNOME 2.16 and later, via the "Assistive Technology
+	  "Applications" menu on some systems.</p></li><li><p>For GNOME 2.16 and later, via the "Assistive Technology
 	  Support" preferences dialog that you can launch from the
 	  "Preferences" menu on some systems.  This will enable
 	  accessibility in your environment and tell Orca to
-	  automatically launch when you log in.</P
-></LI
-><LI
-><P
->Via the "Startup Programs" tab in the "Sessions" dialog
+	  automatically launch when you log in.</p></li><li><p>Via the "Startup Programs" tab in the "Sessions" dialog
 	  that you can launch from the "Preferences" menu on some
 	  systems.  This will automatically launch Orca when you 
-	  log in if you add <TT
-CLASS="LITERAL"
->orca</TT
-> as a startup
-	  program.</P
-></LI
-></UL
-><P
->When you run the <TT
-CLASS="LITERAL"
->orca</TT
-> command from a
-      terminal window, you have the following options:</P
-><PRE
-CLASS="PROGRAMLISTING"
->Usage: orca [OPTION...]
+	  log in if you add <code class="literal">orca</code> as a startup
+	  program.</p></li></ul></div><p>When you run the <code class="literal">orca</code> command from a
+      terminal window, you have the following options:</p><pre class="programlisting">
+Usage: orca [OPTION...]
 
 -?, --help                   Show this help message
 -v, --version                0.9.0
@@ -218,156 +43,44 @@ will automatically launch the preferences set up unless
 the -n or --no-setup option is used.
 
 Report bugs to orca-list@gnome.org.
-    </PRE
-><P
->If you have not run Orca before, it will automatically query
+    </pre><p>If you have not run Orca before, it will automatically query
       you for preferences, such as whether you want to use speech,
       braille, or magnification.  These preferences are saved in
-      <TT
-CLASS="LITERAL"
->~/.orca/user-settings.py</TT
-> (see material in
-      the following sections for more information).</P
-><P
-><SPAN
-CLASS="emphasis"
-><I
-CLASS="EMPHASIS"
->NOTE:</I
-></SPAN
-> The GNOME accessibility environment requires
+      <code class="literal">~/.orca/user-settings.py</code> (see material in
+      the following sections for more information).</p><p><span class="emphasis"><em>NOTE:</em></span> The GNOME accessibility environment requires
       accessibility to be enabled for your login session, which is not
       the default configuration.  The first time you run Orca, Orca
       will detect this and will enable accessibility for you.  In
       order for this to take effect, however, you still need to log
-      out and log back in.</P
-><P
->To get help while running Orca, you can press
-      <TT
-CLASS="LITERAL"
->Insert+F1</TT
-> to enter learn mode.  In learn
+      out and log back in.</p><p>To get help while running Orca, you can press
+      <code class="literal">Insert+F1</code> to enter learn mode.  In learn
       mode, you can type any key combination and Orca will tell you
       the effects of that key combination. To exit learn mode, press
-      <TT
-CLASS="LITERAL"
->Escape</TT
->.</P
-><P
->To quit Orca, you can do any of the following:</P
-><P
-></P
-><UL
-><LI
-><P
->Press <TT
-CLASS="LITERAL"
->Insert+Q</TT
-></P
-></LI
-><LI
-><P
->Enter <TT
-CLASS="LITERAL"
->killall -TERM orca</TT
-> in a 
-          terminal window.  <SPAN
-CLASS="emphasis"
-><I
-CLASS="EMPHASIS"
->NOTE:</I
-></SPAN
-> if you enter <TT
-CLASS="LITERAL"
->killall -HUP 
-	  orca</TT
-> in a terminal window, Orca will restart.</P
-></LI
-></UL
-><P
-><SPAN
-CLASS="emphasis"
-><I
-CLASS="EMPHASIS"
->NOTE:</I
-></SPAN
-> the main shell script to start Orca,
-      <TT
-CLASS="LITERAL"
->/usr/bin/orca</TT
->, will detect failures in Orca
+      <code class="literal">Escape</code>.</p><p>To quit Orca, you can do any of the following:</p><div class="itemizedlist"><ul type="disc"><li><p>Press <code class="literal">Insert+Q</code></p></li><li><p>Enter <code class="literal">killall -TERM orca</code> in a 
+          terminal window.  <span class="emphasis"><em>NOTE:</em></span> if you enter <code class="literal">killall -HUP 
+	  orca</code> in a terminal window, Orca will restart.</p></li></ul></div><p><span class="emphasis"><em>NOTE:</em></span> the main shell script to start Orca,
+      <code class="literal">/usr/bin/orca</code>, will detect failures in Orca
       and restart it if necessary.  In addition, it will stop any
       existing Orca-related processes before starting Orca again.  
       As such, if something bad seems to have happened with Orca,
       you can force it to clean up and restart by merely launching
-      Orca again via any of the methods listed previously.</P
-></DIV
-><DIV
-CLASS="CHAPTER"
-><HR><H1
-><A
-NAME="UGCUSTOMIZATION"
-></A
->Chapter 3. Customizing Orca</H1
-><P
->To be written.  Include verbosity, speech rate, braille,
+      Orca again via any of the methods listed previously.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="ugcustomization"></a>Chapter 3. Customizing Orca</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#ugmodkeys"><code class="literal">orcaModifierKeys</code> - Override "Insert" as Orca Modifier Key</a></span></dt></dl></div><p>To be written.  Include verbosity, speech rate, braille,
       braille monitor, orca modifier keys, voices, key/word echo, read
-      table line, etc.</P
-><P
->To configure Orca, you can do any of the following:</P
-><P
-></P
-><UL
-><LI
-><P
->Run <TT
-CLASS="LITERAL"
->orca --setup</TT
-></P
-></LI
-><LI
-><P
->Press <TT
-CLASS="LITERAL"
->Insert+Space</TT
-> while Orca is 
-          running</P
-></LI
-></UL
-><P
->When you configure Orca, it will create
-      <TT
-CLASS="LITERAL"
->~/.orca/user-settings.py</TT
->.  You can edit this
+      table line, etc.</p><p>To configure Orca, you can do any of the following:</p><div class="itemizedlist"><ul type="disc"><li><p>Run <code class="literal">orca --setup</code></p></li><li><p>Press <code class="literal">Insert+Space</code> while Orca is 
+          running</p></li></ul></div><p>When you configure Orca, it will create
+      <code class="literal">~/.orca/user-settings.py</code>.  You can edit this
       file using a text editor, but be aware that it will be
       overwritten the next time you configure Orca.  If you wish to
       have more persistent settings for Orca, you can create
-      <TT
-CLASS="LITERAL"
->~/.orca/orca-customizations.py</TT
->.  If this file
+      <code class="literal">~/.orca/orca-customizations.py</code>.  If this file
       exists (you need to create it if you want one),
-      <TT
-CLASS="LITERAL"
->~/.orca/user-settings.py</TT
-> will import it each
+      <code class="literal">~/.orca/user-settings.py</code> will import it each
       time the settings are reloaded.  You can force Orca to reload
       the settings by pressing
-      <TT
-CLASS="LITERAL"
->Ctrl+Insert+Space</TT
->.</P
-><P
->The contents of a typical 
-      <TT
-CLASS="LITERAL"
->~/.orca/user-settings.py</TT
-> look similar to the
-      following:</P
-><PRE
-CLASS="PROGRAMLISTING"
-># user-settings.py - custom Orca settings
+      <code class="literal">Ctrl+Insert+Space</code>.</p><p>The contents of a typical 
+      <code class="literal">~/.orca/user-settings.py</code> look similar to the
+      following:</p><pre class="programlisting">
+# user-settings.py - custom Orca settings
 # Generated by orca.  DO NOT EDIT THIS FILE!!!
 # If you want permanent customizations that will not
 # be overwritten, edit orca-customizations.py.
@@ -456,64 +169,21 @@ orca.settings.verbalizePunctuationStyle = orca.settings.PUNCTUATION_STYLE_MOST
 try:
     __import__("orca-customizations")
 except ImportError:
-    pass</PRE
-><DIV
-CLASS="SECTION"
-><HR><H2
-CLASS="SECTION"
-><A
-NAME="UGMODKEYS"
->3.1. <TT
-CLASS="LITERAL"
->orcaModifierKeys</TT
-> - Override "Insert" as Orca Modifier Key</A
-></H2
-><P
->Orca defines keystrokes for the
+    pass
+</pre><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="ugmodkeys"></a><code class="literal">orcaModifierKeys</code> - Override "Insert" as Orca Modifier Key</h2></div></div></div><p>Orca defines keystrokes for the
         keypad and also makes special used of the
-        <TT
-CLASS="LITERAL"
->Insert</TT
-> key as the Orca modifier key.  Orca
-        also provides an <TT
-CLASS="LITERAL"
->orcaModifierKeys</TT
->
+        <code class="literal">Insert</code> key as the Orca modifier key.  Orca
+        also provides an <code class="literal">orcaModifierKeys</code>
         customization setting to allow the user to override
-        <TT
-CLASS="LITERAL"
->Insert</TT
-> as the Orca modifier key.  This
+        <code class="literal">Insert</code> as the Orca modifier key.  This
         setting contains a list of key strings that represent the key
         to be used as the Orca modifier key.  For example, the
         following example specifies that the keyboard
-        <TT
-CLASS="LITERAL"
->Insert</TT
-> key (typically near the
-        <TT
-CLASS="LITERAL"
->Delete</TT
-> key) and the keypad
-        <TT
-CLASS="LITERAL"
->Insert</TT
-> key (typically the 0 key) are to
-        both act as the Orca modifier key:</P
-><PRE
-CLASS="PROGRAMLISTING"
-> 
-orca.settings.orcaModifierKeys = ["Insert", "KP_Insert"] </PRE
-><P
->You can override this setting in your
-        <TT
-CLASS="LITERAL"
->~/.orca/orca-customizations.py</TT
-> module if
-        you wish.</P
-></DIV
-></DIV
-></DIV
-></BODY
-></HTML
->
+        <code class="literal">Insert</code> key (typically near the
+        <code class="literal">Delete</code> key) and the keypad
+        <code class="literal">Insert</code> key (typically the 0 key) are to
+        both act as the Orca modifier key:</p><pre class="programlisting"> 
+orca.settings.orcaModifierKeys = ["Insert", "KP_Insert"] 
+</pre><p>You can override this setting in your
+        <code class="literal">~/.orca/orca-customizations.py</code> module if
+        you wish.</p></div></div></div></body></html>
