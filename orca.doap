@@ -6,13 +6,10 @@
 
   <name xml:lang="en">Orca Screen Reader and Magnifier</name>
   <shortdesc xml:lang="en">Screen reader and magnifier for people with visual impairments</shortdesc>
-  <!--
-  <homepage rdf:resource="http://www.gnome.org/" />
-  -->
-  <!--
-  <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/desktop-devel-list" />
-  -->
-
+  <homepage rdf:resource="http://live.gnome.org/Orca" />
+  <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/orca-list" />
+  <bug-database rdf:resource="http://bugzilla.gnome.org/browse.cgi?product=orca"/>
+  <download-page rdf:resource="http://download.gnome.org/sources/orca/" />
   <maintainer>
     <foaf:Person>
       <foaf:name>Willie Walker</foaf:name>
