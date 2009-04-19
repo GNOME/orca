@@ -1,4 +1,4 @@
-<!-- Copyright 2005-2008, Sun Microsystems, Inc. -->
+<!-- Copyright 2005-2009, Sun Microsystems, Inc. -->
 
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook V4.0//EN" "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"
 [
@@ -34,9 +34,9 @@
   <preface id="archforward"><title>Foreword</title>
     &blurb;
     <para>This book covers the overall architecture of Orca, including
-      a portion on writing custom scripts. The bulk of the user
-      information and user experience design can be found on the Orca
-      WIKI at http://live.gnome.org/Orca.</para>
+    a portion on writing custom scripts. The bulk of the end user
+    information and user experience design can be found on the 
+    <ulink url="http://live.gnome.org/Orca">Orca WIKI</ulink>.</para>
   </preface>
 
   <!--
@@ -48,42 +48,58 @@
   -->
 
   <chapter id="prereq"><title>Prerequisites</title>
-    <para>To help narrow the scope of the Orca development activity,
-      Orca uses existing software where available.  For example, as
-      mentioned in the requirements, Orca is a screen reader that
-      needs to be able to interact with speech synthesis, braille,
-      and screen magnification services, but it need not be the
-      provider of such services.  Given this, Orca has the following
-      dependencies:</para>
+    <para>Orca is a screen reader that needs to be able to interact
+    with speech synthesis, braille, and screen magnification services,
+    but it need not be the provider of such services. To help narrow
+    the scope of the Orca development activity, Orca uses existing
+    software where available.  As such, Orca has the following
+    dependencies.</para>
 
-    <section id="prereqgnome"><title>GNOME 2.22 or better</title> 
-      <para>The GNOME 2.22 desktop contains a number of bug fixes and
-        enhancements to the accessibility infrastructure.  These are
-        needed for Orca to run properly.  GNOME 2.22 also packages a
-        variety of other dependencies of Orca, including gnome-speech,
-        gnome-mag, pyatspi, etc.</para>
+    <section id="prereqgnome"><title>GNOME</title> 
+      <para>Orca is part of the GNOME project and ships with each
+      release of GNOME.  Because Orca uses a number of GNOME
+      components, such as AT-SPI, ATK, GAIL, gnome-speech, gnome-mag,
+      and GTK+, Orca is only supported on the release of GNOME with
+      which it was released.  For example, Orca v2.22.0 was released
+      with GNOME 2.22.0 and is only supported on GNOME 2.22.0.  To
+      determine the version of Orca you are using, run the following
+      command:
+<programlisting>
+orca --version
+</programlisting>
+      To determine the version of GNOME you are using, run the
+      following command:
+<programlisting>
+gnome-about --version
+</programlisting>
+      </para>
     </section>
 
     <section id="prereqpython"><title>Python v2.4 or better</title> 
       <para>Orca is written in the Python programming language and
-        depends upon features found in Python versions 2.4 and
-        greater.</para>
+      depends upon features found in Python versions 2.4 and
+      greater. To determine the version of Python you are using, run
+      the following command:
+<programlisting>
+python -V
+</programlisting>
+      </para>
     </section>
 
     <section id="prereqbrltty"><title>BrlTTY v3.7.2 or better</title>
       <para>BrlTTY <citation><xref linkend="brltty"
-        endterm="brltty.abbrev"/></citation> provides access to a
-        variety of Braille displays, and consists of a library and a
-        daemon to provide programmatic interaction with the
-        display.</para>
+      endterm="brltty.abbrev"/></citation> provides access to a
+      variety of Braille displays, and consists of a library and a
+      daemon to provide programmatic interaction with the
+      display.</para>
     </section>
 
     <section id="prereqkeyboardnav"><title>Keyboard Navigation</title>
       <para>As much as possible, Orca relies upon the keyboard
-        navigation methods built in to the native platform.  For
-        example, it is expected that the native platform will provide
-        access via traditional methods such as the "tab" key, keyboard
-        mnemonics, and keyboard accelerators.</para>
+      navigation methods built in to the native platform.  For
+      example, it is expected that the native platform will provide
+      access via traditional methods such as the "tab" key, keyboard
+      mnemonics, and keyboard accelerators.</para>
     </section>
   </chapter>
 
@@ -100,27 +116,27 @@
 
   <chapter id="i18n"><title>Internationalization (I18N) Support</title>
     <para>All human-consumable text obtained from AT-SPI calls is
-      expected to be in a localized form.  As such, Orca does not
-      do any extra localization processing when working with text
-      obtained via the AT-SPI.</para>
+    expected to be in a localized form.  As such, Orca does not do any
+    extra localization processing when working with text obtained via
+    the AT-SPI.</para>
     <para>For text generated by Orca itself, Orca handles
-      internationalization and localization using the <citation><xref
-      linkend="gettext" endterm="gettext.abbrev"/></citation> support
-      of Python.  The gettext support of Python is similar to the GNU
-      gettext module.  Each human consumable string of Orca is US
-      English text wrapped in a call to gettext.gettext.  The call to
-      gettext.gettext will either return a localized string or default
-      to the US English text. Orca depends upon an active and thriving
-      community of open source translators to provide the
-      localizations.</para>
+    internationalization and localization using
+    the <citation><xref linkend="gettext"
+    endterm="gettext.abbrev"/></citation> support of Python.  The
+    gettext support of Python is similar to the GNU gettext module.
+    Each human consumable string of Orca is US English text wrapped in
+    a call to gettext.gettext.  The call to gettext.gettext will
+    either return a localized string or default to the US English
+    text. Orca depends upon an active and thriving community of open
+    source translators to provide the localizations.</para>
     <para>The synthesis of localized speech is to be provided by the
-      underlying gnome-speech engine.  That is, Orca merely passes
-      localized text to the speech engine, which is responsible for
-      the correct interpretation and pronunciation.</para>
+    underlying gnome-speech engine.  That is, Orca merely passes
+    localized text to the speech engine, which is responsible for the
+    correct interpretation and pronunciation.</para>
     <para>The generation of localized braille is to be determined.
-      &todo; BrlTTY currently does not support this at the moment, but
-      it is expected that the BrlTTY developers will add this in the
-      future.</para>
+    &todo; BrlTTY currently does not support this at the moment, but
+    it is expected that the BrlTTY developers will add this in the
+    future.</para>
   </chapter>
 
   <!--

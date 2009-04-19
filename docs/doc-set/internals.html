@@ -1,264 +1,295 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Orca Technical Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id2488862"></a>Orca Technical Reference</h1></div><div><div class="legalnotice"><a name="id2489718"></a><p>Copyright 2005-2008, Sun Microsystems, Inc.</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#archforward">Foreword</a></span></dt><dt><span class="chapter"><a href="#prereq">1. Prerequisites</a></span></dt><dd><dl><dt><span class="section"><a href="#prereqgnome">GNOME 2.22 or better</a></span></dt><dt><span class="section"><a href="#prereqpython">Python v2.4 or better</a></span></dt><dt><span class="section"><a href="#prereqbrltty">BrlTTY v3.7.2 or better</a></span></dt><dt><span class="section"><a href="#prereqkeyboardnav">Keyboard Navigation</a></span></dt></dl></dd><dt><span class="chapter"><a href="#architecture">2. Architecture</a></span></dt><dd><dl><dt><span class="section"><a href="#archdesktop">Desktop and AT-SPI</a></span></dt><dt><span class="section"><a href="#archorca">Orca Module</a></span></dt><dd><dl><dt><span class="section"><a href="#archsettings">settings</a></span></dt></dl></dd><dt><span class="section"><a href="#script">Orca Scripts</a></span></dt><dt><span class="section"><a href="#archsystemservices">System Services</a></span></dt><dd><dl><dt><span class="section"><a href="#archspeech">speech</a></span></dt><dt><span class="section"><a href="#archbraille">braille</a></span></dt><dt><span class="section"><a href="#archmag">mag</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#scriptguide">3. Introduction to Scripting</a></span></dt><dd><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt></dl></dd><dt><span class="chapter"><a href="#customization">4. Customized Behavior</a></span></dt><dd><dl><dt><span class="section"><a href="#sgeventlisteners">Defining Event Listeners</a></span></dt><dt><span class="section"><a href="#sginputeventhandlers">Input Event Handlers</a></span></dt><dt><span class="section"><a href="#sgkeybindings">Defining Keyboard Bindings</a></span></dt><dt><span class="section"><a href="#sgbraillebindings">Defining Braille Bindings</a></span></dt></dl></dd><dt><span class="chapter"><a href="#sgutilities">5. Script Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">speech.py</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">speechgenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">braille.py</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">braillegenerator.py</code></a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#i18n">6. Internationalization (I18N) Support</a></span></dt><dt><span class="bibliography"><a href="#archbibliography">Bibliography</a></span></dt></dl></div><div class="list-of-figures"><p><b>List of Figures</b></p><dl><dt>2.1. <a href="#id2489635">High Level Orca Architecture. The main components of Orca
-        are as follows: desktop  applications that support the AT-SPI,
-        the  AT-SPI  registry and  infrastructure,  Orca itself,  Orca
-        Scripts, and  system services.  The  key communication between
-        the components is depicted.</a></dt><dt>4.1. <a href="#id2493464">Orca Script Diagram</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="archforward"></a>Foreword</h2></div></div></div><p>Orca is a flexible, extensible, and powerful assistive
-  technology that provides end-user access to applications and
-  toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
-  early input from and continued engagement with its end users, Orca 
-  has been designed and implemented by the Sun Microsystems, Inc.,
-  Accessibility Program Office.</p><p><span class="emphasis"><em>NOTE:</em></span> Orca is currently a work in progress.  As a result, this
-  and other books in the Orca Documentation Series are under
-  continuous modification and are also in various states of
-  completeness.</p><p>This book covers the overall architecture of Orca, including
-      a portion on writing custom scripts. The bulk of the user
-      information and user experience design can be found on the Orca
-      WIKI at http://live.gnome.org/Orca.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="prereq"></a>Chapter 1. Prerequisites</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#prereqgnome">GNOME 2.22 or better</a></span></dt><dt><span class="section"><a href="#prereqpython">Python v2.4 or better</a></span></dt><dt><span class="section"><a href="#prereqbrltty">BrlTTY v3.7.2 or better</a></span></dt><dt><span class="section"><a href="#prereqkeyboardnav">Keyboard Navigation</a></span></dt></dl></div><p>To help narrow the scope of the Orca development activity,
-      Orca uses existing software where available.  For example, as
-      mentioned in the requirements, Orca is a screen reader that
-      needs to be able to interact with speech synthesis, braille,
-      and screen magnification services, but it need not be the
-      provider of such services.  Given this, Orca has the following
-      dependencies:</p><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="prereqgnome"></a>GNOME 2.22 or better</h2></div></div></div><p>The GNOME 2.22 desktop contains a number of bug fixes and
-        enhancements to the accessibility infrastructure.  These are
-        needed for Orca to run properly.  GNOME 2.22 also packages a
-        variety of other dependencies of Orca, including gnome-speech,
-        gnome-mag, pyatspi, etc.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="prereqpython"></a>Python v2.4 or better</h2></div></div></div><p>Orca is written in the Python programming language and
-        depends upon features found in Python versions 2.4 and
-        greater.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="prereqbrltty"></a>BrlTTY v3.7.2 or better</h2></div></div></div><p>BrlTTY [<span class="citation"><a href="#brltty">BRLTTY</a></span>] provides access to a
-        variety of Braille displays, and consists of a library and a
-        daemon to provide programmatic interaction with the
-        display.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="prereqkeyboardnav"></a>Keyboard Navigation</h2></div></div></div><p>As much as possible, Orca relies upon the keyboard
-        navigation methods built in to the native platform.  For
-        example, it is expected that the native platform will provide
-        access via traditional methods such as the "tab" key, keyboard
-        mnemonics, and keyboard accelerators.</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="architecture"></a>Chapter 2. Architecture</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#archdesktop">Desktop and AT-SPI</a></span></dt><dt><span class="section"><a href="#archorca">Orca Module</a></span></dt><dd><dl><dt><span class="section"><a href="#archsettings">settings</a></span></dt></dl></dd><dt><span class="section"><a href="#script">Orca Scripts</a></span></dt><dt><span class="section"><a href="#archsystemservices">System Services</a></span></dt><dd><dl><dt><span class="section"><a href="#archspeech">speech</a></span></dt><dt><span class="section"><a href="#archbraille">braille</a></span></dt><dt><span class="section"><a href="#archmag">mag</a></span></dt></dl></dd></dl></div><p>The Orca architecture has been driven primarily by the Orca
-      User Experience Design.  There are two primary operating modes
-      of Orca: a focus tracking mode and a flat review mode.</p><p>The focus tracking mode generally relies upon applications
-      to provide reasonable keyboard navigation techniques to allow
-      the user to operate the application without requiring the mouse.
-      As the user uses traditional keyboard navigation techniques to
-      move from component to component in the application (e.g.,
-      pressing the Tab key to move from pushbutton to text area to
-      toggle button, etc.), Orca will present this to the user via
-      braille, speech, magnification, or a combination thereof.  In
-      the cases where more complex navigation is needed, such as
-      structural navigation of complex text documents, Orca also
-      provides a facility to define keyboard and braille input events
-      that it can intercept and handle appropriately.</p><p>The flat review mode provides the user with the ability to
-      spatially navigate a window, giving them the ability to explore
-      as well as discover and interact with components in the window.
-      Orca provides a default set of keybindings for flat review, and
-      these keybindings can be easily redefined by the user.</p><p>The various modes of Orca are handled by "scripts," which
-      are Python modules that can provide a custom interpretation of
-      an application's interaction model.  It is not intended that 
-      there will be a unique script for every application.  Instead,
-      it is expected that there will be a general purpose script that
-      covers a large number of applications.  In the event that more
-      compelling or custom behavior is desired for an application,
-      however, one can use a custom script for the application.
-      Furthermore, scripts can subclass other scripts, allowing
-      them to be quite simple.</p><p>As illustrated in the high level Orca architecture diagram,
-      the main components of Orca are as follows: desktop applications
-      that support the AT-SPI, the AT-SPI registry and infrastructure,
-      Orca itself, Orca Scripts, and system services (e.g., speech,
-      braille, magnification).</p><div class="figure"><a name="id2489635"></a><p class="title"><b>Figure 2.1. High Level Orca Architecture. The main components of Orca
-        are as follows: desktop  applications that support the AT-SPI,
-        the  AT-SPI  registry and  infrastructure,  Orca itself,  Orca
-        Scripts, and  system services.  The  key communication between
-        the components is depicted.</b></p><div class="mediaobject"><img src="architecture.jpg" alt="High Level Orca Architecture"></div></div><p>The following sections describe the architecture in more
-      detail.</p><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="archdesktop"></a>Desktop and AT-SPI</h2></div></div></div><p>Orca's sole view of any application on the desktop is via
-        the AT-SPI [<span class="citation"><a href="#at-spi">AT-SPI</a></span>].  The AT-SPI is an
-        IDL/CORBA/Bonobo-based technology [<span class="citation"><a href="#bonobo">Bonobo</a></span>] that provides a common
-        interface for the desktop and its applications to expose their
-        GUI component hierarchy to assistive technologies such as
-        Orca.  AT-SPI support is provided by toolkits such as GNOME's
-        GTK+ toolkit (via gail [<span class="citation"><a href="#gail">GAIL</a></span>]), the Java platform (via
-        the Java access bridge), and the custom
-        toolkits used by applications such as Mozilla and Open
-        Office.  Future support includes the Qt toolkit of KDE.</p><p>Assistive Technologies interact with the AT-SPI via two
-        primary means: the AT-SPI registry and accessible objects.
-        The AT-SPI registry permits assistive technologies to discover
-        existing applications on the desktop and to register for event
-        notification for AT-SPI events (e.g., window creation, focus
-        changes, object state changes, etc.) and device events (e.g.,
-        keyboard input events).  Accessible objects provide the
-        assistive technology with information about the application,
-        and tend to mirror the actual GUI component hierarchy.
-        Accessible objects can be obtained in three ways: </p><div class="orderedlist"><ol type="1"><li><p>From the AT-SPI registry via queries on the desktop</p></li><li><p>From an AT-SPI event</p></li><li><p>From another Accessible via parent/child relationships
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Orca Technical Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id2488862"></a>Orca Technical Reference</h1></div><div><div class="legalnotice"><a name="id2489718"></a><p>Copyright 2005-2009, Sun Microsystems, Inc.</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#archforward">Foreword</a></span></dt><dt><span class="chapter"><a href="#prereq">1. Prerequisites</a></span></dt><dd><dl><dt><span class="section"><a href="#prereqgnome">GNOME</a></span></dt><dt><span class="section"><a href="#prereqpython">Python v2.4 or better</a></span></dt><dt><span class="section"><a href="#prereqbrltty">BrlTTY v3.7.2 or better</a></span></dt><dt><span class="section"><a href="#prereqkeyboardnav">Keyboard Navigation</a></span></dt></dl></dd><dt><span class="chapter"><a href="#architecture">2. Architecture</a></span></dt><dd><dl><dt><span class="section"><a href="#archdesktop">Desktop and AT-SPI</a></span></dt><dt><span class="section"><a href="#archorca">Orca Module</a></span></dt><dd><dl><dt><span class="section"><a href="#archsettings">settings</a></span></dt></dl></dd><dt><span class="section"><a href="#script">Orca Scripts</a></span></dt><dt><span class="section"><a href="#archsystemservices">System Services</a></span></dt><dd><dl><dt><span class="section"><a href="#archspeech">speech</a></span></dt><dt><span class="section"><a href="#archbraille">braille</a></span></dt><dt><span class="section"><a href="#archmag">mag</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#scriptguide">3. Introduction to Scripting</a></span></dt><dd><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt></dl></dd><dt><span class="chapter"><a href="#customization">4. Customized Behavior</a></span></dt><dd><dl><dt><span class="section"><a href="#sgeventlisteners">Defining Event Listeners</a></span></dt><dt><span class="section"><a href="#sginputeventhandlers">Input Event Handlers</a></span></dt><dt><span class="section"><a href="#sgkeybindings">Defining Keyboard Bindings</a></span></dt><dt><span class="section"><a href="#sgbraillebindings">Defining Braille Bindings</a></span></dt></dl></dd><dt><span class="chapter"><a href="#sgutilities">5. Script Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">speech.py</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">speechgenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">braille.py</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">braillegenerator.py</code></a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#i18n">6. Internationalization (I18N) Support</a></span></dt><dt><span class="bibliography"><a href="#archbibliography">Bibliography</a></span></dt></dl></div><div class="list-of-figures"><p><b>List of Figures</b></p><dl><dt>2.1. <a href="#id2489678">High Level Orca Architecture. The main components of Orca
+      are as follows: desktop applications that support the AT-SPI,
+      the AT-SPI registry and infrastructure, Orca itself, Orca
+      Scripts, and system services.  The key communication between the
+      components is depicted.</a></dt><dt>4.1. <a href="#id2493370">Orca Script Diagram</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="archforward"></a>Foreword</h2></div></div></div><p>Orca is a free, open source, flexible, and extensible screen
+reader that provides access to the graphical desktop via
+user-customizable combinations of speech, braille, and/or
+magnification.  Under development by the Sun Microsystems, Inc.,
+Accessibility Program Office since 2004, Orca has been created with
+early input from and continued engagement with its end users.</p><p>Orca works with applications and toolkits that support the
+assistive technology service provider interface (AT-SPI), which is the
+primary assistive technology infrastructure for the Solaris and Linux
+operating environments.  Applications and toolkits supporting the
+AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
+toolkit, OpenOffice, and Mozilla.  AT-SPI support for WebKit and the
+KDE Qt toolkit is currently being pursued.</p><p>See also http://live.gnome.org/Orca for detailed English and
+Spanish information on Orca, including how to run Orca, how to
+communicate with the Orca user community, and where to log bugs and
+feature requests.</p><p>This book covers the overall architecture of Orca, including
+    a portion on writing custom scripts. The bulk of the end user
+    information and user experience design can be found on the 
+    <a href="http://live.gnome.org/Orca" target="_top">Orca WIKI</a>.</p></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="prereq"></a>Chapter 1. Prerequisites</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#prereqgnome">GNOME</a></span></dt><dt><span class="section"><a href="#prereqpython">Python v2.4 or better</a></span></dt><dt><span class="section"><a href="#prereqbrltty">BrlTTY v3.7.2 or better</a></span></dt><dt><span class="section"><a href="#prereqkeyboardnav">Keyboard Navigation</a></span></dt></dl></div><p>Orca is a screen reader that needs to be able to interact
+    with speech synthesis, braille, and screen magnification services,
+    but it need not be the provider of such services. To help narrow
+    the scope of the Orca development activity, Orca uses existing
+    software where available.  As such, Orca has the following
+    dependencies.</p><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="prereqgnome"></a>GNOME</h2></div></div></div><p>Orca is part of the GNOME project and ships with each
+      release of GNOME.  Because Orca uses a number of GNOME
+      components, such as AT-SPI, ATK, GAIL, gnome-speech, gnome-mag,
+      and GTK+, Orca is only supported on the release of GNOME with
+      which it was released.  For example, Orca v2.22.0 was released
+      with GNOME 2.22.0 and is only supported on GNOME 2.22.0.  To
+      determine the version of Orca you are using, run the following
+      command:
+</p><pre class="programlisting">
+orca --version
+</pre><p>
+      To determine the version of GNOME you are using, run the
+      following command:
+</p><pre class="programlisting">
+gnome-about --version
+</pre><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="prereqpython"></a>Python v2.4 or better</h2></div></div></div><p>Orca is written in the Python programming language and
+      depends upon features found in Python versions 2.4 and
+      greater. To determine the version of Python you are using, run
+      the following command:
+</p><pre class="programlisting">
+python -V
+</pre><p>
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="prereqbrltty"></a>BrlTTY v3.7.2 or better</h2></div></div></div><p>BrlTTY [<span class="citation"><a href="#brltty">BRLTTY</a></span>] provides access to a
+      variety of Braille displays, and consists of a library and a
+      daemon to provide programmatic interaction with the
+      display.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="prereqkeyboardnav"></a>Keyboard Navigation</h2></div></div></div><p>As much as possible, Orca relies upon the keyboard
+      navigation methods built in to the native platform.  For
+      example, it is expected that the native platform will provide
+      access via traditional methods such as the "tab" key, keyboard
+      mnemonics, and keyboard accelerators.</p></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="architecture"></a>Chapter 2. Architecture</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#archdesktop">Desktop and AT-SPI</a></span></dt><dt><span class="section"><a href="#archorca">Orca Module</a></span></dt><dd><dl><dt><span class="section"><a href="#archsettings">settings</a></span></dt></dl></dd><dt><span class="section"><a href="#script">Orca Scripts</a></span></dt><dt><span class="section"><a href="#archsystemservices">System Services</a></span></dt><dd><dl><dt><span class="section"><a href="#archspeech">speech</a></span></dt><dt><span class="section"><a href="#archbraille">braille</a></span></dt><dt><span class="section"><a href="#archmag">mag</a></span></dt></dl></dd></dl></div><p>The Orca architecture has been driven primarily by the Orca
+    User Experience Design.  There are two primary operating modes
+    of Orca: a focus tracking mode and a flat review mode.</p><p>The focus tracking mode is the preferred mode of operation.
+    It generally relies upon applications to provide reasonable
+    keyboard navigation techniques to allow the user to operate the
+    application without requiring the mouse.  As the user uses
+    traditional keyboard navigation techniques to move from component
+    to component in the application (e.g., pressing the Tab key to
+    move from pushbutton to text area to toggle button, etc.), Orca
+    will present this to the user via braille, speech, magnification,
+    or a combination thereof.  In the cases where more complex
+    navigation is needed, such as structural navigation of complex
+    text documents, Orca also provides a facility to define keyboard
+    and braille input events that it can intercept and handle
+    appropriately.</p><p>The flat review mode provides the user with the ability to
+    spatially navigate a window, giving them the ability to explore as
+    well as discover and interact with components in the window. This
+    mode is not a preferred mode, but is instead intended to allow a
+    user to interact with ill-behaved applications.  Orca provides a
+    default set of keybindings for flat review, and these keybindings
+    can be easily redefined by the user.</p><p>The focus tracking mode of Orca is handled by "scripts,"
+    which are Python modules that can provide a custom interpretation
+    of an application's interaction model.  It is not intended that
+    there will be a unique script for every application.  Instead, it
+    is expected that there will be a general purpose "default" script
+    that covers a large number of applications.  In the event that
+    more compelling or custom behavior is desired for an application,
+    however, one can use a custom script for the application.
+    Furthermore, scripts can subclass other scripts, allowing them to
+    be quite simple. In practice, all the custom scripts extend the
+    "default" script.</p><p>As illustrated in the high level Orca architecture diagram,
+    the main components of Orca are as follows: desktop applications
+    that support the AT-SPI, the AT-SPI registry and infrastructure,
+    Orca itself, Orca Scripts, and system services (e.g., speech,
+    braille, magnification).</p><div class="figure"><a name="id2489678"></a><p class="title"><b>Figure 2.1. High Level Orca Architecture. The main components of Orca
+      are as follows: desktop applications that support the AT-SPI,
+      the AT-SPI registry and infrastructure, Orca itself, Orca
+      Scripts, and system services.  The key communication between the
+      components is depicted.</b></p><div class="mediaobject"><img src="architecture.png" alt="High Level Orca Architecture"></div></div><p>The following sections describe the architecture in more
+    detail.</p><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="archdesktop"></a>Desktop and AT-SPI</h2></div></div></div><p>Orca's sole view of any application on the desktop is via
+      the AT-SPI [<span class="citation"><a href="#at-spi">AT-SPI</a></span>].  The AT-SPI is an
+      IDL/CORBA/Bonobo-based
+      technology [<span class="citation"><a href="#bonobo">Bonobo</a></span>] that provides a common
+      interface for the desktop and its applications to expose their
+      GUI component hierarchy to assistive technologies such as Orca.
+      <span class="emphasis"><em>NOTE:</em></span> the AT-SPI infrastructure is being migrated to D-Bus for
+      GNOME 3.0.  This migration should have little impact on the
+      architecture or code of Orca.  In other words, do you worry
+      'bout a thing.</p><p>AT-SPI support is provided by toolkits such as GNOME's
+      GTK+ toolkit (via GAIL [<span class="citation"><a href="#gail">GAIL</a></span>]), the Java platform (via the
+      Java access bridge), and the custom toolkits used by
+      applications such as Mozilla and Open Office.  Future support
+      includes the Qt toolkit of KDE.</p><p>Assistive Technologies interact with the AT-SPI via two
+      primary means: the AT-SPI registry and accessible objects.  The
+      AT-SPI registry permits assistive technologies to discover
+      existing applications on the desktop and to register for event
+      notification for AT-SPI events (e.g., window creation, focus
+      changes, object state changes, etc.) and device events (e.g.,
+      keyboard input events).  Accessible objects provide the
+      assistive technology with information about the application, and
+      tend to mirror the actual GUI component hierarchy.  Accessible
+      objects can be obtained in three ways: </p><div class="orderedlist"><ol type="1"><li><p>From the AT-SPI registry via queries on the desktop</p></li><li><p>From an AT-SPI event</p></li><li><p>From another Accessible via parent/child relationships
             and other relationships such as "label for" and 
-	    "labeled by".</p></li></ol></div><p>Orca's interaction with the AT-SPI is managed through
-        Orca's <code class="literal">atspi.py</code> module.  The
-        <code class="literal">atspi.py</code> module communicates directly with
-        the AT-SPI via the AT-SPI IDL interfaces and also provides a
-        number of classes that help with AT-SPI interaction:
-        <code class="literal">Registry</code>, <code class="literal">Accessible</code>,
-        and <code class="literal">Event</code>.  The full documentation for
-        each of these classes is available in the pydoc for Orca
-	while the following paragraphs provide a brief overview.</p><p>The <code class="literal">Registry</code> class provides a singleton
-        class instance to access to the AT-SPI
-        registry.  It provides convenience methods for registering
-        AT-SPI event listeners and device event listeners, and also
-        provides the mechanism for starting and stopping event
-        delivery from the AT-SPI registry.</p><p>The <code class="literal">Accessible</code> class provides a wrapper
-        for communicating with CORBA objects that implement the AT-SPI
-        Accessible and Application interfaces. Using Python's ability
-        to add new properties to a class instance at run time, Orca
-        can also annotate Accessible class instances with additional
-        information.  The main purpose of an Accessible is to provide
-        a local cache for accessible objects, preventing the need for
-        numerous round trip calls to the AT-SPI registry and
-        application for information.</p><p>The <code class="literal">Event</code> class provides a wrapper for
-        converting AT-SPI events into Python <code class="literal">Event</code>
-        instances.  The main purpose is to convert the AT-SPI
-        accessible source of the event into a Python
-        <code class="literal">Accessible</code> instance and to also provide an
-        <code class="literal">Event</code> instance that can be annotated by
-        scripts (the actual AT-SPI event delivered by the registry is 
-	read-only).</p><p>As illustrated in the high level Orca architecture
-        diagram, the <code class="literal">atspi</code> module has been used to
-        register event and device listeners with the AT-SPI registry.
-        Each exemplary desktop application (Firefox, NetBeans, GAIM,
-        StarOffice) emits AT-SPI events to the AT-SPI registry which
-        then delivers them to the <code class="literal">atspi</code> module.
-        The <code class="literal">atspi</code> module then calls all appropriate
-        listeners for the events it receives from the AT-SPI
-        registry.</p><p>In this case, the <code class="literal">orca</code> module receives
-        keyboard events, which it interprets and also sends on to the
-        <code class="literal">focus_tracking_presenter</code> module.  Of more
-        interest, however, is that the
-        <code class="literal">focus_tracking_presenter</code> module receives
-        AT-SPI events which it then passes on the script for the
-        application associated with the event.  If there is no script,
-        the <code class="literal">focus_tracking_presenter</code> will create an
-        instance of the default script.  See the <a href="#scriptguide" title="Chapter 3. Introduction to Scripting">Orca Script Writing Guide</a> for
-        more information.</p><p>The <code class="literal">atspi</code> module also registers its
-        own set of event listeners that it uses to keep its local
-        cache of accessible objects up to date.</p><p><span class="emphasis"><em>IMPLEMENTATION DETAIL:</em></span> Because processing AT-SPI object events can be
-        time consuming, and because the notification of AT-SPI object
-        events is relatively "bursty," the
-        <code class="literal">focus_tracking_presenter</code> maintains a queue
-        of AT-SPI object and input device events. It adds the events
-        to this queue when it receives them and processes the events
-        on the GLib idle handling thread.  This permits Orca to
-        survive a relatively long burst of events and also allows it
-        to handle the events on a thread that is compatible with
-        GLib.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="archorca"></a>Orca Module</h2></div></div></div><p>The <code class="literal">orca</code> module is the "main entry
-        point" of Orca.  It initializes the components that Orca uses
-        (atspi, speech, braille, mag) and loads the user's settings.
-        It also is the first to receive all keyboard and braille input
-        events and delves them out to other Orca components
-        appropriately.</p><p>The <code class="literal">orca</code> module maintains the current
-        known "locus of focus" in the <code class="literal">locusOfFocus</code>
-        field of the <code class="literal">orca_state</code> module.  The
-        <code class="literal">locusOfFocus</code> is intended to represent the
-        current object that the user is working with.  In simple
-        terms, it is the object that is highlighted or has the dotted
-        line drawn around it.  Be advised that the notion of "focus"
-        differs from toolkit to toolkit.  For example, the object with
-        toolkit focus may actually be the parent of the object that is
-        highlighted.  The <code class="literal">locusOfFocus</code> is an an
-        attempt to neutralize these differences across toolkits: the
-        locus of focus is the individual object that is highlighted,
-        has the caret, etc.</p><p>Orca scripts set the locus of focus to inform Orca when
-        the locus of focus has changed.  In addition, in the event
-        that there was a visual appearance change to the object that
-        has the locus of focus, the <code class="literal">orca</code> module
-        provides a <code class="literal">visualAppearanceChanged</code> that
-        scripts can use to inform Orca of this event.</p><p><span class="emphasis"><em>NOTE:</em></span> The <code class="literal">orca_state.locusOfFocus</code>
-        field is intended to be set only via the
-        <code class="literal">setLocusOfFocus</code> method of the
-        <code class="literal">orca</code> module. Because the
-        <code class="literal">setLocusOfFocus</code> method performs bookkeeping
-        and other tasks, the
-        <code class="literal">orca_state.locusOfFocus</code> field should never
-        be set directly.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archsettings"></a>settings</h3></div></div></div><p>The <span class="bold"><strong>settings</strong></span> module
-          (not depicted in the high level Orca architecture diagram)
-          holds preferences set by the user during configuration.
-          These settings include the following: use of speech and/or
-          braille, voice styles, key echo, text echo, and command
-          echo.</p><p>Any Orca module can check the value of a setting by
-          examining the field directly in the
-          <code class="literal">settings</code> module.  In addition, the
-          <code class="literal">orca</code> module will import the
-          <code class="literal">user-settings</code> module from the
-          <code class="literal">~/.orca directory</code>, if it exists (it
-	  is created as part of the configuration process that
-	  is run the first time Orca is used or when the user
-	  presses Insert+Space to invoke the configuration GUI).</p><p>The <code class="literal">user-settings</code> module is a Python
-          script, allowing it to contain functions, class definitions,
-          etc.  The primary job of the
-          <code class="literal">user-settings</code> is to directly set the
-          values of fields in the <code class="literal">settings</code>
-          module.</p><p><span class="emphasis"><em>IMPLEMENTATION DETAIL:</em></span> the <code class="literal">init</code> method of the
-          <code class="literal">orca</code> module obtains settings.  As a
-          result, the <code class="literal">user-settings</code> module is
-          imported very early in the Orca life cycle.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="script"></a>Orca Scripts</h2></div></div></div><p>Internally, the <code class="literal">orca</code> module keeps track
-        of list of <code class="literal">PresentationManager</code> instances
-        (see the pydoc for
-        <code class="literal">presentation_manager.py</code>). The
-        <code class="literal">FocusTrackingPresenter</code> (see
-        <code class="literal">focus_tracking_presenter</code>) is of the most
-        interest, as it is the <code class="literal">PresentationManager</code>
-        that manages scripts.</p><p>Details on the <code class="literal">FocusTrackingPresenter</code>
-        and Orca scripts can be found in the
-        <a href="#scriptguide" title="Chapter 3. Introduction to Scripting">Orca Script Writing Guide</a>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="archsystemservices"></a>System Services</h2></div></div></div><p> Orca relies on existing system services to provide
-        support for speech synthesis, braille, and screen
-        magnification.  To interact with these services, Orca provides
-        the modules described in the following sections.
-      </p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archspeech"></a>speech</h3></div></div></div><p>The <span class="bold"><strong>speech</strong></span> module
-          provides Orca's Python interface to system speech services.
-          Each speech service is generated by a "speech server
-          factory."  There are currently two such factories: one for
-          [<span class="citation"><a href="#gnome-speech">gnome-speech</a></span>] (see
-          <code class="literal">gnomespeechfactory.py</code> and one for
-          [<span class="citation"><a href="#emacspeak">Emacspeak</a></span>] (see
-          <code class="literal">espeechfactory.py</code>), though it is expected
-          that support for other factories can be added in the
-          future.</p><p>Each speech factory offers up a list of
-          <code class="literal">SpeechServer</code>s, where each
-          <code class="literal">SpeechServer</code> is typically an interface to
-          a particular speech engine.  For example, the
-          <code class="literal">espeechfactory</code> will offer up a
-          <code class="literal">SpeechServer</code> that talks to the Fonix
-          DECtalk engine and a <code class="literal">SpeechServer</code> that
-          talks to the IBMTTS engine.  Likewise, the
-          <code class="literal">gnomespeechfactory</code> will offer up a
-          <code class="literal">SpeechServer</code> that uses the
-          <code class="literal">gnome-speech</code> interface to talk to the
-          Festival Speech Synthesis System, a separate
-          <code class="literal">SpeechServer</code> that also uses the
-          <code class="literal">gnome-speech</code> interface to talk to the
-          Fonix DECtalk engine, and so on.</p><p>Each <code class="literal">SpeechServer</code> instance then provides
-          a set of methods for actually speaking.  Each of the methods
-          accepts an <code class="literal">ACSS</code> instance, which represents
-          an aural cascading style sheet ([<span class="citation"><a href="#acss">ACSS</a></span>]) that defines the voice
-          and voice parameter settings to use.</p><p>As part of the <code class="literal">orca-setup</code> process,
-          the user selects a particular speech factory,
-          <code class="literal">SpeechServer</code>, and voice to use as their
-          default voice.  When Orca starts, the
-          <code class="literal">speech</code> module looks for these settings
-          and connects to the appropriate speech factory and
-          <code class="literal">SpeechServer</code>.  In the event the a
-          connection cannot be made, the <code class="literal">speech</code>
-          module attempts to find a working synthesis engine to use by
-          examining its list of speech factories.  The
-          <code class="literal">speech</code> module then provides simple
-          methods that delegate to the <code class="literal">SpeechServer</code>
-          instance.  This model allows scripts to use their own
-          <code class="literal">SpeechServer</code> instances if they wish, but
-          scripts typically just rely upon the user's default
-          preferences.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archbraille"></a>braille</h3></div></div></div><p> The <span class="bold"><strong>braille</strong></span> module
-          provides Orca's Python interface to the system's BrlTTY
-          [<span class="citation"><a href="#brltty">BRLTTY</a></span>] daemon.  The BrlTTY
-          daemon, in turn, provides the interface to braille devices
-          for both displaying braille and receiving input from the
-          user.</p><p><span class="emphasis"><em>TODO:</em></span> flesh this section out more.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archmag"></a>mag</h3></div></div></div><p> The <span class="bold"><strong>mag</strong></span> module
-          provides Orca's Python interface to the system's gnome-mag
-          [<span class="citation"><a href="#gnome-mag">gnome-mag</a></span>] CORBA service(s).
-          The magnification component provides methods that permit
-          Orca discover screen magnification services and set their
-          desktop region of interest.</p><p><span class="emphasis"><em>TODO:</em></span> flesh this section out more.</p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="scriptguide"></a>Chapter 3. Introduction to Scripting</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt></dl></div><p>In this section, you will learn more about the Orca
+	    "labeled by".</p></li></ol></div><p>Orca's interaction with the AT-SPI is managed through the
+      <code class="literal">pyatspi.py</code> module that is part of AT-SPI.  The
+      <code class="literal">pyatspi.py</code> module communicates directly with
+      the AT-SPI number of classes that help with AT-SPI interaction.
+      The best ways to learn AT-SPI are as follows:
+
+      </p><div class="orderedlist"><ol type="1"><li><p>Read the AT-SPI interface documentation.</p></li><li><p>Run the <code class="literal">accerciser</code> application to
+          examine the accessibility information of desktop
+          applications.  This includes analyzing the accessible
+          hierarchy as well as watching events that are issued as
+          you interact with desktop applcations.</p></li><li><p>Enable the debug mode of Orca as described on the
+          <a href="http://live.gnome.org/Orca/Debugging" target="_top">Orca
+          WIKI</a>.  Run Orca and interact with an
+          application. Then, quit Orca and analyze the debug
+          log.</p></li></ol></div><p>
+      </p><p>As illustrated in the high level Orca architecture
+      diagram, the <code class="literal">pyatspi</code> module has been used to
+      register event and device listeners with the AT-SPI registry.
+      Each exemplary desktop application (Firefox, Evolution, Pidgin,
+      and OpenOffice) emits AT-SPI events to the AT-SPI registry which
+      then delivers them to the <code class="literal">pyatspi</code> module.
+      The <code class="literal">pyatspi</code> module then calls all appropriate
+      listeners for the events it receives from the AT-SPI
+      registry.</p><p>In this case, the <code class="literal">orca</code> module receives
+      keyboard events, which it interprets and also sends on to the
+      <code class="literal">focus_tracking_presenter</code> module (not depicted
+      in the illustration).  Of more
+      interest, however, is that the
+      <code class="literal">focus_tracking_presenter</code> module receives
+      AT-SPI events which it then passes on the script for the
+      application associated with the event.  If there is no script,
+      the <code class="literal">focus_tracking_presenter</code> will create an
+      instance of the default script.  See the <a href="#scriptguide" title="Chapter 3. Introduction to Scripting">Orca Script Writing Guide</a> for
+      more information.</p><p><span class="emphasis"><em>IMPLEMENTATION DETAIL:</em></span> Because processing AT-SPI object events can be
+      time consuming, and because the notification of AT-SPI object
+      events is relatively "bursty," the
+      <code class="literal">focus_tracking_presenter</code> maintains a queue of
+      AT-SPI object and input device events. It adds the events to
+      this queue when it receives them and processes the events on the
+      GLib idle handling thread.  This permits Orca to survive a
+      relatively long burst of events and also allows it to handle the
+      events on a thread that is compatible with GLib.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="archorca"></a>Orca Module</h2></div></div></div><p>The <code class="literal">orca</code> module is the "main entry
+      point" of Orca.  It initializes the components that Orca uses
+      (pyatspi, speech, braille, mag) and loads the user's settings.
+      It also is the first to receive all keyboard and braille input
+      events and delves them out to other Orca components
+      appropriately.</p><p>The <code class="literal">orca</code> module maintains the current
+      known "locus of focus" in the <code class="literal">locusOfFocus</code>
+      field of the <code class="literal">orca_state</code> module.  The
+      <code class="literal">orca_state.locusOfFocus</code> field is intended to
+      represent the current object that the user is working with.  In
+      simple terms, it is the object that is highlighted or has the
+      dotted line drawn around it.  Be advised that the notion of
+      "focus" differs from toolkit to toolkit.  For example, the
+      object with toolkit focus may actually be the parent of the
+      object that is highlighted.  As such,
+      the <code class="literal">orca_status.locusOfFocus</code> field is an an
+      attempt to neutralize these differences across toolkits: the
+      locus of focus is the individual object that is highlighted, has
+      the caret, etc.</p><p>Orca scripts
+      set <code class="literal">orca_state.locusOfFocus</code> to inform Orca
+      when the locus of focus has changed.  In addition, in the event
+      that there was a visual appearance change to the object that has
+      the locus of focus, the <code class="literal">orca</code> module provides
+      a <code class="literal">visualAppearanceChanged</code> that scripts can
+      use to inform Orca of this event.</p><p><span class="emphasis"><em>NOTE:</em></span> The <code class="literal">orca_state.locusOfFocus</code>
+      field is intended to be set only via the
+      <code class="literal">setLocusOfFocus</code> method of the
+      <code class="literal">orca</code> module. Because the
+      <code class="literal">orca.setLocusOfFocus</code> method performs bookkeeping
+      and other tasks, the
+      <code class="literal">orca_state.locusOfFocus</code> field should never be
+      set directly.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archsettings"></a>settings</h3></div></div></div><p>The <code class="literal">settings</code> module (not depicted in
+        the high level Orca architecture diagram) holds preferences
+        set by the user during configuration.  These settings include
+        the following: use of speech, braille, and/or magnification,
+        voice styles, key echo, text echo, etc.</p><p>Any Orca module can check the value of a setting by
+        examining the field directly in the
+        <code class="literal">settings</code> module.  In addition, the
+        <code class="literal">orca</code> module will import the
+        <code class="literal">user-settings</code> module from the
+        <code class="literal">~/.orca directory</code>, if it exists.
+        The <code class="literal">user-settings</code> module is
+	created as part of the configuration process that is run the
+	first time Orca is used or when the user presses 
+	<code class="literal">Insert+Space</code> to invoke the configuration
+	GUI.</p><p>The <code class="literal">user-settings</code> module is a Python
+        script, allowing it to contain functions, class definitions,
+        etc.  The primary job of the
+        <code class="literal">user-settings</code>, however, is to directly set
+        the values of fields in the <code class="literal">settings</code>
+        module.</p><p><span class="emphasis"><em>IMPLEMENTATION DETAIL:</em></span> the <code class="literal">init</code> method of the
+        <code class="literal">orca</code> module obtains settings.  As a
+        result, the <code class="literal">user-settings</code> module is
+        imported very early in the Orca life cycle.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="script"></a>Orca Scripts</h2></div></div></div><p>The <code class="literal">orca</code> module creates a single
+      instance of a <code class="literal">FocusTrackingPresenter</code> (defined
+      in the
+      <code class="literal">focus_tracking_presenter</code> module), which manages
+      all the scripts for Orca.</p><p>Details on the <code class="literal">FocusTrackingPresenter</code>
+      and Orca scripts can be found in the <a href="#scriptguide" title="Chapter 3. Introduction to Scripting">Orca Script Writing Guide</a>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="archsystemservices"></a>System Services</h2></div></div></div><p> Orca relies on existing system services to provide
+      support for speech synthesis, braille, and screen magnification.
+      To interact with these services, Orca provides the modules
+      described in the following sections.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archspeech"></a>speech</h3></div></div></div><p>All speaking operations should be done by calling
+        methods in the <code class="literal">speech</code> module.
+        The <code class="literal">speech</code> module provides Orca's Python
+        interface to system speech services.  Each speech service is
+        generated by a "speech server factory."  There are currently
+        three such factories: one for
+        [<span class="citation"><a href="#gnome-speech">gnome-speech</a></span>] (see the
+        <code class="literal">gnomespeechfactory</code> module), one for
+        [<span class="citation"><a href="#emacspeak">Emacspeak</a></span>] (see the
+        <code class="literal">espeechfactory</code> module), and one for
+        SpeechDispatcher (see
+        the <code class="literal">speechdispatcherfactory</code> module).
+        Currently, the only officially supported factory is the one
+        provided by the <code class="literal">gnomespeechfactory</code>
+        module.</p><p>Each speech factory offers up a list of
+        <code class="literal">SpeechServer</code>s, where each
+        <code class="literal">SpeechServer</code> is typically an interface to
+        a particular speech engine.  For example, the
+        <code class="literal">espeechfactory</code> will offer up a
+        <code class="literal">SpeechServer</code> that talks to the Fonix
+        DECtalk engine and a <code class="literal">SpeechServer</code> that
+        talks to the IBMTTS engine.  Likewise, the
+        <code class="literal">gnomespeechfactory</code> will offer up a
+        <code class="literal">SpeechServer</code> that uses the
+        <code class="literal">gnome-speech</code> interface to talk to the
+        eSpeak synthesis engine, a separate
+        <code class="literal">SpeechServer</code> that also uses the
+        <code class="literal">gnome-speech</code> interface to talk to the Fonix
+        DECtalk engine, and so on.</p><p>Each <code class="literal">SpeechServer</code> instance provides a
+        set of methods for actually speaking. Many of the methods
+        accepts an <code class="literal">ACSS</code> instance, which represents
+        an aural cascading style sheet ([<span class="citation"><a href="#acss">ACSS</a></span>]) that defines the voice and
+        voice parameter settings to use.</p><p>As part of the <code class="literal">orca-setup</code> process,
+        the user selects a particular speech factory,
+        <code class="literal">SpeechServer</code>, and voice to use as their
+        default voice.  When Orca starts, the
+        <code class="literal">speech</code> module looks for these settings
+        and connects to the appropriate speech factory and
+        <code class="literal">SpeechServer</code>.  In the event the a
+        connection cannot be made, the <code class="literal">speech</code>
+        module attempts to find a working synthesis engine to use by
+        examining its list of speech factories.  The
+        <code class="literal">speech</code> module then provides simple methods
+        that delegate to the <code class="literal">SpeechServer</code> instance.
+        Although this model allows scripts to use their own
+        <code class="literal">SpeechServer</code> instances if they wish,
+        scripts typically just rely upon the user's default
+        preferences.</p><p><span class="emphasis"><em>NOTE:</em></span> Each Orca script has a
+        single <code class="literal">speechgenerator.SpeechGenerator</code>
+        instance to help generate text to be sent to
+        the <code class="literal">speech</code> module.  More information on
+        speech generators can be found in the
+        <a href="#scriptguide" title="Chapter 3. Introduction to Scripting">Orca Script Writing Guide</a>.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archbraille"></a>braille</h3></div></div></div><p> The <code class="literal">braille</code> module provides Orca's
+        Python interface to the system's BrlTTY
+        [<span class="citation"><a href="#brltty">BRLTTY</a></span>] daemon.  The BrlTTY
+        daemon, in turn, provides the interface to braille devices
+        for both displaying braille and receiving input from the
+        user.</p><p><span class="emphasis"><em>NOTE:</em></span> As with speech, each Orca script has a
+        single <code class="literal">braillegenerator.BrailleGenerator</code>
+        instance to help generate text to be sent to
+        the <code class="literal">braille</code> module.  More information on
+        braille generators can be found in the
+        <a href="#scriptguide" title="Chapter 3. Introduction to Scripting">Orca Script Writing Guide</a>.</p><p><span class="emphasis"><em>TODO:</em></span> flesh this section out more.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archmag"></a>mag</h3></div></div></div><p> The <code class="literal">mag</code> module
+        provides Orca's Python interface to the system's gnome-mag
+        [<span class="citation"><a href="#gnome-mag">gnome-mag</a></span>] CORBA service(s).  The
+        magnification component provides methods that permit Orca
+        discover screen magnification services and set their desktop
+        region of interest.  The script is responsible for
+        calling <code class="literal">mag.magnifyAccessible</code> with the
+        appropriate parameters to set the magnifier's region of
+        interest.</p><p><span class="emphasis"><em>TODO:</em></span> flesh this section out more.</p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="scriptguide"></a>Chapter 3. Introduction to Scripting</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt></dl></div><p>In this section, you will learn more about the Orca
       architecture as well as how to create your own custom scripts
       for Orca.</p><p>The goal of scripting is to provide Orca with the capability
       of providing a natural feeling and compelling user experience
@@ -438,7 +469,7 @@
       here only for historical purposes.</p><p>The customized behavior of a script is set up in its
       constructor.  In its constructor, each script is expected to
       extend/override several fields as illustrated in the following
-      diagram and describe below:</p><div class="figure"><a name="id2493464"></a><p class="title"><b>Figure 4.1. Orca Script Diagram</b></p><div class="mediaobject"><img src="script.jpg" alt="Orca Script Diagram"></div></div><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">listeners</code>: a dictionary where the
+      diagram and describe below:</p><div class="figure"><a name="id2493370"></a><p class="title"><b>Figure 4.1. Orca Script Diagram</b></p><div class="mediaobject"><img src="script.jpg" alt="Orca Script Diagram"></div></div><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">listeners</code>: a dictionary where the
           keys are strings that match AT-SPI event types (e.g.,
           <code class="literal">focus:</code>,
           <code class="literal">object:text-caret-moved</code>, etc.), and the
@@ -804,23 +835,23 @@ if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
     regions.append(braille.Region(
                    " " + rolenames.getBrailleForRoleName(obj)))
         </pre></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="i18n"></a>Chapter 6. Internationalization (I18N) Support</h2></div></div></div><p>All human-consumable text obtained from AT-SPI calls is
-      expected to be in a localized form.  As such, Orca does not
-      do any extra localization processing when working with text
-      obtained via the AT-SPI.</p><p>For text generated by Orca itself, Orca handles
-      internationalization and localization using the [<span class="citation"><a href="#gettext">gettext</a></span>] support
-      of Python.  The gettext support of Python is similar to the GNU
-      gettext module.  Each human consumable string of Orca is US
-      English text wrapped in a call to gettext.gettext.  The call to
-      gettext.gettext will either return a localized string or default
-      to the US English text. Orca depends upon an active and thriving
-      community of open source translators to provide the
-      localizations.</p><p>The synthesis of localized speech is to be provided by the
-      underlying gnome-speech engine.  That is, Orca merely passes
-      localized text to the speech engine, which is responsible for
-      the correct interpretation and pronunciation.</p><p>The generation of localized braille is to be determined.
-      <span class="emphasis"><em>TODO:</em></span> BrlTTY currently does not support this at the moment, but
-      it is expected that the BrlTTY developers will add this in the
-      future.</p></div><div class="bibliography"><div class="titlepage"><div><div><h2 class="title"><a name="archbibliography"></a>Bibliography</h2></div></div></div><div class="biblioentry"><a name="at-spi"></a><p>[<span class="abbrev"><a name="at-spi.abbrev"></a>AT-SPI</span>] <span class="authorgroup"><span class="firstname">Bill</span> <span class="surname">Haneman</span>, <span class="firstname">Marc</span> <span class="surname">Mulcahy</span>, and <span class="firstname">Michael</span> <span class="surname">Meeks</span>. </span><span class="title"><i><a href="http://directory.fsf.org/accessibility/at-spi.html" target="_top">
+    expected to be in a localized form.  As such, Orca does not do any
+    extra localization processing when working with text obtained via
+    the AT-SPI.</p><p>For text generated by Orca itself, Orca handles
+    internationalization and localization using
+    the [<span class="citation"><a href="#gettext">gettext</a></span>] support of Python.  The
+    gettext support of Python is similar to the GNU gettext module.
+    Each human consumable string of Orca is US English text wrapped in
+    a call to gettext.gettext.  The call to gettext.gettext will
+    either return a localized string or default to the US English
+    text. Orca depends upon an active and thriving community of open
+    source translators to provide the localizations.</p><p>The synthesis of localized speech is to be provided by the
+    underlying gnome-speech engine.  That is, Orca merely passes
+    localized text to the speech engine, which is responsible for the
+    correct interpretation and pronunciation.</p><p>The generation of localized braille is to be determined.
+    <span class="emphasis"><em>TODO:</em></span> BrlTTY currently does not support this at the moment, but
+    it is expected that the BrlTTY developers will add this in the
+    future.</p></div><div class="bibliography"><div class="titlepage"><div><div><h2 class="title"><a name="archbibliography"></a>Bibliography</h2></div></div></div><div class="biblioentry"><a name="at-spi"></a><p>[<span class="abbrev"><a name="at-spi.abbrev"></a>AT-SPI</span>] <span class="authorgroup"><span class="firstname">Bill</span> <span class="surname">Haneman</span>, <span class="firstname">Marc</span> <span class="surname">Mulcahy</span>, and <span class="firstname">Michael</span> <span class="surname">Meeks</span>. </span><span class="title"><i><a href="http://directory.fsf.org/accessibility/at-spi.html" target="_top">
         AT-SPI</a>
     </i>. </span></p></div><div class="biblioentry"><a name="acss"></a><p>[<span class="abbrev"><a name="acss.abbrev"></a>ACSS</span>] <span class="authorgroup"><span class="firstname">T.V.</span> <span class="surname">Raman</span>. </span><span class="title"><i><a href="http://www.w3.org/TR/1998/REC-CSS2-19980512/aural.html" target="_top">Aural Style Sheets</a>
     </i>. </span></p></div><div class="biblioentry"><a name="bonobo"></a><p>[<span class="abbrev"><a name="bonobo.abbrev"></a>Bonobo</span>] <span class="author"><span class="firstname">George</span> <span class="surname">Lebl</span>. </span><span class="title"><i><a href="http://lidn.sourceforge.net/articles/gnomenclatureintrotobonobo/" target="_top">

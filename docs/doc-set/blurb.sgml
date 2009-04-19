@@ -1,13 +1,21 @@
-<!-- Copyright 2005-2008, Sun Microsystems, Inc. -->
+<!-- Copyright 2005-2009, Sun Microsystems, Inc. -->
 
-<para>Orca is a flexible, extensible, and powerful assistive
-  technology that provides end-user access to applications and
-  toolkits that support the AT-SPI (e.g., the GNOME desktop).  With
-  early input from and continued engagement with its end users, Orca 
-  has been designed and implemented by the Sun Microsystems, Inc.,
-  Accessibility Program Office.</para>
+<para>Orca is a free, open source, flexible, and extensible screen
+reader that provides access to the graphical desktop via
+user-customizable combinations of speech, braille, and/or
+magnification.  Under development by the Sun Microsystems, Inc.,
+Accessibility Program Office since 2004, Orca has been created with
+early input from and continued engagement with its end users.</para>
 
-<para>&note; Orca is currently a work in progress.  As a result, this
-  and other books in the Orca Documentation Series are under
-  continuous modification and are also in various states of
-  completeness.</para>
+<para>Orca works with applications and toolkits that support the
+assistive technology service provider interface (AT-SPI), which is the
+primary assistive technology infrastructure for the Solaris and Linux
+operating environments.  Applications and toolkits supporting the
+AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
+toolkit, OpenOffice, and Mozilla.  AT-SPI support for WebKit and the
+KDE Qt toolkit is currently being pursued.</para>
+
+<para>See also http://live.gnome.org/Orca for detailed English and
+Spanish information on Orca, including how to run Orca, how to
+communicate with the Orca user community, and where to log bugs and
+feature requests.</para>
