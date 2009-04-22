@@ -7,7 +7,12 @@ exec_prefix=@prefix@
 INSTALL_DIR=@pyexecdir@
 if [ "x$*" == "x" ]
 then
-    FILES=`svn stat src/orca | egrep "^M|^A" | grep "[.]py$" | awk '{ print $2 }'`
+    if [ -d .git ]
+    then
+        FILES=`git status | egrep 'modified:|new file:' | grep '[.]py$' | awk '{ print $NF }'`
+    else
+        FILES=`svn stat src/orca | egrep '^M|^A' | grep '[.]py$' | awk '{ print $NF }'`
+    fi
 else
     FILES="$*"
 fi
