@@ -5,3 +5,4 @@ orca-setup
 orca_i18n.py
 platform.py
 *.pyc
+*~

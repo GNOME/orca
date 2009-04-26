@@ -34,3 +34,4 @@ xmldocs.make
 core
 run_pylint.sh
 bld
+*~
