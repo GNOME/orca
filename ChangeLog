@@ -1,3 +1,80 @@
+2009-04-25  Willie Walker <william.walker@sun.com>
+
+        * src/orca/default.py:
+          Adjust debug utilities to print to console and debug log.
+
+2009-04-25  Willie Walker <william.walker@sun.com>
+
+        * docs/doc-set/architecture.sgml:
+          docs/doc-set/internals.html:
+          docs/doc-set/script_guide.sgml:
+          Update script writing docs.  Braille and speech output sections
+          still need work.
+
+2009-04-23  Olav Vitters <olav@bkor.dhs.org>
+
+        * orca.doap: 
+          Add desktop category
+
+2009-04-22  Mesar Hameed <mesar.hameed@gmail.com>
+
+        * run_pylint.sh.in:
+          Updated run_pylint.sh to work with git.
+
+2009-04-22  Jordi Mas i Hernandez <jmas@softcatala.org>
+
+        * po/ca.po
+          Minor fixes to Catalan translation
+
+commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
+2009-04-19  Aron Xu <aronxu@gnome.org>
+
+        * po/zh_CN.po:
+          Updated zh_CN.po
+
+2009-04-19  Willie Walker <william.walker@sun.com>
+
+        * docs/doc-set/architecture.png:
+          docs/doc-set/architecture.sgml:
+          docs/doc-set/blurb.sgml:
+          docs/doc-set/diagrams.odg:
+          docs/doc-set/internals.html:
+          docs/doc-set/internals.sgml:
+          docs/doc-set/legal.sgml:
+          Update internals docs.  Did not touch script writing guide yet.
+
+2009-04-17  Willie Walker <william.walker@sun.com>
+
+        * docs/doc-set/README:
+          docs/doc-set/architecture.sgml:
+          docs/doc-set/internals.html:
+          docs/doc-set/internals.sgml:
+          docs/doc-set/script_guide.sgml:
+          docs/doc-set/user_guide.html:
+          docs/doc-set/user_guide.sgml:    
+          Update docs to work with xsltproc on OpenSolaris (a command
+          example is in README)
+
+2009-04-17  Willie Walker <william.walker@sun.com>
+
+        * orca.doap:
+          Add homepage, mailing-list, bug-database, and download-page to
+          DOAP file
+
+2009-04-17  Willie Walker <william.walker@sun.com>
+
+        * .gitignore:
+          po/.gitignore:
+          src/brl/.gitignore:
+          src/louis/.gitignore:
+          src/orca/.gitignore:
+          Add .gitignore files
+
+2009-04-17  Willie Walker <william.walker@sun.com>
+
+        * orca.doap:
+        Add orca.doap
+
 2009-04-15  Willie Walker <william.walker@sun.com>
 
         * src/orca/gnomespeechfactory.py:
@@ -47,7 +124,7 @@
 
 2009-04-07  Willie Walker <william.walker@sun.com>
 
-   	* src/orca/orca_gui_main.py:
+        * src/orca/orca_gui_main.py:
           src/orca/orca_gui_prefs.py:
           Fix for bug #576037 - Bind F1 key to help page
 
@@ -209,10 +286,10 @@
 
 2009-02-25  Eitan Isaacson  <eitan@ascender.com>
 
-	* src/orca/scripts/apps/Makefile.am:
-	  src/orca/scripts/apps/notify-osd.py:
-	  po/POTFILES.in:
-	  Added a notify-osd script (bug #573156).
+        * src/orca/scripts/apps/Makefile.am:
+          src/orca/scripts/apps/notify-osd.py:
+          po/POTFILES.in:
+          Added a notify-osd script (bug #573156).
 
 2009-02-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -526,21 +603,21 @@
 
 2009-01-28  Meshar Hameed <via william.walker@sun.com>
 
-	* src/orca/speech.py:
+        * src/orca/speech.py:
           Final(?) fix for bug #562060 - Speech should speak multi case
           strings as words.  Adjust the regexes used.
 
 2009-01-22  Willie Walker <william.walker@sun.com>
 
-	* src/orca/speech.py:
+        * src/orca/speech.py:
           Fix for bug #562060 - Speech should speak multi case strings as
-	  words.  Make speakUtterances also use pronunciations.
+          words.  Make speakUtterances also use pronunciations.
 
 2009-01-22  Willie Walker <william.walker@sun.com>
 
-	* src/orca/speechfactory.py:
+        * src/orca/speechfactory.py:
           Fix for bug #562060 - Speech should speak multi case strings as
-	  words.  Make speakKeyName also use pronunciations.
+          words.  Make speakKeyName also use pronunciations.
 
 2009-01-22  Willie Walker <william.walker@sun.com>
 
@@ -587,9 +664,9 @@
 
 2009-01-21  Willie Walker <william.walker@sun.com>
 
-	* src/orca/gnomespeechfactory.py:
+        * src/orca/gnomespeechfactory.py:
           Fix for bug #562060 - Speech should speak multi case strings as
-	  words.  Make speakCharacter also use pronunciations.
+          words.  Make speakCharacter also use pronunciations.
 
 2009-01-21  Willie Walker <william.walker@sun.com>
 
@@ -606,7 +683,7 @@
 
 2009-01-19  Willie Walker <william.walker@sun.com>
 
-	* src/orca/orca-setup.glade:
+        * src/orca/orca-setup.glade:
           Additional fix for bug #562060 - Speech should speak multi case
           strings as words - add comments for translators.
 
@@ -639,7 +716,7 @@
 
         * NEWS:
           Final prep for Orca v2.25.5 (to include bug #567984 and
-	  bug #567428)
+          bug #567428)
 
 2009-01-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -659,14 +736,14 @@
 
 2009-01-19  Mesar Hameed <via william.walker@sun.com>
 
-	* src/orca/settings.py:
+        * src/orca/settings.py:
           src/orca/orca-setup.glade:
           src/orca/speechdispatcherfactory.py:
           src/orca/speech.py:
           src/orca/gnomespeechfactory.py:
           src/orca/orca_gui_prefs.py:
           Fix for bug #562060 - Speech should speak multi case strings as
-	  words
+          words
 
 2009-01-19  Willie Walker <william.walker@sun.com>
 
