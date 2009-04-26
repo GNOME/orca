@@ -800,86 +800,210 @@ def getBrailleBindings(self):
     <section id="sgtts"><title>Speech Synthesis</title>
 
       <para>Orca provides two main modules for speech output:
-      <literal>speech.py</literal> and
-      <literal>speechgenerator.py</literal>. The
-      <literal>speech.py</literal> module provides the main interface
-      to the speech synthesis subsystem. The
-      <literal>speechgenerator.py</literal> module provides a
-      <literal>SpeechGenerator</literal> class that can be used to to
-      actually generate the text to be spoken for various objects.
-      The expected use of the two modules is as follows: a script will
-      create its own instance of a
-      <literal>SpeechGenerator</literal> and will use it to generate
-      text.  The script will then pass this text to the
-      <literal>speech.py</literal> module to be spoken.</para>
+      <literal>orca.speech</literal>
+      (in <literal>orca/speech.py</literal>) and
+      <literal>orca.speechgenerator</literal>
+      (in <literal>orca/speechgenerator.py</literal>). The
+      <literal>orca.speech</literal> module provides the main
+      interface to the speech synthesis subsystem. The
+      <literal>orca.speechgenerator</literal> module provides the
+      <literal>orca.speechgenerator.SpeechGenerator</literal> class
+      that can be used to generate the text to be spoken for various
+      objects.  The expected use of the two modules is as follows: a
+      script will create its own instance of
+      <literal>orca.speechgenerator.SpeechGenerator</literal> and will
+      use it to generate text.  The script will then pass this text to
+      <literal>orca.speech</literal> to be spoken.</para>
 
-      <section id="sgspeechpy"><title><literal>speech.py</literal></title>
+      <section id="sgspeechpy"><title><literal>orca.speech</literal></title>
  
         <para>For the purposes of script writing, the main entry
-          points of the <literal>speech.py</literal> module are
-          <literal>speak</literal>,
-          <literal>speakUtterances</literal>, and
-          <literal>stop</literal></para>
+        points of the <literal>orca.speech</literal> module are
+        <literal>speak</literal>,
+        <literal>speakUtterances</literal>, 
+	<literal>sayAll</literal>,
+	<literal>speakCharacter</literal>,
+	<literal>speakKeyEvent</literal>, and
+        <literal>stop</literal></para>
 
-        <para>See the <literal>speech.py</literal> module for more
-          information.</para>
+        <para>See the <literal>orca.speech</literal> module for more
+        information.</para>
 
       </section>
 
-      <section id="sgsgpy"><title><literal>speechgenerator.py</literal></title>
+      <section id="sgsgpy"><title><literal>orca.speechgenerator.SpeechGenerator</literal></title>
 
-        <para>The primary goal of a <literal>SpeechGenerator</literal>
-          is to create text to be spoken for an accessible object.
-          There are two public entry points into a
-          <literal>SpeechGenerator</literal>:</para>
+        <para>The primary goal of
+        an <literal>orca.speechgenerator.SpeechGenerator</literal>
+        instance, which is available as
+        the <literal>speechGenerator</literal> field of a script, is
+        to create text to be spoken for an accessible object.  There
+        are two public entry points into a
+        <literal>SpeechGenerator</literal>:</para>
 
         <itemizedlist>
           <listitem>
             <para><literal>getSpeech(obj, already_focused)</literal>:
-              returns a list of strings to be spoken
-              for the given accessible object.  The
-              <literal>already_focused</literal> boolean parameter
-              provides a hint to the speech generator about how much
-              text to generate.  For example, if a check box that
-              already has focus is to be spoken, usually the reason
-              for this is that the state changed between checked and
-              unchecked.  As a result, an appropriate thing to do in
-              this situation is to only speak the new change in
-              state (e.g., "checked").</para>              
+            returns a list of strings to be spoken
+            for the given accessible object.  The
+            <literal>already_focused</literal> boolean parameter
+            provides a hint to the speech generator about how much
+            text to generate.  For example, if a check box that
+            already has focus is to be spoken, usually the reason
+            for this is that the state changed between checked and
+            unchecked.  As a result, an appropriate thing to do in
+            this situation is to only speak the new change in
+            state (e.g., "checked").</para>              
           </listitem>
           <listitem>
             <para><literal>getSpeechContext(obj,
-              stopAncestor)</literal>: returns a list
-              of strings to be spoken that describe the visual context
-              of the given accessible object.  This is loosely
-              represented by the hierarchical relationship of the
-              object (i.e., the "Quit" button in the "File" menu in
-              the ...), and the amount of information can be contained
-              by specifying an accessible
-              <literal>stopAncestor</literal> above which we do not
-              want to know anything about.  The primary use of this
-              method is to provide the user with feedback regarding
-              the relevant visual context information that changed
-              when the locus of focus changes, but this method is also
-              useful for assisting in "where am I" queries.</para>
+            stopAncestor)</literal>: returns a list of strings to be
+            spoken that describe the visual context of the given
+            accessible object.  This is loosely represented by the
+            hierarchical relationship of the object (i.e., the "Quit"
+            button in the "File" menu in the ...), and the amount of
+            information can be contained by specifying an accessible
+            <literal>stopAncestor</literal> above which we do not want
+            to know anything about.  The primary use of this method is
+            to provide the user with feedback regarding the relevant
+            visual context information that changed when the locus of
+            focus changes, but this method is also useful for
+            assisting in "where am I" queries.</para>
           </listitem>
         </itemizedlist>
+ 
+        <para>Custom scripts which want to override the behavior of
+        the default speech generator can create their own speech
+        generator.  Internally,
+        the <literal>orca.speechgenerator.SpeechGenerator</literal>
+        class obtains the speech for an object based upon the object's
+        role.  It does so by creating and using a table
+        called <literal>speechGenerators</literal>.  The keys for the
+        table are <literal>pyatspi</literal> roles such
+        as <literal>pyatspi.ROLE_CHECK_BOX</literal> and the values
+        are a function in the script.  As such, the typical thing a
+        <literal>orca.speechgenerator.SpeechGenerator</literal>
+        subclass does is just override a function.  Here's a brief
+        example of the meaningful components of the speech generator
+        for the Pidgin application.  From the script side, the Pidgin
+        script, held
+        in <literal>orca/scripts/apps/pidgin/script.py</literal>,
+        imports the custom Pidgin speech generator, held in
+        <literal>orca/scripts/apps/pidgin/speech_generator.py</literal>,
+	imports the custom speech generator and creates an instance of
+	it via an overridden <literal>getSpeechGenerator</literal>
+	method:</para>
+<programlisting>
+...
+from speech_generator import SpeechGenerator
+...
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+        return SpeechGenerator(self)
+</programlisting>
+
+        <para>The speech generator itself merely is a class declaration
+        that extends the <literal>orca.speechgenerator.SpeechGenerator</literal>
+        class and overrides the <literal>_getSpeechForTableCell</literal>
+        method to provide customized behavior for Pidgin table cells:</para>
+<programlisting>
+import pyatspi
+
+import orca.settings as settings
+import orca.speechgenerator as speechgenerator
+
+from orca.orca_i18n import _
+from orca.orca_i18n import ngettext  # for ngettext support
+
+########################################################################
+#                                                                      #
+# Custom SpeechGenerator                                               #
+#                                                                      #
+########################################################################
+
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Overrides _getSpeechForTableCell() so that we can provide access
+    to the expanded/collapsed state and node count for the buddy list.
+    """
+
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
+
+    def _getSpeechForTableCell(self, obj, already_focused):
+        """Get the speech utterances for a single table cell
+
+        Arguments:
+        - obj: the table cell
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = speechgenerator.SpeechGenerator._getSpeechForTableCell( \
+            self, obj, already_focused)
+
+        if not self._script.isInBuddyList(obj):
+            return utterances
+
+        # The Pidgin buddy list consists of two columns. The column which
+        # is set as the expander column and which also contains the node
+        # relationship is hidden.  Hidden columns are not included among
+        # a table's columns.  The hidden object of interest seems to always
+        # immediately precede the visible object.
+        #
+        expanderCell = obj.parent[obj.getIndexInParent() - 1]
+        if not expanderCell:
+            return utterances
+
+        state = expanderCell.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                utterances.append(_("expanded"))
+                childNodes = self._script.getChildNodes(expanderCell)
+                children = len(childNodes)
+
+                if not children \
+                   or (settings.speechVerbosityLevel == \
+                       settings.VERBOSITY_LEVEL_VERBOSE):
+                    # Translators: this is the number of items in a layered
+                    # pane or table.
+                    #
+                    itemString = ngettext("%d item",
+                                          "%d items",
+                                          children) % children
+                    utterances.append(itemString)
+            else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                utterances.append(_("collapsed"))
+
+        self._debugGenerator("gaim._getSpeechForTableCell",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+</programlisting>
 
         <para>&note; Orca currently provides some level of support for
-          verbosity via the <literal>VERBOSITY_LEVEL</literal> fields
-          of the <literal>settings.py</literal> module.  There are
-          currently two verbosity levels:
-          <literal>VERBOSITY_LEVEL_BRIEF</literal> and
-          <literal>VERBOSITY_LEVEL_VERBOSE</literal>.  A
-          <literal>SpeechGenerator</literal> subclass is expected to
-          examine the <literal>speechVerbosityLevel</literal> property
-          of the <literal>settings.py</literal> module and provide the
-          appropriate level of text:</para>
-
-<programlisting>
-if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-    utterances.append(rolenames.getSpeechForRoleName(obj))
-</programlisting>
+        verbosity via the <literal>VERBOSITY_LEVEL</literal> fields
+        of the <literal>orca.settings</literal> module.  There are
+        currently two verbosity levels:
+        <literal>VERBOSITY_LEVEL_BRIEF</literal> and
+        <literal>VERBOSITY_LEVEL_VERBOSE</literal>.  A
+        <literal>orca.speechgenerator.SpeechGenerator</literal>
+        subclass is expected to examine
+        the <literal>speechVerbosityLevel</literal> property of
+        the <literal>orca.settings</literal> module and provide the
+        appropriate level of text, as shown in the above snippet
+        from the Pidgin speech generator.</para>
       </section>
 
     </section>

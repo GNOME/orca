@@ -1,8 +1,8 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Orca Technical Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id2488862"></a>Orca Technical Reference</h1></div><div><div class="legalnotice"><a name="id2489718"></a><p>Copyright 2005-2009, Sun Microsystems, Inc.</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#archforward">Foreword</a></span></dt><dt><span class="chapter"><a href="#prereq">1. Prerequisites</a></span></dt><dd><dl><dt><span class="section"><a href="#prereqgnome">GNOME</a></span></dt><dt><span class="section"><a href="#prereqpython">Python v2.4 or better</a></span></dt><dt><span class="section"><a href="#prereqbrltty">BrlTTY v3.7.2 or better</a></span></dt><dt><span class="section"><a href="#prereqkeyboardnav">Keyboard Navigation</a></span></dt></dl></dd><dt><span class="chapter"><a href="#architecture">2. Architecture</a></span></dt><dd><dl><dt><span class="section"><a href="#archdesktop">Desktop and AT-SPI</a></span></dt><dt><span class="section"><a href="#archorca">Orca Module</a></span></dt><dd><dl><dt><span class="section"><a href="#archsettings">settings</a></span></dt></dl></dd><dt><span class="section"><a href="#script">Orca Scripts</a></span></dt><dt><span class="section"><a href="#archsystemservices">System Services</a></span></dt><dd><dl><dt><span class="section"><a href="#archspeech">orca.speech</a></span></dt><dt><span class="section"><a href="#archbraille">orca.braille</a></span></dt><dt><span class="section"><a href="#archmag">orca.mag</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#scriptguide">3. Introduction to Scripting</a></span></dt><dd><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt><dd><dl><dt><span class="section"><a href="#birth">Birth</a></span></dt><dt><span class="section"><a href="#birth">Life</a></span></dt><dt><span class="section"><a href="#birth">Death</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#customization">4. Customized Behavior</a></span></dt><dd><dl><dt><span class="section"><a href="#sgeventlisteners">Event Listeners</a></span></dt><dt><span class="section"><a href="#sginputeventhandlers">Input Event Handlers</a></span></dt><dt><span class="section"><a href="#sgkeybindings">Keyboard Bindings</a></span></dt><dt><span class="section"><a href="#sgbraillebindings">Braille Bindings</a></span></dt></dl></dd><dt><span class="chapter"><a href="#sgutilities">5. Script Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">speech.py</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">speechgenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">braille.py</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">braillegenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt></dl></dd><dt><span class="chapter"><a href="#i18n">6. Internationalization (I18N) Support</a></span></dt><dt><span class="bibliography"><a href="#archbibliography">Bibliography</a></span></dt></dl></div><div class="list-of-figures"><p><b>List of Figures</b></p><dl><dt>2.1. <a href="#id2489678">High Level Orca Architecture. The main components of Orca
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Orca Technical Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id2534620"></a>Orca Technical Reference</h1></div><div><div class="legalnotice"><a name="id2534752"></a><p>Copyright 2005-2009, Sun Microsystems, Inc.</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#archforward">Foreword</a></span></dt><dt><span class="chapter"><a href="#prereq">1. Prerequisites</a></span></dt><dd><dl><dt><span class="section"><a href="#prereqgnome">GNOME</a></span></dt><dt><span class="section"><a href="#prereqpython">Python v2.4 or better</a></span></dt><dt><span class="section"><a href="#prereqbrltty">BrlTTY v3.7.2 or better</a></span></dt><dt><span class="section"><a href="#prereqkeyboardnav">Keyboard Navigation</a></span></dt></dl></dd><dt><span class="chapter"><a href="#architecture">2. Architecture</a></span></dt><dd><dl><dt><span class="section"><a href="#archdesktop">Desktop and AT-SPI</a></span></dt><dt><span class="section"><a href="#archorca">Orca Module</a></span></dt><dd><dl><dt><span class="section"><a href="#archsettings">settings</a></span></dt></dl></dd><dt><span class="section"><a href="#script">Orca Scripts</a></span></dt><dt><span class="section"><a href="#archsystemservices">System Services</a></span></dt><dd><dl><dt><span class="section"><a href="#archspeech">orca.speech</a></span></dt><dt><span class="section"><a href="#archbraille">orca.braille</a></span></dt><dt><span class="section"><a href="#archmag">orca.mag</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#scriptguide">3. Introduction to Scripting</a></span></dt><dd><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt><dd><dl><dt><span class="section"><a href="#birth">Birth</a></span></dt><dt><span class="section"><a href="#birth">Life</a></span></dt><dt><span class="section"><a href="#birth">Death</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#customization">4. Customized Behavior</a></span></dt><dd><dl><dt><span class="section"><a href="#sgeventlisteners">Event Listeners</a></span></dt><dt><span class="section"><a href="#sginputeventhandlers">Input Event Handlers</a></span></dt><dt><span class="section"><a href="#sgkeybindings">Keyboard Bindings</a></span></dt><dt><span class="section"><a href="#sgbraillebindings">Braille Bindings</a></span></dt></dl></dd><dt><span class="chapter"><a href="#sgutilities">5. Script Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">orca.speech</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">orca.speechgenerator.SpeechGenerator</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">braille.py</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">braillegenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt></dl></dd><dt><span class="chapter"><a href="#i18n">6. Internationalization (I18N) Support</a></span></dt><dt><span class="bibliography"><a href="#archbibliography">Bibliography</a></span></dt></dl></div><div class="list-of-figures"><p><b>List of Figures</b></p><dl><dt>2.1. <a href="#id2491183">High Level Orca Architecture. The main components of Orca
       are as follows: desktop applications that support the AT-SPI,
       the AT-SPI registry and infrastructure, Orca itself, Orca
       Scripts, and system services.  The key communication between the
-      components is depicted.</a></dt><dt>4.1. <a href="#id2493775">Orca Script Diagram</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="archforward"></a>Foreword</h2></div></div></div><p>Orca is a free, open source, flexible, and extensible screen
+      components is depicted.</a></dt><dt>4.1. <a href="#id2548391">Orca Script Diagram</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="archforward"></a>Foreword</h2></div></div></div><p>Orca is a free, open source, flexible, and extensible screen
 reader that provides access to the graphical desktop via
 user-customizable combinations of speech, braille, and/or
 magnification.  Under development by the Sun Microsystems, Inc.,
@@ -88,7 +88,7 @@ python -V
     the main components of Orca are as follows: desktop applications
     that support the AT-SPI, the AT-SPI registry and infrastructure,
     Orca itself, Orca Scripts, and system services (e.g., speech,
-    braille, magnification).</p><div class="figure"><a name="id2489678"></a><p class="title"><b>Figure 2.1. High Level Orca Architecture. The main components of Orca
+    braille, magnification).</p><div class="figure"><a name="id2491183"></a><p class="title"><b>Figure 2.1. High Level Orca Architecture. The main components of Orca
       are as follows: desktop applications that support the AT-SPI,
       the AT-SPI registry and infrastructure, Orca itself, Orca
       Scripts, and system services.  The key communication between the
@@ -530,7 +530,7 @@ python -V
       listeners associated with that script.</p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="customization"></a>Chapter 4. Customized Behavior</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgeventlisteners">Event Listeners</a></span></dt><dt><span class="section"><a href="#sginputeventhandlers">Input Event Handlers</a></span></dt><dt><span class="section"><a href="#sgkeybindings">Keyboard Bindings</a></span></dt><dt><span class="section"><a href="#sgbraillebindings">Braille Bindings</a></span></dt></dl></div><p>The customized behavior of a script is set up in its
       constructor.  In its constructor, each script is expected to
       extend/override several fields as illustrated in the following
-      diagram and describe below:</p><div class="figure"><a name="id2493775"></a><p class="title"><b>Figure 4.1. Orca Script Diagram</b></p><div class="mediaobject"><img src="script.jpg" alt="Orca Script Diagram"></div></div><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">listeners</code>: a dictionary where the
+      diagram and describe below:</p><div class="figure"><a name="id2548391"></a><p class="title"><b>Figure 4.1. Orca Script Diagram</b></p><div class="mediaobject"><img src="script.jpg" alt="Orca Script Diagram"></div></div><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">listeners</code>: a dictionary where the
         keys are strings that match AT-SPI event types (e.g.,
         <code class="literal">focus</code>,
         <code class="literal">object:text-caret-moved</code>, etc.), and the
@@ -867,68 +867,188 @@ def getBrailleBindings(self):
         self.inputEventHandlers["goBrailleHomeHandler"]
 
     return brailleBindings
-</pre></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="sgutilities"></a>Chapter 5. Script Utilities</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">speech.py</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">speechgenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">braille.py</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">braillegenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt></dl></div><p>There are many common things a script wants to do: generate
+</pre></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="sgutilities"></a>Chapter 5. Script Utilities</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">orca.speech</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">orca.speechgenerator.SpeechGenerator</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">braille.py</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">braillegenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt></dl></div><p>There are many common things a script wants to do: generate
       speech, update braille, etc.  In addition, there are many common
       things a script writer wants to do, especially getting debug
       output to determine just what the AT-SPI is sending it.  This
       chapter discusses the debug utilities of Orca as well as a
       variety of utilities to assist a script in managing speech,
       braille, and magnification.</p><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sgtts"></a>Speech Synthesis</h2></div></div></div><p>Orca provides two main modules for speech output:
-      <code class="literal">speech.py</code> and
-      <code class="literal">speechgenerator.py</code>. The
-      <code class="literal">speech.py</code> module provides the main interface
-      to the speech synthesis subsystem. The
-      <code class="literal">speechgenerator.py</code> module provides a
-      <code class="literal">SpeechGenerator</code> class that can be used to to
-      actually generate the text to be spoken for various objects.
-      The expected use of the two modules is as follows: a script will
-      create its own instance of a
-      <code class="literal">SpeechGenerator</code> and will use it to generate
-      text.  The script will then pass this text to the
-      <code class="literal">speech.py</code> module to be spoken.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="sgspeechpy"></a><code class="literal">speech.py</code></h3></div></div></div><p>For the purposes of script writing, the main entry
-          points of the <code class="literal">speech.py</code> module are
-          <code class="literal">speak</code>,
-          <code class="literal">speakUtterances</code>, and
-          <code class="literal">stop</code></p><p>See the <code class="literal">speech.py</code> module for more
-          information.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="sgsgpy"></a><code class="literal">speechgenerator.py</code></h3></div></div></div><p>The primary goal of a <code class="literal">SpeechGenerator</code>
-          is to create text to be spoken for an accessible object.
-          There are two public entry points into a
-          <code class="literal">SpeechGenerator</code>:</p><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">getSpeech(obj, already_focused)</code>:
-              returns a list of strings to be spoken
-              for the given accessible object.  The
-              <code class="literal">already_focused</code> boolean parameter
-              provides a hint to the speech generator about how much
-              text to generate.  For example, if a check box that
-              already has focus is to be spoken, usually the reason
-              for this is that the state changed between checked and
-              unchecked.  As a result, an appropriate thing to do in
-              this situation is to only speak the new change in
-              state (e.g., "checked").</p></li><li><p><code class="literal">getSpeechContext(obj,
-              stopAncestor)</code>: returns a list
-              of strings to be spoken that describe the visual context
-              of the given accessible object.  This is loosely
-              represented by the hierarchical relationship of the
-              object (i.e., the "Quit" button in the "File" menu in
-              the ...), and the amount of information can be contained
-              by specifying an accessible
-              <code class="literal">stopAncestor</code> above which we do not
-              want to know anything about.  The primary use of this
-              method is to provide the user with feedback regarding
-              the relevant visual context information that changed
-              when the locus of focus changes, but this method is also
-              useful for assisting in "where am I" queries.</p></li></ul></div><p><span class="emphasis"><em>NOTE:</em></span> Orca currently provides some level of support for
-          verbosity via the <code class="literal">VERBOSITY_LEVEL</code> fields
-          of the <code class="literal">settings.py</code> module.  There are
-          currently two verbosity levels:
-          <code class="literal">VERBOSITY_LEVEL_BRIEF</code> and
-          <code class="literal">VERBOSITY_LEVEL_VERBOSE</code>.  A
-          <code class="literal">SpeechGenerator</code> subclass is expected to
-          examine the <code class="literal">speechVerbosityLevel</code> property
-          of the <code class="literal">settings.py</code> module and provide the
-          appropriate level of text:</p><pre class="programlisting">
-if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-    utterances.append(rolenames.getSpeechForRoleName(obj))
-</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sgbrailleoutput"></a>Braille Output</h2></div></div></div><p>Like speech, Orca provides two main modules for braille:
+      <code class="literal">orca.speech</code>
+      (in <code class="literal">orca/speech.py</code>) and
+      <code class="literal">orca.speechgenerator</code>
+      (in <code class="literal">orca/speechgenerator.py</code>). The
+      <code class="literal">orca.speech</code> module provides the main
+      interface to the speech synthesis subsystem. The
+      <code class="literal">orca.speechgenerator</code> module provides the
+      <code class="literal">orca.speechgenerator.SpeechGenerator</code> class
+      that can be used to generate the text to be spoken for various
+      objects.  The expected use of the two modules is as follows: a
+      script will create its own instance of
+      <code class="literal">orca.speechgenerator.SpeechGenerator</code> and will
+      use it to generate text.  The script will then pass this text to
+      <code class="literal">orca.speech</code> to be spoken.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="sgspeechpy"></a><code class="literal">orca.speech</code></h3></div></div></div><p>For the purposes of script writing, the main entry
+        points of the <code class="literal">orca.speech</code> module are
+        <code class="literal">speak</code>,
+        <code class="literal">speakUtterances</code>, 
+	<code class="literal">sayAll</code>,
+	<code class="literal">speakCharacter</code>,
+	<code class="literal">speakKeyEvent</code>, and
+        <code class="literal">stop</code></p><p>See the <code class="literal">orca.speech</code> module for more
+        information.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="sgsgpy"></a><code class="literal">orca.speechgenerator.SpeechGenerator</code></h3></div></div></div><p>The primary goal of
+        an <code class="literal">orca.speechgenerator.SpeechGenerator</code>
+        instance, which is available as
+        the <code class="literal">speechGenerator</code> field of a script, is
+        to create text to be spoken for an accessible object.  There
+        are two public entry points into a
+        <code class="literal">SpeechGenerator</code>:</p><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">getSpeech(obj, already_focused)</code>:
+            returns a list of strings to be spoken
+            for the given accessible object.  The
+            <code class="literal">already_focused</code> boolean parameter
+            provides a hint to the speech generator about how much
+            text to generate.  For example, if a check box that
+            already has focus is to be spoken, usually the reason
+            for this is that the state changed between checked and
+            unchecked.  As a result, an appropriate thing to do in
+            this situation is to only speak the new change in
+            state (e.g., "checked").</p></li><li><p><code class="literal">getSpeechContext(obj,
+            stopAncestor)</code>: returns a list of strings to be
+            spoken that describe the visual context of the given
+            accessible object.  This is loosely represented by the
+            hierarchical relationship of the object (i.e., the "Quit"
+            button in the "File" menu in the ...), and the amount of
+            information can be contained by specifying an accessible
+            <code class="literal">stopAncestor</code> above which we do not want
+            to know anything about.  The primary use of this method is
+            to provide the user with feedback regarding the relevant
+            visual context information that changed when the locus of
+            focus changes, but this method is also useful for
+            assisting in "where am I" queries.</p></li></ul></div><p>Custom scripts which want to override the behavior of
+        the default speech generator can create their own speech
+        generator.  Internally,
+        the <code class="literal">orca.speechgenerator.SpeechGenerator</code>
+        class obtains the speech for an object based upon the object's
+        role.  It does so by creating and using a table
+        called <code class="literal">speechGenerators</code>.  The keys for the
+        table are <code class="literal">pyatspi</code> roles such
+        as <code class="literal">pyatspi.ROLE_CHECK_BOX</code> and the values
+        are a function in the script.  As such, the typical thing a
+        <code class="literal">orca.speechgenerator.SpeechGenerator</code>
+        subclass does is just override a function.  Here's a brief
+        example of the meaningful components of the speech generator
+        for the Pidgin application.  From the script side, the Pidgin
+        script, held
+        in <code class="literal">orca/scripts/apps/pidgin/script.py</code>,
+        imports the custom Pidgin speech generator, held in
+        <code class="literal">orca/scripts/apps/pidgin/speech_generator.py</code>,
+	imports the custom speech generator and creates an instance of
+	it via an overridden <code class="literal">getSpeechGenerator</code>
+	method:</p><pre class="programlisting">
+...
+from speech_generator import SpeechGenerator
+...
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script.
+        """
+        return SpeechGenerator(self)
+</pre><p>The speech generator itself merely is a class declaration
+        that extends the <code class="literal">orca.speechgenerator.SpeechGenerator</code>
+        class and overrides the <code class="literal">_getSpeechForTableCell</code>
+        method to provide customized behavior for Pidgin table cells:</p><pre class="programlisting">
+import pyatspi
+
+import orca.settings as settings
+import orca.speechgenerator as speechgenerator
+
+from orca.orca_i18n import _
+from orca.orca_i18n import ngettext  # for ngettext support
+
+########################################################################
+#                                                                      #
+# Custom SpeechGenerator                                               #
+#                                                                      #
+########################################################################
+
+class SpeechGenerator(speechgenerator.SpeechGenerator):
+    """Overrides _getSpeechForTableCell() so that we can provide access
+    to the expanded/collapsed state and node count for the buddy list.
+    """
+
+    def __init__(self, script):
+        speechgenerator.SpeechGenerator.__init__(self, script)
+
+    def _getSpeechForTableCell(self, obj, already_focused):
+        """Get the speech utterances for a single table cell
+
+        Arguments:
+        - obj: the table cell
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = speechgenerator.SpeechGenerator._getSpeechForTableCell( \
+            self, obj, already_focused)
+
+        if not self._script.isInBuddyList(obj):
+            return utterances
+
+        # The Pidgin buddy list consists of two columns. The column which
+        # is set as the expander column and which also contains the node
+        # relationship is hidden.  Hidden columns are not included among
+        # a table's columns.  The hidden object of interest seems to always
+        # immediately precede the visible object.
+        #
+        expanderCell = obj.parent[obj.getIndexInParent() - 1]
+        if not expanderCell:
+            return utterances
+
+        state = expanderCell.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                utterances.append(_("expanded"))
+                childNodes = self._script.getChildNodes(expanderCell)
+                children = len(childNodes)
+
+                if not children \
+                   or (settings.speechVerbosityLevel == \
+                       settings.VERBOSITY_LEVEL_VERBOSE):
+                    # Translators: this is the number of items in a layered
+                    # pane or table.
+                    #
+                    itemString = ngettext("%d item",
+                                          "%d items",
+                                          children) % children
+                    utterances.append(itemString)
+            else:
+                # Translators: this represents the state of a node in a tree.
+                # 'expanded' means the children are showing.
+                # 'collapsed' means the children are not showing.
+                #
+                utterances.append(_("collapsed"))
+
+        self._debugGenerator("gaim._getSpeechForTableCell",
+                             obj,
+                             already_focused,
+                             utterances)
+
+        return utterances
+</pre><p><span class="emphasis"><em>NOTE:</em></span> Orca currently provides some level of support for
+        verbosity via the <code class="literal">VERBOSITY_LEVEL</code> fields
+        of the <code class="literal">orca.settings</code> module.  There are
+        currently two verbosity levels:
+        <code class="literal">VERBOSITY_LEVEL_BRIEF</code> and
+        <code class="literal">VERBOSITY_LEVEL_VERBOSE</code>.  A
+        <code class="literal">orca.speechgenerator.SpeechGenerator</code>
+        subclass is expected to examine
+        the <code class="literal">speechVerbosityLevel</code> property of
+        the <code class="literal">orca.settings</code> module and provide the
+        appropriate level of text, as shown in the above snippet
+        from the Pidgin speech generator.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sgbrailleoutput"></a>Braille Output</h2></div></div></div><p>Like speech, Orca provides two main modules for braille:
       <code class="literal">braille.py</code> and
       <code class="literal">braillegenerator.py</code>. The
       <code class="literal">braille.py</code> module provides the main interface
