@@ -14,35 +14,35 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Willie Walker</foaf:name>
-      <foaf:mbox rdf:resource="william.walker@sun.com" />
+      <foaf:mbox rdf:resource="mailto:william.walker@sun.com" />
       <gnome:userid>wwalker</gnome:userid>
     </foaf:Person>
   </maintainer>
   <maintainer>
     <foaf:Person>
       <foaf:name>Mike Pedersen</foaf:name>
-      <foaf:mbox rdf:resource="michael.pedersen@sun.com" />
+      <foaf:mbox rdf:resource="mailto:michael.pedersen@sun.com" />
       <gnome:userid>mpeders</gnome:userid>
     </foaf:Person>
   </maintainer>
   <maintainer>
     <foaf:Person>
       <foaf:name>Joanmarie Diggs</foaf:name>
-      <foaf:mbox rdf:resource="joanmarie.diggs@gmail.com" />
+      <foaf:mbox rdf:resource="mailto:joanmarie.diggs@gmail.com" />
       <gnome:userid>joanied</gnome:userid>
     </foaf:Person>
   </maintainer>
   <maintainer>
     <foaf:Person>
       <foaf:name>Eitan Isaacson</foaf:name>
-      <foaf:mbox rdf:resource="eitan@ascender.com" />
+      <foaf:mbox rdf:resource="mailto:eitan@ascender.com" />
       <gnome:userid>eitani</gnome:userid>
     </foaf:Person>
   </maintainer>
   <maintainer>
     <foaf:Person>
       <foaf:name>Mesar Hameed</foaf:name>
-      <foaf:mbox rdf:resource="M.M.Hameed@bath.ac.uk" />
+      <foaf:mbox rdf:resource="mailto:M.M.Hameed@bath.ac.uk" />
       <gnome:userid>jon</gnome:userid>
     </foaf:Person>
   </maintainer>
