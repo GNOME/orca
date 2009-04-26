@@ -769,17 +769,6 @@ class Script(script.Script):
                 #
                 _("Cycles the debug level at run time."))
 
-        self.inputEventHandlers["printActiveAppHandler"] = \
-            input_event.InputEventHandler(
-                Script.printActiveAppHandler,
-                # Translators: this is a debug message that Orca users
-                # will not normally see. It describes a debug routine
-                # that prints useful debugging information to the console,
-                # for the application that is currently running (has focus).
-                #
-                _("Prints debug information about the currently active " \
-                "application to the console where Orca is running."))
-
         self.inputEventHandlers["printAncestryHandler"] = \
             input_event.InputEventHandler(
                 Script.printAncestryHandler,
@@ -1812,13 +1801,6 @@ class Script(script.Script):
         #  Unbound handlers                                                 #
         #                                                                   #
         #####################################################################
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["reportScriptInfoHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -4537,7 +4519,8 @@ class Script(script.Script):
             except:
                 infoString += " Version unknown"
 
-            debug.println(debug.LEVEL_INFO, infoString)
+            debug.println(debug.LEVEL_OFF, infoString)
+            print infoString
             speech.speak(infoString)
             braille.displayMessage(infoString)
 
@@ -5566,11 +5549,6 @@ class Script(script.Script):
             self._detectCycle(referent, visitedObjs, " " + indent)
         visitedObjs.remove(obj)
 
-    def _printObjInfo(self, indent, obj):
-        """Prints information about an object, if we care about it."""
-        if self._isInterestingObj(obj):
-            print indent, obj.__class__.__name__, `obj`
-
     def printMemoryUsageHandler(self, inputEvent):
         """Prints memory usage information."""
         print 'TODO: print something useful for memory debugging'
@@ -5578,11 +5556,6 @@ class Script(script.Script):
     def printAppsHandler(self, inputEvent=None):
         """Prints a list of all applications to stdout."""
         self.printApps()
-        return True
-
-    def printActiveAppHandler(self, inputEvent=None):
-        """Prints the currently active application."""
-        self.printActiveApp()
         return True
 
     def printAncestryHandler(self, inputEvent=None):
@@ -7084,7 +7057,9 @@ class Script(script.Script):
 
         indent = ""
         for ancestor in ancestorList:
-            print indent + "+-", debug.getAccessibleDetails(ancestor)
+            line = indent + "+- " + debug.getAccessibleDetails(ancestor)
+            debug.println(debug.LEVEL_OFF, line)
+            print line
             indent += "  "
 
     def printHierarchy(self, root, ooi, indent="",
@@ -7103,20 +7078,29 @@ class Script(script.Script):
             return
 
         if root == ooi:
-            print indent + "(*)", debug.getAccessibleDetails(root)
+            line = indent + "(*) " + debug.getAccessibleDetails(root)
         else:
-            print indent + "+-", debug.getAccessibleDetails(root)
+            line = indent + "+- " + debug.getAccessibleDetails(root)
+
+        debug.println(debug.LEVEL_OFF, line)
+        print line
 
         rootManagesDescendants = root.getState().contains( \
                                       pyatspi.STATE_MANAGES_DESCENDANTS)
 
         for child in root:
             if child == root:
-                print indent + "  " + "WARNING CHILD == PARENT!!!"
+                line = indent + "  " + "WARNING CHILD == PARENT!!!"
+                debug.println(debug.LEVEL_OFF, line)
+                print line
             elif not child:
-                print indent + "  " + "WARNING CHILD IS NONE!!!"
+                line = indent + "  " + "WARNING CHILD IS NONE!!!"
+                debug.println(debug.LEVEL_OFF, line)
+                print line
             elif child.parent != root:
-                print indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
+                line = indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
+                debug.println(debug.LEVEL_OFF, line)
+                print line
             else:
                 paint = (not onlyShowing) or (onlyShowing and \
                          child.getState().contains(pyatspi.STATE_SHOWING))
@@ -7134,34 +7118,23 @@ class Script(script.Script):
     def printApps(self):
         """Prints a list of all applications to stdout."""
 
-        level = debug.LEVEL_OFF
-
         apps = self.getKnownApplications()
-        debug.println(level, "There are %d Accessible applications" % len(apps))
+        line = "There are %d Accessible applications" % len(apps)
+        debug.println(debug.LEVEL_OFF, line)
+        print line
         for app in apps:
-            debug.printDetails(level, "  App: ", app, False)
+            line = debug.getAccessibleDetails(app, "  App: ", False)
+            debug.println(debug.LEVEL_OFF, line)
+            print line
             for child in app:
-                debug.printDetails(level, "    Window: ", child, False)
+                line = debug.getAccessibleDetails(child, "    Window: ", False)
+                debug.println(debug.LEVEL_OFF, line)
+                print line
                 if child.parent != app:
-                    debug.println(level,
+                    debug.println(debug.LEVEL_OFF,
                                   "      WARNING: child's parent is not app!!!")
 
         return True
-
-    def printActiveApp(self):
-        """Prints the active application."""
-
-        level = debug.LEVEL_OFF
-
-        window = self.findActiveWindow()
-        if not window:
-            debug.println(level, "Active application: None")
-        else:
-            app = window.getApplication()
-            if not app:
-                debug.println(level, "Active application: None")
-            else:
-                debug.println(level, "Active application: %s" % app.name)
 
     def isInActiveApp(self, obj):
         """Returns True if the given object is from the same application that
