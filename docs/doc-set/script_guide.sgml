@@ -897,7 +897,7 @@ def getBrailleBindings(self):
 ...
 from speech_generator import SpeechGenerator
 ...
-    def getSpeechGenerator(self):
+def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
@@ -1011,79 +1011,234 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     <section id="sgbrailleoutput"><title>Braille Output</title>
 
       <para>Like speech, Orca provides two main modules for braille:
-      <literal>braille.py</literal> and
-      <literal>braillegenerator.py</literal>. The
-      <literal>braille.py</literal> module provides the main interface
-      to the braille display. The
-      <literal>braillegenerator.py</literal> module provides a
+      <literal>orca.braille</literal> (in <literal>orca/braille.py</literal> and
+      <literal>orca.braillegenerator</literal> (in <literal>orca/braillegenerator.py</literal>. The
+      <literal>orca.braille</literal> module provides the main
+      interface to the braille display. The
+      <literal>orca.braillegenerator</literal> module provides a
       <literal>BrailleGenerator</literal> class that can be used to to
       actually generate the text to be displayed for various objects.
       The expected use of the two modules is as follows: a script will
       create its own instance of a
-      <literal>BrailleGenerator</literal> and will use it to braille
-      regions.  The script will then pass these braille regions to the
-      <literal>braille.py</literal> module to be displayed.</para>
+      <literal>orca.braillegenerator.BrailleGenerator</literal> and
+      will use it to braille regions.  The script will then pass these
+      braille regions to the
+      <literal>orca.braille</literal> module to be displayed.</para>
 
-      <section id="sgbraillepy"><title><literal>braille.py</literal></title> 
-        <para>&todo; [[[WDW - much writing to be done here, especially
-          regarding how regions will provide automatic support for
-          cursor routing keys.]]]</para>
+      <section id="sgbraillepy"><title><literal>orca.braille</literal></title> 
+
+	<para>A good way to learn how <literal>orca.braille</literal>
+        and <literal>orca.braillegenerator.BrailleGenerator</literal>
+        are used is by looking at the code.
+        The <literal>updateBraille</literal> method
+        of <literal>orca.default.Script</literal>
+        (in <literal>orca/default.py</literal>) shows the key uses:</para>
+<programlisting>
+def updateBraille(self, obj, extraRegion=None):
+    """Updates the braille display to show the give object.
+
+    Arguments:
+    - obj: the Accessible
+    - extra: extra Region to add to the end
+    """
+
+    if not obj:
+        return
+
+    braille.clear()
+
+    line = braille.Line()
+    braille.addLine(line)
+
+    # For multiline text areas, we only show the context if we
+    # are on the very first line.  Otherwise, we show only the
+    # line.
+    #
+    try:
+        text = obj.queryText()
+    except NotImplementedError:
+        text = None
+    if text and self.isTextArea(obj):
+        [lineString, startOffset, endOffset] = text.getTextAtOffset(
+            text.caretOffset,
+            pyatspi.TEXT_BOUNDARY_LINE_START)
+        if startOffset == 0:
+            line.addRegions(self.brailleGenerator.getBrailleContext(obj))
+    else:
+        line.addRegions(self.brailleGenerator.getBrailleContext(obj))
+
+    result = self.brailleGenerator.getBrailleRegions(obj)
+    line.addRegions(result[0])
+
+    if extraRegion:
+        line.addRegion(extraRegion)
+
+    if extraRegion:
+        braille.setFocus(extraRegion)
+    else:
+        braille.setFocus(result[1])
+
+    braille.refresh(True)
+</programlisting>
+        <para>The key operations are:</para>
+
+        <orderedlist numeration="arabic">
+          <listitem>
+            <para><literal>braille.clear()</literal>: clears the braille display</para>
+          </listitem>
+          <listitem>
+            <para><literal>line = braille.Line()</literal>
+            and <literal>braille.addLine(line)</literal>: creates a new
+            empty <literal>orca.braille.Line</literal> object to which
+            we can add <literal>orca.braille.Region</literal>
+            instances</para>
+          </listitem>
+          <listitem>
+            <para><literal>line.addRegions(...)</literal>: Typically,
+            a script will "build up" a single logical line of text for
+            the braille display.  The beginning of this line will be
+            the result of a call to the
+            <literal>getBrailleContext</literal> method of the
+            script's <literal>brailleGenerator</literal> and the
+            remainder of the line will be the result of one or more
+            calls to the <literal>getBrailleRegions</literal> of the
+            script's
+            <literal>brailleGenerator</literal>.  Since the logical
+            line will typically be longer than the number of cells on
+            the braille display, the <literal>orca.braille</literal>
+            module will scroll to show the
+            <literal>orca.braille.Region</literal> with focus.
+            Furthermore, the
+            <literal>orca.braille</literal> module will also respond
+            to BrlTTY input events to allow the user to use braille
+            display input buttons for scrolling to review the entire
+            line.</para>
+          </listitem>
+	  <listitem>
+	    <para><literal>braille.setFocus(...)</literal>: tells the
+            <literal>orca.braille</literal> module which 
+	    <literal>orca.braille.Region</literal> has "focus" and should
+            get the braille cursor</para>
+          </listitem>
+	  <listitem>
+	    <para><literal>braille.refresh(...)</literal>: tells the
+            <literal>orca.braille</literal> module to refresh/repaint
+            the braille display based upon
+            the <literal>orca.braille.Line</literal> that was built up
+            above</para>
+          </listitem>
+        </orderedlist>
+
       </section>
 
-      <section id="sgbgpy"><title><literal>braillegenerator.py</literal></title>
-        <para>The primary goal of a <literal>BrailleGenerator</literal>
-          is to create text to be displayed for an accessible object.
-          There are two public entry points into a
-          <literal>BrailleGenerator</literal>:</para>
+      <section id="sgbgpy"><title><literal>orca.braillegenerator.BrailleGenerator</literal></title>
+
+        <para>The primary goal of
+        a <literal>orca.braillegenerator.BrailleGenerator</literal>
+        is to create the braille text to be displayed for an
+        accessible object.  There are two public entry points into a
+        <literal>orca.braillegenerator.BrailleGenerator</literal>:</para>
 
         <itemizedlist>
           <listitem>
             <para><literal>getBrailleRegions(obj,
-              groupChildren=True)</literal>: returns a list of two
-              items: the first is an ordered list of braille
-              <literal>Region</literal> instances that represent text
-              to be displayed on the braille display, left-to-right on
-              one line; and the second is an element from the first
-              list that represents which <literal>Region</literal> has
-              "focus" and should be represented by the braille cursor
-              on the display.</para>
-            <para>&todo; [[[WDW - describe grouping of children.]]]</para>
+            groupChildren=True)</literal>: returns a list of two
+            items: the first is an ordered list of braille
+            <literal>Region</literal> instances that represent text to
+            be displayed on the braille display, left-to-right on one
+            line; and the second is an element from the first list
+            that represents which <literal>Region</literal> has
+            "focus" and should be represented by the braille cursor on
+            the display.</para>
           </listitem>
           <listitem>
             <para><literal>getBrailleContext(obj)</literal>: returns
-              an ordered list (i.e., an array) of braille
-              <literal>Region</literal> instances that describe the
-              visual context of the given accessible object.  This is
-              loosely represented by the hierarchical relationship of
-              the object (i.e., the "Quit" button in the "File" menu
-              in the ...).</para>
+            an ordered list (i.e., an array) of braille
+            <literal>Region</literal> instances that describe the
+            visual context of the given accessible object.  This is
+            loosely represented by the hierarchical relationship of
+            the object (i.e., the "Quit" button in the "File" menu
+            in the ...).</para>
           </listitem>
         </itemizedlist>
 
-        <para>Typically, a script will "build up" a single logical
-          line of text for the braille display.  The beginning of this
-          line will be the result of the call to
-          <literal>getBrailleContext</literal> and the remainder of
-          the line will be the result of one or more calls to
-          <literal>getBrailleRegions</literal>.  Since the logical
-          line will typically be longer than the number of cells on
-          the braille display, the <literal>braille.py</literal>
-          module will scroll to show the braille
-          <literal>Region</literal> with focus.  Furthermore, the
-          <literal>braille.py</literal> will also respond to BrlTTY
-          input events to allow the user to use braille display input
-          buttons for scrolling to review the entire line.</para>
+        <para>Custom scripts which want to override the behavior of
+        the default braille generator can create their own braille
+        generator.  Internally,
+        the <literal>orca.braillegenerator.BrailleGenerator</literal>
+        class obtains the braille for an object based upon the object's
+        role.  It does so by creating and using a table
+        called <literal>brailleGenerators</literal>.  The keys for the
+        table are <literal>pyatspi</literal> roles such
+        as <literal>pyatspi.ROLE_CHECK_BOX</literal> and the values
+        are a function in the script.  As such, the typical thing a
+        <literal>orca.braillegenerator.BrailleGenerator</literal>
+        subclass does is just override a function.  Here's a brief
+        example of the meaningful components of the speech generator
+        for the Rhythmbox application.  From the script side, the Rhythmbox
+        script, held
+        in <literal>orca/scripts/apps/rhythmbox/script.py</literal>,
+        imports the custom Rhythmbox speech generator, held in
+        <literal>orca/scripts/apps/rhythmbox/braille_generator.py</literal>,
+	imports the custom braille generator and creates an instance of
+	it via an overridden <literal>getBrailleGenerator</literal>
+	method:</para>
+<programlisting>
+...
+from braille_generator import BrailleGenerator
+...
+def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+        return BrailleGenerator(self)
+</programlisting>
+
+        <para>The braille generator itself merely is a class declaration
+        that extends the <literal>orca.braillegenerator.BrailleGenerator</literal>
+        class and overrides the <literal>_getSpeechForTableCell</literal>
+        method to provide customized behavior for Rhythmbox table cells:</para>
+<programlisting>
+import orca.braillegenerator as braillegenerator
+
+class BrailleGenerator(braillegenerator.BrailleGenerator):
+    """Overrides _getBrailleRegionsForTableCell to correctly handle 
+    the table cells in the Library table.
+    """
+
+    def __init__(self, script):
+        braillegenerator.BrailleGenerator.__init__(self, script)
+
+    def _getBrailleRegionsForTableCell(self, obj):
+        """Get the braille for a single table cell
+
+        Arguments:
+        - obj: the table
+
+        Returns a list where the first element is a list of Regions to 
+        display and the second element is the Region which should get focus.
+        """
+
+        # Check to see if this is a table cell from the Library table.
+        # If so, it'll have five children and we are interested in the
+        # penultimate one. See bug #512639 for more details.
+        #
+        if obj.childCount == 5:
+            obj = obj[3]
+
+        return braillegenerator.BrailleGenerator.\
+                    _getBrailleRegionsForTableCell(self, obj)
+</programlisting>
 
         <para>&note; Orca currently provides some level of support for
-          verbosity via the <literal>VERBOSITY_LEVEL</literal> fields
-          of the <literal>settings.py</literal> module.  There are
-          currently two verbosity levels:
-          <literal>VERBOSITY_LEVEL_BRIEF</literal> and
-          <literal>VERBOSITY_LEVEL_VERBOSE</literal>.  A
-          <literal>BrailleGenerator</literal> subclass is expected to
-          examine the <literal>brailleVerbosityLevel</literal> property
-          of the <literal>settings.py</literal> module and provide the
-          appropriate level of text:</para>
+        verbosity via the <literal>VERBOSITY_LEVEL</literal> fields
+        of the <literal>settings.py</literal> module.  There are
+        currently two verbosity levels:
+        <literal>VERBOSITY_LEVEL_BRIEF</literal> and
+        <literal>VERBOSITY_LEVEL_VERBOSE</literal>.  A
+        <literal>BrailleGenerator</literal> subclass is expected to
+        examine the <literal>brailleVerbosityLevel</literal> property
+        of the <literal>settings.py</literal> module and provide the
+        appropriate level of text:</para>
 
 <programlisting>
 if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:

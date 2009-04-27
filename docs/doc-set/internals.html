@@ -1,8 +1,8 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Orca Technical Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id2534620"></a>Orca Technical Reference</h1></div><div><div class="legalnotice"><a name="id2534752"></a><p>Copyright 2005-2009, Sun Microsystems, Inc.</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#archforward">Foreword</a></span></dt><dt><span class="chapter"><a href="#prereq">1. Prerequisites</a></span></dt><dd><dl><dt><span class="section"><a href="#prereqgnome">GNOME</a></span></dt><dt><span class="section"><a href="#prereqpython">Python v2.4 or better</a></span></dt><dt><span class="section"><a href="#prereqbrltty">BrlTTY v3.7.2 or better</a></span></dt><dt><span class="section"><a href="#prereqkeyboardnav">Keyboard Navigation</a></span></dt></dl></dd><dt><span class="chapter"><a href="#architecture">2. Architecture</a></span></dt><dd><dl><dt><span class="section"><a href="#archdesktop">Desktop and AT-SPI</a></span></dt><dt><span class="section"><a href="#archorca">Orca Module</a></span></dt><dd><dl><dt><span class="section"><a href="#archsettings">settings</a></span></dt></dl></dd><dt><span class="section"><a href="#script">Orca Scripts</a></span></dt><dt><span class="section"><a href="#archsystemservices">System Services</a></span></dt><dd><dl><dt><span class="section"><a href="#archspeech">orca.speech</a></span></dt><dt><span class="section"><a href="#archbraille">orca.braille</a></span></dt><dt><span class="section"><a href="#archmag">orca.mag</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#scriptguide">3. Introduction to Scripting</a></span></dt><dd><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt><dd><dl><dt><span class="section"><a href="#birth">Birth</a></span></dt><dt><span class="section"><a href="#birth">Life</a></span></dt><dt><span class="section"><a href="#birth">Death</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#customization">4. Customized Behavior</a></span></dt><dd><dl><dt><span class="section"><a href="#sgeventlisteners">Event Listeners</a></span></dt><dt><span class="section"><a href="#sginputeventhandlers">Input Event Handlers</a></span></dt><dt><span class="section"><a href="#sgkeybindings">Keyboard Bindings</a></span></dt><dt><span class="section"><a href="#sgbraillebindings">Braille Bindings</a></span></dt></dl></dd><dt><span class="chapter"><a href="#sgutilities">5. Script Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">orca.speech</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">orca.speechgenerator.SpeechGenerator</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">braille.py</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">braillegenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt></dl></dd><dt><span class="chapter"><a href="#i18n">6. Internationalization (I18N) Support</a></span></dt><dt><span class="bibliography"><a href="#archbibliography">Bibliography</a></span></dt></dl></div><div class="list-of-figures"><p><b>List of Figures</b></p><dl><dt>2.1. <a href="#id2491183">High Level Orca Architecture. The main components of Orca
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Orca Technical Reference</title><meta name="generator" content="DocBook XSL Stylesheets V1.69.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book" lang="en"><div class="titlepage"><div><div><h1 class="title"><a name="id2488862"></a>Orca Technical Reference</h1></div><div><div class="legalnotice"><a name="id2489718"></a><p>Copyright 2005-2009, Sun Microsystems, Inc.</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="preface"><a href="#archforward">Foreword</a></span></dt><dt><span class="chapter"><a href="#prereq">1. Prerequisites</a></span></dt><dd><dl><dt><span class="section"><a href="#prereqgnome">GNOME</a></span></dt><dt><span class="section"><a href="#prereqpython">Python v2.4 or better</a></span></dt><dt><span class="section"><a href="#prereqbrltty">BrlTTY v3.7.2 or better</a></span></dt><dt><span class="section"><a href="#prereqkeyboardnav">Keyboard Navigation</a></span></dt></dl></dd><dt><span class="chapter"><a href="#architecture">2. Architecture</a></span></dt><dd><dl><dt><span class="section"><a href="#archdesktop">Desktop and AT-SPI</a></span></dt><dt><span class="section"><a href="#archorca">Orca Module</a></span></dt><dd><dl><dt><span class="section"><a href="#archsettings">settings</a></span></dt></dl></dd><dt><span class="section"><a href="#script">Orca Scripts</a></span></dt><dt><span class="section"><a href="#archsystemservices">System Services</a></span></dt><dd><dl><dt><span class="section"><a href="#archspeech">orca.speech</a></span></dt><dt><span class="section"><a href="#archbraille">orca.braille</a></span></dt><dt><span class="section"><a href="#archmag">orca.mag</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#scriptguide">3. Introduction to Scripting</a></span></dt><dd><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt><dd><dl><dt><span class="section"><a href="#birth">Birth</a></span></dt><dt><span class="section"><a href="#birth">Life</a></span></dt><dt><span class="section"><a href="#birth">Death</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#customization">4. Customized Behavior</a></span></dt><dd><dl><dt><span class="section"><a href="#sgeventlisteners">Event Listeners</a></span></dt><dt><span class="section"><a href="#sginputeventhandlers">Input Event Handlers</a></span></dt><dt><span class="section"><a href="#sgkeybindings">Keyboard Bindings</a></span></dt><dt><span class="section"><a href="#sgbraillebindings">Braille Bindings</a></span></dt></dl></dd><dt><span class="chapter"><a href="#sgutilities">5. Script Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">orca.speech</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">orca.speechgenerator.SpeechGenerator</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">orca.braille</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">orca.braillegenerator.BrailleGenerator</code></a></span></dt></dl></dd><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt></dl></dd><dt><span class="chapter"><a href="#i18n">6. Internationalization (I18N) Support</a></span></dt><dt><span class="bibliography"><a href="#archbibliography">Bibliography</a></span></dt></dl></div><div class="list-of-figures"><p><b>List of Figures</b></p><dl><dt>2.1. <a href="#id2489678">High Level Orca Architecture. The main components of Orca
       are as follows: desktop applications that support the AT-SPI,
       the AT-SPI registry and infrastructure, Orca itself, Orca
       Scripts, and system services.  The key communication between the
-      components is depicted.</a></dt><dt>4.1. <a href="#id2548391">Orca Script Diagram</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="archforward"></a>Foreword</h2></div></div></div><p>Orca is a free, open source, flexible, and extensible screen
+      components is depicted.</a></dt><dt>4.1. <a href="#id2493928">Orca Script Diagram</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="archforward"></a>Foreword</h2></div></div></div><p>Orca is a free, open source, flexible, and extensible screen
 reader that provides access to the graphical desktop via
 user-customizable combinations of speech, braille, and/or
 magnification.  Under development by the Sun Microsystems, Inc.,
@@ -88,7 +88,7 @@ python -V
     the main components of Orca are as follows: desktop applications
     that support the AT-SPI, the AT-SPI registry and infrastructure,
     Orca itself, Orca Scripts, and system services (e.g., speech,
-    braille, magnification).</p><div class="figure"><a name="id2491183"></a><p class="title"><b>Figure 2.1. High Level Orca Architecture. The main components of Orca
+    braille, magnification).</p><div class="figure"><a name="id2489678"></a><p class="title"><b>Figure 2.1. High Level Orca Architecture. The main components of Orca
       are as follows: desktop applications that support the AT-SPI,
       the AT-SPI registry and infrastructure, Orca itself, Orca
       Scripts, and system services.  The key communication between the
@@ -530,7 +530,7 @@ python -V
       listeners associated with that script.</p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="customization"></a>Chapter 4. Customized Behavior</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgeventlisteners">Event Listeners</a></span></dt><dt><span class="section"><a href="#sginputeventhandlers">Input Event Handlers</a></span></dt><dt><span class="section"><a href="#sgkeybindings">Keyboard Bindings</a></span></dt><dt><span class="section"><a href="#sgbraillebindings">Braille Bindings</a></span></dt></dl></div><p>The customized behavior of a script is set up in its
       constructor.  In its constructor, each script is expected to
       extend/override several fields as illustrated in the following
-      diagram and describe below:</p><div class="figure"><a name="id2548391"></a><p class="title"><b>Figure 4.1. Orca Script Diagram</b></p><div class="mediaobject"><img src="script.jpg" alt="Orca Script Diagram"></div></div><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">listeners</code>: a dictionary where the
+      diagram and describe below:</p><div class="figure"><a name="id2493928"></a><p class="title"><b>Figure 4.1. Orca Script Diagram</b></p><div class="mediaobject"><img src="script.jpg" alt="Orca Script Diagram"></div></div><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">listeners</code>: a dictionary where the
         keys are strings that match AT-SPI event types (e.g.,
         <code class="literal">focus</code>,
         <code class="literal">object:text-caret-moved</code>, etc.), and the
@@ -867,7 +867,7 @@ def getBrailleBindings(self):
         self.inputEventHandlers["goBrailleHomeHandler"]
 
     return brailleBindings
-</pre></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="sgutilities"></a>Chapter 5. Script Utilities</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">orca.speech</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">orca.speechgenerator.SpeechGenerator</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">braille.py</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">braillegenerator.py</code></a></span></dt></dl></dd><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt></dl></div><p>There are many common things a script wants to do: generate
+</pre></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="sgutilities"></a>Chapter 5. Script Utilities</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgtts">Speech Synthesis</a></span></dt><dd><dl><dt><span class="section"><a href="#sgspeechpy"><code class="literal">orca.speech</code></a></span></dt><dt><span class="section"><a href="#sgsgpy"><code class="literal">orca.speechgenerator.SpeechGenerator</code></a></span></dt></dl></dd><dt><span class="section"><a href="#sgbrailleoutput">Braille Output</a></span></dt><dd><dl><dt><span class="section"><a href="#sgbraillepy"><code class="literal">orca.braille</code></a></span></dt><dt><span class="section"><a href="#sgbgpy"><code class="literal">orca.braillegenerator.BrailleGenerator</code></a></span></dt></dl></dd><dt><span class="section"><a href="#debug">Debug Utilities</a></span></dt></dl></div><p>There are many common things a script wants to do: generate
       speech, update braille, etc.  In addition, there are many common
       things a script writer wants to do, especially getting debug
       output to determine just what the AT-SPI is sending it.  This
@@ -947,7 +947,7 @@ def getBrailleBindings(self):
 ...
 from speech_generator import SpeechGenerator
 ...
-    def getSpeechGenerator(self):
+def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
@@ -1049,58 +1049,187 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         the <code class="literal">orca.settings</code> module and provide the
         appropriate level of text, as shown in the above snippet
         from the Pidgin speech generator.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="sgbrailleoutput"></a>Braille Output</h2></div></div></div><p>Like speech, Orca provides two main modules for braille:
-      <code class="literal">braille.py</code> and
-      <code class="literal">braillegenerator.py</code>. The
-      <code class="literal">braille.py</code> module provides the main interface
-      to the braille display. The
-      <code class="literal">braillegenerator.py</code> module provides a
+      <code class="literal">orca.braille</code> (in <code class="literal">orca/braille.py</code> and
+      <code class="literal">orca.braillegenerator</code> (in <code class="literal">orca/braillegenerator.py</code>. The
+      <code class="literal">orca.braille</code> module provides the main
+      interface to the braille display. The
+      <code class="literal">orca.braillegenerator</code> module provides a
       <code class="literal">BrailleGenerator</code> class that can be used to to
       actually generate the text to be displayed for various objects.
       The expected use of the two modules is as follows: a script will
       create its own instance of a
-      <code class="literal">BrailleGenerator</code> and will use it to braille
-      regions.  The script will then pass these braille regions to the
-      <code class="literal">braille.py</code> module to be displayed.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="sgbraillepy"></a><code class="literal">braille.py</code></h3></div></div></div><p><span class="emphasis"><em>TODO:</em></span> [[[WDW - much writing to be done here, especially
-          regarding how regions will provide automatic support for
-          cursor routing keys.]]]</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="sgbgpy"></a><code class="literal">braillegenerator.py</code></h3></div></div></div><p>The primary goal of a <code class="literal">BrailleGenerator</code>
-          is to create text to be displayed for an accessible object.
-          There are two public entry points into a
-          <code class="literal">BrailleGenerator</code>:</p><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">getBrailleRegions(obj,
-              groupChildren=True)</code>: returns a list of two
-              items: the first is an ordered list of braille
-              <code class="literal">Region</code> instances that represent text
-              to be displayed on the braille display, left-to-right on
-              one line; and the second is an element from the first
-              list that represents which <code class="literal">Region</code> has
-              "focus" and should be represented by the braille cursor
-              on the display.</p><p><span class="emphasis"><em>TODO:</em></span> [[[WDW - describe grouping of children.]]]</p></li><li><p><code class="literal">getBrailleContext(obj)</code>: returns
-              an ordered list (i.e., an array) of braille
-              <code class="literal">Region</code> instances that describe the
-              visual context of the given accessible object.  This is
-              loosely represented by the hierarchical relationship of
-              the object (i.e., the "Quit" button in the "File" menu
-              in the ...).</p></li></ul></div><p>Typically, a script will "build up" a single logical
-          line of text for the braille display.  The beginning of this
-          line will be the result of the call to
-          <code class="literal">getBrailleContext</code> and the remainder of
-          the line will be the result of one or more calls to
-          <code class="literal">getBrailleRegions</code>.  Since the logical
-          line will typically be longer than the number of cells on
-          the braille display, the <code class="literal">braille.py</code>
-          module will scroll to show the braille
-          <code class="literal">Region</code> with focus.  Furthermore, the
-          <code class="literal">braille.py</code> will also respond to BrlTTY
-          input events to allow the user to use braille display input
-          buttons for scrolling to review the entire line.</p><p><span class="emphasis"><em>NOTE:</em></span> Orca currently provides some level of support for
-          verbosity via the <code class="literal">VERBOSITY_LEVEL</code> fields
-          of the <code class="literal">settings.py</code> module.  There are
-          currently two verbosity levels:
-          <code class="literal">VERBOSITY_LEVEL_BRIEF</code> and
-          <code class="literal">VERBOSITY_LEVEL_VERBOSE</code>.  A
-          <code class="literal">BrailleGenerator</code> subclass is expected to
-          examine the <code class="literal">brailleVerbosityLevel</code> property
-          of the <code class="literal">settings.py</code> module and provide the
-          appropriate level of text:</p><pre class="programlisting">
+      <code class="literal">orca.braillegenerator.BrailleGenerator</code> and
+      will use it to braille regions.  The script will then pass these
+      braille regions to the
+      <code class="literal">orca.braille</code> module to be displayed.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="sgbraillepy"></a><code class="literal">orca.braille</code></h3></div></div></div><p>A good way to learn how <code class="literal">orca.braille</code>
+        and <code class="literal">orca.braillegenerator.BrailleGenerator</code>
+        are used is by looking at the code.
+        The <code class="literal">updateBraille</code> method
+        of <code class="literal">orca.default.Script</code>
+        (in <code class="literal">orca/default.py</code>) shows the key uses:</p><pre class="programlisting">
+def updateBraille(self, obj, extraRegion=None):
+    """Updates the braille display to show the give object.
+
+    Arguments:
+    - obj: the Accessible
+    - extra: extra Region to add to the end
+    """
+
+    if not obj:
+        return
+
+    braille.clear()
+
+    line = braille.Line()
+    braille.addLine(line)
+
+    # For multiline text areas, we only show the context if we
+    # are on the very first line.  Otherwise, we show only the
+    # line.
+    #
+    try:
+        text = obj.queryText()
+    except NotImplementedError:
+        text = None
+    if text and self.isTextArea(obj):
+        [lineString, startOffset, endOffset] = text.getTextAtOffset(
+            text.caretOffset,
+            pyatspi.TEXT_BOUNDARY_LINE_START)
+        if startOffset == 0:
+            line.addRegions(self.brailleGenerator.getBrailleContext(obj))
+    else:
+        line.addRegions(self.brailleGenerator.getBrailleContext(obj))
+
+    result = self.brailleGenerator.getBrailleRegions(obj)
+    line.addRegions(result[0])
+
+    if extraRegion:
+        line.addRegion(extraRegion)
+
+    if extraRegion:
+        braille.setFocus(extraRegion)
+    else:
+        braille.setFocus(result[1])
+
+    braille.refresh(True)
+</pre><p>The key operations are:</p><div class="orderedlist"><ol type="1"><li><p><code class="literal">braille.clear()</code>: clears the braille display</p></li><li><p><code class="literal">line = braille.Line()</code>
+            and <code class="literal">braille.addLine(line)</code>: creates a new
+            empty <code class="literal">orca.braille.Line</code> object to which
+            we can add <code class="literal">orca.braille.Region</code>
+            instances</p></li><li><p><code class="literal">line.addRegions(...)</code>: Typically,
+            a script will "build up" a single logical line of text for
+            the braille display.  The beginning of this line will be
+            the result of a call to the
+            <code class="literal">getBrailleContext</code> method of the
+            script's <code class="literal">brailleGenerator</code> and the
+            remainder of the line will be the result of one or more
+            calls to the <code class="literal">getBrailleRegions</code> of the
+            script's
+            <code class="literal">brailleGenerator</code>.  Since the logical
+            line will typically be longer than the number of cells on
+            the braille display, the <code class="literal">orca.braille</code>
+            module will scroll to show the
+            <code class="literal">orca.braille.Region</code> with focus.
+            Furthermore, the
+            <code class="literal">orca.braille</code> module will also respond
+            to BrlTTY input events to allow the user to use braille
+            display input buttons for scrolling to review the entire
+            line.</p></li><li><p><code class="literal">braille.setFocus(...)</code>: tells the
+            <code class="literal">orca.braille</code> module which 
+	    <code class="literal">orca.braille.Region</code> has "focus" and should
+            get the braille cursor</p></li><li><p><code class="literal">braille.refresh(...)</code>: tells the
+            <code class="literal">orca.braille</code> module to refresh/repaint
+            the braille display based upon
+            the <code class="literal">orca.braille.Line</code> that was built up
+            above</p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="sgbgpy"></a><code class="literal">orca.braillegenerator.BrailleGenerator</code></h3></div></div></div><p>The primary goal of
+        a <code class="literal">orca.braillegenerator.BrailleGenerator</code>
+        is to create the braille text to be displayed for an
+        accessible object.  There are two public entry points into a
+        <code class="literal">orca.braillegenerator.BrailleGenerator</code>:</p><div class="itemizedlist"><ul type="disc"><li><p><code class="literal">getBrailleRegions(obj,
+            groupChildren=True)</code>: returns a list of two
+            items: the first is an ordered list of braille
+            <code class="literal">Region</code> instances that represent text to
+            be displayed on the braille display, left-to-right on one
+            line; and the second is an element from the first list
+            that represents which <code class="literal">Region</code> has
+            "focus" and should be represented by the braille cursor on
+            the display.</p></li><li><p><code class="literal">getBrailleContext(obj)</code>: returns
+            an ordered list (i.e., an array) of braille
+            <code class="literal">Region</code> instances that describe the
+            visual context of the given accessible object.  This is
+            loosely represented by the hierarchical relationship of
+            the object (i.e., the "Quit" button in the "File" menu
+            in the ...).</p></li></ul></div><p>Custom scripts which want to override the behavior of
+        the default braille generator can create their own braille
+        generator.  Internally,
+        the <code class="literal">orca.braillegenerator.BrailleGenerator</code>
+        class obtains the braille for an object based upon the object's
+        role.  It does so by creating and using a table
+        called <code class="literal">brailleGenerators</code>.  The keys for the
+        table are <code class="literal">pyatspi</code> roles such
+        as <code class="literal">pyatspi.ROLE_CHECK_BOX</code> and the values
+        are a function in the script.  As such, the typical thing a
+        <code class="literal">orca.braillegenerator.BrailleGenerator</code>
+        subclass does is just override a function.  Here's a brief
+        example of the meaningful components of the speech generator
+        for the Rhythmbox application.  From the script side, the Rhythmbox
+        script, held
+        in <code class="literal">orca/scripts/apps/rhythmbox/script.py</code>,
+        imports the custom Rhythmbox speech generator, held in
+        <code class="literal">orca/scripts/apps/rhythmbox/braille_generator.py</code>,
+	imports the custom braille generator and creates an instance of
+	it via an overridden <code class="literal">getBrailleGenerator</code>
+	method:</p><pre class="programlisting">
+...
+from braille_generator import BrailleGenerator
+...
+def getBrailleGenerator(self):
+        """Returns the braille generator for this script.
+        """
+        return BrailleGenerator(self)
+</pre><p>The braille generator itself merely is a class declaration
+        that extends the <code class="literal">orca.braillegenerator.BrailleGenerator</code>
+        class and overrides the <code class="literal">_getSpeechForTableCell</code>
+        method to provide customized behavior for Rhythmbox table cells:</p><pre class="programlisting">
+import orca.braillegenerator as braillegenerator
+
+class BrailleGenerator(braillegenerator.BrailleGenerator):
+    """Overrides _getBrailleRegionsForTableCell to correctly handle 
+    the table cells in the Library table.
+    """
+
+    def __init__(self, script):
+        braillegenerator.BrailleGenerator.__init__(self, script)
+
+    def _getBrailleRegionsForTableCell(self, obj):
+        """Get the braille for a single table cell
+
+        Arguments:
+        - obj: the table
+
+        Returns a list where the first element is a list of Regions to 
+        display and the second element is the Region which should get focus.
+        """
+
+        # Check to see if this is a table cell from the Library table.
+        # If so, it'll have five children and we are interested in the
+        # penultimate one. See bug #512639 for more details.
+        #
+        if obj.childCount == 5:
+            obj = obj[3]
+
+        return braillegenerator.BrailleGenerator.\
+                    _getBrailleRegionsForTableCell(self, obj)
+</pre><p><span class="emphasis"><em>NOTE:</em></span> Orca currently provides some level of support for
+        verbosity via the <code class="literal">VERBOSITY_LEVEL</code> fields
+        of the <code class="literal">settings.py</code> module.  There are
+        currently two verbosity levels:
+        <code class="literal">VERBOSITY_LEVEL_BRIEF</code> and
+        <code class="literal">VERBOSITY_LEVEL_VERBOSE</code>.  A
+        <code class="literal">BrailleGenerator</code> subclass is expected to
+        examine the <code class="literal">brailleVerbosityLevel</code> property
+        of the <code class="literal">settings.py</code> module and provide the
+        appropriate level of text:</p><pre class="programlisting">
 if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
     regions.append(braille.Region(
                    " " + rolenames.getBrailleForRoleName(obj)))
