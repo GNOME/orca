@@ -569,6 +569,15 @@ class Script(default.Script):
                 utterances = self.speechGenerator.getSpeech(event.source, True)
                 speech.speakUtterances(utterances)
 
+        # If Ctrl+G was used to repeat a find command, speak the line that
+        # the caret moved to.
+        #
+        if orca_state.lastInputEvent \
+           and orca_state.lastInputEvent.event_string == 'G' \
+           and orca_state.lastInputEvent.modifiers \
+               & (1 << pyatspi.MODIFIER_CONTROL):
+            self.sayLine(event.source)
+
         # For everything else, pass the caret moved event onto the parent
         # class to be handled in the default way.
 
