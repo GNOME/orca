@@ -152,6 +152,14 @@ keyboard binding for Orca.
 To quit Orca, you can press "Insert+q" as shown above, or run 
 "orca --quit" from the command line.
 
-More details are available on the Orca WIKI:
+Scripting Orca
+========================================================================
+
+So, you want to write a script for Orca?  The best thing to do is 
+start by looking at other scripts under the src/orca/scripts/ hierarchy
+of the source tree.  Also, the docs/doc-set/internals.html file contains
+detailed information about the internal workings of Orca.
+
+More details about Orca in general are available on the Orca WIKI:
 
 http://live.gnome.org/Orca
