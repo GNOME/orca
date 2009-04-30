@@ -1094,12 +1094,9 @@ def helpForOrca(script=None, inputEvent=None):
 
     Returns True to indicate the input event has been consumed.
     """
-
-    props = { gnome.PARAM_APP_DATADIR : '/usr/share'}
-    prog = gnome.program_init('orca', '1.0', properties=props)
-    gnome.help_display_with_doc_id(prog, 'gnome-access-guide',
-                                         'gnome-access-guide', 'ats-2')
-
+    gtk.show_uri(gtk.gdk.screen_get_default(),
+                 "ghelp:gnome-access-guide#ats-2",
+                 gtk.get_current_event_time())
     return True
 
 def quitOrca(script=None, inputEvent=None):
