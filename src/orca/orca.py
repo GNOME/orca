@@ -56,7 +56,6 @@ except RuntimeError:
     pass
 
 import getopt
-import gnome
 import os
 import signal
 import time
@@ -1223,7 +1222,7 @@ def start(registry):
     if settings.cacheValues:
         pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
 
-    registry.start()
+    registry.start(gil=settings.useGILIdleHandler)
 
 def die(exitCode=1):
 

@@ -803,6 +803,11 @@ commFailureAttemptLimit = 5
 #
 gilSleepTime            = 0.00001
 
+# The value of the 'gil' parameter in the call to pyatspi.Registry.start
+# See http://bugzilla.gnome.org/show_bug.cgi?id=576954.
+#
+useGILIdleHandler       = False
+
 # If True, use the gidle __blockPreventor() code in atspi.py.
 #
 useBlockPreventor       = False
