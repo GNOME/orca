@@ -33,7 +33,6 @@ import settings
 import speech
 import speechserver
 import orca_prefs
-import platform
 import time
 
 desktopRunning = False
@@ -416,19 +415,13 @@ def setupSpeech(prefsDict):
     return True
 
 def logoutUser():
-    """Automatically log the user out of the GNOME desktop."""
+    """Log the user out of the desktop."""
 
-    import gnome
-    import gnome.ui
-
-    gnome.init(platform.package, platform.version)
-    client = gnome.ui.master_client()
-
-    client.request_save(gnome.ui.SAVE_GLOBAL,  # Save style
-                        True,                  # Shutdown
-                        gnome.ui.INTERACT_ANY, # Allow user interaction
-                        False,                 # Fast
-                        True)                  # All apps save state
+    import dbus
+    bus = dbus.SessionBus()
+    sessionManager = bus.get_object('org.gnome.SessionManager',
+                                    '/org/gnome/SessionManager')
+    sessionManager.Logout(dbus.types.UInt32(1))
 
 def showPreferencesUI(commandLineSettings):
     """Uses the console to query the user for Orca preferences."""
