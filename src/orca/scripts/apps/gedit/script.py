@@ -30,6 +30,7 @@ import pyatspi
 import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
+import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -498,6 +499,7 @@ class Script(default.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_STATUS_BAR \
            and self.isFocusOnFindDialog() \
+           and orca_state.lastNonModifierKeyEvent \
            and orca_state.lastNonModifierKeyEvent.event_string == "Return" \
            and event.source.name == _("Phrase not found"):
             debug.println(self.debugLevel,
@@ -553,6 +555,7 @@ class Script(default.Script):
         # we've just found.
         #
         if self.isFocusOnFindDialog() \
+           and orca_state.lastNonModifierKeyEvent \
            and orca_state.lastNonModifierKeyEvent.event_string == "Return":
             debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
             allComboBoxes = \
@@ -573,6 +576,7 @@ class Script(default.Script):
         # the caret moved to.
         #
         if orca_state.lastInputEvent \
+           and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent)\
            and orca_state.lastInputEvent.event_string == 'G' \
            and orca_state.lastInputEvent.modifiers \
                & (1 << pyatspi.MODIFIER_CONTROL):
