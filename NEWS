@@ -1,3 +1,83 @@
+2.27.1 - 04-May-2009
+
+General:
+
+* Much work to handle the transition from subversion to git.
+  (Willie Walker, Olav Vitters, Mesar Hameed)
+
+* Updated script writer's guide -- the document lives in
+  docs/doc-set/internals.html. (Willie Walker)
+
+* Add setting to disable the pyatspi GIL idle handler:
+  useGILIdleHandler.  This change is made in response to
+  http://bugzilla.gnome.org/show_bug.cgi?id=576954 where it appears as
+  though the GIL idle handler in pyatspi is causing consumers of
+  pyatspi (e.g., Orca and accerciser) to start consuming 100% of a CPU
+  when the machine is idle.  We're pretty sure the GIL handler is not
+  necessary, so this change gets rid of it for the 2.27.1 development
+  build of Orca.  If we see that users notice strange lock ups,
+  however, we may need to change things back. (Willie Walker)
+
+* Adjust debug utilities to print to console and debug log.
+  (Willie Walker)
+
+* Fix for bgo#570952 - Orca should be able to run with AT-SPI/D-Bus.
+  (Willie Walker)
+
+* Fix for bgo#573535 - Orca should use the 16x16 pixels application
+  icon for Main and Preferences windows. (Stephen Brandt)
+
+* Fix for bgo#575921 - When I working with the gcalctool application,
+  Orca says too lot of the result of the mathematic operations.
+  (Willie Walker)
+
+* Fix for bug #576037 - Bind F1 key to help page. (Willie Walker)
+
+* Fix for bug #576438 - Provide state change information for radio
+  buttons that require you to press space to select them.
+  (Willie Walker)
+
+* Fix for bgo#577239 - Cannot navigate by line through multi-line HTML
+  list items in Firefox/Thunderbird when arrowToLineBeginning is
+  False. (Joanmarie Diggs)
+
+* Fix for bug #577330 - Detect whether speech dispatcher is installed
+  or not. (Tomas Cerha)
+
+* Fix for bgo#577977 - provide speech feedback for "repeat last find"
+  in Gedit. (Nolan Darilek)
+
+* Fix for bgo#577979 - Pressing Down Arrow from the middle of a
+  multi-line HTML list item initially moves to the beginning of the
+  line when arrowToLineBeginning is False.  (Joanmarie Diggs)
+
+* Fix for bgo#580423 - Remove deprecated libgnomeui dependency. Use
+  DBus org.gnome.SessionManager.Logout instead of
+  gnome.ui.master_client().request_save. (Willie Walker)
+
+* Fix for bgo#580329 - Use show_uri() to display help window.
+  (Vincent Legoll)
+
+OpenOffice:
+
+* Fix for bgo#577245 - Present paragraph-style information in
+  OpenOffice. (Willie Walker)
+
+* Fix for bgo#578072 - Orca does not always present text attributes
+  in braille in OOo documents. (Joanmarie Diggs)
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    bg       Bulgarian            Alexander Shopov
+    ca       Catalan              Jordi Mas i Hernandez
+    uk       Ukranian             Maxim Dziumanenko
+    zh_CN    Simplified Chinese   Aron Xu
+
+==========
+
 2.26.0 - 15-Mar-2009
 
 NOTE - these are the changes since 2.25.92.  For a summary of changes over 
@@ -18,7 +98,7 @@ New and updated translations (THANKS EVERYONE!!!):
   See also the overall translation status:
   http://l10n.gnome.org/module/orca
 
-    da 	     Danish		  Kenneth Nielsen
+    da       Danish               Kenneth Nielsen
     de       German               Simon Bienlein and Mario Blättermann
     es       Spanish              Francisco Javier Dorado Martinez and 
                                   Jorge Gonzalez
@@ -33,6 +113,7 @@ New and updated translations (THANKS EVERYONE!!!):
     te       Telugu               Krishnababu K
 
 ==========
+
 2.25.92 - 02-Mar-2009
 
 General:
@@ -163,7 +244,7 @@ New and updated translations (THANKS EVERYONE!!!):
   http://l10n.gnome.org/module/orca
 
     ca       Catalan              Gil Forcada
-    da 	     Danish		  Kenneth Nielsen
+    da       Danish               Kenneth Nielsen
     es       Spanish              Francisco Javier Dorado Martinez and
                                   Jorge Gonzalez
     he       Hebrew               Mark Krapivner
@@ -516,7 +597,7 @@ New and updated translations (THANKS EVERYONE!!!):
   See also the overall translation status:
   http://l10n.gnome.org/module/orca
 
-    da	    Danish		 Kenneth Nielsen
+    da      Danish               Kenneth Nielsen
     it      Italian              Luca Ferretti
     pt_BR   Brazilian Portuguese Vladimir Melo and Og Maciel
 
@@ -586,9 +667,9 @@ New and updated translations (THANKS EVERYONE!!!):
 
     ar      Arabic               Youssef Chahibi and Djihed Afifi
     cs      Czech                Lucas Lommer and Petr Kovar
-    da	    Danish		 Kenneth Nielsen
+    da      Danish               Kenneth Nielsen
     et      Estonian             Ivar Smolin and Priit Laes
-    fr	    French		 Bruno Brouard and Claude Paroz
+    fr      French               Bruno Brouard and Claude Paroz
     hi      Hindi                Rajesh Ranjan
     hu      Hungarian            Atilla Hammer and Gabor Kelemen
     it      Italian              Luca Ferretti
