@@ -1919,21 +1919,21 @@ class Script(script.Script):
         values are InputEventHandler instances.
         """
         brailleBindings = script.Script.getBrailleBindings(self)
-        brailleBindings[braille.CMD_FWINLT]   = \
+        brailleBindings[braille.brlapi.KEY_CMD_FWINLT]   = \
             self.inputEventHandlers["panBrailleLeftHandler"]
-        brailleBindings[braille.CMD_FWINRT]   = \
+        brailleBindings[braille.brlapi.KEY_CMD_FWINRT]   = \
             self.inputEventHandlers["panBrailleRightHandler"]
-        brailleBindings[braille.CMD_LNUP]     = \
+        brailleBindings[braille.brlapi.KEY_CMD_LNUP]     = \
             self.inputEventHandlers["reviewAboveHandler"]
-        brailleBindings[braille.CMD_LNDN]     = \
+        brailleBindings[braille.brlapi.KEY_CMD_LNDN]     = \
             self.inputEventHandlers["reviewBelowHandler"]
-        brailleBindings[braille.CMD_FREEZE]   = \
+        brailleBindings[braille.brlapi.KEY_CMD_FREEZE]   = \
             self.inputEventHandlers["toggleFlatReviewModeHandler"]
-        brailleBindings[braille.CMD_TOP_LEFT] = \
+        brailleBindings[braille.brlapi.KEY_CMD_TOP_LEFT] = \
             self.inputEventHandlers["reviewHomeHandler"]
-        brailleBindings[braille.CMD_BOT_LEFT] = \
+        brailleBindings[braille.brlapi.KEY_CMD_BOT_LEFT] = \
             self.inputEventHandlers["reviewBottomLeftHandler"]
-        brailleBindings[braille.CMD_HOME]     = \
+        brailleBindings[braille.brlapi.KEY_CMD_HOME]     = \
             self.inputEventHandlers["goBrailleHomeHandler"]
 
         return brailleBindings

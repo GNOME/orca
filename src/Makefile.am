@@ -1,5 +1,5 @@
 if WITH_LOUIS
-SUBDIRS = brl orca louis
+SUBDIRS = orca louis
 else
-SUBDIRS = brl orca
+SUBDIRS = orca
 endif

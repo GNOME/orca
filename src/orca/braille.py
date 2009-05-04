@@ -44,21 +44,15 @@ except ImportError:
 else:
     _defaultContractionTable = louis.getDefaultTable()
 
-# We'll use the official BrlAPI pythons (as of BrlTTY 3.8) if they
-# are available.  Otherwise, we'll fall back to our own bindings.
-#
 try:
     import brlapi
     import gobject
 
-    brlAPI = None
-    useBrlAPIBindings = True
-    brlAPIRunning = False
-    brlAPISourceId = 0
+    _brlAPI = None
+    _brlAPIRunning = False
+    _brlAPISourceId = 0
 except:
-    import brl
-    useBrlAPIBindings = False
-    brlAPIRunning = False
+    _brlAPIRunning = False
 
 try:
     # This can fail due to gtk not being available.  We want to
@@ -84,79 +78,6 @@ _initialized = False
 #
 monitor = None
 
-# Each of these maps to BrlAPI's brldefs.h file.
-#
-CMD_NOOP              = 0x00
-CMD_LNUP              = 0x01
-CMD_LNDN              = 0x02
-CMD_WINUP             = 0x03
-CMD_WINDN             = 0x04
-CMD_PRDIFLN           = 0x05
-CMD_NXDIFLN           = 0x06
-CMD_ATTRUP            = 0x07
-CMD_ATTRDN            = 0x08
-CMD_TOP               = 0x09
-CMD_BOT               = 0x0a
-CMD_TOP_LEFT          = 0x0b
-CMD_BOT_LEFT          = 0x0c
-CMD_PRPGRPH           = 0x0d
-CMD_NXPGRPH           = 0x0e
-CMD_PRPROMPT          = 0x0f
-CMD_NXPROMPT          = 0x10
-CMD_PRSEARCH          = 0x11
-CMD_NXSEARCH          = 0x12
-CMD_CHRLT             = 0x13
-CMD_CHRRT             = 0x14
-CMD_HWINLT            = 0x15
-CMD_HWINRT            = 0x16
-CMD_FWINLT            = 0x17
-CMD_FWINRT            = 0x18
-CMD_FWINLTSKIP        = 0x19
-CMD_FWINRTSKIP        = 0x1a
-CMD_LNBEG             = 0x1b
-CMD_LNEND             = 0x1c
-CMD_HOME              = 0x1d
-CMD_BACK              = 0x1e
-CMD_FREEZE            = 0x1f
-CMD_DISPMD            = 0x20
-CMD_SIXDOTS           = 0x21
-CMD_SLIDEWIN          = 0x22
-CMD_SKPIDLNS          = 0x23
-CMD_SKPBLNKWINS       = 0x24
-CMD_CSRVIS            = 0x25
-CMD_CSRHIDE           = 0x26
-CMD_CSRTRK            = 0x27
-CMD_CSRSIZE           = 0x28
-CMD_CSRBLINK          = 0x29
-CMD_ATTRVIS           = 0x2a
-CMD_ATTRBLINK         = 0x2b
-CMD_CAPBLINK          = 0x2c
-CMD_TUNES             = 0x2d
-CMD_HELP              = 0x2e
-CMD_INFO              = 0x2f
-CMD_LEARN             = 0x30
-CMD_PREFMENU          = 0x31
-CMD_PREFSAVE          = 0x32
-CMD_PREFLOAD          = 0x33
-CMD_MENU_FIRST_ITEM   = 0x34
-CMD_MENU_LAST_ITEM    = 0x35
-CMD_MENU_PREV_ITEM    = 0x36
-CMD_MENU_NEXT_ITEM    = 0x37
-CMD_MENU_PREV_SETTING = 0x38
-CMD_MENU_NEXT_SETTING = 0x39
-CMD_SAY_LINE          = 0x3a
-CMD_SAY_ABOVE         = 0x3b
-CMD_SAY_BELOW         = 0x3c
-CMD_MUTE              = 0x3d
-CMD_SPKHOME           = 0x3e
-CMD_SWITCHVT_PREV     = 0x3f
-CMD_SWITCHVT_NEXT     = 0x40
-CMD_CSRJMP_VERT       = 0x41
-CMD_PASTE             = 0x42
-CMD_RESTARTBRL        = 0x43
-CMD_RESTARTSPEECH     = 0x44
-CMD_MAX               = 0x44
-
 BRL_FLG_REPEAT_INITIAL = 0x800000
 BRL_FLG_REPEAT_DELAY   = 0x400000
 
@@ -169,52 +90,52 @@ command_name = {}
 # display (an external hardware device used by people who are blind).
 # When pressing the button, the display scrolls to the left.
 #
-command_name[CMD_FWINLT]   = _("Line Left")
+command_name[brlapi.KEY_CMD_FWINLT]   = _("Line Left")
 
 # Translators: this is a command for a button on a refreshable braille
 # display (an external hardware device used by people who are blind).
 # When pressing the button, the display scrolls to the right.
 #
-command_name[CMD_FWINRT]   = _("Line Right")
+command_name[brlapi.KEY_CMD_FWINRT]   = _("Line Right")
 
 # Translators: this is a command for a button on a refreshable braille
 # display (an external hardware device used by people who are blind).
 # When pressing the button, the display scrolls up.
 #
-command_name[CMD_LNUP]     = _("Line Up")
+command_name[brlapi.KEY_CMD_LNUP]     = _("Line Up")
 
 # Translators: this is a command for a button on a refreshable braille
 # display (an external hardware device used by people who are blind).
 # When pressing the button, the display scrolls down.
 #
-command_name[CMD_LNDN]     = _("Line Down")
+command_name[brlapi.KEY_CMD_LNDN]     = _("Line Down")
 
 # Translators: this is a command for a button on a refreshable braille
 # display (an external hardware device used by people who are blind).
 # When pressing the button, it instructs the braille display to freeze.
 #
-command_name[CMD_FREEZE]     = _("Freeze")
+command_name[brlapi.KEY_CMD_FREEZE]     = _("Freeze")
 
 # Translators: this is a command for a button on a refreshable braille
 # display (an external hardware device used by people who are blind).
 # When pressing the button, the display scrolls to the top left of the
 # window.
 #
-command_name[CMD_TOP_LEFT] = _("Top Left")
+command_name[brlapi.KEY_CMD_TOP_LEFT] = _("Top Left")
 
 # Translators: this is a command for a button on a refreshable braille
 # display (an external hardware device used by people who are blind).
 # When pressing the button, the display scrolls to the bottom right of
 # the window.
 #
-command_name[CMD_BOT_LEFT] = _("Bottom Right")
+command_name[brlapi.KEY_CMD_BOT_LEFT] = _("Bottom Right")
 
 # Translators: this is a command for a button on a refreshable braille
 # display (an external hardware device used by people who are blind).
 # When pressing the button, the display scrolls to position containing
 # the cursor.
 #
-command_name[CMD_HOME]     = _("Cursor Position")
+command_name[brlapi.KEY_CMD_HOME]     = _("Cursor Position")
 
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
@@ -986,11 +907,8 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
     global monitor
 
     if len(_lines) == 0:
-        if useBrlAPIBindings:
-            if brlAPIRunning:
-                brlAPI.writeText("", 0)
-        else:
-            brl.writeText(0, "")
+        if _brlAPIRunning:
+            _brlAPI.writeText("", 0)
         return
 
     # Now determine the location of the cursor.  First, we'll figure
@@ -1046,40 +964,37 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
     log.info(logLine.encode("UTF-8"))
 
     substring = string[startPos:endPos]
-    if useBrlAPIBindings:
-        if brlAPIRunning:
-            writeStruct = brlapi.WriteStruct()
-            writeStruct.regionBegin = 1
-            writeStruct.regionSize = len(substring)
-            while writeStruct.regionSize < _displaySize[0]:
-                substring += " "
-                if attributeMask:
-                    attributeMask += '\x00'
-                writeStruct.regionSize += 1
-            writeStruct.text = substring
-            writeStruct.cursor = cursorCell
-
-            # [[[WDW - if you want to muck around with the dots on the
-            # display to do things such as add underlines, you can use
-            # the attrOr field of the write structure to do so.  The
-            # attrOr field is a string whose length must be the same
-            # length as the display and whose dots will end up showing
-            # up on the display.  Each character represents a bitfield
-            # where each bit corresponds to a dot (i.e., bit 0 = dot 1,
-            # bit 1 = dot 2, and so on).  Here's an example that underlines
-            # all the text.]]]
-            #
-            #myUnderline = ""
-            #for i in range(0, _displaySize[0]):
-            #    myUnderline += '\xc0'
-            #writeStruct.attrOr = myUnderline
-
+    if _brlAPIRunning:
+        writeStruct = brlapi.WriteStruct()
+        writeStruct.regionBegin = 1
+        writeStruct.regionSize = len(substring)
+        while writeStruct.regionSize < _displaySize[0]:
+            substring += " "
             if attributeMask:
-                writeStruct.attrOr = attributeMask[startPos:endPos]
+                attributeMask += '\x00'
+            writeStruct.regionSize += 1
+        writeStruct.text = substring
+        writeStruct.cursor = cursorCell
 
-            brlAPI.write(writeStruct)
-    else:
-        brl.writeText(cursorCell, substring)
+        # [[[WDW - if you want to muck around with the dots on the
+        # display to do things such as add underlines, you can use
+        # the attrOr field of the write structure to do so.  The
+        # attrOr field is a string whose length must be the same
+        # length as the display and whose dots will end up showing
+        # up on the display.  Each character represents a bitfield
+        # where each bit corresponds to a dot (i.e., bit 0 = dot 1,
+        # bit 1 = dot 2, and so on).  Here's an example that underlines
+        # all the text.]]]
+        #
+        #myUnderline = ""
+        #for i in range(0, _displaySize[0]):
+        #    myUnderline += '\xc0'
+        #writeStruct.attrOr = myUnderline
+
+        if attributeMask:
+            writeStruct.attrOr = attributeMask[startPos:endPos]
+
+        _brlAPI.write(writeStruct)
 
     if settings.enableBrailleMonitor:
         if not monitor:
@@ -1272,7 +1187,7 @@ def _brlAPIKeyReader(source, condition):
     """Method to read a key from the BrlAPI bindings.  This is a
     gobject IO watch handler.
     """
-    key = brlAPI.readKey(False)
+    key = _brlAPI.readKey(False)
     if key:
         #flags = key >> 32
         lower = key & 0xFFFFFFFF
@@ -1289,7 +1204,7 @@ def _brlAPIKeyReader(source, condition):
             keyCode = 0x100 | (keyCode & 0xFF)
         if keyCode:
             _processBrailleEvent(keyCode)
-    return brlAPIRunning
+    return _brlAPIRunning
 
 def setupKeyRanges(keys):
     """Hacky method to tell BrlTTY what to send and not send us via
@@ -1298,64 +1213,24 @@ def setupKeyRanges(keys):
     Arguments:
     -keys: a list of BrlAPI commands.
     """
-    if not brlAPIRunning:
+    if not _brlAPIRunning:
         return
 
-    try:
-        # First, start by ignoring everything.
-        #
-        brlAPI.ignoreKeys(brlapi.rangeType_all, [0])
+    # First, start by ignoring everything.
+    #
+    _brlAPI.ignoreKeys(brlapi.rangeType_all, [0])
 
-        # Next, enable cursor routing keys.
-        #
-        keySet = [brlapi.KEY_TYPE_CMD | brlapi.KEY_CMD_ROUTE]
+    # Next, enable cursor routing keys.
+    #
+    keySet = [brlapi.KEY_TYPE_CMD | brlapi.KEY_CMD_ROUTE]
 
-        # Finally, enable the commands we care about.
-        #
-        for key in keys:
-            keySet.append(brlapi.KEY_TYPE_CMD | key)
+    # Finally, enable the commands we care about.
+    #
+    for key in keys:
+        keySet.append(brlapi.KEY_TYPE_CMD | key)
             
-        brlAPI.acceptKeys(brlapi.rangeType_command, keySet)
-
-        brlAPI.acceptKeys(brlapi.rangeType_key, [65])
-
-        debug.println(debug.LEVEL_FINEST, "Using BrlAPI v0.5.0+")
-    except:
-        debug.printException(debug.LEVEL_FINEST)
-        try:
-            # Old, incompatible way that was in v3.8 devel, but
-            # changed prior to release.  We need this just in case
-            # people have not updated yet.
-
-            # First, start by ignoring everything.
-            #
-            brlAPI.ignoreKeyRange(0,
-                                  brlapi.KEY_FLAGS_MASK \
-                                  | brlapi.KEY_TYPE_MASK \
-                                  | brlapi.KEY_CODE_MASK)
-
-            # Next, enable cursor routing keys.
-            #
-            brlAPI.acceptKeyRange(brlapi.KEY_TYPE_CMD | brlapi.KEY_CMD_ROUTE,
-                                  brlapi.KEY_TYPE_CMD \
-                                  | brlapi.KEY_CMD_ROUTE \
-                                  | brlapi.KEY_CMD_ARG_MASK)
-
-            # Finally, enable the commands we care about.
-            #
-            keySet = []
-            for key in keys:
-                keySet.append(brlapi.KEY_TYPE_CMD | key)
-            if len(keySet):
-                brlAPI.acceptKeySet(keySet)
-
-            debug.println(debug.LEVEL_FINEST,
-                          "Using BrlAPI pre-release v0.5.0")
-        except:
-            debug.printException(debug.LEVEL_FINEST)
-            debug.println(
-                debug.LEVEL_WARNING,
-                "Braille module cannot listen for braille input events")
+    _brlAPI.acceptKeys(brlapi.rangeType_command, keySet)
+    _brlAPI.acceptKeys(brlapi.rangeType_key, [65])
 
 def init(callback=None, tty=7):
     """Initializes the braille module, connecting to the BrlTTY driver.
@@ -1376,55 +1251,42 @@ def init(callback=None, tty=7):
 
     _callback = callback
 
-    if useBrlAPIBindings:
+    try:
+        global _brlAPI
+        global _brlAPIRunning
+        global _brlAPISourceId
+
+        gobject.threads_init()
+        _brlAPI = brlapi.Connection()
+
         try:
-            global brlAPI
-            global brlAPIRunning
-            global brlAPISourceId
-
-            gobject.threads_init()
-            brlAPI = brlapi.Connection()
-
-            try:
-                import os
-                windowPath = os.environ["WINDOWPATH"]
-                brlAPI.enterTtyModeWithPath()
-                brlAPIRunning = True
-                debug.println(\
-                    debug.LEVEL_CONFIGURATION,
-                    "Braille module has been initialized using WINDOWPATH=" \
-                    + "%s" % windowPath)
-            except:
-                brlAPI.enterTtyMode(tty)
-                brlAPIRunning = True
-                debug.println(\
-                    debug.LEVEL_CONFIGURATION,
-                    "Braille module has been initialized using tty=%d" % tty)
-            brlAPISourceId = gobject.io_add_watch(brlAPI.fileDescriptor,
-                                                  gobject.IO_IN,
-                                                  _brlAPIKeyReader)
+            import os
+            windowPath = os.environ["WINDOWPATH"]
+            _brlAPI.enterTtyModeWithPath()
+            _brlAPIRunning = True
+            debug.println(\
+                debug.LEVEL_CONFIGURATION,
+                "Braille module has been initialized using WINDOWPATH=" \
+                + "%s" % windowPath)
         except:
-            debug.printException(debug.LEVEL_FINEST)
-            return False
-    else:
-        if brl.init(tty):
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Braille module has been initialized.")
-            brl.registerCallback(_processBrailleEvent)
-        else:
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Braille module has NOT been initialized.")
-            return False
+            _brlAPI.enterTtyMode(tty)
+            _brlAPIRunning = True
+            debug.println(\
+                debug.LEVEL_CONFIGURATION,
+                "Braille module has been initialized using tty=%d" % tty)
+        _brlAPISourceId = gobject.io_add_watch(_brlAPI.fileDescriptor,
+                                               gobject.IO_IN,
+                                               _brlAPIKeyReader)
+    except:
+        debug.printException(debug.LEVEL_FINEST)
+        return False
 
     # [[[TODO: WDW - For some reason, BrlTTY wants to say the height of the
     # Vario is 40 so we hardcode it to 1 for now.]]]
     #
     #_displaySize = (brl.getDisplayWidth(), brl.getDisplayHeight())
-    if useBrlAPIBindings:
-        (x, y) = brlAPI.displaySize
-        _displaySize = [x, 1]
-    else:
-        _displaySize = [brl.getDisplayWidth(), 1]
+    (x, y) = _brlAPI.displaySize
+    _displaySize = [x, 1]
 
     debug.println(debug.LEVEL_CONFIGURATION,
                   "braille display size = (%d, %d)" \
@@ -1447,17 +1309,14 @@ def shutdown():
     if not _initialized:
         return False
 
-    global brlAPIRunning
-    global brlAPISourceId
+    global _brlAPIRunning
+    global _brlAPISourceId
 
-    if useBrlAPIBindings:
-        if brlAPIRunning:
-            brlAPIRunning = False
-            gobject.source_remove(brlAPISourceId)
-            brlAPISourceId = 0
-            brlAPI.leaveTtyMode()
-    else:
-        brl.shutdown()
+    if _brlAPIRunning:
+        _brlAPIRunning = False
+        gobject.source_remove(_brlAPISourceId)
+        _brlAPISourceId = 0
+        _brlAPI.leaveTtyMode()
 
     _initialized = False
 
