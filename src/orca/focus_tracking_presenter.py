@@ -751,7 +751,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             event = e
         elif isinstance(e, input_event.BrailleEvent):
             debug.println(debug.LEVEL_ALL,
-                          "----------> QUEUEING BRAILLE COMMAND %d" % e.event)
+                          "----------> QUEUEING BRAILLE COMMAND %s" \
+                          % repr(e.event))
             event = e
         else:
             if e.type in settings.ignoredEventsList:
@@ -894,15 +895,15 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                               % (pressRelease, event.event_string))
             elif isinstance(event, input_event.BrailleEvent):
                 debug.println(debug.LEVEL_ALL,
-                              "DEQUEUED BRAILLE COMMAND %d <----------" \
-                              % event.event)
+                              "DEQUEUED BRAILLE COMMAND %s <----------" \
+                              % repr(event.event))
                 debug.println(debug.eventDebugLevel,
-                              "\nvvvvv PROCESS BRAILLE EVENT %d vvvvv"\
-                              % event.event)
+                              "\nvvvvv PROCESS BRAILLE EVENT %s vvvvv"\
+                              % repr(event.event))
                 self._processBrailleEvent(event)
                 debug.println(debug.eventDebugLevel,
-                              "\n^^^^^ PROCESS BRAILLE EVENT %d ^^^^^"\
-                              % event.event)
+                              "\n^^^^^ PROCESS BRAILLE EVENT %s ^^^^^"\
+                              % repr(event.event))
             else:
                 if (not debug.eventDebugFilter) \
                     or (debug.eventDebugFilter \

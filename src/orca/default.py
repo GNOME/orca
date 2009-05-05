@@ -671,6 +671,28 @@ class Script(script.Script):
                 #
                 _("Returns to object with keyboard focus."))
 
+        self.inputEventHandlers["contractedBrailleHandler"] = \
+            input_event.InputEventHandler(
+                Script.setContractedBraille,
+                # Translators: braille can be displayed in many ways.
+                # Contracted braille provides a more efficient means
+                # to represent text, especially long documents.  The
+                # feature used here is an option to toggle between
+                # contracted and uncontracted.
+                #
+                _("Turns contracted braille on and off."))
+
+        self.inputEventHandlers["processRoutingKeyHandler"] = \
+            input_event.InputEventHandler(
+                Script.processRoutingKey,
+                # Translators: hardware braille displays often have
+                # buttons near each braille cell.  These are called
+                # cursor routing keys and are a way for a user to
+                # tell the machine they are interested in a particular
+                # character on the display.
+                #
+                _("Processes a cursor routing key."))
+
         self.inputEventHandlers["enterLearnModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enterLearnMode,
@@ -1935,6 +1957,10 @@ class Script(script.Script):
             self.inputEventHandlers["reviewBottomLeftHandler"]
         brailleBindings[braille.brlapi.KEY_CMD_HOME]     = \
             self.inputEventHandlers["goBrailleHomeHandler"]
+        brailleBindings[braille.brlapi.KEY_CMD_SIXDOTS]   = \
+            self.inputEventHandlers["contractedBrailleHandler"]
+        brailleBindings[braille.brlapi.KEY_CMD_ROUTE]   = \
+            self.inputEventHandlers["processRoutingKeyHandler"]
 
         return brailleBindings
 
@@ -4939,6 +4965,17 @@ class Script(script.Script):
             return self.toggleFlatReviewMode(inputEvent)
         else:
             return braille.returnToRegionWithFocus(inputEvent)
+
+    def setContractedBraille(self, inputEvent=None):
+        """Toggles contracted braille."""
+        braille.setContractedBraille(inputEvent)
+        return True
+
+    def processRoutingKey(self, inputEvent=None):
+        """Processes a cursor routing key."""
+
+        braille.processRoutingKey(inputEvent)
+        return True
 
     def leftClickReviewItem(self, inputEvent=None):
         """Performs a left mouse button click on the current item."""

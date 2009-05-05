@@ -78,9 +78,6 @@ _initialized = False
 #
 monitor = None
 
-BRL_FLG_REPEAT_INITIAL = 0x800000
-BRL_FLG_REPEAT_DELAY   = 0x400000
-
 # Common names for most used BrlTTY commands, to be shown in the GUI:
 # ATM, the ones used in default.py are:
 #
@@ -137,6 +134,21 @@ command_name[brlapi.KEY_CMD_BOT_LEFT] = _("Bottom Right")
 #
 command_name[brlapi.KEY_CMD_HOME]     = _("Cursor Position")
 
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# When pressing the button, the display toggles between contracted and
+# contracted braille.
+#
+command_name[brlapi.KEY_CMD_SIXDOTS]  = _("Six Dots")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# This command represents a whole set of buttons known as cursor
+# routings keys and are a way for a user to tell the machine they are
+# interested in a particular character on the display.
+#
+command_name[brlapi.KEY_CMD_ROUTE]    = _("Cursor Routing")
+
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
 # left to right, and y values increase from top to bottom.
@@ -190,7 +202,7 @@ def _printBrailleEvent(level, command):
 
     debug.printInputEvent(
         level,
-        "BRAILLE EVENT: %x" % command)
+        "BRAILLE EVENT: %s" % repr(command))
 
 class Region:
     """A Braille region to be displayed on the display.  The width of
@@ -309,9 +321,6 @@ class Region:
         return offset
 
     def setContractedBraille(self, contracted):
-        if self.contracted == contracted:
-            return
-        self.contracted = contracted
         if contracted:
             self.contractionTable = settings.brailleContractionTable or \
                                     _defaultContractionTable
@@ -320,10 +329,13 @@ class Region:
             self.expandRegion()
 
     def contractRegion(self):
+        if self.contracted:
+            return
         self.string, self.inPos, self.outPos, self.cursorOffset = \
                      self.contractLine(self.rawLine,
                                        self.cursorOffset,
                                        self.expandOnCursor)
+        self.contracted = True
         
     def expandRegion(self):
         if not self.contracted:
@@ -333,6 +345,7 @@ class Region:
             self.cursorOffset = self.inPos[self.cursorOffset]
         except IndexError:
             self.cursorOffset = len(self.string)
+        self.contracted = False
         
 class Component(Region):
     """A subclass of Region backed by an accessible.  This Region will react
@@ -1125,29 +1138,30 @@ def returnToRegionWithFocus(inputEvent=None):
 
     return True
 
-def _processBrailleEvent(command):
+def setContractedBraille(event):
+    settings.enableContractedBraille = \
+        (event.event["flags"] & brlapi.KEY_FLG_TOGGLE_ON) != 0
+    for line in _lines:
+        line.setContractedBraille(settings.enableContractedBraille)
+    refresh()
+
+def processRoutingKey(event):
+    cell = event.event["argument"]
+    if len(_lines) > 0:
+        cursor = cell + viewport[0]
+        lineNum = viewport[1]
+        _lines[lineNum].processRoutingKey(cursor)
+    return True
+
+def _processBrailleEvent(event):
     """Handles BrlTTY command events.  This passes commands on to Orca for
-    processing.  If Orca does not handle them (as indicated by a return value
-    of false from the callback passed to init, it will attempt to handle the
-    command itself - either by panning the viewport or passing cursor routing
-    keys to the Regions for handling.
+    processing.
 
     Arguments:
-    - command: the BrlAPI command for the key that was pressed.
+    - event: the BrlAPI input event (expanded)
     """
 
-    _printBrailleEvent(debug.LEVEL_FINE, command)
-
-    # [[[TODO: WDW - DaveM suspects the Alva driver is sending us a
-    # repeat flag.  So...let's kill a couple birds here until BrlTTY
-    # 3.8 fixes the problem: we'll disable autorepeat and we'll also
-    # strip out the autorepeat flag if this is the first press of a
-    # button.]]]
-    #
-    if command & BRL_FLG_REPEAT_INITIAL:
-        command &= ~(BRL_FLG_REPEAT_INITIAL | BRL_FLG_REPEAT_DELAY)
-    elif command & BRL_FLG_REPEAT_DELAY:
-        return True
+    _printBrailleEvent(debug.LEVEL_FINE, event)
 
     consumed = False
 
@@ -1160,23 +1174,10 @@ def _processBrailleEvent(command):
             # Like key event handlers, a return value of True means
             # the command was consumed.
             #
-            consumed = _callback(command)
+            consumed = _callback(event)
         except:
             debug.printException(debug.LEVEL_WARNING)
             consumed = False
-
-    if (command >= 0x100) and (command < (0x100 + _displaySize[0])):
-        if len(_lines) > 0:
-            cursor = (command - 0x100) + viewport[0]
-            lineNum = viewport[1]
-            _lines[lineNum].processRoutingKey(cursor)
-            consumed = True
-
-    if command in (0x2141, 65): # Toggle six dot braille
-        settings.enableContractedBraille = not settings.enableContractedBraille
-        for line in _lines:
-            line.setContractedBraille(settings.enableContractedBraille)
-        refresh()
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
@@ -1189,21 +1190,7 @@ def _brlAPIKeyReader(source, condition):
     """
     key = _brlAPI.readKey(False)
     if key:
-        #flags = key >> 32
-        lower = key & 0xFFFFFFFF
-        #keyType = lower >> 29
-        keyCode = lower & 0x1FFFFFFF
-        
-        # [[TODO: WDW - HACK If we have a cursor routing key, map
-        # it back to the code we used to get with earlier versions
-        # of BrlAPI (i.e., bit 0x100 was the indicator of a cursor
-        # routing key instead of 0x1000).  This may change before
-        # the offical BrlAPI Python bindings are released.]]]
-        #
-        if keyCode & 0x10000:
-            keyCode = 0x100 | (keyCode & 0xFF)
-        if keyCode:
-            _processBrailleEvent(keyCode)
+        _processBrailleEvent(_brlAPI.expandKeyCode(key))
     return _brlAPIRunning
 
 def setupKeyRanges(keys):
@@ -1230,7 +1217,6 @@ def setupKeyRanges(keys):
         keySet.append(brlapi.KEY_TYPE_CMD | key)
             
     _brlAPI.acceptKeys(brlapi.rangeType_command, keySet)
-    _brlAPI.acceptKeys(brlapi.rangeType_key, [65])
 
 def init(callback=None, tty=7):
     """Initializes the braille module, connecting to the BrlTTY driver.

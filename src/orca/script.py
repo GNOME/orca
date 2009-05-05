@@ -442,7 +442,7 @@ class Script:
         elif "default" in user_bindings_map:
             user_bindings = user_bindings_map["default"]
 
-        command = brailleEvent.event
+        command = brailleEvent.event["command"]
         consumes = False
         if user_bindings:
             consumes = command in user_bindings
@@ -481,7 +481,7 @@ class Script:
         #
         consumed = False
         user_bindings = None
-        command = brailleEvent.event
+        command = brailleEvent.event["command"]
 
         user_bindings_map = settings.brailleBindingsMap
         if self.name in user_bindings_map:

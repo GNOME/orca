@@ -820,11 +820,11 @@ def _processKeyboardEvent(event):
 #                                                                      #
 ########################################################################
 
-def _processBrailleEvent(command):
+def _processBrailleEvent(event):
     """Called whenever a  key is pressed on the Braille display.
 
     Arguments:
-    - command: the BrlAPI command for the key that was pressed.
+    - command: the BrlAPI event for the key that was pressed.
 
     Returns True if the event was consumed; otherwise False
     """
@@ -835,7 +835,7 @@ def _processBrailleEvent(command):
     #
     speech.stop()
 
-    event = BrailleEvent(command)
+    event = BrailleEvent(event)
     orca_state.lastInputEvent = event
 
     try:
