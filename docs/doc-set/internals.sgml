@@ -86,7 +86,7 @@ python -V
       </para>
     </section>
 
-    <section id="prereqbrltty"><title>BrlTTY v3.7.2 or better</title>
+    <section id="prereqbrltty"><title>BrlTTY v3.8 or better</title>
       <para>BrlTTY <citation><xref linkend="brltty"
       endterm="brltty.abbrev"/></citation> provides access to a
       variety of Braille displays, and consists of a library and a

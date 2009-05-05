@@ -11,7 +11,7 @@ Source0: orca-%{version}.tar.gz
 %define pyorbit_version 2.0.1
 %define pygtk2_version 2.6.2
 %define gnome_python_version 2.6.2
-%define brltty_version 3.7.2
+%define brltty_version 3.8
 %define atk_version 1.11.3
 %define gail_version 1.8.11
 %define libgail_version 1.1.3
