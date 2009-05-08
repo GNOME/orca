@@ -1883,7 +1883,7 @@ class SpeechGenerator:
         result2 = self.alt.getSpeech(obj, already_focused=already_focused)
         # making the returned values from alt.getSpeech into a string.
         speak =  [" ".join(result2)]
-        print("r%d='%s'\n" %(len(speak[0]), speak))
+        print("s%d='%s'\n" %(len(speak[0]), speak))
         print("r==s=%s\n" %cmp(result1[0], speak[0])) 
         return speak
 
