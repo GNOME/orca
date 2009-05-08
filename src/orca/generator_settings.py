@@ -88,7 +88,7 @@ formattingDict[pyatspi.ROLE_CHECK_BOX] = __roleDict
 #### pyatspi.ROLE_RADIO_BUTTON ####
 __roleDict = {}
 __roleDict['unfocusedSpeech'] = \
-  'labelOrName + radioState + roleName availability'
+  'labelOrName + radioState + roleName + availability'
 __roleDict['focusedSpeech'] = 'radioState'
 formattingDict[pyatspi.ROLE_RADIO_BUTTON] = __roleDict
 
@@ -184,7 +184,7 @@ formattingDict[pyatspi.ROLE_LIST_ITEM] = __roleDict
 ### pyatspi.ROLE_MENU ###
 __roleDict = {}
 __roleDict['unfocusedSpeech'] = \
-  'labelOrName + textSelection + roleName + availability + mnemonic'
+  'labelOrName + textSelection + roleName + availability'
 __roleDict['focusedSpeech'] = ''
 formattingDict[pyatspi.ROLE_MENU] = __roleDict
 
@@ -227,8 +227,32 @@ formattingDict[pyatspi.ROLE_SPLIT_PANE] = __roleDict
 __roleDict = {}
 __roleDict['unfocusedSpeech'] = \
 __roleDict['focusedSpeech'] = \
-formattingDict['default']['unfocusedSpeech'] + ' +hasNoChildren'
+formattingDict['default']['unfocusedSpeech'] + ' + hasNoChildren'
 formattingDict[pyatspi.ROLE_TABLE] = __roleDict
+
+### REAL_ROLE_TABLE_CELL ### 
+# the real cell information
+# note that pyatspi.ROLE_TABLE_CELL is used to work out if we need to
+# read a whole row. It calls REAL_ROLE_TABLE_CELL internally.
+# maybe it can be done in a cleaner way?
+
+__roleDict = {}
+__roleDict['unfocusedSpeech'] = \
+__roleDict['focusedSpeech'] = \
+  '(tableCell2ChildLabel +tableCell2ChildToggle ) or isCheckbox ' + \
+  ' + (realActiveDescendantDisplayedText or imageDescription +image) ' + \
+  ' + (expandableState and (expandableState +noOfChildren ) ) +required '
+formattingDict['REAL_ROLE_TABLE_CELL']  = __roleDict
+
+######## mesar ####
+
+__roleDict = {}
+__roleDict['unfocusedSpeech'] = 'tableCellRow'
+__roleDict['focusedSpeech'] = \
+  '( tableCell2ChildLabel + tableCell2ChildToggle ) or ' + \
+  ' isCheckbox + ( realActiveDescendantDisplayedText or imageDescription ) + ' \
+  '( expandableState and ( expandableState + noOfChildren ) ) + required '
+formattingDict[pyatspi.ROLE_TABLE_CELL] = __roleDict
 
 ### pyatspi.ROLE_EMBEDDED ###
 __roleDict = {}
@@ -240,14 +264,14 @@ formattingDict[pyatspi.ROLE_EMBEDDED] = __roleDict
 ### pyatspi.ROLE_ICON ###
 __roleDict = {}
 __roleDict['unfocusedSpeech'] = \
-__roleDict['focusedSpeech'] = 'labelOrName + imageDescription + iconRole'
+__roleDict['focusedSpeech'] = 'labelOrName + imageDescription + roleName'
 formattingDict[pyatspi.ROLE_ICON] = __roleDict
 
 ### pyatspi.ROLE_LAYERED_PANE ###
 __roleDict = {}
 __roleDict['unfocusedSpeech'] = \
 __roleDict['focusedSpeech'] = \
-formattingDict['default']['unfocusedSpeech'] + ' +hasNoShowingChildren '
+formattingDict['default']['unfocusedSpeech'] + ' + hasNoShowingChildren '
 formattingDict[pyatspi.ROLE_LAYERED_PANE] = __roleDict
 
 ### pyatspi.ROLE_PARAGRAPH, pyatspi.ROLE_PASSWORD_TEXT, pyatspi.ROLE_TEXT ###
