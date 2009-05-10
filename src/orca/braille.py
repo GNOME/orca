@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -28,7 +28,7 @@ moving the text caret.
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import logging
@@ -149,6 +149,24 @@ command_name[brlapi.KEY_CMD_SIXDOTS]  = _("Six Dots")
 #
 command_name[brlapi.KEY_CMD_ROUTE]    = _("Cursor Routing")
 
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# This command represents the start of a selection operation.  It is
+# called "Cut Begin" to map to what BrlTTY users are used to:  in
+# character cell mode operation on virtual consoles, the act of copying
+# text is erroneously called a "cut" operation.
+#
+command_name[brlapi.KEY_CMD_CUTBEGIN] = _("Cut Begin")
+
+# Translators: this is a command for a button on a refreshable braille
+# display (an external hardware device used by people who are blind).
+# This command represents marking the endpoint of a selection.  It is
+# called "Cut Line" to map to what BrlTTY users are used to:  in
+# character cell mode operation on virtual consoles, the act of copying
+# text is erroneously called a "cut" operation.
+#
+command_name[brlapi.KEY_CMD_CUTLINE] = _("Cut Line")
+
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
 # left to right, and y values increase from top to bottom.
@@ -224,9 +242,9 @@ class Region:
         # If louis is None, then we don't go into contracted mode.
         self.contracted = settings.enableContractedBraille and \
                           louis is not None
-        
+
         self.expandOnCursor = expandOnCursor
-        
+
         # The uncontracted string for the line.
         #
         self.rawLine = string.decode("UTF-8").strip("\n")
@@ -241,7 +259,7 @@ class Region:
         else:
             self.string = self.rawLine
             self.cursorOffset = cursorOffset
-            
+
     def processRoutingKey(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of string
@@ -269,7 +287,7 @@ class Region:
         #
         mask = ['\x00'] * maskSize
         return "".join(mask)
-    
+
     def repositionCursor(self):
         """Reposition the cursor offset for contracted mode.
         """
@@ -293,7 +311,7 @@ class Region:
             cursorOnSpace = line[cursorOffset] == ' '
         except IndexError:
             cursorOnSpace = False
-            
+
         if not expandOnCursor or cursorOnSpace:
             contracted, inPos, outPos, cursorPos = \
                              louis.translate([self.contractionTable],
@@ -307,7 +325,7 @@ class Region:
                                              mode=louis.MODE.compbrlAtCursor)
 
         return contracted, inPos, outPos, cursorPos
-    
+
     def displayToBufferOffset(self, display_offset):
         try:
             offset = self.inPos[display_offset]
@@ -336,7 +354,7 @@ class Region:
                                        self.cursorOffset,
                                        self.expandOnCursor)
         self.contracted = True
-        
+
     def expandRegion(self):
         if not self.contracted:
             return
@@ -346,7 +364,7 @@ class Region:
         except IndexError:
             self.cursorOffset = len(self.string)
         self.contracted = False
-        
+
 class Component(Region):
     """A subclass of Region backed by an accessible.  This Region will react
     to any cursor routing key events and perform the default action on the
@@ -372,6 +390,15 @@ class Component(Region):
                 self.string = indicator
 
         self.accessible = accessible
+
+    def getCaretOffset(self, offset):
+        """Returns the caret position of the given offset if the object
+        has text with a caret.  Otherwise, returns -1.
+
+        Arguments:
+        - offset: 0-based offset of the cell on the physical display
+        """
+        return -1
 
     def processRoutingKey(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
@@ -429,7 +456,7 @@ class Text(Region):
     [[[TODO: WDW - need to add in text selection capabilities.  Logged
     as bugzilla bug 319754.]]]"""
 
-    def __init__(self, accessible, label="", eol="", 
+    def __init__(self, accessible, label="", eol="",
                  startOffset=None, endOffset=None):
         """Creates a new Text region.
 
@@ -499,7 +526,7 @@ class Text(Region):
         string = string.decode("UTF-8")
 
         cursorOffset = min(caretOffset - lineOffset, len(string))
-        
+
         if lineOffset != self.lineOffset:
             return False
 
@@ -516,20 +543,33 @@ class Text(Region):
 
         return True
 
+    def getCaretOffset(self, offset):
+        """Returns the caret position of the given offset if the object
+        has text with a caret.  Otherwise, returns -1.
+
+        Arguments:
+        - offset: 0-based offset of the cell on the physical display
+        """
+        offset = self.displayToBufferOffset(offset)
+
+        if offset < 0:
+            return -1
+
+        return min(self.lineOffset + offset, self._maxCaretOffset)
+
     def processRoutingKey(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of text
         associated with this region.  Note that the zeroeth character may have
-        been scrolled off the display."""
-        
-        offset = self.displayToBufferOffset(offset)
+        been scrolled off the display.
+        """
 
-        if offset < 0:
+        caretOffset = self.getCaretOffset(offset)
+
+        if caretOffset < 0:
             return
 
-        newCaretOffset = min(self.lineOffset + offset, self._maxCaretOffset)
-        orca_state.activeScript.setCaretOffset(
-            self.accessible, newCaretOffset)
+        orca_state.activeScript.setCaretOffset(self.accessible, caretOffset)
 
     def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
@@ -636,7 +676,7 @@ class Text(Region):
     def contractLine(self, line, cursorOffset=0, expandOnCursor=True):
         contracted, inPos, outPos, cursorPos = Region.contractLine(
             self, line, cursorOffset, expandOnCursor)
-        
+
         return contracted + self.eol, inPos, outPos, cursorPos
 
     def displayToBufferOffset(self, display_offset):
@@ -688,15 +728,28 @@ class ReviewText(Region):
         self.lineOffset = lineOffset
         self.zone = zone
 
+    def getCaretOffset(self, offset):
+        """Returns the caret position of the given offset if the object
+        has text with a caret.  Otherwise, returns -1.
+
+        Arguments:
+        - offset: 0-based offset of the cell on the physical display
+        """
+        offset = self.displayToBufferOffset(offset)
+
+        if offset < 0:
+            return -1
+
+        return self.lineOffset + offset
+
     def processRoutingKey(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of text
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
 
-        offset = self.displayToBufferOffset(offset)
-        newCaretOffset = self.lineOffset + offset
-        orca_state.activeScript.setCaretOffset(self.accessible, newCaretOffset)
+        caretOffset = self.getCaretOffset(offset)
+        orca_state.activeScript.setCaretOffset(self.accessible, caretOffset)
 
 class Line:
     """A horizontal line on the display.  Each Line is composed of a sequential
@@ -794,7 +847,8 @@ def getRegionAtCell(cell):
     associated with that cell in the form of [region, offsetinregion]
     where 'region' is the region associated with the cell and
     'offsetinregion' is the 0-based offset of where the cell is
-    in the region, where 0 represents the beginning of the region, """
+    in the region, where 0 represents the beginning of the region.
+    """
 
     if len(_lines) > 0:
         offset = (cell - 1) + viewport[0]
@@ -802,6 +856,27 @@ def getRegionAtCell(cell):
         return _lines[lineNum].getRegionAtOffset(offset)
     else:
         return [None, -1]
+
+def getCaretContext(event):
+    """Gets the accesible and caret offset associated with the given
+    event.  The event should have a BrlAPI event that contains an
+    argument value that corresponds to a cell on the display.
+
+    Arguments:
+    - event: an instance of input_event.BrailleEvent.  event.event is
+    the dictionary form of the expanded BrlAPI event.
+    """
+
+    offset = event.event["argument"]
+    [region, regionOffset] = getRegionAtCell(offset + 1)
+    if region and (isinstance(region, Text) or isinstance(region, ReviewText)):
+        accessible = region.accessible
+        caretOffset = region.getCaretOffset(regionOffset)
+    else:
+        accessible = None
+        caretOffset = -1
+
+    return [accessible, caretOffset]
 
 def clear():
     """Clears the logical structure, but keeps the Braille display as is
@@ -1139,6 +1214,13 @@ def returnToRegionWithFocus(inputEvent=None):
     return True
 
 def setContractedBraille(event):
+    """Turns contracted braille on or off based upon the event.
+
+    Arguments:
+    - event: an instance of input_event.BrailleEvent.  event.event is
+    the dictionary form of the expanded BrlAPI event.
+    """
+
     settings.enableContractedBraille = \
         (event.event["flags"] & brlapi.KEY_FLG_TOGGLE_ON) != 0
     for line in _lines:
@@ -1146,11 +1228,20 @@ def setContractedBraille(event):
     refresh()
 
 def processRoutingKey(event):
+    """Processes a cursor routing key event.
+
+    Arguments:
+    - event: an instance of input_event.BrailleEvent.  event.event is
+    the dictionary form of the expanded BrlAPI event.
+    """
+
     cell = event.event["argument"]
+
     if len(_lines) > 0:
         cursor = cell + viewport[0]
         lineNum = viewport[1]
         _lines[lineNum].processRoutingKey(cursor)
+
     return True
 
 def _processBrailleEvent(event):
@@ -1215,7 +1306,7 @@ def setupKeyRanges(keys):
     #
     for key in keys:
         keySet.append(brlapi.KEY_TYPE_CMD | key)
-            
+
     _brlAPI.acceptKeys(brlapi.rangeType_command, keySet)
 
 def init(callback=None, tty=7):
