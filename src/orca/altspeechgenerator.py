@@ -494,7 +494,7 @@ class AltSpeechGenerator:
                         _restoreRole(oldRole, args)
             else:
                 oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
-                                       args)
+                                        args)
                 result.extend(
                     self.getSpeech(obj, **args))
                 _restoreRole(oldRole, args)
@@ -751,18 +751,6 @@ class AltSpeechGenerator:
             #
             args['role'] = args.get('role', obj.getRole())
 
-            # If someone has already given us the format string to be used
-            # then we dont need to look it up.
-            #
-            format = args.get('format', None)
-            if not format:
-                args['already_focused'] = already_focused
-                format = self._script.formatting.getFormat('speech',
-                                                           **args)
-
-            assert(format)
-            evalString = format
-
             # We loop through the format string, catching each error
             # as we go.  Each error should always be a NameError, where
             # the name is the name of one of our generator functions.
@@ -770,9 +758,13 @@ class AltSpeechGenerator:
             # results, placing them in the generatedResultDict,
             # which serves as the globals for the call to eval.
             #
+            args['already_focused'] = already_focused
+            format = self._script.formatting.getFormat('speech',
+                                                       **args)
+            assert(format)
             while True:
                 try:
-                    result = eval(evalString, generatedResultsDict)
+                    result = eval(format, generatedResultsDict)
                     break
                 except NameError:
                     result = []
