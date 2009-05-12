@@ -30,6 +30,10 @@ import pyatspi
 # pylint: disable-msg=C0301
 
 defaultFormatting = {
+    'voices': {
+        'default': ACSS({}),
+        'name' : ACSS({ACSS.AVERAGE_PITCH : 5.6}),
+        },
     'speech': {
         'default': {
             'focused': '',
@@ -187,3 +191,11 @@ class Formatting(dict):
         else:
             format = roleDict['unfocused']
         return format
+
+    def getVoice(self, **args):
+        role = args.get('role',None)
+        if self['voices'].has_key(role):
+            voice = self['voice'][role]
+        else:
+            voice = self['voice']['default']
+        return voice

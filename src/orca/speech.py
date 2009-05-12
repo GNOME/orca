@@ -137,6 +137,34 @@ def sayAll(utteranceIterator, progressCallback):
             debug.println(debug.LEVEL_INFO, logLine)
             log.info(logLine)
 
+def altspeak(textArray, interrupt=True):
+    """Speaks all queued text immediately.  If text is not None,
+    it is added to the queue before speaking.
+
+    Arguments:
+    - textArray:      optional text to add to the queue before speaking
+    - interrupt: if True, stops any speech in progress before
+                 speaking the text
+    """
+
+    # We will not interrupt a key echo in progress.
+    #
+    if orca_state.lastKeyEchoTime:
+        interrupt = interrupt \
+            and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
+
+    if settings.silenceSpeech:
+        return
+
+    acss = textArray[0]
+    for (i=1; i<len(textArray); i++):
+        element = textArray[i]
+        if isinstance(element,basestring):
+            if _speechserver:
+                _speechserver.speak(element, __resolveACSS(acss), interrupt)
+        else:
+            altspeak(element, interrupt=True):
+
 def speak(text, acss=None, interrupt=True):
     """Speaks all queued text immediately.  If text is not None,
     it is added to the queue before speaking.
