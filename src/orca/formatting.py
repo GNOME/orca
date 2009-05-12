@@ -27,6 +27,8 @@ __license__   = "LGPL"
 
 import pyatspi
 
+# pylint: disable-msg=C0301
+
 defaultFormatting = {
     'speech': {
         'default': {
@@ -35,29 +37,29 @@ defaultFormatting = {
             },
         pyatspi.ROLE_ALERT: {
             'unfocused': 'labelAndName + unrelatedLabels'
-            }, 
+            },
         pyatspi.ROLE_ANIMATION: {
             'unfocused': 'labelAndName'
-            }, 
+            },
         pyatspi.ROLE_CHECK_BOX: {
-            'focused': 'checkedState', 
+            'focused': 'checkedState',
             'unfocused': 'labelAndName + roleName + checkedState + required + availability'
-            }, 
+            },
         pyatspi.ROLE_CHECK_MENU_ITEM: {
-            'focused': 'checkedState', 
+            'focused': 'checkedState',
             'unfocused': 'labelAndName + roleName + checkedState + required + availability + accelerator'
-            }, 
+            },
         pyatspi.ROLE_DIALOG: {
             'unfocused': 'labelAndName + unrelatedLabels'
-            }, 
+            },
         pyatspi.ROLE_FRAME: {
-            'focused': '', 
+            'focused': '',
             'unfocused': 'labelAndName + allTextSelection + roleName + unfocusedDialogCount + availability'
-            }, 
+            },
         pyatspi.ROLE_ICON: {
-            'focused': 'labelAndName + imageDescription + roleName', 
+            'focused': 'labelAndName + imageDescription + roleName',
             'unfocused': 'labelAndName + imageDescription + roleName'
-            }, 
+            },
         pyatspi.ROLE_LAYERED_PANE: {
             'focused': 'labelAndName + allTextSelection + roleName + availability + noShowingChildren',
             'unfocused': 'labelAndName + allTextSelection + roleName + availability + noShowingChildren'
@@ -96,7 +98,7 @@ defaultFormatting = {
             # speech utterances. Note that we can't tell if this is a "check
             # menu item" that is currently unchecked and speak that state.
             # See Orca bug #433398 for more details.
-            # 
+            #
             'focused': 'labelAndName + radioState + roleName + availability',
             'unfocused': 'labelAndName + radioState + roleName + availability + accelerator'
             },
@@ -173,12 +175,9 @@ class Formatting(dict):
         self._script = script
         self.update(defaultFormatting)
 
-    def getFormat(self, dictType, forceRole=None, **args):
+    def getFormat(self, dictType, **args):
         already_focused = args.get('already_focused', False)
-        if forceRole:
-            role = forceRole
-        else:
-            role = args.get('role', None)
+        role = args.get('role', None)
         if self[dictType].has_key(role):
             roleDict = self[dictType][role]
         else:
@@ -188,4 +187,3 @@ class Formatting(dict):
         else:
             format = roleDict['unfocused']
         return format
-

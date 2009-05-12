@@ -38,7 +38,7 @@ from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
 from orca_i18n import C_        # to provide qualified translatable strings
 
-def formatExceptionInfo(maxTBlevel=5):
+def _formatExceptionInfo(maxTBlevel=5):
     cla, exc, trbk = sys.exc_info()
     excName = cla.__name__
     try:
@@ -47,6 +47,17 @@ def formatExceptionInfo(maxTBlevel=5):
         excArgs = "<no args>"
     excTb = traceback.format_tb(trbk, maxTBlevel)
     return (excName, excArgs, excTb)
+
+def _overrideRole(newRole, args):
+    oldRole = args.get('role', None)
+    args['role'] = newRole
+    return oldRole
+
+def _restoreRole(oldRole, args):
+    if oldRole:
+        args['role'] = oldRole
+    else:
+        del args['role']
 
 class AltSpeechGenerator:
     """Takes accessible objects and produces a string to speak for
@@ -83,7 +94,7 @@ class AltSpeechGenerator:
                             eval(evalString, generatedResultsDict)
                             break
                         except NameError:
-                            info = formatExceptionInfo()
+                            info = _formatExceptionInfo()
                             arg = info[1][0]
                             arg = arg.replace("name '", "")
                             arg = arg.replace("' is not defined", "")
@@ -93,7 +104,7 @@ class AltSpeechGenerator:
                             generatedResultsDict[arg] = ""
                         except:
                             print roleKey, speechKey, evalString, \
-                                  formatExceptionInfo()
+                                  _formatExceptionInfo()
                             break
 
     #####################################################################
@@ -114,17 +125,15 @@ class AltSpeechGenerator:
     def _getTextRole(self, obj, **args):
         result = []
         # pylint: disable-msg=W0142
-        if obj.getRole() != pyatspi.ROLE_PARAGRAPH:
+        role = args.get('role', obj.getRole())
+        if role != pyatspi.ROLE_PARAGRAPH:
             result.extend(self._getRoleName(obj, **args))
         return result
 
-    def _getRoleName(self, obj, forceRole=None, **args):
+    def _getRoleName(self, obj, **args):
         result = []
-        if forceRole:
-            role = forceRole
-        else:
-            role = args.get('role', None)
-        if (obj.getRole() != pyatspi.ROLE_UNKNOWN):
+        role = args.get('role', obj.getRole())
+        if (role != pyatspi.ROLE_UNKNOWN):
             result.append(rolenames.getSpeechForRoleName(obj, role))
         return result
 
@@ -216,13 +225,10 @@ class AltSpeechGenerator:
                 # string used in the *.po file for gail.
                 #
                 if action.getName(i) in ["toggle", _("toggle")]:
-                    oldFormat = args.get('format', None)
-                    args['format'] = self._script.formatting.getFormat( \
-                        'speech', forceRole=pyatspi.ROLE_CHECK_BOX, **args)
-                    result.extend(
-                        self.getSpeech(obj, **args))
-                    args['format'] = oldFormat
-                    break
+                    oldRole = _overrideRole(pyatspi.ROLE_CHECK_BOX,
+                                            args)
+                    result.extend(self.getSpeech(obj, **args))
+                    _restoreRole(oldRole, args)
         return result
 
     def _getRadioState(self, obj, **args):
@@ -341,8 +347,8 @@ class AltSpeechGenerator:
     #####################################################################
 
     def _getTableCell2ChildLabel(self, obj, **args):
-        """Get the speech utterances for the label of single table cell that
-        has a special 2 child pattern that we run into."""
+        """Get the speech utterances for the label of a toggle in a table cell
+        that has a special 2 child pattern that we run into."""
         # pylint: disable-msg=W0142
         result = []
 
@@ -375,15 +381,13 @@ class AltSpeechGenerator:
             elif not hasToggle[0] and hasToggle[1]:
                 cellOrder = [ 0, 1 ]
             if cellOrder:
-                args['format'] = self._script.formatting.getFormat( 'speech', \
-                  forceRole=pyatspi.ROLE_TABLE_CELL, **args)
                 for i in cellOrder:
                     if not hasToggle[i]:
                         result.extend(self.getSpeech(obj[i], **args))
         return result
 
     def _getTableCell2ChildToggle(self, obj, **args):
-        """Get the speech utterances for the label of single table cell that
+        """Get the speech utterances for the toggle value in a table cell that
         has a special 2 child pattern that we run into."""
         # pylint: disable-msg=W0142
         result = []
@@ -418,7 +422,6 @@ class AltSpeechGenerator:
             elif not hasToggle[0] and hasToggle[1]:
                 cellOrder = [ 0, 1 ]
             if cellOrder:
-                args['role'] = pyatspi.ROLE_CHECK_BOX
                 for i in cellOrder:
                     if hasToggle[i]:
                         result.extend(self.getSpeech(obj[i], **args))
@@ -466,7 +469,7 @@ class AltSpeechGenerator:
                         # also speak the table column header.
                         # See Orca bug #455230 for more details.
                         #
-                        label = self._script.getDisplayedText( \
+                        label = self._script.getDisplayedText(
                             self._script.getRealActiveDescendant(cell))
                         try:
                             action = cell.queryAction()
@@ -483,22 +486,23 @@ class AltSpeechGenerator:
                                     accHeader = \
                                         parentTable.getColumnHeader(i)
                                     result.append(accHeader.name)
-                        format = self._script.formatting.getFormat( 'speech', \
-                            forceRole='REAL_ROLE_TABLE_CELL', **args)
-                        result.extend( \
+                        oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
+                                                args)
+                        result.extend(
                             self.getSpeech(cell,
-                                           format=format,
                                            **args))
+                        _restoreRole(oldRole, args)
             else:
-                format = self._script.formatting.getFormat( 'speech', \
-                    forceRole='REAL_ROLE_TABLE_CELL', **args)
-                result.extend( \
-                    self.getSpeech(obj, format=format, **args))
+                oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
+                                       args)
+                result.extend(
+                    self.getSpeech(obj, **args))
+                _restoreRole(oldRole, args)
         else:
-            format = self._script.formatting.getFormat( 'speech', \
-                forceRole='REAL_ROLE_TABLE_CELL',
-                **args)
-            result = self.getSpeech(obj, format=format, **args)
+            oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
+                                    args)
+            result = self.getSpeech(obj, **args)
+            _restoreRole(oldRole, args)
         return result
 
     #####################################################################
@@ -742,20 +746,18 @@ class AltSpeechGenerator:
         result = []
         generatedResultsDict = {}
         try:
-            role = args.get('role', obj.getRole())
-            forceRole = args.get('forceRole', role)
-            role = forceRole
-
-            roleName = self._getRoleName(obj, forceRole=role, **args)
+            # We sometimes want to override the role.  We'll keep the
+            # role in the args dictionary as a means to let us do so.
+            #
+            args['role'] = args.get('role', obj.getRole())
 
             # If someone has already given us the format string to be used
             # then we dont need to look it up.
             #
-            format = args.get('format', '')
+            format = args.get('format', None)
             if not format:
                 args['already_focused'] = already_focused
-                format = self._script.formatting.getFormat( 'speech', \
-                                                           forceRole=role,
+                format = self._script.formatting.getFormat('speech',
                                                            **args)
 
             assert(format)
@@ -774,7 +776,7 @@ class AltSpeechGenerator:
                     break
                 except NameError:
                     result = []
-                    info = formatExceptionInfo()
+                    info = _formatExceptionInfo()
                     arg = info[1][0]
                     arg = arg.replace("name '", "")
                     arg = arg.replace("' is not defined", "")
@@ -784,7 +786,7 @@ class AltSpeechGenerator:
                     generatedResultsDict[arg] = \
                         self._methodsDict[arg](obj, **args)
         except:
-            print formatExceptionInfo()
+            print _formatExceptionInfo()
             result = []
 
         return result
