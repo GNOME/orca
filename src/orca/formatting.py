@@ -169,21 +169,23 @@ defaultFormatting = {
 class Formatting(dict):
 
     def __init__(self, script):
+        dict.__init__(self)
         self._script = script
         self.update(defaultFormatting)
 
-    def getFormat(self, type, forceRole=None, **args):
+    def getFormat(self, dictType, forceRole=None, **args):
         already_focused = args.get('already_focused', False)
         if forceRole:
             role = forceRole
         else:
             role = args.get('role', None)
-        if self[type].has_key(role):
-            roleDict = self[type][role]
+        if self[dictType].has_key(role):
+            roleDict = self[dictType][role]
         else:
-            roleDict = self[type]['default']
+            roleDict = self[dictType]['default']
         if already_focused and 'focused' in roleDict:
             format = roleDict['focused']
         else:
             format = roleDict['unfocused']
         return format
+

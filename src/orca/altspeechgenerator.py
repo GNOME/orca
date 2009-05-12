@@ -28,7 +28,6 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import sys
-import re
 import traceback
 
 import pyatspi
@@ -137,7 +136,8 @@ class AltSpeechGenerator:
         return result
 
     def _getLabelAndName(self, obj, **args):
-        """Gets the label and the name if the name is different from the label."""
+        """Gets the label and the name if the name is different from the label.
+        """
         # pylint: disable-msg=W0142
         result = []
         label = self._getLabel(obj, **args)
@@ -161,6 +161,7 @@ class AltSpeechGenerator:
 
     def _getUnrelatedLabels(self, obj, **args):
         """Finds all labels not in a label for or labelled by relation."""
+        # pylint: disable-msg=W0142
         labels = self._script.findUnrelatedLabels(obj)
         result = []
         for label in labels:
@@ -216,8 +217,8 @@ class AltSpeechGenerator:
                 #
                 if action.getName(i) in ["toggle", _("toggle")]:
                     oldFormat = args.get('format', None)
-                    args['format'] = self._script.formatting.getFormat(
-                        forceRole=pyatspi.ROLE_CHECK_BOX, **args)
+                    args['format'] = self._script.formatting.getFormat( \
+                        'speech', forceRole=pyatspi.ROLE_CHECK_BOX, **args)
                     result.extend(
                         self.getSpeech(obj, **args))
                     args['format'] = oldFormat
@@ -273,6 +274,7 @@ class AltSpeechGenerator:
 
     def _getMenuItemCheckedState(self, obj, **args):
         result = []
+        state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checked menu item.
             #
@@ -373,7 +375,7 @@ class AltSpeechGenerator:
             elif not hasToggle[0] and hasToggle[1]:
                 cellOrder = [ 0, 1 ]
             if cellOrder:
-                args['format'] = self._script.formatting.getFormat( \
+                args['format'] = self._script.formatting.getFormat( 'speech', \
                   forceRole=pyatspi.ROLE_TABLE_CELL, **args)
                 for i in cellOrder:
                     if not hasToggle[i]:
@@ -481,19 +483,19 @@ class AltSpeechGenerator:
                                     accHeader = \
                                         parentTable.getColumnHeader(i)
                                     result.append(accHeader.name)
-                        format = self._script.formatting.getFormat( \
+                        format = self._script.formatting.getFormat( 'speech', \
                             forceRole='REAL_ROLE_TABLE_CELL', **args)
                         result.extend( \
                             self.getSpeech(cell,
                                            format=format,
                                            **args))
             else:
-                format = self._script.formatting.getFormat( \
+                format = self._script.formatting.getFormat( 'speech', \
                     forceRole='REAL_ROLE_TABLE_CELL', **args)
                 result.extend( \
                     self.getSpeech(obj, format=format, **args))
         else:
-            format = self._script.formatting.getFormat(
+            format = self._script.formatting.getFormat( 'speech', \
                 forceRole='REAL_ROLE_TABLE_CELL',
                 **args)
             result = self.getSpeech(obj, format=format, **args)
@@ -656,8 +658,8 @@ class AltSpeechGenerator:
         if accelerator:
             # Add punctuation for better prosody.
             #
-            #if utterances:
-            #    utterances[-1] += "."
+            #if result:
+            #    result[-1] += "."
             result.append(accelerator)
         return result
 
@@ -671,9 +673,62 @@ class AltSpeechGenerator:
         if mnemonic:
             # Add punctuation for better prosody.
             #
-            #if utterances:
+            #if result:
             #    utterances[-1] += "."
             result = [mnemonic]
+        return result
+
+
+    #####################################################################
+    #                                                                   #
+    # Get the context of where the object is.
+    #                                                                   #
+    #####################################################################
+
+    def _getContext(self, obj, stopAncestor=None, **args):
+        """Get the information that describes the names and role of
+        the container hierarchy of the object, stopping at and
+        not including the stopAncestor.
+
+        Arguments:
+        - obj: the object
+        - stopAncestor: the anscestor to stop at and not include (None
+          means include all ancestors)
+
+        """
+
+        result = []
+
+        if not obj or obj == stopAncestor:
+            return result
+
+        parent = obj.parent
+        if parent \
+            and (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
+            and (parent.getRole() == pyatspi.ROLE_TABLE_CELL):
+            parent = parent.parent
+
+        while parent and (parent.parent != parent):
+            if parent == stopAncestor:
+                break
+            if not self._script.isLayoutOnly(parent):
+                text = self._script.getDisplayedLabel(parent)
+                if not text and 'Text' in pyatspi.listInterfaces(parent):
+                    text = self._script.getDisplayedText(parent)
+                if text and len(text.strip()):
+                    # Push announcement of cell to the end
+                    #
+                    if parent.getRole() not in [pyatspi.ROLE_TABLE_CELL,
+                                                pyatspi.ROLE_FILLER]:
+                        result.extend(self._getRoleName(parent))
+                    result.append(text)
+                    if parent.getRole() == pyatspi.ROLE_TABLE_CELL:
+                        result.extend(self._getRoleName(parent))
+
+            parent = parent.parent
+
+        result.reverse()
+
         return result
 
     #####################################################################
@@ -699,7 +754,7 @@ class AltSpeechGenerator:
             format = args.get('format', '')
             if not format:
                 args['already_focused'] = already_focused
-                format = self._script.formatting.getFormat('speech',
+                format = self._script.formatting.getFormat( 'speech', \
                                                            forceRole=role,
                                                            **args)
 

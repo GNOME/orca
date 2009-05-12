@@ -1859,7 +1859,7 @@ class SpeechGenerator:
 
         return utterances
 
-    def getSpeech(self, obj, already_focused):
+    def getSpeech(self, obj, already_focused, **args):
         """Get the speech for an Accessible object.  This will look
         first to the specific speech generators and then to the
         default speech generator.  This method is the primary method
@@ -1871,6 +1871,7 @@ class SpeechGenerator:
 
         Returns a list of utterances to be spoken.
         """
+        # pylint: disable-msg=W0142
         role = obj.getRole()
         if role in self.speechGenerators:
             generator = self.speechGenerators[role]
@@ -1880,7 +1881,8 @@ class SpeechGenerator:
         result1 =  [" ".join(generator(obj, already_focused))]
         print("r%d='%s'\n" %(len(result1[0]), result1))
 
-        result2 = self.alt.getSpeech(obj, already_focused=already_focused)
+        result2 = self.alt.getSpeech(obj, \
+            already_focused=already_focused, **args)
         # making the returned values from alt.getSpeech into a string.
         speak =  [" ".join(result2)]
         print("s%d='%s'\n" %(len(speak[0]), speak))
