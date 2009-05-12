@@ -34,7 +34,6 @@ import debug
 import orca_state
 import rolenames
 import settings
-import altspeechgenerator
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
@@ -155,8 +154,6 @@ class SpeechGenerator:
              self._getSpeechForTable
         self.speechGenerators[pyatspi.ROLE_WINDOW]              = \
              self._getSpeechForWindow
-        #--- mesar----
-        self.alt = altspeechgenerator.AltSpeechGenerator(script)
 
     def _addSpeechForObjectAccelerator(self, obj, utterances):
         """Adds an utterance that describes the keyboard accelerator for the
@@ -1876,16 +1873,8 @@ class SpeechGenerator:
             generator = self.speechGenerators[role]
         else:
             generator = self._getDefaultSpeech
-        print("processing obj of role %s\n" % obj.getRoleName())
-        result1 =  [" ".join(generator(obj, already_focused))]
-        print("r%d='%s'\n" %(len(result1[0]), result1))
 
-        result2 = self.alt.getSpeech(obj, already_focused=already_focused)
-        # making the returned values from alt.getSpeech into a string.
-        speak =  [" ".join(result2)]
-        print("s%d='%s'\n" %(len(speak[0]), speak))
-        print("r==s=%s\n" %cmp(result1[0], speak[0]))
-        return speak
+        return [" ".join(generator(obj, already_focused))]
 
     def getSpeechContext(self, obj, stopAncestor=None):
         """Get the speech that describes the names and role of
