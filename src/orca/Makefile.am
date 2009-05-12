@@ -9,6 +9,7 @@ orca_pathdir=$(pyexecdir)
 orca_python_PYTHON = \
 	__init__.py \
 	acss.py \
+	altspeechgenerator.py \
 	app_gui_prefs.py \
 	app_prefs.py \
 	bookmarks.py \
@@ -25,6 +26,7 @@ orca_python_PYTHON = \
 	find.py \
 	flat_review.py \
 	focus_tracking_presenter.py \
+	formatting.py \
 	gnomespeechfactory.py \
 	httpserver.py \
 	input_event.py \

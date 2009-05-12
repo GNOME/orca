@@ -42,6 +42,7 @@ __license__   = "LGPL"
 import braillegenerator
 import debug
 import flat_review
+import formatting
 import keybindings
 import orca_state
 import settings
@@ -86,6 +87,7 @@ class Script:
         self.brailleBindings = self.getBrailleBindings()
         self.app_pronunciation_dict = self.getPronunciations()
 
+        self.formatting = self.getFormatting()
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
         self.whereAmI = self.getWhereAmI()
@@ -177,6 +179,10 @@ class Script:
         return [command
                 for command, handler in self.brailleBindings.iteritems()
                 if inputEventHandler == handler]
+
+    def getFormatting(self):
+        """Returns the formatting strings for this script."""
+        return formatting.Formatting(self)
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
