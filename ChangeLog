@@ -154,7 +154,7 @@ commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
 2009-04-15  Willie Walker <william.walker@sun.com>
 
         * src/orca/gnomespeechfactory.py:
-          Fix for bug #570952 - Orca should be able to run with AT-SPI/D-Bus
+          Fix for bug #579052 - Orca should be able to run with AT-SPI/D-Bus
 
 2009-04-12  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 

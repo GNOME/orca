@@ -632,6 +632,14 @@ chnames[u'\u20ac'] = _("euro")
 #
 chnames[u'\u2122'] = _("trademark")
 
+# Translators: this is the spoken word for the character '←' (U+2190)
+#
+chnames[u'\u2190'] = _("left arrow")
+
+# Translators: this is the spoken word for the character '→' (U+2192)
+#
+chnames[u'\u2192'] = _("right arrow")
+
 # Translators: this is the spoken word for the character '≈' (U+2248)
 #
 chnames[u'\u2248'] = _("almost equal to")

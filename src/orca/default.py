@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2008 Sun Microsystems Inc.
+# Copyright 2004-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -25,7 +25,7 @@ for GTK."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import locale
@@ -692,6 +692,22 @@ class Script(script.Script):
                 # character on the display.
                 #
                 _("Processes a cursor routing key."))
+
+        self.inputEventHandlers["processBrailleCutBeginHandler"] = \
+            input_event.InputEventHandler(
+                Script.processBrailleCutBegin,
+                # Translators: this is used to indicate the start point
+                # of a text selection.
+                #
+                _("Marks the beginning of a text selection."))
+
+        self.inputEventHandlers["processBrailleCutLineHandler"] = \
+            input_event.InputEventHandler(
+                Script.processBrailleCutLine,
+                # Translators: this is used to indicate the end point
+                # of a text selection.
+                #
+                _("Marks the end of a text selection."))
 
         self.inputEventHandlers["enterLearnModeHandler"] = \
             input_event.InputEventHandler(
@@ -1961,6 +1977,10 @@ class Script(script.Script):
             self.inputEventHandlers["contractedBrailleHandler"]
         brailleBindings[braille.brlapi.KEY_CMD_ROUTE]   = \
             self.inputEventHandlers["processRoutingKeyHandler"]
+        brailleBindings[braille.brlapi.KEY_CMD_CUTBEGIN] = \
+            self.inputEventHandlers["processBrailleCutBeginHandler"]
+        brailleBindings[braille.brlapi.KEY_CMD_CUTLINE] = \
+            self.inputEventHandlers["processBrailleCutLineHandler"]
 
         return brailleBindings
 
@@ -4968,6 +4988,7 @@ class Script(script.Script):
 
     def setContractedBraille(self, inputEvent=None):
         """Toggles contracted braille."""
+
         braille.setContractedBraille(inputEvent)
         return True
 
@@ -4975,6 +4996,35 @@ class Script(script.Script):
         """Processes a cursor routing key."""
 
         braille.processRoutingKey(inputEvent)
+        return True
+
+    def processBrailleCutBegin(self, inputEvent=None):
+        """Clears the selection and moves the caret offset in the currently
+        active text area.
+        """
+
+        obj, caretOffset = braille.getCaretContext(inputEvent)
+
+        if caretOffset >= 0:
+            self.clearTextSelection(obj)
+            self.setCaretOffset(obj, caretOffset)
+
+        return True
+
+    def processBrailleCutLine(self, inputEvent=None):
+        """Extends the text selection in the currently active text
+        area and also copies the selected text to the system clipboard."""
+
+        obj, caretOffset = braille.getCaretContext(inputEvent)
+
+        if caretOffset >= 0:
+            self.adjustTextSelection(obj, caretOffset)
+            texti = obj.queryText()
+            startOffset, endOffset = texti.getSelection(0)
+            import gtk
+            clipboard = gtk.clipboard_get()
+            clipboard.set_text(texti.getText(startOffset, endOffset))
+
         return True
 
     def leftClickReviewItem(self, inputEvent=None):
@@ -7595,6 +7645,36 @@ class Script(script.Script):
         an error, event etc)
         """
         print "\a"
+
+    def clearTextSelection(self, obj):
+        """Clears the text selection if the object supports it."""
+        try:
+            texti = obj.queryText()
+        except:
+            return
+
+        for i in range(0, texti.getNSelections()):
+            texti.removeSelection(0)
+
+    def adjustTextSelection(self, obj, offset):
+        """Adjusts the end point of a text selection"""
+        try:
+            texti = obj.queryText()
+        except:
+            return
+
+        if not texti.getNSelections():
+            caretOffset = texti.caretOffset
+            startOffset = min(offset, caretOffset)
+            endOffset = max(offset, caretOffset)
+            texti.addSelection(startOffset, endOffset)
+        else:
+            startOffset, endOffset = texti.getSelection(0)
+            if offset < startOffset:
+                startOffset = offset
+            else:
+                endOffset = offset
+            texti.setSelection(0, startOffset, endOffset)
 
     def setCaretOffset(self, obj, offset):
         """Set the caret offset on a given accessible. Similar to

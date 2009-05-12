@@ -21,7 +21,7 @@ General:
 * Adjust debug utilities to print to console and debug log.
   (Willie Walker)
 
-* Fix for bgo#570952 - Orca should be able to run with AT-SPI/D-Bus.
+* Fix for bgo#579052 - Orca should be able to run with AT-SPI/D-Bus.
   (Willie Walker)
 
 * Fix for bgo#573535 - Orca should use the 16x16 pixels application
