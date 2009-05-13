@@ -1859,12 +1859,13 @@ class SpeechGenerator:
 
         return utterances
 
-    def _dumpAndStripAltSpeech(self, result, indent=""):
+    def _dumpAndStripAltSpeech(self, result, voice=None, indent=""):
         """Dumps and strips the array-based speech from the 
         alternate speech generator.  The full result is
         dumped to stdout and the return value is a single
         depth array of only strings."""
         import acss
+        import speech
         newResult = []
         subString = None
         didACSS = False
@@ -1881,11 +1882,13 @@ class SpeechGenerator:
                 subString = None
                 if isinstance(element, list):
                     newResult.extend(
-                        self._dumpAndStripAltSpeech(element, indent))
+                        self._dumpAndStripAltSpeech(element, voice, indent))
                 elif isinstance(element, acss.ACSS):
                     print indent + '<voice acss=\"%s">' % element
                     indent += "  "
                     didACSS = True
+                    voice=acss.ACSS(voice)
+                    voice.update(element)
                 else:
                     print indent + "UNKNOWN element", element
         if subString:
@@ -1919,7 +1922,8 @@ class SpeechGenerator:
 
         result2 = self.alt.getSpeech(obj, \
             already_focused=already_focused, **args)
-        print result2
+        import speech
+        speech.altspeak(result2)
         result2 = self._dumpAndStripAltSpeech(result2)
 
         # making the returned values from alt.getSpeech into a string.

@@ -137,33 +137,30 @@ def sayAll(utteranceIterator, progressCallback):
             debug.println(debug.LEVEL_INFO, logLine)
             log.info(logLine)
 
-def altspeak(textArray, interrupt=True):
-    """Speaks all queued text immediately.  If text is not None,
-    it is added to the queue before speaking.
-
-    Arguments:
-    - textArray:      optional text to add to the queue before speaking
-    - interrupt: if True, stops any speech in progress before
-                 speaking the text
-    """
-
-    # We will not interrupt a key echo in progress.
-    #
-    if orca_state.lastKeyEchoTime:
-        interrupt = interrupt \
-            and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
-
-    if settings.silenceSpeech:
-        return
-
-    acss = textArray[0]
-    for i in range(1, len(textArray)):
-        element = textArray[i]
+def altspeak(result, voice=None):
+    """Speaks the array-based speech from the alternate speech generator."""
+    subString = None
+    for element in result:
         if isinstance(element, basestring):
-            if _speechserver:
-                _speechserver.speak(element, __resolveACSS(acss), interrupt)
+            if subString:
+                subString += " " + element
+            else:
+                subString = element
         else:
-            altspeak(element, interrupt=True)
+            if subString:
+                print "Speaking '%s' with" % subString, voice
+                speak(subString, voice)
+            subString = None
+            if isinstance(element, list):
+                altspeak(element, voice)
+            elif isinstance(element, ACSS):
+                voice = ACSS(voice)
+                voice.update(element)
+            else:
+                print indent + "UNKNOWN element", element
+    if subString:
+        print "Speaking '%s' with" % subString, voice
+        speak(subString, voice)
 
 def speak(text, acss=None, interrupt=True):
     """Speaks all queued text immediately.  If text is not None,
