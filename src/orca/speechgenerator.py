@@ -1859,6 +1859,42 @@ class SpeechGenerator:
 
         return utterances
 
+    def _dumpAndStripAltSpeech(self, result, indent=""):
+        """Dumps and strips the array-based speech from the 
+        alternate speech generator.  The full result is
+        dumped to stdout and the return value is a single
+        depth array of only strings."""
+        import acss
+        newResult = []
+        subString = None
+        didACSS = False
+        for element in result:
+            if isinstance(element, basestring):
+                if subString:
+                    subString += " " + element
+                else:
+                    subString = element
+                newResult.append(element)
+            else:
+                if subString:
+                    print indent + subString
+                subString = None
+                if isinstance(element, list):
+                    newResult.extend(
+                        self._dumpAndStripAltSpeech(element, indent))
+                elif isinstance(element, acss.ACSS):
+                    print indent + '<voice acss=\"%s">' % element
+                    indent += "  "
+                    didACSS = True
+                else:
+                    print indent + "UNKNOWN element", element
+        if subString:
+            print indent + subString
+        if didACSS:
+            print indent[:-2] + '</voice>'
+
+        return newResult
+
     def getSpeech(self, obj, already_focused, **args):
         """Get the speech for an Accessible object.  This will look
         first to the specific speech generators and then to the
@@ -1878,11 +1914,14 @@ class SpeechGenerator:
         else:
             generator = self._getDefaultSpeech
         print("processing obj of role %s\n" % obj.getRoleName())
-        result1 =  [" ".join(generator(obj, already_focused))]
+        result1 = [" ".join(generator(obj, already_focused))]
         print("r%d='%s'\n" %(len(result1[0]), result1))
 
         result2 = self.alt.getSpeech(obj, \
             already_focused=already_focused, **args)
+        print result2
+        result2 = self._dumpAndStripAltSpeech(result2)
+
         # making the returned values from alt.getSpeech into a string.
         speak =  [" ".join(result2)]
         print("s%d='%s'\n" %(len(speak[0]), speak))

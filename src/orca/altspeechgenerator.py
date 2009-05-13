@@ -30,6 +30,7 @@ __license__   = "LGPL"
 import sys
 import traceback
 
+import debug
 import pyatspi
 import rolenames
 import settings
@@ -76,6 +77,16 @@ class AltSpeechGenerator:
             name = name[0].lower() + name[1:]
             self._methodsDict[name] = method
 
+        # Verify the formatting strings are OK.  This is only
+        # for verification and does not effect the function of
+        # Orca at all.
+        #
+        # Populate the entire globals with empty arrays
+        # for the results of all the legal method names.
+        #
+        methods = {}
+        for key in self._methodsDict.keys():
+            methods[key] = []
         for roleKey in self._script.formatting["speech"]:
             for speechKey in ["focused", "unfocused"]:
                 try:
@@ -88,10 +99,9 @@ class AltSpeechGenerator:
                         # It's legal to have an empty string for speech.
                         #
                         continue
-                    generatedResultsDict = {}
                     while True:
                         try:
-                            eval(evalString, generatedResultsDict)
+                            eval(evalString, methods)
                             break
                         except NameError:
                             info = _formatExceptionInfo()
@@ -99,12 +109,15 @@ class AltSpeechGenerator:
                             arg = arg.replace("name '", "")
                             arg = arg.replace("' is not defined", "")
                             if not self._methodsDict.has_key(arg):
-                                print roleKey, speechKey, evalString, \
-                                      "    no function for '%s'\n" % arg
-                            generatedResultsDict[arg] = ""
+                                debug.printException(
+                                    debug.LEVEL_SEVERE,
+                                    "Unable to find function for '%s'\n" % arg)
                         except:
-                            print roleKey, speechKey, evalString, \
-                                  _formatExceptionInfo()
+                            debug.printException(debug.LEVEL_SEVERE)
+                            debug.println(
+                                debug.LEVEL_SEVERE,
+                                "While processing '%s' '%s' '%s' '%s'" \
+                                % (roleKey, speechKey, evalString, methods))
                             break
 
     #####################################################################
@@ -742,10 +755,18 @@ class AltSpeechGenerator:
     #                                                                   #
     #####################################################################
 
+    def _getVoice(self, obj, **args):
+        voiceKey = args.get('role', obj.getRole())
+        try:
+            voice = settings.voices[voiceKey]
+        except:
+            voice = settings.voices[settings.DEFAULT_VOICE]
+        return [voice]
+
     def getSpeech(self, obj, already_focused=False, **args):
         # pylint: disable-msg=W0142
         result = []
-        generatedResultsDict = {}
+        methods = {}
         try:
             # We sometimes want to override the role.  We'll keep the
             # role in the args dictionary as a means to let us do so.
@@ -753,11 +774,11 @@ class AltSpeechGenerator:
             args['role'] = args.get('role', obj.getRole())
 
             # We loop through the format string, catching each error
-            # as we go.  Each error should always be a NameError, where
-            # the name is the name of one of our generator functions.
-            # When we encounter this, we call the function and get its
-            # results, placing them in the generatedResultDict,
-            # which serves as the globals for the call to eval.
+            # as we go.  Each error should always be a NameError,
+            # where the name is the name of one of our generator
+            # functions.  When we encounter this, we call the function
+            # and get its results, placing them in the globals for the
+            # the call to eval.
             #
             args['already_focused'] = already_focused
             format = self._script.formatting.getFormat('speech',
@@ -765,7 +786,7 @@ class AltSpeechGenerator:
             assert(format)
             while True:
                 try:
-                    result = eval(format, generatedResultsDict)
+                    result = eval(format, methods)
                     break
                 except NameError:
                     result = []
@@ -774,12 +795,13 @@ class AltSpeechGenerator:
                     arg = arg.replace("name '", "")
                     arg = arg.replace("' is not defined", "")
                     if not self._methodsDict.has_key(arg):
-                        print("unable to find function for '%s'\n" % arg)
+                        debug.printException(
+                            debug.LEVEL_SEVERE,
+                            "Unable to find function for '%s'\n" % arg)
                         break
-                    generatedResultsDict[arg] = \
-                        self._methodsDict[arg](obj, **args)
+                    methods[arg] = self._methodsDict[arg](obj, **args)
         except:
-            print _formatExceptionInfo()
+            debug.printException(debug.LEVEL_SEVERE)
             result = []
 
         return result
