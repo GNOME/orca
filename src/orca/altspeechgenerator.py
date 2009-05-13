@@ -450,12 +450,13 @@ class AltSpeechGenerator:
             # the same row).
             #
             speakAll = True
-            if "lastRow" in self._script.pointOfReference and \
-               "lastColumn" in self._script.pointOfReference:
+            if "lastRow" in self._script.pointOfReference \
+               and "lastColumn" in self._script.pointOfReference:
                 pointOfReference = self._script.pointOfReference
-                speakAll = (pointOfReference["lastRow"] != row) or \
-                    ((row == 0 or row == parentTable.nRows-1) and \
-                       pointOfReference["lastColumn"] == column)
+                speakAll = \
+                    (pointOfReference["lastRow"] != row) \
+                     or ((row == 0 or row == parentTable.nRows-1) \
+                     and pointOfReference["lastColumn"] == column)
             if speakAll:
                 for i in range(0, parentTable.nColumns):
                     cell = parentTable.getAccessibleAt(row, i)
@@ -481,7 +482,7 @@ class AltSpeechGenerator:
                                 # the 'toggle' action. It must be the same
                                 # string used in the *.po file for gail.
                                 #
-                                if action.getName(j) in ["toggle", \
+                                if action.getName(j) in ["toggle",
                                                          _("toggle")]:
                                     accHeader = \
                                         parentTable.getColumnHeader(i)
@@ -574,7 +575,7 @@ class AltSpeechGenerator:
             pass
         else:
             percentValue = \
-                (value.currentValue \
+                (value.currentValue
                  / (value.maximumValue - value.minimumValue)) \
                 * 100.0
             # Translators: this is the percentage value of a progress bar.
@@ -590,7 +591,7 @@ class AltSpeechGenerator:
     #####################################################################
 
     def _getRealActiveDescendantDisplayedText(self, obj, **args ):
-        text = self._script.getDisplayedText(\
+        text = self._script.getDisplayedText(
           self._script.getRealActiveDescendant(obj))
         if text:
             return [text]
@@ -640,7 +641,7 @@ class AltSpeechGenerator:
         # to let the user know.
         #
         alertAndDialogCount = \
-                    self._script.getUnfocusedAlertAndDialogCount(obj)
+            self._script.getUnfocusedAlertAndDialogCount(obj)
         if alertAndDialogCount > 0:
             # Translators: this tells the user how many unfocused
             # alert and dialog windows that this application has.
@@ -685,7 +686,7 @@ class AltSpeechGenerator:
 
     #####################################################################
     #                                                                   #
-    # Get the context of where the object is.
+    # Get the context of where the object is.                           #
     #                                                                   #
     #####################################################################
 
