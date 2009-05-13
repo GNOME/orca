@@ -89,7 +89,12 @@ defaultFormatting = {
             # voice in the format.  It should be removed when we've
             # figured that stuff out.]]]
             #
-            'unfocused': 'voice(role) + labelAndName + [voice("uppercase") + roleName]'
+            # [[[NOTE: MMH - We will only hear the tutorial string once per script,
+            # this is because the code checks if the tutorial to be spoken was the last tutorial, and this will always be true.
+            # Just putting 'tutorial' in some of the other unfocused strings should get it to behave as normally.
+            # Also r==s thing wont be true when returning tutorial msges because the old getSpeech was not responsible for tutorials, but now it is.]]]
+            #
+            'unfocused': 'voice(role) + labelAndName + [voice("uppercase") + roleName] + tutorial'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',

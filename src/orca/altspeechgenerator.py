@@ -752,6 +752,12 @@ class AltSpeechGenerator:
 
         return result
 
+    def _getTutorial(self, obj, **args):
+        already_focused = args.get('already_focused')
+        forceMessage = args.get('forceMessage', False)
+        return self._script.tutorialGenerator.getTutorial(obj, \
+            already_focused, forceMessage)
+
     #####################################################################
     #                                                                   #
     # Tie it all together                                               #
