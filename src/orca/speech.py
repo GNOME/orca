@@ -157,13 +157,13 @@ def altspeak(textArray, interrupt=True):
         return
 
     acss = textArray[0]
-    for (i=1; i<len(textArray); i++):
+    for i in range(1, len(textArray)):
         element = textArray[i]
-        if isinstance(element,basestring):
+        if isinstance(element, basestring):
             if _speechserver:
                 _speechserver.speak(element, __resolveACSS(acss), interrupt)
         else:
-            altspeak(element, interrupt=True):
+            altspeak(element, interrupt=True)
 
 def speak(text, acss=None, interrupt=True):
     """Speaks all queued text immediately.  If text is not None,
