@@ -87,6 +87,9 @@ class AltSpeechGenerator:
         methods = {}
         for key in self._methodsDict.keys():
             methods[key] = []
+        methods["voice"] = self.voice
+        methods["obj"] = None
+        methods["role"] = None
         for roleKey in self._script.formatting["speech"]:
             for speechKey in ["focused", "unfocused"]:
                 try:
@@ -755,10 +758,9 @@ class AltSpeechGenerator:
     #                                                                   #
     #####################################################################
 
-    def _getVoice(self, obj, **args):
-        voiceKey = args.get('role', obj.getRole())
+    def voice(self, key=None):
         try:
-            voice = settings.voices[voiceKey]
+            voice = settings.voices[key]
         except:
             voice = settings.voices[settings.DEFAULT_VOICE]
         return [voice]
@@ -767,11 +769,15 @@ class AltSpeechGenerator:
         # pylint: disable-msg=W0142
         result = []
         methods = {}
+        methods["voice"] = self.voice
+        methods["obj"] = obj
+        methods["role"] = args.get('role', obj.getRole())
+
         try:
             # We sometimes want to override the role.  We'll keep the
             # role in the args dictionary as a means to let us do so.
             #
-            args['role'] = args.get('role', obj.getRole())
+            args['role'] = methods["role"]
 
             # We loop through the format string, catching each error
             # as we go.  Each error should always be a NameError,

@@ -89,7 +89,7 @@ defaultFormatting = {
             # voice in the format.  It should be removed when we've
             # figured that stuff out.]]]
             #
-            'unfocused': 'voice + labelAndName + [voice + roleName]'
+            'unfocused': 'voice(role) + labelAndName + [voice("uppercase") + roleName]'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',
