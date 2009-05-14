@@ -35,14 +35,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
-    def _getName(self, obj):
+    def _getName(self, obj, **args):
         """Gives preference to the object name versus what is being
         displayed on the screen.  This helps accomodate the naming
         hints being given to us by gcalctool for it's mathematical
         operator buttons."""
 
         if obj.getRole() != pyatspi.ROLE_PUSH_BUTTON:
-            return speechgenerator.SpeechGenerator._getSpeechForObjectName(\
+            return speechgenerator.SpeechGenerator._getName(\
                 self, obj)
 
         if obj.name:

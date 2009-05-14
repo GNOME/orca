@@ -41,7 +41,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     #
     # Also for each one of the grphics buttons in the main window
     #
-    def _getIsDesiredFocusedItem(self, obj, already_focused):
+    def _getIsDesiredFocusedItem(self, obj, **args):
         # Application should implement an accessible name in this
         # component, but until this is made We speech/braille "display
         # more options" when the focus is in one of these toggle

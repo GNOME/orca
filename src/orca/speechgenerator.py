@@ -791,6 +791,7 @@ class SpeechGenerator:
         methods["voice"] = self.voice
         methods["obj"] = obj
         methods["role"] = args.get('role', obj.getRole())
+        methods['pyatspi'] = pyatspi
 
         try:
             # We sometimes want to override the role.  We'll keep the
