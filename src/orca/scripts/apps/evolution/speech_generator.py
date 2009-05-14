@@ -37,7 +37,19 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
-    def _getIsDesiredFocusedItem(self, obj, already_focused):
+    def _getSpeechForTableCell(self, obj, already_focused):
+        """Get the speech utterances for a single table cell
+
+        Arguments:
+        - obj: the table
+        - already_focused: False if object just received focus
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = speechgenerator.SpeechGenerator.\
+                      _getSpeechForTableCell(self, obj, already_focused)
+
         # Check that we are in a table cell in the mail message header list.
         # If we are and this table cell has an expanded state, and the first
         # token of the last utterances is "0", then strip off that last 
@@ -47,6 +59,11 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                      pyatspi.ROLE_TREE_TABLE, \
                      pyatspi.ROLE_UNKNOWN]
         if self._script.isDesiredFocusedItem(obj, rolesList):
-            return True
-        else:
-            return False
+            state = obj.getState()
+            if state and state.contains(pyatspi.STATE_EXPANDABLE):
+                if state.contains(pyatspi.STATE_EXPANDED):
+                    tokens = utterances[-1].split()
+                    if tokens[0] == "0":
+                        utterances = utterances[0:-1]
+
+        return utterances

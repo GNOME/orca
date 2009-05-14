@@ -43,7 +43,6 @@ from orca.orca_i18n import _ # for gettext support
 
 from where_am_i import WhereAmI
 from speech_generator import SpeechGenerator
-from formatting import Formatting
 ########################################################################
 #                                                                      #
 # The Evolution script class.                                          #
@@ -145,10 +144,6 @@ class Script(default.Script):
         """
 
         return WhereAmI(self)
-
-    def getFormatting(self):
-        """Returns the formatting strings for this script."""
-        return Formatting(self)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
