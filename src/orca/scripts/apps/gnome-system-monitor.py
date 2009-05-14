@@ -94,5 +94,5 @@ class Script(default.Script):
                         line.addRegion(braille.Region(" " + label.name))
                         utterances.append(label.name)
 
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
             braille.refresh()

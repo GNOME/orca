@@ -46,4 +46,4 @@ class WhereAmI(where_am_I.WhereAmI):
         utterances = []
         text = self.getObjLabelAndName(self._statusBar)
         utterances.append(text)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)

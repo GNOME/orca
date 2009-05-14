@@ -437,7 +437,7 @@ class Script(default.Script):
 
             utterances = \
                  self.speechGenerator.getSpeech(newLocusOfFocus, False)
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
             brailleRegions = \
                  self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
@@ -469,7 +469,7 @@ class Script(default.Script):
             adjustedUtterances = []
             for utterance in utterances:
                 adjustedUtterances.append(self.adjustForRepeats(utterance))
-            speech.speakUtterances(adjustedUtterances)
+            speech.speak(adjustedUtterances)
             brailleRegions = \
                      self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
@@ -550,7 +550,7 @@ class Script(default.Script):
                 #
                 utterances = \
                      self.speechGenerator.getSpeech(event.source, False)
-                speech.speakUtterances(utterances)
+                speech.speak(utterances)
                 brailleRegions = \
                      self.brailleGenerator.getBrailleRegions(event.source)
                 braille.displayRegions(brailleRegions)

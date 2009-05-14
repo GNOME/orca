@@ -9,7 +9,6 @@ orca_pathdir=$(pyexecdir)
 orca_python_PYTHON = \
 	__init__.py \
 	acss.py \
-	altspeechgenerator.py \
 	app_gui_prefs.py \
 	app_prefs.py \
 	bookmarks.py \

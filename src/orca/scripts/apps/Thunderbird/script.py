@@ -549,7 +549,7 @@ class Script(Gecko.Script):
                 #
                 text = _("%s panel") % parent.name
                 utterances.append(text)
-                speech.speakUtterances(utterances)
+                speech.speak(utterances)
         else:
             grandparent = parent.parent
             if grandparent \
@@ -566,7 +566,7 @@ class Script(Gecko.Script):
                     #
                     text = _("%s panel") % grandparent.name
                     utterances.append(text)
-                    speech.speakUtterances(utterances)
+                    speech.speak(utterances)
 
     def _presentMessage(self, documentFrame):
         """Presents the first line of the message, or the entire message,

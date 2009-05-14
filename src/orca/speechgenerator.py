@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -19,26 +19,46 @@
 
 """Utilities for obtaining speech utterances for objects.  In general,
 there probably should be a singleton instance of the SpeechGenerator
-class.  For those wishing to override the speech generators, however,
-one can create a new instance and replace/extend the speech generators
-as they see fit."""
+class."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__id__        = "$Id:$"
+__version__   = "$Revision:$"
+__date__      = "$Date:$"
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pyatspi
+import sys
+import traceback
+
 import debug
-import orca_state
+import pyatspi
 import rolenames
 import settings
-import altspeechgenerator
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
 from orca_i18n import C_        # to provide qualified translatable strings
+
+def _formatExceptionInfo(maxTBlevel=5):
+    cla, exc, trbk = sys.exc_info()
+    excName = cla.__name__
+    try:
+        excArgs = exc.args
+    except KeyError:
+        excArgs = "<no args>"
+    excTb = traceback.format_tb(trbk, maxTBlevel)
+    return (excName, excArgs, excTb)
+
+def _overrideRole(newRole, args):
+    oldRole = args.get('role', None)
+    args['role'] = newRole
+    return oldRole
+
+def _restoreRole(oldRole, args):
+    if oldRole:
+        args['role'] = oldRole
+    else:
+        del args['role']
 
 class SpeechGenerator:
     """Takes accessible objects and produces a string to speak for
@@ -47,865 +67,217 @@ class SpeechGenerator:
     speechGenerators instance field as they see fit."""
 
     def __init__(self, script):
-
-        # The script that created us.  This allows us to ask the
-        # script for information if we need it.
-        #
         self._script = script
+        self._methodsDict = {}
+        for method in \
+            filter(lambda z: callable(z),
+                   map(lambda y: getattr(self, y).__get__(self, self.__class__),
+                       filter(lambda x: x.startswith("_get"), dir(self)))):
+            name = method.__name__[4:]
+            name = name[0].lower() + name[1:]
+            self._methodsDict[name] = method
 
-        # Set up a dictionary that maps role names to functions
-        # that generate speech for objects that implement that role.
+        # Verify the formatting strings are OK.  This is only
+        # for verification and does not effect the function of
+        # Orca at all.
         #
-        self.speechGenerators = {}
-        self.speechGenerators[pyatspi.ROLE_ALERT]               = \
-             self._getSpeechForAlert
-        self.speechGenerators[pyatspi.ROLE_ANIMATION]           = \
-             self._getSpeechForAnimation
-        self.speechGenerators[pyatspi.ROLE_ARROW]               = \
-             self._getSpeechForArrow
-        self.speechGenerators[pyatspi.ROLE_CHECK_BOX]           = \
-             self._getSpeechForCheckBox
-        self.speechGenerators[pyatspi.ROLE_CHECK_MENU_ITEM]     = \
-             self._getSpeechForCheckMenuItem
-        self.speechGenerators[pyatspi.ROLE_COLUMN_HEADER]       = \
-             self._getSpeechForColumnHeader
-        self.speechGenerators[pyatspi.ROLE_COMBO_BOX]           = \
-             self._getSpeechForComboBox
-        self.speechGenerators[pyatspi.ROLE_DESKTOP_ICON]        = \
-             self._getSpeechForDesktopIcon
-        self.speechGenerators[pyatspi.ROLE_DIAL]                = \
-             self._getSpeechForDial
-        self.speechGenerators[pyatspi.ROLE_DIALOG]              = \
-             self._getSpeechForDialog
-        self.speechGenerators[pyatspi.ROLE_DIRECTORY_PANE]      = \
-             self._getSpeechForDirectoryPane
-        self.speechGenerators[pyatspi.ROLE_EMBEDDED]            = \
-             self._getSpeechForEmbedded
-        self.speechGenerators[pyatspi.ROLE_FRAME]               = \
-             self._getSpeechForFrame
-        self.speechGenerators[pyatspi.ROLE_HTML_CONTAINER]      = \
-             self._getSpeechForHtmlContainer
-        self.speechGenerators[pyatspi.ROLE_ICON]                = \
-             self._getSpeechForIcon
-        self.speechGenerators[pyatspi.ROLE_IMAGE]               = \
-             self._getSpeechForImage
-        self.speechGenerators[pyatspi.ROLE_LABEL]               = \
-             self._getSpeechForLabel
-        self.speechGenerators[pyatspi.ROLE_LAYERED_PANE]        = \
-             self._getSpeechForLayeredPane
-        self.speechGenerators[pyatspi.ROLE_LIST]                = \
-             self._getSpeechForList
-        self.speechGenerators[pyatspi.ROLE_LIST_ITEM]           = \
-             self._getSpeechForListItem
-        self.speechGenerators[pyatspi.ROLE_MENU]                = \
-             self._getSpeechForMenu
-        self.speechGenerators[pyatspi.ROLE_MENU_BAR]            = \
-             self._getSpeechForMenuBar
-        self.speechGenerators[pyatspi.ROLE_MENU_ITEM]           = \
-             self._getSpeechForMenuItem
-        self.speechGenerators[pyatspi.ROLE_OPTION_PANE]         = \
-             self._getSpeechForOptionPane
-        self.speechGenerators[pyatspi.ROLE_PAGE_TAB]            = \
-             self._getSpeechForPageTab
-        self.speechGenerators[pyatspi.ROLE_PAGE_TAB_LIST]       = \
-             self._getSpeechForPageTabList
-        self.speechGenerators[pyatspi.ROLE_PARAGRAPH]           = \
-             self._getSpeechForText
-        self.speechGenerators[pyatspi.ROLE_PASSWORD_TEXT]       = \
-             self._getSpeechForText
-        self.speechGenerators[pyatspi.ROLE_PROGRESS_BAR]        = \
-             self._getSpeechForProgressBar
-        self.speechGenerators[pyatspi.ROLE_PUSH_BUTTON]         = \
-             self._getSpeechForPushButton
-        self.speechGenerators[pyatspi.ROLE_RADIO_BUTTON]        = \
-             self._getSpeechForRadioButton
-        self.speechGenerators[pyatspi.ROLE_RADIO_MENU_ITEM]     = \
-             self._getSpeechForRadioMenuItem
-        self.speechGenerators[pyatspi.ROLE_ROW_HEADER]          = \
-             self._getSpeechForRowHeader
-        self.speechGenerators[pyatspi.ROLE_SCROLL_BAR]          = \
-             self._getSpeechForScrollBar
-        self.speechGenerators[pyatspi.ROLE_SLIDER]              = \
-             self._getSpeechForSlider
-        self.speechGenerators[pyatspi.ROLE_SPIN_BUTTON]         = \
-             self._getSpeechForSpinButton
-        self.speechGenerators[pyatspi.ROLE_SPLIT_PANE]          = \
-             self._getSpeechForSplitPane
-        self.speechGenerators[pyatspi.ROLE_TABLE]               = \
-             self._getSpeechForTable
-        self.speechGenerators[pyatspi.ROLE_TABLE_CELL]          = \
-             self._getSpeechForTableCellRow
-        self.speechGenerators[pyatspi.ROLE_TABLE_COLUMN_HEADER] = \
-             self._getSpeechForTableColumnHeader
-        self.speechGenerators[pyatspi.ROLE_TABLE_ROW_HEADER]    = \
-             self._getSpeechForTableRowHeader
-        self.speechGenerators[pyatspi.ROLE_TEAROFF_MENU_ITEM]  = \
-             self._getSpeechForMenu
-        self.speechGenerators[pyatspi.ROLE_TERMINAL]            = \
-             self._getSpeechForTerminal
-        self.speechGenerators[pyatspi.ROLE_TEXT]                = \
-             self._getSpeechForText
-        self.speechGenerators[pyatspi.ROLE_TOGGLE_BUTTON]       = \
-             self._getSpeechForToggleButton
-        self.speechGenerators[pyatspi.ROLE_TOOL_BAR]            = \
-             self._getSpeechForToolBar
-        self.speechGenerators[pyatspi.ROLE_TREE]                = \
-             self._getSpeechForTable
-        self.speechGenerators[pyatspi.ROLE_TREE_TABLE]          = \
-             self._getSpeechForTable
-        self.speechGenerators[pyatspi.ROLE_WINDOW]              = \
-             self._getSpeechForWindow
-        #--- mesar----
-        self.alt = altspeechgenerator.AltSpeechGenerator(script)
+        # Populate the entire globals with empty arrays
+        # for the results of all the legal method names.
+        #
+        methods = {}
+        for key in self._methodsDict.keys():
+            methods[key] = []
+        methods["voice"] = self.voice
+        methods["obj"] = None
+        methods["role"] = None
+        for roleKey in self._script.formatting["speech"]:
+            for speechKey in ["focused", "unfocused"]:
+                try:
+                    evalString = \
+                        self._script.formatting["speech"][roleKey][speechKey]
+                except:
+                    continue
+                else:
+                    if not evalString:
+                        # It's legal to have an empty string for speech.
+                        #
+                        continue
+                    while True:
+                        try:
+                            eval(evalString, methods)
+                            break
+                        except NameError:
+                            info = _formatExceptionInfo()
+                            arg = info[1][0]
+                            arg = arg.replace("name '", "")
+                            arg = arg.replace("' is not defined", "")
+                            if not self._methodsDict.has_key(arg):
+                                debug.printException(
+                                    debug.LEVEL_SEVERE,
+                                    "Unable to find function for '%s'\n" % arg)
+                        except:
+                            debug.printException(debug.LEVEL_SEVERE)
+                            debug.println(
+                                debug.LEVEL_SEVERE,
+                                "While processing '%s' '%s' '%s' '%s'" \
+                                % (roleKey, speechKey, evalString, methods))
+                            break
 
-    def _addSpeechForObjectAccelerator(self, obj, utterances):
-        """Adds an utterance that describes the keyboard accelerator for the
-        given object to the list of utterances passed in.
+    #####################################################################
+    #                                                                   #
+    # Name, role, and label information                                 #
+    #                                                                   #
+    #####################################################################
 
-        Arguments:
-        - obj: the Accessible object
-        - utterances: the list of utterances to add to.
-
-        Returns a list of utterances to be spoken.
-        """
-
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
-            if accelerator:
-                # Add punctuation for better prosody.
-                #
-                #if utterances:
-                #    utterances[-1] += "."
-                utterances.append(accelerator)
-
-    def _addSpeechForObjectMnemonic(self, obj, utterances):
-        """Adds an utterance that describes the mnemonic for the given object
-        to the utterances passed in.
-
-        Arguments:
-        - obj: the Accessible object
-        - utterances: the list of utterances to add to.
-        """
-
-        if settings.enableMnemonicSpeaking:
-            # The mnemonic is what we're really looking for.  But,
-            # some objects (e.g., menu items) only expose the mnemonic
-            # via the full shortcut (e.g., "Alt f c" for a "Close"
-            # menu item).  So, we fall back to the last character in
-            # the shortcut if the shortcut exists.
-            #
-            [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
-            if mnemonic:
-                mnemonic = mnemonic[-1] # we just want a single character
-            if not mnemonic and shortcut:
-                mnemonic = shortcut
-            if mnemonic:
-                # Add punctuation for better prosody.
-                #
-                #if utterances:
-                #    utterances[-1] += "."
-                utterances.append(mnemonic)
-
-    def _getSpeechForObjectAvailability(self, obj):
-        """Returns a list of utterances that describes the availability
-        of the given object.
-
-        Arguments:
-        - obj: the Accessible object
-
-        Returns a list of utterances to be spoken.
-        """
-        state = obj.getState()
-        if not state.contains(pyatspi.STATE_SENSITIVE):
-            # Translators: this represents an item on the screen that has
-            # been set insensitive (or grayed out).
-            #
-            return [_("grayed")]
-        else:
-            return []
-
-    def _getSpeechForObjectLabel(self, obj):
-        label = self._script.getDisplayedLabel(obj)
-        if label:
-            return [label]
-        else:
-            return []
-
-    def _getSpeechForObjectName(self, obj):
+    def _getName(self, obj, **args):
+        result = []
         name = self._script.getDisplayedText(obj)
         if name:
-            return [name]
+            result.append(name)
         elif obj.description:
-            return [obj.description]
-        else:
-            return []
+            result.append(obj.description)
+        return result
 
-    def getSpeechForObjectRole(self, obj, role=None):
-        if (obj.getRole() != pyatspi.ROLE_UNKNOWN):
-            return [rolenames.getSpeechForRoleName(obj, role)]
-        else:
-            return []
+    def _getTextRole(self, obj, **args):
+        result = []
+        # pylint: disable-msg=W0142
+        role = args.get('role', obj.getRole())
+        if role != pyatspi.ROLE_PARAGRAPH:
+            result.extend(self._getRoleName(obj, **args))
+        return result
 
-    def _getSpeechForAllTextSelection(self, obj):
-        """Check if this object has text associated with it and it's 
-        completely selected.
+    def _getRoleName(self, obj, **args):
+        result = []
+        role = args.get('role', obj.getRole())
+        if (role != pyatspi.ROLE_UNKNOWN):
+            result.append(rolenames.getSpeechForRoleName(obj, role))
+        return result
 
-        Arguments:
-        - obj: the object being presented
+    def _getLabel(self, obj, **args):
+        result = []
+        label = self._script.getDisplayedLabel(obj)
+        if label:
+            result = [label]
+        return result
+
+    def _getLabelAndName(self, obj, **args):
+        """Gets the label and the name if the name is different from the label.
         """
+        # pylint: disable-msg=W0142
+        result = []
+        label = self._getLabel(obj, **args)
+        name = self._getName(obj, **args)
+        result.extend(label)
+        if not len(label):
+            result.extend(name)
+        elif len(name) and name[0] != label[0]:
+            result.extend(name)
+        return result
 
-        utterance = []
-        try:
-            textObj = obj.queryText()
-        except:
-            pass
-        else:
-            noOfSelections = textObj.getNSelections()
-            if noOfSelections == 1:
-                [string, startOffset, endOffset] = \
-                   textObj.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
-                if startOffset == 0 and endOffset == len(string):
-                    # Translators: when the user selects (highlights) text in
-                    # a document, Orca lets them know this.
-                    #
-                    utterance = [C_("text", "selected")]
+    def _getLabelOrName(self, obj, **args):
+        """Gets the label or the name if the label is not preset."""
+        result = []
+        # pylint: disable-msg=W0142
+        result.extend(self._getLabel(obj, **args))
+        if not result:
+            if obj.name and (len(obj.name)):
+                result.append(obj.name)
+        return result
 
-        return utterance
-
-    def _getSpeechForRequiredObject(self, obj):
-        """Returns the list of utterances that describe the required state
-        of the given object.
-
-        Arguments:
-        - obj: the Accessible object
-
-        Returns a list of utterances to be spoken.
-        """
-
-        if not settings.presentRequiredState:
-            return []
-
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_REQUIRED):
-            return [settings.speechRequiredStateString]
-        else:
-            return []
-
-    def _debugGenerator(self, generatorName, obj, already_focused, utterances):
-        """Prints debug.LEVEL_FINER information regarding the speech generator.
-
-        Arguments:
-        - generatorName: the name of the generator
-        - obj: the object being presented
-        - already_focused: False if object just received focus
-        - utterances: the generated text
-        """
-
-        debug.println(debug.LEVEL_FINER,
-                      "GENERATOR: %s" % generatorName)
-        debug.println(debug.LEVEL_FINER,
-                      "           obj             = %s" % obj.name)
-        debug.println(debug.LEVEL_FINER,
-                      "           role            = %s" % obj.getRoleName())
-        debug.println(debug.LEVEL_FINER,
-                      "           already_focused = %s" % already_focused)
-        debug.println(debug.LEVEL_FINER,
-                      "           utterances:")
-        for text in utterances:
-            debug.println(debug.LEVEL_FINER,
-                      "               (%s)" % text)
-
-    def _getDefaultSpeech(self, obj, already_focused, role=None):
-        """Gets a list of utterances to be spoken for the current
-        object's name, role, and any accelerators.  This is usually the
-        fallback speech generator should no other specialized speech
-        generator exist for this object.
-
-        The default speech will be of the following form:
-
-        label name role availability mnemonic
-
-        Arguments:
-        - obj: an Accessible
-        - already_focused: False if object just received focus
-        - role: A role that should be used instead of the Accessible's 
-          possible role.
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        if not already_focused:
-            label = self._getSpeechForObjectLabel(obj)
-            utterances.extend(label)
-            name = self._getSpeechForObjectName(obj)
-            if name != label:
-                utterances.extend(name)
-            utterances.extend(self._getSpeechForAllTextSelection(obj))
-            utterances.extend(self.getSpeechForObjectRole(obj, role))
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            if obj == orca_state.locusOfFocus:
-                self._addSpeechForObjectMnemonic(obj, utterances)
-
-        self._debugGenerator("_getDefaultSpeech",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForAlert(self, obj, already_focused):
-        """Gets the title of the dialog and the contents of labels inside the
-        dialog that are not associated with any other objects.
-
-        Arguments:
-        - obj: the Accessible dialog
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances be spoken.
-        """
-
-        utterances = []
-        label = self._getSpeechForObjectLabel(obj)
-        utterances.extend(label)
-        name = self._getSpeechForObjectName(obj)
-        if name != label:
-            utterances.extend(name)
-
-        # Find all the unrelated labels in the dialog and speak them.
-        #
+    def _getUnrelatedLabels(self, obj, **args):
+        """Finds all labels not in a label for or labelled by relation."""
+        # pylint: disable-msg=W0142
         labels = self._script.findUnrelatedLabels(obj)
+        result = []
         for label in labels:
-            name = self._getSpeechForObjectName(label)
-            utterances.extend(name)
+            name = self._getName(label, **args)
+            result.extend(name)
+        return result
 
-        self._debugGenerator("_getSpeechForAlert",
-                             obj,
-                             already_focused,
-                             utterances)
+    def _getEmbedded(self, obj, **args):
+        # pylint: disable-msg=W0142
+        result = self._getLabelOrName(obj, **args)
+        if not result:
+            try:
+                result.append(obj.getApplication().name)
+            except:
+                pass
+        return result
 
-        return utterances
+    #####################################################################
+    #                                                                   #
+    # State information                                                 #
+    #                                                                   #
+    #####################################################################
 
-    def _getSpeechForAnimation(self, obj, already_focused):
-        """Gets the speech for an animation.
-
-        Arguments:
-        - obj: the animation
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken.
-        """
-
-        utterances = []
-        label = self._getSpeechForObjectLabel(obj)
-        utterances.extend(label)
-        name = self._getSpeechForObjectName(obj)
-        if name != label:
-            utterances.extend(name)
-
-        self._debugGenerator("_getSpeechForAnimation",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForArrow(self, obj, already_focused):
-        """Gets a list of utterances to be spoken for an arrow.
-
-        Arguments:
-        - obj: the arrow
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        # [[[TODO: determine orientation of arrow.  Logged as bugzilla bug
-        # 319744.]]]
-        # text = arrow direction (left, right, up, down)
-        #
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForArrow",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForCheckBox(self, obj, already_focused):
-        """Get the speech for a check box.  If the check box already had
-        focus, then only the state is spoken.
-
-        Arguments:
-        - obj: the check box
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
+    def _getCheckedState(self, obj, **args):
+        result = []
         state = obj.getState()
         if state.contains(pyatspi.STATE_INDETERMINATE):
             # Translators: this represents the state of a checkbox.
             #
-            checkedState = _("partially checked")
+            result.append(_("partially checked"))
         elif state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checkbox.
             #
-            checkedState = _("checked")
+            result.append(_("checked"))
         else:
             # Translators: this represents the state of a checkbox.
             #
-            checkedState = _("not checked")
-
-        # If it's not already focused, say it's name
-        #
-        if not already_focused:
-            label = self._getSpeechForObjectLabel(obj)
-            utterances.extend(label)
-            name = self._getSpeechForObjectName(obj)
-            if name != label:
-                utterances.extend(name)
-            if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-                utterances.extend(
-                  self.getSpeechForObjectRole(
-                    obj, pyatspi.ROLE_CHECK_BOX))
-            else:
-                utterances.extend(self.getSpeechForObjectRole(obj))
-            utterances.append(checkedState)
-            utterances.extend(self._getSpeechForRequiredObject(obj))
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            self._addSpeechForObjectMnemonic(obj, utterances)
-        else:
-            utterances.append(checkedState)
-
-        self._debugGenerator("_getSpeechForCheckBox",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForCheckMenuItem(self, obj, already_focused):
-        """Get the speech for a check menu item.  If the check menu item
-        already had focus, then only the state is spoken.
-
-        Arguments:
-        - obj: the check menu item
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getSpeechForCheckBox(obj, already_focused)
-
-        if not already_focused:
-            self._addSpeechForObjectAccelerator(obj, utterances)
-
-        self._debugGenerator("_getSpeechForCheckMenuItem",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForColumnHeader(self, obj, already_focused):
-        """Get the speech for a column header.
-
-        Arguments:
-        - obj: the column header
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForColumnHeader",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForComboBox(self, obj, already_focused):
-        """Get the speech for a combo box.  If the combo box already has focus,
-        then only the selection is spoken.
-
-        Arguments:
-        - obj: the combo box
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        if not already_focused:
-            label = self._getSpeechForObjectLabel(obj)
-            utterances.extend(label)
-        else:
-            label = None
-
-        name = self._getSpeechForObjectName(obj)
-        if name != label:
-            utterances.extend(name)
-
-        if not already_focused:
-            utterances.extend(self.getSpeechForObjectRole(obj))
-
-        for child in obj:
-            if child.getRole() == pyatspi.ROLE_TEXT:
-                utterances.extend(self._getSpeechForAllTextSelection(child))
-
-        utterances.extend(self._getSpeechForObjectAvailability(obj))
-        self._addSpeechForObjectMnemonic(obj, utterances)
-
-        self._debugGenerator("_getSpeechForComboBox",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForDesktopIcon(self, obj, already_focused):
-        """Get the speech for a desktop icon.
-
-        Arguments:
-        - obj: the desktop icon
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForDesktopIcon",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForDial(self, obj, already_focused):
-        """Get the speech for a dial.
-
-        Arguments:
-        - obj: the dial
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        # [[[TODO: WDW - might need to include the value here?  Logged as
-        # bugzilla bug 319746.]]]
-        #
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForDial",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForDialog(self, obj, already_focused):
-        """Get the speech for a dialog box.
-
-        Arguments:
-        - obj: the dialog box
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getSpeechForAlert(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForDialog",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForDirectoryPane(self, obj, already_focused):
-        """Get the speech for a directory pane.
-
-        Arguments:
-        - obj: the dial
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForDirectoryPane",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForEmbedded(self, obj, already_focused, role=None):
-        """Gets a list of utterances to be spoken for the current
-        embedded component (i.e., something in a panel).
-
-        Arguments:
-        - obj: an Accessible
-        - already_focused: False if object just received focus
-        - role: A role that should be used instead of the Accessible's 
-          possible role.
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        label = self._getSpeechForObjectLabel(obj)
-        utterances.extend(label)
-        name = self._getSpeechForObjectName(obj)
-        if name != label:
-            utterances.extend(name)
-        if not utterances:
-            try:
-                utterances.append(obj.getApplication().name)
-            except:
-                pass
-
-        self._debugGenerator("_getSpeechForEmbedded",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForFrame(self, obj, already_focused):
-        """Get the speech for a frame.
-
-        Arguments:
-        - obj: the frame
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        if not already_focused:
-            label = self._getSpeechForObjectLabel(obj)
-            utterances.extend(label)
-            name = self._getSpeechForObjectName(obj)
-            if name != label:
-                utterances.extend(name)
-            utterances.extend(self._getSpeechForAllTextSelection(obj))
-            utterances.extend(self.getSpeechForObjectRole(obj))
-
-            # If this application has more than one unfocused alert or
-            # dialog window, then speak '<m> unfocused dialogs'
-            # to let the user know.
-            #
-            alertAndDialogCount = \
-                        self._script.getUnfocusedAlertAndDialogCount(obj)
-            if alertAndDialogCount > 0:
-                # Translators: this tells the user how many unfocused
-                # alert and dialog windows that this application has.
-                #
-                line = ngettext("%d unfocused dialog",
-                                "%d unfocused dialogs",
-                                alertAndDialogCount) % alertAndDialogCount
-                utterances.append(line)
-
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-
-        self._debugGenerator("_getSpeechForFrame",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForHtmlContainer(self, obj, already_focused):
-        """Get the speech for an HTML container.
-
-        Arguments:
-        - obj: the dial
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForHtmlContainer",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForIcon(self, obj, already_focused):
-        """Get the speech for an icon.
-
-        Arguments:
-        - obj: the icon
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        # [[[TODO: WDW - HACK to remove availability output because nautilus
-        # doesn't include this information for desktop icons.  If, at some
-        # point, it is determined that availability should be added back in,
-        # then a custom script for nautilus needs to be written to remove the
-        # availability.]]]
-        #
-        utterances = []
-        label = self._getSpeechForObjectLabel(obj)
-        utterances.extend(label)
-        name = self._getSpeechForObjectName(obj)
-        if name != label:
-            utterances.extend(name)
-        
+            result.append(_("not checked"))
+        return result
+
+    def _getCellCheckedState(self, obj, **args):
+        # pylint: disable-msg=W0142
+        result = []
         try:
-            image = obj.queryImage()
+            action = obj.queryAction()
         except NotImplementedError:
-            pass
-        else:
-            description = image.imageDescription
-            if description and len(description):
-                utterances.append(description)
+            action = None
+        if action:
+            for i in range(0, action.nActions):
+                # Translators: this is the action name for
+                # the 'toggle' action. It must be the same
+                # string used in the *.po file for gail.
+                #
+                if action.getName(i) in ["toggle", _("toggle")]:
+                    oldRole = _overrideRole(pyatspi.ROLE_CHECK_BOX,
+                                            args)
+                    result.extend(self.getSpeech(obj, **args))
+                    _restoreRole(oldRole, args)
+        return result
 
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            utterances.append(
-              rolenames.getSpeechForRoleName(
-                obj, pyatspi.ROLE_ICON))
-
-        self._debugGenerator("_getSpeechForIcon",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForImage(self, obj, already_focused):
-        """Get the speech for an image.
-
-        Arguments:
-        - obj: the image
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(
-            obj, already_focused, pyatspi.ROLE_IMAGE)
-
-        self._debugGenerator("_getSpeechForImage",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForLabel(self, obj, already_focused):
-        """Get the speech for a label.
-
-        Arguments:
-        - obj: the label
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForLabel",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForLayeredPane(self, obj, already_focused):
-        """Get the speech for a layered pane
-
-        Arguments:
-        - obj: the table
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForLayeredPane",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        # If this has no children, then let the user know.
-        #
-        hasItems = False
-        for child in obj:
-            state = child.getState()
-            if state.contains(pyatspi.STATE_SHOWING):
-                hasItems = True
-                break
-        if not hasItems:
-            # Translators: this is the number of items in a layered pane
-            # or table.
+    def _getRadioState(self, obj, **args):
+        result = []
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
+            # Translators: this is in reference to a radio button being
+            # selected or not.
             #
-            utterances.append(_("0 items"))
+            result.append(C_("radiobutton", "selected"))
+        else:
+            # Translators: this is in reference to a radio button being
+            # selected or not.
+            #
+            result.append(C_("radiobutton", "not selected"))
+        return result
 
-        return utterances
+    def _getToggleState(self, obj, **args):
+        result = []
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED) \
+           or state.contains(pyatspi.STATE_PRESSED):
+            # Translators: the state of a toggle button.
+            #
+            result.append(_("pressed"))
+        else:
+            # Translators: the state of a toggle button.
+            #
+            result.append(_("not pressed"))
+        return result
 
-    def _getSpeechForList(self, obj, already_focused):
-        """Get the speech for a list.
-
-        Arguments:
-        - obj: the list
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        # [[[TODO: WDW - include how many items in the list?
-        # Logged as bugzilla bug 319749.]]]
-        #
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForList",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-    
-    def _getSpeechForListItem(self, obj, already_focused):
-        """Get the speech for a listitem.
-
-        Arguments:
-        - obj: the listitem
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        if not already_focused:
-            label = self._getSpeechForObjectLabel(obj)
-            utterances.extend(label)
-            name = self._getSpeechForObjectName(obj)
-            if name != label:
-                utterances.extend(name)
-            utterances.extend(self._getSpeechForAllTextSelection(obj))
-
-        # If already in focus then the tree probably collapsed or expanded
+    def _getExpandableState(self, obj, **args):
+        result = []
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
             if state.contains(pyatspi.STATE_EXPANDED):
@@ -913,526 +285,91 @@ class SpeechGenerator:
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
                 #
-                utterances.append(_("expanded"))
+                result.append(_("expanded"))
             else:
                 # Translators: this represents the state of a node in a tree.
                 # 'expanded' means the children are showing.
                 # 'collapsed' means the children are not showing.
                 #
-                utterances.append(_("collapsed"))
-                
-        utterances.extend(self._getSpeechForObjectAvailability(obj))
+                result.append(_("collapsed"))
+        return result
 
-        self._debugGenerator("_getSpeechForListItem",
-                             obj,
-                             already_focused,
-                             utterances)
-        return utterances
-
-    def _getSpeechForMenu(self, obj, already_focused):
-        """Get the speech for a menu.
-
-        Arguments:
-        - obj: the menu
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        if not already_focused:
-            label = self._getSpeechForObjectLabel(obj)
-            utterances.extend(label)
-            name = self._getSpeechForObjectName(obj)
-            if name != label:
-                utterances.extend(name)
-            utterances.extend(self._getSpeechForAllTextSelection(obj))
-            utterances.extend(self.getSpeechForObjectRole(obj))
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            self._addSpeechForObjectMnemonic(obj, utterances)
-            self._addSpeechForObjectAccelerator(obj, utterances)
-
-        self._debugGenerator("_getSpeechForMenu",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForMenuBar(self, obj, already_focused):
-        """Get the speech for a menu bar.
-
-        Arguments:
-        - obj: the menu bar
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-        self._debugGenerator("_getSpeechForMenuBar",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForMenuItem(self, obj, already_focused):
-        """Get the speech for a menu item.
-
-        Arguments:
-        - obj: the menu item
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        # No need to say "menu item" because we already know that.
-        #
-        label = self._getSpeechForObjectLabel(obj)
-        utterances.extend(label)
-        name = self._getSpeechForObjectName(obj)
-        if name != label:
-            utterances.extend(name)
-
-        # OpenOffice check menu items currently have a role of "menu item"
-        # rather then "check menu item", so we need to test if one of the
-        # states is CHECKED. If it is, then add that in to the list of
-        # speech utterances. Note that we can't tell if this is a "check
-        # menu item" that is currently unchecked and speak that state. 
-        # See Orca bug #433398 for more details.
-        #
+    def _getMenuItemCheckedState(self, obj, **args):
+        result = []
         state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checked menu item.
             #
-            utterances.append(_("checked"))
+            result.append(_("checked"))
+        return result
 
-        if not already_focused:
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            self._addSpeechForObjectMnemonic(obj, utterances)
-            self._addSpeechForObjectAccelerator(obj, utterances)
+    def _getAvailability(self, obj, **args):
+        result = []
+        state = obj.getState()
+        if not state.contains(pyatspi.STATE_SENSITIVE):
+            # Translators: this represents an item on the screen that has
+            # been set insensitive (or grayed out).
+            #
+            result.append(_("grayed"))
+        return result
 
-        self._debugGenerator("_getSpeechForMenuItem",
-                             obj,
-                             already_focused,
-                             utterances)
+    def _getRequired(self, obj, **args):
+        result = []
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_REQUIRED):
+            result = [settings.speechRequiredStateString]
+        return result
 
-        return utterances
-
-    def _getSpeechForText(self, obj, already_focused):
-        """Get the speech for a text component.
-
-        Arguments:
-        - obj: the text component
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        # [[[TODO: WDW - HACK to remove availability because some text
-        # areas, such as those in yelp, come up as insensitive though
-        # they really are ineditable.]]]
-        #
-        utterances = []
-        utterances.extend(self._getSpeechForObjectLabel(obj))
-        if len(utterances) == 0:
-            if obj.name and (len(obj.name)):
-                utterances.append(obj.name)
-
+    def _getReadOnly(self, obj, **args):
+        result = []
         if settings.presentReadOnlyText \
            and self._script.isReadOnlyTextArea(obj):
-            utterances.append(settings.speechReadOnlyString)
+            result.append(settings.speechReadOnlyString)
+        return result
 
-        if obj.getRole() != pyatspi.ROLE_PARAGRAPH:
-            utterances.extend(self.getSpeechForObjectRole(obj))
+    #####################################################################
+    #                                                                   #
+    # Image information                                                 #
+    #                                                                   #
+    #####################################################################
 
-        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
-        utterances.append(text)
-
-        utterances.extend(self._getSpeechForAllTextSelection(obj))
-
-        self._addSpeechForObjectMnemonic(obj, utterances)
-
-        self._debugGenerator("_getSpeechForText",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForOptionPane(self, obj, already_focused):
-        """Get the speech for an option pane.
-
-        Arguments:
-        - obj: the option pane
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForOptionPane",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForPageTab(self, obj, already_focused):
-        """Get the speech for a page tab.
-
-        Arguments:
-        - obj: the page tab
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForPageTab",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForPageTabList(self, obj, already_focused):
-        """Get the speech for a page tab list.
-
-        Arguments:
-        - obj: the page tab list
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        #if obj.childCount == 1:
-        #    utterances.append(_("one tab"))
-        #else:
-        #    utterances.append(("%d " % obj.childCount) + _("tabs"))
-
-        self._debugGenerator("_getSpeechForPageTabList",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForProgressBar(self, obj, already_focused):
-        """Get the speech for a progress bar.  If the object already
-        had focus, just the new value is spoken.
-
-        Arguments:
-        - obj: the progress bar
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        value = obj.queryValue()
-        percentValue = (value.currentValue / \
-            (value.maximumValue - value.minimumValue)) * 100.0
-
-        # Translators: this is the percentage value of a progress bar.
-        #
-        percentage = _("%d percent.") % percentValue + " "
-
-        utterances = []
-
-        if not already_focused:
-            label = self._getSpeechForObjectLabel(obj)
-            utterances.extend(label)
-            name = self._getSpeechForObjectName(obj)
-            if name != label:
-                utterances.extend(name)
-            utterances.extend(self.getSpeechForObjectRole(obj))
-
-        utterances.append(percentage)
-
-        self._debugGenerator("_getSpeechForProgressBar",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForPushButton(self, obj, already_focused):
-        """Get the speech for a push button
-
-        Arguments:
-        - obj: the push button
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForPushButton",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForRadioButton(self, obj, already_focused):
-        """Get the speech for a radio button.  If the button already had
-        focus, then only the state is spoken.
-
-        Arguments:
-        - obj: the check box
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED):
-            # Translators: this is in reference to a radio button being
-            # selected or not.
-            #
-            selectionState = C_("radiobutton", "selected")
+    def _getImageDescription(self, obj, **args ):
+        result = []
+        try:
+            image = obj.queryImage()
+        except NotImplementedError:
+            pass
         else:
-            # Translators: this is in reference to a radio button being
-            # selected or not.
-            #
-            selectionState = C_("radiobutton", "not selected")
+            description = image.imageDescription
+            if description and len(description):
+                result.append(description)
+        return result
 
-        # If it's not already focused, say it's name
-        #
-        if not already_focused:
-            # The label is handled as a context in default.py
-            #
-            #utterances.extend(self._getSpeechForObjectLabel(obj))
-            utterances.extend(self._getSpeechForObjectName(obj))
-            utterances.append(selectionState)
-            utterances.extend(self.getSpeechForObjectRole(obj))
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            self._addSpeechForObjectMnemonic(obj, utterances)
+    def _getImage(self, obj, **args):
+        result = []
+        try:
+            image = obj.queryImage()
+        except:
+            pass
         else:
-            utterances.append(selectionState)
+            role = pyatspi.ROLE_IMAGE
+            result.extend(self.getSpeech(obj, role=role))
+        return result
 
-        self._debugGenerator("_getSpeechForRadioButton",
-                             obj,
-                             already_focused,
-                             utterances)
+    #####################################################################
+    #                                                                   #
+    # Table interface information                                       #
+    #                                                                   #
+    #####################################################################
 
-        return utterances
+    def _getTableCell2ChildLabel(self, obj, **args):
+        """Get the speech utterances for the label of a toggle in a table cell
+        that has a special 2 child pattern that we run into."""
+        # pylint: disable-msg=W0142
+        result = []
 
-    def _getSpeechForRadioMenuItem(self, obj, already_focused):
-        """Get the speech for a radio menu item.  If the menu item
-        already had focus, then only the state is spoken.
-
-        Arguments:
-        - obj: the radio menu item
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-        utterances.extend(self._getSpeechForRadioButton(obj, False))
-
-        if not already_focused:
-            self._addSpeechForObjectAccelerator(obj, utterances)
-
-        self._debugGenerator("_getSpeechForRadioMenuItem",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForRowHeader(self, obj, already_focused):
-        """Get the speech for a row header.
-
-        Arguments:
-        - obj: the column header
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForRowHeader",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForScrollBar(self, obj, already_focused):
-        """Get the speech for a scroll bar.
-
-        Arguments:
-        - obj: the scroll bar
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        # [[[TODO: WDW - want to get orientation and maybe the
-        # percentage scrolled so far. Logged as bugzilla bug
-        # 319744.]]]
-        #
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForScrollBar",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForSlider(self, obj, already_focused):
-        """Get the speech for a slider.  If the object already
-        had focus, just the value is spoken.
-
-        Arguments:
-        - obj: the slider
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        valueString = self._script.getTextForValue(obj)
-
-        if already_focused:
-            utterances = [valueString]
-        else:
-            utterances = []
-            utterances.extend(self._getSpeechForObjectLabel(obj))
-            # Ignore the text on the slider.  See bug 340559
-            # (http://bugzilla.gnome.org/show_bug.cgi?id=340559): the
-            # implementors of the slider support decided to put in a
-            # Unicode left-to-right character as part of the text,
-            # even though that is not painted on the screen.
-            #
-            # In Java, however, there are sliders without a label. In
-            # this case, we'll add to presentation the slider name if
-            # it exists and we haven't found anything yet.
-            #
-            if not utterances:
-                utterances.extend(self._getSpeechForObjectName(obj))
-            utterances.extend(self.getSpeechForObjectRole(obj))
-            utterances.append(valueString)
-            utterances.extend(self._getSpeechForRequiredObject(obj))
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            self._addSpeechForObjectMnemonic(obj, utterances)
-        self._debugGenerator("_getSpeechForSlider",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForSpinButton(self, obj, already_focused):
-        """Get the speech for a spin button.  If the object already has
-        focus, then only the new value is spoken.
-
-        Arguments:
-        - obj: the spin button
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        if already_focused:
-            utterances = [self._script.getDisplayedText(obj)]
-        else:
-            utterances = self._getDefaultSpeech(obj, already_focused)
-            utterances.extend(self._getSpeechForRequiredObject(obj))
-
-        self._debugGenerator("_getSpeechForSpinButton",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForSplitPane(self, obj, already_focused):
-        """Get the speech for a split pane.
-
-        Arguments:
-        - obj: the split pane
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        valueString = self._script.getTextForValue(obj)
-
-        if already_focused:
-            utterances = [valueString]
-        else:
-            utterances = []
-            utterances.extend(self._getSpeechForObjectLabel(obj))
-            if not utterances:
-                utterances.extend(self._getSpeechForObjectName(obj))
-            utterances.extend(self.getSpeechForObjectRole(obj))
-            utterances.append(valueString)
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            self._addSpeechForObjectMnemonic(obj, utterances)
-
-        self._debugGenerator("_getSpeechForSplitPane",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForTable(self, obj, already_focused):
-        """Get the speech for a table
-
-        Arguments:
-        - obj: the table
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForTable",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        # If this is a table with no children, then let the user know.
-        #
-        if not obj.childCount:
-            # Translators: this is the number of items in a layered pane
-            # or table.
-            #
-            utterances.append(_("0 items"))
-
-        return utterances
-
-    def _getSpeechForTableCell(self, obj, already_focused):
-        """Get the speech utterances for a single table cell
-
-        Arguments:
-        - obj: the table
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        # If this table cell has 2 children and one of them has a 
-        # 'toggle' action and the other does not, then present this 
+        # If this table cell has 2 children and one of them has a
+        # 'toggle' action and the other does not, then present this
         # as a checkbox where:
         # 1) we get the checked state from the cell with the 'toggle' action
         # 2) we get the label from the other cell.
@@ -1440,7 +377,47 @@ class SpeechGenerator:
         #
         if obj.childCount == 2:
             cellOrder = []
-            hasToggle = [ False, False ]
+            hasToggle = [False, False]
+            for i, child in enumerate(obj):
+                try:
+                    action = child.queryAction()
+                except NotImplementedError:
+                    continue
+                else:
+                    for j in range(0, action.nActions):
+                        # Translators: this is the action name for
+                        # the 'toggle' action. It must be the same
+                        # string used in the *.po file for gail.
+                        #
+                        if action.getName(j) in ["toggle", _("toggle")]:
+                            hasToggle[i] = True
+                            break
+            if hasToggle[0] and not hasToggle[1]:
+                cellOrder = [ 1, 0 ]
+            elif not hasToggle[0] and hasToggle[1]:
+                cellOrder = [ 0, 1 ]
+            if cellOrder:
+                for i in cellOrder:
+                    if not hasToggle[i]:
+                        result.extend(self.getSpeech(obj[i], **args))
+        return result
+
+    def _getTableCell2ChildToggle(self, obj, **args):
+        """Get the speech utterances for the toggle value in a table cell that
+        has a special 2 child pattern that we run into."""
+        # pylint: disable-msg=W0142
+        result = []
+
+        # If this table cell has 2 children and one of them has a
+        # 'toggle' action and the other does not, then present this
+        # as a checkbox where:
+        # 1) we get the checked state from the cell with the 'toggle' action
+        # 2) we get the label from the other cell.
+        # See Orca bug #376015 for more details.
+        #
+        if obj.childCount == 2:
+            cellOrder = []
+            hasToggle = [False, False]
             for i, child in enumerate(obj):
                 try:
                     action = child.queryAction()
@@ -1457,483 +434,294 @@ class SpeechGenerator:
                             break
 
             if hasToggle[0] and not hasToggle[1]:
-                cellOrder = [ 1, 0 ] 
+                cellOrder = [ 1, 0 ]
             elif not hasToggle[0] and hasToggle[1]:
                 cellOrder = [ 0, 1 ]
             if cellOrder:
                 for i in cellOrder:
-                    # Don't speak the label if just the checkbox state has
-                    # changed.
-                    #
-                    if already_focused and not hasToggle[i]:
-                        pass
-                    else:
-                        utterances.extend( \
-                            self._getSpeechForTableCell(obj[i],
-                                                        already_focused))
-                return utterances
+                    if hasToggle[i]:
+                        result.extend(self.getSpeech(obj[i], **args))
+        return result
 
-        # [[[TODO: WDW - Attempt to infer the cell type.  There's a
-        # bunch of stuff we can do here, such as check the EXPANDABLE
-        # state, check the NODE_CHILD_OF relation, etc.  Logged as
-        # bugzilla bug 319750.]]]
-        #
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            action = None
-        if action:
-            for i in range(0, action.nActions):
-                debug.println(debug.LEVEL_FINEST,
-                    "speechgenerator.__getTableCellUtterances " \
-                    + "looking at action %d" % i)
-
-                # Translators: this is the action name for
-                # the 'toggle' action. It must be the same
-                # string used in the *.po file for gail.
-                #
-                if action.getName(i) in ["toggle", _("toggle")]:
-                    utterances = self._getSpeechForCheckBox(obj,
-                                                            already_focused)
-                    break
-
-        displayedText = self._script.getDisplayedText( \
-                          self._script.getRealActiveDescendant(obj))
-        if not already_focused and not displayedText in utterances:
-            utterances.append(displayedText)
-
-        # If there is no displayed text, check to see if this table cell 
-        # contains an icon (image). If yes:
-        #   1/ Try to get a description for it and speak that.
-        #   2/ Treat the object of role type ROLE_IMAGE and speak
-        #      the role name.
-        # See bug #465989 for more details.
-        #
-        # [[TODO: eitani - incorprate this in new rolenames ]]
-        try:
-            image = obj.queryImage()
-        except:
-            image = None
-
-        if (not displayedText or len(displayedText) == 0) and image:
-            if not already_focused:
-                if image.imageDescription:
-                    utterances.append(image.imageDescription)
-                utterances.extend(self._getSpeechForImage(obj, already_focused))
-
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_EXPANDABLE):
-            if state.contains(pyatspi.STATE_EXPANDED):
-                # Translators: this represents the state of a node in a tree.
-                # 'expanded' means the children are showing.
-                # 'collapsed' means the children are not showing.
-                #
-                utterances.append(_("expanded"))
-                childNodes = self._script.getChildNodes(obj)
-                children = len(childNodes)
-
-                if not children \
-                   or (settings.speechVerbosityLevel == \
-                       settings.VERBOSITY_LEVEL_VERBOSE):
-                    # Translators: this is the number of items in a layered
-                    # pane or table.
-                    #
-                    itemString = ngettext("%d item",
-                                          "%d items",
-                                          children) % children
-                    utterances.append(itemString)
-            else:
-                # Translators: this represents the state of a node in a tree.
-                # 'expanded' means the children are showing.
-                # 'collapsed' means the children are not showing.
-                #
-                utterances.append(_("collapsed"))
-
-        utterances.extend(self._getSpeechForRequiredObject(obj))
-
-        self._debugGenerator("_getSpeechForTableCell",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForTableCellRow(self, obj, already_focused):
+    def _getTableCellRow(self, obj, **args):
         """Get the speech for a table cell row or a single table cell
-        if settings.readTableCellRow is False.
+        if settings.readTableCellRow is False."""
+        # pylint: disable-msg=W0142
+        result = []
 
-        Arguments:
-        - obj: the table
-        - already_focused: False if object just received focus
+        try:
+            parentTable = obj.parent.queryTable()
+        except NotImplementedError:
+            parentTable = None
+        if settings.readTableCellRow and parentTable \
+           and (not self._script.isLayoutOnly(obj.parent)):
+            parent = obj.parent
+            index = self._script.getCellIndex(obj)
+            row = parentTable.getRowAtIndex(index)
+            column = parentTable.getColumnAtIndex(index)
 
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        if (not already_focused):
-            try:
-                parent_table = obj.parent.queryTable()
-            except NotImplementedError:
-                parent_table = None
-            if settings.readTableCellRow and parent_table \
-                and (not self._script.isLayoutOnly(obj.parent)):
-                parent = obj.parent
-                index = self._script.getCellIndex(obj)
-                row = parent_table.getRowAtIndex(index)
-                column = parent_table.getColumnAtIndex(index)
-
-                # This is an indication of whether we should speak all the
-                # table cells (the user has moved focus up or down a row),
-                # or just the current one (focus has moved left or right in
-                # the same row).
-                #
-                speakAll = True
-                if "lastRow" in self._script.pointOfReference and \
-                    "lastColumn" in self._script.pointOfReference:
-                    pointOfReference = self._script.pointOfReference
-                    speakAll = (pointOfReference["lastRow"] != row) or \
-                        ((row == 0 or row == parent_table.nRows-1) and \
-                           pointOfReference["lastColumn"] == column)
-
-                if speakAll:
-                    for i in range(0, parent_table.nColumns):
-                        cell = parent_table.getAccessibleAt(row, i)
-                        if not cell:
-                            debug.println(debug.LEVEL_WARNING,
-                                 "ERROR: speechgenerator." \
-                                 + "_getSpeechForTableCellRow" \
-                                 + " no accessible at (%d, %d)" % (row, i))
-                            continue
-                        state = cell.getState()
-                        showing = state.contains(pyatspi.STATE_SHOWING)
-                        if showing:
-                            # If this table cell has a "toggle" action, and
-                            # doesn't have any label associated with it then 
-                            # also speak the table column header.
-                            # See Orca bug #455230 for more details.
-                            #
-                            label = self._script.getDisplayedText( \
-                                self._script.getRealActiveDescendant(cell))
-                            try:
-                                action = cell.queryAction()
-                            except NotImplementedError:
-                                action = None
-                            if action and (label == None or len(label) == 0):
-                                for j in range(0, action.nActions):
-                                    # Translators: this is the action name for
-                                    # the 'toggle' action. It must be the same
-                                    # string used in the *.po file for gail.
-                                    #
-                                    if action.getName(j) in ["toggle", \
-                                                             _("toggle")]:
-                                        accHeader = \
-                                            parent_table.getColumnHeader(i)
-                                        utterances.append(accHeader.name)
-
-                            utterances.extend(self._getSpeechForTableCell(cell,
-                                                           already_focused))
-                else:
-                    utterances.extend(self._getSpeechForTableCell(obj,
-                                                           already_focused))
-            else:
-                utterances = self._getSpeechForTableCell(obj, already_focused)
-        else:
-            utterances = self._getSpeechForTableCell(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForTableCellRow",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForTableColumnHeader(self, obj, already_focused):
-        """Get the speech for a table column header
-
-        Arguments:
-        - obj: the table column header
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getSpeechForColumnHeader(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForTableColumnHeader",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForTableRowHeader(self, obj, already_focused):
-        """Get the speech for a table row header
-
-        Arguments:
-        - obj: the table row header
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getSpeechForRowHeader(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForTableRowHeader",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForTearOffMenuItem(self, obj, already_focused):
-        """Get the speech for a tear off menu item
-
-        Arguments:
-        - obj: the tear off menu item
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            utterances = [rolenames.getSpeechForRoleName(obj)]
-        else:
-            # Translators: brief spoken words for the rolename of a tear off
-            # menu item.
+            # This is an indication of whether we should speak all the
+            # table cells (the user has moved focus up or down a row),
+            # or just the current one (focus has moved left or right in
+            # the same row).
             #
-            utterances = [_("tear off")]
+            speakAll = True
+            if "lastRow" in self._script.pointOfReference \
+               and "lastColumn" in self._script.pointOfReference:
+                pointOfReference = self._script.pointOfReference
+                speakAll = \
+                    (pointOfReference["lastRow"] != row) \
+                     or ((row == 0 or row == parentTable.nRows-1) \
+                     and pointOfReference["lastColumn"] == column)
+            if speakAll:
+                for i in range(0, parentTable.nColumns):
+                    cell = parentTable.getAccessibleAt(row, i)
+                    if not cell:
+                        continue
+                    state = cell.getState()
+                    showing = state.contains(pyatspi.STATE_SHOWING)
+                    if showing:
+                        # If this table cell has a "toggle" action, and
+                        # doesn't have any label associated with it then
+                        # also speak the table column header.
+                        # See Orca bug #455230 for more details.
+                        #
+                        label = self._script.getDisplayedText(
+                            self._script.getRealActiveDescendant(cell))
+                        try:
+                            action = cell.queryAction()
+                        except NotImplementedError:
+                            action = None
+                        if action and (label == None or len(label) == 0):
+                            for j in range(0, action.nActions):
+                                # Translators: this is the action name for
+                                # the 'toggle' action. It must be the same
+                                # string used in the *.po file for gail.
+                                #
+                                if action.getName(j) in ["toggle",
+                                                         _("toggle")]:
+                                    accHeader = \
+                                        parentTable.getColumnHeader(i)
+                                    result.append(accHeader.name)
+                        oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
+                                                args)
+                        result.extend(
+                            self.getSpeech(cell,
+                                           **args))
+                        _restoreRole(oldRole, args)
+            else:
+                oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
+                                        args)
+                result.extend(
+                    self.getSpeech(obj, **args))
+                _restoreRole(oldRole, args)
+        else:
+            oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
+                                    args)
+            result = self.getSpeech(obj, **args)
+            _restoreRole(oldRole, args)
+        return result
 
-        self._debugGenerator("_getSpeechForTearOffMenuItem",
-                             obj,
-                             already_focused,
-                             utterances)
+    #####################################################################
+    #                                                                   #
+    # Terminal information                                              #
+    #                                                                   #
+    #####################################################################
 
-        return utterances
-
-    def _getSpeechForTerminal(self, obj, already_focused):
-        """Get the speech for a terminal
-
-        Arguments:
-        - obj: the terminal
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
+    def _getTerminal(self, obj, **args):
+        result = []
         title = None
         frame = self._script.getFrame(obj)
         if frame:
             title = frame.name
         if not title:
             title = self._script.getDisplayedLabel(obj)
+        result.append(title)
+        return result
 
-        utterances = [title]
+    #####################################################################
+    #                                                                   #
+    # Text interface information                                        #
+    #                                                                   #
+    #####################################################################
 
-        self._debugGenerator("_getSpeechForTerminal",
-                             obj,
-                             already_focused,
-                             utterances)
+    def _getCurrentLineText(self, obj, **args ):
+        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
+        return [text]
 
-        return utterances
+    def _getDisplayedText(self, obj, **args ):
+        """Returns the text being displayed for an object or the object's
+        name if no text is being displayed."""
+        return [self._script.getDisplayedText(obj)]
 
-    def _getSpeechForToggleButton(self, obj, already_focused):
-        """Get the speech for a toggle button.  If the toggle button already
-        had focus, then only the state is spoken.
-
-        Arguments:
-        - obj: the check box
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = []
-
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED) \
-           or state.contains(pyatspi.STATE_PRESSED):
-            # Translators: the state of a toggle button.
-            #
-            checkedState = _("pressed")
+    def _getAllTextSelection(self, obj, **args):
+        """Check if this object has text associated with it and it's
+        completely selected."""
+        result = []
+        try:
+            textObj = obj.queryText()
+        except:
+            pass
         else:
-            # Translators: the state of a toggle button.
-            #
-            checkedState = _("not pressed")
+            noOfSelections = textObj.getNSelections()
+            if noOfSelections == 1:
+                [string, startOffset, endOffset] = \
+                   textObj.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
+                if startOffset == 0 and endOffset == len(string):
+                    # Translators: when the user selects (highlights) text in
+                    # a document, Orca lets them know this.
+                    #
+                    result = [C_("text", "selected")]
+        return result
 
-        # If it's not already focused, say it's name
+    #####################################################################
+    #                                                                   #
+    # Value interface information                                       #
+    #                                                                   #
+    #####################################################################
+
+    def _getValue(self, obj, **args):
+        return [self._script.getTextForValue(obj)]
+
+    def _getPercentage(self, obj, **args ):
+        result = []
+        try:
+            value = obj.queryValue()
+        except NotImplementedError:
+            pass
+        else:
+            percentValue = \
+                (value.currentValue
+                 / (value.maximumValue - value.minimumValue)) \
+                * 100.0
+            # Translators: this is the percentage value of a progress bar.
+            #
+            percentage = _("%d percent.") % percentValue + " "
+            result.append(percentage)
+        return result
+
+    #####################################################################
+    #                                                                   #
+    # Hierarchy and related dialog information                          #
+    #                                                                   #
+    #####################################################################
+
+    def _getRealActiveDescendantDisplayedText(self, obj, **args ):
+        text = self._script.getDisplayedText(
+          self._script.getRealActiveDescendant(obj))
+        if text:
+            return [text]
+        else:
+            return []
+
+    def _getNumberOfChildren(self, obj, **args):
+        result = []
+        childNodes = self._script.getChildNodes(obj)
+        children = len(childNodes)
+        if children:
+            # Translators: this is the number of items in a layered
+            # pane or table.
+            #
+            itemString = ngettext("%d item", "%d items", children) % children
+            result.append(itemString)
+        return result
+
+    def _getNoShowingChildren(self, obj, **args):
+        result = []
+        hasItems = False
+        for child in obj:
+            state = child.getState()
+            if state.contains(pyatspi.STATE_SHOWING):
+                hasItems = True
+                break
+        if not hasItems:
+            # Translators: this is the number of items in a layered pane
+            # or table.
+            #
+            result.append(_("0 items"))
+        return result
+
+    def _getNoChildren(self, obj, **args ):
+        result = []
+        if not obj.childCount:
+            # Translators: this is the number of items in a layered pane
+            # or table.
+            #
+            result.append(_("0 items"))
+        return result
+
+    def _getUnfocusedDialogCount(self, obj,  **args):
+        result = []
+        # If this application has more than one unfocused alert or
+        # dialog window, then speak '<m> unfocused dialogs'
+        # to let the user know.
         #
-        if not already_focused:
-            label = self._getSpeechForObjectLabel(obj)
-            utterances.extend(label)
-            name = self._getSpeechForObjectName(obj)
-            if name != label:
-                utterances.extend(name)
-            utterances.extend(self.getSpeechForObjectRole(obj))
-            utterances.append(checkedState)
-            utterances.extend(self._getSpeechForObjectAvailability(obj))
-            self._addSpeechForObjectMnemonic(obj, utterances)
-        else:
-            utterances.append(checkedState)
+        alertAndDialogCount = \
+            self._script.getUnfocusedAlertAndDialogCount(obj)
+        if alertAndDialogCount > 0:
+            # Translators: this tells the user how many unfocused
+            # alert and dialog windows that this application has.
+            #
+            result.append(ngettext("%d unfocused dialog",
+                            "%d unfocused dialogs",
+                            alertAndDialogCount) % alertAndDialogCount)
+        return result
 
-        self._debugGenerator("_getSpeechForToggleButton",
-                             obj,
-                             already_focused,
-                             utterances)
+    #####################################################################
+    #                                                                   #
+    # Keyboard shortcut information                                     #
+    #                                                                   #
+    #####################################################################
 
-        return utterances
+    def _getAccelerator(self, obj, **args):
+        result = []
+        [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
+        if accelerator:
+            # Add punctuation for better prosody.
+            #
+            #if result:
+            #    result[-1] += "."
+            result.append(accelerator)
+        return result
 
-    def _getSpeechForToolBar(self, obj, already_focused):
-        """Get the speech for a tool bar
+    def _getMnemonic(self, obj, **args):
+        result = []
+        [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
+        if mnemonic:
+            mnemonic = mnemonic[-1] # we just want a single character
+        if not mnemonic and shortcut:
+            mnemonic = shortcut
+        if mnemonic:
+            # Add punctuation for better prosody.
+            #
+            #if result:
+            #    utterances[-1] += "."
+            result = [mnemonic]
+        return result
 
-        Arguments:
-        - obj: the tool bar
-        - already_focused: False if object just received focus
 
-        Returns a list of utterances to be spoken for the object.
-        """
+    #####################################################################
+    #                                                                   #
+    # Tutorial information                                              #
+    #                                                                   #
+    #####################################################################
 
-        utterances = self._getDefaultSpeech(obj, already_focused)
+    def _getTutorial(self, obj, **args):
+        already_focused = args.get('already_focused')
+        forceMessage = args.get('forceMessage', False)
+        return self._script.tutorialGenerator.getTutorial(
+            obj,
+            already_focused,
+            forceMessage)
 
-        self._debugGenerator("_getSpeechForToolBar",
-                             obj,
-                             already_focused,
-                             utterances)
+    #####################################################################
+    #                                                                   #
+    # Get the context of where the object is.                           #
+    #                                                                   #
+    #####################################################################
 
-        return utterances
-
-    def _getSpeechForTree(self, obj, already_focused):
-        """Get the speech for a tree
-
-        Arguments:
-        - obj: the tree
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForTree",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForTreeTable(self, obj, already_focused):
-        """Get the speech for a tree table
-
-        Arguments:
-        - obj: the tree table
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForTreeTable",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _getSpeechForWindow(self, obj, already_focused):
-        """Get the speech for a window
-
-        Arguments:
-        - obj: the window
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = self._getDefaultSpeech(obj, already_focused)
-
-        self._debugGenerator("_getSpeechForWindow",
-                             obj,
-                             already_focused,
-                             utterances)
-
-        return utterances
-
-    def _dumpAndStripAltSpeech(self, result, voice=None, indent=""):
-        """Dumps and strips the array-based speech from the 
-        alternate speech generator.  The full result is
-        dumped to stdout and the return value is a single
-        depth array of only strings."""
-        import acss
-        import speech
-        newResult = []
-        subString = None
-        didACSS = False
-        for element in result:
-            if isinstance(element, basestring):
-                if subString:
-                    subString += " " + element
-                else:
-                    subString = element
-                newResult.append(element)
-            else:
-                if subString:
-                    print indent + subString
-                subString = None
-                if isinstance(element, list):
-                    newResult.extend(
-                        self._dumpAndStripAltSpeech(element, voice, indent))
-                elif isinstance(element, acss.ACSS):
-                    print indent + '<voice acss=\"%s">' % element
-                    indent += "  "
-                    didACSS = True
-                    voice=acss.ACSS(voice)
-                    voice.update(element)
-                else:
-                    print indent + "UNKNOWN element", element
-        if subString:
-            print indent + subString
-        if didACSS:
-            print indent[:-2] + '</voice>'
-
-        return newResult
-
-    def getSpeech(self, obj, already_focused, **args):
-        """Get the speech for an Accessible object.  This will look
-        first to the specific speech generators and then to the
-        default speech generator.  This method is the primary method
-        that external callers of this class should use.
-
-        Arguments:
-        - obj: the object
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken.
-        """
-        # pylint: disable-msg=W0142
-        role = obj.getRole()
-        if role in self.speechGenerators:
-            generator = self.speechGenerators[role]
-        else:
-            generator = self._getDefaultSpeech
-        print("processing obj of role %s\n" % obj.getRoleName())
-        result1 = [" ".join(generator(obj, already_focused))]
-        print("r%d='%s'\n" %(len(result1[0]), result1))
-
-        result2 = self.alt.getSpeech(obj, \
-            already_focused=already_focused, **args)
-        import speech
-        speech.altspeak(result2)
-        result2 = self._dumpAndStripAltSpeech(result2)
-
-        # making the returned values from alt.getSpeech into a string.
-        speak =  [" ".join(result2)]
-        print("s%d='%s'\n" %(len(speak[0]), speak))
-        print("r==s=%s\n" %cmp(result1[0], speak[0]))
-        return speak
-
-    def getSpeechContext(self, obj, stopAncestor=None):
-        """Get the speech that describes the names and role of
+    def _getContext(self, obj, stopAncestor=None):
+        """Get the information that describes the names and role of
         the container hierarchy of the object, stopping at and
         not including the stopAncestor.
 
@@ -1942,16 +730,12 @@ class SpeechGenerator:
         - stopAncestor: the anscestor to stop at and not include (None
           means include all ancestors)
 
-        Returns a list of utterances to be spoken.
         """
 
-        utterances = []
+        result = []
 
-        if not obj:
-            return utterances
-
-        if obj == stopAncestor:
-            return utterances
+        if not obj or obj == stopAncestor:
+            return result
 
         parent = obj.parent
         if parent \
@@ -1971,13 +755,78 @@ class SpeechGenerator:
                     #
                     if parent.getRole() not in [pyatspi.ROLE_TABLE_CELL,
                                                 pyatspi.ROLE_FILLER]:
-                        utterances.extend(self.getSpeechForObjectRole(parent))
-                    utterances.append(text)
+                        result.extend(self._getRoleName(parent))
+                    result.append(text)
                     if parent.getRole() == pyatspi.ROLE_TABLE_CELL:
-                        utterances.extend(self.getSpeechForObjectRole(parent))
+                        result.extend(self._getRoleName(parent))
 
             parent = parent.parent
 
-        utterances.reverse()
+        result.reverse()
 
-        return utterances
+        return result
+
+    # [[[TODO: WDW - need to figure out the context stuff still.
+    #
+    def getSpeechContext(self, obj, stopAncestor=None):
+        return self._getContext(obj, stopAncestor)
+
+    #####################################################################
+    #                                                                   #
+    # Tie it all together                                               #
+    #                                                                   #
+    #####################################################################
+
+    def voice(self, key=None):
+        try:
+            voice = settings.voices[key]
+        except:
+            voice = settings.voices[settings.DEFAULT_VOICE]
+        return [voice]
+
+    def getSpeech(self, obj, already_focused=False, **args):
+        # pylint: disable-msg=W0142
+        result = []
+        methods = {}
+        methods["voice"] = self.voice
+        methods["obj"] = obj
+        methods["role"] = args.get('role', obj.getRole())
+
+        try:
+            # We sometimes want to override the role.  We'll keep the
+            # role in the args dictionary as a means to let us do so.
+            #
+            args['role'] = methods["role"]
+
+            # We loop through the format string, catching each error
+            # as we go.  Each error should always be a NameError,
+            # where the name is the name of one of our generator
+            # functions.  When we encounter this, we call the function
+            # and get its results, placing them in the globals for the
+            # the call to eval.
+            #
+            args['already_focused'] = already_focused
+            format = self._script.formatting.getFormat('speech',
+                                                       **args)
+            assert(format)
+            while True:
+                try:
+                    result = eval(format, methods)
+                    break
+                except NameError:
+                    result = []
+                    info = _formatExceptionInfo()
+                    arg = info[1][0]
+                    arg = arg.replace("name '", "")
+                    arg = arg.replace("' is not defined", "")
+                    if not self._methodsDict.has_key(arg):
+                        debug.printException(
+                            debug.LEVEL_SEVERE,
+                            "Unable to find function for '%s'\n" % arg)
+                        break
+                    methods[arg] = self._methodsDict[arg](obj, **args)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+            result = []
+
+        return result

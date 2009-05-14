@@ -258,5 +258,5 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             # 
             utterances.append(_('%d percent of document read') %percent)
 
-        speech.speakUtterances(utterances)  
+        speech.speak(utterances)  
 

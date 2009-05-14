@@ -1771,6 +1771,8 @@ class StructuralNavigation:
             voice = self._getVoice(obj, string)
             speech.speak(string, voice)
 
+    # [[[TODO: WDW - this needs to be moved to the speech generator.]]]
+    #
     def _getVoice(self, obj, string):
         """Returns the voice to speak anything for the given obj.
 

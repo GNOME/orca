@@ -283,8 +283,8 @@ class Script(default.Script):
                                                    getState().contains( \
                                        pyatspi.STATE_SENSITIVE)):
                                     self.updateBraille(orca_state.locusOfFocus)
-                                    speech.speakUtterances(
-                                        self.speechGenerator.getSpeech( \
+                                    speech.speak(
+                                        self.speechGenerator.getSpeech(
                                             orca_state.locusOfFocus, False))
             except NotImplementedError:
                 pass
@@ -338,7 +338,7 @@ class Script(default.Script):
         savedSpeechVerbosityLevel = settings.speechVerbosityLevel
         settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         utterances = speechGen.getSpeech(tab, False)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
         settings.speechVerbosityLevel = savedSpeechVerbosityLevel
 
         braille.displayRegions(brailleGen.getBrailleRegions(tab))
@@ -771,7 +771,7 @@ class Script(default.Script):
                         utterances.append(string)
 
                 braille.displayRegions([regions, regions[0]])
-                speech.speakUtterances(utterances)
+                speech.speak(utterances)
                 return
 
         # 3) Mail view: message header list
@@ -951,7 +951,7 @@ class Script(default.Script):
                             if column == i:
                                 cellWithFocus = focusedRegion
                             if speakAll or (column == i):
-                                speech.speakUtterances(utterances)
+                                speech.speak(utterances)
 
                         # Speak/braille the table cell.
                         #
@@ -1020,7 +1020,7 @@ class Script(default.Script):
                             cellWithFocus = focusedRegion
 
                         if speakAll or (column == i):
-                            speech.speakUtterances(utterances)
+                            speech.speak(utterances)
 
             if brailleRegions != []:
                 braille.displayRegions([brailleRegions, cellWithFocus])
@@ -1062,7 +1062,7 @@ class Script(default.Script):
             utterances = speechGen.getSpeech(parent, False)
             [brailleRegions, focusedRegion] = \
                     brailleGen.getBrailleRegions(parent)
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
 
             apptExtents = event.source.queryComponent().getExtents(0)
 
@@ -1075,12 +1075,12 @@ class Script(default.Script):
                         appt = childTable.getAccessibleAt(row, 0)
                         extents = appt.queryComponent().getExtents(0)
                         if extents.y == apptExtents.y:
-                            utterances = speechGen.getSpeech(event.source, \
+                            utterances = speechGen.getSpeech(event.source,
                                                              False)
                             [apptRegions, focusedRegion] = \
                                 brailleGen.getBrailleRegions(event.source)
                             brailleRegions.extend(apptRegions)
-                            speech.speakUtterances(utterances)
+                            speech.speak(utterances)
 
                             startTime = 'Start time ' + \
                                 self.getTimeForCalRow(j, noRows)
@@ -1141,7 +1141,7 @@ class Script(default.Script):
                         [apptRegions, focusedRegion] = \
                             brailleGen.getBrailleRegions(child)
                         brailleRegions.extend(apptRegions)
-                        speech.speakUtterances(utterances)
+                        speech.speak(utterances)
 
                         startTime = 'Start time ' + \
                             self.getTimeForCalRow(index, noRows)

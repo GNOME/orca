@@ -88,7 +88,7 @@ class WhereAmI(where_am_I.WhereAmI):
         utterances.append(text)
         debug.println(self._debugLevel, "first table cell utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
         utterances = []
         if doubleClick:
@@ -99,14 +99,14 @@ class WhereAmI(where_am_I.WhereAmI):
             #
             text = _("row %d of %d") % ((row+1), table.nRows)
             utterances.append(text)
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
 
         # Speak the current row
         #
         utterances = self._getTableRow(obj)
         debug.println(self._debugLevel, "second table cell utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
         # Speak the remaining items.
         #
@@ -159,4 +159,4 @@ class WhereAmI(where_am_I.WhereAmI):
 
         debug.println(self._debugLevel, "third table cell utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)

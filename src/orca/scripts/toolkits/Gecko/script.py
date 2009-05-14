@@ -1548,9 +1548,9 @@ class Script(default.Script):
             utterances.append(rolenames.getSpeechForRoleName(event.any_data))
             if settings.speechVerbosityLevel == \
                     settings.VERBOSITY_LEVEL_VERBOSE:
-                utterances.extend(\
+                utterances.extend(
                     self.speechGenerator.getSpeech(event.any_data, False))
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
 
     def onDocumentReload(self, event):
         """Called when the reload button is hit for a web page."""
@@ -1681,8 +1681,8 @@ class Script(default.Script):
                     # http://bugzilla.gnome.org/show_bug.cgi?id=570551
                     #
                     if eventSourceRole == pyatspi.ROLE_ALERT:
-                        speech.speakUtterances(\
-                            self.speechGenerator.getSpeech(event.source, False))
+                        speech.speak(self.speechGenerator.getSpeech(
+                                event.source, False))
                         self.updateBraille(obj)
                     else:
                         self.presentLine(obj, characterOffset)
@@ -1871,8 +1871,7 @@ class Script(default.Script):
                     self.updateBraille(obj)
 
                     if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                        speech.speakUtterances(\
-                            self.speechGenerator.getSpeech(obj, False))
+                        speech.speak(self.speechGenerator.getSpeech(obj, False))
                     elif not script_settings.sayAllOnLoad:
                         self.speakContents(\
                             self.getLineContentsAtOffset(obj,
@@ -2442,7 +2441,7 @@ class Script(default.Script):
         else:
             [textObj, startOffset, endOffset, word] = wordContents[0]
             word = textObj.queryText().getText(startOffset, endOffset)
-            speech.speakUtterances([word], self.getACSS(textObj, word))
+            speech.speak([word], self.getACSS(textObj, word))
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
@@ -5333,6 +5332,8 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
+    # [[[TODO: WDW - this needs to be moved to the speech generator.]]]
+    #
     def getACSS(self, obj, string):
         """Returns the ACSS to speak anything for the given obj."""
         if obj.getRole() == pyatspi.ROLE_LINK:
@@ -5506,7 +5507,7 @@ class Script(default.Script):
                 # speak the entire component.
                 #
                 utterances = self.speechGenerator.getSpeech(obj, False)
-                speech.speakUtterances(utterances)
+                speech.speak(utterances)
 
     ####################################################################
     #                                                                  #

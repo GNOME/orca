@@ -2048,7 +2048,7 @@ class Script(script.Script):
                 if not moved:
                     break
 
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
 
         elif self.isTextArea(orca_state.locusOfFocus):
             try:
@@ -2058,7 +2058,7 @@ class Script(script.Script):
                              orca_state.locusOfFocus, False)
                 utterances.extend(self.tutorialGenerator.getTutorial(
                            orca_state.locusOfFocus, False))
-                speech.speakUtterances(utterances)
+                speech.speak(utterances)
             except AttributeError:
                 pass
             else:
@@ -2710,7 +2710,7 @@ class Script(script.Script):
                         percentage = _("%d percent.") % percentValue + " "
 
                         utterances.append(percentage)
-                        speech.speakUtterances(utterances)
+                        speech.speak(utterances)
 
                         self.lastProgressBarTime[obj] = currentTime
                         self.lastProgressBarValue[obj] = percentValue
@@ -3014,7 +3014,7 @@ class Script(script.Script):
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
-            speech.speakUtterances(utterances, voice, not shouldNotInterrupt)
+            speech.speak(utterances, voice, not shouldNotInterrupt)
 
             # If this is a table cell, save the current row and column
             # information in the table cell's table, so that we can use
@@ -3106,7 +3106,7 @@ class Script(script.Script):
                 for label in labels:
                     utterances.append(label.name)
 
-                speech.speakUtterances(utterances)
+                speech.speak(utterances)
 
                 return
 
@@ -3123,7 +3123,7 @@ class Script(script.Script):
                     utterances = self.speechGenerator.getSpeech(target, True)
                     utterances.extend(self.tutorialGenerator.getTutorial(
                                target, True))
-                    speech.speakUtterances(utterances)
+                    speech.speak(utterances)
                     return
 
         # If this object is a label, and if it has a LABEL_FOR relation
@@ -3142,7 +3142,7 @@ class Script(script.Script):
                                      target, True)
                         utterances.extend(self.tutorialGenerator.getTutorial(
                                           target, True))
-                        speech.speakUtterances(utterances)
+                        speech.speak(utterances)
                         return
 
         if not self.isSameObject(obj, orca_state.locusOfFocus):
@@ -3175,7 +3175,7 @@ class Script(script.Script):
         self.updateBraille(obj)
         utterances = self.speechGenerator.getSpeech(obj, True)
         utterances.extend(self.tutorialGenerator.getTutorial(obj, True))
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
@@ -3947,12 +3947,12 @@ class Script(script.Script):
                     and (orca_state.lastNonModifierKeyEvent.event_string \
                                                                   == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
-                    utterances = self.speechGenerator.getSpeech(\
+                    utterances = self.speechGenerator.getSpeech(
                         orca_state.locusOfFocus,
                         False)
                     utterances.extend(self.tutorialGenerator.getTutorial(
                                       orca_state.locusOfFocus, False))
-                    speech.speakUtterances(utterances)
+                    speech.speak(utterances)
             return
 
         if event.source.getRole() in state_change_notifiers:
@@ -4277,7 +4277,7 @@ class Script(script.Script):
                     # a document, Orca lets them know this.
                     #
                     utterances.append(C_("text", "selected"))
-                    speech.speakUtterances(utterances)
+                    speech.speak(utterances)
                 self.updateBraille(orca_state.locusOfFocus)
 
     def noOp(self, event):
@@ -5286,7 +5286,7 @@ class Script(script.Script):
                     context.getCurrentAccessible(), False)
             utterances.extend(self.tutorialGenerator.getTutorial(
                     context.getCurrentAccessible(), False))
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
         return True
 
     def reviewPreviousItem(self, inputEvent):

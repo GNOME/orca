@@ -124,7 +124,7 @@ class WhereAmI(where_am_I.WhereAmI):
 
         debug.println(self._debugLevel, "calc table cell utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakParagraph(self, obj, basicOnly):
         """OpenOffice Calc cells have the role "paragraph" when
@@ -161,7 +161,7 @@ class WhereAmI(where_am_I.WhereAmI):
 
         debug.println(self._debugLevel, "editable table cell utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _getCalcFrameAndSheet(self, obj):
         """Returns the Calc frame and sheet
@@ -196,7 +196,7 @@ class WhereAmI(where_am_I.WhereAmI):
 
         debug.println(self._debugLevel, "Calc statusbar utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def speakTitle(self, obj):
         """Speak the title bar.
@@ -226,7 +226,7 @@ class WhereAmI(where_am_I.WhereAmI):
 
         debug.println(self._debugLevel,
                       "Calc titlebar and sheet utterances=%s" % utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def speakStatusBar(self, obj):
         """Speak the status bar contents.
@@ -250,7 +250,7 @@ class WhereAmI(where_am_I.WhereAmI):
 
         debug.println(self._debugLevel,
                       "Calc status bar utterances=%s" % utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _getObjLabel(self, obj):
         """Returns the label to speak for an object.

@@ -137,54 +137,8 @@ def sayAll(utteranceIterator, progressCallback):
             debug.println(debug.LEVEL_INFO, logLine)
             log.info(logLine)
 
-def altspeak(result, voice=None):
-    """Speaks the array-based speech from the alternate speech generator."""
-    subString = None
-    for element in result:
-        if isinstance(element, basestring):
-            if subString:
-                subString += " " + element
-            else:
-                subString = element
-        else:
-            if subString:
-                print "Speaking '%s' with" % subString, voice
-                speak(subString, voice)
-            subString = None
-            if isinstance(element, list):
-                altspeak(element, voice)
-            elif isinstance(element, ACSS):
-                voice = ACSS(voice)
-                voice.update(element)
-            else:
-                print indent + "UNKNOWN element", element
-    if subString:
-        print "Speaking '%s' with" % subString, voice
-        speak(subString, voice)
-
-def speak(text, acss=None, interrupt=True):
-    """Speaks all queued text immediately.  If text is not None,
-    it is added to the queue before speaking.
-
-    Arguments:
-    - text:      optional text to add to the queue before speaking
-    - acss:      acss.ACSS instance; if None,
-                 the default voice settings will be used.
-                 Otherwise, the acss settings will be
-                 used to augment/override the default
-                 voice settings.
-    - interrupt: if True, stops any speech in progress before
-                 speaking the text
-    """
-
-    # We will not interrupt a key echo in progress.
-    #
-    if orca_state.lastKeyEchoTime:
-        interrupt = interrupt \
-            and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
-
-    if settings.silenceSpeech:
-        return
+def _speak(text, acss, interrupt):
+    """Speaks the individual string using the given ACSS."""
 
     if settings.speakMultiCaseStringsAsWords:
         text = _processMultiCaseString(text)
@@ -199,6 +153,51 @@ def speak(text, acss=None, interrupt=True):
 
     if _speechserver:
         _speechserver.speak(text, __resolveACSS(acss), interrupt)
+
+
+def speak(content, acss=None, interrupt=True):
+    """Speaks the given content.  The content can be either a simple
+    string or an array of arrays of objects returned by a speech
+    generator."""
+
+    # We will not interrupt a key echo in progress.
+    #
+    if orca_state.lastKeyEchoTime:
+        interrupt = interrupt \
+            and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
+
+    if settings.silenceSpeech:
+        return
+
+    if isinstance(content, basestring):
+        subString = content
+    elif isinstance(content, list):
+        subString = None
+        for element in content:
+            if isinstance(element, basestring):
+                if subString:
+                    subString += " " + element
+                else:
+                    subString = element
+            else:
+                if subString:
+                    _speak(subString, acss, interrupt)
+                subString = None
+                if isinstance(element, list):
+                    speak(element, acss, interrupt)
+                elif isinstance(element, ACSS):
+                    acss = ACSS(acss)
+                    acss.update(element)
+                else:
+                    debug.println(debug.LEVEL_WARNING,
+                                  "UNKNOWN speech element: '%s'" % element)
+    else:
+        debug.printStack(debug.LEVEL_WARNING)
+        debug.println(debug.LEVEL_WARNING, 
+                      "bad content send to speech.speak: '%s'", repr(content))
+
+    if subString:
+        _speak(subString, acss, interrupt)
 
 def speakKeyEvent(event_string, eventType):
     """Speaks a key event immediately.
@@ -262,47 +261,6 @@ def isSpeaking():
         return _speechserver.isSpeaking()
     else:
         return False
-
-def speakUtterances(utterances, acss=None, interrupt=True):
-    """Speaks the given list of utterances immediately.
-
-    Arguments:
-    - list:      list of strings to be spoken
-    - acss:      acss.ACSS instance; if None,
-                 the default voice settings will be used.
-                 Otherwise, the acss settings will be
-                 used to augment/override the default
-                 voice settings.
-    - interrupt: if True, stop any speech currently in progress.
-    """
-
-    # We will not interrupt a key echo in progress.
-    #
-    if orca_state.lastKeyEchoTime:
-        interrupt = interrupt \
-            and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
-
-    if settings.silenceSpeech:
-        return
-    i = 0
-    length = len(utterances)
-    while ( i < length ):
-        if settings.speakMultiCaseStringsAsWords:
-            utterances[i] = _processMultiCaseString(utterances[i])
-        if orca_state.activeScript and orca_state.usePronunciationDictionary:
-            utterances[i] = orca_state.activeScript.adjustForPronunciation(\
-                            utterances[i])
-        if settings.speakMultiCaseStringsAsWords:
-            utterances[i] = _processMultiCaseString(utterances[i])
-        logLine = "SPEECH OUTPUT: '" + utterances[i] + "'"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
-        i = i + 1
-
-    if _speechserver:
-        _speechserver.speakUtterances(utterances,
-                                       __resolveACSS(acss),
-                                       interrupt)
 
 def getInfo():
     info = None

@@ -265,7 +265,7 @@ class MouseReviewer:
                 # display.
                 braille.displayMessage(obj)
             else:
-                speech.speakUtterances(
+                speech.speak(
                     self._currentMouseOver.script.speechGenerator.getSpeech(
                             obj,
                             False))

@@ -62,7 +62,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         utterances = [(_('entered bookmark'))]
         utterances.extend(self._script.speechGenerator.getSpeech \
                          (obj, False))
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
         
     def goToBookmark(self, inputEvent, index=None):
         """ Go to the bookmark indexed at this key and this page's URI """

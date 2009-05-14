@@ -190,7 +190,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "check box utterances=%s" \
                       % utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakRadioButton(self, obj, basicOnly):
         """Radio Buttons present the following information (an example is
@@ -242,7 +242,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "radio button utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakComboBox(self, obj, basicOnly):
         """Comboboxes present the following information (an example is
@@ -278,7 +278,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "combo box utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakSpinButton(self, obj, basicOnly):
         """Spin Buttons present the following information (an example is
@@ -317,7 +317,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "spin button utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakPushButton(self, obj, basicOnly):
         """ Push Buttons present the following information (an example is
@@ -344,7 +344,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "push button utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakSlider(self, obj, basicOnly):
         """Sliders present the following information (examples include
@@ -383,7 +383,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "slider utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakMenuItem(self, obj, basicOnly):
         """Menu items present the following information (examples include
@@ -458,7 +458,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "menu item utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakPageTab(self, obj, basicOnly):
         """Tabs in a Tab List present the following information (an example
@@ -492,7 +492,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "page utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakText(self, obj, basicOnly):
         """Text boxes present the following information (an example is
@@ -552,7 +552,7 @@ class WhereAmI:
         debug.println(self._debugLevel, "first text utterances=%s" % \
                       utterances)
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
         if not basicOnly:
             settings.verbalizePunctuationStyle = savedStyle
@@ -573,7 +573,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "text utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakTableCell(self, obj, basicOnly):
         """Tree Tables present the following information (an example is
@@ -635,7 +635,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "first table cell utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
         utterances = []
         if table:
@@ -648,7 +648,7 @@ class WhereAmI:
             #
             text = _("row %d of %d") % ((row + 1), table.nRows)
             utterances.append(text)
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
 
             # Speak the current row if performing a "detailed" whereAmI.
             #
@@ -657,7 +657,7 @@ class WhereAmI:
                 debug.println(self._debugLevel, \
                               "second table cell utterances=%s" % \
                               utterances)
-                speech.speakUtterances(utterances)
+                speech.speak(utterances)
         
         utterances = []
         state = obj.getState()
@@ -688,7 +688,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "third table cell utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakListItem(self, obj, basicOnly):
         """List items should be treated like tree cells:
@@ -753,7 +753,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "list item utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakParagraph(self, obj, basicOnly):
         """Speak a paragraph object.
@@ -787,7 +787,7 @@ class WhereAmI:
         [frame, dialogue] = self._getFrameAndDialog(obj)
         utterances.extend(getTutorial(frame, False, forceMessage=True))
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
         
     def _speakLink(self, obj, basicOnly):
         """Speaks information about a link including protocol, domain 
@@ -876,7 +876,7 @@ class WhereAmI:
         getTutorial = self._script.tutorialGenerator.getTutorial
         utterances.extend(getTutorial(obj, False, forceMessage=True))
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakToggleButton(self, obj, basicOnly):
         """Speak toggle button information:
@@ -906,7 +906,7 @@ class WhereAmI:
         getTutorial = self._script.tutorialGenerator.getTutorial
         utterances.extend(getTutorial(obj, False, forceMessage=True))
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
       
     def _speakSplitPane(self, obj, basicOnly):
         """Speak split pane information:
@@ -929,7 +929,7 @@ class WhereAmI:
         getTutorial = self._script.tutorialGenerator.getTutorial
         utterances.extend(getTutorial(obj, False, forceMessage=True))
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakLabel(self, obj, basicOnly):
         """Speak label information:
@@ -951,7 +951,7 @@ class WhereAmI:
         getTutorial = self._script.tutorialGenerator.getTutorial
         utterances.extend(getTutorial(obj, False, forceMessage=True))
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
 
     def _speakLayeredPane(self, obj, basicOnly):
@@ -973,7 +973,7 @@ class WhereAmI:
         getTutorial = self._script.tutorialGenerator.getTutorial
         utterances.extend(getTutorial(obj, False, forceMessage=True))
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
 
     def _getSpeechForAllTextSelection(self, obj):
@@ -1097,7 +1097,7 @@ class WhereAmI:
         getTutorial = self._script.tutorialGenerator.getTutorial
         utterances.extend(getTutorial(obj, False, forceMessage=True))
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
 
     def _getObjName(self, obj):
@@ -1799,7 +1799,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "titlebar utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def speakStatusBar(self, obj):
         """Speak the contents of the status bar of the window with focus.
@@ -1820,7 +1820,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "status bar utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _getFrameAndDialog(self, obj):
         """Returns the frame and (possibly) the dialog containing
@@ -1886,7 +1886,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "statusbar utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _getDefaultButton(self, obj):
         """Gets the default button in a dialog.
@@ -1940,7 +1940,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "default button utterances=%s" % \
                       utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _speakObjDescription(self, obj):
         """Speaks the object's description if it is not the same as
@@ -1978,7 +1978,7 @@ class WhereAmI:
 
         debug.println(self._debugLevel, "toolbar utterances=%s" \
                       % utterances)
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def _getRequiredState(self, obj):
         """Returns a string describing the required state of the given
