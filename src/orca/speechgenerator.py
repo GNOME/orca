@@ -31,6 +31,7 @@ import sys
 import traceback
 
 import debug
+import orca_state
 import pyatspi
 import rolenames
 import settings
@@ -66,6 +67,8 @@ class SpeechGenerator:
     entry point.  Subclasses can feel free to override/extend the
     speechGenerators instance field as they see fit."""
 
+    # pylint: disable-msg=W0142
+
     def __init__(self, script):
         self._script = script
         self._methodsDict = {}
@@ -87,9 +90,10 @@ class SpeechGenerator:
         methods = {}
         for key in self._methodsDict.keys():
             methods[key] = []
-        methods["voice"] = self.voice
-        methods["obj"] = None
-        methods["role"] = None
+        methods['voice'] = self.voice
+        methods['obj'] = None
+        methods['role'] = None
+        methods['pyatspi'] = pyatspi
         for roleKey in self._script.formatting["speech"]:
             for speechKey in ["focused", "unfocused"]:
                 try:
@@ -112,7 +116,8 @@ class SpeechGenerator:
                             arg = arg.replace("name '", "")
                             arg = arg.replace("' is not defined", "")
                             if not self._methodsDict.has_key(arg):
-                                debug.printException(
+                                debug.printException(debug.LEVEL_SEVERE)
+                                debug.println(
                                     debug.LEVEL_SEVERE,
                                     "Unable to find function for '%s'\n" % arg)
                         except:
@@ -140,7 +145,6 @@ class SpeechGenerator:
 
     def _getTextRole(self, obj, **args):
         result = []
-        # pylint: disable-msg=W0142
         role = args.get('role', obj.getRole())
         if role != pyatspi.ROLE_PARAGRAPH:
             result.extend(self._getRoleName(obj, **args))
@@ -163,7 +167,6 @@ class SpeechGenerator:
     def _getLabelAndName(self, obj, **args):
         """Gets the label and the name if the name is different from the label.
         """
-        # pylint: disable-msg=W0142
         result = []
         label = self._getLabel(obj, **args)
         name = self._getName(obj, **args)
@@ -177,7 +180,6 @@ class SpeechGenerator:
     def _getLabelOrName(self, obj, **args):
         """Gets the label or the name if the label is not preset."""
         result = []
-        # pylint: disable-msg=W0142
         result.extend(self._getLabel(obj, **args))
         if not result:
             if obj.name and (len(obj.name)):
@@ -186,7 +188,6 @@ class SpeechGenerator:
 
     def _getUnrelatedLabels(self, obj, **args):
         """Finds all labels not in a label for or labelled by relation."""
-        # pylint: disable-msg=W0142
         labels = self._script.findUnrelatedLabels(obj)
         result = []
         for label in labels:
@@ -195,7 +196,6 @@ class SpeechGenerator:
         return result
 
     def _getEmbedded(self, obj, **args):
-        # pylint: disable-msg=W0142
         result = self._getLabelOrName(obj, **args)
         if not result:
             try:
@@ -228,7 +228,6 @@ class SpeechGenerator:
         return result
 
     def _getCellCheckedState(self, obj, **args):
-        # pylint: disable-msg=W0142
         result = []
         try:
             action = obj.queryAction()
@@ -362,10 +361,162 @@ class SpeechGenerator:
     #                                                                   #
     #####################################################################
 
+    def _getRowHeader(self, obj, **args):
+        result = []
+        try:
+            table = obj.parent.queryTable()
+        except:
+            pass
+        else:
+            index = self._script.getCellIndex(obj)
+            rowIndex = table.getRowAtIndex(index)
+            if rowIndex >= 0:
+                # Get the header information.  In Java Swing, the
+                # information is not exposed via the description
+                # but is instead a header object, so we fall back
+                # to that if it exists.
+                #
+                # [[[TODO: WDW - the more correct thing to do, I
+                # think, is to look at the row header object.
+                # We've been looking at the description for so
+                # long, though, that we'll give the description
+                # preference for now.]]]
+                #
+                desc = table.getRowDescription(rowIndex)
+                if not desc:
+                    header = table.getRowHeader(rowIndex)
+                    if header:
+                        desc = self._script.getDisplayedText(header)
+                if desc and len(desc):
+                    text = desc
+                    if settings.speechVerbosityLevel \
+                            == settings.VERBOSITY_LEVEL_VERBOSE:
+                        text += " " \
+                            + rolenames.rolenames[\
+                            pyatspi.ROLE_ROW_HEADER].speech
+                    result.append(text)
+        return result
+
+    def _getNewRowHeader(self, obj, **args):
+        """Returns the row header for the object only if the
+        row header changed from the prior object."""
+        result = []
+        if obj:
+            priorObj = args.get('priorObj', None)
+            try:
+                priorParent = priorObj.parent
+            except:
+                priorParent = None
+
+            if (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
+                or (obj.parent.getRole() == pyatspi.ROLE_TABLE):
+                try:
+                    table = priorParent.queryTable()
+                except:
+                    table = None
+                if table \
+                   and ((priorObj.getRole() == pyatspi.ROLE_TABLE_CELL) \
+                         or (priorObj.getRole() == pyatspi.ROLE_TABLE)):
+                    index = self._script.getCellIndex(priorObj)
+                    oldRow = table.getRowAtIndex(index)
+                else:
+                    oldRow = -1
+
+                try:
+                    table = obj.parent.queryTable()
+                except:
+                    pass
+                else:
+                    index = self._script.getCellIndex(obj)
+                    newRow = table.getRowAtIndex(index)
+                    if (newRow >= 0) \
+                       and ((newRow != oldRow) \
+                            or (obj.parent != priorParent)):
+                        result = self._getRowHeader(obj, **args)
+        return result
+
+    def _getColumnHeader(self, obj, **args):
+        result = []
+        try:
+            table = obj.parent.queryTable()
+        except:
+            pass
+        else:
+            index = self._script.getCellIndex(obj)
+            columnIndex = table.getColumnAtIndex(index)
+            # Don't speak Thunderbird column headers, since
+            # it's not possible to navigate across a row.
+            # [[[TODO: WDW - move the T-bird check to the T-bird generator.]]]
+            if (columnIndex >= 0) \
+               and not self._script.getTopLevelName(obj).endswith(
+                " - Thunderbird"):
+                # Get the header information.  In Java Swing, the
+                # information is not exposed via the description
+                # but is instead a header object, so we fall back
+                # to that if it exists.
+                #
+                # [[[TODO: WDW - the more correct thing to do, I
+                # think, is to look at the row header object.
+                # We've been looking at the description for so
+                # long, though, that we'll give the description
+                # preference for now.]]]
+                #
+                desc = table.getColumnDescription(columnIndex)
+                if not desc:
+                    header = table.getColumnHeader(columnIndex)
+                    if header:
+                        desc = self._script.getDisplayedText(header)
+                if desc and len(desc):
+                    text = desc
+                    if settings.speechVerbosityLevel \
+                            == settings.VERBOSITY_LEVEL_VERBOSE:
+                        text += " " \
+                            + rolenames.rolenames[\
+                            pyatspi.ROLE_COLUMN_HEADER].speech
+                    result.append(text)
+        return result
+
+    def _getNewColumnHeader(self, obj, **args):
+        """Returns the column header for the object only if the
+        column header changed from the prior object."""
+        result = []
+        if obj:
+            priorObj = args.get('priorObj', None)
+            try:
+                priorParent = priorObj.parent
+            except:
+                priorParent = None
+
+            if (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
+                or (obj.parent.getRole() == pyatspi.ROLE_TABLE):
+                try:
+                    table = priorParent.queryTable()
+                except:
+                    table = None
+                if table \
+                   and ((priorObj.getRole() == pyatspi.ROLE_TABLE_CELL) \
+                         or (priorObj.getRole() == pyatspi.ROLE_TABLE)):
+                    index = self._script.getCellIndex(priorObj)
+                    oldCol = table.getColumnAtIndex(index)
+                else:
+                    oldCol = -1
+
+                try:
+                    table = obj.parent.queryTable()
+                except:
+                    pass
+                else:
+                    index = self._script.getCellIndex(obj)
+                    newCol = table.getColumnAtIndex(index)
+                    if (newCol >= 0) \
+                       and ((newCol != oldCol) \
+                            or (obj.parent != priorParent)):
+                        result = self._getColumnHeader(obj, **args)
+        return result
+
     def _getTableCell2ChildLabel(self, obj, **args):
         """Get the speech utterances for the label of a toggle in a table cell
         that has a special 2 child pattern that we run into."""
-        # pylint: disable-msg=W0142
         result = []
 
         # If this table cell has 2 children and one of them has a
@@ -405,7 +556,6 @@ class SpeechGenerator:
     def _getTableCell2ChildToggle(self, obj, **args):
         """Get the speech utterances for the toggle value in a table cell that
         has a special 2 child pattern that we run into."""
-        # pylint: disable-msg=W0142
         result = []
 
         # If this table cell has 2 children and one of them has a
@@ -446,7 +596,6 @@ class SpeechGenerator:
     def _getTableCellRow(self, obj, **args):
         """Get the speech for a table cell row or a single table cell
         if settings.readTableCellRow is False."""
-        # pylint: disable-msg=W0142
         result = []
 
         try:
@@ -522,6 +671,48 @@ class SpeechGenerator:
             _restoreRole(oldRole, args)
         return result
 
+    def _getUnselectedCell(self, obj, **args):
+        result = []
+
+        # If this is an icon within an layered pane or a table cell
+        # within a table or a tree table and the item is focused but not
+        # selected, let the user know. See bug #486908 for more details.
+        #
+        checkIfSelected = False
+        objRole, parentRole, state = None, None, None
+        if obj:
+            objRole = obj.getRole()
+            state = obj.getState()
+            if obj.parent:
+                parentRole = obj.parent.getRole()
+
+        if objRole == pyatspi.ROLE_TABLE_CELL \
+           and (parentRole == pyatspi.ROLE_TREE_TABLE \
+                or parentRole == pyatspi.ROLE_TABLE):
+            checkIfSelected = True
+
+        # If we met the last set of conditions, but we got here by
+        # moving left or right on the same row, then don't announce the
+        # selection state to the user. See bug #523235 for more details.
+        #
+        if checkIfSelected and orca_state.lastNonModifierKeyEvent \
+           and orca_state.lastNonModifierKeyEvent.event_string \
+               in ["Left", "Right"]:
+            checkIfSelected = False
+
+        if objRole == pyatspi.ROLE_ICON \
+           and parentRole == pyatspi.ROLE_LAYERED_PANE:
+            checkIfSelected = True
+
+        if checkIfSelected \
+           and state and not state.contains(pyatspi.STATE_SELECTED):
+            # Translators: this is in reference to a table cell being
+            # selected or not.
+            #
+            result.append(C_("tablecell", "not selected"))
+
+        return result
+
     #####################################################################
     #                                                                   #
     # Terminal information                                              #
@@ -576,6 +767,37 @@ class SpeechGenerator:
 
     #####################################################################
     #                                                                   #
+    # Tree interface information                                        #
+    #                                                                   #
+    #####################################################################
+
+    def _getNodeLevel(self, obj, **args):
+        result = []
+        level = self._script.getNodeLevel(obj)
+        if level >= 0:
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
+            result.append(_("tree level %d") % (level + 1))
+        return result
+
+    def _getNewNodeLevel(self, obj, **args):
+        # [[[TODO: WDW - hate duplicating code from _getNodeLevel,
+        # but don't want to call it because it will make the same
+        # self._script.getNodeLevel call again.]]]
+        #
+        result = []
+        oldLevel = self._script.getNodeLevel(args.get('priorObj', None))
+        newLevel = self._script.getNodeLevel(obj)
+        if (oldLevel != newLevel) and (newLevel >= 0):
+            # Translators: this represents the depth of a node in a tree
+            # view (i.e., how many ancestors a node has).
+            #
+            result.append(_("tree level %d") % (newLevel + 1))
+        return result
+
+    #####################################################################
+    #                                                                   #
     # Value interface information                                       #
     #                                                                   #
     #####################################################################
@@ -605,6 +827,49 @@ class SpeechGenerator:
     # Hierarchy and related dialog information                          #
     #                                                                   #
     #####################################################################
+
+    def _getRadioButtonGroup(self, obj, **args):
+        result = []
+        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+            radioGroupLabel = None
+            relations = obj.getRelationSet()
+            for relation in relations:
+                if (not radioGroupLabel) \
+                    and (relation.getRelationType() \
+                         == pyatspi.RELATION_LABELLED_BY):
+                    radioGroupLabel = relation.getTarget(0)
+                    break
+            if radioGroupLabel:
+                result.append(self._script.getDisplayedText(radioGroupLabel))
+        return result
+
+    def _getNewRadioButtonGroup(self, obj, **args):
+        # [[[TODO: WDW - hate duplicating code from _getRadioButtonGroup
+        # but don't want to call it because it will make the same
+        # AT-SPI method calls.]]]
+        #
+        result = []
+        priorObj = args.get('priorObj', None)
+        if obj and obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+            radioGroupLabel = None
+            inSameGroup = False
+            relations = obj.getRelationSet()
+            for relation in relations:
+                if (not radioGroupLabel) \
+                    and (relation.getRelationType() \
+                         == pyatspi.RELATION_LABELLED_BY):
+                    radioGroupLabel = relation.getTarget(0)
+                if (not inSameGroup) \
+                    and (relation.getRelationType() \
+                         == pyatspi.RELATION_MEMBER_OF):
+                    for i in range(0, relation.getNTargets()):
+                        target = relation.getTarget(i)
+                        if target == priorObj:
+                            inSameGroup = True
+                            break
+            if (not inSameGroup) and radioGroupLabel:
+                result.append(self._script.getDisplayedText(radioGroupLabel))
+        return result
 
     def _getRealActiveDescendantDisplayedText(self, obj, **args ):
         text = self._script.getDisplayedText(
@@ -667,6 +932,41 @@ class SpeechGenerator:
                             alertAndDialogCount) % alertAndDialogCount)
         return result
 
+    def _getAncestors(self, obj, **args):
+        result = []
+        priorObj = args.get('priorObj', None)
+        commonAncestor = self._script.findCommonAncestor(priorObj, obj)
+        if obj != commonAncestor:
+            parent = obj.parent
+            if parent \
+                and (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
+                and (parent.getRole() == pyatspi.ROLE_TABLE_CELL):
+                parent = parent.parent
+            while parent and (parent.parent != parent):
+                if parent == commonAncestor:
+                    break
+                if not self._script.isLayoutOnly(parent):
+                    text = self._script.getDisplayedLabel(parent)
+                    if not text and 'Text' in pyatspi.listInterfaces(parent):
+                        text = self._script.getDisplayedText(parent)
+                    if text and len(text.strip()):
+                        # Push announcement of cell to the end
+                        #
+                        if parent.getRole() not in [pyatspi.ROLE_TABLE_CELL,
+                                                    pyatspi.ROLE_FILLER]:
+                            result.extend(self._getRoleName(parent))
+                        result.append(text)
+                        if parent.getRole() == pyatspi.ROLE_TABLE_CELL:
+                            result.extend(self._getRoleName(parent))
+                parent = parent.parent
+        return result.reverse() or result
+
+    def _getNewAncestors(self, obj, **args):
+        result = []
+        if args.get('priorObj', None):
+            result = self._getAncestors(obj, **args)
+        return result
+
     #####################################################################
     #                                                                   #
     # Keyboard shortcut information                                     #
@@ -716,63 +1016,6 @@ class SpeechGenerator:
 
     #####################################################################
     #                                                                   #
-    # Get the context of where the object is.                           #
-    #                                                                   #
-    #####################################################################
-
-    def _getContext(self, obj, stopAncestor=None):
-        """Get the information that describes the names and role of
-        the container hierarchy of the object, stopping at and
-        not including the stopAncestor.
-
-        Arguments:
-        - obj: the object
-        - stopAncestor: the anscestor to stop at and not include (None
-          means include all ancestors)
-
-        """
-
-        result = []
-
-        if not obj or obj == stopAncestor:
-            return result
-
-        parent = obj.parent
-        if parent \
-            and (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
-            and (parent.getRole() == pyatspi.ROLE_TABLE_CELL):
-            parent = parent.parent
-
-        while parent and (parent.parent != parent):
-            if parent == stopAncestor:
-                break
-            if not self._script.isLayoutOnly(parent):
-                text = self._script.getDisplayedLabel(parent)
-                if not text and 'Text' in pyatspi.listInterfaces(parent):
-                    text = self._script.getDisplayedText(parent)
-                if text and len(text.strip()):
-                    # Push announcement of cell to the end
-                    #
-                    if parent.getRole() not in [pyatspi.ROLE_TABLE_CELL,
-                                                pyatspi.ROLE_FILLER]:
-                        result.extend(self._getRoleName(parent))
-                    result.append(text)
-                    if parent.getRole() == pyatspi.ROLE_TABLE_CELL:
-                        result.extend(self._getRoleName(parent))
-
-            parent = parent.parent
-
-        result.reverse()
-
-        return result
-
-    # [[[TODO: WDW - need to figure out the context stuff still.
-    #
-    def getSpeechContext(self, obj, stopAncestor=None):
-        return self._getContext(obj, stopAncestor)
-
-    #####################################################################
-    #                                                                   #
     # Tie it all together                                               #
     #                                                                   #
     #####################################################################
@@ -785,19 +1028,18 @@ class SpeechGenerator:
         return [voice]
 
     def getSpeech(self, obj, **args):
-        # pylint: disable-msg=W0142
         result = []
         methods = {}
-        methods["voice"] = self.voice
-        methods["obj"] = obj
-        methods["role"] = args.get('role', obj.getRole())
+        methods['voice'] = self.voice
+        methods['obj'] = obj
         methods['pyatspi'] = pyatspi
+        methods['role'] = args.get('role', obj.getRole())
 
         try:
             # We sometimes want to override the role.  We'll keep the
             # role in the args dictionary as a means to let us do so.
             #
-            args['role'] = methods["role"]
+            args['role'] = methods['role']
 
             # We loop through the format string, catching each error
             # as we go.  Each error should always be a NameError,
@@ -808,6 +1050,22 @@ class SpeechGenerator:
             #
             format = self._script.formatting.getFormat('speech',
                                                        **args)
+
+            # Add in the speech context if this is the first time
+            # we've been called.
+            #
+            if not args.get('recursing', False):
+                prefix = self._script.formatting.getPrefix('speech',
+                                                           **args)
+                suffix = self._script.formatting.getSuffix('speech',
+                                                           **args)
+                format = '%s + %s + %s' % (prefix, format, suffix)
+                args['recursing'] = True
+                firstTimeCalled = True
+                debug.println(debug.LEVEL_ALL, "getSpeech using '%s'" % format)
+            else:
+                firstTimeCalled = False
+
             assert(format)
             while True:
                 try:
@@ -820,7 +1078,8 @@ class SpeechGenerator:
                     arg = arg.replace("name '", "")
                     arg = arg.replace("' is not defined", "")
                     if not self._methodsDict.has_key(arg):
-                        debug.printException(
+                        debug.printException(debug.LEVEL_SEVERE)
+                        debug.println(
                             debug.LEVEL_SEVERE,
                             "Unable to find function for '%s'\n" % arg)
                         break
@@ -829,4 +1088,7 @@ class SpeechGenerator:
             debug.printException(debug.LEVEL_SEVERE)
             result = []
 
+        if firstTimeCalled:
+            debug.println(debug.LEVEL_ALL,
+                          "getSpeech generated '%s'" % repr(result))
         return result

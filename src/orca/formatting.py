@@ -29,10 +29,18 @@ import pyatspi
 
 # pylint: disable-msg=C0301
 
-defaultFormatting = {
+formatting = {
     'speech': {
+        'prefix': {
+            'focused': '[]',
+            'unfocused': 'newAncestors + newRowHeader + newColumnHeader + newRadioButtonGroup'
+            },
+        'suffix': {
+            'focused': '[]',
+            'unfocused': 'newNodeLevel + unselectedCell + tutorial'
+            },
         'default': {
-            'focused': '',
+            'focused': '[]',
             'unfocused': 'labelAndName + allTextSelection + roleName + availability'
             },
         pyatspi.ROLE_ALERT: {
@@ -53,7 +61,7 @@ defaultFormatting = {
             'unfocused': 'labelAndName + unrelatedLabels'
             },
         pyatspi.ROLE_FRAME: {
-            'focused': '',
+            'focused': '[]',
             'unfocused': 'labelAndName + allTextSelection + roleName + unfocusedDialogCount + availability'
             },
         pyatspi.ROLE_ICON: {
@@ -69,11 +77,11 @@ defaultFormatting = {
             'unfocused': 'labelAndName + allTextSelection + expandableState + availability'
             },
         pyatspi.ROLE_MENU: {
-            'focused': '',
+            'focused': '[]',
             'unfocused': 'labelAndName + allTextSelection + roleName + availability'
             },
         pyatspi.ROLE_MENU_ITEM: {
-            'focused': '',
+            'focused': '[]',
             'unfocused': 'labelAndName + menuItemCheckedState + availability + accelerator'
             },
         pyatspi.ROLE_PASSWORD_TEXT: {
@@ -85,16 +93,7 @@ defaultFormatting = {
             'unfocused': 'labelAndName + percentage'
             },
         pyatspi.ROLE_PUSH_BUTTON: {
-            # [[[TODO: WDW - this is just an example of embedding a
-            # voice in the format.  It should be removed when we've
-            # figured that stuff out.]]]
-            #
-            # [[[NOTE: MMH - We will only hear the tutorial string once per script,
-            # this is because the code checks if the tutorial to be spoken was the last tutorial, and this will always be true.
-            # Just putting 'tutorial' in some of the other unfocused strings should get it to behave as normally.
-            # Also r==s thing wont be true when returning tutorial msges because the old getSpeech was not responsible for tutorials, but now it is.]]]
-            #
-            'unfocused': 'voice(role) + labelAndName + [voice("uppercase") + roleName] + tutorial'
+            'unfocused': 'labelAndName + roleName'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',
@@ -151,7 +150,7 @@ defaultFormatting = {
             'unfocused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and (expandableState + numberOfChildren)) + required'
             },
         pyatspi.ROLE_TEAROFF_MENU_ITEM: {
-            'focused': '',
+            'focused': '[]',
             'unfocused': 'labelAndName + allTextSelection + roleName + availability'
             },
         pyatspi.ROLE_TERMINAL: {
@@ -182,27 +181,14 @@ class Formatting(dict):
     def __init__(self, script):
         dict.__init__(self)
         self._script = script
-        self.update(defaultFormatting)
-
-    def getFormat(self, dictType, **args):
-        already_focused = args.get('already_focused', False)
-        role = args.get('role', None)
-        if self[dictType].has_key(role):
-            roleDict = self[dictType][role]
-        else:
-            roleDict = self[dictType]['default']
-        if already_focused and 'focused' in roleDict:
-            format = roleDict['focused']
-        else:
-            format = roleDict['unfocused']
-        return format
+        self.update(formatting)
 
     def update(self, newDict):
         for key, val in newDict.iteritems():
             if self.has_key(key):
-                if isinstance(self[key], dict) and isinstance(val, dict): 
+                if isinstance(self[key], dict) and isinstance(val, dict):
                     self[key].update(val)
-                elif isinstance(self[key], basestring) and isinstance(val, basestring): 
+                elif isinstance(self[key], basestring) and isinstance(val, basestring):
                     self[key] = val
                 else:
                     # exception or such like, we are trying to murge
@@ -211,3 +197,50 @@ class Formatting(dict):
                     print("an error has occured, cant murge dicts.")
             else:
                 self[key] = val
+
+    def getPrefix(self, dictType, **args):
+        already_focused = args.get('already_focused', False)
+        if already_focused:
+            focusType = 'focused'
+        else:
+            focusType = 'unfocused'
+        try:
+            prefix = self[dictType]['prefix'][focusType]
+        except:
+            prefix = self[dictType]['prefix']['unfocused']
+        return prefix
+
+    def getSuffix(self, dictType, **args):
+        already_focused = args.get('already_focused', False)
+        if already_focused:
+            focusType = 'focused'
+        else:
+            focusType = 'unfocused'
+        try:
+            suffix = self[dictType]['suffix'][focusType]
+        except:
+            suffix = self[dictType]['suffix']['unfocused']
+        return suffix
+
+    def getFormat(self, dictType, **args):
+        already_focused = args.get('already_focused', False)
+        if already_focused:
+            focusType = 'focused'
+        else:
+            focusType = 'unfocused'
+
+        role = args.get('role', None)
+        try:
+            roleDict = self[dictType][role]
+        except:
+            roleDict = self[dictType]['default']
+
+        try:
+            format = roleDict[focusType]
+        except:
+            try:
+                format = roleDict['unfocused']
+            except:
+                format = self[dictType]['default'][focusType]
+
+        return format

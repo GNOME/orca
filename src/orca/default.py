@@ -2261,34 +2261,34 @@ class Script(script.Script):
         """Speaks the sentence prior to the caret, as long as there is
         a sentence prior to the caret and there is no intervening sentence
         delimiter between the caret and the end of the sentence.
- 
+
         The entry condition for this method is that the character
         prior to the current caret position is a sentence delimiter,
         and it's what caused this method to be called in the first
         place.
- 
+
         Arguments:
         - obj: an Accessible object that implements the AccessibleText
         interface.
         """
- 
+
         try:
             text = obj.queryText()
         except NotImplementedError:
             return
- 
+
         offset = text.caretOffset - 1
         previousOffset = text.caretOffset - 2
         if (offset < 0 or previousOffset < 0):
             return
- 
+
         [currentChar, startOffset, endOffset] = \
             text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
         [previousChar, startOffset, endOffset] = \
             text.getTextAtOffset(previousOffset, pyatspi.TEXT_BOUNDARY_CHAR)
         if not self.isSentenceDelimiter(currentChar, previousChar):
             return
- 
+
         # OK - we seem to be cool so far.  So...starting with what
         # should be the last character in the sentence (caretOffset - 2),
         # work our way to the beginning of the sentence, stopping when
@@ -2296,7 +2296,7 @@ class Script(script.Script):
         #
         sentenceEndOffset = text.caretOffset - 2
         sentenceStartOffset = sentenceEndOffset
- 
+
         while sentenceStartOffset >= 0:
             [currentChar, startOffset, endOffset] = \
                 text.getTextAtOffset(sentenceStartOffset,
@@ -2308,7 +2308,7 @@ class Script(script.Script):
                 break
             else:
                 sentenceStartOffset -= 1
- 
+
         # If we came across a sentence delimiter before hitting any
         # text, we really don't have a previous sentence.
         #
@@ -2323,17 +2323,17 @@ class Script(script.Script):
         else:
             sentence = self.getText(obj, sentenceStartOffset + 1,
                                          sentenceEndOffset + 1)
- 
+
         if self.getLinkIndex(obj, sentenceStartOffset + 1) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
         elif sentence.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
- 
+
         sentence = self.adjustForRepeats(sentence)
         speech.speak(sentence, voice)
- 
+
     def echoPreviousWord(self, obj, offset=None):
         """Speaks the word prior to the caret, as long as there is
         a word prior to the caret and there is no intervening word
@@ -2776,6 +2776,7 @@ class Script(script.Script):
         # Clear the point of reference.
         # If the point of reference is a cell, we want to keep the
         # table-related points of reference.
+        #
         if oldParent is not None and oldParent == newParent and \
               newParent.getRole() == pyatspi.ROLE_TABLE:
             for key in self.pointOfReference.keys():
@@ -2787,153 +2788,13 @@ class Script(script.Script):
         if newLocusOfFocus:
             self.updateBraille(newLocusOfFocus)
 
-            utterances = []
-
-            # Now figure out how of the container context changed and
-            # speech just what is different.
-            #
-            commonAncestor = self.findCommonAncestor(oldLocusOfFocus,
-                                                     newLocusOfFocus)
-            if commonAncestor:
-                context = self.speechGenerator.getSpeechContext( \
-                                           newLocusOfFocus, commonAncestor)
-                utterances.append(" ".join(context))
-
-            # Now, we'll treat table row and column headers as context
-            # as well.  This requires special handling because we're
-            # making headers seem hierarchical in the context, but they
-            # are not hierarchical in the containment hierarchicy.
-            # We also only want to speak the one that changed.  If both
-            # changed, first speak the row header, then the column header.
-            #
-            # We also keep track of tree level depth and only announce
-            # that if it changes.
-            #
-            # Note that Java Swing allows things like ROLE_LABEL objects
-            # in trees and tables, so we'll check the parent's role to 
-            # see if it is a table.
-            #
-            oldNodeLevel = -1
-            newNodeLevel = -1
-            if (newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL) \
-               or (newParent.getRole() == pyatspi.ROLE_TABLE):
-                try:
-                    table = oldParent.queryTable()
-                except:
-                    table = None
-                if table and \
-                      ((oldLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL) \
-                       or (oldParent.getRole() == pyatspi.ROLE_TABLE)):
-                    index = self.getCellIndex(oldLocusOfFocus)
-                    oldRow = table.getRowAtIndex(index)
-                    oldCol = table.getColumnAtIndex(index)
-                else:
-                    oldRow = -1
-                    oldCol = -1
-
-                try:
-                    table = newParent.queryTable()
-                except:
-                    pass
-                else:
-                    index = self.getCellIndex(newLocusOfFocus)
-                    newRow = table.getRowAtIndex(index)
-                    newCol = table.getColumnAtIndex(index)
-
-                    if (newRow >= 0) \
-                       and ((newRow != oldRow) or (oldParent != newParent)):
-                        # Get the header information.  In Java Swing, the
-                        # information is not exposed via the description
-                        # but is instead a header object, so we fall back
-                        # to that if it exists.
-                        #
-                        # [[[TODO: WDW - the more correct thing to do, I 
-                        # think, is to look at the row header object.
-                        # We've been looking at the description for so 
-                        # long, though, that we'll give the description 
-                        # preference for now.]]]
-                        #
-                        desc = table.getRowDescription(newRow)
-                        if not desc:
-                            header = table.getRowHeader(newRow)
-                            if header:
-                                desc = self.getDisplayedText(header)
-                        if desc and len(desc):
-                            text = desc
-                            if settings.speechVerbosityLevel \
-                                   == settings.VERBOSITY_LEVEL_VERBOSE:
-                                text += " " \
-                                        + rolenames.rolenames[\
-                                        pyatspi.ROLE_ROW_HEADER].speech
-                            utterances.append(text)
-                    if (newCol >= 0) \
-                       and ((newCol != oldCol) or (oldParent != newParent)):
-                        # Don't speak Thunderbird column headers, since
-                        # it's not possible to navigate across a row.
-                        topName = self.getTopLevelName(newLocusOfFocus)
-                        if not topName.endswith(" - Thunderbird"):
-                            # Get the header information.  In Java Swing, the
-                            # information is not exposed via the description
-                            # but is instead a header object, so we fall back
-                            # to that if it exists.
-                            #
-                            # [[[TODO: WDW - the more correct thing to do, I 
-                            # think, is to look at the row header object.
-                            # We've been looking at the description for so 
-                            # long, though, that we'll give the description 
-                            # preference for now.]]]
-                            #
-                            desc = table.getColumnDescription(newCol)
-                            if not desc:
-                                header = table.getColumnHeader(newCol)
-                                if header:
-                                    desc = self.getDisplayedText(header)
-                            cellText = self.getDisplayedText(newLocusOfFocus)
-                            if desc and len(desc) and cellText != desc:
-                                text = desc
-                                if settings.speechVerbosityLevel \
-                                       == settings.VERBOSITY_LEVEL_VERBOSE:
-                                    text += " " \
-                                            + rolenames.rolenames[\
-                                            pyatspi.ROLE_COLUMN_HEADER].speech
-                                utterances.append(text)
-
-            oldNodeLevel = self.getNodeLevel(oldLocusOfFocus)
-            newNodeLevel = self.getNodeLevel(newLocusOfFocus)
-
-            # We'll also treat radio button groups as though they are
-            # in a context, with the label for the group being the
-            # name of the context.
-            #
-            if newLocusOfFocus \
-               and newLocusOfFocus.getRole() == pyatspi.ROLE_RADIO_BUTTON:
-                radioGroupLabel = None
-                inSameGroup = False
-                relations = newLocusOfFocus.getRelationSet()
-                for relation in relations:
-                    if (not radioGroupLabel) \
-                        and (relation.getRelationType() \
-                             == pyatspi.RELATION_LABELLED_BY):
-                        radioGroupLabel = relation.getTarget(0)
-                    if (not inSameGroup) \
-                        and (relation.getRelationType() \
-                             == pyatspi.RELATION_MEMBER_OF):
-                        for i in range(0, relation.getNTargets()):
-                            target = relation.getTarget(i)
-                            if target == oldLocusOfFocus:
-                                inSameGroup = True
-                                break
-
-                # We'll only announce the radio button group when we
-                # switch groups.
-                #
-                if (not inSameGroup) and radioGroupLabel:
-                    utterances.append(self.getDisplayedText(radioGroupLabel))
-
             # Check to see if we are in the Pronunciation Dictionary in the
             # Orca Preferences dialog. If so, then we do not want to use the
             # pronunciation dictionary to replace the actual words in the
             # first column of this table.
+            #
+            # [[[TODO: WDW - this should be pushed into an
+            # adjustForPronunciation method in a script for orca.]]]
             #
             rolesList = [pyatspi.ROLE_TABLE_CELL, \
                          pyatspi.ROLE_TABLE, \
@@ -2946,59 +2807,6 @@ class Script(script.Script):
             else:
                 orca_state.usePronunciationDictionary = True
 
-            # Get the text for the object itself.
-            #
-            utterances.extend(
-                self.speechGenerator.getSpeech(newLocusOfFocus))
-            utterances.extend(
-                self.tutorialGenerator.getTutorial(newLocusOfFocus, False))
-            # Now speak the new tree node level if it has changed.
-            #
-            if (oldNodeLevel != newNodeLevel) \
-               and (newNodeLevel >= 0):
-                # Translators: this represents the depth of a node in a tree
-                # view (i.e., how many ancestors a node has).
-                #
-                utterances.append(_("tree level %d") % (newNodeLevel + 1))
-
-            # If this is an icon within an layered pane or a table cell
-            # within a table or a tree table and the item is focused but not
-            # selected, let the user know. See bug #486908 for more details.
-            #
-            checkIfSelected = False
-            objRole, parentRole, state = None, None, None
-            if newLocusOfFocus:
-                objRole = newLocusOfFocus.getRole()
-                state = newLocusOfFocus.getState()
-                if newLocusOfFocus.parent:
-                    parentRole = newLocusOfFocus.parent.getRole()
-
-            if objRole == pyatspi.ROLE_TABLE_CELL and \
-               (parentRole == pyatspi.ROLE_TREE_TABLE or \
-                parentRole == pyatspi.ROLE_TABLE):
-                checkIfSelected = True
-
-            # If we met the last set of conditions, but we got here by
-            # moving left or right on the same row, then don't announce the
-            # selection state to the user. See bug #523235 for more details.
-            #
-            if checkIfSelected == True and \
-               (orca_state.lastNonModifierKeyEvent and \
-               (orca_state.lastNonModifierKeyEvent.event_string == "Left" or \
-               orca_state.lastNonModifierKeyEvent.event_string == "Right")):
-                checkIfSelected = False
-
-            if objRole == pyatspi.ROLE_ICON and \
-                parentRole == pyatspi.ROLE_LAYERED_PANE:
-                checkIfSelected = True
-
-            if checkIfSelected and state \
-               and not state.contains(pyatspi.STATE_SELECTED):
-                # Translators: this is in reference to a table cell being
-                # selected or not.
-                #
-                utterances.append(C_("tablecell", " not selected"))
-
             # We might be automatically speaking the unbound labels
             # in a dialog box as the result of the dialog box suddenly
             # appearing.  If so, don't interrupt this because of a
@@ -3009,18 +2817,23 @@ class Script(script.Script):
                 and self.windowActivateTime \
                 and ((time.time() - self.windowActivateTime) < 1.0)
 
-            if objRole == pyatspi.ROLE_LINK:
+            # [[[TODO: WDW - this should move to the generator.]]]
+            #
+            if newLocusOfFocus.getRole() == pyatspi.ROLE_LINK:
                 voice = self.voices[settings.HYPERLINK_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
+            utterances = self.speechGenerator.getSpeech(
+                newLocusOfFocus,
+                priorObj=oldLocusOfFocus)
             speech.speak(utterances, voice, not shouldNotInterrupt)
 
             # If this is a table cell, save the current row and column
             # information in the table cell's table, so that we can use
             # it the next time.
             #
-            if objRole == pyatspi.ROLE_TABLE_CELL:
+            if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                 try:
                     table = newParent.queryTable()
                 except:
@@ -3323,7 +3136,7 @@ class Script(script.Script):
 
     def _speakContiguousSelection(self, obj, relationship):
         """Check if the contiguous object has a selection. If it does, then
-        speak it. If the user pressed Shift-Down, then look for an object 
+        speak it. If the user pressed Shift-Down, then look for an object
         with a RELATION_FLOWS_FROM relationship. If they pressed Shift-Up,
         then look for a RELATION_FLOWS_TO relationship.
 
@@ -3359,7 +3172,7 @@ class Script(script.Script):
 
                 # When selecting down across paragraph boundaries, what
                 # we've (un)selected on (what is now) the previous line
-                # is from wherever the cursor used to be to the end of 
+                # is from wherever the cursor used to be to the end of
                 # the line.
                 #
                 if relationship == pyatspi.RELATION_FLOWS_FROM:
@@ -3396,7 +3209,7 @@ class Script(script.Script):
         return selSpoken
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
-        """Updates braille, magnification, and outputs speech for the 
+        """Updates braille, magnification, and outputs speech for the
         event.source or the otherObj."""
 
         obj = otherObj or event.source
@@ -3458,7 +3271,7 @@ class Script(script.Script):
                     # Shift+Up, what we've selected in this object starts
                     # with the current offset and goes to the end of the
                     # paragraph.
-                    # 
+                    #
                     if not self.isSameObject(lastPos[0], obj):
                         [startOffset, endOffset] = \
                             text.caretOffset, text.characterCount
@@ -3762,10 +3575,10 @@ class Script(script.Script):
         except NotImplementedError:
             return
 
-        # Pylint is confused and flags this and similar lines, with the 
+        # Pylint is confused and flags this and similar lines, with the
         # following error:
         #
-        # E1103:3673:Script.onTextInserted: Instance of 'str' has no 
+        # E1103:3673:Script.onTextInserted: Instance of 'str' has no
         #'caretOffset' member (but some types could not be inferred)
         #
         # But it does, so we'll just tell pylint that we know what we
@@ -4088,7 +3901,7 @@ class Script(script.Script):
 
             # If there's a completely blank line in between our previous
             # and current locations, where we came from will lack any
-            # offically-selectable characters. As a result, we won't 
+            # offically-selectable characters. As a result, we won't
             # indicate when a blank line has been selected. Under these
             # conditions, we'll try to backtrack further.
             #
@@ -4108,8 +3921,8 @@ class Script(script.Script):
                     else:
                         break
 
-        self.speakTextSelectionState(obj, startOffset, endOffset)    
-            
+        self.speakTextSelectionState(obj, startOffset, endOffset)
+
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
 
@@ -4681,7 +4494,7 @@ class Script(script.Script):
             table = parent.queryTable()
         except NotImplementedError:
             table = None
-            
+
         if table:
             for i in range(0, table.nColumns):
                 header = table.getColumnHeader(i)
@@ -6104,7 +5917,7 @@ class Script(script.Script):
         Returns a string representing the value.
         """
 
-        # Use ARIA "valuetext" attribute if present.  See 
+        # Use ARIA "valuetext" attribute if present.  See
         # http://bugzilla.gnome.org/show_bug.cgi?id=552965
         #
         attributes = obj.getAttributes()
@@ -6647,8 +6460,8 @@ class Script(script.Script):
 
     def isSentenceDelimiter(self, currentChar, previousChar):
         """Returns True if we are positioned at the end of a sentence.
-        This is determined by checking if the current character is a 
-        white space character and the previous character is one of the 
+        This is determined by checking if the current character is a
+        white space character and the previous character is one of the
         normal end-of-sentence punctuation characters.
 
         Arguments:
