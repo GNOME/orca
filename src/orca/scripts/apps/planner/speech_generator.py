@@ -41,10 +41,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     #
     # Also for each one of the grphics buttons in the main window
     #
-    def _getSpeechForToggleButton(self, obj, already_focused):
-        utterances = []
-        tmp = []
-
+    def _getIsDesiredFocusedItem(self, obj, already_focused):
         # Application should implement an accessible name in this
         # component, but until this is made We speech/braille "display
         # more options" when the focus is in one of these toggle
@@ -55,23 +52,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     pyatspi.ROLE_TOOL_BAR]
 
         if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
-            if not already_focused:
-                tmp.append(_("Display more options"))
-                tmp.extend(self._getDefaultSpeech(obj, already_focused))
-
-                if obj.getState().contains(pyatspi.STATE_CHECKED):
-                    tmp.append(_("pressed"))
-                else:
-                    tmp.append(_("not pressed"))
-
-                utterances.extend(tmp)
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                if obj.getState().contains(pyatspi.STATE_CHECKED):
-                    utterances.append(_("pressed"))
-                else:
-                    utterances.append(_("not pressed"))
-
-            return utterances
-
-        return self._getSpeechForLabel(obj, already_focused)
+            return True
+        else:
+            return False

@@ -27,8 +27,9 @@ __license__   = "LGPL"
 
 import orca.default as default
 
-from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
+from formatting import Formatting
+from speech_generator import SpeechGenerator
 
 ########################################################################
 #                                                                      #
@@ -55,3 +56,7 @@ class Script(default.Script):
 
     def getSpeechGenerator(self):
         return SpeechGenerator(self)
+
+    def getFormatting(self):
+        """Returns the formatting strings for this script."""
+        return Formatting(self)
