@@ -2778,7 +2778,8 @@ class Script(script.Script):
         # table-related points of reference.
         #
         if oldParent is not None and oldParent == newParent and \
-              newParent.getRole() == pyatspi.ROLE_TABLE:
+              newParent.getRole() in [pyatspi.ROLE_TABLE,
+                                      pyatspi.ROLE_TREE_TABLE]:
             for key in self.pointOfReference.keys():
                 if key not in ('lastRow', 'lastColumn'):
                     del self.pointOfReference[key]
