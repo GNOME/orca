@@ -35,7 +35,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
-    def _getSpeechForObjectName(self, obj):
+    def _getName(self, obj):
         """Gives preference to the object name versus what is being
         displayed on the screen.  This helps accomodate the naming
         hints being given to us by gcalctool for it's mathematical
