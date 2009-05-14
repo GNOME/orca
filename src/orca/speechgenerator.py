@@ -593,6 +593,18 @@ class SpeechGenerator:
                         result.extend(self.getSpeech(obj[i], **args))
         return result
 
+    def _getRealTableCell(self, obj, **args):
+        result = []
+        oldRole = _overrideRole('REAL_ROLE_TABLE_CELL', args)
+        result.extend(self.getSpeech(obj, **args))
+        _restoreRole(oldRole, args)
+        if not result and settings.speakBlankLines:
+            # Translators: "blank" is a short word to mean the
+            # user has navigated to an empty line.
+            #
+            result = [_("blank")]
+        return result
+
     def _getTableCellRow(self, obj, **args):
         """Get the speech for a table cell row or a single table cell
         if settings.readTableCellRow is False."""
@@ -652,23 +664,11 @@ class SpeechGenerator:
                                     accHeader = \
                                         parentTable.getColumnHeader(i)
                                     result.append(accHeader.name)
-                        oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
-                                                args)
-                        result.extend(
-                            self.getSpeech(cell,
-                                           **args))
-                        _restoreRole(oldRole, args)
+                        result.extend(self._getRealTableCell(cell, **args))
             else:
-                oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
-                                        args)
-                result.extend(
-                    self.getSpeech(obj, **args))
-                _restoreRole(oldRole, args)
+                result.extend(self._getRealTableCell(obj, **args))
         else:
-            oldRole = _overrideRole('REAL_ROLE_TABLE_CELL',
-                                    args)
-            result = self.getSpeech(obj, **args)
-            _restoreRole(oldRole, args)
+            result.extend(self._getRealTableCell(obj, **args))
         return result
 
     def _getUnselectedCell(self, obj, **args):
@@ -872,12 +872,12 @@ class SpeechGenerator:
         return result
 
     def _getRealActiveDescendantDisplayedText(self, obj, **args ):
+        result = []
         text = self._script.getDisplayedText(
           self._script.getRealActiveDescendant(obj))
         if text:
-            return [text]
-        else:
-            return []
+            result = [text]
+        return result
 
     def _getNumberOfChildren(self, obj, **args):
         result = []
