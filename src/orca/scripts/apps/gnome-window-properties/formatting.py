@@ -32,7 +32,7 @@ import orca.formatting as defaultFormatting
 scriptFormatting = {
     'speech': {
         pyatspi.ROLE_ALERT: {
-            'unfocused': 'foobar + unrelatedLabels'
+            'unfocused': 'labelAndName + roleName '
             },
     }
 }
@@ -43,6 +43,3 @@ class Formatting(defaultFormatting.Formatting):
         defaultFormatting.Formatting.__init__(self, script)
         self.update(scriptFormatting)
 
-
-f = Formatting(None)
-print f
