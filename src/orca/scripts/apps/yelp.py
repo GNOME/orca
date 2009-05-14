@@ -202,7 +202,7 @@ class Script(Gecko.Script):
                 self._currentFrameName = event.source.name
                 self.setCaretPosition(obj, characterOffset)
                 if obj.getState().contains(pyatspi.STATE_FOCUSED):
-                    speech.speak(self.speechGenerator.getSpeech(obj, False))
+                    speech.speak(self.speechGenerator.getSpeech(obj))
                 elif not Gecko.script_settings.sayAllOnLoad:
                     self.speakContents(\
                         self.getLineContentsAtOffset(obj, characterOffset))

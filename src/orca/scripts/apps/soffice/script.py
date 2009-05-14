@@ -741,7 +741,7 @@ class Script(default.Script):
             return (cell != None)
 
         self.updateBraille(cell)
-        utterances = self.speechGenerator.getSpeech(cell, False)
+        utterances = self.speechGenerator.getSpeech(cell)
         # [[[TODO: WDW - need to make sure assumption about utterances[0]
         # is still correct with the new speech generator stuff.]]]
         #
@@ -1499,8 +1499,7 @@ class Script(default.Script):
         if self.isSpreadSheetCell(event.source, True):
             if newLocusOfFocus:
                 self.updateBraille(newLocusOfFocus)
-                utterances = self.speechGenerator.getSpeech(newLocusOfFocus,
-                                                            False)
+                utterances = self.speechGenerator.getSpeech(newLocusOfFocus)
                 speech.speak(utterances)
 
                 # Save the current row and column information in the table
@@ -1537,8 +1536,7 @@ class Script(default.Script):
                     for tab in child:
                         eventState = tab.getState()
                         if eventState.contains(pyatspi.STATE_SELECTED):
-                            utterances = self.speechGenerator.getSpeech(tab,
-                                                                        False)
+                            utterances = self.speechGenerator.getSpeech(tab)
                             speech.speak(utterances)
             # Fall-thru to process the event with the default handler.
 
@@ -1830,8 +1828,7 @@ class Script(default.Script):
                 weToggledIt = wasCommand and keyString not in navKeys
 
             if weToggledIt:
-                speech.speak(self.speechGenerator.getSpeech(event.source,
-                                                            False))
+                speech.speak(self.speechGenerator.getSpeech(event.source))
 
         # When a new paragraph receives focus, we get a caret-moved event and
         # two focus events (the first being object:state-changed:focused).

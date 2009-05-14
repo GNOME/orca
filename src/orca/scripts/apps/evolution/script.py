@@ -285,7 +285,7 @@ class Script(default.Script):
                                     self.updateBraille(orca_state.locusOfFocus)
                                     speech.speak(
                                         self.speechGenerator.getSpeech(
-                                            orca_state.locusOfFocus, False))
+                                            orca_state.locusOfFocus))
             except NotImplementedError:
                 pass
 
@@ -337,7 +337,7 @@ class Script(default.Script):
 
         savedSpeechVerbosityLevel = settings.speechVerbosityLevel
         settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
-        utterances = speechGen.getSpeech(tab, False)
+        utterances = speechGen.getSpeech(tab)
         speech.speak(utterances)
         settings.speechVerbosityLevel = savedSpeechVerbosityLevel
 
@@ -942,7 +942,7 @@ class Script(default.Script):
                             settings.speechVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
 
-                            utterances = speechGen.getSpeech(header, False)
+                            utterances = speechGen.getSpeech(header)
                             [headerRegions, focusedRegion] = \
                                          brailleGen.getBrailleRegions(header)
                             brailleRegions.extend(headerRegions)
@@ -968,7 +968,7 @@ class Script(default.Script):
                                 settings.VERBOSITY_LEVEL_BRIEF
                         settings.speechVerbosityLevel = \
                             savedSpeechVerbosityLevel
-                        utterances = speechGen.getSpeech(cell, False)
+                        utterances = speechGen.getSpeech(cell)
                         [cellRegions, focusedRegion] = \
                                            brailleGen.getBrailleRegions(cell)
 
@@ -1059,7 +1059,7 @@ class Script(default.Script):
                           + "day view: tabbing to day with appts.")
 
             parent = event.source.parent
-            utterances = speechGen.getSpeech(parent, False)
+            utterances = speechGen.getSpeech(parent)
             [brailleRegions, focusedRegion] = \
                     brailleGen.getBrailleRegions(parent)
             speech.speak(utterances)
@@ -1075,8 +1075,7 @@ class Script(default.Script):
                         appt = childTable.getAccessibleAt(row, 0)
                         extents = appt.queryComponent().getExtents(0)
                         if extents.y == apptExtents.y:
-                            utterances = speechGen.getSpeech(event.source,
-                                                             False)
+                            utterances = speechGen.getSpeech(event.source)
                             [apptRegions, focusedRegion] = \
                                 brailleGen.getBrailleRegions(event.source)
                             brailleRegions.extend(apptRegions)
@@ -1137,7 +1136,7 @@ class Script(default.Script):
                     apptExtents = child.queryComponent().getExtents(0)
 
                     if extents.y == apptExtents.y:
-                        utterances = speechGen.getSpeech(child, False)
+                        utterances = speechGen.getSpeech(child)
                         [apptRegions, focusedRegion] = \
                             brailleGen.getBrailleRegions(child)
                         brailleRegions.extend(apptRegions)

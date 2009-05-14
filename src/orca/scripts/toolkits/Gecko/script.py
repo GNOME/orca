@@ -1549,7 +1549,7 @@ class Script(default.Script):
             if settings.speechVerbosityLevel == \
                     settings.VERBOSITY_LEVEL_VERBOSE:
                 utterances.extend(
-                    self.speechGenerator.getSpeech(event.any_data, False))
+                    self.speechGenerator.getSpeech(event.any_data))
             speech.speak(utterances)
 
     def onDocumentReload(self, event):
@@ -1682,7 +1682,7 @@ class Script(default.Script):
                     #
                     if eventSourceRole == pyatspi.ROLE_ALERT:
                         speech.speak(self.speechGenerator.getSpeech(
-                                event.source, False))
+                                event.source))
                         self.updateBraille(obj)
                     else:
                         self.presentLine(obj, characterOffset)
@@ -1871,7 +1871,7 @@ class Script(default.Script):
                     self.updateBraille(obj)
 
                     if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                        speech.speak(self.speechGenerator.getSpeech(obj, False))
+                        speech.speak(self.speechGenerator.getSpeech(obj))
                     elif not script_settings.sayAllOnLoad:
                         self.speakContents(\
                             self.getLineContentsAtOffset(obj,
@@ -5420,7 +5420,7 @@ class Script(default.Script):
             #
             if not len(string) \
                or role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
-                utterance = self.speechGenerator.getSpeech(obj, False)
+                utterance = self.speechGenerator.getSpeech(obj)
             else:
                 utterance = [string]
                 if speakRole and not role in doNotSpeakRoles:
@@ -5506,7 +5506,7 @@ class Script(default.Script):
                 # characterOffset (lists).  In these latter cases, we'll just
                 # speak the entire component.
                 #
-                utterances = self.speechGenerator.getSpeech(obj, False)
+                utterances = self.speechGenerator.getSpeech(obj)
                 speech.speak(utterances)
 
     ####################################################################

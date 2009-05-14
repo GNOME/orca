@@ -100,7 +100,7 @@ class Script(default.Script):
                pageTab.getRole() == pyatspi.ROLE_PAGE_TAB and \
                pageTab.getState().contains(pyatspi.STATE_SENSITIVE):
                 self.updateBraille(newLocusOfFocus)
-                utterances = self.speechGenerator.getSpeech(pageTab, False)
+                utterances = self.speechGenerator.getSpeech(pageTab)
                 speech.speak(utterances)
 
         default.Script.locusOfFocusChanged(self, event, 

@@ -569,7 +569,8 @@ class Script(default.Script):
                 # finding something.
                 #
                 speech.speak(_("Phrase found."))
-                utterances = self.speechGenerator.getSpeech(event.source, True)
+                utterances = self.speechGenerator.getSpeech(
+                    event.source, already_focused=True)
                 speech.speak(utterances)
 
         # If Ctrl+G was used to repeat a find command, speak the line that

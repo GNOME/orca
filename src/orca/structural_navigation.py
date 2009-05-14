@@ -1766,7 +1766,7 @@ class StructuralNavigation:
 
         self._script.updateBraille(obj)
         utterances = []
-        strings = self._script.speechGenerator.getSpeech(obj, False)
+        strings = self._script.speechGenerator.getSpeech(obj)
         for string in strings:
             voice = self._getVoice(obj, string)
             speech.speak(string, voice)

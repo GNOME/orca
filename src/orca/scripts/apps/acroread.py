@@ -436,7 +436,7 @@ class Script(default.Script):
                 return
 
             utterances = \
-                 self.speechGenerator.getSpeech(newLocusOfFocus, False)
+                 self.speechGenerator.getSpeech(newLocusOfFocus)
             speech.speak(utterances)
             brailleRegions = \
                  self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
@@ -465,7 +465,7 @@ class Script(default.Script):
             # verboseness: reporting the drawing area(s) in which this link
             # is contained, speaking the periods in a table of contents, etc.
             #
-            utterances = self.speechGenerator.getSpeech(newLocusOfFocus, False)
+            utterances = self.speechGenerator.getSpeech(newLocusOfFocus)
             adjustedUtterances = []
             for utterance in utterances:
                 adjustedUtterances.append(self.adjustForRepeats(utterance))
@@ -549,7 +549,7 @@ class Script(default.Script):
                 # Try to minimize chattiness in the Search panel
                 #
                 utterances = \
-                     self.speechGenerator.getSpeech(event.source, False)
+                     self.speechGenerator.getSpeech(event.source)
                 speech.speak(utterances)
                 brailleRegions = \
                      self.brailleGenerator.getBrailleRegions(event.source)

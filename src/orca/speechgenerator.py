@@ -707,7 +707,7 @@ class SpeechGenerator:
     #####################################################################
 
     def _getTutorial(self, obj, **args):
-        already_focused = args.get('already_focused')
+        already_focused = args.get('already_focused', False)
         forceMessage = args.get('forceMessage', False)
         return self._script.tutorialGenerator.getTutorial(
             obj,
@@ -784,7 +784,7 @@ class SpeechGenerator:
             voice = settings.voices[settings.DEFAULT_VOICE]
         return [voice]
 
-    def getSpeech(self, obj, already_focused=False, **args):
+    def getSpeech(self, obj, **args):
         # pylint: disable-msg=W0142
         result = []
         methods = {}
@@ -805,7 +805,6 @@ class SpeechGenerator:
             # and get its results, placing them in the globals for the
             # the call to eval.
             #
-            args['already_focused'] = already_focused
             format = self._script.formatting.getFormat('speech',
                                                        **args)
             assert(format)

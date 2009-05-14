@@ -2055,7 +2055,7 @@ class Script(script.Script):
                 orca_state.locusOfFocus.queryText()
             except NotImplementedError:
                 utterances = self.speechGenerator.getSpeech(
-                             orca_state.locusOfFocus, False)
+                    orca_state.locusOfFocus)
                 utterances.extend(self.tutorialGenerator.getTutorial(
                            orca_state.locusOfFocus, False))
                 speech.speak(utterances)
@@ -2949,7 +2949,7 @@ class Script(script.Script):
             # Get the text for the object itself.
             #
             utterances.extend(
-                self.speechGenerator.getSpeech(newLocusOfFocus, False))
+                self.speechGenerator.getSpeech(newLocusOfFocus))
             utterances.extend(
                 self.tutorialGenerator.getTutorial(newLocusOfFocus, False))
             # Now speak the new tree node level if it has changed.
@@ -3120,7 +3120,8 @@ class Script(script.Script):
                 target = relation.getTarget(0)
                 if target == orca_state.locusOfFocus:
                     self.updateBraille(target)
-                    utterances = self.speechGenerator.getSpeech(target, True)
+                    utterances = self.speechGenerator.getSpeech(
+                        target, already_focused=True)
                     utterances.extend(self.tutorialGenerator.getTutorial(
                                target, True))
                     speech.speak(utterances)
@@ -3139,7 +3140,7 @@ class Script(script.Script):
                     if target == orca_state.locusOfFocus:
                         self.updateBraille(target)
                         utterances = self.speechGenerator.getSpeech(
-                                     target, True)
+                            target, already_focused=True)
                         utterances.extend(self.tutorialGenerator.getTutorial(
                                           target, True))
                         speech.speak(utterances)
@@ -3173,7 +3174,7 @@ class Script(script.Script):
 
         mag.magnifyAccessible(event, obj)
         self.updateBraille(obj)
-        utterances = self.speechGenerator.getSpeech(obj, True)
+        utterances = self.speechGenerator.getSpeech(obj, already_focused=True)
         utterances.extend(self.tutorialGenerator.getTutorial(obj, True))
         speech.speak(utterances)
 
@@ -3948,8 +3949,7 @@ class Script(script.Script):
                                                                   == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
                     utterances = self.speechGenerator.getSpeech(
-                        orca_state.locusOfFocus,
-                        False)
+                        orca_state.locusOfFocus)
                     utterances.extend(self.tutorialGenerator.getTutorial(
                                       orca_state.locusOfFocus, False))
                     speech.speak(utterances)
@@ -5283,7 +5283,7 @@ class Script(script.Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             utterances = self.speechGenerator.getSpeech(
-                    context.getCurrentAccessible(), False)
+                    context.getCurrentAccessible())
             utterances.extend(self.tutorialGenerator.getTutorial(
                     context.getCurrentAccessible(), False))
             speech.speak(utterances)
