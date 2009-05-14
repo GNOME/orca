@@ -196,3 +196,18 @@ class Formatting(dict):
         else:
             format = roleDict['unfocused']
         return format
+
+    def update(self, newDict):
+        for key, val in newDict.iteritems():
+            if self.has_key(key):
+                if isinstance(self[key], dict) and isinstance(val, dict): 
+                    self[key].update(val)
+                elif isinstance(self[key], basestring) and isinstance(val, basestring): 
+                    self[key] = val
+                else:
+                    # exception or such like, we are trying to murge
+                    # incompatible trees.
+                    # throw an exception?
+                    print("an error has occured, cant murge dicts.")
+            else:
+                self[key] = val
