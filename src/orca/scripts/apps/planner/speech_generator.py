@@ -25,29 +25,46 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.speechgenerator as speechgenerator
 import pyatspi
 
+import orca.speechgenerator as speechgenerator
+
+from orca.orca_i18n import _         # for gettext support
+
 class SpeechGenerator(speechgenerator.SpeechGenerator):
+
+    # pylint: disable-msg=W0142
 
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
-    # We make this to appropiately present ribbon's toggle button in a
-    # toolbar used to display in a menu those options that doesn fill
-    # in toolbar when the application is resized.
-    #
-    # Also for each one of the graphics buttons in the main window
-    #
-    def _getIsDesiredFocusedItem(self, obj, **args):
-        # Application should implement an accessible name in this
-        # component, but until this is made We speech/braille "display
-        # more options" when the focus is in one of these toggle
-        # buttons.
+    def _getLabelAndName(self, obj, **args):
+        """Gets the label and the name if the name is different from the label.
+        """
+        result = []
+
+        # This is the black triangle at the far right of the toolbar.
         #
-        roleList = [pyatspi.ROLE_TOGGLE_BUTTON, \
-                    pyatspi.ROLE_TOOL_BAR]
-        if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
-            return True
+        handleRibbonButton = \
+            obj and not obj.name \
+            and obj.getRole() == pyatspi.ROLE_TOGGLE_BUTTON \
+            and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR
+
+        # This is one of the Gantt, Tasks, Resources, etc., buttons on the
+        # left hand side of the main window.
+        #
+        handleTabButton = \
+            obj and not obj.name \
+            and obj.getRole() == pyatspi.ROLE_TOGGLE_BUTTON \
+            and obj.parent.getRole() == pyatspi.ROLE_FILLER \
+            and len(obj.parent) == 2
+
+        if handleRibbonButton:
+            result.append(_("Display more options"))
+        elif handleTabButton:
+            result.append(self._script.getDisplayedText(obj.parent[1]))
         else:
-            return False
+            result.append(speechgenerator.SpeechGenerator._getLabelAndName(
+                self, obj, **args))
+
+        return result
