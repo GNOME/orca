@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
@@ -30,7 +30,7 @@ import pyatspi
 import orca.speechgenerator as speechgenerator
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides _getSpeechForTableCell so that, if this is an expanded 
+    """Overrides _getSpeechForTableCell so that, if this is an expanded
        table cell,  we can strip off the "0 items".
     """
 
@@ -48,7 +48,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         # Check that we are in a table cell in the mail message header list.
         # If we are and this table cell has an expanded state, and the first
-        # token of the last utterances is "0", then strip off that last 
+        # token of the last utterances is "0", then strip off that last
         # utterance ("0 items"). See bug #432308 for more details.
         #
         rolesList = [pyatspi.ROLE_TABLE_CELL, \

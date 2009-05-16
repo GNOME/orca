@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2006-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,13 +22,11 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.speechgenerator as speechgenerator
 import pyatspi
-
-from orca.orca_i18n import _ # for gettext support
 
 class SpeechGenerator(speechgenerator.SpeechGenerator):
 
@@ -39,7 +37,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     # toolbar used to display in a menu those options that doesn fill
     # in toolbar when the application is resized.
     #
-    # Also for each one of the grphics buttons in the main window
+    # Also for each one of the graphics buttons in the main window
     #
     def _getIsDesiredFocusedItem(self, obj, **args):
         # Application should implement an accessible name in this
@@ -47,10 +45,8 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         # more options" when the focus is in one of these toggle
         # buttons.
         #
-
         roleList = [pyatspi.ROLE_TOGGLE_BUTTON, \
                     pyatspi.ROLE_TOOL_BAR]
-
         if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
             return True
         else:

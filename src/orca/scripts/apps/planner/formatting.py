@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2006-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,25 +22,25 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
+
+# pylint: disable-msg=C0301
 
 import pyatspi
 
-import orca.formatting as defaultFormatting
+import orca.formatting
 
-scriptFormatting = {
+formatting = {
     'speech': {
         pyatspi.ROLE_TOGGLE_BUTTON: {
-            'unfocused': '(isDesiredFocusedItem and _("Display more options") + labelAndName + allTextSelection + roleName + toggleState + availability) or label'
+            'unfocused': '(isDesiredFocusedItem and _("Display more options") + labelAndName + allTextSelection + roleName + toggleState + availability) or label',
             'focused': '(isDesiredFocusedItem and toggleState) or label'
             },
     }
 }
 
-class Formatting(defaultFormatting.Formatting):
-
+class Formatting(orca.formatting.Formatting):
     def __init__(self, script):
-        defaultFormatting.Formatting.__init__(self, script)
-        self.update(scriptFormatting)
-
+        orca.formatting.Formatting.__init__(self, script)
+        self.update(formatting)
