@@ -29,6 +29,18 @@ import pyatspi
 
 import orca.speechgenerator as speechgenerator
 
+
+def _overrideRole(newRole, args):
+    oldRole = args.get('role', None)
+    args['role'] = newRole
+    return oldRole
+
+def _restoreRole(oldRole, args):
+    if oldRole:
+        args['role'] = oldRole
+    else:
+        del args['role']
+
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForTableCell so that, if this is an expanded
        table cell,  we can strip off the "0 items".
@@ -37,24 +49,24 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
-    def _getIsDesiredFocusedItem(self, obj, **args):
-        """Helps us to get the speech utterances for a single table cell
-
-        Arguments:
-        - obj: the table
-
-        Returns a boolean to state if the given object is in DesiredFocusedItem
-        """
-
+    def _getRealTableCell(self, obj, **args):
+        # pylint: disable-msg=W0142
         # Check that we are in a table cell in the mail message header list.
-        # If we are and this table cell has an expanded state, and the first
-        # token of the last utterances is "0", then strip off that last
-        # utterance ("0 items"). See bug #432308 for more details.
+        # If we are and this table cell has an expanded state, then
+        # dont speak the number of items.
+        # See bug #432308 for more details.
         #
         rolesList = [pyatspi.ROLE_TABLE_CELL, \
                      pyatspi.ROLE_TREE_TABLE, \
                      pyatspi.ROLE_UNKNOWN]
         if self._script.isDesiredFocusedItem(obj, rolesList):
-            return True
-        else:
-            return False
+            state = obj.getState()
+            if state and state.contains(pyatspi.STATE_EXPANDABLE):
+                if state.contains(pyatspi.STATE_EXPANDED):
+                    oldRole = _overrideRole(
+                        'ALTERNATIVE_REAL_ROLE_TABLE_CELL', args)
+                    result = self.getSpeech(obj, **args)
+                    _restoreRole(oldRole, args)
+                    return result
+        return speechgenerator.SpeechGenerator._getRealTableCell(
+            self, obj, **args)

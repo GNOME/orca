@@ -29,20 +29,15 @@ __license__   = "LGPL"
 
 import orca.formatting
 
-unfocusedWithCount = '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and (expandableState + numberOfChildren)) + required)'
-unfocusedWithoutCount = '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and expandableState ) + required)'
-focusedWithCount = '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and (expandableState + numberOfChildren)) + required)'
-focusedWithoutCount = '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and expandableState ) + required)'
-
 formatting = {
     'speech': {
-        'REAL_ROLE_TABLE_CELL': {
+        'ALTERNATIVE_REAL_ROLE_TABLE_CELL': {
             # the real cell information
             # note that pyatspi.ROLE_TABLE_CELL is used to work out if we need to
             # read a whole row. It calls REAL_ROLE_TABLE_CELL internally.
             #
-            'focused': '(isDesiredFocusedItem and ' + focusedWithoutCount + ') or ' + focusedWithCount,
-            'unfocused': '(isDesiredFocusedItem and (' + unfocusedWithoutCount + ' ) or ' + unfocusedWithCount
+            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and expandableState ) + required',
+            'unfocused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and expandableState ) + required',
             },
     }
 }
