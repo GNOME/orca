@@ -50,17 +50,6 @@ def _formatExceptionInfo(maxTBlevel=5):
     excTb = traceback.format_tb(trbk, maxTBlevel)
     return (excName, excArgs, excTb)
 
-def _overrideRole(newRole, args):
-    oldRole = args.get('role', None)
-    args['role'] = newRole
-    return oldRole
-
-def _restoreRole(oldRole, args):
-    if oldRole:
-        args['role'] = oldRole
-    else:
-        del args['role']
-
 class SpeechGenerator:
     """Takes accessible objects and produces a string to speak for
     those objects.  See the getSpeech method, which is the primary
@@ -68,6 +57,17 @@ class SpeechGenerator:
     speechGenerators instance field as they see fit."""
 
     # pylint: disable-msg=W0142
+
+    def _overrideRole(self, newRole, args):
+        oldRole = args.get('role', None)
+        args['role'] = newRole
+        return oldRole
+
+    def _restoreRole(self, oldRole, args):
+        if oldRole:
+            args['role'] = oldRole
+        else:
+            del args['role']
 
     def __init__(self, script):
         self._script = script
@@ -240,10 +240,10 @@ class SpeechGenerator:
                 # string used in the *.po file for gail.
                 #
                 if action.getName(i) in ["toggle", _("toggle")]:
-                    oldRole = _overrideRole(pyatspi.ROLE_CHECK_BOX,
+                    oldRole = self._overrideRole(pyatspi.ROLE_CHECK_BOX,
                                             args)
                     result.extend(self.getSpeech(obj, **args))
-                    _restoreRole(oldRole, args)
+                    self._restoreRole(oldRole, args)
         return result
 
     def _getRadioState(self, obj, **args):
@@ -595,9 +595,9 @@ class SpeechGenerator:
 
     def _getRealTableCell(self, obj, **args):
         result = []
-        oldRole = _overrideRole('REAL_ROLE_TABLE_CELL', args)
+        oldRole = self._overrideRole('REAL_ROLE_TABLE_CELL', args)
         result.extend(self.getSpeech(obj, **args))
-        _restoreRole(oldRole, args)
+        self._restoreRole(oldRole, args)
         if not result and settings.speakBlankLines:
             # Translators: "blank" is a short word to mean the
             # user has navigated to an empty line.

@@ -29,18 +29,6 @@ import pyatspi
 
 import orca.speechgenerator as speechgenerator
 
-
-def _overrideRole(newRole, args):
-    oldRole = args.get('role', None)
-    args['role'] = newRole
-    return oldRole
-
-def _restoreRole(oldRole, args):
-    if oldRole:
-        args['role'] = oldRole
-    else:
-        del args['role']
-
 class SpeechGenerator(speechgenerator.SpeechGenerator):
     """Overrides _getSpeechForTableCell so that, if this is an expanded
        table cell,  we can strip off the "0 items".
@@ -63,10 +51,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             state = obj.getState()
             if state and state.contains(pyatspi.STATE_EXPANDABLE):
                 if state.contains(pyatspi.STATE_EXPANDED):
-                    oldRole = _overrideRole(
+                    oldRole = self._overrideRole(
                         'ALTERNATIVE_REAL_ROLE_TABLE_CELL', args)
                     result = self.getSpeech(obj, **args)
-                    _restoreRole(oldRole, args)
+                    self._restoreRole(oldRole, args)
                     return result
         return speechgenerator.SpeechGenerator._getRealTableCell(
             self, obj, **args)
