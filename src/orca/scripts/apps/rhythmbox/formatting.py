@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2006-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for rhythmbox."""
+"""Custom formatting for rhythmbox."""
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
@@ -25,24 +25,26 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.speechgenerator as speechgenerator
+import pyatspi
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+import orca.formatting
 
-    # pylint: disable-msg=W0142
-
-    """Overrides _getRealTableCell to correctly handle the table
-    cells in the Library table.
-    """
-    def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
-
-    def _getRealTableCell(self, obj, **args):
-        # Check to see if this is a table cell from the Library table.
-        # If so, it'll have five children and we are interested in the
-        # penultimate one. See bug #512639 for more details.
+formatting = {
+    'speech': {
+        # When the rating widget changes values, it emits an accessible
+        # name changed event. Because it is of ROLE_UNKNOWN, the default
+        # speechgenerator's _getDefaultSpeech handles it. And because
+        # the widget is already focused, it doesn't speak anything. We
+        # want to speak the widget's name as it contains the number of
+        # stars being displayed.
         #
-        if obj.childCount == 5:
-            obj = obj[3]
-        return speechgenerator.SpeechGenerator._getRealTableCell(
-            self, obj, **args)
+        pyatspi.ROLE_UNKNOWN: {
+            'focused': 'labelAndName'
+            },
+    }
+}
+
+class Formatting(orca.formatting.Formatting):
+    def __init__(self, script):
+        orca.formatting.Formatting.__init__(self, script)
+        self.update(formatting)
