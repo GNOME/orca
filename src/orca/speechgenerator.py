@@ -430,6 +430,7 @@ class SpeechGenerator:
                     index = self._script.getCellIndex(obj)
                     newRow = table.getRowAtIndex(index)
                     if (newRow >= 0) \
+                       and (index != newRow) \
                        and ((newRow != oldRow) \
                             or (obj.parent != priorParent)):
                         result = self._getRowHeader(obj, **args)
@@ -509,6 +510,7 @@ class SpeechGenerator:
                     index = self._script.getCellIndex(obj)
                     newCol = table.getColumnAtIndex(index)
                     if (newCol >= 0) \
+                       and (index != newCol) \
                        and ((newCol != oldCol) \
                             or (obj.parent != priorParent)):
                         result = self._getColumnHeader(obj, **args)
