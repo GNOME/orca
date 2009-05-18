@@ -34,6 +34,7 @@ src/orca/phonnames.py
 src/orca/pronunciation_dict.py
 src/orca/rolenames.py
 src/orca/scripts/apps/acroread.py
+src/orca/scripts/apps/ekiga.py
 src/orca/scripts/apps/evolution/script.py
 src/orca/scripts/apps/evolution/where_am_i.py
 src/orca/scripts/apps/gcalctool/script.py
@@ -56,6 +57,7 @@ src/orca/scripts/apps/soffice/speech_generator.py
 src/orca/scripts/apps/soffice/where_am_i.py
 src/orca/scripts/apps/Thunderbird/script.py
 src/orca/scripts/apps/Thunderbird/speech_generator.py
+src/orca/scripts/apps/gtk-window-decorator.py
 src/orca/scripts/toolkits/Gecko/bookmarks.py
 src/orca/scripts/toolkits/Gecko/script.py
 src/orca/scripts/toolkits/Gecko/speech_generator.py
