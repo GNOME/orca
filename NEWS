@@ -1,3 +1,34 @@
+2.26.2 - 18-May-2009
+
+General:
+
+* Fix for bug #466841 - Orca doesn't announce items when Alt+Tabbing
+  if Compiz is enabled. This fix is designed to improve Orca's access
+  to the basic window switcher in Compiz. There are still bugs in
+  Compiz which make providing compelling access difficult, but this
+  should at least make switching windows accessible.
+
+* Fix for bug #577977 - provide speech feedback for "repeat last find"
+  in Gedit.
+
+* Fix for bug #580329 - Use show_uri() to display help window.
+
+* Fix for bug #580423 - Remove deprecated libgnomeui dependency.  Use
+  DBus org.gnome.SessionManager.Logout instead of
+  gnome.ui.master_client().request_save.
+
+* Fix for bug #582684 - Arrowing left/right across tree tables causes
+  whole row to be spoken.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    ca      Catalan              Jordi Mas i Hernandez
+    hu      Hungarian            Attila Hammer and Gabor Kelemen
+    uk      Ukranian             Maxim Dziumanenko
+
 2.26.1 - 13-Apr-2009
 
 General:

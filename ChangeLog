@@ -1,3 +1,11 @@
+2009-05-18  Willie Walker <william.walker@sun.com>
+
+        * .gitignore:
+          po/.gitignore:
+          src/louis/.gitignore:
+          src/orca/.gitignore
+          Add .gitignore files
+
 2009-05-17  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/Makefile.am:
@@ -7,6 +15,45 @@
           access to the basic window switcher in Compiz. There are still
           bugs in Compiz which make providing compelling access difficult,
           but this should at least make switching windows accessible.
+
+2009-05-14  Willie Walker <william.walker@sun.com>
+
+        * src/orca/default.py:
+          Fix for bgo#582684 - Arrowing left/right across tree tables
+          causes whole row to be spoken
+
+2009-05-14  Gabor Kelemen <kelemeng@gnome.hu>
+
+        * po/hu.po:
+          Hungarian translation updated by Attila Hammer
+
+2009-05-02  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca_console_prefs.py:
+          Fix for bgo#580423 - Remove deprecated libgnomeui dependency.
+          Use DBus org.gnome.SessionManager.Logout instead of
+          gnome.ui.master_client().request_save.
+
+2009-04-30  Willie Walker <william.walker@sun.com>
+
+        * src/orca/orca.py:
+          Fix for bug #580329 - Use show_uri() to display help window
+
+2009-04-30  Maxim V. Dziumanenko <dziumanenko@gmail.com>
+
+        * po/uk.po:
+          Updated Ukrainian translation
+
+2009-04-28  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/apps/gedit/script.py:
+          Fix for bug #577977 - provide speech feedback for "repeat last
+          find" in Gedit
+
+2009-04-22  Jordi Mas i Hernandez <jmas@softcatala.org>
+
+        * po/ca.po:
+          Minor fixes to Catalan translation
 
 2009-04-13  Willie Walker <william.walker@sun.com>
 
@@ -147,7 +194,7 @@
           icon for Main and Preferences windows.  This keeps the icon at the
           48x48 size that has been used to date, but makes sure it is used
           on all the windows shown by Orca.  If we decide to go from 48x48
-          to 16x16, we can change the new set_orca_icon method in 
+          to 16x16, we can change the new set_orca_icon method in
           orca_glade.py.
 
 2009-03-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -458,7 +505,7 @@
 
         * src/orca/scripts/toolkits/Gecko/script.py:
           test/keystrokes/firefox/codetalks_alert.py: (new)
-          Fix for bug #570532 - (ARIA) Alert text not brailled when 
+          Fix for bug #570532 - (ARIA) Alert text not brailled when
           navigating it.
 
         * src/orca/scripts/toolkits/Gecko/script.py:
@@ -516,7 +563,7 @@
           src/orca/where_am_I.py:
           po/*.po:
           Fix for bug #569118 - Use C_() instead of Q_() with context
-          NOTE: you need to install SUNWgnu-gettext and rerun your 
+          NOTE: you need to install SUNWgnu-gettext and rerun your
           autogen.sh to work with this change on OpenSolaris.
 
 2009-01-28  Willie Walker <william.walker@sun.com>
@@ -631,7 +678,7 @@
 
         * src/orca/default.py:
           src/orca/focus_tracking_presenter.py:
-          Fix for bug #561548 - Orca locks up when closing some Pidgin 
+          Fix for bug #561548 - Orca locks up when closing some Pidgin
           conversations.  Also helps with bug #567864.
 
 2009-01-19  Willie Walker <william.walker@sun.com>
@@ -721,7 +768,7 @@
           test/keystrokes/firefox/line_nav_enter_bug.py:
           test/keystrokes/firefox/xul_role_combo_box.py:
           src/orca/scripts/toolkits/Gecko/script.py:
-          Fix for bug #567167 - Orca sometimes (re)announces that the 
+          Fix for bug #567167 - Orca sometimes (re)announces that the
           document frame has just received focus in Firefox 3.x.
 
 2009-01-08  Mesar Hameed <via william.walker@sun.com>
@@ -734,7 +781,7 @@
 
         * src/orca/punctuation_settings.py:
           src/orca/chnames.py:
-          Fix for bug #563200 - Orca not spoken the character code 
+          Fix for bug #563200 - Orca not spoken the character code
           8222 character.  Added double low quote and single low quote
           to the character names and punctuation table.
 
