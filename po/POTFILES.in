@@ -34,6 +34,7 @@ src/orca/phonnames.py
 src/orca/pronunciation_dict.py
 src/orca/rolenames.py
 src/orca/scripts/apps/acroread.py
+src/orca/scripts/apps/ekiga.py
 src/orca/scripts/apps/evolution/script.py
 src/orca/scripts/apps/evolution/where_am_i.py
 src/orca/scripts/apps/gcalctool/script.py
