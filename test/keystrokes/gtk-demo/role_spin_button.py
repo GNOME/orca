@@ -50,7 +50,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Hue: 240 $l', cursor=6",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Hue: 240 spin button'"]))
 
 ########################################################################
@@ -63,11 +62,7 @@ sequence.append(utils.AssertPresentationAction(
     "Hue spin button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "SPEECH OUTPUT: 'Hue:'",
-     "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'Alt h'"]))
+     "SPEECH OUTPUT: 'Hue: spin button 240 selected Alt h'"]))
 
 ########################################################################
 # Do an extended "Where Am I" via double KP_Enter.
@@ -82,16 +77,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "SPEECH OUTPUT: 'Hue:'",
-     "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'Alt h'",
-     "SPEECH OUTPUT: 'Hue:'",
-     "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'Alt h'"]))
+     "SPEECH OUTPUT: 'Hue: spin button 240 selected Alt h'",
+     "SPEECH OUTPUT: 'Hue: spin button 240 selected Alt h'"]))
 
 ########################################################################
 # Change the value by arrowing down.
@@ -114,7 +101,6 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=6",
      "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: 'unselected'",
      "SPEECH OUTPUT: '240'"]))
 
 ########################################################################
@@ -162,10 +148,7 @@ sequence.append(utils.AssertPresentationAction(
     "Hue spin button caret navigation",
     ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=7",
-     "SPEECH OUTPUT: 'Hue:'",
-     "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: 'Alt h'"]))
+     "SPEECH OUTPUT: 'Hue: spin button 240 Alt h'"]))
 
 ########################################################################
 # Close the Color Chooser dialog

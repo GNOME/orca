@@ -42,7 +42,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tear off menu item",
     ["BRAILLE LINE:  'gtk-demo Application menus Frame MenuBar TearOffMenuItem'",
      "     VISIBLE:  'TearOffMenuItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'tear off menu item'"]))
 
 ########################################################################
@@ -55,7 +54,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tear off menu item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application menus Frame MenuBar TearOffMenuItem'",
      "     VISIBLE:  'TearOffMenuItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'tear off menu item'"]))
 
 ########################################################################

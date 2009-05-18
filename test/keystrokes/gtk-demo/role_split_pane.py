@@ -35,7 +35,6 @@ sequence.append(utils.AssertPresentationAction(
     "Split pane",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame 60 SplitPane'",
      "     VISIBLE:  '60 SplitPane', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'split pane 60'"]))
 
 ########################################################################
@@ -64,9 +63,7 @@ sequence.append(utils.AssertPresentationAction(
     "Split pane Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame 61 SplitPane'",
      "     VISIBLE:  '61 SplitPane', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'split pane'",
-     "SPEECH OUTPUT: '61'"]))
+     "SPEECH OUTPUT: 'split pane 61'"]))
 
 ########################################################################
 # Put things back the way they were
