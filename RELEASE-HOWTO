@@ -3,6 +3,7 @@ maintainers how to make a release.
 
 The general instructions for a release are here:
 
+  http://live.gnome.org/MaintainersCorner/Releasing
   http://developer.gnome.org/dotplan/for_maintainers.html
 
 Here's a summary for Orca:
@@ -26,9 +27,6 @@ You should get the translator name from the "Last Translator" field in
 the .po file, not from po/Changelog. Sometimes the translator is not the
 same person as who commits the file.
 
-There is even a script to help us on this job:
-http://svn.gnome.org/viewcvs/releng/trunk/single_module/tools/list_translators.sh?view=markup
-
 NOTE: You should also make sure the external dependencies listed in
 configure.in and README are accurate.
 
@@ -40,17 +38,6 @@ BUILD THE RELEASE:
 
 For sanity, you should run pylint (http://live.gnome.org/Orca/Pylint).
 
-You should also make the pydoc:
-
-cd docs/pydoc
-<edit end of Makefile to uncomment the all: target>
-make
-<copy resulting *.html to 
- ~/gnome-head/gnomeweb-wml/www.gnome.org/projects/orca/pydoc/
- and check these in.  Also update the associated index.html
- files and such to have latest version and such.  Should also
- do the same thing on http://live.gnome.org/Orca/>
-
 
 TEST THE CANDIDATE:
 ------------------
@@ -58,19 +45,19 @@ TEST THE CANDIDATE:
 cd /tmp
 gunzip -c orca-2.19.6.tar.gz | tar xvf -
 cd orca-2.19.6
-./configure --prefix=/usr
+./configure --prefix=`pwd`/bld
 make
 sudo make install
-orca
+./bld/bin/orca
 
 
-TAG THE RELEASE:
----------------
+COMMIT RELEASE CHANGES AND TAG THE RELEASE:
+-------------------------------------------
 
-While in the trunk directory:
-
-svn commit
-svn cp . svn+ssh://svn.gnome.org/svn/orca/tags/ORCA_2_19_6
+git commit -a
+git push
+git tag -a ORCA_2_19_6
+git push origin ORCA_2_19_6
 
 
 UPLOAD THE RELEASE:
@@ -92,6 +79,8 @@ Modify these lines in ./configure.in:
 
 Modify ./README to make sure it has the right "pre" version.
 
+git commit -a
+git push
 
 ANNOUNCE THE RELEASE
 --------------------
