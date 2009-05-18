@@ -57,6 +57,9 @@ formatting = {
             'focused': 'checkedState',
             'unfocused': 'labelAndName + roleName + checkedState + required + availability + accelerator'
             },
+        pyatspi.ROLE_COMBO_BOX: {
+            'focused': 'name',
+            },
         pyatspi.ROLE_DIALOG: {
             'unfocused': 'labelAndName + unrelatedLabels'
             },
