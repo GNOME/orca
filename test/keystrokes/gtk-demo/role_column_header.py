@@ -50,7 +50,6 @@ sequence.append(utils.AssertPresentationAction(
     "Severity column header",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader'",
      "     VISIBLE:  'Severity ColumnHeader', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity column header'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -61,7 +60,6 @@ sequence.append(utils.AssertPresentationAction(
     "Description column header",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader'",
      "     VISIBLE:  'Description ColumnHeader', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Description column header'"]))
 
 ########################################################################
@@ -78,11 +76,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Table', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  'scrollable notebooks and hidden ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'table'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Description column header'",
-     "SPEECH OUTPUT: 'Fixed? check box not checked  60482 Normal scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'Description column header Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
 
 ########################################################################
 # Now move to the cell to the left containing the word "Normal".
@@ -98,9 +93,7 @@ sequence.append(utils.AssertPresentationAction(
     "Normal cell",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Normal'",
      "     VISIBLE:  'Normal', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Severity column header'",
-     "SPEECH OUTPUT: 'Normal'"]))
+     "SPEECH OUTPUT: 'Severity column header Normal'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -112,12 +105,8 @@ sequence.append(utils.AssertPresentationAction(
     "Normal cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'table'",
-     "SPEECH OUTPUT: 'Severity'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'Normal'",
-     "SPEECH OUTPUT: 'column 3 of 4'",
-     "SPEECH OUTPUT: 'row 1 of 14'"]))
+     "SPEECH OUTPUT: 'table Severity cell Normal'",
+     "SPEECH OUTPUT: 'column 3 of 4 row 1 of 14'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -132,22 +121,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'table'",
-     "SPEECH OUTPUT: 'Severity'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'Normal'",
-     "SPEECH OUTPUT: 'column 3 of 4'",
-     "SPEECH OUTPUT: 'row 1 of 14'",
-     "SPEECH OUTPUT: 'table'",
-     "SPEECH OUTPUT: 'Severity'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'Normal'",
-     "SPEECH OUTPUT: 'column 3 of 4'",
-     "SPEECH OUTPUT: 'row 1 of 14'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: '60482'",
-     "SPEECH OUTPUT: 'Normal'",
-     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'table Severity cell Normal'",
+     "SPEECH OUTPUT: 'column 3 of 4 row 1 of 14'",
+     "SPEECH OUTPUT: 'table Severity cell Normal'",
+     "SPEECH OUTPUT: 'column 3 of 4 row 1 of 14'",
+     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
 
 ########################################################################
 # Now move to the cell to the left containing the number "60482".
@@ -163,9 +141,7 @@ sequence.append(utils.AssertPresentationAction(
     "60482 cell",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader 60482'",
      "     VISIBLE:  '60482', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bug number column header'",
-     "SPEECH OUTPUT: '60482'"]))
+     "SPEECH OUTPUT: 'Bug number column header 60482'"]))
 
 ########################################################################
 # Now move to the cell to the left containing the checkbox.
@@ -181,9 +157,7 @@ sequence.append(utils.AssertPresentationAction(
     "Checkbox cell",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed?'",
      "     VISIBLE:  '< > Fixed?', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Fixed? column header'",
-     "SPEECH OUTPUT: 'check box not checked '"]))
+     "SPEECH OUTPUT: 'Fixed? column header check box not checked'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -195,12 +169,8 @@ sequence.append(utils.AssertPresentationAction(
     "Checkbox cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'table'",
-     "SPEECH OUTPUT: 'Fixed?'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'column 1 of 4'",
-     "SPEECH OUTPUT: 'row 1 of 14'"]))
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked'",
+     "SPEECH OUTPUT: 'column 1 of 4 row 1 of 14'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -215,22 +185,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'table'",
-     "SPEECH OUTPUT: 'Fixed?'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'column 1 of 4'",
-     "SPEECH OUTPUT: 'row 1 of 14'",
-     "SPEECH OUTPUT: 'table'",
-     "SPEECH OUTPUT: 'Fixed?'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'column 1 of 4'",
-     "SPEECH OUTPUT: 'row 1 of 14'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: '60482'",
-     "SPEECH OUTPUT: 'Normal'",
-     "SPEECH OUTPUT: 'scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked'",
+     "SPEECH OUTPUT: 'column 1 of 4 row 1 of 14'",
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked'",
+     "SPEECH OUTPUT: 'column 1 of 4 row 1 of 14'",
+     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
  
 ########################################################################
 # Close the GtkListStore demo

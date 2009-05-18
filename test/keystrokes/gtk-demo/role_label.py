@@ -49,7 +49,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This message box has been popped', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Information Alert number of times: $l'",
      "     VISIBLE:  'number of times: $l', cursor=17",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times: label'",
      "SPEECH OUTPUT: 'selected'"]))
@@ -65,9 +64,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Information Alert number of times: $l'",
      "     VISIBLE:  'number of times: $l', cursor=17",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'label'"]))
+     "number of times: selected label'"]))
 
 ########################################################################
 # Do an extended "Where Am I" via double KP_Enter.
@@ -83,13 +80,9 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Information Alert number of times: $l'",
      "     VISIBLE:  'number of times: $l', cursor=17",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'label'",
+     "number of times: selected label'",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'label'"]))
+     "number of times: selected label'"]))
 
 ########################################################################
 # Position the caret at the beginning of the label and move right one
@@ -141,9 +134,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=5",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'label'"]))
+     "number of times: selected label'"]))
 
 ########################################################################
 # Do an extended "Where Am I" via double KP_Enter.
@@ -159,13 +150,9 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=5",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'label'",
+     "number of times: selected label'",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
-     "number of times:'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'label'"]))
+     "number of times: selected label'"]))
 
 ########################################################################
 # Arrow left to clear the selection and then do a Shift+Control+Left to

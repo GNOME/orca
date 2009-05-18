@@ -35,8 +35,7 @@ sequence.append(utils.AssertPresentationAction(
     "All Pages radio button",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range'",
-     "SPEECH OUTPUT: 'All Pages selected radio button'"]))
+     "SPEECH OUTPUT: 'Range All Pages selected radio button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -48,11 +47,7 @@ sequence.append(utils.AssertPresentationAction(
     "All Pages radio button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range'",
-     "SPEECH OUTPUT: 'All Pages radio button'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'item 1 of 3'",
-     "SPEECH OUTPUT: 'Alt a'"]))
+     "SPEECH OUTPUT: 'Range All Pages radio button selected item 1 of 3 Alt a'"]))
 
 ########################################################################
 # Down arrow to the "Pages:" radio button.
@@ -73,7 +68,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE - the radio button should be presented as selected.",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler & y Pages: RadioButton'",
      "     VISIBLE:  '& y Pages: RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Pages: not selected radio button'"]))
 
 ########################################################################
@@ -86,11 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     "Range radio button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y Pages: RadioButton'",
      "     VISIBLE:  '&=y Pages: RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range'",
-     "SPEECH OUTPUT: 'Pages: radio button'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'item 3 of 3'",
-     "SPEECH OUTPUT: 'Alt e'"]))
+     "SPEECH OUTPUT: 'Range Pages: radio button selected item 3 of 3 Alt e'"]))
 
 ########################################################################
 # Put everything back and close the demo.
@@ -103,7 +93,6 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE - the radio button should be presented as selected.",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler & y All Pages RadioButton'",
      "     VISIBLE:  '& y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'All Pages not selected radio button'"]))
 
 ########################################################################

@@ -39,12 +39,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Button Boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
-     "SPEECH OUTPUT: 'Button Boxes'",
-     "SPEECH OUTPUT: 'tree level 1'",
+     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Button Boxes tree level 1'",
      "SPEECH OUTPUT: 'Button Boxes frame'",
-     "SPEECH OUTPUT: 'Horizontal Button Boxes panel Spread panel'",
-     "SPEECH OUTPUT: 'OK button'"]))
+     "SPEECH OUTPUT: 'Horizontal Button Boxes panel Spread panel OK button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -56,9 +53,7 @@ sequence.append(utils.AssertPresentationAction(
     "OK button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
-     "SPEECH OUTPUT: 'OK'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: 'Alt o'"]))
+     "SPEECH OUTPUT: 'OK button Alt o'"]))
 
 ########################################################################
 # Tab to the Cancel button.
@@ -70,7 +65,6 @@ sequence.append(utils.AssertPresentationAction(
     "Cancel button",
     ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel Cancel Button'",
      "     VISIBLE:  'Cancel Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Cancel button'"]))
 
 ########################################################################
@@ -86,8 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     "OK Edge button",
     ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Edge Panel OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
-     "SPEECH OUTPUT: 'Edge panel'",
-     "SPEECH OUTPUT: 'OK button'"]))
+     "SPEECH OUTPUT: 'Edge panel OK button'"]))
 
 ########################################################################
 # Close the demo

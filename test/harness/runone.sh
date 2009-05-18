@@ -86,7 +86,7 @@ then
     source $PARAMS_FILE
 fi
 
-# Run the app (or gnome-terminal if no app was given) and let it settle in.
+# Run the app (or gtk-demo if no app was given) and let it settle in.
 #
 ARGS=""
 if [ -n "$3" ]
@@ -94,7 +94,7 @@ then
     APP_NAME=$2
     orcaRunning=$3
 else
-   APP_NAME=gnome-terminal
+   APP_NAME=gtk-demo
    if [ -n "$2" ]
    then
        orcaRunning=$2

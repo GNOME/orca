@@ -38,8 +38,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
      "     VISIBLE:  'Warning', cursor=1",
      "SPEECH OUTPUT: 'window'",
-     "SPEECH OUTPUT: 'Some stock icons panel'",
-     "SPEECH OUTPUT: 'Warning'"]))
+     "SPEECH OUTPUT: 'Some stock icons panel Warning'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -51,11 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "Warning combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
      "     VISIBLE:  'Warning', cursor=1",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'Warning'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'item 1 of 5'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'menu Warning  item 1 of 5 '"]))
 
 ########################################################################
 # Now arrow down and select the "New" item.
@@ -67,7 +62,6 @@ sequence.append(utils.AssertPresentationAction(
     "New combo box item",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning New'",
      "     VISIBLE:  'New', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'New'"]))
 
 ########################################################################
@@ -80,11 +74,7 @@ sequence.append(utils.AssertPresentationAction(
     "New combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning New'",
      "     VISIBLE:  'New', cursor=1",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: 'New'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'item 3 of 5'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'menu New  item 3 of 5 '"]))
 
 ########################################################################
 # Select the "New" entry and tab to the editable text combo box.  Skip
@@ -100,8 +90,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel New Combo'",
      "     VISIBLE:  'New Combo', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
-     "SPEECH OUTPUT: 'Some stock icons panel'",
-     "SPEECH OUTPUT: 'New combo box'"]))
+     "SPEECH OUTPUT: 'Some stock icons panel New combo box'"]))
 
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Boston", acc_role=pyatspi.ROLE_COMBO_BOX))
@@ -116,8 +105,7 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'Editable panel'",
-     "SPEECH OUTPUT: 'text '"]))
+     "SPEECH OUTPUT: 'Editable panel text '"]))
 
 ########################################################################
 # Type "Four" in the text area.
@@ -154,10 +142,7 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'Four'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'text Four'"]))
 
 ########################################################################
 # Tab to the triangular down arrow of the editable combo box.
@@ -169,7 +154,6 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box open button",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four Combo'",
      "     VISIBLE:  'Four Combo', cursor=5",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Four combo box'"]))
 
 ########################################################################
@@ -207,7 +191,6 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box with selected text",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'text Four selected'"]))
 
 ########################################################################
@@ -220,11 +203,8 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box with selected text Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'Four'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'text Four'",
+     "SPEECH OUTPUT: 'selected '"]))
 
 ########################################################################
 # Tab to the triangular down arrow of the editable combo box and open
@@ -241,10 +221,12 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box menu",
     ["BRAILLE LINE:  'gtk-demo Application Window'",
      "     VISIBLE:  'gtk-demo Application Window', cursor=22",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Menu'",
+     "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour One'",
      "     VISIBLE:  'One', cursor=1",
      "SPEECH OUTPUT: 'window'",
-     "SPEECH OUTPUT: 'Editable panel'",
+     "SPEECH OUTPUT: 'Editable panel menu'",
      "SPEECH OUTPUT: 'One'"]))
 
 ########################################################################
@@ -257,7 +239,6 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box One item",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour Two'",
      "     VISIBLE:  'Two', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Two'"]))
 
 ########################################################################
@@ -271,9 +252,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two Combo'",
      "     VISIBLE:  'Two Combo', cursor=1",
-     "SPEECH OUTPUT: 'Combo boxes frame'",
-     "SPEECH OUTPUT: 'Editable panel'",
-     "SPEECH OUTPUT: 'Two combo box'"]))
+     "SPEECH OUTPUT: 'Combo boxes frame",
+     "SPEECH OUTPUT: 'Editable panel Two combo box'"]))
 
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
@@ -287,7 +267,6 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box Two text selected",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
      "     VISIBLE:  'Two $l', cursor=4",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'text Two selected'"]))
 
 ########################################################################
