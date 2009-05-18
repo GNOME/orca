@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 import debug
 import orca_state
+import rolenames
 import settings
 import speech
 import text_attribute_names
@@ -1159,8 +1160,7 @@ class WhereAmI:
         """
 
         try:
-            return self._script.speechGenerator.\
-                getSpeechForObjectRole(obj, role)[0]
+            return rolenames.getSpeechForRoleName(obj, role)
         except:
             return ""
 
