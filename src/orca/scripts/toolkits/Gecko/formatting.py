@@ -41,6 +41,15 @@ formatting = {
             'focused': 'focusedItem',
             'unfocused': 'labelOrName + focusedItem + multiselectableState + numberOfChildren'
             },
+        # [[[TODO: JD - We should decide if we want to provide
+        # information about the table dimensions, whether or not
+        # this is a layout table versus a data table, etc.  For now,
+        # however, if it's in HTML content let's ignore it so that
+        # SayAll by sentence works. :-) ]]]
+        #
+        pyatspi.ROLE_TABLE: {
+            'unfocused': '[]'
+            },
     }
 }
 
