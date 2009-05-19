@@ -140,7 +140,7 @@ formatting = {
             'unfocused': 'labelAndName + allTextSelection + roleName + availability + noChildren'
             },
         pyatspi.ROLE_TABLE_CELL: {
-            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription) + (expandableState and (expandableState + numberOfChildren)) + required',
+            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (expandableState and (expandableState + numberOfChildren))',
             'unfocused': 'tableCellRow'
             },
         'REAL_ROLE_TABLE_CELL': {
@@ -149,7 +149,7 @@ formatting = {
             # read a whole row. It calls REAL_ROLE_TABLE_CELL internally.
             # maybe it can be done in a cleaner way?
             #
-            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and (expandableState + numberOfChildren)) + required',
+            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (expandableState and (expandableState + numberOfChildren))',
             'unfocused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and (expandableState + numberOfChildren)) + required'
             },
         pyatspi.ROLE_TEAROFF_MENU_ITEM: {
