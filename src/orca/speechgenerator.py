@@ -120,6 +120,7 @@ class SpeechGenerator:
                                 debug.println(
                                     debug.LEVEL_SEVERE,
                                     "Unable to find function for '%s'\n" % arg)
+                            methods[arg] = []
                         except:
                             debug.printException(debug.LEVEL_SEVERE)
                             debug.println(
@@ -1092,6 +1093,8 @@ class SpeechGenerator:
                             "Unable to find function for '%s'\n" % arg)
                         break
                     methods[arg] = self._methodsDict[arg](obj, **args)
+                    debug.println(debug.LEVEL_ALL,
+                                  "%s=%s" % (arg, repr(methods[arg])))
         except:
             debug.printException(debug.LEVEL_SEVERE)
             result = []

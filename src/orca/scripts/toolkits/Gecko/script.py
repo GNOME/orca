@@ -64,12 +64,12 @@ import orca.speechserver as speechserver
 import script_settings
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
+from formatting import Formatting
 from where_am_i import GeckoWhereAmI
 from bookmarks import GeckoBookmarks
 from structural_navigation import GeckoStructuralNavigation
 
 from orca.orca_i18n import _
-
 
 ########################################################################
 #                                                                      #
@@ -309,6 +309,10 @@ class Script(default.Script):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
+
+    def getFormatting(self):
+        """Returns the formatting strings for this script."""
+        return Formatting(self)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types

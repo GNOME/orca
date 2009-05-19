@@ -116,6 +116,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         else:
             result.extend(speechgenerator.SpeechGenerator._getLabelOrName(
                 self, obj, **args))
+        return result
 
     def _getRoleName(self, obj, **args):
         """Prevents some roles from being spoken."""
@@ -228,7 +229,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     def _getNumberOfChildren(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-
         if role == pyatspi.ROLE_LIST:
             # Translators: this represents a list in HTML.
             #
@@ -238,6 +238,23 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         else:
             result.extend(speechgenerator.SpeechGenerator._getNumberOfChildren(
                 self, obj, **args))
+        return result
+
+    def _getFocusedItem(self, obj, **args):
+        result = []
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_LIST:
+            item = None
+            selection = obj.querySelection()
+            for i in xrange(obj.childCount):
+                if selection.isChildSelected(i):
+                    item = obj[i]
+                    break
+            item = item or obj[0]
+            if item:
+                name = self._getName(item, **args)
+                if name and name != self._getLabel(obj, **args):
+                    result.extend(name)
         return result
 
     def _getAncestors(self, obj, **args):

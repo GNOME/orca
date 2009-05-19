@@ -38,7 +38,8 @@ formatting = {
             'unfocused': 'name + roleName'
             },
         pyatspi.ROLE_LIST: {
-            'unfocused': 'labelOrName + multiselectableState + numberOfChildren'
+            'focused': 'focusedItem',
+            'unfocused': 'labelOrName + focusedItem + multiselectableState + numberOfChildren'
             },
     }
 }
