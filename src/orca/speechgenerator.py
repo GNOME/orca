@@ -293,10 +293,18 @@ class SpeechGenerator:
                 result.append(_("collapsed"))
         return result
 
+    def _getMultiselectableState(self, obj, **args):
+        result = []
+        if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE):
+            # Translators: "multi-select" refers to a web form list
+            # in which more than one item can be selected at a time.
+            #
+            result.append(_("multi-select"))
+        return result
+
     def _getMenuItemCheckedState(self, obj, **args):
         result = []
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED):
+        if obj.getState().contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checked menu item.
             #
             result.append(_("checked"))
@@ -304,8 +312,7 @@ class SpeechGenerator:
 
     def _getAvailability(self, obj, **args):
         result = []
-        state = obj.getState()
-        if not state.contains(pyatspi.STATE_SENSITIVE):
+        if not obj.getState().contains(pyatspi.STATE_SENSITIVE):
             # Translators: this represents an item on the screen that has
             # been set insensitive (or grayed out).
             #
@@ -314,8 +321,7 @@ class SpeechGenerator:
 
     def _getRequired(self, obj, **args):
         result = []
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_REQUIRED):
+        if obj.getState().contains(pyatspi.STATE_REQUIRED):
             result = [settings.speechRequiredStateString]
         return result
 
