@@ -92,18 +92,21 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             result.extend(speechgenerator.SpeechGenerator._getName(self,
                                                                    obj,
                                                                    **args))
+        link = None
         if role == pyatspi.ROLE_LINK:
-            # Handle empty alt tags.
+            link = obj
+        elif role == pyatspi.ROLE_IMAGE and not result:
+            link = self._script.getAncestor(obj,
+                                            [pyatspi.ROLE_LINK],
+                                            [pyatspi.ROLE_DOCUMENT_FRAME])
+        if link and (not result or len(result[0].strip()) == 0):
+            # If there's no text for the link, expose part of the
+            # URI to the user.
             #
-            if result and len(result[0].strip()):
-                pass
-            else:
-                # If there's no text for the link, expose part of the
-                # URI to the user.
-                #
-                basename = self._script.getLinkBasename(obj)
-                if basename:
-                    result.append(basename)
+            basename = self._script.getLinkBasename(link)
+            if basename:
+                result.append(basename)
+
         return result
 
     def _getLabel(self, obj, **args):
