@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-08 04:48+0530\n"
+"POT-Creation-Date: 2009-05-20 11:38+0530\n"
 "PO-Revision-Date: 2009-05-20 07:53+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: Tamil <kde-i18n-doc@lists.kde.org>\n"
@@ -19,8 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Lokalize 0.2\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\\n"
-"\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\\n\n"
 "\n"
 
 #: ../orca.desktop.in.h:1
@@ -28,8 +27,10 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "ஆர்கா திரை படிப்பி மற்றும் பெரிதாக்கி"
 
 #: ../orca.desktop.in.h:2
-msgid "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "திரையில் உள்ள தகவலை பேச்சாகவோ அல்லது ப்ரெய்லி ஆகவோ தருக, அல்லது திரையை பெரிதாக்குக."
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr ""
+"திரையில் உள்ள தகவலை பேச்சாகவோ அல்லது ப்ரெய்லி ஆகவோ தருக, அல்லது திரையை பெரிதாக்குக."
 
 #. Liblouis Python bindings
 #.
@@ -3362,7 +3363,8 @@ msgstr "ப்ரெய்லி எழுத்து முறை செயல
 #.
 #: ../src/orca/orca_console_prefs.py:453
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "ப்ரெய்லி எழுத்து முறை திரையகத்தை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
+msgstr ""
+"ப்ரெய்லி எழுத்து முறை திரையகத்தை செயல்படுத்த வேண்டுமா? ஆம் அல்லது இல்லை என உள்ளிடு:"
 
 #. Translators: orca can be set up to automatically start when the
 #. user logs in.
@@ -6224,7 +6226,8 @@ msgstr "நாள்காட்டி நிகழ்வு"
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:168
 msgid "Toggle whether we present new mail if we are not the active script."
-msgstr "குறு நிரல் செயலில் இல்லாவிடாலும் புதிய அஞ்சல் வந்தால் தர வேண்டுமா என்பதை மாற்றுகிறது"
+msgstr ""
+"குறு நிரல் செயலில் இல்லாவிடாலும் புதிய அஞ்சல் வந்தால் தர வேண்டுமா என்பதை மாற்றுகிறது"
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -6504,8 +6507,10 @@ msgid "Notification %s"
 msgstr "அறிவிப்பு %s"
 
 #: ../src/orca/scripts/apps/pidgin/script.py:192
-msgid "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr "அரட்டை அறை செய்திகளை அரட்டை அறை பெயரால் முன்னொட்டு அமைக்கலாமா என்பதை மாற்றுகிறது."
+msgid ""
+"Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr ""
+"அரட்டை அறை செய்திகளை அரட்டை அறை பெயரால் முன்னொட்டு அமைக்கலாமா என்பதை மாற்றுகிறது."
 
 #: ../src/orca/scripts/apps/pidgin/script.py:198
 msgid "Toggle whether we announce when our buddies are typing."
@@ -6642,7 +6647,8 @@ msgstr "உள்ளீடு வரியின் உள்ளடக்கங�
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:225
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr "கால்க் அறைகளின் உள்ளடக்கத்தை பேசும்போது வரியை இயங்கு பத்தி தலைப்புகளை பயன்படுத்த அமை"
+msgstr ""
+"கால்க் அறைகளின் உள்ளடக்கத்தை பேசும்போது வரியை இயங்கு பத்தி தலைப்புகளை பயன்படுத்த அமை"
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
@@ -6655,7 +6661,8 @@ msgstr "இயங்கு பத்தி தலைப்புகளை நீ
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:242
-msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid ""
+"Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr "கால்க் அறைகளின் உள்ளடக்கத்தை பேசும்போது  இயங்கு வரி தலைப்புகளை பயன்படுத்த அமை"
 
 #. Translators: Orca allows you to dynamically define which
@@ -9108,7 +9115,8 @@ msgstr "செயல்படுத்த இடைவெளி விசைய�
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:462
-msgid "Use up or down arrow to select value. Or type in the desired numerical value."
+msgid ""
+"Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
 "மதிப்பை தேர்ந்தெடுக்க  அம்பு குறி விசைகளை பயன்படுத்தவும்.  அல்லது தேவையான எண்ணை "
 "உள்ளிடுக.."
@@ -9275,4 +9283,3 @@ msgstr "முன்னிருப்பு பொத்தான் %s "
 #~ msgstr ""
 #~ "ஆர்கா  ஒடும் முனையத்தில் தற்போது இயங்கும்  பயன்பாட்டின்  வழு நீக்கு பட்டியலை "
 #~ "அச்சிடுகிறது."
-
