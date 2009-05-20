@@ -89,7 +89,8 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  '2. Enter your City:  $l 3. Enter your State:  $l 4. Enter your Country: US $l text field using value'",
      "     VISIBLE:  'US $l text field using value', cursor=1",
-     "SPEECH OUTPUT: '4. Enter your Country: text US'"]))
+     "SPEECH OUTPUT: '4. Enter your Country: text'",
+     "SPEECH OUTPUT: 'US' voice=uppercase"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
