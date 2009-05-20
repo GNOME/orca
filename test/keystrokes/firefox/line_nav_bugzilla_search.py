@@ -204,7 +204,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'List'",
      "     VISIBLE:  'List', cursor=0",
-     "SPEECH OUTPUT: 'UNCONFIRMED multi-select List with 8 items'"]))
+     "SPEECH OUTPUT: 'UNCONFIRMED' voice=uppercase",
+     "SPEECH OUTPUT: 'multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -220,7 +221,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'List'",
      "     VISIBLE:  'List', cursor=0",
-     "SPEECH OUTPUT: 'FIXED multi-select List with 12 items'"]))
+     "SPEECH OUTPUT: 'FIXED' voice=uppercase",
+     "SPEECH OUTPUT: 'multi-select List with 12 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -993,7 +995,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'List'",
      "     VISIBLE:  'List', cursor=0",
-     "SPEECH OUTPUT: 'FIXED multi-select List with 12 items'"]))
+     "SPEECH OUTPUT: 'FIXED' voice=uppercase",
+     "SPEECH OUTPUT: 'multi-select List with 12 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1009,7 +1012,8 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'List'",
      "     VISIBLE:  'List', cursor=0",
-     "SPEECH OUTPUT: 'UNCONFIRMED multi-select List with 8 items'"]))
+     "SPEECH OUTPUT: 'UNCONFIRMED' voice=uppercase",
+     "SPEECH OUTPUT: 'multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

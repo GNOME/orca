@@ -156,7 +156,7 @@ def _speak(text, acss, interrupt):
                     extraDebug = " voice=%s" % key
                 break
     debug.println(debug.LEVEL_INFO, logLine + extraDebug)
-    log.info(logLine)
+    log.info(logLine + extraDebug)
 
     if _speechserver:
         _speechserver.speak(text, __resolveACSS(acss), interrupt)

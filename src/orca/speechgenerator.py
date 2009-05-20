@@ -1071,7 +1071,8 @@ class SpeechGenerator:
                 format = '%s + %s + %s' % (prefix, format, suffix)
                 args['recursing'] = True
                 firstTimeCalled = True
-                debug.println(debug.LEVEL_ALL, "getSpeech using '%s'" % format)
+                debug.println(debug.LEVEL_ALL, "getSpeech for %s using '%s'" \
+                              % (self._getRoleName(obj, **args), format))
             else:
                 firstTimeCalled = False
 
