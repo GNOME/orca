@@ -63,6 +63,10 @@ formatting = {
         pyatspi.ROLE_DIALOG: {
             'unfocused': 'labelAndName + unrelatedLabels'
             },
+        pyatspi.ROLE_ENTRY: {
+            'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
+            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection'
+            },
         pyatspi.ROLE_FRAME: {
             'focused': '[]',
             'unfocused': 'labelAndName + allTextSelection + roleName + unfocusedDialogCount + availability'
