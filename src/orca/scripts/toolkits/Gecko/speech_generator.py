@@ -186,6 +186,13 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 doNotSpeak.append(pyatspi.ROLE_LIST)
 
         if not (role in doNotSpeak):
+            if role == pyatspi.ROLE_IMAGE:
+                link = self._script.getAncestor(obj,
+                                                [pyatspi.ROLE_LINK],
+                                                [pyatspi.ROLE_DOCUMENT_FRAME])
+                if link:
+                    result.append(rolenames.getSpeechForRoleName(link))
+
             if role == pyatspi.ROLE_HEADING:
                 level = self._script.getHeadingLevel(obj)
                 if level:
@@ -202,12 +209,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             else:
                 result.append(rolenames.getSpeechForRoleName(obj, role))
 
-        # If this is a link with a child which is an image, we want
-        # to indicate that.
-        #
-        if role == pyatspi.ROLE_LINK \
-           and obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
-            result.extend(self._getRoleName(obj[0], **args))
+            if role == pyatspi.ROLE_LINK \
+               and obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
+                # If this is a link with a child which is an image, we
+                # want to indicate that.
+                #
+                result.append(rolenames.getSpeechForRoleName(obj[0]))
 
         return result
 

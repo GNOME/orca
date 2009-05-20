@@ -148,7 +148,14 @@ def _speak(text, acss, interrupt):
         text = _processMultiCaseString(text)
 
     logLine = "SPEECH OUTPUT: '" + text + "'"
-    debug.println(debug.LEVEL_INFO, logLine)
+    extraDebug = ""
+    if acss in settings.voices.values():
+        for key in settings.voices:
+            if acss == settings.voices[key]:
+                if key != settings.DEFAULT_VOICE:
+                    extraDebug = " voice=%s" % key
+                break
+    debug.println(debug.LEVEL_INFO, logLine + extraDebug)
     log.info(logLine)
 
     if _speechserver:
