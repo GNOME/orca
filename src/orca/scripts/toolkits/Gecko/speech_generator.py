@@ -53,8 +53,45 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
     def _getName(self, obj, **args):
-        result = speechgenerator.SpeechGenerator._getName(self, obj, **args)
+        result = []
         role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_COMBO_BOX:
+            # With Gecko, a combo box has a menu as a child.  The text being
+            # displayed for the combo box can be obtained via the selected
+            # menu item.
+            #
+            menu = None
+            for child in obj:
+                if child.getRole() == pyatspi.ROLE_MENU:
+                    menu = child
+                    break
+            if menu:
+                child = None
+                try:
+                    # This should work...
+                    #
+                    child = menu.querySelection().getSelectedChild(0)
+                    if not child:
+                        # It's probably a Gtk combo box.
+                        #
+                        result = \
+                            speechgenerator.SpeechGenerator._getDisplayedText(
+                                self, obj, **args)
+                except:
+                    # But just in case, we'll fall back on this.
+                    # [[[TODO - JD: Will we ever have a case where the first
+                    # fails, but this will succeed???]]]
+                    #
+                    for item in menu:
+                        if item.getState().contains(pyatspi.STATE_SELECTED):
+                            child = item
+                            break
+                if child and child.name:
+                    result.append(child.name)
+        else:
+            result.extend(speechgenerator.SpeechGenerator._getName(self,
+                                                                   obj,
+                                                                   **args))
         if role == pyatspi.ROLE_LINK:
             # Handle empty alt tags.
             #
@@ -183,47 +220,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         text = self._script.expandEOCs(obj)
         if text:
             result.append(text)
-        return result
-
-    def _getDisplayedText(self, obj, **args):
-        result = []
-        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
-            # With Gecko, a combo box has a menu as a child.  The text being
-            # displayed for the combo box can be obtained via the selected
-            # menu item.
-            #
-            menu = None
-            for child in obj:
-                if child.getRole() == pyatspi.ROLE_MENU:
-                    menu = child
-                    break
-            if menu:
-                child = None
-                try:
-                    # This should work...
-                    #
-                    child = menu.querySelection().getSelectedChild(0)
-                    if not child:
-                        # It's probably a Gtk combo box.
-                        #
-                        result = \
-                            speechgenerator.SpeechGenerator._getDisplayedText(
-                                self, obj, **args)
-                except:
-                    # But just in case, we'll fall back on this.
-                    # [[[TODO - JD: Will we ever have a case where the first
-                    # fails, but this will succeed???]]]
-                    #
-                    for item in menu:
-                        if item.getState().contains(pyatspi.STATE_SELECTED):
-                            child = item
-                            break
-                if child and child.name:
-                    result.append(child.name)
-        else:
-            result = \
-                speechgenerator.SpeechGenerator._getDisplayedText(
-                    self, obj, **args)
         return result
 
     def _getNumberOfChildren(self, obj, **args):
