@@ -136,7 +136,6 @@ fi
 for testDir in $testDirs
 do
   application=`basename $testDir`
-  application=firefox
   if [ $application != ".svn" ] && [ $application != `basename $keystrokesDir` ]
     then
 
