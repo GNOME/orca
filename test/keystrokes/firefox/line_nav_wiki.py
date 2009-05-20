@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'live.gnome.org h1 Search $l Titles Button Text Button'",
      "     VISIBLE:  'live.gnome.org h1 Search $l Titl', cursor=1",
-     "SPEECH OUTPUT: 'live.gnome.org heading level 1 text Search Titles button grayed Text button grayed'"]))
+     "SPEECH OUTPUT: 'live.gnome.org heading level 1 Search: text Search Titles button grayed Text button grayed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1492,7 +1492,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'live.gnome.org h1 Search $l Titles Button Text Button'",
      "     VISIBLE:  'live.gnome.org h1 Search $l Titl', cursor=1",
-     "SPEECH OUTPUT: 'live.gnome.org heading level 1 text Search Titles button grayed Text button grayed'"]))
+     "SPEECH OUTPUT: 'live.gnome.org heading level 1 Search: text Search Titles button grayed Text button grayed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

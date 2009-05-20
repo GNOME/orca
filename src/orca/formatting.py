@@ -100,7 +100,7 @@ formatting = {
             'unfocused': 'labelAndName + percentage'
             },
         pyatspi.ROLE_PUSH_BUTTON: {
-            'unfocused': 'labelAndName + roleName'
+            'unfocused': 'labelAndName + roleName + availability'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',

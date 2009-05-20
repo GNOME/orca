@@ -29,6 +29,8 @@ import pyatspi
 
 import orca.formatting
 
+# pylint: disable-msg=C0301
+
 formatting = {
     'speech': {
         pyatspi.ROLE_ALERT: {

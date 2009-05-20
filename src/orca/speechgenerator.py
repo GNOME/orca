@@ -1069,10 +1069,10 @@ class SpeechGenerator:
                 suffix = self._script.formatting.getSuffix('speech',
                                                            **args)
                 format = '%s + %s + %s' % (prefix, format, suffix)
+                debug.println(debug.LEVEL_ALL, "getSpeech for %s using '%s'" \
+                              % (repr(args), format))
                 args['recursing'] = True
                 firstTimeCalled = True
-                debug.println(debug.LEVEL_ALL, "getSpeech for %s using '%s'" \
-                              % (self._getRoleName(obj, **args), format))
             else:
                 firstTimeCalled = False
 
