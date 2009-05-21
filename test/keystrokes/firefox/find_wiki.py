@@ -51,7 +51,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Find: text '"]))
 
 # We won't use an assert here because different builds of Firefox give
