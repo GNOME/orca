@@ -1456,8 +1456,11 @@ class Script(default.Script):
         # onCaretMoved will handle.
         #
         if eventSourceInDocument and not self.isAriaWidget(event.source):
-            [obj, characterOffset] = \
-                self.findFirstCaretContext(event.source, event.detail1)
+            if event.source.getRole() != pyatspi.ROLE_ENTRY:
+                [obj, characterOffset] = \
+                    self.findFirstCaretContext(event.source, event.detail1)
+            else:
+                [obj, characterOffset] = [event.source, event.detail1]
             self.setCaretContext(obj, characterOffset)
             orca.setLocusOfFocus(event, obj, notifyPresentationManagers)
             if notifyPresentationManagers:
@@ -2385,7 +2388,8 @@ class Script(default.Script):
         # things, however, we can defer to the default scripts.
         #
 
-        if not self.inDocumentContent():
+        if not self.inDocumentContent() \
+           or obj.getRole() == pyatspi.ROLE_ENTRY:
             default.Script.sayCharacter(self, obj)
             return
 
