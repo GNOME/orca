@@ -24,9 +24,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'View Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Toolbars menu'"]))
 
 ########################################################################
@@ -39,7 +37,6 @@ sequence.append(utils.AssertPresentationAction(
     "Up Arrow in View menu",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar < > Full Screen CheckItem\(F11\)'",
      "     VISIBLE:  '< > Full Screen CheckItem(F11)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Full Screen check item not checked F11'"]))
 
 ########################################################################
@@ -53,13 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar < > Full Screen CheckItem\(F11\)'",
      "     VISIBLE:  '< > Full Screen CheckItem(F11)', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'View menu'",
-     "SPEECH OUTPUT: 'Full Screen'",
-     "SPEECH OUTPUT: 'check item'",
-     "SPEECH OUTPUT: 'not checked'",
-     "SPEECH OUTPUT: 'F11'",
-     "SPEECH OUTPUT: 'item 10 of 10'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'View menu Full Screen check item not checked F11 item 10 of 10 '"]))
 
 ########################################################################
 # Dismiss the menu by pressing Escape and wait for the location bar

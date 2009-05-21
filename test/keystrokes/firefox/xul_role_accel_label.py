@@ -30,9 +30,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'File Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar New Window\(Control N\)'",
      "     VISIBLE:  'New Window(Control N)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'New Window Control N'"]))
 
 ########################################################################
@@ -44,7 +42,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in File menu",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar New Tab\(Control T\)'",
      "     VISIBLE:  'New Tab\(Control T\)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'New Tab Control T'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -53,7 +50,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in File menu",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Open Location...\(Control L\)'",
      "     VISIBLE:  'Open Location...(Control L)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Open Location… Control L'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -62,7 +58,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in File menu",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Open File...\(Control O\)'",
      "     VISIBLE:  'Open File...(Control O)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Open File… Control O'"]))
 
 ########################################################################
@@ -76,11 +71,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Open File...\(Control O\)'",
      "     VISIBLE:  'Open File...(Control O)', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'Open File…'",
-     "SPEECH OUTPUT: 'Control O'",
-     "SPEECH OUTPUT: 'item 4 of [0-9]+'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'File menu Open File… Control O item 4 of [0-9]+ '"]))
 
 ########################################################################
 # Dismiss the menu by pressing Escape and wait for the location bar

@@ -31,7 +31,6 @@ sequence.append(utils.AssertPresentationAction(
     "Shift+Tab to button",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Cancel Button'",
      "     VISIBLE:  'Cancel Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Cancel button'"]))
 
 ########################################################################
@@ -44,9 +43,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Cancel Button'",
      "     VISIBLE:  'Cancel Button', cursor=1",
-     "SPEECH OUTPUT: 'Cancel'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: 'Alt c'"]))
+     "SPEECH OUTPUT: 'Cancel button Alt c'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

@@ -33,10 +33,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'General page'",
-     "SPEECH OUTPUT: 'item 1 of [0-9]+'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list General page item 1 of [0-9]+ '"]))
 
 ########################################################################
 # Right Arrow to move to the second page tab.  
@@ -47,7 +44,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow to second page tab",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page Setup page'"]))
 
 ########################################################################
@@ -60,10 +56,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'Page Setup page'",
-     "SPEECH OUTPUT: 'item 2 of [0-9]+'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list Page Setup page item 2 of [0-9]+ '"]))
 
 ########################################################################
 # Left Arrow to move to the first page tab.  
@@ -74,7 +67,6 @@ sequence.append(utils.AssertPresentationAction(
     "Left Arrow to first page tab",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'General page'"]))
 
 ########################################################################

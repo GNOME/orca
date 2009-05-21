@@ -32,7 +32,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow in list",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List Tabs ListItem'",
      "     VISIBLE:  'Tabs ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tabs'"]))
 
 ########################################################################
@@ -44,7 +43,6 @@ sequence.append(utils.AssertPresentationAction(
     "Left Arrow in list",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List Main ListItem'",
      "     VISIBLE:  'Main ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Main'"]))
 
 ########################################################################
@@ -57,9 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List Main ListItem'",
      "     VISIBLE:  'Main ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'Main'",
-     "SPEECH OUTPUT: 'item 1 of 7'"]))
+     "SPEECH OUTPUT: 'list item Main item 1 of 7'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

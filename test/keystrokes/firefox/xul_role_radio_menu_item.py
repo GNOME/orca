@@ -25,9 +25,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'View Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Toolbars menu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -38,9 +36,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Page Style Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
      "     VISIBLE:  '& y No Style RadioItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page Style menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'No Style not selected radio menu item'"]))
 
 ########################################################################
@@ -54,13 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu & y No Style RadioItem'",
      "     VISIBLE:  '& y No Style RadioItem', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Page Style menu'",
-     "SPEECH OUTPUT: 'No Style'",
-     "SPEECH OUTPUT: 'radio menu item'",
-     "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'item 1 of 2'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Page Style menu No Style radio menu item not selected  item 1 of 2 '"]))
 
 ########################################################################
 # Down Arrow to the "Basic Page Style" radio menu item.
@@ -71,7 +61,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in menu",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu &=y Basic Page Style RadioItem'",
      "     VISIBLE:  '&=y Basic Page Style RadioItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Basic Page Style selected radio menu item'"]))
 
 ########################################################################
@@ -85,13 +74,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu &=y Basic Page Style RadioItem'",
      "     VISIBLE:  '&=y Basic Page Style RadioItem', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Page Style menu'",
-     "SPEECH OUTPUT: 'Basic Page Style'",
-     "SPEECH OUTPUT: 'radio menu item'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'item 2 of 2'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Page Style menu Basic Page Style radio menu item selected  item 2 of 2 '"]))
 
 ########################################################################
 # Dismiss the "Page Style" menu by pressing Escape.
