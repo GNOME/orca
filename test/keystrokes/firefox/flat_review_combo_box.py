@@ -48,7 +48,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Severity combo box", 
     ["BRAILLE LINE:  'Severity: Severity normal Combo'",
      "     VISIBLE:  'Severity: Severity normal Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity link'"]))
 
 ########################################################################
