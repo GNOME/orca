@@ -416,7 +416,7 @@ class SpeechGenerator:
                 priorParent = None
 
             if (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
-                or (obj.parent.getRole() == pyatspi.ROLE_TABLE):
+                or (obj.parent and obj.parent.getRole() == pyatspi.ROLE_TABLE):
                 try:
                     table = priorParent.queryTable()
                 except:
@@ -496,7 +496,7 @@ class SpeechGenerator:
                 priorParent = None
 
             if (obj.getRole() == pyatspi.ROLE_TABLE_CELL) \
-                or (obj.parent.getRole() == pyatspi.ROLE_TABLE):
+                or (obj.parent and obj.parent.getRole() == pyatspi.ROLE_TABLE):
                 try:
                     table = priorParent.queryTable()
                 except:

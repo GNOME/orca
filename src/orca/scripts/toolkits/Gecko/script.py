@@ -3603,7 +3603,7 @@ class Script(default.Script):
         this value is 0-based (Gecko return is 1-based) """
 
         if obj is None or obj.getRole() == pyatspi.ROLE_HEADING \
-           or obj.parent.getRole() == pyatspi.ROLE_MENU:
+           or (obj.parent and obj.parent.getRole() == pyatspi.ROLE_MENU):
             return -1
 
         try:
