@@ -1160,11 +1160,16 @@ class WhereAmI:
 
         try:
             if role:
-                return self._script.speechGenerator.getRoleName(obj, role=role)
+                result = self._script.speechGenerator.getRoleName(obj,
+                                                                  role=role)
             else:
-                return self._script.speechGenerator.getRoleName(obj)
+                result = self._script.speechGenerator.getRoleName(obj)
+            if result:
+                result = result[0]
         except:
-            return ""
+            result = ""
+
+        return result
 
     def _getGroupLabel(self, obj):
         """Returns the label for a group of components.
