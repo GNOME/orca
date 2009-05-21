@@ -128,6 +128,16 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             label = self._script.guessTheLabel(obj)
             if label:
                 result.append(label)
+
+        # XUL combo boxes don't always have a label for/by
+        # relationship.  But, they will make their names be
+        # the string of the thing labelling them.
+        #
+        if not len(result) \
+           and role == pyatspi.ROLE_COMBO_BOX \
+           and not self._script.inDocumentContent():
+            result.append(obj.name)
+
         return result
 
     def _getLabelAndName(self, obj, **args):
