@@ -39,6 +39,9 @@ formatting = {
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'name + roleName'
             },
+        pyatspi.ROLE_LINK: {
+            'unfocused': 'labelAndName + roleName + availability'
+            },
         pyatspi.ROLE_LIST: {
             'focused': 'focusedItem',
             'unfocused': 'labelOrName + focusedItem + multiselectableState + numberOfChildren'
