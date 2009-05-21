@@ -221,9 +221,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
 
         return result
 
-    def getRoleName(self, obj):
-        return self._getRoleName(obj)
-
     def _getExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []

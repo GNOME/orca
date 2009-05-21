@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -26,7 +26,7 @@ http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
@@ -44,7 +44,7 @@ from orca.orca_i18n import ngettext # for ngettext support
 #                                                                      #
 # Custom WhereAmI                                                      #
 #                                                                      #
-######################################################################## 
+########################################################################
 
 class GeckoWhereAmI(where_am_I.WhereAmI):
     def __init__(self, script):
@@ -54,7 +54,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         """
         where_am_I.WhereAmI.__init__(self, script)
         self._script = script
-        
+
     def whereAmI(self, obj, basicOnly):
         """Calls the base class method for basic information and Gecko
         specific presentation methods for detailed/custom information.
@@ -87,7 +87,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         """Returns the rolename to be spoken for the object. Overridden
         here because there are times when we do not want the speech
         generator returning a role to speak (e.g. navigating within
-        a document), but other times when we would (e.g. during a 
+        a document), but other times when we would (e.g. during a
         whereAmI).
         """
 
@@ -130,14 +130,14 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             speech.speak(_("image map link"))
 
     def _collectionPageSummary(self):
-        """Uses the Collection interface to get the quantity of headings, 
+        """Uses the Collection interface to get the quantity of headings,
         forms, tables, visited and unvisited links.
         """
         docframe = self._script.getDocumentFrame()
         col = docframe.queryCollection()
         # We will initialize these after the queryCollection() call in case
         # Collection is not supported
-        headings = 0 
+        headings = 0
         forms = 0
         tables = 0
         vlinks = 0
@@ -146,7 +146,7 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         stateset = pyatspi.StateSet()
         roles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK, pyatspi.ROLE_TABLE,
                  pyatspi.ROLE_FORM]
-        rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,  
+        rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
                                    "", col.MATCH_NONE,
                                    roles, col.MATCH_ANY,
                                    "", col.MATCH_NONE,
@@ -171,12 +171,12 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                     uvlinks += 1
 
         self._outputPageSummary(headings, forms, tables, vlinks, uvlinks, None)
-            
+
     def _iterativePageSummary(self, obj):
-        """Reads the quantity of headings, forms, tables, visited and 
+        """Reads the quantity of headings, forms, tables, visited and
         unvisited links.
         """
-        headings = 0 
+        headings = 0
         forms = 0
         tables = 0
         vlinks = 0
@@ -213,10 +213,10 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
         else:
             percentread = None
 
-        self._outputPageSummary(headings, forms, tables, 
+        self._outputPageSummary(headings, forms, tables,
                                vlinks, uvlinks, percentread)
 
-    def _outputPageSummary(self, headings, forms, tables, 
+    def _outputPageSummary(self, headings, forms, tables,
                                  vlinks, uvlinks, percent):
 
         utterances = []
@@ -252,11 +252,10 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                  ('%d unvisited link', '%d unvisited links', uvlinks) %uvlinks)
         if percent is not None:
             # Translators: Announces the percentage of the document that has
-            # been read.  This is calculated by knowing the index of the 
-            # current position divided by the total number of objects on the 
+            # been read.  This is calculated by knowing the index of the
+            # current position divided by the total number of objects on the
             # page.
-            # 
+            #
             utterances.append(_('%d percent of document read') %percent)
 
-        speech.speak(utterances)  
-
+        speech.speak(utterances)

@@ -158,6 +158,9 @@ class SpeechGenerator:
             result.append(rolenames.getSpeechForRoleName(obj, role))
         return result
 
+    def getRoleName(self, obj, **args):
+        return self._getRoleName(obj, **args)
+
     def _getLabel(self, obj, **args):
         result = []
         label = self._script.getDisplayedLabel(obj)

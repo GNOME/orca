@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,13 +22,12 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
 import debug
 import orca_state
-import rolenames
 import settings
 import speech
 import text_attribute_names
@@ -137,7 +136,7 @@ class WhereAmI:
 
         elif role == pyatspi.ROLE_ICON:
             self._speakIconPanel(obj, basicOnly)
-            
+
         elif role == pyatspi.ROLE_LINK:
             self._speakLink(obj, basicOnly)
 
@@ -303,7 +302,7 @@ class WhereAmI:
         name = self._getObjName(obj)
         if name != label:
             utterances.append(name)
-        
+
         utterances.extend(self._getSpeechForAllTextSelection(obj))
 
         text = self._getObjAccelerator(obj)
@@ -449,7 +448,7 @@ class WhereAmI:
         utterances.append(text)
 
         if obj.parent \
-           and obj.parent.getRole() in [pyatspi.ROLE_MENU, 
+           and obj.parent.getRole() in [pyatspi.ROLE_MENU,
                                         pyatspi.ROLE_MENU_BAR]:
             text = self._getObjMnemonic(obj)
             utterances.append(text)
@@ -659,7 +658,7 @@ class WhereAmI:
                               "second table cell utterances=%s" % \
                               utterances)
                 speech.speak(utterances)
-        
+
         utterances = []
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
@@ -789,9 +788,9 @@ class WhereAmI:
         utterances.extend(getTutorial(frame, False, forceMessage=True))
 
         speech.speak(utterances)
-        
+
     def _speakLink(self, obj, basicOnly):
-        """Speaks information about a link including protocol, domain 
+        """Speaks information about a link including protocol, domain
         comparisons and size of file if possible.
         Also tutorial string if enableTutorialMessages is set.
 
@@ -799,9 +798,9 @@ class WhereAmI:
         - obj: the icon object that currently has focus.
         - basicOnly: True if the user is performing a standard/basic whereAmI.
         """
-        
+
         # get the URI for the link of interest and parse it.
-        # parsed URI is returned as a tuple containing six components: 
+        # parsed URI is returned as a tuple containing six components:
         # scheme://netloc/path;parameters?query#fragment.
         link_uri = self._script.getURI(obj)
         if link_uri:
@@ -810,15 +809,15 @@ class WhereAmI:
             # It might be an anchor.  Try to speak the text.
             #
             return self._speakText(obj, basicOnly)
-      
+
         # Try to get the URI of the active document and parse it
         doc_uri = self._script.getDocumentFrameURI()
         if doc_uri:
             doc_uri_info = urlparse.urlparse(doc_uri)
         else:
             doc_uri_info = None
-              
-        # initialize our three outputs.  Output may change below for some 
+
+        # initialize our three outputs.  Output may change below for some
         # protocols.
         # Translators: this is the protocol of a link eg. http, mailto.
         #
@@ -842,7 +841,7 @@ class WhereAmI:
 
         domainoutput = ''
         sizeoutput = ''
-      
+
         # get size and other protocol specific information
         if link_uri_info[0] == 'ftp' or \
            link_uri_info[0] == 'ftps' or \
@@ -852,7 +851,7 @@ class WhereAmI:
             linkoutput = _('%s link to %s') %(link_uri_info[0], filename[-1])
             sizestr = self.__extractSize(link_uri)
             sizeoutput = self.__formatSizeOutput(sizestr)
-   
+
         # determine location differences if doc uri info is available
         if doc_uri_info:
             if link_uri_info[1] == doc_uri_info[1]:
@@ -869,7 +868,7 @@ class WhereAmI:
                 if len(linkdomain) > 1 and docdomain > 1  \
                     and linkdomain[-1] == docdomain[-1]  \
                     and linkdomain[-2] == docdomain[-2]:
-                    domainoutput = _('same site') 
+                    domainoutput = _('same site')
                 else:
                     domainoutput = _('different site')
 
@@ -908,7 +907,7 @@ class WhereAmI:
         utterances.extend(getTutorial(obj, False, forceMessage=True))
 
         speech.speak(utterances)
-      
+
     def _speakSplitPane(self, obj, basicOnly):
         """Speak split pane information:
            1. Name/Label
@@ -1006,7 +1005,7 @@ class WhereAmI:
     def _getSelectedItemCount(self, obj, basicOnly):
         """Return an utterance indicating how many items are selected in this
         object, the current item, and (if a detailed whereAmI), the names of
-        all the selected items. This object will be an icon panel or a 
+        all the selected items. This object will be an icon panel or a
         layered pane.
 
         Arguments:
@@ -1061,7 +1060,7 @@ class WhereAmI:
                 return None
         except (ValueError, urllib2.URLError, OSError):
             return None
-  
+
     def __formatSizeOutput(self, sizestr):
         """Format the size output announcement.  Changes wording based on
         size.
@@ -1081,7 +1080,7 @@ class WhereAmI:
         elif size >= 1000000:
             # Translators: This is the size of a file in megabytes
             #
-            return _('%.2f megabytes') % (float(size) * .000001) 
+            return _('%.2f megabytes') % (float(size) * .000001)
 
     def _speakGenericObject(self, obj, basicOnly):
         """Speak a generic object; one not specifically handled by
@@ -1160,7 +1159,10 @@ class WhereAmI:
         """
 
         try:
-            return rolenames.getSpeechForRoleName(obj, role)
+            if role:
+                return self._script.speechGenerator.getRoleName(obj, role=role)
+            else:
+                return self._script.speechGenerator.getRoleName(obj)
         except:
             return ""
 
@@ -1262,7 +1264,7 @@ class WhereAmI:
         return text
 
     def _getObjAccelerator(self,
-                           obj, 
+                           obj,
                            fallbackToMnemonic=True,
                            fallbackToFullPath=True):
         """Returns the accelerator for the object, if it exists.
@@ -1415,7 +1417,7 @@ class WhereAmI:
         Arguments:
         - obj: the text object to extract the selected text from.
 
-        Returns: the selected text contents plus the start and end 
+        Returns: the selected text contents plus the start and end
         offsets within the text.
         """
 
@@ -1804,9 +1806,9 @@ class WhereAmI:
     def speakStatusBar(self, obj):
         """Speak the contents of the status bar of the window with focus.
         """
- 
+
         utterances = []
- 
+
         results = self._getFrameAndDialog(obj)
 
         if results[0]:
