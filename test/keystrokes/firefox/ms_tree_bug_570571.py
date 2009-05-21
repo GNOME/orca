@@ -36,9 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Colors", 
     ["BRAILLE LINE:  '+Colors ListItem'",
      "     VISIBLE:  '+Colors ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '+Colors collapsed'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: '+Colors collapsed tree level 1'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -51,11 +49,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - There are visually two items here, but we say this is 1 of 1",
      "BRAILLE LINE:  '+Colors ListItem'",
      "     VISIBLE:  '+Colors ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: '+Colors'",
-     "SPEECH OUTPUT: 'item 1 of 1'",
-     "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'list item +Colors item 1 of 1 collapsed tree level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -79,11 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  '-Colors ListItem'",
      "     VISIBLE:  '-Colors ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: '-Colors'",
-     "SPEECH OUTPUT: 'item 1 of 2'",
-     "SPEECH OUTPUT: 'expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'list item -Colors item 1 of 2 expanded tree level 1'"]))
 
 ########################################################################
 # Down Arrow. Independent of Orca, the first item claims focus as one
@@ -98,10 +88,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red ListItem', cursor=1",
      "BRAILLE LINE:  'Blue ListItem'",
      "     VISIBLE:  'Blue ListItem', cursor=1",
-     "SPEECH OUTPUT: 'main colors panel'",
-     "SPEECH OUTPUT: 'Red'",
-     "SPEECH OUTPUT: 'tree level 2'",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'main colors panel Red tree level 2'",
      "SPEECH OUTPUT: 'Blue'"]))
 
 ########################################################################
@@ -115,11 +102,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red ListItem', cursor=1",
      "BRAILLE LINE:  '-Colors ListItem'",
      "     VISIBLE:  '-Colors ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Red'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: '-Colors expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: '-Colors expanded tree level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -142,7 +126,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Animals", 
     ["BRAILLE LINE:  '+Animals ListItem'",
      "     VISIBLE:  '+Animals ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '+Animals collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -170,9 +153,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Dog ListItem', cursor=1",
      "BRAILLE LINE:  'Cat ListItem'",
      "     VISIBLE:  'Cat ListItem', cursor=1",
-     "SPEECH OUTPUT: 'animals panel'",
-     "SPEECH OUTPUT: 'Dog'",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'animals panel Dog'",
      "SPEECH OUTPUT: 'Cat'"]))
 
 ########################################################################

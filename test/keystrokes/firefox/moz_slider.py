@@ -32,9 +32,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to slider", 
-    ["BRAILLE LINE:  '10% Slider",
+    ["BRAILLE LINE:  '10% Slider'",
      "     VISIBLE:  '10% Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'My slider slider 10%'"]))
 
 ########################################################################
@@ -45,13 +44,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  '10% Slider",
+    ["BRAILLE LINE:  '10% Slider'",
      "     VISIBLE:  '10% Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'slider'",
-     "SPEECH OUTPUT: '10.0'",
-     "SPEECH OUTPUT: '10 percent'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'slider 10.0 10 percent '"]))
 
 ########################################################################
 # Move the slider several times.  The following will be presented for each.

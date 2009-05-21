@@ -40,10 +40,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab Zero Page Tab One Page Tab T', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'Tab Zero page'",
-     "SPEECH OUTPUT: 'item 1 of 5'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list Tab Zero page item 1 of 5 '"]))
 
 ########################################################################
 # Move to tab 2.
@@ -54,8 +51,8 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to tab 2", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab One Page Tab Two Page Tab Th', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab One page'"]))
+
 ########################################################################
 # Move to tab 3
 #
@@ -65,8 +62,8 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab Two Page Tab Three Page Tab ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab Two page'"]))
+
 ########################################################################
 # Move to tab 3 contents
 #
@@ -76,9 +73,8 @@ sequence.append(utils.AssertPresentationAction(
     "tab to tab 3 contents", 
     ["BRAILLE LINE:  '&=y RadioButton Internal Portal Bookmark & y RadioButton External URL'",
      "     VISIBLE:  '&=y RadioButton Internal Portal ', cursor=1",
-     "SPEECH OUTPUT: 'Tab Two scroll pane'",
-     "SPEECH OUTPUT: 'Internal Portal Bookmark'",
-     "SPEECH OUTPUT: 'selected radio button'"]))
+     "SPEECH OUTPUT: 'Tab Two scroll pane Internal Portal Bookmark selected radio button'"]))
+
 ########################################################################
 # Move back to tab 3
 #
@@ -88,8 +84,8 @@ sequence.append(utils.AssertPresentationAction(
     "move back to tab 3", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab Two Page Tab Three Page Tab ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab Two page'"]))
+
 ########################################################################
 # Move to tab 4
 #
@@ -99,8 +95,8 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to tab 4", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab Three Page Tab Four Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab Three page'"]))
+
 ########################################################################
 # Move to tab 5
 #
@@ -110,8 +106,8 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to tab 5", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab Four Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab Four page'"]))
+
 ########################################################################
 # Close the demo
 #
