@@ -399,8 +399,8 @@ class WhereAmI:
         """
 
         utterances = []
-        text = self.getObjLabelAndName(obj.parent) + " " + \
-               self._getSpeechForRoleName(obj.parent)
+        text = self.getObjLabelAndName(obj.parent) + " " \
+               + self._getSpeechForRoleName(obj.parent, force=True)
         utterances.append(text.strip())
 
         text = self.getObjLabelAndName(obj)
@@ -1154,19 +1154,20 @@ class WhereAmI:
 
         return text.strip()
 
-    def _getSpeechForRoleName(self, obj, role=None):
+    # pylint: disable-msg=W0142
+
+    def _getSpeechForRoleName(self, obj, **args):
         """Returns the rolename to be spoken for the object.
         """
 
         try:
-            if role:
-                result = self._script.speechGenerator.getRoleName(obj,
-                                                                  role=role)
-            else:
-                result = self._script.speechGenerator.getRoleName(obj)
+            result = self._script.speechGenerator.getRoleName(obj, **args)
             if result:
                 result = result[0]
+            else:
+                result = ""
         except:
+            debug.printException(debug.LEVEL_WARNING)
             result = ""
 
         return result
@@ -1369,7 +1370,7 @@ class WhereAmI:
                     break
 
         if isToggle:
-            text = self._getSpeechForRoleName(obj, pyatspi.ROLE_CHECK_BOX)
+            text = self._getSpeechForRoleName(obj, role=pyatspi.ROLE_CHECK_BOX)
             text = text + " " + self._getCheckBoxState(obj)
         else:
             descendant = self._script.getRealActiveDescendant(obj)

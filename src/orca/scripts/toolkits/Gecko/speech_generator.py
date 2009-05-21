@@ -172,6 +172,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         """Prevents some roles from being spoken."""
         result = []
         role = args.get('role', obj.getRole())
+        force = args.get('force', False)
 
         # Saying "menu item" for a combo box can confuse users. Therefore,
         # speak the combo box role instead.  Also, only do it if the menu
@@ -185,14 +186,17 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             if comboBox:
                 return self._getRoleName(comboBox, **args)
 
-        doNotSpeak = [pyatspi.ROLE_FORM,
-                      pyatspi.ROLE_LABEL,
-                      pyatspi.ROLE_MENU_ITEM,
-                      pyatspi.ROLE_PARAGRAPH,
-                      pyatspi.ROLE_SECTION,
-                      pyatspi.ROLE_UNKNOWN]
+        if not force:
+            doNotSpeak = [pyatspi.ROLE_FORM,
+                          pyatspi.ROLE_LABEL,
+                          pyatspi.ROLE_MENU_ITEM,
+                          pyatspi.ROLE_PARAGRAPH,
+                          pyatspi.ROLE_SECTION,
+                          pyatspi.ROLE_UNKNOWN]
+        else:
+            doNotSpeak = []
 
-        if self._script.inDocumentContent(obj):
+        if not force and self._script.inDocumentContent(obj):
             doNotSpeak.append(pyatspi.ROLE_TABLE_CELL)
             if not self._script.isAriaWidget(obj):
                 doNotSpeak.append(pyatspi.ROLE_LIST_ITEM)
