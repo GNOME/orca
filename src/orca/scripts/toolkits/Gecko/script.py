@@ -3616,6 +3616,8 @@ class Script(default.Script):
                 # seems to be guilty of this.
                 #
                 #print "getNodeLevel - obj is defunct", obj
+                debug.println(debug.LEVEL_WARNING,
+                              "getNodeLevel - obj is defunct")
                 debug.printStack(debug.LEVEL_WARNING)
                 return -1
 
