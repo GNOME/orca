@@ -194,7 +194,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                           pyatspi.ROLE_SECTION,
                           pyatspi.ROLE_UNKNOWN]
         else:
-            doNotSpeak = []
+            # We never ever want to speak 'unknown'
+            #
+            doNotSpeak = [pyatspi.ROLE_UNKNOWN]
 
         if not force and self._script.inDocumentContent(obj):
             doNotSpeak.append(pyatspi.ROLE_TABLE_CELL)

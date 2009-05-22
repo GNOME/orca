@@ -102,7 +102,8 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
                                     pyatspi.ROLE_SECTION,
                                     pyatspi.ROLE_TABLE_CELL]:
             role = objRole
-        args['role'] = role
+        if role:
+            args['role'] = role
         return where_am_I.WhereAmI._getSpeechForRoleName(self, obj, **args)
 
     def _speakObjDescription(self, obj):
