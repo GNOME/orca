@@ -36,6 +36,9 @@ formatting = {
         pyatspi.ROLE_ALERT: {
             'unfocused': 'expandedEOCs or (labelAndName + unrelatedLabels)'
             },
+        pyatspi.ROLE_DIALOG: {
+            'unfocused': 'expandedEOCs or (labelAndName + unrelatedLabels)'
+            },
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'name + roleName'
             },
