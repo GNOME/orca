@@ -34,11 +34,12 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
        table cell,  we can strip off the "0 items".
     """
 
+    # pylint: disable-msg=W0142
+
     def __init__(self, script):
         speechgenerator.SpeechGenerator.__init__(self, script)
 
     def _getRealTableCell(self, obj, **args):
-        # pylint: disable-msg=W0142
         # Check that we are in a table cell in the mail message header list.
         # If we are and this table cell has an expanded state, then
         # dont speak the number of items.
