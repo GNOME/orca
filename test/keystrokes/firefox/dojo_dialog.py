@@ -38,7 +38,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to show dialog button", 
     ["BRAILLE LINE:  'Show Dialog Button Programatic Dialog \(3 second delay\) Button Show TabContainer Dialog Button Test slow loading HREF Dialog Button Show File Dialog Button'",
      "     VISIBLE:  'Show Dialog Button Programatic D', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show Dialog button'"]))
      
 ########################################################################
@@ -50,7 +49,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to programatic dialog button", 
     ["BRAILLE LINE:  'Show Dialog Button Programatic Dialog \(3 second delay\) Button Show TabContainer Dialog Button Test slow loading HREF Dialog Button Show File Dialog Button'",
      "     VISIBLE:  'Programatic Dialog \(3 second del', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Programatic Dialog \(3 second delay\) button'"]))
      
 ########################################################################
@@ -62,7 +60,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to tabcontainer dialog button", 
     ["BRAILLE LINE:  'Show Dialog Button Programatic Dialog \(3 second delay\) Button Show TabContainer Dialog Button Test slow loading HREF Dialog Button Show File Dialog Button'",
      "     VISIBLE:  'Show TabContainer Dialog Button ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
 ########################################################################
@@ -75,8 +72,7 @@ sequence.append(utils.AssertPresentationAction(
     "Launch dialog", 
     ["BRAILLE LINE:  'First tab Page Second tab Page'",
      "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
-     "SPEECH OUTPUT: 'TabContainer Dialog dialog'",
-     "SPEECH OUTPUT: 'First tab page'"]))
+     "SPEECH OUTPUT: 'TabContainer Dialog dialog First tab page'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -89,10 +85,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic whereAmI", 
     ["BRAILLE LINE:  'First tab Page Second tab Page'",
      "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'First tab page'",
-     "SPEECH OUTPUT: 'item 1 of 2'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list First tab page item 1 of 2 '"]))
 
 ########################################################################
 # Close the dialog, focus goes back to button.  
@@ -104,7 +97,6 @@ sequence.append(utils.AssertPresentationAction(
     "close dialog", 
     ["BRAILLE LINE:  'Show Dialog Button Programatic Dialog \(3 second delay\) Button Show TabContainer Dialog Button Test slow loading HREF Dialog Button Show File Dialog Button'",
      "     VISIBLE:  'Show TabContainer Dialog Button ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
 ########################################################################

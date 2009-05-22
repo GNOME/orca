@@ -35,8 +35,7 @@ sequence.append(utils.AssertPresentationAction(
     "tab to first button", 
     ["BRAILLE LINE:  '& y Thai RadioButton'",
      "     VISIBLE:  '& y Thai RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Lunch Options panel'",
-     "SPEECH OUTPUT: 'Thai not selected radio button'"]))
+     "SPEECH OUTPUT: 'Lunch Options panel Thai not selected radio button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
@@ -48,11 +47,8 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereamI", 
     ["BRAILLE LINE:  '& y Thai RadioButton'",
      "     VISIBLE:  '& y Thai RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Lunch Options'",
-     "SPEECH OUTPUT: 'Thai radio button'",
-     "SPEECH OUTPUT: 'not selected'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Lunch Options Thai radio button not selected  '"]))
+
 ########################################################################
 # Move to the second radio button.
 #
@@ -62,7 +58,6 @@ sequence.append(utils.AssertPresentationAction(
     "move to second radio button", 
     ["BRAILLE LINE:  '&=y Subway RadioButton'",
      "     VISIBLE:  '&=y Subway RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Subway selected radio button'"]))
 
 ########################################################################
@@ -74,7 +69,6 @@ sequence.append(utils.AssertPresentationAction(
     "move to third radio button", 
     ["BRAILLE LINE:  '&=y Jimmy Johns RadioButton'",
      "     VISIBLE:  '&=y Jimmy Johns RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Jimmy Johns selected radio button'"]))
 
 ########################################################################
@@ -86,7 +80,6 @@ sequence.append(utils.AssertPresentationAction(
     "move to fourth radio button", 
     ["BRAILLE LINE:  '&=y Radio Maria RadioButton'",
      "     VISIBLE:  '&=y Radio Maria RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Radio Maria selected radio button'"]))
 
 ########################################################################
@@ -98,7 +91,6 @@ sequence.append(utils.AssertPresentationAction(
     "move to fifth radio button", 
     ["BRAILLE LINE:  '&=y Rainbow Gardens RadioButton'",
      "     VISIBLE:  '&=y Rainbow Gardens RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Rainbow Gardens selected radio button'"]))
 
 ########################################################################
@@ -111,8 +103,7 @@ sequence.append(utils.AssertPresentationAction(
     "tab to second radio group", 
     ["BRAILLE LINE:  '&=y Coffee RadioButton'",
      "     VISIBLE:  '&=y Coffee RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Drink Options panel'",
-     "SPEECH OUTPUT: 'Coffee selected radio button'"]))
+     "SPEECH OUTPUT: 'Drink Options panel Coffee selected radio button'"]))
 
 ########################################################################
 # Move to the second radio button.
@@ -123,7 +114,6 @@ sequence.append(utils.AssertPresentationAction(
     "move to second radio button grp2",
     ["BRAILLE LINE:  '&=y Cola RadioButton'",
      "     VISIBLE:  '&=y Cola RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Cola selected radio button'"]))
 
 ########################################################################
@@ -135,7 +125,6 @@ sequence.append(utils.AssertPresentationAction(
     "move back to first radio button grp2",
     ["BRAILLE LINE:  '&=y Coffee RadioButton'",
      "     VISIBLE:  '&=y Coffee RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Coffee selected radio button'"]))
 
 ########################################################################

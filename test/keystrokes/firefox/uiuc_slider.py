@@ -34,7 +34,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to slider 1", 
     ["BRAILLE LINE:  'Slider Control 1 50 Slider'",
      "     VISIBLE:  'Slider Control 1 50 Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Slider Control 1 slider 50'"]))
     
 ########################################################################
@@ -47,11 +46,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Slider Control 1 50 Slider'",
      "     VISIBLE:  'Slider Control 1 50 Slider', cursor=1",
-     "SPEECH OUTPUT: 'Slider Control 1'",
-     "SPEECH OUTPUT: 'slider'",
-     "SPEECH OUTPUT: '50.0'",
-     "SPEECH OUTPUT: '50 percent'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Slider Control 1 slider 50.0 50 percent '"]))
     
 ########################################################################
 # Increment slider several times
@@ -113,7 +108,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to slider 2", 
     ["BRAILLE LINE:  'Slider Control 2 100 Slider'",
      "     VISIBLE:  'Slider Control 2 100 Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Slider Control 2 slider 100'"]))
     
 ########################################################################

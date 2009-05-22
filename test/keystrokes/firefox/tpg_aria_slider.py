@@ -36,7 +36,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Volume Slider", 
     ["BRAILLE LINE:  'Volume 0 % Slider'",
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Volume slider 0 %'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -262,7 +261,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Food Quality Slider", 
     ["BRAILLE LINE:  'Food Quality terrible Slider'",
      "     VISIBLE:  'Food Quality terrible Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Food Quality slider terrible'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -416,7 +414,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Filesize Slider", 
     ["BRAILLE LINE:  'Filesize 0 Slider'",
      "     VISIBLE:  'Filesize 0 Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Filesize slider 0'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -569,7 +566,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Staff Slider", 
     ["BRAILLE LINE:  'The staff was helpful Strongly disagree Slider'",
      "     VISIBLE:  'The staff was helpful Strongly d', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'The staff was helpful slider Strongly disagree'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -723,7 +719,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Red Slider", 
     ["BRAILLE LINE:  'Red 0 % Slider'",
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Red slider 0 %'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -951,7 +946,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Green Slider", 
     ["BRAILLE LINE:  'Green 0 Slider'",
      "     VISIBLE:  'Green 0 Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Green slider 0'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1104,7 +1098,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Blue Slider", 
     ["BRAILLE LINE:  'Blue 0 Slider'",
      "     VISIBLE:  'Blue 0 Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Blue slider 0'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1258,7 +1251,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Vertical Slider", 
     ["BRAILLE LINE:  'Minimum Filesize 0 units Slider'",
      "     VISIBLE:  'Minimum Filesize 0 units Slider', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Minimum Filesize slider 0 units'"]))
 
 sequence.append(utils.StartRecordingAction())

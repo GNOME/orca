@@ -38,7 +38,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to tab 2", 
     ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Tab 2 Page Tab 3 Page Inlined Su', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 2 page'"]))
 
 ########################################################################
@@ -51,10 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Tab 2 Page Tab 3 Page Inlined Su', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'Tab 2 page'",
-     "SPEECH OUTPUT: 'item 2 of 6'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list Tab 2 page item 2 of 6 '"]))
 
 ########################################################################
 # Use arrows to move between tabs: 'Tab 3'.  The following will be presented.
@@ -65,8 +61,8 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to tab 3", 
     ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Tab 3 Page Inlined Sub TabContai', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Tab 3 page'"]))
+
 ########################################################################
 # Use arrows to move between tabs: 'Another Tab'.  The following will be presented.
 #
@@ -76,7 +72,6 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to programmatically created tab", 
     ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Inlined Sub TabContainer Page Su', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Inlined Sub TabContainer page'"]))
 
 ########################################################################
@@ -89,7 +84,6 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to sub tab container", 
     ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Sub TabContainer from href Page ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Sub TabContainer from href page'",
      "SPEECH OUTPUT: 'Subtab #1  This is a nested tab container BUT loaded via an href.'"]))
 
@@ -102,7 +96,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to tab 2 contents", 
     ["BRAILLE LINE:  'Subtab #1 Page Subtab #2 Page'",
      "     VISIBLE:  'Subtab #1 Page Subtab #2 Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Subtab #1 page'"]))
 
 ########################################################################

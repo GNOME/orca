@@ -39,8 +39,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - Ultimately we get around to announcing the page tab, but should we be speaking all of that additional information?",
      "BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Opera Page Firefox Page Explorer', cursor=1",
-     "SPEECH OUTPUT: 'Browser NewsPress the space bar or enter key to load the content of each tab. Browser News Press the space bar or enter key to load the content of each tab. tab list'",
-     "SPEECH OUTPUT: 'Opera page'"]))
+     "SPEECH OUTPUT: 'Browser NewsPress the space bar or enter key to load the content of each tab. Browser News Press the space bar or enter key to load the content of each tab. tab list Opera page'"]))
     
 ########################################################################
 # Right Arrow to the second tab
@@ -51,7 +50,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow to the next tab", 
     ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Firefox Page Explorer Page Safar', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Firefox page'"]))
 
 ########################################################################
@@ -63,7 +61,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow to the next tab", 
     ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Explorer Page Safari Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Explorer page'"]))
 
 ########################################################################
@@ -75,7 +72,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow to the next tab", 
     ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Safari Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Safari page'"]))
 
 ########################################################################
@@ -88,10 +84,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Safari Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'Safari page'",
-     "SPEECH OUTPUT: 'item 4 of 4'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list Safari page item 4 of 4 '"]))
 
 ########################################################################
 # Left Arrow back to the third tab
@@ -102,7 +95,6 @@ sequence.append(utils.AssertPresentationAction(
     "Left Arrow to the previous tab", 
     ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Explorer Page Safari Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Explorer page'"]))
 
 ########################################################################
@@ -114,7 +106,6 @@ sequence.append(utils.AssertPresentationAction(
     "Left Arrow to the previous tab", 
     ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Firefox Page Explorer Page Safar', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Firefox page'"]))
 
 ########################################################################
@@ -126,7 +117,6 @@ sequence.append(utils.AssertPresentationAction(
     "Left Arrow to the previous tab", 
     ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Opera Page Firefox Page Explorer', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Opera page'"]))
 
 ########################################################################

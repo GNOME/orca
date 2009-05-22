@@ -39,7 +39,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the cb0 checkbox", 
     ["BRAILLE LINE:  '< > CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)'",
      "     VISIBLE:  '< > CheckBox cb0: Vanilla (non-d', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box not checked'"]))
 
 ########################################################################
@@ -62,7 +61,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the cb1 checkbox", 
     ["BRAILLE LINE:  '< > CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages getValue()'",
      "     VISIBLE:  '< > CheckBox cb1: normal checkbo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb1: normal checkbox, with value=foo, clicking generates console log messages check box not checked'"]))
 
 ########################################################################
@@ -86,7 +84,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the cb2 checkbox", 
     ["BRAILLE LINE:  '<x> CheckBox cb2: normal checkbox, with default value, initially turned on. \"onChange\" handler updates: [] getValue()'",
      "     VISIBLE:  '<x> CheckBox cb2: normal checkbo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb2: normal checkbox, with default value, initially turned on. check box checked'"]))
 
 ########################################################################
@@ -99,7 +96,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the cb5 checkbox", 
     ["BRAILLE LINE:  '< > CheckBox cb5: normal checkbox, with specified value=\"\", clicking generates console log messages getValue()'",
      "     VISIBLE:  '< > CheckBox cb5: normal checkbo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb5: normal checkbox, with specified value=\"\", clicking generates console log messages check box not checked'"]))
 
 ########################################################################
@@ -112,7 +108,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the cb6 checkbox", 
     ["BRAILLE LINE:  '<x> CheckBox cb6: instantiated from script'",
      "     VISIBLE:  '<x> CheckBox cb6: instantiated f', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb6: instantiated from script check box checked'"]))
 
 ########################################################################
@@ -124,7 +119,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the cb7 checkbox", 
     ["BRAILLE LINE:  '< > CheckBox cb7: normal checkbox. disable Button enable Button set value to \"fish\" Button Reset value+checked Button \"onChange\" handler updates: []'",
      "     VISIBLE:  '< > CheckBox cb7: normal checkbo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'cb7: normal checkbox. check box not checked'"]))
 
 ########################################################################
@@ -137,8 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '< > CheckBox cb7: normal checkbox. disable Button enable Button set value to \"fish\" Button Reset value+checked Button \"onChange\" handler updates: []'",
      "     VISIBLE:  '< > CheckBox cb7: normal checkbo', cursor=1",
-     "SPEECH OUTPUT: 'cb7: normal checkbox. check box not checked'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'cb7: normal checkbox. check box not checked '"]))
 
 ########################################################################
 # Close the demo

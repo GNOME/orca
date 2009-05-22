@@ -35,8 +35,7 @@ sequence.append(utils.AssertPresentationAction(
     "tab to first button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button &=y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
-     "SPEECH OUTPUT: 'Text Formating Controls 1 list'",
-     "SPEECH OUTPUT: 'Font Larger + button'"]))
+     "SPEECH OUTPUT: 'Text Formating Controls 1 list Font Larger + button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
@@ -49,9 +48,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereamI", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button &=y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
-     "SPEECH OUTPUT: 'Font Larger +'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Font Larger + button '"]))
 
 ########################################################################
 # Now push the first button.  The following will be presented.
@@ -72,7 +69,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to second button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button &=y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Font Smaller - Button &=y Italic', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Font Smaller - button'"]))
 
 ########################################################################
@@ -93,7 +89,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to third button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button &=y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  '&=y Italic i ToggleButton Bold B', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Italic i toggle button pressed'"]))
 
 ########################################################################
@@ -116,7 +111,6 @@ sequence.append(utils.AssertPresentationAction(
     "tab to fourth button", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button & y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Bold B Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bold B button'"]))
 
 ########################################################################

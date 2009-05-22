@@ -34,8 +34,7 @@ sequence.append(utils.AssertPresentationAction(
     "Space to press the Show TabContainer Dialog", 
     ["BRAILLE LINE:  'First tab Page Image Second tab Page Image'",
      "     VISIBLE:  'First tab Page Image Second tab ', cursor=1",
-     "SPEECH OUTPUT: 'TabContainer Dialog dialog'",
-     "SPEECH OUTPUT: 'First tab page'"]))
+     "SPEECH OUTPUT: 'TabContainer Dialog dialog First tab page'"]))
 
 ########################################################################
 # Right Arrow to the Second tab page
@@ -46,7 +45,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow to the Second tab page", 
     ["BRAILLE LINE:  'First tab Page Image Second tab Page Image'",
      "     VISIBLE:  'Second tab Page Image', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Second tab page'"]))
 
 ########################################################################
@@ -59,7 +57,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - Speech isn't getting the first line",
      "BRAILLE LINE:  'This is the second tab.'",
      "     VISIBLE:  'This is the second tab.', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'panel'"]))
 
 ########################################################################
@@ -171,7 +168,6 @@ sequence.append(utils.AssertPresentationAction(
     "Escape to dismiss the dialog", 
     ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
      "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
 ########################################################################
