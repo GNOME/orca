@@ -947,6 +947,7 @@ class SpeechGenerator:
     def _getAncestors(self, obj, **args):
         result = []
         priorObj = args.get('priorObj', None)
+        requireText = args.get('requireText', True)
         commonAncestor = self._script.findCommonAncestor(priorObj, obj)
         if obj != commonAncestor:
             parent = obj.parent
@@ -959,7 +960,10 @@ class SpeechGenerator:
                     break
                 if not self._script.isLayoutOnly(parent):
                     text = self._script.getDisplayedLabel(parent)
-                    if not text and 'Text' in pyatspi.listInterfaces(parent):
+                    if not text \
+                       and (not requireText \
+                            or (requireText \
+                                and 'Text' in pyatspi.listInterfaces(parent))):
                         text = self._script.getDisplayedText(parent)
                     if text and len(text.strip()):
                         # Push announcement of cell to the end
