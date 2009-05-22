@@ -708,7 +708,7 @@ class WhereAmI:
         if text:
             utterances.append(text)
 
-        text = self._getSpeechForRoleName(obj)
+        text = self._getSpeechForRoleName(obj, force=True)
         utterances.append(text)
 
         text = self._getObjName(obj)
