@@ -56,7 +56,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab",
     ["BRAILLE LINE:  'Bar'",
      "     VISIBLE:  'Bar', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bar link'"]))
 
 ########################################################################
@@ -69,7 +68,6 @@ sequence.append(utils.AssertPresentationAction(
     "Shift Tab",
     ["BRAILLE LINE:  'Foo'",
      "     VISIBLE:  'Foo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foo link'"]))
 
 ########################################################################

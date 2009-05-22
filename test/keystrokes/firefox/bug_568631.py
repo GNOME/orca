@@ -66,7 +66,6 @@ sequence.append(utils.AssertPresentationAction(
     "Return",
     ["BRAILLE LINE:  'About h1'",
      "     VISIBLE:  'About h1', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'About heading level 1'"]))
 
 ########################################################################

@@ -164,9 +164,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  'ix. or small roman numerals'",
      "     VISIBLE:  'ix. or small roman numerals', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'ix. or small roman numerals'",
-     "SPEECH OUTPUT: 'item 4 of 6'"]))
+     "SPEECH OUTPUT: 'list item ix. or small roman numerals item 4 of 6'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

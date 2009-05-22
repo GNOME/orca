@@ -244,7 +244,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: '",
-     " link'"]))
+     " link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

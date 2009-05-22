@@ -48,7 +48,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to anchors.html link", 
     ["BRAILLE LINE:  '• anchors.html'",
      "     VISIBLE:  '• anchors.html', cursor=3",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'anchors.html link'"]))
 
 ########################################################################
@@ -60,7 +59,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html'",
      "     VISIBLE:  '• blockquotes.html', cursor=3",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
@@ -72,7 +70,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to bugzilla_top.html link", 
     ["BRAILLE LINE:  '• bugzilla_top.html'",
      "     VISIBLE:  '• bugzilla_top.html', cursor=3",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'bugzilla_top.html link'"]))
 
 ########################################################################
@@ -84,7 +81,6 @@ sequence.append(utils.AssertPresentationAction(
     "Shift Tab to blockquotes.html link", 
     ["BRAILLE LINE:  '• blockquotes.html'",
      "     VISIBLE:  '• blockquotes.html', cursor=3",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
@@ -98,9 +94,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '• blockquotes.html'",
      "     VISIBLE:  '• blockquotes.html', cursor=3",
-     "SPEECH OUTPUT: 'file link to blockquotes.html'",
-     "SPEECH OUTPUT: 'same site'",
-     "SPEECH OUTPUT: '1188 bytes'"]))
+     "SPEECH OUTPUT: 'file link to blockquotes.html same site 1188 bytes'"]))
 
 ########################################################################
 # Press Return to follow the blockquotes.html link.

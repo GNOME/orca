@@ -50,7 +50,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Tab", 
     ["BRAILLE LINE:  '• First item'",
      "     VISIBLE:  '• First item', cursor=3",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'First item link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -59,7 +58,6 @@ sequence.append(utils.AssertPresentationAction(
     "2. Tab", 
     ["BRAILLE LINE:  '• Second item'",
      "     VISIBLE:  '• Second item', cursor=3",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Second item link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -68,7 +66,6 @@ sequence.append(utils.AssertPresentationAction(
     "3. Return", 
     ["BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'link'"]))
 
 sequence.append(utils.StartRecordingAction())
