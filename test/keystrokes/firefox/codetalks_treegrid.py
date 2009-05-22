@@ -35,7 +35,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '+A Question of Love'",
      "     VISIBLE:  '+A Question of Love', cursor=0",
      "SPEECH OUTPUT: 'Selectable Grid with Text with 9 Rows tree table'",
-     "SPEECH OUTPUT: 'Title +A Question of Love'"]))
+     "SPEECH OUTPUT: 'Title tree table'",
+     "SPEECH OUTPUT: '+A Question of Love'"]))
 
 ########################################################################
 # Down Arrow to the next two items.
@@ -73,7 +74,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
     ["BRAILLE LINE:  '+A Question of Love'",
      "     VISIBLE:  '+A Question of Love', cursor=0",
-     "SPEECH OUTPUT: 'Title +A Question of Love'"]))
+     "SPEECH OUTPUT: '+A Question of Love'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -169,7 +170,7 @@ sequence.append(utils.AssertPresentationAction(
     "Up Arrow back to parent", 
     ["BRAILLE LINE:  '-A Question of Love'",
      "     VISIBLE:  '-A Question of Love', cursor=0",
-     "SPEECH OUTPUT: 'Title -A Question of Love'"]))
+     "SPEECH OUTPUT: '-A Question of Love'"]))
 
 ########################################################################
 # Close the demo
