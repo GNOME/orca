@@ -23,7 +23,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gtk
