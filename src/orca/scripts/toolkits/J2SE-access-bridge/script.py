@@ -32,7 +32,7 @@ import orca.orca_state as orca_state
 import orca.keybindings as keybindings
 
 from braillegenerator import BrailleGenerator
-from speechgenerator import SpeechGenerator
+from speech_generator import SpeechGenerator
 from formatting import Formatting
 from where_am_I import WhereAmI
 

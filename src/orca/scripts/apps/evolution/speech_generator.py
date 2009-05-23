@@ -27,9 +27,9 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(speech_generator.SpeechGenerator):
     """Overrides _getSpeechForTableCell so that, if this is an expanded
        table cell,  we can strip off the "0 items".
     """
@@ -37,7 +37,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     # pylint: disable-msg=W0142
 
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
     def _getRealTableCell(self, obj, **args):
         # Check that we are in a table cell in the mail message header list.
@@ -57,5 +57,5 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     result = self.getSpeech(obj, **args)
                     self._restoreRole(oldRole, args)
                     return result
-        return speechgenerator.SpeechGenerator._getRealTableCell(
+        return speech_generator.SpeechGenerator._getRealTableCell(
             self, obj, **args)

@@ -46,7 +46,7 @@ import formatting
 import keybindings
 import orca_state
 import settings
-import speechgenerator
+import speech_generator
 import structural_navigation
 import where_am_I
 import bookmarks
@@ -192,7 +192,7 @@ class Script:
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-        return speechgenerator.SpeechGenerator(self)
+        return speech_generator.SpeechGenerator(self)
 
     def getTutorialGenerator(self):
         """Returns the tutorial generator for this script.

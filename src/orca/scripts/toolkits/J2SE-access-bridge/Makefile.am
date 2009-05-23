@@ -5,7 +5,7 @@ orca_python_PYTHON = \
 	braillegenerator.py \
 	formatting.py \
 	script.py \
-	speechgenerator.py \
+	speech_generator.py \
 	where_am_I.py
 
 orca_pythondir=$(pyexecdir)/orca/scripts/toolkits/J2SE-access-bridge

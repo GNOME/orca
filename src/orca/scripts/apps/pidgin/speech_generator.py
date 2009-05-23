@@ -23,7 +23,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 
 ########################################################################
 #                                                                      #
@@ -31,7 +31,7 @@ import orca.speechgenerator as speechgenerator
 #                                                                      #
 ########################################################################
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(speech_generator.SpeechGenerator):
     """Overrides _getSpeechForTableCell() so that we can provide access
     to the expanded/collapsed state and node count for the buddy list.
     """
@@ -39,7 +39,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     # pylint: disable-msg=W0142
 
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
     def _getExpandableState(self, obj, **args):
         result = []
@@ -54,15 +54,15 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             expanderCell = obj.parent[obj.getIndexInParent() - 1]
             if expanderCell:
                 result.extend(
-                    speechgenerator.SpeechGenerator._getExpandableState(
+                    speech_generator.SpeechGenerator._getExpandableState(
                         self, expanderCell, **args))
             else:
                 result.extend(
-                    speechgenerator.SpeechGenerator._getExpandableState(
+                    speech_generator.SpeechGenerator._getExpandableState(
                         self, obj, **args))
         else:
             result.extend(
-                speechgenerator.SpeechGenerator._getExpandableState(
+                speech_generator.SpeechGenerator._getExpandableState(
                     self, obj, **args))
         return result
 
@@ -79,14 +79,14 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             expanderCell = obj.parent[obj.getIndexInParent() - 1]
             if expanderCell:
                 result.extend(
-                    speechgenerator.SpeechGenerator._getNumberOfChildren(
+                    speech_generator.SpeechGenerator._getNumberOfChildren(
                         self, expanderCell, **args))
             else:
                 result.extend(
-                    speechgenerator.SpeechGenerator._getNumberOfChildren(
+                    speech_generator.SpeechGenerator._getNumberOfChildren(
                         self, obj, **args))
         else:
             result.extend(
-                speechgenerator.SpeechGenerator._getNumberOfChildren(
+                speech_generator.SpeechGenerator._getNumberOfChildren(
                     self, obj, **args))
         return result

@@ -33,7 +33,7 @@ formatting = {
     'speech': {
         # When the rating widget changes values, it emits an accessible
         # name changed event. Because it is of ROLE_UNKNOWN, the default
-        # speechgenerator's _getDefaultSpeech handles it. And because
+        # speech_generator's _getDefaultSpeech handles it. And because
         # the widget is already focused, it doesn't speak anything. We
         # want to speak the widget's name as it contains the number of
         # stars being displayed.

@@ -32,7 +32,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.rolenames as rolenames
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _
 from orca.orca_i18n import ngettext # for ngettext support
@@ -43,14 +43,14 @@ from orca.orca_i18n import ngettext # for ngettext support
 #                                                                      #
 ########################################################################
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(speech_generator.SpeechGenerator):
     """Provides a speech generator specific to Gecko.
     """
 
     # pylint: disable-msg=W0142
 
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
     def _getName(self, obj, **args):
         result = []
@@ -75,7 +75,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                         # It's probably a Gtk combo box.
                         #
                         result = \
-                            speechgenerator.SpeechGenerator._getDisplayedText(
+                            speech_generator.SpeechGenerator._getDisplayedText(
                                 self, obj, **args)
                 except:
                     # But just in case, we'll fall back on this.
@@ -89,9 +89,9 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                 if child and child.name:
                     result.append(child.name)
         else:
-            result.extend(speechgenerator.SpeechGenerator._getName(self,
-                                                                   obj,
-                                                                   **args))
+            result.extend(speech_generator.SpeechGenerator._getName(self,
+                                                                    obj,
+                                                                    **args))
         link = None
         if role == pyatspi.ROLE_LINK:
             link = obj
@@ -110,7 +110,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         return result
 
     def _getLabel(self, obj, **args):
-        result = speechgenerator.SpeechGenerator._getLabel(self, obj, **args)
+        result = speech_generator.SpeechGenerator._getLabel(self, obj, **args)
         role = args.get('role', obj.getRole())
         # We'll attempt to guess the label under some circumstances.
         #
@@ -151,7 +151,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
            and self._script.getDisplayedLabel(obj):
             pass
         else:
-            result.extend(speechgenerator.SpeechGenerator._getLabelAndName(
+            result.extend(speech_generator.SpeechGenerator._getLabelAndName(
                 self, obj, **args))
         return result
 
@@ -164,7 +164,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             #
             result.extend(self._getLabelOrName(obj.parent, **args))
         else:
-            result.extend(speechgenerator.SpeechGenerator._getLabelOrName(
+            result.extend(speech_generator.SpeechGenerator._getLabelOrName(
                 self, obj, **args))
         return result
 
@@ -255,7 +255,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                                    "List with %d items",
                                    obj.childCount) % obj.childCount)
         else:
-            result.extend(speechgenerator.SpeechGenerator._getNumberOfChildren(
+            result.extend(speech_generator.SpeechGenerator._getNumberOfChildren(
                 self, obj, **args))
         return result
 
@@ -386,6 +386,6 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         #
         result = []
         args['isAria'] = self._script.isAriaWidget(obj)
-        result = speechgenerator.SpeechGenerator.getSpeech(self, obj, **args)
+        result = speech_generator.SpeechGenerator.getSpeech(self, obj, **args)
         del args['isAria']
         return result

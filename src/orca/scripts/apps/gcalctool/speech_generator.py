@@ -25,15 +25,15 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 import pyatspi
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(speech_generator.SpeechGenerator):
     """Overrides _getSpeechForPushButton to handle 'unspeakable'
     button labels displayed on the screen.
     """
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
     def _getName(self, obj, **args):
         """Gives preference to the object name versus what is being
@@ -42,7 +42,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         operator buttons."""
 
         if obj.getRole() != pyatspi.ROLE_PUSH_BUTTON:
-            return speechgenerator.SpeechGenerator._getName(\
+            return speech_generator.SpeechGenerator._getName(\
                 self, obj)
 
         if obj.name:

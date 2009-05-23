@@ -27,16 +27,16 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _         # for gettext support
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(speech_generator.SpeechGenerator):
 
     # pylint: disable-msg=W0142
 
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
     def _getLabelAndName(self, obj, **args):
         """Gets the label and the name if the name is different from the label.
@@ -64,7 +64,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         elif handleTabButton:
             result.append(self._script.getDisplayedText(obj.parent[1]))
         else:
-            result.append(speechgenerator.SpeechGenerator._getLabelAndName(
+            result.append(speech_generator.SpeechGenerator._getLabelAndName(
                 self, obj, **args))
 
         return result

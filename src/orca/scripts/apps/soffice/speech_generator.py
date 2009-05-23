@@ -27,14 +27,14 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 import orca.settings as settings
 
 from orca.orca_i18n import _ # for gettext support
 
 import script_settings
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(speech_generator.SpeechGenerator):
     """Overrides _getSpeechForComboBox so that we can provide a name for
     the Calc Name combo box.
     Overrides _getSpeechForTableCellRow so that , when we are in a
@@ -50,7 +50,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     on the Formatting toolbar claim to be push buttons.
     """
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
     def getSpeechForObjectRole(self, obj, role=None):
         if obj.getRoleName() == "text frame" \
@@ -60,7 +60,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                                             [pyatspi.ROLE_APPLICATION])):
             role = pyatspi.ROLE_TEXT
             
-        return speechgenerator.SpeechGenerator.\
+        return speech_generator.SpeechGenerator.\
             getSpeechForObjectRole(self, obj, role)
 
     def _getSpeechForComboBox(self, obj, already_focused):
@@ -240,7 +240,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                     utterances.extend(self._getSpeechForTableCell(obj,
                                                              already_focused))
         else:
-            utterances.extend(speechgenerator.SpeechGenerator.\
+            utterances.extend(speech_generator.SpeechGenerator.\
                 _getSpeechForTableCellRow(self, obj, already_focused))
 
         return utterances
@@ -300,7 +300,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             # and call this method again.
             #
             if obj.childCount <= 1:
-                utterances = speechgenerator.SpeechGenerator.\
+                utterances = speech_generator.SpeechGenerator.\
                     _getSpeechForTableCell(self, obj, already_focused)
             else:
                 utterances = []
@@ -348,7 +348,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
                                  already_focused,
                                  utterances)
         else:
-            utterances.extend(speechgenerator.SpeechGenerator.\
+            utterances.extend(speech_generator.SpeechGenerator.\
                 _getSpeechForText(self, obj, already_focused))
 
         return utterances
@@ -378,7 +378,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.append(obj.name)
             utterances.append(checkedState)
         else:
-            utterances.extend(speechgenerator.SpeechGenerator.\
+            utterances.extend(speech_generator.SpeechGenerator.\
                 _getSpeechForToggleButton(self, obj, already_focused))
 
         return utterances
@@ -408,7 +408,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             utterances.append(obj.name)
             utterances.append(checkedState)
         else:
-            utterances.extend(speechgenerator.SpeechGenerator.\
+            utterances.extend(speech_generator.SpeechGenerator.\
                 _getSpeechForPushButton(self, obj, already_focused))
 
         return utterances

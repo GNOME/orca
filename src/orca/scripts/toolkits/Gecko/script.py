@@ -2436,7 +2436,7 @@ class Script(default.Script):
 
         # Ideally in an entry we would just let default.sayWord() handle
         # things.  That fails to work when navigating backwords by word.
-        # Because getUtterancesFromContents() now uses the speechgenerator
+        # Because getUtterancesFromContents() now uses the speech_generator
         # with entries, we need to handle word navigation in entries here.
         #
         wordContents = self.getWordContentsAtOffset(obj, characterOffset)

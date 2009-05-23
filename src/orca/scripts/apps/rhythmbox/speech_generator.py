@@ -25,9 +25,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(speech_generator.SpeechGenerator):
 
     # pylint: disable-msg=W0142
 
@@ -35,7 +35,7 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
     cells in the Library table.
     """
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
     def _getRealTableCell(self, obj, **args):
         # Check to see if this is a table cell from the Library table.
@@ -44,5 +44,5 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
         #
         if obj.childCount == 5:
             obj = obj[3]
-        return speechgenerator.SpeechGenerator._getRealTableCell(
+        return speech_generator.SpeechGenerator._getRealTableCell(
             self, obj, **args)
