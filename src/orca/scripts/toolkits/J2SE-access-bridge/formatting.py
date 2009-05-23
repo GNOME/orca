@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import copy
+
 import pyatspi
 
 import orca.formatting
@@ -46,4 +48,4 @@ formatting = {
 class Formatting(orca.formatting.Formatting):
     def __init__(self, script):
         orca.formatting.Formatting.__init__(self, script)
-        self.update(formatting)
+        self.update(copy.deepcopy(formatting))

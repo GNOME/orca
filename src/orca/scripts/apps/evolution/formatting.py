@@ -27,6 +27,8 @@ __license__   = "LGPL"
 
 # pylint: disable-msg=C0301
 
+import copy
+
 import orca.formatting
 
 formatting = {
@@ -45,4 +47,4 @@ formatting = {
 class Formatting(orca.formatting.Formatting):
     def __init__(self, script):
         orca.formatting.Formatting.__init__(self, script)
-        self.update(formatting)
+        self.update(copy.deepcopy(formatting))

@@ -25,6 +25,8 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import copy
+
 import pyatspi
 
 # pylint: disable-msg=C0301
@@ -188,14 +190,15 @@ class Formatting(dict):
     def __init__(self, script):
         dict.__init__(self)
         self._script = script
-        self.update(formatting)
+        self.update(copy.deepcopy(formatting))
 
     def update(self, newDict):
         for key, val in newDict.iteritems():
             if self.has_key(key):
                 if isinstance(self[key], dict) and isinstance(val, dict):
                     self[key].update(val)
-                elif isinstance(self[key], basestring) and isinstance(val, basestring):
+                elif isinstance(self[key], basestring) \
+                     and isinstance(val, basestring):
                     self[key] = val
                 else:
                     # exception or such like, we are trying to murge
