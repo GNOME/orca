@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.braille as braille
 import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -49,6 +50,22 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
 
+    def isChatRoomMsg(self, obj):
+        """Returns True if the given accessible is the text object for
+        associated with a chat room conversation.
+
+        Arguments:
+        - obj: the accessible object to examine.
+        """
+
+        if obj and obj.getRole() == pyatspi.ROLE_TEXT:
+            state = obj.getState()
+            if not state.contains(pyatspi.STATE_EDITABLE) \
+               and state.contains(pyatspi.STATE_MULTI_LINE):
+                return True
+
+        return False
+
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a
         change in one of its children.
@@ -63,6 +80,10 @@ class Script(default.Script):
         #
         window = self.getTopLevel(event.source)
         if not window or window.getRole() != pyatspi.ROLE_DIALOG:
+            if event.source.getRole() == pyatspi.ROLE_TABLE:
+                table = event.source.queryTable()
+                print event.detail1, event.any_data.getIndexInParent()
+
             return default.Script.onActiveDescendantChanged(self, event)
 
         # There can be cases when the object that fires an
@@ -107,3 +128,35 @@ class Script(default.Script):
             return
 
         default.Script.onFocus(self, event)
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into one of Ekiga's text objects.
+        Overridden here so that we can present new messages to the user.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if self.isChatRoomMsg(event.source):
+            speech.speak(event.any_data)
+            braille.displayMessage(event.any_data)
+            return
+
+        default.Script.onTextInserted(self, event)
+
+    def onValueChanged(self, event):
+        """Called whenever an object's value changes. Overridden here because
+        new chat windows are not issuing text-inserted events for the chat
+        history until we "tickle" the hierarchy. However, we do seem to get
+        object:property-change:accessible-value events on the split pane. So
+        we'll use that as our trigger to do the tickling.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if event.source.getRole() == pyatspi.ROLE_SPLIT_PANE:
+            textObjects = self.findByRole(event.source, pyatspi.ROLE_TEXT)
+            return
+
+        default.Script.onValueChanged(self, event)
