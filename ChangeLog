@@ -1,5 +1,14 @@
 2009-05-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
+        * src/orca/scripts/toolkits/Gecko/where_am_i.py:
+          src/orca/where_am_I.py:
+          test/html/lists2.html: (new)
+          test/keystrokes/firefox/html_role_list_item_where_am_i.py: (new)
+          Fix for bug #530784 - whereAmI info for list items in web content
+          needs to be improved.
+
+2009-05-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/scripts/apps/ekiga.py:
           Fix for bug #511468 - Ekiga chat window accessibility problem.
 
