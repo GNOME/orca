@@ -80,10 +80,6 @@ class Script(default.Script):
         #
         window = self.getTopLevel(event.source)
         if not window or window.getRole() != pyatspi.ROLE_DIALOG:
-            if event.source.getRole() == pyatspi.ROLE_TABLE:
-                table = event.source.queryTable()
-                print event.detail1, event.any_data.getIndexInParent()
-
             return default.Script.onActiveDescendantChanged(self, event)
 
         # There can be cases when the object that fires an
