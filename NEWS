@@ -1,3 +1,114 @@
+2.27.2 - 25-May-2009
+
+General:
+
+* Work on bug #354471 - Text selection from braille input device.
+  This is the first step of implementing this feature.  Here's the
+  behavior:
+
+  KEY_CMD_CUTBEGIN (Dot 1 + cursor routing key on my display) -
+  this will specify the start of a selection.  Orca will merely
+  move the caret to the given spot and will clear any existing
+  selection.
+
+  KEY_CMD_CUTLINE (Dot 4 + cursor routing key on my display) -
+  this will specify the end of a selection and the selected text
+  is automatically copied to the system clipboard.  If a selection
+  doesn't exist, Orca creates a new one where the other endpoint
+  of the selection is where the caret is.  If a selection exists
+  and the selection point is outside the existing selection, Orca
+  extends the existing one.  If a selection exists and the
+  selection point is inside the existing selection, Orca trims the
+  selection from the right (i.e., the selected text that's after
+  the selection point becomes unselected).
+
+  Known issues that need to be resolved:
+
+  1) This only works in text areas.  It doesn't work across things
+     such as paragraphs in OpenOffice.
+
+  2) There's some strangeness with speech feedback: it sometimes
+     says "unselected" when the text is selected.  This should be
+     fixable, but there also probably shouldn't be any speech
+     feedback when doing this from the braille display.
+
+* Fix for bug #466841 - Orca doesn't announce items when Alt+Tabbing
+  if Compiz is enabled. This fix is designed to improve Orca's access
+  to the basic window switcher in Compiz. There are still bugs in
+  Compiz which make providing compelling access difficult, but this
+  should at least make switching windows accessible.
+
+* Fix for bug #511468 - Ekiga chat window accessibility problem.
+
+* Fix for bug #574221 - left-pane in Ekiga's preference box can't be
+  read at start-up.
+
+* Fix for bug #575614 - Please add speakable characters: → and ←.
+
+* Fix for bug #577977 - provide speech feedback for "repeat last find"
+  in Gedit.
+
+* Fix for bug #581372 - Move cursor routing and six dot key handling
+  from braille.py to script.  With the cleanup from bug #581532 to
+  remove the custom brl module and move directly to the brlapi module
+  provided by BrlTTY/BrlAPI, we are now able to handle BrlAPI commands
+  much better.  This patch 'uncovers' the handling the cursor routing
+  keys and the six dot keys; they are no longer swallowed/handled by
+  the braille.py module alone.  Instead, they go to the script like
+  any other event.  By default, the script just turns around and calls
+  braille.py methods, but it can also feel free to override them.  For
+  example, it might look at keyboard modifiers along with a cursor
+  routing key to see if it wants to select text or not.
+
+  As a note, the BrlAPI events come to us as a dictionary containing a
+  bunch of information about the event.  For example, the cursor
+  routing command contains information about which routing key was
+  pressed.  The six dots command, which is used to turn contracted
+  braille on or off, contains information about whether the user wants
+  to turn contracted braille on (dots 2-3-5 on my Baum display) or off
+  (dots 2-3-6 on my Baum display).  Right now, expressing interest in
+  braille events is still done by the command (e.g.,
+  brlapi.KEY_CMD_HOME, brlapi.KEY_CMD_ROUTE, brlapi.KEY_CMD_SIXDOTS)
+  and it is up to the event handler to determine how to handle the
+  arguments.
+
+* Fix for bug #581532 - Remove brl module.  Orca now uses the BrlAPI
+  python bindings.
+
+* Fix for bug #582028 - Character pronunciations are not used when
+  navigating by line. This provides a fallback to the chnames
+  dictionary.
+
+* Fix for bug #582684 - Arrowing left/right across tree tables causes
+  whole row to be spoken.
+
+OpenOffice:
+
+* Work on bug #574720 - Table Navigation Keys for OpenOffice Writer.
+  This adds in support for Alt + the cursoring keys for navigation in
+  OOo tables. Note that you will need to first enable structural by
+  pressing Orca + Z. We plan to add in the customizations/settings
+  available in the Gecko preferences, as well as for the announcement
+  of dynamic row and column headers when navigating.
+
+Firefox:
+
+* Fix for bug #530784 - whereAmI info for list items in web content
+  needs to be improved.
+
+* Fix for bug #577900 - Blank lines in Firefox text areas incorrectly
+  spoken.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    hu       Hungarian            Attila Hammer and Gabor Kelemen
+    ta       Tamil                drtvasudevan
+
+==========
+
 2.27.1 - 04-May-2009
 
 General:
@@ -21,13 +132,13 @@ General:
 * Adjust debug utilities to print to console and debug log.
   (Willie Walker)
 
-* Fix for bgo#579052 - Orca should be able to run with AT-SPI/D-Bus.
+* Fix for bug #579052 - Orca should be able to run with AT-SPI/D-Bus.
   (Willie Walker)
 
-* Fix for bgo#573535 - Orca should use the 16x16 pixels application
+* Fix for bug #573535 - Orca should use the 16x16 pixels application
   icon for Main and Preferences windows. (Stephen Brandt)
 
-* Fix for bgo#575921 - When I working with the gcalctool application,
+* Fix for bug #575921 - When I working with the gcalctool application,
   Orca says too lot of the result of the mathematic operations.
   (Willie Walker)
 
@@ -37,33 +148,33 @@ General:
   buttons that require you to press space to select them.
   (Willie Walker)
 
-* Fix for bgo#577239 - Cannot navigate by line through multi-line HTML
+* Fix for bug #577239 - Cannot navigate by line through multi-line HTML
   list items in Firefox/Thunderbird when arrowToLineBeginning is
   False. (Joanmarie Diggs)
 
 * Fix for bug #577330 - Detect whether speech dispatcher is installed
   or not. (Tomas Cerha)
 
-* Fix for bgo#577977 - provide speech feedback for "repeat last find"
+* Fix for bug #577977 - provide speech feedback for "repeat last find"
   in Gedit. (Nolan Darilek)
 
-* Fix for bgo#577979 - Pressing Down Arrow from the middle of a
+* Fix for bug #577979 - Pressing Down Arrow from the middle of a
   multi-line HTML list item initially moves to the beginning of the
   line when arrowToLineBeginning is False.  (Joanmarie Diggs)
 
-* Fix for bgo#580423 - Remove deprecated libgnomeui dependency. Use
+* Fix for bug #580423 - Remove deprecated libgnomeui dependency. Use
   DBus org.gnome.SessionManager.Logout instead of
   gnome.ui.master_client().request_save. (Willie Walker)
 
-* Fix for bgo#580329 - Use show_uri() to display help window.
+* Fix for bug #580329 - Use show_uri() to display help window.
   (Vincent Legoll)
 
 OpenOffice:
 
-* Fix for bgo#577245 - Present paragraph-style information in
+* Fix for bug #577245 - Present paragraph-style information in
   OpenOffice. (Willie Walker)
 
-* Fix for bgo#578072 - Orca does not always present text attributes
+* Fix for bug #578072 - Orca does not always present text attributes
   in braille in OOo documents. (Joanmarie Diggs)
 
 New and updated translations (THANKS EVERYONE!!!):
@@ -80,7 +191,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 2.26.0 - 15-Mar-2009
 
-NOTE - these are the changes since 2.25.92.  For a summary of changes over 
+NOTE - these are the changes since 2.25.92.  For a summary of changes over
 the 2.24.x release series, please refer to the following URL:
 
     http://live.gnome.org/TwoPointTwentyfive/ReleaseNotes
@@ -100,7 +211,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
     da       Danish               Kenneth Nielsen
     de       German               Simon Bienlein and Mario Blättermann
-    es       Spanish              Francisco Javier Dorado Martinez and 
+    es       Spanish              Francisco Javier Dorado Martinez and
                                   Jorge Gonzalez
     hi       Hindi                Rajesh Ranjan
     hu       Hungarian            Gabor Kelemen
@@ -180,7 +291,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
     ca      Catalan              Gil Forcada
     en_GB   British English      Philip Withnall
-    es      Spanish              Francisco Javier Dorado Martinez and 
+    es      Spanish              Francisco Javier Dorado Martinez and
                                  Jorge Gonzalez
     eu      Basque               Inaki Larranaga Murgoitio
     fi      Finnish              Ilkka Tuohela
@@ -297,7 +408,7 @@ Firefox:
 * Fix for bug #567984 - Structural navigation needs to consider text
   within the document frame.
 
-* Fix for bug #568467 - aria-describedby text spoken twice via 
+* Fix for bug #568467 - aria-describedby text spoken twice via
   Where Am I
 
 * Fix for bug #568550 - Add default keybindings for navigating by
@@ -322,7 +433,7 @@ New and updated translations (THANKS EVERYONE!!!):
     hu       Hungarian            Attila Hammer and Gabor Kelemen
     ko       Korean               Changwoo Ryu
     sv       Swedish              Daniel Nylander
-  
+
 ==========
 
 2.25.5 - 19-Jan-2009
@@ -433,7 +544,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 General:
 
-* Work on bug #508675 - Applying change in Orca preference dialog 
+* Work on bug #508675 - Applying change in Orca preference dialog
   is a little bit slow.
 
 * Fix for bug #551891 - Flat review does not always
@@ -442,12 +553,12 @@ General:
 * Fix for bug #554002 - Orca App-Preferences dialog page tabs are
   "off" by one in speech and braille.
 
-* Fix for bug #560649 - configure doesn't detect 
+* Fix for bug #560649 - configure doesn't detect
   Python modules installed in non-standard location.
 
 * Fix for bug #561540 - Traceback in default.py onStateChanged.
 
-* Fix for bug #562877 - account for pronunciation dictionary 
+* Fix for bug #562877 - account for pronunciation dictionary
   when speech-dispatcher backend is used
 
 OpenOffice:
@@ -504,7 +615,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 Changes since 2.24.1
 
-General: 
+General:
 
 * Refix for bug #552344 - tutorial message for desktop not spoken.
   This is a much safer fix that doesn't depend upon human consumable
@@ -539,7 +650,7 @@ General:
 * Fix for bug #552088 - Add Utility to desktop categories.
   Thanks Patryk Zawadzki!
 
-* Fix for bug #552343 - Quoting special characters in 
+* Fix for bug #552343 - Quoting special characters in
   espeechfactory.py and other changes. Thanks Dmitri Paduchikh!
 
 * For for bug #553413 - Orca can be double-started on login.
@@ -582,13 +693,13 @@ Firefox:
 * Fix for bug #527022 - updateBraille() has significant whitespace
   issues, should use braille generators when possible, and fails to
   underline links.
- 
+
 * Fix for bug #552887 - Orca gets stuck in graphical boxes on websites.
 
 * Started work on bug #554831 - Google calendar unusable with
   orca. Please note that Google calendar is still unusable with
   Orca. This part of the fix just prevents a hang.
- 
+
 * Workaround for bug #555466 - Orca should attempt to correct
   the Firefox breakage introduced by bug 535827 via script mapping.
 
@@ -675,7 +786,7 @@ New and updated translations (THANKS EVERYONE!!!):
     it      Italian              Luca Ferretti
     nb      Norwegian Bokmål     Kjartan Maraas
     nl      Dutch                Wouter Bolsterlee
-    pt_BR   Brazilian Portuguese Michel Recondo, Tiago M. Casal and 
+    pt_BR   Brazilian Portuguese Michel Recondo, Tiago M. Casal and
                                  Leonardo Ferreira Fontenelle
     ru      Russian              Nickolay V. Shmyrev
     ta      Tamil                I. Felix
@@ -688,7 +799,7 @@ General:
 
 * Partial fix for bug #527022 - Linked text should be "underlined" in
   braille in Firefox.  The complexity of this space, however, has
-  caused us to table the braille underlining of links until the 2.26 
+  caused us to table the braille underlining of links until the 2.26
   release of GNOME.
 
 * Fix for bug #550249 - configure doesn't use find bonobo python
@@ -714,8 +825,8 @@ StarOffice/OpenOffice:
   Writer is largely hosed and we're double-speaking paragraphs in OOo
   Writer docs.
 
-* Fix for bug #551077 - Traceback and loss of speech in OOo 
-  Writer docs with both links and multbyte characters on the 
+* Fix for bug #551077 - Traceback and loss of speech in OOo
+  Writer docs with both links and multbyte characters on the
   same line
 
 * Fix for bug #551159 - Orca says "link" when it shouldn't and
@@ -926,7 +1037,7 @@ General:
 * Fix for bug #538058 - The role for accessibles of ROLE_LIST_ITEM
   should not be spoken when the accessible is given focus.
 
-* Fix for bug #538729 - In Orca preferences window /text attributes 
+* Fix for bug #538729 - In Orca preferences window /text attributes
   page the text attribute names not marked for translation.
 
 * Fix for bug #538773 - Enable a quick 'smoke test' for whether Orca
@@ -953,7 +1064,7 @@ General:
 
 * Fix for bug #542719 - Modified column header does not appear
   translated in Preferences - Key bindings page.
-        
+
 * Fix for bug #543775 - Orca uses incorrect voice sometimes in text
   setup.
 
@@ -964,10 +1075,10 @@ Java:
 
 StarOffice/OpenOffice:
 
-* Fix for bug #538053 - Word echo is not echoing the word typed 
+* Fix for bug #538053 - Word echo is not echoing the word typed
   when return is pressed while editing an Impress slide.
 
-* Fix for bug #538056 - Orca should announce the "view" as part of 
+* Fix for bug #538056 - Orca should announce the "view" as part of
   the scroll pane context in Impress.
 
 * Fix for bug #538064 - Orca should speak placeholder contents when
@@ -980,7 +1091,7 @@ Firefox:
 
 * Fix for bug #519515 - Support ARIA "required" state.  This adds
   support for presenting the fact that the required state has been
-  set for the following types of ARIA widgets: 
+  set for the following types of ARIA widgets:
 
       - checkbox
       - gridcell
@@ -1018,7 +1129,7 @@ Firefox:
 
 * Fix for bug #540187 - Wrapped structural navigation toggle. There
   is a new setting (wrappedStructuralNavigation) which controls
-  whether or not we wrap around the document when structural 
+  whether or not we wrap around the document when structural
   navigation is used. The default value is True (i.e. do wrap). If
   you would prefer Orca not wrap, you can set it to False in your
   user-settings.py or your orca-customizations.py.

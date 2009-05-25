@@ -1,13 +1,34 @@
+2009-05-25  Willie Walker <william.walker@sun.com>
+
+        * README:
+          NEWS:
+          configure.in:
+          Prep for Orca 2.27.2
+
+2009-05-25  drtvasudevan <agnihot3@gmail.com>
+
+        * po/ta.po:
+          Updated Tamil translation
+
 2009-05-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/soffice/script.py:
           src/orca/scripts/apps/soffice/script_settings.py:
-          Work on bug #574720 - Table Navigation Keys for OpenOffice Writer.
-          This adds in support for Alt + the cursoring keys for navigation
-          in OOo tables. Note that you will need to first enable structural
-          by pressing Orca + Z. We plan to add in the customizations/settings
-          available in the Gecko preferences, as well as for the announcement
-          of dynamic row and column headers when navigating.
+          Work on bug #574720 - Table Navigation Keys for OpenOffice
+          Writer.  This adds in support for Alt + the cursoring keys for
+          navigation in OOo tables. Note that you will need to first
+          enable structural by pressing Orca + Z. We plan to add in the
+          customizations/settings available in the Gecko preferences, as
+          well as for the announcement of dynamic row and column headers
+          when navigating.
+
+2009-05-25  Willie Walker <william.walker@sun.com>
+
+        * src/orca/pronunciation_dict.py:
+          Fix for bgo#582028 - Character pronunciations are not used when
+          navigating by line. This provides a fallback to the chnames
+          dictionary
+
 
 2009-05-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -15,8 +36,8 @@
           src/orca/where_am_I.py:
           test/html/lists2.html: (new)
           test/keystrokes/firefox/html_role_list_item_where_am_i.py: (new)
-          Fix for bug #530784 - whereAmI info for list items in web content
-          needs to be improved.
+          Fix for bug #530784 - whereAmI info for list items in web
+          content needs to be improved.
 
 2009-05-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
@@ -26,7 +47,7 @@
 2009-05-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/script.py:
-          Fix for bug #577900 - Blank lines in Firefox text areas 
+          Fix for bug #577900 - Blank lines in Firefox text areas
           incorrectly spoken.
 
 2009-05-18  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -40,11 +61,130 @@
 
         * src/orca/scripts/apps/Makefile.am:
           src/orca/scripts/apps/gtk-window-decorator.py: (new)
-          Fix for bug #466841 - Orca doesn't announce items when Alt+Tabbing
-          if Compiz is enabled. This fix is designed to improve Orca's
-          access to the basic window switcher in Compiz. There are still
-          bugs in Compiz which make providing compelling access difficult,
-          but this should at least make switching windows accessible.
+          Fix for bug #466841 - Orca doesn't announce items when
+          Alt+Tabbing if Compiz is enabled. This fix is designed to
+          improve Orca's access to the basic window switcher in
+          Compiz. There are still bugs in Compiz which make providing
+          compelling access difficult, but this should at least make
+          switching windows accessible.
+
+2009-05-14  Willie Walker <william.walker@sun.com>
+
+        * src/orca/default.py:
+          Fix for bgo#582684 - Arrowing left/right across tree tables
+          causes whole row to be spoken
+
+2009-05-14  Gabor Kelemen <kelemeng@gnome.hu>
+
+        * po/hu.po:
+          Hungarian translation updated by Attila Hammer
+
+2009-05-10  Willie Walker <william.walker@sun.com>
+            and Hammer Attila <hammera@pickup.hu>
+
+        * src/orca/chnames.py:
+          Fix for bgo#575614 - Please add speakable characters: → and ←
+
+2009-05-09  Willie Walker <william.walker@sun.com>
+
+        * src/orca/braille.py:
+          src/orca/default.py:
+          Fix for bgo#354471 - Text selection from braille input device
+
+          This is the first step of implementing this feature.  Here's the
+          behavior:
+
+          KEY_CMD_CUTBEGIN (Dot 1 + cursor routing key on my display) -
+          this will specify the start of a selection.  Orca will merely
+          move the caret to the given spot and will clear any existing
+          selection.
+
+          KEY_CMD_CUTLINE (Dot 4 + cursor routing key on my display) -
+          this will specify the end of a selection and the selected text
+          is automatically copied to the system clipboard.  If a selection
+          doesn't exist, Orca creates a new one where the other endpoint
+          of the selection is where the caret is.  If a selection exists
+          and the selection point is outside the existing selection, Orca
+          extends the existing one.  If a selection exists and the
+          selection point is inside the existing selection, Orca trims the
+          selection from the right (i.e., the selected text that's after
+          the selection point becomes unselected).
+
+          Known issues that need to be resolved:
+
+          1) This only works in text areas.  It doesn't work across things
+             such as paragraphs in OpenOffice.
+
+          2) There's some strangeness with speech feedback: it sometimes
+             says "unselected" when the text is selected.  This should be
+             fixable, but there also probably shouldn't be any speech
+             feedback when doing this from the braille display.
+
+2009-05-05  Willie Walker <william.walker@sun.com>
+
+        * src/orca/braille.py:
+          src/orca/default.py:
+          src/orca/focus_tracking_presenter.py:
+          src/orca/orca.py:
+          src/orca/script.py:
+          Fix for bgo#581372 - Move cursor routing and six dot key
+          handling from braille.py to script
+
+          With the cleanup from bgo#581532 to remove the custom brl module
+          and move directly to the brlapi module provided by
+          BrlTTY/BrlAPI, we are now able to handle BrlAPI commands much
+          better.  This patch 'uncovers' the handling the cursor routing
+          keys and the six dot keys; they are no longer swallowed/handled
+          by the braille.py module alone.  Instead, they go to the script
+          like any other event.  By default, the script just turns around
+          and calls braille.py methods, but it can also feel free to
+          override them.  For example, it might look at keyboard modifiers
+          along with a cursor routing key to see if it wants to select
+          text or not.
+
+          As a note, the BrlAPI events come to us as a dictionary
+          containing a bunch of information about the event.  For example,
+          the cursor routing command contains information about which
+          routing key was pressed.  The six dots command, which is used to
+          turn contracted braille on or off, contains information about
+          whether the user wants to turn contracted braille on (dots 2-3-5
+          on my Baum display) or off (dots 2-3-6 on my Baum display).
+          Right now, expressing interest in braille events is still done
+          by the command (e.g., brlapi.KEY_CMD_HOME, brlapi.KEY_CMD_ROUTE,
+          brlapi.KEY_CMD_SIXDOTS) and it is up to the event handler to
+          determine how to handle the arguments.
+
+2009-05-04  Willie Walker <william.walker@sun.com>
+
+        * configure.in:
+          src/Makefile.am:
+          src/brl/.cvsignore:
+          src/brl/.gitignore:
+          src/brl/Makefile.am:
+          src/brl/brlmodule.c:
+          src/orca/braille.py:
+          src/orca/default.py:
+          Fix for bgo#581532 - Remove brl module
+
+2009-05-04  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/apps/gedit/script.py:
+          Fix for bug #577977 - provide speech feedback for "repeat last
+          find" in Gedit
+
+2009-05-04  Willie Walker <william.walker@sun.com>
+
+        * README:
+          configure.in:
+          Mark as Orca v2.27.2pre
+
+2009-05-04  Willie Walker <william.walker@sun.com>
+
+        * ChangeLog:
+          NEWS:
+          RELEASE-HOWTO:
+          configure.in:
+          Prep for Orca 2.27.1
 
 2009-05-02  Willie Walker <william.walker@sun.com>
 
@@ -55,9 +195,10 @@
 
 2009-05-01  Willie Walker <william.walker@sun.com>
 
-        * src/orca/orca.py: src/orca/settings.py: Add setting to disable
-          the pyatspi GIL idle handler: useGILIdleHandler.  This change is
-          made in response to
+        * src/orca/orca.py:
+          src/orca/settings.py:
+          Add setting to disable the pyatspi GIL idle handler:
+          useGILIdleHandler.  This change is made in response to
           http://bugzilla.gnome.org/show_bug.cgi?id=576954 where it
           appears as though the GIL idle handler in pyatspi is causing
           consumers of pyatspi (e.g., Orca and accerciser) to start
@@ -85,15 +226,16 @@
 2009-04-28  Nolan Darilek <via william.walker@sun.com>
 
         * src/orca/scripts/apps/gedit/script.py:
-        Fix for bug #577977 - provide speech feedback for "repeat last find"
-        in Gedit
+          Fix for bug #577977 - provide speech feedback for "repeat last
+          find" in Gedit
 
 2009-04-26  Willie Walker <william.walker@sun.com>
 
 
         * docs/doc-set/internals.html:
           docs/doc-set/script_guide.sgml:
-          Update the script guide section on braille and braille generators
+          Update the script guide section on braille and braille
+          generators
 
 2009-04-26  Willie Walker <william.walker@sun.com>
 
@@ -109,7 +251,7 @@
 2009-04-26  Willie Walker <william.walker@sun.com>
 
         * ChangeLog:
-          Update ChangeLog to reflect the git changes made since the 
+          Update ChangeLog to reflect the git changes made since the
           transition to git
 
 2009-04-26  Willie Walker <william.walker@sun.com>
@@ -137,7 +279,7 @@
 
 2009-04-23  Olav Vitters <olav@bkor.dhs.org>
 
-        * orca.doap: 
+        * orca.doap:
           Add desktop category
 
 2009-04-22  Mesar Hameed <mesar.hameed@gmail.com>
@@ -150,7 +292,6 @@
         * po/ca.po
           Minor fixes to Catalan translation
 
-commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
 2009-04-19  Aron Xu <aronxu@gnome.org>
 
         * po/zh_CN.po:
@@ -175,7 +316,7 @@ commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
           docs/doc-set/internals.sgml:
           docs/doc-set/script_guide.sgml:
           docs/doc-set/user_guide.html:
-          docs/doc-set/user_guide.sgml:    
+          docs/doc-set/user_guide.sgml:
           Update docs to work with xsltproc on OpenSolaris (a command
           example is in README)
 
@@ -344,7 +485,7 @@ commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
           icon for Main and Preferences windows.  This keeps the icon at the
           48x48 size that has been used to date, but makes sure it is used
           on all the windows shown by Orca.  If we decide to go from 48x48
-          to 16x16, we can change the new set_orca_icon method in 
+          to 16x16, we can change the new set_orca_icon method in
           orca_glade.py.
 
 2009-03-01  Joanmarie Diggs <joanmarie.diggs@gmail.com>
@@ -655,7 +796,7 @@ commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
 
         * src/orca/scripts/toolkits/Gecko/script.py:
           test/keystrokes/firefox/codetalks_alert.py: (new)
-          Fix for bug #570532 - (ARIA) Alert text not brailled when 
+          Fix for bug #570532 - (ARIA) Alert text not brailled when
           navigating it.
 
         * src/orca/scripts/toolkits/Gecko/script.py:
@@ -713,7 +854,7 @@ commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
           src/orca/where_am_I.py:
           po/*.po:
           Fix for bug #569118 - Use C_() instead of Q_() with context
-          NOTE: you need to install SUNWgnu-gettext and rerun your 
+          NOTE: you need to install SUNWgnu-gettext and rerun your
           autogen.sh to work with this change on OpenSolaris.
 
 2009-01-28  Willie Walker <william.walker@sun.com>
@@ -828,7 +969,7 @@ commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
 
         * src/orca/default.py:
           src/orca/focus_tracking_presenter.py:
-          Fix for bug #561548 - Orca locks up when closing some Pidgin 
+          Fix for bug #561548 - Orca locks up when closing some Pidgin
           conversations.  Also helps with bug #567864.
 
 2009-01-19  Willie Walker <william.walker@sun.com>
@@ -918,7 +1059,7 @@ commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
           test/keystrokes/firefox/line_nav_enter_bug.py:
           test/keystrokes/firefox/xul_role_combo_box.py:
           src/orca/scripts/toolkits/Gecko/script.py:
-          Fix for bug #567167 - Orca sometimes (re)announces that the 
+          Fix for bug #567167 - Orca sometimes (re)announces that the
           document frame has just received focus in Firefox 3.x.
 
 2009-01-08  Mesar Hameed <via william.walker@sun.com>
@@ -931,7 +1072,7 @@ commit 2ea4de15f8543f9a6ddc83707f7bf29b6d105a22
 
         * src/orca/punctuation_settings.py:
           src/orca/chnames.py:
-          Fix for bug #563200 - Orca not spoken the character code 
+          Fix for bug #563200 - Orca not spoken the character code
           8222 character.  Added double low quote and single low quote
           to the character names and punctuation table.
 
