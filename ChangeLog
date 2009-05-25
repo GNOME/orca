@@ -1,3 +1,14 @@
+2009-05-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/soffice/script.py:
+          src/orca/scripts/apps/soffice/script_settings.py:
+          Work on bug #574720 - Table Navigation Keys for OpenOffice Writer.
+          This adds in support for Alt + the cursoring keys for navigation
+          in OOo tables. Note that you will need to first enable structural
+          by pressing Orca + Z. We plan to add in the customizations/settings
+          available in the Gecko preferences, as well as for the announcement
+          of dynamic row and column headers when navigating.
+
 2009-05-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/toolkits/Gecko/where_am_i.py:

@@ -51,6 +51,7 @@ import orca.settings as settings
 import orca.keybindings as keybindings
 
 from orca.orca_i18n import _ # for gettext support
+from orca.structural_navigation import StructuralNavigation
 
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
@@ -193,6 +194,15 @@ class Script(default.Script):
 
         return SpeechGenerator(self)
 
+    def getEnabledStructuralNavigationTypes(self):
+        """Returns a list of the structural navigation object types
+        enabled in this script.
+        """
+
+        enabledTypes = [StructuralNavigation.TABLE_CELL]
+
+        return enabledTypes
+
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
         """
@@ -207,6 +217,8 @@ class Script(default.Script):
         """
 
         default.Script.setupInputEventHandlers(self)
+        self.inputEventHandlers.update(\
+            self.structuralNavigation.inputEventHandlers)
 
         self.inputEventHandlers["speakInputLineHandler"] = \
             input_event.InputEventHandler(
@@ -298,6 +310,10 @@ class Script(default.Script):
                 self.inputEventHandlers["clearDynamicRowHeadersHandler"],
                 2))
 
+        bindings = self.structuralNavigation.keyBindings
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
         return keyBindings
 
     def getAppPreferencesGUI(self):
@@ -361,6 +377,27 @@ class Script(default.Script):
             default.Script.setAppState(self, defaultAppState)
         except:
             debug.printException(debug.LEVEL_WARNING)
+
+    def isStructuralNavigationCommand(self, inputEvent=None):
+        """Checks to see if the inputEvent was a structural navigation
+        command. This is necessary to prevent double-presentation of
+        items. [[[TODO - JD: Perhaps this should be moved to default.py]]]
+
+        Arguments:
+        - inputEvent: The input event to examine. If none is provided,
+          orca_state.lastInputEvent will be used.
+
+        Returns True if inputEvent is a structural navigation command
+        enabled in this script.
+        """
+
+        inputEvent = inputEvent or orca_state.lastInputEvent
+        if isinstance(inputEvent, input_event.KeyboardEvent):
+            if self.structuralNavigation.keyBindings.\
+                    getInputHandler(inputEvent):
+                return True
+
+        return False
 
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""
@@ -1672,6 +1709,13 @@ class Script(default.Script):
         - event: the Event
         """
 
+        # If we've used structural navigation commands to get here, the
+        # presentation will be handled by the StructuralNavigation class.
+        # The subsequent event will result in redundant presentation.
+        #
+        if self.isStructuralNavigationCommand():
+            return
+
         # If this is a "focus:" event for the Calc Name combo box, catch
         # it here to reduce verbosity (see bug #364407).
         #
@@ -1989,6 +2033,13 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        # If we've used structural navigation commands to get here, the
+        # presentation will be handled by the StructuralNavigation class.
+        # The subsequent event will result in redundant presentation.
+        #
+        if self.isStructuralNavigationCommand():
+            return
 
         # If we are losing focus and we in:
         # 1/ a paragraph in an ooimpress slide presentation
