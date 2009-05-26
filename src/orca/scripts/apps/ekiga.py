@@ -58,7 +58,8 @@ class Script(default.Script):
         - obj: the accessible object to examine.
         """
 
-        if obj and obj.getRole() == pyatspi.ROLE_TEXT:
+        if obj and obj.getRole() == pyatspi.ROLE_TEXT \
+           and obj.parent.getRole() == pyatspi.ROLE_SCROLL_PANE:
             state = obj.getState()
             if not state.contains(pyatspi.STATE_EDITABLE) \
                and state.contains(pyatspi.STATE_MULTI_LINE):
