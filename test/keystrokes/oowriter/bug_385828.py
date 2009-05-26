@@ -36,15 +36,14 @@ sequence.append(WaitForWindowActivate("aw-5blue (read-only) - " + utils.getOOoNa
 sequence.append(WaitForFocus("Page design", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "Press 'a' to bring up the Agenda... wizard",
-    ["BRAILLE LINE:  'soffice Application aw-5blue (read-only) - " + utils.getOOoName("Writer") + " Frame (1 dialog)'",
-     "     VISIBLE:  'aw-5blue \(read-only\) - " + utils.getOOoName("Writer")[0:9] + "', cursor=1",
-     "BRAILLE LINE:  'soffice Application Agenda Wizard Dialog'",
+    ["BRAILLE LINE:  " + utils.getOOoName("Writer") + " Frame (1 dialog)'",
+     "     VISIBLE:  'Frame (1 dialog)', cursor=1",
+     "BRAILLE LINE:  " + utils.getOOoName("Writer") + "'Agenda Wizard Dialog'",
      "     VISIBLE:  'Agenda Wizard Dialog', cursor=1",
-     "BRAILLE LINE:  'soffice Application Agenda Wizard Dialog Agenda Wizard OptionPane Steps Panel  $l'",
+     "BRAILLE LINE:  " + utils.getOOoName("Writer") + "'Agenda Wizard Dialog Agenda Wizard OptionPane Steps Panel  $l'",
      "     VISIBLE:  '  $l', cursor=1",
-     "SPEECH OUTPUT: 'aw-5blue (read-only) - " + utils.getOOoName("Writer") + " frame 1 unfocused dialog'",
+     "SPEECH OUTPUT: 'frame 1 unfocused dialog'",
      "SPEECH OUTPUT: 'Agenda Wizard Please choose the page design for the agenda 1. Page design 2. General information 3. Headings to include 4. Names 5. Agenda items 6. Name and location'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page design label'"]))
 
 ######################################################################

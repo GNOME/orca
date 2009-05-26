@@ -49,8 +49,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' \$l', cursor=1",
      "BRAILLE LINE:  ' \$l'",
      "     VISIBLE:  ' \$l', cursor=1",
-     "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 ######################################################################
 # 5. Type Control-down to move to the next paragraph.
@@ -78,8 +77,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' \$l', cursor=1",
      "BRAILLE LINE:  ' \$l'",
      "     VISIBLE:  ' \$l', cursor=1",
-     "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 ######################################################################
 # 7. Type Control-down to move to the next paragraph.

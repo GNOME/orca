@@ -101,7 +101,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Change Button', cursor=1",
      "SPEECH OUTPUT: 'Spell(ing|check): [ \(]*English \(USA\)[\)]*'",
      "SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Change button'"]))
 
 ######################################################################

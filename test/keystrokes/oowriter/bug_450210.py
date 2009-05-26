@@ -39,7 +39,6 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'soffice Application Open Dialog Open OptionPane File name:  $l'",
      "     VISIBLE:  'File name:  $l', cursor=12",
      "SPEECH OUTPUT: 'Open'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'File name: text '"]))
 
 ######################################################################

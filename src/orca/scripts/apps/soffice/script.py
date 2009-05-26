@@ -54,6 +54,7 @@ from orca.orca_i18n import _ # for gettext support
 
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
+from formatting import Formatting
 from where_am_i import WhereAmI
 import script_settings
 
@@ -184,19 +185,20 @@ class Script(default.Script):
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
-
         return BrailleGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-
         return SpeechGenerator(self)
+
+    def getFormatting(self):
+        """Returns the formatting strings for this script."""
+        return Formatting(self)
 
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
         """
-
         return WhereAmI(self)
 
     def setupInputEventHandlers(self):
@@ -401,12 +403,13 @@ class Script(default.Script):
         isn't in a table.
         """
 
+        table = None
         obj = self.adjustForWriterTable(obj)
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL and obj.parent:
             try:
                 table = obj.parent.queryTable()
             except NotImplementedError:
-                table = None
+                pass
 
         return table
 

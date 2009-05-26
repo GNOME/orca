@@ -59,7 +59,8 @@ sequence.append(utils.AssertPresentationAction(
     "Text information for bold word",
     ["SPEECH OUTPUT: 'size 12'",
      "SPEECH OUTPUT: 'family name FreeSerif'",
-     "SPEECH OUTPUT: 'bold'"]))
+     "SPEECH OUTPUT: 'bold'",
+     "SPEECH OUTPUT: 'paragraph style Default'"]))
 
 ######################################################################
 # 7. Type Control-right and Insert-f to get the text information
@@ -77,7 +78,8 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Italic '",
      "SPEECH OUTPUT: 'size 12'",
      "SPEECH OUTPUT: 'family name FreeSerif'",
-     "SPEECH OUTPUT: 'style italic'"]))
+     "SPEECH OUTPUT: 'style italic'",
+     "SPEECH OUTPUT: 'paragraph style Default'"]))
 
 ######################################################################
 # 8. Type Control-right and Insert-f to get the text information
@@ -94,7 +96,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bold Italic Normal $l', cursor=13",
      "SPEECH OUTPUT: 'Normal'",
      "SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family name FreeSerif'"]))
+     "SPEECH OUTPUT: 'family name FreeSerif'",
+     "SPEECH OUTPUT: 'paragraph style Default'"]))
 
 ######################################################################
 # 9. Enter Alt-f, Alt-c to close the Writer application.
