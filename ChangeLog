@@ -1,3 +1,10 @@
+2009-05-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/ekiga.py:
+          Tweak to the fix for bug #511468 - Ekiga chat window accessibility
+          problem so that we do not constantly speak the call duration when
+          in a call.
+
 2009-05-25  Willie Walker <william.walker@sun.com>
 
         * README:
