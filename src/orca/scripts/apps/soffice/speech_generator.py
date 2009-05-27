@@ -211,7 +211,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     # sheet cell.
                     #
                     objectText = _("blank")
-                    result.append(objectText)
+                result.append(objectText)
         except NotImplementedError:
             pass
 
@@ -305,7 +305,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             else:
                 result.extend(self._getRealTableCell(obj, **args))
         else:
-            print "HERE", settings.readTableCellRow
             result.extend(speech_generator.SpeechGenerator._getTableCellRow(
                           self, obj, **args))
         return result
