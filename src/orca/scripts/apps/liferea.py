@@ -119,11 +119,11 @@ class Script(default.Script):
             # Here we extend the utterances with the speech generator for 
             # the object with focus (the push button).
             #
-            utterances.extend(speechGen.getSpeech(event.source, False))
+            utterances.extend(speechGen.getSpeech(event.source))
 
             # Finally we speak/braille the utterances/regions.
             #
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
            
             regions = brailleGen.getBrailleRegions(event.source)
             regions[0].insert(0, braille.Region(utterances[0] + " "))

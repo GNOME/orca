@@ -77,9 +77,10 @@ class Bookmarks:
         # those spots.  These spots are known as 'bookmarks'. 
         #
         utterances = [_('bookmark entered')]
-        utterances.extend(self._script.speechGenerator.getSpeech( \
-                          context.getCurrentAccessible(), False))
-        speech.speakUtterances(utterances)
+        utterances.extend(
+            self._script.speechGenerator.getSpeech(
+                context.getCurrentAccessible()))
+        speech.speak(utterances)
 
     def bookmarkCurrentWhereAmI(self, inputEvent):
         """ Report "Where am I" information for this bookmark relative to the 

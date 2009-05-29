@@ -34,7 +34,6 @@ sequence.append(utils.AssertPresentationAction(
     "Navigate to second tab", 
     ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Veges Page Carnivore Page Delive', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Veges page'"]))
     
 ########################################################################
@@ -46,7 +45,6 @@ sequence.append(utils.AssertPresentationAction(
     "Navigate to third tab", 
     ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Carnivore page'"]))
 
 ########################################################################
@@ -59,10 +57,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'Carnivore page'",
-     "SPEECH OUTPUT: 'item 3 of 4'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list Carnivore page item 3 of 4 '"]))
 
 ########################################################################
 # Navigate to fourth tab
@@ -73,7 +68,6 @@ sequence.append(utils.AssertPresentationAction(
     "Navigate to fourth tab", 
     ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Delivery Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Delivery page'"]))
     
 ########################################################################
@@ -85,7 +79,6 @@ sequence.append(utils.AssertPresentationAction(
     "Navigate to back to third tab", 
     ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Carnivore page'"]))
      
 ########################################################################
@@ -97,8 +90,7 @@ sequence.append(utils.AssertPresentationAction(
     "Tab into third page", 
     ["BRAILLE LINE:  '< > CheckBox Hamburger'",
      "     VISIBLE:  '< > CheckBox Hamburger', cursor=1",
-     "SPEECH OUTPUT: 'Carnivore scroll pane'",
-     "SPEECH OUTPUT: 'Hamburger check box not checked'"]))
+     "SPEECH OUTPUT: 'Carnivore scroll pane Hamburger check box not checked'"]))
     
 ########################################################################
 # Press the checkbox

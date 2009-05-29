@@ -135,7 +135,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Up",
     ["BRAILLE LINE:  '& y RadioButton Some polls'",
      "     VISIBLE:  '& y RadioButton Some polls', cursor=1",
-     "SPEECH OUTPUT: 'Some polls not selected radio button'"]))
+     "SPEECH OUTPUT: 'Some polls not selected radio button'",
+     "SPEECH OUTPUT: 'Book Reviews'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -27,9 +27,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bookmarks Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Bookmark This Page\(Control D\)'",
      "     VISIBLE:  'Bookmark This Page(Control D)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
 
 sequence.append(PauseAction(3000))
@@ -39,7 +37,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...'",
      "     VISIBLE:  'Organize Bookmarks...', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Organize Bookmarks…'"]))
 
 sequence.append(KeyComboAction("Return"))
@@ -54,8 +51,7 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree table",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Menu   TREE LEVEL 1', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Menu  '"]))
+     "SPEECH OUTPUT: 'Bookmarks Menu blank blank'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -67,12 +63,8 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Menu TREE LEVEL 1', cursor=1",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Name'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'column 1 of 3'",
-     "SPEECH OUTPUT: 'row 2 of 3'",
+     "SPEECH OUTPUT: 'tree table Name cell Bookmarks Menu'",
+     "SPEECH OUTPUT: 'column 1 of 3 row 2 of 3'",
      "SPEECH OUTPUT: 'tree level 1'"]))
 
 ########################################################################
@@ -84,8 +76,7 @@ sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree table",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Toolbar  '"]))
+     "SPEECH OUTPUT: 'Bookmarks Toolbar blank blank'"]))
 
 ########################################################################
 # Press Alt F4 to close the window.

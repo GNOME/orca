@@ -48,7 +48,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Severity combo box", 
     ["BRAILLE LINE:  'Severity: Severity normal Combo'",
      "     VISIBLE:  'Severity: Severity normal Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity link'"]))
 
 ########################################################################
@@ -63,7 +62,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - Where should the cursor be? If we're not IN the combo box should it be as is with the label showing or not?",
      "BRAILLE LINE:  'Severity: Severity normal Combo'",
      "     VISIBLE:  'Severity: Severity normal Combo', cursor=20",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity normal combo box'"]))
 
 ########################################################################
@@ -76,7 +74,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Priority Link", 
     ["BRAILLE LINE:  'Priority: Normal Combo'",
      "     VISIBLE:  'Priority: Normal Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Priority link'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -86,7 +83,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Priority combo box", 
     ["BRAILLE LINE:  'Priority: Normal Combo'",
      "     VISIBLE:  'Priority: Normal Combo', cursor=11",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Priority: Normal combo box'"]))
 
 ########################################################################
@@ -98,7 +94,6 @@ sequence.append(utils.AssertPresentationAction(
     "Change selection Down: Low",
     ["BRAILLE LINE:  'Low'",
      "     VISIBLE:  'Low', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Low'"]))
 
 ########################################################################
@@ -110,7 +105,6 @@ sequence.append(utils.AssertPresentationAction(
     "Change selection Up: Normal",
     ["BRAILLE LINE:  'Normal'",
      "     VISIBLE:  'Normal', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Normal'"]))
 
 ########################################################################
@@ -124,9 +118,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Priority: Normal Combo', cursor=0",
      "BRAILLE LINE:  'Normal'",
      "     VISIBLE:  'Normal', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Normal combo box'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Normal'"]))
 
 ########################################################################
@@ -138,7 +130,6 @@ sequence.append(utils.AssertPresentationAction(
     "Change selection Down: Low",
     ["BRAILLE LINE:  'Low'",
      "     VISIBLE:  'Low', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Low'"]))
 
 ########################################################################
@@ -150,7 +141,6 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'Priority: Low Combo'",
      "     VISIBLE:  'Priority: Low Combo', cursor=11",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Priority: Low combo box'"]))
 
 ########################################################################
@@ -163,7 +153,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab",
     ["BRAILLE LINE:  'FIXED Combo'",
      "     VISIBLE:  'FIXED Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Resolution: FIXED combo box'"]))
 
 ########################################################################
@@ -224,9 +213,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Speech Combo', cursor=0",
      "BRAILLE LINE:  'Speech'",
      "     VISIBLE:  'Speech', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Speech combo box'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Speech'"]))
 
 ########################################################################
@@ -238,7 +225,6 @@ sequence.append(utils.AssertPresentationAction(
     "Change selection Down", 
     ["BRAILLE LINE:  'Braille'",
      "     VISIBLE:  'Braille', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Braille'"]))
 
 ########################################################################
@@ -250,7 +236,6 @@ sequence.append(utils.AssertPresentationAction(
     "Return to collapse combo box",
     ["BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Component Braille combo box'"]))
 
 ########################################################################
@@ -263,11 +248,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'combo box'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'combo box   '"]))
 
 ########################################################################
 # Press Shift Tab once to return to the Version combo box.  
@@ -278,7 +259,6 @@ sequence.append(utils.AssertPresentationAction(
     "Shift Tab to Version", 
     ["BRAILLE LINE:  'Version 2.16 Combo'",
      "     VISIBLE:  'Version 2.16 Combo', cursor=9",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Version 2.16 combo box'"]))
 
 ########################################################################

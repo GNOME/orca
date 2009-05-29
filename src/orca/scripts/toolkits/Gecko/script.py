@@ -64,12 +64,12 @@ import orca.speechserver as speechserver
 import script_settings
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
+from formatting import Formatting
 from where_am_i import GeckoWhereAmI
 from bookmarks import GeckoBookmarks
 from structural_navigation import GeckoStructuralNavigation
 
 from orca.orca_i18n import _
-
 
 ########################################################################
 #                                                                      #
@@ -309,6 +309,10 @@ class Script(default.Script):
         """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
+
+    def getFormatting(self):
+        """Returns the formatting strings for this script."""
+        return Formatting(self)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types
@@ -1551,9 +1555,9 @@ class Script(default.Script):
             utterances.append(rolenames.getSpeechForRoleName(event.any_data))
             if settings.speechVerbosityLevel == \
                     settings.VERBOSITY_LEVEL_VERBOSE:
-                utterances.extend(\
-                    self.speechGenerator.getSpeech(event.any_data, False))
-            speech.speakUtterances(utterances)
+                utterances.extend(
+                    self.speechGenerator.getSpeech(event.any_data))
+            speech.speak(utterances)
 
     def onDocumentReload(self, event):
         """Called when the reload button is hit for a web page."""
@@ -1684,8 +1688,8 @@ class Script(default.Script):
                     # http://bugzilla.gnome.org/show_bug.cgi?id=570551
                     #
                     if eventSourceRole == pyatspi.ROLE_ALERT:
-                        speech.speakUtterances(\
-                            self.speechGenerator.getSpeech(event.source, False))
+                        speech.speak(self.speechGenerator.getSpeech(
+                                event.source))
                         self.updateBraille(obj)
                     else:
                         self.presentLine(obj, characterOffset)
@@ -1874,8 +1878,7 @@ class Script(default.Script):
                     self.updateBraille(obj)
 
                     if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                        speech.speakUtterances(\
-                            self.speechGenerator.getSpeech(obj, False))
+                        speech.speak(self.speechGenerator.getSpeech(obj))
                     elif not script_settings.sayAllOnLoad:
                         self.speakContents(\
                             self.getLineContentsAtOffset(obj,
@@ -2437,7 +2440,7 @@ class Script(default.Script):
 
         # Ideally in an entry we would just let default.sayWord() handle
         # things.  That fails to work when navigating backwords by word.
-        # Because getUtterancesFromContents() now uses the speechgenerator
+        # Because getUtterancesFromContents() now uses the speech_generator
         # with entries, we need to handle word navigation in entries here.
         #
         wordContents = self.getWordContentsAtOffset(obj, characterOffset)
@@ -2446,7 +2449,7 @@ class Script(default.Script):
         else:
             [textObj, startOffset, endOffset, word] = wordContents[0]
             word = textObj.queryText().getText(startOffset, endOffset)
-            speech.speakUtterances([word], self.getACSS(textObj, word))
+            speech.speak([word], self.getACSS(textObj, word))
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
@@ -3604,7 +3607,7 @@ class Script(default.Script):
         this value is 0-based (Gecko return is 1-based) """
 
         if obj is None or obj.getRole() == pyatspi.ROLE_HEADING \
-           or obj.parent.getRole() == pyatspi.ROLE_MENU:
+           or (obj.parent and obj.parent.getRole() == pyatspi.ROLE_MENU):
             return -1
 
         try:
@@ -3617,6 +3620,8 @@ class Script(default.Script):
                 # seems to be guilty of this.
                 #
                 #print "getNodeLevel - obj is defunct", obj
+                debug.println(debug.LEVEL_WARNING,
+                              "getNodeLevel - obj is defunct")
                 debug.printStack(debug.LEVEL_WARNING)
                 return -1
 
@@ -5337,11 +5342,14 @@ class Script(default.Script):
     #                                                                  #
     ####################################################################
 
+    # [[[TODO: WDW - this needs to be moved to the speech generator.]]]
+    #
     def getACSS(self, obj, string):
         """Returns the ACSS to speak anything for the given obj."""
         if obj.getRole() == pyatspi.ROLE_LINK:
             acss = self.voices[settings.HYPERLINK_VOICE]
-        elif string and string.isupper() and string.strip().isalpha():
+        elif string and string.isupper() \
+             and string.strip().isalpha() and len(string.strip()) > 1:
             acss = self.voices[settings.UPPERCASE_VOICE]
         else:
             acss = self.voices[settings.DEFAULT_VOICE]
@@ -5423,12 +5431,12 @@ class Script(default.Script):
             #
             if not len(string) \
                or role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
-                utterance = self.speechGenerator.getSpeech(obj, False)
+                utterance = self.speechGenerator.getSpeech(obj)
             else:
                 utterance = [string]
                 if speakRole and not role in doNotSpeakRoles:
                     utterance.extend(\
-                        self.speechGenerator.getSpeechForObjectRole(obj))
+                        self.speechGenerator.getRoleName(obj))
   
             # If the object is a heading, or is contained within a heading,
             # speak that role information at the end of the object.
@@ -5445,7 +5453,7 @@ class Script(default.Script):
 
                 if heading:
                     utterance.extend(\
-                        self.speechGenerator.getSpeechForObjectRole(heading))
+                        self.speechGenerator.getRoleName(heading))
 
             for item in utterance:
                 utterances.append([item, self.getACSS(obj, item)])
@@ -5509,8 +5517,8 @@ class Script(default.Script):
                 # characterOffset (lists).  In these latter cases, we'll just
                 # speak the entire component.
                 #
-                utterances = self.speechGenerator.getSpeech(obj, False)
-                speech.speakUtterances(utterances)
+                utterances = self.speechGenerator.getSpeech(obj)
+                speech.speak(utterances)
 
     ####################################################################
     #                                                                  #

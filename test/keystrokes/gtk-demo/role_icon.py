@@ -50,11 +50,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'GtkIconView demo Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'",
      "     VISIBLE:  'LayeredPane', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
-     "SPEECH OUTPUT: 'Icon View Basics'",
-     "SPEECH OUTPUT: 'tree level 2'",
+     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Icon View Basics tree level 2'",
      "SPEECH OUTPUT: 'GtkIconView demo frame'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'layered pane'"]))
 
 ########################################################################
@@ -67,10 +64,7 @@ sequence.append(utils.AssertPresentationAction(
     "Layered pane Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'",
      "     VISIBLE:  'LayeredPane', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'layered pane'",
-     "SPEECH OUTPUT: '0 of [0-9]+ items selected'",
-     "SPEECH OUTPUT: 'on item 0 of [0-9]+'"]))
+     "SPEECH OUTPUT: 'layered pane 0 of [0-9]+ items selected on item 0 of [0-9]+'"]))
 
 ########################################################################
 # Down into the icon list, finally making something be selected in the
@@ -83,9 +77,7 @@ sequence.append(utils.AssertPresentationAction(
     "bin icon",
     ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
      "     VISIBLE:  'bin Icon', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'bin icon'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'bin icon not selected'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -97,10 +89,7 @@ sequence.append(utils.AssertPresentationAction(
     "bin icon Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
      "     VISIBLE:  'bin Icon', cursor=1",
-     "SPEECH OUTPUT: 'Icon panel'",
-     "SPEECH OUTPUT: 'bin'",
-     "SPEECH OUTPUT: '[0-9] of [0-9]+ items selected'",
-     "SPEECH OUTPUT: 'on item 1 of [0-9]+'"]))
+     "SPEECH OUTPUT: 'Icon panel bin [0-9] of [0-9]+ items selected on item 1 of [0-9]+'"]))
 
 ########################################################################
 # Arrow right and wait for the next icon to be selected.
@@ -112,9 +101,7 @@ sequence.append(utils.AssertPresentationAction(
     "boot icon",
     ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane boot Icon'",
      "     VISIBLE:  'boot Icon', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'boot icon'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'boot icon not selected'"]))
 
 ########################################################################
 # Select more than one icon by doing Shift+Right.
@@ -126,9 +113,7 @@ sequence.append(utils.AssertPresentationAction(
     "icon selection",
     ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
      "     VISIBLE:  'bin Icon', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'bin icon'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'bin icon not selected'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -140,10 +125,7 @@ sequence.append(utils.AssertPresentationAction(
     "icon selection Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
      "     VISIBLE:  'bin Icon', cursor=1",
-     "SPEECH OUTPUT: 'Icon panel'",
-     "SPEECH OUTPUT: 'bin'",
-     "SPEECH OUTPUT: '[0-9] of [0-9]+ items selected'",
-     "SPEECH OUTPUT: 'on item 1 of [0-9]+'"]))
+     "SPEECH OUTPUT: 'Icon panel bin [0-9] of [0-9]+ items selected on item 1 of [0-9]+'"]))
 
 ########################################################################
 # Close the GtkIconView demo window

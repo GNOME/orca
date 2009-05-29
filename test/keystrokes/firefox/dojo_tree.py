@@ -39,9 +39,7 @@ sequence.append(utils.AssertPresentationAction(
     "tab to continents", 
     ["BRAILLE LINE:  'Continents ListItem'",
      "     VISIBLE:  'Continents ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Continents expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'Continents expanded tree level 1'"]))
 
 ########################################################################
 # Arrow to Africa tree item
@@ -52,9 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to Africa", 
     ["BRAILLE LINE:  'Africa ListItem'",
      "     VISIBLE:  'Africa ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Africa collapsed'",
-     "SPEECH OUTPUT: 'tree level 2'"]))
+     "SPEECH OUTPUT: 'Africa collapsed tree level 2'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -66,11 +62,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Africa ListItem'",
      "     VISIBLE:  'Africa ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'Africa'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Africa  collapsed tree level 2'"]))
 
 ########################################################################
 # Use arrows to expand/collapse/navigate tree.  
@@ -90,9 +82,7 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to Egypt", 
     ["BRAILLE LINE:  'Egypt ListItem'",
      "     VISIBLE:  'Egypt ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Egypt'",
-     "SPEECH OUTPUT: 'tree level 3'"]))
+     "SPEECH OUTPUT: 'Egypt tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -101,7 +91,6 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to Kenya", 
     ["BRAILLE LINE:  'Kenya ListItem'",
      "     VISIBLE:  'Kenya ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Kenya collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -126,7 +115,6 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to Sudan", 
     ["BRAILLE LINE:  'Sudan ListItem'",
      "     VISIBLE:  'Sudan ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Sudan collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -135,9 +123,7 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to Asia", 
     ["BRAILLE LINE:  'Asia ListItem'",
      "     VISIBLE:  'Asia ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Asia collapsed'",
-     "SPEECH OUTPUT: 'tree level 2'"]))
+     "SPEECH OUTPUT: 'Asia collapsed tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -153,9 +139,7 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to China", 
     ["BRAILLE LINE:  'China ListItem'",
      "     VISIBLE:  'China ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'China'",
-     "SPEECH OUTPUT: 'tree level 3'"]))
+     "SPEECH OUTPUT: 'China tree level 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -163,7 +147,6 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to India", 
     ["BRAILLE LINE:  'India ListItem'",
      "     VISIBLE:  'India ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'India'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -172,7 +155,6 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to Russia", 
     ["BRAILLE LINE:  'Russia ListItem'",
      "     VISIBLE:  'Russia ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Russia'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -181,7 +163,6 @@ sequence.append(utils.AssertPresentationAction(
     "arrow to Mongolia", 
     ["BRAILLE LINE:  'Mongolia ListItem'",
      "     VISIBLE:  'Mongolia ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Mongolia'"]))
     
 ########################################################################

@@ -230,11 +230,8 @@ sequence.append(utils.AssertPresentationAction(
     "Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test. $l'",
      "     VISIBLE:  'This is a test. $l', cursor=11",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: ' is a '",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'text  is a '",
+     "SPEECH OUTPUT: 'selected '"]))
 
 ########################################################################
 # Press Home to move to the beginning of the line. Arrow down to 
@@ -310,11 +307,8 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I multiline selection",
     ["BRAILLE LINE:  'The keyboard sure can get sticky. $l'",
      "     VISIBLE:  'The keyboard sure can get sticky', cursor=13",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'The keyboard'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'text The keyboard'",
+     "SPEECH OUTPUT: 'selected '"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter 2x.
@@ -329,17 +323,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'The keyboard sure can get sticky', cursor=13",
      "BRAILLE LINE:  'The keyboard sure can get sticky. $l'",
      "     VISIBLE:  'The keyboard sure can get sticky', cursor=13",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'The keyboard'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
+     "SPEECH OUTPUT: 'text The keyboard'",
+     "SPEECH OUTPUT: 'selected '",
+     "SPEECH OUTPUT: 'text I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
      "The keyboard'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'selected '"]))
 
 ########################################################################
 # Try a "SayAll".

@@ -36,8 +36,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Untitled[ ]*2 - " + utils.getOOoName("Writer") + " frame'",
-     "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 ######################################################################
 # 3. Enter Alt-f, Alt-c to close the Writer application.

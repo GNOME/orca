@@ -37,8 +37,7 @@ sequence.append(utils.AssertPresentationAction(
     "New menu item",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
      "     VISIBLE:  'New(Control n)', cursor=1",
-     "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'New Control n'"]))
+     "SPEECH OUTPUT: 'File menu New Control n'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
@@ -51,11 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "New menu item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
      "     VISIBLE:  'New(Control n)', cursor=1",
-     "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'New'",
-     "SPEECH OUTPUT: 'Control n'",
-     "SPEECH OUTPUT: 'item 1 of 5'",
-     "SPEECH OUTPUT: 'n'"]))
+     "SPEECH OUTPUT: 'File menu New Control n item 1 of 5 n'"]))
 
 ########################################################################
 # Now, continue on down the menu.
@@ -67,7 +62,6 @@ sequence.append(utils.AssertPresentationAction(
     "Open menu item",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Open(Control o)'",
      "     VISIBLE:  'Open(Control o)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Open Control o'"]))
 
 ########################################################################
@@ -80,7 +74,6 @@ sequence.append(utils.AssertPresentationAction(
     "Save menu item",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Save(Control s)'",
      "     VISIBLE:  'Save(Control s)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Save Control s'"]))
 
 ########################################################################
@@ -93,7 +86,6 @@ sequence.append(utils.AssertPresentationAction(
     "Save As... menu item",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Save As...(Control s)'",
      "     VISIBLE:  'Save As...(Control s)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Save As... Control s'"]))
 
 ########################################################################
@@ -106,7 +98,6 @@ sequence.append(utils.AssertPresentationAction(
     "Quit menu item",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Quit(Control q)'",
      "     VISIBLE:  'Quit(Control q)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Quit Control q'"]))
 
 ########################################################################

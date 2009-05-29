@@ -40,8 +40,7 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Tracking number text entry", 
     ["BRAILLE LINE:  'Tracking number Tracking number  $l'",
      "     VISIBLE:  'Tracking number  $l', cursor=17",
-     "SPEECH OUTPUT: 'Order tracking panel'",
-     "SPEECH OUTPUT: 'Tracking number text '"]))
+     "SPEECH OUTPUT: 'Order tracking panel Tracking number text '"]))
 
 ########################################################################
 # Tab to the "Check Now" push button
@@ -53,7 +52,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Check Now push button",
     ["BRAILLE LINE:  'Check Now Button Check to see if your order has been shipped.  $l'",
      "     VISIBLE:  'Check Now Button Check to see if', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Check Now button'"]))
 
 ########################################################################
@@ -67,9 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereamI", 
     ["BRAILLE LINE:  'Check Now Button Check to see if your order has been shipped.  $l'",
      "     VISIBLE:  'Check Now Button Check to see if', cursor=1",
-     "SPEECH OUTPUT: 'Check Now'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: ''",
+     "SPEECH OUTPUT: 'Check Now button '",
      "SPEECH OUTPUT: 'Check to see if your order has been shipped.'"]))
 
 ########################################################################
@@ -85,7 +81,6 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application The page at http://codetalks.org says: Dialog OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
      "SPEECH OUTPUT: 'The page at http://codetalks.org says: Button pressed'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################

@@ -215,7 +215,7 @@ class LiveRegionManager:
                 utts = message['content']
             else:
                 utts = message['labels'] + message['content']
-            speech.speakUtterances(utts)
+            speech.speak(utts)
 
             # set the last live obj to be announced
             self.lastliveobj = obj
@@ -279,7 +279,7 @@ class LiveRegionManager:
             #
             utterances.append(_('setting live region to off'))
 
-        speech.speakUtterances(utterances)
+        speech.speak(utterances)
 
     def goLastLiveRegion(self):
         """Move the caret to the last announced live region and speak the 
@@ -298,7 +298,7 @@ class LiveRegionManager:
             #
             speech.speak(_('no live message saved'))
         else:
-            speech.speakUtterances(self.msg_cache[-msgnum])
+            speech.speak(self.msg_cache[-msgnum])
 
     def setLivePolitenessOff(self):
         """User toggle to set all live regions to LIVE_OFF or back to their
@@ -384,7 +384,7 @@ class LiveRegionManager:
             # Translators: output the politeness level
             #
             utterances.append(_('politeness level %s') %liveprioritystr)
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
 
     def matchLiveRegion(self, obj):
         """Predicate used to find a live region"""
@@ -460,7 +460,7 @@ class LiveRegionManager:
             speech.stop()
             # Note: we would like to use a different ACSS for alerts.  This work
             # should be done as part of bug #412656.
-            speech.speakUtterances(utts)
+            speech.speak(utts)
             return None
         else:
             return {'content':content, 'labels':labels}

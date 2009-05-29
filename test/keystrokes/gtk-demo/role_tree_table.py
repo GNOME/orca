@@ -52,11 +52,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Card planning sheet Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader'",
      "     VISIBLE:  'Holiday ColumnHeader', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
-     "SPEECH OUTPUT: 'Tree Store'",
-     "SPEECH OUTPUT: 'tree level 2'",
+     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Tree Store tree level 2'",
      "SPEECH OUTPUT: 'Card planning sheet frame'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Holiday column header'"]))
 
 ########################################################################
@@ -85,14 +82,9 @@ sequence.append(utils.AssertPresentationAction(
     "January cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
      "     VISIBLE:  'January expanded < > Alex < > Ha', cursor=1",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Holiday'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'January'",
-     "SPEECH OUTPUT: 'column 1 of 6'",
-     "SPEECH OUTPUT: 'row 1 of 53'",
-     "SPEECH OUTPUT: 'expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'tree table Holiday cell January'",
+     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 53'",
+     "SPEECH OUTPUT: 'expanded tree level 1'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -107,28 +99,13 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'January expanded < > Alex < > Ha', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
      "     VISIBLE:  'January expanded < > Alex < > Ha', cursor=1",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Holiday'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'January'",
-     "SPEECH OUTPUT: 'column 1 of 6'",
-     "SPEECH OUTPUT: 'row 1 of 53'",
-     "SPEECH OUTPUT: 'expanded'",
-     "SPEECH OUTPUT: 'tree level 1'",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Holiday'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'January'",
-     "SPEECH OUTPUT: 'column 1 of 6'",
-     "SPEECH OUTPUT: 'row 1 of 53'",
-     "SPEECH OUTPUT: 'January'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'tree table Holiday cell January'",
+     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 53'",
+     "SPEECH OUTPUT: 'expanded tree level 1'",
+     "SPEECH OUTPUT: 'tree table Holiday cell January'",
+     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 53'",
+     "SPEECH OUTPUT: 'January check box not checked check box not checked check box not checked check box not checked check box not checked'",
+     "SPEECH OUTPUT: 'expanded tree level 1'"]))
 
 ########################################################################
 # Collapse the cell.
@@ -156,14 +133,9 @@ sequence.append(utils.AssertPresentationAction(
     "January cell collapsed basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January collapsed < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
      "     VISIBLE:  'January collapsed < > Alex < > H', cursor=1",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Holiday'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'January'",
-     "SPEECH OUTPUT: 'column 1 of 6'",
-     "SPEECH OUTPUT: 'row 1 of 50'",
-     "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'tree table Holiday cell January'",
+     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 50'",
+     "SPEECH OUTPUT: 'collapsed tree level 1'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -178,28 +150,13 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'January collapsed < > Alex < > H', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January collapsed < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
      "     VISIBLE:  'January collapsed < > Alex < > H', cursor=1",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Holiday'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'January'",
-     "SPEECH OUTPUT: 'column 1 of 6'",
-     "SPEECH OUTPUT: 'row 1 of 50'",
-     "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'tree level 1'",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Holiday'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'January'",
-     "SPEECH OUTPUT: 'column 1 of 6'",
-     "SPEECH OUTPUT: 'row 1 of 50'",
-     "SPEECH OUTPUT: 'January'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'check box not checked'",
-     "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'tree table Holiday cell January'",
+     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 50'",
+     "SPEECH OUTPUT: 'collapsed tree level 1'",
+     "SPEECH OUTPUT: 'tree table Holiday cell January'",
+     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 50'",
+     "SPEECH OUTPUT: 'January check box not checked check box not checked check box not checked check box not checked check box not checked'",
+     "SPEECH OUTPUT: 'collapsed tree level 1'"]))
 
 ########################################################################
 # Expand the cell again.
@@ -231,9 +188,7 @@ sequence.append(utils.AssertPresentationAction(
     "New Year's Day cell",
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave TREE LEVEL 2'",
      "     VISIBLE:  'New Years Day <x> Alex <x> Havoc', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'New Years Day Alex check box checked  Havoc check box checked  Tim check box checked  Owen check box checked  Dave check box not checked '",
-     "SPEECH OUTPUT: 'tree level 2'"]))
+     "SPEECH OUTPUT: 'New Years Day Alex check box checked Havoc check box checked Tim check box checked Owen check box checked Dave check box not checked tree level 2'"]))
 
 ########################################################################
 # Arrow right to a column.
@@ -249,9 +204,7 @@ sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell",
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave'",
      "     VISIBLE:  '<x> Alex <x> Havoc <x> Tim <x> O', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Alex column header'",
-     "SPEECH OUTPUT: 'New Years Day Alex check box checked  Havoc check box checked  Tim check box checked  Owen check box checked  Dave check box not checked '"]))
+     "SPEECH OUTPUT: 'Alex column header check box checked'"]))
 
 #
 # [[[BUG?: Somewhere around here, the demo flakes out.]]]
@@ -267,12 +220,8 @@ sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
      "     VISIBLE:  '<x> Alex', cursor=1",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Alex'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'check box checked'",
-     "SPEECH OUTPUT: 'column 2 of 6'",
-     "SPEECH OUTPUT: 'row 2 of 53'"]))
+     "SPEECH OUTPUT: 'tree table Alex cell check box checked'",
+     "SPEECH OUTPUT: 'column 2 of 6 row 2 of 53'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -287,24 +236,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> Alex', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
      "     VISIBLE:  '<x> Alex', cursor=1",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Alex'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'check box checked'",
-     "SPEECH OUTPUT: 'column 2 of 6'",
-     "SPEECH OUTPUT: 'row 2 of 53'",
-     "SPEECH OUTPUT: 'tree table'",
-     "SPEECH OUTPUT: 'Alex'",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'check box checked'",
-     "SPEECH OUTPUT: 'column 2 of 6'",
-     "SPEECH OUTPUT: 'row 2 of 53'",
-     "SPEECH OUTPUT: 'New Years Day'",
-     "SPEECH OUTPUT: 'check box checked'",
-     "SPEECH OUTPUT: 'check box checked'",
-     "SPEECH OUTPUT: 'check box checked'",
-     "SPEECH OUTPUT: 'check box checked'",
-     "SPEECH OUTPUT: 'check box not checked'"]))
+     "SPEECH OUTPUT: 'tree table Alex cell check box checked'",
+     "SPEECH OUTPUT: 'column 2 of 6 row 2 of 53'",
+     "SPEECH OUTPUT: 'tree table Alex cell check box checked'",
+     "SPEECH OUTPUT: 'column 2 of 6 row 2 of 53'",
+     "SPEECH OUTPUT: 'New Years Day check box checked check box checked check box checked check box checked check box not checked'"]))
 
 ########################################################################
 # Change the state of the checkbox.

@@ -258,7 +258,6 @@ sequence.append(utils.AssertPresentationAction(
     "Alt+D to Description",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  \$l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Description: text '"]))
 
 ########################################################################
@@ -311,11 +310,8 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Here is the second line. \$l'",
      "     VISIBLE:  'Here is the second line. $l', cursor=25",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'Here is the second line.",
-     "'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'text Here is the second line.",
+     "'"]))
 
 ########################################################
 # Press Escape to dismiss the dialog.  Focus should return to the

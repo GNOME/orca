@@ -40,7 +40,6 @@ sequence.append(utils.AssertPresentationAction(
     "Open Alert Box", 
     ["BRAILLE LINE:  'Alert Box'",
      "     VISIBLE:  'Alert Box', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Alert Box12 is not between 1 and 10 '"]))
 
 ########################################################################
@@ -90,8 +89,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Guess a number between 1 and 10 ', cursor=0",
      "BRAILLE LINE:  'Guess a number between 1 and 10 12 $l'",
      "     VISIBLE:  'Guess a number between 1 and 10 ', cursor=0",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Guess a number between 1 and 10 text 12'"]))
+     "SPEECH OUTPUT: 'Guess a number between 1 and 10 text 12 selected'"]))
 
 ########################################################################
 # Close the demo

@@ -35,8 +35,7 @@ sequence.append(utils.AssertPresentationAction(
     "Left resize check box unchecked plus panel context",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel < > Resize CheckBox'",
      "     VISIBLE:  '< > Resize CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'Horizontal panel'",
-     "SPEECH OUTPUT: 'Resize check box not checked'"]))
+     "SPEECH OUTPUT: 'Horizontal panel Resize check box not checked'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -48,8 +47,7 @@ sequence.append(utils.AssertPresentationAction(
     "Left resize check box unchecked Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel < > Resize CheckBox'",
      "     VISIBLE:  '< > Resize CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'Resize check box not checked'",
-     "SPEECH OUTPUT: 'Alt r'"]))
+     "SPEECH OUTPUT: 'Resize check box not checked Alt r'"]))
 
 ########################################################################
 # Now, change its state.
@@ -77,8 +75,7 @@ sequence.append(utils.AssertPresentationAction(
     "Left resize check box checked Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel <x> Resize CheckBox'",
      "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'Resize check box checked'",
-     "SPEECH OUTPUT: 'Alt r'"]))
+     "SPEECH OUTPUT: 'Resize check box checked Alt r'"]))
 
 ########################################################################
 # Change the state back and move on to a few more check boxes.  The
@@ -104,7 +101,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right resize check box checked",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame Horizontal Panel <x> Resize CheckBox'",
      "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Resize check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -145,8 +141,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top resize check box checked plus panel context",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame Vertical Panel < > Resize CheckBox'",
      "     VISIBLE:  '< > Resize CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'Vertical panel'",
-     "SPEECH OUTPUT: 'Resize check box not checked'"]))
+     "SPEECH OUTPUT: 'Vertical panel Resize check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -181,7 +176,6 @@ sequence.append(utils.AssertPresentationAction(
     "Bottom resize check box checked",
     ["BRAILLE LINE:  'gtk-demo Application Panes Frame Vertical Panel <x> Resize CheckBox'",
      "     VISIBLE:  '<x> Resize CheckBox', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Resize check box checked'"]))
 
 sequence.append(utils.StartRecordingAction())

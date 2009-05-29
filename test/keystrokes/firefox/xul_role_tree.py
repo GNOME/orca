@@ -27,9 +27,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Bookmarks Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Bookmark This Page\(Control D\)'",
      "     VISIBLE:  'Bookmark This Page(Control D)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
 
 sequence.append(PauseAction(3000))
@@ -39,7 +37,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...'",
      "     VISIBLE:  'Organize Bookmarks...', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Organize Bookmarks…'"]))
 
 sequence.append(KeyComboAction("Return"))
@@ -55,7 +52,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - We are no longer speaking the Level",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'All Bookmarks expanded'"]))
 
 ########################################################################
@@ -67,9 +63,7 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Toolbar ListItem'",
      "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed'",
-     "SPEECH OUTPUT: 'tree level 2'"]))
+     "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -77,7 +71,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Menu collapsed'"]))
 
 ########################################################################
@@ -90,11 +83,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'item 2 of 3'",
-     "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Bookmarks Menu item 2 of 3 collapsed tree level 2'"]))
 
 ########################################################################
 # Press Right Arrow to expand this item.
@@ -117,11 +106,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'Bookmarks Menu'",
-     "SPEECH OUTPUT: 'item 2 of 3'",
-     "SPEECH OUTPUT: 'expanded'",
-     "SPEECH OUTPUT: 'tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Bookmarks Menu item 2 of 3 expanded tree level 2'"]))
 
 ########################################################################
 # Press Down Arrow to give focus to the next item, Recently Bookmarked.
@@ -132,9 +117,7 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem'",
      "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Recently Bookmarked'",
-     "SPEECH OUTPUT: 'tree level 3'"]))
+     "SPEECH OUTPUT: 'Recently Bookmarked tree level 3'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -146,10 +129,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem'",
      "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'Recently Bookmarked'",
-     "SPEECH OUTPUT: 'item 1 of 4'",
-     "SPEECH OUTPUT: 'tree level 3'"]))
+     "SPEECH OUTPUT: 'list item Recently Bookmarked item 1 of 4 tree level 3'"]))
 
 ########################################################################
 # Press Up Arrow to work back to the Bookmarks Toolbar list item.
@@ -160,9 +140,7 @@ sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
      "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Bookmarks Menu expanded'",
-     "SPEECH OUTPUT: 'tree level 2'"]))
+     "SPEECH OUTPUT: 'Bookmarks Menu expanded tree level 2'"]))
 
 ########################################################################
 # Press Left Arrow to collapse this item.
@@ -184,7 +162,6 @@ sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Toolbar ListItem'",
      "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -193,9 +170,7 @@ sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks ListItem'",
      "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'All Bookmarks expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'All Bookmarks expanded tree level 1'"]))
 
 ########################################################################
 # Press Tab to return to the tree table that had focus initially.
@@ -206,10 +181,7 @@ sequence.append(utils.AssertPresentationAction(
     "Tab back to tree table",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Name column header'",
-     "SPEECH OUTPUT: 'Bookmarks Toolbar  '",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'Name column header Bookmarks Toolbar blank blank not selected'"]))
 
 ########################################################################
 # Now that the Places Manager is back to its pre-explored state,

@@ -41,13 +41,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'TabList', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
-     "SPEECH OUTPUT: 'Printing'",
-     "SPEECH OUTPUT: 'tree level 1'",
+     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Printing tree level 1'",
      "SPEECH OUTPUT: 'Print Range Copies'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'General page'"]))
 
 ########################################################################
@@ -60,10 +56,7 @@ sequence.append(utils.AssertPresentationAction(
     "General page tab Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'General page'",
-     "SPEECH OUTPUT: 'item 1 of 2'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list General page item 1 of 2 '"]))
 
 ########################################################################
 # Arrow Right to the "Page Setup" tab.
@@ -75,7 +68,6 @@ sequence.append(utils.AssertPresentationAction(
     "Page Setup page tab",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Page Setup page'"]))
 
 ########################################################################
@@ -88,10 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     "Page Setup page tab Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list'",
-     "SPEECH OUTPUT: 'Page Setup page'",
-     "SPEECH OUTPUT: 'item 2 of 2'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'tab list Page Setup page item 2 of 2 '"]))
 
 ########################################################################
 # Close the demo

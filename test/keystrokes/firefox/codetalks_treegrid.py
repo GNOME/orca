@@ -34,10 +34,9 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Selectable Grid with Text with 9', cursor=1",
      "BRAILLE LINE:  '+A Question of Love'",
      "     VISIBLE:  '+A Question of Love', cursor=0",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Selectable Grid with Text with 9 Rows tree table'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Title +A Question of Love'"]))
+     "SPEECH OUTPUT: 'Title tree table'",
+     "SPEECH OUTPUT: '+A Question of Love'"]))
 
 ########################################################################
 # Down Arrow to the next two items.
@@ -48,7 +47,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Down Arrow", 
     ["BRAILLE LINE:  'Title + Piece of Peace Cell'",
      "     VISIBLE:  'Title + Piece of Peace Cell', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '+ Piece of Peace'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -57,7 +55,6 @@ sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow", 
     ["BRAILLE LINE:  'Title + International Law Cell'",
      "     VISIBLE:  'Title + International Law Cell', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '+ International Law'"]))
 
 ########################################################################
@@ -69,7 +66,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
     ["BRAILLE LINE:  'Title + Piece of Peace Cell'",
      "     VISIBLE:  'Title + Piece of Peace Cell', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '+ Piece of Peace'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -78,8 +74,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
     ["BRAILLE LINE:  '+A Question of Love'",
      "     VISIBLE:  '+A Question of Love', cursor=0",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Title +A Question of Love'"]))
+     "SPEECH OUTPUT: '+A Question of Love'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -91,8 +86,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  '+A Question of Love'",
      "     VISIBLE:  '+A Question of Love', cursor=0",
-     "SPEECH OUTPUT: 'Title +A Question of Love'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Title +A Question of Love '"]))
 
 ########################################################################
 # Space to expand the current item.
@@ -116,8 +110,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  '-A Question of Love'",
      "     VISIBLE:  '-A Question of Love', cursor=0",
-     "SPEECH OUTPUT: 'Title -A Question of Love'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Title -A Question of Love '"]))
 
 ########################################################################
 # Down Arrow to the child item.
@@ -128,7 +121,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow into child", 
     ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
      "     VISIBLE:  'ISBN 978-3-453-40540-0 Cell Auth', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '978-3-453-40540-0'"]))
 
 ########################################################################
@@ -140,7 +132,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Right Arrow in child", 
     ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
      "     VISIBLE:  'Author Nora Roberts Cell Price $', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Nora Roberts'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -149,7 +140,6 @@ sequence.append(utils.AssertPresentationAction(
     "2. Right Arrow in child", 
     ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
      "     VISIBLE:  'Price $ 9.99 Cell', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '$ 9.99'"]))
 
 ########################################################################
@@ -161,7 +151,6 @@ sequence.append(utils.AssertPresentationAction(
     "1. Left Arrow in child", 
     ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
      "     VISIBLE:  'Author Nora Roberts Cell Price $', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Nora Roberts'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -170,7 +159,6 @@ sequence.append(utils.AssertPresentationAction(
     "2. Left Arrow in child", 
     ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
      "     VISIBLE:  'ISBN 978-3-453-40540-0 Cell Auth', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '978-3-453-40540-0'"]))
 
 ########################################################################
@@ -182,8 +170,7 @@ sequence.append(utils.AssertPresentationAction(
     "Up Arrow back to parent", 
     ["BRAILLE LINE:  '-A Question of Love'",
      "     VISIBLE:  '-A Question of Love', cursor=0",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Title -A Question of Love'"]))
+     "SPEECH OUTPUT: '-A Question of Love'"]))
 
 ########################################################################
 # Close the demo

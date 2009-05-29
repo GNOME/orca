@@ -27,8 +27,8 @@ __license__   = "LGPL"
 
 import orca.default as default
 
-from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
+from speech_generator import SpeechGenerator
 
 ########################################################################
 #                                                                      #
@@ -46,10 +46,6 @@ class Script(default.Script):
         """
         default.Script.__init__(self, app)
 
-    # This method tries to detect and handle the following cases:
-    # 1) Toolbar: the last toggle button to show 'more options'
-    # 2) Main window: one of the four graphic toggle buttons.
-    #
     def getBrailleGenerator(self):
         return BrailleGenerator(self)
 

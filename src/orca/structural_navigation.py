@@ -1765,30 +1765,18 @@ class StructuralNavigation:
         """
 
         self._script.updateBraille(obj)
-        utterances = []
-        strings = self._script.speechGenerator.getSpeech(obj, False)
-        for string in strings:
-            voice = self._getVoice(obj, string)
-            speech.speak(string, voice)
 
-    def _getVoice(self, obj, string):
-        """Returns the voice to speak anything for the given obj.
-
-        Arguments:
-        - obj: the accessible object to be presented.
-        - string: the string to be spoken for obj.
-        """
-
+        # [[[TODO: WDW - move the voice selection to formatting.py
+        # at some point.]]]
+        #
         voices = self._script.voices
-
         if obj.getRole() == pyatspi.ROLE_LINK:
             voice = voices[settings.HYPERLINK_VOICE]
-        elif string and string.isupper() and string.strip().isalpha():
-            voice = voices[settings.UPPERCASE_VOICE]
         else:
-            voice = voices[settings.DEFAULT_VOICE]
+            voice = None
 
-        return voice
+        utterances = self._script.speechGenerator.getSpeech(obj)
+        speech.speak(utterances, voice)
 
     #########################################################################
     #                                                                       #

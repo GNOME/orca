@@ -60,7 +60,6 @@ sequence.append(utils.AssertPresentationAction(
     "Press button", 
     ["BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'close link'",
      "SPEECH OUTPUT: 'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. close '"]))
 

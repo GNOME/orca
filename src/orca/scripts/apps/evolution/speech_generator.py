@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,38 +22,28 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
 
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
-    """Overrides _getSpeechForTableCell so that, if this is an expanded 
+class SpeechGenerator(speech_generator.SpeechGenerator):
+    """Overrides _getSpeechForTableCell so that, if this is an expanded
        table cell,  we can strip off the "0 items".
     """
 
+    # pylint: disable-msg=W0142
+
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _getSpeechForTableCell(self, obj, already_focused):
-        """Get the speech utterances for a single table cell
-
-        Arguments:
-        - obj: the table
-        - already_focused: False if object just received focus
-
-        Returns a list of utterances to be spoken for the object.
-        """
-
-        utterances = speechgenerator.SpeechGenerator.\
-                      _getSpeechForTableCell(self, obj, already_focused)
-
+    def _getRealTableCell(self, obj, **args):
         # Check that we are in a table cell in the mail message header list.
-        # If we are and this table cell has an expanded state, and the first
-        # token of the last utterances is "0", then strip off that last 
-        # utterance ("0 items"). See bug #432308 for more details.
+        # If we are and this table cell has an expanded state, then
+        # dont speak the number of items.
+        # See bug #432308 for more details.
         #
         rolesList = [pyatspi.ROLE_TABLE_CELL, \
                      pyatspi.ROLE_TREE_TABLE, \
@@ -62,8 +52,10 @@ class SpeechGenerator(speechgenerator.SpeechGenerator):
             state = obj.getState()
             if state and state.contains(pyatspi.STATE_EXPANDABLE):
                 if state.contains(pyatspi.STATE_EXPANDED):
-                    tokens = utterances[-1].split()
-                    if tokens[0] == "0":
-                        utterances = utterances[0:-1]
-
-        return utterances
+                    oldRole = self._overrideRole(
+                        'ALTERNATIVE_REAL_ROLE_TABLE_CELL', args)
+                    result = self.getSpeech(obj, **args)
+                    self._restoreRole(oldRole, args)
+                    return result
+        return speech_generator.SpeechGenerator._getRealTableCell(
+            self, obj, **args)

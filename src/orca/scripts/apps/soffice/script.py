@@ -55,6 +55,7 @@ from orca.structural_navigation import StructuralNavigation
 
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
+from formatting import Formatting
 from where_am_i import WhereAmI
 import script_settings
 
@@ -185,14 +186,16 @@ class Script(default.Script):
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
-
         return BrailleGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
-
         return SpeechGenerator(self)
+
+    def getFormatting(self):
+        """Returns the formatting strings for this script."""
+        return Formatting(self)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types
@@ -206,7 +209,6 @@ class Script(default.Script):
     def getWhereAmI(self):
         """Returns the "where am I" class for this script.
         """
-
         return WhereAmI(self)
 
     def setupInputEventHandlers(self):
@@ -438,12 +440,13 @@ class Script(default.Script):
         isn't in a table.
         """
 
+        table = None
         obj = self.adjustForWriterTable(obj)
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL and obj.parent:
             try:
                 table = obj.parent.queryTable()
             except NotImplementedError:
-                table = None
+                pass
 
         return table
 
@@ -778,14 +781,17 @@ class Script(default.Script):
             return (cell != None)
 
         self.updateBraille(cell)
-        utterances = self.speechGenerator.getSpeech(cell, False)
+        utterances = self.speechGenerator.getSpeech(cell)
+        # [[[TODO: WDW - need to make sure assumption about utterances[0]
+        # is still correct with the new speech generator stuff.]]]
+        #
         if not len(utterances[0]) and self.speakBlankLine(newFocus):
             # Translators: "blank" is a short word to mean the
             # user has navigated to an empty line.
             #
             speech.speak(_("blank"), None, False)
         else:
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
 
         if not settings.readTableCellRow:
             self.speakCellName(cell.name)
@@ -1533,9 +1539,8 @@ class Script(default.Script):
         if self.isSpreadSheetCell(event.source, True):
             if newLocusOfFocus:
                 self.updateBraille(newLocusOfFocus)
-                utterances = self.speechGenerator.getSpeech(newLocusOfFocus,
-                                                            False)
-                speech.speakUtterances(utterances)
+                utterances = self.speechGenerator.getSpeech(newLocusOfFocus)
+                speech.speak(utterances)
 
                 # Save the current row and column information in the table
                 # cell's table, so that we can use it the next time.
@@ -1571,9 +1576,8 @@ class Script(default.Script):
                     for tab in child:
                         eventState = tab.getState()
                         if eventState.contains(pyatspi.STATE_SELECTED):
-                            utterances = self.speechGenerator.getSpeech(tab,
-                                                                        False)
-                            speech.speakUtterances(utterances)
+                            utterances = self.speechGenerator.getSpeech(tab)
+                            speech.speak(utterances)
             # Fall-thru to process the event with the default handler.
 
         # If we are focused on a place holder element in the slide
@@ -1871,8 +1875,7 @@ class Script(default.Script):
                 weToggledIt = wasCommand and keyString not in navKeys
 
             if weToggledIt:
-                speech.speakUtterances(self.speechGenerator.getSpeech( \
-                                       event.source, False))
+                speech.speak(self.speechGenerator.getSpeech(event.source))
 
         # When a new paragraph receives focus, we get a caret-moved event and
         # two focus events (the first being object:state-changed:focused).

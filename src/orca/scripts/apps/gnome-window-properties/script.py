@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2006-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,19 +22,18 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.default as default
 
-from speech_generator import SpeechGenerator
+from formatting import Formatting
 
 ########################################################################
 #                                                                      #
 # The gnome-window-properties script class.                            #
 #                                                                      #
 ########################################################################
-
 
 class Script(default.Script):
 
@@ -46,7 +45,6 @@ class Script(default.Script):
         """
         default.Script.__init__(self, app)
 
-    def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
-        return SpeechGenerator(self)
+    def getFormatting(self):
+        """Returns the formatting strings for this script."""
+        return Formatting(self)

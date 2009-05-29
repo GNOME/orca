@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2008 Sun Microsystems Inc.
+# Copyright 2004-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,27 +22,27 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.speechgenerator as speechgenerator
+import orca.speech_generator as speech_generator
 import pyatspi
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+class SpeechGenerator(speech_generator.SpeechGenerator):
     """Overrides _getSpeechForPushButton to handle 'unspeakable'
     button labels displayed on the screen.
     """
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _getSpeechForObjectName(self, obj):
+    def _getName(self, obj, **args):
         """Gives preference to the object name versus what is being
         displayed on the screen.  This helps accomodate the naming
         hints being given to us by gcalctool for it's mathematical
         operator buttons."""
 
         if obj.getRole() != pyatspi.ROLE_PUSH_BUTTON:
-            return speechgenerator.SpeechGenerator._getSpeechForObjectName(\
+            return speech_generator.SpeechGenerator._getName(\
                 self, obj)
 
         if obj.name:

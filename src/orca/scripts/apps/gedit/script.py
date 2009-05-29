@@ -427,7 +427,7 @@ class Script(default.Script):
             line.addRegion(braille.Region(" " + label1))
             line.addRegion(braille.Region(" " + label2))
 
-            speech.speakUtterances(utterances)
+            speech.speak(utterances)
             braille.refresh()
 
     # This method tries to detect and handle the following cases:
@@ -569,8 +569,9 @@ class Script(default.Script):
                 # finding something.
                 #
                 speech.speak(_("Phrase found."))
-                utterances = self.speechGenerator.getSpeech(event.source, True)
-                speech.speakUtterances(utterances)
+                utterances = self.speechGenerator.getSpeech(
+                    event.source, already_focused=True)
+                speech.speak(utterances)
 
         # If Ctrl+G was used to repeat a find command, speak the line that
         # the caret moved to.

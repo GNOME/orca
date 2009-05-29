@@ -42,8 +42,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - The spinbox is followed by some text - 'onChange:' followed by a grayed out entry containing the text 'not fired yet!'. Either the 'on change' text should be present or, in my opinion, this 'not fired yet!' removed. This is true for all assertions.",
      "BRAILLE LINE:  'Spinbox #1: 900 $l not fired yet! $l'",
      "     VISIBLE:  'Spinbox #1: 900 $l not fired yet', cursor=16",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Spinbox #1: 900 selected spin button'"]))
+     "SPEECH OUTPUT: 'Spinbox #1: 900 selected spin button required'"]))
 
 ########################################################################
 # Use down arrow to decrement spinner value.  
@@ -211,10 +210,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Spinbox #1: 902 $l not fired yet! $l'",
      "     VISIBLE:  'Spinbox #1: 902 $l not fired yet', cursor=16",
-     "SPEECH OUTPUT: 'Spinbox #1:'",
-     "SPEECH OUTPUT: 'spin button'",
-     "SPEECH OUTPUT: '902'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Spinbox #1: spin button 902 '"]))
 
 ########################################################################
 # Close the demo

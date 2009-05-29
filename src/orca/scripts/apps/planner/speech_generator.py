@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2006-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,56 +22,49 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.speechgenerator as speechgenerator
 import pyatspi
 
-from orca.orca_i18n import _ # for gettext support
+import orca.speech_generator as speech_generator
 
-class SpeechGenerator(speechgenerator.SpeechGenerator):
+from orca.orca_i18n import _         # for gettext support
+
+class SpeechGenerator(speech_generator.SpeechGenerator):
+
+    # pylint: disable-msg=W0142
 
     def __init__(self, script):
-        speechgenerator.SpeechGenerator.__init__(self, script)
+        speech_generator.SpeechGenerator.__init__(self, script)
 
-    # We make this to appropiately present ribbon's toggle button in a
-    # toolbar used to display in a menu those options that doesn fill
-    # in toolbar when the application is resized.
-    #
-    # Also for each one of the grphics buttons in the main window
-    #
-    def _getSpeechForToggleButton(self, obj, already_focused):
-        utterances = []
-        tmp = []
+    def _getLabelAndName(self, obj, **args):
+        """Gets the label and the name if the name is different from the label.
+        """
+        result = []
 
-        # Application should implement an accessible name in this
-        # component, but until this is made We speech/braille "display
-        # more options" when the focus is in one of these toggle
-        # buttons.
+        # This is the black triangle at the far right of the toolbar.
         #
+        handleRibbonButton = \
+            obj and not obj.name \
+            and obj.getRole() == pyatspi.ROLE_TOGGLE_BUTTON \
+            and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR
 
-        roleList = [pyatspi.ROLE_TOGGLE_BUTTON, \
-                    pyatspi.ROLE_TOOL_BAR]
+        # This is one of the Gantt, Tasks, Resources, etc., buttons on the
+        # left hand side of the main window.
+        #
+        handleTabButton = \
+            obj and not obj.name \
+            and obj.getRole() == pyatspi.ROLE_TOGGLE_BUTTON \
+            and obj.parent.getRole() == pyatspi.ROLE_FILLER \
+            and len(obj.parent) == 2
 
-        if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
-            if not already_focused:
-                tmp.append(_("Display more options"))
-                tmp.extend(self._getDefaultSpeech(obj, already_focused))
+        if handleRibbonButton:
+            result.append(_("Display more options"))
+        elif handleTabButton:
+            result.append(self._script.getDisplayedText(obj.parent[1]))
+        else:
+            result.append(speech_generator.SpeechGenerator._getLabelAndName(
+                self, obj, **args))
 
-                if obj.getState().contains(pyatspi.STATE_CHECKED):
-                    tmp.append(_("pressed"))
-                else:
-                    tmp.append(_("not pressed"))
-
-                utterances.extend(tmp)
-                utterances.extend(self._getSpeechForObjectAvailability(obj))
-            else:
-                if obj.getState().contains(pyatspi.STATE_CHECKED):
-                    utterances.append(_("pressed"))
-                else:
-                    utterances.append(_("not pressed"))
-
-            return utterances
-
-        return self._getSpeechForLabel(obj, already_focused)
+        return result

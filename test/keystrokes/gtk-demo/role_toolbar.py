@@ -40,11 +40,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Application Window Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) column header'",
-     "SPEECH OUTPUT: 'Application main window'",
-     "SPEECH OUTPUT: 'tree level 1'",
+     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Application main window tree level 1'",
      "SPEECH OUTPUT: 'Application Window frame'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Open button'"]))
 
 ########################################################################
@@ -58,9 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Open'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Open button '"]))
 
 ########################################################################
 # Arrow Right to the triangular button next to the "Open" button.
@@ -72,7 +67,6 @@ sequence.append(utils.AssertPresentationAction(
     "Open triangle toggle button",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar & y ToggleButton'",
      "     VISIBLE:  '& y ToggleButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'toggle button not pressed'"]))
 
 ########################################################################
@@ -86,9 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar & y ToggleButton'",
      "     VISIBLE:  '& y ToggleButton', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'toggle button'",
-     "SPEECH OUTPUT: 'not pressed'"]))
+     "SPEECH OUTPUT: 'toggle button not pressed'"]))
 
 ########################################################################
 # Arrow Right to the the "Quit" button.
@@ -100,7 +92,6 @@ sequence.append(utils.AssertPresentationAction(
     "Quit button",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Quit Button'",
      "     VISIBLE:  'Quit Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Quit button'"]))
 
 ########################################################################
@@ -114,9 +105,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Quit Button'",
      "     VISIBLE:  'Quit Button', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Quit'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Quit button '"]))
 
 ########################################################################
 # Close the Application Window demo window

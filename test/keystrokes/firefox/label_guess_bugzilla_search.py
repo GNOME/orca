@@ -57,7 +57,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",
      "     VISIBLE:  'contains all of the words/string', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -90,7 +89,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Admin List'",
      "     VISIBLE:  'Admin List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Classification: Admin multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -101,7 +99,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'accerciser List'",
      "     VISIBLE:  'accerciser List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Product: accerciser multi-select List with 379 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -112,7 +109,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'abiscan List'",
      "     VISIBLE:  'abiscan List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Component: abiscan multi-select List with 1248 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -123,7 +119,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  '0.0.1 List'",
      "     VISIBLE:  '0.0.1 List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Version: 0.0.1 multi-select List with 857 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -134,7 +129,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  '--- List'",
      "     VISIBLE:  '--- List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Target Milestone: --- multi-select List with 555 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -145,7 +139,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'A Comment: contains the string Combo $l'",
      "     VISIBLE:  'contains the string Combo $l', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'A Comment: contains the string combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -166,7 +159,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo $l'",
      "     VISIBLE:  'contains all of the words/string', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Whiteboard: contains all of the words/strings combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -187,7 +179,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Keywords: contains all of the keywords Combo $l'",
      "     VISIBLE:  'contains all of the keywords Com', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Keywords contains all of the keywords combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -209,7 +200,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'UNCONFIRMED List'",
      "     VISIBLE:  'UNCONFIRMED List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Status: UNCONFIRMED multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -220,7 +210,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'FIXED List'",
      "     VISIBLE:  'FIXED List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Resolution: FIXED multi-select List with 12 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -231,7 +220,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'blocker List'",
      "     VISIBLE:  'blocker List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Severity: blocker multi-select List with 7 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -242,7 +230,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Immediate List'",
      "     VISIBLE:  'Immediate List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Priority: Immediate multi-select List with 5 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -253,7 +240,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'All List'",
      "     VISIBLE:  'All List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'OS: All multi-select List with 21 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -314,7 +300,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'contains Combo'",
      "     VISIBLE:  'contains Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'contains combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -385,7 +370,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'contains Combo'",
      "     VISIBLE:  'contains Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'contains combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -407,7 +391,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Only include Combo bugs numbered:  $l'",
      "     VISIBLE:  'Only include Combo bugs numbered', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Only include combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -451,7 +434,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  '[Bug creation] List'",
      "     VISIBLE:  '[Bug creation] List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'where one or more of the following changed: [Bug creation] multi-select List with 26 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -473,7 +455,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Unspecified List'",
      "     VISIBLE:  'Unspecified List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'GNOME version: Unspecified multi-select List with 14 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -484,7 +465,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Unspecified List'",
      "     VISIBLE:  'Unspecified List', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'GNOME target: Unspecified multi-select List with 12 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -496,7 +476,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Sort results by: Reuse same sort as last time Combo'",
      "     VISIBLE:  'Reuse same sort as last time Com', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Sort results by: Reuse same sort as last time combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -537,7 +516,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  '--- Combo --- Combo  $l Or Button'",
      "     VISIBLE:  '--- Combo --- Combo  $l Or Butto', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '--- combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -548,7 +526,6 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  '--- Combo --- Combo  $l Or Button'",
      "     VISIBLE:  '--- Combo  $l Or Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '--- combo box'"]))
 
 ########################################################################

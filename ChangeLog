@@ -1,3 +1,176 @@
+2009-05-29  Willie Walker <william.walker> and
+	    Mesar Hameed <mesar.hameed@gmail.com>
+
+        * po/POTFILES.in:
+          src/orca/Makefile.am:
+          src/orca/bookmarks.py:
+          src/orca/default.py:
+          src/orca/espeechfactory.py:
+          src/orca/formatting.py:
+          src/orca/liveregions.py:
+          src/orca/mouse_review.py:
+          src/orca/orca-setup.glade:
+          src/orca/script.py:
+          src/orca/scripts/apps/Thunderbird/script.py:
+          src/orca/scripts/apps/Thunderbird/speech_generator.py:
+          src/orca/scripts/apps/acroread.py:
+          src/orca/scripts/apps/evolution/Makefile.am:
+          src/orca/scripts/apps/evolution/formatting.py:
+          src/orca/scripts/apps/evolution/script.py:
+          src/orca/scripts/apps/evolution/speech_generator.py:
+          src/orca/scripts/apps/gcalctool/speech_generator.py:
+          src/orca/scripts/apps/gcalctool/where_am_i.py:
+          src/orca/scripts/apps/gedit/script.py:
+          src/orca/scripts/apps/gnome-system-monitor.py:
+          src/orca/scripts/apps/gnome-terminal.py:
+          src/orca/scripts/apps/gnome-window-properties/Makefile.am:
+          src/orca/scripts/apps/gnome-window-properties/formatting.py:
+          src/orca/scripts/apps/gnome-window-properties/script.py:
+          src/orca/scripts/apps/gnome-window-properties/speech_generator.py:
+          src/orca/scripts/apps/liferea.py:
+          src/orca/scripts/apps/pidgin/speech_generator.py:
+          src/orca/scripts/apps/pidgin/where_am_i.py:
+          src/orca/scripts/apps/planner/Makefile.am:
+          src/orca/scripts/apps/planner/script.py:
+          src/orca/scripts/apps/planner/speech_generator.py:
+          src/orca/scripts/apps/rhythmbox/Makefile.am:
+          src/orca/scripts/apps/rhythmbox/formatting.py:
+          src/orca/scripts/apps/rhythmbox/script.py:
+          src/orca/scripts/apps/rhythmbox/speech_generator.py:
+          src/orca/scripts/apps/soffice/Makefile.am:
+          src/orca/scripts/apps/soffice/formatting.py:
+          src/orca/scripts/apps/soffice/script.py:
+          src/orca/scripts/apps/soffice/speech_generator.py:
+          src/orca/scripts/apps/soffice/where_am_i.py:
+          src/orca/scripts/apps/yelp.py:
+          src/orca/scripts/toolkits/Gecko/Makefile.am:
+          src/orca/scripts/toolkits/Gecko/bookmarks.py:
+          src/orca/scripts/toolkits/Gecko/formatting.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/scripts/toolkits/Gecko/speech_generator.py:
+          src/orca/scripts/toolkits/Gecko/where_am_i.py:
+          src/orca/scripts/toolkits/J2SE-access-bridge/Makefile.am:
+          src/orca/scripts/toolkits/J2SE-access-bridge/__init__.py:
+          src/orca/scripts/toolkits/J2SE-access-bridge/formatting.py:
+          src/orca/scripts/toolkits/J2SE-access-bridge/script.py:
+          src/orca/scripts/toolkits/J2SE-access-bridge/speech_generator.py:
+          src/orca/scripts/toolkits/J2SE-access-bridge/speechgenerator.py:
+          src/orca/speech.py:
+          src/orca/speech_generator.py:
+          src/orca/speechgenerator.py:
+          src/orca/structural_navigation.py:
+          src/orca/where_am_I.py:
+          test/harness/.gitignore:
+          test/harness/runone.sh:
+          test/keystrokes/firefox/bug_511389.py:
+          test/keystrokes/firefox/bug_544771.py:
+          test/keystrokes/firefox/bug_552887a.py:
+          test/keystrokes/firefox/bug_568631.py:
+          test/keystrokes/firefox/codetalks_alert.py:
+          test/keystrokes/firefox/codetalks_button.py:
+          test/keystrokes/firefox/codetalks_tree.py:
+          test/keystrokes/firefox/codetalks_treegrid.py:
+          test/keystrokes/firefox/dojo_button.py:
+          test/keystrokes/firefox/dojo_checkbox.py:
+          test/keystrokes/firefox/dojo_combo_box.py:
+          test/keystrokes/firefox/dojo_dialog.py:
+          test/keystrokes/firefox/dojo_panel_text.py:
+          test/keystrokes/firefox/dojo_slider.py:
+          test/keystrokes/firefox/dojo_spinner.py:
+          test/keystrokes/firefox/dojo_tabcontainer.py:
+          test/keystrokes/firefox/dojo_tree.py:
+          test/keystrokes/firefox/find_wiki.py:
+          test/keystrokes/firefox/flat_review_combo_box.py:
+          test/keystrokes/firefox/html_role_combo_box.py:
+          test/keystrokes/firefox/html_role_links.py:
+          test/keystrokes/firefox/html_role_lists.py:
+          test/keystrokes/firefox/html_struct_nav_blockquote.py:
+          test/keystrokes/firefox/imagemap.py:
+          test/keystrokes/firefox/label_guess_bug_546815.py:
+          test/keystrokes/firefox/label_guess_bugzilla_search.py:
+          test/keystrokes/firefox/line_nav_bugzilla_search.py:
+          test/keystrokes/firefox/line_nav_slash_test.py:
+          test/keystrokes/firefox/line_nav_wiki.py:
+          test/keystrokes/firefox/link_where_am_i.py:
+          test/keystrokes/firefox/moz_checkbox.py:
+          test/keystrokes/firefox/moz_menu.py:
+          test/keystrokes/firefox/moz_progressbar.py:
+          test/keystrokes/firefox/moz_slider.py:
+          test/keystrokes/firefox/moz_tabpanel.py:
+          test/keystrokes/firefox/ms_tree_bug_570571.py:
+          test/keystrokes/firefox/page_summary.py:
+          test/keystrokes/firefox/sayAll_bugzilla_search.py:
+          test/keystrokes/firefox/sayAll_role_combo_box.py:
+          test/keystrokes/firefox/sayAll_wiki.py:
+          test/keystrokes/firefox/tpg_aria_slider.py:
+          test/keystrokes/firefox/uiuc_alert.py:
+          test/keystrokes/firefox/uiuc_button.py:
+          test/keystrokes/firefox/uiuc_grid.py:
+          test/keystrokes/firefox/uiuc_radiobutton.py:
+          test/keystrokes/firefox/uiuc_slider.py:
+          test/keystrokes/firefox/uiuc_tabpanel.py:
+          test/keystrokes/firefox/uiuc_tree.py:
+          test/keystrokes/firefox/xul_role_accel_label.py:
+          test/keystrokes/firefox/xul_role_alert.py:
+          test/keystrokes/firefox/xul_role_check_box.py:
+          test/keystrokes/firefox/xul_role_check_menu_item.py:
+          test/keystrokes/firefox/xul_role_combo_box.py:
+          test/keystrokes/firefox/xul_role_entry.py:
+          test/keystrokes/firefox/xul_role_list_item.py:
+          test/keystrokes/firefox/xul_role_menu_bar.py:
+          test/keystrokes/firefox/xul_role_page_tab.py:
+          test/keystrokes/firefox/xul_role_push_button.py:
+          test/keystrokes/firefox/xul_role_radio_button.py:
+          test/keystrokes/firefox/xul_role_radio_menu_item.py:
+          test/keystrokes/firefox/xul_role_tree.py:
+          test/keystrokes/firefox/xul_role_tree_table.py:
+          test/keystrokes/firefox/xul_where_am_i_status_bar.py:
+          test/keystrokes/firefox/yahoo_tab_view.py:
+          test/keystrokes/gtk-demo/role_accel_label.py:
+          test/keystrokes/gtk-demo/role_alert.py:
+          test/keystrokes/gtk-demo/role_check_box.py:
+          test/keystrokes/gtk-demo/role_check_menu_item.py:
+          test/keystrokes/gtk-demo/role_column_header.py:
+          test/keystrokes/gtk-demo/role_combo_box.py:
+          test/keystrokes/gtk-demo/role_combo_box2.py:
+          test/keystrokes/gtk-demo/role_dialog.py:
+          test/keystrokes/gtk-demo/role_icon.py:
+          test/keystrokes/gtk-demo/role_label.py:
+          test/keystrokes/gtk-demo/role_menu.py:
+          test/keystrokes/gtk-demo/role_page_tab.py:
+          test/keystrokes/gtk-demo/role_push_button.py:
+          test/keystrokes/gtk-demo/role_radio_button.py:
+          test/keystrokes/gtk-demo/role_radio_menu_item.py:
+          test/keystrokes/gtk-demo/role_spin_button.py:
+          test/keystrokes/gtk-demo/role_split_pane.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          test/keystrokes/gtk-demo/role_tear_off_menu_item.py:
+          test/keystrokes/gtk-demo/role_text_multiline.py:
+          test/keystrokes/gtk-demo/role_toggle_button.py:
+          test/keystrokes/gtk-demo/role_toolbar.py:
+          test/keystrokes/gtk-demo/role_tree_table.py:
+          test/keystrokes/oowriter/bug_350219.py:
+          test/keystrokes/oowriter/bug_361747.py:
+          test/keystrokes/oowriter/bug_364765.py:
+          test/keystrokes/oowriter/bug_382408.py:
+          test/keystrokes/oowriter/bug_384893.py:
+          test/keystrokes/oowriter/bug_385828.py:
+          test/keystrokes/oowriter/bug_413909.py:
+          test/keystrokes/oowriter/bug_435201.py:
+          test/keystrokes/oowriter/bug_435226.py:
+          test/keystrokes/oowriter/bug_450210.py:
+          test/keystrokes/oowriter/bug_469367.py:
+          test/keystrokes/oowriter/table-sample.odt:	
+	  First phase of working on bug #Bug 570658 – Refactor the speech
+	  and braille generators.  This phase touches the speech
+	  generators and makes things very much table driven (see the
+	  formatting.py modules).  Aside from touching many modules, the
+	  impact on the user should *hopefully* be unnoticeable.  That is,
+	  the new tables are set up to provide the same speech output we
+	  were getting before the refactor.  The next phases will be
+	  migrating where am I support to the speech generator and then
+	  working on braille.
+	
 2009-05-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/ekiga.py:

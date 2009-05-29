@@ -38,7 +38,6 @@ sequence.append(utils.AssertPresentationAction(
     "Red button",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem(Control r)'",
      "     VISIBLE:  '<x> Red CheckItem(Control r)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Red check item checked Control r'"]))
 
 ########################################################################
@@ -51,13 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "Red button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem(Control r)'",
      "     VISIBLE:  '<x> Red CheckItem(Control r)', cursor=1",
-     "SPEECH OUTPUT: 'Color menu'",
-     "SPEECH OUTPUT: 'Red'",
-     "SPEECH OUTPUT: 'check item'",
-     "SPEECH OUTPUT: 'checked'",
-     "SPEECH OUTPUT: 'Control r'",
-     "SPEECH OUTPUT: 'item 1 of 3'",
-     "SPEECH OUTPUT: 'r'"]))
+     "SPEECH OUTPUT: 'Color menu Red check item checked Control r item 1 of 3 r'"]))
 
 ########################################################################
 # Down arrow to the "Green" menu item.
@@ -70,7 +63,6 @@ sequence.append(utils.AssertPresentationAction(
     "Green button",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem(Control g)'",
      "     VISIBLE:  '< > Green CheckItem(Control g)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Green check item not checked Control g'"]))
 
 ########################################################################
@@ -83,13 +75,7 @@ sequence.append(utils.AssertPresentationAction(
     "Green button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem(Control g)'",
      "     VISIBLE:  '< > Green CheckItem(Control g)', cursor=1",
-     "SPEECH OUTPUT: 'Color menu'",
-     "SPEECH OUTPUT: 'Green'",
-     "SPEECH OUTPUT: 'check item'",
-     "SPEECH OUTPUT: 'not checked'",
-     "SPEECH OUTPUT: 'Control g'",
-     "SPEECH OUTPUT: 'item 2 of 3'",
-     "SPEECH OUTPUT: 'g'"]))
+     "SPEECH OUTPUT: 'Color menu Green check item not checked Control g item 2 of 3 g'"]))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window

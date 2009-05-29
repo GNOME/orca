@@ -36,7 +36,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the <button> button", 
     ["BRAILLE LINE:  '<button> <input type='button'> Button       Create   Edit!   Color   Save     '",
      "     VISIBLE:  '<button> <input type='button'> B', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '<button> button'"]))
 
 ########################################################################
@@ -49,9 +48,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on <button>", 
     ["BRAILLE LINE:  '<button> <input type='button'> Button       Create   Edit!   Color   Save     '",
      "     VISIBLE:  '<button> <input type='button'> B', cursor=1",
-     "SPEECH OUTPUT: '<button>'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: '<button> button '"]))
 
 ########################################################################
 # Tab to <input type='button'>  
@@ -63,7 +60,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to <input type='button'>",
     ["BRAILLE LINE:  '<button> <input type='button'> Button       Create   Edit!   Color   Save     '",
      "     VISIBLE:  '<input type='button'> Button    ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '<input type='button'> button'"]))
 
 ########################################################################
@@ -76,9 +72,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on <input type='button'>", 
     ["BRAILLE LINE:  '<button> <input type='button'> Button       Create   Edit!   Color   Save     '",
      "     VISIBLE:  '<input type='button'> Button    ', cursor=1",
-     "SPEECH OUTPUT: '<input type='button'>'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: '<input type='button'> button '"]))
 
 ########################################################################
 # Tab to "Create"  
@@ -91,7 +85,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Create",
     ["BRAILLE LINE:  'Create Button'",
      "     VISIBLE:  'Create Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Create button'",
      "SPEECH OUTPUT: 'tooltip on button'"]))
 
@@ -105,9 +98,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create", 
     ["BRAILLE LINE:  'Create Button'",
      "     VISIBLE:  'Create Button', cursor=1",
-     "SPEECH OUTPUT: 'Create'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Create button '"]))
 
 # WDW - Tabbing to the Create button pops up a tooltip.  Should we present
 # it automatically?
@@ -128,7 +119,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - Missing space between Button and Create, also Menu and Save",
      "BRAILLE LINE:  '<button> Button <input type='button'> ButtonCreate Button   MenuSave Button   Menu'",
      "     VISIBLE:  '  MenuSave Button   Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '  menu'"]))
 
 ########################################################################
@@ -141,9 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on drop down menu on Create", 
     ["BRAILLE LINE:  '<button> Button <input type='button'> ButtonCreate Button   MenuSave Button   Menu'",
      "     VISIBLE:  '  MenuSave Button   Menu', cursor=1",
-     "SPEECH OUTPUT: ' '",
-     "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: '  menu '"]))
 
 ########################################################################
 # Open the drop down menu.
@@ -158,9 +146,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Create blank', cursor=1",
      "BRAILLE LINE:  'Menu'",
      "     VISIBLE:  'Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Create blank'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'"]))
 
 ########################################################################
@@ -173,7 +159,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down to Create from template", 
     ["BRAILLE LINE:  'Create from template'",
      "     VISIBLE:  'Create from template', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Create from template'"]))
 
 ########################################################################
@@ -186,10 +171,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create from template", 
     ["BRAILLE LINE:  'Create from template'",
      "     VISIBLE:  'Create from template', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Create from template'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Create from template '"]))
 
 ########################################################################
 # Close the menu and go to the Edit! button
@@ -204,7 +186,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - Why does it say Edit! twice?",
      "BRAILLE LINE:  'Edit! Edit! Menu'",
      "     VISIBLE:  'Edit! Edit! Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit! menu'"]))
 
 ########################################################################
@@ -220,9 +201,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Cut', cursor=1",
      "BRAILLE LINE:  'Menu'",
      "     VISIBLE:  'Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Cut'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -232,7 +211,6 @@ sequence.append(utils.AssertPresentationAction(
     "Go to Copy", 
     ["BRAILLE LINE:  'Copy'",
      "     VISIBLE:  'Copy', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Copy'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -242,7 +220,6 @@ sequence.append(utils.AssertPresentationAction(
     "Go to Paste", 
     ["BRAILLE LINE:  'Paste'",
      "     VISIBLE:  'Paste', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Paste'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -252,7 +229,6 @@ sequence.append(utils.AssertPresentationAction(
     "Goto Submenu", 
     ["BRAILLE LINE:  'Submenu'",
      "     VISIBLE:  'Submenu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Submenu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -265,9 +241,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'Submenu Item One'",
      "     VISIBLE:  'Submenu Item One', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Submenu Item One'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -277,7 +251,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down to Submenu Item Two", 
     ["BRAILLE LINE:  'Submenu Item Two'",
      "     VISIBLE:  'Submenu Item Two', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Submenu Item Two'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -287,7 +260,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down to Deeper Submenu", 
     ["BRAILLE LINE:  'Deeper Submenu'",
      "     VISIBLE:  'Deeper Submenu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Deeper Submenu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -300,9 +272,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'Sub-sub-menu Item One'",
      "     VISIBLE:  'Sub-sub-menu Item One', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Sub-sub-menu Item One'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -312,7 +282,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down to Sub-sub-menu Item Two", 
     ["BRAILLE LINE:  'Sub-sub-menu Item Two'",
      "     VISIBLE:  'Sub-sub-menu Item Two', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Sub-sub-menu Item Two'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -324,9 +293,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'Deeper Submenu'",
      "     VISIBLE:  'Deeper Submenu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Deeper Submenu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -338,9 +305,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Menu Menu', cursor=6",
      "BRAILLE LINE:  'Submenu'",
      "     VISIBLE:  'Submenu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Submenu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -353,9 +318,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'Edit! Edit! Menu'",
      "     VISIBLE:  'Edit! Edit! Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit! menu'"]))
 
 ########################################################################
@@ -369,7 +332,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - Why does it say Color twice?",
      "BRAILLE LINE:  'Color Color Menu'",
      "     VISIBLE:  'Color Color Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Color menu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -380,9 +342,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - speaks 'not selected' apparently due to Down into a table cell",
      "BRAILLE LINE:  'white Image lime Image green Image blue Image'",
      "     VISIBLE:  'white Image lime Image green Ima', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'white'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'white not selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -391,7 +351,6 @@ sequence.append(utils.AssertPresentationAction(
     "Go to lime", 
     ["BRAILLE LINE:  'white Image lime Image green Image blue Image'",
      "     VISIBLE:  'lime Image green Image blue Imag', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'lime'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -401,7 +360,6 @@ sequence.append(utils.AssertPresentationAction(
     "Go to green", 
     ["BRAILLE LINE:  'white Image lime Image green Image blue Image'",
      "     VISIBLE:  'green Image blue Image', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'green'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -411,7 +369,6 @@ sequence.append(utils.AssertPresentationAction(
     "Go to blue", 
     ["BRAILLE LINE:  'white Image lime Image green Image blue Image'",
      "     VISIBLE:  'blue Image', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'blue'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -422,9 +379,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - speaks 'not selected' apparently due to Down into a table cell",
      "BRAILLE LINE:  'silver Image yellow Image fuchsia Image navy Image'",
      "     VISIBLE:  'navy Image', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'navy'",
-     "SPEECH OUTPUT: ' not selected'"]))
+     "SPEECH OUTPUT: 'navy not selected'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -433,7 +388,6 @@ sequence.append(utils.AssertPresentationAction(
     "Goto fuchsia", 
     ["BRAILLE LINE:  'silver Image yellow Image fuchsia Image navy Image'",
      "     VISIBLE:  'fuchsia Image navy Image', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'fuchsia'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -443,7 +397,6 @@ sequence.append(utils.AssertPresentationAction(
     "Goto yellow", 
     ["BRAILLE LINE:  'silver Image yellow Image fuchsia Image navy Image'",
      "     VISIBLE:  'yellow Image fuchsia Image navy ', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'yellow'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -454,7 +407,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - Why does it say Color twice?",
      "BRAILLE LINE:  'Color Color Menu'",
      "     VISIBLE:  'Color Color Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Color menu'"]))
 
 ########################################################################
@@ -472,7 +424,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the first unlabelled button ('+')", 
     ["BRAILLE LINE:  'Rich Text Test! Button'",
      "     VISIBLE:  'Rich Text Test! Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Rich Text Test! button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -482,7 +433,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the second unlabelled button ('Color')", 
     ["BRAILLE LINE:  'Color Menu'",
      "     VISIBLE:  'Color Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Color menu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -492,7 +442,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the third unlabelled button ('Save')", 
     ["BRAILLE LINE:  'Save Button   Menu'",
      "     VISIBLE:  'Save Button   Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Save button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -502,7 +451,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the down arrow button", 
     ["BRAILLE LINE:  'Save Button   Menu'",
      "     VISIBLE:  'Save Button   Menu', cursor=13",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '  menu'"]))
 
 ########################################################################
@@ -515,7 +463,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the 'Toggle me' toggle button", 
     ["BRAILLE LINE:  '&=y Toggle me ToggleButton'",
      "     VISIBLE:  '&=y Toggle me ToggleButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Toggle me toggle button pressed'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -545,7 +492,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the big button", 
     ["BRAILLE LINE:  'big Button'",
      "     VISIBLE:  'big Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'big button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -555,7 +501,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the small button", 
     ["BRAILLE LINE:  'small Button'",
      "     VISIBLE:  'small Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'small button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -565,7 +510,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the long button", 
     ["BRAILLE LINE:  'long Button'",
      "     VISIBLE:  'long Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'long button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -575,7 +519,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the tall button", 
     ["BRAILLE LINE:  'tall Button'",
      "     VISIBLE:  'tall Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'tall button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -585,7 +528,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the short button", 
     ["BRAILLE LINE:  'short Button'",
      "     VISIBLE:  'short Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'short button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -595,7 +537,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the bit longer button", 
     ["BRAILLE LINE:  'bit longer Button'",
      "     VISIBLE:  'bit longer Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'bit longer button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -605,7 +546,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to the ridiculously long button", 
     ["BRAILLE LINE:  'ridiculously long Button'",
      "     VISIBLE:  'ridiculously long Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'ridiculously long button'"]))
 
 ########################################################################

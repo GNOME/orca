@@ -46,7 +46,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to button", 
     ["BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Who expects the Spanish Inquisition? button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -71,8 +70,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Who expects the Spanish Inquisition? Button'",
      "     VISIBLE:  'Who expects the Spanish Inquisit', cursor=1",
      "SPEECH OUTPUT: 'Status Bar Regression Test - " + utils.firefoxFrameNames + "'",
-     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition!'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! '"]))
 
 ########################################################################
 # Press Tab to the second push button and press it with space bar.  
@@ -83,7 +81,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to button", 
     ["BRAILLE LINE:  'Our chief weapon is... Button'",
      "     VISIBLE:  'Our chief weapon is... Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Our chief weapon is... button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -108,8 +105,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Our chief weapon is... Button'",
      "     VISIBLE:  'Our chief weapon is... Button', cursor=1",
      "SPEECH OUTPUT: 'Status Bar Regression Test - " + utils.firefoxFrameNames + "'",
-     "SPEECH OUTPUT: 'Surprise. Surprise and fear. Fear and surprise... And ruthless efficiency... And an almost fanatical devotion to the Pope... And nice red uniforms.'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Surprise. Surprise and fear. Fear and surprise... And ruthless efficiency... And an almost fanatical devotion to the Pope... And nice red uniforms. '"]))
 
 ########################################################################
 # Press Tab to the third push button and press it with space bar.  
@@ -120,7 +116,6 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to button", 
     ["BRAILLE LINE:  'Fetch the COMFY CHAIR (AKA clear out the status bar) Button'",
      "     VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Fetch the COMFY CHAIR (AKA clear out the status bar) button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -145,8 +140,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Fetch the COMFY CHAIR (AKA clear out the status bar) Button'",
      "     VISIBLE:  'Fetch the COMFY CHAIR (AKA clear', cursor=1",
      "SPEECH OUTPUT: 'Status Bar Regression Test - " + utils.firefoxFrameNames + "'",
-     "SPEECH OUTPUT: 'Done'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Done '"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

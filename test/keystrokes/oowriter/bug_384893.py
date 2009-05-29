@@ -62,7 +62,8 @@ sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information on the underlined word",
     ["SPEECH OUTPUT: 'size 12'",
      "SPEECH OUTPUT: 'family name FreeSerif'",
-     "SPEECH OUTPUT: 'underline single'"]))
+     "SPEECH OUTPUT: 'underline single'",
+     "SPEECH OUTPUT: 'paragraph style Default'"]))
 
 ######################################################################
 # 6. Type Control right arrow three times to position the cursor at
@@ -83,7 +84,8 @@ sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information on the bold word",
     ["SPEECH OUTPUT: 'size 12'",
      "SPEECH OUTPUT: 'family name FreeSerif'",
-     "SPEECH OUTPUT: 'bold'"]))
+     "SPEECH OUTPUT: 'bold'",
+     "SPEECH OUTPUT: 'paragraph style Default'"]))
 
 ######################################################################
 # 8. Enter Alt-f, Alt-c to close the Writer application.

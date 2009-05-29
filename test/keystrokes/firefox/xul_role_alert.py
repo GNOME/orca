@@ -36,12 +36,10 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '[JavaScript Application] Dialog', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application \[JavaScript Application\] Dialog OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'about:blank html content'",
      "SPEECH OUTPUT: 'about:blank page'",
      "SPEECH OUTPUT: 'about:blank html content'",
      "SPEECH OUTPUT: '[JavaScript Application] I am an alert'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
@@ -56,7 +54,6 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'about:blank HtmlPane'",
      "     VISIBLE:  'about:blank HtmlPane', cursor=1",
      "SPEECH OUTPUT: '" + utils.firefoxFrameNames + " frame'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'about:blank html content'"]))
 
 ########################################################################

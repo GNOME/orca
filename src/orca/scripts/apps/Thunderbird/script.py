@@ -23,7 +23,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gtk
@@ -549,7 +549,7 @@ class Script(Gecko.Script):
                 #
                 text = _("%s panel") % parent.name
                 utterances.append(text)
-                speech.speakUtterances(utterances)
+                speech.speak(utterances)
         else:
             grandparent = parent.parent
             if grandparent \
@@ -566,7 +566,7 @@ class Script(Gecko.Script):
                     #
                     text = _("%s panel") % grandparent.name
                     utterances.append(text)
-                    speech.speakUtterances(utterances)
+                    speech.speak(utterances)
 
     def _presentMessage(self, documentFrame):
         """Presents the first line of the message, or the entire message,

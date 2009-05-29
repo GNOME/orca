@@ -57,7 +57,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Enter Insert-f to get text information",
     ["SPEECH OUTPUT: 'size 12'",
-     "SPEECH OUTPUT: 'family name FreeSerif'"]))
+     "SPEECH OUTPUT: 'family name FreeSerif'",
+     "SPEECH OUTPUT: 'paragraph style Default'"]))
 
 ######################################################################
 # 6. Enter Alt-f, Alt-c to close the Writer application.

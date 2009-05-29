@@ -25,6 +25,7 @@ orca_python_PYTHON = \
 	find.py \
 	flat_review.py \
 	focus_tracking_presenter.py \
+	formatting.py \
 	gnomespeechfactory.py \
 	httpserver.py \
 	input_event.py \
@@ -55,7 +56,7 @@ orca_python_PYTHON = \
 	settings.py \
 	speech.py \
 	speechdispatcherfactory.py \
-	speechgenerator.py \
+	speech_generator.py \
 	speechserver.py \
 	structural_navigation.py \
 	text_attribute_names.py \

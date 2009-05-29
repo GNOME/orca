@@ -29,9 +29,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'File Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar New Window\(Control N\)'",
      "     VISIBLE:  'New Window(Control N)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'New Window Control N'"]))
 
 ########################################################################
@@ -45,9 +43,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Edit Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Undo( grayed|)\(Control Z\)'",
      "     VISIBLE:  'Undo( grayed|)\(Control Z\)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Undo( grayed|) Control Z'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -58,9 +54,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'View Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'View menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Toolbars menu'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -69,7 +63,6 @@ sequence.append(utils.AssertPresentationAction(
     "Right Arrow on menu bar",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar View Menu <x> Navigation Toolbar CheckItem'",
      "     VISIBLE:  '<x> Navigation Toolbar CheckItem', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Navigation Toolbar check item checked'"]))
 
 ########################################################################
@@ -91,10 +84,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '" + utils.firefoxLocationBarNames + "  \$l', cursor=%s" % cursorPosition,
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
      "     VISIBLE:  'Toolbars Menu', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '" + utils.firefoxLocationBarNames + " text '",
-     "SPEECH OUTPUT: 'View menu'",
-     "SPEECH OUTPUT: 'Toolbars menu'",]))
+     "SPEECH OUTPUT: 'View menu Toolbars menu'",]))
 
 # This seems to vary depending on whether or not something is in the
 # clipboard. Therefore, we'll check for either.
@@ -110,9 +101,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Edit Menu', cursor=1",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar " + menuItem + "\(Control " + itemShortcut + "\)'",
      "     VISIBLE:  '" + menuItem + "\(Control " + itemShortcut + "\)', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Edit menu'",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: '" + menuItem + " Control " + itemShortcut + "'"]))
 
 ########################################################################

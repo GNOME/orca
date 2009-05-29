@@ -43,8 +43,7 @@ sequence.append(utils.AssertPresentationAction(
     "tab to first slider", 
     ["BRAILLE LINE:  'Horizontal Slider Example 10 Slider'",
      "     VISIBLE:  'Horizontal Slider Example 10 Sli', cursor=1",
-     "SPEECH OUTPUT: 'Horizontal Slider Example table'",
-     "SPEECH OUTPUT: 'Horizontal Slider Example slider 10'"]))
+     "SPEECH OUTPUT: 'Horizontal Slider Example table Horizontal Slider Example slider 10'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
@@ -204,8 +203,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '10.0% $l rdonly', cursor=0",
      "BRAILLE LINE:  '10.0% $l rdonly'",
      "     VISIBLE:  '10.0% $l rdonly', cursor=0",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Slider1 Value: read only text 10.0%'"]))
+     "SPEECH OUTPUT: 'Slider1 Value: read only text 10.0% selected'"]))
 
 ########################################################################
 # Tab to the button between the sliders.  
@@ -216,7 +214,6 @@ sequence.append(utils.AssertPresentationAction(
     "move to button", 
     ["BRAILLE LINE:  'Disable previous slider Button Enable previous slider Button'",
      "     VISIBLE:  'Disable previous slider Button E', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Disable previous slider button'"]))
      
 ########################################################################
@@ -228,8 +225,7 @@ sequence.append(utils.AssertPresentationAction(
     "tab to second slider", 
     ["BRAILLE LINE:  'Vertical Slider Example 10 Slider'",
      "     VISIBLE:  'Vertical Slider Example 10 Slide', cursor=1",
-     "SPEECH OUTPUT: 'Vertical Slider Example table'",
-     "SPEECH OUTPUT: 'Vertical Slider Example slider 10'"]))
+     "SPEECH OUTPUT: 'Vertical Slider Example table Vertical Slider Example slider 10'"]))
 
 ########################################################################
 # Move the slider several times

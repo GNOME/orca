@@ -31,8 +31,7 @@ sequence.append(utils.AssertPresentationAction(
     "Alt a to radio button group",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range'",
-     "SPEECH OUTPUT: 'All Pages selected radio button'"]))
+     "SPEECH OUTPUT: 'Range All Pages selected radio button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -44,11 +43,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range'",
-     "SPEECH OUTPUT: 'All Pages radio button'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'item 1 of 3'",
-     "SPEECH OUTPUT: 'Alt a'"]))
+     "SPEECH OUTPUT: 'Range All Pages radio button selected item 1 of 3 Alt a'"]))
 
 ########################################################################
 # Down Arrow to the next radio button.
@@ -59,7 +54,6 @@ sequence.append(utils.AssertPresentationAction(
     "Down Arrow to next radio button",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler & y Pages: RadioButton'",
      "     VISIBLE:  '& y Pages: RadioButton', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Pages: not selected radio button'"]))
 
 ########################################################################
@@ -72,11 +66,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler &=y Pages: RadioButton'",
      "     VISIBLE:  '&=y Pages: RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range'",
-     "SPEECH OUTPUT: 'Pages: radio button'",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'item 3 of 3'",
-     "SPEECH OUTPUT: 'Alt e'"]))
+     "SPEECH OUTPUT: 'Range Pages: radio button selected item 3 of 3 Alt e'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

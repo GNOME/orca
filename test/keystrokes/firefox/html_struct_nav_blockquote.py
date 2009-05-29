@@ -126,10 +126,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I",
     ["BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'paragraph'",
-     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall '",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall '"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

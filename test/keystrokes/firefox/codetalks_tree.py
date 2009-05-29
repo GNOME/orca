@@ -39,11 +39,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' Fruits', cursor=1",
      "BRAILLE LINE:  ' Fruits'",
      "     VISIBLE:  ' Fruits', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Foods tree'",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Fruits expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'Fruits expanded tree level 1'"]))
 
 ########################################################################
 # Left Arrow to collapse fruits.
@@ -68,12 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  ' Fruits'",
      "     VISIBLE:  ' Fruits', cursor=1",
-     "SPEECH OUTPUT: 'Fruits'",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'Fruits'",
-     "SPEECH OUTPUT: 'item 1 of 2'",
-     "SPEECH OUTPUT: 'collapsed'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'Fruits list item Fruits item 1 of 2 collapsed tree level 1'"]))
 
 ########################################################################
 # Right Arrow to expand fruits.
@@ -98,12 +90,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  ' Fruits'",
      "     VISIBLE:  ' Fruits', cursor=1",
-     "SPEECH OUTPUT: 'Fruits'",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: 'Fruits'",
-     "SPEECH OUTPUT: 'item 1 of 2'",
-     "SPEECH OUTPUT: 'expanded'",
-     "SPEECH OUTPUT: 'tree level 1'"]))
+     "SPEECH OUTPUT: 'Fruits list item Fruits item 1 of 2 expanded tree level 1'"]))
 
 ########################################################################
 # Close the demo
