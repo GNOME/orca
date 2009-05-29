@@ -14,6 +14,7 @@ orca_pathdir=$(pyexecdir)
 orca_python_PYTHON = \
 	__init__.py \
 	acroread.py \
+	ekiga.py \
 	gdmlogin.py \
 	gnome-keyring-ask.py \
 	gnome-mud.py \
@@ -23,6 +24,7 @@ orca_python_PYTHON = \
 	gnome_segv2.py \
 	gnome-system-monitor.py \
 	gnome-terminal.py \
+	gtk-window-decorator.py \
 	liferea.py \
 	metacity.py \
 	Mozilla.py \

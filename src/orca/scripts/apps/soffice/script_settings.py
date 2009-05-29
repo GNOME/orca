@@ -26,3 +26,9 @@ __license__   = "LGPL"
 # Whether we speak spread sheet cell coordinates as the user moves around.
 #
 speakCellCoordinates = True
+
+# Whether or not to use the structrual navigation commands (e.g. H
+# for heading, T for table, and so on). At the moment, only table
+# navigation commands will be enabled.
+#
+structuralNavigationEnabled = True

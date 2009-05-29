@@ -512,10 +512,11 @@ class WhereAmI:
         Gaim, gedit, OpenOffice Writer and Terminal
         """
 
-        cell = self._script.getAncestor(obj,
-                                        [pyatspi.ROLE_TABLE_CELL],
-                                        [pyatspi.ROLE_FRAME])
-        if cell and not self._script.isLayoutOnly(cell.parent):
+        ancestor = self._script.getAncestor(obj,
+                                            [pyatspi.ROLE_TABLE_CELL,
+                                             pyatspi.ROLE_LIST_ITEM],
+                                            [pyatspi.ROLE_FRAME])
+        if ancestor and not self._script.isLayoutOnly(ancestor.parent):
             # [[[TODO: WDW - we handle ROLE_ENTRY specially here because
             # there is a bug in getRealActiveDescendant: it doesn't dive
             # deep enough into the hierarchy (see comment #12 of bug
@@ -523,8 +524,11 @@ class WhereAmI:
             # more comfortable with mucking around with
             # getRealActiveDescendant.]]]
             #
-            if obj.getRole() != pyatspi.ROLE_ENTRY:
-                return self._speakTableCell(cell, basicOnly)
+            if ancestor.getRole() == pyatspi.ROLE_TABLE_CELL:
+                if obj.getRole() != pyatspi.ROLE_ENTRY:
+                    return self._speakTableCell(ancestor, basicOnly)
+            else:
+                return self._speakListItem(ancestor, basicOnly)
 
         utterances = []
         text = self._getObjLabel(obj)
@@ -747,6 +751,19 @@ class WhereAmI:
             # view (i.e., how many ancestors a node has).
             #
             utterances.append(_("tree level %d") % (level + 1))
+        else:
+            nestingLevel = 0
+            parent = obj.parent
+            while parent.parent.getRole() == pyatspi.ROLE_LIST:
+                nestingLevel += 1
+                parent = parent.parent
+            if nestingLevel:
+                # Translators: this represents a list item in a document.
+                # The nesting level is how 'deep' the item is (e.g., a
+                # level of 2 represents a list item inside a list that's
+                # inside another list).
+                #
+                utterances.append(_("Nesting level %d") % nestingLevel)
 
         getTutorial = self._script.tutorialGenerator.getTutorial
         utterances.extend(getTutorial(obj, False, forceMessage=True))

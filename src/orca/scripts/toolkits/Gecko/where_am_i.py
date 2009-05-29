@@ -106,6 +106,23 @@ class GeckoWhereAmI(where_am_I.WhereAmI):
             args['role'] = role
         return where_am_I.WhereAmI._getSpeechForRoleName(self, obj, **args)
 
+    def _getObjName(self, obj):
+        """Returns the name to speak for an object.
+        """
+
+        text = ""
+        name = self._script.getDisplayedText(obj)
+        if not name:
+            name = obj.description
+            if not name and obj.getRole() == pyatspi.ROLE_LIST_ITEM:
+                name = self._script.expandEOCs(obj)
+
+        if name and name != "None":
+            text = name.strip()
+        debug.println(self._debugLevel, "%s name=<%s>" % (obj.getRole(), text))
+
+        return text
+
     def _speakObjDescription(self, obj):
         """Speaks the object's description if it is not the same as the
         object's name or label. Overridden here because Gecko tacks on
