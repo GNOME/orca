@@ -177,7 +177,10 @@ class SpeechGenerator:
         role name will be returned as an array of strings (and
         possibly voice and audio specifications).  Note that a 'role'
         attribute in args will override the accessible role of the
-        obj. [[[WDW - I wonder if this should be moved to _getRoleName.]]]
+        obj. [[[WDW - I wonder if this should be moved to
+        _getRoleName.  Or, maybe make a 'do not speak roles' attribute
+        of a speech generator that we can update and the user can
+        override.]]]
         """
         result = []
         role = args.get('role', obj.getRole())
@@ -930,8 +933,8 @@ class SpeechGenerator:
     def _getTerminal(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) used especially for handling terminal objects.
-        This either is the name of the frame the terminal is in or the 
-        displayed label of the terminal.  [[[WDW - it might be nice 
+        This either is the name of the frame the terminal is in or the
+        displayed label of the terminal.  [[[WDW - it might be nice
         to return an empty array if this is not a terminal.]]]
         """
         result = []
@@ -1048,7 +1051,7 @@ class SpeechGenerator:
         specifications) that represents the value of the object.  This
         is typically the numerical value, but may also be the text
         of the 'value' attribute if it exists on the object.  [[[WDW -
-        we should consider returning an empty array if there is no 
+        we should consider returning an empty array if there is no
         value.
         """
         return [self._script.getTextForValue(obj)]
@@ -1240,7 +1243,7 @@ class SpeechGenerator:
         ancestry between the 'priorObj' and the current obj will be
         computed.  The 'priorObj' is typically set by Orca to be the
         previous object with focus.
-        """        
+        """
         result = []
         priorObj = args.get('priorObj', None)
         requireText = args.get('requireText', True)
@@ -1284,7 +1287,7 @@ class SpeechGenerator:
         computed.  Otherwise, no ancestry will be computed.  The
         'priorObj' is typically set by Orca to be the previous object
         with focus.
-        """        
+        """
         result = []
         if args.get('priorObj', None):
             result = self._getAncestors(obj, **args)
@@ -1360,7 +1363,7 @@ class SpeechGenerator:
 
     def voice(self, key=None):
         """Returns an array containing a voice.  The key is a value
-        to be used to look up the voice in the settings.py:voices 
+        to be used to look up the voice in the settings.py:voices
         dictionary.
         """
         try:
