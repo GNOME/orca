@@ -50,6 +50,11 @@ def _formatExceptionInfo(maxTBlevel=5):
     excTb = traceback.format_tb(trbk, maxTBlevel)
     return (excName, excArgs, excTb)
 
+# [[[WDW - general note -- for all the _get* methods, it would be great if
+# we could return an empty array if we can determine the method does not
+# apply to the object.  This would allow us to reduce the number of strings
+# needed in formatting.py.]]]
+
 class SpeechGenerator:
     """Takes accessible objects and produces a string to speak for
     those objects.  See the getSpeech method, which is the primary
@@ -59,11 +64,20 @@ class SpeechGenerator:
     # pylint: disable-msg=W0142
 
     def _overrideRole(self, newRole, args):
+        """Convenience method to allow you to temporarily override the role in
+        the args dictionary.  This changes the role in args ags
+        returns the old role so you can pass it back to _restoreRole.
+        """
         oldRole = args.get('role', None)
         args['role'] = newRole
         return oldRole
 
     def _restoreRole(self, oldRole, args):
+        """Convenience method to restore the old role back in the args
+        dictionary.  The oldRole should have been obtained from
+        _overrideRole.  If oldRole is None, then the 'role' key/value
+        pair will be deleted from args.
+        """
         if oldRole:
             args['role'] = oldRole
         else:
@@ -83,7 +97,7 @@ class SpeechGenerator:
         # Verify the formatting strings are OK.  This is only
         # for verification and does not effect the function of
         # Orca at all.
-        #
+
         # Populate the entire globals with empty arrays
         # for the results of all the legal method names.
         #
@@ -136,6 +150,18 @@ class SpeechGenerator:
     #####################################################################
 
     def _getName(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the name of the object.  If the
+        object is directly displaying any text, that text will be
+        treated as the name.  Otherwise, the accessible name of the
+        object will be used.  If there is no accessible name, then the
+        description of the object will be used.  This method will
+        return an empty array if nothing can be found.  [[[WDW - I
+        wonder if we should just have _getName, _getDescription,
+        _getDisplayedText, etc., that don't do any fallback.  Then, we
+        can allow the formatting to do the fallback (e.g.,
+        'displayedText or name or description')
+        """
         result = []
         name = self._script.getDisplayedText(obj)
         if name:
@@ -145,6 +171,14 @@ class SpeechGenerator:
         return result
 
     def _getTextRole(self, obj, **args):
+        """A convenience method to prevent the pyatspi.ROLE_PARAGRAPH role
+        from being spoken. In the case of a pyatspi.ROLE_PARAGRAPH
+        role, an empty array will be returned. In all other cases, the
+        role name will be returned as an array of strings (and
+        possibly voice and audio specifications).  Note that a 'role'
+        attribute in args will override the accessible role of the
+        obj. [[[WDW - I wonder if this should be moved to _getRoleName.]]]
+        """
         result = []
         role = args.get('role', obj.getRole())
         if role != pyatspi.ROLE_PARAGRAPH:
@@ -152,6 +186,12 @@ class SpeechGenerator:
         return result
 
     def _getRoleName(self, obj, **args):
+        """Returns the role name for the object in an array of strings (and
+        possibly voice and audio specifications), with the exception
+        that the pyatspi.ROLE_UNKNOWN role will yield an empty array.
+        Note that a 'role' attribute in args will override the
+        accessible role of the obj.
+        """
         result = []
         role = args.get('role', obj.getRole())
         if (role != pyatspi.ROLE_UNKNOWN):
@@ -159,9 +199,21 @@ class SpeechGenerator:
         return result
 
     def getRoleName(self, obj, **args):
+        """Returns the role name for the object in an array of strings (and
+        possibly voice and audio specifications), with the exception
+        that the pyatspi.ROLE_UNKNOWN role will yield an empty array.
+        Note that a 'role' attribute in args will override the
+        accessible role of the obj.  This is provided mostly as a
+        method for scripts to call.
+        """
         return self._getRoleName(obj, **args)
 
     def _getLabel(self, obj, **args):
+        """Returns the label for an object as an array of strings (and
+        possibly voice and audio specifications).  The label is
+        determined by the getDisplayedLabel of the script, and an
+        empty array will be returned if no label can be found.
+        """
         result = []
         label = self._script.getDisplayedLabel(obj)
         if label:
@@ -169,7 +221,9 @@ class SpeechGenerator:
         return result
 
     def _getLabelAndName(self, obj, **args):
-        """Gets the label and the name if the name is different from the label.
+        """Returns the label and the name as an array of strings (and possibly
+        voice and audio specifications).  The name will only be
+        present if the name is different from the label.
         """
         result = []
         label = self._getLabel(obj, **args)
@@ -182,7 +236,11 @@ class SpeechGenerator:
         return result
 
     def _getLabelOrName(self, obj, **args):
-        """Gets the label or the name if the label is not preset."""
+        """Returns the label as an array of strings (and possibly voice
+        specifications).  If the label cannot be found, the name will
+        be used instead.  If the name cannot be found, an empty array
+        will be returned.
+        """
         result = []
         result.extend(self._getLabel(obj, **args))
         if not result:
@@ -191,7 +249,11 @@ class SpeechGenerator:
         return result
 
     def _getUnrelatedLabels(self, obj, **args):
-        """Finds all labels not in a label for or labelled by relation."""
+        """Returns, as an array of strings (and possibly voice
+        specifications), all the labels which are underneath the obj's
+        hierarchy and which are not in a label for or labelled by
+        relation.
+        """
         labels = self._script.findUnrelatedLabels(obj)
         result = []
         for label in labels:
@@ -200,6 +262,11 @@ class SpeechGenerator:
         return result
 
     def _getEmbedded(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) used especially for handling embedded objects.
+        This either is the label or name of the object or the name of
+        the application for the object.
+        """
         result = self._getLabelOrName(obj, **args)
         if not result:
             try:
@@ -215,6 +282,13 @@ class SpeechGenerator:
     #####################################################################
 
     def _getCheckedState(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the checked state of the
+        object.  This is typically for check boxes. [[[WDW - should we
+        return an empty array if we can guarantee we know this thing
+        is not checkable?]]]  [[[WDW - I wonder if we should put these
+        strings in settings.py.]]]
+        """
         result = []
         state = obj.getState()
         if state.contains(pyatspi.STATE_INDETERMINATE):
@@ -232,6 +306,13 @@ class SpeechGenerator:
         return result
 
     def _getCellCheckedState(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the checked state of the
+        object.  This is typically for check boxes that are in a
+        table. An empty array will be returned if this is not a
+        checkable cell.  [[[WDW - I wonder if we can roll this into
+        _getCheckedState somehow.]]]
+        """
         result = []
         try:
             action = obj.queryAction()
@@ -251,6 +332,15 @@ class SpeechGenerator:
         return result
 
     def _getRadioState(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the checked state of the
+        object.  This is typically for check boxes. [[[WDW - should we
+        return an empty array if we can guarantee we know this thing
+        is not checkable?]]] [[[WDW - I wonder if we can roll this
+        into _getCheckedState somehow and provide some sort of
+        settings.py string to let you specify the wording to be used
+        for different roles.]]]
+        """
         result = []
         state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED):
@@ -266,6 +356,15 @@ class SpeechGenerator:
         return result
 
     def _getToggleState(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the checked state of the
+        object.  This is typically for check boxes. [[[WDW - should we
+        return an empty array if we can guarantee we know this thing
+        is not checkable?]]] [[[WDW - I wonder if we can roll this
+        into _getCheckedState somehow and provide some sort of
+        settings.py string to let you specify the wording to be used
+        for different roles.]]]
+        """
         result = []
         state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED) \
@@ -280,6 +379,12 @@ class SpeechGenerator:
         return result
 
     def _getExpandableState(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the expanded/collapsed state of
+        an object, such as a tree node. If the object is not
+        expandable, an empty array will be returned.  [[[WDW - I
+        wonder if these strings should be placed in settings.py.]]]
+        """
         result = []
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
@@ -298,6 +403,13 @@ class SpeechGenerator:
         return result
 
     def _getMultiselectableState(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the multiselectable state of
+        the object.  This is typically for check boxes. If the object
+        is not multiselectable, an empty array will be returned.
+        [[[WDW - I wonder if this string should be placed in
+        settings.py.]]]
+        """
         result = []
         if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE):
             # Translators: "multi-select" refers to a web form list
@@ -307,6 +419,12 @@ class SpeechGenerator:
         return result
 
     def _getMenuItemCheckedState(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the checked state of the menu
+        item, only if it is checked. Otherwise, and empty array will
+        be returned.  [[[WDW - I wonder if we can roll this into
+        _getCheckedState somehow.]]]
+        """
         result = []
         if obj.getState().contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checked menu item.
@@ -315,6 +433,13 @@ class SpeechGenerator:
         return result
 
     def _getAvailability(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the
+        grayed/sensitivity/availability state of the object, but only
+        if it is insensitive (i.e., grayed out and inactive).
+        Otherwise, and empty array will be returned.  [[[WDW - I
+        wonder if we should put this string into settings.py.]]]
+        """
         result = []
         if not obj.getState().contains(pyatspi.STATE_SENSITIVE):
             # Translators: this represents an item on the screen that has
@@ -324,12 +449,23 @@ class SpeechGenerator:
         return result
 
     def _getRequired(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the required state of the
+        object, but only if it is required (i.e., it is in a dialog
+        requesting input and the user must give it a value).
+        Otherwise, and empty array will be returned.
+        """
         result = []
         if obj.getState().contains(pyatspi.STATE_REQUIRED):
             result = [settings.speechRequiredStateString]
         return result
 
     def _getReadOnly(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the read only state of this
+        object, but only if it is read only (i.e., it is a text area
+        that cannot be edited).
+        """
         result = []
         if settings.presentReadOnlyText \
            and self._script.isReadOnlyTextArea(obj):
@@ -343,6 +479,11 @@ class SpeechGenerator:
     #####################################################################
 
     def _getImageDescription(self, obj, **args ):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the description of the image on
+        the object, if it exists.  Otherwise, an empty array is
+        returned.
+        """
         result = []
         try:
             image = obj.queryImage()
@@ -355,6 +496,10 @@ class SpeechGenerator:
         return result
 
     def _getImage(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the image on the the object, if
+        it exists.  Otherwise, an empty array is returned.
+        """
         result = []
         try:
             image = obj.queryImage()
@@ -372,6 +517,11 @@ class SpeechGenerator:
     #####################################################################
 
     def _getRowHeader(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the row header for an object
+        that is in a table, if it exists.  Otherwise, an empty array
+        is returned.
+        """
         result = []
         try:
             table = obj.parent.queryTable()
@@ -408,8 +558,15 @@ class SpeechGenerator:
         return result
 
     def _getNewRowHeader(self, obj, **args):
-        """Returns the row header for the object only if the
-        row header changed from the prior object."""
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the row header for an object
+        that is in a table, if it exists and if it is different from
+        the previous row header.  Otherwise, an empty array is
+        returned.  The previous row header is determined by looking at
+        the row header for the 'priorObj' attribute of the args
+        dictionary.  The 'priorObj' is typically set by Orca to be the
+        previous object with focus.
+        """
         result = []
         if obj:
             priorObj = args.get('priorObj', None)
@@ -447,6 +604,11 @@ class SpeechGenerator:
         return result
 
     def _getColumnHeader(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the column header for an object
+        that is in a table, if it exists.  Otherwise, an empty array
+        is returned.
+        """
         result = []
         try:
             table = obj.parent.queryTable()
@@ -488,8 +650,15 @@ class SpeechGenerator:
         return result
 
     def _getNewColumnHeader(self, obj, **args):
-        """Returns the column header for the object only if the
-        column header changed from the prior object."""
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the column header for an object
+        that is in a table, if it exists and if it is different from
+        the previous column header.  Otherwise, an empty array is
+        returned.  The previous column header is determined by looking
+        at the column header for the 'priorObj' attribute of the args
+        dictionary.  The 'priorObj' is typically set by Orca to be the
+        previous object with focus.
+        """
         result = []
         if obj:
             priorObj = args.get('priorObj', None)
@@ -527,8 +696,11 @@ class SpeechGenerator:
         return result
 
     def _getTableCell2ChildLabel(self, obj, **args):
-        """Get the speech utterances for the label of a toggle in a table cell
-        that has a special 2 child pattern that we run into."""
+        """Returns an array of strings (and possibly voice and audio
+        specifications) for the label of a toggle in a table cell that
+        has a special 2 child pattern that we run into.  Otherwise, an
+        empty array is returned.
+        """
         result = []
 
         # If this table cell has 2 children and one of them has a
@@ -566,8 +738,11 @@ class SpeechGenerator:
         return result
 
     def _getTableCell2ChildToggle(self, obj, **args):
-        """Get the speech utterances for the toggle value in a table cell that
-        has a special 2 child pattern that we run into."""
+        """Returns an array of strings (and possinly voice and audio
+        specifications) for the toggle value of a toggle in a table
+        cell that has a special 2 child pattern that we run into.
+        Otherwise, an empty array is returned.
+        """
         result = []
 
         # If this table cell has 2 children and one of them has a
@@ -606,6 +781,14 @@ class SpeechGenerator:
         return result
 
     def _getRealTableCell(self, obj, **args):
+        """Orca has a feature to automatically read an entire row of a table
+        as the user arrows up/down the roles.  This leads to complexity in
+        the code.  This method is used to return an array of strings
+        (and possibly voice and audio specifications) for a single table
+        cell itself.  The string, 'blank', is added for empty cells.
+        [[[WDW - I wonder if this string and whether it is used or not
+        should be put in settings.py.]]]
+        """
         result = []
         oldRole = self._overrideRole('REAL_ROLE_TABLE_CELL', args)
         result.extend(self.getSpeech(obj, **args))
@@ -618,8 +801,14 @@ class SpeechGenerator:
         return result
 
     def _getTableCellRow(self, obj, **args):
-        """Get the speech for a table cell row or a single table cell
-        if settings.readTableCellRow is False."""
+        """Orca has a feature to automatically read an entire row of a table
+        as the user arrows up/down the roles.  This leads to complexity in
+        the code.  This method is used to return an array of strings
+        (and possibly voice and audio specifications) for an entire row
+        in a table if that's what the user has requested and if the row
+        has changed.  Otherwise, it will return an array for just the
+        current cell.
+        """
         result = []
 
         try:
@@ -684,6 +873,13 @@ class SpeechGenerator:
         return result
 
     def _getUnselectedCell(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) if this is an icon within an layered pane or a
+        table cell within a table or a tree table and the item is
+        focused but not selected.  Otherwise, an empty array is
+        returned.  [[[WDW - I wonder if this string should be moved to
+        settings.py.]]]
+        """
         result = []
 
         # If this is an icon within an layered pane or a table cell
@@ -732,6 +928,12 @@ class SpeechGenerator:
     #####################################################################
 
     def _getTerminal(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) used especially for handling terminal objects.
+        This either is the name of the frame the terminal is in or the 
+        displayed label of the terminal.  [[[WDW - it might be nice 
+        to return an empty array if this is not a terminal.]]]
+        """
         result = []
         title = None
         frame = self._script.getFrame(obj)
@@ -749,17 +951,28 @@ class SpeechGenerator:
     #####################################################################
 
     def _getCurrentLineText(self, obj, **args ):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the current line of text, if
+        this is a text object.  [[[WDW - consider returning an empty
+        array if this is not a text object.]]]
+        """
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         return [text]
 
     def _getDisplayedText(self, obj, **args ):
-        """Returns the text being displayed for an object or the object's
-        name if no text is being displayed."""
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents all the text being displayed
+        by the object. [[[WDW - consider returning an empty array if
+        this is not a text object.]]]
+        """
         return [self._script.getDisplayedText(obj)]
 
     def _getAllTextSelection(self, obj, **args):
-        """Check if this object has text associated with it and it's
-        completely selected."""
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that says if all the text for the entire
+        object is selected. [[[WDW - I wonder if this string should be
+        moved to settings.py.]]]
+        """
         result = []
         try:
             textObj = obj.queryText()
@@ -784,6 +997,12 @@ class SpeechGenerator:
     #####################################################################
 
     def _getNodeLevel(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the tree node level of the
+        object, or an empty array if the object is not a tree
+        node. [[[WDW - I wonder if this string should be moved to
+        settings.py.]]]
+        """
         result = []
         level = self._script.getNodeLevel(obj)
         if level >= 0:
@@ -794,6 +1013,16 @@ class SpeechGenerator:
         return result
 
     def _getNewNodeLevel(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the tree node level of the
+        object, or an empty array if the object is not a tree node or
+        if the node level is not different from the 'priorObj'
+        'priorObj' attribute of the args dictionary.  The 'priorObj'
+        is typically set by Orca to be the previous object with
+        focus.  [[[WDW - I wonder if this string should be moved to
+        settings.py.]]]
+        """
+
         # [[[TODO: WDW - hate duplicating code from _getNodeLevel,
         # but don't want to call it because it will make the same
         # self._script.getNodeLevel call again.]]]
@@ -815,9 +1044,21 @@ class SpeechGenerator:
     #####################################################################
 
     def _getValue(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the value of the object.  This
+        is typically the numerical value, but may also be the text
+        of the 'value' attribute if it exists on the object.  [[[WDW -
+        we should consider returning an empty array if there is no 
+        value.
+        """
         return [self._script.getTextForValue(obj)]
 
     def _getPercentage(self, obj, **args ):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the percentage value of the
+        object.  This is typically for progress bars. [[[WDW - we
+        should consider returning an empty array if there is no value.
+        """
         result = []
         try:
             value = obj.queryValue()
@@ -841,6 +1082,11 @@ class SpeechGenerator:
     #####################################################################
 
     def _getRadioButtonGroup(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the radio button group label
+        for the object, or an empty array if the object has no such
+        label.
+        """
         result = []
         if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
             radioGroupLabel = None
@@ -856,6 +1102,14 @@ class SpeechGenerator:
         return result
 
     def _getNewRadioButtonGroup(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the radio button group label
+        of the object, or an empty array if the object has no such
+        label or if the radio button group is not different from the
+        'priorObj' 'priorObj' attribute of the args dictionary.  The
+        'priorObj' is typically set by Orca to be the previous object
+        with focus.
+        """
         # [[[TODO: WDW - hate duplicating code from _getRadioButtonGroup
         # but don't want to call it because it will make the same
         # AT-SPI method calls.]]]
@@ -884,6 +1138,12 @@ class SpeechGenerator:
         return result
 
     def _getRealActiveDescendantDisplayedText(self, obj, **args ):
+        """Objects, such as tables and trees, can represent individual cells
+        via a complicated nested hierarchy.  This method returns an
+        array of strings (and possibly voice and audio specifications)
+        that represents the text actually being painted in the cell,
+        if it can be found.  Otherwise, an empty array is returned.
+        """
         result = []
         text = self._script.getDisplayedText(
           self._script.getRealActiveDescendant(obj))
@@ -892,6 +1152,12 @@ class SpeechGenerator:
         return result
 
     def _getNumberOfChildren(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the number of children the
+        object has.  [[[WDW - can we always return an empty array if
+        this doesn't apply?]]] [[[WDW - I wonder if this string should
+        be moved to settings.py.]]]
+        """
         result = []
         childNodes = self._script.getChildNodes(obj)
         children = len(childNodes)
@@ -904,6 +1170,13 @@ class SpeechGenerator:
         return result
 
     def _getNoShowingChildren(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that says if this object has no showing
+        children (e.g., it's an empty table or list).  object has.
+        [[[WDW - can we always return an empty array if this doesn't
+        apply?]]] [[[WDW - I wonder if this string should be moved to
+        settings.py.]]]
+        """
         result = []
         hasItems = False
         for child in obj:
@@ -919,6 +1192,13 @@ class SpeechGenerator:
         return result
 
     def _getNoChildren(self, obj, **args ):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that says if this object has no children at
+        all (e.g., it's an empty table or list).  object has.  [[[WDW
+        - can we always return an empty array if this doesn't
+        apply?]]] [[[WDW - I wonder if this string should be moved to
+        settings.py.]]]
+        """
         result = []
         if not obj.childCount:
             # Translators: this is the number of items in a layered pane
@@ -928,6 +1208,12 @@ class SpeechGenerator:
         return result
 
     def _getUnfocusedDialogCount(self, obj,  **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that says how many unfocused alerts and
+        dialogs are associated with the application for this object.
+        [[[WDW - I wonder if this string should be moved to
+        settings.py.]]]
+        """
         result = []
         # If this application has more than one unfocused alert or
         # dialog window, then speak '<m> unfocused dialogs'
@@ -945,6 +1231,16 @@ class SpeechGenerator:
         return result
 
     def _getAncestors(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the text of the ancestors for
+        the object.  This is typically used to present the context for
+        an object (e.g., the names of the window, the panels, etc.,
+        that the object is contained in).  If the 'priorObj' attribute
+        of the args dictionary is set, only the differences in
+        ancestry between the 'priorObj' and the current obj will be
+        computed.  The 'priorObj' is typically set by Orca to be the
+        previous object with focus.
+        """        
         result = []
         priorObj = args.get('priorObj', None)
         requireText = args.get('requireText', True)
@@ -978,6 +1274,17 @@ class SpeechGenerator:
         return result.reverse() or result
 
     def _getNewAncestors(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the text of the ancestors for
+        the object.  This is typically used to present the context for
+        an object (e.g., the names of the window, the panels, etc.,
+        that the object is contained in).  If the 'priorObj' attribute
+        of the args dictionary is set, only the differences in
+        ancestry between the 'priorObj' and the current obj will be
+        computed.  Otherwise, no ancestry will be computed.  The
+        'priorObj' is typically set by Orca to be the previous object
+        with focus.
+        """        
         result = []
         if args.get('priorObj', None):
             result = self._getAncestors(obj, **args)
@@ -990,6 +1297,10 @@ class SpeechGenerator:
     #####################################################################
 
     def _getAccelerator(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the accelerator for the object,
+        or an empty array if no accelerator can be found.
+        """
         result = []
         [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
         if accelerator:
@@ -1001,6 +1312,10 @@ class SpeechGenerator:
         return result
 
     def _getMnemonic(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the mnemonic for the object, or
+        an empty array if no mnemonic can be found.
+        """
         result = []
         [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
         if mnemonic:
@@ -1023,6 +1338,13 @@ class SpeechGenerator:
     #####################################################################
 
     def _getTutorial(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the tutorial for the object.
+        The tutorial will only be generated if the user has requested
+        tutorials, and will then be generated according to the
+        tutorial generator.  A tutorial can be forced by setting the
+        'forceMessage' attribute of the args dictionary to True.
+        """
         already_focused = args.get('already_focused', False)
         forceMessage = args.get('forceMessage', False)
         return self._script.tutorialGenerator.getTutorial(
@@ -1037,6 +1359,10 @@ class SpeechGenerator:
     #####################################################################
 
     def voice(self, key=None):
+        """Returns an array containing a voice.  The key is a value
+        to be used to look up the voice in the settings.py:voices 
+        dictionary.
+        """
         try:
             voice = settings.voices[key]
         except:
@@ -1044,6 +1370,11 @@ class SpeechGenerator:
         return [voice]
 
     def getSpeech(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the complete speech for the
+        object.  The speech to be generated depends highly upon the
+        speech formatting strings in formatting.py.
+        """
         result = []
         methods = {}
         methods['voice'] = self.voice
