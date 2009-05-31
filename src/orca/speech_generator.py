@@ -796,7 +796,8 @@ class SpeechGenerator:
         oldRole = self._overrideRole('REAL_ROLE_TABLE_CELL', args)
         result.extend(self.getSpeech(obj, **args))
         self._restoreRole(oldRole, args)
-        if not result and settings.speakBlankLines:
+        if not result and settings.speakBlankLines \
+           and not args.get('readingRow', False):
             # Translators: "blank" is a short word to mean the
             # user has navigated to an empty line.
             #
@@ -839,6 +840,7 @@ class SpeechGenerator:
                      or ((row == 0 or row == parentTable.nRows-1) \
                      and pointOfReference["lastColumn"] == column)
             if speakAll:
+                args['readingRow'] = True
                 for i in range(0, parentTable.nColumns):
                     cell = parentTable.getAccessibleAt(row, i)
                     if not cell:
