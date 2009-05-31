@@ -1,3 +1,9 @@
+2009-05-31  Willie Walker <william.walker>
+
+        * src/orca/speech_generator.py:
+          test/keystrokes/gtk-demo/role_table.py:
+          Do not speak 'blank' for table cells when reading entire row
+
 2009-05-29  Willie Walker <william.walker> and
 	    Mesar Hameed <mesar.hameed@gmail.com>
 
