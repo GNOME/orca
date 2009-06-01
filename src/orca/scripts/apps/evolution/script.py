@@ -947,7 +947,10 @@ class Script(default.Script):
                             settings.speechVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
 
-                            utterances = speechGen.getSpeech(header)
+                            utterances = speechGen.getSpeech(
+                                header,
+                                includeContext=False,
+                                priorObj=oldLocusOfFocus)
                             [headerRegions, focusedRegion] = \
                                          brailleGen.getBrailleRegions(header)
                             brailleRegions.extend(headerRegions)
@@ -973,7 +976,10 @@ class Script(default.Script):
                                 settings.VERBOSITY_LEVEL_BRIEF
                         settings.speechVerbosityLevel = \
                             savedSpeechVerbosityLevel
-                        utterances = speechGen.getSpeech(cell)
+                        utterances = speechGen.getSpeech(
+                            cell,
+                            includeContext=False,
+                            priorObj=oldLocusOfFocus)
                         [cellRegions, focusedRegion] = \
                                            brailleGen.getBrailleRegions(cell)
 
@@ -1064,7 +1070,9 @@ class Script(default.Script):
                           + "day view: tabbing to day with appts.")
 
             parent = event.source.parent
-            utterances = speechGen.getSpeech(parent)
+            utterances = speechGen.getSpeech(parent,
+                                             includeContext=False,
+                                             priorObj=oldLocusOfFocus)
             [brailleRegions, focusedRegion] = \
                     brailleGen.getBrailleRegions(parent)
             speech.speak(utterances)
@@ -1080,7 +1088,10 @@ class Script(default.Script):
                         appt = childTable.getAccessibleAt(row, 0)
                         extents = appt.queryComponent().getExtents(0)
                         if extents.y == apptExtents.y:
-                            utterances = speechGen.getSpeech(event.source)
+                            utterances = speechGen.getSpeech(
+                                event.source,
+                                includeContext=False,
+                                priorObj=oldLocusOfFocus)
                             [apptRegions, focusedRegion] = \
                                 brailleGen.getBrailleRegions(event.source)
                             brailleRegions.extend(apptRegions)
@@ -1141,7 +1152,10 @@ class Script(default.Script):
                     apptExtents = child.queryComponent().getExtents(0)
 
                     if extents.y == apptExtents.y:
-                        utterances = speechGen.getSpeech(child)
+                        utterances = speechGen.getSpeech(
+                            child,
+                            includeContext=False,
+                            priorObj=oldLocusOfFocus)
                         [apptRegions, focusedRegion] = \
                             brailleGen.getBrailleRegions(child)
                         brailleRegions.extend(apptRegions)

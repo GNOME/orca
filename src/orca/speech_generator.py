@@ -1407,11 +1407,12 @@ class SpeechGenerator:
             # we've been called.
             #
             if not args.get('recursing', False):
-                prefix = self._script.formatting.getPrefix('speech',
-                                                           **args)
-                suffix = self._script.formatting.getSuffix('speech',
-                                                           **args)
-                format = '%s + %s + %s' % (prefix, format, suffix)
+                if args.get('includeContext', True):
+                    prefix = self._script.formatting.getPrefix('speech',
+                                                               **args)
+                    suffix = self._script.formatting.getSuffix('speech',
+                                                               **args)
+                    format = '%s + %s + %s' % (prefix, format, suffix)
                 debug.println(debug.LEVEL_ALL, "getSpeech for %s using '%s'" \
                               % (repr(args), format))
                 args['recursing'] = True
