@@ -663,7 +663,7 @@ class SpeechGenerator:
         previous object with focus.
         """
         result = []
-        if obj:
+        if obj and not args.get('readingRow', False):
             priorObj = args.get('priorObj', None)
             try:
                 priorParent = priorObj.parent
