@@ -1,5 +1,11 @@
 2009-06-01  Willie Walker <william.walker@sun.com>
 
+        * src/orca/formatting.py:
+          src/orca/speech_generator.py:
+          Add mnemonic speaking back in to speech generator
+
+2009-06-01  Willie Walker <william.walker@sun.com>
+
         * src/orca/default.py:
           src/orca/orca.py:
           src/orca/scripts/apps/Thunderbird/script.py:

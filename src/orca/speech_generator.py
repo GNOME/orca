@@ -1322,17 +1322,18 @@ class SpeechGenerator:
         an empty array if no mnemonic can be found.
         """
         result = []
-        [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
-        if mnemonic:
-            mnemonic = mnemonic[-1] # we just want a single character
-        if not mnemonic and shortcut:
-            mnemonic = shortcut
-        if mnemonic:
-            # Add punctuation for better prosody.
-            #
-            #if result:
-            #    utterances[-1] += "."
-            result = [mnemonic]
+        if settings.enableMnemonicSpeaking:
+            [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
+            if mnemonic:
+                mnemonic = mnemonic[-1] # we just want a single character
+            if not mnemonic and shortcut:
+                mnemonic = shortcut
+            if mnemonic:
+                # Add punctuation for better prosody.
+                #
+                #if result:
+                #    utterances[-1] += "."
+                result = [mnemonic]
         return result
 
 

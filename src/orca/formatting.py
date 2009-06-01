@@ -43,7 +43,7 @@ formatting = {
             },
         'default': {
             'focused': '[]',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability'
+            'unfocused': 'labelAndName + allTextSelection + roleName + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_ALERT: {
             'unfocused': 'labelAndName + unrelatedLabels'
@@ -53,11 +53,11 @@ formatting = {
             },
         pyatspi.ROLE_CHECK_BOX: {
             'focused': 'checkedState',
-            'unfocused': 'labelAndName + roleName + checkedState + required + availability'
+            'unfocused': 'labelAndName + roleName + checkedState + required + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_CHECK_MENU_ITEM: {
             'focused': 'checkedState',
-            'unfocused': 'labelAndName + roleName + checkedState + required + availability + accelerator'
+            'unfocused': 'labelAndName + roleName + checkedState + required + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_COMBO_BOX: {
             'focused': 'name',
@@ -67,7 +67,7 @@ formatting = {
             },
         pyatspi.ROLE_ENTRY: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection'
+            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + mnemonic'
             },
         pyatspi.ROLE_FRAME: {
             'focused': '[]',
@@ -87,26 +87,26 @@ formatting = {
             },
         pyatspi.ROLE_MENU: {
             'focused': '[]',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability'
+            'unfocused': 'labelAndName + allTextSelection + roleName + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_MENU_ITEM: {
             'focused': '[]',
-            'unfocused': 'labelAndName + menuItemCheckedState + availability + accelerator'
+            'unfocused': 'labelAndName + menuItemCheckedState + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_PASSWORD_TEXT: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection'
+            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + mnemonic'
             },
         pyatspi.ROLE_PROGRESS_BAR: {
             'focused': 'percentage',
             'unfocused': 'labelAndName + percentage'
             },
         pyatspi.ROLE_PUSH_BUTTON: {
-            'unfocused': 'labelAndName + roleName + availability'
+            'unfocused': 'labelAndName + roleName + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',
-            'unfocused': 'labelAndName + radioState + roleName + availability'
+            'unfocused': 'labelAndName + radioState + roleName + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_RADIO_MENU_ITEM: {
             # OpenOffice check menu items currently have a role of "menu item"
@@ -117,7 +117,7 @@ formatting = {
             # See Orca bug #433398 for more details.
             #
             'focused': 'labelAndName + radioState + roleName + availability',
-            'unfocused': 'labelAndName + radioState + roleName + availability + accelerator'
+            'unfocused': 'labelAndName + radioState + roleName + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_SLIDER: {
             # Ignore the text on the slider.  See bug 340559
@@ -131,15 +131,15 @@ formatting = {
             # it exists and we haven't found anything yet.
             #
             'focused': 'value',
-            'unfocused': 'labelAndName + roleName + value + required + availability'
+            'unfocused': 'labelAndName + roleName + value + required + availability + mnemonic'
             },
         pyatspi.ROLE_SPIN_BUTTON: {
             'focused': 'name',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability + required'
+            'unfocused': 'labelAndName + allTextSelection + roleName + availability + mnemonic + required'
             },
         pyatspi.ROLE_SPLIT_PANE: {
             'focused': 'value',
-            'unfocused': 'labelAndName + roleName + value + availability'
+            'unfocused': 'labelAndName + roleName + value + availability + mnemonic'
             },
         pyatspi.ROLE_TABLE: {
             'focused': 'labelAndName + allTextSelection + roleName + availability + noChildren',
@@ -160,7 +160,7 @@ formatting = {
             },
         pyatspi.ROLE_TEAROFF_MENU_ITEM: {
             'focused': '[]',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability'
+            'unfocused': 'labelAndName + allTextSelection + roleName + availability '
             },
         pyatspi.ROLE_TERMINAL: {
             'focused': 'terminal',
@@ -168,15 +168,15 @@ formatting = {
             },
         pyatspi.ROLE_TEXT: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection'
+            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + mnemonic'
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'toggleState',
-            'unfocused': 'labelAndName + roleName + toggleState + availability'
+            'unfocused': 'labelAndName + roleName + toggleState + availability + mnemonic + accelerator'
             },
         pyatspi.ROLE_PARAGRAPH: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
-            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection'
+            'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + mnemonic'
             },
         pyatspi.ROLE_EMBEDDED: {
             'focused': 'embedded',
