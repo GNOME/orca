@@ -1,5 +1,18 @@
 2009-06-01  Willie Walker <william.walker@sun.com>
 
+        * src/orca/scripts/apps/Thunderbird/speech_generator.py:
+          src/orca/speech_generator.py:
+          Move Thunderbird-specific check to Thunderbird area
+
+          There was some code in speech_generator.py that was looking
+          for a window ending in ' - Thunderbird' as a means to prevent
+          column headers from being spoken.  This code was fragile
+          (and broken since the window can end with 'Mozilla Thunderbird').
+          This code eliminates that check by putting the logic in the
+          thunderbird speech generator.
+
+2009-06-01  Willie Walker <william.walker@sun.com>
+
         * src/orca/formatting.py:
           src/orca/speech_generator.py:
           Add mnemonic speaking back in to speech generator

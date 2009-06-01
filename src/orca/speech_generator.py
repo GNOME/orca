@@ -620,12 +620,7 @@ class SpeechGenerator:
         else:
             index = self._script.getCellIndex(obj)
             columnIndex = table.getColumnAtIndex(index)
-            # Don't speak Thunderbird column headers, since
-            # it's not possible to navigate across a row.
-            # [[[TODO: WDW - move the T-bird check to the T-bird generator.]]]
-            if (columnIndex >= 0) \
-               and not self._script.getTopLevelName(obj).endswith(
-                " - Thunderbird"):
+            if columnIndex >= 0:
                 # Get the header information.  In Java Swing, the
                 # information is not exposed via the description
                 # but is instead a header object, so we fall back
