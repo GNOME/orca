@@ -501,7 +501,7 @@ class Script(default.Script):
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
             obj.queryText().setCaretOffset(context.currentOffset)
-            orca.setLocusOfFocus(None, obj, False)
+            orca.setLocusOfFocus(None, obj, notifyPresentationManager=False)
 
         # If there is a selection, clear it. See bug #489504 for more details.
         # This is not straight forward with Evolution. all the text is in

@@ -1466,7 +1466,10 @@ class Script(default.Script):
             else:
                 [obj, characterOffset] = [event.source, event.detail1]
             self.setCaretContext(obj, characterOffset)
-            orca.setLocusOfFocus(event, obj, notifyPresentationManagers)
+            orca.setLocusOfFocus(
+                event,
+                obj,
+                notifyPresentationManager=notifyPresentationManagers)
             if notifyPresentationManagers:
                 # No point in double-brailling the locusOfFocus.
                 #
@@ -1680,7 +1683,8 @@ class Script(default.Script):
             self.setCaretContext(obj, characterOffset)
             if not self.isSameObject(event.source, obj):
                 if not self.isSameObject(obj, orca_state.locusOfFocus):
-                    orca.setLocusOfFocus(event, obj, False)
+                    orca.setLocusOfFocus(
+                        event, obj, notifyPresentationManager=False)
                     # If an alert got focus, let's do the best we can to 
                     # try to automatically speak its contents while also
                     # making sure the locus of focus and caret context
@@ -1968,7 +1972,8 @@ class Script(default.Script):
 
         if (obj.getRole() == pyatspi.ROLE_CHECK_BOX) \
             and obj.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, obj, False)
+            orca.setLocusOfFocus(
+                event, obj, notifyPresentationManager=False)
 
         default.Script.visualAppearanceChanged(self, event, obj)
 
@@ -5565,7 +5570,8 @@ class Script(default.Script):
         # Reset focus if need be.
         #
         if obj != orca_state.locusOfFocus:
-            orca.setLocusOfFocus(None, obj, False)
+            orca.setLocusOfFocus(
+                None, obj, notifyPresentationManager=False)
 
             # We'd like the object to have focus if it can take focus.
             # Otherwise, we bubble up until we find a parent that can

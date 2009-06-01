@@ -100,7 +100,8 @@ class Script(default.Script):
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
             obj.queryText().setCaretOffset(context.currentOffset)
-            orca.setLocusOfFocus(None, obj, False)
+            orca.setLocusOfFocus(
+                None, obj, notifyPresentationManager=False)
 
     def textLines(self, obj):
         """Creates a generator that can be used to iterate over each line

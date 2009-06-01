@@ -184,7 +184,8 @@ class Script(Gecko.Script):
                 event.source.getState().contains(pyatspi.STATE_EDITABLE)
 
         if updatePosition:
-            orca.setLocusOfFocus(event, event.source, False)
+            orca.setLocusOfFocus(
+                event, event.source, notifyPresentationManager=False)
             self.setCaretContext(event.source, event.detail1)
 
             # The Gecko script, should it be about to pass along this
@@ -243,12 +244,10 @@ class Script(Gecko.Script):
                     # object we're setting the locusOfFocus to is the
                     # same as the current locusOfFocus is returning
                     # True when it's not actually True. Therefore,
-                    # we'll set the current locusOfFocus to None as
-                    # a precaution.
+                    # we'll force the propagation as a precaution.
                     #
-                    if event.type.startswith("focus:"):
-                        orca_state.locusOfFocus = None
-                    orca.setLocusOfFocus(event, acc)
+                    force = event.type.startswith("focus:")
+                    orca.setLocusOfFocus(event, acc, force=force)
                     consume = True
                     break
 

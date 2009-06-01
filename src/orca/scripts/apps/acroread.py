@@ -429,10 +429,12 @@ class Script(default.Script):
             if newLocusOfFocus.getRole() == pyatspi.ROLE_TEXT:
                 newText = self.getTextLineAtCaret(newLocusOfFocus)
                 if newText == self.preFindLine:
-                    orca.setLocusOfFocus(event, oldLocusOfFocus, False)
+                    orca.setLocusOfFocus(
+                        event, oldLocusOfFocus, notifyPresentationManager=False)
                     return
             if newLocusOfFocus.getRole() == pyatspi.ROLE_DRAWING_AREA:
-                orca.setLocusOfFocus(event, oldLocusOfFocus, False)
+                orca.setLocusOfFocus(
+                    event, oldLocusOfFocus, notifyPresentationManager=False)
                 return
 
             utterances = \
@@ -441,7 +443,8 @@ class Script(default.Script):
             brailleRegions = \
                  self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
-            orca.setLocusOfFocus(event, newLocusOfFocus, False)
+            orca.setLocusOfFocus(
+                event, newLocusOfFocus, notifyPresentationManager=False)
             return
 
         # Eliminate unnecessary chattiness in the Search panel.
@@ -456,7 +459,8 @@ class Script(default.Script):
         #
         if newLocusOfFocus.getRole() in [self.ROLE_DOCUMENT,
                                          pyatspi.ROLE_DRAWING_AREA]:
-            orca.setLocusOfFocus(event, newLocusOfFocus, False)
+            orca.setLocusOfFocus(
+                event, newLocusOfFocus, notifyPresentationManager=False)
             return
 
         elif newLocusOfFocus.getRole() == self.ROLE_LINK:
@@ -473,7 +477,8 @@ class Script(default.Script):
             brailleRegions = \
                      self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
-            orca.setLocusOfFocus(event, newLocusOfFocus, False)
+            orca.setLocusOfFocus(
+                event, newLocusOfFocus, notifyPresentationManager=False)
             return
 
         default.Script.locusOfFocusChanged(self, event,
@@ -554,7 +559,8 @@ class Script(default.Script):
                 brailleRegions = \
                      self.brailleGenerator.getBrailleRegions(event.source)
                 braille.displayRegions(brailleRegions)
-                orca.setLocusOfFocus(event, event.source, False)
+                orca.setLocusOfFocus(
+                    event, event.source, notifyPresentationManager=False)
                 return
 
             elif event.source.getRole() == pyatspi.ROLE_TEXT:

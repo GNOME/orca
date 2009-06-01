@@ -1743,7 +1743,7 @@ class StructuralNavigation:
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
-        orca.setLocusOfFocus(None, obj, False)
+        orca.setLocusOfFocus(None, obj, notifyPresentationManager=False)
 
     def _presentLine(self, obj, offset):
         """Presents the first line of the object to the user.

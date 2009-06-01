@@ -2015,7 +2015,8 @@ class Script(script.Script):
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
-            orca.setLocusOfFocus(None, context.obj, False)
+            orca.setLocusOfFocus(
+                None, context.obj, notifyPresentationManager=False)
             text.setCaretOffset(context.currentOffset)
 
         # If there is a selection, clear it. See bug #489504 for more details.

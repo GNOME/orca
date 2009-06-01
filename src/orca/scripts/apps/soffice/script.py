@@ -1733,7 +1733,7 @@ class Script(default.Script):
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel, "StarOffice.onFocus - " \
                           + "Calc: Name combo box.")
-            orca.setLocusOfFocus(event, event.source, True)
+            orca.setLocusOfFocus(event, event.source)
             return
 
         # OOo Writer gets rather enthusiastic with focus: events for lists.
@@ -1795,7 +1795,8 @@ class Script(default.Script):
         if handleEvent:
             if presentEvent:
                 speech.stop()
-            orca.setLocusOfFocus(event, event.any_data, presentEvent)
+            orca.setLocusOfFocus(
+                event, event.any_data, notifyPresentationManager=presentEvent)
 
             # We'll tuck away the activeDescendant information for future
             # reference since the AT-SPI gives us little help in finding
@@ -1895,7 +1896,8 @@ class Script(default.Script):
                          pyatspi.ROLE_ROOT_PANE,
                          pyatspi.ROLE_FRAME]
             if self.isDesiredFocusedItem(event.source, rolesList):
-                orca.setLocusOfFocus(event, event.source, False)
+                orca.setLocusOfFocus(
+                    event, event.source, notifyPresentationManager=False)
                 if event.source != self.currentParagraph:
                     self.updateBraille(event.source)
                 return
@@ -1907,7 +1909,8 @@ class Script(default.Script):
             #
             elif event.source.parent and \
                 event.source.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
-                orca.setLocusOfFocus(None, event.source.parent, False)
+                orca.setLocusOfFocus(
+                    None, event.source.parent, notifyPresentationManager=False)
                 return
 
         # If we are in the sbase Table Wizard, try to reduce the numerous

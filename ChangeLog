@@ -1,5 +1,21 @@
 2009-06-01  Willie Walker <william.walker@sun.com>
 
+        * src/orca/default.py:
+          src/orca/orca.py:
+          src/orca/scripts/apps/Thunderbird/script.py:
+          src/orca/scripts/apps/acroread.py:
+          src/orca/scripts/apps/evolution/script.py:
+          src/orca/scripts/apps/gedit/script.py:
+          src/orca/scripts/apps/soffice/script.py:
+          src/orca/scripts/apps/yelp.py:
+          src/orca/scripts/toolkits/Gecko/script.py:
+          src/orca/structural_navigation.py:
+          Add 'force' parameter to setLocusOfFocus to allow us to
+          force a locus of focus change even if it might be the 
+          same object.  This is to help better support bug #571812.
+
+2009-06-01  Willie Walker <william.walker@sun.com>
+
         * src/orca/speech_generator.py:
           Don't speak new column headers when reading a row
 
