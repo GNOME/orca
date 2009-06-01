@@ -1,3 +1,18 @@
+2009-06-01  Willie Walker <william.walker@sun.com>
+
+        * src/orca/speech_generator.py:
+          Don't speak new column headers when reading a row
+
+2009-06-01  Willie Walker <william.walker@sun.com>
+
+        * src/orca/scripts/apps/evolution/script.py:
+          src/orca/speech_generator.py:
+          Add 'includeContext' support
+    
+          The includeContext support (default=True) allows a caller
+          to override whether the generated speech includes the context
+          for the object or not.
+
 2009-05-31  Willie Walker <william.walker>
 
         * src/orca/speech_generator.py:
