@@ -37,6 +37,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'E-mail List Sorted by Date Capti', cursor=1",
      "BRAILLE LINE:  'Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
      "     VISIBLE:  'Email 0 Selected CheckBox 1 Cell', cursor=1",
+     "SPEECH OUTPUT: 'E-mail List Sorted by Date table'",
      "SPEECH OUTPUT: '1 Read message Attachment Lowest priority From John Smith Subject Trip to Florida panel'"]))
   
 ########################################################################

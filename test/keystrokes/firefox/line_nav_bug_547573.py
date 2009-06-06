@@ -56,7 +56,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
     ["BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image'",
      "     VISIBLE:  '» search tips  Search $l Submit ', cursor=1",
-     "SPEECH OUTPUT: '»  search tips link   text Search Submit Search button Home Page link image'"]))
+     "SPEECH OUTPUT: 'right double angle bracket  search tips link   text Search Submit Search button Home Page link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -223,7 +223,7 @@ sequence.append(utils.AssertPresentationAction(
     "22. Line Down",
     ["BRAILLE LINE:  '• Java Plugin Browser Registration Instructions'",
      "     VISIBLE:  '• Java Plugin Browser Registrati', cursor=1",
-     "SPEECH OUTPUT: '• Java Plugin Browser Registration Instructions link'"]))
+     "SPEECH OUTPUT: 'bullet Java Plugin Browser Registration Instructions link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -231,7 +231,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Line Down",
     ["BRAILLE LINE:  '• Java Web Start Installation Notes'",
      "     VISIBLE:  '• Java Web Start Installation No', cursor=1",
-     "SPEECH OUTPUT: '• Java Web Start Installation Notes link'"]))
+     "SPEECH OUTPUT: 'bullet Java Web Start Installation Notes link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -247,7 +247,7 @@ sequence.append(utils.AssertPresentationAction(
     "25. Line Down",
     ["BRAILLE LINE:  '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
      "     VISIBLE:  '• Self-extracting Binary File - ', cursor=1",
-     "SPEECH OUTPUT: '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
+     "SPEECH OUTPUT: 'bullet Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -271,7 +271,7 @@ sequence.append(utils.AssertPresentationAction(
     "28. Line Down",
     ["BRAILLE LINE:  '• RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'",
      "     VISIBLE:  '• RPM Packages - A rpm.bin file ', cursor=1",
-     "SPEECH OUTPUT: '• RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'"]))
+     "SPEECH OUTPUT: 'bullet RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -466,17 +466,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "52. Line Down",
-    ["BRAILLE LINE:  'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" (necessary if \".\" is not in the PATH'",
+    ["BUG? - We're speaking the quotes here",
+     "BRAILLE LINE:  'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" \(necessary if \".\" is not in the PATH'",
      "     VISIBLE:  'Execute the downloaded file, pre', cursor=1",
-     "SPEECH OUTPUT: 'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" (necessary if \".\" is not in the PATH'"]))
+     "SPEECH OUTPUT: 'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with quote./quote \(necessary if quote.quote is not in the PATH'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "53. Line Down",
-    ["BRAILLE LINE:  'environment variable):'",
-     "     VISIBLE:  'environment variable):', cursor=1",
-     "SPEECH OUTPUT: 'environment variable):'"]))
+    ["BRAILLE LINE:  'environment variable\):'",
+     "     VISIBLE:  'environment variable\):', cursor=1",
+     "SPEECH OUTPUT: 'environment variable\):'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -498,17 +499,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "56. Line Down",
-    ["BRAILLE LINE:  'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure. The JDK documentation'",
+    ["BRAILLE LINE:  'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure. The JDK'",
      "     VISIBLE:  'The JDK files are installed in a', cursor=1",
-     "SPEECH OUTPUT: 'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure link . The JDK documentation'"]))
+     "SPEECH OUTPUT: 'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure link . The JDK'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "57. Line Down",
-    ["BRAILLE LINE:  'is a separate download.'",
-     "     VISIBLE:  'is a separate download.', cursor=1",
-     "SPEECH OUTPUT: 'is a separate download.'"]))
+    ["BRAILLE LINE:  'documentation is a separate download.'",
+     "     VISIBLE:  'documentation is a separate down', cursor=1",
+     "SPEECH OUTPUT: 'documentation is a separate download.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -700,9 +701,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "81. Line Down",
-    ["BRAILLE LINE:  'Note that the initial \"./\" is required if you do not have \".\" in your PATH environment variable.'",
+    ["BUG? - We're speaking the quotes here.",
+     "BRAILLE LINE:  'Note that the initial \"./\" is required if you do not have \".\" in your PATH environment variable.'",
      "     VISIBLE:  'Note that the initial \"./\" is re', cursor=1",
-     "SPEECH OUTPUT: 'Note that the initial \"./\" is required if you do not have \".\" in your PATH environment variable.'"]))
+     "SPEECH OUTPUT: 'Note that the initial quote./quote is required if you do not have quote.quote in your PATH environment variable.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -760,7 +762,7 @@ sequence.append(utils.AssertPresentationAction(
     "88. Line Down",
     ["BRAILLE LINE:  '• The /usr/java/latest link will always point to the version of Java that Sun Microsystems considers the latest version.  Subsequent upgrades of the packages will overwrite this'",
      "     VISIBLE:  '• The /usr/java/latest link will', cursor=1",
-     "SPEECH OUTPUT: '• The /usr/java/latest link will always point to the version of Java that Sun Microsystems considers the latest version.  Subsequent upgrades of the packages will overwrite this'"]))
+     "SPEECH OUTPUT: 'bullet The /usr/java/latest link will always point to the version of Java that Sun Microsystems considers the latest version.  Subsequent upgrades of the packages will overwrite this'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -776,7 +778,7 @@ sequence.append(utils.AssertPresentationAction(
     "90. Line Down",
     ["BRAILLE LINE:  '• By default, /usr/java/default points to /usr/java/latest. However, if administrators change /usr/java/default to  point to another version of Java, subsequent package upgrades'",
      "     VISIBLE:  '• By default, /usr/java/default ', cursor=1",
-     "SPEECH OUTPUT: '• By default, /usr/java/default points to /usr/java/latest. However, if administrators change /usr/java/default to  point to another version of Java, subsequent package upgrades'"]))
+     "SPEECH OUTPUT: 'bullet By default, /usr/java/default points to /usr/java/latest. However, if administrators change /usr/java/default to  point to another version of Java, subsequent package upgrades'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -933,7 +935,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Up",
     ["BRAILLE LINE:  '• By default, /usr/java/default points to /usr/java/latest. However, if administrators change /usr/java/default to  point to another version of Java, subsequent package upgrades'",
      "     VISIBLE:  '• By default, /usr/java/default ', cursor=1",
-     "SPEECH OUTPUT: '• By default, /usr/java/default points to /usr/java/latest. However, if administrators change /usr/java/default to  point to another version of Java, subsequent package upgrades'"]))
+     "SPEECH OUTPUT: 'bullet By default, /usr/java/default points to /usr/java/latest. However, if administrators change /usr/java/default to  point to another version of Java, subsequent package upgrades'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -949,7 +951,7 @@ sequence.append(utils.AssertPresentationAction(
     "11. Line Up",
     ["BRAILLE LINE:  '• The /usr/java/latest link will always point to the version of Java that Sun Microsystems considers the latest version.  Subsequent upgrades of the packages will overwrite this'",
      "     VISIBLE:  '• The /usr/java/latest link will', cursor=1",
-     "SPEECH OUTPUT: '• The /usr/java/latest link will always point to the version of Java that Sun Microsystems considers the latest version.  Subsequent upgrades of the packages will overwrite this'"]))
+     "SPEECH OUTPUT: 'bullet The /usr/java/latest link will always point to the version of Java that Sun Microsystems considers the latest version.  Subsequent upgrades of the packages will overwrite this'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1008,7 +1010,7 @@ sequence.append(utils.AssertPresentationAction(
     "17. Line Up",
     ["BRAILLE LINE:  'Note that the initial \"./\" is required if you do not have \".\" in your PATH environment variable.'",
      "     VISIBLE:  'Note that the initial \"./\" is re', cursor=1",
-     "SPEECH OUTPUT: 'Note that the initial \"./\" is required if you do not have \".\" in your PATH environment variable.'"]))
+     "SPEECH OUTPUT: 'Note that the initial quote./quote is required if you do not have quote.quote in your PATH environment variable.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1200,17 +1202,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "38. Line Up",
-    ["BRAILLE LINE:  'is a separate download.'",
-     "     VISIBLE:  'is a separate download.', cursor=1",
-     "SPEECH OUTPUT: 'is a separate download.'"]))
+    ["BRAILLE LINE:  'documentation is a separate download.'",
+     "     VISIBLE:  'documentation is a separate down', cursor=1",
+     "SPEECH OUTPUT: 'documentation is a separate download.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "39. Line Up",
-    ["BRAILLE LINE:  'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure. The JDK documentation'",
+    ["BRAILLE LINE:  'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure. The JDK'",
      "     VISIBLE:  'The JDK files are installed in a', cursor=1",
-     "SPEECH OUTPUT: 'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure link . The JDK documentation'"]))
+     "SPEECH OUTPUT: 'The JDK files are installed in a directory called jdk1.6.0_<version> in the current directory. Follow this link to see its directory structure link . The JDK'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1232,17 +1234,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "42. Line Up",
-    ["BRAILLE LINE:  'environment variable):'",
-     "     VISIBLE:  'environment variable):', cursor=1",
-     "SPEECH OUTPUT: 'environment variable):'"]))
+    ["BRAILLE LINE:  'environment variable\):'",
+     "     VISIBLE:  'environment variable\):', cursor=1",
+     "SPEECH OUTPUT: 'environment variable\):'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "43. Line Up",
-    ["BRAILLE LINE:  'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" (necessary if \".\" is not in the PATH'",
+    ["BRAILLE LINE:  'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" \(necessary if \".\" is not in the PATH'",
      "     VISIBLE:  'Execute the downloaded file, pre', cursor=1",
-     "SPEECH OUTPUT: 'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" (necessary if \".\" is not in the PATH'"]))
+     "SPEECH OUTPUT: 'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with quote./quote \(necessary if quote.quote is not in the PATH'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1436,7 +1438,7 @@ sequence.append(utils.AssertPresentationAction(
     "67. Line Up",
     ["BRAILLE LINE:  '• RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'",
      "     VISIBLE:  '• RPM Packages - A rpm.bin file ', cursor=1",
-     "SPEECH OUTPUT: '• RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'"]))
+     "SPEECH OUTPUT: 'bullet RPM Packages - A rpm.bin file containing RPM packages, installed with the rpm utility. Requires root access to install. RPM packages are the recommended method for'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1460,7 +1462,7 @@ sequence.append(utils.AssertPresentationAction(
     "70a. Line Up",
     ["BRAILLE LINE:  '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'",
      "     VISIBLE:  '• Self-extracting Binary File - ', cursor=1",
-     "SPEECH OUTPUT: '• Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
+     "SPEECH OUTPUT: 'bullet Self-extracting Binary File - This file can be used to install the JDK in a location chosen by the user. This one can be installed by anyone (not only root users), and it can'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1476,7 +1478,7 @@ sequence.append(utils.AssertPresentationAction(
     "71. Line Up",
     ["BRAILLE LINE:  '• Java Web Start Installation Notes'",
      "     VISIBLE:  '• Java Web Start Installation No', cursor=1",
-     "SPEECH OUTPUT: '• Java Web Start Installation Notes link'"]))
+     "SPEECH OUTPUT: 'bullet Java Web Start Installation Notes link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1484,7 +1486,7 @@ sequence.append(utils.AssertPresentationAction(
     "72. Line Up",
     ["BRAILLE LINE:  '• Java Plugin Browser Registration Instructions'",
      "     VISIBLE:  '• Java Plugin Browser Registrati', cursor=1",
-     "SPEECH OUTPUT: '• Java Plugin Browser Registration Instructions link'"]))
+     "SPEECH OUTPUT: 'bullet Java Plugin Browser Registration Instructions link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1650,7 +1652,7 @@ sequence.append(utils.AssertPresentationAction(
     "93. Line Up",
     ["BRAILLE LINE:  '» search tips  Search $l Submit Search Button Home Page Image'",
      "     VISIBLE:  '» search tips  Search $l Submit ', cursor=1",
-     "SPEECH OUTPUT: '»  search tips link   text Search Submit Search button Home Page link image'"]))
+     "SPEECH OUTPUT: 'right double angle bracket  search tips link   text Search Submit Search button Home Page link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

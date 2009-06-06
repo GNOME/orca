@@ -50,12 +50,12 @@ sequence.append(TypeAction("C"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Replace existing text with a 'C'", 
-    ["BUG? - At this point, the entry expands into a combo box with three items showing. We speak them all. We should instead indicate that this object is expanded, similar to what we do with autocompletes.",
+    ["BUG? - At this point, the entry expands into a combo box with three items showing. We speak them all. We should instead indicate that this object is expanded, similar to what we do with autocompletes. In addition, we're speaking 'bullet' for the initial bullet throughout the test. I think we should be, but marking it just in case.",
      "BRAILLE LINE:  '  US State test 1 California $l'",
      "     VISIBLE:  '  US State test 1 California $l', cursor=0",
      "BRAILLE LINE:  '  US State test 1 C $l'",
      "     VISIBLE:  '  US State test 1 C $l', cursor=0",
-     "SPEECH OUTPUT: '• California• Colorado• Connecticut'"]))
+     "SPEECH OUTPUT: 'bullet California• Colorado• Connecticut'"]))
 
 ########################################################################
 # Down Arrow amongst the newly-displayed items. One should not be able
@@ -69,7 +69,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '  US State test 1 C $l', cursor=0",
      "BRAILLE LINE:  '• California'",
      "     VISIBLE:  '• California', cursor=1",
-     "SPEECH OUTPUT: '• California'"]))
+     "SPEECH OUTPUT: 'bullet California'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -77,7 +77,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow", 
     ["BRAILLE LINE:  '• Colorado'",
      "     VISIBLE:  '• Colorado', cursor=1",
-     "SPEECH OUTPUT: '• Colorado'"]))
+     "SPEECH OUTPUT: 'bullet Colorado'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -85,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow", 
     ["BRAILLE LINE:  '• Connecticut'",
      "     VISIBLE:  '• Connecticut', cursor=1",
-     "SPEECH OUTPUT: '• Connecticut'"]))
+     "SPEECH OUTPUT: 'bullet Connecticut'"]))
 
 # Note that not saying anything here is correct because we're already at
 # the end of the expanded combo box thus pressing Down doesn't move us.
@@ -106,7 +106,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
     ["BRAILLE LINE:  '• Colorado'",
      "     VISIBLE:  '• Colorado', cursor=1",
-     "SPEECH OUTPUT: '• Colorado'"]))
+     "SPEECH OUTPUT: 'bullet Colorado'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -114,7 +114,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
     ["BRAILLE LINE:  '• California'",
      "     VISIBLE:  '• California', cursor=1",
-     "SPEECH OUTPUT: '• California'"]))
+     "SPEECH OUTPUT: 'bullet California'"]))
 
 # Note that not saying anything here is correct because we're already at
 # the top of the expanded combo box thus pressing Up doesn't move us.
@@ -135,7 +135,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I - Combo box expanded", 
     ["BRAILLE LINE:  '• California'",
      "     VISIBLE:  '• California', cursor=1",
-     "SPEECH OUTPUT: 'list item • California item 1 of 3'"]))
+     "SPEECH OUTPUT: 'list item bullet California item 1 of 3'"]))
 
 ########################################################################
 # Escape to collapse the combo box.

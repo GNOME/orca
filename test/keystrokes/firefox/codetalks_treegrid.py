@@ -30,11 +30,13 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to the treegrid",
     ["KNOWN ISSUE - This output and the output of all the assertions that follow are merely designed to illustrate the current state of affairs, namely that Orca's caret navigation is not stomping on the built-in navigation of this treegrid, and to ensure that subsequent changes to Orca do not change that. This output should NOT be seen as what we think is an ideal presentation of a treegrid. See http://bugzilla.gnome.org/show_bug.cgi?id=570556 for more information.",
-     "BRAILLE LINE:  'Selectable Grid with Text with 9 Rows Selectable Grid with Text with 9 Rows TreeTable'",
-     "     VISIBLE:  'Selectable Grid with Text with 9', cursor=1",
+#     "BRAILLE LINE:  'Selectable Grid with Text with 9 Rows Selectable Grid with Text with 9 Rows TreeTable'",
+#     "     VISIBLE:  'Selectable Grid with Text with 9', cursor=1",
+     "BRAILLE LINE:  'Title Title TreeTable'",
+     "     VISIBLE:  'Title Title TreeTable', cursor=1",
      "BRAILLE LINE:  '+A Question of Love'",
      "     VISIBLE:  '+A Question of Love', cursor=0",
-     "SPEECH OUTPUT: 'Selectable Grid with Text with 9 Rows tree table'",
+#     "SPEECH OUTPUT: 'Selectable Grid with Text with 9 Rows tree table'",
      "SPEECH OUTPUT: 'Title tree table'",
      "SPEECH OUTPUT: '+A Question of Love'"]))
 
@@ -45,16 +47,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down Arrow", 
-    ["BRAILLE LINE:  'Title + Piece of Peace Cell'",
-     "     VISIBLE:  'Title + Piece of Peace Cell', cursor=1",
+    ["BRAILLE LINE:  '+ Piece of Peace Cell'",
+     "     VISIBLE:  '+ Piece of Peace Cell', cursor=1",
      "SPEECH OUTPUT: '+ Piece of Peace'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow", 
-    ["BRAILLE LINE:  'Title + International Law Cell'",
-     "     VISIBLE:  'Title + International Law Cell', cursor=1",
+    ["BRAILLE LINE:  '+ International Law Cell'",
+     "     VISIBLE:  '+ International Law Cell', cursor=1",
      "SPEECH OUTPUT: '+ International Law'"]))
 
 ########################################################################
@@ -64,8 +66,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
-    ["BRAILLE LINE:  'Title + Piece of Peace Cell'",
-     "     VISIBLE:  'Title + Piece of Peace Cell', cursor=1",
+    ["BRAILLE LINE:  '+ Piece of Peace Cell'",
+     "     VISIBLE:  '+ Piece of Peace Cell', cursor=1",
      "SPEECH OUTPUT: '+ Piece of Peace'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -86,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  '+A Question of Love'",
      "     VISIBLE:  '+A Question of Love', cursor=0",
-     "SPEECH OUTPUT: 'Title +A Question of Love '"]))
+     "SPEECH OUTPUT: '+A Question of Love '"]))
 
 ########################################################################
 # Space to expand the current item.
@@ -110,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  '-A Question of Love'",
      "     VISIBLE:  '-A Question of Love', cursor=0",
-     "SPEECH OUTPUT: 'Title -A Question of Love '"]))
+     "SPEECH OUTPUT: '-A Question of Love '"]))
 
 ########################################################################
 # Down Arrow to the child item.
@@ -138,9 +140,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "2. Right Arrow in child", 
-    ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
+    ["BUG? - We're saying 'dollar' here. If the dollar sign were right against the 9, I would say this is a bug; because of the whitespace I'm not sure.",
+     "BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
      "     VISIBLE:  'Price $ 9.99 Cell', cursor=1",
-     "SPEECH OUTPUT: '$ 9.99'"]))
+     "SPEECH OUTPUT: 'dollar 9.99'"]))
 
 ########################################################################
 # Left Arrow in the child item.

@@ -67,7 +67,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Where Am I on footprint", 
-    ["BRAILLE LINE:  'Home Image Bugzilla'",
+    ["BUG? - We are speaking 'link' rather than 'image'",
+     "BRAILLE LINE:  'Home Image Bugzilla'",
      "     VISIBLE:  'Home Image Bugzilla', cursor=1",
      "SPEECH OUTPUT: 'http link Home image different site '"]))
 

@@ -72,9 +72,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["BRAILLE LINE:  '  2 (5 oz.) Filet Mignons'",
+    ["BUG? - We're speaking the right paren throughout this test.",
+     "BRAILLE LINE:  '  2 (5 oz.) Filet Mignons'",
      "     VISIBLE:  '  2 (5 oz.) Filet Mignons', cursor=1",
-     "SPEECH OUTPUT: '  2 (5 oz.) Filet Mignons",
+     "SPEECH OUTPUT: '  2 (5 oz.right paren Filet Mignons",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -83,7 +84,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
     ["BRAILLE LINE:  '  2 (5 oz.) Top Sirloins'",
      "     VISIBLE:  '  2 (5 oz.) Top Sirloins', cursor=2",
-     "SPEECH OUTPUT: '  2 (5 oz.) Top Sirloins",
+     "SPEECH OUTPUT: '  2 (5 oz.right paren Top Sirloins",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -92,7 +93,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  '  4 (4 oz.) Foobar Steaks Burgers'",
      "     VISIBLE:  '  4 (4 oz.) Foobar Steaks Burger', cursor=2",
-     "SPEECH OUTPUT: '  4 (4 oz.) Foobar Steaks Burgers",
+     "SPEECH OUTPUT: '  4 (4 oz.right paren Foobar Steaks Burgers",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -101,7 +102,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  '  6 (5.75 oz.) Stuffed Baked Potatoes'",
      "     VISIBLE:  '  6 (5.75 oz.) Stuffed Baked Pot', cursor=2",
-     "SPEECH OUTPUT: '  6 (5.75 oz.) Stuffed Baked Potatoes",
+     "SPEECH OUTPUT: '  6 (5.75 oz.right paren Stuffed Baked Potatoes",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -110,7 +111,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  '  2 (4.5 oz.) Stuffed Sole with Scallops and Crab'",
      "     VISIBLE:  '  2 (4.5 oz.) Stuffed Sole with ', cursor=2",
-     "SPEECH OUTPUT: '  2 (4.5 oz.) Stuffed Sole with Scallops and Crab",
+     "SPEECH OUTPUT: '  2 (4.5 oz.right paren Stuffed Sole with Scallops and Crab",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -119,7 +120,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
     ["BRAILLE LINE:  '  1 (6 in.) Chocolate Lover's Cake'",
      "     VISIBLE:  '  1 (6 in.) Chocolate Lover's Ca', cursor=2",
-     "SPEECH OUTPUT: '  1 (6 in.) Chocolate Lover's Cake",
+     "SPEECH OUTPUT: '  1 (6 in.right paren Chocolate Lover's Cake",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -163,7 +164,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Up",
     ["BRAILLE LINE:  '  1 (6 in.) Chocolate Lover's Cake'",
      "     VISIBLE:  '  1 (6 in.) Chocolate Lover's Ca', cursor=1",
-     "SPEECH OUTPUT: '  1 (6 in.) Chocolate Lover's Cake",
+     "SPEECH OUTPUT: '  1 (6 in.right paren Chocolate Lover's Cake",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -172,7 +173,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Up",
     ["BRAILLE LINE:  '  2 (4.5 oz.) Stuffed Sole with Scallops and Crab'",
      "     VISIBLE:  '  2 (4.5 oz.) Stuffed Sole with ', cursor=1",
-     "SPEECH OUTPUT: '  2 (4.5 oz.) Stuffed Sole with Scallops and Crab",
+     "SPEECH OUTPUT: '  2 (4.5 oz.right paren Stuffed Sole with Scallops and Crab",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -181,7 +182,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Up",
     ["BRAILLE LINE:  '  6 (5.75 oz.) Stuffed Baked Potatoes'",
      "     VISIBLE:  '  6 (5.75 oz.) Stuffed Baked Pot', cursor=1",
-     "SPEECH OUTPUT: '  6 (5.75 oz.) Stuffed Baked Potatoes",
+     "SPEECH OUTPUT: '  6 (5.75 oz.right paren Stuffed Baked Potatoes",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -190,7 +191,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Line Up",
     ["BRAILLE LINE:  '  4 (4 oz.) Foobar Steaks Burgers'",
      "     VISIBLE:  '  4 (4 oz.) Foobar Steaks Burger', cursor=1",
-     "SPEECH OUTPUT: '  4 (4 oz.) Foobar Steaks Burgers",
+     "SPEECH OUTPUT: '  4 (4 oz.right paren Foobar Steaks Burgers",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -199,7 +200,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Up",
     ["BRAILLE LINE:  '  2 (5 oz.) Top Sirloins'",
      "     VISIBLE:  '  2 (5 oz.) Top Sirloins', cursor=1",
-     "SPEECH OUTPUT: '  2 (5 oz.) Top Sirloins",
+     "SPEECH OUTPUT: '  2 (5 oz.right paren Top Sirloins",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -208,7 +209,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
     ["BRAILLE LINE:  '  2 (5 oz.) Filet Mignons'",
      "     VISIBLE:  '  2 (5 oz.) Filet Mignons', cursor=1",
-     "SPEECH OUTPUT: '  2 (5 oz.) Filet Mignons",
+     "SPEECH OUTPUT: '  2 (5 oz.right paren Filet Mignons",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())

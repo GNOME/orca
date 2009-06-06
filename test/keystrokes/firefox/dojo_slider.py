@@ -19,7 +19,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction(utils.DojoURLPrefix + "form/test_Slider.html"))
+sequence.append(TypeAction(utils.DojoNightlyURLPrefix + "form/test_Slider.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("Dojo Slider Widget Demo", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
@@ -69,9 +69,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
 sequence.append(utils.AssertPresentationAction(
     "1 move first slider", 
     ["KNOWN ISSUE - crazy valuetext http://bugs.dojotoolkit.org/ticket/8539",
-     "BRAILLE LINE:  'Horizontal Slider Example 10.242130750605327 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 10.242', cursor=1",
-     "SPEECH OUTPUT: '10.242130750605327'"]))
+     "BRAILLE LINE:  'Horizontal Slider Example 10.223713646532438 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 10.223', cursor=1",
+     "SPEECH OUTPUT: '10.223713646532438'"]))
                             
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -82,9 +82,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "2 move first slider", 
-    ["BRAILLE LINE:  'Horizontal Slider Example 10.484261501210653 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 10.484', cursor=1",
-     "SPEECH OUTPUT: '10.484261501210653'"]))
+    ["BRAILLE LINE:  'Horizontal Slider Example 10.447427293064877 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 10.447', cursor=1",
+     "SPEECH OUTPUT: '10.447427293064877'"]))
                                
 sequence.append(utils.StartRecordingAction())                      
 sequence.append(KeyComboAction("Right"))
@@ -95,9 +95,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "3 move first slider", 
-    ["BRAILLE LINE:  'Horizontal Slider Example 10.72639225181598 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 10.726', cursor=1",
-     "SPEECH OUTPUT: '10.72639225181598'"]))
+    ["BRAILLE LINE:  'Horizontal Slider Example 10.671140939597315 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 10.671', cursor=1",
+     "SPEECH OUTPUT: '10.671140939597315'"]))
                            
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -108,9 +108,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "4 move first slider", 
-    ["BRAILLE LINE:  'Horizontal Slider Example 10.968523002421307 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 10.968', cursor=1",
-     "SPEECH OUTPUT: '10.968523002421307'"]))
+    ["BRAILLE LINE:  'Horizontal Slider Example 10.894854586129753 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 10.894', cursor=1",
+     "SPEECH OUTPUT: '10.894854586129753'"]))
                                
 sequence.append(utils.StartRecordingAction())                  
 sequence.append(KeyComboAction("Right"))
@@ -121,9 +121,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "5 move first slider", 
-    ["BRAILLE LINE:  'Horizontal Slider Example 11.210653753026634 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 11.210', cursor=1",
-     "SPEECH OUTPUT: '11.210653753026634'"]))
+    ["BRAILLE LINE:  'Horizontal Slider Example 11.118568232662192 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 11.118', cursor=1",
+     "SPEECH OUTPUT: '11.118568232662192'"]))
                                   
 sequence.append(utils.StartRecordingAction())                    
 sequence.append(KeyComboAction("Left"))
@@ -134,9 +134,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "6 move first slider", 
-    ["BRAILLE LINE:  'Horizontal Slider Example 10.968523002421307 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 10.968', cursor=1",
-     "SPEECH OUTPUT: '10.968523002421307'"]))
+    ["BRAILLE LINE:  'Horizontal Slider Example 10.894854586129753 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 10.894', cursor=1",
+     "SPEECH OUTPUT: '10.894854586129753'"]))
                                  
 sequence.append(utils.StartRecordingAction())                     
 sequence.append(KeyComboAction("Left"))
@@ -147,9 +147,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "7 move first slider", 
-    ["BRAILLE LINE:  'Horizontal Slider Example 10.72639225181598 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 10.726', cursor=1",
-     "SPEECH OUTPUT: '10.72639225181598'"]))
+    ["BRAILLE LINE:  'Horizontal Slider Example 10.671140939597315 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 10.671', cursor=1",
+     "SPEECH OUTPUT: '10.671140939597315'"]))
                                   
 sequence.append(utils.StartRecordingAction())                    
 sequence.append(KeyComboAction("Left"))
@@ -160,9 +160,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "8 move first slider", 
-    ["BRAILLE LINE:  'Horizontal Slider Example 10.484261501210653 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 10.484', cursor=1",
-     "SPEECH OUTPUT: '10.484261501210653'"]))
+    ["BRAILLE LINE:  'Horizontal Slider Example 10.447427293064877 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 10.447', cursor=1",
+     "SPEECH OUTPUT: '10.447427293064877'"]))
                              
 sequence.append(utils.StartRecordingAction())                     
 sequence.append(KeyComboAction("Left"))
@@ -173,9 +173,9 @@ sequence.append(WaitAction("object:property-change:accessible-value",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "9 move first slider", 
-    ["BRAILLE LINE:  'Horizontal Slider Example 10.242130750605327 Slider'",
-     "     VISIBLE:  'Horizontal Slider Example 10.242', cursor=1",
-     "SPEECH OUTPUT: '10.242130750605327'"]))
+    ["BRAILLE LINE:  'Horizontal Slider Example 10.223713646532438 Slider'",
+     "     VISIBLE:  'Horizontal Slider Example 10.223', cursor=1",
+     "SPEECH OUTPUT: '10.223713646532438'"]))
                             
 sequence.append(utils.StartRecordingAction())                       
 sequence.append(KeyComboAction("Left"))
@@ -212,8 +212,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "move to button", 
-    ["BRAILLE LINE:  'Disable previous slider Button Enable previous slider Button'",
-     "     VISIBLE:  'Disable previous slider Button E', cursor=1",
+    ["BRAILLE LINE:  'Disable previous slider Button'",
+     "     VISIBLE:  'Disable previous slider Button', cursor=1",
      "SPEECH OUTPUT: 'Disable previous slider button'"]))
      
 ########################################################################

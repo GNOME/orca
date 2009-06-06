@@ -169,9 +169,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create from template", 
-    ["BRAILLE LINE:  'Create from template'",
+    ["BUG? - Why are we speaking 'item 1 of 1'?",
+     "BRAILLE LINE:  'Create from template'",
      "     VISIBLE:  'Create from template', cursor=1",
-     "SPEECH OUTPUT: 'Create from template '"]))
+     "SPEECH OUTPUT: 'Create from template  item 1 of 1'"]))
 
 ########################################################################
 # Close the menu and go to the Edit! button
@@ -440,8 +441,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the third unlabelled button ('Save')", 
-    ["BRAILLE LINE:  'Save Button   Menu'",
-     "     VISIBLE:  'Save Button   Menu', cursor=1",
+    ["BRAILLE LINE:  'Save Button'",
+     "     VISIBLE:  'Save Button', cursor=1",
      "SPEECH OUTPUT: 'Save button'"]))
 
 sequence.append(utils.StartRecordingAction())

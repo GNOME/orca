@@ -104,7 +104,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
     ["BRAILLE LINE:  '• This is a short list item.'",
      "     VISIBLE:  '• This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: '• This is a short list item.'"]))
+     "SPEECH OUTPUT: 'bullet This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -112,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
     ["BRAILLE LINE:  '• This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
      "     VISIBLE:  '• This is a list item that spans', cursor=1",
-     "SPEECH OUTPUT: '• This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
+     "SPEECH OUTPUT: 'bullet This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -131,7 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Up",
     ["BRAILLE LINE:  '• This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
      "     VISIBLE:  '• This is a list item that spans', cursor=1",
-     "SPEECH OUTPUT: '• This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
+     "SPEECH OUTPUT: 'bullet This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -139,7 +139,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Up",
     ["BRAILLE LINE:  '• This is a short list item.'",
      "     VISIBLE:  '• This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: '• This is a short list item.'"]))
+     "SPEECH OUTPUT: 'bullet This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

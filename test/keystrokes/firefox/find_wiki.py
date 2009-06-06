@@ -95,7 +95,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "6. Return",
-    ["SPEECH OUTPUT: 'Please join and participate on the Orca mailing list link  ( archives link ): it's a helpful, kind, and productive'"]))
+    ["BUG? - We are speaking the parens here.",
+     "SPEECH OUTPUT: 'Please join and participate on the Orca mailing list link  left paren archives link right paren: it's a helpful, kind, and productive'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
@@ -107,13 +108,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "8. Return",
-    ["SPEECH OUTPUT: '• Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop link'"]))
+    ["BUG? - We are speaking the bullet here. I think we should be, but marking just in case.",
+     "SPEECH OUTPUT: 'bullet Review of Fedora 7 and the Orca screen reader for the Gnome graphical desktop link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "9. Return",
-    ["SPEECH OUTPUT: '(• |)Guide to installing the latest versions of Firefox and Orca link'"]))
+    ["BUG? - We are speaking the bullet here. I think we should be, but marking just in case.",
+     "SPEECH OUTPUT: '(bullet |)Guide to installing the latest versions of Firefox and Orca link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

@@ -52,7 +52,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
      "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
-     "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
+     "SPEECH OUTPUT: 'New bug link  middle dot Browse link  middle dot Search link  middle dot Reports link  middle dot Account link  middle dot Admin link  middle dot Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -68,7 +68,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Give me some help (reloads page.)'",
      "     VISIBLE:  'Give me some help (reloads page.', cursor=1",
-     "SPEECH OUTPUT: 'Give me some help link  (reloads page.)'"]))
+     "SPEECH OUTPUT: 'Give me some help link  (reloads page.right paren'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1149,7 +1149,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Give me some help (reloads page.)'",
      "     VISIBLE:  'Give me some help (reloads page.', cursor=1",
-     "SPEECH OUTPUT: 'Give me some help link  (reloads page.)'"]))
+     "SPEECH OUTPUT: 'Give me some help link  (reloads page.right paren'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1165,7 +1165,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
      "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
-     "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
+     "SPEECH OUTPUT: 'New bug link  middle dot Browse link  middle dot Search link  middle dot Reports link  middle dot Account link  middle dot Admin link  middle dot Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Volume Slider", 
     ["BRAILLE LINE:  'Volume 0 % Slider'",
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: 'Volume slider 0 %'"]))
+     "SPEECH OUTPUT: 'Volume slider 0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -49,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 1 % Slider'",
      "     VISIBLE:  'Volume 1 % Slider', cursor=1",
-     "SPEECH OUTPUT: '1 %'"]))
+     "SPEECH OUTPUT: '1 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -61,7 +61,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 1 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 2 % Slider'",
      "     VISIBLE:  'Volume 2 % Slider', cursor=1",
-     "SPEECH OUTPUT: '2 %'"]))
+     "SPEECH OUTPUT: '2 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -73,7 +73,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 2 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 3 % Slider'",
      "     VISIBLE:  'Volume 3 % Slider', cursor=1",
-     "SPEECH OUTPUT: '3 %'"]))
+     "SPEECH OUTPUT: '3 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -85,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 3 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 2 % Slider'",
      "     VISIBLE:  'Volume 2 % Slider', cursor=1",
-     "SPEECH OUTPUT: '2 %'"]))
+     "SPEECH OUTPUT: '2 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -97,7 +97,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 2 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 1 % Slider'",
      "     VISIBLE:  'Volume 1 % Slider', cursor=1",
-     "SPEECH OUTPUT: '1 %'"]))
+     "SPEECH OUTPUT: '1 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -109,7 +109,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 1 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 0 % Slider'",
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: '0 %'"]))
+     "SPEECH OUTPUT: '0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -121,7 +121,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 1 % Slider'",
      "     VISIBLE:  'Volume 1 % Slider', cursor=1",
-     "SPEECH OUTPUT: '1 %'"]))
+     "SPEECH OUTPUT: '1 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -133,7 +133,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 1 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 2 % Slider'",
      "     VISIBLE:  'Volume 2 % Slider', cursor=1",
-     "SPEECH OUTPUT: '2 %'"]))
+     "SPEECH OUTPUT: '2 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -145,7 +145,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 2 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 3 % Slider'",
      "     VISIBLE:  'Volume 3 % Slider', cursor=1",
-     "SPEECH OUTPUT: '3 %'"]))
+     "SPEECH OUTPUT: '3 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -157,7 +157,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 3 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 2 % Slider'",
      "     VISIBLE:  'Volume 2 % Slider', cursor=1",
-     "SPEECH OUTPUT: '2 %'"]))
+     "SPEECH OUTPUT: '2 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -169,7 +169,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 2 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 1 % Slider'",
      "     VISIBLE:  'Volume 1 % Slider', cursor=1",
-     "SPEECH OUTPUT: '1 %'"]))
+     "SPEECH OUTPUT: '1 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -181,7 +181,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 1 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 0 % Slider'",
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: '0 %'"]))
+     "SPEECH OUTPUT: '0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Up"))
@@ -193,7 +193,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 25 % Slider'",
      "     VISIBLE:  'Volume 25 % Slider', cursor=1",
-     "SPEECH OUTPUT: '25 %'"]))
+     "SPEECH OUTPUT: '25 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Up"))
@@ -205,7 +205,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 25 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 50 % Slider'",
      "     VISIBLE:  'Volume 50 % Slider', cursor=1",
-     "SPEECH OUTPUT: '50 %'"]))
+     "SPEECH OUTPUT: '50 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Down"))
@@ -217,7 +217,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 50 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 25 % Slider'",
      "     VISIBLE:  'Volume 25 % Slider', cursor=1",
-     "SPEECH OUTPUT: '25 %'"]))
+     "SPEECH OUTPUT: '25 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Down"))
@@ -229,7 +229,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 25 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 0 % Slider'",
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: '0 %'"]))
+     "SPEECH OUTPUT: '0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("End"))
@@ -241,7 +241,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 100 % Slider'",
      "     VISIBLE:  'Volume 100 % Slider', cursor=1",
-     "SPEECH OUTPUT: '100 %'"]))
+     "SPEECH OUTPUT: '100 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Home"))
@@ -253,7 +253,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Volume 100 % Slider', cursor=1",
      "BRAILLE LINE:  'Volume 0 % Slider'",
      "     VISIBLE:  'Volume 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: '0 %'"]))
+     "SPEECH OUTPUT: '0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
@@ -719,7 +719,7 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Red Slider", 
     ["BRAILLE LINE:  'Red 0 % Slider'",
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: 'Red slider 0 %'"]))
+     "SPEECH OUTPUT: 'Red slider 0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -732,7 +732,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 1 % Slider'",
      "     VISIBLE:  'Red 1 % Slider', cursor=1",
-     "SPEECH OUTPUT: '1 %'"]))
+     "SPEECH OUTPUT: '1 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -744,7 +744,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 1 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 2 % Slider'",
      "     VISIBLE:  'Red 2 % Slider', cursor=1",
-     "SPEECH OUTPUT: '2 %'"]))
+     "SPEECH OUTPUT: '2 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -756,7 +756,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 2 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 3 % Slider'",
      "     VISIBLE:  'Red 3 % Slider', cursor=1",
-     "SPEECH OUTPUT: '3 %'"]))
+     "SPEECH OUTPUT: '3 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -768,7 +768,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 3 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 2 % Slider'",
      "     VISIBLE:  'Red 2 % Slider', cursor=1",
-     "SPEECH OUTPUT: '2 %'"]))
+     "SPEECH OUTPUT: '2 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -780,7 +780,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 2 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 1 % Slider'",
      "     VISIBLE:  'Red 1 % Slider', cursor=1",
-     "SPEECH OUTPUT: '1 %'"]))
+     "SPEECH OUTPUT: '1 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -792,7 +792,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 1 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 0 % Slider'",
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: '0 %'"]))
+     "SPEECH OUTPUT: '0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -804,7 +804,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 1 % Slider'",
      "     VISIBLE:  'Red 1 % Slider', cursor=1",
-     "SPEECH OUTPUT: '1 %'"]))
+     "SPEECH OUTPUT: '1 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -816,7 +816,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 1 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 2 % Slider'",
      "     VISIBLE:  'Red 2 % Slider', cursor=1",
-     "SPEECH OUTPUT: '2 %'"]))
+     "SPEECH OUTPUT: '2 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -828,7 +828,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 2 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 3 % Slider'",
      "     VISIBLE:  'Red 3 % Slider', cursor=1",
-     "SPEECH OUTPUT: '3 %'"]))
+     "SPEECH OUTPUT: '3 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -840,7 +840,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 3 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 2 % Slider'",
      "     VISIBLE:  'Red 2 % Slider', cursor=1",
-     "SPEECH OUTPUT: '2 %'"]))
+     "SPEECH OUTPUT: '2 percent'"]))
 
 
 sequence.append(utils.StartRecordingAction())
@@ -853,7 +853,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 2 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 1 % Slider'",
      "     VISIBLE:  'Red 1 % Slider', cursor=1",
-     "SPEECH OUTPUT: '1 %'"]))
+     "SPEECH OUTPUT: '1 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -865,7 +865,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 1 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 0 % Slider'",
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: '0 %'"]))
+     "SPEECH OUTPUT: '0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Up"))
@@ -877,7 +877,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 20 % Slider'",
      "     VISIBLE:  'Red 20 % Slider', cursor=1",
-     "SPEECH OUTPUT: '20 %'"]))
+     "SPEECH OUTPUT: '20 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Up"))
@@ -889,7 +889,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 20 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 40 % Slider'",
      "     VISIBLE:  'Red 40 % Slider', cursor=1",
-     "SPEECH OUTPUT: '40 %'"]))
+     "SPEECH OUTPUT: '40 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Down"))
@@ -901,7 +901,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 40 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 20 % Slider'",
      "     VISIBLE:  'Red 20 % Slider', cursor=1",
-     "SPEECH OUTPUT: '20 %'"]))
+     "SPEECH OUTPUT: '20 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Page_Down"))
@@ -913,7 +913,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 20 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 0 % Slider'",
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: '0 %'"]))
+     "SPEECH OUTPUT: '0 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("End"))
@@ -925,7 +925,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 55 % Slider'",
      "     VISIBLE:  'Red 55 % Slider', cursor=1",
-     "SPEECH OUTPUT: '55 %'"]))
+     "SPEECH OUTPUT: '55 percent'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Home"))
@@ -937,7 +937,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Red 55 % Slider', cursor=1",
      "BRAILLE LINE:  'Red 0 % Slider'",
      "     VISIBLE:  'Red 0 % Slider', cursor=1",
-     "SPEECH OUTPUT: '0 %'"]))
+     "SPEECH OUTPUT: '0 percent'"]))
 
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.StartRecordingAction())

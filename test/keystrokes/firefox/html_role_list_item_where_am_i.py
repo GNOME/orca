@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  '• Not in a paragraph'",
      "     VISIBLE:  '• Not in a paragraph', cursor=1",
-     "SPEECH OUTPUT: '• Not in a paragraph'"]))
+     "SPEECH OUTPUT: 'bullet Not in a paragraph'"]))
 
 ########################################################################
 # Press Down Arrow to move through the lists doing a where am I for each
@@ -50,9 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Basic Where Am I",
     ["BRAILLE LINE:  '• In a paragraph'",
      "     VISIBLE:  '• In a paragraph', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: '• In a paragraph'",
-     "SPEECH OUTPUT: 'item 2 of 4'"]))
+     "SPEECH OUTPUT: 'list item bullet In a paragraph item 2 of 4'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -62,9 +60,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
     ["BRAILLE LINE:  '• In a section'",
      "     VISIBLE:  '• In a section', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: '• In a section'",
-     "SPEECH OUTPUT: 'item 3 of 4'"]))
+     "SPEECH OUTPUT: 'list item bullet In a section item 3 of 4'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -74,10 +70,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Basic Where Am I",
     ["BRAILLE LINE:  '1. A nested list item, not in a paragraph'",
      "     VISIBLE:  '1. A nested list item, not in a ', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: '1. A nested list item, not in a paragraph'",
-     "SPEECH OUTPUT: 'item 1 of 3'",
-     "SPEECH OUTPUT: 'Nesting level 1'"]))
+     "SPEECH OUTPUT: 'list item 1. A nested list item, not in a paragraph item 1 of 3 Nesting level 1'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -87,10 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Basic Where Am I",
     ["BRAILLE LINE:  '2. A nested list item, in a paragraph'",
      "     VISIBLE:  '2. A nested list item, in a para', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: '2. A nested list item, in a paragraph'",
-     "SPEECH OUTPUT: 'item 2 of 3'",
-     "SPEECH OUTPUT: 'Nesting level 1'"]))
+     "SPEECH OUTPUT: 'list item 2. A nested list item, in a paragraph item 2 of 3 Nesting level 1'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -100,10 +90,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Basic Where Am I",
     ["BRAILLE LINE:  '3. A nested list item, in a section'",
      "     VISIBLE:  '3. A nested list item, in a sect', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: '3. A nested list item, in a section'",
-     "SPEECH OUTPUT: 'item 3 of 3'",
-     "SPEECH OUTPUT: 'Nesting level 1'"]))
+     "SPEECH OUTPUT: 'list item 3. A nested list item, in a section item 3 of 3 Nesting level 1'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -113,9 +100,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Basic Where Am I",
     ["BRAILLE LINE:  '• In a paragraph that's in a section'",
      "     VISIBLE:  '• In a paragraph that's in a sec', cursor=1",
-     "SPEECH OUTPUT: 'list item'",
-     "SPEECH OUTPUT: '• In a paragraph that's in a section'",
-     "SPEECH OUTPUT: 'item 4 of 4'"]))
+     "SPEECH OUTPUT: 'list item bullet In a paragraph that's in a section item 4 of 4'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
