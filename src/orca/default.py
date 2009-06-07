@@ -4598,10 +4598,34 @@ class Script(script.Script):
         """Toggles between flat review mode and focus tracking mode."""
 
         if self.flatReviewContext:
+            if inputEvent:
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  This message lets the user know
+                # they have left the flat review feature.
+                #
+                speech.speak(_("Leaving flat review."))
             self.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
             self.updateBraille(orca_state.locusOfFocus)
         else:
+            if inputEvent:
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  This message lets the user know
+                # they have entered the flat review feature.
+                #
+                speech.speak(_("Entering flat review."))
             context = self.getFlatReviewContext()
             [wordString, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
