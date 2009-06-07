@@ -49,9 +49,11 @@ try:
     import gobject
 
     _brlAPI = None
+    _brlAPIAvailable = True
     _brlAPIRunning = False
     _brlAPISourceId = 0
 except:
+    _brlAPIAvailable = False
     _brlAPIRunning = False
 
 try:
@@ -83,89 +85,90 @@ monitor = None
 #
 command_name = {}
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to the left.
-#
-command_name[brlapi.KEY_CMD_FWINLT]   = _("Line Left")
+if _brlAPIAvailable:
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to the left.
+    #
+    command_name[brlapi.KEY_CMD_FWINLT]   = _("Line Left")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to the right.
-#
-command_name[brlapi.KEY_CMD_FWINRT]   = _("Line Right")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to the right.
+    #
+    command_name[brlapi.KEY_CMD_FWINRT]   = _("Line Right")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls up.
-#
-command_name[brlapi.KEY_CMD_LNUP]     = _("Line Up")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls up.
+    #
+    command_name[brlapi.KEY_CMD_LNUP]     = _("Line Up")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls down.
-#
-command_name[brlapi.KEY_CMD_LNDN]     = _("Line Down")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls down.
+    #
+    command_name[brlapi.KEY_CMD_LNDN]     = _("Line Down")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, it instructs the braille display to freeze.
-#
-command_name[brlapi.KEY_CMD_FREEZE]     = _("Freeze")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, it instructs the braille display to freeze.
+    #
+    command_name[brlapi.KEY_CMD_FREEZE]     = _("Freeze")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to the top left of the
-# window.
-#
-command_name[brlapi.KEY_CMD_TOP_LEFT] = _("Top Left")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to the top left of the
+    # window.
+    #
+    command_name[brlapi.KEY_CMD_TOP_LEFT] = _("Top Left")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to the bottom right of
-# the window.
-#
-command_name[brlapi.KEY_CMD_BOT_LEFT] = _("Bottom Right")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to the bottom right of
+    # the window.
+    #
+    command_name[brlapi.KEY_CMD_BOT_LEFT] = _("Bottom Right")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to position containing
-# the cursor.
-#
-command_name[brlapi.KEY_CMD_HOME]     = _("Cursor Position")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to position containing
+    # the cursor.
+    #
+    command_name[brlapi.KEY_CMD_HOME]     = _("Cursor Position")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display toggles between contracted and
-# contracted braille.
-#
-command_name[brlapi.KEY_CMD_SIXDOTS]  = _("Six Dots")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display toggles between contracted and
+    # contracted braille.
+    #
+    command_name[brlapi.KEY_CMD_SIXDOTS]  = _("Six Dots")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# This command represents a whole set of buttons known as cursor
-# routings keys and are a way for a user to tell the machine they are
-# interested in a particular character on the display.
-#
-command_name[brlapi.KEY_CMD_ROUTE]    = _("Cursor Routing")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # This command represents a whole set of buttons known as cursor
+    # routings keys and are a way for a user to tell the machine they are
+    # interested in a particular character on the display.
+    #
+    command_name[brlapi.KEY_CMD_ROUTE]    = _("Cursor Routing")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# This command represents the start of a selection operation.  It is
-# called "Cut Begin" to map to what BrlTTY users are used to:  in
-# character cell mode operation on virtual consoles, the act of copying
-# text is erroneously called a "cut" operation.
-#
-command_name[brlapi.KEY_CMD_CUTBEGIN] = _("Cut Begin")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # This command represents the start of a selection operation.  It is
+    # called "Cut Begin" to map to what BrlTTY users are used to:  in
+    # character cell mode operation on virtual consoles, the act of copying
+    # text is erroneously called a "cut" operation.
+    #
+    command_name[brlapi.KEY_CMD_CUTBEGIN] = _("Cut Begin")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# This command represents marking the endpoint of a selection.  It is
-# called "Cut Line" to map to what BrlTTY users are used to:  in
-# character cell mode operation on virtual consoles, the act of copying
-# text is erroneously called a "cut" operation.
-#
-command_name[brlapi.KEY_CMD_CUTLINE] = _("Cut Line")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # This command represents marking the endpoint of a selection.  It is
+    # called "Cut Line" to map to what BrlTTY users are used to:  in
+    # character cell mode operation on virtual consoles, the act of copying
+    # text is erroneously called a "cut" operation.
+    #
+    command_name[brlapi.KEY_CMD_CUTLINE] = _("Cut Line")
 
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
