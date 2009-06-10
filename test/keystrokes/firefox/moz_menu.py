@@ -47,7 +47,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Edit'",
      "     VISIBLE:  'Edit', cursor=1",
-     "SPEECH OUTPUT: 'Edit section Edit  item 1 of 1'"]))
+     "SPEECH OUTPUT: 'Edit item 1 of 1'"]))
 
 ########################################################################
 # Use arrows to navigate menu structure.

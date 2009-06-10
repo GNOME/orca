@@ -59,8 +59,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down Arrow", 
-    ["BUG? - We are now speaking the word 'bullet' for each bullet. We probably should be. Note that I've only marked this once, but it applies throughout this test.",
-     "BRAILLE LINE:  '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do'",
+    ["BRAILLE LINE:  '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do'",
      "     VISIBLE:  '• left and right arrows to move ', cursor=1",
      "SPEECH OUTPUT: 'bullet left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do'"]))
 

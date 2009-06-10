@@ -1775,7 +1775,7 @@ class StructuralNavigation:
         else:
             voice = None
 
-        utterances = self._script.speechGenerator.getSpeech(obj)
+        utterances = self._script.speechGenerator.generateSpeech(obj)
         speech.speak(utterances, voice)
 
     #########################################################################

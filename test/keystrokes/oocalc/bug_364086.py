@@ -57,8 +57,8 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A2 '",
      "     VISIBLE:  'Cell A2 ', cursor=1",
      "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
-     "SPEECH OUTPUT: ' A1'",
-     "SPEECH OUTPUT: ' A2'"]))
+     "SPEECH OUTPUT: 'A1'",
+     "SPEECH OUTPUT: 'A2'"]))
 
 ######################################################################
 # 4. Enter Alt-f, Alt-c to close the Calc spreadsheet window.

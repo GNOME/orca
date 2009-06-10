@@ -78,7 +78,7 @@ class Bookmarks:
         #
         utterances = [_('bookmark entered')]
         utterances.extend(
-            self._script.speechGenerator.getSpeech(
+            self._script.speechGenerator.generateSpeech(
                 context.getCurrentAccessible()))
         speech.speak(utterances)
 

@@ -209,7 +209,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Spinbox #1: 902 $l'",
      "     VISIBLE:  'Spinbox #1: 902 $l', cursor=16",
-     "SPEECH OUTPUT: 'Spinbox #1: spin button 902 '"]))
+     "SPEECH OUTPUT: 'Spinbox #1: spin button 902 required'"]))
 
 ########################################################################
 # Close the demo

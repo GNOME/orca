@@ -34,7 +34,6 @@ import orca.keybindings as keybindings
 from braillegenerator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from formatting import Formatting
-from where_am_I import WhereAmI
 
 ########################################################################
 #                                                                      #
@@ -51,11 +50,6 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
         default.Script.__init__(self, app)
-
-    def getWhereAmI(self):
-        """Returns the "where am I" class for this script.
-        """
-        return WhereAmI(self)
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.

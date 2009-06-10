@@ -131,7 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '< > CheckBox cb7: normal checkbox. disable Button enable Button set value to \"fish\" Button Reset value+checked Button \"onChange\" handler updates: []'",
      "     VISIBLE:  '< > CheckBox cb7: normal checkbo', cursor=1",
-     "SPEECH OUTPUT: 'cb7: normal checkbox. check box not checked '"]))
+     "SPEECH OUTPUT: 'cb7: normal checkbox. check box not checked'"]))
 
 ########################################################################
 # Close the demo

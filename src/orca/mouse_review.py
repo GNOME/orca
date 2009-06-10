@@ -266,8 +266,8 @@ class MouseReviewer:
                 braille.displayMessage(obj)
             else:
                 speech.speak(
-                    self._currentMouseOver.script.speechGenerator.getSpeech(
-                        obj))
+                    self._currentMouseOver.script.speechGenerator.\
+                        generateSpeech(obj))
                 self._currentMouseOver.script.updateBraille(obj)
 
     def _getZOrder(self, frame_name):

@@ -41,7 +41,6 @@ import orca.settings as settings
 
 from orca.orca_i18n import _ # for gettext support
 
-from where_am_i import WhereAmI
 from speech_generator import SpeechGenerator
 from formatting import Formatting
 ########################################################################
@@ -139,12 +138,6 @@ class Script(default.Script):
         """
 
         return SpeechGenerator(self)
-
-    def getWhereAmI(self):
-        """Returns the "where am I" class for this script.
-        """
-
-        return WhereAmI(self)
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""
@@ -289,7 +282,7 @@ class Script(default.Script):
                                        pyatspi.STATE_SENSITIVE)):
                                     self.updateBraille(orca_state.locusOfFocus)
                                     speech.speak(
-                                        self.speechGenerator.getSpeech(
+                                        self.speechGenerator.generateSpeech(
                                             orca_state.locusOfFocus))
             except NotImplementedError:
                 pass
@@ -342,7 +335,7 @@ class Script(default.Script):
 
         savedSpeechVerbosityLevel = settings.speechVerbosityLevel
         settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
-        utterances = speechGen.getSpeech(tab)
+        utterances = speechGen.generateSpeech(tab)
         speech.speak(utterances)
         settings.speechVerbosityLevel = savedSpeechVerbosityLevel
 
@@ -374,6 +367,149 @@ class Script(default.Script):
         mins = minutes[totalMins % 60]
 
         return hrs + ' ' + mins + ' ' + suffix
+
+    def getAllSelectedText(self, obj):
+        """Get all the text applicable text selections for the given object.
+        If there is selected text, look to see if there are any previous
+        or next text objects that also have selected text and add in their
+        text contents.
+
+        Arguments:
+        - obj: the text object to start extracting the selected text from.
+
+        Returns: all the selected text contents plus the start and end
+        offsets within the text for the given object.
+        """
+
+        textContents = ""
+        startOffset = 0
+        endOffset = 0
+        if obj.queryText().getNSelections() > 0:
+            [textContents, startOffset, endOffset] = \
+                                            self.getSelectedText(obj)
+
+        # Unfortunately, Evolution doesn't use the FLOWS_FROM and
+        # FLOWS_TO relationships to easily allow us to get to previous
+        # and next text objects. Instead we have to move up the
+        # component hierarchy until we get to the object containing all
+        # the panels (with each line containing a single text item).
+        # We can then check in both directions to see if there is other
+        # contiguous text that is selected. We also have to jump over
+        # zero length (empty) text lines and continue checking on the
+        # other side.
+        #
+        container = obj.parent.parent
+        current = obj.parent.getIndexInParent()
+        morePossibleSelections = True
+        while morePossibleSelections:
+            morePossibleSelections = False
+            if (current-1) >= 0:
+                prevPanel = container[current-1]
+                try:
+                    prevObj = prevPanel[0]
+                    displayedText = prevObj.queryText().getText(0, -1)
+                    if len(displayedText) == 0:
+                        current -= 1
+                        morePossibleSelections = True
+                    elif prevObj.queryText().getNSelections() > 0:
+                        [newTextContents, start, end] = \
+                                     self.getSelectedText(prevObj)
+                        textContents = newTextContents + " " + textContents
+                        current -= 1
+                        morePossibleSelections = True
+                except:
+                    pass
+
+        current = obj.parent.getIndexInParent()
+        morePossibleSelections = True
+        while morePossibleSelections:
+            morePossibleSelections = False
+            if (current+1) < container.childCount:
+                nextPanel = container[current+1]
+                try:
+                    nextObj = nextPanel[0]
+                    displayedText = nextObj.queryText().getText(0, -1)
+                    if len(displayedText) == 0:
+                        current += 1
+                        morePossibleSelections = True
+                    elif nextObj.queryText().getNSelections() > 0:
+                        [newTextContents, start, end] = \
+                                     self.getSelectedText(nextObj)
+                        textContents += " " + newTextContents
+                        current += 1
+                        morePossibleSelections = True
+                except:
+                    pass
+
+        return [textContents, startOffset, endOffset]
+
+    def hasTextSelections(self, obj):
+        """Return an indication of whether this object has selected text.
+        Note that it's possible that this object has no text, but is part
+        of a selected text area. Because of this, we need to check the
+        objects on either side to see if they are none zero length and
+        have text selections.
+
+        Arguments:
+        - obj: the text object to start checking for selected text.
+
+        Returns: an indication of whether this object has selected text,
+        or adjacent text objects have selected text.
+        """
+
+        currentSelected = False
+        otherSelected = False
+        nSelections = obj.queryText().getNSelections()
+        if nSelections:
+            currentSelected = True
+        else:
+            otherSelected = False
+            displayedText = obj.queryText().getText(0, -1)
+            if len(displayedText) == 0:
+                container = obj.parent.parent
+                current = obj.parent.getIndexInParent()
+                morePossibleSelections = True
+                while morePossibleSelections:
+                    morePossibleSelections = False
+                    if (current-1) >= 0:
+                        prevPanel = container[current-1]
+                        prevObj = prevPanel[0]
+                        try:
+                            prevObjText = prevObj.queryText()
+                        except:
+                            prevObjText = None
+
+                        if prevObj and prevObjText:
+                            if prevObjText.getNSelections() > 0:
+                                otherSelected = True
+                            else:
+                                displayedText = prevObjText.getText(0, -1)
+                                if len(displayedText) == 0:
+                                    current -= 1
+                                    morePossibleSelections = True
+
+                current = obj.parent.getIndexInParent()
+                morePossibleSelections = True
+                while morePossibleSelections:
+                    morePossibleSelections = False
+                    if (current+1) < container.childCount:
+                        nextPanel = container[current+1]
+                        nextObj = nextPanel[0]
+                        try:
+                            nextObjText = nextObj.queryText()
+                        except:
+                            nextObjText = None
+
+                        if nextObj and nextObjText:
+                            if nextObjText.getNSelections() > 0:
+                                otherSelected = True
+                            else:
+                                displayedText = nextObjText.getText(0, -1)
+                                if len(displayedText) == 0:
+                                    current += 1
+                                    morePossibleSelections = True
+
+        return [currentSelected, otherSelected]
 
     def textLines(self, obj):
         """Creates a generator that can be used to iterate over each line
@@ -564,7 +700,7 @@ class Script(default.Script):
         return False
 
     def getMisspelledWordAndBody(self, suggestionsList, messagePanel):
-        """Gets the misspelled word from the spelling dialog and the 
+        """Gets the misspelled word from the spelling dialog and the
         list of words from the message body.
 
         Arguments:
@@ -947,7 +1083,7 @@ class Script(default.Script):
                             settings.speechVerbosityLevel = \
                                 settings.VERBOSITY_LEVEL_BRIEF
 
-                            utterances = speechGen.getSpeech(
+                            utterances = speechGen.generateSpeech(
                                 header,
                                 includeContext=False,
                                 priorObj=oldLocusOfFocus)
@@ -976,7 +1112,7 @@ class Script(default.Script):
                                 settings.VERBOSITY_LEVEL_BRIEF
                         settings.speechVerbosityLevel = \
                             savedSpeechVerbosityLevel
-                        utterances = speechGen.getSpeech(
+                        utterances = speechGen.generateSpeech(
                             cell,
                             includeContext=False,
                             priorObj=oldLocusOfFocus)
@@ -1070,9 +1206,9 @@ class Script(default.Script):
                           + "day view: tabbing to day with appts.")
 
             parent = event.source.parent
-            utterances = speechGen.getSpeech(parent,
-                                             includeContext=False,
-                                             priorObj=oldLocusOfFocus)
+            utterances = speechGen.generateSpeech(parent,
+                                                  includeContext=False,
+                                                  priorObj=oldLocusOfFocus)
             [brailleRegions, focusedRegion] = \
                     brailleGen.getBrailleRegions(parent)
             speech.speak(utterances)
@@ -1088,7 +1224,7 @@ class Script(default.Script):
                         appt = childTable.getAccessibleAt(row, 0)
                         extents = appt.queryComponent().getExtents(0)
                         if extents.y == apptExtents.y:
-                            utterances = speechGen.getSpeech(
+                            utterances = speechGen.generateSpeech(
                                 event.source,
                                 includeContext=False,
                                 priorObj=oldLocusOfFocus)
@@ -1152,7 +1288,7 @@ class Script(default.Script):
                     apptExtents = child.queryComponent().getExtents(0)
 
                     if extents.y == apptExtents.y:
-                        utterances = speechGen.getSpeech(
+                        utterances = speechGen.generateSpeech(
                             child,
                             includeContext=False,
                             priorObj=oldLocusOfFocus)
@@ -1300,7 +1436,7 @@ class Script(default.Script):
                                            "Home", "End", "Return", "Tab"]:
                         return
 
-                    # If the last keyboard event was a "same line" 
+                    # If the last keyboard event was a "same line"
                     # navigation key, then pass this event onto the
                     # onCaretMoved() method in the parent class for
                     # speaking. See bug #516565 for more details.
@@ -1334,7 +1470,7 @@ class Script(default.Script):
 
             if not self.pointOfReference.get('activeDescendantInfo'):
                 [badWord, allTokens] = \
-                    self.getMisspelledWordAndBody(event.source, 
+                    self.getMisspelledWordAndBody(event.source,
                                                   self.message_panel)
                 self.speakMisspeltWord(allTokens, badWord)
 

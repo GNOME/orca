@@ -31,18 +31,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     # pylint: disable-msg=W0142
 
-    """Overrides _getRealTableCell to correctly handle the table
+    """Overrides _generateRealTableCell to correctly handle the table
     cells in the Library table.
     """
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _getRealTableCell(self, obj, **args):
+    def _generateRealTableCell(self, obj, **args):
         # Check to see if this is a table cell from the Library table.
         # If so, it'll have five children and we are interested in the
         # penultimate one. See bug #512639 for more details.
         #
         if obj.childCount == 5:
             obj = obj[3]
-        return speech_generator.SpeechGenerator._getRealTableCell(
+        return speech_generator.SpeechGenerator._generateRealTableCell(
             self, obj, **args)

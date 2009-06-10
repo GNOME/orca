@@ -38,7 +38,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _getLabelAndName(self, obj, **args):
+    def _generateLabelAndName(self, obj, **args):
         """Gets the label and the name if the name is different from the label.
         """
         result = []
@@ -64,7 +64,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         elif handleTabButton:
             result.append(self._script.getDisplayedText(obj.parent[1]))
         else:
-            result.append(speech_generator.SpeechGenerator._getLabelAndName(
-                self, obj, **args))
+            result.append(
+                speech_generator.SpeechGenerator._generateLabelAndName(
+                    self, obj, **args))
 
         return result

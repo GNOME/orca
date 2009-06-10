@@ -29,9 +29,11 @@ import pyatspi
 
 import orca.speech_generator as speech_generator
 
+from orca.orca_i18n import _ # for gettext support
+
 class SpeechGenerator(speech_generator.SpeechGenerator):
-    """Overrides _getSpeechForTableCell so that, if this is an expanded
-       table cell,  we can strip off the "0 items".
+    """Overrides _generateSpeechForTableCell so that, if this is an
+       expanded table cell, we can strip off the "0 items".
     """
 
     # pylint: disable-msg=W0142
@@ -39,7 +41,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _getRealTableCell(self, obj, **args):
+    def _generateRealTableCell(self, obj, **args):
         # Check that we are in a table cell in the mail message header list.
         # If we are and this table cell has an expanded state, then
         # dont speak the number of items.
@@ -54,8 +56,76 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if state.contains(pyatspi.STATE_EXPANDED):
                     oldRole = self._overrideRole(
                         'ALTERNATIVE_REAL_ROLE_TABLE_CELL', args)
-                    result = self.getSpeech(obj, **args)
+                    result = self.generateSpeech(obj, **args)
                     self._restoreRole(oldRole, args)
                     return result
-        return speech_generator.SpeechGenerator._getRealTableCell(
+        return speech_generator.SpeechGenerator._generateRealTableCell(
             self, obj, **args)
+
+    def _generateTableCellRow(self, obj, **args):
+        """Orca has a feature to automatically read an entire row of a table
+        as the user arrows up/down the roles.  This leads to complexity in
+        the code.  This method is used to return an array of strings
+        (and possibly voice and audio specifications) for an entire row
+        in a table if that's what the user has requested and if the row
+        has changed.  Otherwise, it will return an array for just the
+        current cell.
+        """
+        # The only time we want to override things is if we're doing
+        # a detailed whereAmI. In that case, we want to minimize the
+        # chattiness associated with presenting the full row of the
+        # message list.
+        #
+        if args.get('formatType', 'unfocused') != 'detailedWhereAmI':
+            return speech_generator.SpeechGenerator.\
+                _generateTableCellRow(self, obj, **args)
+
+        # [[[TODO - JD: Maybe we can do something clever with a
+        # formatting string to address the headers associated with
+        # toggle columns. That's really the difference here.]]]
+        #
+        result = []
+        try:
+            parentTable = obj.parent.queryTable()
+        except NotImplementedError:
+            parentTable = None
+        if parentTable and parentTable.nColumns > 1 \
+           and not self._script.isLayoutOnly(obj.parent):
+            for i in range(0, parentTable.nColumns):
+                index = self._script.getCellIndex(obj)
+                row = parentTable.getRowAtIndex(index)
+                cell = parentTable.getAccessibleAt(row, i)
+                if not cell:
+                    continue
+                state = cell.getState()
+                if state.contains(pyatspi.STATE_SHOWING):
+                    # Don't speak check box cells that area not checked.
+                    #
+                    notChecked = False
+                    try:
+                        action = cell.queryAction()
+                    except NotImplementedError:
+                        action = None
+                    if action:
+                        for i in range(0, action.nActions):
+                            # Translators: this is the action name for
+                            # the 'toggle' action. It must be the same
+                            # string used in the *.po file for gail.
+                            #
+                            if action.getName(i) in ["toggle", _("toggle")]:
+                                if not state.contains(pyatspi.STATE_CHECKED):
+                                    notChecked = True
+                                break
+                    if notChecked:
+                        continue
+
+                    descendant = self._script.getRealActiveDescendant(cell)
+                    text = self._script.getDisplayedText(descendant)
+                    if text == "Status":
+                        # Translators: this in reference to an e-mail message
+                        # status of having been read or unread.
+                        #
+                        text = _("Read")
+                    result.append(text)
+
+        return result

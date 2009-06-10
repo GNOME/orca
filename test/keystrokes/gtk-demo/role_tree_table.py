@@ -82,12 +82,18 @@ sequence.append(utils.AssertPresentationAction(
     "January cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
      "     VISIBLE:  'January expanded < > Alex < > Ha', cursor=1",
-     "SPEECH OUTPUT: 'tree table Holiday cell January'",
-     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 53'",
-     "SPEECH OUTPUT: 'expanded tree level 1'"]))
+     "SPEECH OUTPUT: 'tree table Holiday cell January column 1 of 6 row 1 of 53 expanded tree level 1'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
+#
+# JD to WDW: another case of utterances being collapsed.
+# In addition, before the detailed Where Am I didn't include the
+# names of the other checkboxes on the row; just their states in
+# rapid succession. Now we speak the names. I think this is a bug
+# fix. :-) Thoughts?
+#
+# WDW to JD: Agreed.  This looks like a fix.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -99,13 +105,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'January expanded < > Alex < > Ha', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January expanded < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
      "     VISIBLE:  'January expanded < > Alex < > Ha', cursor=1",
-     "SPEECH OUTPUT: 'tree table Holiday cell January'",
-     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 53'",
-     "SPEECH OUTPUT: 'expanded tree level 1'",
-     "SPEECH OUTPUT: 'tree table Holiday cell January'",
-     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 53'",
-     "SPEECH OUTPUT: 'January check box not checked check box not checked check box not checked check box not checked check box not checked'",
-     "SPEECH OUTPUT: 'expanded tree level 1'"]))
+     "SPEECH OUTPUT: 'tree table Holiday cell January column 1 of 6 row 1 of 53 expanded tree level 1'",
+     "SPEECH OUTPUT: 'tree table Holiday cell January column 1 of 6 row 1 of 53 January expanded 3 items Alex check box not checked Havoc check box not checked Tim check box not checked Owen check box not checked Dave check box not checked expanded tree level 1'"]))
 
 ########################################################################
 # Collapse the cell.
@@ -133,12 +134,18 @@ sequence.append(utils.AssertPresentationAction(
     "January cell collapsed basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January collapsed < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
      "     VISIBLE:  'January collapsed < > Alex < > H', cursor=1",
-     "SPEECH OUTPUT: 'tree table Holiday cell January'",
-     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 50'",
-     "SPEECH OUTPUT: 'collapsed tree level 1'"]))
+     "SPEECH OUTPUT: 'tree table Holiday cell January column 1 of 6 row 1 of 50 collapsed tree level 1'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
+#
+# JD to WDW: another case of utterances being collapsed.
+# In addition, before the detailed Where Am I didn't include the
+# names of the other checkboxes on the row; just their states in
+# rapid succession. Now we speak the names. I think this is a bug
+# fix. :-) Thoughts?
+#
+# WDW to JD: Agreed.  This looks like a fix.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -150,13 +157,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'January collapsed < > Alex < > H', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Holiday ColumnHeader January collapsed < > Alex < > Havoc < > Tim < > Owen < > Dave TREE LEVEL 1'",
      "     VISIBLE:  'January collapsed < > Alex < > H', cursor=1",
-     "SPEECH OUTPUT: 'tree table Holiday cell January'",
-     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 50'",
-     "SPEECH OUTPUT: 'collapsed tree level 1'",
-     "SPEECH OUTPUT: 'tree table Holiday cell January'",
-     "SPEECH OUTPUT: 'column 1 of 6 row 1 of 50'",
-     "SPEECH OUTPUT: 'January check box not checked check box not checked check box not checked check box not checked check box not checked'",
-     "SPEECH OUTPUT: 'collapsed tree level 1'"]))
+     "SPEECH OUTPUT: 'tree table Holiday cell January column 1 of 6 row 1 of 50 collapsed tree level 1'",
+     "SPEECH OUTPUT: 'tree table Holiday cell January column 1 of 6 row 1 of 50 January collapsed Alex check box not checked Havoc check box not checked Tim check box not checked Owen check box not checked Dave check box not checked collapsed tree level 1'"]))
 
 ########################################################################
 # Expand the cell again.
@@ -220,8 +222,7 @@ sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
      "     VISIBLE:  '<x> Alex', cursor=1",
-     "SPEECH OUTPUT: 'tree table Alex cell check box checked'",
-     "SPEECH OUTPUT: 'column 2 of 6 row 2 of 53'"]))
+     "SPEECH OUTPUT: 'tree table Alex cell check box checked column 2 of 6 row 2 of 53'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -236,11 +237,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '<x> Alex', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
      "     VISIBLE:  '<x> Alex', cursor=1",
-     "SPEECH OUTPUT: 'tree table Alex cell check box checked'",
-     "SPEECH OUTPUT: 'column 2 of 6 row 2 of 53'",
-     "SPEECH OUTPUT: 'tree table Alex cell check box checked'",
-     "SPEECH OUTPUT: 'column 2 of 6 row 2 of 53'",
-     "SPEECH OUTPUT: 'New Years Day check box checked check box checked check box checked check box checked check box not checked'"]))
+     "SPEECH OUTPUT: 'tree table Alex cell check box checked column 2 of 6 row 2 of 53'",
+     "SPEECH OUTPUT: 'tree table Alex cell check box checked column 2 of 6 row 2 of 53 New Years Day Alex check box checked Havoc check box checked Tim check box checked Owen check box checked Dave check box not checked'"]))
 
 ########################################################################
 # Change the state of the checkbox.

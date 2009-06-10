@@ -181,7 +181,7 @@ sequence.append(utils.AssertPresentationAction(
     "Tab back to tree table",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
      "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
-     "SPEECH OUTPUT: 'Name column header Bookmarks Toolbar blank blank not selected'"]))
+     "SPEECH OUTPUT: 'Name column header Bookmarks Toolbar not selected'"]))
 
 ########################################################################
 # Now that the Places Manager is back to its pre-explored state,

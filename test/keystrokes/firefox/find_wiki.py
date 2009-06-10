@@ -102,7 +102,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "7. Return",
-    ["SPEECH OUTPUT: 'Darragh Ó Héiligh link  has created several audio guides for Orca. This is a fantastic contribution'"]))
+    ["BUG? - Should we be doing this?",
+     "SPEECH OUTPUT: 'Darragh O ACUTE Héiligh link  has created several audio guides for Orca. This is a fantastic contribution'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

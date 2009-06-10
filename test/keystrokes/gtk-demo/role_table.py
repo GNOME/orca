@@ -82,8 +82,7 @@ sequence.append(utils.AssertPresentationAction(
     "Table Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke[ ]*'",
      "     VISIBLE:  '3 bottles of coke[ ]*', cursor=1",
-     "SPEECH OUTPUT: 'table Number cell 3'",
-     "SPEECH OUTPUT: 'column 1 of 3 row 1 of 5'"]))
+     "SPEECH OUTPUT: 'table Number cell 3 column 1 of 3 row 1 of 5'"]))
 
 ########################################################################
 # Down arrow to the next line.
@@ -110,8 +109,7 @@ sequence.append(utils.AssertPresentationAction(
     "Table Where Am I (again)",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5'",
      "     VISIBLE:  '5', cursor=1",
-     "SPEECH OUTPUT: 'table Number cell 5'",
-     "SPEECH OUTPUT: 'column 1 of 3 row 2 of 5'"]))
+     "SPEECH OUTPUT: 'table Number cell 5 column 1 of 3 row 2 of 5'"]))
 
 ########################################################################
 # Turn reading of rows off.

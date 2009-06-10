@@ -87,7 +87,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic whereAmI", 
     ["BRAILLE LINE:  'First tab Page Second tab Page'",
      "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list First tab page item 1 of 2 '"]))
+     "SPEECH OUTPUT: 'tab list First tab page item 1 of 2'"]))
 
 ########################################################################
 # Close the dialog, focus goes back to button.  

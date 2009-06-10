@@ -141,16 +141,16 @@ sequence.append(WaitAction("object:property-change:accessible-value",
 
 sequence.append(utils.AssertPresentationAction(
     "progress output", 
-    ["SPEECH OUTPUT: '10 percent. '",
-     "SPEECH OUTPUT: '20 percent. '",
-     "SPEECH OUTPUT: '30 percent. '",
-     "SPEECH OUTPUT: '40 percent. '",
-     "SPEECH OUTPUT: '50 percent. '",
-     "SPEECH OUTPUT: '60 percent. '",
-     "SPEECH OUTPUT: '70 percent. '",
-     "SPEECH OUTPUT: '80 percent. '",
-     "SPEECH OUTPUT: '90 percent. '",
-     "SPEECH OUTPUT: '100 percent. '"]))
+    ["SPEECH OUTPUT: '10 percent'",
+     "SPEECH OUTPUT: '20 percent'",
+     "SPEECH OUTPUT: '30 percent'",
+     "SPEECH OUTPUT: '40 percent'",
+     "SPEECH OUTPUT: '50 percent'",
+     "SPEECH OUTPUT: '60 percent'",
+     "SPEECH OUTPUT: '70 percent'",
+     "SPEECH OUTPUT: '80 percent'",
+     "SPEECH OUTPUT: '90 percent'",
+     "SPEECH OUTPUT: '100 percent'"]))
 
 ########################################################################
 # Close the demo

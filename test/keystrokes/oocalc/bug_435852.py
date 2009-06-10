@@ -45,7 +45,7 @@ sequence.append(utils.AssertPresentationAction(
     "Enter right arrow to move to cell B1",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell B1 '",
      "     VISIBLE:  'Cell B1 ', cursor=1",
-     "SPEECH OUTPUT: ' B1'"]))
+     "SPEECH OUTPUT: 'B1'"]))
 
 ######################################################################
 # 5. Enter down arrow to move to cell B2.
@@ -56,7 +56,7 @@ sequence.append(utils.AssertPresentationAction(
     "Enter down arrow to move to cell B2",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell B2 '",
      "     VISIBLE:  'Cell B2 ', cursor=1",
-     "SPEECH OUTPUT: ' B2'"]))
+     "SPEECH OUTPUT: 'B2'"]))
 
 ######################################################################
 # 6. Enter left arrow to move to cell A2.
@@ -67,7 +67,7 @@ sequence.append(utils.AssertPresentationAction(
     "Enter left arrow to move to cell A2",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A2 '",
      "     VISIBLE:  'Cell A2 ', cursor=1",
-     "SPEECH OUTPUT: ' A2'"]))
+     "SPEECH OUTPUT: 'A2'"]))
 
 ######################################################################
 # 7. Enter up arrow to move to cell A1.
@@ -78,7 +78,7 @@ sequence.append(utils.AssertPresentationAction(
     "Enter up arrow to move to cell A1",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
      "     VISIBLE:  'Cell A1 ', cursor=1",
-     "SPEECH OUTPUT: ' A1'"]))
+     "SPEECH OUTPUT: 'A1'"]))
 
 ######################################################################
 # 8. Enter Alt-f, Alt-c to close the Calc spreadsheet window.

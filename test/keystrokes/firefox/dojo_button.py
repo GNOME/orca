@@ -48,7 +48,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on <button>", 
     ["BRAILLE LINE:  '<button> <input type='button'> Button       Create   Edit!   Color   Save     '",
      "     VISIBLE:  '<button> <input type='button'> B', cursor=1",
-     "SPEECH OUTPUT: '<button> button '"]))
+     "SPEECH OUTPUT: '<button> button'"]))
 
 ########################################################################
 # Tab to <input type='button'>  
@@ -72,7 +72,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on <input type='button'>", 
     ["BRAILLE LINE:  '<button> <input type='button'> Button       Create   Edit!   Color   Save     '",
      "     VISIBLE:  '<input type='button'> Button    ', cursor=1",
-     "SPEECH OUTPUT: '<input type='button'> button '"]))
+     "SPEECH OUTPUT: '<input type='button'> button'"]))
 
 ########################################################################
 # Tab to "Create"  
@@ -98,7 +98,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create", 
     ["BRAILLE LINE:  'Create Button'",
      "     VISIBLE:  'Create Button', cursor=1",
-     "SPEECH OUTPUT: 'Create button '"]))
+     "SPEECH OUTPUT: 'Create button'"]))
 
 # WDW - Tabbing to the Create button pops up a tooltip.  Should we present
 # it automatically?
@@ -131,7 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on drop down menu on Create", 
     ["BRAILLE LINE:  '<button> Button <input type='button'> ButtonCreate Button   MenuSave Button   Menu'",
      "     VISIBLE:  '  MenuSave Button   Menu', cursor=1",
-     "SPEECH OUTPUT: '  menu '"]))
+     "SPEECH OUTPUT: '  menu'"]))
 
 ########################################################################
 # Open the drop down menu.
@@ -169,10 +169,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create from template", 
-    ["BUG? - Why are we speaking 'item 1 of 1'?",
-     "BRAILLE LINE:  'Create from template'",
+    ["BRAILLE LINE:  'Create from template'",
      "     VISIBLE:  'Create from template', cursor=1",
-     "SPEECH OUTPUT: 'Create from template  item 1 of 1'"]))
+     "SPEECH OUTPUT: 'Create from template item 1 of 1'"]))
 
 ########################################################################
 # Close the menu and go to the Edit! button

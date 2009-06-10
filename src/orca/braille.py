@@ -621,7 +621,7 @@ class Text(Region):
                 n += 1
 
         if attrIndicator:
-            enabledAttributes = script.attribsToDictionary(
+            enabledAttributes = script.attributeStringToDictionary(
                 settings.enabledBrailledTextAttributes)
 
             offset = self.lineOffset
@@ -645,7 +645,7 @@ class Text(Region):
                         regionMask[i] |= attrIndicator
 
         if selIndicator:
-            selections = script.getTextSelections(self.accessible)
+            selections = script.getAllTextSelections(self.accessible)
             for startOffset, endOffset in selections:
                 maskStart = max(startOffset - self.lineOffset, 0)
                 maskEnd = min(endOffset - self.lineOffset, stringLength)

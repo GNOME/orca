@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2008 Sun Microsystems Inc.
+# Copyright 2008-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -26,7 +26,7 @@ as they see fit."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2008-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
@@ -36,9 +36,9 @@ import settings
 from orca_i18n import _         # for gettext support
 
 class TutorialGenerator:
-    """Takes accessible objects and produces a tutorial string to speak 
-    for those objects.  See the getTutorialString method, which is the 
-    primary entry point.  Subclasses can feel free to override/extend 
+    """Takes accessible objects and produces a tutorial string to speak
+    for those objects.  See the getTutorialString method, which is the
+    primary entry point.  Subclasses can feel free to override/extend
     the getTutorialGenerators instance field as they see fit."""
 
     def __init__(self, script):
@@ -95,18 +95,18 @@ class TutorialGenerator:
         self.tutorialGenerators[pyatspi.ROLE_MENU_ITEM]           = \
             self._getTutorialForPushButton
         self.tutorialGenerators[pyatspi.ROLE_RADIO_MENU_ITEM]     = \
-            self._getTutorialForCheckBox        
+            self._getTutorialForCheckBox
         self.tutorialGenerators[pyatspi.ROLE_SLIDER]              = \
             self._getTutorialForSlider
 
-    def _debugGenerator(self, generatorName, obj, already_focused, utterances):
-        """Prints debug.LEVEL_FINER information regarding 
+    def _debugGenerator(self, generatorName, obj, alreadyFocused, utterances):
+        """Prints debug.LEVEL_FINER information regarding
         the tutorial generator.
 
         Arguments:
         - generatorName: the name of the generator
         - obj: the object being presented
-        - already_focused: False if object just received focus
+        - alreadyFocused: False if object just received focus
         - utterances: the generated text
         """
 
@@ -117,23 +117,23 @@ class TutorialGenerator:
         debug.println(debug.LEVEL_FINER,
                       "           role            = %s" % obj.getRoleName())
         debug.println(debug.LEVEL_FINER,
-                      "           already_focused = %s" % already_focused)
+                      "           alreadyFocused  = %s" % alreadyFocused)
         debug.println(debug.LEVEL_FINER,
                       "           utterances:")
         for text in utterances:
             debug.println(debug.LEVEL_FINER,
                     "               (%s)" % text)
 
-    def _getDefaultTutorial(self, obj, already_focused, forceMessage, \
-      role=None):
+    def _getDefaultTutorial(
+        self, obj, alreadyFocused, forceTutorial, role=None):
         """The default tutorial generator returns the empty tutorial string
         because We have no associated tutorial function for the object.
-        
+
         Arguments:
         - obj: an Accessible
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
-        - role: A role that should be used instead of the Accessible's 
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
+        - role: A role that should be used instead of the Accessible's
           possible role.
 
         Returns the empty list []
@@ -142,13 +142,13 @@ class TutorialGenerator:
         return []
 
 
-    def _getTutorialForCheckBox(self, obj, already_focused, forceMessage):
+    def _getTutorialForCheckBox(self, obj, alreadyFocused, forceTutorial):
         """Get the  tutorial string for a check box.
 
         Arguments:
         - obj: the check box
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
@@ -157,49 +157,51 @@ class TutorialGenerator:
         # Translators: this is a tip for the user on how to toggle a checkbox.
         msg = _("Press space to toggle.")
 
-        if (not already_focused and self.lastTutorial != [msg]) or forceMessage:
+        if (not alreadyFocused and self.lastTutorial != [msg]) \
+           or forceTutorial:
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForCheckBox",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForComboBox(self, obj, already_focused, forceMessage):
+    def _getTutorialForComboBox(self, obj, alreadyFocused, forceTutorial):
         """Get the  tutorial string for a combobox.
 
         Arguments:
         - obj: the combo box
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
         utterances = []
-        # Translators: this is a tip for the user on how to interact 
+        # Translators: this is a tip for the user on how to interact
         # with a combobox.
         msg = _("Press space to expand, and use up and down to select an item.")
 
-        if (not already_focused and self.lastTutorial != [msg]) or forceMessage:
+        if (not alreadyFocused and self.lastTutorial != [msg]) \
+           or forceTutorial:
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForComboBox",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForFrame(self, obj, already_focused, forceMessage):
+    def _getTutorialForFrame(self, obj, alreadyFocused, forceTutorial):
         """Get the  tutorial string for a frame.
 
         Arguments:
         - obj: the frame
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
@@ -222,45 +224,45 @@ class TutorialGenerator:
 
         self._debugGenerator("_getTutorialForFrame",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForIcon(self, obj, already_focused, forceMessage):
+    def _getTutorialForIcon(self, obj, alreadyFocused, forceTutorial):
         """Get the  tutorial string for an icon.
 
         Arguments:
         - obj: the icon
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
         if obj.parent.getRole() == pyatspi.ROLE_LAYERED_PANE:
             utterances = self._getTutorialForLayeredPane(obj.parent,
-                                                         already_focused,
-                                                         forceMessage)
+                                                         alreadyFocused,
+                                                         forceTutorial)
         else:
             utterances = self._getDefaultTutorial(obj,
-                                                  already_focused,
-                                                  forceMessage)
+                                                  alreadyFocused,
+                                                  forceTutorial)
 
         self._debugGenerator("_getTutorialForIcon",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForLayeredPane(self, obj, already_focused, forceMessage):
+    def _getTutorialForLayeredPane(self, obj, alreadyFocused, forceTutorial):
         """Get the  tutorial string for a layered pane.
 
         Arguments:
         - obj: the layered pane
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
@@ -270,13 +272,13 @@ class TutorialGenerator:
         if not name and obj.description:
             name = obj.description
 
-        # Translators: this gives tips on how to navigate items in a 
+        # Translators: this gives tips on how to navigate items in a
         # layered pane.
         msg = _("To move to items, use either " \
                 "the arrow keys or type ahead searching.")
         utterances.append(msg)
- 
-        # Translators: this is the tutorial string for when first landing 
+
+        # Translators: this is the tutorial string for when first landing
         # on the desktop, describing how to access the system menus.
         desktopMsg = _("To get to the system menus press the alt+f1 key.")
 
@@ -285,52 +287,53 @@ class TutorialGenerator:
         if 'nautilus' in scriptName and obj == sibling:
             utterances.append(desktopMsg)
 
-        if (not already_focused and self.lastTutorial != utterances) \
-            or forceMessage:
+        if (not alreadyFocused and self.lastTutorial != utterances) \
+            or forceTutorial:
             pass
         else:
             utterances = []
 
         self._debugGenerator("_getTutorialForLayeredPane",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForList(self, obj, already_focused, forceMessage):
+    def _getTutorialForList(self, obj, alreadyFocused, forceTutorial):
         """Get the  tutorial string for a list.
 
         Arguments:
         - obj: the list
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
         utterances = []
-        
+
         # Translators: this is the tutorial string when navigating lists.
         msg = _("Use up and down to select an item.")
-        
-        if (not already_focused and self.lastTutorial != [msg]) or forceMessage:
+
+        if (not alreadyFocused and self.lastTutorial != [msg]) \
+           or forceTutorial:
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForList",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
-    
-    def _getTutorialForListItem(self, obj, already_focused, forceMessage):
+
+    def _getTutorialForListItem(self, obj, alreadyFocused, forceTutorial):
         """Get the  tutorial string for a listItem.
 
         Arguments:
         - obj: the listitem
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
@@ -338,94 +341,94 @@ class TutorialGenerator:
         utterances = []
 
         # Translators: this represents the state of a node in a tree.
-	# 'expanded' means the children are showing.
+        # 'expanded' means the children are showing.
         # 'collapsed' means the children are not showing.
         # this string informs the user how to collapse the node.
         expandedMsg = _("To collapse, press shift plus left.")
-        
+
         # Translators: this represents the state of a node in a tree.
         # 'expanded' means the children are showing.
         # 'collapsed' means the children are not showing.
         # this string informs the user how to expand the node.
         collapsedMsg = _("To expand, press shift plus right.")
-        
-        
+
+
         # If already in focus then the tree probably collapsed or expanded
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
             if state.contains(pyatspi.STATE_EXPANDED):
-                if (self.lastTutorial != [expandedMsg]) or forceMessage:
+                if (self.lastTutorial != [expandedMsg]) or forceTutorial:
                     utterances.append(expandedMsg)
             else:
-                if (self.lastTutorial != [collapsedMsg]) or forceMessage:
+                if (self.lastTutorial != [collapsedMsg]) or forceTutorial:
                     utterances.append(collapsedMsg)
-                
+
         self._debugGenerator("_getTutorialForListItem",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
         return utterances
 
-    def _getTutorialForText(self, obj, already_focused, forceMessage):
+    def _getTutorialForText(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial string for a text object.
 
         Arguments:
         - obj: the text component
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
         utterances = []
-        # Translators: This is the tutorial string for when landing 
+        # Translators: This is the tutorial string for when landing
         # on text fields.
         msg = _("Type in text.")
 
-        if (not already_focused or forceMessage) and \
+        if (not alreadyFocused or forceTutorial) and \
            not self._script.isReadOnlyTextArea(obj):
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForText",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForPageTab(self, obj, already_focused, forceMessage):
+    def _getTutorialForPageTab(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial string for a page tab.
 
         Arguments:
         - obj: the page tab
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of tutorial utterances to be spoken for the object.
         """
 
         utterances = []
-        # Translators: this is the tutorial string for landing 
-        # on a page tab, we are informing the 
+        # Translators: this is the tutorial string for landing
+        # on a page tab, we are informing the
         # user how to navigate these.
         msg = _("Use left and right to view other tabs.")
-        
-        if (self.lastTutorial != [msg]) or forceMessage:
+
+        if (self.lastTutorial != [msg]) or forceTutorial:
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForPageTabList",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForPushButton(self, obj, already_focused, forceMessage):
+    def _getTutorialForPushButton(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial string for a push button
 
         Arguments:
         - obj: the push button
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of utterances to be spoken for the object.
         """
@@ -433,52 +436,54 @@ class TutorialGenerator:
         utterances = []
         # Translators: this is the tutorial string for activating a push button.
         msg = _("To activate press space.")
-        
-        if (not already_focused and self.lastTutorial != [msg]) or forceMessage:
+
+        if (not alreadyFocused and self.lastTutorial != [msg]) \
+           or forceTutorial:
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForPushButton",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForSpinButton(self, obj, already_focused, forceMessage):
+    def _getTutorialForSpinButton(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial string for a spin button.  If the object already has
         focus, then no tutorial is given.
 
         Arguments:
         - obj: the spin button
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of utterances to be spoken for the object.
         """
 
         utterances = []
-        # Translators: this is the tutorial string for when landing 
+        # Translators: this is the tutorial string for when landing
         # on a spin button.
         msg = _("Use up or down arrow to select value." \
               " Or type in the desired numerical value.")
 
-        if (not already_focused and self.lastTutorial != [msg]) or forceMessage:
+        if (not alreadyFocused and self.lastTutorial != [msg]) \
+           or forceTutorial:
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForSpinButton",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForTableCell(self, obj, already_focused, forceMessage):
+    def _getTutorialForTableCell(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial utterances for a single table cell
 
         Arguments:
         - obj: the table
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of utterances to be spoken for the object.
         """
@@ -486,19 +491,19 @@ class TutorialGenerator:
         utterances = []
 
         # Translators: this represents the state of a node in a tree.
-	# 'expanded' means the children are showing.
+        # 'expanded' means the children are showing.
         # 'collapsed' means the children are not showing.
         # this string informs the user how to collapse the node.
         expandedMsg = _("To collapse, press shift plus left.")
-        
+
         # Translators: this represents the state of a node in a tree.
         # 'expanded' means the children are showing.
         # 'collapsed' means the children are not showing.
         # this string informs the user how to expand the node.
         collapsedMsg = _("To expand, press shift plus right.")
 
-        # If this table cell has 2 children and one of them has a 
-        # 'toggle' action and the other does not, then present this 
+        # If this table cell has 2 children and one of them has a
+        # 'toggle' action and the other does not, then present this
         # as a checkbox where:
         # 1) we get the checked state from the cell with the 'toggle' action
         # 2) we get the label from the other cell.
@@ -523,7 +528,7 @@ class TutorialGenerator:
                             break
 
             if hasToggle[0] and not hasToggle[1]:
-                cellOrder = [ 1, 0 ] 
+                cellOrder = [ 1, 0 ]
             elif not hasToggle[0] and hasToggle[1]:
                 cellOrder = [ 0, 1 ]
             if cellOrder:
@@ -531,12 +536,12 @@ class TutorialGenerator:
                     # Don't speak the label if just the checkbox state has
                     # changed.
                     #
-                    if already_focused and not hasToggle[i]:
+                    if alreadyFocused and not hasToggle[i]:
                         pass
                     else:
                         utterances.extend( \
                             self._getTutorialForTableCell(obj[i],
-                            already_focused, forceMessage))
+                            alreadyFocused, forceTutorial))
                 return utterances
 
         # [[[TODO: WDW - Attempt to infer the cell type.  There's a
@@ -560,39 +565,39 @@ class TutorialGenerator:
                 #
                 if action.getName(i) in ["toggle", _("toggle")]:
                     utterances = self._getTutorialForCheckBox(obj,
-                                  already_focused, forceMessage)
+                                  alreadyFocused, forceTutorial)
                     break
 
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
             if state.contains(pyatspi.STATE_EXPANDED):
-                if self.lastTutorial != [expandedMsg] or forceMessage:
+                if self.lastTutorial != [expandedMsg] or forceTutorial:
                     utterances.append(expandedMsg)
             else:
-                if self.lastTutorial != [collapsedMsg] or forceMessage:
+                if self.lastTutorial != [collapsedMsg] or forceTutorial:
                     utterances.append(collapsedMsg)
 
         self._debugGenerator("_getTutorialForTableCell",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForTableCellRow(self, obj, already_focused, forceMessage):
+    def _getTutorialForTableCellRow(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial string for the active table cell in the table row.
 
         Arguments:
         - obj: the table
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of utterances to be spoken for the object.
         """
 
         utterances = []
 
-        if (not already_focused):
+        if (not alreadyFocused):
             try:
                 parent_table = obj.parent.queryTable()
             except NotImplementedError:
@@ -618,28 +623,28 @@ class TutorialGenerator:
                            pointOfReference["lastColumn"] == column)
 
                 utterances.extend(self._getTutorialForTableCell(obj,
-                                        already_focused, forceMessage))
+                                        alreadyFocused, forceTutorial))
             else:
-                utterances = self._getTutorialForTableCell(obj, 
-                  already_focused, forceMessage)
+                utterances = self._getTutorialForTableCell(obj,
+                  alreadyFocused, forceTutorial)
         else:
-            utterances = self._getTutorialForTableCell(obj, already_focused, \
-              forceMessage)
+            utterances = self._getTutorialForTableCell(obj, alreadyFocused, \
+              forceTutorial)
 
         self._debugGenerator("_getTutorialForTableCellRow",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def _getTutorialForRadioButton(self, obj, already_focused, forceMessage):
+    def _getTutorialForRadioButton(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial string for a radio button.
 
         Arguments:
         - obj: the radio button
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of utterances to be spoken for the object.
         """
@@ -648,22 +653,23 @@ class TutorialGenerator:
         # Translators: this is a tip for the user, how to navigate radiobuttons.
         msg = _("Use arrow keys to change.")
 
-        if (not already_focused and self.lastTutorial != [msg]) or forceMessage:
+        if (not alreadyFocused and self.lastTutorial != [msg]) \
+           or forceTutorial:
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForRadioButton",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
         return utterances
 
-    def _getTutorialForMenu(self, obj, already_focused, forceMessage):
+    def _getTutorialForMenu(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial string for a menu.
 
         Arguments:
         - obj: the menu
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of utterances to be spoken for the object.
         """
@@ -673,85 +679,86 @@ class TutorialGenerator:
         mainMenuMsg = _("To navigate, press left or right arrow. " \
                        "To move through items press up or down arrow.")
 
-        # Translators: this is a tip for the user, how to 
+        # Translators: this is a tip for the user, how to
         # navigate into sub menues.
-        subMenuMsg = _("To enter sub menu, press right arrow.")        
-        
+        subMenuMsg = _("To enter sub menu, press right arrow.")
+
         # Checking if we are a submenu,
         # we can't rely on our parent being just a menu.
         if obj.parent.name != "" and obj.parent.__class__ == obj.__class__:
-            if (self.lastTutorial != [subMenuMsg]) or forceMessage:
+            if (self.lastTutorial != [subMenuMsg]) or forceTutorial:
                 utterances.append(subMenuMsg)
         else:
-            if (self.lastTutorial != [mainMenuMsg]) or forceMessage:
+            if (self.lastTutorial != [mainMenuMsg]) or forceTutorial:
                 utterances.append(mainMenuMsg)
 
         self._debugGenerator("_getTutorialForMenu",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
         return utterances
 
-    def _getTutorialForSlider(self, obj, already_focused, forceMessage):
+    def _getTutorialForSlider(self, obj, alreadyFocused, forceTutorial):
         """Get the tutorial string for a slider.  If the object already has
         focus, then no tutorial is given.
 
         Arguments:
         - obj: the slider
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of utterances to be spoken for the object.
         """
 
         utterances = []
-        # Translators: this is the tutorial string for when landing 
+        # Translators: this is the tutorial string for when landing
         # on a slider.
         msg = _("To decrease press left arrow, to increase press right arrow." \
           " To go to minimum press home, and for maximum press end.")
-              
-        if (not already_focused and self.lastTutorial != [msg]) or forceMessage:
+
+        if (not alreadyFocused and self.lastTutorial != [msg]) \
+           or forceTutorial:
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForSlider",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
 
         return utterances
 
-    def getTutorial(self, obj, already_focused, forceMessage = False):
+    def getTutorial(self, obj, alreadyFocused, forceTutorial=False):
         """Get the tutorial for an Accessible object.  This will look
-        first to the specific tutorial generators and if this 
+        first to the specific tutorial generators and if this
         does not exist then return the empty tutorial.
         This method is the primary method
         that external callers of this class should use.
 
         Arguments:
         - obj: the object
-        - already_focused: False if object just received focus
-        - forceMessage: used for when whereAmI really needs the tutorial string.
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
 
         Returns a list of utterances to be spoken.
         """
 
         if not settings.enableTutorialMessages:
             return []
-        
+
         role = obj.getRole()
         if role in self.tutorialGenerators:
             generator = self.tutorialGenerators[role]
         else:
             generator = self._getDefaultTutorial
-        msg = generator(obj, already_focused, forceMessage)
+        msg = generator(obj, alreadyFocused, forceTutorial)
         utterances = [" ".join(msg)]
         if msg:
             self.lastTutorial = msg
-        if forceMessage:
+        if forceTutorial:
             self.lastTutorial = ""
 
         self._debugGenerator("getTutorial",
                              obj,
-                             already_focused,
+                             alreadyFocused,
                              utterances)
         return utterances

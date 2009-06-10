@@ -40,7 +40,9 @@ formatting = {
         #
         'suffix': {
             'focused': '[]',
-            'unfocused': 'newNodeLevel + tutorial'
+            'unfocused': 'newNodeLevel + tutorial',
+            'basicWhereAmI': 'tutorial + description',
+            'detailedWhereAmI' : '[]'
             },
         pyatspi.ROLE_COMBO_BOX: {
             'focused': 'name + availability',
@@ -52,6 +54,12 @@ formatting = {
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'labelAndName + toggleState'
+            },
+        'ROLE_SPREADSHEET_CELL': {
+            # We treat spreadsheet cells differently from other table cells in
+            # whereAmI.
+            #
+            'basicWhereAmI': 'roleName + column + columnHeader + row + rowHeader + (textContent or spreadSheetCell) + anyTextSelection'
             },
     }
 }

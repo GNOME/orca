@@ -88,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  '+A Question of Love'",
      "     VISIBLE:  '+A Question of Love', cursor=0",
-     "SPEECH OUTPUT: '+A Question of Love '"]))
+     "SPEECH OUTPUT: '+A Question of Love'"]))
 
 ########################################################################
 # Space to expand the current item.
@@ -112,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  '-A Question of Love'",
      "     VISIBLE:  '-A Question of Love', cursor=0",
-     "SPEECH OUTPUT: '-A Question of Love '"]))
+     "SPEECH OUTPUT: '-A Question of Love'"]))
 
 ########################################################################
 # Down Arrow to the child item.
@@ -140,8 +140,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "2. Right Arrow in child", 
-    ["BUG? - We're saying 'dollar' here. If the dollar sign were right against the 9, I would say this is a bug; because of the whitespace I'm not sure.",
-     "BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
+    ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
      "     VISIBLE:  'Price $ 9.99 Cell', cursor=1",
      "SPEECH OUTPUT: 'dollar 9.99'"]))
 

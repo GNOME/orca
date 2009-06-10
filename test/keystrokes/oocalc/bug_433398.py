@@ -42,7 +42,6 @@ sequence.append(utils.AssertPresentationAction(
     "Type down arrow to get to the Freeze menu item [1]",
     ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane MenuBar Freeze'",
      "     VISIBLE:  'Freeze', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Freeze'"]))
 
 ######################################################################
@@ -77,7 +76,6 @@ sequence.append(utils.AssertPresentationAction(
     "Type down arrow to get to the Freeze menu item [2]",
     ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane MenuBar <x> Freeze'",
      "     VISIBLE:  '<x> Freeze', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Freeze checked'"]))
 
 ######################################################################

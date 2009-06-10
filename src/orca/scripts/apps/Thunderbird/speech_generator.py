@@ -47,7 +47,7 @@ class SpeechGenerator(Gecko.SpeechGenerator):
     def __init__(self, script):
         Gecko.SpeechGenerator.__init__(self, script)
 
-    def _getColumnHeader(self, obj, **args):
+    def _generateColumnHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the column header for an object
         that is in a table, if it exists.  Otherwise, an empty array
@@ -60,7 +60,7 @@ class SpeechGenerator(Gecko.SpeechGenerator):
         #
         return result
 
-    def _getUnrelatedLabels(self, obj, **args):
+    def _generateUnrelatedLabels(self, obj, **args):
         """Finds all labels not in a label for or labelled by relation.
         If this is the spell checking dialog, then there are no
         unrelated labels.  See bug #535192 for more details.
@@ -78,6 +78,6 @@ class SpeechGenerator(Gecko.SpeechGenerator):
                          pyatspi.ROLE_APPLICATION]):
             pass
         else:
-            result.extend(Gecko.SpeechGenerator._getUnrelatedLabels(
+            result.extend(Gecko.SpeechGenerator._generateUnrelatedLabels(
                               self, obj, **args))
         return result

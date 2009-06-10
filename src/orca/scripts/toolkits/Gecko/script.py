@@ -65,7 +65,6 @@ import script_settings
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from formatting import Formatting
-from where_am_i import GeckoWhereAmI
 from bookmarks import GeckoBookmarks
 from structural_navigation import GeckoStructuralNavigation
 
@@ -285,11 +284,6 @@ class Script(default.Script):
         settings.enabledSpokenTextAttributes = \
             self.savedEnabledSpokenTextAttributes
         settings.allTextAttributes = self.savedAllTextAttributes
-
-    def getWhereAmI(self):
-        """Returns the "where am I" class for this script.
-        """
-        return GeckoWhereAmI(self)
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
@@ -1559,7 +1553,7 @@ class Script(default.Script):
             if settings.speechVerbosityLevel == \
                     settings.VERBOSITY_LEVEL_VERBOSE:
                 utterances.extend(
-                    self.speechGenerator.getSpeech(event.any_data))
+                    self.speechGenerator.generateSpeech(event.any_data))
             speech.speak(utterances)
 
     def onDocumentReload(self, event):
@@ -1692,7 +1686,7 @@ class Script(default.Script):
                     # http://bugzilla.gnome.org/show_bug.cgi?id=570551
                     #
                     if eventSourceRole == pyatspi.ROLE_ALERT:
-                        speech.speak(self.speechGenerator.getSpeech(
+                        speech.speak(self.speechGenerator.generateSpeech(
                                 event.source))
                         self.updateBraille(obj)
                     else:
@@ -1882,7 +1876,7 @@ class Script(default.Script):
                     self.updateBraille(obj)
 
                     if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                        speech.speak(self.speechGenerator.getSpeech(obj))
+                        speech.speak(self.speechGenerator.generateSpeech(obj))
                     elif not script_settings.sayAllOnLoad:
                         self.speakContents(\
                             self.getLineContentsAtOffset(obj,
@@ -3874,7 +3868,7 @@ class Script(default.Script):
             #
             if end > childOffset + 1:
                 restOfText = unicodeText[offset:len(unicodeText)]
-                objects.append([obj, childOffset + 1, end, restOfText])                
+                objects.append([obj, childOffset + 1, end, restOfText])
  
         if obj.getRole() in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_TABLE]:
             # Imagemaps that don't have alternative text won't implement
@@ -3941,6 +3935,112 @@ class Script(default.Script):
             lineContents.append(item)
 
         return lineContents
+
+    def getPageSummary(self, obj):
+        """Returns the quantity of headings, forms, tables, visited links,
+        and unvisited links on the page containing obj.
+        """
+
+        if settings.useCollection:
+            try:
+                summary = self._collectionPageSummary()
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                summary = self._iterativePageSummary(obj)
+        else:
+            summary = self._iterativePageSummary(obj)
+
+        return summary
+
+    def _collectionPageSummary(self):
+        """Uses the Collection interface to get the quantity of headings,
+        forms, tables, visited and unvisited links.
+        """
+
+        docframe = self.getDocumentFrame()
+        col = docframe.queryCollection()
+        # We will initialize these after the queryCollection() call in case
+        # Collection is not supported
+        #
+        headings = 0
+        forms = 0
+        tables = 0
+        vlinks = 0
+        uvlinks = 0
+        percentRead = None
+
+        stateset = pyatspi.StateSet()
+        roles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK, pyatspi.ROLE_TABLE,
+                 pyatspi.ROLE_FORM]
+        rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
+                                   "", col.MATCH_NONE,
+                                   roles, col.MATCH_ANY,
+                                   "", col.MATCH_NONE,
+                                   False)
+
+        matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
+        col.freeMatchRule(rule)
+        for obj in matches:
+            role = obj.getRole()
+            if role == pyatspi.ROLE_HEADING:
+                headings += 1
+            elif role == pyatspi.ROLE_FORM:
+                forms += 1
+            elif role == pyatspi.ROLE_TABLE \
+                      and not self.isLayoutOnly(obj):
+                tables += 1
+            elif role == pyatspi.ROLE_LINK:
+                if obj.getState().contains(pyatspi.STATE_VISITED):
+                    vlinks += 1
+                else:
+                    uvlinks += 1
+
+        return [headings, forms, tables, vlinks, uvlinks, percentRead]
+
+    def _iterativePageSummary(self, obj):
+        """Reads the quantity of headings, forms, tables, visited and
+        unvisited links.
+        """
+
+        headings = 0
+        forms = 0
+        tables = 0
+        vlinks = 0
+        uvlinks = 0
+        percentRead = None
+        nodetotal = 0
+        obj_index = None
+        currentobj = obj
+
+        # Start at the first object after document frame.
+        #
+        obj = self.getDocumentFrame()[0]
+        while obj:
+            nodetotal += 1
+            if obj == currentobj:
+                obj_index = nodetotal
+            role = obj.getRole()
+            if role == pyatspi.ROLE_HEADING:
+                headings += 1
+            elif role == pyatspi.ROLE_FORM:
+                forms += 1
+            elif role == pyatspi.ROLE_TABLE \
+                      and not self.isLayoutOnly(obj):
+                tables += 1
+            elif role == pyatspi.ROLE_LINK:
+                if obj.getState().contains(pyatspi.STATE_VISITED):
+                    vlinks += 1
+                else:
+                    uvlinks += 1
+
+            obj = self.findNextObject(obj)
+
+        # Calculate the percentage of the document that has been read.
+        #
+        if obj_index:
+            percentRead = int(obj_index*100/nodetotal)
+
+        return [headings, forms, tables, vlinks, uvlinks, percentRead]
 
     def guessLabelFromLine(self, obj):
         """Attempts to guess what the label of an unlabeled form control
@@ -5435,7 +5535,7 @@ class Script(default.Script):
             #
             if not len(string) \
                or role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
-                utterance = self.speechGenerator.getSpeech(obj)
+                utterance = self.speechGenerator.generateSpeech(obj)
             else:
                 utterance = [string]
                 if speakRole and not role in doNotSpeakRoles:
@@ -5521,7 +5621,7 @@ class Script(default.Script):
                 # characterOffset (lists).  In these latter cases, we'll just
                 # speak the entire component.
                 #
-                utterances = self.speechGenerator.getSpeech(obj)
+                utterances = self.speechGenerator.generateSpeech(obj)
                 speech.speak(utterances)
 
     ####################################################################

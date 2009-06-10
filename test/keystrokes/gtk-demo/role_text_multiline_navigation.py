@@ -356,7 +356,8 @@ sequence.append(utils.AssertPresentationAction(
     "KP_Subtract to enter flat review",
     ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
-     "SPEECH OUTPUT: 'PLEASE'"]))
+     "SPEECH OUTPUT: 'Entering flat review.'",
+     "SPEECH OUTPUT: 'PLEASE' voice=uppercase"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
@@ -1081,7 +1082,8 @@ sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Subtract to exit flat review",
     ["BRAILLE LINE:  'This is only  $l'",
-     "     VISIBLE:  'This is only  $l', cursor=6"]))
+     "     VISIBLE:  'This is only  $l', cursor=6",
+     "SPEECH OUTPUT: 'Leaving flat review.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))

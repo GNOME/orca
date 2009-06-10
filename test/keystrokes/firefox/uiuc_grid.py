@@ -48,10 +48,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
+    ["BUG? - This amount of verbosity in the speech is not the result of the refactor, but it would be nice to figure out why we're doing it",
+     "BRAILLE LINE:  'Email 0 Selected CheckBox 1 Cell Read message Image Attachment Image Lowest priority Image John Smith Cell Trip to Florida Cell 2007-10-03 Cell 2K Cell'",
      "     VISIBLE:  'Email 0 Selected CheckBox 1 Cell', cursor=1",
-     "SPEECH OUTPUT: '1 Read message Attachment Lowest priority From John Smith Subject Trip to Florida panel'",
-     "SPEECH OUTPUT: '1 Read message Attachment Lowest priority John Smith Trip to Florida'"]))
+     "SPEECH OUTPUT: '1 Read message Attachment Lowest priority From John Smith Subject Trip to Florida panel 1 Read message Attachment Lowest priority John Smith Trip to Florida'"]))
 
 ########################################################################
 # Move down grid

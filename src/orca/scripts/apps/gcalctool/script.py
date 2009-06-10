@@ -33,7 +33,6 @@ import orca.speech as speech
 import pyatspi
 
 from speech_generator import SpeechGenerator
-from where_am_i import WhereAmI
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -59,12 +58,6 @@ class Script(default.Script):
         self._lastProcessedKeyEvent = None
         self._lastSpokenContents = None
         self._resultsDisplay = None
-
-    def getWhereAmI(self):
-        """Returns the "where am I" class for this script.
-        """
-
-        return WhereAmI(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.

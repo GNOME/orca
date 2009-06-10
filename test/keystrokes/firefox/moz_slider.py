@@ -43,10 +43,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
-    "basic whereAmI", 
+    "basic whereAmI",
     ["BRAILLE LINE:  '10% Slider'",
      "     VISIBLE:  '10% Slider', cursor=1",
-     "SPEECH OUTPUT: 'slider 10.0 10 percent '"]))
+     "SPEECH OUTPUT: 'slider 10% 10 percent'"]))
 
 ########################################################################
 # Move the slider several times.  The following will be presented for each.

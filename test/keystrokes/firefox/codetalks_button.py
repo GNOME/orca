@@ -65,8 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereamI", 
     ["BRAILLE LINE:  'Check Now Button Check to see if your order has been shipped.  $l'",
      "     VISIBLE:  'Check Now Button Check to see if', cursor=1",
-     "SPEECH OUTPUT: 'Check Now button '",
-     "SPEECH OUTPUT: 'Check to see if your order has been shipped.'"]))
+     "SPEECH OUTPUT: 'Check Now button Check to see if your order has been shipped.'"]))
 
 ########################################################################
 # Now push the button.  The following will be presented.

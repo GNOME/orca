@@ -88,7 +88,8 @@ class Script(default.Script):
             if event.type.startswith("object:state-changed:showing") and \
                event.detail1 == 1:
                 braille.displayMessage(obj.name)
-                speech.speak(obj.name)
+                utterances = self.speechGenerator.generateSpeech(obj)
+                speech.speak(utterances)
 
         # If focus moves to something within a panel and focus was not
         # already in the containing panel, the panel will issue its

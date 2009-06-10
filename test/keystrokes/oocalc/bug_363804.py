@@ -71,7 +71,7 @@ sequence.append(utils.AssertPresentationAction(
     "Control Home to A1 - speak cell coordinates",
     ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
      "     VISIBLE:  'Cell A1 ', cursor=1",
-     "SPEECH OUTPUT: ' A1'"]))
+     "SPEECH OUTPUT: 'A1'"]))
 
 ######################################################################
 # Type Insert-Control-space to bring up the application specific

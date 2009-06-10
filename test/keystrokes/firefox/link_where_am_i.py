@@ -39,7 +39,7 @@ sequence.append(utils.AssertPresentationAction(
     "Where Am I on Product summary link", 
     ["BRAILLE LINE:  '3. Product summary (designed for maintainers)'",
      "     VISIBLE:  'Product summary (designed for ma', cursor=1",
-     "SPEECH OUTPUT: 'http link Product summary different site '"]))
+     "SPEECH OUTPUT: 'http link Product summary different site'"]))
 
 ########################################################################
 # Go home tab and do a Where Am I
@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "Where Am I on New bug link", 
     ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In william.walker@sun.com | Log Out'",
      "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
-     "SPEECH OUTPUT: 'http link New bug different site '"]))
+     "SPEECH OUTPUT: 'http link New bug different site'"]))
 
 ########################################################################
 # Shift+Tab back to the footprint
@@ -67,10 +67,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Where Am I on footprint", 
-    ["BUG? - We are speaking 'link' rather than 'image'",
+    ["BUG? - Is it redundant to speak link twice?",
      "BRAILLE LINE:  'Home Image Bugzilla'",
      "     VISIBLE:  'Home Image Bugzilla', cursor=1",
-     "SPEECH OUTPUT: 'http link Home image different site '"]))
+     "SPEECH OUTPUT: 'http link Home link image different site'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

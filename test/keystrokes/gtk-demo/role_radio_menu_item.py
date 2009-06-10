@@ -43,6 +43,12 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
 #
+# JD to WDW: I'm not sure if this is a regression or not. Now we are
+# speaking a parent menu which we were not before. I *think* that's
+# a bug fix. :-)
+#
+# WDW to JD: I agree -- it looks like a bug fix (yeah!)
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -50,7 +56,7 @@ sequence.append(utils.AssertPresentationAction(
     "Red button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem(Control r)'",
      "     VISIBLE:  '<x> Red CheckItem(Control r)', cursor=1",
-     "SPEECH OUTPUT: 'Color menu Red check item checked Control r item 1 of 3 r'"]))
+     "SPEECH OUTPUT: 'Preferences menu Color menu Red check item checked Control r item 1 of 3 r'"]))
 
 ########################################################################
 # Down arrow to the "Green" menu item.
@@ -68,6 +74,12 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
 #
+# JD to WDW: I'm not sure if this is a regression or not. Now we are
+# speaking a parent menu which we were not before. I *think* that's
+# a bug fix. :-)
+#
+# WDW to JD: I agree -- it looks like a bug fix (yeah!)
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -75,7 +87,7 @@ sequence.append(utils.AssertPresentationAction(
     "Green button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem(Control g)'",
      "     VISIBLE:  '< > Green CheckItem(Control g)', cursor=1",
-     "SPEECH OUTPUT: 'Color menu Green check item not checked Control g item 2 of 3 g'"]))
+     "SPEECH OUTPUT: 'Preferences menu Color menu Green check item not checked Control g item 2 of 3 g'"]))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window

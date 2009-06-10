@@ -24,7 +24,7 @@ sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to position the text caret in cell A1",
     ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
      "     VISIBLE:  'Cell A1 ', cursor=1",
-     "SPEECH OUTPUT: ' A1'"]))
+     "SPEECH OUTPUT: 'A1'"]))
 
 ######################################################################
 # 3. Press the down arrow to move to cell A2.

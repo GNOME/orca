@@ -50,7 +50,7 @@ sequence.append(TypeAction("C"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Replace existing text with a 'C'", 
-    ["BUG? - At this point, the entry expands into a combo box with three items showing. We speak them all. We should instead indicate that this object is expanded, similar to what we do with autocompletes. In addition, we're speaking 'bullet' for the initial bullet throughout the test. I think we should be, but marking it just in case.",
+    ["BUG? - At this point, the entry expands into a combo box with three items showing. We speak them all. We should instead indicate that this object is expanded, similar to what we do with autocompletes.",
      "BRAILLE LINE:  '  US State test 1 California $l'",
      "     VISIBLE:  '  US State test 1 California $l', cursor=0",
      "BRAILLE LINE:  '  US State test 1 C $l'",
@@ -158,8 +158,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I - Combo box collapsed back into an entry", 
     ["BRAILLE LINE:  '  US State test 1 California $l'",
      "     VISIBLE:  '  US State test 1 California $l', cursor=0",
-     "SPEECH OUTPUT: 'US State test 1 text alifornia'",
-     "SPEECH OUTPUT: 'selected '"]))
+     "SPEECH OUTPUT: 'US State test 1 text alifornia selected'"]))
 
 ########################################################################
 # Close the demo

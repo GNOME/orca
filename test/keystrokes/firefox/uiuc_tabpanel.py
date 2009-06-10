@@ -57,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Crust Page Veges Page Carnivore Page Delivery Page'",
      "     VISIBLE:  'Carnivore Page Delivery Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list Carnivore page item 3 of 4 '"]))
+     "SPEECH OUTPUT: 'tab list Carnivore page item 3 of 4'"]))
 
 ########################################################################
 # Navigate to fourth tab

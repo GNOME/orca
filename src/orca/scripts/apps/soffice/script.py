@@ -56,7 +56,6 @@ from orca.structural_navigation import StructuralNavigation
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
 from formatting import Formatting
-from where_am_i import WhereAmI
 import script_settings
 
 class Script(default.Script):
@@ -205,11 +204,6 @@ class Script(default.Script):
         enabledTypes = [StructuralNavigation.TABLE_CELL]
 
         return enabledTypes
-
-    def getWhereAmI(self):
-        """Returns the "where am I" class for this script.
-        """
-        return WhereAmI(self)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -586,13 +580,23 @@ class Script(default.Script):
         Returns True if this is a table cell, False otherwise.
         """
 
+        cell = obj
         if not startFromTable:
             obj = obj.parent
 
         try:
             table = obj.queryTable()
         except:
-            return False
+            # There really doesn't seem to be a good way to identify
+            # when the user is editing a cell because it has a role
+            # of paragraph and no table in the ancestry. This hack is
+            # a carry-over from the whereAmI code.
+            #
+            if cell.getRole() == pyatspi.ROLE_PARAGRAPH:
+                top = self.getTopLevel(cell)
+                return (top and top.name.endswith(" Calc"))
+            else:
+                return False
         else:
             return table.nRows == 65536
 
@@ -629,6 +633,31 @@ class Script(default.Script):
             current = self._getParent(current)
 
         return True
+
+    def findFrameAndDialog(self, obj):
+        """Returns the frame and (possibly) the dialog containing
+        the object. Overridden here for presentation of the title
+        bar information: If the locusOfFocus is a spreadsheet cell,
+        1) we are not in a dialog and 2) we need to present both the
+        frame name and the sheet name. So we might as well return the
+        sheet in place of the dialog so that the default code can do
+        its thing.
+        """
+
+        if not self.isSpreadSheetCell(obj):
+            return default.Script.findFrameAndDialog(self, obj)
+
+        results = [None, None]
+
+        parent = obj.parent
+        while parent and (parent.parent != parent):
+            if parent.getRole() == pyatspi.ROLE_FRAME:
+                results[0] = parent
+            if parent.getRole() == pyatspi.ROLE_TABLE:
+                results[1] = parent
+            parent = parent.parent
+
+        return results
 
     def printHierarchy(self, root, ooi, indent="",
                        onlyShowing=True, omitManaged=True):
@@ -781,7 +810,7 @@ class Script(default.Script):
             return (cell != None)
 
         self.updateBraille(cell)
-        utterances = self.speechGenerator.getSpeech(cell)
+        utterances = self.speechGenerator.generateSpeech(cell)
         # [[[TODO: WDW - need to make sure assumption about utterances[0]
         # is still correct with the new speech generator stuff.]]]
         #
@@ -1507,7 +1536,7 @@ class Script(default.Script):
         # box in Calc. If so, then replace the non-existent name with a
         # simple one before falling through and calling the default
         # locusOfFocusChanged method, which in turn will result in our
-        # _getSpeechForComboBox() method being called.
+        # _generateSpeechForComboBox() method being called.
         #
         rolesList = [pyatspi.ROLE_LIST,
                      pyatspi.ROLE_COMBO_BOX,
@@ -1539,7 +1568,8 @@ class Script(default.Script):
         if self.isSpreadSheetCell(event.source, True):
             if newLocusOfFocus:
                 self.updateBraille(newLocusOfFocus)
-                utterances = self.speechGenerator.getSpeech(newLocusOfFocus)
+                utterances = \
+                    self.speechGenerator.generateSpeech(newLocusOfFocus)
                 speech.speak(utterances)
 
                 # Save the current row and column information in the table
@@ -1576,7 +1606,8 @@ class Script(default.Script):
                     for tab in child:
                         eventState = tab.getState()
                         if eventState.contains(pyatspi.STATE_SELECTED):
-                            utterances = self.speechGenerator.getSpeech(tab)
+                            utterances = \
+                                self.speechGenerator.generateSpeech(tab)
                             speech.speak(utterances)
             # Fall-thru to process the event with the default handler.
 
@@ -1876,7 +1907,7 @@ class Script(default.Script):
                 weToggledIt = wasCommand and keyString not in navKeys
 
             if weToggledIt:
-                speech.speak(self.speechGenerator.getSpeech(event.source))
+                speech.speak(self.speechGenerator.generateSpeech(event.source))
 
         # When a new paragraph receives focus, we get a caret-moved event and
         # two focus events (the first being object:state-changed:focused).
