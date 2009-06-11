@@ -220,14 +220,11 @@ class Script(default.Script):
                                        pyatspi.ROLE_TREE]) \
             and event.source.getState().contains(pyatspi.STATE_FOCUSED):
             newFocus = event.source
-            print "MONKEY", event.source.childCount
             if event.source.childCount:
                 selection = event.source.querySelection()
-                print "MONKEY2", selection.nSelectedChildren
                 if selection.nSelectedChildren > 0:
                     newFocus = selection.getSelectedChild(0)
             orca.setLocusOfFocus(event, newFocus)
-            print "FAH", newFocus
         else:
             default.Script.onSelectionChanged(self, event)
 
