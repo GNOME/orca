@@ -3075,7 +3075,8 @@ class Script(script.Script):
         #
         if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
             if orca_state.lastNonModifierKeyEvent \
-               and orca_state.lastNonModifierKeyEvent.event_string == "space":
+               and orca_state.lastNonModifierKeyEvent.event_string \
+                   in [" ", "space"]:
                 pass
             else:
                 return
@@ -4061,7 +4062,7 @@ class Script(script.Script):
         # containing object.
         #
         elif (event.source != orca_state.locusOfFocus) and \
-            event.source.getState().contains(pyatspi.STATE_FOCUSED):
+              event.source.getState().contains(pyatspi.STATE_FOCUSED):
             newFocus = event.source
             if event.source.childCount:
                 selection = event.source.querySelection()

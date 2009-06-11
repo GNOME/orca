@@ -210,13 +210,26 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # Ignore selection in TREE and TABLE objects since they send us
-        # an active descendant changed event.
+        # We treat selected children as the locus of focus. When the
+        # selection changes in a list we want to update the locus of
+        # focus. If there is no selection, we default the locus of
+        # focus to the containing object.
         #
-        if event.source.getRole() in [pyatspi.ROLE_TREE, pyatspi.ROLE_TABLE]:
-            return
-
-        default.Script.onSelectionChanged(self, event)
+        if (event.source.getRole() in [pyatspi.ROLE_LIST,
+                                       pyatspi.ROLE_PAGE_TAB_LIST,
+                                       pyatspi.ROLE_TREE]) \
+            and event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            newFocus = event.source
+            print "MONKEY", event.source.childCount
+            if event.source.childCount:
+                selection = event.source.querySelection()
+                print "MONKEY2", selection.nSelectedChildren
+                if selection.nSelectedChildren > 0:
+                    newFocus = selection.getSelectedChild(0)
+            orca.setLocusOfFocus(event, newFocus)
+            print "FAH", newFocus
+        else:
+            default.Script.onSelectionChanged(self, event)
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
