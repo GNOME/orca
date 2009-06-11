@@ -186,7 +186,7 @@ formatting = {
             # it exists and we haven't found anything yet.
             #
             'focused': 'value',
-            'unfocused': 'labelAndName + roleName + value + required + availability + mnemonic',
+            'unfocused': 'label + roleName + value + required + availability + mnemonic',
             'basicWhereAmI': 'label + roleName + value + percentage + mnemonic + accelerator + required'
             },
         pyatspi.ROLE_SPIN_BUTTON: {
