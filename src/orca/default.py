@@ -1945,7 +1945,12 @@ class Script(script.Script):
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["toggleMouseReviewHandler"]))
 
-        keyBindings = settings.overrideKeyBindings(self, keyBindings)
+        try:
+            keyBindings = settings.overrideKeyBindings(self, keyBindings)
+        except:
+            debug.println(debug.LEVEL_WARNING,
+                          "WARNING: problem overriding keybindings:")
+            debug.printException(debug.LEVEL_WARNING)
 
         return keyBindings
 
