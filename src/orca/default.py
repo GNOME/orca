@@ -189,7 +189,12 @@ class Script(script.Script):
                 #
                 _("Performs the detailed where am I operation."))
 
-        self.inputEventHandlers["presentTitleHandler"] = \
+        # [[[WDW - I'd prefer to call this presentTitleHandler, but
+        # we're keeping it at getTitleHandler for backwards
+        # compatibility for people who have customized their key
+        # bindings.]]]
+        #
+        self.inputEventHandlers["getTitleHandler"] = \
             input_event.InputEventHandler(
                 Script.presentTitle,
                 # Translators: This command will cause the window's
@@ -197,7 +202,12 @@ class Script(script.Script):
                 #
                 _("Speaks the title bar."))
 
-        self.inputEventHandlers["presentStatusBarHandler"] = \
+        # [[[WDW - I'd prefer to call this presentStatusBarHandler,
+        # but we're keeping it at getStatusBarHandler for backwards
+        # compatibility for people who have customized their key
+        # bindings.]]]
+        #
+        self.inputEventHandlers["getStatusBarHandler"] = \
             input_event.InputEventHandler(
                 Script.presentStatusBar,
                 # Translators: This command will cause the window's
@@ -1094,7 +1104,7 @@ class Script(script.Script):
                 "KP_Enter",
                 settings.defaultModifierMask,
                 settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["presentTitleHandler"],
+                self.inputEventHandlers["getTitleHandler"],
                 1))
 
         keyBindings.add(
@@ -1102,7 +1112,7 @@ class Script(script.Script):
                 "KP_Enter",
                 settings.defaultModifierMask,
                 settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["presentStatusBarHandler"],
+                self.inputEventHandlers["getStatusBarHandler"],
                 2))
 
         keyBindings.add(
@@ -1485,7 +1495,7 @@ class Script(script.Script):
                 "slash",
                 settings.defaultModifierMask,
                 settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["presentTitleHandler"],
+                self.inputEventHandlers["getTitleHandler"],
                 1))
 
         keyBindings.add(
@@ -1493,7 +1503,7 @@ class Script(script.Script):
                 "slash",
                 settings.defaultModifierMask,
                 settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["presentStatusBarHandler"],
+                self.inputEventHandlers["getStatusBarHandler"],
                 2))
 
         keyBindings.add(
