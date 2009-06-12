@@ -34,7 +34,7 @@ sequence.append(utils.AssertPresentationAction(
     "tab to slider", 
     ["BRAILLE LINE:  '10% Slider'",
      "     VISIBLE:  '10% Slider', cursor=1",
-     "SPEECH OUTPUT: 'My slider slider 10%'"]))
+     "SPEECH OUTPUT: 'slider 10%'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
