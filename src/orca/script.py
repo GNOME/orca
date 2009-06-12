@@ -90,6 +90,7 @@ class Script:
         self.formatting = self.getFormatting()
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
+        self.generatorCache = {}
         self.whereAmI = self.getWhereAmI()
         self.bookmarks = self.getBookmarks()
         self.voices = settings.voices
@@ -339,6 +340,10 @@ class Script:
 
         if not processEvent:
             return
+
+        # Clear the generator cache for each event.
+        #
+        self.generatorCache = {}
 
         # This calls the first listener it finds whose key *begins with* or is
         # the same as the event.type.  The reason we do this is that the event

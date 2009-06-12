@@ -1257,20 +1257,23 @@ class SpeechGenerator:
 
         return attribStr
 
-    def _generateTextInformation(self, obj, **args):
-        """Returns an empty array, but sets up a 'textInformation' attribute
-        in self._valueCache for other methods to use.  The information
-        is either:
+    def _getTextInformation(self, obj):
+        """Returns [textContents, startOffset, endOffset, selected] as
+        follows:
 
         A. if no text on the current line is selected, the current line
         B. if text is selected, the selected text
         C. if the current line is blank/empty, 'blank'
 
-        For all the above, we'll get a 'textInformation' entry in
-        self._valueCache that is the following list:
-
-        [textContents, startOffset, endOffset, selected]
+        Also sets up a 'textInformation' attribute in
+        self._script.generatorCache to prevent computing this
+        information repeatedly while processing a single event.
         """
+
+        try:
+            return self._script.generatorCache['textInformation']
+        except:
+            pass
 
         textObj = obj.queryText()
         caretOffset = textObj.caretOffset
@@ -1303,10 +1306,10 @@ class SpeechGenerator:
                     #
                     textContents = (_("blank"))
 
-        self._valueCache['textInformation'] = \
+        self._script.generatorCache['textInformation'] = \
             [textContents, startOffset, endOffset, selected]
 
-        return []
+        return self._script.generatorCache['textInformation']
 
     def _generateTextContent(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -1318,10 +1321,9 @@ class SpeechGenerator:
         except NotImplementedError:
             return []
 
-        if not self._valueCache.has_key('textInformation'):
-            self._generateTextInformation(obj, **args)
         [line, startOffset, endOffset, selected] = \
-            self._valueCache['textInformation']
+            self._getTextInformation(obj)
+
         # The empty string seems to be messing with using 'or' in
         # formatting strings.
         #
@@ -1341,10 +1343,8 @@ class SpeechGenerator:
         except NotImplementedError:
             return []
 
-        if not self._valueCache.has_key('textInformation'):
-            self._generateTextInformation(obj, **args)
         [line, startOffset, endOffset, selected] = \
-            self._valueCache['textInformation']
+            self._getTextInformation(obj)
 
         newLine = ""
         lastAttribs = None
@@ -1398,10 +1398,8 @@ class SpeechGenerator:
         """
         result = []
 
-        if not self._valueCache.has_key('textInformation'):
-            self._generateTextInformation(obj, **args)
         [line, startOffset, endOffset, selected] = \
-            self._valueCache['textInformation']
+            self._getTextInformation(obj)
 
         if selected:
             # Translators: when the user selects (highlights) text in
