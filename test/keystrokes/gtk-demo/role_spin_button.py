@@ -65,22 +65,6 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Hue: spin button 240 selected Alt h'"]))
 
 ########################################################################
-# Do an extended "Where Am I" via double KP_Enter.
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "Hue spin button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "SPEECH OUTPUT: 'Hue: spin button 240 selected Alt h'",
-     "SPEECH OUTPUT: 'Hue: spin button 240 selected Alt h'"]))
-
-########################################################################
 # Change the value by arrowing down.
 #
 sequence.append(utils.StartRecordingAction())
