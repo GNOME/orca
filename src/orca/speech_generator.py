@@ -1174,6 +1174,34 @@ class SpeechGenerator:
             result.append(_("row %d of %d") % ((row + 1), table.nRows))
         return result
 
+    def _generateEndOfTableIndicator(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) indicating that this cell is the last cell
+        in the table.
+        """
+        result = []
+        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+            if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+                cell = obj
+            else:
+                cell = self._script.getAncestor(obj,
+                                                [pyatspi.ROLE_TABLE_CELL],
+                                                [pyatspi.ROLE_FRAME])
+            try:
+                table = cell.parent.queryTable()
+            except:
+                pass
+            else:
+                index = self._script.getCellIndex(cell)
+                row = table.getRowAtIndex(index)
+                col = table.getColumnAtIndex(index)
+                if row + 1 == table.nRows and col + 1 == table.nColumns:
+                    # Translators: This is to indicate to the user that
+                    # he/she is in the last cell of a table in a document.
+                    #
+                    result.append(_("End of table"))
+        return result
+
     #####################################################################
     #                                                                   #
     # Terminal information                                              #

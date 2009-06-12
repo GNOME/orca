@@ -55,6 +55,12 @@ formatting = {
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'labelAndName + toggleState'
             },
+        pyatspi.ROLE_TABLE_CELL: {
+            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (expandableState and (expandableState + numberOfChildren))',
+            'unfocused': 'endOfTableIndicator + tableCellRow',
+            'basicWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + expandableState + nodeLevel',
+            'detailedWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + tableCellRow + expandableState + nodeLevel'
+            },
         'ROLE_SPREADSHEET_CELL': {
             # We treat spreadsheet cells differently from other table cells in
             # whereAmI.
