@@ -39,10 +39,36 @@ class WhereAmI:
         """Create a new WhereAmI that will be used to speak information
         about the current object of interest.
         """
-
         self._script = script
         self._debugLevel = debug.LEVEL_FINEST
         self._lastAttributeString = ""
+
+    def _adjustObject(self, obj):
+        """We want to treat text objects inside list items and table cells as
+        list items and table cells.
+        """
+        # [[[TODO: WDW - we purposely omit ROLE_ENTRY here because
+        # there is a bug in getRealActiveDescendant: it doesn't dive
+        # deep enough into the hierarchy (see comment #12 of bug
+        # #542714).  So, we won't treat entries inside cells as cells
+        # until we're more comfortable with mucking around with
+        # getRealActiveDescendant.]]]
+        #
+        role = obj.getRole()
+        if role in [pyatspi.ROLE_TEXT,
+                    pyatspi.ROLE_PASSWORD_TEXT,
+                    pyatspi.ROLE_TERMINAL,
+                    pyatspi.ROLE_PARAGRAPH,
+                    pyatspi.ROLE_SECTION,
+                    pyatspi.ROLE_HEADING,
+                    pyatspi.ROLE_DOCUMENT_FRAME]:
+            ancestor = self._script.getAncestor(obj,
+                                                [pyatspi.ROLE_TABLE_CELL,
+                                                 pyatspi.ROLE_LIST_ITEM],
+                                                [pyatspi.ROLE_FRAME])
+            if ancestor and not self._script.isLayoutOnly(ancestor.parent):
+                obj = ancestor
+        return obj
 
     def whereAmI(self, obj, basicOnly):
         """Speaks information about the current object of interest, including
@@ -55,46 +81,11 @@ class WhereAmI:
         mode, the object of interest is the object currently being visited,
         whether it has keyboard focus or not.
         """
-
         if (not obj):
             return False
-
-        role = obj.getRole()
-        if role in [pyatspi.ROLE_ENTRY,
-                    pyatspi.ROLE_TEXT,
-                    pyatspi.ROLE_PASSWORD_TEXT,
-                    pyatspi.ROLE_TERMINAL,
-                    pyatspi.ROLE_PARAGRAPH,
-                    pyatspi.ROLE_SECTION,
-                    pyatspi.ROLE_HEADING,
-                    pyatspi.ROLE_DOCUMENT_FRAME]:
-            self._speakText(obj, basicOnly)
         else:
             speech.speak(self.getWhereAmI(obj, basicOnly))
-
-        return True
-
-    def _speakText(self, obj, basicOnly):
-        # [[[TODO: WDW - we handle ROLE_ENTRY specially here because
-        # there is a bug in getRealActiveDescendant: it doesn't dive
-        # deep enough into the hierarchy (see comment #12 of bug
-        # #542714).  So, we'll do this nasty hack until we can feel
-        # more comfortable with mucking around with
-        # getRealActiveDescendant.]]]
-        #
-        ancestor = self._script.getAncestor(obj,
-                                            [pyatspi.ROLE_TABLE_CELL,
-                                             pyatspi.ROLE_LIST_ITEM],
-                                            [pyatspi.ROLE_FRAME])
-        if ancestor and not self._script.isLayoutOnly(ancestor.parent):
-            if ancestor.getRole() == pyatspi.ROLE_TABLE_CELL:
-                if obj.getRole() != pyatspi.ROLE_ENTRY:
-                    speech.speak(self.getWhereAmI(ancestor, basicOnly))
-                    return
-            else:
-                speech.speak(self.getWhereAmI(ancestor, basicOnly))
-                return
-        speech.speak(self.getWhereAmI(obj, basicOnly))
+            return True
 
     def getWhereAmI(self, obj, basicOnly):
         """Returns an array of strings (and possibly voice and audio
@@ -107,7 +98,7 @@ class WhereAmI:
         else:
             formatType = 'detailedWhereAmI'
         return self._script.speechGenerator.generateSpeech(
-                   obj,
+                   self._adjustObject(obj),
                    alreadyFocused=True,
                    formatType=formatType,
                    forceMnemonic=True,
