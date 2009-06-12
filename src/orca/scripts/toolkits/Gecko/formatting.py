@@ -37,8 +37,8 @@ formatting = {
     'speech': {
         'suffix': {
             'focused': '[]',
-            'unfocused': 'newNodeLevel + unselectedCell + tutorial',
-            'basicWhereAmI': 'tutorial + description + liveRegionDescription',
+            'unfocused': 'newNodeLevel + unselectedCell + ' + orca.formatting.TUTORIAL,
+            'basicWhereAmI': orca.formatting.TUTORIAL + ' + description + liveRegionDescription',
             'detailedWhereAmI' : '[]'
             },
         'default': {

@@ -31,6 +31,8 @@ import pyatspi
 
 # pylint: disable-msg=C0301
 
+TUTORIAL = '(tutorial and (pause + tutorial) or [])'
+
 formatting = {
     'speech': {
         'prefix': {
@@ -41,8 +43,8 @@ formatting = {
             },
         'suffix': {
             'focused': '[]',
-            'unfocused': 'newNodeLevel + unselectedCell + tutorial',
-            'basicWhereAmI': 'tutorial + description',
+            'unfocused': 'newNodeLevel + unselectedCell + ' + TUTORIAL,
+            'basicWhereAmI': TUTORIAL + ' + description',
             'detailedWhereAmI' : '[]'
             },
         'default': {
@@ -76,7 +78,7 @@ formatting = {
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + mnemonic',
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + tutorial'
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + ' + TUTORIAL
             },
         pyatspi.ROLE_EMBEDDED: {
             'focused': 'embedded',
@@ -86,7 +88,7 @@ formatting = {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + mnemonic',
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + mnemonic',
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + tutorial'
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + ' + TUTORIAL
             },
         pyatspi.ROLE_FRAME: {
             'focused': '[]',
@@ -94,7 +96,7 @@ formatting = {
             },
         pyatspi.ROLE_HEADING: {
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + mnemonic',
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + tutorial'
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + ' + TUTORIAL
             },
         pyatspi.ROLE_ICON: {
             'focused': 'labelAndName + imageDescription + roleName',
@@ -137,13 +139,13 @@ formatting = {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + mnemonic',
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + mnemonic',
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + tutorial'
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + ' + TUTORIAL
             },
         pyatspi.ROLE_PASSWORD_TEXT: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + mnemonic',
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + mnemonic',
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + tutorial'
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + ' + TUTORIAL
             },
         pyatspi.ROLE_PROGRESS_BAR: {
             'focused': 'percentage',
@@ -172,7 +174,7 @@ formatting = {
             },
         pyatspi.ROLE_SECTION: {
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + mnemonic',
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + tutorial'
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + ' + TUTORIAL
             },
         pyatspi.ROLE_SLIDER: {
             # Ignore the text on the slider.  See bug 340559
@@ -227,13 +229,13 @@ formatting = {
             'focused': 'terminal',
             'unfocused': 'terminal',
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + mnemonic',
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + tutorial'
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + ' + TUTORIAL
             },
         pyatspi.ROLE_TEXT: {
             'focused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection',
             'unfocused': 'labelOrName + readOnly + textRole + currentLineText + allTextSelection + mnemonic',
             'basicWhereAmI': 'label + readOnly + textRole + textContent + anyTextSelection + mnemonic',
-            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + tutorial'
+            'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + mnemonic + ' + TUTORIAL
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'focused': 'toggleState',

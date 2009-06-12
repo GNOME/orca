@@ -38,6 +38,7 @@ import keynames
 import orca
 import orca_state
 import settings
+import speech_generator
 
 from acss import ACSS
 from orca_i18n import _           # for gettext support
@@ -186,6 +187,10 @@ def speak(content, acss=None, interrupt=True):
                     subString += " " + element
                 else:
                     subString = element
+            elif isinstance(element, speech_generator.Pause):
+                if subString:
+                    _speak(subString + ".", acss, interrupt)
+                    subString = None
             else:
                 if subString:
                     _speak(subString, acss, interrupt)

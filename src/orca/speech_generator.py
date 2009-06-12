@@ -52,6 +52,14 @@ def _formatExceptionInfo(maxTBlevel=5):
     excTb = traceback.format_tb(trbk, maxTBlevel)
     return (excName, excArgs, excTb)
 
+class Pause:
+    """A dummy class to indicate we want to insert a pause into an
+    utterance."""
+    def __init__(self):
+        pass
+
+PAUSE = [Pause()]
+
 # [[[WDW - general note -- for all the _generate* methods, it would be great if
 # we could return an empty array if we can determine the method does not
 # apply to the object.  This would allow us to reduce the number of strings
@@ -2105,6 +2113,9 @@ class SpeechGenerator:
     # Tie it all together                                               #
     #                                                                   #
     #####################################################################
+
+    def _generatePause(self, obj, **args):
+        return PAUSE
 
     def voice(self, key=None):
         """Returns an array containing a voice.  The key is a value

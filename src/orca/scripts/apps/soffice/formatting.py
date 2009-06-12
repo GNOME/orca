@@ -40,8 +40,8 @@ formatting = {
         #
         'suffix': {
             'focused': '[]',
-            'unfocused': 'newNodeLevel + tutorial',
-            'basicWhereAmI': 'tutorial + description',
+            'unfocused': 'newNodeLevel + ' + orca.formatting.TUTORIAL,
+            'basicWhereAmI': orca.formatting.TUTORIAL + ' + description',
             'detailedWhereAmI' : '[]'
             },
         pyatspi.ROLE_COMBO_BOX: {
