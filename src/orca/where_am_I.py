@@ -516,7 +516,8 @@ class WhereAmI:
                                             [pyatspi.ROLE_TABLE_CELL,
                                              pyatspi.ROLE_LIST_ITEM],
                                             [pyatspi.ROLE_FRAME])
-        if ancestor and not self._script.isLayoutOnly(ancestor.parent):
+        if ancestor and not self._script.isLayoutOnly(ancestor.parent) \
+           and obj.getRole() != pyatspi.ROLE_ENTRY:
             # [[[TODO: WDW - we handle ROLE_ENTRY specially here because
             # there is a bug in getRealActiveDescendant: it doesn't dive
             # deep enough into the hierarchy (see comment #12 of bug
@@ -525,8 +526,7 @@ class WhereAmI:
             # getRealActiveDescendant.]]]
             #
             if ancestor.getRole() == pyatspi.ROLE_TABLE_CELL:
-                if obj.getRole() != pyatspi.ROLE_ENTRY:
-                    return self._speakTableCell(ancestor, basicOnly)
+                return self._speakTableCell(ancestor, basicOnly)
             else:
                 return self._speakListItem(ancestor, basicOnly)
 
