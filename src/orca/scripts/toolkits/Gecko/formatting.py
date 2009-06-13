@@ -43,7 +43,7 @@ formatting = {
             },
         'default': {
             'focused': '[]',
-            'unfocused': 'labelAndName + allTextSelection + roleName + availability + mnemonic + accelerator',
+            'unfocused': 'labelAndName + allTextSelection + roleName + availability + ' + orca.formatting.MNEMONIC + ' + accelerator',
             'basicWhereAmI': 'labelAndName + roleName',
             'detailedWhereAmI' : 'pageSummary'
             },
