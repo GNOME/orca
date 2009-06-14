@@ -189,7 +189,13 @@ def speak(content, acss=None, interrupt=True):
                     subString = element
             elif isinstance(element, speech_generator.Pause):
                 if subString:
-                    _speak(subString + ".", acss, interrupt)
+                    if subString[-1] != ".":
+                        subString += "."
+                    _speak(subString, acss, interrupt)
+                    subString = None
+            elif isinstance(element, speech_generator.LineBreak):
+                if subString:
+                    _speak(subString, acss, interrupt)
                     subString = None
             else:
                 if subString:

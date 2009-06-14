@@ -56,7 +56,8 @@ sequence.append(utils.AssertPresentationAction(
     "Red button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem(Control r)'",
      "     VISIBLE:  '<x> Red CheckItem(Control r)', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Color menu Red check item checked Control r item 1 of 3 r'"]))
+     "SPEECH OUTPUT: 'Preferences menu Color menu Red check item checked Control r item 1 of 3.",
+     "SPEECH OUTPUT: 'r'"]))
 
 ########################################################################
 # Down arrow to the "Green" menu item.
@@ -87,7 +88,8 @@ sequence.append(utils.AssertPresentationAction(
     "Green button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem(Control g)'",
      "     VISIBLE:  '< > Green CheckItem(Control g)', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Color menu Green check item not checked Control g item 2 of 3 g'"]))
+     "SPEECH OUTPUT: 'Preferences menu Color menu Green check item not checked Control g item 2 of 3.",
+     "SPEECH OUTPUT: 'g'"]))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window

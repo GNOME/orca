@@ -60,6 +60,14 @@ class Pause:
 
 PAUSE = [Pause()]
 
+class LineBreak:
+    """A dummy class to indicate we want to break an utterance into
+    separate calls to speak."""
+    def __init__(self):
+        pass
+
+LINE_BREAK = [LineBreak()]
+
 # [[[WDW - general note -- for all the _generate* methods, it would be great if
 # we could return an empty array if we can determine the method does not
 # apply to the object.  This would allow us to reduce the number of strings
@@ -2144,6 +2152,9 @@ class SpeechGenerator:
 
     def _generatePause(self, obj, **args):
         return PAUSE
+
+    def _generateLineBreak(self, obj, **args):
+        return LINE_BREAK
 
     def voice(self, key=None):
         """Returns an array containing a voice.  The key is a value

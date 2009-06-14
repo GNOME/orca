@@ -48,7 +48,8 @@ sequence.append(utils.AssertPresentationAction(
     "File menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
      "     VISIBLE:  'File Menu', cursor=1",
-     "SPEECH OUTPUT: 'menu bar File menu item 1 of 3 f'"]))
+     "SPEECH OUTPUT: 'menu bar File menu item 1 of 3.",
+     "SPEECH OUTPUT: 'f'"]))
 
 ########################################################################
 # Right arrow to the "Preferences" menu.
@@ -73,7 +74,8 @@ sequence.append(utils.AssertPresentationAction(
     "Preferences menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'",
      "     VISIBLE:  'Preferences Menu', cursor=1",
-     "SPEECH OUTPUT: 'menu bar Preferences menu item 2 of 3 p'"]))
+     "SPEECH OUTPUT: 'menu bar Preferences menu item 2 of 3.",
+     "SPEECH OUTPUT: 'p'"]))
 
 ########################################################################
 # Go down to the "Color" menu.
@@ -98,7 +100,8 @@ sequence.append(utils.AssertPresentationAction(
     "Color menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
      "     VISIBLE:  'Color Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Color menu item 1 of 3 c'"]))
+     "SPEECH OUTPUT: 'Preferences menu Color menu item 1 of 3.",
+     "SPEECH OUTPUT: 'c'"]))
 
 ########################################################################
 # Go down to the "Shape" menu.
@@ -123,7 +126,8 @@ sequence.append(utils.AssertPresentationAction(
     "Shape menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'",
      "     VISIBLE:  'Shape Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Shape menu item 2 of 3 s'"]))
+     "SPEECH OUTPUT: 'Preferences menu Shape menu item 2 of 3.",
+     "SPEECH OUTPUT: 's'"]))
 
 ########################################################################
 # Dismiss the menu and close the Application Window demo window

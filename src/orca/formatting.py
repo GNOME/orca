@@ -32,7 +32,7 @@ import pyatspi
 # pylint: disable-msg=C0301
 
 TUTORIAL = '(tutorial and (pause + tutorial) or [])'
-MNEMONIC = '(mnemonic and (pause + mnemonic) or [])'
+MNEMONIC = '(mnemonic and (pause + mnemonic + lineBreak) or [])'
 
 formatting = {
     'speech': {
