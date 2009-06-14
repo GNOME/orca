@@ -420,6 +420,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(
                 speech_generator.SpeechGenerator._generateTableCellRow(
                     self, obj, **args))
+            if not len(result) and settings.speakBlankLines:
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
+                result.append(_("blank"))
         return result
 
     def generateSpeech(self, obj, **args):

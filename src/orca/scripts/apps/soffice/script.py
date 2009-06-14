@@ -810,17 +810,7 @@ class Script(default.Script):
             return (cell != None)
 
         self.updateBraille(cell)
-        utterances = self.speechGenerator.generateSpeech(cell)
-        # [[[TODO: WDW - need to make sure assumption about utterances[0]
-        # is still correct with the new speech generator stuff.]]]
-        #
-        if not len(utterances[0]) and self.speakBlankLine(newFocus):
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"), None, False)
-        else:
-            speech.speak(utterances)
+        speech.speak(self.speechGenerator.generateSpeech(cell))
 
         if not settings.readTableCellRow:
             self.speakCellName(cell.name)
