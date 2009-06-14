@@ -316,7 +316,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         try:
             if obj.queryText():
                 objectText = self._script.getText(obj, 0, -1)
-                if not script_settings.speakCellCoordinates \
+                if not script_settings.speakSpreadsheetCoordinates \
                    or args.get('formatType', 'unfocused') == 'basicWhereAmI' \
                    and len(objectText) == 0:
                     # Translators: this indicates an empty (blank) spread
@@ -327,7 +327,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         except NotImplementedError:
             pass
 
-        if script_settings.speakCellCoordinates \
+        if script_settings.speakSpreadsheetCoordinates \
            and args.get('formatType', 'unfocused') != 'basicWhereAmI':
             nameList = obj.name.split()
             # We were assuming that the word for "cell" would always

@@ -822,7 +822,7 @@ class Script(default.Script):
         gtk.Container.add(tableAlignment, tableVBox)
 
         # Translators: this is an option to tell Orca whether or not it
-        # should speak table cell coordinates in HTML content.
+        # should speak table cell coordinates in document content.
         #
         label = _("Speak _cell coordinates")
         self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
@@ -845,7 +845,7 @@ class Script(default.Script):
                                     settings.speakCellSpan)
 
         # Translators: this is an option for whether or not to speak
-        # the header of a table cell in HTML content.
+        # the header of a table cell in document content.
         #
         label = _("Announce cell _header")
         self.speakCellHeadersCheckButton = gtk.CheckButton(label)
@@ -856,7 +856,7 @@ class Script(default.Script):
                                     settings.speakCellHeaders)
 
         # Translators: this is an option to allow users to skip over
-        # empty/blank cells when navigating tables in HTML content.
+        # empty/blank cells when navigating tables in document content.
         #
         label = _("Skip _blank cells")
         self.skipBlankCellsCheckButton = gtk.CheckButton(label)
@@ -867,7 +867,7 @@ class Script(default.Script):
                                     settings.skipBlankCells)
 
         # Translators: this is the title of a panel containing options
-        # for specifying how to navigate tables in HTML content.
+        # for specifying how to navigate tables in document content.
         #
         tableLabel = gtk.Label("<b>%s</b>" % _("Table Navigation"))
         gtk.Widget.show(tableLabel)

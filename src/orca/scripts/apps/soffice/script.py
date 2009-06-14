@@ -73,8 +73,12 @@ class Script(default.Script):
         #
         self.savedEnabledBrailledTextAttributes = None
         self.savedEnabledSpokenTextAttributes = None
-        self.speakCellCoordinatesCheckButton = None
+        self.speakSpreadsheetCoordinatesCheckButton = None
         self.savedreadTableCellRow = None
+        self.skipBlankCellsCheckButton = None
+        self.speakCellCoordinatesCheckButton = None
+        self.speakCellHeadersCheckButton = None
+        self.speakCellSpanCheckButton = None
 
         # Set the debug level for all the methods in this script.
         #
@@ -328,12 +332,81 @@ class Script(default.Script):
         # column position within the spread sheet (i.e. A1, B1, C2 ...)
         #
         label = _("Speak spread sheet cell coordinates")
+        self.speakSpreadsheetCoordinatesCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakSpreadsheetCoordinatesCheckButton)
+        gtk.Box.pack_start(vbox, self.speakSpreadsheetCoordinatesCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(\
+            self.speakSpreadsheetCoordinatesCheckButton,
+            script_settings.speakSpreadsheetCoordinates)
+
+        # Table Navigation frame.
+        #
+        tableFrame = gtk.Frame()
+        gtk.Widget.show(tableFrame)
+        gtk.Box.pack_start(vbox, tableFrame, False, False, 5)
+
+        tableAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
+        gtk.Widget.show(tableAlignment)
+        gtk.Container.add(tableFrame, tableAlignment)
+        gtk.Alignment.set_padding(tableAlignment, 0, 0, 12, 0)
+
+        tableVBox = gtk.VBox(False, 0)
+        gtk.Widget.show(tableVBox)
+        gtk.Container.add(tableAlignment, tableVBox)
+
+        # Translators: this is an option to tell Orca whether or not it
+        # should speak table cell coordinates in document content.
+        #
+        label = _("Speak _cell coordinates")
         self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakCellCoordinatesCheckButton)
-        gtk.Box.pack_start(vbox, self.speakCellCoordinatesCheckButton,
+        gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
-                                    script_settings.speakCellCoordinates)
+                                    settings.speakCellCoordinates)
+
+        # Translators: this is an option to tell Orca whether or not it
+        # should speak the span size of a table cell (e.g., how many
+        # rows and columns a particular table cell spans in a table).
+        #
+        label = _("Speak _multiple cell spans")
+        self.speakCellSpanCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakCellSpanCheckButton)
+        gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakCellSpanCheckButton,
+                                    settings.speakCellSpan)
+
+        # Translators: this is an option for whether or not to speak
+        # the header of a table cell in document content.
+        #
+        label = _("Announce cell _header")
+        self.speakCellHeadersCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakCellHeadersCheckButton)
+        gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
+                                    settings.speakCellHeaders)
+
+        # Translators: this is an option to allow users to skip over
+        # empty/blank cells when navigating tables in document content.
+        #
+        label = _("Skip _blank cells")
+        self.skipBlankCellsCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.skipBlankCellsCheckButton)
+        gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.skipBlankCellsCheckButton,
+                                    settings.skipBlankCells)
+
+        # Translators: this is the title of a panel containing options
+        # for specifying how to navigate tables in document content.
+        #
+        tableLabel = gtk.Label("<b>%s</b>" % _("Table Navigation"))
+        gtk.Widget.show(tableLabel)
+        gtk.Frame.set_label_widget(tableFrame, tableLabel)
+        gtk.Label.set_use_markup(tableLabel, True)
 
         return vbox
 
@@ -346,11 +419,30 @@ class Script(default.Script):
         """
 
         prefs.writelines("\n")
-        script_settings.speakCellCoordinates = \
-                 self.speakCellCoordinatesCheckButton.get_active()
         prefix = "orca.scripts.apps.soffice.script_settings"
-        prefs.writelines("%s.speakCellCoordinates = %s\n" % \
-                         (prefix, script_settings.speakCellCoordinates))
+
+        script_settings.speakSpreadsheetCoordinates = \
+                 self.speakSpreadsheetCoordinatesCheckButton.get_active()
+        prefs.writelines("%s.speakSpreadsheetCoordinates = %s\n" % \
+                         (prefix, script_settings.speakSpreadsheetCoordinates))
+
+        settings.speakCellCoordinates = \
+                 self.speakCellCoordinatesCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellCoordinates = %s\n" % \
+                         settings.speakCellCoordinates)
+
+        settings.speakCellSpan = self.speakCellSpanCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellSpan = %s\n" % \
+                         settings.speakCellSpan)
+
+        settings.speakCellHeaders = \
+                self.speakCellHeadersCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellHeaders = %s\n" % \
+                         settings.speakCellHeaders)
+
+        settings.skipBlankCells = self.skipBlankCellsCheckButton.get_active()
+        prefs.writelines("orca.settings.skipBlankCells = %s\n" % \
+                         settings.skipBlankCells)
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
