@@ -63,7 +63,8 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList Options Page <x> Ignore Scaling and Shrink To Fit Page Width CheckBox'",
      "     VISIBLE:  '<x> Ignore Scaling and Shrink To', cursor=1",
-     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box checked Alt h'"]))
+     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box checked.'",
+     "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################
 # Toggle the state of the check box by pressing Space. 
@@ -87,7 +88,8 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList Options Page < > Ignore Scaling and Shrink To Fit Page Width CheckBox'",
      "     VISIBLE:  '< > Ignore Scaling and Shrink To', cursor=1",
-     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box not checked Alt h'"]))
+     "SPEECH OUTPUT: 'Ignore Scaling and Shrink To Fit Page Width check box not checked.'",
+     "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################
 # Toggle the state of the check box by pressing Space. 
