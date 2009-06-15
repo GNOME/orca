@@ -5453,7 +5453,8 @@ class Script(default.Script):
         """Returns the ACSS to speak anything for the given obj."""
         if obj.getRole() == pyatspi.ROLE_LINK:
             acss = self.voices[settings.HYPERLINK_VOICE]
-        elif string and string.isupper() and string.strip().isalpha():
+        elif string and isinstance(string, basestring) \
+            and string.isupper() and string.strip().isalpha():
             acss = self.voices[settings.UPPERCASE_VOICE]
         else:
             acss = self.voices[settings.DEFAULT_VOICE]
