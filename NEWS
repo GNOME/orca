@@ -34,6 +34,9 @@ OpenOffice:
   one day we will. Alt + the arrows move by cell, Alt + Home/End move
   to the beginning/ending of the table respectively.
 
+* Fix for bug #583414 - Orca should announce when is at last cell on
+  a table in OOo.
+
 New and updated translations (THANKS EVERYONE!!!):
 
   See also the overall translation status:
