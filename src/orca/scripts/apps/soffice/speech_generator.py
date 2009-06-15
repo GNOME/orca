@@ -316,8 +316,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         try:
             if obj.queryText():
                 objectText = self._script.getText(obj, 0, -1)
-                if not script_settings.speakSpreadsheetCoordinates \
-                   or args.get('formatType', 'unfocused') == 'basicWhereAmI' \
+                if (not script_settings.speakSpreadsheetCoordinates \
+                    or args.get('formatType', 'unfocused') == 'basicWhereAmI') \
                    and len(objectText) == 0:
                     # Translators: this indicates an empty (blank) spread
                     # sheet cell.
