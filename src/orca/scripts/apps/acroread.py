@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2007-2008 Sun Microsystems Inc. and Joanmarie Diggs
+# Copyright 2007-2009 Sun Microsystems Inc. and Joanmarie Diggs
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2007-2008 Sun Microsystems Inc. Joanmarie Diggs"
+__copyright__ = "Copyright (c) 2007-2009 Sun Microsystems Inc. Joanmarie Diggs"
 __license__   = "LGPL"
 
 import pyatspi
@@ -273,8 +273,8 @@ class Script(default.Script):
         if not oldFocusIsTable and newFocusIsTable:
             # We've entered a table.  Announce the dimensions.
             #
-            line = _("table with %d rows and %d columns.") % \
-                    (newFocusRows, newFocusColumns)
+            line = _("table with %(rows)d rows and %(columns)d columns.") \
+                   % {"rows" : newFocusRows, "columns" : newFocusColumns}
             speech.speak(line)
 
         elif oldFocusIsTable and not newFocusIsTable:
@@ -298,7 +298,8 @@ class Script(default.Script):
                 # Translators: this represents the row and column we're
                 # on in a table.
                 #
-                line = _("row %d, column %d") % (newRow, newCol)
+                line = _("row %(row)d, column %(column)d") \
+                       % {"row": newRow, "column": newCol}
                 speech.speak(line)
             elif newCol != oldCol:
                 # Translators: this represents the column we're

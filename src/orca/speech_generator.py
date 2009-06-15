@@ -555,12 +555,13 @@ class SpeechGenerator:
                 # and the second item the name of the file being linked
                 # to.
                 #
-                result.append(_('%s link to %s') %\
-                               (link_uri_info[0], fileName[-1]))
+                result.append(_("%(uri)s link to %(file)s") \
+                              % {"uri" : link_uri_info[0],
+                                 "file" : fileName[-1]})
             else:
                 # Translators: this is the protocol of a link eg. http, mailto.
                 #
-                linkOutput = _('%s link') %link_uri_info[0]
+                linkOutput = _("%s link") % link_uri_info[0]
                 text = self._script.getDisplayedText(obj)
                 if not text:
                     # If there's no text for the link, expose part of the
@@ -593,13 +594,13 @@ class SpeechGenerator:
                     # Translators: this is an indication that a given
                     # link points to an object that is on the same page.
                     #
-                    result.append(_('same page'))
+                    result.append(_("same page"))
                 else:
                     # Translators: this is an indication that a given
                     # link points to an object that is at the same site
                     # (but not on the same page as the link).
                     #
-                    result.append(_('same site'))
+                    result.append(_("same site"))
             else:
                 # check for different machine name on same site
                 #
@@ -612,13 +613,13 @@ class SpeechGenerator:
                     # link points to an object that is at the same site
                     # (but not on the same page) as the link.
                     #
-                    result.append(_('same site'))
+                    result.append(_("same site"))
                 else:
                     # Translators: this is an indication that a given
                     # link points to an object that is at a different
                     # site than that of the link.
                     #
-                    result.append(_('different site'))
+                    result.append(_("different site"))
         return result
 
     def _generateFileSize(self, obj, **args):
@@ -645,15 +646,15 @@ class SpeechGenerator:
             if size < 10000:
                 # Translators: This is the size of a file in bytes
                 #
-                result.append(ngettext('%d byte', '%d bytes', size) % size)
+                result.append(ngettext("%d byte", "%d bytes", size) % size)
             elif size < 1000000:
                 # Translators: This is the size of a file in kilobytes
                 #
-                result.append(_('%.2f kilobytes') % (float(size) * .001))
+                result.append(_("%.2f kilobytes") % (float(size) * .001))
             elif size >= 1000000:
                 # Translators: This is the size of a file in megabytes
                 #
-                result.append(_('%.2f megabytes') % (float(size) * .000001))
+                result.append(_("%.2f megabytes") % (float(size) * .000001))
         return result
 
     #####################################################################
@@ -1176,10 +1177,14 @@ class SpeechGenerator:
             row = table.getRowAtIndex(index)
             # Translators: this is in references to a column in a
             # table.
-            result.append(_("column %d of %d") % ((col + 1), table.nColumns))
+            result.append(_("column %(index)d of %(total)d") \
+                          % {"index" : (col + 1),
+                             "total" : table.nColumns})
             # Translators: this is in reference to a row in a table.
             #
-            result.append(_("row %d of %d") % ((row + 1), table.nRows))
+            result.append(_("row %(index)d of %(total)d") \
+                          % {"index" : (row + 1),
+                             "total" : table.nRows})
         return result
 
     def _generateEndOfTableIndicator(self, obj, **args):
@@ -1730,16 +1735,19 @@ class SpeechGenerator:
         # and the count of the total number of icons within an icon panel.
         # An example of an icon panel is the Nautilus folder view.
         #
-        countString = ngettext("%d of %d item selected",
-                              "%d of %d items selected",
-                              childCount) % \
-                              (totalSelectedItems, childCount)
+        countString = ngettext("%(index)d of %(total)d item selected",
+                               "%(index)d of %(total)d items selected",
+                               childCount) \
+                      % {"index" : totalSelectedItems,
+                         "total" : childCount}
         result.append(countString)
         # Translators: this is a indication of the focused icon and the
         # count of the total number of icons within an icon panel. An
         # example of an icon panel is the Nautilus folder view.
         #
-        itemString = _("on item %d of %d") % (currentItem, childCount)
+        itemString = _("on item %(index)d of %(total)d") \
+                     % {"index" : currentItem,
+                        "total" : childCount}
         result.append(itemString)
         return result
 
@@ -1893,7 +1901,9 @@ class SpeechGenerator:
         if position >= 0:
             # Translators: this is an item in a list.
             #
-            result.append(_("item %d of %d") % (position, total))
+            result.append(_("item %(index)d of %(total)d") \
+                          % {"index" : position,
+                             "total" : total})
 
         return result
 
@@ -1969,7 +1979,9 @@ class SpeechGenerator:
         if position >= 0:
             # Translators: this is an item in a list.
             #
-            result.append(_("item %d of %d") % (position, total))
+            result.append(_("item %(index)d of %(total)d") \
+                          % {"index" : position,
+                             "total" : total})
 
         return result
 
@@ -2015,9 +2027,6 @@ class SpeechGenerator:
         specifications) that represent the default button of the window
         containing the object.
         """
-        # TODO/Question - JD to WDW: Do we want to add this to the
-        # formatting strings? For now, I've not done that.
-        #
         return self._generateDefaultButton(obj, **args)
 
     def _generateStatusBar(self, obj, **args):
@@ -2041,9 +2050,6 @@ class SpeechGenerator:
         specifications) that represent the status bar of the window
         containing the object.
         """
-        # TODO/Question - JD to WDW: Do we want to add this to the
-        # formatting strings? For now, I've not done that.
-        #
         return self._generateStatusBar(obj, **args)
 
     def generateTitle(self, obj, **args):
@@ -2052,9 +2058,6 @@ class SpeechGenerator:
         containing the object, along with information associated with
         any unfocused dialog boxes.
         """
-        # TODO/Question - JD to WDW: Do we want to add this to the
-        # formatting strings? For now, I've not done that.
-        #
         result = []
         frame, dialog = self._script.findFrameAndDialog(obj)
         if frame:

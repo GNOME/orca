@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -24,7 +24,7 @@ script providing access to document content."""
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
@@ -1483,8 +1483,9 @@ class StructuralNavigation:
             # within a document.  We need to announce when the cell occupies
             # or "spans" more than a single row and/or column.
             #
-            spanString = _("Cell spans %d rows and %d columns") % \
-                          (rowspan, colspan)
+            spanString = _("Cell spans %(rows)d rows and %(columns)d columns") \
+                         % {"rows" : rowspan,
+                            "columns" : colspan}
         elif (colspan > 1):
             # Translators: The cell here refers to a cell within a table
             # within a document.  We need to announce when the cell occupies
@@ -3307,7 +3308,8 @@ class StructuralNavigation:
             # Translators: this represents the (row, col) position of
             # a cell in a table.
             #
-            speech.speak(_("Row %d, column %d.") % (row + 1, col + 1))
+            speech.speak(_("Row %(row)d, column %(column)d.") \
+                         % {"row" : row + 1, "column" : col + 1})
 
         spanString = self._getCellSpanInfo(cell)
         if spanString and settings.speakCellSpan:

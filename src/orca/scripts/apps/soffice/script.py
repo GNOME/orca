@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -34,7 +34,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gtk
@@ -879,8 +879,9 @@ class Script(default.Script):
             if newTable:
                 # We've entered a table.  Announce the dimensions.
                 #
-                line = _("table with %d rows and %d columns.") % \
-                        (newTable.nRows, newTable.nColumns)
+                line = _("table with %(rows)d rows and %(columns)d columns.") \
+                       % {"rows" : newTable.nRows,
+                          "columns" : newTable.nColumns}
                 speech.speak(line)
 
         if not newTable:
@@ -1876,7 +1877,7 @@ class Script(default.Script):
             # event.source lacks STATE_FOCUSED. This causes the default
             # script to ignore the event. See bug #523416. [[[TODO - JD:
             # If the OOo guys fix this on their end, this hack should be
-            # removed. The OOo issue can be found here: 
+            # removed. The OOo issue can be found here:
             # http://www.openoffice.org/issues/show_bug.cgi?id=93083]]]
             #
             rolesList = [pyatspi.ROLE_LIST,
@@ -2405,7 +2406,7 @@ class Script(default.Script):
         # dialog, and loses focus requiring the user to know that it's
         # there and needs Alt+F6ing into.  But officially it's a normal
         # window.
- 
+
         # There doesn't seem to be (an efficient) top-down equivalent
         # of isDesiredFocusedItem(). But OOo documents have root panes;
         # this thing does not.

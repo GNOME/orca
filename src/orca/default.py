@@ -4372,10 +4372,11 @@ class Script(script.Script):
                             # application, so we leave things in plural form
                             # here.
                             #
-                            line = ngettext("%s %s pixel",
-                                            "%s %s pixels",
-                                            int(attribute)) % \
-                                                (localizedKey, localizedValue)
+                            line = ngettext("%(key)s %(value)s pixel",
+                                            "%(key)s %(value)s pixels",
+                                            int(attribute)) \
+                                   % {"key" : localizedKey,
+                                      "value": localizedValue}
                     elif key in ["indent", "size"]:
                         # In Gecko, we seem to get these values as a number
                         # immediately followed by "px". But we'll hedge our
@@ -4383,10 +4384,11 @@ class Script(script.Script):
                         #
                         value = attribute.split("px")
                         if len(value) > 1:
-                            line = ngettext("%s %s pixel",
-                                            "%s %s pixels",
-                                            float(value[0])) % \
-                                            (localizedKey, value[0])
+                            line = ngettext("%(key)s %(value)s pixel",
+                                            "%(key)s %(value)s pixels",
+                                            float(value[0])) \
+                                   % {"key" : localizedKey,
+                                      "value" : value[0]}
                     elif key == "family-name":
                         # In Gecko, we get a huge list and we just want the
                         # first one.  See:
