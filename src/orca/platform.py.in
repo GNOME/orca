@@ -41,3 +41,7 @@ package     = "@PACKAGE@"
 # The name of the data directory (usually "share").
 #
 datadirname = "@DATADIRNAME@"
+
+# The directory where we could find liblouis translation tables.
+#
+tablesdir = "@LOUIS_TABLE_DIR@"
