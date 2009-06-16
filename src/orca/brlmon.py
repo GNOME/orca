@@ -176,13 +176,16 @@ class BrlMon(gtk.Window):
                 self.cellFrames[i].set_shadow_type(
                     gtk.SHADOW_OUT)
 
-            if mask:
-                if (mask[i] == DOTS_78):
-                    markup += ATTRIBUTE_78
-                elif (mask[i] == DOT_7):
-                    markup += ATTRIBUTE_7
-                elif (mask[i] == DOT_8):
-                    markup += ATTRIBUTE_8
+            try:
+                if mask:
+                    if (mask[i] == DOTS_78):
+                        markup += ATTRIBUTE_78
+                    elif (mask[i] == DOT_7):
+                        markup += ATTRIBUTE_7
+                    elif (mask[i] == DOT_8):
+                        markup += ATTRIBUTE_8
+            except:
+                pass
 
             self.cellLabels[i].set_markup(
                 "<span" + markup + ">%s</span>" % char)
