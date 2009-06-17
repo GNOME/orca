@@ -177,10 +177,10 @@ def speak(content, acss=None, interrupt=True):
     if settings.silenceSpeech:
         return
 
+    subString = None
     if isinstance(content, basestring):
         subString = content
     elif isinstance(content, list):
-        subString = None
         for element in content:
             if isinstance(element, basestring):
                 if subString:
@@ -209,10 +209,13 @@ def speak(content, acss=None, interrupt=True):
                 else:
                     debug.println(debug.LEVEL_WARNING,
                                   "UNKNOWN speech element: '%s'" % element)
+    elif isinstance(content, (speech_generator.Pause,
+                              speech_generator.LineBreak)):
+        pass
     else:
         debug.printStack(debug.LEVEL_WARNING)
         debug.println(debug.LEVEL_WARNING, 
-                      "bad content send to speech.speak: '%s'", repr(content))
+                      "bad content sent to speech.speak: '%s'" % repr(content))
 
     if subString:
         _speak(subString, acss, interrupt)

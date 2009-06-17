@@ -1144,9 +1144,10 @@ class Script(default.Script):
             for i in xrange(len(clumped)):
                 [obj, startOffset, endOffset, text] = \
                                              contents[min(i, len(contents)-1)]
-                [string, voice] = clumped[i]
-                string = self.adjustForRepeats(string)
-                yield [speechserver.SayAllContext(obj, string,
+                [element, voice] = clumped[i]
+                if isinstance(element, basestring):
+                    element = self.adjustForRepeats(element)
+                yield [speechserver.SayAllContext(obj, element,
                                                   startOffset, endOffset),
                        voice]
 
@@ -5577,14 +5578,16 @@ class Script(default.Script):
 
         clumped = []
 
-        for [string, acss] in utterances:
+        for [element, acss] in utterances:
             if len(clumped) == 0:
-                clumped = [[string, acss]]
-            elif acss == clumped[-1][1]:
+                clumped = [[element, acss]]
+            elif acss == clumped[-1][1] \
+                 and isinstance(element, basestring) \
+                 and isinstance(clumped[-1][0], basestring):
                 clumped [-1][0] = clumped[-1][0].rstrip(" ")
-                clumped[-1][0] += " " + string
+                clumped[-1][0] += " " + element
             else:
-                clumped.append([string, acss])
+                clumped.append([element, acss])
 
         if (len(clumped) == 1) and (clumped[0][0] == "\n"):
             if settings.speakBlankLines:
@@ -5593,8 +5596,8 @@ class Script(default.Script):
                 #
                 return [[_("blank"), clumped[0][1]]]
 
-        if len(clumped):
-            clumped [-1][0] = clumped[-1][0].rstrip(" ")
+        if len(clumped) and isinstance(clumped[-1][0], basestring):
+            clumped[-1][0] = clumped[-1][0].rstrip(" ")
 
         return clumped
 
@@ -5602,9 +5605,10 @@ class Script(default.Script):
         """Speaks each string in contents using the associated voice/acss"""
         utterances = self.getUtterancesFromContents(contents, speakRole)
         clumped = self.clumpUtterances(utterances)
-        for [string, acss] in clumped:
-            string = self.adjustForRepeats(string)
-            speech.speak(string, acss, False)
+        for [element, acss] in clumped:
+            if isinstance(element, basestring):
+                element = self.adjustForRepeats(element)
+            speech.speak(element, acss, False)
 
     def speakCharacterAtOffset(self, obj, characterOffset):
         """Speaks the character at the given characterOffset in the
