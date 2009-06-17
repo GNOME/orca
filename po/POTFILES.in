@@ -2,7 +2,6 @@
 # Please keep this file sorted alphabetically.
 [encoding: UTF-8]
 orca.desktop.in
-src/louis/constants.py.in
 src/orca/app_gui_prefs.py
 src/orca/bookmarks.py
 src/orca/braillegenerator.py
