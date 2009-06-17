@@ -1948,6 +1948,8 @@ class SpeechGenerator:
                         parent = target
                     break
             obj = parent
+        else:
+            obj = obj.parent
 
         # We want to return the position relative to this hierarchical
         # level and not the entire list.  If the object in question
