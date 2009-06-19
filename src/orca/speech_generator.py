@@ -1131,7 +1131,7 @@ class SpeechGenerator:
         if col >= 0:
             # Translators: this is in references to a column in a
             # table.
-            result.append(_("column %d" % (col + 1)))
+            result.append(_("column %d") % (col + 1))
         return result
 
     def _generateRow(self, obj, **args):
@@ -1154,7 +1154,7 @@ class SpeechGenerator:
         if row >= 0:
             # Translators: this is in references to a row in a table.
             #
-            result.append(_("row %d" % (row + 1)))
+            result.append(_("row %d") % (row + 1))
         return result
 
     def _generateColumnAndRow(self, obj, **args):
