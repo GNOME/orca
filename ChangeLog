@@ -115,6 +115,12 @@
 
 2009-04-10  Willie Walker <william.walker@sun.com>
 
+        * src/orca/default.py:
+          Fix for bug #583811 - Doing a select all in OOo Writer causes Orca
+          to say "selected" for each paragraph.
+
+2009-05-25  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
         * src/orca/scripts/apps/soffice/script.py:
           src/orca/settings.py:
           src/orca/where_am_I.py:
