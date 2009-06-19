@@ -5644,6 +5644,12 @@ class Script(default.Script):
         given object.
         """
 
+        # Clear the flat review context if the user is currently in a
+        # flat review.
+        #
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
+
         caretContext = self.getCaretContext()
 
         # Save where we are in this particular document frame.
