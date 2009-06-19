@@ -20,7 +20,8 @@ sequence.append(utils.AssertPresentationAction(
     "Slider Where Am I",
     ["BRAILLE LINE:  'slider Application Slider Frame Some slider: 0.0 Slider'",
      "     VISIBLE:  'Some slider: 0.0 Slider', cursor=1",
-     "SPEECH OUTPUT: 'Some slider: slider 0.0 0 percent Alt s'"]))
+     "SPEECH OUTPUT: 'Some slider: slider 0.0 0 percent.'",
+     "SPEECH OUTPUT: 'Alt s'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -42,7 +43,8 @@ sequence.append(utils.AssertPresentationAction(
     "Slider Where Am I",
     ["BRAILLE LINE:  'slider Application Slider Frame Some slider: 1.0 Slider'",
      "     VISIBLE:  'Some slider: 1.0 Slider', cursor=1",
-     "SPEECH OUTPUT: 'Some slider: slider 1.0 10 percent Alt s'"]))
+     "SPEECH OUTPUT: 'Some slider: slider 1.0 10 percent.'",
+     "SPEECH OUTPUT: 'Alt s'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -64,7 +66,8 @@ sequence.append(utils.AssertPresentationAction(
     "Slider Where Am I",
     ["BRAILLE LINE:  'slider Application Slider Frame Some slider: 0.0 Slider'",
      "     VISIBLE:  'Some slider: 0.0 Slider', cursor=1",
-     "SPEECH OUTPUT: 'Some slider: slider 0.0 0 percent Alt s'"]))
+     "SPEECH OUTPUT: 'Some slider: slider 0.0 0 percent.'",
+     "SPEECH OUTPUT: 'Alt s'"]))
 
 # Just a little extra wait to let some events get through.
 #
