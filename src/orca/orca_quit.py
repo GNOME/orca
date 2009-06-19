@@ -65,6 +65,7 @@ class OrcaQuitGUI(orca_glade.GladeWrapper):
         except AttributeError:
             debug.printException(debug.LEVEL_FINEST)
 
+        quitDialog.hide()
         quitDialog.show()
 
     def quitNoButtonClicked(self, widget):
