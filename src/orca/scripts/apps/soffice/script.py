@@ -51,11 +51,11 @@ import orca.settings as settings
 import orca.keybindings as keybindings
 
 from orca.orca_i18n import _ # for gettext support
-from orca.structural_navigation import StructuralNavigation
 
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
 from formatting import Formatting
+from structural_navigation import StructuralNavigation
 import script_settings
 
 class Script(default.Script):
@@ -199,6 +199,12 @@ class Script(default.Script):
     def getFormatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
+
+    def getStructuralNavigation(self):
+        """Returns the 'structural navigation' class for this script.
+        """
+        types = self.getEnabledStructuralNavigationTypes()
+        return StructuralNavigation(self, types, enabled=False)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types

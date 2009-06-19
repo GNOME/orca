@@ -84,10 +84,8 @@ sequence.append(utils.AssertPresentationAction(
     "1. Alt Shift Left.",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 3 Paragraph") + "'",
      "     VISIBLE:  '3 Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 3 Paragraph") + "'",
-     "     VISIBLE:  '3 Paragraph', cursor=1",
      "SPEECH OUTPUT: '3'",
-     "SPEECH OUTPUT: 'Row 3, column 1."]))
+     "SPEECH OUTPUT: 'Row 3, column 1.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Left"))
@@ -102,9 +100,8 @@ sequence.append(utils.AssertPresentationAction(
     "3. Alt Shift Right.",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
      "     VISIBLE:  '4 Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
-     "     VISIBLE:  '4 Paragraph', cursor=1","SPEECH OUTPUT: '4'",
-     "SPEECH OUTPUT: 'Row 3, column 2."]))
+     "SPEECH OUTPUT: '4'",
+     "SPEECH OUTPUT: 'Row 3, column 2.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Right"))
@@ -113,10 +110,8 @@ sequence.append(utils.AssertPresentationAction(
     "4. Alt Shift Right.",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 5 Paragraph") + "'",
      "     VISIBLE:  '5 Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 5 Paragraph") + "'",
-     "     VISIBLE:  '5 Paragraph', cursor=1",
      "SPEECH OUTPUT: '5'",
-     "SPEECH OUTPUT: 'Row 3, column 3."]))
+     "SPEECH OUTPUT: 'Row 3, column 3.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Right"))
@@ -125,10 +120,9 @@ sequence.append(utils.AssertPresentationAction(
     "5. Alt Shift Right.",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 6 Paragraph7 Paragraph") + "'",
      "     VISIBLE:  '7 Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 6 Paragraph7 Paragraph") + "'",
-     "     VISIBLE:  '7 Paragraph', cursor=1",
-     "SPEECH OUTPUT: '6 7'",
-     "SPEECH OUTPUT: 'Row 3, column 4.",
+     "SPEECH OUTPUT: '6'",
+     "SPEECH OUTPUT: '7'",
+     "SPEECH OUTPUT: 'Row 3, column 4.'",
      "SPEECH OUTPUT: 'Cell spans 2 columns'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -139,7 +133,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Paragraph") + "'",
      "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'Row 2, column 4."]))
+     "SPEECH OUTPUT: 'Row 2, column 4.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Up"))
@@ -148,10 +142,8 @@ sequence.append(utils.AssertPresentationAction(
     "7. Alt Shift Up.",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Wed Paragraph") + "'",
      "     VISIBLE:  'Wed Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Wed Paragraph") + "'",
-     "     VISIBLE:  'Wed Paragraph', cursor=1",
      "SPEECH OUTPUT: 'Wed'",
-     "SPEECH OUTPUT: 'Row 1, column 4."]))
+     "SPEECH OUTPUT: 'Row 1, column 4.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Up"))
@@ -167,7 +159,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Paragraph") + "'",
      "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'Row 7, column 7."]))
+     "SPEECH OUTPUT: 'Row 7, column 7.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
@@ -188,10 +180,8 @@ sequence.append(utils.AssertPresentationAction(
     "12. Alt Shift Home.",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Sun Paragraph") + "'",
      "     VISIBLE:  'Sun Paragraph', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Sun Paragraph") + "'",
-     "     VISIBLE:  'Sun Paragraph', cursor=1",
      "SPEECH OUTPUT: 'Sun'",
-     "SPEECH OUTPUT: 'Row 1, column 1."]))
+     "SPEECH OUTPUT: 'Row 1, column 1.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Up"))

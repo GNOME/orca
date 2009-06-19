@@ -52,6 +52,7 @@ src/orca/scripts/apps/planner/braille_generator.py
 src/orca/scripts/apps/planner/speech_generator.py
 src/orca/scripts/apps/soffice/script.py
 src/orca/scripts/apps/soffice/speech_generator.py
+src/orca/scripts/apps/soffice/structural_navigation.py
 src/orca/scripts/apps/Thunderbird/script.py
 src/orca/scripts/apps/Thunderbird/speech_generator.py
 src/orca/scripts/apps/gtk-window-decorator.py
