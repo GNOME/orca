@@ -3999,6 +3999,26 @@ class Script(script.Script):
                 # dealing with this situation.
                 #
                 return
+            else:
+                # If we do a select all in a document in which each
+                # paragraph is a separate accessible object, we'll
+                # get an event for each of those objects. We don't
+                # want to repeat "(un)selected". See bug #583811.
+                #
+                diff = lastPos[0].getIndexInParent() - obj.getIndexInParent()
+                if abs(diff) > 1:
+                    # We can skip this one because we'll do the
+                    # announcement based on another one.
+                    #
+                    return
+                elif startOffset > 0 and startOffset == endOffset:
+                    try:
+                        text = lastPos[0].queryText()
+                    except:
+                        pass
+                    else:
+                        if startOffset == text.characterCount:
+                            return
 
             # We must be approaching from the top, left, or right. Or
             # from below but we've found a blank line. Our stored point
