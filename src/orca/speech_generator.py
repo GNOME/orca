@@ -1343,6 +1343,18 @@ class SpeechGenerator:
                 textObj.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
             if len(line):
+                # Check for embedded object characters. If we find any,
+                # expand the text. TODO - JD: This expansion doesn't 
+                # include the role information; just the text. However,
+                # the handling of roles should probably be dealt with as
+                # a formatting string. We have not yet worked out how to
+                # do this with Gecko (primary user of embedded object
+                # characters). Until we do, this expansion is better than
+                # presenting the actual embedded object character.
+                #
+                unicodeText = line.decode("UTF-8")
+                if self._script.EMBEDDED_OBJECT_CHARACTER in unicodeText:
+                    line = self._script.expandEOCs(obj, startOffset, endOffset)
                 line = self._script.adjustForRepeats(line)
                 textContents = line
             else:

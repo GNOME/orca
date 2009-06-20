@@ -6591,6 +6591,85 @@ class Script(script.Script):
 
         return newLine.encode("UTF-8")
 
+    def getCharacterOffsetInParent(self, obj):
+        """Returns the character offset of the embedded object
+        character for this object in its parent's accessible text.
+
+        Arguments:
+        - obj: an Accessible that should implement the accessible hyperlink
+               specialization.
+
+        Returns an integer representing the character offset of the
+        embedded object character for this hyperlink in its parent's
+        accessible text, or -1 something was amuck.
+        """
+
+        try:
+            hyperlink = obj.queryHyperlink()
+        except NotImplementedError:
+            offset = -1
+        else:
+            # We need to make sure that this is an embedded object in
+            # some accessible text (as opposed to an imagemap link).
+            #
+            try:
+                obj.parent.queryText()
+            except NotImplementedError:
+                offset = -1
+            else:
+                offset = hyperlink.startIndex
+
+        return offset
+
+    def expandEOCs(self, obj, startOffset=0, endOffset=-1):
+        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
+        with their text.
+
+        Arguments
+        - obj: the object whose text should be expanded
+        - startOffset: the offset of the first character to be included
+        - endOffset: the offset of the last character to be included
+
+        Returns the fully expanded text for the object.
+        """
+
+        if not obj:
+            return None
+
+        string = None
+        try:
+            text = obj.queryText()
+        except:
+            text = None
+
+        if text and text.characterCount:
+            string = text.getText(startOffset, endOffset)
+            unicodeText = string.decode("UTF-8")
+            if unicodeText \
+                and self.EMBEDDED_OBJECT_CHARACTER in unicodeText:
+                # If we're not getting the full text of this object, but
+                # rather a substring, we need to figure out the offset of
+                # the first child within this substring.
+                #
+                childOffset = 0
+                for child in obj:
+                    if self.getCharacterOffsetInParent(child) >= startOffset:
+                        break
+                    childOffset += 1
+
+                toBuild = list(unicodeText)
+                count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
+                for i in xrange(count):
+                    index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
+                    child = obj[i + childOffset]
+                    childText = self.expandEOCs(child)
+                    if not childText:
+                        childText = ""
+                    toBuild[index] = childText.decode("UTF-8")
+                string = "".join(toBuild)
+
+        return string
+
     def _getPronunciationForSegment(self, segment):
         """Adjust the word segment to potentially replace it with what
         those words actually sound like. Two pronunciation dictionaries
