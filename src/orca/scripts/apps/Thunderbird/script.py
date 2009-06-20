@@ -582,6 +582,9 @@ class Script(Gecko.Script):
         Overridden here because multiple open messages are not arranged
         in tabs like they are in Firefox."""
 
+        if self.inFindToolbar():
+            return Gecko.Script.getDocumentFrame(self)
+
         obj = orca_state.locusOfFocus
         while obj:
             role = obj.getRole()
