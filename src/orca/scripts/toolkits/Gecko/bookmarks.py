@@ -60,8 +60,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         # Translators: this announces that a bookmark has been entered
         #
         utterances = [(_('entered bookmark'))]
-        utterances.extend(self._script.speechGenerator.generateSpeech \
-                         (obj, False))
+        utterances.extend(self._script.speechGenerator.generateSpeech(obj))
         speech.speak(utterances)
         
     def goToBookmark(self, inputEvent, index=None):
