@@ -340,6 +340,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 for char in name.decode("UTF-8"):
                     if char.isdigit():
                         result.append(name)
+                        break
         return result
 
     def _generateRealTableCell(self, obj, **args):
