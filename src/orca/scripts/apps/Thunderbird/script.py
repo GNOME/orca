@@ -592,3 +592,13 @@ class Script(Gecko.Script):
                 obj = obj.parent
 
         return None
+
+    def toggleFlatReviewMode(self, inputEvent=None):
+        """Toggles between flat review mode and focus tracking mode."""
+
+        # If we're leaving flat review dump the cache. See bug 568658.
+        #
+        if self.flatReviewContext:
+            pyatspi.clearCache()
+
+        return default.Script.toggleFlatReviewMode(self, inputEvent)
