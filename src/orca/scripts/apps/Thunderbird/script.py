@@ -354,12 +354,10 @@ class Script(Gecko.Script):
         # number as the previously deleted message).
         # See bug #536451 for more details.
         #
-        rolesList = [pyatspi.ROLE_TABLE_CELL, \
-                     pyatspi.ROLE_TREE_TABLE, \
-                     pyatspi.ROLE_SCROLL_PANE, \
-                     pyatspi.ROLE_SCROLL_PANE, \
-                     pyatspi.ROLE_FRAME, \
-                     pyatspi.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_TREE_TABLE,
+                     pyatspi.ROLE_SCROLL_PANE,
+                     pyatspi.ROLE_SCROLL_PANE]
         if self.isDesiredFocusedItem(event.source, rolesList):
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 string = orca_state.lastNonModifierKeyEvent.event_string
