@@ -36,7 +36,7 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  '• Not in a paragraph'",
      "     VISIBLE:  '• Not in a paragraph', cursor=1",
-     "SPEECH OUTPUT: 'bullet Not in a paragraph'"]))
+     "SPEECH OUTPUT: '• Not in a paragraph'"]))
 
 ########################################################################
 # Press Down Arrow to move through the lists doing a where am I for each
@@ -50,7 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Basic Where Am I",
     ["BRAILLE LINE:  '• In a paragraph'",
      "     VISIBLE:  '• In a paragraph', cursor=1",
-     "SPEECH OUTPUT: 'list item bullet In a paragraph item 2 of 4'"]))
+     "SPEECH OUTPUT: 'list item • In a paragraph item 2 of 4'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -60,7 +60,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
     ["BRAILLE LINE:  '• In a section'",
      "     VISIBLE:  '• In a section', cursor=1",
-     "SPEECH OUTPUT: 'list item bullet In a section item 3 of 4'"]))
+     "SPEECH OUTPUT: 'list item • In a section item 3 of 4'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
@@ -100,7 +100,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Basic Where Am I",
     ["BRAILLE LINE:  '• In a paragraph that's in a section'",
      "     VISIBLE:  '• In a paragraph that's in a sec', cursor=1",
-     "SPEECH OUTPUT: 'list item bullet In a paragraph that's in a section item 4 of 4'"]))
+     "SPEECH OUTPUT: 'list item • In a paragraph that's in a section item 4 of 4'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

@@ -73,7 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• listing item'",
      "     VISIBLE:  '• listing item', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
-     "SPEECH OUTPUT: 'bullet listing item'"]))
+     "SPEECH OUTPUT: '• listing item'"]))
 
 ########################################################################
 # Press L to move to the first sub-list of the third list.
@@ -86,7 +86,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• first sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 1'",
-     "SPEECH OUTPUT: 'bullet first sublevel'"]))
+     "SPEECH OUTPUT: '• first sublevel'"]))
 
 ########################################################################
 # Press L to move to the first list *within* the first sub-list of
@@ -100,7 +100,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• look for the bullet on', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 2'",
-     "SPEECH OUTPUT: 'bullet look for the bullet on'"]))
+     "SPEECH OUTPUT: '• look for the bullet on'"]))
 
 ########################################################################
 # Press L again.  To move to the first sub-sub-list of the third list.
@@ -114,7 +114,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• each sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 3'",
-     "SPEECH OUTPUT: 'bullet each sublevel'"]))
+     "SPEECH OUTPUT: '• each sublevel'"]))
 
 ########################################################################
 # Press L again.  Now we're working our way out, but still stopping
@@ -128,7 +128,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• if your TYPE is circle', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 2'",
-     "SPEECH OUTPUT: 'bullet if your TYPE is circle'"]))
+     "SPEECH OUTPUT: '• if your TYPE is circle'"]))
 
 ########################################################################
 # Press L again.  Almost done.
@@ -141,7 +141,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• was a composer who was not squ', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 1'",
-     "SPEECH OUTPUT: 'bullet was a composer who was not square'"]))
+     "SPEECH OUTPUT: '• was a composer who was not square'"]))
 
 ########################################################################
 # Press L again.  That should be all of the lists.
@@ -153,7 +153,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• feeling listless'",
      "     VISIBLE:  '• feeling listless', cursor=1",
      "SPEECH OUTPUT: 'List with 3 items'",
-     "SPEECH OUTPUT: 'bullet feeling listless'"]))
+     "SPEECH OUTPUT: '• feeling listless'"]))
 
 ########################################################################
 # Pressing L again should result in our wrapping to the top.
@@ -180,7 +180,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• feeling listless', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'List with 3 items'",
-     "SPEECH OUTPUT: 'bullet feeling listless'"]))
+     "SPEECH OUTPUT: '• feeling listless'"]))
 
 ########################################################################
 # Pressing Shift+L subsequently should place us on all of the lists
@@ -194,17 +194,17 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• was a composer who was not squ', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 1'",
-     "SPEECH OUTPUT: 'bullet was a composer who was not square'"]))
+     "SPEECH OUTPUT: '• was a composer who was not square'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
-     ["BRAILLE LINE:  '• if your TYPE is circle'",
+    ["BRAILLE LINE:  '• if your TYPE is circle'",
      "     VISIBLE:  '• if your TYPE is circle', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 2'",
-     "SPEECH OUTPUT: 'bullet if your TYPE is circle'"]))
+     "SPEECH OUTPUT: '• if your TYPE is circle'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
@@ -214,7 +214,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• each sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 3'",
-     "SPEECH OUTPUT: 'bullet each sublevel'"]))
+     "SPEECH OUTPUT: '• each sublevel'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
@@ -224,7 +224,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• look for the bullet on', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 2'",
-     "SPEECH OUTPUT: 'bullet look for the bullet on'"]))
+     "SPEECH OUTPUT: '• look for the bullet on'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
@@ -234,7 +234,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '• first sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 1'",
-     "SPEECH OUTPUT: 'bullet first sublevel'"]))
+     "SPEECH OUTPUT: '• first sublevel'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
@@ -243,7 +243,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  '• listing item'",
      "     VISIBLE:  '• listing item', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
-     "SPEECH OUTPUT: 'bullet listing item'"]))
+     "SPEECH OUTPUT: '• listing item'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))

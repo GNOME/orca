@@ -65,7 +65,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
     ["BRAILLE LINE:  '• Do this thing'",
      "     VISIBLE:  '• Do this thing', cursor=1",
-     "SPEECH OUTPUT: 'bullet Do this thing'"]))
+     "SPEECH OUTPUT: '• Do this thing'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -73,7 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BRAILLE LINE:  '• Do this other thing'",
      "     VISIBLE:  '• Do this other thing', cursor=1",
-     "SPEECH OUTPUT: 'bullet Do this other thing'"]))
+     "SPEECH OUTPUT: '• Do this other thing'"]))
 
 ########################################################################
 # Up Arrow.
@@ -84,7 +84,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Up",
     ["BRAILLE LINE:  '• Do this thing'",
      "     VISIBLE:  '• Do this thing', cursor=1",
-     "SPEECH OUTPUT: 'bullet Do this thing'"]))
+     "SPEECH OUTPUT: '• Do this thing'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

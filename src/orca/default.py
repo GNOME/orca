@@ -30,6 +30,7 @@ __license__   = "LGPL"
 
 import locale
 import math
+import re
 import sys
 import time
 
@@ -70,6 +71,7 @@ class Script(script.Script):
 
     EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
     NO_BREAK_SPACE_CHARACTER  = u'\u00a0'
+    WORDS_RE = re.compile("(\W+)", re.UNICODE)
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -6622,23 +6624,20 @@ class Script(script.Script):
         dictionary.
         """
 
-        line = line.decode("UTF-8")
-        newLine = segment = u''
+        newLine = ""
+        words = self.WORDS_RE.split(line.decode("UTF-8"))
+        for word in words:
+            if word.isalnum():
+                word = self._getPronunciationForSegment(word)
+            newLine += word
 
-        for i in range(0, len(line)):
-            if self.isWordDelimiter(line[i]):
-                if len(segment) != 0:
-                    newLine = newLine + \
-                              self._getPronunciationForSegment(segment)
-                newLine = newLine + line[i]
-                segment = u''
-            else:
-                segment += line[i]
-
-        if len(segment) != 0:
-            newLine = newLine + self._getPronunciationForSegment(segment)
-
-        return newLine.encode("UTF-8")
+        if line != newLine:
+            debug.println(debug.LEVEL_FINEST,
+                          "adjustForPronunciation: \n  From '%s'\n  To   '%s'" \
+                          % (line, newLine))
+            return newLine.encode("UTF-8")
+        else:
+            return line
 
     def getLinkIndex(self, obj, characterIndex):
         """A brute force method to see if an offset is a link.  This
@@ -7967,7 +7966,8 @@ class Script(script.Script):
             return rv, 0, 0
 
         if get_defaults:
-            rv.update(self.attributeStringToDictionary(texti.getDefaultAttributes()))
+            rv.update(self.attributeStringToDictionary(
+                texti.getDefaultAttributes()))
 
         attrib_str, start, end = texti.getAttributes(offset)
 

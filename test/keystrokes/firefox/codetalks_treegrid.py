@@ -142,7 +142,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Right Arrow in child", 
     ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
      "     VISIBLE:  'Price $ 9.99 Cell', cursor=1",
-     "SPEECH OUTPUT: 'dollar 9.99'"]))
+     "SPEECH OUTPUT: '$ 9.99'"]))
 
 ########################################################################
 # Left Arrow in the child item.

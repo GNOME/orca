@@ -124,7 +124,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up to anchors.html", 
     ["BRAILLE LINE:  '• anchors.html'",
      "     VISIBLE:  '• anchors.html', cursor=1",
-     "SPEECH OUTPUT: 'bullet anchors.html link'"]))
+     "SPEECH OUTPUT: '• anchors.html link'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

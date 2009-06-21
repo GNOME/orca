@@ -99,7 +99,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• This is a test that is not very interesting.'",
      "     VISIBLE:  '• This is a test that is not ver', cursor=1",
-     "SPEECH OUTPUT: 'bullet This is a test link  that is not very interesting.'"]))
+     "SPEECH OUTPUT: '• This is a test link  that is not very interesting.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -107,7 +107,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• But it looks like a real-world example.'",
      "     VISIBLE:  '• But it looks like a real-world', cursor=1",
-     "SPEECH OUTPUT: 'bullet But it looks like link  a real-world example.'"]))
+     "SPEECH OUTPUT: '• But it looks like link  a real-world example.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -115,7 +115,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• And that's why this silly test is here.'",
      "     VISIBLE:  '• And that's why this silly test', cursor=1",
-     "SPEECH OUTPUT: 'bullet And that's link  why this silly test is here.'"]))
+     "SPEECH OUTPUT: '• And that's link  why this silly test is here.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -139,7 +139,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• The thing is we can't copy content.'",
      "     VISIBLE:  '• The thing is we can't copy con', cursor=1",
-     "SPEECH OUTPUT: 'bullet The thing is link  we can't copy content.'"]))
+     "SPEECH OUTPUT: '• The thing is link  we can't copy content.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -147,7 +147,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• So we must create silly tests.'",
      "     VISIBLE:  '• So we must create silly tests.', cursor=1",
-     "SPEECH OUTPUT: 'bullet So we must link  create silly tests.'"]))
+     "SPEECH OUTPUT: '• So we must link  create silly tests.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -155,7 +155,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '• Oh well.'",
      "     VISIBLE:  '• Oh well.', cursor=1",
-     "SPEECH OUTPUT: 'bullet Oh link  well.'"]))
+     "SPEECH OUTPUT: '• Oh link  well.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -174,7 +174,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• Oh well.'",
      "     VISIBLE:  '• Oh well.', cursor=1",
-     "SPEECH OUTPUT: 'bullet Oh link  well.'"]))
+     "SPEECH OUTPUT: '• Oh link  well.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -182,7 +182,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• So we must create silly tests.'",
      "     VISIBLE:  '• So we must create silly tests.', cursor=1",
-     "SPEECH OUTPUT: 'bullet So we must link  create silly tests.'"]))
+     "SPEECH OUTPUT: '• So we must link  create silly tests.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -190,7 +190,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• The thing is we can't copy content.'",
      "     VISIBLE:  '• The thing is we can't copy con', cursor=1",
-     "SPEECH OUTPUT: 'bullet The thing is link  we can't copy content.'"]))
+     "SPEECH OUTPUT: '• The thing is link  we can't copy content.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -214,7 +214,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• And that's why this silly test is here.'",
      "     VISIBLE:  '• And that's why this silly test', cursor=1",
-     "SPEECH OUTPUT: 'bullet And that's link  why this silly test is here.'"]))
+     "SPEECH OUTPUT: '• And that's link  why this silly test is here.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -222,7 +222,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• But it looks like a real-world example.'",
      "     VISIBLE:  '• But it looks like a real-world', cursor=1",
-     "SPEECH OUTPUT: 'bullet But it looks like link  a real-world example.'"]))
+     "SPEECH OUTPUT: '• But it looks like link  a real-world example.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -230,7 +230,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '• This is a test that is not very interesting.'",
      "     VISIBLE:  '• This is a test that is not ver', cursor=1",
-     "SPEECH OUTPUT: 'bullet This is a test link  that is not very interesting.'"]))
+     "SPEECH OUTPUT: '• This is a test link  that is not very interesting.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -75,7 +75,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Down Arrow", 
     ["BRAILLE LINE:  '\$Revision: [0-9]* \$'",
      "     VISIBLE:  '\$Revision: [0-9]* \$', cursor=1",
-     "SPEECH OUTPUT: '\$Revision: [0-9]* dollar'"]))
+     "SPEECH OUTPUT: '\$Revision: [0-9]* \$'"]))
 
 ########################################################################
 # Up Arrow.

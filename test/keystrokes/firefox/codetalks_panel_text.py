@@ -61,7 +61,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Down Arrow", 
     ["BRAILLE LINE:  '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'",
      "     VISIBLE:  '• left and right arrows to move ', cursor=1",
-     "SPEECH OUTPUT: 'bullet left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'"]))
+     "SPEECH OUTPUT: '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -77,7 +77,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Down Arrow", 
     ["BRAILLE LINE:  '• ctrl-left and ctrl-right arrows behave the same as left and right arrows'",
      "     VISIBLE:  '• ctrl-left and ctrl-right arrow', cursor=1",
-     "SPEECH OUTPUT: 'bullet ctrl-left and ctrl-right arrows behave the same as left and right arrows'"]))
+     "SPEECH OUTPUT: '• ctrl-left and ctrl-right arrows behave the same as left and right arrows'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -85,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Down Arrow", 
     ["BRAILLE LINE:  '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'",
      "     VISIBLE:  '• ctrl-shift-pageup / ctrl-shift', cursor=1",
-     "SPEECH OUTPUT: 'bullet ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'"]))
+     "SPEECH OUTPUT: '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -104,7 +104,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
     ["BRAILLE LINE:  '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'",
      "     VISIBLE:  '• ctrl-shift-pageup / ctrl-shift', cursor=1",
-     "SPEECH OUTPUT: 'bullet ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'"]))
+     "SPEECH OUTPUT: '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -112,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
     ["BRAILLE LINE:  '• ctrl-left and ctrl-right arrows behave the same as left and right arrows'",
      "     VISIBLE:  '• ctrl-left and ctrl-right arrow', cursor=1",
-     "SPEECH OUTPUT: 'bullet ctrl-left and ctrl-right arrows behave the same as left and right arrows'"]))
+     "SPEECH OUTPUT: '• ctrl-left and ctrl-right arrows behave the same as left and right arrows'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -128,7 +128,7 @@ sequence.append(utils.AssertPresentationAction(
     "4. Up Arrow", 
     ["BRAILLE LINE:  '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'",
      "     VISIBLE:  '• left and right arrows to move ', cursor=1",
-     "SPEECH OUTPUT: 'bullet left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'"]))
+     "SPEECH OUTPUT: '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
