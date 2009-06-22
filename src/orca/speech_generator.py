@@ -27,11 +27,9 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import sys
-import traceback
 import urlparse, urllib2
 
-import debug
+import generator
 import orca_state
 import pyatspi
 import rolenames
@@ -41,16 +39,6 @@ import text_attribute_names
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
 from orca_i18n import C_        # to provide qualified translatable strings
-
-def _formatExceptionInfo(maxTBlevel=5):
-    cla, exc, trbk = sys.exc_info()
-    excName = cla.__name__
-    try:
-        excArgs = exc.args
-    except KeyError:
-        excArgs = "<no args>"
-    excTb = traceback.format_tb(trbk, maxTBlevel)
-    return (excName, excArgs, excTb)
 
 class Pause:
     """A dummy class to indicate we want to insert a pause into an
@@ -77,7 +65,7 @@ LINE_BREAK = [LineBreak()]
 #
 METHOD_PREFIX = "_generate"
 
-class SpeechGenerator:
+class SpeechGenerator(generator.Generator):
     """Takes accessible objects and produces a string to speak for
     those objects.  See the generateSpeech method, which is the primary
     entry point.  Subclasses can feel free to override/extend the
@@ -85,91 +73,17 @@ class SpeechGenerator:
 
     # pylint: disable-msg=W0142
 
-    def _overrideRole(self, newRole, args):
-        """Convenience method to allow you to temporarily override the role in
-        the args dictionary.  This changes the role in args ags
-        returns the old role so you can pass it back to _restoreRole.
-        """
-        oldRole = args.get('role', None)
-        args['role'] = newRole
-        return oldRole
-
-    def _restoreRole(self, oldRole, args):
-        """Convenience method to restore the old role back in the args
-        dictionary.  The oldRole should have been obtained from
-        _overrideRole.  If oldRole is None, then the 'role' key/value
-        pair will be deleted from args.
-        """
-        if oldRole:
-            args['role'] = oldRole
-        else:
-            del args['role']
-
     def __init__(self, script):
-        self._script = script
-        self._methodsDict = {}
-        for method in \
-            filter(lambda z: callable(z),
-                   map(lambda y: getattr(self, y).__get__(self, self.__class__),
-                       filter(lambda x: x.startswith(METHOD_PREFIX),
-                                        dir(self)))):
-            name = method.__name__[len(METHOD_PREFIX):]
-            name = name[0].lower() + name[1:]
-            self._methodsDict[name] = method
+        generator.Generator.__init__(self, script, "speech")
 
-        # Something to help us retain things we've computed while
-        # generating speech so we don't need to keep recomputing them.
-        #
-        self._valueCache = {}
+    def _addGlobals(self, globalsDict):
+        """Other things to make available from the formatting string.
+        """
+        generator.Generator._addGlobals(self, globalsDict)
+        globalsDict['voice'] = self.voice
 
-        # Verify the formatting strings are OK.  This is only
-        # for verification and does not effect the function of
-        # Orca at all.
-
-        # Populate the entire globals with empty arrays
-        # for the results of all the legal method names.
-        #
-        methods = {}
-        for key in self._methodsDict.keys():
-            methods[key] = []
-        methods['voice'] = self.voice
-        methods['obj'] = None
-        methods['role'] = None
-        methods['pyatspi'] = pyatspi
-        for roleKey in self._script.formatting["speech"]:
-            for speechKey in ["focused", "unfocused"]:
-                try:
-                    evalString = \
-                        self._script.formatting["speech"][roleKey][speechKey]
-                except:
-                    continue
-                else:
-                    if not evalString:
-                        # It's legal to have an empty string for speech.
-                        #
-                        continue
-                    while True:
-                        try:
-                            eval(evalString, methods)
-                            break
-                        except NameError:
-                            info = _formatExceptionInfo()
-                            arg = info[1][0]
-                            arg = arg.replace("name '", "")
-                            arg = arg.replace("' is not defined", "")
-                            if not self._methodsDict.has_key(arg):
-                                debug.printException(debug.LEVEL_SEVERE)
-                                debug.println(
-                                    debug.LEVEL_SEVERE,
-                                    "Unable to find function for '%s'\n" % arg)
-                            methods[arg] = []
-                        except:
-                            debug.printException(debug.LEVEL_SEVERE)
-                            debug.println(
-                                debug.LEVEL_SEVERE,
-                                "While processing '%s' '%s' '%s' '%s'" \
-                                % (roleKey, speechKey, evalString, methods))
-                            break
+    def generateSpeech(self, obj, **args):
+        return self.generate(obj, **args)
 
     #####################################################################
     #                                                                   #
@@ -1344,7 +1258,7 @@ class SpeechGenerator:
                 pyatspi.TEXT_BOUNDARY_LINE_START)
             if len(line):
                 # Check for embedded object characters. If we find any,
-                # expand the text. TODO - JD: This expansion doesn't 
+                # expand the text. TODO - JD: This expansion doesn't
                 # include the role information; just the text. However,
                 # the handling of roles should probably be dealt with as
                 # a formatting string. We have not yet worked out how to
@@ -1395,9 +1309,9 @@ class SpeechGenerator:
     def _generateTextContentWithAttributes(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) containing the text content, obtained from the
-        'textInformation' value of self._valueCache, with character
-        attribute information mixed in.  This requires
-        _generateTextInformation to have been called prior to this method.
+        'textInformation' value, with character attribute information
+        mixed in.  This requires _generateTextInformation to have been
+        called prior to this method.
         """
         try:
             text = obj.queryText()
@@ -2103,10 +2017,6 @@ class SpeechGenerator:
         result = []
         [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
         if accelerator:
-            # Add punctuation for better prosody.
-            #
-            #if result:
-            #    result[-1] += "."
             result.append(accelerator)
         return result
 
@@ -2123,10 +2033,6 @@ class SpeechGenerator:
             if not mnemonic and shortcut:
                 mnemonic = shortcut
             if mnemonic:
-                # Add punctuation for better prosody.
-                #
-                #if result:
-                #    utterances[-1] += "."
                 result = [mnemonic]
         return result
 
@@ -2163,7 +2069,7 @@ class SpeechGenerator:
 
     #####################################################################
     #                                                                   #
-    # Tie it all together                                               #
+    # Other things for prosody and voice selection                      #
     #                                                                   #
     #####################################################################
 
@@ -2183,100 +2089,3 @@ class SpeechGenerator:
         except:
             voice = settings.voices[settings.DEFAULT_VOICE]
         return [voice]
-
-    def generateSpeech(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the complete speech for the
-        object.  The speech to be generated depends highly upon the
-        speech formatting strings in formatting.py.
-
-        args is a dictionary that may contain any of the following:
-        - alreadyFocused: if True, we're getting speech for an object
-          that previously had focus
-        - priorObj: if set, represents the object that had focus before
-          this object
-        - includeContext: boolean (default=True) which says whether
-          the context for an object should be included as a prefix
-          and suffix
-        - role: a role to override the object's role
-        - formatType: the type of formatting, such as
-          'focused', 'basicWhereAmI', etc.
-        - forceMnemonic: boolean (default=False) which says if we
-          should ignore the settings.enableMnemonicSpeaking setting
-        - forceTutorial: boolean (default=False) which says if we
-          should force a tutorial to be spoken or not
-        """
-        result = []
-        methods = {}
-        methods['voice'] = self.voice
-        methods['obj'] = obj
-        methods['pyatspi'] = pyatspi
-        methods['role'] = args.get('role', obj.getRole())
-
-        try:
-            # We sometimes want to override the role.  We'll keep the
-            # role in the args dictionary as a means to let us do so.
-            #
-            args['role'] = methods['role']
-
-            # We loop through the format string, catching each error
-            # as we go.  Each error should always be a NameError,
-            # where the name is the name of one of our generator
-            # functions.  When we encounter this, we call the function
-            # and get its results, placing them in the globals for the
-            # the call to eval.
-            #
-            args['mode'] = 'speech'
-            if not args.get('formatType', None):
-                if args.get('alreadyFocused', False):
-                    args['formatType'] = 'focused'
-                else:
-                    args['formatType'] = 'unfocused'
-
-            format = self._script.formatting.getFormat(**args)
-
-            # Add in the speech context if this is the first time
-            # we've been called.
-            #
-            if not args.get('recursing', False):
-                self._valueCache = {}
-                if args.get('includeContext', True):
-                    prefix = self._script.formatting.getPrefix(**args)
-                    suffix = self._script.formatting.getSuffix(**args)
-                    format = '%s + %s + %s' % (prefix, format, suffix)
-                args['recursing'] = True
-                firstTimeCalled = True
-            else:
-                firstTimeCalled = False
-
-            debug.println(debug.LEVEL_ALL, "generateSpeech for %s using '%s'" \
-                          % (repr(args), format))
-
-            assert(format)
-            while True:
-                try:
-                    result = eval(format, methods)
-                    break
-                except NameError:
-                    result = []
-                    info = _formatExceptionInfo()
-                    arg = info[1][0]
-                    arg = arg.replace("name '", "")
-                    arg = arg.replace("' is not defined", "")
-                    if not self._methodsDict.has_key(arg):
-                        debug.printException(debug.LEVEL_SEVERE)
-                        debug.println(
-                            debug.LEVEL_SEVERE,
-                            "Unable to find function for '%s'\n" % arg)
-                        break
-                    methods[arg] = self._methodsDict[arg](obj, **args)
-                    debug.println(debug.LEVEL_ALL,
-                                  "%s=%s" % (arg, repr(methods[arg])))
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-            result = []
-
-        debug.println(debug.LEVEL_ALL,
-                      "generateSpeech generated '%s'" % repr(result))
-
-        return result

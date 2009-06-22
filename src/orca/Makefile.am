@@ -26,6 +26,7 @@ orca_python_PYTHON = \
 	flat_review.py \
 	focus_tracking_presenter.py \
 	formatting.py \
+	generator.py \
 	gnomespeechfactory.py \
 	httpserver.py \
 	input_event.py \
