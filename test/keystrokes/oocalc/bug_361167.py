@@ -31,10 +31,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic where am I with no dynamic headers set", 
     ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
      "     VISIBLE:  'Cell A1 ', cursor=1",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'column 1'",
-     "SPEECH OUTPUT: 'row 1'",
-     "SPEECH OUTPUT: ''"]))
+     "SPEECH OUTPUT: 'cell column 1 row 1 blank'"]))
 
 ######################################################################
 # 4. Type Insert-r to set the dynamic column headers to the first column.
@@ -94,12 +91,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic where am I with dynamic headers set B2", 
     ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
      "     VISIBLE:  'Yes Cell B2 ', cursor=1",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'column 2'",
-     "SPEECH OUTPUT: 'Apples'",
-     "SPEECH OUTPUT: 'row 2'",
-     "SPEECH OUTPUT: 'Good in Pies'",
-     "SPEECH OUTPUT: 'Yes'"]))
+     "SPEECH OUTPUT: 'cell column 2 Apples row 2 Good in Pies Yes'"]))
 
 ######################################################################
 # 9. Press the down arrow to move to cell B3.
@@ -133,12 +125,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic where am I with dynamic headers set C3",
     ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell C3 '",
      "     VISIBLE:  'Yes Cell C3 ', cursor=1",
-     "SPEECH OUTPUT: 'cell'",
-     "SPEECH OUTPUT: 'column 3'",
-     "SPEECH OUTPUT: 'Pears'",
-     "SPEECH OUTPUT: 'row 3'",
-     "SPEECH OUTPUT: 'Juiceable'",
-     "SPEECH OUTPUT: 'Yes'"]))
+     "SPEECH OUTPUT: 'cell column 3 Pears row 3 Juiceable Yes'"]))
 
 ######################################################################
 # 13. Press the up arrow to move to cell C2.

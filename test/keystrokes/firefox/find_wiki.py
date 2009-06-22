@@ -89,13 +89,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "5. Return",
-    ["SPEECH OUTPUT: 'AT-SPI (e.g., the GNOME desktop). The development of Orca has'"]))
+    ["SPEECH OUTPUT: 'AT-SPI \(e.g., the GNOME desktop\). The development of Orca has'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "6. Return",
-    ["SPEECH OUTPUT: 'Please join and participate on the Orca mailing list link  ( archives link ): it's a helpful, kind, and productive'"]))
+    ["SPEECH OUTPUT: 'Please join and participate on the Orca mailing list link  \( archives link \): it's a helpful, kind, and productive'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

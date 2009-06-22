@@ -35,23 +35,23 @@ import logging
 log = logging.getLogger("braille")
 
 import signal
+import os
 
 try:
     import louis
 except ImportError:
     louis = None
-    _defaultContractionTable = None
-else:
-    _defaultContractionTable = louis.getDefaultTable()
 
 try:
     import brlapi
     import gobject
 
     _brlAPI = None
+    _brlAPIAvailable = True
     _brlAPIRunning = False
     _brlAPISourceId = 0
 except:
+    _brlAPIAvailable = False
     _brlAPIRunning = False
 
 try:
@@ -67,6 +67,7 @@ import debug
 import eventsynthesizer
 import orca_state
 import settings
+from platform import tablesdir
 
 from orca_i18n import _                          # for gettext support
 
@@ -83,89 +84,90 @@ monitor = None
 #
 command_name = {}
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to the left.
-#
-command_name[brlapi.KEY_CMD_FWINLT]   = _("Line Left")
+if _brlAPIAvailable:
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to the left.
+    #
+    command_name[brlapi.KEY_CMD_FWINLT]   = _("Line Left")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to the right.
-#
-command_name[brlapi.KEY_CMD_FWINRT]   = _("Line Right")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to the right.
+    #
+    command_name[brlapi.KEY_CMD_FWINRT]   = _("Line Right")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls up.
-#
-command_name[brlapi.KEY_CMD_LNUP]     = _("Line Up")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls up.
+    #
+    command_name[brlapi.KEY_CMD_LNUP]     = _("Line Up")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls down.
-#
-command_name[brlapi.KEY_CMD_LNDN]     = _("Line Down")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls down.
+    #
+    command_name[brlapi.KEY_CMD_LNDN]     = _("Line Down")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, it instructs the braille display to freeze.
-#
-command_name[brlapi.KEY_CMD_FREEZE]     = _("Freeze")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, it instructs the braille display to freeze.
+    #
+    command_name[brlapi.KEY_CMD_FREEZE]     = _("Freeze")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to the top left of the
-# window.
-#
-command_name[brlapi.KEY_CMD_TOP_LEFT] = _("Top Left")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to the top left of the
+    # window.
+    #
+    command_name[brlapi.KEY_CMD_TOP_LEFT] = _("Top Left")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to the bottom right of
-# the window.
-#
-command_name[brlapi.KEY_CMD_BOT_LEFT] = _("Bottom Right")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to the bottom right of
+    # the window.
+    #
+    command_name[brlapi.KEY_CMD_BOT_LEFT] = _("Bottom Right")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display scrolls to position containing
-# the cursor.
-#
-command_name[brlapi.KEY_CMD_HOME]     = _("Cursor Position")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display scrolls to position containing
+    # the cursor.
+    #
+    command_name[brlapi.KEY_CMD_HOME]     = _("Cursor Position")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# When pressing the button, the display toggles between contracted and
-# contracted braille.
-#
-command_name[brlapi.KEY_CMD_SIXDOTS]  = _("Six Dots")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # When pressing the button, the display toggles between contracted and
+    # contracted braille.
+    #
+    command_name[brlapi.KEY_CMD_SIXDOTS]  = _("Six Dots")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# This command represents a whole set of buttons known as cursor
-# routings keys and are a way for a user to tell the machine they are
-# interested in a particular character on the display.
-#
-command_name[brlapi.KEY_CMD_ROUTE]    = _("Cursor Routing")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # This command represents a whole set of buttons known as cursor
+    # routings keys and are a way for a user to tell the machine they are
+    # interested in a particular character on the display.
+    #
+    command_name[brlapi.KEY_CMD_ROUTE]    = _("Cursor Routing")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# This command represents the start of a selection operation.  It is
-# called "Cut Begin" to map to what BrlTTY users are used to:  in
-# character cell mode operation on virtual consoles, the act of copying
-# text is erroneously called a "cut" operation.
-#
-command_name[brlapi.KEY_CMD_CUTBEGIN] = _("Cut Begin")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # This command represents the start of a selection operation.  It is
+    # called "Cut Begin" to map to what BrlTTY users are used to:  in
+    # character cell mode operation on virtual consoles, the act of copying
+    # text is erroneously called a "cut" operation.
+    #
+    command_name[brlapi.KEY_CMD_CUTBEGIN] = _("Cut Begin")
 
-# Translators: this is a command for a button on a refreshable braille
-# display (an external hardware device used by people who are blind).
-# This command represents marking the endpoint of a selection.  It is
-# called "Cut Line" to map to what BrlTTY users are used to:  in
-# character cell mode operation on virtual consoles, the act of copying
-# text is erroneously called a "cut" operation.
-#
-command_name[brlapi.KEY_CMD_CUTLINE] = _("Cut Line")
+    # Translators: this is a command for a button on a refreshable braille
+    # display (an external hardware device used by people who are blind).
+    # This command represents marking the endpoint of a selection.  It is
+    # called "Cut Line" to map to what BrlTTY users are used to:  in
+    # character cell mode operation on virtual consoles, the act of copying
+    # text is erroneously called a "cut" operation.
+    #
+    command_name[brlapi.KEY_CMD_CUTLINE] = _("Cut Line")
 
 # The size of the physical display (width, height).  The coordinate system of
 # the display is set such that the upper left is (0,0), x values increase from
@@ -208,6 +210,67 @@ beginningIsShowing = False
 # of 0 means no cell has the cursor.
 #
 cursorCell = 0
+
+# Translators: These are the braille translation table names for different
+# languages. You could read about braille tables at:
+# http://en.wikipedia.org/wiki/Braille
+#
+TABLE_NAMES = {"Cz-Cz-g1": _("Czech Grade 1"),
+               "Es-Es-g1": _("Spanish Grade 1"),
+               "Fr-Ca-g2": _("Canada French Grade 2"),
+               "Fr-Fr-g2": _("France French Grade 2"),
+               "Lv-Lv-g1": _("Latvian Grade 1"),
+               "Nl-Nl-g1": _("Netherlands Dutch Grade 1"),
+               "No-No-g0": _("Norwegian Grade 0"),
+               "No-No-g1": _("Norwegian Grade 1"),
+               "No-No-g2": _("Norwegian Grade 2"),
+               "No-No-g3": _("Norwegian Grade 3"),
+               "Pl-Pl-g1": _("Polish Grade 1"),
+               "Pt-Pt-g1": _("Portuguese Grade 1"),
+               "Se-Se-g1": _("Swedish Grade 1"),
+               "ar-ar-g1": _("Arabic Grade 1"),
+               "cy-cy-g1": _("Welsh Grade 1"),
+               "cy-cy-g2": _("Welsh Grade 2"),
+               "de-de-g0": _("German Grade 0"),
+               "de-de-g1": _("German Grade 1"),
+               "de-de-g2": _("German Grade 2"),
+               "en-GB-g2": _("U.K. English Grade 2"),
+               "en-gb-g1": _("U.K. English Grade 1"),
+               "en-us-g1": _("U.S. English Grade 1"),
+               "en-us-g2": _("U.S. English Grade 2"),
+               "fr-ca-g1": _("Canada French Grade 1"),
+               "fr-fr-g1": _("France French Grade 1"),
+               "gr-gr-g1": _("Greek Grade 1"),
+               "hi-in-g1": _("Hindi Grade 1"),
+               "it-it-g1": _("Italian Grade 1"),
+               "nl-be-g1": _("Belgium Dutch Grade 1")}
+
+def listTables():
+    tables = {}
+    try:
+        for fname in os.listdir(tablesdir):
+            if fname[-4:] in (".utb", ".ctb"):
+                alias = fname[:-4]
+                tables[TABLE_NAMES.get(alias, alias)] = \
+                    os.path.join(tablesdir, fname)
+    except OSError:
+        pass
+
+    return tables
+
+def getDefaultTable():
+    try:
+        for fname in os.listdir(tablesdir):
+            if fname[-4:] in (".utb", ".ctb"):
+                if fname.startswith("en-us"):
+                    return os.path.join(tablesdir, fname)
+    except OSError:
+        pass
+
+    return ""
+
+if louis:
+    _defaultContractionTable = getDefaultTable()
 
 def _printBrailleEvent(level, command):
     """Prints out a Braille event.  The given level may be overridden
@@ -313,16 +376,15 @@ class Region:
             cursorOnSpace = False
 
         if not expandOnCursor or cursorOnSpace:
-            contracted, inPos, outPos, cursorPos = \
-                             louis.translate([self.contractionTable],
-                                             line,
-                                             cursorPos=cursorOffset)
+            mode = 0
         else:
-            contracted, inPos, outPos, cursorPos = \
-                             louis.translate([self.contractionTable],
-                                             line,
-                                             cursorPos=cursorOffset,
-                                             mode=louis.MODE.compbrlAtCursor)
+            mode = louis.compbrlAtCursor
+
+        contracted, inPos, outPos, cursorPos = \
+            louis.translate([self.contractionTable],
+                            line,
+                            cursorPos=cursorOffset,
+                            mode=mode)
 
         return contracted, inPos, outPos, cursorPos
 
@@ -618,7 +680,7 @@ class Text(Region):
                 n += 1
 
         if attrIndicator:
-            enabledAttributes = script.attribsToDictionary(
+            enabledAttributes = script.attributeStringToDictionary(
                 settings.enabledBrailledTextAttributes)
 
             offset = self.lineOffset
@@ -642,7 +704,7 @@ class Text(Region):
                         regionMask[i] |= attrIndicator
 
         if selIndicator:
-            selections = script.getTextSelections(self.accessible)
+            selections = script.getAllTextSelections(self.accessible)
             for startOffset, endOffset in selections:
                 maskStart = max(startOffset - self.lineOffset, 0)
                 maskEnd = min(endOffset - self.lineOffset, stringLength)
@@ -1337,7 +1399,6 @@ def init(callback=None, tty=7):
         _brlAPI = brlapi.Connection()
 
         try:
-            import os
             windowPath = os.environ["WINDOWPATH"]
             _brlAPI.enterTtyModeWithPath()
             _brlAPIRunning = True

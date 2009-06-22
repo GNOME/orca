@@ -346,13 +346,13 @@ class LiveRegionManager:
             # Toggle our flag
             self.monitoring = True  
 
-    def outputLiveRegionDescription(self, obj):
+    def generateLiveRegionDescription(self, obj, **args):
         """Used in conjuction with whereAmI to output description and 
         politeness of the given live region object"""
         objectid = self._getObjectId(obj)
         uri = self._script.bookmarks.getURIKey()
 
-        utterances = []
+        results = []
 
         # get the description if there is one.
         for relation in obj.getRelationSet():
@@ -367,7 +367,7 @@ class LiveRegionManager:
                     #
                     description = targetobj.queryText().getText(0, -1)
                     if description.strip() != obj.description.strip():
-                        utterances.append(description)
+                        results.append(description)
                 except NotImplemented:
                     pass
 
@@ -380,11 +380,12 @@ class LiveRegionManager:
 
         # We will only output useful information
         # 
-        if utterances or liveprioritystr != 'none':
+        if results or liveprioritystr != 'none':
             # Translators: output the politeness level
             #
-            utterances.append(_('politeness level %s') %liveprioritystr)
-            speech.speak(utterances)
+            results.append(_('politeness level %s') %liveprioritystr)
+
+        return results
 
     def matchLiveRegion(self, obj):
         """Predicate used to find a live region"""

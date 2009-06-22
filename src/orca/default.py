@@ -25,11 +25,12 @@ for GTK."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import locale
 import math
+import re
 import sys
 import time
 
@@ -49,7 +50,6 @@ import orca_state
 import phonnames
 import pronunciation_dict
 import punctuation_settings
-import rolenames
 import script
 import settings
 import speech
@@ -71,6 +71,7 @@ class Script(script.Script):
 
     EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
     NO_BREAK_SPACE_CHARACTER  = u'\u00a0'
+    WORDS_RE = re.compile("(\W+)", re.UNICODE)
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -190,17 +191,27 @@ class Script(script.Script):
                 #
                 _("Performs the detailed where am I operation."))
 
+        # [[[WDW - I'd prefer to call this presentTitleHandler, but
+        # we're keeping it at getTitleHandler for backwards
+        # compatibility for people who have customized their key
+        # bindings.]]]
+        #
         self.inputEventHandlers["getTitleHandler"] = \
             input_event.InputEventHandler(
-                Script.getTitle,
+                Script.presentTitle,
                 # Translators: This command will cause the window's
                 # title to be spoken.
                 #
                 _("Speaks the title bar."))
 
+        # [[[WDW - I'd prefer to call this presentStatusBarHandler,
+        # but we're keeping it at getStatusBarHandler for backwards
+        # compatibility for people who have customized their key
+        # bindings.]]]
+        #
         self.inputEventHandlers["getStatusBarHandler"] = \
             input_event.InputEventHandler(
-                Script.getStatusBar,
+                Script.presentStatusBar,
                 # Translators: This command will cause the window's
                 # status bar contents to be spoken.
                 #
@@ -1946,7 +1957,12 @@ class Script(script.Script):
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["toggleMouseReviewHandler"]))
 
-        keyBindings = settings.overrideKeyBindings(self, keyBindings)
+        try:
+            keyBindings = settings.overrideKeyBindings(self, keyBindings)
+        except:
+            debug.println(debug.LEVEL_WARNING,
+                          "WARNING: problem overriding keybindings:")
+            debug.printException(debug.LEVEL_WARNING)
 
         return keyBindings
 
@@ -1957,31 +1973,35 @@ class Script(script.Script):
         values are InputEventHandler instances.
         """
         brailleBindings = script.Script.getBrailleBindings(self)
-        brailleBindings[braille.brlapi.KEY_CMD_FWINLT]   = \
-            self.inputEventHandlers["panBrailleLeftHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_FWINRT]   = \
-            self.inputEventHandlers["panBrailleRightHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_LNUP]     = \
-            self.inputEventHandlers["reviewAboveHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_LNDN]     = \
-            self.inputEventHandlers["reviewBelowHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_FREEZE]   = \
-            self.inputEventHandlers["toggleFlatReviewModeHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_TOP_LEFT] = \
-            self.inputEventHandlers["reviewHomeHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_BOT_LEFT] = \
-            self.inputEventHandlers["reviewBottomLeftHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_HOME]     = \
-            self.inputEventHandlers["goBrailleHomeHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_SIXDOTS]   = \
-            self.inputEventHandlers["contractedBrailleHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_ROUTE]   = \
-            self.inputEventHandlers["processRoutingKeyHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_CUTBEGIN] = \
-            self.inputEventHandlers["processBrailleCutBeginHandler"]
-        brailleBindings[braille.brlapi.KEY_CMD_CUTLINE] = \
-            self.inputEventHandlers["processBrailleCutLineHandler"]
-
+        try:
+            brailleBindings[braille.brlapi.KEY_CMD_FWINLT]   = \
+                self.inputEventHandlers["panBrailleLeftHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_FWINRT]   = \
+                self.inputEventHandlers["panBrailleRightHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_LNUP]     = \
+                self.inputEventHandlers["reviewAboveHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_LNDN]     = \
+                self.inputEventHandlers["reviewBelowHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_FREEZE]   = \
+                self.inputEventHandlers["toggleFlatReviewModeHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_TOP_LEFT] = \
+                self.inputEventHandlers["reviewHomeHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_BOT_LEFT] = \
+                self.inputEventHandlers["reviewBottomLeftHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_HOME]     = \
+                self.inputEventHandlers["goBrailleHomeHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_SIXDOTS]   = \
+                self.inputEventHandlers["contractedBrailleHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_ROUTE]   = \
+                self.inputEventHandlers["processRoutingKeyHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_CUTBEGIN] = \
+                self.inputEventHandlers["processBrailleCutBeginHandler"]
+            brailleBindings[braille.brlapi.KEY_CMD_CUTLINE] = \
+                self.inputEventHandlers["processBrailleCutLineHandler"]
+        except:
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "WARNING: braille bindings unavailable:")
+            debug.printException(debug.LEVEL_CONFIGURATION)
         return brailleBindings
 
     def processKeyboardEvent(self, keyboardEvent):
@@ -2015,7 +2035,8 @@ class Script(script.Script):
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
-            orca.setLocusOfFocus(None, context.obj, False)
+            orca.setLocusOfFocus(
+                None, context.obj, notifyPresentationManager=False)
             text.setCaretOffset(context.currentOffset)
 
         # If there is a selection, clear it. See bug #489504 for more details.
@@ -2054,7 +2075,7 @@ class Script(script.Script):
             try:
                 orca_state.locusOfFocus.queryText()
             except NotImplementedError:
-                utterances = self.speechGenerator.getSpeech(
+                utterances = self.speechGenerator.generateSpeech(
                     orca_state.locusOfFocus)
                 utterances.extend(self.tutorialGenerator.getTutorial(
                            orca_state.locusOfFocus, False))
@@ -2514,15 +2535,26 @@ class Script(script.Script):
         #
         text = ""
         if obj.description:
-            text = obj.description
+            speechResult = brailleResult = obj.description
         else:
-            # Reuse the "where am I" algorithm.
-            text = self.whereAmI.getObjLabelAndName(obj)
-
-        debug.println(debug.LEVEL_FINEST, "presentTooltip: text='%s'" % text)
-        if text != "":
-            braille.displayMessage(text)
-            speech.speak(text)
+            # [[[TODO: WDW to JD: I see what you mean about making the
+            # _getLabelAndName method a public method.  We might consider
+            # doing that when we get to the braille refactor where we
+            # will probably make an uber generator class/module that the
+            # speech and braille generator classes can subclass.  For
+            # now, I've kind of hacked at the speech result.  The idea
+            # is that the speech result might return an audio cue and
+            # voice specification.  Of course, if it does that, then
+            # the speechResult[0] assumption will fail. :-(]]]
+            #
+            speechResult = self.whereAmI.getWhereAmI(obj, True)
+            brailleResult = speechResult[0]
+        debug.println(debug.LEVEL_FINEST,
+                      "presentTooltip: text='%s'" % speechResult)
+        if speechResult:
+            speech.speak(speechResult)
+        if brailleResult:
+            braille.displayMessage(brailleResult)
 
     def doWhereAmI(self, inputEvent, basicOnly):
         """Peforms the whereAmI operation.
@@ -2549,23 +2581,109 @@ class Script(script.Script):
 
         self.doWhereAmI(inputEvent, False)
 
-    def getTitle(self, inputEvent):
-        """Speaks the title of the window with focus.
+    def presentTitle(self, inputEvent):
+        """Speaks and brailles the title of the window with focus.
+        """
+
+        obj = orca_state.locusOfFocus
+        self.updateBraille(obj)
+        speech.speak(self.speechGenerator.generateTitle(obj))
+
+    def presentStatusBar(self, inputEvent):
+        """Speaks and brailles the contents of the status bar and/or default
+        button of the window with focus.
         """
 
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
 
-        return self.whereAmI.speakTitle(orca_state.locusOfFocus)
+        frame, dialog = self.findFrameAndDialog(obj)
+        if frame:
+            # In windows with lots of objects (Thunderbird, Firefox, etc.)
+            # If we wait until we've checked for both the status bar and
+            # a default button, there may be a noticable delay. Therefore,
+            # speak the status bar info immediately and then go looking
+            # for a default button.
+            #
+            speech.speak(self.speechGenerator.generateStatusBar(frame))
+        window = dialog or frame
+        if window:
+            speech.speak(self.speechGenerator.generateDefaultButton(window))
 
-    def getStatusBar(self, inputEvent):
-        """Speaks the contents of the status bar of the window with focus.
+    def findStatusBar(self, obj):
+        """Returns the status bar in the window which contains obj.
         """
 
-        obj = orca_state.locusOfFocus
-        self.updateBraille(obj)
+        # There are some objects which are not worth descending.
+        #
+        skipRoles = [pyatspi.ROLE_TREE,
+                     pyatspi.ROLE_TREE_TABLE,
+                     pyatspi.ROLE_TABLE]
 
-        return self.whereAmI.speakStatusBar(orca_state.locusOfFocus)
+        if obj.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
+           or obj.getRole() in skipRoles:
+            return
+
+        statusBar = None
+        # The status bar is likely near the bottom of the window.
+        #
+        for i in range(obj.childCount - 1, -1, -1):
+            if obj[i].getRole() == pyatspi.ROLE_STATUS_BAR:
+                statusBar = obj[i]
+            elif not obj[i] in skipRoles:
+                statusBar = self.findStatusBar(obj[i])
+
+            if statusBar:
+                break
+
+        return statusBar
+
+    def findDefaultButton(self, obj):
+        """Returns the default button in dialog, obj.
+        """
+
+        # There are some objects which are not worth descending.
+        #
+        skipRoles = [pyatspi.ROLE_TREE,
+                     pyatspi.ROLE_TREE_TABLE,
+                     pyatspi.ROLE_TABLE]
+
+        if obj.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
+           or obj.getRole() in skipRoles:
+            return
+
+        defaultButton = None
+        # The default button is likely near the bottom of the window.
+        #
+        for i in range(obj.childCount - 1, -1, -1):
+            if obj[i].getRole() == pyatspi.ROLE_PUSH_BUTTON \
+                and obj[i].getState().contains(pyatspi.STATE_IS_DEFAULT):
+                defaultButton = obj[i]
+            elif not obj[i].getRole() in skipRoles:
+                defaultButton = self.findDefaultButton(obj[i])
+
+            if defaultButton:
+                break
+
+        return defaultButton
+
+    def findFrameAndDialog(self, obj):
+        """Returns the frame and (possibly) the dialog containing
+        the object.
+        """
+
+        results = [None, None]
+
+        parent = obj.parent
+        while parent and (parent.parent != parent):
+            if parent.getRole() == pyatspi.ROLE_FRAME:
+                results[0] = parent
+            if parent.getRole() in [pyatspi.ROLE_DIALOG,
+                                    pyatspi.ROLE_FILE_CHOOSER]:
+                results[1] = parent
+            parent = parent.parent
+
+        return results
 
     def findCommonAncestor(self, a, b):
         """Finds the common ancestor between Accessible a and Accessible b.
@@ -2704,12 +2822,9 @@ class Script(script.Script):
                                 else:
                                     index += 1
 
-                        # Translators: this is the percentage value of a
-                        # progress bar.
-                        #
-                        percentage = _("%d percent.") % percentValue + " "
+                        utterances.extend(self.speechGenerator.generateSpeech(
+                            obj, alreadyFocused=True))
 
-                        utterances.append(percentage)
                         speech.speak(utterances)
 
                         self.lastProgressBarTime[obj] = currentTime
@@ -2825,7 +2940,7 @@ class Script(script.Script):
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
-            utterances = self.speechGenerator.getSpeech(
+            utterances = self.speechGenerator.generateSpeech(
                 newLocusOfFocus,
                 priorObj=oldLocusOfFocus)
             speech.speak(utterances, voice, not shouldNotInterrupt)
@@ -2934,8 +3049,8 @@ class Script(script.Script):
                 target = relation.getTarget(0)
                 if target == orca_state.locusOfFocus:
                     self.updateBraille(target)
-                    utterances = self.speechGenerator.getSpeech(
-                        target, already_focused=True)
+                    utterances = self.speechGenerator.generateSpeech(
+                        target, alreadyFocused=True)
                     utterances.extend(self.tutorialGenerator.getTutorial(
                                target, True))
                     speech.speak(utterances)
@@ -2953,8 +3068,8 @@ class Script(script.Script):
                     target = relation.getTarget(0)
                     if target == orca_state.locusOfFocus:
                         self.updateBraille(target)
-                        utterances = self.speechGenerator.getSpeech(
-                            target, already_focused=True)
+                        utterances = self.speechGenerator.generateSpeech(
+                            target, alreadyFocused=True)
                         utterances.extend(self.tutorialGenerator.getTutorial(
                                           target, True))
                         speech.speak(utterances)
@@ -2972,7 +3087,8 @@ class Script(script.Script):
         #
         if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
             if orca_state.lastNonModifierKeyEvent \
-               and orca_state.lastNonModifierKeyEvent.event_string == "space":
+               and orca_state.lastNonModifierKeyEvent.event_string \
+                   in [" ", "space"]:
                 pass
             else:
                 return
@@ -2988,7 +3104,8 @@ class Script(script.Script):
 
         mag.magnifyAccessible(event, obj)
         self.updateBraille(obj)
-        utterances = self.speechGenerator.getSpeech(obj, already_focused=True)
+        utterances = self.speechGenerator.generateSpeech(
+                         obj, alreadyFocused=True)
         utterances.extend(self.tutorialGenerator.getTutorial(obj, True))
         speech.speak(utterances)
 
@@ -3189,7 +3306,7 @@ class Script(script.Script):
 
                 if objText.getNSelections() > 0:
                     [textContents, startOffset, endOffset] = \
-                        self.whereAmI.getTextSelection(obj)
+                        self.getSelectedText(obj)
 
                     # Now that we have the full selection, adjust based
                     # on the relation type. (see above comment)
@@ -3752,7 +3869,6 @@ class Script(script.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_TOOL_TIP:
             obj = event.source
-
             if event.type.startswith("object:state-changed:showing"):
                 if event.detail1 == 1:
                     self.presentTooltip(obj)
@@ -3760,9 +3876,9 @@ class Script(script.Script):
                     and isinstance(orca_state.lastInputEvent,
                                    input_event.KeyboardEvent) \
                     and (orca_state.lastNonModifierKeyEvent.event_string \
-                                                                  == "F1"):
+                         == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
-                    utterances = self.speechGenerator.getSpeech(
+                    utterances = self.speechGenerator.generateSpeech(
                         orca_state.locusOfFocus)
                     utterances.extend(self.tutorialGenerator.getTutorial(
                                       orca_state.locusOfFocus, False))
@@ -3885,6 +4001,26 @@ class Script(script.Script):
                 # dealing with this situation.
                 #
                 return
+            else:
+                # If we do a select all in a document in which each
+                # paragraph is a separate accessible object, we'll
+                # get an event for each of those objects. We don't
+                # want to repeat "(un)selected". See bug #583811.
+                #
+                diff = lastPos[0].getIndexInParent() - obj.getIndexInParent()
+                if abs(diff) > 1:
+                    # We can skip this one because we'll do the
+                    # announcement based on another one.
+                    #
+                    return
+                elif startOffset > 0 and startOffset == endOffset:
+                    try:
+                        text = lastPos[0].queryText()
+                    except:
+                        pass
+                    else:
+                        if startOffset == text.characterCount:
+                            return
 
             # We must be approaching from the top, left, or right. Or
             # from below but we've found a blank line. Our stored point
@@ -3958,7 +4094,7 @@ class Script(script.Script):
         # containing object.
         #
         elif (event.source != orca_state.locusOfFocus) and \
-            event.source.getState().contains(pyatspi.STATE_FOCUSED):
+              event.source.getState().contains(pyatspi.STATE_FOCUSED):
             newFocus = event.source
             if event.source.childCount:
                 selection = event.source.querySelection()
@@ -4082,7 +4218,7 @@ class Script(script.Script):
                 pass
             else:
                 [textContents, startOffset, endOffset] = \
-                    self.whereAmI.getTextSelections(obj, True)
+                    self.getAllSelectedText(obj)
                 if textContents:
                     utterances = []
                     utterances.append(textContents)
@@ -4258,10 +4394,11 @@ class Script(script.Script):
                             # application, so we leave things in plural form
                             # here.
                             #
-                            line = ngettext("%s %s pixel",
-                                            "%s %s pixels",
-                                            int(attribute)) % \
-                                                (localizedKey, localizedValue)
+                            line = ngettext("%(key)s %(value)s pixel",
+                                            "%(key)s %(value)s pixels",
+                                            int(attribute)) \
+                                   % {"key" : localizedKey,
+                                      "value": localizedValue}
                     elif key in ["indent", "size"]:
                         # In Gecko, we seem to get these values as a number
                         # immediately followed by "px". But we'll hedge our
@@ -4269,10 +4406,11 @@ class Script(script.Script):
                         #
                         value = attribute.split("px")
                         if len(value) > 1:
-                            line = ngettext("%s %s pixel",
-                                            "%s %s pixels",
-                                            float(value[0])) % \
-                                            (localizedKey, value[0])
+                            line = ngettext("%(key)s %(value)s pixel",
+                                            "%(key)s %(value)s pixels",
+                                            float(value[0])) \
+                                   % {"key" : localizedKey,
+                                      "value" : value[0]}
                     elif key == "family-name":
                         # In Gecko, we get a huge list and we just want the
                         # first one.  See:
@@ -4355,6 +4493,69 @@ class Script(script.Script):
                 speech.speak(_("link"))
 
         return True
+
+    def hasTextSelections(self, obj):
+        """Return an indication of whether this object has selected text.
+        Note that it's possible that this object has no selection, but is part
+        of a selected text area. Because of this, we need to check the
+        objects on either side to see if they are none zero length and
+        have text selections.
+
+        Arguments:
+        - obj: the text object to start checking for selected text.
+
+        Returns: an indication of whether this object has selected text,
+        or adjacent text objects have selected text.
+        """
+
+        currentSelected = False
+        otherSelected = False
+        text = obj.queryText()
+        nSelections = text.getNSelections()
+        if nSelections:
+            currentSelected = True
+        else:
+            otherSelected = False
+            text = obj.queryText()
+            displayedText = text.getText(0, -1)
+            if (text.caretOffset == 0) or len(displayedText) == 0:
+                current = obj
+                morePossibleSelections = True
+                while morePossibleSelections:
+                    morePossibleSelections = False
+                    for relation in current.getRelationSet():
+                        if relation.getRelationType() == \
+                               pyatspi.RELATION_FLOWS_FROM:
+                            prevObj = relation.getTarget(0)
+                            prevObjText = prevObj.queryText()
+                            if prevObjText.getNSelections() > 0:
+                                otherSelected = True
+                            else:
+                                displayedText = prevObjText.getText(0, -1)
+                                if len(displayedText) == 0:
+                                    current = prevObj
+                                    morePossibleSelections = True
+                            break
+
+                current = obj
+                morePossibleSelections = True
+                while morePossibleSelections:
+                    morePossibleSelections = False
+                    for relation in current.getRelationSet():
+                        if relation.getRelationType() == \
+                               pyatspi.RELATION_FLOWS_TO:
+                            nextObj = relation.getTarget(0)
+                            nextObjText = nextObj.queryText()
+                            if nextObjText.getNSelections() > 0:
+                                otherSelected = True
+                            else:
+                                displayedText = nextObjText.getText(0, -1)
+                                if len(displayedText) == 0:
+                                    current = nextObj
+                                    morePossibleSelections = True
+                            break
+
+        return [currentSelected, otherSelected]
 
     def reportScriptInfo(self, inputEvent=None):
         """Output useful information on the current script via speech
@@ -4593,10 +4794,34 @@ class Script(script.Script):
         """Toggles between flat review mode and focus tracking mode."""
 
         if self.flatReviewContext:
+            if inputEvent:
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  This message lets the user know
+                # they have left the flat review feature.
+                #
+                speech.speak(_("Leaving flat review."))
             self.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
             self.updateBraille(orca_state.locusOfFocus)
         else:
+            if inputEvent:
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  This message lets the user know
+                # they have entered the flat review feature.
+                #
+                speech.speak(_("Entering flat review."))
             context = self.getFlatReviewContext()
             [wordString, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
@@ -5096,7 +5321,7 @@ class Script(script.Script):
         # the Braille display as an input device.
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
-            utterances = self.speechGenerator.getSpeech(
+            utterances = self.speechGenerator.generateSpeech(
                     context.getCurrentAccessible())
             utterances.extend(self.tutorialGenerator.getTutorial(
                     context.getCurrentAccessible(), False))
@@ -6366,6 +6591,85 @@ class Script(script.Script):
 
         return newLine.encode("UTF-8")
 
+    def getCharacterOffsetInParent(self, obj):
+        """Returns the character offset of the embedded object
+        character for this object in its parent's accessible text.
+
+        Arguments:
+        - obj: an Accessible that should implement the accessible hyperlink
+               specialization.
+
+        Returns an integer representing the character offset of the
+        embedded object character for this hyperlink in its parent's
+        accessible text, or -1 something was amuck.
+        """
+
+        try:
+            hyperlink = obj.queryHyperlink()
+        except NotImplementedError:
+            offset = -1
+        else:
+            # We need to make sure that this is an embedded object in
+            # some accessible text (as opposed to an imagemap link).
+            #
+            try:
+                obj.parent.queryText()
+            except NotImplementedError:
+                offset = -1
+            else:
+                offset = hyperlink.startIndex
+
+        return offset
+
+    def expandEOCs(self, obj, startOffset=0, endOffset=-1):
+        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
+        with their text.
+
+        Arguments
+        - obj: the object whose text should be expanded
+        - startOffset: the offset of the first character to be included
+        - endOffset: the offset of the last character to be included
+
+        Returns the fully expanded text for the object.
+        """
+
+        if not obj:
+            return None
+
+        string = None
+        try:
+            text = obj.queryText()
+        except:
+            text = None
+
+        if text and text.characterCount:
+            string = text.getText(startOffset, endOffset)
+            unicodeText = string.decode("UTF-8")
+            if unicodeText \
+                and self.EMBEDDED_OBJECT_CHARACTER in unicodeText:
+                # If we're not getting the full text of this object, but
+                # rather a substring, we need to figure out the offset of
+                # the first child within this substring.
+                #
+                childOffset = 0
+                for child in obj:
+                    if self.getCharacterOffsetInParent(child) >= startOffset:
+                        break
+                    childOffset += 1
+
+                toBuild = list(unicodeText)
+                count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
+                for i in xrange(count):
+                    index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
+                    child = obj[i + childOffset]
+                    childText = self.expandEOCs(child)
+                    if not childText:
+                        childText = ""
+                    toBuild[index] = childText.decode("UTF-8")
+                string = "".join(toBuild)
+
+        return string
+
     def _getPronunciationForSegment(self, segment):
         """Adjust the word segment to potentially replace it with what
         those words actually sound like. Two pronunciation dictionaries
@@ -6399,23 +6703,20 @@ class Script(script.Script):
         dictionary.
         """
 
-        line = line.decode("UTF-8")
-        newLine = segment = u''
+        newLine = ""
+        words = self.WORDS_RE.split(line.decode("UTF-8"))
+        for word in words:
+            if word.isalnum():
+                word = self._getPronunciationForSegment(word)
+            newLine += word
 
-        for i in range(0, len(line)):
-            if self.isWordDelimiter(line[i]):
-                if len(segment) != 0:
-                    newLine = newLine + \
-                              self._getPronunciationForSegment(segment)
-                newLine = newLine + line[i]
-                segment = u''
-            else:
-                segment += line[i]
-
-        if len(segment) != 0:
-            newLine = newLine + self._getPronunciationForSegment(segment)
-
-        return newLine.encode("UTF-8")
+        if line != newLine:
+            debug.println(debug.LEVEL_FINEST,
+                          "adjustForPronunciation: \n  From '%s'\n  To   '%s'" \
+                          % (line, newLine))
+            return newLine.encode("UTF-8")
+        else:
+            return line
 
     def getLinkIndex(self, obj, characterIndex):
         """A brute force method to see if an offset is a link.  This
@@ -7505,7 +7806,7 @@ class Script(script.Script):
 
         texti.setCaretOffset(offset)
 
-    def attribsToDictionary(self, dict_string):
+    def attributeStringToDictionary(self, dict_string):
         """Creates a Python dict from a typical attributes list returned from
         different AT-SPI methods.
 
@@ -7592,7 +7893,105 @@ class Script(script.Script):
         else:
             return inner_container
 
-    def getTextSelections(self, acc):
+    # pylint: disable-msg=W0142
+
+    def getSelectedText(self, obj):
+        """Get the text selection for the given object.
+
+        Arguments:
+        - obj: the text object to extract the selected text from.
+
+        Returns: the selected text contents plus the start and end
+        offsets within the text.
+        """
+
+        textContents = ""
+        textObj = obj.queryText()
+        nSelections = textObj.getNSelections()
+        for i in range(0, nSelections):
+            [startOffset, endOffset] = textObj.getSelection(i)
+
+            debug.println(debug.LEVEL_FINEST,
+                "getSelectedText: selection start=%d, end=%d" % \
+                (startOffset, endOffset))
+
+            selectedText = textObj.getText(startOffset, endOffset)
+            debug.println(debug.LEVEL_FINEST,
+                "getSelectedText: selected text=<%s>" % selectedText)
+
+            if i > 0:
+                textContents += " "
+            textContents += selectedText
+
+        return [textContents, startOffset, endOffset]
+
+    def getAllSelectedText(self, obj):
+        """Get all the text applicable text selections for the given object.
+        including any previous or next text objects that also have
+        selected text and add in their text contents.
+
+        Arguments:
+        - obj: the text object to start extracting the selected text from.
+
+        Returns: all the selected text contents plus the start and end
+        offsets within the text for the given object.
+        """
+
+        textContents = ""
+        startOffset = 0
+        endOffset = 0
+        text = obj.queryText()
+        if text.getNSelections() > 0:
+            [textContents, startOffset, endOffset] = \
+                self.getSelectedText(obj)
+
+        current = obj
+        morePossibleSelections = True
+        while morePossibleSelections:
+            morePossibleSelections = False
+            for relation in current.getRelationSet():
+                if relation.getRelationType() \
+                   == pyatspi.RELATION_FLOWS_FROM:
+                    prevObj = relation.getTarget(0)
+                    prevObjText = prevObj.queryText()
+                    if prevObjText.getNSelections() > 0:
+                        [newTextContents, start, end] = \
+                            self.getSelectedText(prevObj)
+                        textContents = newTextContents + " " + textContents
+                        current = prevObj
+                        morePossibleSelections = True
+                    else:
+                        displayedText = prevObjText.getText(0, -1)
+                        if len(displayedText) == 0:
+                            current = prevObj
+                            morePossibleSelections = True
+                    break
+
+        current = obj
+        morePossibleSelections = True
+        while morePossibleSelections:
+            morePossibleSelections = False
+            for relation in current.getRelationSet():
+                if relation.getRelationType() \
+                   == pyatspi.RELATION_FLOWS_TO:
+                    nextObj = relation.getTarget(0)
+                    nextObjText = nextObj.queryText()
+                    if nextObjText.getNSelections() > 0:
+                        [newTextContents, start, end] = \
+                            self.getSelectedText(nextObj)
+                        textContents += " " + newTextContents
+                        current = nextObj
+                        morePossibleSelections = True
+                    else:
+                        displayedText = nextObjText.getText(0, -1)
+                        if len(displayedText) == 0:
+                            current = nextObj
+                            morePossibleSelections = True
+                    break
+
+        return [textContents, startOffset, endOffset]
+
+    def getAllTextSelections(self, acc):
         """Get a list of text selections in the given accessible object,
         equivelent to getNSelections()*texti.getSelection()
 
@@ -7646,11 +8045,12 @@ class Script(script.Script):
             return rv, 0, 0
 
         if get_defaults:
-            rv.update(self.attribsToDictionary(texti.getDefaultAttributes()))
+            rv.update(self.attributeStringToDictionary(
+                texti.getDefaultAttributes()))
 
         attrib_str, start, end = texti.getAttributes(offset)
 
-        rv.update(self.attribsToDictionary(attrib_str))
+        rv.update(self.attributeStringToDictionary(attrib_str))
 
         return rv, start, end
 

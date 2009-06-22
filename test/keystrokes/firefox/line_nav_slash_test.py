@@ -69,21 +69,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
-    ["BUG? - We're speaking the object which just gave up focus",
-     "BRAILLE LINE:  'Recent Tags h4'",
+    ["BRAILLE LINE:  'Recent Tags h4'",
      "     VISIBLE:  'Recent Tags h4', cursor=1",
-     "SPEECH OUTPUT: 'Recent Tags link heading level 4'",
-     "SPEECH OUTPUT: 'Science'"]))
+     "SPEECH OUTPUT: 'Recent Tags link heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Down",
-    ["BUG? - We're speaking the object which just gave up focus",
-     "BRAILLE LINE:  'Slashdot Login h4'",
+    ["BRAILLE LINE:  'Slashdot Login h4'",
      "     VISIBLE:  'Slashdot Login h4', cursor=1",
-     "SPEECH OUTPUT: 'Slashdot Login heading level 4'",
-     "SPEECH OUTPUT: 'Recent Tags'"]))
+     "SPEECH OUTPUT: 'Slashdot Login heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -135,8 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Up",
     ["BRAILLE LINE:  '& y RadioButton Some polls'",
      "     VISIBLE:  '& y RadioButton Some polls', cursor=1",
-     "SPEECH OUTPUT: 'Some polls not selected radio button'",
-     "SPEECH OUTPUT: 'Book Reviews'"]))
+     "SPEECH OUTPUT: 'Some polls not selected radio button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -183,21 +178,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Up",
-    ["BUG? - We're speaking the object which just gave up focus",
-     "BRAILLE LINE:  'Science h4'",
+    ["BRAILLE LINE:  'Science h4'",
      "     VISIBLE:  'Science h4', cursor=1",
-     "SPEECH OUTPUT: 'Science link heading level 4'",
-     "SPEECH OUTPUT: 'Recent Tags'"]))
+     "SPEECH OUTPUT: 'Science link heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Line Up",
-    ["BUG? - We're speaking the object which just gave up focus",
-     "BRAILLE LINE:  'Services h4'",
+    ["BRAILLE LINE:  'Services h4'",
      "     VISIBLE:  'Services h4', cursor=1",
-     "SPEECH OUTPUT: 'Services heading level 4'",
-     "SPEECH OUTPUT: 'Science'"]))
+     "SPEECH OUTPUT: 'Services heading level 4'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

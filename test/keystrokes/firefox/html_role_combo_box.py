@@ -246,9 +246,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  'Braille Combo'",
+    ["BUG? - The item count appears to be incorrect",
+     "BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
-     "SPEECH OUTPUT: 'combo box   '"]))
+     "SPEECH OUTPUT: 'Component combo box Braille item 1 of 1'"]))
 
 ########################################################################
 # Press Shift Tab once to return to the Version combo box.  

@@ -43,6 +43,13 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
 #
+# JD to WDW: This to me looks like two bug fixes:
+# 1) Lost a trailing space
+# 2) Before we were saying "menu"; I don't think we should in a combo box,
+#    even though technically there is a menu in between a combo box and
+#    the options it contains in the hierarchy.
+# Question: Should we be presenting the containing panel or not?
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -50,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
     "Warning combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
      "     VISIBLE:  'Warning', cursor=1",
-     "SPEECH OUTPUT: 'menu Warning  item 1 of 5 '"]))
+     "SPEECH OUTPUT: 'Some stock icons panel Warning item 1 of 5'"]))
 
 ########################################################################
 # Now arrow down and select the "New" item.
@@ -67,6 +74,13 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
 #
+# JD to WDW: This to me looks like two bug fixes:
+# 1) Lost a trailing space
+# 2) Before we were saying "menu"; I don't think we should in a combo box,
+#    even though technically there is a menu in between a combo box and
+#    the options it contains in the hierarchy.
+# Question: Should we be presenting the containing panel or not?
+#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -74,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     "New combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning New'",
      "     VISIBLE:  'New', cursor=1",
-     "SPEECH OUTPUT: 'menu New  item 3 of 5 '"]))
+     "SPEECH OUTPUT: 'Some stock icons panel New item 3 of 5'"]))
 
 ########################################################################
 # Select the "New" entry and tab to the editable text combo box.  Skip
@@ -203,8 +217,7 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box with selected text Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5",
-     "SPEECH OUTPUT: 'text Four'",
-     "SPEECH OUTPUT: 'selected '"]))
+     "SPEECH OUTPUT: 'text Four selected'"]))
 
 ########################################################################
 # Tab to the triangular down arrow of the editable combo box and open

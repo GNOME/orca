@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -34,7 +34,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gtk
@@ -51,12 +51,11 @@ import orca.settings as settings
 import orca.keybindings as keybindings
 
 from orca.orca_i18n import _ # for gettext support
-from orca.structural_navigation import StructuralNavigation
 
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
 from formatting import Formatting
-from where_am_i import WhereAmI
+from structural_navigation import StructuralNavigation
 import script_settings
 
 class Script(default.Script):
@@ -74,8 +73,12 @@ class Script(default.Script):
         #
         self.savedEnabledBrailledTextAttributes = None
         self.savedEnabledSpokenTextAttributes = None
-        self.speakCellCoordinatesCheckButton = None
+        self.speakSpreadsheetCoordinatesCheckButton = None
         self.savedreadTableCellRow = None
+        self.skipBlankCellsCheckButton = None
+        self.speakCellCoordinatesCheckButton = None
+        self.speakCellHeadersCheckButton = None
+        self.speakCellSpanCheckButton = None
 
         # Set the debug level for all the methods in this script.
         #
@@ -197,6 +200,12 @@ class Script(default.Script):
         """Returns the formatting strings for this script."""
         return Formatting(self)
 
+    def getStructuralNavigation(self):
+        """Returns the 'structural navigation' class for this script.
+        """
+        types = self.getEnabledStructuralNavigationTypes()
+        return StructuralNavigation(self, types, enabled=False)
+
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types
         enabled in this script.
@@ -205,11 +214,6 @@ class Script(default.Script):
         enabledTypes = [StructuralNavigation.TABLE_CELL]
 
         return enabledTypes
-
-    def getWhereAmI(self):
-        """Returns the "where am I" class for this script.
-        """
-        return WhereAmI(self)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -334,12 +338,81 @@ class Script(default.Script):
         # column position within the spread sheet (i.e. A1, B1, C2 ...)
         #
         label = _("Speak spread sheet cell coordinates")
+        self.speakSpreadsheetCoordinatesCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakSpreadsheetCoordinatesCheckButton)
+        gtk.Box.pack_start(vbox, self.speakSpreadsheetCoordinatesCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(\
+            self.speakSpreadsheetCoordinatesCheckButton,
+            script_settings.speakSpreadsheetCoordinates)
+
+        # Table Navigation frame.
+        #
+        tableFrame = gtk.Frame()
+        gtk.Widget.show(tableFrame)
+        gtk.Box.pack_start(vbox, tableFrame, False, False, 5)
+
+        tableAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
+        gtk.Widget.show(tableAlignment)
+        gtk.Container.add(tableFrame, tableAlignment)
+        gtk.Alignment.set_padding(tableAlignment, 0, 0, 12, 0)
+
+        tableVBox = gtk.VBox(False, 0)
+        gtk.Widget.show(tableVBox)
+        gtk.Container.add(tableAlignment, tableVBox)
+
+        # Translators: this is an option to tell Orca whether or not it
+        # should speak table cell coordinates in document content.
+        #
+        label = _("Speak _cell coordinates")
         self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakCellCoordinatesCheckButton)
-        gtk.Box.pack_start(vbox, self.speakCellCoordinatesCheckButton,
+        gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
                            False, False, 0)
         gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
-                                    script_settings.speakCellCoordinates)
+                                    settings.speakCellCoordinates)
+
+        # Translators: this is an option to tell Orca whether or not it
+        # should speak the span size of a table cell (e.g., how many
+        # rows and columns a particular table cell spans in a table).
+        #
+        label = _("Speak _multiple cell spans")
+        self.speakCellSpanCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakCellSpanCheckButton)
+        gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakCellSpanCheckButton,
+                                    settings.speakCellSpan)
+
+        # Translators: this is an option for whether or not to speak
+        # the header of a table cell in document content.
+        #
+        label = _("Announce cell _header")
+        self.speakCellHeadersCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.speakCellHeadersCheckButton)
+        gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
+                                    settings.speakCellHeaders)
+
+        # Translators: this is an option to allow users to skip over
+        # empty/blank cells when navigating tables in document content.
+        #
+        label = _("Skip _blank cells")
+        self.skipBlankCellsCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.skipBlankCellsCheckButton)
+        gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.skipBlankCellsCheckButton,
+                                    settings.skipBlankCells)
+
+        # Translators: this is the title of a panel containing options
+        # for specifying how to navigate tables in document content.
+        #
+        tableLabel = gtk.Label("<b>%s</b>" % _("Table Navigation"))
+        gtk.Widget.show(tableLabel)
+        gtk.Frame.set_label_widget(tableFrame, tableLabel)
+        gtk.Label.set_use_markup(tableLabel, True)
 
         return vbox
 
@@ -352,11 +425,30 @@ class Script(default.Script):
         """
 
         prefs.writelines("\n")
-        script_settings.speakCellCoordinates = \
-                 self.speakCellCoordinatesCheckButton.get_active()
         prefix = "orca.scripts.apps.soffice.script_settings"
-        prefs.writelines("%s.speakCellCoordinates = %s\n" % \
-                         (prefix, script_settings.speakCellCoordinates))
+
+        script_settings.speakSpreadsheetCoordinates = \
+                 self.speakSpreadsheetCoordinatesCheckButton.get_active()
+        prefs.writelines("%s.speakSpreadsheetCoordinates = %s\n" % \
+                         (prefix, script_settings.speakSpreadsheetCoordinates))
+
+        settings.speakCellCoordinates = \
+                 self.speakCellCoordinatesCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellCoordinates = %s\n" % \
+                         settings.speakCellCoordinates)
+
+        settings.speakCellSpan = self.speakCellSpanCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellSpan = %s\n" % \
+                         settings.speakCellSpan)
+
+        settings.speakCellHeaders = \
+                self.speakCellHeadersCheckButton.get_active()
+        prefs.writelines("orca.settings.speakCellHeaders = %s\n" % \
+                         settings.speakCellHeaders)
+
+        settings.skipBlankCells = self.skipBlankCellsCheckButton.get_active()
+        prefs.writelines("orca.settings.skipBlankCells = %s\n" % \
+                         settings.skipBlankCells)
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
@@ -586,13 +678,23 @@ class Script(default.Script):
         Returns True if this is a table cell, False otherwise.
         """
 
+        cell = obj
         if not startFromTable:
             obj = obj.parent
 
         try:
             table = obj.queryTable()
         except:
-            return False
+            # There really doesn't seem to be a good way to identify
+            # when the user is editing a cell because it has a role
+            # of paragraph and no table in the ancestry. This hack is
+            # a carry-over from the whereAmI code.
+            #
+            if cell.getRole() == pyatspi.ROLE_PARAGRAPH:
+                top = self.getTopLevel(cell)
+                return (top and top.name.endswith(" Calc"))
+            else:
+                return False
         else:
             return table.nRows == 65536
 
@@ -629,6 +731,31 @@ class Script(default.Script):
             current = self._getParent(current)
 
         return True
+
+    def findFrameAndDialog(self, obj):
+        """Returns the frame and (possibly) the dialog containing
+        the object. Overridden here for presentation of the title
+        bar information: If the locusOfFocus is a spreadsheet cell,
+        1) we are not in a dialog and 2) we need to present both the
+        frame name and the sheet name. So we might as well return the
+        sheet in place of the dialog so that the default code can do
+        its thing.
+        """
+
+        if not self.isSpreadSheetCell(obj):
+            return default.Script.findFrameAndDialog(self, obj)
+
+        results = [None, None]
+
+        parent = obj.parent
+        while parent and (parent.parent != parent):
+            if parent.getRole() == pyatspi.ROLE_FRAME:
+                results[0] = parent
+            if parent.getRole() == pyatspi.ROLE_TABLE:
+                results[1] = parent
+            parent = parent.parent
+
+        return results
 
     def printHierarchy(self, root, ooi, indent="",
                        onlyShowing=True, omitManaged=True):
@@ -758,8 +885,9 @@ class Script(default.Script):
             if newTable:
                 # We've entered a table.  Announce the dimensions.
                 #
-                line = _("table with %d rows and %d columns.") % \
-                        (newTable.nRows, newTable.nColumns)
+                line = _("table with %(rows)d rows and %(columns)d columns.") \
+                       % {"rows" : newTable.nRows,
+                          "columns" : newTable.nColumns}
                 speech.speak(line)
 
         if not newTable:
@@ -781,17 +909,7 @@ class Script(default.Script):
             return (cell != None)
 
         self.updateBraille(cell)
-        utterances = self.speechGenerator.getSpeech(cell)
-        # [[[TODO: WDW - need to make sure assumption about utterances[0]
-        # is still correct with the new speech generator stuff.]]]
-        #
-        if not len(utterances[0]) and self.speakBlankLine(newFocus):
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"), None, False)
-        else:
-            speech.speak(utterances)
+        speech.speak(self.speechGenerator.generateSpeech(cell))
 
         if not settings.readTableCellRow:
             self.speakCellName(cell.name)
@@ -1507,7 +1625,7 @@ class Script(default.Script):
         # box in Calc. If so, then replace the non-existent name with a
         # simple one before falling through and calling the default
         # locusOfFocusChanged method, which in turn will result in our
-        # _getSpeechForComboBox() method being called.
+        # _generateSpeechForComboBox() method being called.
         #
         rolesList = [pyatspi.ROLE_LIST,
                      pyatspi.ROLE_COMBO_BOX,
@@ -1539,7 +1657,8 @@ class Script(default.Script):
         if self.isSpreadSheetCell(event.source, True):
             if newLocusOfFocus:
                 self.updateBraille(newLocusOfFocus)
-                utterances = self.speechGenerator.getSpeech(newLocusOfFocus)
+                utterances = \
+                    self.speechGenerator.generateSpeech(newLocusOfFocus)
                 speech.speak(utterances)
 
                 # Save the current row and column information in the table
@@ -1576,7 +1695,8 @@ class Script(default.Script):
                     for tab in child:
                         eventState = tab.getState()
                         if eventState.contains(pyatspi.STATE_SELECTED):
-                            utterances = self.speechGenerator.getSpeech(tab)
+                            utterances = \
+                                self.speechGenerator.generateSpeech(tab)
                             speech.speak(utterances)
             # Fall-thru to process the event with the default handler.
 
@@ -1733,7 +1853,7 @@ class Script(default.Script):
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel, "StarOffice.onFocus - " \
                           + "Calc: Name combo box.")
-            orca.setLocusOfFocus(event, event.source, True)
+            orca.setLocusOfFocus(event, event.source)
             return
 
         # OOo Writer gets rather enthusiastic with focus: events for lists.
@@ -1763,7 +1883,7 @@ class Script(default.Script):
             # event.source lacks STATE_FOCUSED. This causes the default
             # script to ignore the event. See bug #523416. [[[TODO - JD:
             # If the OOo guys fix this on their end, this hack should be
-            # removed. The OOo issue can be found here: 
+            # removed. The OOo issue can be found here:
             # http://www.openoffice.org/issues/show_bug.cgi?id=93083]]]
             #
             rolesList = [pyatspi.ROLE_LIST,
@@ -1795,7 +1915,8 @@ class Script(default.Script):
         if handleEvent:
             if presentEvent:
                 speech.stop()
-            orca.setLocusOfFocus(event, event.any_data, presentEvent)
+            orca.setLocusOfFocus(
+                event, event.any_data, notifyPresentationManager=presentEvent)
 
             # We'll tuck away the activeDescendant information for future
             # reference since the AT-SPI gives us little help in finding
@@ -1875,7 +1996,7 @@ class Script(default.Script):
                 weToggledIt = wasCommand and keyString not in navKeys
 
             if weToggledIt:
-                speech.speak(self.speechGenerator.getSpeech(event.source))
+                speech.speak(self.speechGenerator.generateSpeech(event.source))
 
         # When a new paragraph receives focus, we get a caret-moved event and
         # two focus events (the first being object:state-changed:focused).
@@ -1895,7 +2016,8 @@ class Script(default.Script):
                          pyatspi.ROLE_ROOT_PANE,
                          pyatspi.ROLE_FRAME]
             if self.isDesiredFocusedItem(event.source, rolesList):
-                orca.setLocusOfFocus(event, event.source, False)
+                orca.setLocusOfFocus(
+                    event, event.source, notifyPresentationManager=False)
                 if event.source != self.currentParagraph:
                     self.updateBraille(event.source)
                 return
@@ -1907,7 +2029,8 @@ class Script(default.Script):
             #
             elif event.source.parent and \
                 event.source.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
-                orca.setLocusOfFocus(None, event.source.parent, False)
+                orca.setLocusOfFocus(
+                    None, event.source.parent, notifyPresentationManager=False)
                 return
 
         # If we are in the sbase Table Wizard, try to reduce the numerous
@@ -2289,7 +2412,7 @@ class Script(default.Script):
         # dialog, and loses focus requiring the user to know that it's
         # there and needs Alt+F6ing into.  But officially it's a normal
         # window.
- 
+
         # There doesn't seem to be (an efficient) top-down equivalent
         # of isDesiredFocusedItem(). But OOo documents have root panes;
         # this thing does not.

@@ -48,7 +48,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on <button>", 
     ["BRAILLE LINE:  '<button> <input type='button'> Button       Create   Edit!   Color   Save     '",
      "     VISIBLE:  '<button> <input type='button'> B', cursor=1",
-     "SPEECH OUTPUT: '<button> button '"]))
+     "SPEECH OUTPUT: '<button> button'"]))
 
 ########################################################################
 # Tab to <input type='button'>  
@@ -72,7 +72,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on <input type='button'>", 
     ["BRAILLE LINE:  '<button> <input type='button'> Button       Create   Edit!   Color   Save     '",
      "     VISIBLE:  '<input type='button'> Button    ', cursor=1",
-     "SPEECH OUTPUT: '<input type='button'> button '"]))
+     "SPEECH OUTPUT: '<input type='button'> button'"]))
 
 ########################################################################
 # Tab to "Create"  
@@ -98,7 +98,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create", 
     ["BRAILLE LINE:  'Create Button'",
      "     VISIBLE:  'Create Button', cursor=1",
-     "SPEECH OUTPUT: 'Create button '"]))
+     "SPEECH OUTPUT: 'Create button'"]))
 
 # WDW - Tabbing to the Create button pops up a tooltip.  Should we present
 # it automatically?
@@ -131,7 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on drop down menu on Create", 
     ["BRAILLE LINE:  '<button> Button <input type='button'> ButtonCreate Button   MenuSave Button   Menu'",
      "     VISIBLE:  '  MenuSave Button   Menu', cursor=1",
-     "SPEECH OUTPUT: '  menu '"]))
+     "SPEECH OUTPUT: '  menu'"]))
 
 ########################################################################
 # Open the drop down menu.
@@ -171,7 +171,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create from template", 
     ["BRAILLE LINE:  'Create from template'",
      "     VISIBLE:  'Create from template', cursor=1",
-     "SPEECH OUTPUT: 'Create from template '"]))
+     "SPEECH OUTPUT: 'Create from template item 1 of 1'"]))
 
 ########################################################################
 # Close the menu and go to the Edit! button
@@ -440,8 +440,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the third unlabelled button ('Save')", 
-    ["BRAILLE LINE:  'Save Button   Menu'",
-     "     VISIBLE:  'Save Button   Menu', cursor=1",
+    ["BRAILLE LINE:  'Save Button'",
+     "     VISIBLE:  'Save Button', cursor=1",
      "SPEECH OUTPUT: 'Save button'"]))
 
 sequence.append(utils.StartRecordingAction())

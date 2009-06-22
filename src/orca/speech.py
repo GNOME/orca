@@ -38,6 +38,7 @@ import keynames
 import orca
 import orca_state
 import settings
+import speech_generator
 
 from acss import ACSS
 from orca_i18n import _           # for gettext support
@@ -176,16 +177,26 @@ def speak(content, acss=None, interrupt=True):
     if settings.silenceSpeech:
         return
 
+    subString = None
     if isinstance(content, basestring):
         subString = content
     elif isinstance(content, list):
-        subString = None
         for element in content:
             if isinstance(element, basestring):
                 if subString:
                     subString += " " + element
                 else:
                     subString = element
+            elif isinstance(element, speech_generator.Pause):
+                if subString:
+                    if subString[-1] != ".":
+                        subString += "."
+                    _speak(subString, acss, interrupt)
+                    subString = None
+            elif isinstance(element, speech_generator.LineBreak):
+                if subString:
+                    _speak(subString, acss, interrupt)
+                    subString = None
             else:
                 if subString:
                     _speak(subString, acss, interrupt)
@@ -198,10 +209,13 @@ def speak(content, acss=None, interrupt=True):
                 else:
                     debug.println(debug.LEVEL_WARNING,
                                   "UNKNOWN speech element: '%s'" % element)
+    elif isinstance(content, (speech_generator.Pause,
+                              speech_generator.LineBreak)):
+        pass
     else:
         debug.printStack(debug.LEVEL_WARNING)
         debug.println(debug.LEVEL_WARNING, 
-                      "bad content send to speech.speak: '%s'", repr(content))
+                      "bad content sent to speech.speak: '%s'" % repr(content))
 
     if subString:
         _speak(subString, acss, interrupt)

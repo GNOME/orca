@@ -20,7 +20,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction(utils.DojoURLPrefix + "test_Tree.html"))
+sequence.append(TypeAction(utils.DojoNightlyURLPrefix + "test_Tree.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("Dijit Tree Test", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
@@ -62,7 +62,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Africa ListItem'",
      "     VISIBLE:  'Africa ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item Africa  collapsed tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Africa item 1 of 6 collapsed tree level 2'"]))
 
 ########################################################################
 # Use arrows to expand/collapse/navigate tree.  

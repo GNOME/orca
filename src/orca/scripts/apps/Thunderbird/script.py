@@ -184,7 +184,8 @@ class Script(Gecko.Script):
                 event.source.getState().contains(pyatspi.STATE_EDITABLE)
 
         if updatePosition:
-            orca.setLocusOfFocus(event, event.source, False)
+            orca.setLocusOfFocus(
+                event, event.source, notifyPresentationManager=False)
             self.setCaretContext(event.source, event.detail1)
 
             # The Gecko script, should it be about to pass along this
@@ -243,12 +244,10 @@ class Script(Gecko.Script):
                     # object we're setting the locusOfFocus to is the
                     # same as the current locusOfFocus is returning
                     # True when it's not actually True. Therefore,
-                    # we'll set the current locusOfFocus to None as
-                    # a precaution.
+                    # we'll force the propagation as a precaution.
                     #
-                    if event.type.startswith("focus:"):
-                        orca_state.locusOfFocus = None
-                    orca.setLocusOfFocus(event, acc)
+                    force = event.type.startswith("focus:")
+                    orca.setLocusOfFocus(event, acc, force=force)
                     consume = True
                     break
 
@@ -354,12 +353,10 @@ class Script(Gecko.Script):
         # number as the previously deleted message).
         # See bug #536451 for more details.
         #
-        rolesList = [pyatspi.ROLE_TABLE_CELL, \
-                     pyatspi.ROLE_TREE_TABLE, \
-                     pyatspi.ROLE_SCROLL_PANE, \
-                     pyatspi.ROLE_SCROLL_PANE, \
-                     pyatspi.ROLE_FRAME, \
-                     pyatspi.ROLE_APPLICATION]
+        rolesList = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_TREE_TABLE,
+                     pyatspi.ROLE_SCROLL_PANE,
+                     pyatspi.ROLE_SCROLL_PANE]
         if self.isDesiredFocusedItem(event.source, rolesList):
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 string = orca_state.lastNonModifierKeyEvent.event_string
@@ -585,6 +582,9 @@ class Script(Gecko.Script):
         Overridden here because multiple open messages are not arranged
         in tabs like they are in Firefox."""
 
+        if self.inFindToolbar():
+            return Gecko.Script.getDocumentFrame(self)
+
         obj = orca_state.locusOfFocus
         while obj:
             role = obj.getRole()
@@ -594,3 +594,13 @@ class Script(Gecko.Script):
                 obj = obj.parent
 
         return None
+
+    def toggleFlatReviewMode(self, inputEvent=None):
+        """Toggles between flat review mode and focus tracking mode."""
+
+        # If we're leaving flat review dump the cache. See bug 568658.
+        #
+        if self.flatReviewContext:
+            pyatspi.clearCache()
+
+        return default.Script.toggleFlatReviewMode(self, inputEvent)

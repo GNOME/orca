@@ -19,7 +19,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction(utils.DojoURLPrefix + "test_Dialog.html"))
+sequence.append(TypeAction(utils.DojoNightlyURLPrefix + "test_Dialog.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 
@@ -36,8 +36,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to show dialog button", 
-    ["BRAILLE LINE:  'Show Dialog Button Programatic Dialog \(3 second delay\) Button Show TabContainer Dialog Button Test slow loading HREF Dialog Button Show File Dialog Button'",
-     "     VISIBLE:  'Show Dialog Button Programatic D', cursor=1",
+    ["BRAILLE LINE:  'Show Dialog Button'",
+     "     VISIBLE:  'Show Dialog Button', cursor=1",
      "SPEECH OUTPUT: 'Show Dialog button'"]))
      
 ########################################################################
@@ -47,7 +47,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to programatic dialog button", 
-    ["BRAILLE LINE:  'Show Dialog Button Programatic Dialog \(3 second delay\) Button Show TabContainer Dialog Button Test slow loading HREF Dialog Button Show File Dialog Button'",
+    ["BRAILLE LINE:  'Programatic Dialog \(3 second delay\) Button'",
      "     VISIBLE:  'Programatic Dialog \(3 second del', cursor=1",
      "SPEECH OUTPUT: 'Programatic Dialog \(3 second delay\) button'"]))
      
@@ -58,8 +58,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to tabcontainer dialog button", 
-    ["BRAILLE LINE:  'Show Dialog Button Programatic Dialog \(3 second delay\) Button Show TabContainer Dialog Button Test slow loading HREF Dialog Button Show File Dialog Button'",
-     "     VISIBLE:  'Show TabContainer Dialog Button ', cursor=1",
+    ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
+     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
      "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
 
 ########################################################################
@@ -70,9 +70,11 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("First tab", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.AssertPresentationAction(
     "Launch dialog", 
-    ["BRAILLE LINE:  'First tab Page Second tab Page'",
+    ["BUG? - Garbage speech at the end??",
+     "BRAILLE LINE:  'First tab Page Second tab Page'",
      "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
-     "SPEECH OUTPUT: 'TabContainer Dialog dialog First tab page'"]))
+     "SPEECH OUTPUT: 'TabContainer Dialog dialog First tab page'",
+     "SPEECH OUTPUT: 'focused on dijit_layout_TabContainer_0_tablist_dijit_layout_ContentPane_0'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -85,7 +87,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic whereAmI", 
     ["BRAILLE LINE:  'First tab Page Second tab Page'",
      "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list First tab page item 1 of 2 '"]))
+     "SPEECH OUTPUT: 'tab list First tab page item 1 of 2'"]))
 
 ########################################################################
 # Close the dialog, focus goes back to button.  
@@ -95,9 +97,11 @@ sequence.append(KeyComboAction("Escape"))
 sequence.append(WaitForFocus("Show TabContainer Dialog", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "close dialog", 
-    ["BRAILLE LINE:  'Show Dialog Button Programatic Dialog \(3 second delay\) Button Show TabContainer Dialog Button Test slow loading HREF Dialog Button Show File Dialog Button'",
-     "     VISIBLE:  'Show TabContainer Dialog Button ', cursor=1",
-     "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
+    ["BUG? - Garbage speech at the end??",
+     "BRAILLE LINE:  'Show TabContainer Dialog Button'",
+     "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
+     "SPEECH OUTPUT: 'Show TabContainer Dialog button'",
+     "SPEECH OUTPUT: 'focused on dijit_form_Button_1'"]))
 
 ########################################################################
 # Close the demo

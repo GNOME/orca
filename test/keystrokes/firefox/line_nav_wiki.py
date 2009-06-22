@@ -77,9 +77,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Home | Download/Installation | Configuration/Use | Accessible Applications | Mailing List (Archives) |'",
-     "     VISIBLE:  'Home | Download/Installation | Co', cursor=1",
-     "SPEECH OUTPUT: 'Home link | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link  ( Archives link ) |'"]))
+    ["BRAILLE LINE:  'Home | Download/Installation | Configuration/Use | Accessible Applications | Mailing List \(Archives\) |'",
+     "     VISIBLE:  'Home | Download/Installation | C', cursor=1",
+     "SPEECH OUTPUT: 'Home link  | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link  \( Archives link \) |'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -285,9 +285,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Please join and participate on the Orca mailing list (archives): it's a helpful, kind, and productive'",
+    ["BRAILLE LINE:  'Please join and participate on the Orca mailing list \(archives\): it's a helpful, kind, and productive'",
      "     VISIBLE:  'Please join and participate on t', cursor=1",
-     "SPEECH OUTPUT: 'Please join and participate on the Orca mailing list link  ( archives link ): it's a helpful, kind, and productive'"]))
+     "SPEECH OUTPUT: 'Please join and participate on the Orca mailing list link  \( archives link \): it's a helpful, kind, and productive'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -317,9 +317,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  '(THANKS!)!!! The audio guides can be found at http://www.digitaldarragh.com/linuxat.asp and'",
-     "     VISIBLE:  '(THANKS!)!!! The audio guides ca', cursor=1",
-     "SPEECH OUTPUT: '(THANKS!)!!! The audio guides can be found at http://www.digitaldarragh.com/linuxat.asp link  and'"]))
+    ["BRAILLE LINE:  '\(THANKS!\)!!! The audio guides can be found at http://www.digitaldarragh.com/linuxat.asp and'",
+     "     VISIBLE:  '\(THANKS!\)!!! The audio guides ca', cursor=1",
+     "SPEECH OUTPUT: '\(THANKS!\)!!! The audio guides can be found at http://www.digitaldarragh.com/linuxat.asp link  and'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -613,17 +613,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '• Mailing list: orca-list@gnome.org (Archives)'",
+    ["BRAILLE LINE:  '• Mailing list: orca-list@gnome.org \(Archives\)'",
      "     VISIBLE:  '• Mailing list: orca-list@gnome.', cursor=1",
-     "SPEECH OUTPUT: '• Mailing list: orca-list@gnome.org link  ( Archives link )'"]))
+     "SPEECH OUTPUT: '• Mailing list: orca-list@gnome.org link  \( Archives link \)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '• Bug database: GNOME Bug Tracking System (Bugzilla) (current bug list)'",
+    ["BRAILLE LINE:  '• Bug database: GNOME Bug Tracking System \(Bugzilla\) \(current bug list\)'",
      "     VISIBLE:  '• Bug database: GNOME Bug Tracki', cursor=1",
-     "SPEECH OUTPUT: '• Bug database: GNOME Bug Tracking System (Bugzilla) link  ( current bug list link )'"]))
+     "SPEECH OUTPUT: '• Bug database: GNOME Bug Tracking System \(Bugzilla\) link  \( current bug list link \)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -709,9 +709,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Orca (last edited 2007-12-07 22:09:22 by WillieWalker)'",
-     "     VISIBLE:  'Orca (last edited 2007-12-07 22:', cursor=1",
-     "SPEECH OUTPUT: 'Orca (last edited 2007-12-07 22:09:22 by WillieWalker link )'"]))
+    ["BRAILLE LINE:  'Orca \(last edited 2007-12-07 22:09:22 by WillieWalker\)'",
+     "     VISIBLE:  'Orca \(last edited 2007-12-07 22:', cursor=1",
+     "SPEECH OUTPUT: 'Orca \(last edited 2007-12-07 22:09:22 by WillieWalker link \)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -842,9 +842,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Orca (last edited 2007-12-07 22:09:22 by WillieWalker)'",
-     "     VISIBLE:  'Orca (last edited 2007-12-07 22:', cursor=1",
-     "SPEECH OUTPUT: 'Orca (last edited 2007-12-07 22:09:22 by WillieWalker link )'"]))
+    ["BRAILLE LINE:  'Orca \(last edited 2007-12-07 22:09:22 by WillieWalker\)'",
+     "     VISIBLE:  'Orca \(last edited 2007-12-07 22:', cursor=1",
+     "SPEECH OUTPUT: 'Orca \(last edited 2007-12-07 22:09:22 by WillieWalker link \)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -930,17 +930,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '• Bug database: GNOME Bug Tracking System (Bugzilla) (current bug list)'",
+    ["BRAILLE LINE:  '• Bug database: GNOME Bug Tracking System \(Bugzilla\) \(current bug list\)'",
      "     VISIBLE:  '• Bug database: GNOME Bug Tracki', cursor=1",
-     "SPEECH OUTPUT: '• Bug database: GNOME Bug Tracking System (Bugzilla) link  ( current bug list link )'"]))
+     "SPEECH OUTPUT: '• Bug database: GNOME Bug Tracking System \(Bugzilla\) link  \( current bug list link \)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '• Mailing list: orca-list@gnome.org (Archives)'",
+    ["BRAILLE LINE:  '• Mailing list: orca-list@gnome.org \(Archives\)'",
      "     VISIBLE:  '• Mailing list: orca-list@gnome.', cursor=1",
-     "SPEECH OUTPUT: '• Mailing list: orca-list@gnome.org link  ( Archives link )'"]))
+     "SPEECH OUTPUT: '• Mailing list: orca-list@gnome.org link  \( Archives link \)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1050,9 +1050,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'provider interface (AT-SPI). This includes the GNOME desktop and its applications, OpenOffice,'",
-     "     VISIBLE:  'provider interface (AT-SPI). Thi', cursor=1",
-     "SPEECH OUTPUT: 'provider interface (AT-SPI). This includes the GNOME desktop and its applications, OpenOffice link ,'"]))
+    ["BRAILLE LINE:  'provider interface \(AT-SPI\). This includes the GNOME desktop and its applications, OpenOffice,'",
+     "     VISIBLE:  'provider interface \(AT-SPI\). Thi', cursor=1",
+     "SPEECH OUTPUT: 'provider interface \(AT-SPI\). This includes the GNOME desktop and its applications, OpenOffice link ,'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1098,17 +1098,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'a window. Refer to Orca Keyboard Commands (Laptop Layout) for more information on Orca-specific'",
+    ["BRAILLE LINE:  'a window. Refer to Orca Keyboard Commands \(Laptop Layout\) for more information on Orca-specific'",
      "     VISIBLE:  'a window. Refer to Orca Keyboard', cursor=1",
-     "SPEECH OUTPUT: 'a window. Refer to Orca Keyboard Commands link (Laptop Layout) link  for more information on Orca-specific'"]))
+     "SPEECH OUTPUT: 'a window. Refer to Orca Keyboard Commands link \(Laptop Layout\) link  for more information on Orca-specific'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  '(accessed by pressing Insert+Space when Orca is running) and for using flat review mode to examine'",
-     "     VISIBLE:  '(accessed by pressing Insert+Spa', cursor=1",
-     "SPEECH OUTPUT: '(accessed by pressing Insert+Space when Orca is running) and for using flat review mode to examine'"]))
+    ["BRAILLE LINE:  '\(accessed by pressing Insert\+Space when Orca is running\) and for using flat review mode to examine'",
+     "     VISIBLE:  '\(accessed by pressing Insert\+Spa', cursor=1",
+     "SPEECH OUTPUT: '\(accessed by pressing Insert\+Space when Orca is running\) and for using flat review mode to examine'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1234,9 +1234,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  '(THANKS!)!!! The audio guides can be found at http://www.digitaldarragh.com/linuxat.asp and'",
-     "     VISIBLE:  '(THANKS!)!!! The audio guides ca', cursor=1",
-     "SPEECH OUTPUT: '(THANKS!)!!! The audio guides can be found at http://www.digitaldarragh.com/linuxat.asp link  and'"]))
+    ["BRAILLE LINE:  '\(THANKS!\)!!! The audio guides can be found at http://www.digitaldarragh.com/linuxat.asp and'",
+     "     VISIBLE:  '\(THANKS!\)!!! The audio guides ca', cursor=1",
+     "SPEECH OUTPUT: '\(THANKS!\)!!! The audio guides can be found at http://www.digitaldarragh.com/linuxat.asp link  and'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1266,9 +1266,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'Please join and participate on the Orca mailing list (archives): it's a helpful, kind, and productive'",
+    ["BRAILLE LINE:  'Please join and participate on the Orca mailing list \(archives\): it's a helpful, kind, and productive'",
      "     VISIBLE:  'Please join and participate on t', cursor=1",
-     "SPEECH OUTPUT: 'Please join and participate on the Orca mailing list link  ( archives link ): it's a helpful, kind, and productive'"]))
+     "SPEECH OUTPUT: 'Please join and participate on the Orca mailing list link  \( archives link \): it's a helpful, kind, and productive'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1466,9 +1466,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up", 
-    ["BRAILLE LINE:  'Home | Download/Installation | Configuration/Use | Accessible Applications | Mailing List (Archives) |'",
+    ["BRAILLE LINE:  'Home | Download/Installation | Configuration/Use | Accessible Applications | Mailing List \(Archives\) |'",
      "     VISIBLE:  'Home | Download/Installation | Co', cursor=1",
-     "SPEECH OUTPUT: 'Home link  | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link  ( Archives link ) |'"]))
+     "SPEECH OUTPUT: 'Home link  | Download/Installation link  | Configuration/Use link  | Accessible Applications link  | Mailing List link  \( archives link \) |'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

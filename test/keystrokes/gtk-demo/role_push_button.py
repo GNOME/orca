@@ -53,7 +53,8 @@ sequence.append(utils.AssertPresentationAction(
     "OK button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
-     "SPEECH OUTPUT: 'OK button Alt o'"]))
+     "SPEECH OUTPUT: 'OK button.",
+     "SPEECH OUTPUT: 'Alt o'"]))
 
 ########################################################################
 # Tab to the Cancel button.

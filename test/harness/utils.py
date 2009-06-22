@@ -200,15 +200,15 @@ class AssertPresentationAction(AtomicAction):
             diffs = list(d.compare(self._expectedResults, results))
             print >> myErr, '\n'.join(list(diffs))
         except:
-            print "(ERROR COMPUTING DIFFERENCES!!!)"
+            print >> myErr, "(ERROR COMPUTING DIFFERENCES!!!)"
             for i in range(0, max(len(results), len(self._expectedResults))):
                 try:
-                    print "  EXPECTED: %s" \
+                    print >> myErr, "  EXPECTED: %s" \
                           % self._expectedResults[i].decode("UTF-8", "replace")
                 except:
                     pass
                 try:
-                    print "  ACTUAL:   %s" \
+                    print >> myErr, "  ACTUAL:   %s" \
                           % results[i].decode("UTF-8", "replace")
                 except:
                     pass

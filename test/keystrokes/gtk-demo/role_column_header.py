@@ -105,11 +105,23 @@ sequence.append(utils.AssertPresentationAction(
     "Normal cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'table Severity cell Normal'",
-     "SPEECH OUTPUT: 'column 3 of 4 row 1 of 14'"]))
+     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 4 row 1 of 14'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
+#
+# JD to WDW: This test was changed. Multiple utterances are now just
+# one. Do we care? 
+#
+# WDW to JD: No - it's OK.  If pauses are needed (which we can learn via
+# end user testing), we can add '+ ["."] +' things in the formatting
+# strings as needed.
+#
+# In addition, something I would consider a bug fix: Before we
+# didn't speak the name ("Fixed?") of the checkbox at the start of the row;
+# now we do.
+#
+# WDW to JD: I agree.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
@@ -121,11 +133,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'table Severity cell Normal'",
-     "SPEECH OUTPUT: 'column 3 of 4 row 1 of 14'",
-     "SPEECH OUTPUT: 'table Severity cell Normal'",
-     "SPEECH OUTPUT: 'column 3 of 4 row 1 of 14'",
-     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 4 row 1 of 14'",
+     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 4 row 1 of 14 Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
 
 ########################################################################
 # Now move to the cell to the left containing the number "60482".
@@ -169,8 +178,7 @@ sequence.append(utils.AssertPresentationAction(
     "Checkbox cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'table Fixed? cell check box not checked'",
-     "SPEECH OUTPUT: 'column 1 of 4 row 1 of 14'"]))
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 4 row 1 of 14'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -185,11 +193,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'table Fixed? cell check box not checked'",
-     "SPEECH OUTPUT: 'column 1 of 4 row 1 of 14'",
-     "SPEECH OUTPUT: 'table Fixed? cell check box not checked'",
-     "SPEECH OUTPUT: 'column 1 of 4 row 1 of 14'",
-     "SPEECH OUTPUT: 'check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 4 row 1 of 14'",
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 4 row 1 of 14 Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
  
 ########################################################################
 # Close the GtkListStore demo

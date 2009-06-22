@@ -48,7 +48,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereamI", 
     ["BRAILLE LINE:  'Font Larger + Button Font Smaller - Button &=y Italic i ToggleButton Bold B Button'",
      "     VISIBLE:  'Font Larger + Button Font Smalle', cursor=1",
-     "SPEECH OUTPUT: 'Font Larger + button '"]))
+     "SPEECH OUTPUT: 'Font Larger + button'"]))
 
 ########################################################################
 # Now push the first button.  The following will be presented.

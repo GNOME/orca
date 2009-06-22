@@ -46,7 +46,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Slider Control 1 50 Slider'",
      "     VISIBLE:  'Slider Control 1 50 Slider', cursor=1",
-     "SPEECH OUTPUT: 'Slider Control 1 slider 50.0 50 percent '"]))
+     "SPEECH OUTPUT: 'Slider Control 1 slider 50 50 percent'"]))
     
 ########################################################################
 # Increment slider several times

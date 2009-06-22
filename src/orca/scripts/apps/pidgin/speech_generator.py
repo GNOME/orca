@@ -20,7 +20,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.speech_generator as speech_generator
@@ -32,7 +32,7 @@ import orca.speech_generator as speech_generator
 ########################################################################
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
-    """Overrides _getSpeechForTableCell() so that we can provide access
+    """Overrides _generateExpandableState so that we can provide access
     to the expanded/collapsed state and node count for the buddy list.
     """
 
@@ -41,7 +41,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _getExpandableState(self, obj, **args):
+    def _generateExpandableState(self, obj, **args):
         result = []
         if self._script.isInBuddyList(obj):
             # The Pidgin buddy list consists of two columns. The
@@ -54,19 +54,19 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             expanderCell = obj.parent[obj.getIndexInParent() - 1]
             if expanderCell:
                 result.extend(
-                    speech_generator.SpeechGenerator._getExpandableState(
+                    speech_generator.SpeechGenerator._generateExpandableState(
                         self, expanderCell, **args))
             else:
                 result.extend(
-                    speech_generator.SpeechGenerator._getExpandableState(
+                    speech_generator.SpeechGenerator._generateExpandableState(
                         self, obj, **args))
         else:
             result.extend(
-                speech_generator.SpeechGenerator._getExpandableState(
+                speech_generator.SpeechGenerator._generateExpandableState(
                     self, obj, **args))
         return result
 
-    def _getNumberOfChildren(self, obj, **args):
+    def _generateNumberOfChildren(self, obj, **args):
         result = []
         if self._script.isInBuddyList(obj):
             # The Pidgin buddy list consists of two columns. The
@@ -79,14 +79,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             expanderCell = obj.parent[obj.getIndexInParent() - 1]
             if expanderCell:
                 result.extend(
-                    speech_generator.SpeechGenerator._getNumberOfChildren(
+                    speech_generator.SpeechGenerator._generateNumberOfChildren(
                         self, expanderCell, **args))
             else:
                 result.extend(
-                    speech_generator.SpeechGenerator._getNumberOfChildren(
+                    speech_generator.SpeechGenerator._generateNumberOfChildren(
                         self, obj, **args))
         else:
             result.extend(
-                speech_generator.SpeechGenerator._getNumberOfChildren(
+                speech_generator.SpeechGenerator._generateNumberOfChildren(
                     self, obj, **args))
         return result

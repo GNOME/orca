@@ -7,7 +7,7 @@ orca_python_PYTHON = \
 	script.py \
 	script_settings.py \
 	speech_generator.py \
-	where_am_i.py
+	structural_navigation.py
 
 orca_pythondir=$(pyexecdir)/orca/scripts/apps/soffice
 

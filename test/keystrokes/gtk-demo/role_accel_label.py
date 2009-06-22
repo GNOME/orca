@@ -50,7 +50,8 @@ sequence.append(utils.AssertPresentationAction(
     "New menu item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
      "     VISIBLE:  'New(Control n)', cursor=1",
-     "SPEECH OUTPUT: 'File menu New Control n item 1 of 5 n'"]))
+     "SPEECH OUTPUT: 'File menu New Control n item 1 of 5.",
+     "SPEECH OUTPUT: 'n'"]))
 
 ########################################################################
 # Now, continue on down the menu.

@@ -159,9 +159,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
+    ["BUG? - We claim this is item 1 of 1. This is how it was before the refactor as well.",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
-     "SPEECH OUTPUT: 'Show a blank page combo box Show a blank page  item 1 of 1 '"]))
+     "SPEECH OUTPUT: 'When " + utils.firefoxAppNames + " starts: combo box Show a blank page item 1 of 1'"]))
 
 ########################################################################
 # Press Shift+Tab to move back to the Main list item.

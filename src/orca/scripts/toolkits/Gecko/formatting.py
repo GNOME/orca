@@ -35,6 +35,18 @@ import orca.formatting
 
 formatting = {
     'speech': {
+        'suffix': {
+            'focused': '[]',
+            'unfocused': 'newNodeLevel + unselectedCell + ' + orca.formatting.TUTORIAL,
+            'basicWhereAmI': orca.formatting.TUTORIAL + ' + description + liveRegionDescription',
+            'detailedWhereAmI' : '[]'
+            },
+        'default': {
+            'focused': '[]',
+            'unfocused': 'labelAndName + allTextSelection + roleName + availability + ' + orca.formatting.MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'labelAndName + roleName',
+            'detailedWhereAmI' : 'pageSummary'
+            },
         pyatspi.ROLE_ALERT: {
             'unfocused': 'expandedEOCs or (labelAndName + unrelatedLabels)'
             },
@@ -43,9 +55,6 @@ formatting = {
             },
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'name + roleName'
-            },
-        pyatspi.ROLE_LINK: {
-            'unfocused': 'labelAndName + roleName + availability'
             },
         pyatspi.ROLE_LIST: {
             'focused': 'focusedItem',
@@ -75,10 +84,10 @@ class Formatting(orca.formatting.Formatting):
         #
         self._defaultFormatting = orca.formatting.Formatting(script)
 
-    def getFormat(self, dictType, **args):
+    def getFormat(self, **args):
         # ARIA widgets get treated like regular default widgets.
         #
         if args.get('isAria', False):
-            return self._defaultFormatting.getFormat(dictType, **args)
+            return self._defaultFormatting.getFormat(**args)
         else:
-            return orca.formatting.Formatting.getFormat(self, dictType, **args)
+            return orca.formatting.Formatting.getFormat(self, **args)

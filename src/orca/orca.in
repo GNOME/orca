@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Orca
 #
@@ -137,7 +137,7 @@ if [ "x$LOGNAME" != "xgdm" ] ; then
     fi
 fi
 
-if [ `grep -c "\-q" <<< $ARGS` -gt 0 ] ; then
+if [ `echo $ARGS | grep -c "\-q"` -gt 0 ] ; then
     # If the user has done -q or --quit, that means to tell any
     # existing orca process to quit.  So, we just do a cleanup.
     #
@@ -154,7 +154,7 @@ else
     if [ "x$ARGS" = "x" ] ; then
         CLEANUP=1
     else
-        CLEANUP=`egrep -c "\-s|\-t|\-n|\-u|\-e|\-d" <<< $ARGS`
+        CLEANUP=`echo $ARGS | egrep -c "\-s|\-t|\-n|\-u|\-e|\-d"`
     fi
 
     # Clean up before running orca to get anything that might

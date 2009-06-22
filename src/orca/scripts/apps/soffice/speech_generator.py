@@ -54,7 +54,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                              [pyatspi.ROLE_APPLICATION]))
         return override
 
-    def _getRoleName(self, obj, **args):
+    def _generateRoleName(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
         if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON] \
@@ -69,21 +69,41 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             override = self.__overrideParagraph(obj, **args)
             if override:
                 oldRole = self._overrideRole(pyatspi.ROLE_TEXT, args)
-            result.extend(speech_generator.SpeechGenerator._getRoleName(
+            # Treat a paragraph which is inside of a spreadsheet cell as
+            # a spreadsheet cell.
+            #
+            elif role == 'ROLE_SPREADSHEET_CELL':
+                oldRole = self._overrideRole(pyatspi.ROLE_TABLE_CELL, args)
+                override = True
+            result.extend(speech_generator.SpeechGenerator._generateRoleName(
                           self, obj, **args))
             if override:
                 self._restoreRole(oldRole, args)
         return result
 
-    def _getTextRole(self, obj, **args):
+    def _generateTextRole(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
         if role != pyatspi.ROLE_PARAGRAPH \
            or self.__overrideParagraph(obj, **args):
-            result.extend(self._getRoleName(obj, **args))
+            result.extend(self._generateRoleName(obj, **args))
         return result
 
-    def _getLabelOrName(self, obj, **args):
+    def _generateLabel(self, obj, **args):
+        """Returns the label for an object as an array of strings (and
+        possibly voice and audio specifications).  The label is
+        determined by the getDisplayedLabel of the script, and an
+        empty array will be returned if no label can be found.
+        """
+        result = []
+        override = self.__overrideParagraph(obj, **args)
+        label = self._script.getDisplayedLabel(obj) or ""
+        if not label and override:
+            label = self._script.getDisplayedLabel(obj.parent) or ""
+        result.append(label.strip())
+        return result
+
+    def _generateLabelOrName(self, obj, **args):
         """Gets the label or the name if the label is not preset."""
         result = []
         override = self.__overrideParagraph(obj, **args)
@@ -91,26 +111,49 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # as a text object.
         #
         if override:
-            result.extend(self._getLabel(obj, **args))
+            result.extend(self._generateLabel(obj, **args))
             if len(result) == 0 and obj.parent:
-                parentLabel = self._getLabel(obj.parent, **args)
+                parentLabel = self._generateLabel(obj.parent, **args)
                 # If we aren't already focused, we will have spoken the
                 # parent as part of the speech context and do not want
                 # to repeat it.
                 #
-                already_focused = args.get('already_focused', False)
-                if already_focused:
+                alreadyFocused = args.get('alreadyFocused', False)
+                if alreadyFocused:
                     result.extend(parentLabel)
                 # If we still don't have a label, look to the name.
                 #
                 if not parentLabel and obj.name and len(obj.name):
                     result.append(obj.name)
         else:
-            result.extend(speech_generator.SpeechGenerator._getLabelOrName(
+            result.extend(speech_generator.SpeechGenerator._generateLabelOrName(
                 self, obj, **args))
         return result
 
-    def _getToggleState(self, obj, **args):
+    def _generateDescription(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the description of the object,
+        if that description is different from that of the name and
+        label.
+        """
+        result = []
+        if obj.description:
+            # The description of some OOo paragraphs consists of the name
+            # and the displayed text, with punctuation added. Try to spot
+            # this and, if found, ignore the description.
+            #
+            text = self._script.getDisplayedText(obj) or ""
+            desc = obj.description.replace(text, "")
+            for item in obj.name.split():
+                desc = desc.replace(item, "")
+            for char in desc.decode("UTF-8").strip():
+                if char.isalnum():
+                    result.append(obj.description)
+                    break
+
+        return result
+
+    def _generateToggleState(self, obj, **args):
         """Treat push buttons (which act like toggle buttons) and toggle
         buttons in the toolbar specially.  This is so we can have more
         natural sounding speech such as "bold on", "bold off", etc."""
@@ -127,11 +170,45 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 #
                 result.append(_("off"))
         elif role == pyatspi.ROLE_TOGGLE_BUTTON:
-            result.extend(speech_generator.SpeechGenerator._getToggleState(
+            result.extend(speech_generator.SpeechGenerator._generateToggleState(
                 self, obj, **args))
         return result
 
-    def _getNewRowHeader(self, obj, **args):
+    def _generateRowHeader(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the row header for an object
+        that is in a table, if it exists.  Otherwise, an empty array
+        is returned. Overridden here so that we can get the dynamic
+        row header(s).
+        """
+        result = []
+        try:
+            table = obj.parent.queryTable()
+        except:
+            pass
+        else:
+            index = self._script.getCellIndex(obj)
+            rowIndex = table.getRowAtIndex(index)
+            if rowIndex >= 0 \
+               and table in self._script.dynamicRowHeaders:
+                column = self._script.dynamicRowHeaders[table]
+                header = self._script.getDynamicColumnHeaderCell(obj, column)
+                try:
+                    headerText = header.queryText()
+                except:
+                    headerText = None
+                if header.childCount > 0:
+                    for child in header:
+                        text = self._script.getText(child, 0, -1)
+                        if text:
+                            result.append(text)
+                elif headerText:
+                    text = self._script.getText(header, 0, -1)
+                    if text:
+                        result.append(text)
+        return result
+
+    def _generateNewRowHeader(self, obj, **args):
         result = []
         # Check to see if this spread sheet cell has either a dynamic
         # row heading associated with it.
@@ -164,7 +241,41 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         result.append(text)
         return result
 
-    def _getNewColumnHeader(self, obj, **args):
+    def _generateColumnHeader(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the column header for an object
+        that is in a table, if it exists.  Otherwise, an empty array
+        is returned. Overridden here so that we can get the dynamic
+        column header(s).
+        """
+        result = []
+        try:
+            table = obj.parent.queryTable()
+        except:
+            pass
+        else:
+            index = self._script.getCellIndex(obj)
+            columnIndex = table.getColumnAtIndex(index)
+            if columnIndex >= 0 \
+               and table in self._script.dynamicColumnHeaders:
+                row = self._script.dynamicColumnHeaders[table]
+                header = self._script.getDynamicRowHeaderCell(obj, row)
+                try:
+                    headerText = header.queryText()
+                except:
+                    headerText = None
+                if header.childCount > 0:
+                    for child in header:
+                        text = self._script.getText(child, 0, -1)
+                        if text:
+                            result.append(text)
+                elif headerText:
+                    text = self._script.getText(header, 0, -1)
+                    if text:
+                        result.append(text)
+        return result
+
+    def _generateNewColumnHeader(self, obj, **args):
         result = []
         # Check to see if this spread sheet cell has either a dynamic
         # row heading associated with it.
@@ -197,7 +308,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         result.append(text)
         return result
 
-    def _getSpreadSheetCell(self, obj, **args):
+    def _generateSpreadSheetCell(self, obj, **args):
         result = []
         if self._script.inputLineForCell == None:
             self._script.inputLineForCell = \
@@ -205,7 +316,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         try:
             if obj.queryText():
                 objectText = self._script.getText(obj, 0, -1)
-                if not script_settings.speakCellCoordinates \
+                if (not script_settings.speakSpreadsheetCoordinates \
+                    or args.get('formatType', 'unfocused') == 'basicWhereAmI') \
                    and len(objectText) == 0:
                     # Translators: this indicates an empty (blank) spread
                     # sheet cell.
@@ -215,7 +327,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         except NotImplementedError:
             pass
 
-        if script_settings.speakCellCoordinates:
+        if script_settings.speakSpreadsheetCoordinates \
+           and args.get('formatType', 'unfocused') != 'basicWhereAmI':
             nameList = obj.name.split()
             # We were assuming that the word for "cell" would always
             # precede the coordinates. This is not the case for all
@@ -223,26 +336,26 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # examine each item and choose the one which contains a
             # digit.
             #
-            for name in nameList:                    
+            for name in nameList:
                 for char in name.decode("UTF-8"):
                     if char.isdigit():
                         result.append(name)
+                        break
         return result
 
-    def _getRealTableCell(self, obj, **args):
+    def _generateRealTableCell(self, obj, **args):
         """Get the speech for a table cell. If this isn't inside a
         spread sheet, just return the utterances returned by the default
         table cell speech handler.
 
         Arguments:
         - obj: the table cell
-        - already_focused: False if object just received focus
 
         Returns a list of utterances to be spoken for the object.
         """
         result = []
         if self._script.isSpreadSheetCell(obj):
-            result.extend(self._getSpreadSheetCell(obj, **args))
+            result.extend(self._generateSpreadSheetCell(obj, **args))
         else:
             # Check to see how many children this table cell has. If it's
             # just one (or none), then pass it on to the superclass to be
@@ -253,13 +366,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             #
             if obj.childCount <= 1:
                 result.extend(speech_generator.SpeechGenerator.\
-                              _getRealTableCell(self, obj, **args))
+                              _generateRealTableCell(self, obj, **args))
             else:
                 for child in obj:
-                    result.extend(self._getRealTableCell(child, **args))
+                    result.extend(self._generateRealTableCell(child, **args))
         return result
 
-    def _getTableCellRow(self, obj, **args):
+    def _generateTableCellRow(self, obj, **args):
         """Get the speech for a table cell row or a single table cell
         if settings.readTableCellRow is False. If this isn't inside a
         spread sheet, just return the utterances returned by the default
@@ -267,7 +380,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         Arguments:
         - obj: the table cell
-        - already_focused: False if object just received focus
 
         Returns a list of utterances to be spoken for the object.
         """
@@ -299,12 +411,42 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         showing = cell.getState().contains( \
                                       pyatspi.STATE_SHOWING)
                         if showing:
-                            result.extend(self._getRealTableCell(cell, **args))
+                            result.extend(self._generateRealTableCell(
+                                              cell, **args))
                 else:
-                    result.extend(self._getRealTableCell(obj, **args))
+                    result.extend(self._generateRealTableCell(obj, **args))
             else:
-                result.extend(self._getRealTableCell(obj, **args))
+                result.extend(self._generateRealTableCell(obj, **args))
         else:
-            result.extend(speech_generator.SpeechGenerator._getTableCellRow(
-                          self, obj, **args))
+            result.extend(
+                speech_generator.SpeechGenerator._generateTableCellRow(
+                    self, obj, **args))
+            if not len(result) and settings.speakBlankLines:
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
+                result.append(_("blank"))
+        return result
+
+    def generateSpeech(self, obj, **args):
+        result = []
+        if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
+           and self._script.isSpreadSheetCell(obj):
+            oldRole = self._overrideRole('ROLE_SPREADSHEET_CELL', args)
+            # In addition, if focus is in a cell being edited, we cannot
+            # query the accessible table interface for coordinates and the
+            # like because we're temporarily in an entirely different object
+            # which is outside of the table. This makes things difficult.
+            # However, odds are that if we're doing a whereAmI in a cell
+            # which we are editing, we have some pointOfReference info
+            # we can use to guess the coordinates.
+            #
+            args['guessCoordinates'] = obj.getRole() == pyatspi.ROLE_PARAGRAPH
+            result.extend(speech_generator.SpeechGenerator.\
+                                           generateSpeech(self, obj, **args))
+            del args['guessCoordinates']
+            self._restoreRole(oldRole, args)
+        else:
+            result.extend(speech_generator.SpeechGenerator.\
+                                           generateSpeech(self, obj, **args))
         return result

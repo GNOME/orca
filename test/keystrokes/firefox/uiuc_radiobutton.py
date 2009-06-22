@@ -47,7 +47,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereamI", 
     ["BRAILLE LINE:  '& y Thai RadioButton'",
      "     VISIBLE:  '& y Thai RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Lunch Options Thai radio button not selected  '"]))
+     "SPEECH OUTPUT: 'Lunch Options Thai radio button not selected'"]))
 
 ########################################################################
 # Move to the second radio button.

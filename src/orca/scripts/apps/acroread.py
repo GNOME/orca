@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2007-2008 Sun Microsystems Inc. and Joanmarie Diggs
+# Copyright 2007-2009 Sun Microsystems Inc. and Joanmarie Diggs
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2007-2008 Sun Microsystems Inc. Joanmarie Diggs"
+__copyright__ = "Copyright (c) 2007-2009 Sun Microsystems Inc. Joanmarie Diggs"
 __license__   = "LGPL"
 
 import pyatspi
@@ -273,8 +273,8 @@ class Script(default.Script):
         if not oldFocusIsTable and newFocusIsTable:
             # We've entered a table.  Announce the dimensions.
             #
-            line = _("table with %d rows and %d columns.") % \
-                    (newFocusRows, newFocusColumns)
+            line = _("table with %(rows)d rows and %(columns)d columns.") \
+                   % {"rows" : newFocusRows, "columns" : newFocusColumns}
             speech.speak(line)
 
         elif oldFocusIsTable and not newFocusIsTable:
@@ -298,7 +298,8 @@ class Script(default.Script):
                 # Translators: this represents the row and column we're
                 # on in a table.
                 #
-                line = _("row %d, column %d") % (newRow, newCol)
+                line = _("row %(row)d, column %(column)d") \
+                       % {"row": newRow, "column": newCol}
                 speech.speak(line)
             elif newCol != oldCol:
                 # Translators: this represents the column we're
@@ -429,19 +430,22 @@ class Script(default.Script):
             if newLocusOfFocus.getRole() == pyatspi.ROLE_TEXT:
                 newText = self.getTextLineAtCaret(newLocusOfFocus)
                 if newText == self.preFindLine:
-                    orca.setLocusOfFocus(event, oldLocusOfFocus, False)
+                    orca.setLocusOfFocus(
+                        event, oldLocusOfFocus, notifyPresentationManager=False)
                     return
             if newLocusOfFocus.getRole() == pyatspi.ROLE_DRAWING_AREA:
-                orca.setLocusOfFocus(event, oldLocusOfFocus, False)
+                orca.setLocusOfFocus(
+                    event, oldLocusOfFocus, notifyPresentationManager=False)
                 return
 
             utterances = \
-                 self.speechGenerator.getSpeech(newLocusOfFocus)
+                 self.speechGenerator.generateSpeech(newLocusOfFocus)
             speech.speak(utterances)
             brailleRegions = \
                  self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
-            orca.setLocusOfFocus(event, newLocusOfFocus, False)
+            orca.setLocusOfFocus(
+                event, newLocusOfFocus, notifyPresentationManager=False)
             return
 
         # Eliminate unnecessary chattiness in the Search panel.
@@ -456,7 +460,8 @@ class Script(default.Script):
         #
         if newLocusOfFocus.getRole() in [self.ROLE_DOCUMENT,
                                          pyatspi.ROLE_DRAWING_AREA]:
-            orca.setLocusOfFocus(event, newLocusOfFocus, False)
+            orca.setLocusOfFocus(
+                event, newLocusOfFocus, notifyPresentationManager=False)
             return
 
         elif newLocusOfFocus.getRole() == self.ROLE_LINK:
@@ -465,7 +470,7 @@ class Script(default.Script):
             # verboseness: reporting the drawing area(s) in which this link
             # is contained, speaking the periods in a table of contents, etc.
             #
-            utterances = self.speechGenerator.getSpeech(newLocusOfFocus)
+            utterances = self.speechGenerator.generateSpeech(newLocusOfFocus)
             adjustedUtterances = []
             for utterance in utterances:
                 adjustedUtterances.append(self.adjustForRepeats(utterance))
@@ -473,7 +478,8 @@ class Script(default.Script):
             brailleRegions = \
                      self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
-            orca.setLocusOfFocus(event, newLocusOfFocus, False)
+            orca.setLocusOfFocus(
+                event, newLocusOfFocus, notifyPresentationManager=False)
             return
 
         default.Script.locusOfFocusChanged(self, event,
@@ -549,12 +555,13 @@ class Script(default.Script):
                 # Try to minimize chattiness in the Search panel
                 #
                 utterances = \
-                     self.speechGenerator.getSpeech(event.source)
+                     self.speechGenerator.generateSpeech(event.source)
                 speech.speak(utterances)
                 brailleRegions = \
                      self.brailleGenerator.getBrailleRegions(event.source)
                 braille.displayRegions(brailleRegions)
-                orca.setLocusOfFocus(event, event.source, False)
+                orca.setLocusOfFocus(
+                    event, event.source, notifyPresentationManager=False)
                 return
 
             elif event.source.getRole() == pyatspi.ROLE_TEXT:

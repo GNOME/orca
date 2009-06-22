@@ -43,7 +43,8 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range All Pages radio button selected item 1 of 3 Alt a'"]))
+     "SPEECH OUTPUT: 'Range All Pages radio button selected item 1 of 3.'",
+     "SPEECH OUTPUT: 'Alt a'"]))
 
 ########################################################################
 # Down Arrow to the next radio button.
@@ -66,7 +67,8 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler &=y Pages: RadioButton'",
      "     VISIBLE:  '&=y Pages: RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range Pages: radio button selected item 3 of 3 Alt e'"]))
+     "SPEECH OUTPUT: 'Range Pages: radio button selected item 3 of 3.'",
+     "SPEECH OUTPUT: 'Alt e'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

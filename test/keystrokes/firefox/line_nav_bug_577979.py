@@ -29,22 +29,6 @@ sequence.append(WaitForFocus("",
                              acc_role=pyatspi.ROLE_DOCUMENT_FRAME))
 
 ########################################################################
-# Set Gecko's arrowToLineBeginning setting to False
-#
-sequence.append(KeyPressAction(0, None, "KP_Insert"))
-sequence.append(KeyComboAction("<Control>space"))
-sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
-sequence.append(WaitForWindowActivate("Orca Preferences for Firefox",None))
-sequence.append(WaitForFocus("Speech", acc_role=pyatspi.ROLE_PAGE_TAB))
-sequence.append(KeyComboAction("End"))
-sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("<Alt>p"))
-sequence.append(WaitForFocus("Position cursor at start of line when navigating vertically", acc_role=pyatspi.ROLE_CHECK_BOX))
-sequence.append(KeyComboAction("<Alt>o"))
-sequence.append(TypeAction(" "))
-sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
-
-########################################################################
 # Press Control+Home to move to the top.
 #
 sequence.append(utils.StartRecordingAction())
@@ -135,22 +119,6 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'This is an example of an unordered list:'",
      "     VISIBLE:  'This is an example of an unorder', cursor=(1|8)",
      "SPEECH OUTPUT: 'This is an example of an unordered list:'"]))
-
-########################################################################
-# Set Gecko's arrowToLineBeginning setting back to True
-#
-sequence.append(KeyPressAction(0, None, "KP_Insert"))
-sequence.append(KeyComboAction("<Control>space"))
-sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
-sequence.append(WaitForWindowActivate("Orca Preferences for Firefox",None))
-sequence.append(WaitForFocus("Speech", acc_role=pyatspi.ROLE_PAGE_TAB))
-sequence.append(KeyComboAction("End"))
-sequence.append(PauseAction(3000))
-sequence.append(KeyComboAction("<Alt>p"))
-sequence.append(WaitForFocus("Position cursor at start of line when navigating vertically", acc_role=pyatspi.ROLE_CHECK_BOX))
-sequence.append(KeyComboAction("<Alt>o"))
-sequence.append(TypeAction(" "))
-sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

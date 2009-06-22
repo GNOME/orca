@@ -466,17 +466,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "52. Line Down",
-    ["BRAILLE LINE:  'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" (necessary if \".\" is not in the PATH'",
+    ["BRAILLE LINE:  'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" \(necessary if \".\" is not in the PATH'",
      "     VISIBLE:  'Execute the downloaded file, pre', cursor=1",
-     "SPEECH OUTPUT: 'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" (necessary if \".\" is not in the PATH'"]))
+     "SPEECH OUTPUT: 'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" \(necessary if \".\" is not in the PATH'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "53. Line Down",
-    ["BRAILLE LINE:  'environment variable):'",
-     "     VISIBLE:  'environment variable):', cursor=1",
-     "SPEECH OUTPUT: 'environment variable):'"]))
+    ["BRAILLE LINE:  'environment variable\):'",
+     "     VISIBLE:  'environment variable\):', cursor=1",
+     "SPEECH OUTPUT: 'environment variable\):'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -1232,17 +1232,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "42. Line Up",
-    ["BRAILLE LINE:  'environment variable):'",
-     "     VISIBLE:  'environment variable):', cursor=1",
-     "SPEECH OUTPUT: 'environment variable):'"]))
+    ["BRAILLE LINE:  'environment variable\):'",
+     "     VISIBLE:  'environment variable\):', cursor=1",
+     "SPEECH OUTPUT: 'environment variable\):'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "43. Line Up",
-    ["BRAILLE LINE:  'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" (necessary if \".\" is not in the PATH'",
+    ["BRAILLE LINE:  'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" \(necessary if \".\" is not in the PATH'",
      "     VISIBLE:  'Execute the downloaded file, pre', cursor=1",
-     "SPEECH OUTPUT: 'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" (necessary if \".\" is not in the PATH'"]))
+     "SPEECH OUTPUT: 'Execute the downloaded file, prepended by the path to it. For example, if the file is in the current directory, prepend it with \"./\" \(necessary if \".\" is not in the PATH'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

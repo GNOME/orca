@@ -1540,15 +1540,19 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             # currently used one.
             # 
             tablesCombo = self.get_widget("contractionTableCombo")
-            tableDict = louis.listTables()
+            tableDict = braille.listTables()
             selectedTableIter = None
             selectedTable = prefs["brailleContractionTable"] or \
-                             louis.getDefaultTable()
+                             braille.getDefaultTable()
             if tableDict:
                 tablesModel = gtk.ListStore(str, str)
-                for name, fname in tableDict.items():
+                names = tableDict.keys()
+                names.sort()
+                for name in names:
+                    fname = tableDict[name]
                     it = tablesModel.append([name, fname])
-                    if os.path.join(louis.TABLES_DIR, fname) == selectedTable:
+                    if os.path.join(braille.tablesdir, fname) == \
+                            selectedTable:
                         selectedTableIter = it
                 cell = self.planeCellRendererText
                 tablesCombo.pack_start(cell, True)

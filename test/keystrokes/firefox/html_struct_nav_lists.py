@@ -200,7 +200,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
-     ["BRAILLE LINE:  '• if your TYPE is circle'",
+    ["BRAILLE LINE:  '• if your TYPE is circle'",
      "     VISIBLE:  '• if your TYPE is circle', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
      "SPEECH OUTPUT: 'Nesting level 2'",

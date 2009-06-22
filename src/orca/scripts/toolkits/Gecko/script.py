@@ -65,7 +65,6 @@ import script_settings
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from formatting import Formatting
-from where_am_i import GeckoWhereAmI
 from bookmarks import GeckoBookmarks
 from structural_navigation import GeckoStructuralNavigation
 
@@ -285,11 +284,6 @@ class Script(default.Script):
         settings.enabledSpokenTextAttributes = \
             self.savedEnabledSpokenTextAttributes
         settings.allTextAttributes = self.savedAllTextAttributes
-
-    def getWhereAmI(self):
-        """Returns the "where am I" class for this script.
-        """
-        return GeckoWhereAmI(self)
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
@@ -828,7 +822,7 @@ class Script(default.Script):
         gtk.Container.add(tableAlignment, tableVBox)
 
         # Translators: this is an option to tell Orca whether or not it
-        # should speak table cell coordinates in HTML content.
+        # should speak table cell coordinates in document content.
         #
         label = _("Speak _cell coordinates")
         self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
@@ -851,7 +845,7 @@ class Script(default.Script):
                                     settings.speakCellSpan)
 
         # Translators: this is an option for whether or not to speak
-        # the header of a table cell in HTML content.
+        # the header of a table cell in document content.
         #
         label = _("Announce cell _header")
         self.speakCellHeadersCheckButton = gtk.CheckButton(label)
@@ -862,7 +856,7 @@ class Script(default.Script):
                                     settings.speakCellHeaders)
 
         # Translators: this is an option to allow users to skip over
-        # empty/blank cells when navigating tables in HTML content.
+        # empty/blank cells when navigating tables in document content.
         #
         label = _("Skip _blank cells")
         self.skipBlankCellsCheckButton = gtk.CheckButton(label)
@@ -873,7 +867,7 @@ class Script(default.Script):
                                     settings.skipBlankCells)
 
         # Translators: this is the title of a panel containing options
-        # for specifying how to navigate tables in HTML content.
+        # for specifying how to navigate tables in document content.
         #
         tableLabel = gtk.Label("<b>%s</b>" % _("Table Navigation"))
         gtk.Widget.show(tableLabel)
@@ -1150,9 +1144,10 @@ class Script(default.Script):
             for i in xrange(len(clumped)):
                 [obj, startOffset, endOffset, text] = \
                                              contents[min(i, len(contents)-1)]
-                [string, voice] = clumped[i]
-                string = self.adjustForRepeats(string)
-                yield [speechserver.SayAllContext(obj, string,
+                [element, voice] = clumped[i]
+                if isinstance(element, basestring):
+                    element = self.adjustForRepeats(element)
+                yield [speechserver.SayAllContext(obj, element,
                                                   startOffset, endOffset),
                        voice]
 
@@ -1466,7 +1461,10 @@ class Script(default.Script):
             else:
                 [obj, characterOffset] = [event.source, event.detail1]
             self.setCaretContext(obj, characterOffset)
-            orca.setLocusOfFocus(event, obj, notifyPresentationManagers)
+            orca.setLocusOfFocus(
+                event,
+                obj,
+                notifyPresentationManager=notifyPresentationManagers)
             if notifyPresentationManagers:
                 # No point in double-brailling the locusOfFocus.
                 #
@@ -1556,7 +1554,7 @@ class Script(default.Script):
             if settings.speechVerbosityLevel == \
                     settings.VERBOSITY_LEVEL_VERBOSE:
                 utterances.extend(
-                    self.speechGenerator.getSpeech(event.any_data))
+                    self.speechGenerator.generateSpeech(event.any_data))
             speech.speak(utterances)
 
     def onDocumentReload(self, event):
@@ -1680,7 +1678,8 @@ class Script(default.Script):
             self.setCaretContext(obj, characterOffset)
             if not self.isSameObject(event.source, obj):
                 if not self.isSameObject(obj, orca_state.locusOfFocus):
-                    orca.setLocusOfFocus(event, obj, False)
+                    orca.setLocusOfFocus(
+                        event, obj, notifyPresentationManager=False)
                     # If an alert got focus, let's do the best we can to 
                     # try to automatically speak its contents while also
                     # making sure the locus of focus and caret context
@@ -1688,7 +1687,7 @@ class Script(default.Script):
                     # http://bugzilla.gnome.org/show_bug.cgi?id=570551
                     #
                     if eventSourceRole == pyatspi.ROLE_ALERT:
-                        speech.speak(self.speechGenerator.getSpeech(
+                        speech.speak(self.speechGenerator.generateSpeech(
                                 event.source))
                         self.updateBraille(obj)
                     else:
@@ -1878,7 +1877,7 @@ class Script(default.Script):
                     self.updateBraille(obj)
 
                     if obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-                        speech.speak(self.speechGenerator.getSpeech(obj))
+                        speech.speak(self.speechGenerator.generateSpeech(obj))
                     elif not script_settings.sayAllOnLoad:
                         self.speakContents(\
                             self.getLineContentsAtOffset(obj,
@@ -1968,7 +1967,8 @@ class Script(default.Script):
 
         if (obj.getRole() == pyatspi.ROLE_CHECK_BOX) \
             and obj.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(event, obj, False)
+            orca.setLocusOfFocus(
+                event, obj, notifyPresentationManager=False)
 
         default.Script.visualAppearanceChanged(self, event, obj)
 
@@ -3097,36 +3097,6 @@ class Script(default.Script):
         else:
             return False
 
-    def getCharacterOffsetInParent(self, obj):
-        """Returns the character offset of the embedded object
-        character for this object in its parent's accessible text.
-
-        Arguments:
-        - obj: an Accessible that should implement the accessible hyperlink
-               specialization.
-
-        Returns an integer representing the character offset of the
-        embedded object character for this hyperlink in its parent's
-        accessible text, or -1 something was amuck.
-        """
-
-        try:
-            hyperlink = obj.queryHyperlink()
-        except NotImplementedError:
-            offset = -1
-        else:
-            # We need to make sure that this is an embedded object in
-            # some accessible text (as opposed to an imagemap link).
-            #
-            try:
-                obj.parent.queryText()
-            except NotImplementedError:
-                offset = -1
-            else:
-                offset = hyperlink.startIndex
-
-        return offset
-
     def getChildIndex(self, obj, characterOffset):
         """Given an object that implements accessible text, determine
         the index of the child that is represented by an
@@ -3740,41 +3710,6 @@ class Script(default.Script):
 
         return [newCell, text, extents, isField]
 
-    def expandEOCs(self, obj, startOffset=0, endOffset= -1):
-        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
-        with their text.
-
-        Arguments
-        - obj: the object whose text should be expanded
-        - startOffset: the offset of the first character to be included
-        - endOffset: the offset of the last character to be included
-
-        Returns the fully expanded text for the object.
-        """
-
-        if not obj:
-            return None
-
-        string = None
-        text = self.queryNonEmptyText(obj)
-        if text:
-            string = text.getText(startOffset, endOffset)
-            unicodeText = string.decode("UTF-8")
-            if unicodeText \
-                and self.EMBEDDED_OBJECT_CHARACTER in unicodeText:
-                toBuild = list(unicodeText)
-                count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
-                for i in xrange(count):
-                    index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
-                    child = obj[i]
-                    childText = self.expandEOCs(child)
-                    if not childText:
-                        childText = ""
-                    toBuild[index] = childText.decode("UTF-8")
-                string = "".join(toBuild)
-
-        return string
-
     def getObjectsFromEOCs(self, obj, offset, boundary=None):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
         with [obj, startOffset, endOffset, string] tuples.
@@ -3869,7 +3804,7 @@ class Script(default.Script):
             #
             if end > childOffset + 1:
                 restOfText = unicodeText[offset:len(unicodeText)]
-                objects.append([obj, childOffset + 1, end, restOfText])                
+                objects.append([obj, childOffset + 1, end, restOfText])
  
         if obj.getRole() in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_TABLE]:
             # Imagemaps that don't have alternative text won't implement
@@ -3936,6 +3871,112 @@ class Script(default.Script):
             lineContents.append(item)
 
         return lineContents
+
+    def getPageSummary(self, obj):
+        """Returns the quantity of headings, forms, tables, visited links,
+        and unvisited links on the page containing obj.
+        """
+
+        if settings.useCollection:
+            try:
+                summary = self._collectionPageSummary()
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                summary = self._iterativePageSummary(obj)
+        else:
+            summary = self._iterativePageSummary(obj)
+
+        return summary
+
+    def _collectionPageSummary(self):
+        """Uses the Collection interface to get the quantity of headings,
+        forms, tables, visited and unvisited links.
+        """
+
+        docframe = self.getDocumentFrame()
+        col = docframe.queryCollection()
+        # We will initialize these after the queryCollection() call in case
+        # Collection is not supported
+        #
+        headings = 0
+        forms = 0
+        tables = 0
+        vlinks = 0
+        uvlinks = 0
+        percentRead = None
+
+        stateset = pyatspi.StateSet()
+        roles = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK, pyatspi.ROLE_TABLE,
+                 pyatspi.ROLE_FORM]
+        rule = col.createMatchRule(stateset.raw(), col.MATCH_NONE,
+                                   "", col.MATCH_NONE,
+                                   roles, col.MATCH_ANY,
+                                   "", col.MATCH_NONE,
+                                   False)
+
+        matches = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
+        col.freeMatchRule(rule)
+        for obj in matches:
+            role = obj.getRole()
+            if role == pyatspi.ROLE_HEADING:
+                headings += 1
+            elif role == pyatspi.ROLE_FORM:
+                forms += 1
+            elif role == pyatspi.ROLE_TABLE \
+                      and not self.isLayoutOnly(obj):
+                tables += 1
+            elif role == pyatspi.ROLE_LINK:
+                if obj.getState().contains(pyatspi.STATE_VISITED):
+                    vlinks += 1
+                else:
+                    uvlinks += 1
+
+        return [headings, forms, tables, vlinks, uvlinks, percentRead]
+
+    def _iterativePageSummary(self, obj):
+        """Reads the quantity of headings, forms, tables, visited and
+        unvisited links.
+        """
+
+        headings = 0
+        forms = 0
+        tables = 0
+        vlinks = 0
+        uvlinks = 0
+        percentRead = None
+        nodetotal = 0
+        obj_index = None
+        currentobj = obj
+
+        # Start at the first object after document frame.
+        #
+        obj = self.getDocumentFrame()[0]
+        while obj:
+            nodetotal += 1
+            if obj == currentobj:
+                obj_index = nodetotal
+            role = obj.getRole()
+            if role == pyatspi.ROLE_HEADING:
+                headings += 1
+            elif role == pyatspi.ROLE_FORM:
+                forms += 1
+            elif role == pyatspi.ROLE_TABLE \
+                      and not self.isLayoutOnly(obj):
+                tables += 1
+            elif role == pyatspi.ROLE_LINK:
+                if obj.getState().contains(pyatspi.STATE_VISITED):
+                    vlinks += 1
+                else:
+                    uvlinks += 1
+
+            obj = self.findNextObject(obj)
+
+        # Calculate the percentage of the document that has been read.
+        #
+        if obj_index:
+            percentRead = int(obj_index*100/nodetotal)
+
+        return [headings, forms, tables, vlinks, uvlinks, percentRead]
 
     def guessLabelFromLine(self, obj):
         """Attempts to guess what the label of an unlabeled form control
@@ -5348,8 +5389,8 @@ class Script(default.Script):
         """Returns the ACSS to speak anything for the given obj."""
         if obj.getRole() == pyatspi.ROLE_LINK:
             acss = self.voices[settings.HYPERLINK_VOICE]
-        elif string and string.isupper() \
-             and string.strip().isalpha() and len(string.strip()) > 1:
+        elif string and isinstance(string, basestring) \
+            and string.isupper() and string.strip().isalpha():
             acss = self.voices[settings.UPPERCASE_VOICE]
         else:
             acss = self.voices[settings.DEFAULT_VOICE]
@@ -5431,7 +5472,7 @@ class Script(default.Script):
             #
             if not len(string) \
                or role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
-                utterance = self.speechGenerator.getSpeech(obj)
+                utterance = self.speechGenerator.generateSpeech(obj)
             else:
                 utterance = [string]
                 if speakRole and not role in doNotSpeakRoles:
@@ -5472,14 +5513,16 @@ class Script(default.Script):
 
         clumped = []
 
-        for [string, acss] in utterances:
+        for [element, acss] in utterances:
             if len(clumped) == 0:
-                clumped = [[string, acss]]
-            elif acss == clumped[-1][1]:
+                clumped = [[element, acss]]
+            elif acss == clumped[-1][1] \
+                 and isinstance(element, basestring) \
+                 and isinstance(clumped[-1][0], basestring):
                 clumped [-1][0] = clumped[-1][0].rstrip(" ")
-                clumped[-1][0] += " " + string
+                clumped[-1][0] += " " + element
             else:
-                clumped.append([string, acss])
+                clumped.append([element, acss])
 
         if (len(clumped) == 1) and (clumped[0][0] == "\n"):
             if settings.speakBlankLines:
@@ -5488,8 +5531,8 @@ class Script(default.Script):
                 #
                 return [[_("blank"), clumped[0][1]]]
 
-        if len(clumped):
-            clumped [-1][0] = clumped[-1][0].rstrip(" ")
+        if len(clumped) and isinstance(clumped[-1][0], basestring):
+            clumped[-1][0] = clumped[-1][0].rstrip(" ")
 
         return clumped
 
@@ -5497,9 +5540,10 @@ class Script(default.Script):
         """Speaks each string in contents using the associated voice/acss"""
         utterances = self.getUtterancesFromContents(contents, speakRole)
         clumped = self.clumpUtterances(utterances)
-        for [string, acss] in clumped:
-            string = self.adjustForRepeats(string)
-            speech.speak(string, acss, False)
+        for [element, acss] in clumped:
+            if isinstance(element, basestring):
+                element = self.adjustForRepeats(element)
+            speech.speak(element, acss, False)
 
     def speakCharacterAtOffset(self, obj, characterOffset):
         """Speaks the character at the given characterOffset in the
@@ -5517,7 +5561,7 @@ class Script(default.Script):
                 # characterOffset (lists).  In these latter cases, we'll just
                 # speak the entire component.
                 #
-                utterances = self.speechGenerator.getSpeech(obj)
+                utterances = self.speechGenerator.generateSpeech(obj)
                 speech.speak(utterances)
 
     ####################################################################
@@ -5534,6 +5578,12 @@ class Script(default.Script):
         """Sets the caret position to the given character offset in the
         given object.
         """
+
+        # Clear the flat review context if the user is currently in a
+        # flat review.
+        #
+        if self.flatReviewContext:
+            self.toggleFlatReviewMode()
 
         caretContext = self.getCaretContext()
 
@@ -5565,7 +5615,8 @@ class Script(default.Script):
         # Reset focus if need be.
         #
         if obj != orca_state.locusOfFocus:
-            orca.setLocusOfFocus(None, obj, False)
+            orca.setLocusOfFocus(
+                None, obj, notifyPresentationManager=False)
 
             # We'd like the object to have focus if it can take focus.
             # Otherwise, we bubble up until we find a parent that can

@@ -167,7 +167,7 @@ do
       #
       mkdir -p ./tmp/$application
       cd ./tmp/$application
-      for testFile in `find $testDir -type f -name "*.py" | sort`; do
+      for testFile in `find $testDir -xtype f -name "*.py" | sort`; do
         echo ========================================
         echo Running $testFile
         if [ "$found" -gt 0 ]
@@ -213,7 +213,7 @@ do
             sed "/speech.speakUtterances utterance='Desktop frame'/,/speech.speakUtterances utterance='Icon View layered pane'/ d" $newResultsFile.speech > $currentdir/$outputdir/$newResultsFile.speech
             mv $newResultsFile.speech $currentdir/$outputdir/$newResultsFile.speech.unfiltered
             mv $newResultsFile.debug $currentdir/$outputdir
-            rm -f *
+            rm -rf *
         fi
 
         echo Finished running $testFile.

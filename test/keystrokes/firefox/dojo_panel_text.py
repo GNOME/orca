@@ -32,9 +32,11 @@ sequence.append(TypeAction(" "))
 sequence.append(WaitForFocus("First tab"))
 sequence.append(utils.AssertPresentationAction(
     "Space to press the Show TabContainer Dialog", 
-    ["BRAILLE LINE:  'First tab Page Image Second tab Page Image'",
-     "     VISIBLE:  'First tab Page Image Second tab ', cursor=1",
-     "SPEECH OUTPUT: 'TabContainer Dialog dialog First tab page'"]))
+    ["BUG? - Garbage speech at the end??",
+     "BRAILLE LINE:  'First tab Page Second tab Page'",
+     "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
+     "SPEECH OUTPUT: 'TabContainer Dialog dialog First tab page'",
+     "SPEECH OUTPUT: 'focused on dijit_layout_TabContainer_0_tablist_dijit_layout_ContentPane_0'"]))
 
 ########################################################################
 # Right Arrow to the Second tab page
@@ -43,8 +45,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to the Second tab page", 
-    ["BRAILLE LINE:  'First tab Page Image Second tab Page Image'",
-     "     VISIBLE:  'Second tab Page Image', cursor=1",
+    ["BRAILLE LINE:  'First tab Page Second tab Page'",
+     "     VISIBLE:  'First tab Page Second tab Page', cursor=16",
      "SPEECH OUTPUT: 'Second tab page'"]))
 
 ########################################################################
@@ -155,9 +157,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Up Arrow", 
-    ["BRAILLE LINE:  'First tab Page Image Second tab Page Image'",
-     "     VISIBLE:  'First tab Page Image Second tab ', cursor=1",
-     "SPEECH OUTPUT: 'First tab page Second tab page'"]))
+    ["BRAILLE LINE:  'First tab Page Second tab Page'",
+     "     VISIBLE:  'First tab Page Second tab Page', cursor=1",
+     "SPEECH OUTPUT: 'First tab page Second tab page'",
+     "SPEECH OUTPUT: 'focused on dijit_layout_TabContainer_0_tablist_dijit_layout_ContentPane_0'"]))
 
 ########################################################################
 # Escape to dismiss the dialog.
@@ -168,7 +171,8 @@ sequence.append(utils.AssertPresentationAction(
     "Escape to dismiss the dialog", 
     ["BRAILLE LINE:  'Show TabContainer Dialog Button'",
      "     VISIBLE:  'Show TabContainer Dialog Button', cursor=1",
-     "SPEECH OUTPUT: 'Show TabContainer Dialog button'"]))
+     "SPEECH OUTPUT: 'Show TabContainer Dialog button'",
+     "SPEECH OUTPUT: 'focused on dijit_form_Button_1'"]))
 
 ########################################################################
 # Close the demo

@@ -66,9 +66,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Give me some help (reloads page.)'",
-     "     VISIBLE:  'Give me some help (reloads page.', cursor=1",
-     "SPEECH OUTPUT: 'Give me some help link  (reloads page.)'"]))
+    ["BRAILLE LINE:  'Give me some help \(reloads page.\)'",
+     "     VISIBLE:  'Give me some help \(reloads page.', cursor=1",
+     "SPEECH OUTPUT: 'Give me some help link  \(reloads page.\)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -428,9 +428,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '(comma-separated list)'",
-     "     VISIBLE:  '(comma-separated list)', cursor=1",
-     "SPEECH OUTPUT: '(comma-separated list)'"]))
+    ["BRAILLE LINE:  '\(comma-separated list\)'",
+     "     VISIBLE:  '\(comma-separated list\)', cursor=1",
+     "SPEECH OUTPUT: '\(comma-separated list\)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -461,9 +461,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '(YYYY-MM-DD or relative dates)'",
-     "     VISIBLE:  '(YYYY-MM-DD or relative dates)', cursor=1",
-     "SPEECH OUTPUT: '(YYYY-MM-DD or relative dates)'"]))
+    ["BRAILLE LINE:  '\(YYYY-MM-DD or relative dates\)'",
+     "     VISIBLE:  '\(YYYY-MM-DD or relative dates\)', cursor=1",
+     "SPEECH OUTPUT: '\(YYYY-MM-DD or relative dates\)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -573,7 +573,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  '< > CheckBox Not (negate this whole chart)'",
+    ["BRAILLE LINE:  '< > CheckBox Not \(negate this whole chart\)'",
      "     VISIBLE:  '< > CheckBox Not \(negate this wh', cursor=1",
      "SPEECH OUTPUT: 'Not (negate this whole chart) check box not checked'"]))
 
@@ -640,9 +640,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '< > CheckBox Not (negate this whole chart)'",
+    ["BRAILLE LINE:  '< > CheckBox Not \(negate this whole chart\)'",
      "     VISIBLE:  '< > CheckBox Not \(negate this wh', cursor=1",
-     "SPEECH OUTPUT: 'Not (negate this whole chart) check box not checked'"]))
+     "SPEECH OUTPUT: 'Not \(negate this whole chart\) check box not checked'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -752,9 +752,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '(YYYY-MM-DD or relative dates)'",
-     "     VISIBLE:  '(YYYY-MM-DD or relative dates)', cursor=1",
-     "SPEECH OUTPUT: '(YYYY-MM-DD or relative dates)'"]))
+    ["BRAILLE LINE:  '\(YYYY-MM-DD or relative dates\)'",
+     "     VISIBLE:  '\(YYYY-MM-DD or relative dates\)', cursor=1",
+     "SPEECH OUTPUT: '\(YYYY-MM-DD or relative dates\)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -785,9 +785,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  '(comma-separated list)'",
-     "     VISIBLE:  '(comma-separated list)', cursor=1",
-     "SPEECH OUTPUT: '(comma-separated list)'"]))
+    ["BRAILLE LINE:  '\(comma-separated list\)'",
+     "     VISIBLE:  '\(comma-separated list\)', cursor=1",
+     "SPEECH OUTPUT: '\(comma-separated list\)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1147,9 +1147,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Give me some help (reloads page.)'",
-     "     VISIBLE:  'Give me some help (reloads page.', cursor=1",
-     "SPEECH OUTPUT: 'Give me some help link  (reloads page.)'"]))
+    ["BRAILLE LINE:  'Give me some help \(reloads page.\)'",
+     "     VISIBLE:  'Give me some help \(reloads page.', cursor=1",
+     "SPEECH OUTPUT: 'Give me some help link  \(reloads page.\)'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

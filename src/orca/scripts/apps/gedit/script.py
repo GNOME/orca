@@ -100,7 +100,8 @@ class Script(default.Script):
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
             obj.queryText().setCaretOffset(context.currentOffset)
-            orca.setLocusOfFocus(None, obj, False)
+            orca.setLocusOfFocus(
+                None, obj, notifyPresentationManager=False)
 
     def textLines(self, obj):
         """Creates a generator that can be used to iterate over each line
@@ -569,8 +570,8 @@ class Script(default.Script):
                 # finding something.
                 #
                 speech.speak(_("Phrase found."))
-                utterances = self.speechGenerator.getSpeech(
-                    event.source, already_focused=True)
+                utterances = self.speechGenerator.generateSpeech(
+                    event.source, alreadyFocused=True)
                 speech.speak(utterances)
 
         # If Ctrl+G was used to repeat a find command, speak the line that

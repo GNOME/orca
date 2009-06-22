@@ -52,7 +52,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
 
-    def _getName(self, obj, **args):
+    def _generateName(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_COMBO_BOX:
@@ -74,9 +74,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     if not child:
                         # It's probably a Gtk combo box.
                         #
-                        result = \
-                            speech_generator.SpeechGenerator._getDisplayedText(
-                                self, obj, **args)
+                        result = speech_generator.SpeechGenerator.\
+                            _generateDisplayedText(self, obj, **args)
                 except:
                     # But just in case, we'll fall back on this.
                     # [[[TODO - JD: Will we ever have a case where the first
@@ -89,9 +88,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if child and child.name:
                     result.append(child.name)
         else:
-            result.extend(speech_generator.SpeechGenerator._getName(self,
-                                                                    obj,
-                                                                    **args))
+            result.extend(speech_generator.SpeechGenerator._generateName(
+                              self, obj, **args))
+        if not result and role == pyatspi.ROLE_LIST_ITEM:
+            result.append(self._script.expandEOCs(obj))
+
         link = None
         if role == pyatspi.ROLE_LINK:
             link = obj
@@ -109,8 +110,32 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def _getLabel(self, obj, **args):
-        result = speech_generator.SpeechGenerator._getLabel(self, obj, **args)
+    def _generateDescription(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the description of the object,
+        if that description is different from that of the name and
+        label.
+        """
+        if args.get('role', obj.getRole()) == pyatspi.ROLE_LINK \
+           and obj.parent.getRole() == pyatspi.ROLE_IMAGE:
+            result = self._generateName(obj, **args)
+            # Translators: The following string is spoken to let the user
+            # know that he/she is on a link within an image map. An image
+            # map is an image/graphic which has been divided into regions.
+            # Each region can be clicked on and has an associated link.
+            # Please see http://en.wikipedia.org/wiki/Imagemap for more
+            # information and examples.
+            #
+            result.append(_("image map link"))
+        else:
+            result = speech_generator.SpeechGenerator.\
+                           _generateDescription(self, obj, **args)
+        return result
+
+    def _generateLabel(self, obj, **args):
+        result = speech_generator.SpeechGenerator._generateLabel(self,
+                                                                 obj,
+                                                                 **args)
         role = args.get('role', obj.getRole())
         # We'll attempt to guess the label under some circumstances.
         #
@@ -140,7 +165,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def _getLabelAndName(self, obj, **args):
+    def _generateLabelAndName(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
         # For radio buttons, the label is handled as a context and we
@@ -151,24 +176,25 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and self._script.getDisplayedLabel(obj):
             pass
         else:
-            result.extend(speech_generator.SpeechGenerator._getLabelAndName(
-                self, obj, **args))
+            result.extend(
+                speech_generator.SpeechGenerator._generateLabelAndName(
+                    self, obj, **args))
         return result
 
-    def _getLabelOrName(self, obj, **args):
+    def _generateLabelOrName(self, obj, **args):
         result = []
         if obj.parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
             # This is the main difference between this class and the default
             # class - we'll give this thing a name here, and we'll make it
             # be the name of the autocomplete.
             #
-            result.extend(self._getLabelOrName(obj.parent, **args))
+            result.extend(self._generateLabelOrName(obj.parent, **args))
         else:
-            result.extend(speech_generator.SpeechGenerator._getLabelOrName(
+            result.extend(speech_generator.SpeechGenerator._generateLabelOrName(
                 self, obj, **args))
         return result
 
-    def _getRoleName(self, obj, **args):
+    def _generateRoleName(self, obj, **args):
         """Prevents some roles from being spoken."""
         result = []
         role = args.get('role', obj.getRole())
@@ -184,7 +210,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                                 [pyatspi.ROLE_COMBO_BOX],
                                                 [pyatspi.ROLE_DOCUMENT_FRAME])
             if comboBox:
-                return self._getRoleName(comboBox, **args)
+                return self._generateRoleName(comboBox, **args)
 
         if not force:
             doNotSpeak = [pyatspi.ROLE_FORM,
@@ -200,7 +226,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not force and self._script.inDocumentContent(obj):
             doNotSpeak.append(pyatspi.ROLE_TABLE_CELL)
-            if not self._script.isAriaWidget(obj):
+            if not self._script.isAriaWidget(obj) \
+               and args.get('formatType', 'unfocused') != 'basicWhereAmI':
                 doNotSpeak.append(pyatspi.ROLE_LIST_ITEM)
                 doNotSpeak.append(pyatspi.ROLE_LIST)
 
@@ -237,7 +264,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def _getExpandedEOCs(self, obj, **args):
+    def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []
         text = self._script.expandEOCs(obj)
@@ -245,7 +272,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(text)
         return result
 
-    def _getNumberOfChildren(self, obj, **args):
+    def _generateNumberOfChildren(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_LIST:
@@ -255,11 +282,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                    "List with %d items",
                                    obj.childCount) % obj.childCount)
         else:
-            result.extend(speech_generator.SpeechGenerator._getNumberOfChildren(
-                self, obj, **args))
+            result.extend(
+                speech_generator.SpeechGenerator._generateNumberOfChildren(
+                    self, obj, **args))
         return result
 
-    def _getFocusedItem(self, obj, **args):
+    def _generateFocusedItem(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_LIST:
@@ -271,12 +299,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     break
             item = item or obj[0]
             if item:
-                name = self._getName(item, **args)
-                if name and name != self._getLabel(obj, **args):
+                name = self._generateName(item, **args)
+                if name and name != self._generateLabel(obj, **args):
                     result.extend(name)
         return result
 
-    def _getAncestors(self, obj, **args):
+    def _generateAncestors(self, obj, **args):
         result = []
         priorObj = args.get('priorObj', None)
         commonAncestor = self._script.findCommonAncestor(priorObj, obj)
@@ -302,6 +330,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         #
         stopRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
                      pyatspi.ROLE_INTERNAL_FRAME]
+
+        # [[[TODO - JD: Right now we're using this method to get the
+        # full context of menu items in whereAmI. It seems to work for
+        # gtk-demo, but here we're getting way too much context. So for
+        # now, add in a check. Later, look for better way.]]]
+        #
+        if args.get('formatType', 'unfocused') == 'basicWhereAmI':
+            stopRoles.append(pyatspi.ROLE_MENU_BAR)
 
         # There are some objects we want to include in the context,
         # but not add their rolenames.
@@ -371,9 +407,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # has this state, but in the case of a group of radio buttons,
             # it is the group which has the state).
             #
-            result.extend(self._getRequired(parent, **args))
+            result.extend(self._generateRequired(parent, **args))
 
             result.extend(newResult)
+
+            # [[[TODO - JD: Right now we're using this method to get the
+            # full context of menu items in whereAmI. It seems to work for
+            # gtk-demo, but here we're getting way too much context. So for
+            # now, add in a check. Later, look for better way.]]]
+            #
+            if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
+               and parent.getRole() == pyatspi.ROLE_COMBO_BOX:
+                break
 
             parent = parent.parent
 
@@ -381,11 +426,87 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def getSpeech(self, obj, **args):
+    def _generateDefaultButton(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the default button in a dialog.
+        This method should initially be called with a top-level window.
+        """
+        if self._script.inDocumentContent(obj) \
+           and not self._script.isAriaWidget(obj):
+            return []
+
+        return speech_generator.SpeechGenerator.\
+                     _generateDefaultButton(self, obj, **args)
+
+    def _generateLiveRegionDescription(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the live region.
+        """
+        return self._script.liveMngr.\
+                    generateLiveRegionDescription(obj, **args)
+
+    def _generatePageSummary(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that summarize the objects found on the page
+        containing obj.
+        """
+        result = []
+        headings, forms, tables, vlinks, uvlinks, percent = \
+            self._script.getPageSummary(obj)
+        if headings:
+            # Translators: Announces the number of headings in the
+            # web page that is currently being displayed.
+            #
+            result.append(ngettext \
+                ('%d heading', '%d headings', headings) % headings)
+        if forms:
+            # Translators: Announces the number of forms in the
+            # web page that is currently being displayed.
+            #
+            result.append(ngettext('%d form', '%d forms', forms) % forms)
+        if tables:
+            # Translators: Announces the number of non-layout tables in the
+            # web page that is currently being displayed.
+            #
+            result.append(ngettext('%d table', '%d tables', tables) % tables)
+        if vlinks:
+            # Translators: Announces the number of visited links in the
+            # web page that is currently being displayed.
+            #
+            result.append(ngettext \
+                ('%d visited link', '%d visited links', vlinks) % vlinks)
+        if uvlinks:
+            # Translators: Announces the number of unvisited links in the
+            # web page that is currently being displayed.
+            #
+            result.append(ngettext \
+                ('%d unvisited link', '%d unvisited links', uvlinks) % uvlinks)
+        if percent is not None:
+            # Translators: Announces the percentage of the document that has
+            # been read.  This is calculated by knowing the index of the
+            # current position divided by the total number of objects on the
+            # page.
+            #
+            result.append(_('%d percent of document read') % percent)
+
+        return result
+
+    def generateSpeech(self, obj, **args):
+        result = []
+        # Detailed WhereAmI should always be a page summary if we
+        # are in document content.
+        #
+        if args.get('formatType', 'unfocused') == 'detailedWhereAmI' \
+           and self._script.inDocumentContent(obj):
+            oldRole = self._overrideRole('default', args)
+            result.extend(speech_generator.SpeechGenerator.\
+                                           generateSpeech(self, obj, **args))
+            self._restoreRole(oldRole, args)
         # ARIA widgets get treated like regular default widgets.
         #
-        result = []
-        args['isAria'] = self._script.isAriaWidget(obj)
-        result = speech_generator.SpeechGenerator.getSpeech(self, obj, **args)
-        del args['isAria']
+        else:
+            args['isAria'] = self._script.isAriaWidget(obj)
+            result.extend(speech_generator.SpeechGenerator.\
+                                           generateSpeech(self, obj, **args))
+            del args['isAria']
         return result

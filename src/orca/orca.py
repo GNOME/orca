@@ -175,7 +175,7 @@ def getScriptForApp(app):
 #                                                                      #
 ########################################################################
 
-def setLocusOfFocus(event, obj, notifyPresentationManager=True):
+def setLocusOfFocus(event, obj, notifyPresentationManager=True, force=False):
     """Sets the locus of focus (i.e., the object with visual focus) and
     notifies the current presentation manager of the change.
 
@@ -183,9 +183,11 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True):
     - event: if not None, the Event that caused this to happen
     - obj: the Accessible with the new locus of focus.
     - notifyPresentationManager: if True, propagate this event
+    - force: if True, don't worry if this is the same object as the
+      current locusOfFocus
     """
 
-    if obj == orca_state.locusOfFocus:
+    if not force and obj == orca_state.locusOfFocus:
         return
 
     # If this event is not for the currently active script, then just return.

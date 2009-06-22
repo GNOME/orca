@@ -48,7 +48,6 @@ import orca.speech as speech
 from orca.orca_i18n import _
 
 from speech_generator import SpeechGenerator
-from where_am_i import WhereAmI
 import script_settings
 
 ########################################################################
@@ -260,12 +259,6 @@ class Script(default.Script):
         """
 
         return SpeechGenerator(self)
-
-    def getWhereAmI(self):
-        """Returns the 'where am I' class for this script.
-        """
-        
-        return WhereAmI(self)
 
     def getAppPreferencesGUI(self):
         """Return a GtkVBox contain the application unique configuration

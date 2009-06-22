@@ -143,16 +143,16 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Progress 90% $l', cursor=1",
      "BRAILLE LINE:  'Progress 100% $l'",
      "     VISIBLE:  'Progress 100% $l', cursor=1",
-     "SPEECH OUTPUT: '10 percent. '",
-     "SPEECH OUTPUT: '20 percent. '",
-     "SPEECH OUTPUT: '30 percent. '",
-     "SPEECH OUTPUT: '40 percent. '",
-     "SPEECH OUTPUT: '50 percent. '",
-     "SPEECH OUTPUT: '60 percent. '",
-     "SPEECH OUTPUT: '70 percent. '",
-     "SPEECH OUTPUT: '80 percent. '",
-     "SPEECH OUTPUT: '90 percent. '",
-     "SPEECH OUTPUT: '100 percent. '"]))
+     "SPEECH OUTPUT: '10 percent'",
+     "SPEECH OUTPUT: '20 percent'",
+     "SPEECH OUTPUT: '30 percent'",
+     "SPEECH OUTPUT: '40 percent'",
+     "SPEECH OUTPUT: '50 percent'",
+     "SPEECH OUTPUT: '60 percent'",
+     "SPEECH OUTPUT: '70 percent'",
+     "SPEECH OUTPUT: '80 percent'",
+     "SPEECH OUTPUT: '90 percent'",
+     "SPEECH OUTPUT: '100 percent'"]))
 
 # Just a little extra wait to let some events get through.
 #

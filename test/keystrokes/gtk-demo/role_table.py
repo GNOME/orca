@@ -63,7 +63,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '3 bottles of coke[ ]*', cursor=1",
      "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Editable Cells tree level 2'",
      "SPEECH OUTPUT: 'Shopping list frame'",
-     "SPEECH OUTPUT: 'Number column header 3 bottles of coke blank'"]))
+     "SPEECH OUTPUT: 'Number column header 3 bottles of coke'"]))
      # [WDW - the [ ]* re is to account for the last
      # column not showing on some systems (e.g.,
      # Ubuntu, but showing on others (e.g., Solaris).
@@ -82,8 +82,7 @@ sequence.append(utils.AssertPresentationAction(
     "Table Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke[ ]*'",
      "     VISIBLE:  '3 bottles of coke[ ]*', cursor=1",
-     "SPEECH OUTPUT: 'table Number cell 3'",
-     "SPEECH OUTPUT: 'column 1 of 3 row 1 of 5'"]))
+     "SPEECH OUTPUT: 'table Number cell 3 column 1 of 3 row 1 of 5'"]))
 
 ########################################################################
 # Down arrow to the next line.
@@ -99,7 +98,7 @@ sequence.append(utils.AssertPresentationAction(
     "Table down one line",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles[ ]*'",
      "     VISIBLE:  '5 packages of noodles[ ]*', cursor=1",
-     "SPEECH OUTPUT: '5 packages of noodles blank'"]))
+     "SPEECH OUTPUT: '5 packages of noodles'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -110,8 +109,7 @@ sequence.append(utils.AssertPresentationAction(
     "Table Where Am I (again)",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5'",
      "     VISIBLE:  '5', cursor=1",
-     "SPEECH OUTPUT: 'table Number cell 5'",
-     "SPEECH OUTPUT: 'column 1 of 3 row 2 of 5'"]))
+     "SPEECH OUTPUT: 'table Number cell 5 column 1 of 3 row 2 of 5'"]))
 
 ########################################################################
 # Turn reading of rows off.

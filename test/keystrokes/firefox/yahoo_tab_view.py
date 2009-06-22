@@ -84,7 +84,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Opera Page Firefox Page Explorer Page Safari Page'",
      "     VISIBLE:  'Safari Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list Safari page item 4 of 4 '"]))
+     "SPEECH OUTPUT: 'tab list Safari page item 4 of 4'"]))
 
 ########################################################################
 # Left Arrow back to the third tab
