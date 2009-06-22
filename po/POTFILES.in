@@ -12,6 +12,7 @@ src/orca/espeechfactory.py
 src/orca/find.py
 src/orca/flat_review.py
 src/orca/focus_tracking_presenter.py
+src/orca/generator.py
 src/orca/gnomespeechfactory.py
 src/orca/keybindings.py
 src/orca/keynames.py
