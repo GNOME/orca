@@ -30,6 +30,7 @@ import traceback
 
 import debug
 import pyatspi
+import settings
 
 def _formatExceptionInfo(maxTBlevel=5):
     cla, exc, trbk = sys.exc_info()
@@ -241,3 +242,193 @@ class Generator:
                       "generate %s generated '%s'" % (self._mode, repr(result)))
 
         return result
+
+    #####################################################################
+    #                                                                   #
+    # Name, role, and label information                                 #
+    #                                                                   #
+    #####################################################################
+
+    def _generateLabel(self, obj, **args):
+        """Returns the label for an object as an array of strings for use by
+        speech and braille.  The label is determined by the
+        getDisplayedLabel of the script, and an empty array will be
+        returned if no label can be found.
+        """
+        result = []
+        label = self._script.getDisplayedLabel(obj)
+        if label:
+            result.append(label)
+        return result
+
+    #####################################################################
+    #                                                                   #
+    # State information                                                 #
+    #                                                                   #
+    #####################################################################
+
+    def _generateAvailability(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the grayed/sensitivity/availability state of the
+        object, but only if it is insensitive (i.e., grayed out and
+        inactive).  Otherwise, and empty array will be returned.
+        """
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'insensitive'
+        if not obj.getState().contains(pyatspi.STATE_SENSITIVE):
+            result.append(self._script.formatting.getString(**args))
+        return result
+
+    def _generateRequired(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the required state of the object, but only if it is
+        required (i.e., it is in a dialog requesting input and the
+        user must give it a value).  Otherwise, and empty array will
+        be returned.
+        """
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'required'
+        if obj.getState().contains(pyatspi.STATE_REQUIRED) \
+           or (obj.getRole() == pyatspi.ROLE_RADIO_BUTTON \
+               and obj.parent.getState().contains(pyatspi.STATE_REQUIRED)):
+            result.append(self._script.formatting.getString(**args))
+        return result
+
+    def _generateReadOnly(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the read only state of this object, but only if it
+        is read only (i.e., it is a text area that cannot be edited).
+        """
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'readonly'
+        if settings.presentReadOnlyText \
+           and self._script.isReadOnlyTextArea(obj):
+            result.append(self._script.formatting.getString(**args))
+        return result
+
+    def _generateCheckedState(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the checked state of the object.  This is typically
+        for check boxes. [[[WDW - should we return an empty array if
+        we can guarantee we know this thing is not checkable?]]]
+        """
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'checkbox'
+        [no, yes, indeterminate] = self._script.formatting.getString(**args)
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_INDETERMINATE):
+            result.append(indeterminate)
+        elif state.contains(pyatspi.STATE_CHECKED):
+            result.append(yes)
+        else:
+            result.append(no)
+        return result
+
+    def _generateRadioState(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the checked state of the object.  This is typically
+        for check boxes. [[[WDW - should we return an empty array if
+        we can guarantee we know this thing is not checkable?]]]
+        """
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'radiobutton'
+        [no, yes] = self._script.formatting.getString(**args)
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED):
+            result.append(yes)
+        else:
+            result.append(no)
+        return result
+
+    def _generateToggleState(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the checked state of the object.  This is typically
+        for check boxes. [[[WDW - should we return an empty array if
+        we can guarantee we know this thing is not checkable?]]]
+        """
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'togglebutton'
+        [no, yes] = self._script.formatting.getString(**args)
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_CHECKED) \
+           or state.contains(pyatspi.STATE_PRESSED):
+            result.append(yes)
+        else:
+            result.append(no)
+        return result
+
+    def _generateMenuItemCheckedState(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the checked state of the menu item, only if it is
+        checked. Otherwise, and empty array will be returned.
+        """
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'checkbox'
+        [no, yes, indeterminate] = self._script.formatting.getString(**args)
+        if obj.getState().contains(pyatspi.STATE_CHECKED):
+            # Translators: this represents the state of a checked menu item.
+            #
+            result.append(yes)
+        return result
+
+    def _generateExpandableState(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the expanded/collapsed state of an object, such as a
+        tree node. If the object is not expandable, an empty array
+        will be returned.
+        """
+        result = []
+        if not args.get('mode', None):
+            args['mode'] = self._mode
+        args['stringType'] = 'expansion'
+        [no, yes] = self._script.formatting.getString(**args)
+        state = obj.getState()
+        if state.contains(pyatspi.STATE_EXPANDABLE):
+            if state.contains(pyatspi.STATE_EXPANDED):
+                result.append(yes)
+            else:
+                result.append(no)
+        return result
+
+    #####################################################################
+    #                                                                   #
+    # Text interface information                                        #
+    #                                                                   #
+    #####################################################################
+
+    def _generateDisplayedText(self, obj, **args ):
+        """Returns an array of strings for use by speech and braille that
+        represents all the text being displayed by the object. [[[WDW
+        - consider returning an empty array if this is not a text
+        object.]]]
+        """
+        return [self._script.getDisplayedText(obj)]
+
+    #####################################################################
+    #                                                                   #
+    # Value interface information                                       #
+    #                                                                   #
+    #####################################################################
+
+    def _generateValue(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represents the value of the object.  This is typically the
+        numerical value, but may also be the text of the 'value'
+        attribute if it exists on the object.  [[[WDW - we should
+        consider returning an empty array if there is no value.
+        """
+        return [self._script.getTextForValue(obj)]

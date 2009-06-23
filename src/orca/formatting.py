@@ -29,12 +29,37 @@ import copy
 
 import pyatspi
 
+import settings
+
 # pylint: disable-msg=C0301
 
 TUTORIAL = '(tutorial and (pause + tutorial) or [])'
 MNEMONIC = '(mnemonic and (pause + mnemonic + lineBreak) or [])'
 
 formatting = {
+    'strings' : {
+        'speech' : {
+            'required'     : settings.speechRequiredStateString,
+            'readonly'     : settings.speechReadOnlyString,
+            'insensitive'  : settings.speechInsensitiveString,
+            'checkbox'     : settings.speechCheckboxIndicators,
+            'radiobutton'  : settings.speechRadioButtonIndicators,
+            'togglebutton' : settings.speechToggleButtonIndicators,
+            'expansion'    : settings.speechExpansionIndicators,
+            'multiselect'  : settings.speechMultiSelectString,
+        },
+        'braille' : {
+            'eol'          : settings.brailleEOLIndicator,
+            'required'     : settings.brailleRequiredStateString,
+            'readonly'     : settings.brailleReadOnlyString,
+            'insensitive'  : settings.brailleInsensitiveString,
+            'checkbox'     : settings.brailleCheckBoxIndicators,
+            'radiobutton'  : settings.brailleRadioButtonIndicators,
+            'togglebutton' : settings.brailleToggleButtonIndicators,
+            'expansion'    : settings.brailleExpansionIndicators,
+        },
+    },
+
     'speech': {
         'prefix': {
             'focused': '[]',
@@ -298,9 +323,19 @@ class Formatting(dict):
         suffix = self[args['mode']]['suffix'][args['formatType']]
         return suffix
 
+    def getString(self, **args):
+        """Gets a human consumable string for a specific value
+        (e.g., an indicator for a checkbox state).
+
+        Arguments expected in args:
+        - mode: output mode, such as 'speech', 'braille'.
+        - stringType: the type of the string to get (see the dictionary above).
+        """
+        return self['strings'][args['mode']][args['stringType']]
+
     def getFormat(self, **args):
-        """Get a formatting string for the given mode and
-        formatType.
+        """Get a formatting string for the given mode and formatType for a
+        role (e.g., a where am I string for a text object).
 
         Arguments expected in args:
         - mode: output mode, such as 'speech', 'braille'.

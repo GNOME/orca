@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2008 Sun Microsystems Inc.
+# Copyright 2004-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -24,7 +24,7 @@ case of gdm) or doesn't have the specified attribute."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
@@ -303,7 +303,7 @@ if os.getenv("DBUS_SESSION_BUS_ADDRESS"):
 else:
     useDBus = False
 
-# Whether or not recording is enabled via the HTTP server. 
+# Whether or not recording is enabled via the HTTP server.
 #
 enableRemoteLogging     = False
 
@@ -358,16 +358,6 @@ enableBrailleGrouping   = False
 # If True, enable braille monitor.
 #
 enableBrailleMonitor    = False
-
-# string to indicate end of printed line for braille displays:
-#
-disableBrailleEOL = False
-brailleEOLIndicator = " $l"
-
-# Strings used to indicate checkbox/radio button states in braille:
-#
-brailleCheckBoxIndicators = ["< >", "<x>", "<->"]
-brailleRadioButtonIndicators = ["& y", "&=y"]
 
 # If True, enable magnification.
 #
@@ -609,7 +599,7 @@ keyboardLayout                  = GENERAL_KEYBOARD_LAYOUT_DESKTOP
 #
 outlineColor = [ 0xFFFF, 0x0000, 0x0000 ]
 
-# Thickness in pixels of the outline around the the current item in flat 
+# Thickness in pixels of the outline around the the current item in flat
 # review mode.
 #
 outlineThickness = 4
@@ -652,17 +642,6 @@ progressBarUpdateInterval = 10
 # if we can detect they are read only or not.
 #
 presentReadOnlyText = True
-
-# Translators: this is used to indicate the user is in a text
-# area that is not editable.  It is meant to be spoken to the user.
-#
-speechReadOnlyString = C_("text", "read only")
-
-# Translators: this is used to indicate the user is in a text
-# area that is not editable.  It is meant to be a short abbreviation
-# to be presented on the braille display.
-#
-brailleReadOnlyString = C_("text", "rdonly")
 
 # The complete list of possible text attributes.
 #
@@ -875,7 +854,7 @@ def setAccessibilityEnabled(enable):
     except:
         return False
 
-# Obtain/set information regarding whether Orca is autostarted for this 
+# Obtain/set information regarding whether Orca is autostarted for this
 # user at login time.
 #
 def isOrcaAutostarted():
@@ -943,7 +922,7 @@ settingsPackages          = ["app-settings"]
 # REMEMBER: to make something a package, the directory has to
 # have a __init__.py file in it.
 #
-scriptPackages          = ["orca-scripts", "scripts", 
+scriptPackages          = ["orca-scripts", "scripts",
                            "scripts.apps", "scripts.toolkits"]
 
 # A list that helps us map application names to script module
@@ -1092,7 +1071,7 @@ setScriptMapping(re.compile('gnome-help'), "yelp")
 #
 deprecatedMessages = False
 
-# Focus history length. We keep a reference to past focused accessibles to 
+# Focus history length. We keep a reference to past focused accessibles to
 # maximize on caching.
 #
 focusHistoryLength = 5
@@ -1106,22 +1085,22 @@ listenAllEvents = False
 #
 ignoredEventsList = ['object:bounds-changed']
 
-# Listen to Live Region events.  Tells Gecko.onChildrenChanged() and 
+# Listen to Live Region events.  Tells Gecko.onChildrenChanged() and
 # onTextInserted() event handlers to monitor these events for live region
-# changes.  
+# changes.
 #
 inferLiveRegions = True
 
 # Contracted braille support.
-# 
+#
 enableContractedBraille = False
 
 # Contracted braille table.
-# 
+#
 brailleContractionTable = ''
 
 # Use Collection Interface?
-# 
+#
 useCollection = True
 
 # Whether or not to speak the cell's coordinates when navigating
@@ -1156,13 +1135,13 @@ wrappedStructuralNavigation = True
 #
 enableMouseReview = False
 
-# Mouse dwell delay in milliseconds for mouse review mode. 
+# Mouse dwell delay in milliseconds for mouse review mode.
 # If the value is zero, the review will be read time.
 #
 mouseDwellDelay = 0
 
 # Maximum allowed drift while pointer is dwelling in mouse review mode.
-# 
+#
 mouseDwellMaxDrift = 3
 
 # The different modifiers/modifier masks associated with keybindings
@@ -1214,13 +1193,16 @@ defaultModifierMask = NON_LOCKING_MODIFIER_MASK
 #
 presentRequiredState = False
 
-# Translators: Certain objects (such as form controls on web pages)
-# can have STATE_REQUIRED set on them to inform the user that this
-# field must be filled out. This string is the default string which
-# will be spoken and displayed in braille to indicate this state is
-# present.
+########################################################################
+#                                                                      #
+# Strings for speech and braille                                       #
+#                                                                      #
+########################################################################
+
+# Translators: "blank" is a short word to mean the
+# user has navigated to an empty line.
 #
-brailleRequiredStateString = _("required")
+speechBlankString = _("blank")
 
 # Translators: Certain objects (such as form controls on web pages)
 # can have STATE_REQUIRED set on them to inform the user that this
@@ -1229,3 +1211,78 @@ brailleRequiredStateString = _("required")
 # present.
 #
 speechRequiredStateString = _("required")
+
+# Translators: this is used to indicate the user is in a text
+# area that is not editable.  It is meant to be spoken to the user.
+#
+speechReadOnlyString = C_("text", "read only")
+
+# Translators: this represents an item on the screen that has
+# been set insensitive (or grayed out).
+#
+speechInsensitiveString = _("grayed")
+
+# Translators: this represents the state of a checkbox.  It is meant
+# to be spoken to the user.
+#
+speechCheckboxIndicators = [_("not checked"),
+                            _("checked"),
+                            _("partially checked")]
+
+# Translators: this represents the state of a radio button.  It is
+# meant to be spoken to the user.
+#
+speechRadioButtonIndicators = [C_("radiobutton", "not selected"),
+                               C_("radiobutton", "selected")]
+
+# Translators: this represents the state of a toggle button.  It is
+# meant to be spoken to the user.
+#
+speechToggleButtonIndicators = [_("not pressed"), _("pressed")]
+
+# Translators: this represents the state of a node in a tree.
+# 'expanded' means the children are showing.  'collapsed' means the
+# children are not showing.
+#
+speechExpansionIndicators = [_("collapsed"), _("expanded")]
+
+# Translators: "multi-select" refers to a web form list
+# in which more than one item can be selected at a time.
+#
+speechMultiSelectString = _("multi-select")
+
+# string to indicate end of printed line for braille displays:
+#
+disableBrailleEOL = False
+brailleEOLIndicator = " $l"
+
+# Translators: Certain objects (such as form controls on web pages)
+# can have STATE_REQUIRED set on them to inform the user that this
+# field must be filled out. This string is the default string which
+# will be spoken and displayed in braille to indicate this state is
+# present.
+#
+brailleRequiredStateString = _("required")
+
+# Translators: this is used to indicate the user is in a text
+# area that is not editable.  It is meant to be a short abbreviation
+# to be presented on the braille display.
+#
+brailleReadOnlyString = C_("text", "rdonly")
+
+# Translators: this represents an item on the screen that has
+# been set insensitive (or grayed out).
+#
+brailleInsensitiveString = _("grayed")
+
+# Strings used to indicate checkbox/radio button states in braille:
+#
+brailleCheckBoxIndicators = ["< >", "<x>", "<->"]
+brailleRadioButtonIndicators = ["& y", "&=y"]
+brailleToggleButtonIndicators = ["& y", "&=y"]
+
+# Translators: this represents the state of a node in a tree.
+# 'expanded' means the children are showing.  'collapsed' means the
+# children are not showing.
+#
+brailleExpansionIndicators = [_("collapsed"), _("expanded")]

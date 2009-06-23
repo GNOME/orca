@@ -17,9 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for obtaining speech utterances for objects.  In general,
-there probably should be a singleton instance of the SpeechGenerator
-class."""
+"""Utilities for obtaining speech utterances for objects."""
 
 __id__        = "$Id:$"
 __version__   = "$Revision:$"
@@ -166,18 +164,6 @@ class SpeechGenerator(generator.Generator):
         """
         return self._generateRoleName(obj, **args)
 
-    def _generateLabel(self, obj, **args):
-        """Returns the label for an object as an array of strings (and
-        possibly voice and audio specifications).  The label is
-        determined by the getDisplayedLabel of the script, and an
-        empty array will be returned if no label can be found.
-        """
-        result = []
-        label = self._script.getDisplayedLabel(obj)
-        if label:
-            result = [label]
-        return result
-
     def _generateLabelAndName(self, obj, **args):
         """Returns the label and the name as an array of strings (and possibly
         voice and audio specifications).  The name will only be
@@ -239,37 +225,12 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generateCheckedState(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the checked state of the
-        object.  This is typically for check boxes. [[[WDW - should we
-        return an empty array if we can guarantee we know this thing
-        is not checkable?]]]  [[[WDW - I wonder if we should put these
-        strings in settings.py.]]]
-        """
-        result = []
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_INDETERMINATE):
-            # Translators: this represents the state of a checkbox.
-            #
-            result.append(_("partially checked"))
-        elif state.contains(pyatspi.STATE_CHECKED):
-            # Translators: this represents the state of a checkbox.
-            #
-            result.append(_("checked"))
-        else:
-            # Translators: this represents the state of a checkbox.
-            #
-            result.append(_("not checked"))
-        return result
-
     def _generateCellCheckedState(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the checked state of the
         object.  This is typically for check boxes that are in a
         table. An empty array will be returned if this is not a
-        checkable cell.  [[[WDW - I wonder if we can roll this into
-        _generateCheckedState somehow.]]]
+        checkable cell.
         """
         result = []
         try:
@@ -289,147 +250,20 @@ class SpeechGenerator(generator.Generator):
                     self._restoreRole(oldRole, args)
         return result
 
-    def _generateRadioState(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the checked state of the
-        object.  This is typically for check boxes. [[[WDW - should we
-        return an empty array if we can guarantee we know this thing
-        is not checkable?]]] [[[WDW - I wonder if we can roll this
-        into _generateCheckedState somehow and provide some sort of
-        settings.py string to let you specify the wording to be used
-        for different roles.]]]
-        """
-        result = []
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED):
-            # Translators: this is in reference to a radio button being
-            # selected or not.
-            #
-            result.append(C_("radiobutton", "selected"))
-        else:
-            # Translators: this is in reference to a radio button being
-            # selected or not.
-            #
-            result.append(C_("radiobutton", "not selected"))
-        return result
-
-    def _generateToggleState(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the checked state of the
-        object.  This is typically for check boxes. [[[WDW - should we
-        return an empty array if we can guarantee we know this thing
-        is not checkable?]]] [[[WDW - I wonder if we can roll this
-        into _generateCheckedState somehow and provide some sort of
-        settings.py string to let you specify the wording to be used
-        for different roles.]]]
-        """
-        result = []
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_CHECKED) \
-           or state.contains(pyatspi.STATE_PRESSED):
-            # Translators: the state of a toggle button.
-            #
-            result.append(_("pressed"))
-        else:
-            # Translators: the state of a toggle button.
-            #
-            result.append(_("not pressed"))
-        return result
-
-    def _generateExpandableState(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the expanded/collapsed state of
-        an object, such as a tree node. If the object is not
-        expandable, an empty array will be returned.  [[[WDW - I
-        wonder if these strings should be placed in settings.py.]]]
-        """
-        result = []
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_EXPANDABLE):
-            if state.contains(pyatspi.STATE_EXPANDED):
-                # Translators: this represents the state of a node in a tree.
-                # 'expanded' means the children are showing.
-                # 'collapsed' means the children are not showing.
-                #
-                result.append(_("expanded"))
-            else:
-                # Translators: this represents the state of a node in a tree.
-                # 'expanded' means the children are showing.
-                # 'collapsed' means the children are not showing.
-                #
-                result.append(_("collapsed"))
-        return result
-
     def _generateMultiselectableState(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the multiselectable state of
         the object.  This is typically for check boxes. If the object
         is not multiselectable, an empty array will be returned.
-        [[[WDW - I wonder if this string should be placed in
-        settings.py.]]]
         """
         result = []
         if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE):
             # Translators: "multi-select" refers to a web form list
             # in which more than one item can be selected at a time.
             #
-            result.append(_("multi-select"))
-        return result
-
-    def _generateMenuItemCheckedState(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the checked state of the menu
-        item, only if it is checked. Otherwise, and empty array will
-        be returned.  [[[WDW - I wonder if we can roll this into
-        _generateCheckedState somehow.]]]
-        """
-        result = []
-        if obj.getState().contains(pyatspi.STATE_CHECKED):
-            # Translators: this represents the state of a checked menu item.
-            #
-            result.append(_("checked"))
-        return result
-
-    def _generateAvailability(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the
-        grayed/sensitivity/availability state of the object, but only
-        if it is insensitive (i.e., grayed out and inactive).
-        Otherwise, and empty array will be returned.  [[[WDW - I
-        wonder if we should put this string into settings.py.]]]
-        """
-        result = []
-        if not obj.getState().contains(pyatspi.STATE_SENSITIVE):
-            # Translators: this represents an item on the screen that has
-            # been set insensitive (or grayed out).
-            #
-            result.append(_("grayed"))
-        return result
-
-    def _generateRequired(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the required state of the
-        object, but only if it is required (i.e., it is in a dialog
-        requesting input and the user must give it a value).
-        Otherwise, and empty array will be returned.
-        """
-        result = []
-        if obj.getState().contains(pyatspi.STATE_REQUIRED) \
-           or (obj.getRole() == pyatspi.ROLE_RADIO_BUTTON \
-               and obj.parent.getState().contains(pyatspi.STATE_REQUIRED)):
-            result = [settings.speechRequiredStateString]
-        return result
-
-    def _generateReadOnly(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the read only state of this
-        object, but only if it is read only (i.e., it is a text area
-        that cannot be edited).
-        """
-        result = []
-        if settings.presentReadOnlyText \
-           and self._script.isReadOnlyTextArea(obj):
-            result.append(settings.speechReadOnlyString)
+            result.append(self._script.formatting.getString(
+                mode='speech',
+                stringType='multiselect'))
         return result
 
     #####################################################################
@@ -884,8 +718,6 @@ class SpeechGenerator(generator.Generator):
         the code.  This method is used to return an array of strings
         (and possibly voice and audio specifications) for a single table
         cell itself.  The string, 'blank', is added for empty cells.
-        [[[WDW - I wonder if this string and whether it is used or not
-        should be put in settings.py.]]]
         """
         result = []
         oldRole = self._overrideRole('REAL_ROLE_TABLE_CELL', args)
@@ -896,7 +728,7 @@ class SpeechGenerator(generator.Generator):
             # Translators: "blank" is a short word to mean the
             # user has navigated to an empty line.
             #
-            result = [_("blank")]
+            result.append(_("blank"))
         return result
 
     def _generateTableCellRow(self, obj, **args):
@@ -1357,14 +1189,6 @@ class SpeechGenerator(generator.Generator):
         [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
         return [text]
 
-    def _generateDisplayedText(self, obj, **args ):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represents all the text being displayed
-        by the object. [[[WDW - consider returning an empty array if
-        this is not a text object.]]]
-        """
-        return [self._script.getDisplayedText(obj)]
-
     def _generateAnyTextSelection(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that says if any of the text for the entire
@@ -1459,16 +1283,6 @@ class SpeechGenerator(generator.Generator):
     # Value interface information                                       #
     #                                                                   #
     #####################################################################
-
-    def _generateValue(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represents the value of the object.  This
-        is typically the numerical value, but may also be the text
-        of the 'value' attribute if it exists on the object.  [[[WDW -
-        we should consider returning an empty array if there is no
-        value.
-        """
-        return [self._script.getTextForValue(obj)]
 
     def _generatePercentage(self, obj, **args ):
         """Returns an array of strings (and possibly voice and audio
