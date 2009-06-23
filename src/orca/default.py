@@ -5991,13 +5991,22 @@ class Script(script.Script):
         if there is nothing of interest here.
         """
 
-        labelString = None
+        DISPLAYED_LABEL = 'displayedLabel'
+
+        try:
+            return self.generatorCache[DISPLAYED_LABEL][obj]
+        except:
+            if not self.generatorCache.has_key(DISPLAYED_LABEL):
+                self.generatorCache[DISPLAYED_LABEL] = {}
+            labelString = None
+
         labels = self.findDisplayedLabel(obj)
         for label in labels:
             labelString = self.appendString(labelString,
                                             self.getDisplayedText(label))
 
-        return labelString
+        self.generatorCache[DISPLAYED_LABEL][obj] = labelString
+        return self.generatorCache[DISPLAYED_LABEL][obj]
 
     def __getDisplayedTextInComboBox(self, combo):
 
@@ -6074,11 +6083,20 @@ class Script(script.Script):
         any text being shown.
         """
 
-        displayedText = None
+        DISPLAYED_TEXT = 'displayedText'
+
+        try:
+            return self.generatorCache[DISPLAYED_TEXT][obj]
+        except:
+            if not self.generatorCache.has_key(DISPLAYED_TEXT):
+                self.generatorCache[DISPLAYED_TEXT] = {}
+            displayedText = None
 
         role = obj.getRole()
         if role == pyatspi.ROLE_COMBO_BOX:
-            return self.__getDisplayedTextInComboBox(obj)
+            displayedText = self.__getDisplayedTextInComboBox(obj)
+            self.generatorCache[DISPLAYED_TEXT][obj] = displayedText
+            return self.generatorCache[DISPLAYED_TEXT][obj]
 
         # The accessible text of an object is used to represent what is
         # drawn on the screen.
@@ -6132,7 +6150,8 @@ class Script(script.Script):
                         displayedText = self.appendString(displayedText,
                                                           childText)
 
-        return displayedText
+        self.generatorCache[DISPLAYED_TEXT][obj] = displayedText
+        return self.generatorCache['displayedText'][obj]
 
     def getTextForValue(self, obj):
         """Returns the text to be displayed for the object's current value.
