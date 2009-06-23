@@ -72,6 +72,8 @@ class Script(script.Script):
     EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
     NO_BREAK_SPACE_CHARACTER  = u'\u00a0'
     WORDS_RE = re.compile("(\W+)", re.UNICODE)
+    DISPLAYED_LABEL = 'displayedLabel'
+    DISPLAYED_TEXT = 'displayedText'
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -5991,13 +5993,11 @@ class Script(script.Script):
         if there is nothing of interest here.
         """
 
-        DISPLAYED_LABEL = 'displayedLabel'
-
         try:
-            return self.generatorCache[DISPLAYED_LABEL][obj]
+            return self.generatorCache[self.DISPLAYED_LABEL][obj]
         except:
-            if not self.generatorCache.has_key(DISPLAYED_LABEL):
-                self.generatorCache[DISPLAYED_LABEL] = {}
+            if not self.generatorCache.has_key(self.DISPLAYED_LABEL):
+                self.generatorCache[self.DISPLAYED_LABEL] = {}
             labelString = None
 
         labels = self.findDisplayedLabel(obj)
@@ -6005,8 +6005,8 @@ class Script(script.Script):
             labelString = self.appendString(labelString,
                                             self.getDisplayedText(label))
 
-        self.generatorCache[DISPLAYED_LABEL][obj] = labelString
-        return self.generatorCache[DISPLAYED_LABEL][obj]
+        self.generatorCache[self.DISPLAYED_LABEL][obj] = labelString
+        return self.generatorCache[self.DISPLAYED_LABEL][obj]
 
     def __getDisplayedTextInComboBox(self, combo):
 
@@ -6083,20 +6083,18 @@ class Script(script.Script):
         any text being shown.
         """
 
-        DISPLAYED_TEXT = 'displayedText'
-
         try:
-            return self.generatorCache[DISPLAYED_TEXT][obj]
+            return self.generatorCache[self.DISPLAYED_TEXT][obj]
         except:
-            if not self.generatorCache.has_key(DISPLAYED_TEXT):
-                self.generatorCache[DISPLAYED_TEXT] = {}
+            if not self.generatorCache.has_key(self.DISPLAYED_TEXT):
+                self.generatorCache[self.DISPLAYED_TEXT] = {}
             displayedText = None
 
         role = obj.getRole()
         if role == pyatspi.ROLE_COMBO_BOX:
             displayedText = self.__getDisplayedTextInComboBox(obj)
-            self.generatorCache[DISPLAYED_TEXT][obj] = displayedText
-            return self.generatorCache[DISPLAYED_TEXT][obj]
+            self.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
+            return self.generatorCache[self.DISPLAYED_TEXT][obj]
 
         # The accessible text of an object is used to represent what is
         # drawn on the screen.
@@ -6150,8 +6148,8 @@ class Script(script.Script):
                         displayedText = self.appendString(displayedText,
                                                           childText)
 
-        self.generatorCache[DISPLAYED_TEXT][obj] = displayedText
-        return self.generatorCache['displayedText'][obj]
+        self.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
+        return self.generatorCache[self.DISPLAYED_TEXT][obj]
 
     def getTextForValue(self, obj):
         """Returns the text to be displayed for the object's current value.
