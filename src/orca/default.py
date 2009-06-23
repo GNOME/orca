@@ -74,6 +74,7 @@ class Script(script.Script):
     WORDS_RE = re.compile("(\W+)", re.UNICODE)
     DISPLAYED_LABEL = 'displayedLabel'
     DISPLAYED_TEXT = 'displayedText'
+    KEY_BINDING = 'keyBinding'
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -7050,9 +7051,16 @@ class Script(script.Script):
         """
 
         try:
+            return self.generatorCache[self.KEY_BINDING][obj]
+        except:
+            if not self.generatorCache.has_key(self.KEY_BINDING):
+                self.generatorCache[self.KEY_BINDING] = {}
+
+        try:
             action = obj.queryAction()
         except NotImplementedError:
-            return ["", "", ""]
+            self.generatorCache[self.KEY_BINDING][obj] = ["", "", ""]
+            return self.generatorCache[self.KEY_BINDING][obj]
 
         # Action is a string in the format, where the mnemonic and/or
         # accelerator can be missing.
@@ -7103,7 +7111,9 @@ class Script(script.Script):
         debug.println(debug.LEVEL_FINEST, "default.getKeyBinding: " \
                       + repr([mnemonic, fullShortcut, accelerator]))
 
-        return [mnemonic, fullShortcut, accelerator]
+        self.generatorCache[self.KEY_BINDING][obj] = \
+            [mnemonic, fullShortcut, accelerator]
+        return self.generatorCache[self.KEY_BINDING][obj]
 
     def getKnownApplications(self):
         """Retrieves the list of currently running apps for the desktop
