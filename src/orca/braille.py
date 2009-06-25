@@ -36,14 +36,6 @@ log = logging.getLogger("braille")
 
 import signal
 
-try:
-    import louis
-except ImportError:
-    louis = None
-    _defaultContractionTable = None
-else:
-    _defaultContractionTable = louis.getDefaultTable()
-
 # We'll use the official BrlAPI pythons (as of BrlTTY 3.8) if they
 # are available.  Otherwise, we'll fall back to our own bindings.
 #
@@ -73,6 +65,25 @@ import debug
 import eventsynthesizer
 import orca_state
 import settings
+
+try:
+    import louis
+    _defaultContractionTable = louis.getDefaultTable()
+except:
+    louis = None
+    _defaultContractionTable = None
+
+if louis:
+    version = louis.version()
+    [major, minor, point] = louis.version().split(".", 2)
+    major = int(major)
+    minor = int(minor)
+    if (major > 1) or (major == 1 and minor > 5):
+        debug.println(debug.LEVEL_SEVERE,
+            "You have liblouis %s installed.  "\
+            "liblouis 1.5.2 or earlier is needed." % version)
+        louis = None
+        _defaultContractionTable = None
 
 from orca_i18n import _                          # for gettext support
 
