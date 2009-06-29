@@ -1,3 +1,47 @@
+2.26.3 - 29-Jun-2009
+
+General:
+
+* Fix for bug #511468 - Ekiga chat window accessibility problem
+
+* Fix for bug #574221 - left-pane in Ekiga's preference box can't be
+  read at start-up
+
+* Fix for bug #586890 - Orca 2.27.3 and earlier will crash if liblouis
+  1.6.2 python bindings are installed
+
+OpenOffice/StarOffice:
+
+* Fix for bug #583811 - Doing a select all in OOo Writer causes Orca
+  to say "selected" for each paragraph
+
+Thunderbird:
+
+* Fix for bug #584837 - Find dialog fails to move caret to desired
+  location in Thunderbird
+
+* Fix for bug #568658 - Sometimes Orca announces the wrong subject in
+  Thunderbird.  This change causes us to dump the pyatspi cache if
+  we're in Thunderbird and exit flat review. As a result, we should
+  not have bogus table data hanging around.
+
+Firefox:
+
+* Fix for bug #530784 - whereAmI info for list items in web content
+  needs to be improved
+
+* Fix for bug #577900 - Blank lines in Firefox text areas incorrectly
+  spoken
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  See also the overall translation status:
+  http://l10n.gnome.org/module/orca
+
+    cs      Czech                Lucas Lommer
+
+==========
+
 2.26.2 - 18-May-2009
 
 General:
@@ -20,8 +64,6 @@ General:
 * Fix for bug #582684 - Arrowing left/right across tree tables causes
   whole row to be spoken.
 
-==========
-
 New and updated translations (THANKS EVERYONE!!!):
 
   See also the overall translation status:
@@ -30,6 +72,8 @@ New and updated translations (THANKS EVERYONE!!!):
     ca      Catalan              Jordi Mas i Hernandez
     hu      Hungarian            Attila Hammer and Gabor Kelemen
     uk      Ukranian             Maxim Dziumanenko
+
+==========
 
 2.26.1 - 13-Apr-2009
 

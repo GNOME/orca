@@ -1,4 +1,4 @@
-2009-05-29
+2009-06-29  Willie Walker <william.walker@sun.com>
 
         * src/orca/pronunciation_dict.py:
 	  src/orca/chnames.py:
@@ -8,12 +8,51 @@
 	  bgo#575614 - Please add speakable characters: → and ← that works
 	  within the boundaries of the string freeze for 2.26.
 
+2009-06-24  Willie Walker <william.walker@sun.com>
+
+        * src/orca/braille.py:
+          Fix for bug #586890 - Orca 2.27.3 and earlier will crash if
+          liblouis 1.6.2 python bindings are installed
+
+2009-06-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          Rest of the fix for bug #568658 - Sometimes Orca announces the
+          wrong subject in Thunderbird.  This change causes us to dump the
+          pyatspi cache if we're in Thunderbird and exit flat review. As a
+          result, we should not have bogus table data hanging around.
+
+2009-06-21  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #568658 - Sometimes Orca announces the wrong subject
+          in Thunderbird.
+
+2009-06-20  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/scripts/apps/Thunderbird/script.py:
+          Fix for bug #584837 - Find dialog fails to move caret to desired
+          location in Thunderbird
+
+2009-06-19  Joanmarie Diggs <joanmarie.diggs@gmail.com>
+
+        * src/orca/default.py:
+          test/keystrokes/gtk-demo/role_label.py:
+          Fix for bug #583811 - Doing a select all in OOo Writer causes
+          Orca to say "selected" for each paragraph.
+
 2009-05-26  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
         * src/orca/scripts/apps/ekiga.py:
           Tweak to the fix for bug #511468 - Ekiga chat window accessibility
           problem so that we do not constantly speak the call duration when
           in a call.
+
+2009-05-25  Willie Walker <william.walker@sun.com>
+
+        * src/orca/pronunciation_dict.py:
+          Fix for bgo#582028 - Character pronunciations are not used when
+          navigating by line.
 
 2009-05-24  Joanmarie Diggs <joanmarie.diggs@gmail.com>
 
