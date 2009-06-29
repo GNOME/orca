@@ -51,7 +51,12 @@ def getPronunciation(word, pronunciations=None):
         else:
             return pronunciation_dict[lowerWord][1]
     except:
-        return chnames.getCharacterName(word)
+        # If you want a character name to be spoken, treat it as a
+        # punctuation character at LEVEL_NONE in puncutation_settings.py.
+        # See, for example, the left_arrow and right_arrow characters.
+        #
+        #return chnames.getCharacterName(word)
+        return word
 
 def setPronunciation(word, replacementString, pronunciations=None):
     """Given an actual word, and a replacement string, set a key/value

@@ -715,6 +715,12 @@ chnames[u'\u2717'] = _("x-shaped bullet")
 #
 chnames[u'\u2974'] = _("right-pointing arrow")
 
+# WDW - we reuse 'right-pointing arrow' here (see 2974 entry above) to
+# avoid a string change for 2.26.3.  In 2.27.x, this is now 'right
+# arrow'.
+#
+chnames[u'\u2192'] = chnames[u'\u2974']
+
 # Translators: this is the spoken word for the character '➢' (U+27a2)
 # This symbol is included here because it can be used as a bullet in an 
 # OOo list. The goal is to inform the user of the appearance of the bullet 

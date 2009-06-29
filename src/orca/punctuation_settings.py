@@ -76,7 +76,7 @@ black_circle         =  u'\u25cf'
 check_mark           =  u'\u2713'
 heavy_check_mark     =  u'\u2714'
 x_shaped_bullet      =  u'\u2717'
-right_arrow          =  u'\u2794'
+heavy_right_arrow    =  u'\u2794'
 right_arrowhead      =  u'\u27a2'
 
 # StarOffice/OOo's special-purpose bullet chararacters
@@ -116,6 +116,7 @@ prime                =  u'\u2032'
 double_prime         =  u'\u2033'
 euro                 =  u'\u20ac'
 trademark            =  u'\u2122'
+right_arrow          =  u'\u2192'
 infinity             =  u'\u221e'
 almost_equal         =  u'\u2248'
 not_equal            =  u'\u2260'
@@ -197,6 +198,7 @@ punctuation[prime]              =  [ LEVEL_SOME, PUNCTUATION_REPLACE ]
 punctuation[double_prime]       =  [ LEVEL_SOME, PUNCTUATION_REPLACE ]
 punctuation[per_mille]          =  [ LEVEL_SOME, PUNCTUATION_REPLACE ]
 
+punctuation[right_arrow]        =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[middle_dot]         =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[bullet]             =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[triangular_bullet]  =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
@@ -210,7 +212,7 @@ punctuation[black_circle]       =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[check_mark]         =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[heavy_check_mark]   =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[x_shaped_bullet]    =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
-punctuation[right_arrow]        =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
+punctuation[heavy_right_arrow]  =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[right_arrowhead]    =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[SO_black_square]    =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
 punctuation[SO_black_diamond]   =  [ LEVEL_NONE, PUNCTUATION_REPLACE ]
