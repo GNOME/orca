@@ -89,40 +89,6 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generateName(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the name of the object.  If the
-        object is directly displaying any text, that text will be
-        treated as the name.  Otherwise, the accessible name of the
-        object will be used.  If there is no accessible name, then the
-        description of the object will be used.  This method will
-        return an empty array if nothing can be found.  [[[WDW - I
-        wonder if we should just have _generateName, _generateDescription,
-        _generateDisplayedText, etc., that don't do any fallback.  Then, we
-        can allow the formatting to do the fallback (e.g.,
-        'displayedText or name or description'). [[[JD to WDW - I needed
-        a _generateDescription for whereAmI. :-) See below.
-        """
-        result = []
-        name = self._script.getDisplayedText(obj)
-        if name:
-            result.append(name)
-        elif obj.description:
-            result.append(obj.description)
-        return result
-
-    def _generateDescription(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the description of the object,
-        if that description is different from that of the name and
-        label.
-        """
-        result = []
-        label = self._script.getDisplayedLabel(obj)
-        if obj.description and not obj.description in [obj.name, label]:
-            result.append(obj.description)
-        return result
-
     def _generateTextRole(self, obj, **args):
         """A convenience method to prevent the pyatspi.ROLE_PARAGRAPH role
         from being spoken. In the case of a pyatspi.ROLE_PARAGRAPH
@@ -164,34 +130,6 @@ class SpeechGenerator(generator.Generator):
         """
         return self._generateRoleName(obj, **args)
 
-    def _generateLabelAndName(self, obj, **args):
-        """Returns the label and the name as an array of strings (and possibly
-        voice and audio specifications).  The name will only be
-        present if the name is different from the label.
-        """
-        result = []
-        label = self._generateLabel(obj, **args)
-        name = self._generateName(obj, **args)
-        result.extend(label)
-        if not len(label):
-            result.extend(name)
-        elif len(name) and name[0] != label[0]:
-            result.extend(name)
-        return result
-
-    def _generateLabelOrName(self, obj, **args):
-        """Returns the label as an array of strings (and possibly voice
-        specifications).  If the label cannot be found, the name will
-        be used instead.  If the name cannot be found, an empty array
-        will be returned.
-        """
-        result = []
-        result.extend(self._generateLabel(obj, **args))
-        if not result:
-            if obj.name and (len(obj.name)):
-                result.append(obj.name)
-        return result
-
     def _generateUnrelatedLabels(self, obj, **args):
         """Returns, as an array of strings (and possibly voice
         specifications), all the labels which are underneath the obj's
@@ -224,31 +162,6 @@ class SpeechGenerator(generator.Generator):
     # State information                                                 #
     #                                                                   #
     #####################################################################
-
-    def _generateCellCheckedState(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the checked state of the
-        object.  This is typically for check boxes that are in a
-        table. An empty array will be returned if this is not a
-        checkable cell.
-        """
-        result = []
-        try:
-            action = obj.queryAction()
-        except NotImplementedError:
-            action = None
-        if action:
-            for i in range(0, action.nActions):
-                # Translators: this is the action name for
-                # the 'toggle' action. It must be the same
-                # string used in the *.po file for gail.
-                #
-                if action.getName(i) in ["toggle", _("toggle")]:
-                    oldRole = self._overrideRole(pyatspi.ROLE_CHECK_BOX,
-                                            args)
-                    result.extend(self.generateSpeech(obj, **args))
-                    self._restoreRole(oldRole, args)
-        return result
 
     def _generateMultiselectableState(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -411,23 +324,6 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generateImageDescription(self, obj, **args ):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the description of the image on
-        the object, if it exists.  Otherwise, an empty array is
-        returned.
-        """
-        result = []
-        try:
-            image = obj.queryImage()
-        except NotImplementedError:
-            pass
-        else:
-            description = image.imageDescription
-            if description and len(description):
-                result.append(description)
-        return result
-
     def _generateImage(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the image on the the object, if
@@ -440,7 +336,7 @@ class SpeechGenerator(generator.Generator):
             pass
         else:
             role = pyatspi.ROLE_IMAGE
-            result.extend(self.generateSpeech(obj, role=role))
+            result.extend(self.generate(obj, role=role))
         return result
 
     #####################################################################
@@ -448,49 +344,6 @@ class SpeechGenerator(generator.Generator):
     # Table interface information                                       #
     #                                                                   #
     #####################################################################
-
-    def _generateRowHeader(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the row header for an object
-        that is in a table, if it exists.  Otherwise, an empty array
-        is returned.
-        """
-        result = []
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            index = self._script.getCellIndex(obj)
-            rowIndex = table.getRowAtIndex(index)
-            if rowIndex >= 0:
-                # Get the header information.  In Java Swing, the
-                # information is not exposed via the description
-                # but is instead a header object, so we fall back
-                # to that if it exists.
-                #
-                # [[[TODO: WDW - the more correct thing to do, I
-                # think, is to look at the row header object.
-                # We've been looking at the description for so
-                # long, though, that we'll give the description
-                # preference for now.]]]
-                #
-                desc = table.getRowDescription(rowIndex)
-                if not desc:
-                    header = table.getRowHeader(rowIndex)
-                    if header:
-                        desc = self._script.getDisplayedText(header)
-                if desc and len(desc):
-                    text = desc
-                    if settings.speechVerbosityLevel \
-                            == settings.VERBOSITY_LEVEL_VERBOSE \
-                       and not args.get('formatType', None) \
-                           in ['basicWhereAmI', 'detailedWhereAmI']:
-                        text += " " \
-                            + rolenames.rolenames[\
-                            pyatspi.ROLE_ROW_HEADER].speech
-                    result.append(text)
-        return result
 
     def _generateNewRowHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
@@ -536,49 +389,6 @@ class SpeechGenerator(generator.Generator):
                        and ((newRow != oldRow) \
                             or (obj.parent != priorParent)):
                         result = self._generateRowHeader(obj, **args)
-        return result
-
-    def _generateColumnHeader(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the column header for an object
-        that is in a table, if it exists.  Otherwise, an empty array
-        is returned.
-        """
-        result = []
-        try:
-            table = obj.parent.queryTable()
-        except:
-            pass
-        else:
-            index = self._script.getCellIndex(obj)
-            columnIndex = table.getColumnAtIndex(index)
-            if columnIndex >= 0:
-                # Get the header information.  In Java Swing, the
-                # information is not exposed via the description
-                # but is instead a header object, so we fall back
-                # to that if it exists.
-                #
-                # [[[TODO: WDW - the more correct thing to do, I
-                # think, is to look at the row header object.
-                # We've been looking at the description for so
-                # long, though, that we'll give the description
-                # preference for now.]]]
-                #
-                desc = table.getColumnDescription(columnIndex)
-                if not desc:
-                    header = table.getColumnHeader(columnIndex)
-                    if header:
-                        desc = self._script.getDisplayedText(header)
-                if desc and len(desc):
-                    text = desc
-                    if settings.speechVerbosityLevel \
-                            == settings.VERBOSITY_LEVEL_VERBOSE \
-                       and not args.get('formatType', None) \
-                           in ['basicWhereAmI', 'detailedWhereAmI']:
-                        text += " " \
-                            + rolenames.rolenames[\
-                            pyatspi.ROLE_COLUMN_HEADER].speech
-                    result.append(text)
         return result
 
     def _generateNewColumnHeader(self, obj, **args):
@@ -627,91 +437,6 @@ class SpeechGenerator(generator.Generator):
                         result = self._generateColumnHeader(obj, **args)
         return result
 
-    def _generateTableCell2ChildLabel(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) for the label of a toggle in a table cell that
-        has a special 2 child pattern that we run into.  Otherwise, an
-        empty array is returned.
-        """
-        result = []
-
-        # If this table cell has 2 children and one of them has a
-        # 'toggle' action and the other does not, then present this
-        # as a checkbox where:
-        # 1) we get the checked state from the cell with the 'toggle' action
-        # 2) we get the label from the other cell.
-        # See Orca bug #376015 for more details.
-        #
-        if obj.childCount == 2:
-            cellOrder = []
-            hasToggle = [False, False]
-            for i, child in enumerate(obj):
-                try:
-                    action = child.queryAction()
-                except NotImplementedError:
-                    continue
-                else:
-                    for j in range(0, action.nActions):
-                        # Translators: this is the action name for
-                        # the 'toggle' action. It must be the same
-                        # string used in the *.po file for gail.
-                        #
-                        if action.getName(j) in ["toggle", _("toggle")]:
-                            hasToggle[i] = True
-                            break
-            if hasToggle[0] and not hasToggle[1]:
-                cellOrder = [ 1, 0 ]
-            elif not hasToggle[0] and hasToggle[1]:
-                cellOrder = [ 0, 1 ]
-            if cellOrder:
-                for i in cellOrder:
-                    if not hasToggle[i]:
-                        result.extend(self.generateSpeech(obj[i], **args))
-        return result
-
-    def _generateTableCell2ChildToggle(self, obj, **args):
-        """Returns an array of strings (and possinly voice and audio
-        specifications) for the toggle value of a toggle in a table
-        cell that has a special 2 child pattern that we run into.
-        Otherwise, an empty array is returned.
-        """
-        result = []
-
-        # If this table cell has 2 children and one of them has a
-        # 'toggle' action and the other does not, then present this
-        # as a checkbox where:
-        # 1) we get the checked state from the cell with the 'toggle' action
-        # 2) we get the label from the other cell.
-        # See Orca bug #376015 for more details.
-        #
-        if obj.childCount == 2:
-            cellOrder = []
-            hasToggle = [False, False]
-            for i, child in enumerate(obj):
-                try:
-                    action = child.queryAction()
-                except NotImplementedError:
-                    continue
-                else:
-                    for j in range(0, action.nActions):
-                        # Translators: this is the action name for
-                        # the 'toggle' action. It must be the same
-                        # string used in the *.po file for gail.
-                        #
-                        if action.getName(j) in ["toggle", _("toggle")]:
-                            hasToggle[i] = True
-                            break
-
-            if hasToggle[0] and not hasToggle[1]:
-                cellOrder = [ 1, 0 ]
-            elif not hasToggle[0] and hasToggle[1]:
-                cellOrder = [ 0, 1 ]
-            if cellOrder:
-                for i in cellOrder:
-                    if hasToggle[i]:
-                        result.extend(self.generateSpeech(obj[i], **args))
-        return result
-
     def _generateRealTableCell(self, obj, **args):
         """Orca has a feature to automatically read an entire row of a table
         as the user arrows up/down the roles.  This leads to complexity in
@@ -721,7 +446,7 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         oldRole = self._overrideRole('REAL_ROLE_TABLE_CELL', args)
-        result.extend(self.generateSpeech(obj, **args))
+        result.extend(self.generate(obj, **args))
         self._restoreRole(oldRole, args)
         if not result and settings.speakBlankLines \
            and not args.get('readingRow', False):
@@ -729,83 +454,6 @@ class SpeechGenerator(generator.Generator):
             # user has navigated to an empty line.
             #
             result.append(_("blank"))
-        return result
-
-    def _generateTableCellRow(self, obj, **args):
-        """Orca has a feature to automatically read an entire row of a table
-        as the user arrows up/down the roles.  This leads to complexity in
-        the code.  This method is used to return an array of strings
-        (and possibly voice and audio specifications) for an entire row
-        in a table if that's what the user has requested and if the row
-        has changed.  Otherwise, it will return an array for just the
-        current cell.
-        """
-        result = []
-
-        try:
-            parentTable = obj.parent.queryTable()
-        except NotImplementedError:
-            parentTable = None
-        isDetailedWhereAmI = args.get('formatType', None) == 'detailedWhereAmI'
-        if (settings.readTableCellRow or isDetailedWhereAmI) and parentTable \
-           and (not self._script.isLayoutOnly(obj.parent)):
-            parent = obj.parent
-            index = self._script.getCellIndex(obj)
-            row = parentTable.getRowAtIndex(index)
-            column = parentTable.getColumnAtIndex(index)
-
-            # This is an indication of whether we should speak all the
-            # table cells (the user has moved focus up or down a row),
-            # or just the current one (focus has moved left or right in
-            # the same row).
-            #
-            speakAll = True
-            if isDetailedWhereAmI:
-                if parentTable.nColumns <= 1:
-                    return result
-            elif "lastRow" in self._script.pointOfReference \
-               and "lastColumn" in self._script.pointOfReference:
-                pointOfReference = self._script.pointOfReference
-                speakAll = \
-                    (pointOfReference["lastRow"] != row) \
-                     or ((row == 0 or row == parentTable.nRows-1) \
-                     and pointOfReference["lastColumn"] == column)
-            if speakAll:
-                args['readingRow'] = True
-                for i in range(0, parentTable.nColumns):
-                    cell = parentTable.getAccessibleAt(row, i)
-                    if not cell:
-                        continue
-                    state = cell.getState()
-                    showing = state.contains(pyatspi.STATE_SHOWING)
-                    if showing:
-                        # If this table cell has a "toggle" action, and
-                        # doesn't have any label associated with it then
-                        # also speak the table column header.
-                        # See Orca bug #455230 for more details.
-                        #
-                        label = self._script.getDisplayedText(
-                            self._script.getRealActiveDescendant(cell))
-                        try:
-                            action = cell.queryAction()
-                        except NotImplementedError:
-                            action = None
-                        if action and (label == None or len(label) == 0):
-                            for j in range(0, action.nActions):
-                                # Translators: this is the action name for
-                                # the 'toggle' action. It must be the same
-                                # string used in the *.po file for gail.
-                                #
-                                if action.getName(j) in ["toggle",
-                                                         _("toggle")]:
-                                    accHeader = \
-                                        parentTable.getColumnHeader(i)
-                                    result.append(accHeader.name)
-                        result.extend(self._generateRealTableCell(cell, **args))
-            else:
-                result.extend(self._generateRealTableCell(obj, **args))
-        else:
-            result.extend(self._generateRealTableCell(obj, **args))
         return result
 
     def _generateUnselectedCell(self, obj, **args):
@@ -1180,15 +828,6 @@ class SpeechGenerator(generator.Generator):
 
         return [newLine]
 
-    def _generateCurrentLineText(self, obj, **args ):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represents the current line of text, if
-        this is a text object.  [[[WDW - consider returning an empty
-        array if this is not a text object.]]]
-        """
-        [text, caretOffset, startOffset] = self._script.getTextLineAtCaret(obj)
-        return [text]
-
     def _generateAnyTextSelection(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that says if any of the text for the entire
@@ -1237,22 +876,6 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generateNodeLevel(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represents the tree node level of the
-        object, or an empty array if the object is not a tree
-        node. [[[WDW - I wonder if this string should be moved to
-        settings.py.]]]
-        """
-        result = []
-        level = self._script.getNodeLevel(obj)
-        if level >= 0:
-            # Translators: this represents the depth of a node in a tree
-            # view (i.e., how many ancestors a node has).
-            #
-            result.append(_("tree level %d") % (level + 1))
-        return result
-
     def _generateNewNodeLevel(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represents the tree node level of the
@@ -1260,22 +883,13 @@ class SpeechGenerator(generator.Generator):
         if the node level is not different from the 'priorObj'
         'priorObj' attribute of the args dictionary.  The 'priorObj'
         is typically set by Orca to be the previous object with
-        focus.  [[[WDW - I wonder if this string should be moved to
-        settings.py.]]]
+        focus.
         """
-
-        # [[[TODO: WDW - hate duplicating code from _generateNodeLevel,
-        # but don't want to call it because it will make the same
-        # self._script.getNodeLevel call again.]]]
-        #
         result = []
         oldLevel = self._script.getNodeLevel(args.get('priorObj', None))
         newLevel = self._script.getNodeLevel(obj)
         if (oldLevel != newLevel) and (newLevel >= 0):
-            # Translators: this represents the depth of a node in a tree
-            # view (i.e., how many ancestors a node has).
-            #
-            result.append(_("tree level %d") % (newLevel + 1))
+            result.extend(self._generateNodeLevel(obj, **args))
         return result
 
     #####################################################################
@@ -1312,36 +926,6 @@ class SpeechGenerator(generator.Generator):
     #                                                                   #
     #####################################################################
 
-    def _generateRadioButtonGroup(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represents the radio button group label
-        for the object, or an empty array if the object has no such
-        label.
-        """
-        result = []
-        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
-            radioGroupLabel = None
-            relations = obj.getRelationSet()
-            for relation in relations:
-                if (not radioGroupLabel) \
-                    and (relation.getRelationType() \
-                         == pyatspi.RELATION_LABELLED_BY):
-                    radioGroupLabel = relation.getTarget(0)
-                    break
-            if radioGroupLabel:
-                result.append(self._script.getDisplayedText(radioGroupLabel))
-            else:
-                parent = obj.parent
-                while parent and (parent.parent != parent):
-                    if parent.getRole() in [pyatspi.ROLE_PANEL,
-                                            pyatspi.ROLE_FILLER]:
-                        label = self._generateLabelAndName(parent)
-                        if label:
-                            result.extend(label)
-                            break
-                    parent = parent.parent
-        return result
-
     def _generateNewRadioButtonGroup(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represents the radio button group label
@@ -1376,20 +960,6 @@ class SpeechGenerator(generator.Generator):
                             break
             if (not inSameGroup) and radioGroupLabel:
                 result.append(self._script.getDisplayedText(radioGroupLabel))
-        return result
-
-    def _generateRealActiveDescendantDisplayedText(self, obj, **args ):
-        """Objects, such as tables and trees, can represent individual cells
-        via a complicated nested hierarchy.  This method returns an
-        array of strings (and possibly voice and audio specifications)
-        that represents the text actually being painted in the cell,
-        if it can be found.  Otherwise, an empty array is returned.
-        """
-        result = []
-        text = self._script.getDisplayedText(
-          self._script.getRealActiveDescendant(obj))
-        if text:
-            result = [text]
         return result
 
     def _generateNumberOfChildren(self, obj, **args):
@@ -1725,26 +1295,6 @@ class SpeechGenerator(generator.Generator):
                           % {"index" : position,
                              "total" : total})
 
-        return result
-
-    def _generateNestingLevel(self, obj, **args):
-        """Returns an array of strings (and possibly voice and audio
-        specifications) that represent the nesting level of an object
-        in a list.
-        """
-        result = []
-        nestingLevel = 0
-        parent = obj.parent
-        while parent.parent.getRole() == pyatspi.ROLE_LIST:
-            nestingLevel += 1
-            parent = parent.parent
-        if nestingLevel:
-            # Translators: this represents a list item in a document.
-            # The nesting level is how 'deep' the item is (e.g., a
-            # level of 2 represents a list item inside a list that's
-            # inside another list).
-            #
-            result.append(_("Nesting level %d") % nestingLevel)
         return result
 
     def _generateDefaultButton(self, obj, **args):

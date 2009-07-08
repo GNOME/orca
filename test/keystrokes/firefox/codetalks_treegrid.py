@@ -121,8 +121,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow into child", 
-    ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
-     "     VISIBLE:  'ISBN 978-3-453-40540-0 Cell Auth', cursor=1",
+    ["BRAILLE LINE:  '978-3-453-40540-0 Cell Nora Roberts Cell $ 9.99 Cell'",
+     "     VISIBLE:  '978-3-453-40540-0 Cell Nora Robe', cursor=1",
      "SPEECH OUTPUT: '978-3-453-40540-0'"]))
 
 ########################################################################
@@ -132,16 +132,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "1. Right Arrow in child", 
-    ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
-     "     VISIBLE:  'Author Nora Roberts Cell Price $', cursor=1",
+    ["BRAILLE LINE:  '978-3-453-40540-0 Cell Nora Roberts Cell $ 9.99 Cell'",
+     "     VISIBLE:  'Nora Roberts Cell $ 9.99 Cell', cursor=1",
      "SPEECH OUTPUT: 'Nora Roberts'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "2. Right Arrow in child", 
-    ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
-     "     VISIBLE:  'Price $ 9.99 Cell', cursor=1",
+    ["BRAILLE LINE:  '978-3-453-40540-0 Cell Nora Roberts Cell $ 9.99 Cell'",
+     "     VISIBLE:  '$ 9.99 Cell', cursor=1",
      "SPEECH OUTPUT: '$ 9.99'"]))
 
 ########################################################################
@@ -151,16 +151,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "1. Left Arrow in child", 
-    ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
-     "     VISIBLE:  'Author Nora Roberts Cell Price $', cursor=1",
+    ["BRAILLE LINE:  '978-3-453-40540-0 Cell Nora Roberts Cell $ 9.99 Cell'",
+     "     VISIBLE:  'Nora Roberts Cell $ 9.99 Cell', cursor=1",
      "SPEECH OUTPUT: 'Nora Roberts'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "2. Left Arrow in child", 
-    ["BRAILLE LINE:  'ISBN 978-3-453-40540-0 Cell Author Nora Roberts Cell Price $ 9.99 Cell'",
-     "     VISIBLE:  'ISBN 978-3-453-40540-0 Cell Auth', cursor=1",
+    ["BRAILLE LINE:  '978-3-453-40540-0 Cell Nora Roberts Cell $ 9.99 Cell'",
+     "     VISIBLE:  '978-3-453-40540-0 Cell Nora Robe', cursor=1",
      "SPEECH OUTPUT: '978-3-453-40540-0'"]))
 
 ########################################################################

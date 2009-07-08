@@ -26,10 +26,10 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the next line",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "This is a test. \$l") + "'",
-     "     VISIBLE:  'This is a test. $l', cursor=16",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "This is a test. \$l") + "'",
-     "     VISIBLE:  'This is a test. $l', cursor=16",
+    ["BRAILLE LINE:  'This is a test. \$l'",
+     "     VISIBLE:  'This is a test. \$l', cursor=16",
+     "BRAILLE LINE:  'This is a test. \$l'",
+     "     VISIBLE:  'This is a test. \$l', cursor=16",
      "SPEECH OUTPUT: 'This is a test.'"]))
 
 ######################################################################
@@ -118,8 +118,8 @@ sequence.append(KeyComboAction("<Alt><Shift>Right"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "5. Alt Shift Right.",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 6 Paragraph7 Paragraph") + "'",
-     "     VISIBLE:  '7 Paragraph', cursor=1",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 6 Paragraph 7 Paragraph") + "'",
+     "     VISIBLE:  '6 Paragraph 7 Paragraph', cursor=1",
      "SPEECH OUTPUT: '6'",
      "SPEECH OUTPUT: '7'",
      "SPEECH OUTPUT: 'Row 3, column 4.'",

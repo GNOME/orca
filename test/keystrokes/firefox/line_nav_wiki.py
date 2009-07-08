@@ -766,8 +766,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BUG? - In 3.1 we aren't presenting More Actions at times; other times we are",
-     "BRAILLE LINE:  ' Combo'",
-     "     VISIBLE:  ' Combo', cursor=0",
+     "BRAILLE LINE:  'Combo'",
+     "     VISIBLE:  'Combo', cursor=1",
      "SPEECH OUTPUT: 'combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -786,8 +786,8 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BUG? - In 3.1 we aren't presenting More Actions at times; other times we are",
-     "BRAILLE LINE:  ' Combo'",
-     "     VISIBLE:  ' Combo', cursor=0",
+     "BRAILLE LINE:  'Combo'",
+     "     VISIBLE:  'Combo', cursor=1",
      "SPEECH OUTPUT: 'combo box'"]))
 
 sequence.append(utils.StartRecordingAction())

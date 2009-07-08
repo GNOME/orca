@@ -31,7 +31,6 @@ import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.keybindings as keybindings
 
-from braillegenerator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from formatting import Formatting
 
@@ -51,13 +50,8 @@ class Script(default.Script):
         """
         default.Script.__init__(self, app)
 
-    def getBrailleGenerator(self):
-        """Returns the braille generator for this script.
-        """
-        return BrailleGenerator(self)
-
     def getSpeechGenerator(self):
-        """Returns the braille generator for this script.
+        """Returns the speech generator for this script.
         """
         return SpeechGenerator(self)
 

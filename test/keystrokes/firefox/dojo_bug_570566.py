@@ -20,7 +20,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction(utils.DojoNightlyURLPrefix + "test_Editor.html"))
+sequence.append(TypeAction(utils.DojoNightlyURLPrefix + "editor/test_Editor.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("Editor Test", 
@@ -59,14 +59,14 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Created from div h2', cursor=1",
      "SPEECH OUTPUT: 'Created from div heading level 2 heading level 2'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(PauseAction(2000))
-sequence.append(utils.AssertPresentationAction(
-    "2. Up Arrow", 
-    ["BRAILLE LINE:  'Created from div h2'",
-     "     VISIBLE:  'Created from div h2', cursor=1",
-     "SPEECH OUTPUT: 'Created from div heading level 2'"]))
+#sequence.append(utils.StartRecordingAction())
+#sequence.append(KeyComboAction("Up"))
+#sequence.append(PauseAction(2000))
+#sequence.append(utils.AssertPresentationAction(
+#    "2. Up Arrow", 
+#    ["BRAILLE LINE:  'Created from div h2'",
+#     "     VISIBLE:  'Created from div h2', cursor=1",
+#     "SPEECH OUTPUT: 'Created from div heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

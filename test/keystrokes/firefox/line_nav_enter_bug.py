@@ -103,8 +103,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Version: List Component: List'",
-     "     VISIBLE:  'Version: List Component: List', cursor=1",
+    ["BRAILLE LINE:  'Version: 2.21.x List Component: braille List'",
+     "     VISIBLE:  'Version: 2.21.x List Component: ', cursor=1",
      "SPEECH OUTPUT: 'Version: 2.21.x List with 9 items Component link : braille List with 5 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -136,7 +136,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'GNOME Unspecified Combo'",
-     "     VISIBLE:  'GNOME Unspecified Combo', cursor=0",
+     "     VISIBLE:  'GNOME Unspecified Combo', cursor=7",
      "SPEECH OUTPUT: 'GNOME link Unspecified combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -428,8 +428,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Version: List Component: List'",
-     "     VISIBLE:  'Version: List Component: List', cursor=1",
+    ["BRAILLE LINE:  'Version: 2.21.x List Component: braille List'",
+     "     VISIBLE:  'Version: 2.21.x List Component: ', cursor=1",
      "SPEECH OUTPUT: 'Version: 2.21.x List with 9 items Component link : braille List with 5 items'"]))
 
 sequence.append(utils.StartRecordingAction())

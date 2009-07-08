@@ -1507,7 +1507,7 @@ class Script(default.Script):
                 textToSpeak = result[0].decode("UTF-8")
                 self._speakWriterText(event, textToSpeak)
                 braille.displayRegions(\
-                    brailleGen.getBrailleRegions(event.source))
+                    brailleGen.generateBraille(event.source))
                 return
 
         # Check to see if the object that just got focus is in the Setup
@@ -2262,7 +2262,7 @@ class Script(default.Script):
             textToSpeak = result.decode("UTF-8")
             self._speakWriterText(event, textToSpeak)
             braille.displayRegions( \
-                self.brailleGenerator.getBrailleRegions(event.source))
+                self.brailleGenerator.generateBraille(event.source))
         else:
             default.Script.onCaretMoved(self, event)
 

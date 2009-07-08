@@ -37,8 +37,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "tab to continents", 
-    ["BRAILLE LINE:  'Continents ListItem'",
-     "     VISIBLE:  'Continents ListItem', cursor=1",
+    ["BRAILLE LINE:  'Continents expanded ListItem'",
+     "     VISIBLE:  'Continents expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'Continents expanded tree level 1'"]))
 
 ########################################################################
@@ -48,8 +48,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to Africa", 
-    ["BRAILLE LINE:  'Africa ListItem'",
-     "     VISIBLE:  'Africa ListItem', cursor=1",
+    ["BRAILLE LINE:  'Africa collapsed ListItem'",
+     "     VISIBLE:  'Africa collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'Africa collapsed tree level 2'"]))
 
 ########################################################################
@@ -60,8 +60,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'Africa ListItem'",
-     "     VISIBLE:  'Africa ListItem', cursor=1",
+    ["BRAILLE LINE:  'Africa collapsed ListItem'",
+     "     VISIBLE:  'Africa collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item Africa item 1 of 6 collapsed tree level 2'"]))
 
 ########################################################################
@@ -71,8 +71,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "expand Africa", 
-    ["BRAILLE LINE:  'Africa ListItem'",
-     "     VISIBLE:  'Africa ListItem', cursor=1",
+    ["BRAILLE LINE:  'Africa expanded ListItem'",
+     "     VISIBLE:  'Africa expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -89,48 +89,48 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Kenya", acc_role=pyatspi.ROLE_LIST_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "arrow to Kenya", 
-    ["BRAILLE LINE:  'Kenya ListItem'",
-     "     VISIBLE:  'Kenya ListItem', cursor=1",
+    ["BRAILLE LINE:  'Kenya collapsed ListItem'",
+     "     VISIBLE:  'Kenya collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'Kenya collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "expand Kenya", 
-    ["BRAILLE LINE:  'Kenya ListItem'",
-     "     VISIBLE:  'Kenya ListItem', cursor=1",
+    ["BRAILLE LINE:  'Kenya expanded ListItem'",
+     "     VISIBLE:  'Kenya expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "collapse Kenya", 
-    ["BRAILLE LINE:  'Kenya ListItem'",
-     "     VISIBLE:  'Kenya ListItem', cursor=1",
+    ["BRAILLE LINE:  'Kenya collapsed ListItem'",
+     "     VISIBLE:  'Kenya collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to Sudan", 
-    ["BRAILLE LINE:  'Sudan ListItem'",
-     "     VISIBLE:  'Sudan ListItem', cursor=1",
+    ["BRAILLE LINE:  'Sudan collapsed ListItem'",
+     "     VISIBLE:  'Sudan collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'Sudan collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "arrow to Asia", 
-    ["BRAILLE LINE:  'Asia ListItem'",
-     "     VISIBLE:  'Asia ListItem', cursor=1",
+    ["BRAILLE LINE:  'Asia collapsed ListItem'",
+     "     VISIBLE:  'Asia collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'Asia collapsed tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "expand Asia", 
-    ["BRAILLE LINE:  'Asia ListItem'",
-     "     VISIBLE:  'Asia ListItem', cursor=1",
+    ["BRAILLE LINE:  'Asia expanded ListItem'",
+     "     VISIBLE:  'Asia expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 sequence.append(utils.StartRecordingAction())

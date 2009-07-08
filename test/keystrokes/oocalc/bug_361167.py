@@ -66,7 +66,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow to cell A2",
-    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table  Good in Pies Good in Pies Cell A2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Good in Pies Cell A2 '",
      "     VISIBLE:  'Good in Pies Cell A2 ', cursor=1",
      "SPEECH OUTPUT: 'Good in Pies Good in Pies A2'"]))
 
@@ -77,7 +77,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to cell B2",
-    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table  Apples Yes Cell B2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Apples Yes Cell B2 '",
      "     VISIBLE:  'Yes Cell B2 ', cursor=1",
      "SPEECH OUTPUT: 'Apples Yes B2'"]))
 
@@ -89,7 +89,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic where am I with dynamic headers set B2", 
-    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell B2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Apples Yes Cell B2 '",
      "     VISIBLE:  'Yes Cell B2 ', cursor=1",
      "SPEECH OUTPUT: 'cell column 2 Apples row 2 Good in Pies Yes'"]))
 
@@ -100,7 +100,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow to cell B3",
-    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table  Juiceable Yes Cell B3 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Juiceable Apples Yes Cell B3 '",
      "     VISIBLE:  'Yes Cell B3 ', cursor=1",
      "SPEECH OUTPUT: 'Juiceable Yes B3'"]))
 
@@ -111,7 +111,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to cell C3",
-    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table  Pears Yes Cell C3 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Juiceable Pears Yes Cell C3 '",
      "     VISIBLE:  'Yes Cell C3 ', cursor=1",
      "SPEECH OUTPUT: 'Pears Yes C3'"]))
 
@@ -123,7 +123,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic where am I with dynamic headers set C3",
-    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Yes Cell C3 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Juiceable Pears Yes Cell C3 '",
      "     VISIBLE:  'Yes Cell C3 ', cursor=1",
      "SPEECH OUTPUT: 'cell column 3 Pears row 3 Juiceable Yes'"]))
 
@@ -134,7 +134,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow to cell C2",
-    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table  Good in Pies No Cell C2 '",
+    ["BRAILLE LINE:  'soffice Application fruit(.ods|) - " + utils.getOOoName("Calc") + " Frame fruit(.ods|) - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Good in Pies Pears No Cell C2 '",
      "     VISIBLE:  'No Cell C2 ', cursor=1",
      "SPEECH OUTPUT: 'Good in Pies No C2'"]))
 

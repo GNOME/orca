@@ -90,8 +90,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'Admin List'",
+     "     VISIBLE:  'Admin List', cursor=1",
      "SPEECH OUTPUT: 'Admin multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -106,8 +106,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'accerciser List'",
+     "     VISIBLE:  'accerciser List', cursor=1",
      "SPEECH OUTPUT: 'accerciser multi-select List with 379 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -122,8 +122,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'abiscan List'",
+     "     VISIBLE:  'abiscan List', cursor=1",
      "SPEECH OUTPUT: 'abiscan multi-select List with 1248 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -138,8 +138,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  '0.0.1 List'",
+     "     VISIBLE:  '0.0.1 List', cursor=1",
      "SPEECH OUTPUT: '0.0.1 multi-select List with 857 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -154,8 +154,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  '--- List'",
+     "     VISIBLE:  '--- List', cursor=1",
      "SPEECH OUTPUT: '--- multi-select List with 555 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -202,8 +202,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'UNCONFIRMED List'",
+     "     VISIBLE:  'UNCONFIRMED List', cursor=1",
      "SPEECH OUTPUT: 'UNCONFIRMED' voice=uppercase",
      "SPEECH OUTPUT: 'multi-select List with 8 items'"]))
 
@@ -219,8 +219,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'FIXED List'",
+     "     VISIBLE:  'FIXED List', cursor=1",
      "SPEECH OUTPUT: 'FIXED' voice=uppercase",
      "SPEECH OUTPUT: 'multi-select List with 12 items'"]))
 
@@ -236,8 +236,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'blocker List'",
+     "     VISIBLE:  'blocker List', cursor=1",
      "SPEECH OUTPUT: 'blocker multi-select List with 7 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -252,8 +252,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'Immediate List'",
+     "     VISIBLE:  'Immediate List', cursor=1",
      "SPEECH OUTPUT: 'Immediate multi-select List with 5 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -268,8 +268,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'All List'",
+     "     VISIBLE:  'All List', cursor=1",
      "SPEECH OUTPUT: 'All multi-select List with 21 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -333,7 +333,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'contains Combo'",
-     "     VISIBLE:  'contains Combo', cursor=0",
+     "     VISIBLE:  'contains Combo', cursor=1",
      "SPEECH OUTPUT: 'contains combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -397,7 +397,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'contains Combo'",
-     "     VISIBLE:  'contains Combo', cursor=0",
+     "     VISIBLE:  'contains Combo', cursor=1",
      "SPEECH OUTPUT: 'contains combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -421,7 +421,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Only include Combo bugs numbered:  $l'",
-     "     VISIBLE:  'Only include Combo bugs numbered', cursor=0",
+     "     VISIBLE:  'Only include Combo bugs numbered', cursor=1",
      "SPEECH OUTPUT: 'Only include combo box bugs numbered: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -477,8 +477,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  '[Bug creation] List'",
+     "     VISIBLE:  '[Bug creation] List', cursor=1",
      "SPEECH OUTPUT: '[Bug creation] multi-select List with 26 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -509,8 +509,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'Unspecified List'",
+     "     VISIBLE:  'Unspecified List', cursor=1",
      "SPEECH OUTPUT: 'Unspecified multi-select List with 14 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -525,8 +525,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'Unspecified List'",
+     "     VISIBLE:  'Unspecified List', cursor=1",
      "SPEECH OUTPUT: 'Unspecified multi-select List with 12 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -582,7 +582,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  '--- Combo --- Combo  $l Or Button'",
-     "     VISIBLE:  '--- Combo --- Combo  $l Or Butto', cursor=0",
+     "     VISIBLE:  '--- Combo --- Combo  $l Or Butto', cursor=1",
      "SPEECH OUTPUT: '--- combo box --- combo box text Or button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -633,7 +633,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  '--- Combo --- Combo  $l Or Button'",
-     "     VISIBLE:  '--- Combo --- Combo  $l Or Butto', cursor=0",
+     "     VISIBLE:  '--- Combo --- Combo  $l Or Butto', cursor=1",
      "SPEECH OUTPUT: '--- combo box --- combo box text Or button'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -688,8 +688,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'Unspecified List'",
+     "     VISIBLE:  'Unspecified List', cursor=1",
      "SPEECH OUTPUT: 'Unspecified multi-select List with 12 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -704,8 +704,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'Unspecified List'",
+     "     VISIBLE:  'Unspecified List', cursor=1",
      "SPEECH OUTPUT: 'Unspecified multi-select List with 14 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -736,8 +736,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  '[Bug creation] List'",
+     "     VISIBLE:  '[Bug creation] List', cursor=1",
      "SPEECH OUTPUT: '[Bug creation] multi-select List with 26 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -794,7 +794,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Only include Combo bugs numbered:  $l'",
-     "     VISIBLE:  'Only include Combo bugs numbered', cursor=0",
+     "     VISIBLE:  'Only include Combo bugs numbered', cursor=1",
      "SPEECH OUTPUT: 'Only include combo box bugs numbered: text'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -818,7 +818,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'contains Combo'",
-     "     VISIBLE:  'contains Combo', cursor=0",
+     "     VISIBLE:  'contains Combo', cursor=1",
      "SPEECH OUTPUT: 'contains combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -882,7 +882,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'contains Combo'",
-     "     VISIBLE:  'contains Combo', cursor=0",
+     "     VISIBLE:  'contains Combo', cursor=1",
      "SPEECH OUTPUT: 'contains combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -945,8 +945,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'All List'",
+     "     VISIBLE:  'All List', cursor=1",
      "SPEECH OUTPUT: 'All multi-select List with 21 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -961,8 +961,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'Immediate List'",
+     "     VISIBLE:  'Immediate List', cursor=1",
      "SPEECH OUTPUT: 'Immediate multi-select List with 5 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -977,8 +977,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'blocker List'",
+     "     VISIBLE:  'blocker List', cursor=1",
      "SPEECH OUTPUT: 'blocker multi-select List with 7 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -993,8 +993,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'FIXED List'",
+     "     VISIBLE:  'FIXED List', cursor=1",
      "SPEECH OUTPUT: 'FIXED' voice=uppercase",
      "SPEECH OUTPUT: 'multi-select List with 12 items'"]))
 
@@ -1010,8 +1010,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'UNCONFIRMED List'",
+     "     VISIBLE:  'UNCONFIRMED List', cursor=1",
      "SPEECH OUTPUT: 'UNCONFIRMED' voice=uppercase",
      "SPEECH OUTPUT: 'multi-select List with 8 items'"]))
 
@@ -1059,8 +1059,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  '--- List'",
+     "     VISIBLE:  '--- List', cursor=1",
      "SPEECH OUTPUT: '--- multi-select List with 555 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1075,8 +1075,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  '0.0.1 List'",
+     "     VISIBLE:  '0.0.1 List', cursor=1",
      "SPEECH OUTPUT: '0.0.1 multi-select List with 857 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1091,8 +1091,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'abiscan List'",
+     "     VISIBLE:  'abiscan List', cursor=1",
      "SPEECH OUTPUT: 'abiscan multi-select List with 1248 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1107,8 +1107,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'accerciser List'",
+     "     VISIBLE:  'accerciser List', cursor=1",
      "SPEECH OUTPUT: 'accerciser multi-select List with 379 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1123,8 +1123,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'List'",
-     "     VISIBLE:  'List', cursor=0",
+    ["BRAILLE LINE:  'Admin List'",
+     "     VISIBLE:  'Admin List', cursor=1",
      "SPEECH OUTPUT: 'Admin multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())

@@ -323,6 +323,9 @@ class Region:
             self.string = self.rawLine
             self.cursorOffset = cursorOffset
 
+    def __str__(self):
+        return "Region: '%s', %d" % (self.string, self.cursorOffset)
+
     def processRoutingKey(self, offset):
         """Processes a cursor routing key press on this Component.  The offset
         is 0-based, where 0 represents the leftmost character of string
@@ -453,6 +456,9 @@ class Component(Region):
 
         self.accessible = accessible
 
+    def __str__(self):
+        return "Component: '%s', %d" % (self.string, self.cursorOffset)
+
     def getCaretOffset(self, offset):
         """Returns the caret position of the given offset if the object
         has text with a caret.  Otherwise, returns -1.
@@ -494,6 +500,9 @@ class Link(Component):
         have the region expand on cursor."""
         Component.__init__(self, accessible, string, cursorOffset, '', True)
 
+    def __str__(self):
+        return "Link: '%s', %d" % (self.string, self.cursorOffset)
+
     def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
         write structure for the purpose of indicating text attributes and
@@ -528,12 +537,14 @@ class Text(Region):
         """
 
         self.accessible = accessible
-        if orca_state.activeScript:
+        if orca_state.activeScript and self.accessible:
             [string, self.caretOffset, self.lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible,
                                                             startOffset)
         else:
             string = ""
+            self.caretOffset = 0
+            self.lineOffset = 0
 
         string = string.decode("UTF-8")
         if label:
@@ -574,6 +585,9 @@ class Text(Region):
 
         if not self.contracted and not settings.disableBrailleEOL:
             self.string += self.eol
+
+    def __str__(self):
+        return "Text: '%s', %d" % (self.string, self.cursorOffset)
 
     def repositionCursor(self):
         """Attempts to reposition the cursor in response to a new
@@ -1165,7 +1179,7 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
 def displayRegions(regionInfo):
     """Displays a list of regions on a single line, setting focus to the
        specified region.  The regionInfo parameter is something that is
-       typically returned by a call to braillegenerator.getBrailleRegions.
+       typically returned by a call to braille_generator.generateBraille.
 
     Arguments:
     - regionInfo: a list where the first element is a list of regions

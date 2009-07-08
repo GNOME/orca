@@ -33,7 +33,7 @@ sequence.append(KeyComboAction("<Alt>a", 500))
 sequence.append(WaitForFocus("All Pages", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "All Pages radio button",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Range All Pages selected radio button'"]))
 
@@ -45,9 +45,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "All Pages radio button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range All Pages radio button selected item 1 of 3.",
+     "SPEECH OUTPUT: 'Range All Pages radio button selected item 1 of 3.'",
      "SPEECH OUTPUT: 'Alt a'"]))
 
 ########################################################################
@@ -67,7 +67,7 @@ sequence.append(WaitForFocus("Pages:", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Range radio button",
     ["KNOWN ISSUE - the radio button should be presented as selected.",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler & y Pages: RadioButton'",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range & y Pages: RadioButton'",
      "     VISIBLE:  '& y Pages: RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Pages: not selected radio button'"]))
 
@@ -79,9 +79,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Range radio button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler &=y Pages: RadioButton'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y Pages: RadioButton'",
      "     VISIBLE:  '&=y Pages: RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range Pages: radio button selected item 3 of 3.",
+     "SPEECH OUTPUT: 'Range Pages: radio button selected item 3 of 3.'",
      "SPEECH OUTPUT: 'Alt e'"]))
 
 ########################################################################
@@ -93,7 +93,7 @@ sequence.append(WaitForFocus("All Pages", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "All Pages radio button",
     ["KNOWN ISSUE - the radio button should be presented as selected.",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range Filler & y All Pages RadioButton'",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range & y All Pages RadioButton'",
      "     VISIBLE:  '& y All Pages RadioButton', cursor=1",
      "SPEECH OUTPUT: 'All Pages not selected radio button'"]))
 

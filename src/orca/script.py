@@ -39,7 +39,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import braillegenerator
+import braille_generator
 import debug
 import flat_review
 import formatting
@@ -188,7 +188,7 @@ class Script:
     def getBrailleGenerator(self):
         """Returns the braille generator for this script.
         """
-        return braillegenerator.BrailleGenerator(self)
+        return braille_generator.BrailleGenerator(self)
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.

@@ -91,8 +91,8 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Normal cell",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader Normal'",
-     "     VISIBLE:  'Normal', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
      "SPEECH OUTPUT: 'Severity column header Normal'"]))
 
 ########################################################################
@@ -148,8 +148,8 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "60482 cell",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader 60482'",
-     "     VISIBLE:  '60482', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  '60482 Normal scrollable notebook', cursor=1",
      "SPEECH OUTPUT: 'Bug number column header 60482'"]))
 
 ########################################################################
@@ -164,8 +164,8 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Checkbox cell",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed?'",
-     "     VISIBLE:  '< > Fixed?', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
      "SPEECH OUTPUT: 'Fixed? column header check box not checked'"]))
 
 ########################################################################

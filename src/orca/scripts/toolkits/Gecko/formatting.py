@@ -33,6 +33,13 @@ import orca.formatting
 
 # pylint: disable-msg=C0301
 
+########################################################################
+#                                                                      #
+# Formatting for things that are not ARIA widgets.  For things that    #
+# are ARIA widgets, we use the default formatting (see the             #
+# getFormat method).                                                   #
+#                                                                      #
+########################################################################
 formatting = {
     'speech': {
         'suffix': {
@@ -69,6 +76,63 @@ formatting = {
         pyatspi.ROLE_TABLE: {
             'unfocused': '[]'
             },
+    },
+    'braille': {
+        # [[[TODO: WDW - we're doing very little here.  The goal for
+        # autocomplete boxes at the moment is that their children (e.g.,
+        # a text area, a menu, etc., do all the interactive work and
+        # the autocomplete acts as more of a container.]]]
+        #
+        pyatspi.ROLE_AUTOCOMPLETE: {
+            'unfocused': '[Component(obj, asString(roleName))]'
+        },
+        pyatspi.ROLE_CHECK_BOX: {
+            'unfocused': '[Component(obj,\
+                                     asString((not inDocumentContent\
+                                               and (label + displayedText)\
+                                               or (label and [""] or name))\
+                                              + roleName),\
+                                     indicator=asString(checkedState))]'
+        },
+        pyatspi.ROLE_COMBO_BOX: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + name + roleName),\
+                                     asString(label) and (len(asString(label)) + 1) or 0)]'
+            },
+        pyatspi.ROLE_IMAGE: {
+            'unfocused':  '(imageLink\
+                           and [Link(obj, (asString(label + displayedText)\
+                                           or asString(name))\
+                                          + " " + asString(value + roleName))]\
+                           or [Component(obj,\
+                                        asString(label + displayedText + value + roleName))])'
+        },
+        # [[[TODO: WDW - yikes!  We need more parameters to send to
+        # the Link constructor.]]]
+        #
+        pyatspi.ROLE_LINK: {
+            'unfocused': '[Link(obj, asString(currentLineText)\
+                                     or asString(displayedText)\
+                                     or asString(name))]',
+        },
+        pyatspi.ROLE_LIST: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + focusedItem + roleName),\
+                                     asString(label) and (len(asString(label)) + 1) or 0)]'
+        },
+        # If we're in document content, we present the indicator followed
+        # immediately by the role, followed by the label/displayed text,
+        # etc. The label/displayed text is obtained as part of the line
+        # contents, therefore we do not want to include it here.
+        #
+        pyatspi.ROLE_RADIO_BUTTON: {
+            'unfocused': '[Component(obj,\
+                                     asString((not inDocumentContent\
+                                               and ((label + displayedText) or description)\
+                                               or [""])\
+                                             + roleName),\
+                                   indicator=asString(radioState))]'
+        }
     }
 }
 
@@ -87,7 +151,7 @@ class Formatting(orca.formatting.Formatting):
     def getFormat(self, **args):
         # ARIA widgets get treated like regular default widgets.
         #
-        if args.get('isAria', False):
+        if args.get('useDefaultFormatting', False):
             return self._defaultFormatting.getFormat(**args)
         else:
             return orca.formatting.Formatting.getFormat(self, **args)

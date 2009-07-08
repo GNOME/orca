@@ -220,8 +220,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell basic Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
-     "     VISIBLE:  '<x> Alex', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave'",
+     "     VISIBLE:  '<x> Alex <x> Havoc <x> Tim <x> O', cursor=1",
      "SPEECH OUTPUT: 'tree table Alex cell check box checked column 2 of 6 row 2 of 53'"]))
 
 ########################################################################
@@ -233,10 +233,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell detailed Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
-     "     VISIBLE:  '<x> Alex', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
-     "     VISIBLE:  '<x> Alex', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave'",
+     "     VISIBLE:  '<x> Alex <x> Havoc <x> Tim <x> O', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave'",
+     "     VISIBLE:  '<x> Alex <x> Havoc <x> Tim <x> O', cursor=1",
      "SPEECH OUTPUT: 'tree table Alex cell check box checked column 2 of 6 row 2 of 53'",
      "SPEECH OUTPUT: 'tree table Alex cell check box checked column 2 of 6 row 2 of 53 New Years Day Alex check box checked Havoc check box checked Tim check box checked Owen check box checked Dave check box not checked'"]))
 
@@ -252,8 +252,8 @@ sequence.append(WaitAction("object:state-changed:checked",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell unchecked",
-    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader < > Alex'",
-     "     VISIBLE:  '< > Alex', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader New Years Day < > Alex <x> Havoc <x> Tim <x> Owen < > Dave'",
+     "     VISIBLE:  '< > Alex <x> Havoc <x> Tim <x> O', cursor=1",
      "SPEECH OUTPUT: 'not checked'"]))
 
 ########################################################################
@@ -268,8 +268,8 @@ sequence.append(WaitAction("object:state-changed:checked",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Alex checkbox cell checked",
-    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader <x> Alex'",
-     "     VISIBLE:  '<x> Alex', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame ScrollPane TreeTable Alex ColumnHeader New Years Day <x> Alex <x> Havoc <x> Tim <x> Owen < > Dave'",
+     "     VISIBLE:  '<x> Alex <x> Havoc <x> Tim <x> O', cursor=1",
      "SPEECH OUTPUT: 'checked'"]))
 
 ########################################################################

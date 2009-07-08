@@ -64,7 +64,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         elif handleTabButton:
             result.append(self._script.getDisplayedText(obj.parent[1]))
         else:
-            result.append(
+            result.extend(
                 speech_generator.SpeechGenerator._generateLabelAndName(
                     self, obj, **args))
 

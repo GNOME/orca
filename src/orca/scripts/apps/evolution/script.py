@@ -339,7 +339,7 @@ class Script(default.Script):
         speech.speak(utterances)
         settings.speechVerbosityLevel = savedSpeechVerbosityLevel
 
-        braille.displayRegions(brailleGen.getBrailleRegions(tab))
+        braille.displayRegions(brailleGen.generateBraille(tab))
 
     def getTimeForCalRow(self, row, noIncs):
         """Return a string equivalent to the time of the given row in
@@ -1088,7 +1088,7 @@ class Script(default.Script):
                                 includeContext=False,
                                 priorObj=oldLocusOfFocus)
                             [headerRegions, focusedRegion] = \
-                                         brailleGen.getBrailleRegions(header)
+                                         brailleGen.generateBraille(header)
                             brailleRegions.extend(headerRegions)
                             brailleRegions.append(braille.Region(" "))
 
@@ -1117,7 +1117,7 @@ class Script(default.Script):
                             includeContext=False,
                             priorObj=oldLocusOfFocus)
                         [cellRegions, focusedRegion] = \
-                                           brailleGen.getBrailleRegions(cell)
+                                           brailleGen.generateBraille(cell)
 
                         # Translators: this is the name of the
                         # status column header in the message
@@ -1210,7 +1210,7 @@ class Script(default.Script):
                                                   includeContext=False,
                                                   priorObj=oldLocusOfFocus)
             [brailleRegions, focusedRegion] = \
-                    brailleGen.getBrailleRegions(parent)
+                    brailleGen.generateBraille(parent)
             speech.speak(utterances)
 
             apptExtents = event.source.queryComponent().getExtents(0)
@@ -1229,7 +1229,7 @@ class Script(default.Script):
                                 includeContext=False,
                                 priorObj=oldLocusOfFocus)
                             [apptRegions, focusedRegion] = \
-                                brailleGen.getBrailleRegions(event.source)
+                                brailleGen.generateBraille(event.source)
                             brailleRegions.extend(apptRegions)
                             speech.speak(utterances)
 
@@ -1293,7 +1293,7 @@ class Script(default.Script):
                             includeContext=False,
                             priorObj=oldLocusOfFocus)
                         [apptRegions, focusedRegion] = \
-                            brailleGen.getBrailleRegions(child)
+                            brailleGen.generateBraille(child)
                         brailleRegions.extend(apptRegions)
                         speech.speak(utterances)
 

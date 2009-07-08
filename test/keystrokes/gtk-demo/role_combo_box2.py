@@ -39,7 +39,7 @@ sequence.append(WaitForFocus("All sheets", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "All sheets combo box item",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: All sheets Combo'",
-     "     VISIBLE:  'All sheets Combo', cursor=1",
+     "     VISIBLE:  'Only print: All sheets Combo', cursor=13",
      "SPEECH OUTPUT: 'Layout Only print: All sheets combo box'"]))
 
 ########################################################################
@@ -51,8 +51,8 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "All sheets combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: All sheets Combo'",
-     "     VISIBLE:  'All sheets Combo', cursor=1",
-     "SPEECH OUTPUT: 'Only print: combo box All sheets item 1 of 3.",
+     "     VISIBLE:  'Only print: All sheets Combo', cursor=13",
+     "SPEECH OUTPUT: 'Only print: combo box All sheets item 1 of 3.'",
      "SPEECH OUTPUT: 'Alt o'"]))
 
 ########################################################################
@@ -68,7 +68,7 @@ sequence.append(WaitAction("object:selection-changed",
 sequence.append(utils.AssertPresentationAction(
     "Event sheets combo box item",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
-     "     VISIBLE:  'Even sheets Combo', cursor=1",
+     "     VISIBLE:  'Only print: Even sheets Combo', cursor=13",
      "SPEECH OUTPUT: 'Even sheets'"]))
 
 ########################################################################
@@ -80,8 +80,8 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Even sheets combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
-     "     VISIBLE:  'Even sheets Combo', cursor=1",
-     "SPEECH OUTPUT: 'Only print: combo box Even sheets item 2 of 3.",
+     "     VISIBLE:  'Only print: Even sheets Combo', cursor=13",
+     "SPEECH OUTPUT: 'Only print: combo box Even sheets item 2 of 3.'",
      "SPEECH OUTPUT: 'Alt o'"]))
 
 ########################################################################

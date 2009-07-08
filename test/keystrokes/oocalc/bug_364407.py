@@ -78,12 +78,9 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "Type 'c3' followed by Return to jump to cell C3 in the spreadsheet",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
-     "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell C3 '",
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Calc") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell C3 '",
      "     VISIBLE:  'Cell C3 ', cursor=1",
-     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
-     "SPEECH OUTPUT: ' C3'"]))
+     "SPEECH OUTPUT: 'C3'"]))
 
 ######################################################################
 # 6. Enter Alt-f, Alt-c to close the Calc spreadsheet window.

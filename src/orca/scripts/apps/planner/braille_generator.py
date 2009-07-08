@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2006-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,66 +22,54 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.braille as braille
-import orca.settings as settings
-import orca.braillegenerator as braillegenerator
 import pyatspi
+
+import orca.braille_generator as braille_generator
 
 from orca.orca_i18n import _ # for gettext support
 
-class BrailleGenerator(braillegenerator.BrailleGenerator):
+class BrailleGenerator(braille_generator.BrailleGenerator):
     """We make this to appropiately present ribbon's toggle button in
     a toolbar used to display in a menu those options that doesn't
     fill in toolbar when the application is resized. Also for each one
     of the grphics buttons in the main window."""
 
     def __init__(self, script):
-        braillegenerator.BrailleGenerator.__init__(self, script)
+        braille_generator.BrailleGenerator.__init__(self, script)
 
-    def _getBrailleRegionsForToggleButton(self, obj):
-        """Get the braille for a radio button.  If the button already had
-        focus, then only the state is displayed.
-
-        Arguments:
-        - obj: the check box
-
-        Returns a list where the first element is a list of Regions to display
-        and the second element is the Region which should get focus.
+    def _generateDisplayedText(self, obj, **args ):
+        """Returns an array of strings for use by braille that represents all
+        the text being displayed by the object. [[[WDW - consider
+        returning an empty array if this is not a text object.]]]
         """
+        result = []
 
-        self._debugGenerator("_getBrailleRegionsForRadioButton", obj)
-
-        text = ""
-        text = self._script.appendString(text, 
-                                         self._script.getDisplayedLabel(obj))
-        text = self._script.appendString(text, 
-                                         self._script.getDisplayedText(obj))
-
-        # First special toggle button is the one in the toolbar and
-        # that it has no name Application should implement an
-        # accessible name in this component, but until this is made We
-        # speech/braille "display more options" when the focus is in
-        # one of these toggle buttons.
+        # This is the black triangle at the far right of the toolbar.
         #
-        roleList = [pyatspi.ROLE_TOGGLE_BUTTON, pyatspi.ROLE_TOOL_BAR]
+        handleRibbonButton = \
+            obj and not obj.name \
+            and obj.getRole() == pyatspi.ROLE_TOGGLE_BUTTON \
+            and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR
 
-        if self._script.isDesiredFocusedItem(obj, roleList) and not obj.name:
-            text += _("Display more options")
+        # This is one of the Gantt, Tasks, Resources, etc., buttons on the
+        # left hand side of the main window.
+        #
+        handleTabButton = \
+            obj and not obj.name \
+            and obj.getRole() == pyatspi.ROLE_TOGGLE_BUTTON \
+            and obj.parent.getRole() == pyatspi.ROLE_FILLER \
+            and len(obj.parent) == 2
 
-        text = self._script.appendString(text, self._getTextForRole(obj))
-
-        if obj.getState().contains(pyatspi.STATE_CHECKED):
-            brailleindicatorindex = 1
+        if handleRibbonButton:
+            result.append(_("Display more options"))
+        elif handleTabButton:
+            result.append(self._script.getDisplayedText(obj.parent[1]))
         else:
-            brailleindicatorindex = 0
+            result.extend(
+                braille_generator.BrailleGenerator._generateDisplayedText(
+                    self, obj, **args))
 
-        regions = []
-        indicator = \
-            settings.brailleRadioButtonIndicators[brailleindicatorindex]
-        componentRegion = braille.Component(obj, text, indicator=indicator)
-        regions.append(componentRegion)
-
-        return [regions, componentRegion]
+        return result

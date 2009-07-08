@@ -505,8 +505,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # ARIA widgets get treated like regular default widgets.
         #
         else:
-            args['isAria'] = self._script.isAriaWidget(obj)
+            args['useDefaultFormatting'] = self._script.isAriaWidget(obj)
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
-            del args['isAria']
+            del args['useDefaultFormatting']
         return result

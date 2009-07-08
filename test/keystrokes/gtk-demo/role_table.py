@@ -107,8 +107,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "Table Where Am I (again)",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5'",
-     "     VISIBLE:  '5', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles[ ]*'",
+     "     VISIBLE:  '5 packages of noodles[ ]*', cursor=1",
      "SPEECH OUTPUT: 'table Number cell 5 column 1 of 3 row 2 of 5'"]))
 
 ########################################################################

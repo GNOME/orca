@@ -265,7 +265,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two Combo'",
      "     VISIBLE:  'Two Combo', cursor=1",
-     "SPEECH OUTPUT: 'Combo boxes frame",
+     "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Editable panel Two combo box'"]))
 
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))

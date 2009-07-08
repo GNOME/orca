@@ -13,7 +13,7 @@ orca_python_PYTHON = \
 	app_prefs.py \
 	bookmarks.py \
 	braille.py \
-	braillegenerator.py \
+	braille_generator.py \
 	brlmon.py \
 	chnames.py \
 	dbusserver.py \

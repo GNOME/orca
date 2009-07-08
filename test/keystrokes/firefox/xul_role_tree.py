@@ -30,15 +30,17 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Bookmarks menu'",
      "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
 
+# Firefox 3.5 introduces a shortcut (Control Shift O) that was not present
+# in earlier versions.
+#
 sequence.append(PauseAction(3000))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...'",
-     "     VISIBLE:  'Organize Bookmarks...', cursor=1",
-     "SPEECH OUTPUT: 'Organize Bookmarks…'"]))
-
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...(\(Control Shift O\)|)'",
+     "     VISIBLE:  'Organize Bookmarks...(\(Control Sh|)', cursor=1",
+     "SPEECH OUTPUT: 'Organize Bookmarks…( Control Shift O|)'"]))
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
 
@@ -50,8 +52,8 @@ sequence.append(KeyComboAction("<Shift>Tab", 1000))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab for tree",
     ["BUG? - We are no longer speaking the Level",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks ListItem'",
-     "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks expanded ListItem TREE LEVEL 1'",
+     "     VISIBLE:  'All Bookmarks expanded ListItem ', cursor=1",
      "SPEECH OUTPUT: 'All Bookmarks expanded'"]))
 
 ########################################################################
@@ -61,16 +63,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Toolbar ListItem'",
-     "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Toolbar collapsed ListItem TREE LEVEL 2'",
+     "     VISIBLE:  'Bookmarks Toolbar collapsed List', cursor=1",
      "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed tree level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
-     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu collapsed ListItem TREE LEVEL 2'",
+     "     VISIBLE:  'Bookmarks Menu collapsed ListIte', cursor=1",
      "SPEECH OUTPUT: 'Bookmarks Menu collapsed'"]))
 
 ########################################################################
@@ -81,8 +83,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
-     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu collapsed ListItem TREE LEVEL 2'",
+     "     VISIBLE:  'Bookmarks Menu collapsed ListIte', cursor=1",
      "SPEECH OUTPUT: 'list item Bookmarks Menu item 2 of 3 collapsed tree level 2'"]))
 
 ########################################################################
@@ -92,8 +94,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to expand folder", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
-     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu expanded ListItem TREE LEVEL 2'",
+     "     VISIBLE:  'Bookmarks Menu expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 ########################################################################
@@ -104,8 +106,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
-     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu expanded ListItem TREE LEVEL 2'",
+     "     VISIBLE:  'Bookmarks Menu expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'list item Bookmarks Menu item 2 of 3 expanded tree level 2'"]))
 
 ########################################################################
@@ -115,8 +117,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in tree",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem'",
-     "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem TREE LEVEL 3'",
+     "     VISIBLE:  'Recently Bookmarked ListItem TRE', cursor=1",
      "SPEECH OUTPUT: 'Recently Bookmarked tree level 3'"]))
 
 ########################################################################
@@ -127,8 +129,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem'",
-     "     VISIBLE:  'Recently Bookmarked ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem TREE LEVEL 3'",
+     "     VISIBLE:  'Recently Bookmarked ListItem TRE', cursor=1",
      "SPEECH OUTPUT: 'list item Recently Bookmarked item 1 of 4 tree level 3'"]))
 
 ########################################################################
@@ -138,8 +140,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
-     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu expanded ListItem TREE LEVEL 2'",
+     "     VISIBLE:  'Bookmarks Menu expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'Bookmarks Menu expanded tree level 2'"]))
 
 ########################################################################
@@ -149,8 +151,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow to collapse folder", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu ListItem'",
-     "     VISIBLE:  'Bookmarks Menu ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu collapsed ListItem TREE LEVEL 2'",
+     "     VISIBLE:  'Bookmarks Menu collapsed ListIte', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################
@@ -160,16 +162,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Toolbar ListItem'",
-     "     VISIBLE:  'Bookmarks Toolbar ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Toolbar collapsed ListItem TREE LEVEL 2'",
+     "     VISIBLE:  'Bookmarks Toolbar collapsed List', cursor=1",
      "SPEECH OUTPUT: 'Bookmarks Toolbar collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in tree",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks ListItem'",
-     "     VISIBLE:  'All Bookmarks ListItem', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks expanded ListItem TREE LEVEL 1'",
+     "     VISIBLE:  'All Bookmarks expanded ListItem ', cursor=1",
      "SPEECH OUTPUT: 'All Bookmarks expanded tree level 1'"]))
 
 ########################################################################

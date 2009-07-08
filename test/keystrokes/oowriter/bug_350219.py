@@ -30,8 +30,7 @@ sequence.append(WaitForWindowActivate("Untitled[ ]*2 - " + utils.getOOoName("Wri
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "New text document",
-    ["BUG? - The braille context doesn't include the Frame",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame'",
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame'",
      "     VISIBLE:  'Untitled[ ]*2 - *",
      "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view  \$l'",
      "     VISIBLE:  ' $l', cursor=1",

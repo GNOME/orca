@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -27,15 +27,15 @@ http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
 
-import orca.braille as braille
-import orca.braillegenerator as braillegenerator
-import orca.rolenames as rolenames
-import orca.settings as settings
+import orca.braille_generator as braille_generator
+import orca.orca_state as orca_state
+
+from orca.orca_i18n import _ # for gettext support
 
 ########################################################################
 #                                                                      #
@@ -43,485 +43,217 @@ import orca.settings as settings
 #                                                                      #
 ########################################################################
 
-class BrailleGenerator(braillegenerator.BrailleGenerator):
+class BrailleGenerator(braille_generator.BrailleGenerator):
     """Provides a braille generator specific to Gecko.
     """
 
     def __init__(self, script):
-        braillegenerator.BrailleGenerator.__init__(self, script)
-        self.brailleGenerators[pyatspi.ROLE_AUTOCOMPLETE] = \
-             self._getBrailleRegionsForAutocomplete
-        self.brailleGenerators[pyatspi.ROLE_ENTRY]        = \
-             self._getBrailleRegionsForText
-        self.brailleGenerators[pyatspi.ROLE_LINK]         = \
-             self._getBrailleRegionsForLink
+        braille_generator.BrailleGenerator.__init__(self, script)
 
-    def _getTextForRole(self, obj, role=None):
-        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
-           and not obj.getRole() in [pyatspi.ROLE_SECTION,
-                                     pyatspi.ROLE_FORM,
-                                     pyatspi.ROLE_UNKNOWN]:
-            return rolenames.getBrailleForRoleName(obj, role)
-        else:
-            return None
-
-    def _getBrailleRegionsForAutocomplete(self, obj):
-        """Gets the braille for an autocomplete box.  We let the
-        handlers for the children do the rest.
-
-        Arguments:
-        - obj: an Accessible
-
-        Returns a list where the first element is a list of Regions to
-        display and the second element is the Region which should get
-        focus.
+    def _generateInDocumentContent(self, obj, **args):
+        """Returns True if this object is in HTML document content.
         """
+        return self._script.inDocumentContent(obj)
 
-        self._debugGenerator("Gecko._getBrailleRegionsForAutocomplete", obj)
-
-        # [[[TODO: WDW - we're doing very little here.  The goal for
-        # autocomplete boxes at the moment is that their children (e.g.,
-        # a text area, a menu, etc., do all the interactive work and
-        # the autocomplete acts as more of a container.]]]
-        #
-        regions = []
-        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            regions.append(braille.Region(
-                rolenames.getBrailleForRoleName(obj)))
-        else:
-            regions.append(braille.Region(""))
-
-        return (regions, regions[0])
-
-    def _getBrailleRegionsForCheckBox(self, obj):
-        """Get the braille for a check box.  If the check box already had
-        focus, then only the state is displayed.
-
-        Arguments:
-        - obj: the check box
-
-        Returns a list where the first element is a list of Regions to display
-        and the second element is the Region which should get focus.
+    def _generateImageLink(self, obj, **args):
+        """Returns the link (if any) for this image.
         """
+        imageLink = None
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_IMAGE:
+            imageLink = self._script.getAncestor(obj,
+                                                 [pyatspi.ROLE_LINK],
+                                                 [pyatspi.ROLE_DOCUMENT_FRAME])
+        return imageLink
 
-        self._debugGenerator("Gecko._getBrailleRegionsForCheckBox", obj)
+    def _generateRoleName(self, obj, **args):
+        """Prevents some roles from being spoken."""
+        result = []
+        role = args.get('role', obj.getRole())
+        if not obj.getRole() in [pyatspi.ROLE_SECTION,
+                                 pyatspi.ROLE_FORM,
+                                 pyatspi.ROLE_UNKNOWN]:
+            result.extend(braille_generator.BrailleGenerator._generateRoleName(
+                self, obj, **args))
+        return result
 
-        # Treat ARIA widgets like default.py widgets
-        #
-        if self._script.isAriaWidget(obj):
-            return braillegenerator.BrailleGenerator.\
-                       _getBrailleRegionsForCheckBox(self, obj)
-        
-        # In document content (I'm not sure about XUL widgets yet), a
-        # checkbox is its own little beast with no text.  So...  if it
-        # is in document content and has a label, we're likely to be
-        # displaying that label already.  If it doesn't have a label,
-        # though, we'll display its name.
-        #
-        text = ""
-        if not self._script.inDocumentContent():
-            text = self._script.appendString(
-                text, self._script.getDisplayedLabel(obj))
-            text = self._script.appendString(
-                text, self._script.getDisplayedText(obj))
-        else:
-            isLabelled = False
-            relationSet = obj.getRelationSet()
-            if relationSet:
-                for relation in relationSet:
-                    if relation.getRelationType() \
-                        == pyatspi.RELATION_LABELLED_BY:
-                        isLabelled = True
-                        break
-            if not isLabelled and obj.name and len(obj.name):
-                text = self._script.appendString(text, obj.name)
-
-        text = self._script.appendString(text, self._getTextForRole(obj))
-
-        # get the Braille indicator
-        state = obj.getState()
-        if state.contains(pyatspi.STATE_INDETERMINATE):
-            indicatorIndex = 2
-        elif state.contains(pyatspi.STATE_CHECKED):
-            indicatorIndex = 1
-        else:
-            indicatorIndex = 0
-
-        regions = []
-
-        componentRegion = braille.Component(
-            obj, text,
-            indicator=settings.brailleCheckBoxIndicators[indicatorIndex])
-        regions.append(componentRegion)
-
-        return [regions, componentRegion]
-
-    def _getBrailleRegionsForRadioButton(self, obj):
-        """Get the braille for a radio button.  If the radio button already
-        had focus, then only the state is displayed.
-
-        Arguments:
-        - obj: the radio button
-
-        Returns a list where the first element is a list of Regions to display
-        and the second element is the Region which should get focus.
-        """
-
-        self._debugGenerator("Gecko._getBrailleRegionsForRadioButton", obj)
-
-        # Treat ARIA widgets like default.py widgets
-        #
-        if self._script.isAriaWidget(obj):
-            return braillegenerator.BrailleGenerator.\
-                       _getBrailleRegionsForRadioButton(self, obj)
-        
-        # In document content (I'm not sure about XUL widgets yet), a
-        # radio button is its own little beast with no text.  So...  if it
-        # is in document content and has a label, we're likely to be
-        # displaying that label already.  If it doesn't have a label,
-        # though, we'll display its name.
-        #
-        text = ""
-        if not self._script.inDocumentContent():
-            text = self._script.appendString(
-                text, self._script.getDisplayedLabel(obj))
-            text = self._script.appendString(
-                text, self._script.getDisplayedText(obj))
-        else:
-            isLabelled = False
-            relationSet = obj.getRelationSet()
-            if relationSet:
-                for relation in relationSet:
-                    if relation.getRelationType() \
-                        == pyatspi.RELATION_LABELLED_BY:
-                        isLabelled = True
-                        break
-
-            if not isLabelled and obj.name and len(obj.name):
-                text = self._script.appendString(text, obj.name)
-
-        text = self._script.appendString(text, self._getTextForRole(obj))
-
-        indicatorIndex = int(obj.getState().contains(pyatspi.STATE_CHECKED))
-
-        regions = []
-        componentRegion = braille.Component(
-            obj, text,
-            indicator=settings.brailleRadioButtonIndicators[indicatorIndex])
-        regions.append(componentRegion)
-
-        return [regions, componentRegion]
-
-    def _getBrailleRegionsForText(self, obj):
-        """Gets text to be displayed for the entry of an autocomplete box.
-
-        Arguments:
-        - obj: an Accessible
-
-        Returns a list where the first element is a list of Regions to
-        display and the second element is the Region which should get
-        focus.
-        """
-
-        self._debugGenerator("Gecko._getBrailleRegionsForText", obj)
-
-        # Treat ARIA widgets like default.py widgets
-        #
-        if self._script.isAriaWidget(obj):
-            return braillegenerator.BrailleGenerator.\
-                       _getBrailleRegionsForText(self, obj)
-        
-        parent = obj.parent
-        if parent.getRole() != pyatspi.ROLE_AUTOCOMPLETE:
-            return braillegenerator.BrailleGenerator._getBrailleRegionsForText(
-                self, obj)
-
-        regions = []
-
-        # This is the main difference between this class and the default
-        # class - we'll give this thing a name here, and we'll make it
-        # be the name of the autocomplete.
-        #
-        label = self._script.getDisplayedLabel(parent)
-        if not label or not len(label):
-            label = parent.name
-
-        textRegion = braille.Text(obj, label, settings.brailleEOLIndicator)
-        regions.append(textRegion)
-
-        if settings.presentReadOnlyText \
-           and self._script.isReadOnlyTextArea(obj):
-            regions.append(braille.Region(" " \
-                                          + settings.brailleReadOnlyString))
-
-        return [regions, textRegion]
-
-    def _getBrailleRegionsForComboBox(self, obj):
-        """Get the braille for a combo box.  If the combo box already has
-        focus, then only the selection is displayed.
-
-        Arguments:
-        - obj: the combo box
-
-        Returns a list where the first element is a list of Regions to display
-        and the second element is the Region which should get focus.
-        """
-
-        self._debugGenerator("Gecko._getBrailleRegionsForComboBox", obj)
-
-        # Treat ARIA widgets like default.py widgets
-        #
-        if self._script.isAriaWidget(obj):
-            return braillegenerator.BrailleGenerator.\
-                     _getBrailleRegionsForComboBox(self, obj)
-        
-        regions = []
-
-        label = self._script.getDisplayedLabel(obj)
-        if not label and not self._script.inDocumentContent():
-            label = obj.name
-
-        focusedRegionIndex = 0
-        if label and len(label):
-            regions.append(braille.Region(label + " "))
-            focusedRegionIndex = 1
-
-        # With Gecko, a combo box has a menu as a child.  The text being
-        # displayed for the combo box can be obtained via the selected
-        # menu item.
-        #
-        menu = None
-        for child in obj:
-            if child.getRole() == pyatspi.ROLE_MENU:
-                menu = child
-                break
-        if menu:
-            child = None
-            try:
-                # This should work...
-                #
-                child = menu.querySelection().getSelectedChild(0)
-                if not child:
-                    # It's probably a Gtk combo box.
+    def _generateName(self, obj, **args):
+        result = []
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_COMBO_BOX:
+            # With Gecko, a combo box has a menu as a child.  The text being
+            # displayed for the combo box can be obtained via the selected
+            # menu item.
+            #
+            menu = None
+            for child in obj:
+                if child.getRole() == pyatspi.ROLE_MENU:
+                    menu = child
+                    break
+            if menu:
+                child = None
+                try:
+                    # This should work...
                     #
-                    return braillegenerator.BrailleGenerator.\
-                        _getBrailleRegionsForComboBox(self, obj)
-            except:
-                # But just in case, we'll fall back on this.
-                # [[[TODO - JD: Will we ever have a case where the first
-                # fails, but this will succeed???]]]
-                #
-                for item in menu:
-                    if item.getState().contains(pyatspi.STATE_SELECTED):
-                        child = item
-                        break
-            if child:
-                regions.append(braille.Region(child.name))
-
-        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            regions.append(braille.Region(
-                " " + rolenames.getBrailleForRoleName(obj)))
-
-        # Things may not have gone as expected above, so we'll do some
-        # defensive programming to make sure we don't get an index out
-        # of bounds.
-        #
-        if focusedRegionIndex >= len(regions):
-            focusedRegionIndex = 0
-
-        if obj.getState().contains(pyatspi.STATE_FOCUSED):
-            focusedRegion = regions[focusedRegionIndex]
+                    child = menu.querySelection().getSelectedChild(0)
+                    if not child:
+                        # It's probably a Gtk combo box.
+                        #
+                        result = braille_generator.BrailleGenerator.\
+                            _generateDisplayedText(self, obj, **args)
+                except:
+                    # But just in case, we'll fall back on this.
+                    # [[[TODO - JD: Will we ever have a case where the first
+                    # fails, but this will succeed???]]]
+                    #
+                    for item in menu:
+                        if item.getState().contains(pyatspi.STATE_SELECTED):
+                            child = item
+                            break
+                if child and child.name:
+                    result.append(child.name)
         else:
-            focusedRegion = None
+            result.extend(braille_generator.BrailleGenerator._generateName(
+                              self, obj, **args))
+        if not result and role == pyatspi.ROLE_LIST_ITEM:
+            result.append(self._script.expandEOCs(obj))
 
-        # [[[TODO: WDW - perhaps if a text area was created, we should
-        # give focus to it.]]]
-        #
-        return [regions, focusedRegion]
+        link = None
+        if role == pyatspi.ROLE_LINK:
+            link = obj
+        elif role == pyatspi.ROLE_IMAGE and not result:
+            link = self._generateImageLink(obj, **args)
+        if link and (not result or len(result[0].strip()) == 0):
+            # If there's no text for the link, expose part of the
+            # URI to the user.
+            #
+            basename = self._script.getLinkBasename(link)
+            if basename:
+                result.append(basename)
 
-    def _getBrailleRegionsForMenuItem(self, obj):
-        """Get the braille for a menu item.
+        return result
 
-        Arguments:
-        - obj: the menu item
-
-        Returns a list where the first element is a list of Regions to display
-        and the second element is the Region which should get focus.
+    def _generateDescription(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the description of the object,
+        if that description is different from that of the name and
+        label.
         """
+        if args.get('role', obj.getRole()) == pyatspi.ROLE_LINK \
+           and obj.parent.getRole() == pyatspi.ROLE_IMAGE:
+            result = self._generateName(obj, **args)
+            # Translators: The following string is spoken to let the user
+            # know that he/she is on a link within an image map. An image
+            # map is an image/graphic which has been divided into regions.
+            # Each region can be clicked on and has an associated link.
+            # Please see http://en.wikipedia.org/wiki/Imagemap for more
+            # information and examples.
+            #
+            result.append(_("image map link"))
+        else:
+            result = braille_generator.BrailleGenerator.\
+                           _generateDescription(self, obj, **args)
+        return result
 
-        self._debugGenerator("Gecko._getBrailleRegionsForMenuItem", obj)
-
-        # Treat ARIA widgets like default.py widgets
+    def _generateLabel(self, obj, **args):
+        result = braille_generator.BrailleGenerator._generateLabel(self,
+                                                                   obj,
+                                                                   **args)
+        role = args.get('role', obj.getRole())
+        # We'll attempt to guess the label under some circumstances.
         #
-        if self._script.isAriaWidget(obj):
-            return braillegenerator.BrailleGenerator.\
-                     _getBrailleRegionsForMenuItem(self, obj)
-        
-        if not self._script.inDocumentContent():
-            return braillegenerator.BrailleGenerator.\
-                       _getBrailleRegionsForMenuItem(self, obj)
-
-        regions = []
-
-        # Displaying "menu item" for a combo box can confuse users. Therefore,
-        # display the combo box role instead.  Also, only do it if the menu
-        # item is not focused (if the menu item is focused, it means we're
-        # navigating in the combo box).
+        # [[[TODO: WDW - ROLE_ENTRY is noticeably absent from here.  If
+        # we include it here, the label_guess_bug_546815.py tests will
+        # end up showing the label twice.  So, I've pulled the ROLE_ENTRY
+        # out of here.  The effect of that is that we go back to the old
+        # way where the entry will appear on the same line as the text.
+        # I think there's a bug lurking there, though, in that the EOC for
+        # the entry seems to still exist on the braille line.  This was
+        # in the old (pre-refactor) code, too]]]
         #
-        label = self._script.getDisplayedLabel(obj)
-        focusedRegionIndex = 0
-        if label and len(label):
-            regions.append(braille.Region(label + " "))
-            focusedRegionIndex = 1
-        regions.append(braille.Region(obj.name))
-
-        comboBox = \
-                 self._script.getAncestor(obj,
-                                          [pyatspi.ROLE_COMBO_BOX],
-                                          [pyatspi.ROLE_DOCUMENT_FRAME])
-        if comboBox \
-           and not obj.getState().contains(pyatspi.STATE_FOCUSED) \
-           and (settings.brailleVerbosityLevel == \
-                settings.VERBOSITY_LEVEL_VERBOSE):
-            regions.append(braille.Region(
-                " " + rolenames.getBrailleForRoleName(comboBox)))
-
-        return [regions, regions[focusedRegionIndex]]
-
-    def _getBrailleRegionsForList(self, obj):
-        """Get the braille for a list in a form.  If the list already has
-        focus, then only the selection is displayed.
-
-        Arguments:
-        - obj: the list
-
-        Returns a list where the first element is a list of Regions to display
-        and the second element is the Region which should get focus.
-        """
-
-        self._debugGenerator("Gecko._getBrailleRegionsForList", obj)
-
-        # Treat ARIA widgets like default.py widgets
+        # [[[TODO: WDW - ROLE_COMBO_BOX, ROLE_PASSWORD, ROLE_CHECK_BOX
+        # and ROLE_RADIO_BUTTON are absent for reasons similar to
+        # ROLE_ENTRY.]]]
         #
-        if self._script.isAriaWidget(obj):
-            return braillegenerator.BrailleGenerator.\
-                       _getBrailleRegionsForList(self, obj)
-        
-        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            return braillegenerator.BrailleGenerator.\
-                       _getBrailleRegionsForList(self, obj)
+        if not len(result) \
+           and role in [pyatspi.ROLE_LIST,
+                        pyatspi.ROLE_PARAGRAPH,
+                        pyatspi.ROLE_TEXT] \
+           and self._script.inDocumentContent(obj) \
+           and not self._script.isAriaWidget(obj):
+            label = self._script.guessTheLabel(obj)
+            if label:
+                result.append(label)
 
-        regions = []
-        focusedRegionIndex = 0
+        # XUL combo boxes don't always have a label for/by
+        # relationship.  But, they will make their names be
+        # the string of the thing labelling them.
+        #
+        if not len(result) \
+           and role == pyatspi.ROLE_COMBO_BOX \
+           and not self._script.inDocumentContent(obj):
+            result.append(obj.name)
 
-        if obj.getState().contains(pyatspi.STATE_FOCUSED):
-            label = self._script.getDisplayedLabel(obj)
-            if not label:
-                label = obj.name
+        # If this is an autocomplete, and we'll make the label be the
+        # name of the autocomplete.
+        #
+        if not len(result):
+            parent = obj.parent
+            if parent and parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+                label = self._script.getDisplayedLabel(parent)
+                if not label or not len(label):
+                    label = parent.name
+                result.append(label)
 
-            if label and len(label):
-                regions.append(braille.Region(label + " "))
-                focusedRegionIndex = 1
+        return result
 
+    def _generateExpandedEOCs(self, obj, **args):
+        """Returns the expanded embedded object characters for an object."""
+        result = []
+        text = self._script.expandEOCs(obj)
+        if text:
+            result.append(text)
+        return result
+
+    def _generateFocusedItem(self, obj, **args):
+        result = []
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_LIST:
             item = None
             selection = obj.querySelection()
             for i in xrange(obj.childCount):
                 if selection.isChildSelected(i):
                     item = obj[i]
                     break
-            if not item:
-                item = obj[0]
-            regions.append(braille.Region(item.name + " "))
-        elif obj.getState().contains(pyatspi.STATE_FOCUSABLE):
-            focusedRegionIndex = -1
+            item = item or obj[0]
+            if item and (item != orca_state.locusOfFocus):
+                name = self._generateName(item, **args)
+                if name and name != self._generateLabel(obj, **args):
+                    result.extend(name)
+        return result
 
-        if settings.brailleVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
-            regions.append(braille.Region(
-                rolenames.getBrailleForRoleName(obj)))
-
-        if focusedRegionIndex > -1:
-            focusedRegion = regions[focusedRegionIndex]
-        else:
-            focusedRegion = None
-
-        return [regions, focusedRegion]
-
-    def _getBrailleRegionsForImage(self, obj):
-        """Get the braille regions for an image.
-
-        Arguments:
-        - obj: an Accessible
-
-        Returns a list where the first element is a list of Regions to
-        display and the second element is the Region which should get
-        focus.
-        """
-
-        self._debugGenerator("Gecko._getBrailleRegionsForImage", obj)
-
-        # Treat ARIA widgets like default.py widgets
+    def generateBraille(self, obj, **args):
+        result = []
+        # ARIA widgets get treated like regular default widgets.
         #
-        if self._script.isAriaWidget(obj):
-            return braillegenerator.BrailleGenerator.\
-                       _getBrailleRegionsForImage(self, obj)
-        
-        text = ""
-        text = self._script.appendString(text, 
-                                         self._script.getDisplayedLabel(obj))
-        text = self._script.appendString(text,
-                                         self._script.getDisplayedText(obj))
-        link = self._script.getAncestor(obj, 
-                                        [pyatspi.ROLE_LINK],
-                                        [pyatspi.ROLE_DOCUMENT_FRAME])
-        if link:
-            if len(text) == 0:
-                # If there's no text for the link, expose part of the
-                # link to the user if the image is in a link.
-                #
-                basename = self._script.getLinkBasename(link)
-                if basename:
-                    text = basename
-
-        text = self._script.appendString(text,
-                                         self._script.getTextForValue(obj))
-        text = self._script.appendString(text, self._getTextForRole(obj))
-
-        regions = []
-        if link:
-            region = braille.Link(obj, text)
-        else:
-            region = braille.Component(obj, text)
-        regions.append(region)
-
-        return [regions, region]
-
-    def _getBrailleRegionsForLink(self, obj):
-        """Gets text to be displayed for a link.
-
-        Arguments:
-        - obj: an Accessible
-
-        Returns a list where the first element is a list of Regions to
-        display and the second element is the Region which should get
-        focus.
-        """
-
-        self._debugGenerator("Gecko._getBrailleRegionsForLink", obj)
-
-        text, caretOffset, startOffset = self._script.getTextLineAtCaret(obj)
-        if not len(text):
-            text = self._script.getDisplayedText(obj)
-
-        # If there's no text for the link, expose part of the
-        # URI to the user.
+        args['includeContext'] = not self._script.inDocumentContent(obj)
+        args['useDefaultFormatting'] = \
+            self._script.isAriaWidget(obj) \
+            or ((obj.getRole() == pyatspi.ROLE_LIST) \
+                and (not obj.getState().contains(pyatspi.STATE_FOCUSABLE)))
+        # Treat menu items in collapsed combo boxes as if the combo box
+        # had focus. This will make things more consistent with how we
+        # present combo boxes outside of Gecko.
         #
-        if len(text) == 0:
-            basename = self._script.getLinkBasename(obj)
-            if basename:
-                text = basename
-
-        regions = []
-        linkRegion = braille.Link(obj, text, caretOffset - startOffset)
-        regions.append(linkRegion)
-
-        return [regions, linkRegion]
+        if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
+            comboBox = self._script.getAncestor(obj,
+                                                [pyatspi.ROLE_COMBO_BOX],
+                                                [pyatspi.ROLE_FRAME])
+            if comboBox \
+               and not comboBox.getState().contains(pyatspi.STATE_EXPANDED):
+                obj = comboBox
+        result.extend(braille_generator.BrailleGenerator.\
+                          generateBraille(self, obj, **args))
+        del args['includeContext']
+        del args['useDefaultFormatting']
+        return result

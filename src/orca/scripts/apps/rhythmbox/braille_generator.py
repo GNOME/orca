@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,35 +22,21 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.braillegenerator as braillegenerator
+import orca.braille_generator as braille_generator
 
-class BrailleGenerator(braillegenerator.BrailleGenerator):
-    """Overrides _getBrailleRegionsForTableCell to correctly handle 
-    the table cells in the Library table.
+class BrailleGenerator(braille_generator.BrailleGenerator):
+
+    # pylint: disable-msg=W0142
+
+    """Overrides _generateRealTableCell to correctly handle the table
+    cells in the Library table.
     """
-
     def __init__(self, script):
-        braillegenerator.BrailleGenerator.__init__(self, script)
+        braille_generator.BrailleGenerator.__init__(self, script)
 
-    def _getBrailleRegionsForTableCell(self, obj):
-        """Get the braille for a single table cell
-
-        Arguments:
-        - obj: the table
-
-        Returns a list where the first element is a list of Regions to 
-        display and the second element is the Region which should get focus.
-        """
-
-        # Check to see if this is a table cell from the Library table.
-        # If so, it'll have five children and we are interested in the
-        # penultimate one. See bug #512639 for more details.
-        #
-        if obj.childCount == 5:
-            obj = obj[3]
-
-        return braillegenerator.BrailleGenerator.\
-                    _getBrailleRegionsForTableCell(self, obj)
+    def _generateRealTableCell(self, obj, **args):
+        return braille_generator.BrailleGenerator._generateRealTableCell(
+            self, self._script.adjustTableCell(obj), **args)

@@ -87,8 +87,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Admin List'",
-     "     VISIBLE:  'Admin List', cursor=1",
+    ["BRAILLE LINE:  'Classification: Admin List'",
+     "     VISIBLE:  'Classification: Admin List', cursor=17",
      "SPEECH OUTPUT: 'Classification: Admin multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -97,8 +97,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'accerciser List'",
-     "     VISIBLE:  'accerciser List', cursor=1",
+    ["BRAILLE LINE:  'Product: accerciser List'",
+     "     VISIBLE:  'Product: accerciser List', cursor=10",
      "SPEECH OUTPUT: 'Product: accerciser multi-select List with 379 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -107,8 +107,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'abiscan List'",
-     "     VISIBLE:  'abiscan List', cursor=1",
+    ["BRAILLE LINE:  'Component: abiscan List'",
+     "     VISIBLE:  'Component: abiscan List', cursor=12",
      "SPEECH OUTPUT: 'Component: abiscan multi-select List with 1248 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -117,8 +117,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '0.0.1 List'",
-     "     VISIBLE:  '0.0.1 List', cursor=1",
+    ["BRAILLE LINE:  'Version: 0.0.1 List'",
+     "     VISIBLE:  'Version: 0.0.1 List', cursor=10",
      "SPEECH OUTPUT: 'Version: 0.0.1 multi-select List with 857 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -127,8 +127,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '--- List'",
-     "     VISIBLE:  '--- List', cursor=1",
+    ["BRAILLE LINE:  'Target Milestone: --- List'",
+     "     VISIBLE:  'Target Milestone: --- List', cursor=19",
      "SPEECH OUTPUT: 'Target Milestone: --- multi-select List with 555 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -198,8 +198,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'UNCONFIRMED List'",
-     "     VISIBLE:  'UNCONFIRMED List', cursor=1",
+    ["BRAILLE LINE:  'Status: UNCONFIRMED List'",
+     "     VISIBLE:  'Status: UNCONFIRMED List', cursor=9",
      "SPEECH OUTPUT: 'Status: UNCONFIRMED multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -208,8 +208,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'FIXED List'",
-     "     VISIBLE:  'FIXED List', cursor=1",
+    ["BRAILLE LINE:  'Resolution: FIXED List'",
+     "     VISIBLE:  'Resolution: FIXED List', cursor=13",
      "SPEECH OUTPUT: 'Resolution: FIXED multi-select List with 12 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -218,8 +218,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'blocker List'",
-     "     VISIBLE:  'blocker List', cursor=1",
+    ["BRAILLE LINE:  'Severity: blocker List'",
+     "     VISIBLE:  'Severity: blocker List', cursor=11",
      "SPEECH OUTPUT: 'Severity: blocker multi-select List with 7 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -228,8 +228,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Immediate List'",
-     "     VISIBLE:  'Immediate List', cursor=1",
+    ["BRAILLE LINE:  'Priority: Immediate List'",
+     "     VISIBLE:  'Priority: Immediate List', cursor=11",
      "SPEECH OUTPUT: 'Priority: Immediate multi-select List with 5 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -238,8 +238,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'All List'",
-     "     VISIBLE:  'All List', cursor=1",
+    ["BRAILLE LINE:  'OS: All List'",
+     "     VISIBLE:  'OS: All List', cursor=5",
      "SPEECH OUTPUT: 'OS: All multi-select List with 21 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -432,8 +432,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  '[Bug creation] List'",
-     "     VISIBLE:  '[Bug creation] List', cursor=1",
+    ["BUG? - The VISIBLE line positions the cursor so the first character in the list is showing. Since the list is focused, should the full list be displayed instead?",
+     "BRAILLE LINE:  'where one or more of the following changed: [Bug creation] List'",
+     "     VISIBLE:  'more of the following changed: [', cursor=32",
      "SPEECH OUTPUT: 'where one or more of the following changed: [Bug creation] multi-select List with 26 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -453,8 +454,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Unspecified List'",
-     "     VISIBLE:  'Unspecified List', cursor=1",
+    ["BRAILLE LINE:  'GNOME version: Unspecified List'",
+     "     VISIBLE:  'GNOME version: Unspecified List', cursor=16",
      "SPEECH OUTPUT: 'GNOME version: Unspecified multi-select List with 14 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -463,8 +464,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Unspecified List'",
-     "     VISIBLE:  'Unspecified List', cursor=1",
+    ["BRAILLE LINE:  'GNOME target: Unspecified List'",
+     "     VISIBLE:  'GNOME target: Unspecified List', cursor=15",
      "SPEECH OUTPUT: 'GNOME target: Unspecified multi-select List with 12 items'"]))
 
 sequence.append(utils.StartRecordingAction())

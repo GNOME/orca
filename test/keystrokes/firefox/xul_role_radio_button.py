@@ -29,7 +29,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>a"))
 sequence.append(utils.AssertPresentationAction(
     "Alt a to radio button group",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Range All Pages selected radio button'"]))
 
@@ -41,7 +41,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler &=y All Pages RadioButton'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Range All Pages radio button selected item 1 of 3.'",
      "SPEECH OUTPUT: 'Alt a'"]))
@@ -53,7 +53,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow to next radio button",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler & y Pages: RadioButton'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range & y Pages: RadioButton'",
      "     VISIBLE:  '& y Pages: RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Pages: not selected radio button'"]))
 
@@ -65,7 +65,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range Filler &=y Pages: RadioButton'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page Range &=y Pages: RadioButton'",
      "     VISIBLE:  '&=y Pages: RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Range Pages: radio button selected item 3 of 3.'",
      "SPEECH OUTPUT: 'Alt e'"]))

@@ -442,7 +442,7 @@ class Script(default.Script):
                  self.speechGenerator.generateSpeech(newLocusOfFocus)
             speech.speak(utterances)
             brailleRegions = \
-                 self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
+                 self.brailleGenerator.generateBraille(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
             orca.setLocusOfFocus(
                 event, newLocusOfFocus, notifyPresentationManager=False)
@@ -476,7 +476,7 @@ class Script(default.Script):
                 adjustedUtterances.append(self.adjustForRepeats(utterance))
             speech.speak(adjustedUtterances)
             brailleRegions = \
-                     self.brailleGenerator.getBrailleRegions(newLocusOfFocus)
+                     self.brailleGenerator.generateBraille(newLocusOfFocus)
             braille.displayRegions(brailleRegions)
             orca.setLocusOfFocus(
                 event, newLocusOfFocus, notifyPresentationManager=False)
@@ -558,7 +558,7 @@ class Script(default.Script):
                      self.speechGenerator.generateSpeech(event.source)
                 speech.speak(utterances)
                 brailleRegions = \
-                     self.brailleGenerator.getBrailleRegions(event.source)
+                     self.brailleGenerator.generateBraille(event.source)
                 braille.displayRegions(brailleRegions)
                 orca.setLocusOfFocus(
                     event, event.source, notifyPresentationManager=False)

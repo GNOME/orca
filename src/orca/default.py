@@ -75,6 +75,9 @@ class Script(script.Script):
     DISPLAYED_LABEL = 'displayedLabel'
     DISPLAYED_TEXT = 'displayedText'
     KEY_BINDING = 'keyBinding'
+    NESTING_LEVEL = 'nestingLevel'
+    NODE_LEVEL = 'nodeLevel'
+    REAL_ACTIVE_DESCENDANT = 'realActiveDescendant'
 
     def __init__(self, app):
         """Creates a new script for the given application.
@@ -3136,16 +3139,8 @@ class Script(script.Script):
             text = obj.queryText()
         except NotImplementedError:
             text = None
-        if text and self.isTextArea(obj):
-            [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                text.caretOffset,
-                pyatspi.TEXT_BOUNDARY_LINE_START)
-            if startOffset == 0:
-                line.addRegions(self.brailleGenerator.getBrailleContext(obj))
-        else:
-            line.addRegions(self.brailleGenerator.getBrailleContext(obj))
 
-        result = self.brailleGenerator.getBrailleRegions(obj)
+        result = self.brailleGenerator.generateBraille(obj)
         line.addRegions(result[0])
 
         if extraRegion:
@@ -6251,6 +6246,13 @@ class Script(script.Script):
         manages its descendants.
         """
 
+        try:
+            return self.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj]
+        except:
+            if not self.generatorCache.has_key(self.REAL_ACTIVE_DESCENDANT):
+                self.generatorCache[self.REAL_ACTIVE_DESCENDANT] = {}
+            realActiveDescendant = None
+
         # If obj is a table cell and all of it's children are table cells
         # (probably cell renderers), then return the first child which has
         # a non zero length text string. If no such object is found, just
@@ -6270,7 +6272,7 @@ class Script(script.Script):
                         continue
                     else:
                         if text.getText(0, -1):
-                            return child
+                            realActiveDescendant = child
 
         # [[[TODO: WDW - this is an odd hacky thing I've somewhat drawn
         # from Gnopernicus.  The notion here is that we get an active
@@ -6287,10 +6289,12 @@ class Script(script.Script):
         # comment is here to remind us this is being done in poor taste
         # and we need to eventually clean up our act.]]]
         #
-        if obj and obj.childCount:
-            return obj[-1]
-        else:
-            return obj
+        if not realActiveDescendant and obj and obj.childCount:
+            realActiveDescendant = obj[-1]
+
+        self.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj] = \
+            realActiveDescendant or obj
+        return self.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj]
 
     def isDesiredFocusedItem(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of
@@ -6949,6 +6953,32 @@ class Script(script.Script):
 
         return [content.encode("UTF-8"), text.caretOffset, startOffset]
 
+    def getNestingLevel(self, obj):
+        """Determines the nesting level of this object in a list.  If this
+        object is not in a list relation, then 0 will be returned.
+
+        Arguments:
+        -obj: the Accessible object
+        """
+
+        if not obj:
+            return 0
+
+        try:
+            return self.generatorCache[self.NESTING_LEVEL][obj]
+        except:
+            if not self.generatorCache.has_key(self.NESTING_LEVEL):
+                self.generatorCache[self.NESTING_LEVEL] = {}
+
+        nestingLevel = 0
+        parent = obj.parent
+        while parent.parent.getRole() == pyatspi.ROLE_LIST:
+            nestingLevel += 1
+            parent = parent.parent
+
+        self.generatorCache[self.NESTING_LEVEL][obj] = nestingLevel
+        return self.generatorCache[self.NESTING_LEVEL][obj]
+
     def getNodeLevel(self, obj):
         """Determines the node level of this object if it is in a tree
         relation, with 0 being the top level node.  If this object is
@@ -6960,6 +6990,12 @@ class Script(script.Script):
 
         if not obj:
             return -1
+
+        try:
+            return self.generatorCache[self.NODE_LEVEL][obj]
+        except:
+            if not self.generatorCache.has_key(self.NODE_LEVEL):
+                self.generatorCache[self.NODE_LEVEL] = {}
 
         nodes = []
         node = obj
@@ -6988,7 +7024,8 @@ class Script(script.Script):
             else:
                 done = True
 
-        return len(nodes) - 1
+        self.generatorCache[self.NODE_LEVEL][obj] = len(nodes) - 1
+        return self.generatorCache[self.NODE_LEVEL][obj]
 
     def getChildNodes(self, obj):
         """Gets all of the children that have RELATION_NODE_CHILD_OF pointing

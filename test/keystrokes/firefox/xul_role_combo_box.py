@@ -35,7 +35,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to combobox",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo'",
-     "     VISIBLE:  'Show a blank page Combo', cursor=1",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show a blan', cursor=22",
      "SPEECH OUTPUT: 'Main scroll pane Startup panel When " + utils.firefoxAppNames + " starts: Show a blank page combo box'"]))
 
 ########################################################################
@@ -46,10 +46,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in combobox",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
-     "     VISIBLE:  'Show a blank page', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen " + utils.firefoxAppNames + " starts:  Show my windows and tabs from last time'",
-     "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show my windows and tabs from last time Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show my win', cursor=22",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show my windows and tabs from last time Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show my win', cursor=22",
      "SPEECH OUTPUT: 'Show a blank page'",
      "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
 
@@ -60,8 +60,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in combobox",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen " + utils.firefoxAppNames + " starts:  Show my home page'",
-     "     VISIBLE:  'Show my home page', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show my home page Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show my hom', cursor=22",
      "SPEECH OUTPUT: 'Show my home page'"]))
 
 ########################################################################
@@ -71,8 +71,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in combobox",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my windows and tabs from last timeWhen " + utils.firefoxAppNames + " starts:  Show my windows and tabs from last time'",
-     "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show my windows and tabs from last time Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show my win', cursor=22",
      "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
 
 ########################################################################
@@ -82,8 +82,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in combobox",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
-     "     VISIBLE:  'Show a blank page', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show a blan', cursor=22",
      "SPEECH OUTPUT: 'Show a blank page'"]))
 
 ########################################################################
@@ -103,7 +103,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in expanded combobox",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show my windows and tabs from last time'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo Show my windows and tabs from last time'",
      "     VISIBLE:  'Show my windows and tabs from la', cursor=1",
      "SPEECH OUTPUT: 'Show my windows and tabs from last time'"]))
 
@@ -114,7 +114,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in expanded combobox",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo Show a blank page'",
      "     VISIBLE:  'Show a blank page', cursor=1",
      "SPEECH OUTPUT: 'Show a blank page'"]))
 
@@ -126,7 +126,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to collapse combobox",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo'",
-     "     VISIBLE:  'Show a blank page Combo', cursor=1",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show a blan', cursor=22",
      "SPEECH OUTPUT: '" + utils.firefoxAppNames + " application " + utils.firefoxAppNames + " Preferences frame Main scroll pane Startup panel When " + utils.firefoxAppNames + " starts: Show a blank page combo box'"]))
 
 ########################################################################
@@ -136,10 +136,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("s"))
 sequence.append(utils.AssertPresentationAction(
     "First letter navigation with s",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
-     "     VISIBLE:  'Show a blank page', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow my home pageWhen " + utils.firefoxAppNames + " starts:  Show my home page'",
-     "     VISIBLE:  'Show my home page', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show my home page Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show my hom', cursor=22",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show my home page Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show my hom', cursor=22",
      "SPEECH OUTPUT: 'Show a blank page'",
      "SPEECH OUTPUT: 'Show my home page'"]))
 
@@ -147,8 +147,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("s"))
 sequence.append(utils.AssertPresentationAction(
     "First letter navigation with s",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
-     "     VISIBLE:  'Show a blank page', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show a blan', cursor=22",
      "SPEECH OUTPUT: 'Show a blank page'"]))
 
 ########################################################################
@@ -160,8 +160,8 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BUG? - We claim this is item 1 of 1. This is how it was before the refactor as well.",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel  ComboShow a blank pageWhen " + utils.firefoxAppNames + " starts:  Show a blank page'",
-     "     VISIBLE:  'Show a blank page', cursor=1",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame Main ScrollPane Startup Panel When " + utils.firefoxAppNames + " starts: Show a blank page Combo'",
+     "     VISIBLE:  'When " + utils.firefoxAppNames + " starts: Show a blan', cursor=22",
      "SPEECH OUTPUT: 'When " + utils.firefoxAppNames + " starts: combo box Show a blank page item 1 of 1'"]))
 
 ########################################################################

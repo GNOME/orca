@@ -30,15 +30,17 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Bookmarks menu'",
      "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
 
+# Firefox 3.5 introduces a shortcut (Control Shift O) that was not present
+# in earlier versions.
+#
 sequence.append(PauseAction(3000))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...'",
-     "     VISIBLE:  'Organize Bookmarks...', cursor=1",
-     "SPEECH OUTPUT: 'Organize Bookmarks…'"]))
-
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...(\(Control Shift O\)|)'",
+     "     VISIBLE:  'Organize Bookmarks...(\(Control Sh|)', cursor=1",
+     "SPEECH OUTPUT: 'Organize Bookmarks…( Control Shift O|)'"]))
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
 
@@ -61,8 +63,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu TREE LEVEL 1'",
-     "     VISIBLE:  'Bookmarks Menu TREE LEVEL 1', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Menu   TREE LEVEL 1'",
+     "     VISIBLE:  'Bookmarks Menu   TREE LEVEL 1', cursor=1",
      "SPEECH OUTPUT: 'tree table Name cell Bookmarks Menu column 1 of 3 row 2 of 3 tree level 1'"]))
 
 ########################################################################

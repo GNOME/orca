@@ -115,7 +115,7 @@ sequence.append(KeyComboAction("<Alt>Down"))
 sequence.append(utils.AssertPresentationAction(
     "Alt Down to Expand",
     ["BRAILLE LINE:  'Priority: Normal Combo'",
-     "     VISIBLE:  'Priority: Normal Combo', cursor=0",
+     "     VISIBLE:  'Priority: Normal Combo', cursor=11",
      "BRAILLE LINE:  'Normal'",
      "     VISIBLE:  'Normal', cursor=1",
      "SPEECH OUTPUT: 'Normal combo box'",
@@ -198,7 +198,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
     ["BRAILLE LINE:  'Speech Combo'",
-     "     VISIBLE:  'Speech Combo', cursor=0",
+     "     VISIBLE:  'Speech Combo', cursor=1",
      "SPEECH OUTPUT: 'Speech combo box'"]))
 
 ########################################################################
@@ -210,7 +210,7 @@ sequence.append(KeyComboAction("<Alt>Down"))
 sequence.append(utils.AssertPresentationAction(
     "Alt Down to Expand", 
     ["BRAILLE LINE:  'Speech Combo'",
-     "     VISIBLE:  'Speech Combo', cursor=0",
+     "     VISIBLE:  'Speech Combo', cursor=1",
      "BRAILLE LINE:  'Speech'",
      "     VISIBLE:  'Speech', cursor=1",
      "SPEECH OUTPUT: 'Speech combo box'",

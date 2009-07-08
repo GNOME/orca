@@ -2266,7 +2266,7 @@ class Script(default.Script):
                            pyatspi.ROLE_PASSWORD_TEXT,
                            pyatspi.ROLE_LINK]:
                 [regions, fRegion] = \
-                          self.brailleGenerator.getBrailleRegions(obj)
+                          self.brailleGenerator.generateBraille(obj)
 
                 if isFocusedObj:
                     focusedRegion = fRegion
@@ -2690,15 +2690,22 @@ class Script(default.Script):
         """
         if not obj:
             obj = orca_state.locusOfFocus
-
+        try:
+            return self.generatorCache['inDocumentContent'][obj]
+        except:
+            if not self.generatorCache.has_key('inDocumentContent'):
+                self.generatorCache['inDocumentContent'] = {}
+        result = False
         while obj:
             role = obj.getRole()
             if role == pyatspi.ROLE_DOCUMENT_FRAME \
                     or role == pyatspi.ROLE_EMBEDDED:
-                return True
+                result = True
+                break
             else:
                 obj = obj.parent
-        return False
+        self.generatorCache['inDocumentContent'][obj] = result
+        return self.generatorCache['inDocumentContent'][obj]
 
     def getDocumentFrame(self):
         """Returns the document frame that holds the content being shown."""
@@ -2979,9 +2986,16 @@ class Script(default.Script):
         - obj: The accessible object of interest.  If None, the
         locusOfFocus is examined.
         """
+        try:
+            return self.generatorCache['isAria'][obj]
+        except:
+            if not self.generatorCache.has_key('isAria'):
+                self.generatorCache['isAria'] = {}
         obj = obj or orca_state.locusOfFocus
         attrs = self._getAttrDictionary(obj)
-        return ('xml-roles' in attrs and 'live' not in attrs)
+        self.generatorCache['isAria'][obj] = \
+            ('xml-roles' in attrs and 'live' not in attrs)
+        return self.generatorCache['isAria'][obj]
 
     def _getAttrDictionary(self, obj):
         if not obj:
@@ -5020,7 +5034,7 @@ class Script(default.Script):
             candidate, startOffset, endOffset, string = content
             if self.isSameObject(candidate, obj) \
                and (offset is None or (startOffset <= offset <= endOffset)):
-                return string, caretOffset, startOffset
+                return string.encode("UTF-8"), caretOffset, startOffset
 
         # If we're still here, obj presumably is not on this line. This
         # shouldn't happen, but if it does we'll let the default script

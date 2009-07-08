@@ -1251,6 +1251,19 @@ speechExpansionIndicators = [_("collapsed"), _("expanded")]
 #
 speechMultiSelectString = _("multi-select")
 
+# Translators: this represents the depth of a node in a tree
+# view (i.e., how many ancestors a node has).  It is meant to be
+# spoken.
+#
+speechNodeLevelString = _("tree level %d")
+
+# Translators: this represents a list item in a document.
+# The nesting level is how 'deep' the item is (e.g., a
+# level of 2 represents a list item inside a list that's
+# inside another list). This is meant to be spoken.
+#
+speechNestingLevelString = _("Nesting level %d")
+
 # string to indicate end of printed line for braille displays:
 #
 disableBrailleEOL = False
@@ -1286,3 +1299,21 @@ brailleToggleButtonIndicators = ["& y", "&=y"]
 # children are not showing.
 #
 brailleExpansionIndicators = [_("collapsed"), _("expanded")]
+
+# Translators: this represents the depth of a node in a tree
+# view (i.e., how many ancestors a node has).  It is meant to
+# be presented on a braille display.
+#
+brailleNodeLevelString = _("TREE LEVEL %d")
+
+# Translators: this represents a list item in a document.
+# The nesting level is how 'deep' the item is (e.g., a
+# level of 2 represents a list item inside a list that's
+# inside another list).  It is meant to be presented on
+# the braille display.
+#
+brailleNestingLevelString = _("LEVEL %d")
+
+# String for delimiters between table cells
+#
+brailleTableCellDelimiter = " "

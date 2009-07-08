@@ -38,11 +38,5 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         speech_generator.SpeechGenerator.__init__(self, script)
 
     def _generateRealTableCell(self, obj, **args):
-        # Check to see if this is a table cell from the Library table.
-        # If so, it'll have five children and we are interested in the
-        # penultimate one. See bug #512639 for more details.
-        #
-        if obj.childCount == 5:
-            obj = obj[3]
         return speech_generator.SpeechGenerator._generateRealTableCell(
-            self, obj, **args)
+            self, self._script.adjustTableCell(obj), **args)

@@ -34,8 +34,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Colors", 
-    ["BRAILLE LINE:  '+Colors ListItem'",
-     "     VISIBLE:  '+Colors ListItem', cursor=1",
+    ["BRAILLE LINE:  '+Colors collapsed ListItem LEVEL 1'",
+     "     VISIBLE:  '+Colors collapsed ListItem LEVEL', cursor=1",
      "SPEECH OUTPUT: '+Colors collapsed tree level 1'"]))
 
 ########################################################################
@@ -47,20 +47,20 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BUG? - There are visually two items here, but we say this is 1 of 1",
-     "BRAILLE LINE:  '+Colors ListItem'",
-     "     VISIBLE:  '+Colors ListItem', cursor=1",
+     "BRAILLE LINE:  '+Colors collapsed ListItem LEVEL 1'",
+     "     VISIBLE:  '+Colors collapsed ListItem LEVEL', cursor=1",
      "SPEECH OUTPUT: 'list item +Colors item 1 of 1 collapsed tree level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Expand Colors", 
-    ["BRAILLE LINE:  '+Colors ListItem'",
-     "     VISIBLE:  '+Colors ListItem', cursor=1",
-     "BRAILLE LINE:  '-Colors ListItem'",
-     "     VISIBLE:  '-Colors ListItem', cursor=1",
-     "BRAILLE LINE:  '-Colors ListItem'",
-     "     VISIBLE:  '-Colors ListItem', cursor=1",
+    ["BRAILLE LINE:  '+Colors collapsed ListItem LEVEL 1'",
+     "     VISIBLE:  '+Colors collapsed ListItem LEVEL', cursor=1",
+     "BRAILLE LINE:  '-Colors expanded ListItem LEVEL 1'",
+     "     VISIBLE:  '-Colors expanded ListItem LEVEL ', cursor=1",
+     "BRAILLE LINE:  '-Colors expanded ListItem LEVEL 1'",
+     "     VISIBLE:  '-Colors expanded ListItem LEVEL ', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 ########################################################################
@@ -71,8 +71,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  '-Colors ListItem'",
-     "     VISIBLE:  '-Colors ListItem', cursor=1",
+    ["BRAILLE LINE:  '-Colors expanded ListItem LEVEL 1'",
+     "     VISIBLE:  '-Colors expanded ListItem LEVEL ', cursor=1",
      "SPEECH OUTPUT: 'list item -Colors item 1 of 2 expanded tree level 1'"]))
 
 ########################################################################
@@ -100,8 +100,8 @@ sequence.append(utils.AssertPresentationAction(
     "Up Arrow to Colors", 
     ["BRAILLE LINE:  'Red ListItem'",
      "     VISIBLE:  'Red ListItem', cursor=1",
-     "BRAILLE LINE:  '-Colors ListItem'",
-     "     VISIBLE:  '-Colors ListItem', cursor=1",
+     "BRAILLE LINE:  '-Colors expanded ListItem LEVEL 1'",
+     "     VISIBLE:  '-Colors expanded ListItem LEVEL ', cursor=1",
      "SPEECH OUTPUT: 'Red'",
      "SPEECH OUTPUT: '-Colors expanded tree level 1'"]))
 
@@ -109,12 +109,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Collapse Colors", 
-    ["BRAILLE LINE:  '-Colors ListItem'",
-     "     VISIBLE:  '-Colors ListItem', cursor=1",
-     "BRAILLE LINE:  '+Colors ListItem'",
-     "     VISIBLE:  '+Colors ListItem', cursor=1",
-     "BRAILLE LINE:  '+Colors ListItem'",
-     "     VISIBLE:  '+Colors ListItem', cursor=1",
+    ["BRAILLE LINE:  '-Colors expanded ListItem LEVEL 1'",
+     "     VISIBLE:  '-Colors expanded ListItem LEVEL ', cursor=1",
+     "BRAILLE LINE:  '+Colors collapsed ListItem LEVEL 1'",
+     "     VISIBLE:  '+Colors collapsed ListItem LEVEL', cursor=1",
+     "BRAILLE LINE:  '+Colors collapsed ListItem LEVEL 1'",
+     "     VISIBLE:  '+Colors collapsed ListItem LEVEL', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################
@@ -124,20 +124,20 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Animals", 
-    ["BRAILLE LINE:  '+Animals ListItem'",
-     "     VISIBLE:  '+Animals ListItem', cursor=1",
+    ["BRAILLE LINE:  '+Animals collapsed ListItem LEVEL 1'",
+     "     VISIBLE:  '+Animals collapsed ListItem LEVE', cursor=1",
      "SPEECH OUTPUT: '+Animals collapsed'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Expand Animals", 
-    ["BRAILLE LINE:  '+Animals ListItem'",
-     "     VISIBLE:  '+Animals ListItem', cursor=1",
-     "BRAILLE LINE:  '-Animals ListItem'",
-     "     VISIBLE:  '-Animals ListItem', cursor=1",
-     "BRAILLE LINE:  '-Animals ListItem'",
-     "     VISIBLE:  '-Animals ListItem', cursor=1",
+    ["BRAILLE LINE:  '+Animals collapsed ListItem LEVEL 1'",
+     "     VISIBLE:  '+Animals collapsed ListItem LEVE', cursor=1",
+     "BRAILLE LINE:  '-Animals expanded ListItem LEVEL 1'",
+     "     VISIBLE:  '-Animals expanded ListItem LEVEL', cursor=1",
+     "BRAILLE LINE:  '-Animals expanded ListItem LEVEL 1'",
+     "     VISIBLE:  '-Animals expanded ListItem LEVEL', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 ########################################################################

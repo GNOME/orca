@@ -67,6 +67,17 @@ formatting = {
             #
             'basicWhereAmI': 'roleName + column + columnHeader + row + rowHeader + (textContent or spreadSheetCell) + anyTextSelection'
             },
+    },
+    'braille': {
+        pyatspi.ROLE_LIST: {
+            'unfocused': '[Component(obj,\
+                                     asString(labelOrName + roleName + required))]'
+        },
+        pyatspi.ROLE_SCROLL_PANE: {
+            'unfocused': 'asPageTabOrScrollPane\
+                          + (childTab\
+                             and ([Region(" ")] + childTab) or [])'
+        }
     }
 }
 
@@ -74,3 +85,10 @@ class Formatting(orca.formatting.Formatting):
     def __init__(self, script):
         orca.formatting.Formatting.__init__(self, script)
         self.update(copy.deepcopy(formatting))
+        self._defaultFormatting = orca.formatting.Formatting(script)
+
+    def getFormat(self, **args):
+        if args.get('useDefaultFormatting', False):
+            return self._defaultFormatting.getFormat(**args)
+        else:
+            return orca.formatting.Formatting.getFormat(self, **args)

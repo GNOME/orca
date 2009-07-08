@@ -62,7 +62,7 @@ sequence.append(utils.AssertPresentationAction(
     "Hue spin button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
-     "SPEECH OUTPUT: 'Hue: spin button 240 selected.",
+     "SPEECH OUTPUT: 'Hue: spin button 240 selected.'",
      "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################
@@ -133,7 +133,7 @@ sequence.append(utils.AssertPresentationAction(
     "Hue spin button caret navigation",
     ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=7",
-     "SPEECH OUTPUT: 'Hue: spin button 240.",
+     "SPEECH OUTPUT: 'Hue: spin button 240.'",
      "SPEECH OUTPUT: 'Alt h'"]))
 
 ########################################################################

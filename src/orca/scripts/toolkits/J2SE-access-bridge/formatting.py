@@ -42,6 +42,11 @@ formatting = {
             'unfocused': '(displayedText or roleName) + expandableState',
             'focused': 'expandableState'
             },
+    },
+    'braille': {
+        pyatspi.ROLE_LABEL: {
+            'unfocused': '[Component(obj, asString(displayedText + expandableState))]'
+            },
     }
 }
 

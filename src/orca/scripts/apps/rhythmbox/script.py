@@ -54,3 +54,13 @@ class Script(default.Script):
     def getFormatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
+
+    def adjustTableCell(self, obj):
+        # Check to see if this is a table cell from the Library table.
+        # If so, it'll have five children and we are interested in the
+        # penultimate one. See bug #512639 for more details.
+        #
+        if obj.childCount == 5:
+            return obj[3]
+        else:
+            return obj

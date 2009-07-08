@@ -125,7 +125,7 @@ class Script(default.Script):
             #
             speech.speak(utterances)
            
-            regions = brailleGen.getBrailleRegions(event.source)
+            regions = brailleGen.generateBraille(event.source)
             regions[0].insert(0, braille.Region(utterances[0] + " "))
             braille.displayRegions(regions)
            

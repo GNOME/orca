@@ -36,7 +36,19 @@ import settings
 TUTORIAL = '(tutorial and (pause + tutorial) or [])'
 MNEMONIC = '(mnemonic and (pause + mnemonic + lineBreak) or [])'
 
+BRAILLE_TEXT = '[Text(obj, asString(label), asString(eol))]\
+                + (required and [Region(" " + asString(required))])\
+                + (readOnly and [Region(" " + asString(readOnly))])'
+
 formatting = {
+
+    ####################################################################
+    #                                                                  #
+    # Strings Orca includes on its own (versus getting them from the   #
+    # application.                                                     #
+    #                                                                  #
+    ####################################################################
+
     'strings' : {
         'speech' : {
             'required'     : settings.speechRequiredStateString,
@@ -46,6 +58,8 @@ formatting = {
             'radiobutton'  : settings.speechRadioButtonIndicators,
             'togglebutton' : settings.speechToggleButtonIndicators,
             'expansion'    : settings.speechExpansionIndicators,
+            'nodelevel'    : settings.speechNodeLevelString,
+            'nestinglevel' : settings.speechNestingLevelString,
             'multiselect'  : settings.speechMultiSelectString,
         },
         'braille' : {
@@ -57,8 +71,16 @@ formatting = {
             'radiobutton'  : settings.brailleRadioButtonIndicators,
             'togglebutton' : settings.brailleToggleButtonIndicators,
             'expansion'    : settings.brailleExpansionIndicators,
+            'nodelevel'    : settings.brailleNodeLevelString,
+            'nestinglevel' : settings.brailleNestingLevelString,
         },
     },
+
+    ####################################################################
+    #                                                                  #
+    # Formatting for speech.                                           #
+    #                                                                  #
+    ####################################################################
 
     'speech': {
         'prefix': {
@@ -233,7 +255,8 @@ formatting = {
             'basicWhereAmI': 'labelAndName + allTextSelection + roleName + availability + noChildren'
             },
         pyatspi.ROLE_TABLE_CELL: {
-            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (expandableState and (expandableState + numberOfChildren))',
+            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle)\
+                        or (cellCheckedState + (expandableState and (expandableState + numberOfChildren)))',
             'unfocused': 'tableCellRow',
             'basicWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + expandableState + nodeLevel',
             'detailedWhereAmI': 'parentRoleName + columnHeader + rowHeader + roleName + cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + columnAndRow + tableCellRow + expandableState + nodeLevel'
@@ -244,8 +267,14 @@ formatting = {
             # read a whole row. It calls REAL_ROLE_TABLE_CELL internally.
             # maybe it can be done in a cleaner way?
             #
-            'focused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (expandableState and (expandableState + numberOfChildren))',
-            'unfocused': '(tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState + (realActiveDescendantDisplayedText or imageDescription + image) + (expandableState and (expandableState + numberOfChildren)) + required'
+            'focused':   '(tableCell2ChildLabel + tableCell2ChildToggle)\
+                          or (cellCheckedState + (expandableState and (expandableState + numberOfChildren)))',
+            'unfocused': '(tableCell2ChildLabel + tableCell2ChildToggle)\
+                          or (columnHeaderIfToggleAndNoText\
+                              + cellCheckedState\
+                              + (realActiveDescendantDisplayedText or imageDescription + image)\
+                              + (expandableState and (expandableState + numberOfChildren))\
+                              + required)'
             },
         pyatspi.ROLE_TEAROFF_MENU_ITEM: {
             'focused': '[]',
@@ -272,6 +301,214 @@ formatting = {
             'unfocused': 'labelAndName',
             'basicWhereAmI': 'labelAndName'
             },
+    },
+
+    ####################################################################
+    #                                                                  #
+    # Formatting for braille.                                          #
+    #                                                                  #
+    ####################################################################
+
+    'braille': {
+        'prefix': {
+#            'focused':   'ancestors\
+#                         + (rowHeader and [Region(" " + asString(rowHeader))])\
+#                         + (columnHeader and [Region(" " + asString(columnHeader))])\
+#                         + (radioButtonGroup and [Region(" " + asString(radioButtonGroup))])\
+#                         + [Region(" ")]',
+#            'unfocused': 'ancestors\
+#                         + (rowHeader and [Region(" " + asString(rowHeader))])\
+#                         + (columnHeader and [Region(" " + asString(columnHeader))])\
+#                         + (radioButtonGroup and [Region(" " + asString(radioButtonGroup))])\
+#                         + [Region(" ")]',
+            'focused':   '(includeContext\
+                           and (ancestors\
+                                + (rowHeader and [Region(" " + asString(rowHeader))])\
+                                + (columnHeader and [Region(" " + asString(columnHeader))])\
+                                + (radioButtonGroup and [Region(" " + asString(radioButtonGroup))])\
+                                + [Region(" ")])\
+                           or [])',
+            'unfocused': '(includeContext\
+                           and (ancestors\
+                                + (rowHeader and [Region(" " + asString(rowHeader))])\
+                                + (columnHeader and [Region(" " + asString(columnHeader))])\
+                                + (radioButtonGroup and [Region(" " + asString(radioButtonGroup))])\
+                                + [Region(" ")])\
+                           or [])',
+            },
+        'suffix': {
+            'focused':   '(nodeLevel and [Region(" " + asString(nodeLevel))])',
+            'unfocused': '(nodeLevel and [Region(" " + asString(nodeLevel))])',
+            },
+        'default': {
+            'focused':   '[Component(obj,\
+                                     asString(label + displayedText + value + roleName + required))]',
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + value + roleName + required))]',
+            },
+        #pyatspi.ROLE_ALERT: 'default'
+        pyatspi.ROLE_ANIMATION: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + roleName + (description and space(": ") + description)))]',
+            },
+        #pyatspi.ROLE_ARROW: 'default'
+        pyatspi.ROLE_CHECK_BOX: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + roleName),\
+                                     indicator=asString(checkedState))]'
+            },
+        pyatspi.ROLE_CHECK_MENU_ITEM: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + roleName + availability) + asString(accelerator),\
+                                     indicator=asString(checkedState))]'
+            },
+        #pyatspi.ROLE_COLUMN_HEADER: 'default'
+        pyatspi.ROLE_COMBO_BOX: {
+            # [[[TODO: WDW - maybe pass the label into the region constructor?
+            # We could then use the cursorOffset field to indicate where the
+            # combobox starts.]]]
+            #
+            'unfocused': '((comboBoxTextObj and [Text(comboBoxTextObj[0], asString(label))])\
+                           or [Component(obj, asString(label + displayedText), label and (len(asString(label)) + 1) or 0)])\
+                          + [Region(" " + asString(roleName))]'
+            },
+        #pyatspi.ROLE_DESKTOP_ICON: 'default'
+        #pyatspi.ROLE_DIAL: 'default'
+        #pyatspi.ROLE_DIALOG: 'default'
+        #pyatspi.ROLE_DIRECTORY_PANE: 'default'
+        pyatspi.ROLE_EMBEDDED: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText) or asString(applicationName))]'
+            },
+        pyatspi.ROLE_ENTRY: {
+            'unfocused': BRAILLE_TEXT
+            },
+        pyatspi.ROLE_FRAME: {
+            'unfocused': '[Component(obj,\
+                                     asString(((label + displayedText) or name) + value + roleName + alertAndDialogCount))]'
+            },
+        #pyatspi.ROLE_HTML_CONTAINER: 'default'
+        pyatspi.ROLE_ICON: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + imageDescription + roleName))]'
+            },
+        #pyatspi.ROLE_IMAGE: 'default'
+        pyatspi.ROLE_LABEL: {
+            'unfocused': '[Text(obj,\
+                                asString(label),\
+                                asString(eol))]'
+            },
+        #pyatspi.ROLE_LIST: 'default'
+        pyatspi.ROLE_LIST_ITEM: {
+            'focused':   '[Component(obj,\
+                                     asString(label + displayedText + expandableState + roleName + availability) + asString(accelerator))]\
+                          + (nestingLevel and [Region(" " + asString(nestingLevel))])',
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + expandableState))]\
+                          + (nestingLevel and [Region(" " + asString(nestingLevel))])',
+            },
+        pyatspi.ROLE_MENU: {
+            'focused':   '[Component(obj,\
+                                     asString(label + displayedText + roleName + availability) + asString(accelerator))]',
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + roleName))]',
+            },
+        #pyatspi.ROLE_MENU_BAR: 'default'
+        pyatspi.ROLE_MENU_ITEM: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + availability) + asString(accelerator),\
+                                     indicator=asString(menuItemCheckedState))]'
+            },
+        #pyatspi.ROLE_OPTION_PANE: 'default'
+        pyatspi.ROLE_PAGE_TAB: {
+            'focused':   '[Component(obj,\
+                                     asString(label + displayedText + roleName + availability) + asString(accelerator))]',
+            'unfocused': '[Component(obj,\
+                                     asString(label + displayedText + roleName))]'
+            },
+        #pyatspi.ROLE_PAGE_TAB_LIST: 'default'
+        pyatspi.ROLE_PANEL: {
+            'unfocused': '[Component(obj,\
+                                     asString((label or displayedText) + roleName))]'
+            },
+        pyatspi.ROLE_PARAGRAPH: {
+            'unfocused': BRAILLE_TEXT
+            },
+        pyatspi.ROLE_PASSWORD_TEXT: {
+            'unfocused': BRAILLE_TEXT
+            },
+        #pyatspi.ROLE_PROGRESS_BAR: 'default'
+        pyatspi.ROLE_PUSH_BUTTON: {
+            'unfocused': '[Component(obj,\
+                                     asString(((label + displayedText) or description) + roleName))]'
+            },
+        pyatspi.ROLE_RADIO_BUTTON: {
+            'unfocused': '[Component(obj,\
+                                     asString(((label + displayedText) or description) + roleName),\
+                                     indicator=asString(radioState))]'
+            },
+        pyatspi.ROLE_RADIO_MENU_ITEM: {
+            'focused':   '[Component(obj,\
+                                     asString(((label + displayedText) or description) + roleName + availability)\
+                                     + asString(accelerator),\
+                                     indicator=asString(radioState))]',
+            'unfocused': '[Component(obj,\
+                                     asString((label + displayedText) or description)\
+                                     + asString(accelerator),\
+                                     indicator=asString(radioState))]'
+            },
+        #pyatspi.ROLE_ROW_HEADER: 'default'
+        #pyatspi.ROLE_SCROLL_BAR: 'default'
+        pyatspi.ROLE_SCROLL_PANE: {
+            'unfocused': 'asPageTabOrScrollPane'
+            },
+        #'REAL_ROLE_SCROLL_PANE': 'default'
+        pyatspi.ROLE_SLIDER: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + value + roleName + required))]'
+            },
+        pyatspi.ROLE_SPIN_BUTTON: {
+            'unfocused': '[Text(obj, asString(label), asString(eol))]\
+                          + (required and [Region(" " + asString(required))] or [])\
+                          + (readOnly and [Region(" " + asString(readOnly))] or [])'
+            },
+        #pyatspi.ROLE_SPLIT_PANE: 'default'
+        #pyatspi.ROLE_TABLE: 'default'
+        pyatspi.ROLE_TABLE_CELL: {
+            'unfocused': 'tableCellRow',
+            },
+        'REAL_ROLE_TABLE_CELL' : {
+            'unfocused': '(tableCell2ChildToggle + tableCell2ChildLabel)\
+                          or (cellCheckedState\
+                              + (columnHeaderIfToggleAndNoText and [Region(" "), Component(obj, asString(columnHeaderIfToggleAndNoText))])\
+                              + ((realActiveDescendantDisplayedText and [Component(obj, asString(realActiveDescendantDisplayedText))])\
+                                 or (imageDescription and [Region(" "), Component(obj, asString(imageDescription))]))\
+                              + (realActiveDescendantRoleName and [Component(obj, (realActiveDescendantDisplayedText and " " or "") + asString(realActiveDescendantRoleName))])\
+                              + (expandableState and [Region(" " + asString(expandableState))])\
+                              + (required and [Region(" " + asString(required))]))\
+                          or ([Component(obj,"")])'
+            },
+        #pyatspi.ROLE_TABLE_COLUMN_HEADER: 'default'
+        #pyatspi.ROLE_TABLE_ROW_HEADER: 'default'
+        pyatspi.ROLE_TEAROFF_MENU_ITEM: {
+            'unfocused': '[Component(obj,\
+                                     asString(roleName))]'
+            },
+        pyatspi.ROLE_TERMINAL: {
+            'unfocused': '[Text(obj)]'
+            },
+        pyatspi.ROLE_TEXT: {
+            'unfocused': BRAILLE_TEXT
+            },
+        pyatspi.ROLE_TOGGLE_BUTTON: {
+            'unfocused': '[Component(obj,\
+                                     asString(((label + displayedText) or description) + roleName),\
+                                     indicator=asString(toggleState))]'
+            },
+        #pyatspi.ROLE_TOOL_BAR: 'default'
+        #pyatspi.ROLE_TREE: 'default'
+        #pyatspi.ROLE_TREE_TABLE: 'default'
+        #pyatspi.ROLE_WINDOW: 'default'
     }
 }
 

@@ -2,7 +2,6 @@ orca_pathdir=$(pyexecdir)
 
 orca_python_PYTHON = \
 	__init__.py \
-	braillegenerator.py \
 	formatting.py \
 	script.py \
 	speech_generator.py
