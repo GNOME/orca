@@ -64,6 +64,9 @@ class Generator:
     # pylint: disable-msg=W0142
 
     def __init__(self, script, mode):
+
+        # pylint: disable-msg=W0108
+
         self._mode = mode
         self._script = script
         self._methodsDict = {}
@@ -448,14 +451,14 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'checkbox'
-        [no, yes, indeterminate] = self._script.formatting.getString(**args)
+        indicators = self._script.formatting.getString(**args)
         state = obj.getState()
         if state.contains(pyatspi.STATE_INDETERMINATE):
-            result.append(indeterminate)
+            result.append(indicators[2])
         elif state.contains(pyatspi.STATE_CHECKED):
-            result.append(yes)
+            result.append(indicators[1])
         else:
-            result.append(no)
+            result.append(indicators[0])
         return result
 
     def _generateRadioState(self, obj, **args):
@@ -468,12 +471,12 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'radiobutton'
-        [no, yes] = self._script.formatting.getString(**args)
+        indicators = self._script.formatting.getString(**args)
         state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED):
-            result.append(yes)
+            result.append(indicators[1])
         else:
-            result.append(no)
+            result.append(indicators[0])
         return result
 
     def _generateToggleState(self, obj, **args):
@@ -486,13 +489,13 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'togglebutton'
-        [no, yes] = self._script.formatting.getString(**args)
+        indicators = self._script.formatting.getString(**args)
         state = obj.getState()
         if state.contains(pyatspi.STATE_CHECKED) \
            or state.contains(pyatspi.STATE_PRESSED):
-            result.append(yes)
+            result.append(indicators[1])
         else:
-            result.append(no)
+            result.append(indicators[0])
         return result
 
     def _generateMenuItemCheckedState(self, obj, **args):
@@ -504,11 +507,11 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'checkbox'
-        [no, yes, indeterminate] = self._script.formatting.getString(**args)
+        indicators = self._script.formatting.getString(**args)
         if obj.getState().contains(pyatspi.STATE_CHECKED):
             # Translators: this represents the state of a checked menu item.
             #
-            result.append(yes)
+            result.append(indicators[1])
         return result
 
     def _generateExpandableState(self, obj, **args):
@@ -521,13 +524,13 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'expansion'
-        [no, yes] = self._script.formatting.getString(**args)
+        indicators = self._script.formatting.getString(**args)
         state = obj.getState()
         if state.contains(pyatspi.STATE_EXPANDABLE):
             if state.contains(pyatspi.STATE_EXPANDED):
-                result.append(yes)
+                result.append(indicators[1])
             else:
-                result.append(no)
+                result.append(indicators[0])
         return result
 
     #####################################################################
