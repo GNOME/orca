@@ -45,6 +45,7 @@ except ImportError:
 try:
     import brlapi
     import gobject
+    gobject.threads_init()
 
     _brlAPI = None
     _brlAPIAvailable = True
@@ -71,13 +72,9 @@ from platform import tablesdir
 
 from orca_i18n import _                          # for gettext support
 
-# If True, this module has been initialized.
-#
-_initialized = False
-
 # The braille monitor
 #
-monitor = None
+_monitor = None
 
 # Common names for most used BrlTTY commands, to be shown in the GUI:
 # ATM, the ones used in default.py are:
@@ -178,7 +175,8 @@ if _brlAPIAvailable:
 #
 # [[[TODO: WDW - Only a height of 1 is support at this time.]]]
 #
-_displaySize = [32, 1]
+DEFAULT_DISPLAY_SIZE = 32
+_displaySize = [DEFAULT_DISPLAY_SIZE, 1]
 
 # The list of lines on the display.  This represents the entire amount of data
 # to be drawn on the display.  It will be clipped by the viewport if too large.
@@ -486,6 +484,8 @@ class Component(Region):
             try:
                 eventsynthesizer.clickObject(self.accessible, 1)
             except:
+                debug.println(debug.LEVEL_SEVERE,
+                              "Could not process routing key:")
                 debug.printException(debug.LEVEL_SEVERE)
         else:
             action.doAction(0)
@@ -1068,11 +1068,19 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
     global endIsShowing
     global beginningIsShowing
     global cursorCell
-    global monitor
+    global _monitor
 
     if len(_lines) == 0:
+        if not _brlAPIRunning:
+            init(_callback, settings.tty)
         if _brlAPIRunning:
-            _brlAPI.writeText("", 0)
+            try:
+                _brlAPI.writeText("", 0)
+            except:
+                debug.println(debug.LEVEL_WARNING,
+                              "BrlTTY seems to have disappeared:")
+                debug.printException(debug.LEVEL_WARNING)
+                shutdown()
         return
 
     # Now determine the location of the cursor.  First, we'll figure
@@ -1128,6 +1136,8 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
     log.info(logLine.encode("UTF-8"))
 
     substring = string[startPos:endPos]
+    if not _brlAPIRunning:
+        init(_callback, settings.tty)
     if _brlAPIRunning:
         writeStruct = brlapi.WriteStruct()
         writeStruct.regionBegin = 1
@@ -1158,20 +1168,29 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
         if attributeMask:
             writeStruct.attrOr = attributeMask[startPos:endPos]
 
-        _brlAPI.write(writeStruct)
+        if not _brlAPIRunning:
+            init(_callback, settings.tty)
+        if _brlAPIRunning:
+            try:
+                _brlAPI.write(writeStruct)
+            except:
+                debug.println(debug.LEVEL_WARNING,
+                              "BrlTTY seems to have disappeared:")
+                debug.printException(debug.LEVEL_WARNING)
+                shutdown()
 
     if settings.enableBrailleMonitor:
-        if not monitor:
-            monitor = brlmon.BrlMon(_displaySize[0])
-            monitor.show_all()
+        if not _monitor:
+            _monitor = brlmon.BrlMon(_displaySize[0])
+            _monitor.show_all()
         if attributeMask:
             subMask = attributeMask[startPos:endPos]
         else:
             subMask = None
-        monitor.writeText(cursorCell, substring, subMask)
-    elif monitor:
-        monitor.destroy()
-        monitor = None
+        _monitor.writeText(cursorCell, substring, subMask)
+    elif _monitor:
+        _monitor.destroy()
+        _monitor = None
 
     beginningIsShowing = startPos == 0
     endIsShowing = endPos >= len(string)
@@ -1343,6 +1362,7 @@ def _processBrailleEvent(event):
             #
             consumed = _callback(event)
         except:
+            debug.println(debug.LEVEL_WARNING, "Issue processing event:")
             debug.printException(debug.LEVEL_WARNING)
             consumed = False
 
@@ -1355,7 +1375,13 @@ def _brlAPIKeyReader(source, condition):
     """Method to read a key from the BrlAPI bindings.  This is a
     gobject IO watch handler.
     """
-    key = _brlAPI.readKey(False)
+    try:
+        key = _brlAPI.readKey(False)
+    except:
+        debug.println(debug.LEVEL_WARNING, "BrlTTY seems to have disappeared:")
+        debug.printException(debug.LEVEL_WARNING)
+        shutdown()
+        return
     if key:
         _processBrailleEvent(_brlAPI.expandKeyCode(key))
     return _brlAPIRunning
@@ -1367,6 +1393,8 @@ def setupKeyRanges(keys):
     Arguments:
     -keys: a list of BrlAPI commands.
     """
+    if not _brlAPIRunning:
+        init(_callback, settings.tty)
     if not _brlAPIRunning:
         return
 
@@ -1391,25 +1419,26 @@ def init(callback=None, tty=7):
     Arguments:
     - callback: the method to call with a BrlTTY input event.
     - tty: the tty port to take ownership of (default = 7)
-    Returns True if the initialization procedure was run or False if this
-    module has already been initialized.
+    Returns False if BrlTTY cannot be accessed or braille has
+    not been enabled.
     """
 
-    global _initialized
+    global _brlAPI
+    global _brlAPIRunning
+    global _brlAPISourceId
     global _displaySize
     global _callback
+    global _monitor
 
-    if _initialized:
+    if _brlAPIRunning:
+        return True
+
+    if not settings.enableBraille:
         return False
 
     _callback = callback
 
     try:
-        global _brlAPI
-        global _brlAPIRunning
-        global _brlAPISourceId
-
-        gobject.threads_init()
         _brlAPI = brlapi.Connection()
 
         try:
@@ -1430,7 +1459,10 @@ def init(callback=None, tty=7):
                                                gobject.IO_IN,
                                                _brlAPIKeyReader)
     except:
-        debug.printException(debug.LEVEL_FINEST)
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Could not initialize BrlTTY:")
+        debug.printException(debug.LEVEL_CONFIGURATION)
+        _brlAPIRunning = False
         return False
 
     # [[[TODO: WDW - For some reason, BrlTTY wants to say the height of the
@@ -1440,6 +1472,12 @@ def init(callback=None, tty=7):
     (x, y) = _brlAPI.displaySize
     _displaySize = [x, 1]
 
+    # The monitor will be created in refresh if needed.
+    #
+    if _monitor:
+        _monitor.destroy()
+        _monitor = None
+
     debug.println(debug.LEVEL_CONFIGURATION,
                   "braille display size = (%d, %d)" \
                   % (_displaySize[0], _displaySize[1]))
@@ -1447,29 +1485,31 @@ def init(callback=None, tty=7):
     clear()
     refresh(True)
 
-    _initialized = True
-
     return True
 
 def shutdown():
     """Shuts down the braille module.   Returns True if the shutdown procedure
-    was run or False if this module has not been initialized.
+    was run.
     """
-
-    global _initialized
-
-    if not _initialized:
-        return False
 
     global _brlAPIRunning
     global _brlAPISourceId
+    global _monitor
+    global _displaySize
 
     if _brlAPIRunning:
         _brlAPIRunning = False
         gobject.source_remove(_brlAPISourceId)
         _brlAPISourceId = 0
-        _brlAPI.leaveTtyMode()
-
-    _initialized = False
+        try:
+            _brlAPI.leaveTtyMode()
+        except:
+            pass
+        if _monitor:
+            _monitor.destroy()
+            _monitor = None
+        _displaySize = [DEFAULT_DISPLAY_SIZE, 1]
+    else:
+        return False
 
     return True
