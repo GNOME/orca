@@ -240,6 +240,13 @@ BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
 BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
 brailleRolenameStyle    = BRAILLE_ROLENAME_STYLE_LONG
 
+# Roles to force to be displayed even when the verbosity level
+# is not verbose.
+#
+brailleForceRoles = [pyatspi.ROLE_COMBO_BOX,
+                     pyatspi.ROLE_MENU,
+                     pyatspi.ROLE_TEAROFF_MENU_ITEM]
+
 # Braille Selection Indicator (see brailleSelectorIndicator).
 # The values represent the character to be used in the attrOr
 # field of brlAPI's writeStruct.
