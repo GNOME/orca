@@ -3657,7 +3657,10 @@ class Script(default.Script):
     def getLastObject(self, documentFrame):
         """Returns the last object in the document frame"""
 
-        lastChild = documentFrame[documentFrame.childCount - 1]
+        try:
+            lastChild = documentFrame[documentFrame.childCount - 1]
+        except:
+            lastChild = documentFrame
         while lastChild:
             lastObj = self.findNextObject(lastChild, documentFrame)
             if lastObj:
@@ -5628,7 +5631,8 @@ class Script(default.Script):
         # it and trap the user in the list. The same is true for combo
         # boxes.
         #
-        if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX] \
+        if obj \
+           and obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX] \
            and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
             characterOffset = self.getCharacterOffsetInParent(obj)
             obj = obj.parent
