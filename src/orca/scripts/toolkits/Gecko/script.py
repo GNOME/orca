@@ -5279,13 +5279,21 @@ class Script(default.Script):
                             offset = start + 1
                         else:
                             # It's a link that ends on our left. Who knows
-                            # where it starts. Might be on the previous
-                            # line.
+                            # where it starts? Might be on the previous
+                            # line. We will assume that it begins on this
+                            # line if the start offset is 0. However, it
+                            # might be an image link which occupies more
+                            # than just this line. To be safe, we'll also
+                            # look to be sure that the text does not start
+                            # with an embedded object character. See bug
+                            # 587794.
                             #
                             cOffset = childText.characterCount - 1
                             [cLine, cStart, cEnd] = \
                                 childText.getTextAtOffset(cOffset, boundary)
                             if cStart == 0 \
+                               and not cLine.startswith(\
+                                self.EMBEDDED_OBJECT_CHARACTER) \
                                and obj.getRole() != pyatspi.ROLE_PANEL:
                                 # It starts on this line.
                                 #
