@@ -289,7 +289,9 @@ class BrailleGenerator(generator.Generator):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        include = True
+        include = settings.enableBrailleContext
+        if not include:
+            return include
         try:
             text = obj.queryText()
         except NotImplementedError:
