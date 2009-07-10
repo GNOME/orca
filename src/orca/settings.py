@@ -1335,3 +1335,9 @@ brailleNestingLevelString = _("LEVEL %d")
 # String for delimiters between table cells
 #
 brailleTableCellDelimiter = " "
+
+# This is for bug #585417 - Allow pauses to be inserted into speech
+# output. We're keeping it separate for now until we get the pauses
+# sorted out just right.
+#
+useExperimentalSpeechProsody = False

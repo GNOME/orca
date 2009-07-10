@@ -32,6 +32,7 @@ import copy
 import pyatspi
 
 import orca.formatting
+import orca.settings
 
 formatting = {
     'speech': {
@@ -80,6 +81,19 @@ formatting = {
         }
     }
 }
+
+if orca.settings.useExperimentalSpeechProsody:
+    print "Adding pauses to soffice speech formatting strings."
+    formatting['speech']['ROLE_SPREADSHEET_CELL']['basicWhereAmI'] = \
+        'roleName + pause + column + pause + columnHeader + pause + row + pause + rowHeader + pause + (textContent or spreadSheetCell) + pause + anyTextSelection + pause'
+    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['focused'] = \
+        '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState) + pause + (expandableState and (expandableState + pause + numberOfChildren + pause))'
+    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['unfocused'] = \
+        'endOfTableIndicator + pause + tableCellRow + pause'
+    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['basicWhereAmI'] = \
+        'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + expandableState + pause + nodeLevel + pause'
+    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['detailedWhereAmI'] = \
+        'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + tableCellRow + pause + expandableState + pause + nodeLevel + pause'
 
 class Formatting(orca.formatting.Formatting):
     def __init__(self, script):

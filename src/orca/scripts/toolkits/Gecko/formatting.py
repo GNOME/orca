@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2009 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -30,6 +30,7 @@ import copy
 import pyatspi
 
 import orca.formatting
+import orca.settings
 
 # pylint: disable-msg=C0301
 
@@ -135,6 +136,11 @@ formatting = {
         }
     }
 }
+
+if orca.settings.useExperimentalSpeechProsody:
+    print "Adding pauses to Gecko speech formatting strings."
+    formatting['speech'][pyatspi.ROLE_LIST]['unfocused'] = \
+        'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
 
 class Formatting(orca.formatting.Formatting):
 

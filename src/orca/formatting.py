@@ -512,6 +512,67 @@ formatting = {
     }
 }
 
+if settings.useExperimentalSpeechProsody:
+    print "Adding pauses to default speech formatting strings."
+    formatting['speech'][pyatspi.ROLE_CHECK_MENU_ITEM]['basicWhereAmI'] = \
+        'ancestors + pause + labelAndName + roleName + checkedState + pause + accelerator + pause + positionInList + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_COMBO_BOX]['basicWhereAmI'] = \
+        'label + roleName + pause + name + positionInList + ' + MNEMONIC + ' + accelerator'
+    formatting['speech'][pyatspi.ROLE_HEADING]['basicWhereAmI'] = \
+        'label + readOnly + textRole + pause + textContent + anyTextSelection + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_HEADING]['detailedWhereAmI'] = \
+        'label + readOnly + textRole + pause +textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+    formatting['speech'][pyatspi.ROLE_ICON]['basicWhereAmI'] = \
+        'parentRoleName + pause + labelAndName + pause + selectedItemCount + pause'
+    formatting['speech'][pyatspi.ROLE_ICON]['detailedWhereAmI'] = \
+        'parentRoleName + pause + labelAndName + pause + selectedItemCount + pause + selectedItems + pause'
+    formatting['speech'][pyatspi.ROLE_LAYERED_PANE]['basicWhereAmI'] = \
+        'labelAndName + pause+ roleName + pause + selectedItemCount + pause'
+    formatting['speech'][pyatspi.ROLE_LAYERED_PANE]['detailedWhereAmI'] = \
+        'labelAndName + pause + roleName + pause + selectedItemCount + pause+ selectedItems + pause'
+    formatting['speech'][pyatspi.ROLE_LINK]['basicWhereAmI'] = \
+        'linkInfo + pause + siteDescription + pause + fileSize'
+    formatting['speech'][pyatspi.ROLE_LIST_ITEM]['unfocused'] = \
+        'labelAndName + allTextSelection + pause + expandableState + pause + availability'
+    formatting['speech'][pyatspi.ROLE_LIST_ITEM]['basicWhereAmI'] = \
+        'label + roleName + pause + name + pause + positionInList + pause + expandableState + (nodeLevel or nestingLevel) + pause'
+    formatting['speech'][pyatspi.ROLE_MENU]['basicWhereAmI'] = \
+        '(ancestors or parentRoleName) + pause + labelAndName + roleName + pause +  positionInList + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_MENU_ITEM]['basicWhereAmI'] = \
+        'ancestors + pause + labelAndName + pause + accelerator + pause + positionInList + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_PAGE_TAB]['basicWhereAmI'] = \
+        'parentRoleName + pause + labelAndName + roleName + pause + positionInList + ' + MNEMONIC + ' + accelerator'
+    formatting['speech'][pyatspi.ROLE_RADIO_BUTTON]['unfocused'] = \
+        'labelAndName + pause + radioState + roleName + availability + lineBreak + ' + MNEMONIC + ' + accelerator + pause'
+    formatting['speech'][pyatspi.ROLE_RADIO_BUTTON]['basicWhereAmI'] = \
+        'radioButtonGroup + pause + labelAndName + roleName + pause + radioState + pause + positionInGroup + ' + MNEMONIC + ' + accelerator'
+    formatting['speech'][pyatspi.ROLE_TABLE]['focused'] = \
+        'labelAndName + pause + allTextSelection + roleName + availability + noChildren'
+    formatting['speech'][pyatspi.ROLE_TABLE]['unfocused'] = \
+        'labelAndName + pause + allTextSelection + roleName + availability + noChildren'
+    formatting['speech'][pyatspi.ROLE_TABLE]['basicWhereAmI'] = \
+        'labelAndName + pause + allTextSelection + roleName + availability + noChildren'
+    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['focused'] = \
+        '((tableCell2ChildLabel + tableCell2ChildToggle) or cellCheckedState) + pause + (expandableState and (expandableState + pause + numberOfChildren + pause))'
+    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['unfocused'] = \
+        'tableCellRow + pause'
+    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['basicWhereAmI'] = \
+        'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + expandableState + pause + nodeLevel + pause'
+    formatting['speech'][pyatspi.ROLE_TABLE_CELL]['detailedWhereAmI'] = \
+        'parentRoleName + pause + columnHeader + pause + rowHeader + pause + roleName + pause + cellCheckedState + pause + (realActiveDescendantDisplayedText or imageDescription + image) + pause + columnAndRow + pause + tableCellRow + pause + expandableState + pause + nodeLevel + pause'
+    formatting['speech'][pyatspi.ROLE_TERMINAL]['basicWhereAmI'] = \
+        'label + readOnly + pause + textRole + pause + textContent + anyTextSelection + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_TERMINAL]['detailedWhereAmI'] = \
+        'label + readOnly + pause + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
+    formatting['speech'][pyatspi.ROLE_TEXT]['focused'] = \
+        'labelOrName + readOnly + textRole + pause + currentLineText + allTextSelection',
+    formatting['speech'][pyatspi.ROLE_TEXT]['unfocused'] = \
+        'labelOrName + readOnly + textRole + pause + currentLineText + allTextSelection + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_TEXT]['basicWhereAmI'] = \
+        'label + readOnly + textRole + pause + textContent + anyTextSelection + pause + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_TEXT]['detailedWhereAmI'] = \
+        'label + readOnly + textRole + pause + textContentWithAttributes + anyTextSelection + pause + ' + MNEMONIC + ' + ' + TUTORIAL
+
 class Formatting(dict):
 
     def __init__(self, script):
