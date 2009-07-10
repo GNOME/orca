@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2008 Sun Microsystems Inc.
+# Copyright 2004-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -23,7 +23,7 @@ as its speech server, or it can feel free to create one of its own."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import logging
@@ -38,6 +38,7 @@ import keynames
 import orca
 import orca_state
 import settings
+import sound
 import speech_generator
 
 from acss import ACSS
@@ -197,6 +198,11 @@ def speak(content, acss=None, interrupt=True):
                 if subString:
                     _speak(subString, acss, interrupt)
                     subString = None
+            elif isinstance(element, sound.Sound):
+                if subString:
+                    _speak(subString, acss, interrupt)
+                    subString = None
+                element.play()
             else:
                 if subString:
                     _speak(subString, acss, interrupt)
@@ -209,6 +215,8 @@ def speak(content, acss=None, interrupt=True):
                 else:
                     debug.println(debug.LEVEL_WARNING,
                                   "UNKNOWN speech element: '%s'" % element)
+    elif isinstance(content, sound.Sound):
+        content.play()
     elif isinstance(content, (speech_generator.Pause,
                               speech_generator.LineBreak)):
         pass

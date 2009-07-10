@@ -55,6 +55,7 @@ orca_python_PYTHON = \
 	rolenames.py \
 	script.py \
 	settings.py \
+	sound.py \
 	speech.py \
 	speechdispatcherfactory.py \
 	speech_generator.py \

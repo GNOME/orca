@@ -32,6 +32,7 @@ import orca_state
 import pyatspi
 import rolenames
 import settings
+import sound
 import text_attribute_names
 
 from orca_i18n import _         # for gettext support
@@ -79,6 +80,22 @@ class SpeechGenerator(generator.Generator):
         """
         generator.Generator._addGlobals(self, globalsDict)
         globalsDict['voice'] = self.voice
+        globalsDict['play'] = self.play
+
+    def play(self, key):
+        """Returns an array containing a sound.Sound instance.
+        The key can a value to be used to look up a filename in the
+        settings.py:sounds dictionary (e.g., a pyatspi.ROLE_* value)
+        or just the name of an audio file to use.
+        """
+        try:
+            soundBite = sound.Sound(settings.sounds[key])
+        except:
+            if isinstance(key, basestring):
+                soundBite = sound.Sound(key)
+            else:
+                soundBite = None
+        return [soundBite]
 
     def generateSpeech(self, obj, **args):
         return self.generate(obj, **args)
