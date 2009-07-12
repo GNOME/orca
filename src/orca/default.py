@@ -38,6 +38,7 @@ import pyatspi
 import braille
 import chnames
 import debug
+import eventsynthesizer
 import find
 import flat_review
 import input_event
@@ -129,6 +130,14 @@ class Script(script.Script):
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
+
+        self.inputEventHandlers["routePointerToItemHandler"] = \
+            input_event.InputEventHandler(
+                Script.routePointerToItem,
+                # Translators: this command will move the mouse pointer
+                # to the current item without clicking on it.
+                #
+                _("Routes the pointer to the current item."))
 
         self.inputEventHandlers["leftClickReviewItemHandler"] = \
             input_event.InputEventHandler(
@@ -1059,6 +1068,13 @@ class Script(script.Script):
 
         keyBindings = keybindings.KeyBindings()
 
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Divide",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["routePointerToItemHandler"]))
+
         # We want the user to be able to combine modifiers with the
         # mouse click (e.g. to Shift+Click and select), therefore we
         # do not "care" about the modifiers.
@@ -1448,6 +1464,13 @@ class Script(script.Script):
         """
 
         keyBindings = keybindings.KeyBindings()
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "9",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["routePointerToItemHandler"]))
 
         # We want the user to be able to combine modifiers with the
         # mouse click (e.g. to Shift+Click and select), therefore we
@@ -5061,6 +5084,27 @@ class Script(script.Script):
             import gtk
             clipboard = gtk.clipboard_get()
             clipboard.set_text(texti.getText(startOffset, endOffset))
+
+        return True
+
+    def routePointerToItem(self, inputEvent=None):
+        """Moves the mouse pointer to the current item."""
+
+        if self.flatReviewContext:
+            self.flatReviewContext.routeToCurrent()
+        else:
+            try:
+                eventsynthesizer.routeToCharacter(orca_state.locusOfFocus)
+            except:
+                try:
+                    eventsynthesizer.routeToObject(orca_state.locusOfFocus)
+                except:
+                    # Translators: Orca has a command that allows the user
+                    # to move the mouse pointer to the current object. If
+                    # for some reason Orca cannot identify the current
+                    # location, it will speak this message.
+                    #
+                    speech.speak(_("Could not find current location."))
 
         return True
 

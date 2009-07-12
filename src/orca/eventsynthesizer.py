@@ -49,6 +49,44 @@ def generateMouseEvent(x, y, eventName):
 
     pyatspi.Registry.generateMouseEvent(x, y, eventName)
 
+def routeToCharacter(obj):
+    """Moves the mouse pointer to the given character
+
+    Arguments:
+    - obj: the Accessible which implements the accessible text
+      interface
+    """
+    text = obj.queryText()
+    # We try to move to the left of center.  This is to
+    # handle toolkits that will offset the caret position to
+    # the right if you click dead on center of a character.
+    #
+    extents = text.getCharacterExtents(text.caretOffset,
+                                       pyatspi.DESKTOP_COORDS)
+    x = max(extents[0], extents[0] + (extents[2] / 2) - 1)
+    y = extents[1] + extents[3] / 2
+    routeToPoint(x, y, "abs")
+
+def routeToObject(obj):
+    """Moves the mouse pointer to the given Accessible.
+
+    Arguments:
+    - obj: the Accessible
+    """
+    extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+    x = extents.x + extents.width / 2
+    y = extents.y + extents.height / 2
+    routeToPoint(x, y, "abs")
+
+def routeToPoint(x, y, eventName="abs"):
+    """Moves the mouse pointer to the given point.
+
+    Arguments:
+    - x, y: the point
+    - eventName: absolute("abs") or relative("rel")
+    """
+    generateMouseEvent(x, y, eventName)
+
 def clickObject(obj, button):
     """Performs a button click on the given Accessible.
 

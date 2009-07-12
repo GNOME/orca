@@ -1476,6 +1476,24 @@ class Context:
         #print "Current line=%d zone=%d word=%d char=%d" \
         #      % (lineIndex, zoneIndex, wordIndex, charIndex)
 
+    def routeToCurrent(self):
+        """Routes the mouse pointer to the current accessible."""
+
+        if (not self.lines) \
+           or (not self.lines[self.lineIndex].zones):
+            return
+
+        [string, x, y, width, height] = self.getCurrent(Context.CHAR)
+        try:
+            # We try to move to the left of center.  This is to
+            # handle toolkits that will offset the caret position to
+            # the right if you click dead on center of a character.
+            #
+            x = max(x, x + (width / 2) - 1)
+            eventsynthesizer.routeToPoint(x, y + height / 2, "abs")
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
+
     def clickCurrent(self, button=1):
         """Performs a mouse click on the current accessible."""
 
