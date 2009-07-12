@@ -3414,7 +3414,10 @@ class Script(default.Script):
 
         textObj = self.queryNonEmptyText(obj)
         if not textObj and obj.getRole() == pyatspi.ROLE_PARAGRAPH:
-            useless = True
+            # Under these circumstances, this object is useless even
+            # if it is the child of a link.
+            #
+            return True
         elif obj.getRole() in [pyatspi.ROLE_IMAGE, \
                                pyatspi.ROLE_TABLE_CELL, \
                                pyatspi.ROLE_SECTION]:
@@ -5357,7 +5360,17 @@ class Script(default.Script):
         done = False
         while not done:
             [lastObj, start, end, string] = objects[-1]
-            [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end)
+
+            # The offset reported as the end offset can vary with Gecko.
+            # If the offset is one bigger than we expect, we are in danger
+            # of skipping over an object. Therefore, start by decrementing
+            # the end offset by 1. If we find the same object, try again.
+            #
+            [nextObj, nOffset] = self.findNextCaretInOrder(lastObj, end - 1)
+            if self.isSameObject(lastObj, nextObj):
+                [nextObj, nOffset] = \
+                    self.findNextCaretInOrder(nextObj, nOffset)
+
             if not nextObj or self.isSameObject(nextObj, lastObj):
                 break
 
@@ -5653,6 +5666,16 @@ class Script(default.Script):
             self._objectForFocusGrab = obj
             while self._objectForFocusGrab and obj:
                 role = self._objectForFocusGrab.getRole()
+
+                # If we're within a link whose children contain the text,
+                # grabbing focus on the link will result in our looping
+                # back to the link and never being able to arrow through
+                # the text.
+                #
+                if role == pyatspi.ROLE_LINK and self.queryNonEmptyText(obj):
+                    self._objectForFocusGrab = None
+                    break
+
                 if self._objectForFocusGrab.getState().contains(\
                     pyatspi.STATE_FOCUSABLE):
                     break

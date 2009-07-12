@@ -3385,9 +3385,13 @@ class StructuralNavigation:
         """
 
         if obj:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
-            self._presentObject(obj, characterOffset)
+            # We were counting on the Gecko script's setCaretPosition
+            # to do the focus grab. It turns out that we do not always
+            # want setCaretPosition to grab focus on a link (e.g. when
+            # arrowing in the text of a paragraph which is a child of
+            # a link. Therefore, we need to grab focus here.
+            #
+            obj.queryComponent().grabFocus()
         else:
             # Translators: this is for navigating document content by
             # moving from unvisited link to unvisited link. This string
@@ -3465,9 +3469,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
         if obj:
-            [obj, characterOffset] = self._getCaretPosition(obj)
-            self._setCaretPosition(obj, characterOffset)
-            self._presentObject(obj, characterOffset)
+            obj.queryComponent().grabFocus()
         else:
             # Translators: this is for navigating document content by
             # moving from visited link to visited link. This string is

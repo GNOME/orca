@@ -95,7 +95,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Check Now Button Check to see if your order has been shipped.  $l'",
      "     VISIBLE:  'Check Now Button Check to see if', cursor=1",
      "SPEECH OUTPUT: 'ARIA Button - " + utils.firefoxFrameNames + " frame'",
-     "SPEECH OUTPUT: 'Check Now button Check to see if your order has been shipped. text Check to see if your order has been shipped.'"]))
+     "SPEECH OUTPUT: 'Check Now button text Check to see if your order has been shipped.'"]))
 
 ########################################################################
 # Close the demo
