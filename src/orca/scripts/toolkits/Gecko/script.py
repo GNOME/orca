@@ -3432,7 +3432,50 @@ class Script(default.Script):
                                     [pyatspi.ROLE_LINK],
                                     [pyatspi.ROLE_DOCUMENT_FRAME])
             if link:
-                useless = False
+                if obj.getRole() == pyatspi.ROLE_IMAGE:
+                    # If this object had alternative text and/or a title,
+                    # we wouldn't be here. We need to determine if this
+                    # image is indeed worth presenting and not a duplicate
+                    # piece of information. See Facebook's timeline and/or
+                    # bug 584540.
+                    #
+                    for child in obj.parent:
+                        if self.getDisplayedText(child):
+                            # Some other sibling is presenting information.
+                            # We'll treat this image as useless.
+                            #
+                            break
+                    else:
+                        # No other siblings are presenting information.
+                        #
+                        if obj.parent.getRole() == pyatspi.ROLE_LINK:
+                            if not link.name:
+                                # If no siblings are presenting information,
+                                # but the link had a name, then we'd know we
+                                # had text along with the image(s). Given the
+                                # lack of name, we'll treat the first image as
+                                # the useful one and ignore the rest.
+                                #
+                                useless = obj.getIndexInParent() > 0
+                        else:
+                            # The image must be in a paragraph or section or
+                            # heading or something else that might result in
+                            # it being on its own line.
+                            #
+                            textObj = self.queryNonEmptyText(obj.parent)
+                            if textObj:
+                                text = textObj.getText(0, -1).decode("UTF-8")
+                                text = text.replace(\
+                                    self.EMBEDDED_OBJECT_CHARACTER, "").strip()
+                                if not text:
+                                    # There's no other text on this line inside
+                                    # of this link. We don't want to skip over
+                                    # this line, so we'll treat the first image
+                                    # as useful.
+                                    #
+                                    useless = obj.getIndexInParent() > 0
+                else:
+                    useless = False
 
         return useless
 
