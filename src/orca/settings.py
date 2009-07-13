@@ -1340,4 +1340,4 @@ brailleTableCellDelimiter = " "
 # output. We're keeping it separate for now until we get the pauses
 # sorted out just right.
 #
-useExperimentalSpeechProsody = False
+useExperimentalSpeechProsody = True
