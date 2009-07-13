@@ -1,4 +1,112 @@
-2.27.3 - 15-June-2009
+2.27.4 - 13-Jul-2009
+
+General:
+
+* Fix for doo#9676 - Orca fails to launch.  Make sure setting the PATH
+  follows sh syntax and not bash.
+
+* Latent work for bgo#400729 - Orca should provide support for general
+  audio.  This adds some latent support for audio that gives people
+  something to experiment with as soon as bgo#570658 is done.
+
+* Fix for bgo#561452 - Factor out included "louis" C extension.  This
+  now requires liblouis 1.6.2 and the liblouis 1.6.2 "louis" python
+  module in order for contracted braille to work with Orca.  See
+  http://live.gnome.org/Orca/Braille for more information.
+
+* Fix for bgo#568696 - locus of focus changes when updating list of
+  files in nautilus.
+
+* Much more work on bgo#570658 - Refactor the speech and braille
+  generators. This refactor is almost complete. After a pass to
+  simplify and consolidate the formatting strings, we should be ready
+  to document how you can customize Orca presentation for yourself.
+  NOTE: to indicate things are still experimental, informational
+  messages will be included on the command line where you run Orca.
+  These informational messages say that pauses have been added to the
+  formatting strings.  When the integration is done, these messages
+  will be removed.
+
+* More work on bgo#575614 - Please add speakable characters: → and ←.
+
+* Fix for bgo#583199 - orca should not hang itself, or the desktop
+  when brltty is killed. This fix allows BrlTTY to be killed,
+  restarted, started before Orca, started after Orca, etc.  This
+  requires a fix in BrlTTY that will appear in a to-be-released
+  version of BrlTTY (i.e., the fix is not in BrlTTY 4.0).  Note that
+  this change has caused us to change the default value of
+  settings.enableBraille to False to prevent speech-only users from
+  incurring unnecessary overhead.
+
+* Fix for bgo#584796 - Invoking the application specific preferences
+  for Orca when in the Orca Quit dialog freezes speech.
+
+* Fix for bgo#585103 - Inconsistent behavior of flat review.
+
+* Provisional work on bgo#585417 - Allow pauses to be inserted in
+  speech output.  This provides code that will modify the speech
+  formatting strings if orca.settings.useExperimentalSpeechProsody is
+  True (the default value is True for this release).  This allows
+  users to experiment with the prosody work Hammer Attila has done
+  before we finally commit to it.
+
+* Fix for bgo#585897 - Pronunciation substitution can miss words due
+  to word delimiters
+
+* Fix for bgo#586385 - When I using where am I function with
+  Openoffice.org Calc, the spoken row and column information are not
+  marked for translation.
+
+* Fix for bgo#586580 - Orca repeats the coordinates of Calc cells.
+
+* Fix for bgo#588403 - Implement ability to route the mouse pointer
+  without clicking. This implements support for routing the pointer to
+  the current location (either the area under flat review or the
+  locusOfFocus).
+
+* Fix for crash (no bug number) - Prevent stack trace when contracted
+  braille is being used. The trace would also kill speech.
+
+OpenOffice/StarOffice:
+
+* Fix for bug #583811 - Doing a select all in OOo Writer causes Orca
+  to say "selected" for each paragraph.
+
+Thunderbird:
+
+* Fix for bgo#584263 - When I compose or reply to a message with
+  Thunderbird, the Ctrl+End key combination does not work.
+
+* Fix for bgo#584837 - Find dialog fails to move caret to desired
+  location in Thunderbird.
+
+* Fix for bgo#568658 - Sometimes Orca announces the wrong subject in
+  Thunderbird.
+
+Firefox:
+
+* Fix for bgo#584540 - Orca should not duplicate images and lines of
+  text on facebook
+
+* Fix for bgo#585871 - WhereAmI info in FF doesn't include link
+  text.
+
+* Fix for bgo#587794 - In some pages I cannot read using the Down
+  Arrow key.
+
+* Fix for bgo#588344 - Missed text on a page in Firefox.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs       Czech                Lucas Lommer
+    es       Spanish              Francisco Javier Dorado Martinez and
+                                  Jorge Gonzalez
+    hu       Hungarian            Attila Hammer and Gabor Kelemen
+    uk       Ukranian             Maxim Dziumanenko
+
+==========
+
+2.27.3 - 15-Jun-2009
 
 General:
 
