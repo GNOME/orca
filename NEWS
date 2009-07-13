@@ -21,11 +21,6 @@ General:
   generators. This refactor is almost complete. After a pass to
   simplify and consolidate the formatting strings, we should be ready
   to document how you can customize Orca presentation for yourself.
-  NOTE: to indicate things are still experimental, informational
-  messages will be included on the command line where you run Orca.
-  These informational messages say that pauses have been added to the
-  formatting strings.  When the integration is done, these messages
-  will be removed.
 
 * More work on bgo#575614 - Please add speakable characters: → and ←.
 
@@ -49,6 +44,12 @@ General:
   True (the default value is True for this release).  This allows
   users to experiment with the prosody work Hammer Attila has done
   before we finally commit to it.
+
+  NOTE: to indicate things are still experimental, informational
+  messages will be included on the command line where you run Orca.
+  These informational messages say that pauses have been added to the
+  formatting strings.  When the integration is done, these messages
+  will be removed.
 
 * Fix for bgo#585897 - Pronunciation substitution can miss words due
   to word delimiters
