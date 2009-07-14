@@ -670,16 +670,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                 and (orca_state.activeScript.app \
                                      != event.host_application)
 
-                    # One last check -- let's make sure the new script actually
-                    # has an active window.  See bug #568696.
-                    #
-                    if setNewActiveScript and event.host_application:
-                        setNewActiveScript = False
-                        for child in event.host_application:
-                            if child.getState().contains(pyatspi.STATE_ACTIVE):
-                                setNewActiveScript = True
-                                break
-
                     if not reason and setNewActiveScript:
                         reason = "object received focus"
 
