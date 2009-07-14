@@ -565,7 +565,7 @@ if settings.useExperimentalSpeechProsody:
     formatting['speech'][pyatspi.ROLE_TERMINAL]['detailedWhereAmI'] = \
         'label + readOnly + pause + textRole + pause + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
     formatting['speech'][pyatspi.ROLE_TEXT]['focused'] = \
-        'labelOrName + readOnly + textRole + pause + currentLineText + allTextSelection',
+        'labelOrName + readOnly + textRole + pause + currentLineText + allTextSelection'
     formatting['speech'][pyatspi.ROLE_TEXT]['unfocused'] = \
         'labelOrName + readOnly + textRole + pause + currentLineText + allTextSelection + ' + MNEMONIC
     formatting['speech'][pyatspi.ROLE_TEXT]['basicWhereAmI'] = \
