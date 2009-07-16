@@ -166,8 +166,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box open button",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four Combo'",
-     "     VISIBLE:  'Four Combo', cursor=5",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l Combo'",
+     "     VISIBLE:  'Four $l Combo', cursor=5",
      "SPEECH OUTPUT: 'Four combo box'"]))
 
 ########################################################################
@@ -236,7 +236,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'gtk-demo Application Window', cursor=22",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Menu'",
      "     VISIBLE:  'Menu', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour One'",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour $l One'",
      "     VISIBLE:  'One', cursor=1",
      "SPEECH OUTPUT: 'window'",
      "SPEECH OUTPUT: 'Editable panel menu'",
@@ -250,7 +250,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Two", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box One item",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour Two'",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour $l Two'",
      "     VISIBLE:  'Two', cursor=1",
      "SPEECH OUTPUT: 'Two'"]))
 
@@ -263,8 +263,8 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box Two selected",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame'",
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two Combo'",
-     "     VISIBLE:  'Two Combo', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l Combo'",
+     "     VISIBLE:  'Two $l Combo', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Editable panel Two combo box'"]))
 

@@ -318,10 +318,11 @@ class BrailleGenerator(generator.Generator):
 
     def _generateEol(self, obj, **args):
         result = []
-        if not args.get('mode', None):
-            args['mode'] = self._mode
-        args['stringType'] = 'eol'
-        result.append(self._script.formatting.getString(**args))
+        if not settings.disableBrailleEOL:
+            if not args.get('mode', None):
+                args['mode'] = self._mode
+            args['stringType'] = 'eol'
+            result.append(self._script.formatting.getString(**args))
         return result
 
     def space(self, delimiter=" "):

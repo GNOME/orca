@@ -368,7 +368,7 @@ formatting = {
             # We could then use the cursorOffset field to indicate where the
             # combobox starts.]]]
             #
-            'unfocused': '((comboBoxTextObj and [Text(comboBoxTextObj[0], asString(label))])\
+            'unfocused': '((comboBoxTextObj and [Text(comboBoxTextObj[0], asString(label), asString(eol))])\
                            or [Component(obj, asString(label + displayedText), label and (len(asString(label)) + 1) or 0)])\
                           + [Region(" " + asString(roleName))]'
             },

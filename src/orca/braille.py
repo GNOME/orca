@@ -585,6 +585,11 @@ class Text(Region):
 
         if not self.contracted and not settings.disableBrailleEOL:
             self.string += self.eol
+        elif settings.disableBrailleEOL:
+            # Ensure there is a place to click on at the end of a line
+            # so the user can route the caret to the end of the line.
+            #
+            self.string += ' '
 
     def __str__(self):
         return "Text: '%s', %d" % (self.string, self.cursorOffset)
