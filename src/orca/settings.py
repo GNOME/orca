@@ -54,12 +54,6 @@ try:
     screenWidth = _screen.get_width()
     screenHeight = _screen.get_height()
 
-    # We want to know what the tty is so we can send it to BrlAPI
-    # if possible.
-    #
-    (atom, format, data) = _root_window.property_get("XFree86_VT")
-    tty = data[0]
-
     # The bug that caused gnome-panel to crash is fixed in GTK 2.10.11.
     minimum_gtk_version = (100000 * 2) + \
                           (1000 * 10) + \
@@ -68,6 +62,12 @@ try:
                            (1000 * gtk.gtk_version[1]) + \
                             gtk.gtk_version[2]
     canPresentToolTips = (current_gtk_version >= minimum_gtk_version)
+
+    # We want to know what the tty is so we can send it to BrlAPI
+    # if possible.
+    #
+    (atom, format, data) = _root_window.property_get("XFree86_VT")
+    tty = data[0]
 except:
     pass
 

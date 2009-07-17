@@ -2553,7 +2553,7 @@ class Script(script.Script):
 
         return alertAndDialogCount
 
-    def presentTooltip(self, obj):
+    def presentToolTip(self, obj):
         """
         Speaks the tooltip for the current object of interest.
         """
@@ -2579,7 +2579,7 @@ class Script(script.Script):
             speechResult = self.whereAmI.getWhereAmI(obj, True)
             brailleResult = speechResult[0]
         debug.println(debug.LEVEL_FINEST,
-                      "presentTooltip: text='%s'" % speechResult)
+                      "presentToolTip: text='%s'" % speechResult)
         if speechResult:
             speech.speak(speechResult)
         if brailleResult:
@@ -3892,7 +3892,7 @@ class Script(script.Script):
             obj = event.source
             if event.type.startswith("object:state-changed:showing"):
                 if event.detail1 == 1:
-                    self.presentTooltip(obj)
+                    self.presentToolTip(obj)
                 elif orca_state.locusOfFocus \
                     and isinstance(orca_state.lastInputEvent,
                                    input_event.KeyboardEvent) \

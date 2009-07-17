@@ -497,27 +497,24 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         #
         try:
             if event.source.getRole() == pyatspi.ROLE_TOOL_TIP:
-                # Check that it's okay to present tool tips. Always present
-                # tooltips initiated by the user pressing Control-F1 on the
-                # keyboard.
-                #
-                if isinstance(orca_state.lastInputEvent, \
-                              input_event.KeyboardEvent):
-                    if not orca_state.lastNonModifierKeyEvent.event_string \
-                                                                     == "F1":
-                        return
-
-                    # Mouse move events don't update orca_state.lastInputEvent
-                    # so it's possible the user accidentally nudged the
-                    # mouse and generated another tooltip event. If the
-                    # current time minus the last keyboard event time is
-                    # greater than 0.2 seconds, than just ignore this tooltip
-                    # event.
+                if settings.presentToolTips:
+                    pass
+                elif isinstance(orca_state.lastInputEvent, \
+                                input_event.KeyboardEvent) \
+                     and orca_state.lastNonModifierKeyEvent.event_string \
+                         == "F1":
+                    # Always present tooltips initiated by the user
+                    # pressing Control-F1 on the keyboard.  Mouse move
+                    # events don't update orca_state.lastInputEvents,
+                    # however, so it's possible the user accidentally
+                    # nudged the mouse after pressing F1 and generated
+                    # another tooltip event. If the current time minus
+                    # the last keyboard event time is greater than 0.5
+                    # seconds, than just ignore this tooltip event.
                     #
-                    currentTime =  time.time()
-                    if (currentTime - orca_state.lastInputEvent.time) > 0.2:
+                    if (time.time() - orca_state.lastInputEvent.time) > 0.5:
                         return
-                elif not settings.presentToolTips:
+                else:
                     return
         except:
             pass
