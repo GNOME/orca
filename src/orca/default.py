@@ -5111,13 +5111,41 @@ class Script(script.Script):
     def leftClickReviewItem(self, inputEvent=None):
         """Performs a left mouse button click on the current item."""
 
-        self.getFlatReviewContext().clickCurrent(1)
+        if self.flatReviewContext:
+            self.flatReviewContext.clickCurrent(1)
+        else:
+            try:
+                eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 1)
+            except:
+                try:
+                    eventsynthesizer.clickObject(orca_state.locusOfFocus, 1)
+                except:
+                    # Translators: Orca has a command that allows the user
+                    # to move the mouse pointer to the current object. If
+                    # for some reason Orca cannot identify the current
+                    # location, it will speak this message.
+                    #
+                    speech.speak(_("Could not find current location."))
         return True
 
     def rightClickReviewItem(self, inputEvent=None):
         """Performs a right mouse button click on the current item."""
 
-        self.getFlatReviewContext().clickCurrent(3)
+        if self.flatReviewContext:
+            self.flatReviewContext.clickCurrent(3)
+        else:
+            try:
+                eventsynthesizer.clickCharacter(orca_state.locusOfFocus, 3)
+            except:
+                try:
+                    eventsynthesizer.clickObject(orca_state.locusOfFocus, 3)
+                except:
+                    # Translators: Orca has a command that allows the user
+                    # to move the mouse pointer to the current object. If
+                    # for some reason Orca cannot identify the current
+                    # location, it will speak this message.
+                    #
+                    speech.speak(_("Could not find current location."))
         return True
 
     def reviewCurrentLine(self, inputEvent):

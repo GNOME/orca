@@ -87,6 +87,25 @@ def routeToPoint(x, y, eventName="abs"):
     """
     generateMouseEvent(x, y, eventName)
 
+def clickCharacter(obj, button):
+    """Performs a button click on the current character
+
+    Arguments:
+    - obj: the Accessible which implements the accessible text
+      interface
+    - button: an integer representing the mouse button number
+    """
+    text = obj.queryText()
+    # We try to click to the left of center.  This is to
+    # handle toolkits that will offset the caret position to
+    # the right if you click dead on center of a character.
+    #
+    extents = text.getCharacterExtents(text.caretOffset,
+                                       pyatspi.DESKTOP_COORDS)
+    x = max(extents[0], extents[0] + (extents[2] / 2) - 1)
+    y = extents[1] + extents[3] / 2
+    generateMouseEvent(x, y, "b%dc" % button)
+
 def clickObject(obj, button):
     """Performs a button click on the given Accessible.
 
