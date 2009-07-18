@@ -1044,6 +1044,8 @@ class Script(script.Script):
             self.onStateChanged
         listeners["object:state-changed:selected"]          = \
             self.onStateChanged
+        listeners["object:text-attributes-changed"]         = \
+            self.onTextAttributesChanged
         listeners["object:text-selection-changed"]          = \
             self.onTextSelectionChanged
         listeners["object:selection-changed"]               = \
@@ -2253,6 +2255,8 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
+        self.speakMisspelledIndicator(obj, startOffset)
+
         word = self.adjustForRepeats(word)
         orca_state.lastWord = word
         speech.speak(word, voice)
@@ -2518,6 +2522,7 @@ class Script(script.Script):
                     speech.speak(_("blank"), voice, False)
                 return
 
+        self.speakMisspelledIndicator(obj, offset)
         speech.speakCharacter(character, voice)
 
     def isFunctionalDialog(self, obj):
@@ -3993,6 +3998,45 @@ class Script(script.Script):
             endOffset = offset+1
 
         return [startOffset, endOffset]
+
+    def onTextAttributesChanged(self, event):
+        """Called when an object's text attributes change. Right now this
+        method is only to handle the presentation of spelling errors on
+        the fly. Also note that right now, the Gecko toolkit is the only
+        one to present this information to us.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
+           and self.isSameObject(event.source, orca_state.locusOfFocus):
+            try:
+                text = event.source.queryText()
+            except:
+                return
+
+            # If the misspelled word indicator has just appeared, it's
+            # because the user typed a word boundary or navigated out
+            # of the word. We don't want to have to store a full set of
+            # each object's text attributes to compare, therefore, we'll
+            # check the previous word (most likely case) and the next
+            # word with respect to the current position.
+            #
+            prevWordAndOffsets = \
+                text.getTextAtOffset(text.caretOffset - 1,
+                                     pyatspi.TEXT_BOUNDARY_WORD_START)
+            nextWordAndOffsets = \
+                text.getTextAtOffset(text.caretOffset + 1,
+                                     pyatspi.TEXT_BOUNDARY_WORD_START)
+
+            if self.isWordMisspelled(event.source, prevWordAndOffsets[1] ) \
+               or self.isWordMisspelled(event.source, nextWordAndOffsets[1]):
+                # Translators: this is to inform the user of the presence
+                # of the red squiggly line which indicates that a given
+                # word is not spelled correctly.
+                #
+                speech.speak(_("misspelled"))
 
     def onTextSelectionChanged(self, event):
         """Called when an object's text selection changes.
@@ -8163,6 +8207,64 @@ class Script(script.Script):
         Returns True if this accessible should provide the single word.
         """
         return acc and acc.getState().contains(pyatspi.STATE_EDITABLE)
+
+    def speakMisspelledIndicator(self, obj, offset):
+        """Speaks an announcement indicating that a given word is misspelled.
+
+        Arguments:
+        - obj: An accessible which implements the accessible text interface.
+        - offset: Offset in the accessible's text for which to retrieve the
+          attributes.
+        """
+
+        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+            try:
+                text = obj.queryText()
+            except:
+                return
+            # If we're on whitespace, we cannot be on a misspelled word.
+            #
+            charAndOffsets = \
+                text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
+            if not charAndOffsets[0].strip() \
+               or self.isWordDelimiter(charAndOffsets[0]):
+                orca_state.lastWordCheckedForSpelling = charAndOffsets[0]
+                return
+
+            wordAndOffsets = \
+                text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_WORD_START)
+            if self.isWordMisspelled(obj, offset) \
+               and wordAndOffsets[0] != orca_state.lastWordCheckedForSpelling:
+                # Translators: this is to inform the user of the presence
+                # of the red squiggly line which indicates that a given
+                # word is not spelled correctly.
+                #
+                speech.speak(_("misspelled"))
+            # Store this word so that we do not continue to present the
+            # presence of the red squiggly as the user arrows amongst
+            # the characters.
+            #
+            orca_state.lastWordCheckedForSpelling = wordAndOffsets[0]
+
+    def isWordMisspelled(self, obj, offset):
+        """Identifies if the current word is flagged as misspelled by the
+        application.
+
+        Arguments:
+        - obj: An accessible which implements the accessible text interface.
+        - offset: Offset in the accessible's text for which to retrieve the
+          attributes.
+
+        Returns True if the word is flagged as misspelled.
+        """
+
+        # Right now, the Gecko toolkit is the only one to expose this
+        # information to us. As other appliations and toolkits do so,
+        # the scripts for those applications/toolkits can override this
+        # method and, theoretically, the presentation of misspelled words
+        # should JustWork(tm).
+        #
+        return False
 
     def getTextAttributes(self, acc, offset, get_defaults=False):
         """Get the text attributes run for a given offset in a given accessible

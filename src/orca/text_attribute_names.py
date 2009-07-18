@@ -130,7 +130,7 @@ _textAttributeTable["indent"] = C_("textattr", "indent")
 # the text, such as it being a misspelled word. See:
 # https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #
-_textAttributeTable["invalid"] = C_("textattr", "invalid")
+_textAttributeTable["invalid"] = C_("textattr", "mistake")
 
 # Translators: this attribute specifies whether the text is invisible.
 # It will be a "true" or "false" value.

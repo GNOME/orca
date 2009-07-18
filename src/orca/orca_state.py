@@ -87,6 +87,10 @@ noFocusTimestamp = 0.0
 #
 lastWord = ""
 
+# The last word examined for the misspelled indicator.
+#
+lastWordCheckedForSpelling = ""
+
 # The last searchQuery
 #
 searchQuery = None

@@ -252,7 +252,8 @@ class Script(default.Script):
             "-moz-center"             : "center",
             "start"                   : "no justification",
             "underlinesolid"          : "single",
-            "line-throughsolid"       : "solid"}
+            "line-throughsolid"       : "solid",
+            "invalid"                 : "mistake"}
 
         # We need to save our special attributes so that we can revert to
         # the default text attributes when giving up focus to another app
@@ -2456,10 +2457,11 @@ class Script(default.Script):
         # with entries, we need to handle word navigation in entries here.
         #
         wordContents = self.getWordContentsAtOffset(obj, characterOffset)
+        [textObj, startOffset, endOffset, word] = wordContents[0]
+        self.speakMisspelledIndicator(textObj, startOffset)
         if obj.getRole() != pyatspi.ROLE_ENTRY:
             self.speakContents(wordContents)
         else:
-            [textObj, startOffset, endOffset, word] = wordContents[0]
             word = textObj.queryText().getText(startOffset, endOffset)
             speech.speak([word], self.getACSS(textObj, word))
 
@@ -5104,6 +5106,23 @@ class Script(default.Script):
         #print "getTextLineAtCaret failed"
         return default.Script.getTextLineAtCaret(self, obj, offset)
 
+    def isWordMisspelled(self, obj, offset):
+        """Identifies if the current word is flagged as misspelled by the
+        application.
+
+        Arguments:
+        - obj: An accessible which implements the accessible text interface.
+        - offset: Offset in the accessible's text for which to retrieve the
+          attributes.
+
+        Returns True if the word is flagged as misspelled.
+        """
+
+        attributes, start, end  = self.getTextAttributes(obj, offset, True)
+        error = attributes.get("invalid")
+
+        return error == "spelling"
+
     def getTextAttributes(self, acc, offset, get_defaults=False):
         """Get the text attributes run for a given offset in a given accessible
 
@@ -5642,6 +5661,7 @@ class Script(default.Script):
         """Speaks the character at the given characterOffset in the
         given object."""
         character = self.getCharacterAtOffset(obj, characterOffset)
+        self.speakMisspelledIndicator(obj, characterOffset)
         if obj:
             if character and character != self.EMBEDDED_OBJECT_CHARACTER:
                 speech.speakCharacter(character,
@@ -5843,6 +5863,7 @@ class Script(default.Script):
 
         self.setCaretPosition(obj, startOffset)
         self.updateBraille(obj)
+        self.speakMisspelledIndicator(obj, startOffset)
         self.speakContents(contents)
 
     def goNextWord(self, inputEvent):
@@ -5869,6 +5890,11 @@ class Script(default.Script):
         [obj, startOffset, endOffset, string] = contents[-1]
         self.setCaretPosition(obj, endOffset)
         self.updateBraille(obj)
+        # Because we're getting the word based on the WORD_END boundary
+        # rather than the WORD_START boundary, we need to increment our
+        # offset.
+        #
+        self.speakMisspelledIndicator(obj, startOffset + 1)
         self.speakContents(contents)
 
     def findPreviousLine(self, obj, characterOffset, updateCache=True):
