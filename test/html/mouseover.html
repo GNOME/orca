@@ -1,0 +1,24 @@
+<html>
+<head><title>MouseOvers</title></head>
+<script language="JavaScript">
+<!--
+var myImg = document.getElementById('myImage');
+ 
+function myMessage() {
+    alert('Welcome to mouseover-enabled Orca!');
+}
+ 
+if(myImg.addEventListener) {
+    myImg.addEventListener('mouseover', myMessage, false);
+}
+else { 
+    myImg.onmouseover = myMessage;
+}
+//-->
+</script>
+<body>
+<p>Mouseover which will present an traditional alert:</p>
+<p><img id="myImage" src="orca-for-tests.jpg" alt="Orca Logo" onMouseOver="myMessage();"></p>
+</body>
+</html>
+

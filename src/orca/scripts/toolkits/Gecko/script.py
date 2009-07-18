@@ -50,6 +50,7 @@ import urlparse
 import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
+import orca.eventsynthesizer as eventsynthesizer
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.liveregions as liveregions
@@ -262,6 +263,15 @@ class Script(default.Script):
         self.savedEnabledBrailledTextAttributes = None
         self.savedEnabledSpokenTextAttributes = None
         self.savedAllTextAttributes = None
+
+        # Keep track of the last object which appeared as a result of
+        # the user routing the mouse pointer over an object. Also keep
+        # track of the object which is associated with the mouse over
+        # so that we can restore focus to it if need be.
+        #
+        self.lastMouseOverObject = None
+        self.preMouseOverContext = [None, -1]
+        self.inMouseOverObject = False
 
     def activate(self):
         """Called when this script is activated."""
@@ -520,6 +530,19 @@ class Script(default.Script):
                 #
                 _("Speaks entire document."))
 
+        self.inputEventHandlers["moveToMouseOverHandler"] = \
+            input_event.InputEventHandler(
+                Script.moveToMouseOver,
+                # Translators: hovering the mouse over certain objects
+                # on a web page causes a new object to appear such as
+                # a pop-up menu. This command will move the user to the
+                # object which just appeared as a result of the user
+                # hovering the mouse. If the user is already in the
+                # mouse over object, this command will hide the mouse
+                # over and return the user to the object he/she was in.
+                #
+                _("Moves focus into and away from the current mouse over."))
+
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
         """
@@ -707,6 +730,22 @@ class Script(default.Script):
                 settings.defaultModifierMask,
                 settings.ORCA_MODIFIER_MASK,
                 self.inputEventHandlers["goPreviousObjectInOrderHandler"]))
+
+        if orca.settings.keyboardLayout == \
+                orca.settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    "KP_Multiply",
+                    settings.defaultModifierMask,
+                    settings.ORCA_MODIFIER_MASK,
+                    self.inputEventHandlers["moveToMouseOverHandler"]))
+        else:
+            keyBindings.add(
+                keybindings.KeyBinding(
+                    "0",
+                    settings.defaultModifierMask,
+                    settings.ORCA_MODIFIER_MASK,
+                    self.inputEventHandlers["moveToMouseOverHandler"]))
 
         if script_settings.controlCaretNavigation:
             for keyBinding in self.__getArrowBindings().keyBindings:
@@ -1490,6 +1529,14 @@ class Script(default.Script):
         if not event.source.getState().contains(pyatspi.STATE_EDITABLE):
             self._guessedLabels = {}
 
+            if self.inMouseOverObject:
+                obj = self.lastMouseOverObject
+                while obj and (obj != obj.parent):
+                    if self.isSameObject(event.source, obj):
+                        self.restorePreMouseOverContext()
+                        break
+                    obj = obj.parent
+
         default.Script.onTextDeleted(self, event)
 
     def onTextInserted(self, event):
@@ -1551,6 +1598,27 @@ class Script(default.Script):
 
         # no need moving forward if we don't have our target.
         if event.any_data is None:
+            return
+
+        # If we just routed the mouse pointer to our current location,
+        # we should say something about what resulted.
+        #
+        if self.lastMouseRoutingTime \
+           and 0 < time.time() - self.lastMouseRoutingTime < 1 \
+           and event.type.startswith("object:children-changed:add"):
+            utterances = []
+            # Translators: Orca has a command that moves the mouse
+            # pointer to the current location on a web page. If
+            # moving the mouse pointer caused an item to appear
+            # such as a pop-up menu, we want to present that fact.
+            #
+            utterances.append(_("New item has been added"))
+            utterances.extend(
+                self.speechGenerator.generateSpeech(event.any_data,
+                                                    force = True))
+            speech.speak(utterances)
+            self.lastMouseOverObject = event.any_data
+            self.preMouseOverContext = self.getCaretContext()
             return
 
         # handle live region events
@@ -5787,6 +5855,67 @@ class Script(default.Script):
                                       self.getExtents(obj,
                                                       characterOffset,
                                                       characterOffset + 1))
+
+    def moveToMouseOver(self, inputEvent):
+        """Positions the caret offset to the next character or object
+        in the mouse over which has just appeared.
+        """
+
+        if not self.lastMouseOverObject:
+            # Translators: hovering the mouse over certain objects on a
+            # web page causes a new object to appear such as a pop-up
+            # menu. Orca has a command will move the user to the object
+            # which just appeared as a result of the user hovering the
+            # mouse. If this command fails, Orca will present this message.
+            #
+            message = _("Mouse over object not found.")
+            speech.speak(message)
+            return
+
+        if not self.inMouseOverObject:
+            obj = self.lastMouseOverObject
+            offset = 0
+            if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+                [obj, offset] = self.findFirstCaretContext(obj, offset)
+
+            if obj and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+                obj.queryComponent().grabFocus()
+            elif obj:
+                contents = self.getObjectContentsAtOffset(obj, offset)
+                # If we don't have anything to say, let's try one more
+                # time.
+                #
+                if len(contents) == 1 and not contents[0][3].strip():
+                    [obj, offset] = self.findNextCaretInOrder(obj, offset)
+                    contents = self.getObjectContentsAtOffset(obj, offset)
+                self.setCaretPosition(obj, offset)
+                self.speakContents(contents)
+                self.updateBraille(obj)
+            self.inMouseOverObject = True
+        else:
+            # Route the mouse pointer where it was before both to "clean up
+            # after ourselves" and also to get the mouse over object to go
+            # away.
+            #
+            x, y = self.oldMouseCoordinates
+            eventsynthesizer.routeToPoint(x, y)
+            self.restorePreMouseOverContext()
+
+    def restorePreMouseOverContext(self):
+        """Cleans things up after a mouse-over object has been hidden."""
+
+        obj, offset = self.preMouseOverContext
+        if obj and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            [obj, offset] = self.findFirstCaretContext(obj, offset)
+
+        if obj and obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            obj.queryComponent().grabFocus()
+        elif obj:
+            self.setCaretPosition(obj, offset)
+            self.speakContents(self.getObjectContentsAtOffset(obj, offset))
+            self.updateBraille(obj)
+        self.inMouseOverObject = False
+        self.lastMouseOverObject = None
 
     def goNextCharacter(self, inputEvent):
         """Positions the caret offset to the next character or object

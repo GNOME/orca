@@ -127,6 +127,17 @@ class Script(script.Script):
         #
         self.attributeNamesDict = {}
 
+        # Keep track of the last time we issued a mouse routing command
+        # so that we can guess if a change resulted from our moving the
+        # pointer.
+        #
+        self.lastMouseRoutingTime = None
+
+        # The last location of the mouse, which we might want if routing
+        # the pointer elsewhere.
+        #
+        self.oldMouseCoordinates = [0, 0]
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
@@ -1079,19 +1090,20 @@ class Script(script.Script):
 
         # We want the user to be able to combine modifiers with the
         # mouse click (e.g. to Shift+Click and select), therefore we
-        # do not "care" about the modifiers.
+        # do not "care" about the modifiers -- unless it's the Orca
+        # modifier.
         #
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Divide",
-                settings.NO_MODIFIER_MASK,
+                settings.ORCA_MODIFIER_MASK,
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["leftClickReviewItemHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
                 "KP_Multiply",
-                settings.NO_MODIFIER_MASK,
+                settings.ORCA_MODIFIER_MASK,
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["rightClickReviewItemHandler"]))
 
@@ -5135,9 +5147,23 @@ class Script(script.Script):
 
         return True
 
+    def getAbsoluteMouseCoordinates(self):
+        """Gets the absolute position of the mouse pointer."""
+
+        import gtk
+        rootWindow = gtk.Window().get_screen().get_root_window()
+        x, y, modifiers = rootWindow.get_pointer()
+
+        return x, y
+
     def routePointerToItem(self, inputEvent=None):
         """Moves the mouse pointer to the current item."""
 
+        # Store the original location for scripts which want to restore
+        # it later.
+        #
+        self.oldMouseCoordinates = self.getAbsoluteMouseCoordinates()
+        self.lastMouseRoutingTime = time.time()
         if self.flatReviewContext:
             self.flatReviewContext.routeToCurrent()
         else:
