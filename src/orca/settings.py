@@ -1341,3 +1341,11 @@ brailleTableCellDelimiter = " "
 # sorted out just right.
 #
 useExperimentalSpeechProsody = True
+
+# If True, whenever a 'pause' keyword is found in a speech formatting
+# string, any string being created will be sent to the speech synthesis
+# system immediately.  This is for bug #585417 and allows for some
+# adaptation to how different systems handle queued speech.  For example,
+# some introduce unnaturally long pauses between requests to speak.
+#
+emitSpeechOnPauses = True

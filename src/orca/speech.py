@@ -192,8 +192,9 @@ def speak(content, acss=None, interrupt=True):
                 if subString:
                     if subString[-1] != ".":
                         subString += "."
-                    _speak(subString, acss, interrupt)
-                    subString = None
+                    if settings.emitSpeechOnPauses:
+                        _speak(subString, acss, interrupt)
+                        subString = None
             elif isinstance(element, speech_generator.LineBreak):
                 if subString:
                     _speak(subString, acss, interrupt)
