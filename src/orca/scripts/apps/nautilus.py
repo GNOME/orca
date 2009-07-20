@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2006-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2006-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
@@ -62,14 +62,48 @@ class Script(default.Script):
         #
         self.oldFolderName = None
 
+    def isActivatableEvent(self, event):
+        """Returns True if the given event is one that should cause this
+        script to become the active script.  This is only a hint to
+        the focus tracking manager and it is not guaranteed this
+        request will be honored.  Note that by the time the focus
+        tracking manager calls this method, it thinks the script
+        should become active.  This is an opportunity for the script
+        to say it shouldn't.
+        """
+
+        # Let's make sure we have an active window if focus on an icon
+        # changes. Focus can change when we don't have an an active
+        # window when someone deletes a file from a shell and nautilus
+        # happens to be showing the directory where that file exists.
+        # See bug #568696.  We'll be specific here so as to avoid
+        # looking at the child states for every single event from
+        # nautilus, which happens to be an event-happy application.
+        #
+        if event and event.type == "focus:" \
+           and event.source.getRole() == pyatspi.ROLE_ICON:
+            shouldActivate = False
+            for child in self.app:
+                if child.getState().contains(pyatspi.STATE_ACTIVE):
+                    shouldActivate = True
+                    break
+        else:
+            shouldActivate = True
+
+        if not shouldActivate:
+            debug.println(debug.LEVEL_FINE,
+                          "%s does not want to become active" % self.name)
+
+        return shouldActivate
+
     def getItemCount(self, frame):
-        """Return a string containing the number of items in the current 
+        """Return a string containing the number of items in the current
         folder.
 
         Arguments:
         - frame: the top-level frame for this Nautilus window.
 
-        Return a string containing the number of items in the current 
+        Return a string containing the number of items in the current
         folder.
         """
 
@@ -84,7 +118,7 @@ class Script(default.Script):
                      pyatspi.ROLE_FRAME, \
                      pyatspi.ROLE_APPLICATION]
 
-        # Look for the scroll pane containing the folder items. If this 
+        # Look for the scroll pane containing the folder items. If this
         # window is showing an icon view, then the child will be a layered
         # pane. If it's showing a list view, then the child will be a table.
         # Create a string of the number of items in the folder.
@@ -127,18 +161,18 @@ class Script(default.Script):
             # Unfortunately we get two of what appear to be idential events
             # when the accessible name of the frame changes. We only want to
             # speak/braille the new folder name if its different then last
-            # time, so, if the Location bar is showing, look to see if the 
-            # same toggle button (with the same name) in the "path view" is 
+            # time, so, if the Location bar is showing, look to see if the
+            # same toggle button (with the same name) in the "path view" is
             # checked. If it isn't, then this is a new folder, so announce it.
             #
             # If the Location bar isn't showing, then just do a comparison of
-            # the new folder name with the old folder name and if they are 
-            # different, announce it. Note that this doesn't do the right 
-            # thing when navigating directory hierarchies such as 
+            # the new folder name with the old folder name and if they are
+            # different, announce it. Note that this doesn't do the right
+            # thing when navigating directory hierarchies such as
             # /path/to/same/same/same.
             #
             allTokens = event.source.name.split(" - ")
-            newFolderName = allTokens[0] 
+            newFolderName = allTokens[0]
 
             allPanels = self.findByRole(event.source, pyatspi.ROLE_PANEL)
             rolesList = [pyatspi.ROLE_PANEL, \
@@ -195,7 +229,7 @@ class Script(default.Script):
         # poorly named gtk-edit toggle button, then just return. We will have
         # spoken the information for this component with the previously
         # received "object:state-changed:focused" event. For all other events,
-        # just let the parent class handle it. See bug #371637 for more 
+        # just let the parent class handle it. See bug #371637 for more
         # details.
         #
         if event.type.startswith("object:state-changed:showing"):

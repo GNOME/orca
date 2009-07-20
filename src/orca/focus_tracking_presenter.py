@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2008 Sun Microsystems Inc.
+# Copyright 2004-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__  = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gobject
@@ -147,7 +147,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         - script: the script.
         """
 
-        if settings.listenAllEvents: 
+        if settings.listenAllEvents:
             # We are always listening to everything.
             return
 
@@ -161,7 +161,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         Arguments:
         - script: the script.
         """
-        if settings.listenAllEvents: 
+        if settings.listenAllEvents:
             # We are always listening to everything.
             return
 
@@ -667,6 +667,17 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                                 and (orca_state.activeScript.app \
                                      != event.host_application)
 
+                    # One last check -- let's make sure the new script
+                    # thinks it should become active.
+                    #
+                    if setNewActiveScript:
+                        theScript = \
+                            self.getScript(event.host_application \
+                                           or event.source.getApplication())
+                        setNewActiveScript = theScript.isActivatableEvent(event)
+                        if not reason and setNewActiveScript:
+                            reason = "script requested it"
+
                     if not reason and setNewActiveScript:
                         reason = "object received focus"
 
@@ -785,7 +796,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # If the event doesn't have a source or that source is not marked
             # valid, then we don't care about this event. Just return.
             #
-            
+
             event = e
             if not event.source:
                 debug.println(debug.LEVEL_FINEST,

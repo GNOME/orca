@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2004-2008 Sun Microsystems Inc.
+# Copyright 2004-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -36,7 +36,7 @@ instance of the Script subclass.  See default.py for an example."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import braille_generator
@@ -72,7 +72,7 @@ class Script:
             self.name = "default"
 
         self.name += " (module=" + self.__module__ + ")"
-        
+
         self.listeners = self.getListeners()
 
         # By default, handle events for non-active applications.
@@ -225,10 +225,10 @@ class Script:
         """Returns the "where am I" class for this script.
         """
         return where_am_I.WhereAmI(self)
-    
+
     def echoKey(self, keyEvent):
         """Determine whether this script should echo the current key event.
-        Note that the keyEcho() method in orca.py will still take into 
+        Note that the keyEcho() method in orca.py will still take into
         account whatever the user's various preferences for key echoing
         are, which may override what is return by this echoKey() method.
 
@@ -245,7 +245,7 @@ class Script:
         """Returns the "bookmarks" class for this script.
         """
         try:
-            return self.bookmarks 
+            return self.bookmarks
         except AttributeError:
             self.bookmarks = bookmarks.Bookmarks(self)
             return self.bookmarks
@@ -548,6 +548,17 @@ class Script:
         - obj: the Accessible whose visual appearance changed.
         """
         pass
+
+    def isActivatableEvent(self, event):
+        """Returns True if the given event is one that should cause this
+        script to become the active script.  This is only a hint to
+        the focus tracking manager and it is not guaranteed this
+        request will be honored.  Note that by the time the focus
+        tracking manager calls this method, it thinks the script
+        should become active.  This is an opportunity for the script
+        to say it shouldn't.
+        """
+        return True
 
     def activate(self):
         """Called when this script is activated."""
