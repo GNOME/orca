@@ -1,0 +1,1033 @@
+<?xml version="1.0"?>
+<!--*- mode: xml -*-->
+<interface>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">1</property>
+    <property name="lower">-1</property>
+    <property name="page_increment">0.25</property>
+    <property name="step_increment">0.0500000007451</property>
+    <property name="page_size">0</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment2">
+    <property name="upper">1</property>
+    <property name="lower">-1</property>
+    <property name="page_increment">0.25</property>
+    <property name="step_increment">0.0500000007451</property>
+    <property name="page_size">0</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment3">
+    <property name="upper">1</property>
+    <property name="lower">-1</property>
+    <property name="page_increment">0.25</property>
+    <property name="step_increment">0.0500000007451</property>
+    <property name="page_size">0</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment4">
+    <property name="upper">1</property>
+    <property name="lower">-1</property>
+    <property name="page_increment">0.25</property>
+    <property name="step_increment">0.0500000007451</property>
+    <property name="page_size">0</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment5">
+    <property name="upper">1</property>
+    <property name="lower">-1</property>
+    <property name="page_increment">0.25</property>
+    <property name="step_increment">0.0500000007451</property>
+    <property name="page_size">0</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment6">
+    <property name="upper">1</property>
+    <property name="lower">-1</property>
+    <property name="page_increment">0.25</property>
+    <property name="step_increment">0.0500000007451</property>
+    <property name="page_size">0</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkListStore" id="model1">
+    <columns>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">None</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Bilinear</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model2">
+    <columns>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">None</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Saturate red</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Saturate green</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Saturate blue</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Desaturate red</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Desaturate green</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Desaturate blue</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Positive hue shift</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Negative hue shift</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkWindow" id="orcaMagAdvancedDialog">
+    <property name="title" translatable="yes">Advanced Settings</property>
+    <property name="type">GTK_WINDOW_TOPLEVEL</property>
+    <property name="window_position">GTK_WIN_POS_MOUSE</property>
+    <property name="modal">True</property>
+    <property name="resizable">True</property>
+    <property name="destroy_with_parent">False</property>
+    <property name="decorated">True</property>
+    <property name="skip_taskbar_hint">False</property>
+    <property name="skip_pager_hint">False</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+    <property name="focus_on_map">True</property>
+    <property name="urgency_hint">False</property>
+    <signal handler="magAdvancedDialogDestroyed" last_modification_time="Wed, 12 Dec 2007 17:58:20 GMT" name="destroy"/>
+    <signal handler="magAdvancedDialogKeyPressed" last_modification_time="Thu, 13 Dec 2007 21:21:16 GMT" name="key_press_event"/>
+    <child>
+      <object class="GtkVBox" id="vbox30">
+        <property name="border_width">5</property>
+        <property name="visible">True</property>
+        <property name="homogeneous">False</property>
+        <property name="spacing">0</property>
+        <child>
+          <object class="GtkAlignment" id="alignment66">
+            <property name="visible">True</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+            <property name="xscale">1</property>
+            <property name="yscale">1</property>
+            <property name="top_padding">5</property>
+            <property name="bottom_padding">0</property>
+            <property name="left_padding">0</property>
+            <property name="right_padding">0</property>
+            <child>
+              <object class="GtkHBox" id="hbox53">
+                <property name="border_width">5</property>
+                <property name="visible">True</property>
+                <property name="homogeneous">False</property>
+                <property name="spacing">5</property>
+                <child>
+                  <object class="GtkLabel" id="magSmoothingLabel">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">_Smoothing:</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_markup">False</property>
+                    <property name="justify">GTK_JUSTIFY_RIGHT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">1</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="mnemonic_widget">magSmoothingComboBox</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                    <accessibility>
+                      <relation target="magSmoothingComboBox" type="label-for"/>
+                    </accessibility>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBox" id="magSmoothingComboBox">
+                    <property name="visible">True</property>
+                    <property name="add_tearoffs">False</property>
+                    <property name="focus_on_click">True</property>
+                    <accessibility>
+                      <relation target="magSmoothingLabel" type="labelled-by"/>
+                    </accessibility>
+                    <signal handler="magSmoothingChanged" last_modification_time="Wed, 03 May 2006 15:54:49 GMT" name="changed"/>
+                    <property name="model">model1</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="renderer1"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkAlignment" id="alignment67">
+            <property name="visible">True</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+            <property name="xscale">1</property>
+            <property name="yscale">1</property>
+            <property name="top_padding">12</property>
+            <property name="bottom_padding">0</property>
+            <property name="left_padding">0</property>
+            <property name="right_padding">0</property>
+            <child>
+              <object class="GtkFrame" id="frame12">
+                <property name="visible">True</property>
+                <property name="label_xalign">0</property>
+                <property name="label_yalign">0.5</property>
+                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                <child>
+                  <object class="GtkAlignment" id="alignment76">
+                    <property name="visible">True</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xscale">1</property>
+                    <property name="yscale">1</property>
+                    <property name="top_padding">5</property>
+                    <property name="bottom_padding">0</property>
+                    <property name="left_padding">12</property>
+                    <property name="right_padding">0</property>
+                    <child>
+                      <object class="GtkTable" id="table17">
+                        <property name="visible">True</property>
+                        <property name="n_rows">1</property>
+                        <property name="n_columns">3</property>
+                        <property name="homogeneous">False</property>
+                        <property name="row_spacing">0</property>
+                        <property name="column_spacing">25</property>
+                        <child>
+                          <object class="GtkHBox" id="hbox56">
+                            <property name="visible">True</property>
+                            <property name="homogeneous">False</property>
+                            <property name="spacing">5</property>
+                            <child>
+                              <object class="GtkLabel" id="magBrightnessRedLabel">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">_Red:</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_markup">False</property>
+                                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                                <property name="wrap">False</property>
+                                <property name="selectable">False</property>
+                                <property name="xalign">0.5</property>
+                                <property name="yalign">0.5</property>
+                                <property name="xpad">0</property>
+                                <property name="ypad">0</property>
+                                <property name="mnemonic_widget">magBrightnessRedSpinButton</property>
+                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                                <property name="width_chars">-1</property>
+                                <property name="single_line_mode">False</property>
+                                <property name="angle">0</property>
+                                <accessibility>
+                                  <relation target="magBrightnessRedSpinButton" type="label-for"/>
+                                </accessibility>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="magBrightnessRedSpinButton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="climb_rate">1</property>
+                                <property name="digits">2</property>
+                                <property name="numeric">True</property>
+                                <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+                                <property name="snap_to_ticks">False</property>
+                                <property name="wrap">False</property>
+                                <property name="adjustment">adjustment1</property>
+                                <accessibility>
+                                  <relation target="magBrightnessRedLabel" type="labelled-by"/>
+                                </accessibility>
+                                <signal handler="magBrightnessRedValueChanged" last_modification_time="Mon, 10 Dec 2007 18:08:10 GMT" name="value_changed"/>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="right_attach">1</property>
+                            <property name="top_attach">0</property>
+                            <property name="bottom_attach">1</property>
+                            <property name="x_options">fill</property>
+                            <property name="y_options">fill</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkHBox" id="hbox57">
+                            <property name="visible">True</property>
+                            <property name="homogeneous">False</property>
+                            <property name="spacing">5</property>
+                            <child>
+                              <object class="GtkLabel" id="magBrightnessGreenLabel">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">_Green:</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_markup">False</property>
+                                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                                <property name="wrap">False</property>
+                                <property name="selectable">False</property>
+                                <property name="xalign">0.5</property>
+                                <property name="yalign">0.5</property>
+                                <property name="xpad">0</property>
+                                <property name="ypad">0</property>
+                                <property name="mnemonic_widget">magBrightnessGreenSpinButton</property>
+                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                                <property name="width_chars">-1</property>
+                                <property name="single_line_mode">False</property>
+                                <property name="angle">0</property>
+                                <accessibility>
+                                  <relation target="magBrightnessGreenSpinButton" type="label-for"/>
+                                </accessibility>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="magBrightnessGreenSpinButton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="climb_rate">1</property>
+                                <property name="digits">2</property>
+                                <property name="numeric">True</property>
+                                <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+                                <property name="snap_to_ticks">False</property>
+                                <property name="wrap">False</property>
+                                <property name="adjustment">adjustment2</property>
+                                <accessibility>
+                                  <relation target="magBrightnessGreenLabel" type="labelled-by"/>
+                                </accessibility>
+                                <signal handler="magBrightnessGreenValueChanged" last_modification_time="Mon, 10 Dec 2007 18:08:31 GMT" name="value_changed"/>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">0</property>
+                            <property name="bottom_attach">1</property>
+                            <property name="x_options">fill</property>
+                            <property name="y_options">fill</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkHBox" id="hbox58">
+                            <property name="visible">True</property>
+                            <property name="homogeneous">False</property>
+                            <property name="spacing">5</property>
+                            <child>
+                              <object class="GtkLabel" id="magBrightnessBlueLabel">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">_Blue:</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_markup">False</property>
+                                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                                <property name="wrap">False</property>
+                                <property name="selectable">False</property>
+                                <property name="xalign">0.5</property>
+                                <property name="yalign">0.5</property>
+                                <property name="xpad">0</property>
+                                <property name="ypad">0</property>
+                                <property name="mnemonic_widget">magBrightnessBlueSpinButton</property>
+                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                                <property name="width_chars">-1</property>
+                                <property name="single_line_mode">False</property>
+                                <property name="angle">0</property>
+                                <accessibility>
+                                  <relation target="magBrightnessBlueSpinButton" type="label-for"/>
+                                </accessibility>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="magBrightnessBlueSpinButton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="climb_rate">1</property>
+                                <property name="digits">2</property>
+                                <property name="numeric">True</property>
+                                <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+                                <property name="snap_to_ticks">False</property>
+                                <property name="wrap">False</property>
+                                <property name="adjustment">adjustment3</property>
+                                <accessibility>
+                                  <relation target="magBrightnessBlueLabel" type="labelled-by"/>
+                                </accessibility>
+                                <signal handler="magBrightnessBlueValueChanged" last_modification_time="Mon, 10 Dec 2007 18:08:50 GMT" name="value_changed"/>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="right_attach">3</property>
+                            <property name="top_attach">0</property>
+                            <property name="bottom_attach">1</property>
+                            <property name="x_options">fill</property>
+                            <property name="y_options">fill</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="label">
+                  <object class="GtkLabel" id="label43">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Brightness&lt;/b&gt;</property>
+                    <property name="use_underline">False</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkAlignment" id="alignment68">
+            <property name="visible">True</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+            <property name="xscale">1</property>
+            <property name="yscale">1</property>
+            <property name="top_padding">12</property>
+            <property name="bottom_padding">0</property>
+            <property name="left_padding">0</property>
+            <property name="right_padding">0</property>
+            <child>
+              <object class="GtkFrame" id="frame13">
+                <property name="visible">True</property>
+                <property name="label_xalign">0</property>
+                <property name="label_yalign">0.5</property>
+                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                <child>
+                  <object class="GtkAlignment" id="alignment77">
+                    <property name="visible">True</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xscale">1</property>
+                    <property name="yscale">1</property>
+                    <property name="top_padding">0</property>
+                    <property name="bottom_padding">0</property>
+                    <property name="left_padding">12</property>
+                    <property name="right_padding">0</property>
+                    <child>
+                      <object class="GtkTable" id="table18">
+                        <property name="visible">True</property>
+                        <property name="n_rows">1</property>
+                        <property name="n_columns">3</property>
+                        <property name="homogeneous">False</property>
+                        <property name="row_spacing">0</property>
+                        <property name="column_spacing">25</property>
+                        <child>
+                          <object class="GtkHBox" id="hbox59">
+                            <property name="visible">True</property>
+                            <property name="homogeneous">False</property>
+                            <property name="spacing">5</property>
+                            <child>
+                              <object class="GtkLabel" id="magContrastRedLabel">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">R_ed:</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_markup">False</property>
+                                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                                <property name="wrap">False</property>
+                                <property name="selectable">False</property>
+                                <property name="xalign">0.5</property>
+                                <property name="yalign">0.5</property>
+                                <property name="xpad">0</property>
+                                <property name="ypad">0</property>
+                                <property name="mnemonic_widget">magContrastRedSpinButton</property>
+                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                                <property name="width_chars">-1</property>
+                                <property name="single_line_mode">False</property>
+                                <property name="angle">0</property>
+                                <accessibility>
+                                  <relation target="magBrightnessRedSpinButton" type="label-for"/>
+                                </accessibility>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="magContrastRedSpinButton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="climb_rate">1</property>
+                                <property name="digits">2</property>
+                                <property name="numeric">False</property>
+                                <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+                                <property name="snap_to_ticks">False</property>
+                                <property name="wrap">False</property>
+                                <property name="adjustment">adjustment4</property>
+                                <accessibility>
+                                  <relation target="magContrastRedLabel" type="labelled-by"/>
+                                </accessibility>
+                                <signal handler="magContrastRedValueChanged" last_modification_time="Mon, 10 Dec 2007 18:09:11 GMT" name="value_changed"/>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="right_attach">1</property>
+                            <property name="top_attach">0</property>
+                            <property name="bottom_attach">1</property>
+                            <property name="x_options">fill</property>
+                            <property name="y_options">fill</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkHBox" id="hbox60">
+                            <property name="visible">True</property>
+                            <property name="homogeneous">False</property>
+                            <property name="spacing">5</property>
+                            <child>
+                              <object class="GtkLabel" id="magContrastGreenLabel">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">Gree_n:</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_markup">False</property>
+                                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                                <property name="wrap">False</property>
+                                <property name="selectable">False</property>
+                                <property name="xalign">0.5</property>
+                                <property name="yalign">0.5</property>
+                                <property name="xpad">0</property>
+                                <property name="ypad">0</property>
+                                <property name="mnemonic_widget">magContrastGreenSpinButton</property>
+                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                                <property name="width_chars">-1</property>
+                                <property name="single_line_mode">False</property>
+                                <property name="angle">0</property>
+                                <accessibility>
+                                  <relation target="magContrastGreenSpinButton" type="label-for"/>
+                                </accessibility>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="magContrastGreenSpinButton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="climb_rate">1</property>
+                                <property name="digits">2</property>
+                                <property name="numeric">True</property>
+                                <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+                                <property name="snap_to_ticks">False</property>
+                                <property name="wrap">False</property>
+                                <property name="adjustment">adjustment5</property>
+                                <accessibility>
+                                  <relation target="magContrastGreenLabel" type="labelled-by"/>
+                                </accessibility>
+                                <signal handler="magContrastGreenValueChanged" last_modification_time="Mon, 10 Dec 2007 18:09:28 GMT" name="value_changed"/>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">0</property>
+                            <property name="bottom_attach">1</property>
+                            <property name="x_options">fill</property>
+                            <property name="y_options">fill</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkHBox" id="hbox61">
+                            <property name="visible">True</property>
+                            <property name="homogeneous">False</property>
+                            <property name="spacing">5</property>
+                            <child>
+                              <object class="GtkLabel" id="magContrastBlueLabel">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">B_lue:</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_markup">False</property>
+                                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                                <property name="wrap">False</property>
+                                <property name="selectable">False</property>
+                                <property name="xalign">0.5</property>
+                                <property name="yalign">0.5</property>
+                                <property name="xpad">0</property>
+                                <property name="ypad">0</property>
+                                <property name="mnemonic_widget">magContrastBlueSpinButton</property>
+                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                                <property name="width_chars">-1</property>
+                                <property name="single_line_mode">False</property>
+                                <property name="angle">0</property>
+                                <accessibility>
+                                  <relation target="magContrastBlueSpinButton" type="label-for"/>
+                                </accessibility>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="magContrastBlueSpinButton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="climb_rate">1</property>
+                                <property name="digits">2</property>
+                                <property name="numeric">True</property>
+                                <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+                                <property name="snap_to_ticks">False</property>
+                                <property name="wrap">False</property>
+                                <property name="adjustment">adjustment6</property>
+                                <accessibility>
+                                  <relation target="magContrastBlueLabel" type="labelled-by"/>
+                                </accessibility>
+                                <signal handler="magContrastBlueValueChanged" last_modification_time="Mon, 10 Dec 2007 18:09:44 GMT" name="value_changed"/>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">2</property>
+                            <property name="right_attach">3</property>
+                            <property name="top_attach">0</property>
+                            <property name="bottom_attach">1</property>
+                            <property name="x_options">fill</property>
+                            <property name="y_options">fill</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="label">
+                  <object class="GtkLabel" id="label47">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Contrast&lt;/b&gt;</property>
+                    <property name="use_underline">False</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkAlignment" id="alignment69">
+            <property name="visible">True</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+            <property name="xscale">1</property>
+            <property name="yscale">1</property>
+            <property name="top_padding">12</property>
+            <property name="bottom_padding">0</property>
+            <property name="left_padding">5</property>
+            <property name="right_padding">0</property>
+            <child>
+              <object class="GtkHBox" id="magColorFilteringHbox">
+                <property name="visible">True</property>
+                <property name="homogeneous">False</property>
+                <property name="spacing">5</property>
+                <child>
+                  <object class="GtkLabel" id="magColorFilteringLabel">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">_Color Filtering:</property>
+                    <property name="use_underline">True</property>
+                    <property name="use_markup">False</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="mnemonic_widget">magColorFilteringComboBox</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                    <accessibility>
+                      <relation target="magColorFilteringComboBox" type="label-for"/>
+                    </accessibility>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBox" id="magColorFilteringComboBox">
+                    <property name="visible">True</property>
+                    <property name="add_tearoffs">False</property>
+                    <property name="focus_on_click">True</property>
+                    <accessibility>
+                      <relation target="magColorFilteringLabel" type="labelled-by"/>
+                    </accessibility>
+                    <signal handler="magColorFilteringChanged" last_modification_time="Mon, 10 Dec 2007 18:11:12 GMT" name="changed"/>
+                    <property name="model">model2</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="renderer2"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="padding">0</property>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkAlignment" id="alignment65">
+            <property name="visible">True</property>
+            <property name="xalign">0.5</property>
+            <property name="yalign">0.5</property>
+            <property name="xscale">1</property>
+            <property name="yscale">1</property>
+            <property name="top_padding">12</property>
+            <property name="bottom_padding">0</property>
+            <property name="left_padding">0</property>
+            <property name="right_padding">0</property>
+            <child>
+              <object class="GtkFrame" id="magMultiMonitorFrame">
+                <property name="visible">True</property>
+                <property name="label_xalign">0</property>
+                <property name="label_yalign">0.5</property>
+                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                <child>
+                  <object class="GtkAlignment" id="alignment63">
+                    <property name="border_width">6</property>
+                    <property name="visible">True</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xscale">1</property>
+                    <property name="yscale">1</property>
+                    <property name="top_padding">0</property>
+                    <property name="bottom_padding">0</property>
+                    <property name="left_padding">12</property>
+                    <property name="right_padding">0</property>
+                    <child>
+                      <object class="GtkTable" id="table11">
+                        <property name="visible">True</property>
+                        <property name="n_rows">1</property>
+                        <property name="n_columns">2</property>
+                        <property name="homogeneous">False</property>
+                        <property name="row_spacing">0</property>
+                        <property name="column_spacing">20</property>
+                        <child>
+                          <object class="GtkHBox" id="hbox52">
+                            <property name="visible">True</property>
+                            <property name="homogeneous">False</property>
+                            <property name="spacing">3</property>
+                            <child>
+                              <object class="GtkLabel" id="magTargetDisplayLabel">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">Target displa_y:</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_markup">False</property>
+                                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                                <property name="wrap">False</property>
+                                <property name="selectable">False</property>
+                                <property name="xalign">1</property>
+                                <property name="yalign">0.5</property>
+                                <property name="xpad">0</property>
+                                <property name="ypad">0</property>
+                                <property name="mnemonic_widget">magTargetDisplayEntry</property>
+                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                                <property name="width_chars">-1</property>
+                                <property name="single_line_mode">False</property>
+                                <property name="angle">0</property>
+                                <accessibility>
+                                  <relation target="magTargetDisplayEntry" type="label-for"/>
+                                </accessibility>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxEntry" id="magTargetDisplayEntry">
+                                <property name="width_request">89</property>
+                                <property name="visible">True</property>
+                                <property name="add_tearoffs">False</property>
+                                <property name="has_frame">True</property>
+                                <property name="focus_on_click">True</property>
+                                <accessibility>
+                                  <relation target="magTargetDisplayLabel" type="labelled-by"/>
+                                </accessibility>
+                                <signal handler="magTargetDisplayChanged" last_modification_time="Wed, 02 Jan 2008 21:16:20 GMT" name="changed"/>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="pack_type">GTK_PACK_END</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">0</property>
+                            <property name="bottom_attach">1</property>
+                            <property name="x_options">fill</property>
+                            <property name="y_options">fill</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkHBox" id="hbox51">
+                            <property name="visible">True</property>
+                            <property name="homogeneous">False</property>
+                            <property name="spacing">3</property>
+                            <child>
+                              <object class="GtkLabel" id="magSourceDisplayLabel">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">S_ource display:</property>
+                                <property name="use_underline">True</property>
+                                <property name="use_markup">False</property>
+                                <property name="justify">GTK_JUSTIFY_LEFT</property>
+                                <property name="wrap">False</property>
+                                <property name="selectable">False</property>
+                                <property name="xalign">1</property>
+                                <property name="yalign">0.5</property>
+                                <property name="xpad">0</property>
+                                <property name="ypad">0</property>
+                                <property name="mnemonic_widget">magSourceDisplayEntry</property>
+                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                                <property name="width_chars">-1</property>
+                                <property name="single_line_mode">False</property>
+                                <property name="angle">0</property>
+                                <accessibility>
+                                  <relation target="magSourceDisplayEntry" type="label-for"/>
+                                </accessibility>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxEntry" id="magSourceDisplayEntry">
+                                <property name="width_request">89</property>
+                                <property name="visible">True</property>
+                                <property name="add_tearoffs">False</property>
+                                <property name="has_frame">True</property>
+                                <property name="focus_on_click">True</property>
+                                <accessibility>
+                                  <relation target="magSourceDisplayLabel" type="labelled-by"/>
+                                </accessibility>
+                                <signal handler="magSourceDisplayChanged" last_modification_time="Wed, 02 Jan 2008 21:16:33 GMT" name="changed"/>
+                              </object>
+                              <packing>
+                                <property name="padding">0</property>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="pack_type">GTK_PACK_END</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">0</property>
+                            <property name="right_attach">1</property>
+                            <property name="top_attach">0</property>
+                            <property name="bottom_attach">1</property>
+                            <property name="x_options">fill</property>
+                            <property name="y_options">fill</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="label">
+                  <object class="GtkLabel" id="label35">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">&lt;b&gt;Multi-monitor Settings&lt;/b&gt;</property>
+                    <property name="use_underline">False</property>
+                    <property name="use_markup">True</property>
+                    <property name="justify">GTK_JUSTIFY_LEFT</property>
+                    <property name="wrap">False</property>
+                    <property name="selectable">False</property>
+                    <property name="xalign">0.5</property>
+                    <property name="yalign">0.5</property>
+                    <property name="xpad">0</property>
+                    <property name="ypad">0</property>
+                    <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+                    <property name="width_chars">-1</property>
+                    <property name="single_line_mode">False</property>
+                    <property name="angle">0</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHButtonBox" id="hbuttonbox1">
+            <property name="border_width">5</property>
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkButton" id="magAdvancedCancelButton">
+                <property name="visible">True</property>
+                <property name="can_default">True</property>
+                <property name="can_focus">True</property>
+                <property name="label">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <property name="relief">GTK_RELIEF_NORMAL</property>
+                <property name="focus_on_click">True</property>
+                <signal handler="magAdvancedCancelButtonClicked" last_modification_time="Mon, 10 Dec 2007 18:15:40 GMT" name="clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="magAdvancedOkButton">
+                <property name="visible">True</property>
+                <property name="can_default">True</property>
+                <property name="can_focus">True</property>
+                <property name="label">gtk-ok</property>
+                <property name="use_stock">True</property>
+                <property name="relief">GTK_RELIEF_NORMAL</property>
+                <property name="focus_on_click">True</property>
+                <signal handler="magAdvancedOkButtonClicked" last_modification_time="Mon, 10 Dec 2007 18:16:21 GMT" name="clicked"/>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">0</property>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2007-2008 Sun Microsystems Inc.
+# Copyright 2007-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2007-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2007-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gtk
@@ -37,7 +37,7 @@ import default
 import focus_tracking_presenter
 import input_event
 import keybindings
-import orca_glade
+import orca_gtkbuilder
 import orca_gui_prefs
 import orca_prefs
 import orca_state
@@ -56,8 +56,8 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         """Initialize the application specific Orca configuration GUI.
 
         Arguments:
-        - fileName: name of the Glade file.
-        - windowName: name of the component to get from the Glade file.
+        - fileName: name of the GtkBuilder file.
+        - windowName: name of the component to get from the GtkBuilder file.
         """
 
         orca_gui_prefs.OrcaSetupGUI.__init__(self, fileName, 
@@ -256,7 +256,7 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow
            GtkWindow widget. Reset orca_state.appOS to None, so that the 
-           GUI can be rebuilt from the Glade file the next time the user 
+           GUI can be rebuilt from the GtkBuilder file the next time the user
            wants to display the configuration GUI.
 
         Arguments:
@@ -265,7 +265,7 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
 
         orca_state.appOS = None
 
-class WarningDialogGUI(orca_glade.GladeWrapper):
+class WarningDialogGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def getPrefsWarningDialog(self):
         """Return a handle to the Orca Preferences warning dialog.
@@ -276,7 +276,7 @@ class WarningDialogGUI(orca_glade.GladeWrapper):
     def orcaPrefsWarningDialogDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the 
         orcaPrefsWarningDialog GtkWindow widget. Reset orca_state.orcaWD
-        to None, so that the GUI can be rebuilt from the Glade file the 
+        to None, so that the GUI can be rebuilt from the GtkBuilder file the
         next time that this warning dialog has to be displayed.
 
         Arguments:
@@ -328,26 +328,39 @@ def showPreferencesUI():
         speech.speak(line)
 
         prefsDict = orca_prefs.readPreferences()
-        orca_state.prefsGladeFile = os.path.join(platform.prefix,
-                                                 platform.datadirname,
-                                                 platform.package,
-                                                 "glade",
-                                                 "orca-setup.glade")
+        orca_state.prefsUIFile = \
+            os.path.join(platform.prefix,
+                         platform.datadirname,
+                         platform.package,
+                         "ui",
+                         "orca-setup.ui")
+        orca_state.advancedMagUIFile = \
+            os.path.join(platform.prefix,
+                         platform.datadirname,
+                         platform.package,
+                         "ui",
+                         "orca-advanced-magnification.ui")
         orca_state.advancedMag = \
-          orca_gui_prefs.OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
+          orca_gui_prefs.OrcaAdvancedMagGUI(orca_state.advancedMagUIFile,
                                    "orcaMagAdvancedDialog", prefsDict)
         orca_state.advancedMag.init()
         orca_state.advancedMagDialog = \
                            orca_state.advancedMag.getAdvancedMagDialog()
 
-        orca_state.appOS = OrcaSetupGUI(orca_state.prefsGladeFile,
+        orca_state.appOS = OrcaSetupGUI(orca_state.prefsUIFile,
                                         "orcaSetupWindow", prefsDict)
         removeGeneralPane = True
         orca_state.appOS.init()
     else:
         if not orca_state.orcaWD:
+            orca_state.orcaWarningDialogUIFile = \
+                os.path.join(platform.prefix,
+                             platform.datadirname,
+                             platform.package,
+                             "ui",
+                             "orca-preferences-warning.ui")
             orca_state.orcaWD = \
-                WarningDialogGUI(orca_state.prefsGladeFile,
+                WarningDialogGUI(orca_state.orcaWarningDialogUIFile,
                                  "orcaPrefsWarningDialog")
             warningDialog = orca_state.orcaWD.getPrefsWarningDialog()
             warningDialog.realize()

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
@@ -32,7 +32,7 @@ import gtk
 import locale
 
 import find
-import orca_glade
+import orca_gtkbuilder
 import orca_state
 import platform
 
@@ -40,17 +40,17 @@ from orca_i18n import _  # for gettext support
 
 OS = None
 
-class OrcaFindGUI(orca_glade.GladeWrapper):
+class OrcaFindGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def __init__(self, fileName, windowName):
         """Initialize the Orca configuration GUI.
 
         Arguments:
-        - fileName: name of the Glade file.
-        - windowName: name of the component to get from the Glade file.
+        - fileName: name of the GtkBuilder file.
+        - windowName: name of the component to get from the GtkBuilder file.
         """
 
-        orca_glade.GladeWrapper.__init__(self, fileName, windowName)
+        orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
 
         # Initialize variables to None to keep pylint happy.
         #
@@ -246,12 +246,12 @@ def showFindUI():
     global OS
 
     if not OS:
-        gladeFile = os.path.join(platform.prefix,
-                                 platform.datadirname,
-                                 platform.package,
-                                 "glade",
-                                 "orca-find.glade")
-        OS = OrcaFindGUI(gladeFile, "findDialog")
+        uiFile = os.path.join(platform.prefix,
+                              platform.datadirname,
+                              platform.package,
+                              "ui",
+                              "orca-find.ui")
+        OS = OrcaFindGUI(uiFile, "findDialog")
         OS.init()
 
     OS.showGUI()

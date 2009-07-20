@@ -2,7 +2,7 @@ orca_SCRIPTS = \
 	orca
 
 orcadir=$(bindir)
-gladedir=$(datadir)/orca/glade
+uidir=$(datadir)/orca/ui
 
 orca_pathdir=$(pyexecdir)
 
@@ -37,7 +37,7 @@ orca_python_PYTHON = \
 	mouse_review.py \
 	orca.py \
 	orca_console_prefs.py \
-	orca_glade.py \
+	orca_gtkbuilder.py \
 	orca_gui_find.py \
 	orca_gui_main.py \
 	orca_gui_prefs.py \
@@ -69,11 +69,13 @@ orca_pythondir=$(pyexecdir)/orca
 
 SUBDIRS = scripts
 
-glade_DATA = \
-	orca-find.glade \
-	orca-mainwin.glade \
-	orca-quit.glade \
-	orca-setup.glade
+ui_DATA = \
+	orca-advanced-magnification.ui \
+	orca-find.ui \
+	orca-mainwin.ui \
+	orca-preferences-warning.ui \
+	orca-quit.ui \
+	orca-setup.ui
 
 EXTRA_DIST = \
-	$(glade_DATA)
+	$(ui_DATA)

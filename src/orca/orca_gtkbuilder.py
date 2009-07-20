@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,17 +22,17 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gettext
 import gtk
 
-class GladeWrapper:
+class GtkBuilderWrapper:
     """
-    Superclass for glade based applications. Just derive from this
+    Superclass for GtkBuilder based applications. Just derive from this
     and your subclass should create methods whose names correspond to
-    the signal handlers defined in the glade file. Any other attributes
+    the signal handlers defined in the GtkBuilder file. Any other attributes
     in your class will be safely ignored.
 
     This class will give you the ability to do:
@@ -41,8 +41,10 @@ class GladeWrapper:
     """
 
     def __init__(self, fileName, windowName):
-        # Load glade file.
-        self.widgets = gtk.glade.XML(fileName, windowName, gettext.textdomain())
+        # Load GtkBuilder file.
+        self.builder = gtk.Builder()
+        self.builder.set_translation_domain(gettext.textdomain())
+        self.builder.add_from_file(fileName)
         self.gtkWindow = getattr(self, windowName)
 
         # Set default application icon.
@@ -51,7 +53,7 @@ class GladeWrapper:
         instance_attributes = {}
         for attribute in dir(self.__class__):
             instance_attributes[attribute] = getattr(self, attribute)
-        self.widgets.signal_autoconnect(instance_attributes)
+        self.builder.connect_signals(instance_attributes)
 
     def set_orca_icon(self):
         """Get the icon in all sizes from the current theme and set them as
@@ -76,21 +78,21 @@ class GladeWrapper:
 
     def get_widget(self, attribute):
         """Return the requested widget. This routine has been introduced
-        (and calls to it made by the Orca Glade sub-classes), to prevent
+        (and calls to it made by the Orca GtkBuilder sub-classes), to prevent
         "No class attribute" pychecker errors caused when using __getattr__.
 
         Arguments:
         - attribute: name of the widget to return.
         """
 
-        widget = self.widgets.get_widget(attribute)
+        widget = self.builder.get_object(attribute)
         if widget is None:
             raise AttributeError("Widget [" + attribute + "] not found")
 
         return widget
 
     def __getattr__(self, attribute):   # Called when no attribute in __dict__
-        widget = self.widgets.get_widget(attribute)
+        widget = self.builder.get_object(attribute)
         if widget is None:
             raise AttributeError("Widget [" + attribute + "] not found")
         self.__dict__[attribute] = widget   # Add reference to cache.

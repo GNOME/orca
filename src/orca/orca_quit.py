@@ -32,14 +32,14 @@ import gtk
 import locale
 
 import orca
-import orca_glade
+import orca_gtkbuilder
 import orca_state
 import platform
 import settings
 
 OS = None
 
-class OrcaQuitGUI(orca_glade.GladeWrapper):
+class OrcaQuitGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def init(self):
         pass
@@ -96,8 +96,8 @@ class OrcaQuitGUI(orca_glade.GladeWrapper):
     def quitDialogDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the quitDialog
            GtkWindow widget. Reset OS to None, so that the GUI can be rebuilt
-           from the Glade file the next time the user wants to display the
-           quit dialog GUI.
+           from the GtkBuilder file the next time the user wants to display
+           the quit dialog GUI.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -111,12 +111,12 @@ def showQuitUI():
     global OS
 
     if not OS:
-        gladeFile = os.path.join(platform.prefix,
-                                 platform.datadirname,
-                                 platform.package,
-                                 "glade",
-                                 "orca-quit.glade")
-        OS = OrcaQuitGUI(gladeFile, "quitDialog")
+        uiFile = os.path.join(platform.prefix,
+                              platform.datadirname,
+                              platform.package,
+                              "ui",
+                              "orca-quit.ui")
+        OS = OrcaQuitGUI(uiFile, "quitDialog")
         OS.init()
 
     OS.showGUI()

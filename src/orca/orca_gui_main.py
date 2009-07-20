@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
@@ -31,12 +31,12 @@ import gtk
 import locale
 
 import orca
-import orca_glade
+import orca_gtkbuilder
 import platform
 
 OS = None
 
-class OrcaMainGUI(orca_glade.GladeWrapper):
+class OrcaMainGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def init(self):
         pass
@@ -118,12 +118,12 @@ def showMainUI():
     global OS
 
     if not OS:
-        gladeFile = os.path.join(platform.prefix,
-                                 platform.datadirname,
-                                 platform.package,
-                                 "glade",
-                                 "orca-mainwin.glade")
-        OS = OrcaMainGUI(gladeFile, "mainWindow")
+        uiFile = os.path.join(platform.prefix,
+                              platform.datadirname,
+                              platform.package,
+                              "ui",
+                              "orca-mainwin.ui")
+        OS = OrcaMainGUI(uiFile, "mainWindow")
         OS.init()
 
     OS.showGUI()

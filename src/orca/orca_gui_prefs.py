@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
@@ -36,7 +36,7 @@ import locale
 import acss
 import mag
 import orca
-import orca_glade
+import orca_gtkbuilder
 import orca_prefs
 import orca_state
 import platform
@@ -56,6 +56,7 @@ except ImportError:
     louis = None
 
 from orca_i18n import _  # for gettext support
+from orca_i18n import C_ # to provide qualified translatable strings
 
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, OLDTEXT1, \
  TEXT1, MOD_MASK2, MOD_USED2, KEY2, CLICK_COUNT2, OLDTEXT2, TEXT2, MODIF, \
@@ -65,11 +66,11 @@ from orca_i18n import _  # for gettext support
 
 (ACTUAL, REPLACEMENT) = range(2)
 
-# Must match the order of voice types in the glade file.
+# Must match the order of voice types in the GtkBuilder file.
 #
 (DEFAULT, UPPERCASE, HYPERLINK) = range(3)
 
-class OrcaSetupGUI(orca_glade.GladeWrapper):
+class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     # Translators: this is an algorithm for tracking an object
     # of interest (mouse pointer, caret, or widget) with the
@@ -105,11 +106,12 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         """Initialize the Orca configuration GUI.
 
         Arguments:
-        - fileName: name of the Glade file.
-        - windowName: name of the component to get from the Glade file.
+        - fileName: name of the GtkBuilder file.
+        - windowName: name of the component to get from the GtkBuilder
+          file.
         """
 
-        orca_glade.GladeWrapper.__init__(self, fileName, windowName)
+        orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
 
         self.prefsDict = prefsDict
         self.enableLiveUpdating = settings.enableMagLiveUpdating
@@ -180,8 +182,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             self.savedRate = 50.0
 
         # ***** Key Bindings treeview initialization *****
-
-        self.keyBindView = self.widgets.get_widget("keyBindingsTreeview")
+        self.keyBindView = self.get_widget("keyBindingsTreeview")
         self.keyBindingsModel = gtk.TreeStore(
             gobject.TYPE_STRING,  # Handler name
             gobject.TYPE_STRING,  # Human Readable Description
@@ -425,7 +426,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         #
         self._populateKeyBindings()
 
-        self.window = self.widgets.get_widget("orcaSetupWindow")
+        self.window = self.get_widget("orcaSetupWindow")
         self.window.resize(790, 580)
 
         self._setKeyEchoItems()
@@ -711,8 +712,25 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         # voice type.  Whenever the families change, we'll reset the
         # voice type selection to the first one ("Default").
         #
-        self.get_widget("voiceTypes").set_active(DEFAULT)
-        voiceType = self.get_widget("voiceTypes").get_active()
+        comboBox = self.get_widget("voiceTypes")
+        types = []
+        # Translators: This refers to the default/typical voice used
+        # by Orca when presenting the content of the screen and other
+        # messages.
+        #
+        types.append(C_("VoiceType", "Default"))
+        # Translators: This refers to the voice used by Orca when
+        # presenting one or more characters which is in uppercase.
+        #
+        types.append(C_("VoiceType", "Uppercase"))
+        # Translators: This refers to the voice used by Orca when
+        # presenting one or more characters which is part of a
+        # hyperlink.
+        #
+        types.append(C_("VoiceType", "Hyperlink"))
+        self.populateComboBox(comboBox, types)
+        comboBox.set_active(DEFAULT)
+        voiceType = comboBox.get_active()
         self._setVoiceSettingsForVoiceType(voiceType)
 
     def _setSpeechServersChoice(self, serverInfo):
@@ -1018,7 +1036,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.prefsDict["enabledBrailledTextAttributes"] = brailledAttrStr
 
     def contractedBrailleToggled(self, checkbox):
-        hbox = self.widgets.get_widget('contractionTablesHBox')
+        hbox = self.get_widget('contractionTablesHBox')
         hbox.set_sensitive(checkbox.get_active())
         self.prefsDict["enableContractedBraille"] = checkbox.get_active()
 
@@ -1100,8 +1118,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
                       this value.
         """
 
-        self.getTextAttributesView = \
-                       self.widgets.get_widget("textAttributesTreeView")
+        self.getTextAttributesView = self.get_widget("textAttributesTreeView")
         model = gtk.ListStore(gobject.TYPE_STRING,
                               gobject.TYPE_BOOLEAN,
                               gobject.TYPE_BOOLEAN,
@@ -1271,8 +1288,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
           pronunciation from.
         """
 
-        self.pronunciationView = \
-                       self.widgets.get_widget("pronunciationTreeView")
+        self.pronunciationView = self.get_widget("pronunciationTreeView")
         model = gtk.ListStore(gobject.TYPE_STRING,
                               gobject.TYPE_STRING)
 
@@ -1502,7 +1518,9 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.get_widget("speakMnemonicsCheckButton").set_active(\
             prefs["enableMnemonicSpeaking"])
 
-        self.get_widget("sayAllStyle").set_active(prefs["sayAllStyle"])
+        combobox = self.get_widget("sayAllStyle")
+        self.populateComboBox(combobox, [_("Line"), _("Sentence")])
+        combobox.set_active(prefs["sayAllStyle"])
 
         # Set the sensitivity of the "Update Interval" items, depending
         # upon whether the "Speak progress bar updates" checkbox is checked.
@@ -1779,6 +1797,13 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             zoomerType = _("Full Screen")
 
         magZoomerPositionComboBox = self.get_widget("magZoomerPositionComboBox")
+        types = [_("Full Screen"),
+                 _("Top Half"),
+                 _("Bottom Half"),
+                 _("Left Half"),
+                 _("Right Half"),
+                 _("Custom")]
+        self.populateComboBox(magZoomerPositionComboBox, types)
         index = self.getComboBoxIndex(magZoomerPositionComboBox, zoomerType)
         magZoomerPositionComboBox.set_active(index)
 
@@ -1819,6 +1844,9 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         else:
             mode = self.magTrackingCenteredStr
         magMouseTrackingComboBox = self.get_widget("magMouseTrackingComboBox")
+        trackingTypes = \
+            [_("Centered"), _("Proportional"), _("Push"), _("None")]
+        self.populateComboBox(magMouseTrackingComboBox, trackingTypes)
         index = self.getComboBoxIndex(magMouseTrackingComboBox, mode)
         magMouseTrackingComboBox.set_active(index)
 
@@ -1837,6 +1865,8 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             mode = self.magTrackingPushStr
         magControlTrackingComboBox = \
                          self.get_widget("magControlTrackingComboBox")
+        trackingTypes = [_("Centered"), _("Push"), _("None")]
+        self.populateComboBox(magControlTrackingComboBox, trackingTypes)
         index = self.getComboBoxIndex(magControlTrackingComboBox, mode)
         magControlTrackingComboBox.set_active(index)
 
@@ -1854,6 +1884,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
             mode = self.magTrackingPushStr
         magTextCursorTrackingComboBox = \
                          self.get_widget("magTextCursorTrackingComboBox")
+        self.populateComboBox(magTextCursorTrackingComboBox, trackingTypes)
         index = self.getComboBoxIndex(magTextCursorTrackingComboBox, mode)
         magTextCursorTrackingComboBox.set_active(index)
         self.get_widget("magEdgeMarginHBox").\
@@ -1918,6 +1949,19 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         self.enableAutostart = settings.isOrcaAutostarted()
         self.get_widget("autostartOrcaCheckbutton").set_active( \
                          self.enableAutostart)
+
+    def populateComboBox(self, combobox, items):
+        """Populates the combobox with the items provided.
+
+        Arguments:
+        - combobox: the GtkComboBox to populate
+        - items: the list of strings with which to populate it
+        """
+
+        model = gtk.ListStore(str)
+        for item in items:
+            model.append([item])
+        combobox.set_model(model)
 
     def getComboBoxIndex(self, combobox, searchStr, col=0):
         """ For each of the entries in the given combo box, look for searchStr.
@@ -2281,7 +2325,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
         if not self.keyBindingsModel.iter_has_child(iterUnbound):
             self.keyBindingsModel.remove(iterUnbound)
 
-        self.orcaModKeyEntry = self.widgets.get_widget("orcaModKeyEntry")
+        self.orcaModKeyEntry = self.get_widget("orcaModKeyEntry")
         self.orcaModKeyEntry.set_text(
             str(settings.orcaModifierKeys)[1:-1].replace("'",""))
 
@@ -4125,7 +4169,7 @@ class OrcaSetupGUI(orca_glade.GladeWrapper):
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow
            GtkWindow widget. Reset orca_state.orcaOS to None, so that the 
-           GUI can be rebuilt from the Glade file the next time the user 
+           GUI can be rebuilt from the GtkBuilder file the next time the user
            wants to display the configuration GUI.
 
         Arguments:
@@ -4160,8 +4204,8 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         """Initialize the Orca configuration GUI.
 
         Arguments:
-        - fileName: name of the Glade file.
-        - windowName: name of the component to get from the Glade file.
+        - fileName: name of the GtkBuilder file.
+        - windowName: name of the component to get from the GtkBuilder file.
         """
 
         OrcaSetupGUI.__init__(self, fileName, windowName)
@@ -4283,6 +4327,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
             #
             mode = _("Bilinear")
         magSmoothingComboBox = self.get_widget("magSmoothingComboBox")
+        self.populateComboBox(magSmoothingComboBox, [_("None"), _("Bilinear")])
         index = self.getComboBoxIndex(magSmoothingComboBox, mode)
         magSmoothingComboBox.set_active(index)
 
@@ -4548,9 +4593,17 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
             filteringMode = _("None")
 
         comboBox = self.get_widget("magColorFilteringComboBox")
+        types = [_("None"),
+                 _("Saturate red"),
+                 _("Saturate green"),
+                 _("Saturate blue"),
+                 _("Desaturate red"),
+                 _("Desaturate blue"),
+                 _("Positive hue shift"),
+                 _("Negative hue shift")]
+        self.populateComboBox(comboBox, types)
         index = self.getComboBoxIndex(comboBox, filteringMode)
         comboBox.set_active(index)
-
         enable = mag.isFilteringCapable()
         self.get_widget("magColorFilteringHbox").set_sensitive(enable)
 
@@ -4799,7 +4852,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
         """
 
         self.restoreAdvancedSettings()
-        orca_state.advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
+        orca_state.advancedMag = OrcaAdvancedMagGUI(orca_state.prefsUIFile,
                                    "orcaMagAdvancedDialog", self.prefsDict)
         orca_state.advancedMag.init()
         orca_state.advancedMagDialog = \
@@ -4831,7 +4884,7 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         return False
 
-class WarningDialogGUI(orca_glade.GladeWrapper):
+class WarningDialogGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def getPrefsWarningDialog(self):
         """Return a handle to the Orca Preferences warning dialog.
@@ -4842,7 +4895,7 @@ class WarningDialogGUI(orca_glade.GladeWrapper):
     def orcaPrefsWarningDialogDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the 
         orcaPrefsWarningDialog GtkWindow widget. Reset orca_state.orcaWD
-        to None, so that the GUI can be rebuilt from the Glade file the 
+        to None, so that the GUI can be rebuilt from the GtkBuilder file the
         next time that this warning dialog has to be displayed.
 
         Arguments:
@@ -4874,24 +4927,38 @@ def showPreferencesUI():
         speech.speak(line)
 
         prefsDict = orca_prefs.readPreferences()
-        orca_state.prefsGladeFile = os.path.join(platform.prefix,
-                                                 platform.datadirname,
-                                                 platform.package,
-                                                 "glade",
-                                                 "orca-setup.glade")
-        orca_state.advancedMag = OrcaAdvancedMagGUI(orca_state.prefsGladeFile,
-                                   "orcaMagAdvancedDialog", prefsDict)
+        orca_state.prefsUIFile = \
+            os.path.join(platform.prefix,
+                         platform.datadirname,
+                         platform.package,
+                         "ui",
+                         "orca-setup.ui")
+        orca_state.advancedMagUIFile = \
+            os.path.join(platform.prefix,
+                         platform.datadirname,
+                         platform.package,
+                         "ui",
+                         "orca-advanced-magnification.ui")
+        orca_state.advancedMag = \
+            OrcaAdvancedMagGUI(orca_state.advancedMagUIFile,
+                               "orcaMagAdvancedDialog", prefsDict)
         orca_state.advancedMag.init()
         orca_state.advancedMagDialog = \
                               orca_state.advancedMag.getAdvancedMagDialog()
 
-        orca_state.orcaOS = OrcaSetupGUI(orca_state.prefsGladeFile,
+        orca_state.orcaOS = OrcaSetupGUI(orca_state.prefsUIFile,
                                          "orcaSetupWindow", prefsDict)
         orca_state.orcaOS.init()
     else:
         if not orca_state.orcaWD:
+            orca_state.orcaWarningDialogUIFile = \
+                os.path.join(platform.prefix,
+                             platform.datadirname,
+                             platform.package,
+                             "ui",
+                             "orca-preferences-warning.ui")
             orca_state.orcaWD = \
-                WarningDialogGUI(orca_state.prefsGladeFile,
+                WarningDialogGUI(orca_state.orcaWarningDialogUIFile,
                                  "orcaPrefsWarningDialog")
             warningDialog = orca_state.orcaWD.getPrefsWarningDialog()
             warningDialog.realize()
