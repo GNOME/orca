@@ -48,17 +48,12 @@ AM_PROG_LIBTOOL
 # pyorbit 2.14.0
 # pygtk 2.8.4
 # gnome-python 2.6.2
-# libgail-gnome 1.1.3
 # gnome-mag-1.0 0.12.5 (optional)
 #
 #PKG_CHECK_MODULES(orca, \
-#	glib-2.0 >= 2.10.0 \
 #	gtk+-2.0 >= 2.8.16 \
 #	libbonobo-2.0 >= 2.14.0 \
 #	atk >= 1.11.3 \
-#	gail >= 1.8.11 \
-#	libspi-1.0 >= 1.7.6 \
-#	cspi-1.0 >= 1.7.6 \
 #	gnome-speech-1.0 >= 0.3.10 \
 #)
 

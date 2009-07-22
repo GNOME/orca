@@ -13,10 +13,7 @@ Source0: orca-%{version}.tar.gz
 %define gnome_python_version 2.6.2
 %define brltty_version 3.8
 %define atk_version 1.11.3
-%define gail_version 1.8.11
-%define libgail_version 1.1.3
 %define gnome_speech_version 0.3.10
-%define libspi_version 1.7.6
 
 BuildRoot: %{_tmppath}/orca-%{version}-%{release}-buildroot
 BuildRequires:	gnome-common >= 2.12.0
@@ -24,16 +21,11 @@ BuildRequires:  python >= %{python_version}
 BuildRequires:  pygtk2 >= %{pygtk2_version}
 BuildRequires:  pyorbit >= %{pyorbit_version}
 BuildRequires:	atk >= %{atk_version}
-BuildRequires:	gail >= %{gail_version}
-BuildRequires:	libspi-1.0 >= %{libspi_version}
 BuildRequires:	gnome-speech-1.0 >= ${gnome_speech_version}
 Requires:       python >= %{python_version}
 Requires:       pygtk2 >= %{pygtk2_version}
 Requires:       pyorbit >= %{pyorbit_version}
 Requires:	atk >=  %{atk_version}
-Requires:	gail >=  %{gail_version}
-Requires:	libgail-gnome >= %{libgail_version}
-Requires:	libspi-1.0 >= %{libspi_version}
 Requires:	gnome-speech-1.0 >= ${gnome_speech_version}
 
 %description
@@ -64,6 +56,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/icons/hicolor/48x48/apps/orca.png
 
 %changelog
+* Wed Jul 22 2009 Willie Walker <william.walker@sun.com>
+- Remove unneeded dependencies (gail, libgail, cspi)
 * Sat Feb 03 2007 Willie Walker <william.walker@sun.com>
 - Add libgail-gnome dependency.
 * Thu Aug 03 2006 Willie Walker <william.walker@sun.com>
