@@ -687,6 +687,19 @@ def _processKeyboardEvent(event):
     """
     global _orcaModifierPressed
 
+    # Input methods appear to play games with repeating events
+    # and also making up events with no timestamps.  We try
+    # to handle that here. See bug #589504.
+    #
+    if (event.timestamp == 0) \
+       or (event.timestamp == orca_state.lastInputEventTimestamp \
+           and orca_state.lastInputEvent \
+           and orca_state.lastInputEvent.hw_code == event.hw_code \
+           and orca_state.lastInputEvent.type == event.type):
+        debug.println(debug.LEVEL_FINE, keyEventToString(event))
+        debug.println(debug.LEVEL_FINE, "IGNORING EVENT DUE TO TIMESTAMP")
+        return
+
     orca_state.lastInputEventTimestamp = event.timestamp
 
     # Log the keyboard event for future playback, if desired.

@@ -196,4 +196,5 @@ def keyEventToString(event):
         + ("          modifiers=%d\n" % event.modifiers) \
         + ("          event_string=(%s)\n" % event.event_string) \
         + ("          is_text=%s\n" % event.is_text) \
+        + ("          timestamp=%d\n" % event.timestamp) \
         + ("          time=%f" % time.time())
