@@ -1367,7 +1367,7 @@
                         <child>
                           <object class="GtkTable" id="checkBoxTable">
                             <property name="visible">True</property>
-                            <property name="n_rows">3</property>
+                            <property name="n_rows">4</property>
                             <property name="n_columns">2</property>
                             <property name="homogeneous">False</property>
                             <child>
@@ -1569,6 +1569,26 @@
                                 <property name="right_attach">1</property>
                                 <property name="top_attach">2</property>
                                 <property name="bottom_attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="pauseBreaksCheckButton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property comments="Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated." name="label" translatable="yes">Break speech into ch_unks between pauses</property>
+                                <property name="use_underline">True</property>
+                                <property name="relief">GTK_RELIEF_NORMAL</property>
+                                <property name="focus_on_click">True</property>
+                                <property name="active">True</property>
+                                <property name="inconsistent">False</property>
+                                <property name="draw_indicator">True</property>
+                                <signal handler="pauseBreaksToggled" last_modification_time="Mon, 04 Aug 2008 17:11:04 GMT" name="toggled"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="right_attach">1</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
                               </packing>
                             </child>
                             <child>

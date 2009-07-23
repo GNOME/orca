@@ -1515,6 +1515,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("speakTutorialMessagesCheckButton").set_active(\
             prefs["enableTutorialMessages"])
 
+        self.get_widget("pauseBreaksCheckButton").set_active(\
+            prefs["enablePauseBreaks"])
+
         self.get_widget("speakMnemonicsCheckButton").set_active(\
             prefs["enableMnemonicSpeaking"])
 
@@ -2560,6 +2563,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         self.prefsDict["enableTutorialMessages"] = widget.get_active()
+
+    def pauseBreaksToggled (self, widget):
+        """Signal handler for the "toggled" signal for the
+           pauseBreaksCheckButton GtkCheckButton widget.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["enablePauseBreaks"] = widget.get_active()
 
     def mnemonicSpeakingChecked (self, widget):
         """Signal handler for the "toggled" signal for the

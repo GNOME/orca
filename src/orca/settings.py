@@ -104,6 +104,7 @@ userCustomizableSettings = [
     "enableFunctionKeys",
     "enableActionKeys",
     "enableNavigationKeys",
+    "enablePauseBreaks",
     "enableTutorialMessages",
     "enableMnemonicSpeaking",
     "enableBraille",
@@ -1348,4 +1349,4 @@ useExperimentalSpeechProsody = True
 # adaptation to how different systems handle queued speech.  For example,
 # some introduce unnaturally long pauses between requests to speak.
 #
-emitSpeechOnPauses = True
+enablePauseBreaks = True
