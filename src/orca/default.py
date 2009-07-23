@@ -4826,7 +4826,9 @@ class Script(script.Script):
                 # {line,word,character}.  This message lets the user know
                 # they have left the flat review feature.
                 #
-                speech.speak(_("Leaving flat review."))
+                if settings.speechVerbosityLevel \
+                   != settings.VERBOSITY_LEVEL_BRIEF:
+                    speech.speak(_("Leaving flat review."))
             self.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
             self.updateBraille(orca_state.locusOfFocus)
@@ -4842,7 +4844,9 @@ class Script(script.Script):
                 # {line,word,character}.  This message lets the user know
                 # they have entered the flat review feature.
                 #
-                speech.speak(_("Entering flat review."))
+                if settings.speechVerbosityLevel \
+                   != settings.VERBOSITY_LEVEL_BRIEF:
+                    speech.speak(_("Entering flat review."))
             context = self.getFlatReviewContext()
             [wordString, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
