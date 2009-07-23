@@ -1512,6 +1512,18 @@ class Script(default.Script):
 
         default.Script.onTextInserted(self, event)
 
+    def _getCtrlShiftSelectionsStrings(self):
+        return [
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
+            _("line selected down from cursor position"),
+            _("line unselected down from cursor position"),
+            _("line selected up from cursor position"),
+            _("line unselected up from cursor position"),
+        ]
+
     def onTextSelectionChanged(self, event):
         """Called when an object's text selection changes.
 

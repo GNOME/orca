@@ -7658,6 +7658,18 @@ class Script(script.Script):
             self.pointOfReference["lastSelections"].append(
               text.getSelection(i))
 
+    def _getCtrlShiftSelectionsStrings(self):
+        return [
+            # Translators: when the user selects (highlights) text in
+            # a document, Orca will speak information about what they
+            # have selected.
+            #
+            _("paragraph selected down from cursor position"),
+            _("paragraph unselected down from cursor position"),
+            _("paragraph selected up from cursor position"),
+            _("paragraph unselected up from cursor position"),
+        ]
+
     def speakTextSelectionState(self, obj, startOffset, endOffset):
         """Speak "selected" if the text was just selected, "unselected" if
         it was just unselected.
@@ -7752,31 +7764,19 @@ class Script(script.Script):
 
         elif (eventStr == "Down") and isShiftKey and isControlKey:
             specialCaseFound = True
+            strings = self._getCtrlShiftSelectionsStrings()
             if selectedText:
-                # Translators: when the user selects (highlights) text in
-                # a document, Orca will speak information about what they
-                # have selected.
-                #
-                line = _("line selected down from cursor position")
+                line = strings[0]
             else:
-                # Translators: when the user unselects text in a document,
-                # Orca will speak information about what they have unselected.
-                #
-                line = _("line unselected down from cursor position")
+                line = strings[1]
 
         elif (eventStr == "Up") and isShiftKey and isControlKey:
             specialCaseFound = True
+            strings = self._getCtrlShiftSelectionsStrings()
             if selectedText:
-                # Translators: when the user selects (highlights) text in
-                # a document, Orca will speak information about what they
-                # have selected.
-                #
-                line = _("line selected up from cursor position")
+                line = strings[2]
             else:
-                # Translators: when the user unselects text in a document,
-                # Orca will speak information about what they have unselected.
-                #
-                line = _("line unselected up from cursor position")
+                line = strings[3]
 
         elif (eventStr == "Home") and isShiftKey and isControlKey:
             specialCaseFound = True
