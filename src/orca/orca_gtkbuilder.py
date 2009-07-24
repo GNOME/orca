@@ -28,6 +28,8 @@ __license__   = "LGPL"
 import gettext
 import gtk
 
+from orca_i18n import _
+
 class GtkBuilderWrapper:
     """
     Superclass for GtkBuilder based applications. Just derive from this
@@ -45,7 +47,13 @@ class GtkBuilderWrapper:
         self.builder = gtk.Builder()
         self.builder.set_translation_domain(gettext.textdomain())
         self.builder.add_from_file(fileName)
-        self.gtkWindow = getattr(self, windowName)
+        self.gtkWindow = self.builder.get_object(windowName)
+
+        # Force the localization of widgets to work around a GtkBuilder
+        # bug. See bgo bug 589362.
+        #
+        for obj in self.builder.get_objects():
+            success = self.localize_widget(obj)
 
         # Set default application icon.
         self.set_orca_icon()
@@ -98,3 +106,39 @@ class GtkBuilderWrapper:
         self.__dict__[attribute] = widget   # Add reference to cache.
 
         return widget
+
+    def localize_widget(self, obj):
+        """Force the localization of the label/title of GtkBuilder objects
+
+        Arguments:
+        - obj: the GtkBuilder object whose label or title should be localized
+        """
+
+        # TODO - JD: This is a workaround for a GtkBuilder bug which prevents
+        # the strings displayed by widgets from being translated. See bgo bug
+        # 589362.
+        #
+        try:
+            useMarkup = obj.get_use_markup()
+            useUnderline = obj.get_use_underline()
+        except:
+            useMarkup = False
+            useUnderline = False
+
+        try:
+            obj.set_title(_(obj.get_title()))
+        except:
+            try:
+                text = obj.get_label()
+            except:
+                return False
+
+            if useMarkup:
+                obj.set_markup(_(text))
+            else:
+                obj.set_label(_(text))
+
+        if useUnderline:
+            obj.set_use_underline(True)
+
+        return True
