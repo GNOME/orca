@@ -104,7 +104,6 @@ AM_CHECK_PYMOD(ORBit,CORBA,,[AC_MSG_ERROR(Could not find python module ORBit.COR
 #AM_CHECK_PYMOD(gconf,,,[AC_MSG_ERROR(Could not find python module gconf - make sure you have pygtk >= 2.8.14 installed)])
 #AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find python module gtk - make sure you have pygtk >= 2.8.14 installed)])
 #AM_CHECK_PYMOD(gtk,gdk,,[AC_MSG_ERROR(Could not find python module gtk.gdk - make sure you have pygtk >= 2.8.14 installed)])
-#AM_CHECK_PYMOD(gtk,glade,,[AC_MSG_ERROR(Could not find python module gtk.glade - make sure you have pygtk >= 2.8.14 installed)])
 
 AM_CHECK_PYORBIT_MOD(Accessibility,,[AC_MSG_ERROR(Could not find python ORBit module Accessibility - make sure you have the atspi libspi-1.0 >= 1.7.6 installed)])
 AM_CHECK_PYORBIT_MOD(GNOME_Speech,,[AC_MSG_WARN(Could not find python ORBit module Speech - you need gnome-speech-1.0 >= 0.3.10 installed to use speech)])
