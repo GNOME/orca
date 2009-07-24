@@ -25,9 +25,13 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import pygst
-pygst.require("0.10")
-import gst
+if False:
+    # Don't require this until we actually use gst directly instead
+    # of doing an os.system call.
+    # 
+    import pygst
+    pygst.require("0.10")
+    import gst
 
 class Sound:
     """Class to hold a path to a sound file to play."""
