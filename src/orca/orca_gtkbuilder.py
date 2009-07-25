@@ -125,6 +125,15 @@ class GtkBuilderWrapper:
             useMarkup = False
             useUnderline = False
 
+        if isinstance(obj, gtk.Frame):
+            # For some reason, if we localize the frame, which has a label
+            # but does not (itself) support use_markup, we get unmarked
+            # labels which are not bold but which do have <b></b>. If we
+            # skip the frames, the labels get processed as expected. And
+            # there was much rejoicing. Yea.
+            #
+            return
+
         try:
             obj.set_title(_(obj.get_title()))
         except:
