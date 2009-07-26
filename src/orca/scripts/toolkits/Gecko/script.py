@@ -253,8 +253,7 @@ class Script(default.Script):
             "-moz-center"             : "center",
             "start"                   : "no justification",
             "underlinesolid"          : "single",
-            "line-throughsolid"       : "solid",
-            "invalid"                 : "mistake"}
+            "line-throughsolid"       : "solid"}
 
         # We need to save our special attributes so that we can revert to
         # the default text attributes when giving up focus to another app
