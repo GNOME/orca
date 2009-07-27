@@ -1648,6 +1648,22 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("echoBySentenceCheckbutton").set_active( \
                         prefs["enableEchoBySentence"])
 
+        # Translators: When this option is enabled, dead keys will be
+        # announced when pressed.
+        #
+        label = _("Enable non-spacing _diacritical keys")
+        # TODO - JD: I did the above because GtkBuilder translator notes
+        # (which we have for the above string) are not getting sucked in
+        # to orca.pot. :-(
+
+        # Translators: When this option is enabled, inserted text of length
+        # 1 is spoken.
+        #
+        label = _("Enable echo by cha_racter")
+        # TODO - JD: I did the above because GtkBuilder translator notes
+        # (which we have for the above string) are not getting sucked in
+        # to orca.pot. :-(
+
         # Magnifier pane.
         #
         # Turn live updating off temporarily.
