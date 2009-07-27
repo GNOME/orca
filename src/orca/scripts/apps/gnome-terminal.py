@@ -256,7 +256,21 @@ class Script(default.Script):
             speakThis = True
 
         if matchFound:
-            orca.keyEcho(orca_state.lastInputEvent)
+            echoed = orca.keyEcho(orca_state.lastInputEvent)
+        else:
+            echoed = False
+
+        if not echoed:
+            # We might need to echo this if it is a single character.
+            #
+            speakThis = speakThis \
+                or ((settings.enableEchoByCharacter \
+                     or (settings.enableKeyEcho \
+                         and settings.enablePrintableKeys)) \
+                    and text \
+                    and event.source.getRole() \
+                        != pyatspi.ROLE_PASSWORD_TEXT \
+                    and len(text.decode("UTF-8")) == 1)
 
         if speakThis:
             if text.isupper():

@@ -489,6 +489,22 @@ def isNavigationKey(event_string):
                   "orca.isNavigationKey: returning: %s" % reply)
     return reply
 
+def isDiacriticalKey(event_string):
+    """Return an indication of whether this is a non-spacing diacritical key
+
+    Arguments:
+    - event: the event string
+    - modifiers: key modifiers state
+
+    Returns True if this is a non-spacing diacritical key
+    """
+
+    reply = event_string.startswith("dead_")
+
+    debug.println(debug.LEVEL_FINEST,
+                  "orca.isDiacriticalKey: returning: %s" % reply)
+    return reply
+
 class KeyEventType:
     """Definition of available key event types."""
 
@@ -516,6 +532,9 @@ class KeyEventType:
     # A navigation key event.
     NAVIGATION = 'NAVIGATION'
 
+    # A diacritical key event.
+    DIACRITICAL = 'DIACRITICAL'
+
     def __init__(self):
         pass
 
@@ -536,7 +555,7 @@ def keyEcho(event):
     #
     if orca_state.locusOfFocus \
         and (orca_state.locusOfFocus.getRole() == pyatspi.ROLE_PASSWORD_TEXT):
-        return
+        return False
 
     event_string = event.event_string
     debug.println(debug.LEVEL_FINEST,
@@ -550,22 +569,28 @@ def keyEcho(event):
 
         if isModifierKey(event_string):
             if not settings.enableModifierKeys:
-                return
+                return False
             eventType = KeyEventType.MODIFIER
 
         elif isNavigationKey(event_string):
             if not settings.enableNavigationKeys:
-                return
+                return False
             eventType = KeyEventType.NAVIGATION
 
+        elif isDiacriticalKey(event_string):
+            if not settings.enableDiacriticalKeys:
+                return False
+            eventType = KeyEventType.DIACRITICAL
+
         elif isPrintableKey(event_string):
-            if not settings.enablePrintableKeys:
-                return
+            if not (settings.enablePrintableKeys \
+                    or settings.enableEchoByCharacter):
+                return False
             eventType = KeyEventType.PRINTABLE
 
         elif isLockingKey(event_string):
             if not settings.enableLockingKeys:
-                return
+                return False
             eventType = KeyEventType.LOCKING
 
             modifiers = event.modifiers
@@ -590,28 +615,49 @@ def keyEcho(event):
 
         elif isFunctionKey(event_string):
             if not settings.enableFunctionKeys:
-                return
+                return False
             eventType = KeyEventType.FUNCTION
 
         elif isActionKey(event_string):
             if not settings.enableActionKeys:
-                return
+                return False
             eventType = KeyEventType.ACTION
 
         else:
             debug.println(debug.LEVEL_FINEST,
                   "orca.keyEcho: event string not handled: %s" % event_string)
-            return
-
-        debug.println(debug.LEVEL_FINEST,
-                      "orca.keyEcho: speaking: %s" % event_string)
+            return False
 
         # We keep track of the time as means to let others know that
         # we are probably echoing a key and should not be interrupted.
         #
         orca_state.lastKeyEchoTime = time.time()
 
-        speech.speakKeyEvent(event_string, eventType)
+        # Before we echo printable keys, let's try to make sure the
+        # character echo isn't going to also echo something.
+        #
+        characterEcho = \
+            eventType == KeyEventType.PRINTABLE \
+            and not _orcaModifierPressed \
+            and orca_state.activeScript \
+            and orca_state.activeScript.willEchoCharacter(event)
+
+        # One last check for echoing -- a PRINTABLE key may have squeaked
+        # through due to the enableEchoByCharacter check above.  We only
+        # want to echo PRINTABLE keys if enablePrintableKeys is True.
+        #
+        if not (characterEcho or
+                (eventType == KeyEventType.PRINTABLE \
+                 and not settings.enablePrintableKeys)):
+            debug.println(debug.LEVEL_FINEST,
+                          "orca.keyEcho: speaking: %s" % event_string)
+            speech.speakKeyEvent(event_string, eventType)
+            return True
+        elif characterEcho:
+            debug.println(debug.LEVEL_FINEST,
+                          "orca.keyEcho: letting character echo handle: %s" \
+                          % event_string)
+            return False
 
 def _setClickCount(inputEvent):
     """Sets the count of the number of clicks a user has made to one
@@ -762,7 +808,10 @@ def _processKeyboardEvent(event):
         #
         if not settings.learnModeEnabled and \
            orca_state.activeScript.echoKey(keyboardEvent):
-            keyEcho(keyboardEvent)
+            try:
+                keyEcho(keyboardEvent)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
 
     elif isOrcaModifier \
         and (keyboardEvent.type == pyatspi.KEY_RELEASED_EVENT):

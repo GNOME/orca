@@ -1626,6 +1626,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         prefs["enableActionKeys"])
         self.get_widget("navigationCheckbutton").set_active( \
                         prefs["enableNavigationKeys"])
+        self.get_widget("diacriticalCheckbutton").set_active( \
+                        prefs["enableDiacriticalKeys"])
+        self.get_widget("echoByCharacterCheckbutton").set_active( \
+                        prefs["enableEchoByCharacter"])
         self.get_widget("echoByWordCheckbutton").set_active( \
                         prefs["enableEchoByWord"])
         self.get_widget("echoBySentenceCheckbutton").set_active( \
@@ -2073,6 +2077,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("functionCheckbutton").set_sensitive(enable)
         self.get_widget("actionCheckbutton").set_sensitive(enable)
         self.get_widget("navigationCheckbutton").set_sensitive(enable)
+        self.get_widget("diacriticalCheckbutton").set_sensitive(enable)
 
     def _say(self, text, stop=False):
         """If the text field is not None, speaks the given text, optionally
@@ -2700,6 +2705,29 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
         self.prefsDict["enableNavigationKeys"] = widget.get_active()
+
+    def diacriticalKeysChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           diacriticalCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable diacritical keys' checkbox. Set the
+           'enableDiacriticalKeys' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+        self.prefsDict["enableDiacriticalKeys"] = widget.get_active()
+
+    def echoByCharacterChecked(self, widget):
+        """Signal handler for the "toggled" signal for the
+           echoByCharacterCheckbutton GtkCheckButton widget. The user has
+           [un]checked the 'Enable Echo by Character' checkbox. Set the
+           'enableEchoByCharacter' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["enableEchoByCharacter"] = widget.get_active()
 
     def echoByWordChecked(self, widget):
         """Signal handler for the "toggled" signal for the

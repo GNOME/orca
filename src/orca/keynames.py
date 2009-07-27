@@ -144,67 +144,67 @@ __keynames["Return"] = _("return")
 #
 __keynames["KP_Enter"] = _("enter")
 
-# Translators: this is how someone would speak the name of the up arrow key 
+# Translators: this is how someone would speak the name of the up arrow key
 #
 __keynames["Up"] = _("up")
 
-# Translators: this is how someone would speak the name of the up arrow key 
+# Translators: this is how someone would speak the name of the up arrow key
 #
 __keynames["KP_Up"] = _("up")
 
-# Translators: this is how someone would speak the name of the down arrow key 
+# Translators: this is how someone would speak the name of the down arrow key
 #
 __keynames["Down"] = _("down")
 
-# Translators: this is how someone would speak the name of the down arrow key 
+# Translators: this is how someone would speak the name of the down arrow key
 #
 __keynames["KP_Down"] = _("down")
 
-# Translators: this is how someone would speak the name of the left arrow key 
+# Translators: this is how someone would speak the name of the left arrow key
 #
 __keynames["Left"] = _("left")
 
-# Translators: this is how someone would speak the name of the left arrow key 
+# Translators: this is how someone would speak the name of the left arrow key
 #
 __keynames["KP_Left"] = _("left")
 
-# Translators: this is how someone would speak the name of the right arrow key 
+# Translators: this is how someone would speak the name of the right arrow key
 #
 __keynames["Right"] = _("right")
 
-# Translators: this is how someone would speak the name of the right arrow key 
+# Translators: this is how someone would speak the name of the right arrow key
 #
 __keynames["KP_Right"] = _("right")
 
-# Translators: this is how someone would speak the name of the left super key 
+# Translators: this is how someone would speak the name of the left super key
 #
 __keynames["Super_L"] = _("left super")
 
-# Translators: this is how someone would speak the name of the right super key 
+# Translators: this is how someone would speak the name of the right super key
 #
 __keynames["Super_R"] = _("right super")
 
-# Translators: this is how someone would speak the name of the menu key 
+# Translators: this is how someone would speak the name of the menu key
 #
 __keynames["Menu"] = _("menu")
 
-# Translators: this is how someone would speak the name of the ISO shift key 
+# Translators: this is how someone would speak the name of the ISO shift key
 #
 __keynames["ISO_Level3_Shift"] = _("ISO level 3 shift")
 
-# Translators: this is how someone would speak the name of the help key 
+# Translators: this is how someone would speak the name of the help key
 #
 __keynames["Help"] = _("help")
 
-# Translators: this is how someone would speak the name of the multi key 
+# Translators: this is how someone would speak the name of the multi key
 #
 __keynames["Multi_key"] = _("multi")
 
-# Translators: this is how someone would speak the name of the mode switch key 
+# Translators: this is how someone would speak the name of the mode switch key
 #
 __keynames["Mode_switch"] = _("mode switch")
 
-# Translators: this is how someone would speak the name of the escape key 
+# Translators: this is how someone would speak the name of the escape key
 #
 __keynames["Escape"] = _("escape")
 
@@ -243,6 +243,46 @@ __keynames["KP_End"] = _("end")
 # Translators: this is how someone would speak the name of the begin key
 #
 __keynames["KP_Begin"] = _("begin")
+
+# Translators: this is how someone would speak the name of the
+# non-spacing diacritical key for the grave glyph
+#
+__keynames["dead_grave"] = _("grave")
+
+# Translators: this is how someone would speak the name of the
+# non-spacing diacritical key for the acute glyph
+#
+__keynames["dead_acute"] = _("acute")
+
+# Translators: this is how someone would speak the name of the
+# non-spacing diacritical key for the circumflex glyph
+#
+__keynames["dead_circumflex"] = _("circumflex")
+
+# Translators: this is how someone would speak the name of the
+# non-spacing diacritical key for the tilde glyph
+#
+__keynames["dead_tilde"] = _("tilde")
+
+# Translators: this is how someone would speak the name of the
+# non-spacing diacritical key for the diaeresis glyph
+#
+__keynames["dead_diaeresis"] = _("diaeresis")
+
+# Translators: this is how someone would speak the name of the
+# non-spacing diacritical key for the ring glyph
+#
+__keynames["dead_abovering"] = _("ring")
+
+# Translators: this is how someone would speak the name of the
+# non-spacing diacritical key for the cedilla glyph
+#
+__keynames["dead_cedilla"] = _("cedilla")
+
+# Translators: this is how someone would speak the name of the
+# non-spacing diacritical key for the stroke glyph
+#
+__keynames["dead_stroke"] = _("stroke")
 
 def getKeyName(key):
     """Given a keyboard key, return its name as people might refer to it

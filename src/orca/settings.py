@@ -95,6 +95,7 @@ userCustomizableSettings = [
     "speechVerbosityLevel",
     "readTableCellRow",
     "enableSpeechIndentation",
+    "enableEchoByCharacter",
     "enableEchoByWord",
     "enableEchoBySentence",
     "enableKeyEcho",
@@ -104,6 +105,7 @@ userCustomizableSettings = [
     "enableFunctionKeys",
     "enableActionKeys",
     "enableNavigationKeys",
+    "enableDiacriticalKeys",
     "enablePauseBreaks",
     "enableTutorialMessages",
     "enableMnemonicSpeaking",
@@ -532,6 +534,12 @@ magSourceDisplay                 = ''
 #
 magTargetDisplay                 = ''
 
+# if True, enable character echo.
+# Note that it is allowable for both enableEchoByCharacter and enableKeyEcho
+# to be True
+#
+enableEchoByCharacter   = False
+
 # if True, enable word echo.
 # Note that it is allowable for both enableEchoByWord and enableKeyEcho
 # to be True
@@ -573,6 +581,10 @@ enableActionKeys        = True
 # If True and key echo is enabled, echo Navigation keys.
 #
 enableNavigationKeys    = False
+
+# If True and key echo is enabled, echo Diacritical keys.
+#
+enableDiacriticalKeys   = False
 
 # If True, tutorial strings defined will be spoken.
 #

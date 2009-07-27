@@ -3643,6 +3643,30 @@ class Script(script.Script):
         else:
             speech.speak(character, voice, False)
 
+    def willEchoCharacter(self, event):
+        """Given a keyboard event containing an alphanumeric key,
+        determine if the script is likely to echo it as a character.
+        """
+
+        # The check here in English is something like this: "If this
+        # character echo is enabled, then character echo is likely to
+        # happen if the locus of focus is a focusable editable text
+        # area or terminal and neither of the Ctrl, Alt, or Orca
+        # modifiers are pressed.  If that's the case, then character
+        # echo will kick in for us."
+        #
+        return  settings.enableEchoByCharacter \
+                and orca_state.locusOfFocus \
+                and (self.isTextArea(orca_state.locusOfFocus)\
+                     or orca_state.locusOfFocus.getRole() \
+                        == pyatspi.ROLE_ENTRY) \
+                and (orca_state.locusOfFocus.getRole() \
+                     == pyatspi.ROLE_TERMINAL \
+                     or (not self.isReadOnlyTextArea(orca_state.locusOfFocus) \
+                         and (orca_state.locusOfFocus.getState().contains( \
+                                  pyatspi.STATE_FOCUSABLE)))) \
+                and not (event.modifiers & settings.ORCA_CTRL_MODIFIER_MASK)
+
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.
 
@@ -3719,6 +3743,15 @@ class Script(script.Script):
                         input_event.MouseButtonEvent) and \
              orca_state.lastInputEvent.button == "2":
             speakThis = True
+
+        # We might need to echo this if it is a single character.
+        #
+        speakThis = speakThis \
+                    or (settings.enableEchoByCharacter \
+                        and text \
+                        and event.source.getRole() \
+                            != pyatspi.ROLE_PASSWORD_TEXT \
+                        and len(text.decode("UTF-8")) == 1)
 
         if speakThis:
             if text.isupper():
