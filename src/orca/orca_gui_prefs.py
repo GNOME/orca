@@ -2043,7 +2043,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         cell = gtk.CellRendererText()
         combobox.pack_start(cell, True)
-        combobox.add_attribute(cell, 'text', 1)
+        # We only want to display one column; not two.
+        #
+        try:
+            columnToDisplay = combobox.get_cells()[0]
+            combobox.add_attribute(columnToDisplay, 'text', 1)
+        except:
+            combobox.add_attribute(cell, 'text', 1)
         model = gtk.ListStore(int, str)
         combobox.set_model(model)
 
@@ -4295,6 +4301,8 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         sourceDisplay = prefs["magSourceDisplay"]
         sourceComboBox = self.get_widget("magSourceDisplayEntry")
+        if sourceComboBox.get_text_column() == -1:
+            sourceComboBox.set_text_column(1)
         index = self.getComboBoxIndex(sourceComboBox, sourceDisplay, 1)
         model = sourceComboBox.get_model()
         displayIter = model.get_iter(index)
@@ -4304,6 +4312,8 @@ class OrcaAdvancedMagGUI(OrcaSetupGUI):
 
         targetDisplay = prefs["magTargetDisplay"]
         targetComboBox = self.get_widget("magTargetDisplayEntry")
+        if targetComboBox.get_text_column() == -1:
+            targetComboBox.set_text_column(1)
         index = self.getComboBoxIndex(targetComboBox, targetDisplay, 1)
         model = targetComboBox.get_model()
         displayIter = model.get_iter(index)
