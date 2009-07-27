@@ -1592,6 +1592,26 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkCheckButton" id="speakPositionCheckButton">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property comments="Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7')." name="label" translatable="yes">Speak child p_osition</property>
+                                <property name="use_underline">True</property>
+                                <property name="relief">GTK_RELIEF_NORMAL</property>
+                                <property name="focus_on_click">True</property>
+                                <property name="active">True</property>
+                                <property name="inconsistent">False</property>
+                                <property name="draw_indicator">True</property>
+                                <signal handler="speakPositionToggled" last_modification_time="Mon, 27 Jul 2009 09:34:04 GMT" name="toggled"/>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkCheckButton" id="speakMnemonicsCheckButton">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>

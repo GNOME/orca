@@ -102,4 +102,5 @@ class WhereAmI:
                    alreadyFocused=True,
                    formatType=formatType,
                    forceMnemonic=True,
+                   forceList=True,
                    forceTutorial=True)

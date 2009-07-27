@@ -46,8 +46,8 @@ formatting = {
             'detailedWhereAmI' : '[]'
             },
         pyatspi.ROLE_COMBO_BOX: {
-            'focused': 'name + availability',
-            'unfocused': 'labelAndName + roleName + availability'
+            'focused': 'name + positionInList + availability',
+            'unfocused': 'labelAndName + roleName + positionInList + availability'
             },
         pyatspi.ROLE_PUSH_BUTTON: {
             'unfocused': 'labelAndName + roleName + toggleState + availability',

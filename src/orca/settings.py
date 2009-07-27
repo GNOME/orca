@@ -109,6 +109,7 @@ userCustomizableSettings = [
     "enablePauseBreaks",
     "enableTutorialMessages",
     "enableMnemonicSpeaking",
+    "enablePositionSpeaking",
     "enableBraille",
     "enableBrailleContext",
     "enableBrailleGrouping",
@@ -593,6 +594,10 @@ enableTutorialMessages = False
 # If True, mnemonics will be spoken.
 #
 enableMnemonicSpeaking = False
+
+# If true, position indexes  will be spoken automaticaly
+#
+enablePositionSpeaking = False
 
 # If True, show the main Orca window.
 #

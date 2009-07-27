@@ -1305,7 +1305,9 @@ class SpeechGenerator(generator.Generator):
                 if next == name:
                     position = index
 
-        if position >= 0:
+        if (settings.enablePositionSpeaking \
+            or args.get('forceList', False)) \
+           and position >= 0:
             # Translators: this is an item in a list.
             #
             result.append(_("item %(index)d of %(total)d") \

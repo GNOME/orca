@@ -1531,6 +1531,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # (which we have for the above string) are not getting sucked in
         # to orca.pot. :-(
 
+        self.get_widget("speakPositionCheckButton").set_active(\
+            prefs["enablePositionSpeaking"])
+
         self.get_widget("speakMnemonicsCheckButton").set_active(\
             prefs["enableMnemonicSpeaking"])
 
@@ -2613,6 +2616,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         self.prefsDict["enablePauseBreaks"] = widget.get_active()
+
+    def speakPositionToggled(self, widget):
+        """Signal handler for the "toggled" signal for the
+           speakPositionCheckButton GtkCheckButton widget.
+           Set the 'enablePositionSpeaking' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        self.prefsDict["enablePositionSpeaking"] = widget.get_active()
 
     def mnemonicSpeakingChecked (self, widget):
         """Signal handler for the "toggled" signal for the
