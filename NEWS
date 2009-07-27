@@ -1,3 +1,75 @@
+2.27.5 - 27-Jul-2009
+
+General:
+
+* Migrated to GtkBuilder (bgo#582506 and bgo#589362)
+
+* Fix for bgo#434600 – cursor routing keys cannot be used to position
+  caret at end of line
+
+* Re-fix for bgo#568696 - locus of focus changes when updating list of
+  files in nautilus
+
+* Work on bgo#575784 - accented characters are not echoed correctly.
+  Orca now has two new checkboxes on the "Key Echo" tab of the
+  preferences UI.  The first, "Enable non-spacing diacritical keys",
+  specifies whether dead keys are echoed or not.  The second, "Enable
+  echo by character", specifies if the exact character typed in an
+  editable text area is to be spoken.  This differs from the "Enable
+  alphanumeric and punctuation keys" setting in that it echos the
+  characters that are typed vs. the keys that were pressed.  If both
+  are enabled, preference is given to character echo where it applies.
+
+* Fix for bgo#578106 - Gtk Warning on starting Orca Preferences GUI
+
+* Fix for bgo#585049 - When I select paragraphs with Ctrl+Shift+Down
+  key combination, Orca says incorrect information message
+
+* Fix for bgo#585417 - Allow pauses to be inserted in speech output
+
+* Fix for bgo#585948 - Automatic position index spoken request.  Orca
+  now has a "Speak child position" on the "Speech" tab in the
+  preferences UI.  When selected, Orca will speak the child position
+  (e.g., 'item 6 of 7') of various objects.
+
+* Fix for bgo#588471 - Orca's clicking functionality should click on
+  the locusOfFocus when not in flat review
+
+* Fix for bgo#588774 - Tooltips aren't always presented
+
+* Fix for bgo#589244 - Remove libgail-gnome usage, use gail in gtk+
+  instead
+
+* Fix for bgo#589497 - orca shouldn't speak entering / leaving flat
+  review mode when verbosity is set to brief
+
+* Fix for bgo#589504 - Orca double speaks typed characters when input
+  method is enabled
+
+Firefox:
+
+* Fix for bgo#480883 - Braille navigation on Webpages. The pan left
+  and pan right buttons on the braille display should now allow you to
+  scroll through the page content in linear order.
+
+* Fix for bgo#586399 - Orca should provide support/access to "Mouse
+  Overs" in web content.  See the following message for a complete
+  description:
+  http://mail.gnome.org/archives/orca-list/2009-July/msg00186.html.
+
+* Fix for bgo#588910 - Orca should support the spellcheck as you go in
+  mozilla applications
+
+* Fix for bgo#589455 - Can not activate links with structural
+  navigation keys
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es       Spanish              Francisco Javier Dorado Martinez
+    fr       French               Claude Paroz
+
+==========
+
 2.27.4 - 13-Jul-2009
 
 General:
