@@ -1518,6 +1518,19 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("pauseBreaksCheckButton").set_active(\
             prefs["enablePauseBreaks"])
 
+        # Translators: different speech systems and speech engines work
+        # differently when it comes to handling pauses (e.g., sentence
+        # boundaries). This property allows the user to specify whether
+        # speech should be sent to the speech synthesis system immediately
+        # when a pause directive is enountered or if it should be queued
+        # up and sent to the speech synthesis system once the entire set
+        # of utterances has been calculated.
+        #
+        label = _("Break speech into ch_unks between pauses")
+        # TODO - JD: I did the above because GtkBuilder translator notes
+        # (which we have for the above string) are not getting sucked in
+        # to orca.pot. :-(
+
         self.get_widget("speakMnemonicsCheckButton").set_active(\
             prefs["enableMnemonicSpeaking"])
 
