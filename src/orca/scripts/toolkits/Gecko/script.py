@@ -529,6 +529,36 @@ class Script(default.Script):
                 #
                 _("Speaks entire document."))
 
+        self.inputEventHandlers["panBrailleLeftHandler"] = \
+            input_event.InputEventHandler(
+                Script.panBrailleLeft,
+                # Translators: a refreshable braille display is an
+                # external hardware device that presents braille
+                # character to the user.  There are a limited number
+                # of cells on the display (typically 40 cells).  Orca
+                # provides the feature to build up a longer logical
+                # line and allow the user to press buttons on the
+                # braille display so they can pan left and right over
+                # this line.
+                #
+                _("Pans the braille display to the left."),
+                False) # Do not enable learn mode for this action
+
+        self.inputEventHandlers["panBrailleRightHandler"] = \
+            input_event.InputEventHandler(
+                Script.panBrailleRight,
+                # Translators: a refreshable braille display is an
+                # external hardware device that presents braille
+                # character to the user.  There are a limited number
+                # of cells on the display (typically 40 cells).  Orca
+                # provides the feature to build up a longer logical
+                # line and allow the user to press buttons on the
+                # braille display so they can pan left and right over
+                # this line.
+                #
+                _("Pans the braille display to the right."),
+                False) # Do not enable learn mode for this action
+
         self.inputEventHandlers["moveToMouseOverHandler"] = \
             input_event.InputEventHandler(
                 Script.moveToMouseOver,
@@ -2250,7 +2280,8 @@ class Script(default.Script):
         if index < 0:
             self.currentLineContents = self.getLineContentsAtOffset(obj,
                                                                     offset)
-        self.speakContents(self.currentLineContents)
+        if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
+            self.speakContents(self.currentLineContents)
         self.updateBraille(obj)
 
     def updateBraille(self, obj, extraRegion=None):
@@ -2560,6 +2591,38 @@ class Script(default.Script):
                 characterOffset -= 1
 
         self.speakContents(self.getLineContentsAtOffset(obj, characterOffset))
+
+    def panBrailleLeft(self, inputEvent=None, panAmount=0):
+        """In document content, we want to use the panning keys to browse the
+        entire document.
+        """
+        if self.flatReviewContext \
+           or self.isAriaWidget(orca_state.locusOfFocus) \
+           or not self.inDocumentContent() \
+           or not braille.beginningIsShowing:
+            default.Script.panBrailleLeft(self, inputEvent, panAmount)
+        else:
+            self.goPreviousLine(inputEvent)
+            while braille.panRight():
+                pass
+            braille.refresh(False)
+        return True
+
+    def panBrailleRight(self, inputEvent=None, panAmount=0):
+        """In document content, we want to use the panning keys to browse the
+        entire document.
+        """
+        if self.flatReviewContext \
+           or self.isAriaWidget(orca_state.locusOfFocus) \
+           or not self.inDocumentContent() \
+           or not braille.endIsShowing:
+            default.Script.panBrailleRight(self, inputEvent, panAmount)
+        else:
+            self.goNextLine(inputEvent)
+            while braille.panLeft():
+                pass
+            braille.refresh(False)
+        return True
 
     ####################################################################
     #                                                                  #
@@ -6281,7 +6344,8 @@ class Script(default.Script):
                or self.getLineContentsAtOffset(obj, characterOffset)
         obj, characterOffset = line[0][0], line[0][1]
         self.setCaretPosition(obj, characterOffset)
-        self.speakCharacterAtOffset(obj, characterOffset)
+        if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
+            self.speakCharacterAtOffset(obj, characterOffset)
         self.updateBraille(obj)
 
     def goEndOfLine(self, inputEvent):
@@ -6292,7 +6356,8 @@ class Script(default.Script):
                or self.getLineContentsAtOffset(obj, characterOffset)
         obj, characterOffset = line[-1][0], line[-1][2] - 1
         self.setCaretPosition(obj, characterOffset)
-        self.speakCharacterAtOffset(obj, characterOffset)
+        if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
+            self.speakCharacterAtOffset(obj, characterOffset)
         self.updateBraille(obj)
 
     def goTopOfFile(self, inputEvent):
