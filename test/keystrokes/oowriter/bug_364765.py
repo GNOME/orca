@@ -32,7 +32,8 @@ sequence.append(utils.AssertPresentationAction(
     "Press W to open the Wizards submenu",
     ["BRAILLE LINE:  'soffice Application Untitled[ ]*1 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*1 - " + utils.getOOoName("Writer") + " RootPane MenuBar File Menu Letter...'",
      "     VISIBLE:  'Letter...', cursor=1",
-     "SPEECH OUTPUT: 'Wizards menu  Letter...'"]))
+     "SPEECH OUTPUT: 'Wizards menu'",
+     "SPEECH OUTPUT: 'Letter...'"]))
 
 ######################################################################
 # 4. Press Escape to close the Wizards submenu.
