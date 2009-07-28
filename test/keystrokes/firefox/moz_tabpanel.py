@@ -40,7 +40,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Tab Zero Page Tab One Page Tab Two Page Tab Three Page Tab Four Page'",
      "     VISIBLE:  'Tab Zero Page Tab One Page Tab T', cursor=1",
-     "SPEECH OUTPUT: 'tab list Tab Zero page item 1 of 5'"]))
+     "SPEECH OUTPUT: 'tab list Tab Zero page 1 of 5'"]))
 
 ########################################################################
 # Move to tab 2.

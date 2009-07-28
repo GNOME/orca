@@ -56,7 +56,7 @@ sequence.append(utils.AssertPresentationAction(
     "General page tab Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list General page item 1 of 2'"]))
+     "SPEECH OUTPUT: 'tab list General page 1 of 2'"]))
 
 ########################################################################
 # Arrow Right to the "Page Setup" tab.
@@ -80,7 +80,7 @@ sequence.append(utils.AssertPresentationAction(
     "Page Setup page tab Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list Page Setup page item 2 of 2'"]))
+     "SPEECH OUTPUT: 'tab list Page Setup page 2 of 2'"]))
 
 ########################################################################
 # Close the demo

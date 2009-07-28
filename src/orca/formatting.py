@@ -61,6 +61,8 @@ formatting = {
             'nodelevel'    : settings.speechNodeLevelString,
             'nestinglevel' : settings.speechNestingLevelString,
             'multiselect'  : settings.speechMultiSelectString,
+            'iconindex'    : settings.speechIconIndexString,
+            'groupindex'   : settings.speechGroupIndexString,
         },
         'braille' : {
             'eol'          : settings.brailleEOLIndicator,

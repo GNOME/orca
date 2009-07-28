@@ -62,7 +62,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Africa collapsed ListItem'",
      "     VISIBLE:  'Africa collapsed ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item Africa item 1 of 6 collapsed tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Africa 1 of 6 collapsed tree level 2'"]))
 
 ########################################################################
 # Use arrows to expand/collapse/navigate tree.  

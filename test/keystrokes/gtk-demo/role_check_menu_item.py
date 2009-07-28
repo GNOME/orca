@@ -52,7 +52,7 @@ sequence.append(utils.AssertPresentationAction(
     "Bold check item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar <x> Bold CheckItem(Control b)'",
      "     VISIBLE:  '<x> Bold CheckItem(Control b)', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Bold check item checked Control b item 3 of 3.",
+     "SPEECH OUTPUT: 'Preferences menu Bold check item checked Control b 3 of 3.",
      "SPEECH OUTPUT: 'b'"]))
 
 ########################################################################

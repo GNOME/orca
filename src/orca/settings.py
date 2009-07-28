@@ -1300,6 +1300,18 @@ speechNodeLevelString = _("tree level %d")
 #
 speechNestingLevelString = _("Nesting level %d")
 
+# Translators: this is a indication of the focused icon and the
+# count of the total number of icons within an icon panel. An
+# example of an icon panel is the Nautilus folder view.
+#
+speechIconIndexString = _("on %(index)d of %(total)d")
+
+# Translators: this refers to the position of an item in a list
+# or group of objects, such as menu items in a menu, radio buttons
+# in a radio button group, combobox item in a combobox, etc.
+#
+speechGroupIndexString = _("%(index)d of %(total)d")
+
 # string to indicate end of printed line for braille displays:
 #
 disableBrailleEOL = False

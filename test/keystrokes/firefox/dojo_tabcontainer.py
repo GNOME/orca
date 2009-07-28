@@ -50,7 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Tab 1 Page Tab 2 Page Tab 3 Page Inlined Sub TabContainer Page Sub TabContainer from href Page SplitContainer from href Page'",
      "     VISIBLE:  'Tab 1 Page Tab 2 Page Tab 3 Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list Tab 1 page item 1 of 7'"]))
+     "SPEECH OUTPUT: 'tab list Tab 1 page 1 of 7'"]))
 
 ########################################################################
 # Use arrows to move between tabs: 'Tab 2'.  The following will be presented.

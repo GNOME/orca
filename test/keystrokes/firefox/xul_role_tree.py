@@ -85,7 +85,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu collapsed ListItem TREE LEVEL 2'",
      "     VISIBLE:  'Bookmarks Menu collapsed ListIte', cursor=1",
-     "SPEECH OUTPUT: 'list item Bookmarks Menu item 2 of 3 collapsed tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Bookmarks Menu 2 of 3 collapsed tree level 2'"]))
 
 ########################################################################
 # Press Right Arrow to expand this item.
@@ -108,7 +108,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu expanded ListItem TREE LEVEL 2'",
      "     VISIBLE:  'Bookmarks Menu expanded ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item Bookmarks Menu item 2 of 3 expanded tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Bookmarks Menu 2 of 3 expanded tree level 2'"]))
 
 ########################################################################
 # Press Down Arrow to give focus to the next item, Recently Bookmarked.
@@ -131,7 +131,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem TREE LEVEL 3'",
      "     VISIBLE:  'Recently Bookmarked ListItem TRE', cursor=1",
-     "SPEECH OUTPUT: 'list item Recently Bookmarked item 1 of 4 tree level 3'"]))
+     "SPEECH OUTPUT: 'list item Recently Bookmarked 1 of 4 tree level 3'"]))
 
 ########################################################################
 # Press Up Arrow to work back to the Bookmarks Toolbar list item.

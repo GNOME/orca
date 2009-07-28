@@ -249,7 +249,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - The item count appears to be incorrect",
      "BRAILLE LINE:  'Braille Combo'",
      "     VISIBLE:  'Braille Combo', cursor=1",
-     "SPEECH OUTPUT: 'Component combo box Braille item 1 of 1'"]))
+     "SPEECH OUTPUT: 'Component combo box Braille 1 of 1'"]))
 
 ########################################################################
 # Press Shift Tab once to return to the Version combo box.  

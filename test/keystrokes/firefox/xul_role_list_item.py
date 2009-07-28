@@ -55,7 +55,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List Main ListItem'",
      "     VISIBLE:  'Main ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item Main item 1 of 7'"]))
+     "SPEECH OUTPUT: 'list item Main 1 of 7'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

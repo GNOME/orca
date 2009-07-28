@@ -148,13 +148,13 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Radio One ", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 
 ########################################################################
-# TODO: "item 3 of 3"?
+# TODO: "3 of 3"?
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented in speech:
 # SPEECH OUTPUT: 'Image Radio Buttons'
 # SPEECH OUTPUT: 'Radio One radio button'
 # SPEECH OUTPUT: 'not selected'
-# SPEECH OUTPUT: 'item 3 of 3'
+# SPEECH OUTPUT: '3 of 3'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -172,13 +172,13 @@ sequence.append(WaitAction("object:property-change:accessible-value", None,
                            None, pyatspi.ROLE_RADIO_BUTTON, 5000))
 
 ########################################################################
-# TODO: "item 3 of 3"?
+# TODO: "3 of 3"?
 # Do a basic "Where Am I" via KP_Enter.  The following should be
 # presented in speech:
 # SPEECH OUTPUT: 'Image Radio Buttons'
 # SPEECH OUTPUT: 'Radio One radio button'
 # SPEECH OUTPUT: 'selected'
-# SPEECH OUTPUT: 'item 3 of 3'
+# SPEECH OUTPUT: '3 of 3'
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 
@@ -201,7 +201,7 @@ sequence.append(WaitForFocus("Radio Two", acc_role=pyatspi.ROLE_RADIO_BUTTON))
 # SPEECH OUTPUT: 'Image Radio Buttons'
 # SPEECH OUTPUT: 'Radio Two radio button'
 # SPEECH OUTPUT: 'not selected'
-# SPEECH OUTPUT: 'item 2 of 3'
+# SPEECH OUTPUT: '2 of 3'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -224,7 +224,7 @@ sequence.append(WaitAction("object:property-change:accessible-value", None,
 # SPEECH OUTPUT: 'Image Radio Buttons'
 # SPEECH OUTPUT: 'Radio Two radio button'
 # SPEECH OUTPUT: 'selected'
-# SPEECH OUTPUT: 'item 2 of 3'
+# SPEECH OUTPUT: '2 of 3'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))

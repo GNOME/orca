@@ -48,7 +48,7 @@ sequence.append(utils.AssertPresentationAction(
     "File menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
      "     VISIBLE:  'File Menu', cursor=1",
-     "SPEECH OUTPUT: 'menu bar File menu item 1 of 3.",
+     "SPEECH OUTPUT: 'menu bar File menu 1 of 3.",
      "SPEECH OUTPUT: 'f'"]))
 
 ########################################################################
@@ -74,7 +74,7 @@ sequence.append(utils.AssertPresentationAction(
     "Preferences menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'",
      "     VISIBLE:  'Preferences Menu', cursor=1",
-     "SPEECH OUTPUT: 'menu bar Preferences menu item 2 of 3.",
+     "SPEECH OUTPUT: 'menu bar Preferences menu 2 of 3.",
      "SPEECH OUTPUT: 'p'"]))
 
 ########################################################################
@@ -100,7 +100,7 @@ sequence.append(utils.AssertPresentationAction(
     "Color menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
      "     VISIBLE:  'Color Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Color menu item 1 of 3.",
+     "SPEECH OUTPUT: 'Preferences menu Color menu 1 of 3.",
      "SPEECH OUTPUT: 'c'"]))
 
 ########################################################################
@@ -126,7 +126,7 @@ sequence.append(utils.AssertPresentationAction(
     "Shape menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'",
      "     VISIBLE:  'Shape Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Shape menu item 2 of 3.",
+     "SPEECH OUTPUT: 'Preferences menu Shape menu 2 of 3.",
      "SPEECH OUTPUT: 's'"]))
 
 ########################################################################

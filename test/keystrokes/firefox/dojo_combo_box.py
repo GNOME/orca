@@ -135,7 +135,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I - Combo box expanded", 
     ["BRAILLE LINE:  '• California'",
      "     VISIBLE:  '• California', cursor=1",
-     "SPEECH OUTPUT: 'list item • California item 1 of 3'"]))
+     "SPEECH OUTPUT: 'list item • California 1 of 3'"]))
 
 ########################################################################
 # Escape to collapse the combo box.

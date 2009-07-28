@@ -115,7 +115,7 @@ sequence.append(WaitForFocus("<html><font color=blue><bold><center>Bouncing Babi
 #
 # SPEECH OUTPUT: 'tab list'
 # SPEECH OUTPUT: '<html><font color=blue><bold><center>Bouncing Babies!</center></bold></font></html> page'
-# SPEECH OUTPUT: 'item 4 of 4'
+# SPEECH OUTPUT: '4 of 4'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -129,7 +129,7 @@ sequence.append(WaitForFocus("Hania", acc_role=pyatspi.ROLE_PAGE_TAB))
 #
 # SPEECH OUTPUT: 'tab list'
 # SPEECH OUTPUT: 'Hania page'
-# SPEECH OUTPUT: 'item 3 of 4'
+# SPEECH OUTPUT: '3 of 4'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -143,7 +143,7 @@ sequence.append(WaitForFocus("Ewan", acc_role=pyatspi.ROLE_PAGE_TAB))
 #
 # SPEECH OUTPUT: 'tab list'
 # SPEECH OUTPUT: 'Ewan page'
-# SPEECH OUTPUT: 'item 2 of 4'
+# SPEECH OUTPUT: '2 of 4'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -157,7 +157,7 @@ sequence.append(WaitForFocus("Laine", acc_role=pyatspi.ROLE_PAGE_TAB))
 #
 # SPEECH OUTPUT: 'tab list'
 # SPEECH OUTPUT: 'Laine page'
-# SPEECH OUTPUT: 'item 1 of 4'
+# SPEECH OUTPUT: '1 of 4'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))

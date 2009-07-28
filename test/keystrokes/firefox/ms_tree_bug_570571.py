@@ -49,7 +49,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - There are visually two items here, but we say this is 1 of 1",
      "BRAILLE LINE:  '+Colors collapsed ListItem LEVEL 1'",
      "     VISIBLE:  '+Colors collapsed ListItem LEVEL', cursor=1",
-     "SPEECH OUTPUT: 'list item +Colors item 1 of 1 collapsed tree level 1'"]))
+     "SPEECH OUTPUT: 'list item +Colors 1 of 1 collapsed tree level 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -73,7 +73,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  '-Colors expanded ListItem LEVEL 1'",
      "     VISIBLE:  '-Colors expanded ListItem LEVEL ', cursor=1",
-     "SPEECH OUTPUT: 'list item -Colors item 1 of 2 expanded tree level 1'"]))
+     "SPEECH OUTPUT: 'list item -Colors 1 of 2 expanded tree level 1'"]))
 
 ########################################################################
 # Down Arrow. Independent of Orca, the first item claims focus as one

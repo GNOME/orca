@@ -39,7 +39,7 @@ sequence.append(WaitForFocus("Ocean", acc_role=pyatspi.ROLE_RADIO_MENU_ITEM))
 # SPEECH OUTPUT: 'radio menu item'
 # SPEECH OUTPUT: 'selected'
 # SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 3 of 9'
+# SPEECH OUTPUT: '3 of 9'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
@@ -62,7 +62,7 @@ sequence.append(WaitForFocus("Steel", acc_role=pyatspi.ROLE_RADIO_MENU_ITEM))
 # SPEECH OUTPUT: 'radio menu item'
 # SPEECH OUTPUT: 'not selected'
 # SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 4 of 9'
+# SPEECH OUTPUT: '4 of 9'
 # SPEECH OUTPUT: ''
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))

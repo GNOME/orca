@@ -51,7 +51,7 @@ sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
     ["BRAILLE LINE:  'Fruits expanded ListItem'",
      "     VISIBLE:  'Fruits expanded ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item Fruits item 1 of 2 expanded tree level 1'"]))
+     "SPEECH OUTPUT: 'list item Fruits 1 of 2 expanded tree level 1'"]))
 
 ########################################################################
 # Navigate the tree using the arrows.  

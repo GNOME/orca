@@ -1068,14 +1068,13 @@ class SpeechGenerator(generator.Generator):
                       % {"index" : totalSelectedItems,
                          "total" : childCount}
         result.append(countString)
-        # Translators: this is a indication of the focused icon and the
-        # count of the total number of icons within an icon panel. An
-        # example of an icon panel is the Nautilus folder view.
-        #
-        itemString = _("on item %(index)d of %(total)d") \
-                     % {"index" : currentItem,
-                        "total" : childCount}
-        result.append(itemString)
+
+        result.append(self._script.formatting.getString(
+                          mode='speech',
+                          stringType='iconindex') \
+                      % {"index" : currentItem,
+                         "total" : childCount})
+
         return result
 
     def _generateSelectedItems(self, obj, **args):
@@ -1226,9 +1225,9 @@ class SpeechGenerator(generator.Generator):
                         break
 
         if position >= 0:
-            # Translators: this is an item in a list.
-            #
-            result.append(_("item %(index)d of %(total)d") \
+            result.append(self._script.formatting.getString(
+                              mode='speech',
+                              stringType='groupindex') \
                           % {"index" : position,
                              "total" : total})
 
@@ -1308,9 +1307,9 @@ class SpeechGenerator(generator.Generator):
         if (settings.enablePositionSpeaking \
             or args.get('forceList', False)) \
            and position >= 0:
-            # Translators: this is an item in a list.
-            #
-            result.append(_("item %(index)d of %(total)d") \
+            result.append(self._script.formatting.getString(
+                              mode='speech',
+                              stringType='groupindex') \
                           % {"index" : position,
                              "total" : total})
 

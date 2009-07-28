@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Open File...\(Control O\)'",
      "     VISIBLE:  'Open File...(Control O)', cursor=1",
-     "SPEECH OUTPUT: 'tool bar File menu Open File… Control O item 4 of [0-9]+'"]))
+     "SPEECH OUTPUT: 'tool bar File menu Open File… Control O 4 of [0-9]+'"]))
 
 ########################################################################
 # Dismiss the menu by pressing Escape and wait for the location bar

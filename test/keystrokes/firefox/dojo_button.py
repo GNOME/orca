@@ -171,7 +171,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create from template", 
     ["BRAILLE LINE:  'Create from template'",
      "     VISIBLE:  'Create from template', cursor=1",
-     "SPEECH OUTPUT: 'Create from template item 1 of 1'"]))
+     "SPEECH OUTPUT: 'Create from template 1 of 1'"]))
 
 ########################################################################
 # Close the menu and go to the Edit! button

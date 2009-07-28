@@ -38,7 +38,7 @@ sequence.append(WaitForFocus("About", acc_role=pyatspi.ROLE_MENU_ITEM))
 # SPEECH OUTPUT: ' popup menu'
 # SPEECH OUTPUT: 'About'
 # SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'item 1 of 5'
+# SPEECH OUTPUT: '1 of 5'
 # SPEECH OUTPUT: ''
 
 sequence.append(KeyComboAction("KP_Enter"))

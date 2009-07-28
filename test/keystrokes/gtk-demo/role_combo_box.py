@@ -57,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
     "Warning combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
      "     VISIBLE:  'Warning', cursor=1",
-     "SPEECH OUTPUT: 'Some stock icons panel Warning item 1 of 5'"]))
+     "SPEECH OUTPUT: 'Some stock icons panel Warning 1 of 5'"]))
 
 ########################################################################
 # Now arrow down and select the "New" item.
@@ -88,7 +88,7 @@ sequence.append(utils.AssertPresentationAction(
     "New combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning New'",
      "     VISIBLE:  'New', cursor=1",
-     "SPEECH OUTPUT: 'Some stock icons panel New item 3 of 5'"]))
+     "SPEECH OUTPUT: 'Some stock icons panel New 3 of 5'"]))
 
 ########################################################################
 # Select the "New" entry and tab to the editable text combo box.  Skip
