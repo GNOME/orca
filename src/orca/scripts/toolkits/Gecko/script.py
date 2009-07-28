@@ -5632,7 +5632,8 @@ class Script(default.Script):
         if obj.getRole() == pyatspi.ROLE_LINK:
             acss = self.voices[settings.HYPERLINK_VOICE]
         elif string and isinstance(string, basestring) \
-            and string.isupper() and string.strip().isalpha():
+            and string.decode("UTF-8").isupper() \
+            and string.decode("UTF-8").strip().isalpha():
             acss = self.voices[settings.UPPERCASE_VOICE]
         else:
             acss = self.voices[settings.DEFAULT_VOICE]

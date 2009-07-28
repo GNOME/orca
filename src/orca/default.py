@@ -2177,7 +2177,7 @@ class Script(script.Script):
         phrase = self.getText(obj, startOffset, endOffset)
 
         if len(phrase) and phrase != "\n":
-            if phrase.isupper():
+            if phrase.decode("UTF-8").isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
@@ -2209,7 +2209,7 @@ class Script(script.Script):
             (caretOffset, settings.speakBlankLines))
 
         if len(line) and line != "\n":
-            if line.isupper():
+            if line.decode("UTF-8").isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
@@ -2262,7 +2262,7 @@ class Script(script.Script):
 
         if self.getLinkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif word.isupper():
+        elif word.decode("UTF-8").isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -2392,7 +2392,7 @@ class Script(script.Script):
 
         if self.getLinkIndex(obj, sentenceStartOffset + 1) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif sentence.isupper():
+        elif sentence.decode("UTF-8").isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -2468,7 +2468,7 @@ class Script(script.Script):
 
         if self.getLinkIndex(obj, wordStartOffset + 1) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif word.isupper():
+        elif word.decode("UTF-8").isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -3629,7 +3629,7 @@ class Script(script.Script):
 
         if self.getLinkIndex(event.source, text.caretOffset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif character.isupper():
+        elif character.decode("UTF-8").isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -3754,7 +3754,7 @@ class Script(script.Script):
                         and len(text.decode("UTF-8")) == 1)
 
         if speakThis:
-            if text.isupper():
+            if text.decode("UTF-8").isupper():
                 speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
             else:
                 speech.speak(text)
@@ -5310,7 +5310,8 @@ class Script(script.Script):
                 # user has navigated to a line with only whitespace on it.
                 #
                 speech.speak(_("white space"))
-            elif lineString.isupper() and (speechType < 2 or speechType > 3):
+            elif lineString.decode("UTF-8").isupper() \
+                 and (speechType < 2 or speechType > 3):
                 speech.speak(lineString, self.voices[settings.UPPERCASE_VOICE])
             elif speechType == 2:
                 self.spellCurrentItem(lineString)
@@ -5473,7 +5474,7 @@ class Script(script.Script):
                     # user has navigated to a line with only whitespace on it.
                     #
                     speech.speak(_("white space"))
-                elif wordString.isupper() and speechType == 1:
+                elif wordString.decode("UTF-8").isupper() and speechType == 1:
                     speech.speak(wordString,
                                  self.voices[settings.UPPERCASE_VOICE])
                 elif speechType == 2:
@@ -6619,7 +6620,7 @@ class Script(script.Script):
                 offset = endOffset
 
                 lineString = self.adjustForRepeats(lineString)
-                if lineString.isupper():
+                if lineString.decode("UTF-8").isupper():
                     voice = settings.voices[settings.UPPERCASE_VOICE]
                 else:
                     voice = settings.voices[settings.DEFAULT_VOICE]

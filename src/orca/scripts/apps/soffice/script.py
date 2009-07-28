@@ -1286,7 +1286,7 @@ class Script(default.Script):
             if self.getLinkIndex(obj, i) >= 0:
                 voice = voices[settings.HYPERLINK_VOICE]
                 break
-            elif word.isupper():
+            elif word.decode("UTF-8").isupper():
                 voice = voices[settings.UPPERCASE_VOICE]
             else:
                 voice = voices[settings.DEFAULT_VOICE]
@@ -2309,7 +2309,7 @@ class Script(default.Script):
         if isinstance(orca_state.lastInputEvent,
                         input_event.MouseButtonEvent) and \
              orca_state.lastInputEvent.button == "2":
-            if text.isupper():
+            if text.decode("UTF-8").isupper():
                 speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
             else:
                 speech.speak(text)

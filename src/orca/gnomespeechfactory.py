@@ -978,7 +978,7 @@ class SpeechServer(speechserver.SpeechServer):
         if self.__sayAll:
             self.stop()
 
-        if not acss and text and text.isupper():
+        if not acss and text and text.decode("UTF-8").isupper():
             try:
                 acss = \
                     orca_state.activeScript.voices[settings.UPPERCASE_VOICE]

@@ -150,7 +150,7 @@ class Script(default.Script):
                 if mode == pyatspi.TEXT_BOUNDARY_LINE_START or \
                    len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
                     string = self.adjustForRepeats(string)
-                    if string.isupper():
+                    if string.decode("UTF-8").isupper():
                         voice = settings.voices[settings.UPPERCASE_VOICE]
                     else:
                         voice = settings.voices[settings.DEFAULT_VOICE]
@@ -188,7 +188,7 @@ class Script(default.Script):
         #
         if len(string) != 0:
             string = self.adjustForRepeats(string)
-            if string.isupper():
+            if string.decode("UTF-8").isupper():
                 voice = settings.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = settings.voices[settings.DEFAULT_VOICE]

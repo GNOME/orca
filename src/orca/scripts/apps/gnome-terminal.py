@@ -273,7 +273,7 @@ class Script(default.Script):
                     and len(text.decode("UTF-8")) == 1)
 
         if speakThis:
-            if text.isupper():
+            if text.decode("UTF-8").isupper():
                 speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
             else:
                 speech.speak(text)
