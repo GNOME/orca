@@ -135,17 +135,20 @@ class GtkBuilderWrapper:
             return
 
         try:
-            obj.set_title(_(obj.get_title()))
+            title = obj.get_title()
+            if title and len(title):
+                obj.set_title(_(title))
         except:
             try:
                 text = obj.get_label()
             except:
                 return False
 
-            if useMarkup:
-                obj.set_markup(_(text))
-            else:
-                obj.set_label(_(text))
+            if text and len(text):
+                if useMarkup:
+                    obj.set_markup(_(text))
+                else:
+                    obj.set_label(_(text))
 
         if useUnderline:
             obj.set_use_underline(True)
