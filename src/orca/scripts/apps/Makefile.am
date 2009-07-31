@@ -2,6 +2,7 @@ SUBDIRS = \
 	soffice \
 	evolution \
 	gcalctool \
+	packagemanager \
 	pidgin \
 	planner \
 	rhythmbox \

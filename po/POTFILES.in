@@ -44,6 +44,8 @@ src/orca/scripts/apps/metacity.py
 src/orca/scripts/apps/nautilus.py
 src/orca/scripts/apps/notification-daemon.py
 src/orca/scripts/apps/notify-osd.py
+src/orca/scripts/apps/packagemanager/script.py
+src/orca/scripts/apps/packagemanager/tutorialgenerator.py
 src/orca/scripts/apps/pidgin/script.py
 src/orca/scripts/apps/planner/braille_generator.py
 src/orca/scripts/apps/planner/speech_generator.py

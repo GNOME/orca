@@ -1922,18 +1922,21 @@ class Script(default.Script):
                     #
                     self._loadingDocumentContent = True
 
-                    # Translators: this is in reference to loading a web page.
+                    # Translators: this is in reference to loading a web page
+                    # or some other content.
                     #
                     message = _("Loading.  Please wait.")
 
                 elif event.source.name:
-                    # Translators: this is in reference to loading a web page.
+                    # Translators: this is in reference to loading a web page
+                    # or some other content.
                     #
                     message = _("Finished loading %s.") % event.source.name
                     finishedLoading = True
 
                 else:
-                    # Translators: this is in reference to loading a web page.
+                    # Translators: this is in reference to loading a web page
+                    # or some other content.
                     #
                     message = _("Finished loading.")
                     finishedLoading = True
