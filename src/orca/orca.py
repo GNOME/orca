@@ -759,6 +759,9 @@ def _processKeyboardEvent(event):
 
     keyboardEvent = KeyboardEvent(event)
 
+    if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
+        braille.killFlash()
+
     # See if this is one of our special Orca modifier keys.
     #
     # Just looking at the keycode should suffice, but there is a

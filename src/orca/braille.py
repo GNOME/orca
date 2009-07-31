@@ -37,6 +37,9 @@ log = logging.getLogger("braille")
 import signal
 import os
 
+import gobject
+gobject.threads_init()
+
 try:
     import louis
 except ImportError:
@@ -44,8 +47,6 @@ except ImportError:
 
 try:
     import brlapi
-    import gobject
-    gobject.threads_init()
 
     _brlAPI = None
     _brlAPIAvailable = True
@@ -208,6 +209,14 @@ beginningIsShowing = False
 # of 0 means no cell has the cursor.
 #
 cursorCell = 0
+
+# The event source of a timeout used for flashing a message.
+#
+_flashEventSourceId = 0
+
+# Line information saved prior to flashing any messages
+#
+_saved = None
 
 # Translators: These are the braille translation table names for different
 # languages. You could read about braille tables at:
@@ -1047,7 +1056,10 @@ def setFocus(region, panToFocus=True, getLinkMask=True):
 
     viewport[0] = max(0, offset)
 
-def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
+def refresh(panToCursor=True,
+            targetCursorCell=0,
+            getLinkMask=True,
+            stopFlash=True):
     """Repaints the Braille on the physical display.  This clips the entire
     logical structure by the viewport and also sets the cursor to the
     appropriate location.  [[[TODO: WDW - I'm not sure how BrlTTY handles
@@ -1068,12 +1080,16 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
       attributeMask for links. Reasons we might not want to include
       knowning that we will fail and/or it taking an unreasonable
       amount of time (AKA Gecko).
+    - stopFlash: if True, kill any flashed message that may be showing.
     """
 
     global endIsShowing
     global beginningIsShowing
     global cursorCell
     global _monitor
+
+    if stopFlash:
+        killFlash(restoreSaved=False)
 
     if len(_lines) == 0:
         if not _brlAPIRunning:
@@ -1200,7 +1216,67 @@ def refresh(panToCursor=True, targetCursorCell=0, getLinkMask=True):
     beginningIsShowing = startPos == 0
     endIsShowing = endPos >= len(string)
 
-def displayRegions(regionInfo):
+def _flashCallback():
+    global _lines
+    global _regionWithFocus
+    global viewport
+    global _flashEventSourceId
+
+    if _flashEventSourceId:
+        (_lines, _regionWithFocus, viewport, flashTime) = _saved
+        refresh(panToCursor=False, stopFlash=False)
+        _flashEventSourceId = 0
+
+    return False
+
+def killFlash(restoreSaved=True):
+    global _flashEventSourceId
+    global _lines
+    global _regionWithFocus
+    global viewport
+    if _flashEventSourceId:
+        if _flashEventSourceId > 0:
+            gobject.source_remove(_flashEventSourceId)
+        if restoreSaved:
+            (_lines, _regionWithFocus, viewport, flashTime) = _saved
+            refresh(panToCursor=False, stopFlash=False)
+        _flashEventSourceId = 0
+
+def resetFlashTimer():
+    global _flashEventSourceId
+    if _flashEventSourceId > 0:
+        gobject.source_remove(_flashEventSourceId)
+        flashTime = _saved[3]
+        _flashEventSourceId = gobject.timeout_add(flashTime, _flashCallback)
+
+def _initFlash(flashTime):
+    """Sets up the state needed to flash a message or clears any existing
+    flash if nothing is to be flashed.
+
+    Arguments:
+    - flashTime:  if non-0, the number of milliseconds to display the
+                  regions before reverting back to what was there before.
+                  A 0 means to not do any flashing.  A negative number
+                  means display the message until some other message
+                  comes along or the user presses a cursor routing key.
+    """
+
+    global _saved
+    global _flashEventSourceId
+
+    if _flashEventSourceId:
+        if _flashEventSourceId > 0:
+            gobject.source_remove(_flashEventSourceId)
+        _flashEventSourceId = 0
+    else:
+        _saved = (_lines, _regionWithFocus, viewport, flashTime)
+
+    if flashTime > 0:
+        _flashEventSourceId = gobject.timeout_add(flashTime, _flashCallback)
+    elif flashTime < 0:
+        _flashEventSourceId = -666
+
+def displayRegions(regionInfo, flashTime=0):
     """Displays a list of regions on a single line, setting focus to the
        specified region.  The regionInfo parameter is something that is
        typically returned by a call to braille_generator.generateBraille.
@@ -1209,8 +1285,14 @@ def displayRegions(regionInfo):
     - regionInfo: a list where the first element is a list of regions
                   to display and the second element is the region
                   with focus (must be in the list from element 0)
+    - flashTime:  if non-0, the number of milliseconds to display the
+                  regions before reverting back to what was there before.
+                  A 0 means to not do any flashing.  A negative number
+                  means display the message until some other message
+                  comes along or the user presses a cursor routing key.
     """
 
+    _initFlash(flashTime)
     regions = regionInfo[0]
     focusedRegion = regionInfo[1]
 
@@ -1220,22 +1302,28 @@ def displayRegions(regionInfo):
         line.addRegion(item)
     addLine(line)
     setFocus(focusedRegion)
-    refresh()
+    refresh(stopFlash=False)
 
-def displayMessage(message, cursor=-1):
+def displayMessage(message, cursor=-1, flashTime=0):
     """Displays a single line, setting the cursor to the given position,
     ensuring that the cursor is in view.
 
     Arguments:
     - message: the string to display
     - cursor: the 0-based cursor position, where -1 (default) means no cursor
+    - flashTime:  if non-0, the number of milliseconds to display the
+                  regions before reverting back to what was there before.
+                  A 0 means to not do any flashing.  A negative number
+                  means display the message until some other message
+                  comes along or the user presses a cursor routing key.
     """
 
+    _initFlash(flashTime)
     clear()
     region = Region(message, cursor)
     addLine(Line(region))
     setFocus(region)
-    refresh(True)
+    refresh(True, stopFlash=False)
 
 def panLeft(panAmount=0):
     """Pans the display to the left, limiting the pan to the beginning
@@ -1334,6 +1422,12 @@ def processRoutingKey(event):
     - event: an instance of input_event.BrailleEvent.  event.event is
     the dictionary form of the expanded BrlAPI event.
     """
+
+    # If a message is being flashed, we'll use a routing key to dismiss it.
+    #
+    if _flashEventSourceId:
+        killFlash()
+        return
 
     cell = event.event["argument"]
 

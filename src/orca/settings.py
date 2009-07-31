@@ -366,6 +366,10 @@ enableBrailleContext    = True
 #
 enableBrailleGrouping   = False
 
+# The timeout (in milliseconds) to use for messages flashed in braille.
+#
+brailleFlashTime        = 5000
+
 # If True, enable braille monitor.
 #
 enableBrailleMonitor    = False

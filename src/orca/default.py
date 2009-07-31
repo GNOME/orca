@@ -5060,7 +5060,10 @@ class Script(script.Script):
                 self.reviewPreviousCharacter(inputEvent)
         else:
             braille.panLeft(panAmount)
-            braille.refresh(False)
+            # We might be panning through a flashed message.
+            #
+            braille.resetFlashTimer()
+            braille.refresh(False, stopFlash=False)
 
         return True
 
@@ -5118,7 +5121,10 @@ class Script(script.Script):
                 text.setCaretOffset(endOffset)
         else:
             braille.panRight(panAmount)
-            braille.refresh(False)
+            # We might be panning through a flashed message.
+            #
+            braille.resetFlashTimer()
+            braille.refresh(False, stopFlash=False)
 
         return True
 
