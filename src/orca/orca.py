@@ -595,11 +595,16 @@ def keyEcho(event):
 
             modifiers = event.modifiers
 
+            brailleMessage = None
             if event_string == "Caps_Lock":
                 if modifiers & (1 << pyatspi.MODIFIER_SHIFTLOCK):
                     eventType = KeyEventType.LOCKING_UNLOCKED
+                    brailleMessage = keynames.getKeyName(event_string) \
+                                     + " " + _("off")
                 else:
                     eventType = KeyEventType.LOCKING_LOCKED
+                    brailleMessage = keynames.getKeyName(event_string) \
+                                     + " " + _("on")
 
             elif event_string == "Num_Lock":
                 # [[[TODO: richb - we are not getting a correct modifier
@@ -612,6 +617,10 @@ def keyEcho(event):
                 #else:
                 #    eventType = KeyEventType.LOCKING_LOCKED
                 pass
+
+            if brailleMessage:
+                braille.displayMessage(brailleMessage,
+                                       flashTime=settings.brailleFlashTime)
 
         elif isFunctionKey(event_string):
             if not settings.enableFunctionKeys:
