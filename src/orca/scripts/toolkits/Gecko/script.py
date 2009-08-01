@@ -5678,6 +5678,15 @@ class Script(default.Script):
                or self.isLabellingContents(obj, contents):
                 continue
 
+            # Thunderbird now does something goofy with smileys in
+            # email: exposes them as a nested paragraph with a name
+            # consisting of the punctuation used to create the smiley
+            # and an empty accessible text object. This causes us to
+            # speak tutorial info for each smiley. :-( type in text.
+            #
+            elif role == pyatspi.ROLE_PARAGRAPH and not len(string):
+                string = obj.name
+
             # If it is a "useless" image (i.e. not a link, no associated
             # text), ignore it, unless it's the only thing here.
             #
