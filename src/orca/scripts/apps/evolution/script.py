@@ -1629,6 +1629,24 @@ class Script(default.Script):
         #
         default.Script.onStateChanged(self, event)
 
+    def isActivatableEvent(self, event):
+        """Returns True if the given event is one that should cause this
+        script to become the active script.  This is only a hint to
+        the focus tracking manager and it is not guaranteed this
+        request will be honored.  Note that by the time the focus
+        tracking manager calls this method, it thinks the script
+        should become active.  This is an opportunity for the script
+        to say it shouldn't.
+        """
+
+        # If the Evolution window is not focused, ignore this event.
+        #
+        window = self.getTopLevel(event.source)
+        if window and not window.getState().contains(pyatspi.STATE_ACTIVE):
+            return False
+
+        return True
+
     def onFocus(self, event):
         """Called whenever an object gets focus.
 
