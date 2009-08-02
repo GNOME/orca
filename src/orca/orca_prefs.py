@@ -482,6 +482,23 @@ class OrcaPrefs:
         else:
             return "orca.settings.MAG_ZOOMER_TYPE_FULL_SCREEN"
 
+    def _getProgressBarVerbosityString(self, verbosityLevel):
+        """Returns a string that represents the progress bar verbosity level
+        passed in.
+
+        Arguments:
+        - verbosityLevel: verbosity level for progress bars.
+
+        Returns a string suitable for the preferences file.
+        """
+
+        if verbosityLevel == settings.PROGRESS_BAR_ALL:
+            return "orca.settings.PROGRESS_BAR_ALL"
+        elif verbosityLevel == settings.PROGRESS_BAR_WINDOW:
+            return "orca.settings.PROGRESS_BAR_WINDOW"
+        else:
+            return "orca.settings.PROGRESS_BAR_APPLICATION"
+
     def _writeKeyBindingsPreamble(self, prefs):
         """Writes the preamble to the user-settings.py keyBindings section."""
 
@@ -718,6 +735,8 @@ class OrcaPrefs:
             elif key == "textAttributesBrailleIndicator":
                 value = self._getTextAttributesBrailleIndicatorString( \
                                                               prefsDict[key])
+            elif key == "progressBarVerbosity":
+                value = self._getProgressBarVerbosityString(prefsDict[key])
             elif key == "brailleContractionTable":
                 value = "'%s'" % prefsDict[key]
             elif key == "brailleEOLIndicator":

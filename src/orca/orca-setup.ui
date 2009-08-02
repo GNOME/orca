@@ -226,6 +226,22 @@
       </row>
     </data>
   </object>
+  <object class="GtkListStore" id="model7">
+    <columns>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">All</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Application</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Window</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkDialog" id="orcaSetupWindow">
     <property name="title" translatable="yes">Orca Preferences</property>
     <property name="type">GTK_WINDOW_TOPLEVEL</property>
@@ -1367,130 +1383,8 @@
                         <child>
                           <object class="GtkTable" id="checkBoxTable">
                             <property name="visible">True</property>
-                            <property name="n_rows">4</property>
+                            <property name="n_rows">5</property>
                             <property name="n_columns">2</property>
-                            <property name="homogeneous">False</property>
-                            <child>
-                              <object class="GtkHBox" id="hbox43">
-                                <property name="visible">True</property>
-                                <property name="homogeneous">False</property>
-                                <child>
-                                  <object class="GtkCheckButton" id="speechProgressBarCheckbutton">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="label" translatable="yes">Speak progress bar _updates</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="relief">GTK_RELIEF_NORMAL</property>
-                                    <property name="focus_on_click">True</property>
-                                    <property name="active">True</property>
-                                    <property name="inconsistent">False</property>
-                                    <property name="draw_indicator">True</property>
-                                    <signal handler="speechProgressBarChecked" last_modification_time="Mon, 18 Jun 2007 16:59:36 GMT" name="toggled"/>
-                                  </object>
-                                  <packing>
-                                    <property name="padding">0</property>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkHBox" id="speakUpdateIntervalHBox">
-                                    <property name="visible">True</property>
-                                    <property name="homogeneous">False</property>
-                                    <property name="spacing">3</property>
-                                    <child>
-                                      <object class="GtkLabel" id="speakProgressBarLabel">
-                                        <property name="visible">True</property>
-                                        <property comments="Translators: Here 'every' labels a spin button through which a user can customize the frequency in seconds an announcement should be made. (The spin button is followed by the label 'seconds'.) Thus if a user chooses 5 in the spin button, the complete phrase would be 'every 5 seconds'." name="label" translatable="yes">every</property>
-                                        <property name="use_underline">True</property>
-                                        <property name="use_markup">False</property>
-                                        <property name="justify">GTK_JUSTIFY_LEFT</property>
-                                        <property name="wrap">False</property>
-                                        <property name="selectable">False</property>
-                                        <property name="xalign">0.5</property>
-                                        <property name="yalign">0.5</property>
-                                        <property name="xpad">0</property>
-                                        <property name="ypad">0</property>
-                                        <property name="mnemonic_widget">speakProgressBarSpinButton</property>
-                                        <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-                                        <property name="width_chars">-1</property>
-                                        <property name="single_line_mode">False</property>
-                                        <property name="angle">0</property>
-                                        <accessibility>
-                                          <relation target="speakProgressBarSpinButton" type="label-for"/>
-                                        </accessibility>
-                                      </object>
-                                      <packing>
-                                        <property name="padding">0</property>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkSpinButton" id="speakProgressBarSpinButton">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="climb_rate">1</property>
-                                        <property name="digits">0</property>
-                                        <property name="numeric">True</property>
-                                        <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-                                        <property name="snap_to_ticks">False</property>
-                                        <property name="wrap">False</property>
-                                        <property name="adjustment">adjustment4</property>
-                                        <accessibility>
-                                          <relation target="speakProgressBarUnitsLabel" type="labelled-by"/>
-                                          <relation target="speakProgressBarLabel" type="labelled-by"/>
-                                        </accessibility>
-                                        <signal handler="speakProgressBarValueChanged" last_modification_time="Thu, 14 Jun 2007 15:09:00 GMT" name="value_changed"/>
-                                      </object>
-                                      <packing>
-                                        <property name="padding">0</property>
-                                        <property name="expand">False</property>
-                                        <property name="fill">True</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkLabel" id="speakProgressBarUnitsLabel">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">seconds</property>
-                                        <property name="use_underline">False</property>
-                                        <property name="use_markup">False</property>
-                                        <property name="justify">GTK_JUSTIFY_LEFT</property>
-                                        <property name="wrap">False</property>
-                                        <property name="selectable">False</property>
-                                        <property name="xalign">0.5</property>
-                                        <property name="yalign">0.5</property>
-                                        <property name="xpad">0</property>
-                                        <property name="ypad">0</property>
-                                        <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-                                        <property name="width_chars">-1</property>
-                                        <property name="single_line_mode">False</property>
-                                        <property name="angle">0</property>
-                                        <accessibility>
-                                          <relation target="speakProgressBarSpinButton" type="label-for"/>
-                                        </accessibility>
-                                      </object>
-                                      <packing>
-                                        <property name="padding">0</property>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                      </packing>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="padding">0</property>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                  </packing>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="right_attach">1</property>
-                                <property name="top_attach">0</property>
-                                <property name="bottom_attach">1</property>
-                              </packing>
-                            </child>
                             <child>
                               <object class="GtkCheckButton" id="speechIndentationCheckbutton">
                                 <property name="visible">True</property>
@@ -1505,10 +1399,8 @@
                                 <signal handler="speechIndentationChecked" last_modification_time="Mon, 19 Jun 2006 15:46:40 GMT" name="toggled"/>
                               </object>
                               <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">0</property>
-                                <property name="bottom_attach">1</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
                               </packing>
                             </child>
                             <child>
@@ -1524,12 +1416,6 @@
                                 <property name="draw_indicator">True</property>
                                 <signal handler="speakBlankLinesChecked" last_modification_time="Wed, 01 Nov 2006 01:09:29 GMT" name="toggled"/>
                               </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="right_attach">1</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                              </packing>
                             </child>
                             <child>
                               <object class="GtkCheckButton" id="speakMultiCaseAsWordsCheckButton">
@@ -1547,8 +1433,6 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
                               </packing>
                             </child>
                             <child>
@@ -1565,10 +1449,8 @@
                                 <signal handler="speakTutorialMessagesToggled" last_modification_time="Mon, 04 Aug 2008 17:11:04 GMT" name="toggled"/>
                               </object>
                               <packing>
-                                <property name="left_attach">0</property>
-                                <property name="right_attach">1</property>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                               </packing>
                             </child>
                             <child>
@@ -1581,14 +1463,13 @@
                                 <property name="focus_on_click">True</property>
                                 <property name="active">True</property>
                                 <property name="inconsistent">False</property>
+                                <property name="inconsistent">False</property>
                                 <property name="draw_indicator">True</property>
                                 <signal handler="pauseBreaksToggled" last_modification_time="Mon, 04 Aug 2008 17:11:04 GMT" name="toggled"/>
                               </object>
                               <packing>
-                                <property name="left_attach">0</property>
-                                <property name="right_attach">1</property>
-                                <property name="top_attach">3</property>
-                                <property name="bottom_attach">4</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
                               </packing>
                             </child>
                             <child>
@@ -1600,15 +1481,14 @@
                                 <property name="relief">GTK_RELIEF_NORMAL</property>
                                 <property name="focus_on_click">True</property>
                                 <property name="active">True</property>
-                                <property name="inconsistent">False</property>
                                 <property name="draw_indicator">True</property>
                                 <signal handler="speakPositionToggled" last_modification_time="Mon, 27 Jul 2009 09:34:04 GMT" name="toggled"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">3</property>
-                                <property name="bottom_attach">4</property>
+                                <property name="top_attach">2</property>
+                                <property name="bottom_attach">3</property>
                               </packing>
                             </child>
                             <child>
@@ -1627,90 +1507,217 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="padding">0</property>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkHBox" id="hbox39">
-                            <property name="visible">True</property>
-                            <property name="homogeneous">False</property>
-                            <property name="spacing">3</property>
-                            <child>
-                              <object class="GtkLabel" id="sayAllLabel">
-                                <property name="visible">True</property>
-                                <property comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better." name="label" translatable="yes">Say All B_y:</property>
-                                <property name="use_underline">True</property>
-                                <property name="use_markup">False</property>
-                                <property name="justify">GTK_JUSTIFY_LEFT</property>
-                                <property name="wrap">False</property>
-                                <property name="selectable">False</property>
-                                <property name="xalign">0.5</property>
-                                <property name="yalign">0.5</property>
-                                <property name="xpad">0</property>
-                                <property name="ypad">0</property>
-                                <property name="mnemonic_widget">sayAllStyle</property>
-                                <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
-                                <property name="width_chars">-1</property>
-                                <property name="single_line_mode">False</property>
-                                <property name="angle">0</property>
-                                <accessibility>
-                                  <relation target="sayAllStyle" type="label-for"/>
-                                </accessibility>
-                              </object>
-                              <packing>
-                                <property name="padding">0</property>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
+                                <property name="top_attach">1</property>
+                                <property name="bottom_attach">2</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkComboBox" id="sayAllStyle">
+                              <object class="GtkHBox" id="hbox39">
                                 <property name="visible">True</property>
-                                <property name="add_tearoffs">False</property>
-                                <property name="focus_on_click">True</property>
-                                <accessibility>
-                                  <relation target="sayAllLabel" type="labelled-by"/>
-                                </accessibility>
-                                <signal handler="sayAllStyleChanged" last_modification_time="Mon, 16 Apr 2007 17:10:02 GMT" name="changed"/>
-                                <property name="model">model2</property>
+                                <property name="spacing">3</property>
                                 <child>
-                                  <object class="GtkCellRendererText" id="renderer2"/>
-                                  <attributes>
-                                    <attribute name="text">0</attribute>
-                                  </attributes>
+                                  <object class="GtkLabel" id="sayAllLabel">
+                                    <property name="visible">True</property>
+                                    <property comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better." name="label" translatable="yes">Say All B_y:</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="mnemonic_widget">sayAllStyle</property>
+                                    <accessibility>
+                                      <relation type="label-for" target="sayAllStyle"/>
+                                    </accessibility>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="sayAllStyle">
+                                    <property name="visible">True</property>
+                                    <property name="model">model2</property>
+                                    <accessibility>
+                                      <relation type="labelled-by" target="sayAllLabel"/>
+                                    </accessibility>
+                                    <signal name="changed" handler="sayAllStyleChanged"/>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="renderer2"/>
+                                      <attributes>
+                                        <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="padding">3</property>
+                                    <property name="position">1</property>
+                                  </packing>
                                 </child>
                               </object>
                               <packing>
-                                <property name="padding">3</property>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
+                                <property name="top_attach">4</property>
+                                <property name="bottom_attach">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkHBox" id="hbox43">
+                                <property name="visible">True</property>
+                                <child>
+                                  <object class="GtkCheckButton" id="speechProgressBarCheckbutton">
+                                    <property name="label" translatable="yes">Speak progress bar _updates</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="speechProgressBarChecked"/>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkHBox" id="speakUpdateIntervalHBox">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">3</property>
+                                    <child>
+                                      <object class="GtkLabel" id="speakProgressBarLabel">
+                                        <property name="visible">True</property>
+                                        <property name="label" comments="Translators: Here 'every' labels a spin button through which a user can customize the frequency in seconds an announcement should be made. (The spin button is followed by the label 'seconds'.) Thus if a user chooses 5 in the spin button, the complete phrase would be 'every 5 seconds'." translatable="yes">every</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="mnemonic_widget">speakProgressBarSpinButton</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="speakProgressBarSpinButton"/>
+                                        </accessibility>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkSpinButton" id="speakProgressBarSpinButton">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="invisible_char">&#x25CF;</property>
+                                        <property name="adjustment">adjustment4</property>
+                                        <property name="climb_rate">1</property>
+                                        <property name="numeric">True</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="speakProgressBarLabel"/>
+                                          <relation type="labelled-by" target="speakProgressBarUnitsLabel"/>
+                                        </accessibility>
+                                        <signal name="value_changed" handler="speakProgressBarValueChanged"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="speakProgressBarUnitsLabel">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">seconds</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="speakProgressBarSpinButton"/>
+                                        </accessibility>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">2</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">3</property>
+                                <property name="bottom_attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkHBox" id="progressBarVerbosityHBox">
+                                <property name="visible">True</property>
+                                <child>
+                                  <object class="GtkLabel" id="progressBarVerbosityLabel">
+                                    <property name="visible">True</property>
+                                    <property name="label" comments="Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window." translatable="yes">Restrict progress bar updates to:</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="progressBarVerbosity">
+                                    <property name="visible">True</property>
+                                    <property name="model">model7</property>
+                                    <accessibility>
+                                      <relation type="labelled-by" target="progressBarVerbosityLabel"/>
+                                    </accessibility>
+                                    <signal name="changed" handler="progressBarVerbosityChanged"/>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="renderer2"/>
+                                      <attributes>
+                                        <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="padding">3</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="right_attach">2</property>
+                                <property name="top_attach">4</property>
+                                <property name="bottom_attach">5</property>
+                                <property name="x_padding">20</property>
                               </packing>
                             </child>
                           </object>
                           <packing>
-                            <property name="padding">0</property>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>
                       <packing>
-                        <property name="padding">0</property>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
-                    <property name="tab_expand">False</property>
+                    <property name="position">1</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="speechTabLabel">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Speech</property>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
                     <property name="tab_fill">False</property>
                   </packing>
                 </child>

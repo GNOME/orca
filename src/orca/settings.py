@@ -172,6 +172,7 @@ userCustomizableSettings = [
     "textAttributesBrailleIndicator",
     "enableProgressBarUpdates",
     "progressBarUpdateInterval",
+    "progressBarVerbosity",
     "enableContractedBraille",
     "brailleContractionTable",
     "enableMouseReview",
@@ -666,6 +667,18 @@ enableProgressBarUpdates = True
 # of zero means that progress bar updates should not be spoken at all.
 #
 progressBarUpdateInterval = 10
+
+# When progress bar updates should be spoken, assuming they are enabled.
+# ALL means that any progress bar update will be spoken. APPLICATION
+# means that progress bar updates from the active application will be
+# spoken, even if they are not in the active window. WINDOW means that
+# the progress bar must be contained in the active window in order to
+# be spoken. The default verbosity level is APPLICATION.
+#
+PROGRESS_BAR_ALL = 0
+PROGRESS_BAR_APPLICATION = 1
+PROGRESS_BAR_WINDOW = 2
+progressBarVerbosity = PROGRESS_BAR_APPLICATION
 
 # Whether or not to present the 'read only' attribute of text areas
 # if we can detect they are read only or not.

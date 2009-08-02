@@ -1551,6 +1551,40 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         interval = prefs["progressBarUpdateInterval"]
         self.get_widget("speakProgressBarSpinButton").set_value(interval)
 
+        # Translators: Orca has a setting which determines which progress
+        # bar updates should be announced. The options are all progress
+        # bars, only progress bars in the active application, or only
+        # progress bars in the current window.
+        #
+        label = _("Restrict progress bar updates to:")
+        # TODO - JD: I did the above because GtkBuilder translator notes
+        # (which we have for the above string) are not getting sucked in
+        # to orca.pot. :-(
+        #
+        comboBox = self.get_widget("progressBarVerbosity")
+        levels = []
+        # Translators: Orca has a setting which determines which progress
+        # bar updates should be announced. Choosing "All" means that Orca
+        # will present progress bar updates regardless of what application
+        # and window they happen to be in.
+        #
+        levels.append(C_("ProgressBar", "All"))
+        # Translators: Orca has a setting which determines which progress
+        # bar updates should be announced. Choosing "Application" means
+        # that Orca will present progress bar updates as long as the
+        # progress bar is in the active application (but not necessarily
+        # in the current window).
+        #
+        levels.append(C_("ProgressBar", "Application"))
+        # Translators: Orca has a setting which determines which progress
+        # bar updates should be announced. Choosing "Window" means that
+        # Orca will present progress bar updates as long as the progress
+        # bar is in the active window.
+        #
+        levels.append(C_("ProgressBar", "Window"))
+        self.populateComboBox(comboBox, levels)
+        comboBox.set_active(prefs["progressBarVerbosity"])
+
         enable = prefs["enableMouseReview"]
         self.get_widget("speakUnderMouseCheckButton").set_active(enable)
 
@@ -2956,6 +2990,42 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_ALL
 
+    def progressBarVerbosityChanged(self, widget):
+        """Signal handler for the changed signal for the progressBarVerbosity
+           GtkComboBox widget. Set the 'progressBarVerbosity' preference to
+           the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        progressBarVerbosity = widget.get_active_text()
+        # Translators: Orca has a setting which determines which progress
+        # bar updates should be announced. Choosing "All" means that Orca
+        # will present progress bar updates regardless of what application
+        # and window they happen to be in.
+        #
+        if progressBarVerbosity == C_("ProgressBar", "All"):
+            self.prefsDict["progressBarVerbosity"] = \
+                settings.PROGRESS_BAR_ALL
+        # Translators: Orca has a setting which determines which progress
+        # bar updates should be announced. Choosing "Window" means that
+        # Orca will present progress bar updates as long as the progress
+        # bar is in the active window.
+        #
+        elif progressBarVerbosity == C_("ProgressBar", "Window"):
+            self.prefsDict["progressBarVerbosity"] = \
+                settings.PROGRESS_BAR_WINDOW
+        # Translators: Orca has a setting which determines which progress
+        # bar updates should be announced. Choosing "Application" means
+        # that Orca will present progress bar updates as long as the
+        # progress bar is in the active application (but not necessarily
+        # in the current window).
+        #
+        else:
+            self.prefsDict["progressBarVerbosity"] = \
+                settings.PROGRESS_BAR_APPLICATION
+
     def sayAllStyleChanged(self, widget):
         """Signal handler for the "changed" signal for the sayAllStyle
            GtkComboBox widget. Set the 'sayAllStyle' preference to the
@@ -3040,6 +3110,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         enable = widget.get_active()
         self.prefsDict["enableProgressBarUpdates"] = enable
         self.get_widget("speakUpdateIntervalHBox").set_sensitive(enable)
+        self.get_widget("progressBarVerbosityHBox").set_sensitive(enable)
 
     def speakProgressBarValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the

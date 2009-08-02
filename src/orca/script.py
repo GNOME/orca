@@ -39,6 +39,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import braille_generator
 import debug
 import flat_review
@@ -337,6 +339,10 @@ class Script:
         #
         processEvent = (orca_state.activeScript == self \
                         or self.presentIfInactive)
+        if event.source.getRole() == pyatspi.ROLE_PROGRESS_BAR \
+           and not processEvent \
+           and settings.progressBarVerbosity == settings.PROGRESS_BAR_ALL:
+            processEvent = True
 
         if not processEvent:
             return

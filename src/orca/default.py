@@ -2788,7 +2788,8 @@ class Script(script.Script):
         """Determine whether this progress bar event should be spoken or not.
         It should be spoken if:
         1/ settings.enableProgressBarUpdates is True.
-        2/ The application with the progress bar has focus.
+        2/ settings.progressBarVerbosity matches the current location of the
+           progress bar.
         3/ The time of this event exceeds the
            settings.progressBarUpdateInterval value.  This value
            indicates the time (in seconds) between potential spoken
@@ -2802,8 +2803,18 @@ class Script(script.Script):
         """
 
         if settings.enableProgressBarUpdates:
-            if orca_state.locusOfFocus and \
-               orca_state.locusOfFocus.getApplication() == obj.getApplication():
+            makeAnnouncment = False
+            if settings.progressBarVerbosity == settings.PROGRESS_BAR_ALL:
+                makeAnnouncement = True
+            elif settings.progressBarVerbosity == settings.PROGRESS_BAR_WINDOW:
+                makeAnnouncement = self.isSameObject( \
+                    self.getTopLevel(obj), self.findActiveWindow())
+            elif orca_state.locusOfFocus:
+                makeAnnouncement = self.isSameObject( \
+                    obj.getApplication(),
+                    orca_state.locusOfFocus.getApplication())
+
+            if makeAnnouncement:
                 currentTime = time.time()
 
                 # Check for defunct progress bars. Get rid of them if they
