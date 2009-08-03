@@ -101,7 +101,7 @@ dnl Check if a module containing a given ORBit module is visible to python.
 AC_DEFUN([AM_CHECK_PYORBIT_MOD],
 [AC_REQUIRE([AM_PATH_PYTHON])
 py_mod_var=$1
-AC_MSG_CHECKING(for PyORBit module $1)
+AC_MSG_CHECKING(for python ORBit module $1)
 AC_CACHE_VAL(py_cv_mod_$py_mod_var, [
 prog="
 import sys
