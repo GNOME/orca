@@ -2620,8 +2620,7 @@ class Script(default.Script):
            or not self.inDocumentContent() \
            or not braille.endIsShowing:
             default.Script.panBrailleRight(self, inputEvent, panAmount)
-        else:
-            self.goNextLine(inputEvent)
+        elif self.goNextLine(inputEvent):
             while braille.panLeft():
                 pass
             braille.refresh(False)
@@ -6314,12 +6313,14 @@ class Script(default.Script):
     def goPreviousLine(self, inputEvent):
         """Positions the caret offset at the previous line in the document
         window, attempting to preserve horizontal caret position.
+
+        Returns True if we actually moved.
         """
         [obj, characterOffset] = self.getCaretContext()
         [previousObj, previousCharOffset] = \
                                    self.findPreviousLine(obj, characterOffset)
         if not previousObj:
-            return
+            return False
 
         self.setCaretPosition(previousObj, previousCharOffset)
         self.presentLine(previousObj, previousCharOffset)
@@ -6330,16 +6331,20 @@ class Script(default.Script):
         #                                        previousCharOffset)
         #self.dumpContents(inputEvent, contents)
 
+        return True
+
     def goNextLine(self, inputEvent):
         """Positions the caret offset at the next line in the document
         window, attempting to preserve horizontal caret position.
+
+        Returns True if we actually moved.
         """
 
         [obj, characterOffset] = self.getCaretContext()
         [nextObj, nextCharOffset] = self.findNextLine(obj, characterOffset)
 
         if not nextObj:
-            return
+            return False
 
         self.setCaretPosition(nextObj, nextCharOffset)
         self.presentLine(nextObj, nextCharOffset)
@@ -6348,6 +6353,8 @@ class Script(default.Script):
         #
         #contents = self.getLineContentsAtOffset(nextObj, nextCharOffset)
         #self.dumpContents(inputEvent, contents)
+
+        return True
 
     def goBeginningOfLine(self, inputEvent):
         """Positions the caret offset at the beginning of the line."""
