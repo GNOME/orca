@@ -13,14 +13,15 @@ PREPARE SOURCES FOR THE RELEASE:
 
 Modify these lines in ./configure.in:
 
-  ORCA_MAJOR_VERSION=2
-  ORCA_MINOR_VERSION=19
-  ORCA_MICRO_VERSION=6
+m4_define([orca_major_version], [2])
+m4_define([orca_minor_version], [27])
+m4_define([orca_micro_version], [90pre])
 
 Modify ./README to make sure it has the right Orca version.
 
 Update ./NEWS based upon entries in ./ChangeLog, or based upon git output
-from a git command like the following:
+from a git command like the following (the tag string followed by ".." gives
+you changes made since that tag was created):
 
 git log --pretty=format:"%ai %an <%ae>%n%n        %s%n" --name-status ORCA_2_27_4..
 

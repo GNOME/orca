@@ -1,116 +1,58 @@
-AC_INIT(ChangeLog)
+m4_define([orca_major_version], [2])
+m4_define([orca_minor_version], [27])
+m4_define([orca_micro_version], [90pre])
+m4_define([orca_version],
+          [orca_major_version.orca_minor_version.orca_micro_version])
 
-ORCA_MAJOR_VERSION=2
-ORCA_MINOR_VERSION=27
-ORCA_MICRO_VERSION=90pre
-ORCA_VERSION="$ORCA_MAJOR_VERSION.$ORCA_MINOR_VERSION.$ORCA_MICRO_VERSION"
-AM_INIT_AUTOMAKE(orca, $ORCA_VERSION)
+AC_INIT([orca],
+        [orca_version],
+        [http://bugzilla.gnome.org/enter_bug.cgi?product=orca],
+        [orca])
+AM_INIT_AUTOMAKE
+AM_MAINTAINER_MODE
+ORCA_VERSION=orca_version
 AC_SUBST(ORCA_VERSION)
 
-# libtool versioning
-LT_CURRENT=0
-LT_REVISION=0
-LT_AGE=0
-LT_VERSION_INFO='-version-info ${LT_CURRENT}:${LT_REVISION}:${LT_AGE}'
-AC_SUBST(LT_VERSION_INFO)
-AC_SUBST(LT_RELEASE)
-AC_SUBST(LT_CURRENT)
-AC_SUBST(LT_REVISION)
-AC_SUBST(LT_AGE)
-
-dnl Specify a header configuration file
-AM_CONFIG_HEADER(config.h)
-
-dnl Initialize maintainer mode
-AM_MAINTAINER_MODE
-
 dnl Gettext stuff
-
 GETTEXT_PACKAGE=orca
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package])
 AM_GLIB_GNU_GETTEXT
-
 IT_PROG_INTLTOOL([0.40.0])
 
-dnl Checks for programs
-AC_PROG_CC
+dnl Needed programs
 AC_PROG_INSTALL
-AC_ISC_POSIX
 
-dnl Initialize libtool
-AM_DISABLE_STATIC
-AM_PROG_LIBTOOL
+dnl Check for various modules. NOTE: On OpenSolaris, you may
+dnl need to set PKG_CONFIG_PATH=/usr/lib/pkgconfig in order
+dnl for these to be found.
+PKG_CHECK_MODULES(orca, \
+	dbus-python >= 0.83.0 \
+	gnome-python-desktop-2.0 >= 2.24.0 \
+	libspi-1.0 > 1.24.0 \
+)
 
-# Check for various modules.  We want at least the ones
-# listed, plus:
-#
-# pyorbit 2.14.0
-# pygtk 2.8.4
-# gnome-python 2.6.2
-# gnome-mag-1.0 0.12.5 (optional)
-#
-#PKG_CHECK_MODULES(orca, \
-#	gtk+-2.0 >= 2.8.16 \
-#	libbonobo-2.0 >= 2.14.0 \
-#	atk >= 1.11.3 \
-#	gnome-speech-1.0 >= 0.3.10 \
-#)
-
-# Find the idl compiler
-
-ORBIT_IDL=`pkg-config --variable=orbit_idl ORBit-2.0`
-AC_SUBST(ORBIT_IDL)
-
-# Find the at-spi IDL
-
-AT_SPI_IDLDIR=`pkg-config --variable=idldir libspi-1.0`
-AC_SUBST(AT_SPI_IDLDIR)
-
-# Find the bonobo IDL
-
-BONOBO_IDLDIR=`pkg-config --variable=idldir libbonobo-2.0`
-
-# Find the bonobo-activation IDL
-
-BONOBO_ACTIVATION_IDLDIR=`pkg-config --variable=idldir bonobo-activation-2.0`
-
-AT_SPI_IDLFLAGS="-I$BONOBO_IDLDIR -I$BONOBO_ACTIVATION_IDLDIR -I$AT_SPI_IDLDIR"
-AC_SUBST(AT_SPI_IDLFLAGS)
-
-# Check for Python
-
+dnl Check for python and python modules needed by Orca
+dnl TODO: check for incompatibilities between Orca and liblouis
+dnl per http://live.gnome.org/Orca/Braille
 AM_PATH_PYTHON(2.4)
-
-# Check for PyGTK 2.0
-
 AM_CHECK_PYGTK(2.0,,[AC_MSG_ERROR(Could not find pygtk 2.0)])
-
-# Find the headers needed to build extensions
-
-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(Could not find python headers needed to build Python extensions)])
-
-# Find the modules used by Orca
-
-AM_CHECK_PYMOD(gettext,,,[AC_MSG_ERROR(Could not find python module gettext)])
-AM_CHECK_PYMOD(getopt,,,[AC_MSG_ERROR(Could not find python module getopt)])
-AM_CHECK_PYMOD(bonobo,,,[AC_MSG_ERROR(Could not find python module bonobo - make sure you have gnome-python with support for libbonobo-2.0 >= 2.14.0 installed)])
-AM_CHECK_PYMOD(ORBit,,,[AC_MSG_ERROR(Could not find python module ORBit - make sure you have pyorbit >= 2.14.0 installed)])
-AM_CHECK_PYMOD(ORBit,CORBA,,[AC_MSG_ERROR(Could not find python module ORBit.CORBA - make sure you have pyorbit >= 2.14.0 installed)])
-
+AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find python module: gobject)])
 # Don't require the DISPLAY to be set - the gtk checking will fail 
 # if DISPLAY is not set, and we don't like that.
-#
-#AM_CHECK_PYMOD(gconf,,,[AC_MSG_ERROR(Could not find python module gconf - make sure you have pygtk >= 2.8.14 installed)])
-#AM_CHECK_PYMOD(gtk,,,[AC_MSG_ERROR(Could not find python module gtk - make sure you have pygtk >= 2.8.14 installed)])
-#AM_CHECK_PYMOD(gtk,gdk,,[AC_MSG_ERROR(Could not find python module gtk.gdk - make sure you have pygtk >= 2.8.14 installed)])
-
-AM_CHECK_PYORBIT_MOD(Accessibility,,[AC_MSG_ERROR(Could not find python ORBit module Accessibility - make sure you have the atspi libspi-1.0 >= 1.7.6 installed)])
-AM_CHECK_PYORBIT_MOD(GNOME_Speech,,[AC_MSG_WARN(Could not find python ORBit module Speech - you need gnome-speech-1.0 >= 0.3.10 installed to use speech)])
-AM_CHECK_PYORBIT_MOD(GNOME_Magnifier,,[AC_MSG_WARN(Could not find python ORBit module GNOME_Magnifier - you need gnome-mag-1.0 >= 0.12.5 installed to use magnification)])
-
+#AM_CHECK_PYMOD(gtk,gdk,,[AC_MSG_ERROR(Could not find python module: gtk.gdk)])
+AM_CHECK_PYMOD(gconf,,,[AC_MSG_ERROR(Could not find python module: gconf)])
+AM_CHECK_PYMOD(pyatspi,,,[AC_MSG_ERROR(Could not find python module: pyatspi)])
+AM_CHECK_PYMOD(ORBit,,,[AC_MSG_ERROR(Could not find python module: ORBit)])
+AM_CHECK_PYMOD(ORBit,CORBA,,[AC_MSG_ERROR(Could not find python module: ORBit.CORBA)])
+AM_CHECK_PYMOD(bonobo,,,[AC_MSG_ERROR(Could not find python module: bonobo)])
+AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find python module: dbus)])
+AM_CHECK_PYMOD(cairo,,,[AC_MSG_ERROR(Could not find python module: cairo)])
+AM_CHECK_PYMOD(pango,,,[AC_MSG_ERROR(Could not find python module: pango)])
+AM_CHECK_PYMOD(wnck,,[wnck_available="yes"],[wnck_available="no"])
+AM_CHECK_PYORBIT_MOD(GNOME_Speech,[gnome_speech_available="yes"],[gnome_speech_available="no"])
+AM_CHECK_PYORBIT_MOD(GNOME_Magnifier,[gnome_mag_available="yes"],[gnome_mag_available="no"])
 AM_CHECK_PYMOD(brlapi,,[brlapi_available="yes"],[brlapi_available="no"])
-
 LOUIS_TABLE_DIR=""
 AM_CHECK_PYMOD(louis,,[louis_available="yes"],[louis_available="no"])
 if test x$louis_available = "xyes"; then
@@ -118,16 +60,10 @@ if test x$louis_available = "xyes"; then
 fi
 AC_SUBST(LOUIS_TABLE_DIR)
 
-AC_SUBST(orca_LIBS)
-AC_SUBST(orca_CFLAGS)
-
-PYDOC_CHECK()
-
 AC_OUTPUT([ 
 run_pylint.sh
 Makefile
 docs/Makefile
-docs/pydoc/Makefile
 docs/man/Makefile
 po/Makefile.in
 icons/Makefile
@@ -156,6 +92,14 @@ src/orca/platform.py
 if test "x$brlapi_available" = "xno" ; then
 echo
 echo "NOTE: Braille support requires BrlTTY >= 3.9 and BrlAPI >= 0.5.1."
-echo "A suitable version could not be found, so braille will not be enabled."
-echo
 fi
+if test "x$wnck_available" = "xno" ; then
+echo
+echo "NOTE: Mouse review requires wnck, which was not found."
+fi
+echo
+echo Use gnome-speech: $gnome_speech_available
+echo Use gnome-mag: $gnome_mag_available
+echo Use brltty: $brlapi_available
+echo Use liblouis: $louis_available
+echo
