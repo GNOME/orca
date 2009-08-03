@@ -25,8 +25,6 @@ desktop_DATA     = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 EXTRA_DIST =                \
-	orca.spec           \
-	orca.spec.in        \
 	$(desktop_in_files) \
 	$(icon_DATA)        \
 	ChangeLog           \
