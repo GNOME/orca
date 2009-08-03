@@ -126,7 +126,6 @@ PYDOC_CHECK()
 AC_OUTPUT([ 
 run_pylint.sh
 Makefile
-orca.spec
 docs/Makefile
 docs/pydoc/Makefile
 docs/man/Makefile
