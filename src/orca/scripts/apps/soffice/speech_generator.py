@@ -30,6 +30,7 @@ import pyatspi
 import orca.speech_generator as speech_generator
 import orca.settings as settings
 
+from orca.orca_i18n import ngettext # for ngettext support
 from orca.orca_i18n import _ # for gettext support
 
 import script_settings
@@ -308,6 +309,40 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         result.append(text)
         return result
 
+    def _generateTooLong(self, obj, **args):
+        """If there is text in this spread sheet cell, compare the size of
+        the text within the table cell with the size of the actual table
+        cell and report back to the user if it is larger.
+
+        Returns an indication of how many characters are greater than the size
+        of the spread sheet cell, or None if the message fits.
+        """
+        result = []
+        try:
+            text = obj.queryText()
+            objectText = self._script.getText(obj, 0, -1).decode("UTF-8")
+            extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        except NotImplementedError:
+            pass
+        else:
+            tooLongCount = 0
+            for i in range(0, len(objectText)):
+                [x, y, width, height] = text.getRangeExtents(i, i + 1, 0)
+                if x < extents.x:
+                    tooLongCount += 1
+                elif (x + width) > extents.x + extents.width:
+                    tooLongCount += len(objectText) - i
+                    break
+            if tooLongCount > 0:
+                # Translators: people can enter a string of text that is
+                # too wide for a spreadsheet cell.  This string will be
+                # spoken if such a cell is encountered.
+                #
+                result = [ngettext("%d character too long",
+                                   "%d characters too long",
+                                   tooLongCount) % tooLongCount]
+        return result
+
     def _generateSpreadSheetCell(self, obj, **args):
         result = []
         if self._script.inputLineForCell == None:
@@ -341,6 +376,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     if char.isdigit():
                         result.append(name)
                         break
+
+        tooLong = self._generateTooLong(obj, **args)
+        if tooLong and len(tooLong):
+            result.extend(self._generatePause(obj, **args))
+            result.extend(tooLong)
+
         return result
 
     def _generateRealTableCell(self, obj, **args):
