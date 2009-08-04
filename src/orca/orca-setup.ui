@@ -1560,38 +1560,22 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHBox" id="hbox43">
+                              <object class="GtkVBox" id="progressBarVBox">
                                 <property name="visible">True</property>
+                                <property name="orientation">vertical</property>
                                 <child>
-                                  <object class="GtkCheckButton" id="speechProgressBarCheckbutton">
-                                    <property name="label" translatable="yes">Speak progress bar _updates</property>
+                                  <object class="GtkHBox" id="hbox43">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">False</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="active">True</property>
-                                    <property name="draw_indicator">True</property>
-                                    <signal name="toggled" handler="speechProgressBarChecked"/>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkHBox" id="speakUpdateIntervalHBox">
-                                    <property name="visible">True</property>
-                                    <property name="spacing">3</property>
                                     <child>
-                                      <object class="GtkLabel" id="speakProgressBarLabel">
+                                      <object class="GtkCheckButton" id="speechProgressBarCheckbutton">
+                                        <property name="label" translatable="yes">Speak progress bar _updates</property>
                                         <property name="visible">True</property>
-                                        <property name="label" comments="Translators: Here 'every' labels a spin button through which a user can customize the frequency in seconds an announcement should be made. (The spin button is followed by the label 'seconds'.) Thus if a user chooses 5 in the spin button, the complete phrase would be 'every 5 seconds'." translatable="yes">every</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">False</property>
                                         <property name="use_underline">True</property>
-                                        <property name="mnemonic_widget">speakProgressBarSpinButton</property>
-                                        <accessibility>
-                                          <relation type="label-for" target="speakProgressBarSpinButton"/>
-                                        </accessibility>
+                                        <property name="active">True</property>
+                                        <property name="draw_indicator">True</property>
+                                        <signal name="toggled" handler="speechProgressBarChecked"/>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -1600,42 +1584,107 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkSpinButton" id="speakProgressBarSpinButton">
+                                      <object class="GtkHBox" id="speakUpdateIntervalHBox">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="invisible_char">&#x25CF;</property>
-                                        <property name="adjustment">adjustment4</property>
-                                        <property name="climb_rate">1</property>
-                                        <property name="numeric">True</property>
-                                        <accessibility>
-                                          <relation type="labelled-by" target="speakProgressBarLabel"/>
-                                          <relation type="labelled-by" target="speakProgressBarUnitsLabel"/>
-                                        </accessibility>
-                                        <signal name="value_changed" handler="speakProgressBarValueChanged"/>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkLabel" id="speakProgressBarUnitsLabel">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">seconds</property>
-                                        <accessibility>
-                                          <relation type="label-for" target="speakProgressBarSpinButton"/>
-                                        </accessibility>
+                                        <property name="spacing">3</property>
+                                        <child>
+                                          <object class="GtkLabel" id="speakProgressBarLabel">
+                                            <property name="visible">True</property>
+                                            <property name="label" comments="Translators: Here 'every' labels a spin button through which a user can customize the frequency in seconds an announcement should be made. (The spin button is followed by the label 'seconds'.) Thus if a user chooses 5 in the spin button, the complete phrase would be 'every 5 seconds'." translatable="yes">every</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="mnemonic_widget">speakProgressBarSpinButton</property>
+                                            <accessibility>
+                                              <relation type="label-for" target="speakProgressBarSpinButton"/>
+                                            </accessibility>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSpinButton" id="speakProgressBarSpinButton">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="invisible_char">&#x25CF;</property>
+                                            <property name="adjustment">adjustment4</property>
+                                            <property name="climb_rate">1</property>
+                                            <property name="numeric">True</property>
+                                            <accessibility>
+                                              <relation type="labelled-by" target="speakProgressBarUnitsLabel"/>
+                                              <relation type="labelled-by" target="speakProgressBarLabel"/>
+                                            </accessibility>
+                                            <signal name="value_changed" handler="speakProgressBarValueChanged"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="speakProgressBarUnitsLabel">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">seconds</property>
+                                            <accessibility>
+                                              <relation type="label-for" target="speakProgressBarSpinButton"/>
+                                            </accessibility>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="fill">False</property>
-                                        <property name="position">2</property>
+                                        <property name="position">1</property>
                                       </packing>
                                     </child>
                                   </object>
                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkHBox" id="progressBarVerbosityHBox">
+                                    <property name="visible">True</property>
+                                    <child>
+                                      <object class="GtkLabel" id="progressBarVerbosityLabel">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes" comments="Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.">Restrict progress bar updates to:</property>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkComboBox" id="progressBarVerbosity">
+                                        <property name="visible">True</property>
+                                        <property name="model">model7</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="progressBarVerbosityLabel"/>
+                                        </accessibility>
+                                        <signal name="changed" handler="progressBarVerbosityChanged"/>
+                                        <child>
+                                          <object class="GtkCellRendererText" id="renderer3"/>
+                                          <attributes>
+                                            <attribute name="text">0</attribute>
+                                          </attributes>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="padding">3</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
@@ -1644,51 +1693,7 @@
                                 <property name="left_attach">1</property>
                                 <property name="right_attach">2</property>
                                 <property name="top_attach">3</property>
-                                <property name="bottom_attach">4</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkHBox" id="progressBarVerbosityHBox">
-                                <property name="visible">True</property>
-                                <child>
-                                  <object class="GtkLabel" id="progressBarVerbosityLabel">
-                                    <property name="visible">True</property>
-                                    <property name="label" comments="Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window." translatable="yes">Restrict progress bar updates to:</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkComboBox" id="progressBarVerbosity">
-                                    <property name="visible">True</property>
-                                    <property name="model">model7</property>
-                                    <accessibility>
-                                      <relation type="labelled-by" target="progressBarVerbosityLabel"/>
-                                    </accessibility>
-                                    <signal name="changed" handler="progressBarVerbosityChanged"/>
-                                    <child>
-                                      <object class="GtkCellRendererText" id="renderer2"/>
-                                      <attributes>
-                                        <attribute name="text">0</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="padding">3</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">4</property>
                                 <property name="bottom_attach">5</property>
-                                <property name="x_padding">20</property>
                               </packing>
                             </child>
                           </object>
