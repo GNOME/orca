@@ -1562,7 +1562,6 @@
                             <child>
                               <object class="GtkVBox" id="progressBarVBox">
                                 <property name="visible">True</property>
-                                <property name="orientation">vertical</property>
                                 <child>
                                   <object class="GtkHBox" id="hbox43">
                                     <property name="visible">True</property>
