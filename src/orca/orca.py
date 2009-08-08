@@ -909,9 +909,9 @@ def _processBrailleEvent(event):
 
     # Braille key presses always interrupt speech.
     #
-    speech.stop()
-
     event = BrailleEvent(event)
+    if event.event['command'] not in braille.dontInteruptSpeechKeys:
+        speech.stop()
     orca_state.lastInputEvent = event
 
     try:

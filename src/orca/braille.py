@@ -77,6 +77,13 @@ from orca_i18n import _                          # for gettext support
 #
 _monitor = None
 
+# brlapi keys which are not allowed to interupt speech:
+#
+dontInteruptSpeechKeys = []
+if _brlAPIAvailable:
+    dontInteruptSpeechKeys = [brlapi.KEY_CMD_FWINLT, brlapi.KEY_CMD_FWINRT, \
+        brlapi.KEY_CMD_LNUP, brlapi.KEY_CMD_LNDN]
+
 # Common names for most used BrlTTY commands, to be shown in the GUI:
 # ATM, the ones used in default.py are:
 #
