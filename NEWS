@@ -1,3 +1,97 @@
+2.27.90 - 09-Aug-2009
+
+General:
+
+* Fix for bgo#480883 - User can pan right in braille indefinitely at
+  the end of a web page
+
+* Fix for bgo#523693 - Positioning of the cursor when editing text
+
+  This fixes a 'jumping cursor' problem when deleting text in the
+  middle of a long text area and also adds a _realignViewport method
+  to braille.py.  The method works off new settings (you need to
+  hand-edit your ~/.orca/user-settings.py or ~/.orca/orca-customizations.py
+  file for now):
+
+    ALIGN_BRAILLE_BY_EDGE   = 0
+    ALIGN_BRAILLE_BY_MARGIN = 1
+    ALIGN_BRAILLE_BY_WORD   = 2
+    brailleAlignmentMargin  = 3
+    brailleMaximumJump      = 8
+    brailleAlignmentStyle   = ALIGN_BRAILLE_BY_EDGE
+
+  The default alignment style matches what we have today.
+
+  The ALIGN_BRAILLE_BY_MARGIN style uses brailleAlignmentMargin and is
+  effectively a "push" model - when you get to the edge of the
+  display, the viewport is pushed to keep the cursor cell at the
+  margin (until you reach the edge of the text).
+
+  The ALIGN_BRAILLE_BY_WORD style uses brailleAlignmentMargin in the
+  same push model above, but when it pushes the viewport, it pushes it
+  so the edge lands on a word boundary.  In the event we hit a really
+  long word, the brailleMaximumJump setting limits how far we jump.
+
+* Fix for bgo#570070 - Remove 'item' from spoken string that
+  represents position/index information
+
+* Fix for bgo#574344 - Support for different progress bar "verbosity
+  levels" should be implemented
+
+* Fix for bgo#576847 - Add ability to 'flash' braille messages
+
+  This adds a 'flashTime' parameter to the braille.displayMessage and
+  braille.displayRegions methods.  If it is 0, the message will not be
+  flashed.  If it is greater than 0, the current message on the display
+  will be saved and the new message will be flashed for flashTime
+  milliseconds.  If it is less than 0, the current message on the display
+  will be saved and the new message will be shown until some other action,
+  such as a keypress or cursor routing key press, causes the display to
+  revert back to the original message.
+
+* Fix for bgo#578832 - Flash locking modifier key state in braille
+
+  This flashes a message for the Caps Lock modifier if the "Enable
+  locking keys" checkbox is checked on the "Key Echo" tab in the Orca
+  preferences UI. The flash time is settable via the
+  'brailleFlashTime' setting which represents the number of
+  milliseconds to flash a message.
+
+* Fix for bgo#582318 - Pressing panning buttons on the braille display
+  should not interrupt speech
+
+* Fix for bgo#582491 - Strange message table behavior with Evolution
+
+* Fix for bgo#589610 - isupper should be used on unicode and not UTF-8
+  strings
+
+* Fix for bgo#590219 - Incorrect text displayed with Orca quit
+  confirmation dialog when the user using non english locale
+
+* Fix for bgo#590378 - configure.in and orca.spec.in need updating for
+  compile and runtime dependencies.
+
+* Fix for bgo#590382 - Orca should have a script for packagemanager
+
+OpenOffice/StarOffice:
+
+* Fix for bgo#363820 - Orca should inform the user when text in given
+  cell in Calc is too wide for that column
+
+Thunderbird:
+
+* Fix for bgo#590267 - Thunderbird's rendering of smileys as named
+  paragraphs without accessible text causes Orca to speak the tutorial
+  message inappropriately
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bn       Bengali              Maruf Ovee and Jamil Ahmed
+    es       Spanish              Francisco Javier Dorado Martínez
+    hu       Hungarian            Attila Hammer and Gabor Kelemen
+
+==========
+
 2.27.5 - 27-Jul-2009
 
 General:
