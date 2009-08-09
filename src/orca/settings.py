@@ -186,7 +186,11 @@ userCustomizableSettings = [
     "wrappedStructuralNavigation",
     "presentRequiredState",
     "brailleRequiredStateString",
-    "speechRequiredStateString"
+    "speechRequiredStateString",
+    "chatMessageVerbosity",
+    "chatPrefixMessageWithName",
+    "chatAnnounceBuddyTyping",
+    "chatSeparateRoomHistories",
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -899,6 +903,26 @@ timeoutCallback         = None # Set by orca.py:init to orca.timeout
 # spells the current word rather than speaks it).
 #
 doubleClickTimeout = 0.5
+
+# Available options indicating which chat messages Orca should speak.
+#
+CHAT_SPEAK_ALL             = 0
+CHAT_SPEAK_ALL_IF_FOCUSED  = 1
+CHAT_SPEAK_FOCUSED_CHANNEL = 2
+
+chatMessageVerbosity = CHAT_SPEAK_ALL
+
+# Whether we prefix chat room messages with the name of the chat room.
+#
+chatSpeakRoomName = False
+
+# Whether we announce when a buddy is typing.
+#
+chatAnnounceBuddyTyping = False
+
+# Whether we provide chat room specific message histories.
+#
+chatRoomHistories = False
 
 # Obtain/set information regarding whether accessibility is enabled
 # or not.

@@ -15,6 +15,7 @@ orca_python_PYTHON = \
 	braille.py \
 	braille_generator.py \
 	brlmon.py \
+	chat.py \
 	chnames.py \
 	dbusserver.py \
 	debug.py \

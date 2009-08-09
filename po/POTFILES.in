@@ -6,6 +6,7 @@ src/orca/app_gui_prefs.py
 src/orca/bookmarks.py
 src/orca/braille_generator.py
 src/orca/braille.py
+src/orca/chat.py
 src/orca/chnames.py
 src/orca/default.py
 src/orca/espeechfactory.py

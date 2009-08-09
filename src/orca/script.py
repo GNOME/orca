@@ -82,6 +82,7 @@ class Script:
         self.presentIfInactive = True
 
         self.structuralNavigation = self.getStructuralNavigation()
+        self.chat = self.getChat()
         self.inputEventHandlers = {}
         self.pointOfReference = {}
         self.setupInputEventHandlers()
@@ -205,6 +206,11 @@ class Script:
         """Returns the tutorial generator for this script.
         """
         return tutorialgenerator.TutorialGenerator(self)
+
+    def getChat(self):
+        """Returns the 'chat' class for this script.
+        """
+        return None
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types
