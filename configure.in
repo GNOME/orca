@@ -23,14 +23,18 @@ IT_PROG_INTLTOOL([0.40.0])
 dnl Needed programs
 AC_PROG_INSTALL
 
-dnl Check for various modules. NOTE: On OpenSolaris, you may
-dnl need to set PKG_CONFIG_PATH=/usr/lib/pkgconfig in order
-dnl for these to be found.
-PKG_CHECK_MODULES(orca, \
-	dbus-python >= 0.83.0 \
-	gnome-python-desktop-2.0 >= 2.24.0 \
-	libspi-1.0 >= 1.24.0 \
-)
+# WDW - I give up. No matter what I do, I seem to find a package that
+# is specified somewhere, but the packaging is not honored by various
+# distributions.
+#
+#dnl Check for various modules. NOTE: On OpenSolaris, you may
+#dnl need to set PKG_CONFIG_PATH=/usr/lib/pkgconfig in order
+#dnl for these to be found.
+#PKG_CHECK_MODULES(orca, \
+#	dbus-python >= 0.83.0 \
+#	gnome-python-desktop-2.0 >= 2.24.0 \
+#	libspi-1.0 >= 1.24.0 \
+#)
 
 dnl Check for python and python modules needed by Orca
 dnl TODO: check for incompatibilities between Orca and liblouis
