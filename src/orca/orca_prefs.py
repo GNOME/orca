@@ -313,6 +313,17 @@ class OrcaPrefs:
         else:
             return "orca.settings.BRAILLE_ROLENAME_STYLE_LONG"
 
+    def _getBrailleAlignmentStyleString(self, brailleAlignmentStyle):
+        """Returns a string that represents the brailleAlignmentStyle
+         passed in."""
+
+        if brailleAlignmentStyle == settings.ALIGN_BRAILLE_BY_WORD:
+            return "orca.settings.ALIGN_BRAILLE_BY_WORD"
+        if brailleAlignmentStyle == settings.ALIGN_BRAILLE_BY_MARGIN:
+            return "orca.settings.ALIGN_BRAILLE_BY_MARGIN"
+        else:
+            return "orca.settings.ALIGN_BRAILLE_BY_EDGE"
+
     def _getVerbalizePunctuationStyleString(self, punctuationStyle):
         """Returns a string that represents the punctuation style passed in."""
 
@@ -702,6 +713,8 @@ class OrcaPrefs:
                 value = self._getBrailleSelectionIndicatorString(prefsDict[key])
             elif key == "brailleLinkIndicator":
                 value = self._getBrailleLinkIndicatorString(prefsDict[key])
+            elif key == "brailleAlignmentStyle":
+                value = self._getBrailleAlignmentStyleString(prefsDict[key])
             elif key == "verbalizePunctuationStyle":
                 value = self._getVerbalizePunctuationStyleString(prefsDict[key])
             elif key == "sayAllStyle":

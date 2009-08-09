@@ -297,7 +297,8 @@ class BrailleGenerator(generator.Generator):
             text = obj.queryText()
         except NotImplementedError:
             text = None
-        if text and self._script.isTextArea(obj):
+        if text and (self._script.isTextArea(obj) \
+                     or (obj.getRole() in [pyatspi.ROLE_LABEL])):
             [lineString, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)

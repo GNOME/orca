@@ -119,6 +119,7 @@ userCustomizableSettings = [
     "brailleRolenameStyle",
     "brailleSelectorIndicator",
     "brailleLinkIndicator",
+    "brailleAlignmentStyle",
     "enableBrailleMonitor",
     "enableMagnifier",
     "enableMagLiveUpdating",
@@ -271,6 +272,19 @@ BRAILLE_LINK_7    = 0x40 # 01000000
 BRAILLE_LINK_8    = 0x80 # 10000000
 BRAILLE_LINK_BOTH = 0xc0 # 11000000
 brailleLinkIndicator = BRAILLE_LINK_BOTH
+
+# Braille alignment styles.  These say how to align text on the
+# edges of the braille display.  The brailleAlignmentMargin value
+# says how close to the edge of the braille the display the cursor
+# cell can get.  The brailleMaximumJump says how far we can jump
+# the display when aligning by word.
+#
+ALIGN_BRAILLE_BY_EDGE   = 0
+ALIGN_BRAILLE_BY_MARGIN = 1
+ALIGN_BRAILLE_BY_WORD   = 2
+brailleAlignmentMargin  = 3
+brailleMaximumJump      = 8
+brailleAlignmentStyle   = ALIGN_BRAILLE_BY_EDGE
 
 # Speech punctuation levels (see verbalizePunctuationStyle).
 #
