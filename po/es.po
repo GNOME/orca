@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
-"POT-Creation-Date: 2009-08-04 05:42+0000\n"
+"POT-Creation-Date: 2009-08-10 15:27+0000\n"
 "PO-Revision-Date: 2009-08-04 19:42+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -135,7 +135,7 @@ msgstr[1] "(%d diálogos)"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls to the left.
 #.
-#: ../src/orca/braille.py:90
+#: ../src/orca/braille.py:97
 msgid "Line Left"
 msgstr "Línea izquierda"
 
@@ -143,7 +143,7 @@ msgstr "Línea izquierda"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls to the right.
 #.
-#: ../src/orca/braille.py:96
+#: ../src/orca/braille.py:103
 msgid "Line Right"
 msgstr "Línea derecha"
 
@@ -151,7 +151,7 @@ msgstr "Línea derecha"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls up.
 #.
-#: ../src/orca/braille.py:102
+#: ../src/orca/braille.py:109
 msgid "Line Up"
 msgstr "Línea arriba"
 
@@ -159,7 +159,7 @@ msgstr "Línea arriba"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls down.
 #.
-#: ../src/orca/braille.py:108
+#: ../src/orca/braille.py:115
 msgid "Line Down"
 msgstr "Línea abajo"
 
@@ -167,7 +167,7 @@ msgstr "Línea abajo"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, it instructs the braille display to freeze.
 #.
-#: ../src/orca/braille.py:114
+#: ../src/orca/braille.py:121
 msgid "Freeze"
 msgstr "Deshabilitar"
 
@@ -176,7 +176,7 @@ msgstr "Deshabilitar"
 #. When pressing the button, the display scrolls to the top left of the
 #. window.
 #.
-#: ../src/orca/braille.py:121
+#: ../src/orca/braille.py:128
 msgid "Top Left"
 msgstr "Arriba Izquierda"
 
@@ -185,7 +185,7 @@ msgstr "Arriba Izquierda"
 #. When pressing the button, the display scrolls to the bottom right of
 #. the window.
 #.
-#: ../src/orca/braille.py:128
+#: ../src/orca/braille.py:135
 msgid "Bottom Right"
 msgstr "Abajo derecha"
 
@@ -194,7 +194,7 @@ msgstr "Abajo derecha"
 #. When pressing the button, the display scrolls to position containing
 #. the cursor.
 #.
-#: ../src/orca/braille.py:135
+#: ../src/orca/braille.py:142
 msgid "Cursor Position"
 msgstr "Posición del cursor"
 
@@ -203,7 +203,7 @@ msgstr "Posición del cursor"
 #. When pressing the button, the display toggles between contracted and
 #. contracted braille.
 #.
-#: ../src/orca/braille.py:142
+#: ../src/orca/braille.py:149
 msgid "Six Dots"
 msgstr "Seis puntos"
 
@@ -213,7 +213,7 @@ msgstr "Seis puntos"
 #. routings keys and are a way for a user to tell the machine they are
 #. interested in a particular character on the display.
 #.
-#: ../src/orca/braille.py:150
+#: ../src/orca/braille.py:157
 msgid "Cursor Routing"
 msgstr "Enrutado del cursor"
 
@@ -224,7 +224,7 @@ msgstr "Enrutado del cursor"
 #. character cell mode operation on virtual consoles, the act of copying
 #. text is erroneously called a "cut" operation.
 #.
-#: ../src/orca/braille.py:159
+#: ../src/orca/braille.py:166
 msgid "Cut Begin"
 msgstr "Inicio del corte"
 
@@ -235,7 +235,7 @@ msgstr "Inicio del corte"
 #. character cell mode operation on virtual consoles, the act of copying
 #. text is erroneously called a "cut" operation.
 #.
-#: ../src/orca/braille.py:168
+#: ../src/orca/braille.py:175
 msgid "Cut Line"
 msgstr "Línea cortada"
 
@@ -243,119 +243,119 @@ msgstr "Línea cortada"
 #. languages. You could read about braille tables at:
 #. http://en.wikipedia.org/wiki/Braille
 #.
-#: ../src/orca/braille.py:225
+#: ../src/orca/braille.py:241
 msgid "Czech Grade 1"
 msgstr "Checo grado 1"
 
-#: ../src/orca/braille.py:226
+#: ../src/orca/braille.py:242
 msgid "Spanish Grade 1"
 msgstr "Español grado 1"
 
-#: ../src/orca/braille.py:227
+#: ../src/orca/braille.py:243
 msgid "Canada French Grade 2"
 msgstr "Francés de Canadá grado 2"
 
-#: ../src/orca/braille.py:228
+#: ../src/orca/braille.py:244
 msgid "France French Grade 2"
 msgstr "Francés de Francia grado 2"
 
-#: ../src/orca/braille.py:229
+#: ../src/orca/braille.py:245
 msgid "Latvian Grade 1"
 msgstr "Letón grado 1"
 
-#: ../src/orca/braille.py:230
+#: ../src/orca/braille.py:246
 msgid "Netherlands Dutch Grade 1"
 msgstr "Holandés de Países Bajos grado 1"
 
-#: ../src/orca/braille.py:231
+#: ../src/orca/braille.py:247
 msgid "Norwegian Grade 0"
 msgstr "Noruego grado 0"
 
-#: ../src/orca/braille.py:232
+#: ../src/orca/braille.py:248
 msgid "Norwegian Grade 1"
 msgstr "Noruego grado 1"
 
-#: ../src/orca/braille.py:233
+#: ../src/orca/braille.py:249
 msgid "Norwegian Grade 2"
 msgstr "Noruego grado 2"
 
-#: ../src/orca/braille.py:234
+#: ../src/orca/braille.py:250
 msgid "Norwegian Grade 3"
 msgstr "Noruego grado 2"
 
-#: ../src/orca/braille.py:235
+#: ../src/orca/braille.py:251
 msgid "Polish Grade 1"
 msgstr "Polaco grado 1"
 
-#: ../src/orca/braille.py:236
+#: ../src/orca/braille.py:252
 msgid "Portuguese Grade 1"
 msgstr "Portugués grado 1"
 
-#: ../src/orca/braille.py:237
+#: ../src/orca/braille.py:253
 msgid "Swedish Grade 1"
 msgstr "Sueco grado 1"
 
-#: ../src/orca/braille.py:238
+#: ../src/orca/braille.py:254
 msgid "Arabic Grade 1"
 msgstr "Árabe grado 1"
 
-#: ../src/orca/braille.py:239
+#: ../src/orca/braille.py:255
 msgid "Welsh Grade 1"
 msgstr "Galés grado 1"
 
-#: ../src/orca/braille.py:240
+#: ../src/orca/braille.py:256
 msgid "Welsh Grade 2"
 msgstr "Galés grado 2"
 
-#: ../src/orca/braille.py:241
+#: ../src/orca/braille.py:257
 msgid "German Grade 0"
 msgstr "Alemán grado 0"
 
-#: ../src/orca/braille.py:242
+#: ../src/orca/braille.py:258
 msgid "German Grade 1"
 msgstr "Alemán grado 1"
 
-#: ../src/orca/braille.py:243
+#: ../src/orca/braille.py:259
 msgid "German Grade 2"
 msgstr "Alemán grado 2"
 
-#: ../src/orca/braille.py:244
+#: ../src/orca/braille.py:260
 msgid "U.K. English Grade 2"
 msgstr "Inglés del Reino Unido grado 2"
 
-#: ../src/orca/braille.py:245
+#: ../src/orca/braille.py:261
 msgid "U.K. English Grade 1"
 msgstr "Inglés del Reino Unido grado 1"
 
-#: ../src/orca/braille.py:246
+#: ../src/orca/braille.py:262
 msgid "U.S. English Grade 1"
 msgstr "Inglés de Estados Unidos grado 1"
 
-#: ../src/orca/braille.py:247
+#: ../src/orca/braille.py:263
 msgid "U.S. English Grade 2"
 msgstr "Inglés de Estados Unidos grado 2"
 
-#: ../src/orca/braille.py:248
+#: ../src/orca/braille.py:264
 msgid "Canada French Grade 1"
 msgstr "Francés de Canadá grado 1"
 
-#: ../src/orca/braille.py:249
+#: ../src/orca/braille.py:265
 msgid "France French Grade 1"
 msgstr "Francés de Francia grado 2"
 
-#: ../src/orca/braille.py:250
+#: ../src/orca/braille.py:266
 msgid "Greek Grade 1"
 msgstr "Griego grado 1"
 
-#: ../src/orca/braille.py:251
+#: ../src/orca/braille.py:267
 msgid "Hindi Grade 1"
 msgstr "Hindú grado 1"
 
-#: ../src/orca/braille.py:252
+#: ../src/orca/braille.py:268
 msgid "Italian Grade 1"
 msgstr "Italiano grado 1"
 
-#: ../src/orca/braille.py:253
+#: ../src/orca/braille.py:269
 msgid "Belgium Dutch Grade 1"
 msgstr "Holandés de Bélgica grado 1"
 
@@ -2245,11 +2245,11 @@ msgstr[1] "%d tabuladores"
 #: ../src/orca/default.py:5596 ../src/orca/default.py:5604
 #: ../src/orca/scripts/apps/evolution/script.py:771
 #: ../src/orca/scripts/apps/soffice/script.py:1415
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:325
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:428
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:360
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:469
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5786
-#: ../src/orca/settings.py:1258 ../src/orca/speech_generator.py:473
+#: ../src/orca/settings.py:1276 ../src/orca/speech_generator.py:473
 #: ../src/orca/speech_generator.py:779
 #: ../src/orca/structural_navigation.py:3304
 msgid "blank"
@@ -2593,13 +2593,13 @@ msgstr "Saltando al principio"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:352 ../src/orca/settings.py:1283
+#: ../src/orca/flat_review.py:352 ../src/orca/settings.py:1301
 msgid "partially checked"
 msgstr "parcialmente marcado"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:356 ../src/orca/settings.py:1282
+#: ../src/orca/flat_review.py:356 ../src/orca/settings.py:1300
 msgid "checked"
 msgstr "marcado"
 
@@ -2608,13 +2608,13 @@ msgstr "marcado"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:360 ../src/orca/settings.py:1281
+#: ../src/orca/flat_review.py:360 ../src/orca/settings.py:1299
 msgid "not checked"
 msgstr "no marcado"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:367 ../src/orca/settings.py:1294
+#: ../src/orca/flat_review.py:367 ../src/orca/settings.py:1312
 msgid "pressed"
 msgstr "pulsado"
 
@@ -2623,14 +2623,14 @@ msgstr "pulsado"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:371 ../src/orca/settings.py:1294
+#: ../src/orca/flat_review.py:371 ../src/orca/settings.py:1312
 msgid "not pressed"
 msgstr "no pulsado"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:379 ../src/orca/settings.py:1289
+#: ../src/orca/flat_review.py:379 ../src/orca/settings.py:1307
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seleccionado"
@@ -2641,7 +2641,7 @@ msgstr "seleccionado"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:384 ../src/orca/settings.py:1288
+#: ../src/orca/flat_review.py:384 ../src/orca/settings.py:1306
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "no seleccionado"
@@ -3899,7 +3899,7 @@ msgstr "Ventana"
 #.
 #: ../src/orca/orca_gui_prefs.py:1691 ../src/orca/orca-setup.ui.h:64
 msgid "Enable non-spacing _diacritical keys"
-msgstr "Activar teclas diacríticas"
+msgstr "Activar teclas _diacríticas"
 
 #. TODO - JD: I did the above because GtkBuilder translator notes
 #. (which we have for the above string) are not getting sucked in
@@ -4098,7 +4098,7 @@ msgstr "Saliendo del modo de aprendizaje."
 #. key (e.g., Caps Lock)
 #.
 #: ../src/orca/orca.py:603
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:171
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:172
 #: ../src/orca/speech.py:261 ../src/orca/speechserver.py:218
 msgid "off"
 msgstr "desactivado"
@@ -4109,7 +4109,7 @@ msgstr "desactivado"
 #. key (e.g., Caps Lock)
 #.
 #: ../src/orca/orca.py:607
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:167
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:168
 #: ../src/orca/speech.py:256 ../src/orca/speechserver.py:213
 msgid "on"
 msgstr "activado"
@@ -6947,6 +6947,17 @@ msgstr "tiene fórmula"
 msgid "Cell %s"
 msgstr "Celda %s"
 
+#. Translators: people can enter a string of text that is
+#. too wide for a spreadsheet cell.  This string will be
+#. spoken if such a cell is encountered.
+#.
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:341
+#, python-format
+msgid "%d character too long"
+msgid_plural "%d characters too long"
+msgstr[0] ""
+msgstr[1] ""
+
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
@@ -7425,28 +7436,28 @@ msgstr "leído %d por ciento del documento"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:1026
+#: ../src/orca/settings.py:1040
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:1031
+#: ../src/orca/settings.py:1045
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:1036
+#: ../src/orca/settings.py:1050
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:1041
+#: ../src/orca/settings.py:1055
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
@@ -7454,7 +7465,7 @@ msgstr "[Ee]volution"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1047
+#: ../src/orca/settings.py:1061
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -7462,7 +7473,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1053
+#: ../src/orca/settings.py:1067
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
@@ -7470,43 +7481,35 @@ msgstr "Bon Echo"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1059
+#: ../src/orca/settings.py:1073
 msgid "Minefield"
 msgstr "Minefield"
-
-#. Translators: see the regular expression note above.  This is for a
-#. version of Thunderbird, which chooses to now call itself by a different
-#. name.
-#.
-#: ../src/orca/settings.py:1079
-msgid "Shredder"
-msgstr "Shredder"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:1084
+#: ../src/orca/settings.py:1102
 msgid "Mail/News"
 msgstr "Correo/Noticias"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:1089
+#: ../src/orca/settings.py:1107
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:1094
+#: ../src/orca/settings.py:1112
 msgid "vte"
 msgstr "etv"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:1099
+#: ../src/orca/settings.py:1117
 msgid "gaim"
 msgstr "gaim"
 
@@ -7516,14 +7519,14 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1266 ../src/orca/settings.py:1343
+#: ../src/orca/settings.py:1284 ../src/orca/settings.py:1361
 msgid "required"
 msgstr "requerido"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:1271
+#: ../src/orca/settings.py:1289
 msgctxt "text"
 msgid "read only"
 msgstr "sólo lectura"
@@ -7531,7 +7534,7 @@ msgstr "sólo lectura"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:1276 ../src/orca/settings.py:1354
+#: ../src/orca/settings.py:1294 ../src/orca/settings.py:1372
 msgid "grayed"
 msgstr "sombreado"
 
@@ -7539,18 +7542,18 @@ msgstr "sombreado"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:1300 ../src/orca/settings.py:1366
+#: ../src/orca/settings.py:1318 ../src/orca/settings.py:1384
 msgid "collapsed"
 msgstr "contraído"
 
-#: ../src/orca/settings.py:1300 ../src/orca/settings.py:1366
+#: ../src/orca/settings.py:1318 ../src/orca/settings.py:1384
 msgid "expanded"
 msgstr "expandido"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:1305
+#: ../src/orca/settings.py:1323
 msgid "multi-select"
 msgstr "selección-múltiple"
 
@@ -7558,7 +7561,7 @@ msgstr "selección-múltiple"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:1311
+#: ../src/orca/settings.py:1329
 #, python-format
 msgid "tree level %d"
 msgstr "nivel de árbol %d"
@@ -7573,7 +7576,7 @@ msgstr "nivel de árbol %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1318 ../src/orca/structural_navigation.py:2807
+#: ../src/orca/settings.py:1336 ../src/orca/structural_navigation.py:2807
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nivel de anidamiento %d"
@@ -7582,7 +7585,7 @@ msgstr "Nivel de anidamiento %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:1324
+#: ../src/orca/settings.py:1342
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "sobre %(index)d de %(total)d"
@@ -7591,7 +7594,7 @@ msgstr "sobre %(index)d de %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:1330
+#: ../src/orca/settings.py:1348
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d de %(total)d"
@@ -7600,7 +7603,7 @@ msgstr "%(index)d de %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:1349
+#: ../src/orca/settings.py:1367
 msgctxt "text"
 msgid "rdonly"
 msgstr "sólolec"
@@ -7609,7 +7612,7 @@ msgstr "sólolec"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1372
+#: ../src/orca/settings.py:1390
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVEL DE ÁRBOL %d"
@@ -7620,7 +7623,7 @@ msgstr "NIVEL DE ÁRBOL %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1380
+#: ../src/orca/settings.py:1398
 #, python-format
 msgid "LEVEL %d"
 msgstr "NIVEL %d"
@@ -9487,6 +9490,9 @@ msgid ""
 msgstr ""
 "Para decrementar pulse flecha izquierda, para incrementar pulse flecha "
 "derecha, para el mínimo pulse inicio y para el máximo pulse fin."
+
+#~ msgid "Shredder"
+#~ msgstr "Shredder"
 
 #~ msgid ""
 #~ "Centered\n"
