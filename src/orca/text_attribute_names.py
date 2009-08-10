@@ -433,6 +433,16 @@ _textAttributeTable["char"] = C_("textattr", "char")
 _textAttributeTable["word"] = C_("textattr", "word")
 
 # Translators: this is one of the text attribute values for the following
+# text attributes: "wrap mode." It corresponds to GTK_WRAP_WORD_CHAR,
+# defined in the Gtk documentation as "Wrap text, breaking lines in
+# between words, or if that is not enough, also between graphemes."
+# See:
+# http://library.gnome.org/devel/atk/1.27/AtkText.html#AtkTextAttribute
+# http://library.gnome.org/devel/gtk/stable/GtkTextTag.html#GtkWrapMode
+#
+_textAttributeTable["word_char"] = C_("textattr", "word char")
+
+# Translators: this is one of the text attribute values for the following
 # text attributes: "direction".
 # See:
 # http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
