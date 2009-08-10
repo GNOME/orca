@@ -1090,7 +1090,11 @@ setScriptMapping(re.compile('[Ff]irefox'), "Mozilla")
 # version of Thunderbird, which chooses to now call itself by a different
 # name.
 #
-setScriptMapping(re.compile(_('Shredder')), "Thunderbird")
+#setScriptMapping(re.compile(_('Shredder')), "Thunderbird")
+#
+# Don't localize this. It seems to be messing us up. See bug 584103.
+#
+setScriptMapping(re.compile('Shredder'), "Thunderbird")
 
 # Translators: see the regular expression note above.  This is for
 # the Thunderbird e-mail application.
