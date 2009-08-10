@@ -5307,7 +5307,7 @@ class Script(default.Script):
             else:
                 context = [acc, offset]
                 childIndex = self.getChildIndex(acc, offset)
-                if childIndex >= 0:
+                if childIndex >= 0 and acc.childCount:
                     acc = acc[childIndex]
                 else:
                     break
