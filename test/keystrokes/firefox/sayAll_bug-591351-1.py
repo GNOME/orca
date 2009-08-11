@@ -52,7 +52,8 @@ sequence.append(utils.AssertPresentationAction(
      "",
      " I wonder what a bevezeto is. I should Google that.",
      "",
-     " Aha! It is the Hungarian word for \"Introduction\". Here is some proof link . I really think we need to get Attila to teach the Orca team some Hungarian. Maybe one (really easy) phrase per bug comment.'"]))
+     " Aha! It is the Hungarian word for \"Introduction\". Here is some proof link . I really think we need to get Attila to teach the Orca team some Hungarian. Maybe one (really easy) phrase per bug comment. separator'",
+     "SPEECH OUTPUT: ' Foo link",]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

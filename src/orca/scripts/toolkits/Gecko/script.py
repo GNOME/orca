@@ -70,6 +70,7 @@ from bookmarks import GeckoBookmarks
 from structural_navigation import GeckoStructuralNavigation
 
 from orca.orca_i18n import _
+from orca.speech_generator import Pause
 
 ########################################################################
 #                                                                      #
@@ -1216,6 +1217,12 @@ class Script(default.Script):
                 [element, voice] = clumped[i]
                 if isinstance(element, basestring):
                     element = self.adjustForRepeats(element)
+                if isinstance(element, Pause):
+                    # At the moment, SayAllContext is expecting a string; not
+                    # a Pause. For now, being conservative and catching that
+                    # here. See bug #591351.
+                    #
+                    continue
                 yield [speechserver.SayAllContext(obj, element,
                                                   startOffset, endOffset),
                        voice]
