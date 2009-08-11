@@ -5685,6 +5685,13 @@ class Script(default.Script):
             #
             elif role == pyatspi.ROLE_PARAGRAPH and not len(string):
                 string = obj.name
+                # We also see goofiness in some pages. That can cause
+                # SayAll by Sentence to spit up. See bug 591351. So
+                # if we still do not have string and if we've got
+                # more than object in contents, let's dump this one.
+                #
+                if len(contents) > 1 and not len(string):
+                    continue
 
             # If it is a "useless" image (i.e. not a link, no associated
             # text), ignore it, unless it's the only thing here.
