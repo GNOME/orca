@@ -111,7 +111,15 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         positioned.
         """
 
-        return self._script.findFirstCaretContext(obj, 0)
+        obj, offset = self._script.findFirstCaretContext(obj, 0)
+        # If it's an anchor, look for the first object of use.
+        # See bug #591592.
+        #
+        if obj.getRole() == pyatspi.ROLE_LINK \
+           and not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            obj, offset = self._script.findNextCaretInOrder(obj, offset)
+
+        return obj, offset
 
     def _setCaretPosition(self, obj, characterOffset):
         """Sets the caret at the specified offset within obj."""
