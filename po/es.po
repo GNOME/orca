@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
-"POT-Creation-Date: 2009-08-10 15:27+0000\n"
+"POT-Creation-Date: 2009-08-10 22:24+0000\n"
 "PO-Revision-Date: 2009-08-04 19:42+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -6955,8 +6955,8 @@ msgstr "Celda %s"
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d carácter demasiado grande"
+msgstr[1] "%d caracteres demasiado grandes"
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
@@ -8964,11 +8964,27 @@ msgid "word"
 msgstr "palabra"
 
 #. Translators: this is one of the text attribute values for the following
+#. text attributes: "wrap mode." It corresponds to GTK_WRAP_WORD_CHAR,
+#. defined in the Gtk documentation as "Wrap text, breaking lines in
+#. between words, or if that is not enough, also between graphemes."
+#. See:
+#. http://library.gnome.org/devel/atk/1.27/AtkText.html#AtkTextAttribute
+#. http://library.gnome.org/devel/gtk/stable/GtkTextTag.html#GtkWrapMode
+#.
+#: ../src/orca/text_attribute_names.py:443
+#, fuzzy
+#| msgctxt "textattr"
+#| msgid "char"
+msgctxt "textattr"
+msgid "word char"
+msgstr "carácter"
+
+#. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:440
+#: ../src/orca/text_attribute_names.py:450
 msgctxt "textattr"
 msgid "ltr"
 msgstr "I-->D"
@@ -8978,7 +8994,7 @@ msgstr "I-->D"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:447
+#: ../src/orca/text_attribute_names.py:457
 msgctxt "textattr"
 msgid "rtl"
 msgstr "D-->I"
@@ -8988,7 +9004,7 @@ msgstr "D-->I"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:454
+#: ../src/orca/text_attribute_names.py:464
 msgctxt "textattr"
 msgid "left"
 msgstr "izquierda"
@@ -8998,7 +9014,7 @@ msgstr "izquierda"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:461
+#: ../src/orca/text_attribute_names.py:471
 msgctxt "textattr"
 msgid "right"
 msgstr "derecha"
@@ -9008,7 +9024,7 @@ msgstr "derecha"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:468
+#: ../src/orca/text_attribute_names.py:478
 msgctxt "textattr"
 msgid "center"
 msgstr "centrado"
@@ -9017,7 +9033,7 @@ msgstr "centrado"
 #. text attributes: "justification". In Gecko, when no justification has
 #. be explicitly set, they report a justification of "start".
 #.
-#: ../src/orca/text_attribute_names.py:474
+#: ../src/orca/text_attribute_names.py:484
 msgctxt "textattr"
 msgid "no justification"
 msgstr "sin justificación"
@@ -9027,7 +9043,7 @@ msgstr "sin justificación"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:481
+#: ../src/orca/text_attribute_names.py:491
 msgctxt "textattr"
 msgid "fill"
 msgstr "completa"
@@ -9037,7 +9053,7 @@ msgstr "completa"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:488
+#: ../src/orca/text_attribute_names.py:498
 msgctxt "textattr"
 msgid "ultra condensed"
 msgstr "ultra condensado"
@@ -9047,7 +9063,7 @@ msgstr "ultra condensado"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:495
+#: ../src/orca/text_attribute_names.py:505
 msgctxt "textattr"
 msgid "extra condensed"
 msgstr "extra condensado"
@@ -9057,7 +9073,7 @@ msgstr "extra condensado"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:502
+#: ../src/orca/text_attribute_names.py:512
 msgctxt "textattr"
 msgid "condensed"
 msgstr "condensado"
@@ -9067,7 +9083,7 @@ msgstr "condensado"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:509
+#: ../src/orca/text_attribute_names.py:519
 msgctxt "textattr"
 msgid "semi condensed"
 msgstr "semi condensado"
@@ -9077,7 +9093,7 @@ msgstr "semi condensado"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:516
+#: ../src/orca/text_attribute_names.py:526
 msgctxt "textattr"
 msgid "normal"
 msgstr "normal"
@@ -9087,7 +9103,7 @@ msgstr "normal"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:523
+#: ../src/orca/text_attribute_names.py:533
 msgctxt "textattr"
 msgid "semi expanded"
 msgstr "semi expandido"
@@ -9097,7 +9113,7 @@ msgstr "semi expandido"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:530
+#: ../src/orca/text_attribute_names.py:540
 msgctxt "textattr"
 msgid "expanded"
 msgstr "expandido"
@@ -9107,7 +9123,7 @@ msgstr "expandido"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:537
+#: ../src/orca/text_attribute_names.py:547
 msgctxt "textattr"
 msgid "extra expanded"
 msgstr "extra expandido"
@@ -9117,7 +9133,7 @@ msgstr "extra expandido"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:544
+#: ../src/orca/text_attribute_names.py:554
 msgctxt "textattr"
 msgid "ultra expanded"
 msgstr "ultra expandido"
@@ -9127,7 +9143,7 @@ msgstr "ultra expandido"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:551
+#: ../src/orca/text_attribute_names.py:561
 msgctxt "textattr"
 msgid "small caps"
 msgstr "mayúsculas pequeñas"
@@ -9137,7 +9153,7 @@ msgstr "mayúsculas pequeñas"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:558
+#: ../src/orca/text_attribute_names.py:568
 msgctxt "textattr"
 msgid "oblique"
 msgstr "oblicuo"
@@ -9147,7 +9163,7 @@ msgstr "oblicuo"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:565
+#: ../src/orca/text_attribute_names.py:575
 msgctxt "textattr"
 msgid "italic"
 msgstr "cursiva"
@@ -9157,7 +9173,7 @@ msgstr "cursiva"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:572
+#: ../src/orca/text_attribute_names.py:582
 msgctxt "textattr"
 msgid "Default"
 msgstr "Predeterminado"
@@ -9167,7 +9183,7 @@ msgstr "Predeterminado"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:579
+#: ../src/orca/text_attribute_names.py:589
 msgctxt "textattr"
 msgid "Text body"
 msgstr "Cuerpo del texto"
@@ -9177,7 +9193,7 @@ msgstr "Cuerpo del texto"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:586
+#: ../src/orca/text_attribute_names.py:596
 msgctxt "textattr"
 msgid "Heading"
 msgstr "Encabezado"
@@ -9188,7 +9204,7 @@ msgstr "Encabezado"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:594
+#: ../src/orca/text_attribute_names.py:604
 msgctxt "textattr"
 msgid "baseline"
 msgstr "en línea"
@@ -9198,7 +9214,7 @@ msgstr "en línea"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:601
+#: ../src/orca/text_attribute_names.py:611
 msgctxt "textattr"
 msgid "sub"
 msgstr "subíndice"
@@ -9208,7 +9224,7 @@ msgstr "subíndice"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:608
+#: ../src/orca/text_attribute_names.py:618
 msgctxt "textattr"
 msgid "super"
 msgstr "super índice"
@@ -9218,7 +9234,7 @@ msgstr "super índice"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:615
+#: ../src/orca/text_attribute_names.py:625
 msgctxt "textattr"
 msgid "top"
 msgstr "superior"
@@ -9228,7 +9244,7 @@ msgstr "superior"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:622
+#: ../src/orca/text_attribute_names.py:632
 msgctxt "textattr"
 msgid "text-top"
 msgstr "texto-superior"
@@ -9238,7 +9254,7 @@ msgstr "texto-superior"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:629
+#: ../src/orca/text_attribute_names.py:639
 msgctxt "textattr"
 msgid "middle"
 msgstr "medio"
@@ -9248,7 +9264,7 @@ msgstr "medio"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:636
+#: ../src/orca/text_attribute_names.py:646
 msgctxt "textattr"
 msgid "bottom"
 msgstr "inferior"
@@ -9258,7 +9274,7 @@ msgstr "inferior"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:643
+#: ../src/orca/text_attribute_names.py:653
 msgctxt "textattr"
 msgid "text-bottom"
 msgstr "texto-inferior"
@@ -9269,7 +9285,7 @@ msgstr "texto-inferior"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:651
+#: ../src/orca/text_attribute_names.py:661
 msgctxt "textattr"
 msgid "inherit"
 msgstr "heredar"
@@ -9279,7 +9295,7 @@ msgstr "heredar"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:658
+#: ../src/orca/text_attribute_names.py:668
 msgctxt "textattr"
 msgid "lr-tb"
 msgstr "izde-arab"
@@ -9289,7 +9305,7 @@ msgstr "izde-arab"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:665
+#: ../src/orca/text_attribute_names.py:675
 msgctxt "textattr"
 msgid "rl-tb"
 msgstr "deiz-arab"
@@ -9299,7 +9315,7 @@ msgstr "deiz-arab"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:672
+#: ../src/orca/text_attribute_names.py:682
 msgctxt "textattr"
 msgid "tb-rl"
 msgstr "arab-deiz"
@@ -9309,7 +9325,7 @@ msgstr "arab-deiz"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:679
+#: ../src/orca/text_attribute_names.py:689
 msgctxt "textattr"
 msgid "tb-lr"
 msgstr "arab-izde"
@@ -9319,7 +9335,7 @@ msgstr "arab-izde"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:686
+#: ../src/orca/text_attribute_names.py:696
 msgctxt "textattr"
 msgid "bt-rl"
 msgstr "abar-deiz"
@@ -9329,7 +9345,7 @@ msgstr "abar-deiz"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:693
+#: ../src/orca/text_attribute_names.py:703
 msgctxt "textattr"
 msgid "bt-lr"
 msgstr "abar-izde"
@@ -9339,7 +9355,7 @@ msgstr "abar-izde"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:700
+#: ../src/orca/text_attribute_names.py:710
 msgctxt "textattr"
 msgid "lr"
 msgstr "izde"
@@ -9349,7 +9365,7 @@ msgstr "izde"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:707
+#: ../src/orca/text_attribute_names.py:717
 msgctxt "textattr"
 msgid "rl"
 msgstr "deiz"
@@ -9359,7 +9375,7 @@ msgstr "deiz"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:714
+#: ../src/orca/text_attribute_names.py:724
 msgctxt "textattr"
 msgid "tb"
 msgstr "arab"
@@ -9367,7 +9383,7 @@ msgstr "arab"
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "strikethrough." It refers to the line style.
 #.
-#: ../src/orca/text_attribute_names.py:719
+#: ../src/orca/text_attribute_names.py:729
 msgctxt "textattr"
 msgid "solid"
 msgstr "tachado"
@@ -9377,7 +9393,7 @@ msgstr "tachado"
 #. spelled correctly. See:
 #. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #.
-#: ../src/orca/text_attribute_names.py:726
+#: ../src/orca/text_attribute_names.py:736
 msgctxt "textattr"
 msgid "spelling"
 msgstr "falta ortográfica"
