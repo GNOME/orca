@@ -56,10 +56,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Home"))
 sequence.append(utils.AssertPresentationAction(
     "Home",
-    ["BUG? - We should remain on the blank line.",
-     "BRAILLE LINE:  'This is a test.'",
-     "     VISIBLE:  'This is a test.', cursor=1",
-     "SPEECH OUTPUT: 'T'"]))
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'newline'"]))
 
 ########################################################################
 # Press Control+Home to move to the top.
@@ -91,9 +90,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("End"))
 sequence.append(utils.AssertPresentationAction(
     "End",
-    ["BUG? - We should remain on the blank line.",
-     "BRAILLE LINE:  'This is a test.'",
-     "     VISIBLE:  'This is a test.', cursor=16",
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
      "SPEECH OUTPUT: 'newline'"]))
 
 ########################################################################

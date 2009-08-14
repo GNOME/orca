@@ -6374,8 +6374,7 @@ class Script(default.Script):
         """Positions the caret offset at the beginning of the line."""
 
         [obj, characterOffset] = self.getCaretContext()
-        line = self.currentLineContents \
-               or self.getLineContentsAtOffset(obj, characterOffset)
+        line = self.getLineContentsAtOffset(obj, characterOffset)
         obj, characterOffset = line[0][0], line[0][1]
         self.setCaretPosition(obj, characterOffset)
         if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
@@ -6386,8 +6385,7 @@ class Script(default.Script):
         """Positions the caret offset at the end of the line."""
 
         [obj, characterOffset] = self.getCaretContext()
-        line = self.currentLineContents \
-               or self.getLineContentsAtOffset(obj, characterOffset)
+        line = self.getLineContentsAtOffset(obj, characterOffset)
         obj, characterOffset = line[-1][0], line[-1][2] - 1
         self.setCaretPosition(obj, characterOffset)
         if not isinstance(orca_state.lastInputEvent, input_event.BrailleEvent):
