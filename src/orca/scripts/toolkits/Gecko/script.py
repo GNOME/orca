@@ -2955,6 +2955,9 @@ class Script(default.Script):
         if keyboardEvent.event_string in ["Page_Up", "Page_Down"]:
             return False
 
+        if self._loadingDocumentContent:
+            return False
+
         weHandleIt = True
         obj = orca_state.locusOfFocus
         if obj and (obj.getRole() == pyatspi.ROLE_ENTRY):
@@ -3056,6 +3059,9 @@ class Script(default.Script):
             return False
 
         if not self.isNavigableAria(orca_state.locusOfFocus):
+            return False
+
+        if self._loadingDocumentContent:
             return False
 
         # If the Orca_Modifier key was pressed, we're handling it.
