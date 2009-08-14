@@ -1654,6 +1654,9 @@
                                       <object class="GtkLabel" id="progressBarVerbosityLabel">
                                         <property name="visible">True</property>
                                         <property name="label" translatable="yes" comments="Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.">Restrict progress bar updates to:</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="progressBarVerbosity"/>
+                                        </accessibility>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
