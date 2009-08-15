@@ -577,6 +577,24 @@ class Script(Gecko.Script):
             self.sayAll(None)
         self._messageLoaded = False
 
+    def getBottomOfFile(self):
+        """Returns the object and last caret offset at the bottom of the
+         document frame. Overridden here because really long text messages
+         with no links near the bottom are not handled efficiently by the
+         Gecko script's method."""
+
+        obj = self.getDocumentFrame()
+        text = self.queryNonEmptyText(obj)
+        if text:
+            lastOffset = text.characterCount - 1
+            lastChar = text.getText(lastOffset - 1, lastOffset)
+            if lastChar != self.EMBEDDED_OBJECT_CHARACTER:
+                obj, lastOffset = \
+                    self.findPreviousCaretInOrder(obj, lastOffset - 1)
+                return obj, lastOffset
+
+        return Gecko.Script.getBottomOfFile(self)
+
     def getDocumentFrame(self):
         """Returns the document frame that holds the content being shown.
         Overridden here because multiple open messages are not arranged
