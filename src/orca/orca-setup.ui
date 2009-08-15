@@ -232,7 +232,7 @@
     </columns>
     <data>
       <row>
-        <col id="0" translatable="yes">All</col>
+        <col id="0" translatable="yes" context="ProgressBar" comments="Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.">All</col>
       </row>
       <row>
         <col id="0" translatable="yes">Application</col>
