@@ -36,8 +36,6 @@
   // -->
   </script>
 
-    <link href="skins/standard/global.css" rel="stylesheet" type="text/css">
-    <link href="skins/custom/global.css" rel="stylesheet" type="text/css">
 
 
 
@@ -56,7 +54,7 @@
 src="skins/custom/gnome-64.png" alt="Home"
 title="Back to the Gnome Bugzilla home page" /></a>
 
-  <div id="hdrNavTop">Bugzilla</div>
+  <div id="hdrNavTop" style="float:right;">Bugzilla</div>
   <div id="hdrNav">
     <a href="enter_bug.cgi">New bug</a> &middot; 
     <a href="browse.cgi">Browse</a> &middot; 
@@ -66,10 +64,10 @@ title="Back to the Gnome Bugzilla home page" /></a>
      <a href="page.cgi?id=admin.html">Admin</a> &middot;
 
     <a href="http://live.gnome.org/BugzillaHelp">Help</a>
-  </div>
-<div id="login-info">
+<div id="login-info" style="float:right;">
     <span id="login-label">Logged In</span> joanmarie.diggs&#64;gmail.com |
     <a href="relogin.cgi">Log Out</a>
+</div>
 </div>
 </div>
 <div id="body">
@@ -144,7 +142,7 @@ function set_assign_to() {
 <input type="hidden" name="product" value="orca">
 <input type="hidden" name="token" value="VeYfFhLN7H">
 
-<table cellspacing="2" cellpadding="0" border="0">
+<table cellspacing="2" cellpadding="0" border="0" width="700">
 
   <tr>
     <td><br></td>
@@ -220,7 +218,7 @@ function set_assign_to() {
     <td colspan="3"></td>
   </tr>
 
-    <tr><td align="right">
+    <tr valign="top"><td align="right">
     <strong>
       <a href="page.cgi?id=bug-status.html#gnome_version">GNOME version</a>:
     </strong>
@@ -447,9 +445,6 @@ function set_assign_to() {
   <div id="links-saved">
     <div class="label">
           Saved&nbsp;Searches:
-    </div>
-
-    <div class="links">
             <a href="buglist.cgi?cmdtype=runnamed&amp;namedcmd=All%20Orca">All&nbsp;Orca</a> | 
             <a href="buglist.cgi?cmdtype=runnamed&amp;namedcmd=Firefox">Firefox</a> | 
             <a href="buglist.cgi?cmdtype=runnamed&amp;namedcmd=open%20orca">open&nbsp;orca</a> | 
