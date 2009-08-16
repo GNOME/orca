@@ -1912,6 +1912,16 @@ class Script(default.Script):
             handleEvent = True
             presentEvent = False
 
+        if orca_state.locusOfFocus \
+           and self.isSameObject(orca_state.locusOfFocus, event.any_data):
+            # We're already on the new item. If we (or the default script)
+            # presents it, the speech.stop() will cause us to interrupt the
+            # presentation we're probably about to make due to an earlier
+            # event.
+            #
+            handleEvent = True
+            presentEvent = False
+
         if handleEvent:
             if presentEvent:
                 speech.stop()
