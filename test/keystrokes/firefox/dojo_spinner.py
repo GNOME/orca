@@ -17,9 +17,14 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 ########################################################################
 # Load the dojo spinner demo.
 #
+# NOTE: After 5 Aug 2009, the test sets the required state to False by
+# Default. The state can be toggled by pressing a button, which is NOT
+# in the Tab order. :-( Therefore, for now, use the most recent archive
+# which has required set to True.
+#
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction(utils.DojoNightlyURLPrefix + "form/test_Spinner.html"))
+sequence.append(TypeAction(utils.DojoURLPrefix + "form/test_Spinner.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("Dojo Spinner Widget Test", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))

@@ -171,11 +171,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Up",
-    ["BUG? - Are we finding this line twice?",
-     "BRAILLE LINE:  ' '",
-     "     VISIBLE:  ' ', cursor=1",
-     "SPEECH OUTPUT: '",
-     "  '"]))
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1",
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

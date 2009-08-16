@@ -57,7 +57,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
     ["BRAILLE LINE:  'Created from div h2'",
      "     VISIBLE:  'Created from div h2', cursor=1",
-     "SPEECH OUTPUT: 'Created from div heading level 2 heading level 2'"]))
+     "SPEECH OUTPUT: 'Created from div heading level 2'"]))
 
 #sequence.append(utils.StartRecordingAction())
 #sequence.append(KeyComboAction("Up"))
@@ -72,9 +72,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow", 
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1",
-     "SPEECH OUTPUT: 'blank'"]))
+    ["BRAILLE LINE:  ' '",
+     "     VISIBLE:  ' ', cursor=1",
+     "SPEECH OUTPUT: ' '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
