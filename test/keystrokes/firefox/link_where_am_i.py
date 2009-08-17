@@ -68,8 +68,8 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Where Am I on footprint", 
     ["BUG? - Is it redundant to speak link twice?",
-     "BRAILLE LINE:  'Home Image Bugzilla'",
-     "     VISIBLE:  'Home Image Bugzilla', cursor=1",
+     "BRAILLE LINE:  'Home Image'",
+     "     VISIBLE:  'Home Image', cursor=1",
      "SPEECH OUTPUT: 'http link Home link image different site'"]))
 
 ########################################################################

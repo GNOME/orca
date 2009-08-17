@@ -179,7 +179,7 @@ sequence.append(utils.AssertPresentationAction(
     "Next form field", 
     ["BRAILLE LINE:  'Keywords: contains all of the keywords Combo $l'",
      "     VISIBLE:  'contains all of the keywords Com', cursor=1",
-     "SPEECH OUTPUT: 'Keywords contains all of the keywords combo box'"]))
+     "SPEECH OUTPUT: 'Keywords: contains all of the keywords combo box'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

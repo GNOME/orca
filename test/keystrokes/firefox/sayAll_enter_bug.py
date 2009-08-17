@@ -48,10 +48,7 @@ sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Home link image'",
-     "SPEECH OUTPUT: 'Bugzilla'",
-     "SPEECH OUTPUT: 'New bug link'",
-     "SPEECH OUTPUT: ' · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link'",
-     "SPEECH OUTPUT: 'Logged In joanmarie.diggs@gmail.com | Log Out link'",
+     "SPEECH OUTPUT: 'Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'",
      "SPEECH OUTPUT: 'Enter Bug: orca – This page lets you enter a new bug into Bugzilla. heading level 1'",
      "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'Before reporting a bug, please read the bug writing guidelines link , please look at the list of most frequently reported bugs link , and please search link  or browse link  for the bug.'",
@@ -97,9 +94,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '      Remember values as bookmarkable template button'",
      "SPEECH OUTPUT: '",
      "We've made a guess at your operating system. Please check it and, if we got it wrong, email bugmaster@gnome.org.'",
-     "SPEECH OUTPUT: 'Saved Searches:'",
-     "SPEECH OUTPUT: 'All Orca link'",
-     "SPEECH OUTPUT: ' | Firefox link  | open orca link  | Open RFEs link'"]))
+     "SPEECH OUTPUT: 'Saved Searches: All Orca link  | Firefox link  | open orca link  | Open RFEs link'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

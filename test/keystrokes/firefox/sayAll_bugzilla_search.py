@@ -51,10 +51,7 @@ sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Add to do a SayAll",
     ["SPEECH OUTPUT: 'Home link image'",
-     "SPEECH OUTPUT: 'Bugzilla'",
-     "SPEECH OUTPUT: 'New bug link'",
-     "SPEECH OUTPUT: ' · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link'",
-     "SPEECH OUTPUT: 'Logged In joanmarie.diggs@gmail.com | Log Out link'",
+     "SPEECH OUTPUT: 'Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'",
      "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'Short Bug Search Form link'",
      "SPEECH OUTPUT: 'Complicated Bug Search Form'",
@@ -157,9 +154,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'And button'",
      "SPEECH OUTPUT: '       Add another boolean chart button       '",
      "SPEECH OUTPUT: 'separator'",
-     "SPEECH OUTPUT: 'Saved Searches:'",
-     "SPEECH OUTPUT: 'My Bugs and Patches link'",
-     "SPEECH OUTPUT: ' | All Orca link  | Firefox link  | open orca link  | Open RFEs link'"]))
+     "SPEECH OUTPUT: 'Saved Searches: My Bugs and Patches link  | All Orca link  | Firefox link  | open orca link  | Open RFEs link'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
