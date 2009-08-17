@@ -174,6 +174,11 @@ chnames["}"] = _("right brace")
 #
 chnames["~"] = _("tilde")
 
+# Translators: this is the spoken character for the no break space
+# character (e.g., "&nbsp;" in HTML -- U+00a0)
+#
+chnames[u'\u00a0'] = _("no break space")
+
 # Translators: this is the spoken word for the character '¡' (U+00a1)
 #
 chnames[u'\u00a1'] = _("inverted exclamation point")

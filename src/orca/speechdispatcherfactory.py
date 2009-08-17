@@ -242,6 +242,10 @@ class SpeechServer(speechserver.SpeechServer):
                 current[acss_property] = value
 
     def _speak(self, text, acss, **kwargs):
+        # Replace no break space characters with plain spaces since some
+        # synthesizers cannot handle them.  See bug #591734.
+        #
+        text = text.decode("UTF-8").replace(u'\u00a0', ' ').encode("UTF-8")
         self._apply_acss(acss)
         self._send_command(self._client.speak, text, **kwargs)
 

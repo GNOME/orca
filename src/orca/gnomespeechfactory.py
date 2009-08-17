@@ -941,6 +941,11 @@ class SpeechServer(speechserver.SpeechServer):
 
         text = self.__addVerbalizedPunctuation(text)
 
+        # Replace no break space characters with plain spaces since some
+        # synthesizers cannot handle them.  See bug #591734.
+        #
+        text = text.decode("UTF-8").replace(u'\u00a0', ' ').encode("UTF-8")
+
         try:
             # [[[TODO: WDW - back this stop out for now.  The problem is
             # that we end up clipping too much speech, especially in the
