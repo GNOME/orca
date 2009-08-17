@@ -99,6 +99,15 @@ _userSettings = None
 #
 _commandLineSettings = {}
 
+# True if --debug is used on the command line.
+#
+_debugSwitch = False
+
+# Filename of the debug file to use if --debug or --debug-file is
+# used on the command line.
+#
+_debugFile = None
+
 ########################################################################
 #                                                                      #
 # METHODS FOR HANDLING PRESENTATION MANAGERS                           #
@@ -991,6 +1000,10 @@ def loadUserSettings(script=None, inputEvent=None):
     else:
         try:
             _userSettings = __import__("user-settings")
+            if _debugSwitch:
+                debug.debugLevel = debug.LEVEL_ALL
+                debug.eventDebugLevel = debug.LEVEL_OFF
+                debug.debugFile = open(_debugFile, 'w', 0)
         except ImportError:
             debug.printException(debug.LEVEL_FINEST)
         except:
@@ -1436,6 +1449,24 @@ def usage():
     print "-l, --list-apps              " + \
           _("Print the known running applications")
 
+    # Translators: this enables debug output for Orca.  The
+    # YYYY-MM-DD-HH:MM:SS portion is a shorthand way of saying that
+    # the file name will be formed from the current date and time with
+    # 'debug' in front and '.out' at the end.  The 'debug' and '.out'
+    # portions of this string should not be translated (i.e., it will
+    # always start with 'debug' and end with '.out', regardless of the
+    # locale.).
+    #
+    print "--debug                      " + \
+          _("Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out")
+
+    # Translators: this enables debug output for Orca and overrides
+    # the name of the debug file Orca will use for debug output if the
+    # --debug option is used.
+    #
+    print "--debug-file=filename        " + \
+          _("Send debug output to the specified file")
+
     # Translators: this is the description of the command line option
     # '-s, --setup, --gui-setup' that will initially display a GUI dialog
     # that would allow the user to set their Orca preferences.
@@ -1528,6 +1559,9 @@ def main():
     an exit code of 0 means normal completion and an exit code of 50
     means Orca exited because of a hang."""
 
+    global _debugSwitch
+    global _debugFile
+
     # Method to call when we think something might be hung.
     #
     settings.timeoutCallback = timeout
@@ -1593,6 +1627,8 @@ def main():
              "text-setup",
              "no-setup",
              "list-apps",
+             "debug",
+             "debug-file=",
              "version"])
         for opt, val in opts:
             if opt in ("-u", "--user-prefs-dir"):
@@ -1650,6 +1686,13 @@ def main():
             if opt in ("-v", "--version"):
                 print "Orca %s" % platform.version
                 die(0)
+            if opt == "--debug":
+                _debugSwitch = True
+                if not _debugFile:
+                    _debugFile = time.strftime('debug-%Y-%m-%d-%H:%M:%S.out')
+            if opt == "--debug-file":
+                _debugSwitch = True
+                _debugFile = val.strip()
             if opt in ("-l", "--list-apps"):
                 apps = filter(lambda x: x is not None,
                               pyatspi.Registry.getDesktop(0))
