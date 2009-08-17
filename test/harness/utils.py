@@ -41,8 +41,8 @@ OOoWriterNames = "(StarOffice Writer|OpenOffice.org Writer|OOo-dev Writer Beta)"
 #OOO_VERSION="OpenOffice 2.4"
 #OOO_VERSION="StarOffice 8"
 #OOO_VERSION="DEV300_m25"
-#OOO_VERSION="DEV300_m29"
-OOO_VERSION="OpenOffice 3.0"
+#OOO_VERSION="OpenOffice 3.0"
+OOO_VERSION="DEV300_m54" # This is the current dev build of 3.2
 
 def getOOoName(app):
     if OOO_VERSION in ["OpenOffice 2.4", "OpenOffice 3.0"]:
@@ -51,7 +51,7 @@ def getOOoName(app):
         return "StarOffice %s" % app
     elif OOO_VERSION == "DEV300_m25":
         return "OOo-dev %s Beta" % app
-    elif OOO_VERSION == "DEV300_m29":
+    elif OOO_VERSION == "DEV300_m54":
         return "OOo-dev %s" % app
         
 def getOOoBrailleLine(app, title, remainder):
@@ -61,7 +61,7 @@ def getOOoBrailleLine(app, title, remainder):
         return "soffice Application " + title + " - StarOffice " + app + " Frame " +  title + " - StarOffice " + app + " RootPane ScrollPane Document view " + remainder
     elif OOO_VERSION == "DEV300_m25":
         return "soffice Application " + title + " - OOo-dev " + app + " Beta Frame " +  title + " - OOo-dev " + app + " Beta RootPane ScrollPane Document view " + remainder
-    elif OOO_VERSION == "DEV300_m29":
+    elif OOO_VERSION == "DEV300_m54":
         return "soffice Application " + title + " - OOo-dev " + app + " Frame " +  title + " - OOo-dev " + app + " RootPane ScrollPane Document view " + remainder
 
 createDiffs = True
