@@ -1103,7 +1103,9 @@ def _realignViewport(string, focusOffset, cursorOffset):
     # viewport.
     #
     if (cursorOffset < 0) \
-       or (settings.brailleAlignmentStyle == settings.ALIGN_BRAILLE_BY_EDGE):
+       or (settings.brailleAlignmentStyle == settings.ALIGN_BRAILLE_BY_EDGE) \
+       or not (cursorOffset >= viewport[0]
+               and cursorOffset < (viewport[0] + _displaySize[0])):
         pass
     else:
         # The left and right margin values are absolute values in the
@@ -1111,7 +1113,7 @@ def _realignViewport(string, focusOffset, cursorOffset):
         # current viewport lie.  Note these are margins and not the
         # actual edges of the viewport.
         #
-        leftMargin = viewport[0] + settings.brailleAlignmentMargin
+        leftMargin = viewport[0] + settings.brailleAlignmentMargin - 1
         rightMargin = (viewport[0] + _displaySize[0]) \
                       - settings.brailleAlignmentMargin
 
@@ -1271,7 +1273,14 @@ def refresh(panToCursor=True,
     if (targetCursorCell == 0) \
        and currentTextObj and (currentTextObj == lastTextObj) \
        and (currentLineOffset == lastLineOffset):
-        if lastCaretOffset == currentCaretOffset:
+        if lastCursorCell == 0:
+            # The lastCursorCell will be 0 if the user has panned
+            # the display on a long line and the caret of the text
+            # object is no longer in view.  We'll pass here and
+            # let the panning code figure out what to do.
+            #
+            pass
+        elif lastCaretOffset == currentCaretOffset:
             targetCursorCell = lastCursorCell
         elif lastCaretOffset < currentCaretOffset:
             targetCursorCell = min(_displaySize[0],
