@@ -3482,7 +3482,7 @@ class Script(script.Script):
             if hasLastPos and not inNewObj and isShiftKey and isControlKey:
                 [startOffset, endOffset] = self.getOffsetsForPhrase(obj)
                 self.sayPhrase(obj, startOffset, endOffset)
-            elif isControlKey and not inNewObj:
+            elif isControlKey and not isShiftKey:
                 [startOffset, endOffset] = self.getOffsetsForWord(obj)
                 if startOffset == endOffset:
                     self.sayCharacter(obj)

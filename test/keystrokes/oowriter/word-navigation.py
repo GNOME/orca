@@ -82,15 +82,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "5. Next Word",
-    ["BUG? - We should announce the next word here.",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=16",
      "BRAILLE LINE:  'So is this. \$l'",
      "     VISIBLE:  'So is this. \$l', cursor=1",
      "BRAILLE LINE:  'So is this. \$l'",
      "     VISIBLE:  'So is this. \$l', cursor=1",
      "SPEECH OUTPUT: 'newline'",
-     "SPEECH OUTPUT: 'S'"]))
+     "SPEECH OUTPUT: 'So '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
