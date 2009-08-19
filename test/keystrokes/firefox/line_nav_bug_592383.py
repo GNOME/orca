@@ -62,28 +62,25 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Down",
-    ["BUG? - We're stuck",
-     "BRAILLE LINE:  'W'",
-     "     VISIBLE:  'W', cursor=1",
-     "SPEECH OUTPUT: 'W' voice=uppercase"]))
+    ["BRAILLE LINE:  '   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the beginning of this paragraph. These are the'",
+     "     VISIBLE:  '   hy did the chicken cross the ', cursor=1",
+     "SPEECH OUTPUT: '   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the beginning of this paragraph. These are the'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down",
-    ["BUG? - We're stuck",
-     "BRAILLE LINE:  'W'",
-     "     VISIBLE:  'W', cursor=1",
-     "SPEECH OUTPUT: 'W' voice=uppercase"]))
+    ["BRAILLE LINE:  'things that keep chickens up at night. No. Really.They are.'",
+     "     VISIBLE:  'things that keep chickens up at ', cursor=1",
+     "SPEECH OUTPUT: 'things that keep chickens up at night. No. Really.They are.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down",
-    ["BUG? - We're stuck",
-     "BRAILLE LINE:  'W'",
-     "     VISIBLE:  'W', cursor=1",
-     "SPEECH OUTPUT: 'W' voice=uppercase"]))
+    ["BRAILLE LINE:  'Here's another normal paragraph.'",
+     "     VISIBLE:  'Here's another normal paragraph.', cursor=1",
+     "SPEECH OUTPUT: 'Here's another normal paragraph.'"]))
 
 ########################################################################
 # Press Control+End to move to the end.
@@ -107,13 +104,13 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'things that keep chickens up at ', cursor=1",
      "SPEECH OUTPUT: 'things that keep chickens up at night. No. Really.They are.'"]))
 
-# BUG? - We're skipping the line at the beginning of the paragraph
-
-#sequence.append(utils.StartRecordingAction())
-#sequence.append(KeyComboAction("Up"))
-#sequence.append(utils.AssertPresentationAction(
-#    "2. Up",
-#    []))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(utils.AssertPresentationAction(
+    "2. Up",
+    ["BUG? - We're skipping the line at the beginning of the paragraph",
+     "BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=1"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -5502,6 +5502,15 @@ class Script(default.Script):
                             # assumed anchor.
                             #
                             offset = start + 1
+                        elif obj.getRole() == pyatspi.ROLE_PARAGRAPH \
+                             and child.getRole() == pyatspi.ROLE_PARAGRAPH:
+                            # We don't normally see nested paragraphs. But
+                            # they occur at least when a paragraph begins
+                            # with a multi-line-high character. If we set
+                            # the beginning of this line to that initial
+                            # character, we'll get stuck. See bug 592383.
+                            #
+                            pass
                         else:
                             # It's a link that ends on our left. Who knows
                             # where it starts? Might be on the previous
