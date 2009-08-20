@@ -1,25 +1,26 @@
 # translation of orca.master.po to Galician
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
 # Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2006.
 # Ignacio Casal Quinteiro <icq@svn.gnome.org>, 2007, 2008.
 # Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2008.
 # Francisco Diéguez <fran.dieguez@mabishu.com>, 2009.
 # Antón Méixome <meixome@mancomun.org>, 2009.
+# Anton Meixome <certima@certima.net>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-19 14:04+0200\n"
-"PO-Revision-Date: 2009-08-18 12:56+0200\n"
-"Last-Translator: Antón Méixome <meixome@mancomun.org>\n"
-"Language-Team: Galician <gnome@mancomun.org>\n"
+"POT-Creation-Date: 2009-08-20 09:33+0200\n"
+"PO-Revision-Date: 2009-08-19 20:20+0100\n"
+"Last-Translator: Anton Meixome <meixome@mancomun.org>\n"
+"Language-Team: Galician Proxecto Trasno <gnome@mancomun.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Virtaal 0.4.0\n"
 
 #: ../orca.desktop.in.h:1
 msgid "Orca Screen Reader and Magnifier"
@@ -51,7 +52,7 @@ msgstr "Non asociado"
 
 #: ../src/orca/app_gui_prefs.py:309
 msgid "No application has focus."
-msgstr "Ningunha aplicación ten o foco."
+msgstr "Ningún aplicativo ten o foco."
 
 #. Translators: Orca Preferences in this case, is a configuration GUI
 #. for allowing users to set application specific settings from within
@@ -582,9 +583,8 @@ msgstr "til"
 #. character (e.g., "&nbsp;" in HTML -- U+00a0)
 #.
 #: ../src/orca/chnames.py:180
-#, fuzzy
 msgid "no break space"
-msgstr "retroceso"
+msgstr "espazo insecábel"
 
 #. Translators: this is the spoken word for the character '¡' (U+00a1)
 #.
@@ -2034,7 +2034,7 @@ msgstr "Mostra o diálogo de configuración das preferencias."
 #.
 #: ../src/orca/default.py:816
 msgid "Displays the application preferences configuration dialog."
-msgstr "Mostra o diálogo de configuración das preferencias da aplicación."
+msgstr "Mostra o diálogo de configuración das preferencias do aplicativo."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -2053,7 +2053,7 @@ msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
-"Imprime un listado de depuración sobre todas as aplicacións coñecidas na "
+"Imprime un listado de depuración sobre todos os aplicativos coñecidas na "
 "consola onde se está executando Orca."
 
 #. Translators: this is a debug message that Orca users
@@ -2086,7 +2086,7 @@ msgstr "Imprime información de depuración sobre o ancestro do obxecto co foco.
 #.
 #: ../src/orca/default.py:871
 msgid "Prints debug information about the application with focus."
-msgstr "Imprime información de depuración sobre a aplicación que ten o foco."
+msgstr "Imprime información de depuración sobre o aplicativo que ten o foco."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2207,7 +2207,7 @@ msgstr "Cambiar o modo de revisión do rato."
 #.
 #: ../src/orca/default.py:1007
 msgid "Passes the next command on to the current application."
-msgstr "Envía o seguinte comando á aplicación activa."
+msgstr "Envía a seguinte orde ao aplicativo activo."
 
 #. Translators: this is the number of space characters on a line
 #. of text.
@@ -2254,7 +2254,7 @@ msgstr[1] "%d separadores"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:360
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:469
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5806
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5815
 #: ../src/orca/settings.py:1276 ../src/orca/speech_generator.py:473
 #: ../src/orca/speech_generator.py:779
 #: ../src/orca/structural_navigation.py:3304
@@ -4158,7 +4158,7 @@ msgstr "Mostra esta mensaxe de axuda"
 #.
 #: ../src/orca/orca.py:1450
 msgid "Print the known running applications"
-msgstr "Imprime as aplicacións coñecidas que se están executando"
+msgstr "Imprime os aplicativos coñecidos que se están executando"
 
 #. Translators: this enables debug output for Orca.  The
 #. YYYY-MM-DD-HH:MM:SS portion is a shorthand way of saying that
@@ -4170,7 +4170,7 @@ msgstr "Imprime as aplicacións coñecidas que se están executando"
 #.
 #: ../src/orca/orca.py:1461
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr ""
+msgstr "Enviar a saída de depuración debug-YYYY-MM-DD-HH:MM:SS.out"
 
 #. Translators: this enables debug output for Orca and overrides
 #. the name of the debug file Orca will use for debug output if the
@@ -4178,7 +4178,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1468
 msgid "Send debug output to the specified file"
-msgstr ""
+msgstr "Enviar a depuración da saída ao ao ficheiro especificado"
 
 #. Translators: this is the description of the command line option
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
@@ -4388,7 +4388,7 @@ msgstr "Todo"
 #.
 #: ../src/orca/orca-setup.ui.h:24 ../src/orca/rolenames.py:1127
 msgid "Application"
-msgstr "Aplicación"
+msgstr "Aplicativo"
 
 #: ../src/orca/orca-setup.ui.h:25
 msgid "Border color:"
@@ -6190,7 +6190,7 @@ msgstr "apl"
 #.
 #: ../src/orca/rolenames.py:1130
 msgid "application"
-msgstr "aplicación"
+msgstr "aplicativo"
 
 #. Translators: short braille for the rolename of a autocomplete.
 #.
@@ -7302,13 +7302,13 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5965
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5974
 msgid "Mouse over object not found."
 msgstr "O rato sobre o obxecto non foi localizado."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6448
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6457
 msgid "open"
 msgstr "abrir"
 
@@ -7318,7 +7318,7 @@ msgstr "abrir"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6521
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6530
 #: ../src/orca/structural_navigation.py:883
 msgid "Wrapping to bottom."
 msgstr "Saltando ao final."
@@ -7329,7 +7329,7 @@ msgstr "Saltando ao final."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6589
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6598
 #: ../src/orca/structural_navigation.py:891
 msgid "Wrapping to top."
 msgstr "Saltando ao principio."
@@ -7337,9 +7337,9 @@ msgstr "Saltando ao principio."
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6615
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6639
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6649
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6624
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6648
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6658
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "O soporte de áreas activas está desactivado"
@@ -7347,11 +7347,11 @@ msgstr "O soporte de áreas activas está desactivado"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6623
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6632
 msgid "Live regions monitoring on"
 msgstr "Monitorización de áreas activas activado"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6630
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6639
 msgid "Live regions monitoring off"
 msgstr "Monitorización de áreas activas desactivado"
 
@@ -7362,7 +7362,7 @@ msgstr "Monitorización de áreas activas desactivado"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6665
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6674
 msgid "Gecko is controlling the caret."
 msgstr "O Gecko está controlando o cursor."
 
@@ -7373,7 +7373,7 @@ msgstr "O Gecko está controlando o cursor."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6677
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6686
 msgid "Orca is controlling the caret."
 msgstr "O Orca está controlando o cursor."
 
