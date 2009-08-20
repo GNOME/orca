@@ -138,7 +138,6 @@ formatting = {
 }
 
 if orca.settings.useExperimentalSpeechProsody:
-    print "Adding pauses to Gecko speech formatting strings."
     formatting['speech'][pyatspi.ROLE_LIST]['unfocused'] = \
         'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
 

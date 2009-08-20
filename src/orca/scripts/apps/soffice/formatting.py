@@ -88,7 +88,6 @@ formatting = {
 }
 
 if orca.settings.useExperimentalSpeechProsody:
-    print "Adding pauses to soffice speech formatting strings."
     formatting['speech']['ROLE_SPREADSHEET_CELL']['basicWhereAmI'] = \
         'roleName + pause + column + pause + columnHeader + pause + row + pause + rowHeader + pause + (textContent or spreadSheetCell) + pause + anyTextSelection + pause'
     formatting['speech'][pyatspi.ROLE_TABLE_CELL]['focused'] = \

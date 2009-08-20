@@ -518,7 +518,6 @@ formatting = {
 }
 
 if settings.useExperimentalSpeechProsody:
-    print "Adding pauses to default speech formatting strings."
     formatting['speech'][pyatspi.ROLE_CHECK_MENU_ITEM]['unfocused'] = \
         'labelAndName + roleName + checkedState + required + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
     formatting['speech'][pyatspi.ROLE_CHECK_MENU_ITEM]['basicWhereAmI'] = \
