@@ -412,6 +412,10 @@ class Region:
                             cursorPos=cursorOffset,
                             mode=mode)
 
+        # Make sure the cursor is at a realistic spot.
+        #
+        cursorPos = min(cursorPos, len(contracted))
+
         return contracted, inPos, outPos, cursorPos
 
     def displayToBufferOffset(self, display_offset):
