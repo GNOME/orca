@@ -47,6 +47,19 @@ class SpeechGenerator(Gecko.SpeechGenerator):
     def __init__(self, script):
         Gecko.SpeechGenerator.__init__(self, script)
 
+    def _generateRoleName(self, obj, **args):
+        """Prevents some roles from being spoken."""
+        result = []
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_DOCUMENT_FRAME \
+           and obj.getState().contains(pyatspi.STATE_EDITABLE):
+            pass
+        else:
+            result.extend(Gecko.SpeechGenerator._generateRoleName(
+                              self, obj, **args))
+
+        return result
+
     def _generateColumnHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the column header for an object

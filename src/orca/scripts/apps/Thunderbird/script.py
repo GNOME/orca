@@ -163,6 +163,16 @@ class Script(Gecko.Script):
         - event: the Event
         """
 
+        # Much of the Gecko code is designed to handle Gecko's broken
+        # caret navigation. This is not needed in -- and can sometimes
+        # interfere with our presentation of -- a simple message being
+        # composed by the user. Surely we can count on Thunderbird to
+        # handle navigation in that case.
+        # 
+        if self.isEditableMessage(event.source):
+            self.setCaretContext(event.source, event.detail1)
+            return default.Script.onCaretMoved(self, event)
+
         # Page_Up/Page_Down are not used by Orca. However, users report
         # using these keys in Thunderbird without success. The default
         # script is sometimes rejecting the resulting caret-moved events
@@ -622,3 +632,25 @@ class Script(Gecko.Script):
             pyatspi.clearCache()
 
         return default.Script.toggleFlatReviewMode(self, inputEvent)
+
+    def isEditableMessage(self, obj):
+        """Returns True if this is a editable message."""
+
+        # For now, look specifically to see if this object is the
+        # document frame. If it's not, we cannot be sure how complex
+        # this message is and should let the Gecko code kick in.
+        #
+        if obj \
+           and obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
+           and obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return True
+
+        return False
+
+    def useCaretNavigationModel(self, keyboardEvent):
+        """Returns True if we should do our own caret navigation."""
+
+        if self.isEditableMessage(orca_state.locusOfFocus):
+            return False
+
+        return Gecko.Script.useCaretNavigationModel(self, keyboardEvent)

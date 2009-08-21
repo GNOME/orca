@@ -2525,8 +2525,8 @@ class Script(default.Script):
             # before speaking the character.
             #
             string = text.getText(0, -1)
-            if characterOffset >= len(string) and \
-               obj.getRole() != pyatspi.ROLE_ENTRY:
+            if characterOffset >= len(string) \
+               and not obj.getState().contains(pyatspi.STATE_EDITABLE):
                 print "YIKES in Gecko.sayCharacter!"
                 characterOffset -= 1
 
@@ -2555,7 +2555,8 @@ class Script(default.Script):
             # a call to goNextWord.]]]
             #
             string = text.getText(0, -1)
-            if characterOffset >= len(string):
+            if characterOffset >= len(string) \
+               and not obj.getState().contains(pyatspi.STATE_EDITABLE):
                 print "YIKES in Gecko.sayWord!"
                 characterOffset -= 1
 
@@ -2596,7 +2597,8 @@ class Script(default.Script):
             # a call to goNextLine.]]]
             #
             string = text.getText(0, -1)
-            if characterOffset >= len(string):
+            if characterOffset >= len(string) \
+               and not obj.getState().contains(pyatspi.STATE_EDITABLE):
                 print "YIKES in Gecko.sayLine!"
                 characterOffset -= 1
 
