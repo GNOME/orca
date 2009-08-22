@@ -73,13 +73,9 @@ class Script(default.Script):
         #
         self.spellCheckDialog = None
 
-        # Dictionary of Setup Assistant panels already handled.
+        # Last Setup Assistant panel spoken.
         #
-        self.setupPanels = {}
-
-        # Dictionary of Setup Assistant labels already handled.
-        #
-        self.setupLabels = {}
+        self.lastSetupPanel = None
 
         # The last row and column we were on in the mail message header list.
 
@@ -196,6 +192,47 @@ class Script(default.Script):
 
         return listeners
 
+    def findUnrelatedLabels(self, root):
+        """Returns a list containing all the unrelated (i.e., have no
+        relations to anything and are not a fundamental element of a
+        more atomic component like a combo box) labels under the given
+        root.  Note that the labels must also be showing on the display.
+
+        Arguments:
+        - root the Accessible object to traverse
+
+        Returns a list of unrelated labels under the given root.
+        """
+
+        labels = default.Script.findUnrelatedLabels(self, root)
+        for i, label in enumerate(labels):
+            if not label.getState().contains(pyatspi.STATE_SENSITIVE):
+                labels.remove(label)
+            else:
+                try:
+                    text = label.queryText()
+                except:
+                    pass
+                else:
+                    attr = text.getAttributes(0)
+                    if attr[0]:
+                        [charKeys, charDict] = \
+                            self.textAttrsToDictionary(attr[0])
+                        if charDict.get('weight', '400') == '700':
+                            if self.isWizard(root):
+                                # We've passed the wizard info at the top,
+                                # which is what we want to present. The rest
+                                # is noise.
+                                #
+                                return labels[0:i]
+                            else:
+                                # This label is bold and thus serving as a
+                                # heading. As such, it's not really unrelated.
+                                #
+                                labels.remove(label)
+
+        return labels
+
     def toggleReadMail(self, inputEvent):
         """ Toggle whether we present new mail if we not not the active script.+
         Arguments:
@@ -220,106 +257,6 @@ class Script(default.Script):
         speech.speak(line)
 
         return True
-
-    def speakSetupAssistantLabel(self, label):
-        """Perform a variety of tests on this Setup Assistant label to see
-        if we want to speak it.
-
-        Arguments:
-        - label: the Setup Assistant Label.
-        """
-
-        if label.getState().contains(pyatspi.STATE_SHOWING):
-            # We are only interested in a label if all the panels in the
-            # component hierarchy have states of ENABLED, SHOWING and VISIBLE.
-            # If this is not the case, then just return.
-            #
-            obj = label.parent
-            while obj and obj.getRole() != pyatspi.ROLE_APPLICATION:
-                if obj.getRole() == pyatspi.ROLE_PANEL:
-                    state = obj.getState()
-                    if not state.contains(pyatspi.STATE_ENABLED) or \
-                       not state.contains(pyatspi.STATE_SHOWING) or \
-                       not state.contains(pyatspi.STATE_VISIBLE):
-                        return
-                obj = obj.parent
-
-            # Each Setup Assistant screen has one label in the top left
-            # corner that describes what this screen is for. It has a text
-            # weight attribute of 800. We always speak those labels with
-            # " screen" appended.
-            #
-            try:
-                labelText = label.queryText()
-                if labelText:
-                    charAttributes = labelText.getAttributes(0)
-                    if charAttributes[0]:
-                        [charKeys, charDict] = \
-                            self.textAttrsToDictionary(charAttributes[0])
-                        weight = charDict.get('weight')
-                        if weight and weight == '800':
-                            text = self.getDisplayedText(label)
-
-                            # Only speak the screen label if we haven't already
-                            # done so.
-                            #
-                            if text and label not in self.setupLabels:
-                                # Translators: this is the name of a setup
-                                # assistant window/screen in Evolution.
-                                #
-                                speech.speak(_("%s screen") % text, None, False)
-                                self.setupLabels[label] = True
-
-                                # If the locus of focus is a push button that's
-                                # insensitive, speak/braille about it. (The
-                                # Identity screen has such a component).
-                                #
-                                if orca_state.locusOfFocus and \
-                                   orca_state.locusOfFocus.getRole() == \
-                                       pyatspi.ROLE_PUSH_BUTTON and \
-                                   (not orca_state.locusOfFocus.\
-                                                   getState().contains( \
-                                       pyatspi.STATE_SENSITIVE)):
-                                    self.updateBraille(orca_state.locusOfFocus)
-                                    speech.speak(
-                                        self.speechGenerator.generateSpeech(
-                                            orca_state.locusOfFocus))
-            except NotImplementedError:
-                pass
-
-            # It's possible to get multiple "object:state-changed:showing"
-            # events for the same label. If we've already handled this
-            # label, then just ignore it.
-            #
-            text = self.getDisplayedText(label)
-            if text and label not in self.setupLabels:
-                # Most of the Setup Assistant screens have a useful piece
-                # of text starting with the word "Please". We want to speak
-                # these. For the first screen, the useful piece of text
-                # starts with "Welcome". For the last screen, it starts
-                # with "Congratulations". Speak those too.
-                #
-                # Translators: we regret having to do this, but the
-                # translated string here has to match what the translated
-                # string is for Evolution.
-                #
-                if text.startswith(_("Please")) or \
-                    text.startswith(_("Welcome")) or \
-                    text.startswith(_("Congratulations")):
-                    speech.speak(text, None, False)
-                    self.setupLabels[label] = True
-
-    def handleSetupAssistantPanel(self, panel):
-        """Find all the labels in this Setup Assistant panel and see if
-        we want to speak them.
-
-        Arguments:
-        - panel: the Setup Assistant panel.
-        """
-
-        allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
-        for label in allLabels:
-            self.speakSetupAssistantLabel(label)
 
     def readPageTab(self, tab):
         """Speak/Braille the given page tab. The speech verbosity is set
@@ -804,7 +741,6 @@ class Script(default.Script):
     # 8) Mail compose window: message area
     # 9) Spell Checking Dialog
     # 10) Mail view: message area - attachments.
-    # 11) Setup Assistant
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -1513,32 +1449,6 @@ class Script(default.Script):
             speech.speak(utterance)
             return
 
-        # 11) Setup Assistant.
-        #
-        # If the name of the frame of the object that currently has focus is
-        # "Evolution Setup Assistant", then empty out the two dictionaries
-        # containing which setup assistant panels and labels we've already
-        # seen.
-
-        obj = event.source.parent
-        while obj and obj.getRole() != pyatspi.ROLE_APPLICATION:
-            # Translators: this is the ending of the name of the
-            # Evolution Setup Assistant window.  The translated
-            # form has to match what Evolution is using.  We hate
-            # keying off stuff like this, but we're forced to do
-            # so in this case.
-            #
-            if obj.getRole() == pyatspi.ROLE_FRAME and \
-                (obj.name.endswith(_("Assistant")) or \
-                obj.name.startswith(_("Assistant"))):
-                debug.println(self.debugLevel,
-                              "evolution.locusOfFocusChanged - " \
-                              + "setup assistant.")
-                self.setupPanels = {}
-                self.setupLabels = {}
-                break
-            obj = obj.parent
-
         # For everything else, pass the focus event onto the parent class
         # to be handled in the default way.
         #
@@ -1584,50 +1494,103 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if event.type.endswith("showing"):
-            # Check to see if this "object:state-changed:showing" event is
-            # for an object in the Setup Assistant by walking back up the
-            # object hierarchy until we get to the frame object and check
-            # to see if it has a name that ends with "Assistant", which is
-            # what we see when we configure Evolution for the first time
-            # and when we add new accounts.
-            #
-            obj = event.source.parent
-            while obj and obj.getRole() != pyatspi.ROLE_APPLICATION:
-                # Translators: this is the ending of the name of the
-                # Evolution Setup Assistant window.  The translated
-                # form has to match what Evolution is using.  We hate
-                # keying off stuff like this, but we're forced to do
-                # so in this case.
-                #
-                if obj.getRole() == pyatspi.ROLE_FRAME and \
-                    (obj.name.endswith(_("Assistant")) or \
-                    obj.name.startswith(_("Assistant"))):
-                    debug.println(self.debugLevel,
-                                  "evolution.onStateChanged - " \
-                                  + "setup assistant.")
-
-                    # If the event is for a label see if we want to speak it.
-                    #
-                    if event.source.getRole() == pyatspi.ROLE_LABEL:
-                        self.speakSetupAssistantLabel(event.source)
-                        break
-
-                    # If the event is for a panel and we haven't already
-                    # seen this panel, then handle it.
-                    #
-                    elif event.source.getRole() == pyatspi.ROLE_PANEL and \
-                        event.source not in self.setupPanels:
-                        self.handleSetupAssistantPanel(event.source)
-                        self.setupPanels[event.source] = True
-                        break
-
-                obj = obj.parent
+        if self.isWizardNewInfoEvent(event):
+            if event.source.getRole() == pyatspi.ROLE_PANEL:
+                self.lastSetupPanel = event.source
+            self.presentWizardNewInfo(self.getTopLevel(event.source))
+            return
 
         # For everything else, pass the event onto the parent class
         # to be handled in the default way.
         #
         default.Script.onStateChanged(self, event)
+
+    def presentWizardNewInfo(self, obj):
+        """Causes the new information displayed in a wizard to be presented
+        to the user.
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        if not obj:
+            return
+
+        # TODO - JD: Presenting the Setup Assistant (or any Wizard) as a
+        # dialog means that we will repeat the dialog's name for each new
+        # "screen". We should consider a 'ROLE_WIZARD' or some other means
+        # for presenting these objects.
+        #
+        utterances = \
+            self.speechGenerator.generateSpeech(obj, role=pyatspi.ROLE_DIALOG)
+
+        # The following falls under the heading of "suck it and see." The
+        # worst case scenario is that we present the push button and then
+        # process a focus:/object:state-changed:focused event and present
+        # it.
+        #
+        if orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_PUSH_BUTTON \
+           and orca_state.locusOfFocus.getState().\
+               contains(pyatspi.STATE_FOCUSED):
+            utterances.append(
+                self.speechGenerator.generateSpeech(orca_state.locusOfFocus))
+
+        speech.speak(utterances)
+
+    def isWizard(self, obj):
+        """Returns True if this object is, or is within, a wizard.
+
+        Arguments:
+        - obj: the Accessible object
+        """
+
+        # The Setup Assistant is a frame whose child is a panel. That panel
+        # holds a bunch of other panels, one for each stage in the wizard.
+        # Only the active stage's panel has STATE_SHOWING. There is also
+        # one child of ROLE_FILLER which holds the buttons.
+        #
+        window = self.getTopLevel(obj) or obj
+        if window and window.getRole() == pyatspi.ROLE_FRAME \
+           and window.childCount and window[0].getRole() == pyatspi.ROLE_PANEL:
+            allPanels = panelsNotShowing = 0
+            for child in window[0]:
+                if child.getRole() == pyatspi.ROLE_PANEL:
+                    allPanels += 1
+                    if not child.getState().contains(pyatspi.STATE_SHOWING):
+                        panelsNotShowing += 1
+            if allPanels - panelsNotShowing == 1 \
+               and window[0].childCount - allPanels == 1:
+                return True
+
+        return False
+
+    def isWizardNewInfoEvent(self, event):
+        """Returns True if the event is judged to be the presentation of
+        new information in a wizard. This method should be subclassed by
+        application scripts as needed.
+
+        Arguments:
+        - event: the Accessible event being examined
+        """
+
+        if event.source.getRole() == pyatspi.ROLE_FRAME \
+           and (event.type.startswith("window:activate") \
+                or (event.type.startswith("object:state-changed:active") \
+                    and event.detail1 == 1)):
+            return self.isWizard(event.source)
+
+        elif event.source.getRole() == pyatspi.ROLE_PANEL \
+             and event.type.startswith("object:state-changed:showing") \
+             and event.detail1 == 1 \
+             and not self.isSameObject(event.source, self.lastSetupPanel):
+            rolesList = [pyatspi.ROLE_PANEL,
+                         pyatspi.ROLE_PANEL,
+                         pyatspi.ROLE_FRAME]
+            if self.isDesiredFocusedItem(event.source, rolesList):
+                return self.isWizard(event.source)
+
+        return False
 
     def isActivatableEvent(self, event):
         """Returns True if the given event is one that should cause this

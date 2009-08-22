@@ -129,3 +129,38 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.append(text)
 
         return result
+
+    def _generateUnrelatedLabels(self, obj, **args):
+        """Returns, as an array of strings (and possibly voice
+        specifications), all the labels which are underneath the obj's
+        hierarchy and which are not in a label for or labelled by
+        relation.
+        """
+
+        if not self._script.isWizard(obj):
+            return speech_generator.SpeechGenerator.\
+                _generateUnrelatedLabels(self, obj, **args)
+
+        result = []
+        labels = self._script.findUnrelatedLabels(obj)
+        for label in labels:
+            name = self._generateName(label, **args)
+            try:
+                text = label.queryText()
+            except:
+                pass
+            else:
+                attr = text.getAttributes(0)
+                if attr[0]:
+                    [charKeys, charDict] = \
+                        self._script.textAttrsToDictionary(attr[0])
+                    if charDict.get('weight', '400') == '800':
+                        # It's a new "screen" in the Setup Assistant.
+                        #
+                        name = self._script.getDisplayedText(label)
+                        # Translators: this is the name of a setup
+                        # assistant window/screen in Evolution.
+                        #
+                        name = [_("%s screen") % name]
+            result.extend(name)
+        return result
