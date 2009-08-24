@@ -1,3 +1,89 @@
+2.27.91 - 24-Aug-2009
+
+General:
+
+* Fix for bgo#591282 - add a switch to activate debug when executing
+  orca
+
+* Fix for bgo#591289 - Need to remove duplicate speechTabLabel from
+  orca-setup.ui
+
+* Fix for bgo#591382 - Need to add "word_char" to
+  text_attribute_names.py for localization
+
+* Fix for bgo#591729 - Using cursor routing keys when the caret
+  is panned off the display can cause cursor to jump
+
+* Fix for bgo#591734 - "No break space" character not spoken
+
+* Fix for bgo#591805 - Orca speaks the "restrict progress bar update
+  to" label when the app preferences dialog loads
+
+* Fix for bgo#591907 - "All" hard to translate
+
+* Fix for bgo#592517 - Cursor position based upon uncontracted text
+  when typing text and contracted braille is enabled
+
+* Fix for bgo#592741 - Fix .desktop file to meet GNOME goal
+
+OpenOffice/StarOffice:
+
+* Fix for bgo#356060 - Provide access to tree item level and state in
+  OOo Navigator
+
+* Fix for bgo#590682 - Orca does not always speak the Paths table of
+  the OOo Options dialog correctly
+
+* Fix for bgo#592138 - Orca speaks the next character rather than the
+  next word when a paragraph boundary is crossed in Writer
+
+Evolution:
+
+* Fix for bgo#592708 - Orca should attempt to recognize Evo's Setup
+  Assistant and present the (non-focused) prompts
+
+Firefox/Thunderbird:
+
+* Fix for bgo#577899 - Strange cursor movements in Firefox
+
+* Fix for bgo#584103 - Cursor problems when I compose a new message
+  with Thunderbird 3.0B3 pre
+
+* Fix for bgo#591336 - Need a sanity check in Gecko's
+  searchForCaretLocation
+
+* Fix for bgo#591351 - SayAll document function doesn't work correctly
+  on some webpages
+
+* Fix for bgo#591592 - Orca does not speak and braille the appropriate
+  information when moving by headings on all sites
+
+* Fix for bgo#591807 - Orca sometimes presents the previous line when
+  Home/End is pressed in Gecko
+
+* Fix for bgo#591860 - Orca grinds to a halt when Ctrl+End is pressed
+  in a really long message in Thunderbird
+
+* Fix for bgo#592383 - Orca gets stuck when it encounters a paragraph
+  in Firefox which begins with a multi-line-high character
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg       Bulgarian            Alexander Shopov
+    de       German               Christian Kirbach and Simon Bienlein
+    es       Spanish              Francisco Javier Dorado Martinez
+    fr       French               Claude Paroz
+    ga       Irish                Seán de Búrca
+    gl       Galician             Antón Méixome
+    gu       Gujarati             Ankit Patel and Sweta Kothari
+    he       Hebrew               Mark Krapivner
+    hu       Hungarian            Attila Hammer and Gabor Kelemen
+    pt       Portuguese           Rui Batista
+    pt_BR    Brazilian Portuguese Leonardo Ferreira Fontenelle
+    sv	     Swedish              Daniel Nylander
+
+==========
+
 2.27.90 - 09-Aug-2009
 
 General:
