@@ -178,7 +178,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return to activate Apply Style - Take 2",
-    ["BUG? - We're presenting nothing. Should we be indicating focus?"]))
+    ["BUG? - Spacing issue with the Combobox in this and the following assertions",
+     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboDefault \$l Apply Style List Default ListItem'",
+     "     VISIBLE:  'Default ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Default'"]))
 
 ######################################################################
 # Down Arrow to change the selection without expanding the list first
@@ -187,26 +190,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down in Apply Style (Collapsed) - Take 2",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 1 \$l'",
-     "     VISIBLE:  'Heading 1 $l', cursor=1",
-    "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 1 \$l'",
-     "     VISIBLE:  'Heading 1 $l', cursor=1",
-    "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 1 \$l'",
-     "     VISIBLE:  'Heading 1 $l', cursor=10",
-     "SPEECH OUTPUT: 'Heading 1'",
-     "SPEECH OUTPUT: 'selected'"]))
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboHeading 1 \$l Apply Style List Heading 1 ListItem'",
+     "     VISIBLE:  'Heading 1 ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Heading 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down in Apply Style (Collapsed) - Take 2",
-    ["BUG? - We shouldn't be saying 'selected' here once, let alone twice. And we're not speaking the newly selected item. This bug appears quite a bit in this test, but I'm only marking it once.",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 2 \$l'",
-     "     VISIBLE:  'Heading 2 $l', cursor=1",
-    "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 2 \$l'",
-     "     VISIBLE:  'Heading 2 $l', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'selected'"]))
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboHeading 2 \$l Apply Style List Heading 2 ListItem'",
+     "     VISIBLE:  'Heading 2 ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Heading 2'"]))
 
 ######################################################################
 # Alt Down Arrow to expand the list. Then Down Arrow some.
@@ -221,23 +215,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down in Apply Style (Expanded) - Take 2",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 3 \$l'",
-     "     VISIBLE:  'Heading 3 $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 3 \$l'",
-     "     VISIBLE:  'Heading 3 $l', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'selected'"]))
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboHeading 3 \$l Apply Style List Heading 3 ListItem'",
+     "     VISIBLE:  'Heading 3 ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Heading 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down in Apply Style (Expanded) - Take 2",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Text body \$l'",
-     "     VISIBLE:  'Text body $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Text body \$l'",
-     "     VISIBLE:  'Text body $l', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'selected'"]))
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboText body \$l Apply Style List Text body ListItem'",
+     "     VISIBLE:  'Text body ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Text body'"]))
 
 ######################################################################
 # Up Arrow to restore the original style.
@@ -246,47 +234,33 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up in Apply Style (Expanded) - Take 2",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 3 \$l'",
-     "     VISIBLE:  'Heading 3 $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 3 \$l'",
-     "     VISIBLE:  'Heading 3 $l', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'selected'"]))
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboHeading 3 \$l Apply Style List Heading 3 ListItem'",
+     "     VISIBLE:  'Heading 3 ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Heading 3'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Up in Apply Style (Expanded) - Take 2",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 2 \$l'",
-     "     VISIBLE:  'Heading 2 $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 2 \$l'",
-     "     VISIBLE:  'Heading 2 $l', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'selected'"]))
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboHeading 2 \$l Apply Style List Heading 2 ListItem'",
+     "     VISIBLE:  'Heading 2 ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Heading 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up in Apply Style (Expanded) - Take 2",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 1 \$l'",
-     "     VISIBLE:  'Heading 1 $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Heading 1 \$l'",
-     "     VISIBLE:  'Heading 1 $l', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
-     "SPEECH OUTPUT: 'selected'"]))
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboHeading 1 \$l Apply Style List Heading 1 ListItem'",
+     "     VISIBLE:  'Heading 1 ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Heading 1'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Up in Apply Style (Expanded) - Take 2",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Default \$l'",
-     "     VISIBLE:  'Default $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Default \$l'",
-     "     VISIBLE:  'Default $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel Default \$l'",
-     "     VISIBLE:  'Default $l', cursor=8",
-     "SPEECH OUTPUT: 'Default'",
-     "SPEECH OUTPUT: 'selected'"]))
+    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane Formatting ToolBar Apply Style Panel  ComboDefault \$l Apply Style List Default ListItem'",
+     "     VISIBLE:  'Default ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Default'"]))
 
 ######################################################################
 # Press Alt Up to collapse the list. Then Tab to the Bold toggle/push

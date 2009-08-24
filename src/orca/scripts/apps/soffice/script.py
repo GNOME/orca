@@ -1894,6 +1894,14 @@ class Script(default.Script):
                and event.any_data:
                 handleEvent = True
 
+            # The style list in the Formatting toolbar also lacks state
+            # focused.
+            #
+            elif event.any_data and self.getAncestor(event.source,
+                                                     [pyatspi.ROLE_TOOL_BAR],
+                                                     [pyatspi.ROLE_FRAME]):
+                handleEvent = True
+
         elif self.isSameObject(orca_state.locusOfFocus, event.source.parent) \
              and event.source.getRole() == pyatspi.ROLE_LIST \
              and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_COMBO_BOX:
@@ -2274,6 +2282,17 @@ class Script(default.Script):
             braille.displayRegions( \
                 self.brailleGenerator.generateBraille(event.source))
         else:
+            # The lists and combo boxes in the Formatting toolbar emit
+            # object:active-descendant-changed events which cause us
+            # to set the locusOfFocus to the list item. If the user then
+            # arrows within the text portion, we will not present it due
+            # to the event not being from the locusOfFocus.
+            #
+            if event.source.getRole() == pyatspi.ROLE_TEXT \
+               and self.getAncestor(event.source,
+                                    [pyatspi.ROLE_TOOL_BAR],
+                                    [pyatspi.ROLE_FRAME]):
+                orca.setLocusOfFocus(event, event.source, False)
             default.Script.onCaretMoved(self, event)
 
         # If we're still here, we must be convinced that this paragraph
