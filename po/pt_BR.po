@@ -5,7 +5,7 @@
 # Jonh Wendell <jwendell@gnome.org>, 2007.
 # Fábio Nogueira <deb-user-ba@ubuntu.com>, 2007.
 # Leonardo Ferreira Fontenelle <leonardof@gnome.org>, 2007-2009.
-# Og Maciel <ogmaciel@ubuntu.com>, 2007.
+# Og Maciel <ogmaciel@gnome.org>, 2007, 2009.
 # Djavan Fagundes <dnoway@gmail.com>, 2007.
 # Tiago Melo Casal <tiagocasal@yahoo.com.br>, 2007-2009.
 # Michel Recondo <mrecondo@gmail.com>, 2008.
@@ -18,8 +18,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-25 20:49-0400\n"
-"PO-Revision-Date: 2009-08-25 21:20-0300\n"
-"Last-Translator: Marco de Freitas <marcodefreitas@gmail.com>\n"
+"PO-Revision-Date: 2009-08-25 21:00-0400\n"
+"Last-Translator: Og Maciel <ogmaciel@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -225,7 +225,7 @@ msgstr "Seis pontos"
 #.
 #: ../src/orca/braille.py:157
 msgid "Cursor Routing"
-msgstr ""
+msgstr "Roteamento do cursor"
 
 #. Translators: this is a command for a button on a refreshable braille
 #. display (an external hardware device used by people who are blind).
@@ -1965,7 +1965,7 @@ msgstr "Ativa ou desativa o Braille contraído."
 #.
 #: ../src/orca/default.py:731
 msgid "Processes a cursor routing key."
-msgstr ""
+msgstr "Processa uma chave de roteamento do cursor."
 
 #. Translators: this is used to indicate the start point
 #. of a text selection.
@@ -6980,8 +6980,8 @@ msgstr "Célula %s"
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d caractere muito longo"
+msgstr[1] "%d caracteres muito longos"
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
@@ -7158,7 +7158,7 @@ msgstr "Alterna entre a navegação por cursor nativa do Gecko e a do Orca."
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:574
 msgid "Moves focus into and away from the current mouse over."
-msgstr ""
+msgstr "Remoove o foco do objeto atualmente sob o mouse."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -7297,7 +7297,7 @@ msgstr "h%d"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5974
 msgid "Mouse over object not found."
-msgstr ""
+msgstr "Objeto sob o mouse não encontrado."
 
 #. Translators: this is the action name for the 'open' action.
 #.
