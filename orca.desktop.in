@@ -1,7 +1,7 @@
 [Desktop Entry]
 _Name=Orca
 _GenericName=Screen Reader and Magnifier
-_X-FullName=Orca Screen Reader and Magnifier
+_X-GNOME-FullName=Orca Screen Reader and Magnifier
 _Comment=Present on-screen information as speech or braille, or magnify the screen
 Exec=orca
 Icon=orca
