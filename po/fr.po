@@ -12,10 +12,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca HEAD\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&component=i18n\n"
-"POT-Creation-Date: 2009-08-20 03:29+0000\n"
-"PO-Revision-Date: 2009-08-21 23:58+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-29 22:43+0200\n"
+"PO-Revision-Date: 2009-08-29 22:45+0200\n"
 "Last-Translator: Laurent Coudeur <laurentc@iol.ie>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,26 +22,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
-#: ../orca.desktop.in.h:1
+#: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:210
+#: ../src/orca/keybindings.py:157 ../src/orca/orca_gui_prefs.py:2273
+#: ../src/orca/orca_gui_prefs.py:2378
+msgid "Orca"
+msgstr "Orca"
+
+#: ../orca.desktop.in.h:2
 msgid "Orca Screen Reader and Magnifier"
 msgstr "Lecteur d'écran et loupe Orca"
 
-#: ../orca.desktop.in.h:2
+#: ../orca.desktop.in.h:3
 msgid ""
 "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 "Présente les informations à l'écran par la voix ou en braille, et agrandit "
 "l'écran"
 
+#: ../orca.desktop.in.h:4
+msgid "Screen Reader and Magnifier"
+msgstr "Lecteur d'écran et loupe"
+
 #: ../src/orca/app_gui_prefs.py:129
 #, python-format
 msgid "Orca Preferences for %s"
 msgstr "Préférences d'Orca pour %s"
-
-#: ../src/orca/app_gui_prefs.py:210 ../src/orca/keybindings.py:157
-#: ../src/orca/orca_gui_prefs.py:2273 ../src/orca/orca_gui_prefs.py:2378
-msgid "Orca"
-msgstr "Orca"
 
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
@@ -1469,7 +1473,7 @@ msgstr "Effectue un clic droit sur l'élément actuel de la révision globale."
 #. interrupted.
 #.
 #: ../src/orca/default.py:194 ../src/orca/scripts/apps/acroread.py:114
-#: ../src/orca/scripts/apps/evolution/script.py:157
+#: ../src/orca/scripts/apps/evolution/script.py:153
 #: ../src/orca/scripts/toolkits/Gecko/script.py:531
 msgid "Speaks entire document."
 msgstr "Lit le document entier."
@@ -2257,7 +2261,7 @@ msgstr[1] "%d tabulations"
 #: ../src/orca/default.py:2534 ../src/orca/default.py:5324
 #: ../src/orca/default.py:5480 ../src/orca/default.py:5488
 #: ../src/orca/default.py:5596 ../src/orca/default.py:5604
-#: ../src/orca/scripts/apps/evolution/script.py:771
+#: ../src/orca/scripts/apps/evolution/script.py:708
 #: ../src/orca/scripts/apps/soffice/script.py:1415
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:360
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:469
@@ -2686,7 +2690,7 @@ msgstr "%d pourcent."
 #: ../src/orca/flat_review.py:1071 ../src/orca/generator.py:437
 #: ../src/orca/generator.py:694 ../src/orca/generator.py:736
 #: ../src/orca/generator.py:782
-#: ../src/orca/scripts/apps/evolution/script.py:1049
+#: ../src/orca/scripts/apps/evolution/script.py:985
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:115
 #: ../src/orca/tutorialgenerator.py:526 ../src/orca/tutorialgenerator.py:566
 msgid "toggle"
@@ -6321,37 +6325,37 @@ msgstr "colonne %d"
 
 #. Translators: short braille for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:114
+#: ../src/orca/scripts/apps/evolution/script.py:110
 msgid "calv"
 msgstr "vuecal"
 
 #. Translators: long braille for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:117
+#: ../src/orca/scripts/apps/evolution/script.py:113
 msgid "CalendarView"
 msgstr "VueDuCalendrier"
 
 #. Translators: spoken words for the rolename of a calendar view.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:120
+#: ../src/orca/scripts/apps/evolution/script.py:116
 msgid "calendar view"
 msgstr "vue du calendrier"
 
 #. Translators: short braille for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:128
+#: ../src/orca/scripts/apps/evolution/script.py:124
 msgid "cale"
 msgstr "cale"
 
 #. Translators: long braille for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:131
+#: ../src/orca/scripts/apps/evolution/script.py:127
 msgid "CalendarEvent"
 msgstr "ÉvénementDuCalendrier"
 
 #. Translators: spoken words for the rolename of a calendar event.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:134
+#: ../src/orca/scripts/apps/evolution/script.py:130
 msgid "calendar event"
 msgstr "événement du calendrier"
 
@@ -6360,7 +6364,7 @@ msgstr "événement du calendrier"
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:166
+#: ../src/orca/scripts/apps/evolution/script.py:162
 msgid "Toggle whether we present new mail if we are not the active script."
 msgstr ""
 "Indique s'il faut présenter les nouveaux messages quand ce script n'est pas "
@@ -6370,7 +6374,7 @@ msgstr ""
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:211
+#: ../src/orca/scripts/apps/evolution/script.py:248
 msgid "present new mail if this script is not active."
 msgstr "présenter les nouveaux messages si ce script n'est pas actif."
 
@@ -6378,47 +6382,17 @@ msgstr "présenter les nouveaux messages si ce script n'est pas actif."
 #. the user know when new mail has arrived, even if Evolution
 #. doesn't have focus.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:218
+#: ../src/orca/scripts/apps/evolution/script.py:255
 msgid "do not present new mail if this script is not active."
 msgstr "ne pas présenter les nouveaux messages si ce script n'est pas actif."
-
-#. Translators: this is the name of a setup
-#. assistant window/screen in Evolution.
-#.
-#: ../src/orca/scripts/apps/evolution/script.py:270
-#, python-format
-msgid "%s screen"
-msgstr "écran %s"
-
-#. Most of the Setup Assistant screens have a useful piece
-#. of text starting with the word "Please". We want to speak
-#. these. For the first screen, the useful piece of text
-#. starts with "Welcome". For the last screen, it starts
-#. with "Congratulations". Speak those too.
-#.
-#. Translators: we regret having to do this, but the
-#. translated string here has to match what the translated
-#. string is for Evolution.
-#.
-#: ../src/orca/scripts/apps/evolution/script.py:306
-msgid "Please"
-msgstr "S'il-vous-plaît"
-
-#: ../src/orca/scripts/apps/evolution/script.py:307
-msgid "Welcome"
-msgstr "Bienvenue"
-
-#: ../src/orca/scripts/apps/evolution/script.py:308
-msgid "Congratulations"
-msgstr "Félicitations"
 
 #. Translators: this is the name of the
 #. status column header in the message
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1059
-#: ../src/orca/scripts/apps/evolution/script.py:1127
+#: ../src/orca/scripts/apps/evolution/script.py:995
+#: ../src/orca/scripts/apps/evolution/script.py:1063
 msgid "Status"
 msgstr "État"
 
@@ -6427,8 +6401,8 @@ msgstr "État"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1068
-#: ../src/orca/scripts/apps/evolution/script.py:1152
+#: ../src/orca/scripts/apps/evolution/script.py:1004
+#: ../src/orca/scripts/apps/evolution/script.py:1088
 msgid "Flagged"
 msgstr "Marqué"
 
@@ -6436,7 +6410,7 @@ msgstr "Marqué"
 #. indicate that an email message has not been
 #. marked as having been read.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1132
+#: ../src/orca/scripts/apps/evolution/script.py:1068
 msgid "unread"
 msgstr "non lu"
 
@@ -6445,14 +6419,14 @@ msgstr "non lu"
 #. list in Evolution.  The name needs to
 #. match what Evolution is using.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1141
+#: ../src/orca/scripts/apps/evolution/script.py:1077
 msgid "Attachment"
 msgstr "Pièce jointe"
 
 #. Translators: this means there are no scheduled entries
 #. in the calendar.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1322
+#: ../src/orca/scripts/apps/evolution/script.py:1258
 msgid "No appointments"
 msgstr "Aucun rendez-vous"
 
@@ -6460,22 +6434,9 @@ msgstr "Aucun rendez-vous"
 #. top of the mail view Insert Attachment dialog in Evolution.
 #. We give it a name.
 #.
-#: ../src/orca/scripts/apps/evolution/script.py:1399
+#: ../src/orca/scripts/apps/evolution/script.py:1335
 msgid "Directories button"
 msgstr "Bouton de répertoires"
-
-#. Translators: this is the ending of the name of the
-#. Evolution Setup Assistant window.  The translated
-#. form has to match what Evolution is using.  We hate
-#. keying off stuff like this, but we're forced to do
-#. so in this case.
-#.
-#: ../src/orca/scripts/apps/evolution/script.py:1532
-#: ../src/orca/scripts/apps/evolution/script.py:1533
-#: ../src/orca/scripts/apps/evolution/script.py:1604
-#: ../src/orca/scripts/apps/evolution/script.py:1605
-msgid "Assistant"
-msgstr "Assistant"
 
 #. Translators: this in reference to an e-mail message
 #. status of having been read or unread.
@@ -6483,6 +6444,14 @@ msgstr "Assistant"
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:128
 msgid "Read"
 msgstr "Lu"
+
+#. Translators: this is the name of a setup
+#. assistant window/screen in Evolution.
+#.
+#: ../src/orca/scripts/apps/evolution/speech_generator.py:164
+#, python-format
+msgid "%s screen"
+msgstr "écran %s"
 
 #. Translators: this is an indication that Orca is unable to
 #. obtain the display of the gcalctool calculator, which is
@@ -7182,8 +7151,8 @@ msgstr "Bascule entre le mode de navigation au curseur de Gecko et d'Orca."
 #: ../src/orca/scripts/toolkits/Gecko/script.py:574
 msgid "Moves focus into and away from the current mouse over."
 msgstr ""
-"Déplace le focus dans ou hors de l'objet survolé par le pointeur "
-"de la souris."
+"Déplace le focus dans ou hors de l'objet survolé par le pointeur de la "
+"souris."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -9557,6 +9526,18 @@ msgid ""
 msgstr ""
 "Pour diminuer appuyez sur la flèche gauche, pour augmenter sur la flèche "
 "droite. Pour le minimum appuyez sur Origine et pour le maximum sur Fin."
+
+#~ msgid "Please"
+#~ msgstr "S'il-vous-plaît"
+
+#~ msgid "Welcome"
+#~ msgstr "Bienvenue"
+
+#~ msgid "Congratulations"
+#~ msgstr "Félicitations"
+
+#~ msgid "Assistant"
+#~ msgstr "Assistant"
 
 #~ msgid ""
 #~ "Centered\n"
