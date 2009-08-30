@@ -6159,6 +6159,9 @@ class Script(default.Script):
         currentLine = self.currentLineContents
         index = self.findObjectOnLine(obj, characterOffset, currentLine)
         if index < 0:
+            text = self.queryNonEmptyText(obj)
+            if text and text.characterCount == characterOffset:
+                characterOffset -= 1
             currentLine = self.getLineContentsAtOffset(obj, characterOffset)
 
         prevObj = currentLine[0][0]
