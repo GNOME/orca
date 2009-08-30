@@ -3836,6 +3836,12 @@ class Script(default.Script):
          document frame."""
 
         documentFrame = self.getDocumentFrame()
+        text = self.queryNonEmptyText(documentFrame)
+        if text:
+            char = text.getText(text.characterCount - 1, text.characterCount)
+            if char != self.EMBEDDED_OBJECT_CHARACTER:
+                return [documentFrame, text.characterCount - 1]
+
         obj = self.getLastObject(documentFrame)
         offset = 0
 
