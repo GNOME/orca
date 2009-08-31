@@ -137,7 +137,7 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. Line Down",
     ["BRAILLE LINE:  '   Installation of Self-Extracting Binary'",
-     "     VISIBLE:  '   Installation of Self-Extracti', cursor=1",
+     "     VISIBLE:  '   Installation of Self-Extracti', cursor=2",
      "SPEECH OUTPUT: '    Installation of Self-Extracting Binary link ",
      "'"]))
 
@@ -1567,8 +1567,9 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "82. Line Up",
     ["BRAILLE LINE:  'Installation of Self-Extracting Binary'",
-     "     VISIBLE:  'Installation of Self-Extracting ', cursor=0",
-     "SPEECH OUTPUT: 'blank'"]))
+     "     VISIBLE:  'Installation of Self-Extracting ', cursor=1",
+     "SPEECH OUTPUT: 'Installation of Self-Extracting Binary link ",
+     "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

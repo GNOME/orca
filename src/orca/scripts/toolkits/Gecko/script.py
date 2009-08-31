@@ -5487,6 +5487,16 @@ class Script(default.Script):
             if not (start <= offset < end):
                 [line, start, end] = text.getTextAfterOffset(end, boundary)
 
+            # If we're still seeing bogusity, which we only seem to see when
+            # moving up, locate the previous character and use it instead.
+            #
+            if not (start <= offset < end):
+                pObj, pOffset = self.findPreviousCaretInOrder(obj, offset)
+                if pObj:
+                    obj, offset = pObj, pOffset
+                    text = self.queryNonEmptyText(obj)
+                    [line, start, end] = text.getTextAtOffset(offset, boundary)
+
             if start <= offset < end:
                 # So far so good. If the line doesn't begin with an EOC, we
                 # have our first character for this object.

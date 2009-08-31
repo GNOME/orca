@@ -192,17 +192,16 @@ sequence.append(utils.AssertPresentationAction(
 
 ########################################################################
 # Tab to the next entry between the sliders. 
-# [[[Bug?: not labeling properly.]]]
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "move to entry", 
-    ["BRAILLE LINE:  '10.0% $l rdonly'",
-     "     VISIBLE:  '10.0% $l rdonly', cursor=0",
-     "BRAILLE LINE:  '10.0% $l rdonly'",
-     "     VISIBLE:  '10.0% $l rdonly', cursor=0",
+    ["BRAILLE LINE:  'Slider1 Value: 10.0% $l rdonly'",
+     "     VISIBLE:  'Slider1 Value: 10.0% $l rdonly', cursor=0",
+     "BRAILLE LINE:  'Slider1 Value: 10.0% $l rdonly'",
+     "     VISIBLE:  'Slider1 Value: 10.0% $l rdonly', cursor=0",
      "SPEECH OUTPUT: 'Slider1 Value: read only text 10.0% selected'"]))
 
 ########################################################################
