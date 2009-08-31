@@ -589,21 +589,19 @@ class Script(Gecko.Script):
 
     def getBottomOfFile(self):
         """Returns the object and last caret offset at the bottom of the
-         document frame. Overridden here because really long text messages
-         with no links near the bottom are not handled efficiently by the
-         Gecko script's method."""
+        document frame. Overridden here to handle editable messages.
+        """
 
-        obj = self.getDocumentFrame()
-        text = self.queryNonEmptyText(obj)
-        if text:
-            lastOffset = text.characterCount - 1
-            lastChar = text.getText(lastOffset - 1, lastOffset)
-            if lastChar != self.EMBEDDED_OBJECT_CHARACTER:
-                obj, lastOffset = \
-                    self.findPreviousCaretInOrder(obj, lastOffset - 1)
-                return obj, lastOffset
+        # Pylint thinks that obj is an instance of a list. It most
+        # certainly is not. Silly pylint.
+        #
+        # pylint: disable-msg=E1103
+        #
+        [obj, offset] = Gecko.Script.getBottomOfFile(self)
+        if obj and obj.getState().contains(pyatspi.STATE_EDITABLE):
+            offset += 1
 
-        return Gecko.Script.getBottomOfFile(self)
+        return [obj, offset]
 
     def getDocumentFrame(self):
         """Returns the document frame that holds the content being shown.
