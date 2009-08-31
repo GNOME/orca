@@ -3847,6 +3847,17 @@ class Script(default.Script):
         obj = self.getLastObject(documentFrame)
         offset = 0
 
+        # If the last object is a link, it may be more efficient to check
+        # for text that follows.
+        #
+        if obj.getRole() == pyatspi.ROLE_LINK:
+            text = self.queryNonEmptyText(obj.parent)
+            if text:
+                char = text.getText(text.characterCount - 1,
+                                    text.characterCount)
+                if char != self.EMBEDDED_OBJECT_CHARACTER:
+                    return [obj.parent, text.characterCount - 1]
+
         # obj should now be the very last item in the entire document frame
         # and not have children of its own.  Therefore, it should have text.
         # If it doesn't, we don't want to be here.
