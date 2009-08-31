@@ -108,9 +108,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Up",
-    ["BUG? - We're skipping the line at the beginning of the paragraph",
-     "BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=1"]))
+    ["BRAILLE LINE:  '   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the beginning of this paragraph. These are the'",
+     "     VISIBLE:  '   hy did the chicken cross the ', cursor=1",
+     "SPEECH OUTPUT: '   hy did the chicken cross the road? Give up? It was to escape from the enormous capital letter at the beginning of this paragraph. These are the'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
