@@ -5520,7 +5520,12 @@ class Script(default.Script):
                             # the beginning of this line to that initial
                             # character, we'll get stuck. See bug 592383.
                             #
-                            pass
+                            if end - start > 1 and end - offset == 1:
+                                # We must be Up Arrowing. Set the offset to
+                                # just past the EOC so that we present the
+                                # line rather than saying "blank."
+                                #
+                                offset = start + 1
                         else:
                             # It's a link that ends on our left. Who knows
                             # where it starts? Might be on the previous
