@@ -7670,7 +7670,7 @@ msgstr "%s forvalgt stemme"
 #: ../src/orca/speech_generator.py:236
 #, python-format
 msgid "%(uri)s link to %(file)s"
-msgstr "%(uri)s lenker til %(fil)s"
+msgstr "%(uri)s lenker til %(file)s"
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
