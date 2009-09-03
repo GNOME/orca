@@ -1672,7 +1672,7 @@
                                         </accessibility>
                                         <signal name="changed" handler="progressBarVerbosityChanged"/>
                                         <child>
-                                          <object class="GtkCellRendererText" id="renderer3"/>
+                                          <object class="GtkCellRendererText" id="renderer33"/>
                                           <attributes>
                                             <attribute name="text">0</attribute>
                                           </attributes>
