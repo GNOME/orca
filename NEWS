@@ -1,3 +1,28 @@
+2.27.92 - 06-Sep-2009
+
+General:
+
+* Fix for bgo#594022 - cannot launch orca preferences - GError:
+  Duplicate object id
+
+* Rename X-FullName to X-GNOME-FullName in desktop file
+
+StarOffice/OpenOffice:
+
+* Fix for bgo#592917 - Orca doesn't present OOo Writer's Style combo
+  box correctly
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    eu       Basque               Iñaki Larrañaga Murgoitio
+    fr       French               Laurent Coudeur and Claude Paroz
+    nb       Norwegian Bokmål     Kjartan Maraas
+    pt       Portuguese           Rui Batista and Duarte Loreto
+    pt_BR    Brazilian Portuguese Og B. Maciel and Marco de Freitas
+    ta       Tamil                I. Felix
+
+==========
+
 2.27.91 - 24-Aug-2009
 
 General:
