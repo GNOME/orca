@@ -62,8 +62,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
      "BRAILLE LINE:  'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject  \$l'",
      "     VISIBLE:  'Now old lady, you have one last ', cursor=1",
-     "BRAILLE LINE:  ' \$l'",
-     "     VISIBLE:  ' \$l', cursor=1",
      "SPEECH OUTPUT: 'Now old lady, you have one last chance. Confess the heinous sin of heresy, reject the works of the ungodly. Two last chances. And you shall be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance.'"]))
 
 ######################################################################
@@ -90,8 +88,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=1",
      "BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR! \$l'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=1",
-     "BRAILLE LINE:  ' \$l'",
-     "     VISIBLE:  ' \$l', cursor=1",
      "SPEECH OUTPUT: 'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'"]))
 
 ######################################################################

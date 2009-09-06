@@ -44,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' \$l', cursor=1",
      "SPEECH OUTPUT: 'frame 1 unfocused dialog'",
      "SPEECH OUTPUT: 'Agenda Wizard Please choose the page design for the agenda 1. Page design 2. General information 3. Headings to include 4. Names 5. Agenda items 6. Name and location'",
-     "SPEECH OUTPUT: 'Page design label'"]))
+     "SPEECH OUTPUT: 'Page design'"]))
 
 ######################################################################
 # 5. Press Escape to put focus back in the document.
