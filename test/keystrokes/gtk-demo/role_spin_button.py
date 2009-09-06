@@ -78,15 +78,14 @@ sequence.append(WaitAction("object:property-change:accessible-value",
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button decrement value",
-    ["KNOWN ISSUE - Value should be 239",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=6",
-     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
-     "     VISIBLE:  'Hue: 240 $l', cursor=6",
+     "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 239 $l'",
+     "     VISIBLE:  'Hue: 239 $l', cursor=6",
      "SPEECH OUTPUT: '240'",
-     "SPEECH OUTPUT: '240'"]))
+     "SPEECH OUTPUT: '239'"]))
 
 ########################################################################
 # Change the value by arrowing back up.
