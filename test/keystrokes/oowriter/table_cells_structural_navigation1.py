@@ -158,8 +158,12 @@ sequence.append(utils.AssertPresentationAction(
     "9. Alt Shift End.",
     ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Paragraph") + "'",
      "     VISIBLE:  'Paragraph', cursor=1",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Paragraph") + "'",
+     "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'Row 7, column 7.'"]))
+     "SPEECH OUTPUT: 'Row 7, column 7.'",
+     "SPEECH OUTPUT: 'End of table blank'",
+     "SPEECH OUTPUT: 'Cell G7'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
