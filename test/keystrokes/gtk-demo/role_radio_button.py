@@ -50,52 +50,55 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Range All Pages radio button selected 1 of 3.'",
      "SPEECH OUTPUT: 'Alt a'"]))
 
-########################################################################
-# Down arrow to the "Pages:" radio button.
-# 
-# presented [[[BUG?: when you first arrow to a radio button, we present
-# it as not selected in the tests, but manual testing presents it as
-# selected.  It should be presented as selected.  Something's wrong,
-# but I suspect we're getting a focus event before the state change
-# event.  Because our normal operating mode of Orca is asynchronous,
-# it's likely that the state has already changed by the time we handle
-# the focus event.]]]:
+# WDW - the printing dialog changed for 2.27.x - the pages radio button
+# takes you to the text entry field now.  We'll comment this out for now.
 #
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Pages:", acc_role=pyatspi.ROLE_RADIO_BUTTON))
-sequence.append(utils.AssertPresentationAction(
-    "Range radio button",
-    ["KNOWN ISSUE - the radio button should be presented as selected.",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range & y Pages: RadioButton'",
-     "     VISIBLE:  '& y Pages: RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Pages: not selected radio button'"]))
-
-########################################################################
-# Do a basic "Where Am I" via KP_Enter.
+#########################################################################
+## Down arrow to the "Pages:" radio button.
+## 
+## presented [[[BUG?: when you first arrow to a radio button, we present
+## it as not selected in the tests, but manual testing presents it as
+## selected.  It should be presented as selected.  Something's wrong,
+## but I suspect we're getting a focus event before the state change
+## event.  Because our normal operating mode of Orca is asynchronous,
+## it's likely that the state has already changed by the time we handle
+## the focus event.]]]:
+##
+#sequence.append(utils.StartRecordingAction())
+#sequence.append(KeyComboAction("Down"))
+#sequence.append(WaitForFocus("Pages:", acc_role=pyatspi.ROLE_RADIO_BUTTON))
+#sequence.append(utils.AssertPresentationAction(
+#    "Range radio button",
+#    ["KNOWN ISSUE - the radio button should be presented as selected.",
+#     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range & y Pages: RadioButton'",
+#     "     VISIBLE:  '& y Pages: RadioButton', cursor=1",
+#     "SPEECH OUTPUT: 'Pages: not selected radio button'"]))
 #
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_Enter"))
-sequence.append(PauseAction(3000))
-sequence.append(utils.AssertPresentationAction(
-    "Range radio button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y Pages: RadioButton'",
-     "     VISIBLE:  '&=y Pages: RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range Pages: radio button selected 3 of 3.'",
-     "SPEECH OUTPUT: 'Alt e'"]))
-
-########################################################################
-# Put everything back and close the demo.
+#########################################################################
+## Do a basic "Where Am I" via KP_Enter.
+##
+#sequence.append(utils.StartRecordingAction())
+#sequence.append(KeyComboAction("KP_Enter"))
+#sequence.append(PauseAction(3000))
+#sequence.append(utils.AssertPresentationAction(
+#    "Range radio button Where Am I",
+#    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y Pages: RadioButton'",
+#     "     VISIBLE:  '&=y Pages: RadioButton', cursor=1",
+#     "SPEECH OUTPUT: 'Range Pages: radio button selected 3 of 3.'",
+#     "SPEECH OUTPUT: 'Alt e'"]))
 #
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("All Pages", acc_role=pyatspi.ROLE_RADIO_BUTTON))
-sequence.append(utils.AssertPresentationAction(
-    "All Pages radio button",
-    ["KNOWN ISSUE - the radio button should be presented as selected.",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range & y All Pages RadioButton'",
-     "     VISIBLE:  '& y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'All Pages not selected radio button'"]))
+#########################################################################
+## Put everything back and close the demo.
+##
+#sequence.append(utils.StartRecordingAction())
+#sequence.append(KeyComboAction("Up"))
+#sequence.append(WaitForFocus("All Pages", acc_role=pyatspi.ROLE_RADIO_BUTTON))
+#sequence.append(utils.AssertPresentationAction(
+#    "All Pages radio button",
+#    ["KNOWN ISSUE - the radio button should be presented as selected.",
+#     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range & y All Pages RadioButton'",
+#     "     VISIBLE:  '& y All Pages RadioButton', cursor=1",
+#     "SPEECH OUTPUT: 'All Pages not selected radio button'"]))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
