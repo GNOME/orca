@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: orca 2.25.x\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-01 14:44+0200\n"
-"PO-Revision-Date: 2009-09-01 14:53+0200\n"
+"Project-Id-Version: orca 2.27.x\n"
+"Report-Msgid-Bugs-To:\n"
+"POT-Creation-Date: 2009-09-14 10:59+0200\n"
+"PO-Revision-Date: 2009-09-14 11:11+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -584,9 +584,8 @@ msgstr "tilde"
 #. character (e.g., "&nbsp;" in HTML -- U+00a0)
 #.
 #: ../src/orca/chnames.py:180
-#, fuzzy
 msgid "no break space"
-msgstr "slett"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '¡' (U+00a1)
 #.
@@ -1198,9 +1197,8 @@ msgstr "høyre enkeltfnutt"
 #. Translators: this is the spoken word for the character '‚' (U+201a)
 #.
 #: ../src/orca/chnames.py:586
-#, fuzzy
 msgid "single low quote"
-msgstr "høyre shift"
+msgstr "enkelt lavt sitattegn"
 
 #. Translators: this is the spoken word for the character '“' (U+201c)
 #.
@@ -1218,7 +1216,7 @@ msgstr "høyre dobbeltfnutt"
 #.
 #: ../src/orca/chnames.py:598
 msgid "double low quote"
-msgstr ""
+msgstr "dobbelt lavt sittattegn"
 
 #. Translators: this is the spoken word for the character '†' (U+2020)
 #.
@@ -1230,7 +1228,7 @@ msgstr "dolk"
 #.
 #: ../src/orca/chnames.py:606
 msgid "double dagger"
-msgstr ""
+msgstr "dobbel dolk"
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
@@ -1703,7 +1701,8 @@ msgstr "Flytter flat visning til oret over gjeldende ord."
 #.
 #: ../src/orca/default.py:452
 msgid "Speaks the current flat review item or word."
-msgstr "Leser opp den gjeldende oppføringen eller det gjeldende ordet i flat visning."
+msgstr ""
+"Leser opp den gjeldende oppføringen eller det gjeldende ordet i flat visning."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1717,7 +1716,8 @@ msgstr "Leser opp den gjeldende oppføringen eller det gjeldende ordet i flat vi
 #.
 #: ../src/orca/default.py:467
 msgid "Spells the current flat review item or word."
-msgstr "Leser opp den gjeldende oppføringen eller det gjeldende ordet i flat visning."
+msgstr ""
+"Leser opp den gjeldende oppføringen eller det gjeldende ordet i flat visning."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -2367,9 +2367,8 @@ msgstr "lenke"
 #. interception of it.
 #.
 #: ../src/orca/default.py:4725
-#, fuzzy
 msgid "Bypass mode enabled."
-msgstr "Opplesning slått på."
+msgstr ""
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -2997,9 +2996,8 @@ msgstr "multi"
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
 #: ../src/orca/keynames.py:205
-#, fuzzy
 msgid "mode switch"
-msgstr "samme nettsted"
+msgstr "bytt modus"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
@@ -3079,7 +3077,7 @@ msgstr "ø"
 #.
 #: ../src/orca/liveregions.py:265
 msgid "setting live region to polite"
-msgstr ""
+msgstr "setter levende område til høflig"
 
 #. Translators:  sets the live region politeness level to assertive
 #.
@@ -3097,20 +3095,20 @@ msgstr ""
 #.
 #: ../src/orca/liveregions.py:280
 msgid "setting live region to off"
-msgstr ""
+msgstr "setter levende område til av"
 
 #. Tranlators: this tells the user that a cached message
 #. is not available.
 #.
 #: ../src/orca/liveregions.py:299
 msgid "no live message saved"
-msgstr ""
+msgstr "ingen mellomlagret melding lagret"
 
 #. Translators: This lets the user know that all live regions
 #. have been turned off.
 #: ../src/orca/liveregions.py:316
 msgid "All live regions set to off"
-msgstr ""
+msgstr "Alle levende områder satt til av"
 
 #. Translators: This lets the user know that all live regions
 #. have been restored to their original politeness level.
@@ -3130,8 +3128,9 @@ msgstr "høflighetsnivå %s"
 #. to see, such as inverting the colors or applying a tint.
 #.
 #: ../src/orca/mag.py:1556
+#, fuzzy
 msgid "Color enhancements disabled."
-msgstr ""
+msgstr "Farge"
 
 #. Translators: "color enhancements" are changes users can
 #. make to the appearance of the screen to make things easier
@@ -3267,7 +3266,7 @@ msgstr "Bilineær"
 #: ../src/orca/orca_gui_prefs.py:4739 ../src/orca/orca_gui_prefs.py:4766
 #: ../src/orca/orca_gui_prefs.py:4837
 msgid "Desaturate blue"
-msgstr ""
+msgstr "Avmetning av blå"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the green value for all
@@ -3277,7 +3276,7 @@ msgstr ""
 #: ../src/orca/orca-advanced-magnification.ui.h:8
 #: ../src/orca/orca_gui_prefs.py:4731 ../src/orca/orca_gui_prefs.py:4829
 msgid "Desaturate green"
-msgstr ""
+msgstr "Avmetning av grønn"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the red value for all
@@ -3288,7 +3287,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:4723 ../src/orca/orca_gui_prefs.py:4765
 #: ../src/orca/orca_gui_prefs.py:4821
 msgid "Desaturate red"
-msgstr ""
+msgstr "Avmetning av rød"
 
 #: ../src/orca/orca-advanced-magnification.ui.h:10
 msgid "Gree_n:"
@@ -3363,7 +3362,7 @@ msgstr "tretabell"
 #: ../src/orca/orca_gui_prefs.py:4707 ../src/orca/orca_gui_prefs.py:4763
 #: ../src/orca/orca_gui_prefs.py:4805
 msgid "Saturate green"
-msgstr ""
+msgstr "Metning av grønn"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will maximize the red value for all
@@ -3374,7 +3373,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:4699 ../src/orca/orca_gui_prefs.py:4762
 #: ../src/orca/orca_gui_prefs.py:4797
 msgid "Saturate red"
-msgstr ""
+msgstr "Metning av rød"
 
 #: ../src/orca/orca-advanced-magnification.ui.h:19
 msgid "Target displa_y:"
@@ -4181,7 +4180,7 @@ msgstr "Vis denne hjelpeteksten"
 #.
 #: ../src/orca/orca.py:1450
 msgid "Print the known running applications"
-msgstr ""
+msgstr "Skriv ut kjente kjørende programmer"
 
 #. Translators: this enables debug output for Orca.  The
 #. YYYY-MM-DD-HH:MM:SS portion is a shorthand way of saying that
@@ -4193,7 +4192,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1461
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr ""
+msgstr "Send feilsøkingsdata til feilsøking-ÅÅÅÅ-MM-DD-TT:MM:SS.ut"
 
 #. Translators: this enables debug output for Orca and overrides
 #. the name of the debug file Orca will use for debug output if the
@@ -4201,7 +4200,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1468
 msgid "Send debug output to the specified file"
-msgstr ""
+msgstr "Send feilsøkingsinformasjon til oppgitt fil"
 
 #. Translators: this is the description of the command line option
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
@@ -4237,7 +4236,7 @@ msgstr "Hopp over oppsett av brukervalg"
 #.
 #: ../src/orca/orca.py:1499
 msgid "Use alternate directory for user preferences"
-msgstr ""
+msgstr "Bruk en alternativ katalog for brukervalg"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
 #. command line option, it will be automatically enabled as Orca is
@@ -4245,7 +4244,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1512
 msgid "Force use of option"
-msgstr ""
+msgstr "Tvungen bruk av et alternativ"
 
 #. Translators: if the user supplies an option via the '-d, --disable'
 #. command line option, it will be automatically disabled as Orca is
@@ -4253,7 +4252,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:1525
 msgid "Prevent use of option"
-msgstr ""
+msgstr "Forhindre bruk av et alternativ"
 
 #. Translators: this is the Orca command line option that will quit Orca.
 #. The user would run the Orca shell script again from a terminal window.
@@ -4425,7 +4424,7 @@ msgstr "Lysstyrke:"
 
 #: ../src/orca/orca-setup.ui.h:33
 msgid "Contraction _Table:"
-msgstr ""
+msgstr "Sammentrekkings_tabell:"
 
 #: ../src/orca/orca-setup.ui.h:34
 msgid "Contrast:"
@@ -4457,7 +4456,7 @@ msgstr "Forvalg"
 
 #: ../src/orca/orca-setup.ui.h:42
 msgid "Disable _end of line symbol"
-msgstr ""
+msgstr "Slå av symbol _for slutt på linjen"
 
 #: ../src/orca/orca-setup.ui.h:43
 msgid "Disable gksu _keyboard grab"
@@ -4465,7 +4464,7 @@ msgstr "Slå av gksu tastatur_grabb"
 
 #: ../src/orca/orca-setup.ui.h:47
 msgid "Edge mar_gin:"
-msgstr ""
+msgstr "Kantmar_g:"
 
 #: ../src/orca/orca-setup.ui.h:48
 msgid "Enable Braille _monitor"
@@ -4616,8 +4615,9 @@ msgid "Quit Orca _without confirmation"
 msgstr "Avslutt Orca _uten bekreftelse"
 
 #: ../src/orca/orca-setup.ui.h:97
+#, fuzzy
 msgid "Say All B_y:"
-msgstr ""
+msgstr "Si alt _ved:"
 
 #: ../src/orca/orca-setup.ui.h:98
 msgid "Scale _factor:"
@@ -4628,9 +4628,8 @@ msgid "Show Orca _main window"
 msgstr "Vis _hovedvindu for Orca"
 
 #: ../src/orca/orca-setup.ui.h:102
-#, fuzzy
 msgid "Spea_k object mnemonics"
-msgstr "Les objektet under m_usen"
+msgstr "Les hurtigtast for obje_kt"
 
 #: ../src/orca/orca-setup.ui.h:103
 msgid "Speak _indentation and justification"
@@ -6449,7 +6448,7 @@ msgstr "%s-skjerm"
 #.
 #: ../src/orca/scripts/apps/gcalctool/script.py:103
 msgid "Unable to get calculator display"
-msgstr ""
+msgstr "Kan ikke finne skjerm for kalkulator"
 
 #. Translators: these are labels from the gedit spell checking
 #. dialog and must be the same strings gedit uses.  We hate
@@ -6533,7 +6532,7 @@ msgstr "Frase funnet."
 
 #: ../src/orca/scripts/apps/gnome-mud.py:119
 msgid "Read the latest n messages in the incoming messages text area."
-msgstr ""
+msgstr "Les de siste n meldingene i tekstområde for innkommende meldinger."
 
 #: ../src/orca/scripts/apps/gnome-search-tool.py:100
 msgid "Searching."
@@ -6637,7 +6636,7 @@ msgstr "Fullført lasting."
 #.
 #: ../src/orca/scripts/apps/packagemanager/tutorialgenerator.py:60
 msgid "Use Ctrl+L to move focus to the results."
-msgstr ""
+msgstr "Bruk Ctrl+L for å flytte fokus til resultatene."
 
 #: ../src/orca/scripts/apps/pidgin/script.py:191
 msgid ""
@@ -6932,7 +6931,7 @@ msgstr "Flytt til celle"
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1974
+#: ../src/orca/scripts/apps/soffice/script.py:1982
 msgid "Presentation Wizard"
 msgstr "Presentasjonsassistent"
 
@@ -6941,13 +6940,13 @@ msgstr "Presentasjonsassistent"
 #. has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2110
+#: ../src/orca/scripts/apps/soffice/script.py:2118
 msgid "has formula"
 msgstr "har formel"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2163
+#: ../src/orca/scripts/apps/soffice/script.py:2171
 #, python-format
 msgid "Cell %s"
 msgstr "Celle %s"
@@ -7094,7 +7093,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:482
 msgid "Monitor live regions."
-msgstr ""
+msgstr "Overvåk levende områder."
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
@@ -7246,7 +7245,7 @@ msgstr "linje valgt opp fra markørposisjon"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1651
 msgid "New item has been added"
-msgstr ""
+msgstr "Ny oppføring lagt til"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
@@ -7357,7 +7356,7 @@ msgstr "Orca styrer markøren."
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:250
 #, python-format
 msgid "%(role)s level %(level)d"
-msgstr ""
+msgstr "%(role)s nivå %(level)d"
 
 #. Translators: this represents a list in HTML.
 #.
@@ -7590,7 +7589,7 @@ msgstr "Nøstenivå %d"
 #: ../src/orca/settings.py:1342
 #, python-format
 msgid "on %(index)d of %(total)d"
-msgstr ""
+msgstr "på %(index)d av %(total)d"
 
 #. Translators: this refers to the position of an item in a list
 #. or group of objects, such as menu items in a menu, radio buttons
@@ -7599,7 +7598,7 @@ msgstr ""
 #: ../src/orca/settings.py:1348
 #, python-format
 msgid "%(index)d of %(total)d"
-msgstr ""
+msgstr "%(index)d av %(total)d"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be a short abbreviation
@@ -8457,7 +8456,7 @@ msgstr "bakgrunnsfarge"
 #: ../src/orca/text_attribute_names.py:71
 msgctxt "textattr"
 msgid "background full height"
-msgstr ""
+msgstr "bakgrunn full høyde"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
 #. stippling the background color. It will be a "true" or "false" value.
@@ -8467,7 +8466,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:78
 msgctxt "textattr"
 msgid "background stipple"
-msgstr ""
+msgstr "bakgrunn stiplet"
 
 #. Translators: this attribute specifies the direction of the text.
 #. Values are "none", "ltr" or "rtl".
@@ -8516,7 +8515,7 @@ msgstr "forgrunnsfarge"
 #: ../src/orca/text_attribute_names.py:112
 msgctxt "textattr"
 msgid "foreground stipple"
-msgstr ""
+msgstr "forgrunn stiplet"
 
 #. Translators: this attribute specifies the effect applied to the font
 #. used by the text.
@@ -8527,7 +8526,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:120
 msgctxt "textattr"
 msgid "font effect"
-msgstr ""
+msgstr "skrifteffekt"
 
 #. Translators: this attribute specifies the indentation of the text
 #. (in pixels).
@@ -8618,7 +8617,7 @@ msgstr "stil for avsnitt"
 #: ../src/orca/text_attribute_names.py:184
 msgctxt "textattr"
 msgid "pixels above lines"
-msgstr ""
+msgstr "piksler over linjer"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave below each newline-terminated line.
@@ -8628,7 +8627,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:191
 msgctxt "textattr"
 msgid "pixels below lines"
-msgstr ""
+msgstr "piksler under linjer"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave between wrapped lines inside the same newline-terminated line
@@ -8639,7 +8638,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:199
 msgctxt "textattr"
 msgid "pixels inside wrap"
-msgstr ""
+msgstr "piksler inni brytning"
 
 #. Translators: this attribute specifies the pixel width of the right margin.
 #. See:
@@ -9056,7 +9055,7 @@ msgstr "fyll"
 #: ../src/orca/text_attribute_names.py:498
 msgctxt "textattr"
 msgid "ultra condensed"
-msgstr ""
+msgstr "ultrasammentrukket"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -9066,7 +9065,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:505
 msgctxt "textattr"
 msgid "extra condensed"
-msgstr ""
+msgstr "ekstra sammetrukket"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -9076,7 +9075,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:512
 msgctxt "textattr"
 msgid "condensed"
-msgstr ""
+msgstr "sammentrukket"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -9086,7 +9085,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:519
 msgctxt "textattr"
 msgid "semi condensed"
-msgstr ""
+msgstr "middels sammentrukket"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch" and "variant".
@@ -9126,7 +9125,7 @@ msgstr "utvidet"
 #: ../src/orca/text_attribute_names.py:547
 msgctxt "textattr"
 msgid "extra expanded"
-msgstr ""
+msgstr "ekstra utvidet"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -9136,7 +9135,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:554
 msgctxt "textattr"
 msgid "ultra expanded"
-msgstr ""
+msgstr "utltrautvidet"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "variant".
@@ -9227,7 +9226,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:618
 msgctxt "textattr"
 msgid "super"
-msgstr ""
+msgstr "super"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9237,7 +9236,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:625
 msgctxt "textattr"
 msgid "top"
-msgstr ""
+msgstr "topp"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9257,7 +9256,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:639
 msgctxt "textattr"
 msgid "middle"
-msgstr ""
+msgstr "midt på"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9267,7 +9266,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:646
 msgctxt "textattr"
 msgid "bottom"
-msgstr ""
+msgstr "bunn"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -9288,7 +9287,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:661
 msgctxt "textattr"
 msgid "inherit"
-msgstr ""
+msgstr "arv"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "writing-mode".
@@ -9430,7 +9429,7 @@ msgstr ""
 #. Translators: this is the tutorial string when navigating lists.
 #: ../src/orca/tutorialgenerator.py:317
 msgid "Use up and down to select an item."
-msgstr ""
+msgstr "Bruk opp og ned for å velge en oppføring."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -9438,7 +9437,7 @@ msgstr ""
 #. this string informs the user how to collapse the node.
 #: ../src/orca/tutorialgenerator.py:347 ../src/orca/tutorialgenerator.py:497
 msgid "To collapse, press shift plus left."
-msgstr ""
+msgstr "Trykk shift + venstre for å slå sammen."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -9446,7 +9445,7 @@ msgstr ""
 #. this string informs the user how to expand the node.
 #: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:503
 msgid "To expand, press shift plus right."
-msgstr ""
+msgstr "Trykk shift + høyre for å utvide."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
@@ -9459,12 +9458,12 @@ msgstr "Skriv inn tekst."
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:413
 msgid "Use left and right to view other tabs."
-msgstr ""
+msgstr "Bruk venstre og høyre for å vise andre faner."
 
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:438
 msgid "To activate press space."
-msgstr ""
+msgstr "Trykk mellomrom for å aktivere."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
