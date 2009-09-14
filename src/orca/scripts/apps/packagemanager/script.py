@@ -33,6 +33,8 @@ import orca.speech as speech
 
 from orca.orca_i18n import _
 
+from braille_generator import BrailleGenerator
+from speech_generator import SpeechGenerator
 from tutorialgenerator import TutorialGenerator
 
 ########################################################################
@@ -60,6 +62,16 @@ class Script(default.Script):
         listeners["object:state-changed:busy"] = self.onStateChanged
 
         return listeners
+
+    def getBrailleGenerator(self):
+        """Returns the braille generator for this script."""
+
+        return BrailleGenerator(self)
+
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script."""
+
+        return SpeechGenerator(self)
 
     def getTutorialGenerator(self):
         """Returns the tutorial generator for this script."""
@@ -152,5 +164,42 @@ class Script(default.Script):
            and self.getAncestor( \
             obj, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME]):
             return True
+
+        return False
+
+    def isPackageListToggle(self, obj):
+        """Attempts to identify the toggle-able cell in the package list.
+
+        Arguments:
+        -obj: the accessible being examined
+
+        Returns True if we think obj is the toggle-able cell in the package
+        list.
+        """
+
+        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+            try:
+                action = obj.queryAction()
+            except NotImplementedError:
+                action = None
+            if action:
+                for i in range(action.nActions):
+                    # Translators: this is the action name for
+                    # the 'toggle' action. It must be the same
+                    # string used in the *.po file for gail.
+                    #
+                    if action.getName(i) in ["toggle", _("toggle")]:
+                        try:
+                            table = obj.parent.queryTable()
+                        except:
+                            col = -1
+                        else:
+                            index = self.getCellIndex(obj)
+                            col = table.getColumnAtIndex(index)
+                        if col == 0:
+                            top = self.getTopLevel(obj)
+                            if top and top.getRole() == pyatspi.ROLE_FRAME:
+                                return True
+                        return False
 
         return False
