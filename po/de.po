@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-16 11:01+0200\n"
+"POT-Creation-Date: 2009-09-16 11:11+0200\n"
 "PO-Revision-Date: 2009-09-16 11:06+0200\n"
 "Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -2276,7 +2276,7 @@ msgstr[1] "%d Tabulatoren"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:360
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:469
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5815
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5849
 #: ../src/orca/settings.py:1276 ../src/orca/speech_generator.py:473
 #: ../src/orca/speech_generator.py:779
 #: ../src/orca/structural_navigation.py:3304
@@ -3940,7 +3940,7 @@ msgstr "Fenster"
 #.
 #: ../src/orca/orca_gui_prefs.py:1691 ../src/orca/orca-setup.ui.h:65
 msgid "Enable non-spacing _diacritical keys"
-msgstr "Diakritische Tasten sprechen"
+msgstr "_Diakritische Tasten sprechen"
 
 #. TODO - JD: I did the above because GtkBuilder translator notes
 #. (which we have for the above string) are not getting sucked in
@@ -6523,9 +6523,9 @@ msgstr "Drücken Sie zum Abbrechen die Tabulator- und die Eingabetaste."
 #: ../src/orca/scripts/apps/gedit/script.py:394
 #: ../src/orca/scripts/apps/gedit/script.py:477
 #: ../src/orca/scripts/apps/Thunderbird/script.py:152
-#: ../src/orca/scripts/apps/Thunderbird/script.py:292
-#: ../src/orca/scripts/apps/Thunderbird/script.py:509
-#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:75
+#: ../src/orca/scripts/apps/Thunderbird/script.py:302
+#: ../src/orca/scripts/apps/Thunderbird/script.py:519
+#: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:88
 msgid "Check Spelling"
 msgstr "Rechtschreibung überprüfen"
 
@@ -6999,8 +6999,8 @@ msgstr "Zeile %(row)d, Spalte %(column)d."
 # python-format
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:547
-#: ../src/orca/scripts/apps/Thunderbird/script.py:564
+#: ../src/orca/scripts/apps/Thunderbird/script.py:557
+#: ../src/orca/scripts/apps/Thunderbird/script.py:574
 #, python-format
 msgid "%s panel"
 msgstr "%s Leiste"
@@ -7299,13 +7299,13 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5974
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6008
 msgid "Mouse over object not found."
 msgstr "Kein Mouse-Over Objekt gefunden."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6457
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6494
 msgid "open"
 msgstr "öffnen"
 
@@ -7315,7 +7315,7 @@ msgstr "öffnen"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6530
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6567
 #: ../src/orca/structural_navigation.py:883
 msgid "Wrapping to bottom."
 msgstr "Nach unten springen"
@@ -7326,7 +7326,7 @@ msgstr "Nach unten springen"
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6598
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6635
 #: ../src/orca/structural_navigation.py:891
 msgid "Wrapping to top."
 msgstr "Nach oben springen"
@@ -7334,9 +7334,9 @@ msgstr "Nach oben springen"
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6624
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6648
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6658
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6661
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6685
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6695
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Unterstützung für dynamische Bereiche ist ausgeschaltet"
@@ -7344,11 +7344,11 @@ msgstr "Unterstützung für dynamische Bereiche ist ausgeschaltet"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6632
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6669
 msgid "Live regions monitoring on"
 msgstr "Überwachung der dynamischen Bereiche ist eingeschaltet"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6639
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6676
 msgid "Live regions monitoring off"
 msgstr "Überwachung der dynamischen Bereiche ist ausgeschaltet"
 
@@ -7359,7 +7359,7 @@ msgstr "Überwachung der dynamischen Bereiche ist ausgeschaltet"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6674
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6711
 msgid "Gecko is controlling the caret."
 msgstr "Navigationssteuerung erfolgt durch Gecko."
 
@@ -7370,7 +7370,7 @@ msgstr "Navigationssteuerung erfolgt durch Gecko."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6686
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6723
 msgid "Orca is controlling the caret."
 msgstr "Navigationssteuerung erfolgt durch Orca."
 
