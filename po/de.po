@@ -3940,7 +3940,7 @@ msgstr "Fenster"
 #.
 #: ../src/orca/orca_gui_prefs.py:1691 ../src/orca/orca-setup.ui.h:65
 msgid "Enable non-spacing _diacritical keys"
-msgstr "Diakritische Tasten sprechen"
+msgstr "_Diakritische Tasten sprechen"
 
 #. TODO - JD: I did the above because GtkBuilder translator notes
 #. (which we have for the above string) are not getting sucked in
