@@ -17,7 +17,8 @@ m4_define([orca_major_version], [2])
 m4_define([orca_minor_version], [27])
 m4_define([orca_micro_version], [90pre])
 
-Modify ./README to make sure it has the right Orca version.
+Modify ./README to make sure it has the right Orca version and GNOME
+versions.
 
 Update ./NEWS based upon entries in ./ChangeLog, or based upon git output
 from a git command like the following (the tag string followed by ".." gives
@@ -28,8 +29,12 @@ git log --pretty=format:"%ai %an <%ae>%n%n        %s%n" --name-status ORCA_2_27_
 NOTE about giving credit to translators:
 
 You should get the translator name from the "Last Translator" field in
-the .po file, not from po/Changelog. Sometimes the translator is not the
-same person as who commits the file.
+the .po file, not from po/Changelog. Sometimes the translator is not
+the same person as who commits the file.  The translators don't always
+get everything right, though, so you need to look at the commit logs
+and the *.po files.  They spend a lot of time doing translations, so
+it's worth the extra few moments to check the files to make sure we
+give them credit.
 
 NOTE: You should also make sure the external dependencies listed in
 configure.in and README are accurate.
