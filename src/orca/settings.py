@@ -1126,6 +1126,11 @@ setScriptMapping(re.compile(_('gaim')), "pidgin")
 #setScriptMapping(re.compile(_('gnome-help')), "yelp")
 setScriptMapping(re.compile('gnome-help'), "yelp")
 
+# Strip off the extra 'py' that the Device Driver Utility includes
+# as part of its accessible name.
+#
+setScriptMapping(re.compile('ddu.py'), "ddu")
+
 # Show deprecated messeges in debug output.
 # Set this to True to help find potential pyatspi porting problems
 #

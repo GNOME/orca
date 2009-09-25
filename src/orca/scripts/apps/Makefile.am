@@ -15,6 +15,7 @@ orca_pathdir=$(pyexecdir)
 orca_python_PYTHON = \
 	__init__.py \
 	acroread.py \
+	ddu.py \
 	ekiga.py \
 	gdmlogin.py \
 	gnome-keyring-ask.py \
