@@ -1095,6 +1095,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     self.detail1 = detail1
                     self.detail2 = detail2
                     self.any_data = any_data
+                    self.host_application = None
 
             class _FakeData:
                 def __init__(self):
@@ -1103,8 +1104,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     return None
 
             fe = _FakeEvent(win, "window:activate", 0, 0, _FakeData())
-            e = pyatspi.event.Event(fe)
-            self._enqueueEvent(e)
+            self._enqueueEvent(fe)
 
     def deactivate(self):
         """Called when this presentation manager is deactivated."""

@@ -899,7 +899,8 @@ doubleClickTimeout = 0.5
 #
 def isAccessibilityEnabled():
     try:
-        return gconfClient.get_bool("/desktop/gnome/interface/accessibility")
+        return gconfClient.get_bool("/desktop/gnome/interface/accessibility") \
+            or gconfClient.get_bool("/desktop/gnome/interface/accessibility2")
     except:
         return False
 
