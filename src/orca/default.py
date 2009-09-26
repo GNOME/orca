@@ -3803,6 +3803,18 @@ class Script(script.Script):
         elif settings.enableEchoByWord and self.isWordDelimiter(currentChar):
             self.echoPreviousWord(event.source)
 
+    def stopSpeechOnActiveDescendantChanged(self, event):
+        """Whether or not speech should be stopped prior to setting the
+        locusOfFocus in onActiveDescendantChanged.
+
+        Arguments:
+        - event: the Event
+
+        Returns True if speech should be stopped; False otherwise.
+        """
+
+        return True
+
     def onActiveDescendantChanged(self, event):
         """Called when an object who manages its own descendants detects a
         change in one of its children.
@@ -3820,7 +3832,8 @@ class Script(script.Script):
         #
         child = event.any_data
         if child:
-            speech.stop()
+            if self.stopSpeechOnActiveDescendantChanged(event):
+                speech.stop()
             orca.setLocusOfFocus(event, child)
         else:
             orca.setLocusOfFocus(event, event.source)

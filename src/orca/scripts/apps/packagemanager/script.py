@@ -148,6 +148,24 @@ class Script(default.Script):
 
         return statusBar
 
+    def stopSpeechOnActiveDescendantChanged(self, event):
+        """Whether or not speech should be stopped prior to setting the
+        locusOfFocus in onActiveDescendantChanged.
+
+        Arguments:
+        - event: the Event
+
+        Returns True if speech should be stopped; False otherwise.
+        """
+
+        # Intentionally doing an equality check for performance
+        # purposes.
+        #
+        if event.any_data == orca_state.locusOfFocus:
+            return False
+
+        return True
+
     def isSearchEntry(self, obj):
         """Attempts to distinguish the Search entry from other accessibles.
 

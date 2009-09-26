@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.default as default
+import orca.orca_state as orca_state
 import orca.speech as speech
 
 ########################################################################
@@ -93,6 +94,24 @@ class Script(default.Script):
                     return True
 
         return False
+
+    def stopSpeechOnActiveDescendantChanged(self, event):
+        """Whether or not speech should be stopped prior to setting the
+        locusOfFocus in onActiveDescendantChanged.
+
+        Arguments:
+        - event: the Event
+
+        Returns True if speech should be stopped; False otherwise.
+        """
+
+        # Intentionally doing an equality check for performance
+        # purposes.
+        #
+        if event.any_data == orca_state.locusOfFocus:
+            return False
+
+        return True
 
     def getRealActiveDescendant(self, obj):
         """Given an object that should be a child of an object that
