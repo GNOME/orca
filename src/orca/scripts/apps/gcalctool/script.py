@@ -58,6 +58,7 @@ class Script(default.Script):
         self._lastProcessedKeyEvent = None
         self._lastSpokenContents = None
         self._resultsDisplay = None
+        self._statusLine = None
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
@@ -71,31 +72,13 @@ class Script(default.Script):
         - event: the window activated Event
         """
 
-        # If we haven't found the display, and this is a toplevel window,
-        # look for the display in this window
+        # Locate the results display and the status line if we've not yet
+        # done so.
         #
-        if (self._resultsDisplay is None) \
-               and (event.source.getRole() == pyatspi.ROLE_FRAME):
-
-            # The widget hierarchy for gcalctool differs depending upon the
-            # version.
-            #
-            # In GNOME 2.6 (gcalctool version 4.3.51 for example), the
-            # display area was a text_view widget. This can be found by
-            # looking for an accessible object with a role of ROLE_TEXT.
-            #
-            # For GNOME 2.10 and 2.12 there is a scrolled_window containing
-            # the text_view display. This can be found by looking for an
-            # accessible object with a role of ROLE_EDITBAR.
-            #
-            d = self.findByRole(event.source, pyatspi.ROLE_TEXT)
-            if len(d) == 0:
-                d = self.findByRole(event.source, pyatspi.ROLE_EDITBAR)
-
-            # If d is an empty list at this point, we're unable to get the
-            # gcalctool display. Inform the user.
-            #
-            if len(d) == 0:
+        if not (self._resultsDisplay and self._statusLine) \
+           and event.source.getRole() == pyatspi.ROLE_FRAME:
+            objs = self.findByRole(event.source, pyatspi.ROLE_EDITBAR)
+            if len(objs) == 0:
                 # Translators: this is an indication that Orca is unable to
                 # obtain the display of the gcalctool calculator, which is
                 # the area where calculation results are presented.
@@ -104,13 +87,29 @@ class Script(default.Script):
                 speech.speak(contents)
                 braille.displayMessage(contents)
             else:
-                self._resultsDisplay = d[0]
+                self._resultsDisplay = objs[0]
                 contents = self.getText(self._resultsDisplay, 0, -1)
                 braille.displayMessage(contents)
+                # The status line in gcalctool 5.29 is a sibling of the
+                # edit bar.
+                #
+                objs = self.findByRole(self._resultsDisplay.parent,
+                                       pyatspi.ROLE_TEXT)
+                for obj in objs:
+                    if not obj.getState().contains(pyatspi.STATE_EDITABLE):
+                        self._statusLine = obj
+                        break
+                else:
+                    # The status line in gcalctool 5.28 is a label in the
+                    # status bar in which text is inserted as need be.
+                    #
+                    statusBar = self.findStatusBar(event.source)
+                    if statusBar:
+                        objs = self.findByRole(statusBar, pyatspi.ROLE_LABEL)
+                        if len(objs):
+                            self._statusLine = objs[0]
 
-            # Call the default onWindowActivated function
-            #
-            default.Script.onWindowActivated(self, event)
+        default.Script.onWindowActivated(self, event)
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into gcalctool's text display.
@@ -122,7 +121,7 @@ class Script(default.Script):
         # Always update the Braille display but only speak if the last
         # key pressed was Return, space, or equals.
         #
-        if event.source == self._resultsDisplay:
+        if self.isSameObject(event.source, self._resultsDisplay):
             contents = self.getText(self._resultsDisplay, 0, -1)
             braille.displayMessage(contents)
 
@@ -142,7 +141,7 @@ class Script(default.Script):
                 # In fact, it's usually about 4, but we cannot depend upon
                 # that.  In addition, keyboard events are decoupled from
                 # text insertion events, so we may get key press/release
-                # events before an insertion occurs, or we might get a 
+                # events before an insertion occurs, or we might get a
                 # press, an insertion, and then a release.
                 #
                 # So, what we do is try to infer that an insertion event
@@ -184,5 +183,10 @@ class Script(default.Script):
                     speech.speak(contents)
                     self._lastSpokenContents = contents
 
-        self._lastProcessedKeyEvent = \
-            input_event.KeyboardEvent(orca_state.lastNonModifierKeyEvent)
+            self._lastProcessedKeyEvent = \
+                input_event.KeyboardEvent(orca_state.lastNonModifierKeyEvent)
+
+        elif self.isSameObject(event.source, self._statusLine):
+            contents = self.getText(self._statusLine, 0, -1)
+            speech.speak(contents)
+            return
