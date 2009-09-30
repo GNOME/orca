@@ -41,7 +41,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         hints being given to us by gcalctool for it's mathematical
         operator buttons."""
 
-        if obj.getRole() != pyatspi.ROLE_PUSH_BUTTON:
+        if not obj.getRole() in [pyatspi.ROLE_PUSH_BUTTON,
+                                 pyatspi.ROLE_TOGGLE_BUTTON]:
             return speech_generator.SpeechGenerator._generateName(\
                 self, obj)
 
