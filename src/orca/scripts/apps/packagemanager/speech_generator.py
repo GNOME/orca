@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.speech_generator as speech_generator
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
@@ -34,6 +36,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def __init__(self, script):
         speech_generator.SpeechGenerator.__init__(self, script)
+
+    def generateSpeech(self, obj, **args):
+        results = []
+        oldRole = None
+        if self._script.isLink(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
+        results.extend(
+            speech_generator.SpeechGenerator.generateSpeech(self, obj, **args))
+        if oldRole:
+            self._restoreRole(oldRole, args)
+
+        return results
 
     def _generateColumnHeader(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio

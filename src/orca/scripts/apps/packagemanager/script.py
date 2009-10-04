@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.default as default
+import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
 
@@ -77,6 +78,24 @@ class Script(default.Script):
         """Returns the tutorial generator for this script."""
 
         return TutorialGenerator(self)
+
+    def onCaretMoved(self, event):
+        """Called whenever the caret moves.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Quietly set the locusOfFocus in HTML containers so that the default
+        # script doesn't ignore this event.
+        #
+        if event.source != orca_state.locusOfFocus \
+           and self.getAncestor(event.source,
+                                [pyatspi.ROLE_HTML_CONTAINER],
+                                [pyatspi.ROLE_FRAME]):
+            orca.setLocusOfFocus(event, event.source, False)
+
+        default.Script.onCaretMoved(self, event)
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
@@ -165,6 +184,42 @@ class Script(default.Script):
             return False
 
         return True
+
+    def isLink(self, obj):
+        """Returns True if this is a text object serving as a link.
+
+        Arguments:
+        - obj: an accessible
+        """
+
+        # Images seem to be exposed as ROLE_PANEL and implement very few of
+        # the accessibility interfaces.
+        #
+        if obj.getRole() == pyatspi.ROLE_PANEL and not obj.childCount \
+           and obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+           and self.getAncestor(obj,
+                                [pyatspi.ROLE_HTML_CONTAINER],
+                                [pyatspi.ROLE_FRAME]):
+            return True
+
+        try:
+            text = obj.queryText()
+        except:
+            return False
+        else:
+            return self.getLinkIndex(obj, text.caretOffset) >= 0
+
+    def isTextArea(self, obj):
+        """Returns True if obj is a GUI component that is for entering text.
+
+        Arguments:
+        - obj: an accessible
+        """
+
+        if self.isLink(obj):
+            return False
+
+        return default.Script.isTextArea(self, obj)
 
     def isSearchEntry(self, obj):
         """Attempts to distinguish the Search entry from other accessibles.
