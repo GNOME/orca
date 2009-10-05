@@ -352,8 +352,8 @@ class SpeechGenerator(generator.Generator):
         except:
             pass
         else:
-            role = pyatspi.ROLE_IMAGE
-            result.extend(self.generate(obj, role=role))
+            args['role'] = pyatspi.ROLE_IMAGE
+            result.extend(self.generate(obj, **args))
         return result
 
     #####################################################################
