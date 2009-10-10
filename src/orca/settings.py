@@ -1082,6 +1082,8 @@ setScriptMapping(re.compile(_('Minefield')), "Mozilla")
 #setScriptMapping(re.compile(_('Shiretoko')), "Mozilla")
 setScriptMapping(re.compile('Shiretoko'), "Mozilla")
 
+setScriptMapping(re.compile('Namoroka'), "Mozilla")
+
 # This is a temporary fix for the schema/FF 3.0 not being accessible
 # issue. (See GNOME bugs #535827 and #555466.)
 #
