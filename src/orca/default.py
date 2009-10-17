@@ -4651,7 +4651,7 @@ class Script(script.Script):
         else:
             otherSelected = False
             text = obj.queryText()
-            displayedText = text.getText(0, -1)
+            displayedText = text.getText(0, self.getTextEndOffset(text))
             if (text.caretOffset == 0) or len(displayedText) == 0:
                 current = obj
                 morePossibleSelections = True
@@ -4665,7 +4665,8 @@ class Script(script.Script):
                             if prevObjText.getNSelections() > 0:
                                 otherSelected = True
                             else:
-                                displayedText = prevObjText.getText(0, -1)
+                                displayedText = prevObjText.getText(0,
+                                    self.getTextEndOffset(prevObjText))
                                 if len(displayedText) == 0:
                                     current = prevObj
                                     morePossibleSelections = True
@@ -4683,7 +4684,8 @@ class Script(script.Script):
                             if nextObjText.getNSelections() > 0:
                                 otherSelected = True
                             else:
-                                displayedText = nextObjText.getText(0, -1)
+                                displayedText = nextObjText.getText(0,
+                                    self.getTextEndOffset(nextObjText))
                                 if len(displayedText) == 0:
                                     current = nextObj
                                     morePossibleSelections = True
@@ -6310,7 +6312,7 @@ class Script(script.Script):
         except NotImplementedError:
             pass
         else:
-            displayedText = text.getText(0, -1)
+            displayedText = text.getText(0, self.getTextEndOffset(text))
 
             # [[[WDW - HACK to account for things such as Gecko that want
             # to use the EMBEDDED_OBJECT_CHARACTER on a label to hold the
@@ -6481,7 +6483,7 @@ class Script(script.Script):
                     except NotImplementedError:
                         continue
                     else:
-                        if text.getText(0, -1):
+                        if text.getText(0, self.getTextEndOffset(text)):
                             realActiveDescendant = child
 
         # [[[TODO: WDW - this is an odd hacky thing I've somewhat drawn
@@ -7095,6 +7097,19 @@ class Script(script.Script):
             return ""
         else:
             return top.name
+
+    def getTextEndOffset(self, textInterface):
+        """Returns the offset which should be used as the end offset.
+        By default, this is -1. However, this value triggers an assertion
+        in certain apps. See bug 598797.
+
+        Argument:
+        - textInterface: the accessible text interface for which the end
+          offset is desired.
+
+        """
+
+        return -1
 
     def getTextLineAtCaret(self, obj, offset=None):
         """Gets the line of text where the caret is.
@@ -8235,7 +8250,8 @@ class Script(script.Script):
                         current = prevObj
                         morePossibleSelections = True
                     else:
-                        displayedText = prevObjText.getText(0, -1)
+                        displayedText = prevObjText.getText(0,
+                            self.getTextEndOffset(prevObjText))
                         if len(displayedText) == 0:
                             current = prevObj
                             morePossibleSelections = True
@@ -8257,7 +8273,8 @@ class Script(script.Script):
                         current = nextObj
                         morePossibleSelections = True
                     else:
-                        displayedText = nextObjText.getText(0, -1)
+                        displayedText = nextObjText.getText(0,
+                            self.getTextEndOffset(nextObjText))
                         if len(displayedText) == 0:
                             current = nextObj
                             morePossibleSelections = True
@@ -8401,7 +8418,7 @@ class Script(script.Script):
         except NotImplementedError:
             return '', 0, 0
 
-        text_contents = ti.getText(0, -1)
+        text_contents = ti.getText(0, self.getTextEndOffset(ti))
         line_offsets = []
         start_offset = 0
         while True:

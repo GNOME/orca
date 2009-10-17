@@ -313,3 +313,15 @@ class Script(default.Script):
 
         return string, caretOffset, lineOffset
         
+    def getTextEndOffset(self, textInterface):
+        """Returns the offset which should be used as the end offset.
+        By default, this is -1. However, this value triggers an assertion
+        in certain apps. See bug 598797.
+
+        Argument:
+        - textInterface: the accessible text interface for which the end
+          offset is desired.
+
+        """
+
+        return textInterface.characterCount
