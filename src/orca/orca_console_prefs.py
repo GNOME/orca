@@ -171,7 +171,12 @@ def setupSpeech(prefsDict):
 
         # Translators: this is prompting for a numerical choice.
         #
-        choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        while True:
+            try:
+                choice = int(sayAndPrint(_("Enter choice: "), False, True))
+                break
+            except:
+                pass
         if (choice <= 0) or (choice >= i):
             # Translators: this means speech synthesis will not be used.
             #
@@ -203,7 +208,12 @@ def setupSpeech(prefsDict):
 
         # Translators: this is prompting for a numerical choice.
         #
-        choice = int(sayAndPrint(_("Enter choice: "), False, True))
+        while True:
+            try:
+                choice = int(sayAndPrint(_("Enter choice: "), False, True))
+                break
+            except:
+                pass
         if (choice <= 0) or (choice >= i):
             # Translators: this means speech synthesis will not be used.
             #
@@ -250,10 +260,15 @@ def setupSpeech(prefsDict):
 
         # Translators: this is prompting for a numerical choice.
         #
-        choice = int(sayAndPrint(_("Enter choice: "),
-                                 False,               # stop
-                                 True,                # getInput
-                                 speechServerChoice)) # speech server
+        while True:
+            try:
+                choice = int(sayAndPrint(_("Enter choice: "),
+                                         False,               # stop
+                                         True,                # getInput
+                                         speechServerChoice)) # speech server
+                break
+            except:
+                pass
         if (choice <= 0) or (choice >= i):
             # Translators: this means speech synthesis will not be used.
             #
@@ -396,13 +411,15 @@ def setupSpeech(prefsDict):
     sayAndPrint(_("2. Laptop"),
                 False, False, speechServerChoice, speechVoiceChoice)
 
-    try:
-        # Translators: this is prompting for a numerical choice.
-        #
-        choice = int(sayAndPrint(_("Enter choice: "),
-                     False, True, speechServerChoice, speechVoiceChoice))
-    except:
-        choice = -1
+    while True:
+        try:
+            # Translators: this is prompting for a numerical choice.
+            #
+            choice = int(sayAndPrint(_("Enter choice: "),
+                         False, True, speechServerChoice, speechVoiceChoice))
+            break
+        except:
+            pass
     if choice == 2:
         prefsDict["keyboardLayout"] = settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
         prefsDict["orcaModifierKeys"] = settings.LAPTOP_MODIFIER_KEYS
