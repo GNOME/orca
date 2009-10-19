@@ -1,3 +1,46 @@
+2.28.1 - 19-Oct-2009
+
+General:
+
+* Fix for bgo#596257 - Generator arguments are not passed along with
+  _generateImage()
+
+* Fix for bgo#596340 - Exception if no selection is given when
+  choosing a language
+
+* Fix for bgo#596364 - Create a script for the OpenSolaris Device
+  Driver Utility
+
+* Fix for bgo#596384 - Orca sometimes fails to speak a newly-focused
+  table in certain OpenSolaris utilities
+
+* Fix for bgo#598797 - Gnome-Terminal and VTE dump core when using Orca
+
+Firefox/Thunderbird:
+
+* Fix for bgo#592634 - The Gecko script's handling of caret navigation
+  interferes when navigating editable messages in Thunderbird
+
+* Fix for bgo#593520 - The Gecko script's getBottomOfFile needs to be
+  more efficient
+
+* Fix for bgo#593594 - Orca says "blank" when Firefox returns a bogus
+  value for getTextAtOffset
+
+* Fix for bgo#593596 - When the user Up Arrows to a line in Firefox
+  which begins with a nested paragraph, Orca fails to present that
+  line
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    da		Danish	     	     Kenneth Nielsen
+    de          German               Simon Bienlein
+    el		Greek		     Jennie Petoumenou
+    it          Italian              Luca Ferretti
+    ru		Russian		     Leonid Kanter
+
+==========
+
 2.28.0 - 21-Sep-2009
 
 General:
