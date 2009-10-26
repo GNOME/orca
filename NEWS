@@ -1,3 +1,82 @@
+2.29.1 - 26-Sep-2009
+
+General:
+
+* Fix for bgo#594022 - cannot launch orca preferences - GError:
+  Duplicate object id 'renderer3'
+
+* Fix for bgo#595117 - Need to customize the presentation of the
+  Packagemanager package list toggle
+
+* Fix for bgo#596257 - Generator arguments are not passed along with
+  _generateImage()
+
+* Fix for bgo#596340 - Exception if no selection is given when
+  choosing a language
+
+* Fix for bgo#596364 - Create a script for the OpenSolaris Device
+  Driver Utility
+
+* Fix for bgo#596384 - Orca sometimes fails to speak a newly-focused
+  table in certain OpenSolaris utilities
+
+* Fix for bgo#596635 - gcalctool script will need to be updated for
+  2.29/2.30/3.0
+
+* Fix for bgo#598797 - Gnome-Terminal and VTE dump core when using
+  Orca
+
+OpenOffice:
+
+* Fix for bgo#592917 - Orca doesn't present OOo Writer's Style combo
+  box correctly
+
+Firefox:
+
+* Added script mapping for the latest Firefox.
+
+* Fix for bgo#592634 - The Gecko script's handling of caret navigation
+  interferes when navigating editable messages in Thunderbird
+
+* Fix for bgo#593520 - The Gecko script's getBottomOfFile needs to be
+  more efficient
+
+* Fix for bgo#593594 - Orca says "blank" when Firefox returns a bogus
+  value for getTextAtOffset
+
+* Fix for bgo#593596 - When the user Up Arrows to a line in Firefox
+  which begins with a nested paragraph, Orca fails to present that
+  line
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg	        Bulgarian	     Alexander Shopov
+    ca	        Catalan		     Gil Forcada
+    ca@valencia Catalan (Valencian)  Carles Ferrando
+    cs		Czech		     Lucas Lommer and Petr Kovar
+    da     	Danish	     	     Kenneth Nielsen
+    de	     	German	     	     Simon Bienlein and
+    	     			     Mario Blättermann
+    el	 	Greek		     Kostas Papadimas and Jennie Petoumenou
+    en_GB    	British English	     Bruce Cowan
+    es		Spanish		     Francisco Javier Dorado Martinez
+    eu		Basque		     Inaki Larranaga
+    fi	     	Finnish		     Ilkka Tuohela
+    gl	     	Galician	     Antón Méixome
+    it       	Italian              Luca Ferretti
+    nb		Norwegian bokmål     Kjartan Marass
+    pl	     	Polish		     Piotr Leszczyński
+    pt		Portuguese	     Duarte Loreto
+    pt_BR	Brazilian Portuguese Og B. Maciel and Marco de Freitas
+    ro	     	Romanian	     Adi Roiban
+    ta	     	Tamil		     drtvasudevan
+    sl	     	Slovenian	     Matej Urbančič
+    uk	     	Ukrainian	     Maxim V. Dziumanenko
+    zh_HK    	Traditional Chinese  Chao-Hsiung Liao
+    zh_TW    	Traditional Chinese  Chao-Hsiung Liao
+
+==========
+
 2.27.91 - 24-Aug-2009
 
 General:
