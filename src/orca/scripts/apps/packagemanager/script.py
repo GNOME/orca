@@ -30,6 +30,7 @@ import pyatspi
 import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
+import orca.settings as settings
 import orca.speech as speech
 
 from orca.orca_i18n import _
@@ -184,6 +185,167 @@ class Script(default.Script):
             return False
 
         return True
+
+    def sayLine(self, obj):
+        """Speaks the line at the current caret position."""
+
+        if not self.getAncestor(
+           obj, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
+            return default.Script.sayLine(self, obj)
+
+        try:
+            text = obj.queryText()
+        except:
+            return default.Script.sayLine(self, obj)
+
+        contents = self.getLineContentsAtOffset(obj, text.caretOffset)
+        for content in contents:
+            child, startOffset, endOffset, line = content
+            if len(contents) > 1 and not line.strip():
+                continue
+
+            isLink = self.isLink(child)
+
+            if len(line) and line != "\n":
+                if line.decode("UTF-8").isupper():
+                    voice = self.voices[settings.UPPERCASE_VOICE]
+                elif isLink:
+                    voice = self.voices[settings.HYPERLINK_VOICE]
+                else:
+                    voice = self.voices[settings.DEFAULT_VOICE]
+
+                line = self.adjustForRepeats(line)
+                speech.speak(line, voice)
+                if isLink:
+                    speech.speak(self.speechGenerator.getRoleName(
+                            child, role=pyatspi.ROLE_LINK))
+
+            else:
+                self.sayCharacter(child)
+
+    def getRelationTarget(self, obj, relationType):
+        """Gets the target of the specified relation for obj.
+
+        Arguments:
+        - obj: the current object
+        - relationType: the pyatspi relation type
+
+        Returns the target that relation points to; otherwise, None.
+        """
+
+        for relation in obj.getRelationSet():
+            if relation.getRelationType() == relationType:
+                return relation.getTarget(0)
+
+        return None
+
+    def getLineContentsAtOffset(self, obj, offset):
+        """Returns an ordered list where each element is composed of an
+        [obj, startOffset, endOffset, string] tuple.  The list is created
+        via an in-order traversal of the document contents starting at
+        the given object and characterOffset.  The first element in
+        the list represents the beginning of the line.  The last
+        element in the list represents the character just before the
+        beginning of the next line.
+
+        Arguments:
+        -obj: the object to start at
+        -offset: the character offset in the object
+        """
+
+        try:
+            text = obj.queryText()
+        except:
+            return []
+
+        contents = []
+
+        # Get the line contents with respect to this object.
+        #
+        line = text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_LINE_START)
+        contents.append([obj, line[1], line[2], line[0]])
+
+        extents = text.getCharacterExtents(offset, 0)
+        index = obj.getIndexInParent()
+
+        # Get the line contents for all objects to the left.
+        #
+        prevObj = self.getRelationTarget(obj, pyatspi.RELATION_FLOWS_FROM)
+        while prevObj:
+            try:
+                text = prevObj.queryText()
+            except:
+                break
+
+            line = text.getTextAtOffset(
+                text.characterCount - 1, pyatspi.TEXT_BOUNDARY_LINE_START)
+            newExtents = text.getCharacterExtents(line[1], 0)
+            if extents != newExtents and self.onSameLine(extents, newExtents):
+                content = [prevObj, line[1], line[2], line[0]]
+
+                # Sanity check due to some circular FLOWS_TO/FROM relations.
+                #
+                if contents.count(content):
+                    break
+
+                # Sanity check due to gtkhtml2 flat out lying about the value
+                # of y.
+                #
+                if extents[0] <= newExtents[0]:
+                    break
+
+                contents[0:0] = [content]
+                prevObj = self.getRelationTarget(
+                    prevObj, pyatspi.RELATION_FLOWS_FROM)
+            else:
+                break
+
+        # Get the line contents for all objects to the right.
+        #
+        nextObj = self.getRelationTarget(obj, pyatspi.RELATION_FLOWS_TO)
+        while nextObj:
+            try:
+                text = nextObj.queryText()
+            except:
+                break
+
+            line = text.getTextAtOffset(0, pyatspi.TEXT_BOUNDARY_LINE_START)
+            newExtents = text.getCharacterExtents(line[1], 0)
+            if extents != newExtents and self.onSameLine(extents, newExtents):
+                content = [nextObj, line[1], line[2], line[0]]
+
+                # Sanity check due to some circular FLOWS_TO/FROM relations.
+                #
+                if contents.count(content):
+                    break
+
+                # Sanity check due to gtkhtml2 flat out lying about the value
+                # of y.
+                #
+                if extents[0] >= newExtents[0]:
+                    break
+
+                contents.append(content)
+                nextObj = \
+                    self.getRelationTarget(nextObj, pyatspi.RELATION_FLOWS_TO)
+            else:
+                break
+
+        return contents
+
+    def onSameLine(self, extents1, extents2):
+        """Determine if extents1 and extents2 are on the same line.
+
+        Arguments:
+        -extents1: [x, y, width, height]
+        -extents2: [x, y, width, height]
+
+        Returns True if extents1 and extents2 are on the same line.
+        """
+
+        verticalCenter1 = extents1[1] + extents1[3] / 2
+        verticalCenter2 = extents2[1] + extents2[3] / 2
+        return abs(verticalCenter1 - verticalCenter2) <= 1
 
     def isLink(self, obj):
         """Returns True if this is a text object serving as a link.
