@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.braille as braille
 import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -185,6 +186,47 @@ class Script(default.Script):
             return False
 
         return True
+
+    def updateBraille(self, obj, extraRegion=None):
+        """Updates the braille display to show the given object.
+
+        Arguments:
+        - obj: the Accessible
+        - extra: extra Region to add to the end
+        """
+
+        if not self.getAncestor(
+           obj, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
+            return default.Script.updateBraille(self, obj, extraRegion)
+
+        try:
+            text = obj.queryText()
+        except:
+            return default.Script.updateBraille(self, obj, extraRegion)
+
+        braille.clear()
+        line = braille.Line()
+        braille.addLine(line)
+
+        focusedRegion = None
+        contents = self.getLineContentsAtOffset(obj, text.caretOffset)
+        for i, content in enumerate(contents):
+            child, startOffset, endOffset, string = content
+            isFocusedObj = self.isSameObject(child, obj)
+            regions = [braille.Text(child,
+                                    startOffset=startOffset,
+                                    endOffset=endOffset)]
+
+            if isFocusedObj:
+                focusedRegion = regions[0]
+
+            line.addRegions(regions)
+
+        if extraRegion:
+            line.addRegion(extraRegion)
+
+        braille.setFocus(focusedRegion, getLinkMask=False)
+        braille.refresh(panToCursor=True, getLinkMask=False)
 
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
