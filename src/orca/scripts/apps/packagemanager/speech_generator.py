@@ -74,3 +74,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(speech_generator.SpeechGenerator.\
                 _generateColumnHeaderIfToggleAndNoText(self, obj, **args))
         return result
+
+    def _generateAvailability(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the grayed/sensitivity/availability state of the
+        object, but only if it is insensitive (i.e., grayed out and
+        inactive).  Otherwise, and empty array will be returned.
+        """
+        result = []
+        if not self._script.isLink(obj):
+            result.extend(speech_generator.SpeechGenerator.\
+                _generateAvailability(self, obj, **args))
+        return result
