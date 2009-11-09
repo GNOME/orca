@@ -67,7 +67,10 @@ import debug
 import httpserver
 import keynames
 import keybindings
-import mag
+try:
+    import gsmag as mag
+except:
+    import mag
 import orca_state
 import platform
 import settings

@@ -27,7 +27,10 @@ __license__   = "LGPL"
 
 import orca.braille as braille
 import orca.default as default
-import orca.mag as mag
+try:
+    import orca.gsmag as mag
+except:
+    import orca.mag as mag
 import orca.speech as speech
 import pyatspi
 

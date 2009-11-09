@@ -34,7 +34,10 @@ import pango   # for ellipsize property constants of CellRendererText
 import locale
 
 import acss
-import mag
+try:
+    import gsmag as mag
+except:
+    import mag
 import orca
 import orca_gtkbuilder
 import orca_prefs

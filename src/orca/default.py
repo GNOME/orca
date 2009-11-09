@@ -43,7 +43,10 @@ import find
 import flat_review
 import input_event
 import keybindings
-import mag
+try:
+    import gsmag as mag
+except:
+    import mag
 import outline
 import orca
 import orca_prefs

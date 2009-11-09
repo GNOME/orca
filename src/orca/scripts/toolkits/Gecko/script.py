@@ -54,7 +54,10 @@ import orca.eventsynthesizer as eventsynthesizer
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.liveregions as liveregions
-import orca.mag as mag
+try:
+    import orca.gsmag as mag
+except:
+    import orca.mag as mag
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.rolenames as rolenames

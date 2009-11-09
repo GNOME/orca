@@ -28,6 +28,7 @@ orca_python_PYTHON = \
 	formatting.py \
 	generator.py \
 	gnomespeechfactory.py \
+	gsmag.py \
 	httpserver.py \
 	input_event.py \
 	keybindings.py \
