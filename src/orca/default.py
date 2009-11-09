@@ -7274,6 +7274,22 @@ class Script(script.Script):
                 return []
 
         nodes = []
+
+        # First see if this accessible implements RELATION_NODE_PARENT_OF.
+        # If it does, the full target list are the nodes. If it doesn't
+        # we'll do an old-school, row-by-row search for child nodes.
+        #
+        relations = obj.getRelationSet()
+        try:
+            for relation in relations:
+                if relation.getRelationType() == \
+                        pyatspi.RELATION_NODE_PARENT_OF:
+                    for target in range(relation.getNTargets()):
+                        nodes.append(target)
+                    return nodes
+        except:
+            pass
+
         index = self.getCellIndex(obj)
         row = table.getRowAtIndex(index)
         col = table.getColumnAtIndex(index)
