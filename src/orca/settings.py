@@ -1129,6 +1129,9 @@ setScriptMapping(re.compile(_('gaim')), "pidgin")
 #setScriptMapping(re.compile(_('gnome-help')), "yelp")
 setScriptMapping(re.compile('gnome-help'), "yelp")
 
+# This is for development builds of Banshee
+setScriptMapping(re.compile('Nereid'), "Banshee")
+
 # Strip off the extra 'py' that the Device Driver Utility includes
 # as part of its accessible name.
 #

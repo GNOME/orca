@@ -8,7 +8,8 @@ SUBDIRS = \
 	rhythmbox \
 	Thunderbird \
 	gedit \
-	gnome-window-properties
+	gnome-window-properties \
+	Banshee
 
 orca_pathdir=$(pyexecdir)
 

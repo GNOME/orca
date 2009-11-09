@@ -85,6 +85,7 @@ src/orca/scripts/apps/rhythmbox/Makefile
 src/orca/scripts/apps/Thunderbird/Makefile
 src/orca/scripts/apps/gedit/Makefile
 src/orca/scripts/apps/gnome-window-properties/Makefile
+src/orca/scripts/apps/Banshee/Makefile
 src/orca/scripts/toolkits/Makefile
 src/orca/scripts/toolkits/Gecko/Makefile
 src/orca/scripts/toolkits/J2SE-access-bridge/Makefile
