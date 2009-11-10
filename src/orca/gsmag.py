@@ -67,7 +67,7 @@ def _setROICenter(x, y):
     - x: integer in unzoomed system coordinates representing x component
     - y: integer in unzoomed system coordinates representing y component
     """
-    _magnifier.shiftContentsTo(x, y)
+    _magnifier.shiftContentsTo(x + 1, y + 1)
 
 def _setROICursorPush(x, y, width, height, edgeMargin = 0):
     """Nudges the ROI if the caret or control is not visible.
@@ -195,10 +195,12 @@ def magnifyAccessible(event, obj, extents=None):
 
             # Be sure that the upper-left corner of the object will still
             # be visible on the screen.
+            # [[[WDW - probably should not make a getROI call each time]]]
             #
-            if width > _roiWidth:
+            (roiLeft, roiTop, roiWidth, roiHeight) = _magnifier.getROI()
+            if width > roiWidth:
                 centerX = x
-            if height > _roiHeight:
+            if height > roiHeight:
                 centerY = y
 
             _setROICenter(centerX, centerY)
