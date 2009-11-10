@@ -158,6 +158,12 @@ else
         CLEANUP=`echo $ARGS | egrep -c "\-s|\-t|\-n|\-u|\-e|\-d"`
     fi
 
+    # Allow a -z override to avoid cleanup.
+    #
+    if [ `echo $ARGS | grep -c "\-z"` -gt 0 ] ; then
+	CLEANUP=0
+    fi
+
     # Clean up before running orca to get anything that might
     # be laying around.
     #

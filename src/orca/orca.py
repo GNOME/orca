@@ -1535,6 +1535,13 @@ def usage():
     print "-q, --quit                   " + \
           _("Quits Orca (if shell script used)")
 
+    # Translators: this is the Orca command line option that will enable to
+    # to launch multiple instances of orca on multi-head computers. If this
+    # command line option is specified, the script will not kill any other
+    # instances of Orca that are already running.
+    #
+    print "-z                           " +\
+          _("Orca does not kill other running orca processes")
     print
 
     # Translators: this is text being sent to a terminal and we want to
@@ -1617,10 +1624,11 @@ def main():
         # n is for no setup
         # t is for text setup
         # v is for version
+        # z is for no exit
         #
         opts, args = getopt.getopt(
             arglist,
-            "?stnvld:e:u:",
+            "?zstnvld:e:u:",
             ["help",
              "user-prefs-dir=",
              "enable=",
