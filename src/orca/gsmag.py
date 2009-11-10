@@ -296,10 +296,39 @@ def finishLiveUpdating():
 #                                                                      #
 ########################################################################
 
+def _setScreenPosition(position):
+    if position == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
+        positionString = "Full Screen"
+    elif position == settings.MAG_ZOOMER_TYPE_TOP_HALF:
+        positionString = "Top Half"
+    elif position == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
+        positionString = "Bottom Half"
+    elif position == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
+        positionString = "Left Half"
+    elif position == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
+        positionString = "Right Half"
+    else:
+        positionString = "Full Screen"
+    _magnifier.setScreenPosition(positionString)
+    
 def applySettings():
     """Looks at the user settings and applies them to the magnifier."""
-    # [[[WDW - To be implemented]]]
-    pass
+    global _mouseTracking
+    global _controlTracking
+    global _textTracking
+    global _edgeMargin
+    global _pointerFollowsZoomer
+    global _pointerFollowsFocus
+
+    _magnifier.setMagFactor(settings.magZoomFactor, settings.magZoomFactor)
+    _setScreenPosition(settings.magZoomerType)
+  
+    _mouseTracking = settings.magMouseTrackingMode
+    _controlTracking = settings.magControlTrackingMode
+    _textTracking = settings.magTextTrackingMode
+    _edgeMargin = settings.magEdgeMargin
+    _pointerFollowsZoomer = settings.magPointerFollowsZoomer
+    _pointerFollowsFocus = settings.magPointerFollowsFocus
 
 def hideSystemPointer(hidePointer):
     """Hide or show the system pointer.
@@ -546,8 +575,7 @@ def isFullScreenCapable():
 def init():
     global _isActive
     _magnifier.setActive(True)
-    _magnifier.setMagFactor(settings.magZoomFactor, settings.magZoomFactor)
-    _magnifier.setScreenPosition("Full Screen")
+    applySettings()
     _isActive = _magnifier.isActive()
     
 def shutdown():
