@@ -66,16 +66,21 @@ speechVoiceChoice  = None
 # translation of the "Enter y or n:" strings for this file.
 #
 YESEXPR = re.compile(_("^[Yy1]"))
+NOEXPR = re.compile(_("^[Nn0]"))
 
 def checkYes(value) :
-    """Checks if a string represents a yes.
-
+    """Checks if a string represents a yes, no.
     Arguments:
     - value: a string read from the console
 
     Returns True if the argument represents a yes
     """
-    return YESEXPR.match(value) != None
+    if YESEXPR.match(value) != None:
+        return True
+    elif NOEXPR.match(value) != None:
+        return False
+    else:
+        raise ValueError
 
 def sayAndPrint(text,
                 stop=False,
@@ -176,7 +181,11 @@ def setupSpeech(prefsDict):
                 choice = int(sayAndPrint(_("Enter choice: "), False, True))
                 break
             except:
-                pass
+                # Translators: this is letting the user they input an
+                # invalid integer value on the command line and is
+                # also requesting they enter a valid integer value.
+                #
+                sayAndPrint(_("Please enter a valid number."))
         if (choice <= 0) or (choice >= i):
             # Translators: this means speech synthesis will not be used.
             #
@@ -213,7 +222,7 @@ def setupSpeech(prefsDict):
                 choice = int(sayAndPrint(_("Enter choice: "), False, True))
                 break
             except:
-                pass
+                sayAndPrint(_("Please enter a valid number."))
         if (choice <= 0) or (choice >= i):
             # Translators: this means speech synthesis will not be used.
             #
@@ -258,17 +267,17 @@ def setupSpeech(prefsDict):
             choices[i] = voice
             i += 1
 
-        # Translators: this is prompting for a numerical choice.
-        #
         while True:
             try:
+                # Translators: this is prompting for a numerical choice.
+                #
                 choice = int(sayAndPrint(_("Enter choice: "),
                                          False,               # stop
                                          True,                # getInput
                                          speechServerChoice)) # speech server
                 break
             except:
-                pass
+                sayAndPrint(_("Please enter a valid number."))
         if (choice <= 0) or (choice >= i):
             # Translators: this means speech synthesis will not be used.
             #
@@ -303,87 +312,138 @@ def setupSpeech(prefsDict):
     prefsDict["speechServerInfo"] = speechServerChoice
     prefsDict["voices"] = voices
 
-    # Translators: the word echo feature of Orca will speak the word
-    # prior to the caret when the user types a word delimiter.
-    #
-    answer = sayAndPrint(_("Enable echo by word?  Enter y or n: "),
-                         True,
-                         True,
-                         speechServerChoice,
+    stop = True
+    while True:
+        # Translators: the word echo feature of Orca will speak the
+        # word prior to the caret when the user types a word
+        # delimiter.
+        #
+        answer = sayAndPrint(_("Enable echo by word?  Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
+                             speechVoiceChoice)
+        try:
+            prefsDict["enableEchoByWord"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
+
+    stop = True
+    while True:
+        # Translators: if key echo is enabled, Orca will speak the
+        # name of a key as the user types on the keyboard.  If the
+        # user wants key echo, they will then be prompted for which
+        # classes of keys they want echoed.
+        #
+        answer = sayAndPrint(_("Enable key echo?  Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
                          speechVoiceChoice)
-    prefsDict["enableEchoByWord"] = checkYes(answer)
+        try:
+            prefsDict["enableKeyEcho"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
 
-    # Translators: if key echo is enabled, Orca will speak the name of a key
-    # as the user types on the keyboard.  If the user wants key echo, they
-    # will then be prompted for which classes of keys they want echoed.
-    #
-    answer = sayAndPrint(_("Enable key echo?  Enter y or n: "),
-                         True,
-                         True,
-                         speechServerChoice,
-                         speechVoiceChoice)
-    if checkYes(answer):
-        prefsDict["enableKeyEcho"] = True
-
-        # Translators: this is in reference to key echo for
-        # normal text entry keys.
-        #
-        answer = sayAndPrint( \
-          _("Enable alphanumeric and punctuation keys?  Enter y or n: "),
-                             True,
-                             True,
-                             speechServerChoice,
-                             speechVoiceChoice)
-        prefsDict["enablePrintableKeys"] = checkYes(answer)
-
-        # Translators: this is in reference to key echo for
-        # CTRL, ALT, Shift, Insert, and "Fn" on laptops.
-        #
-        answer = sayAndPrint(_("Enable modifier keys?  Enter y or n: "),
-                             True,
-                             True,
-                             speechServerChoice,
-                             speechVoiceChoice)
-        prefsDict["enableModifierKeys"] = checkYes(answer)
-
-        # Translators: this is in reference to key echo for
-        # Caps Lock, Num Lock, Scroll Lock, etc.
-        #
-        answer = sayAndPrint(_("Enable locking keys?  Enter y or n: "),
-                             True,
-                             True,
-                             speechServerChoice,
-                             speechVoiceChoice)
-        prefsDict["enableLockingKeys"] = checkYes(answer)
-
-        # Translators: this is in reference to key echo for
-        # the keys at the top of the keyboard.
-        #
-        answer = sayAndPrint(_("Enable function keys?  Enter y or n: "),
-                             True,
-                             True,
-                             speechServerChoice,
-                             speechVoiceChoice)
-        prefsDict["enableFunctionKeys"] = checkYes(answer)
-
-        # Translators: this is in reference to key echo for
-        # space, enter, escape, tab, backspace, delete, arrow
-        # keys, page up, page down, etc.
-        #
-        answer = sayAndPrint(_("Enable action keys?  Enter y or n: "),
-                             True,
-                             True,
-                             speechServerChoice,
-                             speechVoiceChoice)
-        prefsDict["enableActionKeys"] = checkYes(answer)
-
-    else:
+    keyEcho = prefsDict["enableKeyEcho"]
+    if not keyEcho:
         prefsDict["enableKeyEcho"]       = False
         prefsDict["enablePrintableKeys"] = False
         prefsDict["enableModifierKeys"]  = False
         prefsDict["enableLockingKeys"]   = False
         prefsDict["enableFunctionKeys"]  = False
         prefsDict["enableActionKeys"]    = False
+
+    stop = True
+    while keyEcho and True:
+        # Translators: this is in reference to key echo for
+        # normal text entry keys.
+        #
+        answer = sayAndPrint( \
+            _("Enable alphanumeric and punctuation keys?  Enter y or n: "),
+            stop,
+            True,
+            speechServerChoice,
+            speechVoiceChoice)
+        try:
+            prefsDict["enablePrintableKeys"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
+
+    stop = True
+    while keyEcho and True:
+        # Translators: this is in reference to key echo for
+        # CTRL, ALT, Shift, Insert, and "Fn" on laptops.
+        #
+        answer = sayAndPrint(_("Enable modifier keys?  Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
+                             speechVoiceChoice)
+        try:
+            prefsDict["enableModifierKeys"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
+
+    stop = True
+    while keyEcho and True:
+        # Translators: this is in reference to key echo for
+        # Caps Lock, Num Lock, Scroll Lock, etc.
+        #
+        answer = sayAndPrint(_("Enable locking keys?  Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
+                             speechVoiceChoice)
+        try:
+            prefsDict["enableLockingKeys"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
+
+    stop = True
+    while keyEcho and True:
+        # Translators: this is in reference to key echo for
+        # the keys at the top of the keyboard.
+        #
+        answer = sayAndPrint(_("Enable function keys?  Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
+                             speechVoiceChoice)
+        try:
+            prefsDict["enableFunctionKeys"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
+
+    stop = True
+    while keyEcho and True:
+        # Translators: this is in reference to key echo for
+        # space, enter, escape, tab, backspace, delete, arrow
+        # keys, page up, page down, etc.
+        #
+        answer = sayAndPrint(_("Enable action keys?  Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
+                             speechVoiceChoice)
+        try:
+            prefsDict["enableActionKeys"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
 
     # Translators: we allow the user to choose between the desktop (i.e.,
     # has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -417,17 +477,22 @@ def setupSpeech(prefsDict):
             #
             choice = int(sayAndPrint(_("Enter choice: "),
                          False, True, speechServerChoice, speechVoiceChoice))
-            break
+            if choice == 2:
+                prefsDict["keyboardLayout"] = \
+                    settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
+                prefsDict["orcaModifierKeys"] = \
+                    settings.LAPTOP_MODIFIER_KEYS
+                break
+            elif choice == 1:
+                prefsDict["keyboardLayout"] = \
+                    settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+                prefsDict["orcaModifierKeys"] = \
+                    settings.DESKTOP_MODIFIER_KEYS
+                break
+            else:
+                sayAndPrint(_("Please enter a valid number."))
         except:
-            pass
-    if choice == 2:
-        prefsDict["keyboardLayout"] = settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
-        prefsDict["orcaModifierKeys"] = settings.LAPTOP_MODIFIER_KEYS
-    else:
-        prefsDict["keyboardLayout"] = settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        prefsDict["orcaModifierKeys"] = settings.DESKTOP_MODIFIER_KEYS
-    if (choice <= 0) or (choice >= 3):
-        sayAndPrint(_("Invalid choice. Selecting desktop keyboard layout.\n"))
+            sayAndPrint(_("Please enter a valid number."))
 
     return True
 
@@ -452,38 +517,60 @@ def showPreferencesUI(commandLineSettings):
         prefsDict["enableEchoByWord"] = False
         prefsDict["enableKeyEcho"]    = False
 
-    # Translators: this is prompting for whether the user wants to use a
-    # refreshable braille display (an external hardware device) or not.
-    #
-    answer = sayAndPrint(_("Enable Braille?  Enter y or n: "),
-                         True,
-                         True,
-                         speechServerChoice,
-                         speechVoiceChoice)
-    prefsDict["enableBraille"] = checkYes(answer)
+    stop = True
+    while True:
+        # Translators: this is prompting for whether the user wants to
+        # use a refreshable braille display (an external hardware
+        # device) or not.
+        #
+        answer = sayAndPrint(_("Enable Braille?  Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
+                             speechVoiceChoice)
+        try:
+            prefsDict["enableBraille"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
 
-    # Translators: the braille monitor is a graphical display on the screen
-    # that is used for debugging and demoing purposes.  It presents what
-    # would be (or is being) shown on the external refreshable braille
-    # display.
-    #
-    answer = sayAndPrint(_("Enable Braille Monitor?  Enter y or n: "),
-                         True,
-                         True,
-                         speechServerChoice,
-                         speechVoiceChoice)
-    prefsDict["enableBrailleMonitor"] = checkYes(answer)
+    stop = True
+    while True:
+        # Translators: the braille monitor is a graphical display on
+        # the screen that is used for debugging and demoing purposes.
+        # It presents what would be (or is being) shown on the
+        # external refreshable braille display.
+        #
+        answer = sayAndPrint(_("Enable Braille Monitor?  Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
+                             speechVoiceChoice)
+        try:
+            prefsDict["enableBrailleMonitor"] = checkYes(answer)
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
 
-    # Translators: orca can be set up to automatically start when the 
-    # user logs in.
-    #
-    answer = sayAndPrint(_("Automatically start orca when you log in?  " \
-                           "Enter y or n: "),
-                         True,
-                         True,
-                         speechServerChoice,
-                         speechVoiceChoice)
-    settings.setOrcaAutostart(checkYes(answer))
+    stop = True
+    while True:
+        # Translators: orca can be set up to automatically start when
+        # the user logs in.
+        #
+        answer = sayAndPrint(_("Automatically start orca when you log in?  " \
+                                   "Enter y or n: "),
+                             stop,
+                             True,
+                             speechServerChoice,
+                             speechVoiceChoice)
+        try:
+            settings.setOrcaAutostart(checkYes(answer))
+            break
+        except:
+            stop = False
+            sayAndPrint(_("Please enter y or n."))
 
     logoutNeeded = orca_prefs.writePreferences(prefsDict)
     if logoutNeeded:
@@ -500,26 +587,33 @@ def showPreferencesUI(commandLineSettings):
                     speechVoiceChoice)
 
         if desktopRunning:
-            answer = sayAndPrint( \
-                _("Do you want to logout now?  Enter y or n: "),
-                                 False,
-                                 True,
-                                 speechServerChoice,
-                                 speechVoiceChoice)
-            if checkYes(answer):
-                sayAndPrint(_("Setup complete. Logging out now."),
-                            False,
-                            False,
-                            speechServerChoice,
-                            speechVoiceChoice)
-                time.sleep(2)
+            stop = True
+            while True:
+                answer = sayAndPrint( \
+                    _("Do you want to logout now?  Enter y or n: "),
+                                     False,
+                                     True,
+                                     speechServerChoice,
+                                     speechVoiceChoice)
+                try:
+                    if checkYes(answer):
+                        sayAndPrint(_("Setup complete. Logging out now."),
+                                    stop,
+                                    False,
+                                    speechServerChoice,
+                                    speechVoiceChoice)
+                        time.sleep(2)
 
-                import bonobo
-                import gobject
+                        import bonobo
+                        import gobject
 
-                gobject.threads_init()
-                gobject.idle_add(logoutUser)
-                bonobo.main()
+                        gobject.threads_init()
+                        gobject.idle_add(logoutUser)
+                        bonobo.main()
+                    break
+                except:
+                    stop = False
+                    sayAndPrint(_("Please enter y or n."))
 
     answer = sayAndPrint(_("Setup complete.  Press Return to continue."),
                          not logoutNeeded,
