@@ -1,4 +1,4 @@
-.\" Copyright (C) 2005-2008 Sun Microsystems Inc.
+.\" Copyright (C) 2005-2009 Sun Microsystems Inc.
 .\"
 .\" This is free software; you may redistribute it and/or modify
 .\" it under the terms of the GNU General Public License as
@@ -14,80 +14,66 @@
 .\" along with this; if not write to the Free Software Foundation, Inc.
 .\" 51 Franklin Street, Fifth Floor, Boston MA 02110-1301 USA
 '\"
-.TH orca 1 "7 May 2008" "GNOME"
+.TH orca 1 "10 Nov 2008" "GNOME"
 .SH NAME
-orca \- a screen reader / magnifier
+orca \- is a scriptable screen reader and magnifier
 .SH SYNOPSIS
 .B orca
 .RI [ option... ]
 .SH DESCRIPTION
-.B orca 
+.B orca
 is a screen reader for people with visual impairments,
-and provides alternative access to the desktop by making use
-of speech synthesis, braille, and magnification  support on
-the platform.
+it provides alternative access to the desktop by using speech synthesis, braille, and magnification.
 .P
-In addition, 
-.B orca 
+In addition,
+.B orca
 only provides access to
 applications/toolkits that support the assistive technology
 service provide interface (AT-SPI), which include GTK,
 Mozilla, Firefox, Evolution, OpenOffice, StarOffice,
 Java/Swing, etc.
 .P
-WARNING: suspending 
+WARNING: suspending
 .B orca,
 e.g. by pressing Control-Z, from
 an AT-SPI enabled shell (such as gnome-terminal), can also
 suspend the desktop until Orca is killed.
 .SH OPTIONS
 .TP
-.B \-s, --gui-setup, --setup
+.B \-s, --setup, --gui-setup
 When starting
 .BR orca ,
 bring up the GUI configuration dialog.
 .TP
 .B \-t, --text-setup
-When starting 
+When starting
 .BR orca ,
 initiate the text-based configuration.
 .TP
 .B \-n, --no-setup
-When starting 
-.BR orca ,
-force the application to be started without configuration, even though
-it might have needed it. This is useful when starting 
-.B orca 
-via something like gdm.
-.TP
-.BI "\-u " dirname
-.TP
-.BI "--user-prefs-dir=" dirname
 When starting
 .BR orca ,
-use 
-.I dirname 
+force the application to be started without configuration, even though
+it might have needed it. This is useful when starting
+.B orca
+via something like gdm.
+.TP
+.BI "\-u, --user-prefs-dir=" dirname
+When starting
+.BR orca ,
+use
+.I dirname
 as an alternate directory for the user preferences.
 .TP
-.BI "\-e " speech|braille|braille-monitor|magnifier|main-window
-.TP
-.BI "--enable=" speech|braille|braille-monitor|magnifier|main-window
+.BI "\-e, \-\-enable=" speech|braille|braille\-monitor|magnifier|main\-window
 When starting
 .BR orca ,
 force the enabling of the supplied options.
 .TP
-.BI "\-d " speech|braille|braille-monitor|magnifier|main-window
-.TP
-.BI "--disable=" speech|braille|braille-monitor|magnifier|main-window
+.BI "\-d, \-\-disable=" speech|braille|braille\-monitor|magnifier|main\-window
 When starting
 .BR orca ,
 force the disabling of the supplied options.
-.TP
-.B \-?, \-h, \--help
-Show the help 
-message of this release of the 
-.B orca
-program.
 .TP
 .B \-l, --list-apps
 Prints the names of all the currently running applications.  This
@@ -112,31 +98,280 @@ form 'debug-YYYY-MM-DD-HH:MM:SS.out' in the current directory.
 The YYYY-MM-DD-HH:MM:SS portion will be replaced with the current
 date and time.
 .TP
-.B \--debug-file=filename
+.BI "\--debug-file=" filename
 Enables debug output for
 .B orca
 and sends all debug output to the given filename.
 .TP
 .B \-v, --version
-Return the 
-.B orca 
-version number.
+outputs
+.B orca
+version number and exits.
+.TP
+.B \-?, \-h, \--help
+displays
+.B orca
+help and exits.
 .TP
 .B \-q, --quit
-Quit 
+Quit
 .BR orca .
+
+.SH KEYBOARD SETTINGS
+Orca provides two keyboard modes, Desktop and Laptop keyboard layout. The
+.B Orca_Modifier
+key is 
+.B Insert
+in desktop keyboard layout and
+.B Caps_Lock
+in laptop keyboard layout.
+
+.B Orca
+uses default GNOME keyboard shortcuts to navigate the desktop and interact with various applications. The flat review commands provide an alternative method of interaction in certain inaccessible applications. It should not be confused with flat review functionality provided by other screen readers.
+
+.SH Desktop Mode
+
+.B Flat review commands
+
+.B "Numpad-7"
+move the flat review cursor to the previous line and read it.
+
+.B "Numpad-8"
+read the current line.
+
+.B "Numpad-9"
+move the flat review cursor to the next line and read it.
+
+.B "Numpad-4"
+move the flat review cursor to the previous word and read it.
+
+.B "Numpad-5"
+read the current word.
+
+.B "Numpad-6"
+move the flat review cursor to the next word and read it.
+
+.B "Numpad-1"
+move the flat review cursor to the previous character and read it.
+
+.B "Numpad-2"
+read the current character.
+
+.B "Numpad-3"
+move the flat review cursor to the next character and read it.
+
+.B "Numpad-slash"
+perform a left mouse click at the location of the flat review cursor.
+
+.B "Numpad-star"
+perform a right mouse click at the location of the flat review cursor.
+
+.B Bookmark commands
+
+.B "Alt+Insert+[1-6]"
+assign a bookmark to a numbered slot. If a bookmark already exists in the slot it will be replaced with the new one.
+
+.B "Insert+[1-6]"
+go to the position pointed to by the bookmark bound to this numbered slot.
+
+.B "Alt+Shift+[1-6]"
+'Where am I' information for this bookmark relative to the current pointer location.
+
+.B "Insert+B and Insert+Shift+B"
+move between the given bookmarks for the given application or page.
+
+.B "Alt+Insert+B"
+save the defined bookmarks for the current application or page.
+
+
+.B Miscellaneous functions
+
+.B "Numpad+Plus"
+ 'say all' command; reads from the current position of the caret to the end of the document.
+
+.B "Numpad+Enter"
+ 'Where am I' command; speaks information such as the title of the current application window, as well as the name of the control that currently has focus.
+
+.B "Insert+H"
+enter into orca's 'learn mode'; press Escape to exit.
+
+.B "Insert+F"
+speak font and attribute information for the current character.
+
+.B "Insert+Space"
+Launch the orca Configuration dialog.
+
+.B "Insert+Ctrl+Space"
+reload user settings and reinitialize services as necessary. Also launches the orca Configuration dialog for the current application.
+
+.B "Insert+S"
+toggle speech on and off.
+
+.B "Insert+F11"
+toggle the reading of tables, either by single cell or whole row.
+
+.B "Insert+Q"
+quit orca.
+
+.B Debugging
+
+.B "Ctrl+Alt+Insert+Home"
+report information on the currently active script.
+
+.B "Ctrl+Alt+Insert+End"
+print a debug listing of all known applications to the console where orca is running.
+
+.B "Ctrl+Alt+Insert+Page_Up"
+print debug information about the ancestry of the object with focus.
+
+.B "Ctrl+Alt+Insert+Page_Down"
+print debug information about the hierarchy of the application with focus.
+
+.SH Laptop Mode
+
+.B Flat review commands
+
+.B "Caps_Lock+U"
+move the flat review cursor to the previous line and read it. Double-click to move flat review to the top of the current window.
+
+.B "Caps_Lock+I"
+read the current line. Double-click to read the current line along with formatting and capitalization details.
+
+.B "Caps_Lock+O"
+move the flat review cursor to the next line and read it. Double- click to move flat review to the bottom of the current window.
+
+.B "Caps_Lock+J"
+move the flat review cursor to the previous word and read it. Double-click to move flat review to the word above the current word.
+
+.B "Caps_Lock+K"
+read the current word. Double-click to spell the word. Triple-click to hear the word spelled phonetically.
+
+.B "Caps_Lock+L"
+move the flat review cursor to the next word and read it. Double- click to move flat review to the word below the current word.
+
+.B "Caps_Lock+M"
+move the flat review cursor to the previous character and read it. Double-click to move flat review to the end of the current line.
+
+.B "Caps_Lock+Comma"
+read the current character. Double-click to pronounce the character phonetically if it is a letter.
+
+.B "Caps_Lock+Period"
+move the flat review cursor to the next character and read it.
+
+.B "Caps_Lock+7"
+perform a left mouse click at the location of the flat review cursor.
+
+.B "Caps_Lock+8"
+perform a right mouse click at the location of the flat review cursor.
+
+.B "Caps_Lock+8"
+perform a right mouse click at the location of the flat review cursor.
+
+.B Bookmark commands
+
+.B "Alt+Caps_Lock+[1-6]"
+
+add a bookmark to the numbered slot. If a bookmark already exists for the slot it will be replaced with the new one.
+
+.B "Caps_Lock+[1-6]"
+go to the position pointed to by the bookmark bound to this numbered slot.
+
+.B "Alt+Shift+[1-6]"
+'Where am I' information for this bookmark relative to the current pointer location.
+
+.B "Caps_Lock+Band Caps_Lock+Shift+B"
+move between the given bookmarks for the given application or page.
+
+.B "Alt+Caps_Lock+B"
+save the defined bookmarks for the current application or page.
+
+.B Miscellaneous functions
+
+.B "Caps_Lock+Semicolon"
+'Say all' command; reads from the current position of the caret to the end of the document.
+.B "Caps_Lock+Enter"
+'Where am I' command; speaks information such as the title of the current application window, as well as the name of the control that currently has focus.
+
+.B "Caps_Lock+H"
+enter learn mode (press Escape to exit).
+
+.B "Caps_Lock+F"
+speak font and attribute information for the current character.
+
+.B "Caps_Lock+Space"
+launch the orca Configuration dialog.
+
+.B "Caps_Lock+Ctrl+Space"
+reload user settings and reinitialize services as necessary; also launches the orca Configuration dialog for the current application.
+
+.B "Caps_Lock+S"
+toggle speech on and off.
+
+.B "Caps_Lock+F11"
+toggle the reading of tables, either by single cell or whole row.
+
+.B "Caps_Lock+Q"
+quit orca.
+
+.B Debugging
+
+.B "Caps_Lock+Alt+Ctrl+Home"
+report information on the currently active script.
+
+.B "Caps_Lock+Alt+Ctrl+End"
+prints a debug listing of all known applications to the console where orca is running.
+
+.B "Caps_Lock+Alt+Ctrl+Page_Up"
+prints debug information about the ancestry of the object with focus.
+
+.B "Caps_Lock+Alt+Ctrl+Page_Down"
+prints debug information about the object hierarchy of the application with focus.
+
+.SH FILES
+.TP
+.BI ~/.orca
+.B Orca
+user preferences directory
+.TP
+.BI ~/.orca/user-settings.py
+.B Orca
+user preferences configuration file.
+.TP
+.BI ~/.orca/orca-customizations.py
+.B Orca
+user customizations configuration file
+
+.TP
+.BI ~/.orca/orca-scripts
+.B Orca
+user orca scripts directory
+.TP
+.BI ~/.orca/bookmarks
+.B Orca
+user bookmarks directory
+.TP
+.BI ~/.orca/app-settings
+.B Orca
+user application specific settings directory
+
+
 .SH AUTHOR
-.B orca 
-development is a community effort led by the Sun Microsystems Inc. 
-Accessibility Program Office.
+.B Orca
+development is a community effort led by the Sun Microsystems Inc.
+Accessibility Program Office and with contributions from many community members.
 .SH SEE ALSO
-The
+For more information please visit
 .B orca
 wiki at
-.UR http://live.gnome.org/orca
-<http://live.gnome.org/orca>
+.UR http://live.gnome.org/Orca
+<http://live.gnome.org/Orca>
 .UE
 .P
 The
 .B orca
-mailing list orca-list@gnome.org
+mailing list
+.UR http://mail.gnome.org/mailman/listinfo/orca-list
+<http://mail.gnome.org/mailman/listinfo/orca-list>
+To post a message to all
+.B orca
+list, send a email to orca-list@gnome.org
