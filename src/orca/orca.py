@@ -61,19 +61,26 @@ import signal
 import time
 import unicodedata
 
+import settings
+if settings.useDBus:
+    import dbus.mainloop.glib
+    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+    import dbusserver
+    try:
+        import gsmag as mag
+    except:
+        import mag
+else:
+    import mag
+
 import pyatspi
 import braille
 import debug
 import httpserver
 import keynames
 import keybindings
-try:
-    import gsmag as mag
-except:
-    import mag
 import orca_state
 import platform
-import settings
 import speech
 
 from input_event import BrailleEvent

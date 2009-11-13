@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import dbus
 import dbus.service
-import dbus.mainloop.glib
 
 import debug
 import settings
@@ -39,6 +38,10 @@ loggingStreamHandlers = {}
 
 # pylint: disable-msg=R0923
 # Server: Interface not implemented
+
+bus = None
+name = None
+obj = None
 
 class Server(dbus.service.Object):
 
@@ -138,25 +141,36 @@ class Server(dbus.service.Object):
             stringIO = StringIO.StringIO()
         return result
 
-obj = None
-
 def init():
     """Sets up the Orca DBus service.  This will only take effect once
     the Orca main loop starts."""
 
+    global bus
+    global name
     global obj
 
-    if obj:
+    if obj or bus or name:
         return
 
     try:
-        dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
         bus = dbus.SessionBus()
-        name = dbus.service.BusName('org.gnome.Orca', bus=bus)
+        name = dbus.service.BusName('org.gnome.Orca',
+                                    bus=bus,
+                                    allow_replacement=False,
+                                    replace_existing=False)
         obj = Server('/', name)
     except:
         debug.println(debug.LEVEL_WARNING,
                       "dbusserver.py: Could not initialize DBus server")
+        debug.printException(debug.LEVEL_WARNING)
 
 def shutdown():
     pass
+
+def main():
+    import pyatspi
+    init()
+    pyatspi.Registry.start()
+
+if __name__ == "__main__":
+    main()
