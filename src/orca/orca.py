@@ -88,9 +88,6 @@ from input_event import KeyboardEvent
 from input_event import MouseButtonEvent
 from input_event import keyEventToString
 
-if settings.useDBus:
-    import dbusserver
-
 from orca_i18n import _           # for gettext support
 
 if settings.debugMemoryUsage:
@@ -1542,18 +1539,16 @@ def usage():
     print "-q, --quit                   " + \
           _("Quits Orca (if shell script used)")
 
-    # Translators: this is the Orca command line option that will enable to
-    # to launch multiple instances of orca on multi-head computers. If this
-    # command line option is specified, the script will not kill any other
-    # instances of Orca that are already running.
+    # Translators: this is the Orca command line option to tell Orca to
+    # replace any existing Orca process(es) that might be running.
     #
-    print "-z                           " +\
-          _("Orca does not kill other running orca processes")
-    print
+    print "--replace                    " +\
+          _("Replace a currently running Orca")
 
     # Translators: this is text being sent to a terminal and we want to
     # keep the text lines within terminal boundaries.
     #
+    print
     print _("If Orca has not been previously set up by the user, Orca\n" \
             "will automatically launch the preferences set up unless\n" \
             "the -n or --no-setup option is used.")
@@ -1635,7 +1630,7 @@ def main():
         #
         opts, args = getopt.getopt(
             arglist,
-            "?zstnvld:e:u:",
+            "?stnvld:e:u:",
             ["help",
              "user-prefs-dir=",
              "enable=",
@@ -1647,7 +1642,8 @@ def main():
              "list-apps",
              "debug",
              "debug-file=",
-             "version"])
+             "version",
+             "replace"])
         for opt, val in opts:
             if opt in ("-u", "--user-prefs-dir"):
                 userPrefsDir = val.strip()

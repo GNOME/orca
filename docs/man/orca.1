@@ -113,12 +113,23 @@ displays
 .B orca
 help and exits.
 .TP
-.B \-q, --quit
-Quit
-.BR orca .
+.B \--replace
+Replace a currently running
+.BR orca
+process.  By default, if
+.BR orca
+detects an existing
+.BR orca
+process for the same session, it will not start a new
+.BR orca
+process.  This option will kill and cleanup after any existing
+.BR orca
+process and then start a new
+.BR orca
+in its place.
 .TP
-.B \-z
-Do not automatically kill other orca processes.
+.B \-q, --quit
+Kill and cleanup after any existing Orca process.
 
 .SH KEYBOARD SETTINGS
 Orca provides two keyboard modes, Desktop and Laptop keyboard layout. The
