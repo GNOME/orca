@@ -57,6 +57,7 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
         self._isBusy = False
+        self._lastObjectPresented = None
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script."""
@@ -186,6 +187,21 @@ class Script(default.Script):
             return False
 
         return True
+
+    def _presentTextAtNewCaretPosition(self, event, otherObj=None):
+        """Updates braille, magnification, and outputs speech for the
+        event.source or the otherObj. Overridden here to force the braille
+        display to be updated when the user arrows left/right into another
+        object."""
+
+        default.Script._presentTextAtNewCaretPosition(self, event, otherObj)
+
+        if not self.isSameObject(event.source, self._lastObjectPresented) \
+           and self.getAncestor(
+            event.source, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
+            self.updateBraille(event.source)
+
+        self._lastObjectPresented = event.source
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the given object.
