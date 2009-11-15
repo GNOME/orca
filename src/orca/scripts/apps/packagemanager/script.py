@@ -29,6 +29,7 @@ import pyatspi
 
 import orca.braille as braille
 import orca.default as default
+import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -82,12 +83,42 @@ class Script(default.Script):
 
         return TutorialGenerator(self)
 
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
+
+        Arguments:
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
+        """
+
+        # Prevent chattiness when arrowing out of or into a link.
+        #
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent.event_string in \
+               ["Left", "Right", "Up", "Down"] \
+           and event and event.type.startswith("focus:") \
+           and (self.isLink(oldLocusOfFocus) or self.isLink(newLocusOfFocus)):
+            orca.setLocusOfFocus(event, newLocusOfFocus, False)
+            return
+
+        default.Script.locusOfFocusChanged(
+            self, event, oldLocusOfFocus, newLocusOfFocus)
+
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
 
         Arguments:
         - event: the Event
         """
+
+        # When arrowing into a link, we get a focus: event followed by two
+        # identical caret-moved events.
+        #
+        lastPos = self.pointOfReference.get("lastCursorPosition")
+        if lastPos and lastPos[0] == event.source \
+           and lastPos[1] == event.detail1:
+            return
 
         # Quietly set the locusOfFocus in HTML containers so that the default
         # script doesn't ignore this event.
@@ -411,6 +442,9 @@ class Script(default.Script):
         Arguments:
         - obj: an accessible
         """
+
+        if not obj:
+            return False
 
         # Images seem to be exposed as ROLE_PANEL and implement very few of
         # the accessibility interfaces.
