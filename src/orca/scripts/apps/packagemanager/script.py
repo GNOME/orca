@@ -275,6 +275,35 @@ class Script(default.Script):
         braille.setFocus(focusedRegion, getLinkMask=False)
         braille.refresh(panToCursor=True, getLinkMask=False)
 
+    def sayCharacter(self, obj):
+        """Speak the character at the caret. Overridden here because the
+        event we get when crossing object boundaries is for the object
+        being left.
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+        """
+
+        if not self.getAncestor(
+           obj, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
+            return default.Script.sayCharacter(self, obj)
+
+        try:
+            text = obj.queryText()
+        except:
+            return
+
+        if text.caretOffset == text.characterCount \
+           and isinstance(orca_state.lastInputEvent,
+                          input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent.event_string == "Right":
+            nextObj = self.getRelationTarget(obj, pyatspi.RELATION_FLOWS_TO)
+            if nextObj and nextObj.getRole() == pyatspi.ROLE_TEXT:
+                obj = nextObj
+
+        default.Script.sayCharacter(self, obj)
+
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
 
