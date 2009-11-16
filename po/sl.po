@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
-"POT-Creation-Date: 2009-11-10 21:03+0000\n"
-"PO-Revision-Date: 2009-11-13 07:52+0100\n"
+"POT-Creation-Date: 2009-11-14 00:55+0000\n"
+"PO-Revision-Date: 2009-11-14 10:47+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -4220,9 +4220,9 @@ msgstr "Povečevalo in bralnik zaslona Orka"
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:294
-#: ../src/orca/orca.py:1356
-#: ../src/orca/orca.py:1357
+#: ../src/orca/orca.py:298
+#: ../src/orca/orca.py:1360
+#: ../src/orca/orca.py:1361
 msgid "Goodbye."
 msgstr "Do prihodnjega snidenja."
 
@@ -4235,7 +4235,7 @@ msgstr "Do prihodnjega snidenja."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:366
+#: ../src/orca/orca.py:370
 msgid "Exiting learn mode."
 msgstr "Izhod iz učnega načina."
 
@@ -4244,7 +4244,7 @@ msgstr "Izhod iz učnega načina."
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:615
+#: ../src/orca/orca.py:619
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:172
 #: ../src/orca/speech.py:261
 #: ../src/orca/speechserver.py:218
@@ -4256,7 +4256,7 @@ msgstr " izključeno"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:619
+#: ../src/orca/orca.py:623
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:168
 #: ../src/orca/speech.py:256
 #: ../src/orca/speechserver.py:213
@@ -4266,14 +4266,14 @@ msgstr " vključeno"
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:957
+#: ../src/orca/orca.py:961
 msgid "Speech enabled."
 msgstr "Govor omogočen."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:962
+#: ../src/orca/orca.py:966
 msgid "Speech disabled."
 msgstr "Govor onemogočen."
 
@@ -4281,18 +4281,18 @@ msgstr "Govor onemogočen."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1029
+#: ../src/orca/orca.py:1033
 msgid "Orca user settings reloaded."
 msgstr "Uporabniške nastavitve Orke ponovno naložene."
 
-#: ../src/orca/orca.py:1438
+#: ../src/orca/orca.py:1442
 msgid "Usage: orca [OPTION...]"
 msgstr "Uporaba: orca [MOŽNOST...]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:1444
+#: ../src/orca/orca.py:1448
 msgid "Show this help message"
 msgstr "Prikaži sporočilo pomoči"
 
@@ -4300,7 +4300,7 @@ msgstr "Prikaži sporočilo pomoči"
 #. the names of the applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:1453
+#: ../src/orca/orca.py:1457
 msgid "Print the known running applications"
 msgstr "Izpiši seznam znanih programov"
 
@@ -4312,7 +4312,7 @@ msgstr "Izpiši seznam znanih programov"
 #. always start with 'debug' and end with '.out', regardless of the
 #. locale.).
 #.
-#: ../src/orca/orca.py:1464
+#: ../src/orca/orca.py:1468
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr "Pošlji izpis razhroščevanja datoteki debug-YYYY-MM-DD-HH:MM:SS.out"
 
@@ -4320,7 +4320,7 @@ msgstr "Pošlji izpis razhroščevanja datoteki debug-YYYY-MM-DD-HH:MM:SS.out"
 #. the name of the debug file Orca will use for debug output if the
 #. --debug option is used.
 #.
-#: ../src/orca/orca.py:1471
+#: ../src/orca/orca.py:1475
 msgid "Send debug output to the specified file"
 msgstr "Pošlji izpis razhroščevanja določeni datoteki."
 
@@ -4328,7 +4328,7 @@ msgstr "Pošlji izpis razhroščevanja določeni datoteki."
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
 #. that would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:1477
+#: ../src/orca/orca.py:1481
 msgid "Set up user preferences"
 msgstr "Nastavitve lastnosti uporabnika"
 
@@ -4338,7 +4338,7 @@ msgstr "Nastavitve lastnosti uporabnika"
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
 #.
-#: ../src/orca/orca.py:1486
+#: ../src/orca/orca.py:1490
 msgid "Set up user preferences (text version)"
 msgstr "Nastavitve lastnosti uporabnika (besedilna različica)"
 
@@ -4346,7 +4346,7 @@ msgstr "Nastavitve lastnosti uporabnika (besedilna različica)"
 #. '-n, --no-setup' that means that Orca will startup without setting
 #. up any user preferences.
 #.
-#: ../src/orca/orca.py:1493
+#: ../src/orca/orca.py:1497
 msgid "Skip set up of user preferences"
 msgstr "Preskoči nastavitev uporabniških lastnosti"
 
@@ -4356,7 +4356,7 @@ msgstr "Preskoči nastavitev uporabniških lastnosti"
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for those user preferences.
 #.
-#: ../src/orca/orca.py:1502
+#: ../src/orca/orca.py:1506
 msgid "Use alternate directory for user preferences"
 msgstr "Uporabi drugo mapo za nastavitve uporabnika"
 
@@ -4364,7 +4364,7 @@ msgstr "Uporabi drugo mapo za nastavitve uporabnika"
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:1515
+#: ../src/orca/orca.py:1519
 msgid "Force use of option"
 msgstr "Vsili uporabo možnosti"
 
@@ -4372,7 +4372,7 @@ msgstr "Vsili uporabo možnosti"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:1528
+#: ../src/orca/orca.py:1532
 msgid "Prevent use of option"
 msgstr "Prepreči uporabo možnosti"
 
@@ -4381,23 +4381,18 @@ msgstr "Prepreči uporabo možnosti"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:1536
+#: ../src/orca/orca.py:1540
 msgid "Quits Orca (if shell script used)"
 msgstr "Konča program Orka (v primeru uporabe ukazne vrstice)"
 
-#. Translators: this is the Orca command line option that will enable to
-#. to launch multiple instances of orca on multi-head computers. If this
-#. command line option is specified, the script will not kill any other
-#. instances of Orca that are already running.
+#. Translators: this is the Orca command line option to tell Orca to
+#. replace any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:1544
-msgid "Orca does not kill other running orca processes"
-msgstr "Orka ne uniči drugih lastnih zagnanih opravil"
+#: ../src/orca/orca.py:1546
+msgid "Replace a currently running Orca"
+msgstr "Zamenjaj trenutno zagnani program Orca"
 
-#. Translators: this is text being sent to a terminal and we want to
-#. keep the text lines within terminal boundaries.
-#.
-#: ../src/orca/orca.py:1550
+#: ../src/orca/orca.py:1552
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -4407,7 +4402,7 @@ msgstr ""
 "nastavitve samodejno zagnale razen v primeru, kadar\n"
 "sta uporabljeni zastavici možnosti -n ali --no-setup."
 
-#: ../src/orca/orca.py:1558
+#: ../src/orca/orca.py:1560
 msgid ""
 "WARNING: suspending Orca, e.g. by pressing Control-Z, from\n"
 "an AT-SPI enabled shell (such as gnome-terminal), can also\n"
@@ -4417,11 +4412,11 @@ msgstr ""
 "terminalskega okna, lahko povzroči zaustavitev celotnega namizja\n"
 "dokler dokončno ne ustavite programa Orka."
 
-#: ../src/orca/orca.py:1563
+#: ../src/orca/orca.py:1565
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Pošiljanje poročil o napakah na orca-list@gnome.org."
 
-#: ../src/orca/orca.py:1747
+#: ../src/orca/orca.py:1750
 msgid "Welcome to Orca."
 msgstr "Pozdravljeni v Orki."
 
@@ -9660,6 +9655,8 @@ msgstr "Za vstop v podrejeni meni, pritisnite desno puščico."
 msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
 msgstr "Za zmanjšanje pritisnite levo puščico, za povečanje pa desno. Za najmanjšo vrednost pritisnite tipko domov, za največjo pa tipko konec."
 
+#~ msgid "Orca does not kill other running orca processes"
+#~ msgstr "Orka ne uniči drugih lastnih zagnanih opravil"
 #~ msgid "Invalid choice. Selecting desktop keyboard layout.\n"
 #~ msgstr "Neveljavna izbira. Izbiranje razporeditve namizne tipkovnice.\n"
 #~ msgid ""
