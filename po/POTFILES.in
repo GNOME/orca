@@ -14,6 +14,7 @@ src/orca/flat_review.py
 src/orca/focus_tracking_presenter.py
 src/orca/generator.py
 src/orca/gnomespeechfactory.py
+src/orca/gsmag.py
 src/orca/keybindings.py
 src/orca/keynames.py
 src/orca/liveregions.py
