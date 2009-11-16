@@ -1,3 +1,45 @@
+2.29.2 - 16-Nov-2009
+
+NOTE - as a result of work on bgo#598917, you must now use
+"orca --replace" if you want the new Orca process to kill any existing
+processes.  Prior to this, merely running "orca" would automatically
+kill any existing processes.  The new behavior is more consistent with
+the way singleton instances are handled by many other applications.
+
+General:
+
+* Provisional support for the GNOME Shell Magnifier (a work in
+  progress)
+
+* Fix for bgo#554688 - Navigation in gconf-editor doesn't work
+
+* Fix for bgo#597159 - Orca does not provide access to the contents of
+  Packagemanager's HTML container
+
+* Fix for bgo#597170 - Add support for Banshee script (thanks Eitan!)
+
+* Fix for bgo#598917 -  Orca Multiple Instances
+
+  NOTE: you must now use "orca --replace" if you want the new Orca
+  process to kill any existing Orca process. Prior to this, merely
+  running "orca" would automatically kill any existing processes.  The
+  new behavior is more consistent with the way singleton instances are
+  handled by many other applications.
+
+* Fix for bgo#600372 - Orca handles text configuration input
+  incorrectly
+
+* Fix for bgo#600539 - Man page improvements (thanks Arky!)
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca	        Catalan		     Gil Forcada
+    hu          Hungarian            Attila Hammer and Gabor Kelemen
+    nb		Norwegian bokmål     Kjartan Marass
+    sl	     	Slovenian	     Matej Urbančič
+
+==========
+
 2.29.1 - 26-Sep-2009
 
 General:
