@@ -1115,6 +1115,7 @@ setScriptMapping(re.compile(_('vte')), "gnome-terminal")
 # supporting gaim, which has recently be renamed to pidgin.
 #
 setScriptMapping(re.compile(_('gaim')), "pidgin")
+setScriptMapping(re.compile('Pidgin'), "pidgin")
 
 # Translators: see the regular expression note above.  This is for
 # supporting yelp, which sometimes identifies itself as gnome-help.
