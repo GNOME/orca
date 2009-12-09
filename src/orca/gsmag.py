@@ -29,8 +29,8 @@ __license__   = "LGPL"
 
 import dbus
 _bus = dbus.SessionBus()
-_proxy_obj = _bus.get_object("org.gnome.Shell", "/org/gnome/Shell/Magnifier")
-_magnifier = dbus.Interface(_proxy_obj, "org.gnome.Shell.Magnifier")
+_proxy_obj = _bus.get_object("org.freedesktop.Magnifier", "/org/freedesktop/Magnifier")
+_magnifier = dbus.Interface(_proxy_obj, "org.freedesktop.Magnifier")
 
 import eventsynthesizer
 import settings
@@ -54,6 +54,12 @@ _pointerFollowsZoomer = None
 _pointerFollowsFocus = None
 _textTracking = None
 
+import gtk
+_display = gtk.gdk.display_get_default()
+_screen = _display.get_default_screen()
+_screenWidth = _screen.get_width()
+_screenHeight = _screen.get_height()
+
 ########################################################################
 #                                                                      #
 # Methods for magnifying objects                                       #
@@ -67,7 +73,7 @@ def _setROICenter(x, y):
     - x: integer in unzoomed system coordinates representing x component
     - y: integer in unzoomed system coordinates representing y component
     """
-    _magnifier.shiftContentsTo(x + 1, y + 1)
+    _magnifier.shiftContentsTo(x, y)
 
 def _setROICursorPush(x, y, width, height, edgeMargin = 0):
     """Nudges the ROI if the caret or control is not visible.
@@ -84,10 +90,9 @@ def _setROICursorPush(x, y, width, height, edgeMargin = 0):
     # The edge margin should not exceed 50%. (50% is a centered alignment).
     # [[[WDW - probably should not make a D-Bus call each time.]]]
     #
-    (screenWidth, screenHeight) = _magnifier.getScreenSize()
     edgeMargin = min(edgeMargin, 50)/100.00
-    edgeMarginX = edgeMargin * screenWidth/settings.magZoomFactor
-    edgeMarginY = edgeMargin * screenHeight/settings.magZoomFactor
+    edgeMarginX = edgeMargin * _screenWidth/settings.magZoomFactor
+    edgeMarginY = edgeMargin * _screenHeight/settings.magZoomFactor
 
     # Determine if the accessible is partially to the left, right,
     # above, or below the current region of interest (ROI).
@@ -119,7 +124,7 @@ def _setROICursorPush(x, y, width, height, edgeMargin = 0):
         x1 = max(0, x - edgeMarginX)
         x2 = x1 + roiWidth
     elif rightOfROI:
-        x = min(screenWidth - 1, x + edgeMarginX)
+        x = min(_screenWidth, x + edgeMarginX)
         if width > roiWidth:
             x1 = x
             x2 = x1 + roiWidth
@@ -131,7 +136,7 @@ def _setROICursorPush(x, y, width, height, edgeMargin = 0):
         y1 = max(0, y - edgeMarginY)
         y2 = y1 + roiHeight
     elif belowROI:
-        y = min(screenHeight - 1, y + edgeMarginY)
+        y = min(_screenHeight, y + edgeMarginY)
         if height > roiHeight:
             y1 = y
             y2 = y1 + roiHeight
@@ -300,18 +305,18 @@ def finishLiveUpdating():
 
 def _setScreenPosition(position):
     if position == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
-        positionString = "Full Screen"
+        positionValue = 1
     elif position == settings.MAG_ZOOMER_TYPE_TOP_HALF:
-        positionString = "Top Half"
+        positionValue = 2
     elif position == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
-        positionString = "Bottom Half"
+        positionValue = 3
     elif position == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
-        positionString = "Left Half"
+        positionValue = 4
     elif position == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
-        positionString = "Right Half"
+        positionValue = 5
     else:
-        positionString = "Full Screen"
-    _magnifier.setScreenPosition(positionString)
+        positionValue = 1
+    _magnifier.setScreenPosition(positionValue)
     
 def applySettings():
     """Looks at the user settings and applies them to the magnifier."""
