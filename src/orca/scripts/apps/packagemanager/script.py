@@ -131,6 +131,23 @@ class Script(default.Script):
 
         default.Script.onCaretMoved(self, event)
 
+    def onFocus(self, event):
+        """Called whenever an object gets focus.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # For some reason we're getting quite a few claims of focus from
+        # nameless page tabs. This seems to occur in conjunction with PM's
+        # new Recent Searches feature. We need to ignore these events.
+        #
+        if event and event.source and not event.source.name \
+           and event.source.getRole() == pyatspi.ROLE_PAGE_TAB:
+            return
+
+        default.Script.onFocus(self, event)
+
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
 
@@ -218,6 +235,46 @@ class Script(default.Script):
             return False
 
         return True
+
+    def onActiveDescendantChanged(self, event):
+        """Called when an object who manages its own descendants detects a
+        change in one of its children.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # If the user arrows into the "recent searches" portion of the
+        # categories tree, the tree will stop claiming STATE_FOCUSED,
+        # but continue to emit active-descendant-changed events. (Doing
+        # an equality check seems to be safe here.)
+        #
+        if not event.source.getState().contains(pyatspi.STATE_FOCUSED) \
+           and orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.parent != event.source:
+            return
+
+        # There can be cases when the object that fires an
+        # active-descendant-changed event has no children. In this case,
+        # use the object that fired the event, otherwise, use the child.
+        #
+        child = event.any_data
+        if child:
+            if self.stopSpeechOnActiveDescendantChanged(event):
+                speech.stop()
+            orca.setLocusOfFocus(event, child)
+        else:
+            orca.setLocusOfFocus(event, event.source)
+
+        # We'll tuck away the activeDescendant information for future
+        # reference since the AT-SPI gives us little help in finding
+        # this.
+        #
+        if orca_state.locusOfFocus \
+           and (orca_state.locusOfFocus != event.source):
+            self.pointOfReference['activeDescendantInfo'] = \
+                [orca_state.locusOfFocus.parent,
+                 orca_state.locusOfFocus.getIndexInParent()]
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
         """Updates braille, magnification, and outputs speech for the
