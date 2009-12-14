@@ -1,3 +1,23 @@
+2.28.2 - 14-Dec-2009
+
+General:
+
+* Work on bgo#597159 - Orca does not provide access to the contents of
+  Packagemanager's HTML container
+
+* Fix for bgo#603520 - Need to add script mapping to check for Pidgin
+  with a capital "P"
+
+* Fix for bgo#604492 - Orca doesn't work well with Packagemanager's
+  new Recent Searches feature
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca          Catalan              Gil Forcada
+    ja          Japanese             Takeshi Aihana
+
+==========
+
 2.28.1 - 19-Oct-2009
 
 General:
