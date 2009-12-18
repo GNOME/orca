@@ -1763,6 +1763,13 @@ def main():
         showPreferencesGUI()
     elif (not _userSettings) and (not bypassSetup):
         if desktopRunning:
+            if not os.path.exists(userprefs):
+                # Hack to work around b.g.o. 601657.
+                #
+                try:
+                    os.mkdir(userprefs)
+                except:
+                    debug.printException(debug.LEVEL_FINEST)
             showPreferencesGUI()
         else:
             _showPreferencesConsole()
