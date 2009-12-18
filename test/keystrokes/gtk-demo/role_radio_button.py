@@ -45,7 +45,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "All Pages radio button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
+    ["KNOWN ISSUE - we say 'of 4' instead of 'of 3' due to bug https://bugzilla.gnome.org/show_bug.cgi?id=594152.",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
      "SPEECH OUTPUT: 'Range All Pages radio button selected 1 of 3.'",
      "SPEECH OUTPUT: 'Alt a'"]))

@@ -40,7 +40,7 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEAROFF_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Tear off menu item",
-    ["BRAILLE LINE:  'gtk-demo Application menus Frame MenuBar TearOffMenuItem'",
+    ["BRAILLE LINE:  'gtk-demo Application Menus Frame MenuBar TearOffMenuItem'",
      "     VISIBLE:  'TearOffMenuItem', cursor=1",
      "SPEECH OUTPUT: 'tear off menu item'"]))
 
@@ -52,7 +52,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Tear off menu item Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application menus Frame MenuBar TearOffMenuItem'",
+    ["BRAILLE LINE:  'gtk-demo Application Menus Frame MenuBar TearOffMenuItem'",
      "     VISIBLE:  'TearOffMenuItem', cursor=1",
      "SPEECH OUTPUT: 'tear off menu item'"]))
 
