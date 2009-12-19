@@ -520,7 +520,7 @@ class Script(default.Script):
 
         verticalCenter1 = extents1[1] + extents1[3] / 2
         verticalCenter2 = extents2[1] + extents2[3] / 2
-        return abs(verticalCenter1 - verticalCenter2) <= 1
+        return abs(verticalCenter1 - verticalCenter2) <= 5
 
     def isLink(self, obj):
         """Returns True if this is a text object serving as a link.
