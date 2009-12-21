@@ -156,6 +156,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.savedGain = None
         self.savedPitch = None
         self.savedRate = None
+        self._isInitialSetup = False
 
     def init(self):
         """Initialize the Orca configuration GUI. Read the users current
@@ -441,6 +442,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.speechFamiliesModel = \
                         self._initComboBox(self.get_widget("speechFamilies"))
         self._initSpeechState()
+
+        path = os.path.join(settings.userPrefsDir, "user-settings.py")
+        self._isInitialSetup = not os.path.exists(path)
 
         self._initGUIState()
 
@@ -4246,7 +4250,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.restoreSettings()
+        if not self._isInitialSetup:
+            self.restoreSettings()
 
         enable = self.get_widget("speechSupportCheckbutton").get_active()
         self.prefsDict["enableSpeech"] = enable
