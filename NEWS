@@ -1,3 +1,31 @@
+2.29.4 - 21-Dec-2009
+
+NOTE - There was no 2.29.3 release due to no changes having been made
+       during the 2.29.3 release time frame.
+
+General:
+
+* Fix for b.g.o.#601657 and d.o.o.#12629 - Preferences cannot be saved.
+
+* Fix for bgo#603520 - Need to add script mapping to check for Pidgin
+  with a capital "P"
+
+* Fix for bgo#604492 - Orca doesn't work well with Packagemanager's
+  new Recent Searches feature
+
+* Fix for bgo#604956 - Certain speech settings get improperly restored
+  to default when setting up Orca initially
+
+* Fix for bgo#604964 -  Orca doesn't present the section headings in
+  PackageManager's new "Featured Packages" start page
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    zh_HK    	Traditional Chinese  Chao-Hsiung Liao
+    zh_TW    	Traditional Chinese  Chao-Hsiung Liao
+
+==========
+
 2.29.2 - 16-Nov-2009
 
 NOTE - as a result of work on bgo#598917, you must now use
