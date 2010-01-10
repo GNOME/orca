@@ -431,7 +431,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._populateKeyBindings()
 
         self.window = self.get_widget("orcaSetupWindow")
-        self.window.resize(790, 580)
 
         self._setKeyEchoItems()
 
@@ -1558,16 +1557,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         interval = prefs["progressBarUpdateInterval"]
         self.get_widget("speakProgressBarSpinButton").set_value(interval)
 
-        # Translators: Orca has a setting which determines which progress
-        # bar updates should be announced. The options are all progress
-        # bars, only progress bars in the active application, or only
-        # progress bars in the current window.
-        #
-        label = _("Restrict progress bar updates to:")
-        # TODO - JD: I did the above because GtkBuilder translator notes
-        # (which we have for the above string) are not getting sucked in
-        # to orca.pot. :-(
-        #
         comboBox = self.get_widget("progressBarVerbosity")
         levels = []
         # Translators: Orca has a setting which determines which progress
