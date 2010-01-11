@@ -1,3 +1,23 @@
+2.29.5 - 11-Jan-2009
+
+General:
+
+* Fix for bgo#586445 - Provide an 'About' dialog
+
+* Fix for bgo#592424 - Progress bar options in the Preferences dialog
+  cannot be translated properly for all locales
+
+* Fix for bgo#593203 - Orca preferences does not fit in 1024x600 screen
+  resolution
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    hu          Hungarian            Attila Hammer and Gabor Kelemen
+    sv	        Swedish              Daniel Nylander
+    uk	     	Ukrainian	     Maxim V. Dziumanenko
+
+==========
+
 2.29.4 - 21-Dec-2009
 
 NOTE - There was no 2.29.3 release due to no changes having been made
