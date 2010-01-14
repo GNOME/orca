@@ -140,7 +140,15 @@ def setupSpeech(prefsDict):
         print _("Speech is unavailable.")
         return False
 
-    speech.init()
+    try:
+        speech.init()
+    except:
+        # Translators: this means speech synthesis (i.e., the machine
+        # speaks to you from its speakers) is not installed or working.
+        #
+        print _("Speech is unavailable.")
+        return False
+
     sayAndPrint(_("Welcome to Orca setup."))
 
     workingFactories = []
