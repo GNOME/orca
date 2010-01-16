@@ -1002,3 +1002,18 @@ class Generator:
         rad = self._script.getRealActiveDescendant(obj)
         args['role'] = rad.getRole()
         return self._generateRoleName(rad, **args)
+
+    def _generateNamedContainingPanel(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represents the nearest ancestor of an object which is a named panel.
+        """
+        result = []
+        parent = obj.parent
+        while parent and (parent.parent != parent):
+            if parent.getRole() == pyatspi.ROLE_PANEL:
+                label = self._generateLabelAndName(parent)
+                if label:
+                    result.extend(label)
+                    break
+            parent = parent.parent
+        return result
