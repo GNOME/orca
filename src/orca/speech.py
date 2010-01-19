@@ -71,31 +71,19 @@ def getSpeechServerFactories():
                                  [''])
             factories.append(module)
         except:
-            debug.printException(debug.LEVEL_OFF)
+            debug.printException(debug.LEVEL_CONFIGURATION)
 
     return factories
 
-def init():
+def _initSpeechServer(moduleName, speechServerInfo):
 
     global _speechserver
 
-    if _speechserver:
+    if not moduleName:
         return
 
-    # First, find the factory module to use.  We will
-    # allow the user to give their own factory module,
-    # thus we look first in the global name space, and
-    # then we look in the orca namespace.
-    #
-    moduleName = settings.speechServerFactory
-
-    if moduleName:
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Using speech server factory: %s" % moduleName)
-    else:
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Speech not available.")
-        return
+    debug.println(debug.LEVEL_CONFIGURATION,
+                  "Trying to use speech server factory: %s" % moduleName)
 
     factory = None
     try:
@@ -120,6 +108,32 @@ def init():
         _speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
     else:
         _speechserver = factory.SpeechServer.getSpeechServer()
+
+def init():
+
+    if _speechserver:
+        return
+
+    try:
+        moduleName = settings.speechServerFactory
+        _initSpeechServer(moduleName,
+                          settings.speechServerInfo)
+    except:
+        moduleNames = settings.speechFactoryModules
+        for moduleName in moduleNames:
+            if moduleName != settings.speechServerFactory:
+                try:
+                    _initSpeechServer(moduleName, None)
+                    if _speechserver:
+                        break
+                except:
+                    debug.printException(debug.LEVEL_SEVERE)
+
+    if _speechserver:
+        debug.println(debug.LEVEL_CONFIGURATION,
+                      "Using speech server factory: %s" % moduleName)
+    else:
+        debug.println(debug.LEVEL_CONFIGURATION, "Speech not available.")
 
 def __resolveACSS(acss=None):
     if acss:
