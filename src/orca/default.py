@@ -601,6 +601,24 @@ class Script(script.Script):
                 #
                 _("Phonetically speaks the current flat review character."))
 
+        self.inputEventHandlers["reviewUnicodeInformationCurrentCharacterHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewUnicodeInformationCurrentCharacter,
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  Previous will go backwards
+                # in the window until you reach the top (i.e., it will
+                # wrap across lines if necessary).  This command will
+                # cause Orca to speak information about the current character
+                # Like its unicode value and other relevant information
+                _("Speaks some extra information about the current flat review character."))
+
+
         self.inputEventHandlers["reviewNextCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewNextCharacter,
@@ -1445,6 +1463,15 @@ class Script(script.Script):
 
         keyBindings.add(
             keybindings.KeyBinding(
+                "KP_2",
+                settings.defaultModifierMask,
+                settings.NO_MODIFIER_MASK,
+                self.inputEventHandlers["reviewUnicodeInformationCurrentCharacterHandler"],
+                3))
+
+
+        keyBindings.add(
+            keybindings.KeyBinding(
                 "KP_Down",
                 settings.defaultModifierMask,
                 settings.NO_MODIFIER_MASK,
@@ -1458,6 +1485,14 @@ class Script(script.Script):
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["reviewSpellCurrentCharacterHandler"],
                 2))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "KP_Down",
+                settings.defaultModifierMask,
+                settings.NO_MODIFIER_MASK,
+                self.inputEventHandlers["reviewUnicodeInformationCurrentCharacterHandler"],
+                3))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -5589,12 +5624,22 @@ class Script(script.Script):
 
         return True
 
+    def reviewUnicodeInformationCurrentCharacter(self, inputEvent):
+        """Brailles and speaks unicode information about the current flat review
+        character.
+        """
+
+        self._reviewCurrentCharacter(inputEvent, 3)
+        self.lastReviewCurrentEvent = inputEvent
+
+        return True
+
     def _reviewCurrentCharacter(self, inputEvent, speechType=1):
         """Presents the current flat review character via braille and speech.
 
         Arguments:
         - inputEvent - the current input event.
-        - speechType - the desired presentation: speak (1) or phonetic (2)
+        - speechType - the desired presentation: speak (1), phonetic (2) or unicode value information (3)
         """
 
         context = self.getFlatReviewContext()
@@ -5615,11 +5660,13 @@ class Script(script.Script):
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
-                if lineString == "\n":
+                if lineString == "\n" and speechType != 3:
                     # Translators: "blank" is a short word to mean the
                     # user has navigated to an empty line.
                     #
                     speech.speak(_("blank"))
+                elif speechType == 3:
+                    self.speakUnicodeCharacterInformation(charString)
                 elif speechType == 2:
                     self.phoneticSpellCurrentItem(charString)
                 elif charString.decode("UTF-8").isupper():
@@ -5631,6 +5678,31 @@ class Script(script.Script):
         self.updateBrailleReview()
 
         return True
+
+    def speakUnicodeCharacterInformation(self, character):
+        """ Speaks some information about an unicode character.
+        At the Momment it just anounces the character unicode number but this information may be
+        changed in the future
+        
+        Arguments:
+        - character: the character to speak information of
+        """
+        vars = {"value" : self.getUnicodeValueRepresentation(character)}
+        # Translators: this is information about an unicode character reported to the user.
+        # value is the unicode number value of this character in hex.
+        speech.speak(_("Character %(value)s" % vars))
+
+    def getUnicodeValueRepresentation(self, character):
+        """ Returns a four hex dijit representaiton of the given character
+        
+        Arguments:
+        - The character to return representation
+        
+        returns a string representaition of the given character unicode vlue
+        """
+        if not isinstance(character, unicode):
+            character = character.decode('UTF-8')
+        return "%04x" % ord(character)
 
     def reviewPreviousCharacter(self, inputEvent):
         """Moves the flat review context to the previous character.  Places
