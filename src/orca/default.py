@@ -616,6 +616,7 @@ class Script(script.Script):
                 # wrap across lines if necessary).  This command will
                 # cause Orca to speak information about the current character
                 # Like its unicode value and other relevant information
+                #
                 _("Speaks unicode value of the current flat review character."))
 
 
@@ -5695,7 +5696,7 @@ class Script(script.Script):
         # reported to the user.  The value is the unicode number value
         # of this character in hex.
         #
-        speech.speak(_("Unicode %s" % self.getUnicodeValueString(character)))
+        speech.speak(_("Unicode %s") % self.getUnicodeValueString(character))
 
     def getUnicodeValueString(self, character):
         """ Returns a four hex digit representaiton of the given character
