@@ -52,7 +52,7 @@ PREREQUISITES:
 --------------
 
 The main prerequisite for running the tests is that you've checked the
-orca module out from the GNOME CVS repository.  If you want to do
+orca module out from the GNOME git repository.  If you want to do
 regression testing to compare the test results with a known 'correct'
 set of results, you need to create an 'orca' user on your machine and
 run the tests while logged in as that user.  It's best if you check
