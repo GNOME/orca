@@ -7960,7 +7960,8 @@ class Script(script.Script):
         # where <state> is either "selected" or "unselected" depending
         # upon whether there are any text selections.
         #
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent:
             eventStr = orca_state.lastNonModifierKeyEvent.event_string
             mods = orca_state.lastInputEvent.modifiers
         else:
