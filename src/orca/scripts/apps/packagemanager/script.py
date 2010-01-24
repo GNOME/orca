@@ -218,6 +218,31 @@ class Script(default.Script):
 
         return statusBar
 
+    def findStatusBarIcon(self, statusBar=None):
+        """Locates the icon which is sometimes found to the left of the
+        packagemanager status bar.
+
+        Arguments:
+        - statusBar: packagemanager's status bar
+
+        Returns the accessible for the icon if the icon is found and
+        showing.
+        """
+
+        icon = None
+        if not statusBar:
+            statusBar = self.findStatusBar(orca_state.locusOfFocus)
+
+        if statusBar:
+            i = statusBar.getIndexInParent()
+            if i > 0:
+                icons = self.findByRole(
+                    statusBar.parent[i - 1], pyatspi.ROLE_ICON)
+                if icons:
+                    icon = icons[0]
+
+        return icon
+
     def stopSpeechOnActiveDescendantChanged(self, event):
         """Whether or not speech should be stopped prior to setting the
         locusOfFocus in onActiveDescendantChanged.

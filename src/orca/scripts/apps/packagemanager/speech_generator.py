@@ -86,3 +86,24 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(speech_generator.SpeechGenerator.\
                 _generateAvailability(self, obj, **args))
         return result
+
+    def _generateStatusBar(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the status bar of a window.
+        This method should initially be called with a top-level window.
+        """
+        result = []
+        statusBar = self._script.findStatusBar(obj)
+        if statusBar:
+            name = self._generateName(statusBar)
+            if name:
+                result.extend(name)
+            else:
+                for child in statusBar:
+                    result.extend(self._generateName(child))
+
+            icon = self._script.findStatusBarIcon(statusBar)
+            if icon:
+                result[0:0] = self.generate(icon)
+
+        return result
