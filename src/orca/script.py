@@ -86,6 +86,10 @@ class Script:
         self.pointOfReference = {}
         self.setupInputEventHandlers()
         self.keyBindings = self.getKeyBindings()
+        if settings.validateKeyBindings:
+            validation = self.keyBindings.validate()
+            if len(validation):
+                debug.println(debug.LEVEL_SEVERE, validation)
         self.brailleBindings = self.getBrailleBindings()
         self.app_pronunciation_dict = self.getPronunciations()
 

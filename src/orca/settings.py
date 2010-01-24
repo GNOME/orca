@@ -228,6 +228,11 @@ DESKTOP_MODIFIER_KEYS = ["Insert", "KP_Insert"]
 LAPTOP_MODIFIER_KEYS  = ["Caps_Lock"]
 orcaModifierKeys      = DESKTOP_MODIFIER_KEYS
 
+# If True, some validation of the keybindings will be done to check for
+# missing keysyms and duplicate keys used for different operations.
+#
+validateKeyBindings = False
+
 # A new modifier to use (set by the press of any key in the
 # orcaModifierKeys list) to represent the Orca modifier.
 #

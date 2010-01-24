@@ -383,3 +383,54 @@ class KeyBindings:
                     debug.printException(debug.LEVEL_SEVERE)
 
         return consumed
+
+    def validate(self):
+        """Tries to find keybindings where the keysym is not set for the
+        keyboard layout or where multiple keybindings map to the same
+        physical key."""
+
+        errorString = ""
+
+        # Find keybindings where the keysym is not found in the
+        # system's keymap.
+        #
+        for keyBinding in self.keyBindings:
+            keysymstring = keyBinding.keysymstring
+            if keysymstring:
+                if not getKeycode(keysymstring):
+                    errorString += "No physical key defines %s\n" \
+                                   % keysymstring
+                    if keyBinding.handler:
+                        errorString += "needed for %s\n" \
+                                       % keyBinding.handler.description
+
+        # Now, find duplicate bindings that are unintended duplicates.
+        #
+        for i in range(0, len(self.keyBindings)):
+            iKeyBinding = self.keyBindings[i]
+            if not iKeyBinding.keycode:
+                iKeyBinding.keycode = getKeycode(iKeyBinding.keysymstring)
+            if iKeyBinding.keycode:
+                for j in range(i + 1, len(self.keyBindings)):
+                    jKeyBinding = self.keyBindings[j]
+                    if not jKeyBinding.keycode:
+                        jKeyBinding.keycode = \
+                            getKeycode(jKeyBinding.keysymstring)
+                    if (iKeyBinding.keycode == jKeyBinding.keycode) \
+                       and (iKeyBinding.click_count \
+                            == jKeyBinding.click_count) \
+                       and (iKeyBinding.handler != jKeyBinding.handler) \
+                       and ((iKeyBinding.modifiers
+                             & iKeyBinding.modifier_mask) \
+                            == (jKeyBinding.modifiers
+                                & jKeyBinding.modifier_mask)):
+                        errorString += "%s maps to the same key as %s\n" \
+                                       % (iKeyBinding.keysymstring,
+                                          jKeyBinding.keysymstring)
+                        if iKeyBinding.handler:
+                            errorString += "used by %s\n" \
+                                           % iKeyBinding.handler.description
+                        if jKeyBinding.handler:
+                            errorString += "used by %s\n" \
+                                           % jKeyBinding.handler.description
+        return errorString
