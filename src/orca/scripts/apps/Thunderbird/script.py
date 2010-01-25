@@ -168,8 +168,9 @@ class Script(Gecko.Script):
         # interfere with our presentation of -- a simple message being
         # composed by the user. Surely we can count on Thunderbird to
         # handle navigation in that case.
-        # 
-        if self.isEditableMessage(event.source):
+        #
+        if self.isEditableMessage(event.source) \
+           or self.isNonHTMLEntry(event.source):
             self.setCaretContext(event.source, event.detail1)
             return default.Script.onCaretMoved(self, event)
 
@@ -346,7 +347,16 @@ class Script(Gecko.Script):
                     pass
 
         if not consume:
-            Gecko.Script.onFocus(self, event)
+            # Much of the Gecko code is designed to handle Gecko's broken
+            # caret navigation. This is not needed in -- and can sometimes
+            # interfere with our presentation of -- a simple message being
+            # composed by the user. Surely we can count on Thunderbird to
+            # handle navigation in that case.
+            #
+            if self.isEditableMessage(event.source):
+                default.Script.onFocus(self, event)
+            else:
+                Gecko.Script.onFocus(self, event)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -631,6 +641,18 @@ class Script(Gecko.Script):
 
         return default.Script.toggleFlatReviewMode(self, inputEvent)
 
+    def isNonHTMLEntry(self, obj):
+        """Checks for ROLE_ENTRY areas that are not part of an HTML
+        document.  See bug #607414.
+
+        Returns True is this is something like the Subject: entry
+        """
+        result = obj and obj.getRole() == pyatspi.ROLE_ENTRY \
+            and None == self.getAncestor(obj,
+                                         [pyatspi.ROLE_DOCUMENT_FRAME],
+                                         [pyatspi.ROLE_FRAME])
+        return result
+
     def isEditableMessage(self, obj):
         """Returns True if this is a editable message."""
 
@@ -648,7 +670,8 @@ class Script(Gecko.Script):
     def useCaretNavigationModel(self, keyboardEvent):
         """Returns True if we should do our own caret navigation."""
 
-        if self.isEditableMessage(orca_state.locusOfFocus):
+        if self.isEditableMessage(orca_state.locusOfFocus) \
+           or self.isNonHTMLEntry(orca_state.locusOfFocus):
             return False
 
         return Gecko.Script.useCaretNavigationModel(self, keyboardEvent)
