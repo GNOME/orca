@@ -155,9 +155,6 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # TODO - JD: This might be a good candidate for a braille "flash
-        # message."
-        #
         if event.source.getRole() == pyatspi.ROLE_FRAME \
            and event.type.startswith("object:state-changed:busy"):
             # The busy cursor gets set/unset frequently. It's only worth
@@ -171,13 +168,17 @@ class Script(default.Script):
                 # Translators: this is in reference to loading a web page
                 # or some other content.
                 #
-                speech.speak(_("Loading.  Please wait."))
+                msg = _("Loading.  Please wait.")
+                speech.speak(msg)
+                braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
                 self._isBusy = True
             elif event.detail1 == 0 and self._isBusy:
                 # Translators: this is in reference to loading a web page
                 # or some other content.
                 #
-                speech.speak(_("Finished loading."))
+                msg = _("Finished loading.")
+                speech.speak(msg)
+                braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
                 self._isBusy = False
             return
 
