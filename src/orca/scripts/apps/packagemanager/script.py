@@ -59,6 +59,7 @@ class Script(default.Script):
         default.Script.__init__(self, app)
         self._isBusy = False
         self._lastObjectPresented = None
+        self._presentedStatusBarIcon = False
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script."""
@@ -95,6 +96,7 @@ class Script(default.Script):
         # Prevent chattiness when arrowing out of or into a link.
         #
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent \
            and orca_state.lastNonModifierKeyEvent.event_string in \
                ["Left", "Right", "Up", "Down"] \
            and event and event.type.startswith("focus:") \
@@ -182,7 +184,38 @@ class Script(default.Script):
                 self._isBusy = False
             return
 
+        if not self._presentedStatusBarIcon \
+           and event.source.getRole() == pyatspi.ROLE_PANEL \
+           and event.type.startswith("object:state-changed:showing") \
+           and event.detail1:
+            obj = self.findStatusBarIcon()
+            while obj and not self.isSameObject(obj, event.source):
+                obj = obj.parent
+            if obj:
+                # Translators: The Package Manager application notifies the
+                # user of minor errors by displaying an icon in the status
+                # bar and adding them to an error log rather than displaying
+                # the error in a dialog box. This is the message Orca will
+                # present to inform the user that this has occurred.
+                #
+                msg = _("An error occurred. View the error log for details")
+                speech.speak(msg)
+                braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
+                self._presentedStatusBarIcon = True
+
         default.Script.onStateChanged(self, event)
+
+    def onWindowActivated(self, event):
+        """Called whenever a toplevel window is activated.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if self._presentedStatusBarIcon and not self.findStatusBarIcon():
+            self._presentedStatusBarIcon = False
+
+        default.Script.onWindowActivated(self, event)
 
     def findStatusBar(self, obj):
         """Returns the status bar in the window which contains obj.
@@ -231,8 +264,10 @@ class Script(default.Script):
         """
 
         icon = None
-        if not statusBar:
-            statusBar = self.findStatusBar(orca_state.locusOfFocus)
+        if not statusBar and self.app.childCount:
+            # Be sure we're looking in PM's main window.
+            #
+            statusBar = self.findStatusBar(self.app[0])
 
         if statusBar:
             i = statusBar.getIndexInParent()
