@@ -1,4 +1,51 @@
-2.29.5 - 11-Jan-2009
+2.29.6 - 25-Jan-2010
+
+General:
+
+* Removed some references to the string "CVS" in docs.  Many apologies
+  for the people this confused and the time it may have taken them to
+  realize we didn't go back to CVS, but instead moved forward to "git"
+  a long time ago.
+
+* Partial fix for bgo#431531 - Orca now speaks the unicode value of a
+  character when you press the "review current character" key (e.g.,
+  KP_2) 3X.
+
+* Fix for bgo#606962 - availability of gnome-speech (or lack thereof)
+  not handled well
+
+* Fix for bgo#607042 - Orca does not always present sufficient context
+  in Where Am I
+
+* Fix for bgo#607414 - When I try writing a message with Thunderbird
+  3.0, sometime the message edit box is not spokened after I pressing
+  a tab key after with the subject edit box
+
+* Fix for bgo#607470 - Update script for Package Manager to include
+  sibling of status bar when presenting status bar contents
+
+* Detection code for bgo#607847.  This attempts to find problems with
+  Orca keybindings conflicting or not working with the X Server
+  keymap.  You need to enable settings.validateKeyBindings in order
+  for this to kick in.
+
+* Fix for bgo#607901 - Sanity check needed in speakTextSelectionState
+
+* Fix for bgo#607990 - Orca should present the appearance of the icon
+  for logged errors in packagemanager
+
+* Fix for bgo#607988 - The messages spoken during a packagemanager
+  search should also be 'flashed' in braille
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es          Spanish              Francisco Javier Dorado Martinez and
+                                     Jorge Gonzalez
+    sv	        Swedish              Daniel Nylander
+
+==========
+
+2.29.5 - 11-Jan-2010
 
 General:
 
