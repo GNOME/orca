@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2005-2010 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,9 +22,10 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2010 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gtk
 import pyatspi
 
 import orca.braille as braille
@@ -40,6 +41,7 @@ from orca.orca_i18n import _
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from tutorialgenerator import TutorialGenerator
+import script_settings
 
 ########################################################################
 #                                                                      #
@@ -60,6 +62,10 @@ class Script(default.Script):
         self._isBusy = False
         self._lastObjectPresented = None
         self._presentedStatusBarIcon = False
+
+        # Initialize variable to None to make pylint happy.
+        #
+        self.presentLoggedErrorsCheckButton = None
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script."""
@@ -83,6 +89,48 @@ class Script(default.Script):
         """Returns the tutorial generator for this script."""
 
         return TutorialGenerator(self)
+
+    def getAppPreferencesGUI(self):
+        """Return a GtkVBox contain the application unique configuration
+        GUI items for the current application.
+        """
+
+        vbox = gtk.VBox(False, 0)
+        vbox.set_border_width(12)
+        gtk.Widget.show(vbox)
+
+        # Translators: The Package Manager application notifies the
+        # user of minor errors by displaying an icon in the status
+        # bar and adding them to an error log rather than displaying
+        # the error in a dialog box. This string is the label for a
+        # checkbox. If it is checked, Orca will inform the user when
+        # the notification icon has appeared.
+        #
+        label = _("Notify me when errors have been logged.")
+        self.presentLoggedErrorsCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.presentLoggedErrorsCheckButton)
+        gtk.Box.pack_start(vbox, self.presentLoggedErrorsCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(
+            self.presentLoggedErrorsCheckButton,
+            script_settings.presentLoggedErrors)
+
+        return vbox
+
+    def setAppPreferences(self, prefs):
+        """Write out the application specific preferences lines and set the
+        new values.
+
+        Arguments:
+        - prefs: file handle for application preferences.
+        """
+
+        prefs.writelines("\n")
+        script_settings.presentLoggedErrors = \
+                 self.presentLoggedErrorsCheckButton.get_active()
+        prefs.writelines("%s.presentLoggedErrors = %s\n" % \
+                         ("orca.scripts.apps.packagemanager.script_settings",
+                          script_settings.presentLoggedErrors))
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -184,7 +232,8 @@ class Script(default.Script):
                 self._isBusy = False
             return
 
-        if not self._presentedStatusBarIcon \
+        if script_settings.presentLoggedErrors \
+           and not self._presentedStatusBarIcon \
            and event.source.getRole() == pyatspi.ROLE_PANEL \
            and event.type.startswith("object:state-changed:showing") \
            and event.detail1:
