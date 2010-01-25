@@ -247,7 +247,7 @@ class Script(default.Script):
                 # the error in a dialog box. This is the message Orca will
                 # present to inform the user that this has occurred.
                 #
-                msg = _("An error occurred. View the error log for details")
+                msg = _("An error occurred. View the error log for details.")
                 speech.speak(msg)
                 braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
                 self._presentedStatusBarIcon = True
