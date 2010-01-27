@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-01-25 02:00+0000\n"
-"PO-Revision-Date: 2010-01-25 20:04+0100\n"
+"POT-Creation-Date: 2010-01-25 21:36+0000\n"
+"PO-Revision-Date: 2010-01-27 18:56+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1857,10 +1857,9 @@ msgstr "Lee fonéticamente el carácter actual de revisión."
 #. Like its unicode value and other relevant information
 #.
 #: ../src/orca/default.py:620
-#, fuzzy
 #| msgid "Speaks the current flat review character."
 msgid "Speaks unicode value of the current flat review character."
-msgstr "Lee el carácter revisado actualmente."
+msgstr "Lee el carácter unicode del carácter actual de revisión."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -3533,7 +3532,6 @@ msgstr "¿Activar eco por palabras? Introduzca s o n: "
 #: ../src/orca/orca_console_prefs.py:454 ../src/orca/orca_console_prefs.py:544
 #: ../src/orca/orca_console_prefs.py:563 ../src/orca/orca_console_prefs.py:581
 #: ../src/orca/orca_console_prefs.py:624
-#| msgid "Enable Braille?  Enter y or n: "
 msgid "Please enter y or n."
 msgstr "Introducir s o n."
 
@@ -3731,6 +3729,9 @@ msgid ""
 "A free, open source scriptable screen reader, which provides access to "
 "applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
 msgstr ""
+"Un lector de pantalla libre, con scripts y de código abierto que proporciona "
+"acceso a aplicaciones y conjuntos de herramientas que soporten AT-SPI (ej. "
+"el Escritorio GNOME)."
 
 #. Translators: This text is used in the Orca About dialog.
 #.
@@ -3780,6 +3781,21 @@ msgid ""
 "Free Software Foundation, Inc., Franklin Street, Fifth Floor,\n"
 "Boston MA  02110-1301 USA."
 msgstr ""
+"Orca es software libre; puede redistribuirlos y/o modificarlos bajo los \n"
+"términos de la Licencia Pública General GNU como se publicó por la Free \n"
+"Software Foundation, en la versión 2 de la licencia, o (a su elección) \n"
+"cualquier versión posterior.\n"
+"\n"
+"Orca se distribuye con la esperanza de que sea útil, pero SIN NINGUNA \n"
+"GARANTÍA; sin ninguna implicación de garantía de COMERCIABILIDAD o CALIDAD \n"
+"PARA NINGÚN PROPÓSITO PARTICULAR. Consulte la Licencia Pública GNU para "
+"más \n"
+"detalles.\n"
+"\n"
+"Debería haber recibido una copia de la Licencia Pública General de GNU "
+"junto \n"
+"con ORCA, de lo contrario, escriba a la Free Software Foundation, Inc, \n"
+"Franklin Street, Fifth Floor, Boston, MA 02110-1301, EE. UU."
 
 #. Translators: this is an algorithm for tracking an object
 #. of interest (mouse pointer, caret, or widget) with the
@@ -4360,7 +4376,6 @@ msgstr "Sale de Orca (si se usó shell script)"
 #. replace any existing Orca process(es) that might be running.
 #.
 #: ../src/orca/orca.py:1546
-#| msgid "Replacement String"
 msgid "Replace a currently running Orca"
 msgstr "Reemplazar una instancia de Orca actualmente en ejecución"
 
@@ -4433,7 +4448,6 @@ msgstr ""
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
 #: ../src/orca/orca-setup.ui.h:6
-#| msgid "<b>Border Settings</b>"
 msgid "<b>Border</b>"
 msgstr "<b>Borde</b>"
 
@@ -4443,19 +4457,16 @@ msgstr "<b>Indicador Braille</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
 #: ../src/orca/orca-setup.ui.h:9
-#| msgid "<b>Contrast</b>"
 msgid "<b>Color</b>"
 msgstr "<b>Color</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
 #: ../src/orca/orca-setup.ui.h:11
-#| msgid "<b>Cross-hair Settings</b>"
 msgid "<b>Cross-hair</b>"
 msgstr "<b>Cruz</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
 #: ../src/orca/orca-setup.ui.h:13
-#| msgid "<b>Cursor Settings</b>"
 msgid "<b>Cursor</b>"
 msgstr "<b>Cursor</b>"
 
@@ -4469,7 +4480,6 @@ msgstr "<b>Distribución de teclado</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:17
-#| msgid "Speak progress bar _updates"
 msgid "<b>Progress Bar Updates</b>"
 msgstr "<b>Actualizaciones de barras de progreso</b>"
 
@@ -4487,7 +4497,6 @@ msgstr "<b>Indicador de selección</b>"
 
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
 #: ../src/orca/orca-setup.ui.h:22
-#| msgid "<b>Table Row Speech</b>"
 msgid "<b>Table Rows</b>"
 msgstr "<b>Filas de tabla</b>"
 
@@ -4497,7 +4506,6 @@ msgstr "<b>Atributos de texto</b>"
 
 #. Translators:  In the context of magnifying the contents of the screen, "tracking" refers to whether or not an object (mouse pointer, the caret, or the widget with focus) is of interest.  Objects of interest must always be displayed.  "Alignment" refers to where on the screen objects of interest should be displayed.
 #: ../src/orca/orca-setup.ui.h:25
-#| msgid "<b>Tracking and Alignment Settings</b>"
 msgid "<b>Tracking and Alignment</b>"
 msgstr "<b>Seguimiento y alineación</b>"
 
@@ -4507,13 +4515,11 @@ msgstr "<b>Cantidad de información</b>"
 
 #. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
 #: ../src/orca/orca-setup.ui.h:28
-#| msgid "<b>Zoomer Settings</b>"
 msgid "<b>Zoomer</b>"
 msgstr "<b>Ampliador</b>"
 
 #. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
 #: ../src/orca/orca-setup.ui.h:30
-#| msgid "Advanced _Settings..."
 msgid "Advanced..."
 msgstr "Avanzado…"
 
@@ -4655,10 +4661,9 @@ msgstr "Activar teclas de _bloqueo"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
 #: ../src/orca/orca-setup.ui.h:80
-#, fuzzy
 #| msgid "Enable bor_der"
 msgid "Enable_d"
-msgstr "Activar _borde"
+msgstr "Activa_do"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
 #: ../src/orca/orca-setup.ui.h:82
@@ -4775,7 +4780,6 @@ msgstr "Leer _las teclas de acceso del objeto"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
 #: ../src/orca/orca-setup.ui.h:127
-#| msgid "Speak cell"
 msgid "Speak _cell"
 msgstr "Leer _celda"
 
@@ -4807,7 +4811,6 @@ msgstr "Leer el objeto debajo del ra_tón."
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
 #: ../src/orca/orca-setup.ui.h:137
-#| msgid "Speak row"
 msgid "Speak ro_w"
 msgstr "Leer _fila"
 
@@ -6640,8 +6643,8 @@ msgstr "Pulse tab e intro para terminar."
 #: ../src/orca/scripts/apps/gedit/script.py:394
 #: ../src/orca/scripts/apps/gedit/script.py:477
 #: ../src/orca/scripts/apps/Thunderbird/script.py:152
-#: ../src/orca/scripts/apps/Thunderbird/script.py:302
-#: ../src/orca/scripts/apps/Thunderbird/script.py:519
+#: ../src/orca/scripts/apps/Thunderbird/script.py:303
+#: ../src/orca/scripts/apps/Thunderbird/script.py:529
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:88
 msgid "Check Spelling"
 msgstr "Corregir ortografía"
@@ -7139,8 +7142,8 @@ msgstr "Fila %(row)d, columna %(column)d."
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:557
-#: ../src/orca/scripts/apps/Thunderbird/script.py:574
+#: ../src/orca/scripts/apps/Thunderbird/script.py:567
+#: ../src/orca/scripts/apps/Thunderbird/script.py:584
 #, python-format
 msgid "%s panel"
 msgstr "panel %s"
