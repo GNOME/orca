@@ -1454,7 +1454,8 @@ class Script(default.Script):
            and self.isSameObject(obj, event.source):
             return
 
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent:
             string = orca_state.lastNonModifierKeyEvent.event_string
             if self.useCaretNavigationModel(orca_state.lastInputEvent):
                 # Orca is set to control the caret and is in a place where
