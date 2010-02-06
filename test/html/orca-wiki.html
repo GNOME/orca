@@ -6,81 +6,18 @@
 <meta name="robots" content="index,nofollow">
 
 <title>Orca - GNOME Live!</title>
-<script type="text/javascript" src="/wiki/common/js/common.js"></script>
+<script type="text/javascript" src="common.js"></script>
 
 <script type="text/javascript">
-<!--// common functions
-
-// We keep here the state of the search box
-searchIsDisabled = false;
-
-function searchChange(e) {
-    // Update search buttons status according to search box content.
-    // Ignore empty or whitespace search term.
-    var value = e.value.replace(/\s+/, '');
-    if (value == '' || searchIsDisabled) { 
-        searchSetDisabled(true);
-    } else {
-        searchSetDisabled(false);
-    }
-}
-
-function searchSetDisabled(flag) {
-    // Enable or disable search
-    document.getElementById('fullsearch').disabled = flag;
-    document.getElementById('titlesearch').disabled = flag;
-}
-
-function searchFocus(e) {
-    // Update search input content on focus
-    if (e.value == 'Search') {
-        e.value = '';
-        e.className = '';
-        searchIsDisabled = false;
-    }
-}
-
-function searchBlur(e) {
-    // Update search input content on blur
-    if (e.value == '') {
-        e.value = 'Search';
-        e.className = 'disabled';
-        searchIsDisabled = true;
-    }
-}
-
-function actionsMenuInit(title) {
-    // Initialize action menu
-    for (i = 0; i < document.forms.length; i++) {
-        var form = document.forms[i];
-        if (form.className == 'actionsmenu') {
-            // Check if this form needs update
-            var div = form.getElementsByTagName('div')[0];
-            var label = div.getElementsByTagName('label')[0];
-            if (label) {
-                // This is the first time: remove label and do buton.
-                div.removeChild(label);
-                var dobutton = div.getElementsByTagName('input')[0];
-                div.removeChild(dobutton);
-                // and add menu title
-                var select = div.getElementsByTagName('select')[0];
-                var item = document.createElement('option');
-                item.appendChild(document.createTextNode(title));
-                item.value = 'show';
-                select.insertBefore(item, select.options[0]);
-                select.selectedIndex = 0;
-            }
-        }
-    }
-}
+<!--
+var search_hint = "Search";
 //-->
 </script>
 
-<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="http://live.gnome.org/moin_static164/gnome/css/common.css">
-
-<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="http://live.gnome.org/moin_static164/gnome/css/screen.css">
-<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="http://live.gnome.org/moin_static164/gnome/css/print.css">
-<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="http://live.gnome.org/moin_static164/gnome/projection.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="screen.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="print.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="projection.css">
 
 <!-- css only for MSIE browsers -->
 <!--[if IE]>
@@ -105,40 +42,43 @@ function actionsMenuInit(title) {
 
   <div id="page">
     <ul id="general">
+
       <li id="siteaction-gnome_home" class="home">
         <a href="http://www.gnome.org/" title="Home">Home</a>
       </li>
       <li id="siteaction-gnome_news">
-
         <a href="http://news.gnome.org" title="News">News</a>
       </li>
       <li id="siteaction-gnome_projects">
         <a href="http://www.gnome.org/projects/" title="Projects">Projects</a>
+
       </li>
       <li id="siteaction-gnome_art">
         <a href="http://art.gnome.org" title="Art">Art</a>
-
       </li>
       <li id="siteaction-gnome_support">
         <a href="http://www.gnome.org/support/" title="Support">Support</a>
       </li>
       <li id="siteaction-gnome_development">
+
         <a href="http://developer.gnome.org" title="Development">Development</a>
       </li>
       <li id="siteaction-gnome_community">
-
         <a href="http://www.gnome.org/community/" title="Community">Community</a>
       </li>
     </ul>
     <div id="header">
       <h1>
+
         live.gnome.org
       </h1>
       <div id="control">
         <div id="search">
 
 
-<form id="searchform" method="get" action="">
+
+
+<form id="searchform" method="get" action="/Orca">
 <div>
 <input type="hidden" name="action" value="fullsearch">
 <input type="hidden" name="context" value="180">
@@ -148,6 +88,7 @@ function actionsMenuInit(title) {
     onkeyup="searchChange(this)" onchange="searchChange(this)" alt="Search">
 <input id="titlesearch" name="titlesearch" type="submit"
     value="Titles" alt="Search Titles">
+
 <input id="fullsearch" name="fullsearch" type="submit"
     value="Text" alt="Search Full Text">
 </div>
@@ -165,6 +106,8 @@ searchBlur(e);
 
         </div>
       </div>
+      
+
       
 
 <div id="tabs">
