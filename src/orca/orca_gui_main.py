@@ -138,7 +138,7 @@ class OrcaMainGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.aboutDialog.set_copyright(copyrights)
         self.aboutDialog.set_license(licenseText)
         self.aboutDialog.set_logo_icon_name('orca')
-        self.aboutDialog.set_name('Orca')
+        self.aboutDialog.set_name(_('Orca'))
         self.aboutDialog.set_version(platform.version)
         self.aboutDialog.set_website(url)
         self.aboutDialog.connect('response', self.aboutDialogOnResponse)
