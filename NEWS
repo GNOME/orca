@@ -1,3 +1,34 @@
+2.29.90 - 08-Feb-2010
+
+General:
+
+* Fix for bgo#608186 - Man page needs live region keybinds
+  (thanks Arky!)
+
+* Sanity check to address the traceback reported in bgo#608319.
+
+* Fix for bgo#608680 - Please make orca's name translatable in the
+  about dialog (thanks Gabor Kelemen!)
+
+Firefox:
+
+* Updated regression tests to use local stylesheets
+
+* Work on bgo #608149 - Orca's caret navigation for Firefox is broken
+  effective the 30th Sept build of FF 3.6
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg          Bulgarian            Alexander Shopov
+    bn          Bengali              Maruf Ovee and Jamil Ahmed
+    es          Spanish              Francisco Javier Dorado Martinez and
+                                     Jorge Gonzalez
+    et          Estonian             Mattias Põldaru
+    hu          Hungarian            Attila Hammer and Gabor Kelemen
+    sl	     	Slovenian	     Matej Urbančič
+
+==========
+
 2.29.6 - 25-Jan-2010
 
 General:
@@ -923,7 +954,7 @@ New and updated translations (THANKS EVERYONE!!!):
     eu      Basque               Inaki Larranaga Murgoitio
     fi      Finnish              Ilkka Tuohela
     fr      French               Claude Paroz
-    hu      Hungarian            Gabor Keleman
+    hu      Hungarian            Gabor Kelemen
     ja      Japanese             Takeshi Aihana
     nl      Dutch                Wouter Bolsterlee
     pl      Polish               Tomasz Dominikowski
