@@ -107,6 +107,7 @@ class Script(default.Script):
         self.speakCellSpanCheckButton = None
         self.speakResultsDuringFindCheckButton = None
         self.structuralNavigationCheckButton = None
+        self.grabFocusOnAncestorCheckButton = None
 
         # _caretNavigationFunctions are functions that represent fundamental
         # ways to move the caret (e.g., by the arrow keys).
@@ -842,6 +843,23 @@ class Script(default.Script):
         gtk.ToggleButton.set_active(self.structuralNavigationCheckButton,
                                     self.structuralNavigation.enabled)
 
+        # Translators: Orca has had to implement its own caret navigation
+        # model to work around issues in Gecko/Firefox. In certain versions
+        # of Firefox, we must perform a focus grab on each object being
+        # navigated in order for things to work as expected; in other
+        # versions of Firefox, we must avoid doing so in order for things
+        # to work as expected. We cannot identify with certainty which
+        # situation the user is in, so we must provide this as an option
+        # within Orca.
+        #
+        label = _("_Grab focus on objects when navigating")
+        self.grabFocusOnAncestorCheckButton = gtk.CheckButton(label)
+        gtk.Widget.show(self.grabFocusOnAncestorCheckButton)
+        gtk.Box.pack_start(generalVBox, self.grabFocusOnAncestorCheckButton,
+                           False, False, 0)
+        gtk.ToggleButton.set_active(self.grabFocusOnAncestorCheckButton,
+                                    script_settings.grabFocusOnAncestor)
+
         # Translators: when the user arrows up and down in HTML content,
         # it is some times beneficial to always position the cursor at the
         # beginning of the line rather than guessing the position directly
@@ -1047,6 +1065,10 @@ class Script(default.Script):
         prefs.writelines("%s.structuralNavigationEnabled = %s\n" \
                          % (prefix, value))
         script_settings.structuralNavigationEnabled = value
+
+        value = self.grabFocusOnAncestorCheckButton.get_active()
+        prefs.writelines("%s.grabFocusOnAncestor = %s\n" % (prefix, value))
+        script_settings.grabFocusOnAncestor = value
 
         value = self.arrowToLineBeginningCheckButton.get_active()
         prefs.writelines("%s.arrowToLineBeginning = %s\n" % (prefix, value))
@@ -5947,7 +5969,11 @@ class Script(default.Script):
             # of something such as a text area and back into the
             # document content.
             #
-            self._objectForFocusGrab = obj
+            if script_settings.grabFocusOnAncestor:
+                self._objectForFocusGrab = obj
+            else:
+                self._objectForFocusGrab = None
+
             while self._objectForFocusGrab and obj:
                 role = self._objectForFocusGrab.getRole()
 
@@ -5972,6 +5998,14 @@ class Script(default.Script):
                         break
 
                 self._objectForFocusGrab = self._objectForFocusGrab.parent
+
+            # [[[JD - I *think* we still want to do a focus grab, even with
+            # the issues identified in bug 608149. Nothing bad should result
+            # from grabbing focus on a non-focusable object. But I might be
+            # wrong.]]]
+            #
+            if obj and not self._objectForFocusGrab:
+                obj.queryComponent().grabFocus()
 
             if self._objectForFocusGrab:
                 # [[[See https://bugzilla.mozilla.org/show_bug.cgi?id=363214.
