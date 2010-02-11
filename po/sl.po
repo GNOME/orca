@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-01-27 17:58+0000\n"
-"PO-Revision-Date: 2010-01-28 12:38+0100\n"
+"POT-Creation-Date: 2010-02-08 19:29+0000\n"
+"PO-Revision-Date: 2010-02-11 08:17+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,7 @@ msgstr ""
 #: ../orca.desktop.in.h:1
 #: ../src/orca/app_gui_prefs.py:210
 #: ../src/orca/keybindings.py:157
+#: ../src/orca/orca_gui_main.py:141
 #: ../src/orca/orca_gui_prefs.py:2278
 #: ../src/orca/orca_gui_prefs.py:2383
 msgid "Orca"
@@ -1484,7 +1485,7 @@ msgstr "Izvede desni klik na trenutnem predmetu ploske ocene."
 #: ../src/orca/default.py:197
 #: ../src/orca/scripts/apps/acroread.py:114
 #: ../src/orca/scripts/apps/evolution/script.py:153
-#: ../src/orca/scripts/toolkits/Gecko/script.py:534
+#: ../src/orca/scripts/toolkits/Gecko/script.py:535
 msgid "Speaks entire document."
 msgstr "Prebere celoten dokument."
 
@@ -1923,7 +1924,7 @@ msgstr "Pošlje podrobnosti trenutnega skripta."
 #. this line.
 #.
 #: ../src/orca/default.py:682
-#: ../src/orca/scripts/toolkits/Gecko/script.py:548
+#: ../src/orca/scripts/toolkits/Gecko/script.py:549
 msgid "Pans the braille display to the left."
 msgstr "Postavi Braillov zaslon levo."
 
@@ -1937,7 +1938,7 @@ msgstr "Postavi Braillov zaslon levo."
 #. this line.
 #.
 #: ../src/orca/default.py:697
-#: ../src/orca/scripts/toolkits/Gecko/script.py:563
+#: ../src/orca/scripts/toolkits/Gecko/script.py:564
 msgid "Pans the braille display to the right."
 msgstr "Postavi Braillov zaslon desno."
 
@@ -2288,7 +2289,7 @@ msgstr[3] "%d tabulatorji"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:360
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:469
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5852
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5875
 #: ../src/orca/settings.py:1293
 #: ../src/orca/speech_generator.py:473
 #: ../src/orca/speech_generator.py:779
@@ -6890,7 +6891,7 @@ msgstr "Opozori, kadar so zabeležene napake."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:221
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1938
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1961
 msgid "Loading.  Please wait."
 msgstr "Nalaganje. Počakajte."
 
@@ -6898,7 +6899,7 @@ msgstr "Nalaganje. Počakajte."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:229
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1951
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1974
 msgid "Finished loading."
 msgstr "Končano nalaganje."
 
@@ -7075,7 +7076,7 @@ msgstr "Izgovori koordinate celic preglednice"
 #. should speak table cell coordinates in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:367
-#: ../src/orca/scripts/toolkits/Gecko/script.py:900
+#: ../src/orca/scripts/toolkits/Gecko/script.py:918
 msgid "Speak _cell coordinates"
 msgstr "Izgovori koordinate _celic"
 
@@ -7084,7 +7085,7 @@ msgstr "Izgovori koordinate _celic"
 #. rows and columns a particular table cell spans in a table).
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:379
-#: ../src/orca/scripts/toolkits/Gecko/script.py:912
+#: ../src/orca/scripts/toolkits/Gecko/script.py:930
 msgid "Speak _multiple cell spans"
 msgstr "Izgovori _širino več celic"
 
@@ -7092,7 +7093,7 @@ msgstr "Izgovori _širino več celic"
 #. the header of a table cell in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:390
-#: ../src/orca/scripts/toolkits/Gecko/script.py:923
+#: ../src/orca/scripts/toolkits/Gecko/script.py:941
 msgid "Announce cell _header"
 msgstr "Napoved _glave celice"
 
@@ -7100,7 +7101,7 @@ msgstr "Napoved _glave celice"
 #. empty/blank cells when navigating tables in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:401
-#: ../src/orca/scripts/toolkits/Gecko/script.py:934
+#: ../src/orca/scripts/toolkits/Gecko/script.py:952
 msgid "Skip _blank cells"
 msgstr "Preskoči _prazne celice"
 
@@ -7108,7 +7109,7 @@ msgstr "Preskoči _prazne celice"
 #. for specifying how to navigate tables in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:412
-#: ../src/orca/scripts/toolkits/Gecko/script.py:945
+#: ../src/orca/scripts/toolkits/Gecko/script.py:963
 msgid "Table Navigation"
 msgstr "Premikanje po preglednici"
 
@@ -7274,119 +7275,119 @@ msgstr "povezava načrta slike"
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:381
+#: ../src/orca/scripts/toolkits/Gecko/script.py:382
 msgid "Goes to next character."
 msgstr "Skoči na naslednji znak."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:389
+#: ../src/orca/scripts/toolkits/Gecko/script.py:390
 msgid "Goes to previous character."
 msgstr "Skoči na predhodni znak."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:397
+#: ../src/orca/scripts/toolkits/Gecko/script.py:398
 msgid "Goes to next word."
 msgstr "Skoči na naslednjo besedo"
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:405
+#: ../src/orca/scripts/toolkits/Gecko/script.py:406
 msgid "Goes to previous word."
 msgstr "Skoči na predhodno besedo."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:413
+#: ../src/orca/scripts/toolkits/Gecko/script.py:414
 msgid "Goes to next line."
 msgstr "Skoči na naslednjo vrstico"
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:421
+#: ../src/orca/scripts/toolkits/Gecko/script.py:422
 msgid "Goes to previous line."
 msgstr "Skoči na predhodno vrstico"
 
 #. Translators: this command will move the user to the
 #. beginning of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:429
+#: ../src/orca/scripts/toolkits/Gecko/script.py:430
 msgid "Goes to the top of the file."
 msgstr "Skoči na vrh datoteke."
 
 #. Translators: this command will move the user to the
 #. end of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:437
+#: ../src/orca/scripts/toolkits/Gecko/script.py:438
 msgid "Goes to the bottom of the file."
 msgstr "Skoči na dno datoteke."
 
 #. Translators: this command will move the user to the
 #. beginning of the line in an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:445
+#: ../src/orca/scripts/toolkits/Gecko/script.py:446
 msgid "Goes to the beginning of the line."
 msgstr "Premakne se na začetek vrstice."
 
 #. Translators: this command will move the user to the
 #. end of the line in an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:453
+#: ../src/orca/scripts/toolkits/Gecko/script.py:454
 msgid "Goes to the end of the line."
 msgstr "Premakne se na konec vrstice."
 
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:461
+#: ../src/orca/scripts/toolkits/Gecko/script.py:462
 msgid "Causes the current combo box to be expanded."
 msgstr "Povzroči razširjanje pojavnega menija."
 
 #. Translators: this is for advancing the live regions
 #. politeness setting
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:469
+#: ../src/orca/scripts/toolkits/Gecko/script.py:470
 msgid "Advance live region politeness setting."
 msgstr "Napredna nastavitev prijaznosti samodejno posodobljenih predelov"
 
 #. Translators: this is for setting all live regions
 #. to 'off' politeness.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:477
+#: ../src/orca/scripts/toolkits/Gecko/script.py:478
 msgid "Set default live region politeness level to off."
 msgstr "Nastavitev privzete prijaznosti posodobljenih predelov je izključeno."
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:485
+#: ../src/orca/scripts/toolkits/Gecko/script.py:486
 msgid "Monitor live regions."
 msgstr "Nadzor samodejno posodobljenih predelov"
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:493
+#: ../src/orca/scripts/toolkits/Gecko/script.py:494
 msgid "Review live region announcement."
 msgstr "Pregled objav samodejno posodobljenih predelov."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:501
+#: ../src/orca/scripts/toolkits/Gecko/script.py:502
 msgid "Goes to the previous object."
 msgstr "Skoči na predhodni predmet."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:509
+#: ../src/orca/scripts/toolkits/Gecko/script.py:510
 msgid "Goes to the next object."
 msgstr "Skoči na naslednji predmet."
 
@@ -7397,7 +7398,7 @@ msgstr "Skoči na naslednji predmet."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:521
+#: ../src/orca/scripts/toolkits/Gecko/script.py:522
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Preklopi med privzetim Gecko in kazalnim Orka premikanjem."
 
@@ -7409,7 +7410,7 @@ msgstr "Preklopi med privzetim Gecko in kazalnim Orka premikanjem."
 #. mouse over object, this command will hide the mouse
 #. over and return the user to the object he/she was in.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:577
+#: ../src/orca/scripts/toolkits/Gecko/script.py:578
 msgid "Moves focus into and away from the current mouse over."
 msgstr "Premakne dejanje na oziroma stran od trenutnega pojavnega predmeta miške."
 
@@ -7420,7 +7421,7 @@ msgstr "Premakne dejanje na oziroma stran od trenutnega pojavnega predmeta mišk
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:824
+#: ../src/orca/scripts/toolkits/Gecko/script.py:825
 msgid "Use _Orca Caret Navigation"
 msgstr "Uporabi _orka kazalno premikanje"
 
@@ -7428,9 +7429,22 @@ msgstr "Uporabi _orka kazalno premikanje"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:837
+#: ../src/orca/scripts/toolkits/Gecko/script.py:838
 msgid "Use Orca _Structural Navigation"
 msgstr "Uporabi _orka strukturno premikanje"
+
+#. Translators: Orca has had to implement its own caret navigation
+#. model to work around issues in Gecko/Firefox. In certain versions
+#. of Firefox, we must perform a focus grab on each object being
+#. navigated in order for things to work as expected; in other
+#. versions of Firefox, we must avoid doing so in order for things
+#. to work as expected. We cannot identify with certainty which
+#. situation the user is in, so we must provide this as an option
+#. within Orca.
+#.
+#: ../src/orca/scripts/toolkits/Gecko/script.py:855
+msgid "_Grab focus on objects when navigating"
+msgstr "_Zahtevaj žarišče predmeta med premikanjem"
 
 #. Translators: when the user arrows up and down in HTML content,
 #. it is some times beneficial to always position the cursor at the
@@ -7438,7 +7452,7 @@ msgstr "Uporabi _orka strukturno premikanje"
 #. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:852
+#: ../src/orca/scripts/toolkits/Gecko/script.py:870
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "_Postavi kazalnik na začetek vrstice ob premikanju navpično"
 
@@ -7446,7 +7460,7 @@ msgstr "_Postavi kazalnik na začetek vrstice ob premikanju navpično"
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:865
+#: ../src/orca/scripts/toolkits/Gecko/script.py:883
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
 
@@ -7454,7 +7468,7 @@ msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:877
+#: ../src/orca/scripts/toolkits/Gecko/script.py:895
 msgid "Page Navigation"
 msgstr "Premikanje po strani"
 
@@ -7462,7 +7476,7 @@ msgstr "Premikanje po strani"
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:969
+#: ../src/orca/scripts/toolkits/Gecko/script.py:987
 msgid "Speak results during _find"
 msgstr "Izgovori zadetke med _iskanjem"
 
@@ -7471,7 +7485,7 @@ msgstr "Izgovori zadetke med _iskanjem"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:982
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1000
 msgid "Onl_y speak changed lines during find"
 msgstr "Izgovori le _spremenjene vrstice med iskanjem"
 
@@ -7479,14 +7493,14 @@ msgstr "Izgovori le _spremenjene vrstice med iskanjem"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:999
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1017
 msgid "Minimum length of matched text:"
 msgstr "Najmanjša dolžina primerljivega besedila:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1024
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1042
 msgid "Find Options"
 msgstr "Možnosti iskanja"
 
@@ -7494,19 +7508,19 @@ msgstr "Možnosti iskanja"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1608
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1631
 msgid "line selected down from cursor position"
 msgstr "vrstica izbrana pod položajem kazalca"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1609
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1632
 msgid "line unselected down from cursor position"
 msgstr "odstranjen izbor vrstice pod položajem kazalca"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1610
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1633
 msgid "line selected up from cursor position"
 msgstr "vrstica izbrana nad položajem kazalca"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1611
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1634
 msgid "line unselected up from cursor position"
 msgstr "odstranjen izbor vrstice nad položajem kazalca"
 
@@ -7515,14 +7529,14 @@ msgstr "odstranjen izbor vrstice nad položajem kazalca"
 #. moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1654
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1677
 msgid "New item has been added"
 msgstr "Dodan je nov predmet"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1944
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1967
 #, python-format
 msgid "Finished loading %s."
 msgstr "Končano nalaganje %s."
@@ -7534,7 +7548,7 @@ msgstr "Končano nalaganje %s."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2434
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2457
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -7545,13 +7559,13 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6011
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6046
 msgid "Mouse over object not found."
 msgstr "Pojavnega predmeta miške ni mogoče najti."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6497
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6532
 msgid "open"
 msgstr "odpri"
 
@@ -7561,7 +7575,7 @@ msgstr "odpri"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6570
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6605
 #: ../src/orca/structural_navigation.py:883
 msgid "Wrapping to bottom."
 msgstr "Prelom na dnu."
@@ -7572,7 +7586,7 @@ msgstr "Prelom na dnu."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6638
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6673
 #: ../src/orca/structural_navigation.py:891
 msgid "Wrapping to top."
 msgstr "Prelom na vrhu."
@@ -7580,9 +7594,9 @@ msgstr "Prelom na vrhu."
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6664
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6688
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6698
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6699
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6723
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6733
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Podpora samodejno posodobljenim predelom"
@@ -7590,11 +7604,11 @@ msgstr "Podpora samodejno posodobljenim predelom"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6672
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6707
 msgid "Live regions monitoring on"
 msgstr "Nadzor samodejno posodobljenih predelov je vključen."
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6679
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6714
 msgid "Live regions monitoring off"
 msgstr "Nadzor samodejno posodobljenih predelov je izključen."
 
@@ -7605,7 +7619,7 @@ msgstr "Nadzor samodejno posodobljenih predelov je izključen."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6714
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6749
 msgid "Gecko is controlling the caret."
 msgstr "Gecko nadzira kazalnik"
 
@@ -7616,7 +7630,7 @@ msgstr "Gecko nadzira kazalnik"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6726
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6761
 msgid "Orca is controlling the caret."
 msgstr "Orka nadzira kazalnik"
 
