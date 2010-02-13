@@ -102,6 +102,13 @@ class Script(Gecko.Script):
         gtk.ToggleButton.set_active(self.sayAllOnLoadCheckButton,
                                     script_settings.sayAllOnLoad)
 
+        # We need to maintain a separate setting for grabFocusOnAncestor
+        # because the version of Gecko used by the Thunderbird might be
+        # different from that used by Firefox. See bug 608149.
+        #
+        gtk.ToggleButton.set_active(self.grabFocusOnAncestorCheckButton,
+                                    script_settings.grabFocusOnAncestor)
+
         return vbox
 
     def setAppPreferences(self, prefs):
@@ -114,12 +121,16 @@ class Script(Gecko.Script):
 
         Gecko.Script.setAppPreferences(self, prefs)
 
-        # Write the Thunderbird specific setting.
+        # Write the Thunderbird specific settings.
         #
         prefix = "orca.scripts.apps.Thunderbird.script_settings"
         value = self.sayAllOnLoadCheckButton.get_active()
         prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
         script_settings.sayAllOnLoad = value
+
+        value = self.grabFocusOnAncestorCheckButton.get_active()
+        prefs.writelines("%s.grabFocusOnAncestor = %s\n" % (prefix, value))
+        script_settings.grabFocusOnAncestor = value
 
     def _debug(self, msg):
         """ Convenience method for printing debug messages
