@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2010 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,9 +22,10 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2010 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import gtk
 import pyatspi
 
 import orca.orca as orca
@@ -33,6 +34,8 @@ import orca.settings as settings
 import orca.speech as speech
 
 import orca.scripts.toolkits.Gecko as Gecko
+
+import script_settings
 
 class Script(Gecko.Script):
 
@@ -57,6 +60,40 @@ class Script(Gecko.Script):
         # Store a copy of the context so that we can return it.
         #
         self._lastFindContext = [None, -1]
+
+    def getAppPreferencesGUI(self):
+        """Return a GtkVBox contain the application unique configuration
+        GUI items for the current application.
+        """
+
+        vbox = Gecko.Script.getAppPreferencesGUI(self)
+
+        # We need to maintain a separate setting for grabFocusOnAncestor
+        # because the version of Gecko used by Yelp might be different
+        # from that used by Firefox. See bug 608149.
+        #
+        gtk.ToggleButton.set_active(self.grabFocusOnAncestorCheckButton,
+                                    script_settings.grabFocusOnAncestor)
+
+        return vbox
+
+    def setAppPreferences(self, prefs):
+        """Write out the application specific preferences lines and set the
+        new values.
+
+        Arguments:
+        - prefs: file handle for application preferences.
+        """
+
+        Gecko.Script.setAppPreferences(self, prefs)
+
+        # Write the Yelp specific settings.
+        #
+        prefix = "orca.scripts.apps.yelp.script_settings"
+
+        value = self.grabFocusOnAncestorCheckButton.get_active()
+        prefs.writelines("%s.grabFocusOnAncestor = %s\n" % (prefix, value))
+        script_settings.grabFocusOnAncestor = value
 
     def inFindToolbar(self, obj=None):
         """Returns True if the given object is in the Find toolbar.
@@ -203,6 +240,11 @@ class Script(Gecko.Script):
             else:
                 self._currentFrameName = event.source.name
                 self.setCaretPosition(obj, characterOffset)
+                # Pylint thinks that obj is an instance of a list. It most
+                # certainly is not. Silly pylint.
+                #
+                # pylint: disable-msg=E1103
+                #
                 if obj.getState().contains(pyatspi.STATE_FOCUSED):
                     speech.speak(self.speechGenerator.generateSpeech(obj))
                 elif not Gecko.script_settings.sayAllOnLoad:

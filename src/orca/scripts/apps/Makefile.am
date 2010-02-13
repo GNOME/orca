@@ -9,7 +9,8 @@ SUBDIRS = \
 	Thunderbird \
 	gedit \
 	gnome-window-properties \
-	Banshee
+	Banshee \
+	yelp
 
 orca_pathdir=$(pyexecdir)
 
@@ -33,8 +34,7 @@ orca_python_PYTHON = \
 	Mozilla.py \
 	nautilus.py \
 	notification-daemon.py \
-	notify-osd.py \
-	yelp.py
+	notify-osd.py
 
 orca_pythondir=$(pyexecdir)/orca/scripts/apps
 
