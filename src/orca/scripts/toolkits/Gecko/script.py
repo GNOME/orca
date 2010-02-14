@@ -3938,11 +3938,15 @@ class Script(default.Script):
         text = ""
         extents = (0, 0, 0, 0)
         isField = False
-        if not cell or cell.getRole() != pyatspi.ROLE_TABLE_CELL:
+        parentTable = self.getAncestor(cell,
+                                       [pyatspi.ROLE_TABLE],
+                                       [pyatspi.ROLE_DOCUMENT_FRAME])
+        if not cell or cell.getRole() != pyatspi.ROLE_TABLE_CELL \
+           or not parentTable:
             return [newCell, text, extents, isField]
 
         [row, col] = self.getCellCoordinates(cell)
-        table = cell.parent.queryTable()
+        table = parentTable.queryTable()
         rowspan = table.getRowExtentAt(row, col)
         colspan = table.getColumnExtentAt(row, col)
         nextCell = None
