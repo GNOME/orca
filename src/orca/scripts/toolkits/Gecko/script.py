@@ -3481,9 +3481,11 @@ class Script(default.Script):
                                    [pyatspi.ROLE_TABLE_CELL],
                                    [pyatspi.ROLE_DOCUMENT_FRAME])
 
-        parent = obj.parent
+        parentTable = self.getAncestor(obj,
+                                       [pyatspi.ROLE_TABLE],
+                                       [pyatspi.ROLE_DOCUMENT_FRAME])
         try:
-            table = parent.queryTable()
+            table = parentTable.queryTable()
         except:
             pass
         else:
