@@ -70,7 +70,7 @@ minimumFindLength = 4
 onlySpeakChangedLinesDuringFind = False
 
 # Whether we should grab focus on a focusable ancestor when setting
-# the caret position. See bug 608149. We'll default to True for now
-# because most Orca users are not using the impacted versions of FF.
+# the caret position. See bug 608149. We'll default to False because
+# it seems distros are shipping FF 3.6 for GNOME 2.30.
 #
-grabFocusOnAncestor = True
+grabFocusOnAncestor = False
