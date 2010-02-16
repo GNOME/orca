@@ -57,6 +57,9 @@ try:
     import louis
 except ImportError:
     louis = None
+from platform import tablesdir
+if louis and not tablesdir:
+    louis = None
 
 from orca_i18n import _  # for gettext support
 from orca_i18n import C_ # to provide qualified translatable strings
