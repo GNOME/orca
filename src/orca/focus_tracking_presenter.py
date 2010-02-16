@@ -532,6 +532,16 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     self._cleanupGarbage()
             return
 
+        # Clean up any flat review context so that Orca does not get
+        # confused (see bgo#609633)
+        #
+        if event.type.startswith("window:deactivate") \
+           and orca_state.activeScript \
+           and orca_state.activeScript.flatReviewContext \
+           and orca_state.activeScript.app == event.host_application:
+            orca_state.activeScript.drawOutline(-1, 0, 0, 0)
+            orca_state.activeScript.flatReviewContext = None
+
         try:
             # We don't want to touch a defunct object.  It's useless and it
             # can cause hangs.
@@ -542,10 +552,6 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     debug.println(debug.LEVEL_FINEST,
                                   "IGNORING DEFUNCT OBJECT")
                     if event.type.startswith("window:deactivate"):
-                        if orca_state.activeScript \
-                           and orca_state.activeScript.flatReviewContext:
-                            orca_state.activeScript.drawOutline(-1, 0, 0, 0)
-                            orca_state.activeScript.flatReviewContext = None
                         orca.setLocusOfFocus(event, None)
                         orca_state.activeWindow = None
                     return
