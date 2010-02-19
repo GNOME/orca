@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-02-08 19:29+0000\n"
-"PO-Revision-Date: 2010-02-11 08:17+0100\n"
+"POT-Creation-Date: 2010-02-19 17:25+0000\n"
+"PO-Revision-Date: 2010-02-19 21:50+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -1485,7 +1485,7 @@ msgstr "Izvede desni klik na trenutnem predmetu ploske ocene."
 #: ../src/orca/default.py:197
 #: ../src/orca/scripts/apps/acroread.py:114
 #: ../src/orca/scripts/apps/evolution/script.py:153
-#: ../src/orca/scripts/toolkits/Gecko/script.py:535
+#: ../src/orca/scripts/toolkits/Gecko/script.py:536
 msgid "Speaks entire document."
 msgstr "Prebere celoten dokument."
 
@@ -1924,7 +1924,7 @@ msgstr "Pošlje podrobnosti trenutnega skripta."
 #. this line.
 #.
 #: ../src/orca/default.py:682
-#: ../src/orca/scripts/toolkits/Gecko/script.py:549
+#: ../src/orca/scripts/toolkits/Gecko/script.py:550
 msgid "Pans the braille display to the left."
 msgstr "Postavi Braillov zaslon levo."
 
@@ -1938,7 +1938,7 @@ msgstr "Postavi Braillov zaslon levo."
 #. this line.
 #.
 #: ../src/orca/default.py:697
-#: ../src/orca/scripts/toolkits/Gecko/script.py:564
+#: ../src/orca/scripts/toolkits/Gecko/script.py:565
 msgid "Pans the braille display to the right."
 msgstr "Postavi Braillov zaslon desno."
 
@@ -2289,11 +2289,11 @@ msgstr[3] "%d tabulatorji"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:360
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:469
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5875
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5882
 #: ../src/orca/settings.py:1293
 #: ../src/orca/speech_generator.py:473
 #: ../src/orca/speech_generator.py:779
-#: ../src/orca/structural_navigation.py:3304
+#: ../src/orca/structural_navigation.py:3375
 msgid "blank"
 msgstr "prazno"
 
@@ -2753,7 +2753,7 @@ msgstr "preklopi"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/focus_tracking_presenter.py:952
+#: ../src/orca/focus_tracking_presenter.py:958
 msgid "No focus"
 msgstr "Ni v žarišču"
 
@@ -6754,9 +6754,9 @@ msgstr "Pritisnite Tab in Enter za izhod."
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:394
 #: ../src/orca/scripts/apps/gedit/script.py:477
-#: ../src/orca/scripts/apps/Thunderbird/script.py:152
-#: ../src/orca/scripts/apps/Thunderbird/script.py:303
-#: ../src/orca/scripts/apps/Thunderbird/script.py:529
+#: ../src/orca/scripts/apps/Thunderbird/script.py:163
+#: ../src/orca/scripts/apps/Thunderbird/script.py:314
+#: ../src/orca/scripts/apps/Thunderbird/script.py:540
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:88
 msgid "Check Spelling"
 msgstr "Preveri črkovanje"
@@ -6891,7 +6891,7 @@ msgstr "Opozori, kadar so zabeležene napake."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:221
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1961
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1962
 msgid "Loading.  Please wait."
 msgstr "Nalaganje. Počakajte."
 
@@ -6899,7 +6899,7 @@ msgstr "Nalaganje. Počakajte."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:229
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1974
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1975
 msgid "Finished loading."
 msgstr "Končano nalaganje."
 
@@ -7076,7 +7076,7 @@ msgstr "Izgovori koordinate celic preglednice"
 #. should speak table cell coordinates in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:367
-#: ../src/orca/scripts/toolkits/Gecko/script.py:918
+#: ../src/orca/scripts/toolkits/Gecko/script.py:919
 msgid "Speak _cell coordinates"
 msgstr "Izgovori koordinate _celic"
 
@@ -7085,7 +7085,7 @@ msgstr "Izgovori koordinate _celic"
 #. rows and columns a particular table cell spans in a table).
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:379
-#: ../src/orca/scripts/toolkits/Gecko/script.py:930
+#: ../src/orca/scripts/toolkits/Gecko/script.py:931
 msgid "Speak _multiple cell spans"
 msgstr "Izgovori _širino več celic"
 
@@ -7093,7 +7093,7 @@ msgstr "Izgovori _širino več celic"
 #. the header of a table cell in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:390
-#: ../src/orca/scripts/toolkits/Gecko/script.py:941
+#: ../src/orca/scripts/toolkits/Gecko/script.py:942
 msgid "Announce cell _header"
 msgstr "Napoved _glave celice"
 
@@ -7101,7 +7101,7 @@ msgstr "Napoved _glave celice"
 #. empty/blank cells when navigating tables in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:401
-#: ../src/orca/scripts/toolkits/Gecko/script.py:952
+#: ../src/orca/scripts/toolkits/Gecko/script.py:953
 msgid "Skip _blank cells"
 msgstr "Preskoči _prazne celice"
 
@@ -7109,7 +7109,7 @@ msgstr "Preskoči _prazne celice"
 #. for specifying how to navigate tables in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:412
-#: ../src/orca/scripts/toolkits/Gecko/script.py:963
+#: ../src/orca/scripts/toolkits/Gecko/script.py:964
 msgid "Table Navigation"
 msgstr "Premikanje po preglednici"
 
@@ -7241,15 +7241,15 @@ msgstr[3] "%d znaki predolgo"
 #. a cell in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:123
-#: ../src/orca/structural_navigation.py:3311
+#: ../src/orca/structural_navigation.py:3382
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "vrstica %(row)d, stolpec %(column)d."
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:567
-#: ../src/orca/scripts/apps/Thunderbird/script.py:584
+#: ../src/orca/scripts/apps/Thunderbird/script.py:578
+#: ../src/orca/scripts/apps/Thunderbird/script.py:595
 #, python-format
 msgid "%s panel"
 msgstr "pult %s"
@@ -7275,119 +7275,119 @@ msgstr "povezava načrta slike"
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:382
+#: ../src/orca/scripts/toolkits/Gecko/script.py:383
 msgid "Goes to next character."
 msgstr "Skoči na naslednji znak."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:390
+#: ../src/orca/scripts/toolkits/Gecko/script.py:391
 msgid "Goes to previous character."
 msgstr "Skoči na predhodni znak."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:398
+#: ../src/orca/scripts/toolkits/Gecko/script.py:399
 msgid "Goes to next word."
 msgstr "Skoči na naslednjo besedo"
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:406
+#: ../src/orca/scripts/toolkits/Gecko/script.py:407
 msgid "Goes to previous word."
 msgstr "Skoči na predhodno besedo."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:414
+#: ../src/orca/scripts/toolkits/Gecko/script.py:415
 msgid "Goes to next line."
 msgstr "Skoči na naslednjo vrstico"
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:422
+#: ../src/orca/scripts/toolkits/Gecko/script.py:423
 msgid "Goes to previous line."
 msgstr "Skoči na predhodno vrstico"
 
 #. Translators: this command will move the user to the
 #. beginning of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:430
+#: ../src/orca/scripts/toolkits/Gecko/script.py:431
 msgid "Goes to the top of the file."
 msgstr "Skoči na vrh datoteke."
 
 #. Translators: this command will move the user to the
 #. end of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:438
+#: ../src/orca/scripts/toolkits/Gecko/script.py:439
 msgid "Goes to the bottom of the file."
 msgstr "Skoči na dno datoteke."
 
 #. Translators: this command will move the user to the
 #. beginning of the line in an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:446
+#: ../src/orca/scripts/toolkits/Gecko/script.py:447
 msgid "Goes to the beginning of the line."
 msgstr "Premakne se na začetek vrstice."
 
 #. Translators: this command will move the user to the
 #. end of the line in an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:454
+#: ../src/orca/scripts/toolkits/Gecko/script.py:455
 msgid "Goes to the end of the line."
 msgstr "Premakne se na konec vrstice."
 
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:462
+#: ../src/orca/scripts/toolkits/Gecko/script.py:463
 msgid "Causes the current combo box to be expanded."
 msgstr "Povzroči razširjanje pojavnega menija."
 
 #. Translators: this is for advancing the live regions
 #. politeness setting
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:470
+#: ../src/orca/scripts/toolkits/Gecko/script.py:471
 msgid "Advance live region politeness setting."
 msgstr "Napredna nastavitev prijaznosti samodejno posodobljenih predelov"
 
 #. Translators: this is for setting all live regions
 #. to 'off' politeness.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:478
+#: ../src/orca/scripts/toolkits/Gecko/script.py:479
 msgid "Set default live region politeness level to off."
 msgstr "Nastavitev privzete prijaznosti posodobljenih predelov je izključeno."
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:486
+#: ../src/orca/scripts/toolkits/Gecko/script.py:487
 msgid "Monitor live regions."
 msgstr "Nadzor samodejno posodobljenih predelov"
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:494
+#: ../src/orca/scripts/toolkits/Gecko/script.py:495
 msgid "Review live region announcement."
 msgstr "Pregled objav samodejno posodobljenih predelov."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:502
+#: ../src/orca/scripts/toolkits/Gecko/script.py:503
 msgid "Goes to the previous object."
 msgstr "Skoči na predhodni predmet."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:510
+#: ../src/orca/scripts/toolkits/Gecko/script.py:511
 msgid "Goes to the next object."
 msgstr "Skoči na naslednji predmet."
 
@@ -7398,7 +7398,7 @@ msgstr "Skoči na naslednji predmet."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:522
+#: ../src/orca/scripts/toolkits/Gecko/script.py:523
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Preklopi med privzetim Gecko in kazalnim Orka premikanjem."
 
@@ -7410,7 +7410,7 @@ msgstr "Preklopi med privzetim Gecko in kazalnim Orka premikanjem."
 #. mouse over object, this command will hide the mouse
 #. over and return the user to the object he/she was in.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:578
+#: ../src/orca/scripts/toolkits/Gecko/script.py:579
 msgid "Moves focus into and away from the current mouse over."
 msgstr "Premakne dejanje na oziroma stran od trenutnega pojavnega predmeta miške."
 
@@ -7421,7 +7421,7 @@ msgstr "Premakne dejanje na oziroma stran od trenutnega pojavnega predmeta mišk
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:825
+#: ../src/orca/scripts/toolkits/Gecko/script.py:826
 msgid "Use _Orca Caret Navigation"
 msgstr "Uporabi _orka kazalno premikanje"
 
@@ -7429,7 +7429,7 @@ msgstr "Uporabi _orka kazalno premikanje"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:838
+#: ../src/orca/scripts/toolkits/Gecko/script.py:839
 msgid "Use Orca _Structural Navigation"
 msgstr "Uporabi _orka strukturno premikanje"
 
@@ -7442,7 +7442,7 @@ msgstr "Uporabi _orka strukturno premikanje"
 #. situation the user is in, so we must provide this as an option
 #. within Orca.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:855
+#: ../src/orca/scripts/toolkits/Gecko/script.py:856
 msgid "_Grab focus on objects when navigating"
 msgstr "_Zahtevaj žarišče predmeta med premikanjem"
 
@@ -7452,7 +7452,7 @@ msgstr "_Zahtevaj žarišče predmeta med premikanjem"
 #. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:870
+#: ../src/orca/scripts/toolkits/Gecko/script.py:871
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "_Postavi kazalnik na začetek vrstice ob premikanju navpično"
 
@@ -7460,7 +7460,7 @@ msgstr "_Postavi kazalnik na začetek vrstice ob premikanju navpično"
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:883
+#: ../src/orca/scripts/toolkits/Gecko/script.py:884
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
 
@@ -7468,7 +7468,7 @@ msgstr "Samodejno začni z izgovarjanjem vsebine strani po _nalaganju"
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:895
+#: ../src/orca/scripts/toolkits/Gecko/script.py:896
 msgid "Page Navigation"
 msgstr "Premikanje po strani"
 
@@ -7476,7 +7476,7 @@ msgstr "Premikanje po strani"
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:987
+#: ../src/orca/scripts/toolkits/Gecko/script.py:988
 msgid "Speak results during _find"
 msgstr "Izgovori zadetke med _iskanjem"
 
@@ -7485,7 +7485,7 @@ msgstr "Izgovori zadetke med _iskanjem"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1000
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1001
 msgid "Onl_y speak changed lines during find"
 msgstr "Izgovori le _spremenjene vrstice med iskanjem"
 
@@ -7493,14 +7493,14 @@ msgstr "Izgovori le _spremenjene vrstice med iskanjem"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1017
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1018
 msgid "Minimum length of matched text:"
 msgstr "Najmanjša dolžina primerljivega besedila:"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1042
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1043
 msgid "Find Options"
 msgstr "Možnosti iskanja"
 
@@ -7508,19 +7508,19 @@ msgstr "Možnosti iskanja"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1631
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1632
 msgid "line selected down from cursor position"
 msgstr "vrstica izbrana pod položajem kazalca"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1632
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1633
 msgid "line unselected down from cursor position"
 msgstr "odstranjen izbor vrstice pod položajem kazalca"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1633
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1634
 msgid "line selected up from cursor position"
 msgstr "vrstica izbrana nad položajem kazalca"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1634
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1635
 msgid "line unselected up from cursor position"
 msgstr "odstranjen izbor vrstice nad položajem kazalca"
 
@@ -7529,14 +7529,14 @@ msgstr "odstranjen izbor vrstice nad položajem kazalca"
 #. moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1677
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1678
 msgid "New item has been added"
 msgstr "Dodan je nov predmet"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1967
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1968
 #, python-format
 msgid "Finished loading %s."
 msgstr "Končano nalaganje %s."
@@ -7548,7 +7548,7 @@ msgstr "Končano nalaganje %s."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2457
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2458
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -7559,13 +7559,13 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6046
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6053
 msgid "Mouse over object not found."
 msgstr "Pojavnega predmeta miške ni mogoče najti."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6532
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6539
 msgid "open"
 msgstr "odpri"
 
@@ -7575,8 +7575,8 @@ msgstr "odpri"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6605
-#: ../src/orca/structural_navigation.py:883
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6612
+#: ../src/orca/structural_navigation.py:884
 msgid "Wrapping to bottom."
 msgstr "Prelom na dnu."
 
@@ -7586,17 +7586,17 @@ msgstr "Prelom na dnu."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6673
-#: ../src/orca/structural_navigation.py:891
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6680
+#: ../src/orca/structural_navigation.py:892
 msgid "Wrapping to top."
 msgstr "Prelom na vrhu."
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6699
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6723
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6733
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6706
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6730
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6740
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Podpora samodejno posodobljenim predelom"
@@ -7604,11 +7604,11 @@ msgstr "Podpora samodejno posodobljenim predelom"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6707
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6714
 msgid "Live regions monitoring on"
 msgstr "Nadzor samodejno posodobljenih predelov je vključen."
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6714
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6721
 msgid "Live regions monitoring off"
 msgstr "Nadzor samodejno posodobljenih predelov je izključen."
 
@@ -7619,7 +7619,7 @@ msgstr "Nadzor samodejno posodobljenih predelov je izključen."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6749
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6756
 msgid "Gecko is controlling the caret."
 msgstr "Gecko nadzira kazalnik"
 
@@ -7630,7 +7630,7 @@ msgstr "Gecko nadzira kazalnik"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6761
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6768
 msgid "Orca is controlling the caret."
 msgstr "Orka nadzira kazalnik"
 
@@ -7647,7 +7647,7 @@ msgstr "%(role)s raven %(level)d"
 #. Translators: this represents a list in HTML.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:281
-#: ../src/orca/structural_navigation.py:2792
+#: ../src/orca/structural_navigation.py:2793
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -7880,7 +7880,7 @@ msgstr "raven drevesa %d"
 #. inside another list).
 #.
 #: ../src/orca/settings.py:1353
-#: ../src/orca/structural_navigation.py:2807
+#: ../src/orca/structural_navigation.py:2808
 #, python-format
 msgid "Nesting level %d"
 msgstr "Raven drevesa %d"
@@ -8133,7 +8133,7 @@ msgstr "Privzeti gumb je %s"
 #. This feature needs to be toggle-able so that it does not
 #. interfere with normal writing functions.
 #.
-#: ../src/orca/structural_navigation.py:589
+#: ../src/orca/structural_navigation.py:590
 msgid "Toggles structural navigation keys."
 msgstr "Preklopi strukturne krmilne tipke"
 
@@ -8147,7 +8147,7 @@ msgstr "Preklopi strukturne krmilne tipke"
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/structural_navigation.py:643
+#: ../src/orca/structural_navigation.py:644
 msgid "Structural navigation keys on."
 msgstr "Strukturne krmilne tipke vključene."
 
@@ -8161,7 +8161,7 @@ msgstr "Strukturne krmilne tipke vključene."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/structural_navigation.py:655
+#: ../src/orca/structural_navigation.py:656
 msgid "Structural navigation keys off."
 msgstr "Strukturne krmilne tipke izključene."
 
@@ -8170,7 +8170,7 @@ msgstr "Strukturne krmilne tipke izključene."
 #. table navigation command but is not in a table, Orca speaks
 #. this message.
 #.
-#: ../src/orca/structural_navigation.py:695
+#: ../src/orca/structural_navigation.py:696
 msgid "Not in a table."
 msgstr "Ni v preglednici."
 
@@ -8180,7 +8180,7 @@ msgstr "Ni v preglednici."
 #. to move to the left of the current cell and is
 #. already in the first column.
 #.
-#: ../src/orca/structural_navigation.py:715
+#: ../src/orca/structural_navigation.py:716
 msgid "Beginning of row."
 msgstr "Začetek vrstice."
 
@@ -8190,7 +8190,7 @@ msgstr "Začetek vrstice."
 #. to move to the right of the current cell and is
 #. already in the last column.
 #.
-#: ../src/orca/structural_navigation.py:724
+#: ../src/orca/structural_navigation.py:725
 msgid "End of row."
 msgstr "Konec vrstice."
 
@@ -8200,7 +8200,7 @@ msgstr "Konec vrstice."
 #. to move to the cell above the current cell and is
 #. already in the first row.
 #.
-#: ../src/orca/structural_navigation.py:733
+#: ../src/orca/structural_navigation.py:734
 msgid "Top of column."
 msgstr "Vrh stolpca."
 
@@ -8210,7 +8210,7 @@ msgstr "Vrh stolpca."
 #. to move to the cell below the current cell and is
 #. already in the last row.
 #.
-#: ../src/orca/structural_navigation.py:742
+#: ../src/orca/structural_navigation.py:743
 msgid "Bottom of column."
 msgstr "Dno stolpca"
 
@@ -8219,13 +8219,13 @@ msgstr "Dno stolpca"
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1326
+#: ../src/orca/structural_navigation.py:1327
 msgid "Non-uniform"
 msgstr "enotna preglednica"
 
 #. Translators: this represents the number of rows in a table.
 #.
-#: ../src/orca/structural_navigation.py:1333
+#: ../src/orca/structural_navigation.py:1334
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -8236,7 +8236,7 @@ msgstr[3] "Preglednica z %d vrsticami"
 
 #. Translators: this represents the number of cols in a table.
 #.
-#: ../src/orca/structural_navigation.py:1338
+#: ../src/orca/structural_navigation.py:1339
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -8249,7 +8249,7 @@ msgstr[3] "%d stolpci"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1486
+#: ../src/orca/structural_navigation.py:1487
 #, python-format
 msgid "Cell spans %(rows)d rows and %(columns)d columns"
 msgstr "Celica je razširjena preko %(rows)d vrstic in %(columns)d stolpcev."
@@ -8258,7 +8258,7 @@ msgstr "Celica je razširjena preko %(rows)d vrstic in %(columns)d stolpcev."
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1494
+#: ../src/orca/structural_navigation.py:1495
 #, python-format
 msgid "Cell spans %d columns"
 msgstr "Celica je razširjena preko %d stolpcev"
@@ -8267,7 +8267,7 @@ msgstr "Celica je razširjena preko %d stolpcev"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1500
+#: ../src/orca/structural_navigation.py:1501
 #, python-format
 msgid "Cell spans %d rows"
 msgstr "Celica je razširjena preko %d vrstic"
@@ -8275,14 +8275,14 @@ msgstr "Celica je razširjena preko %d vrstic"
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1837
+#: ../src/orca/structural_navigation.py:1838
 msgid "Goes to previous anchor."
 msgstr "Premakne se na predhodno sidro."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1842
+#: ../src/orca/structural_navigation.py:1843
 msgid "Goes to next anchor."
 msgstr "Premakne se na naslednje sidro."
 
@@ -8291,21 +8291,21 @@ msgstr "Premakne se na naslednje sidro."
 #. that one can jump to. This stirng is what orca will say
 #. if there are no more anchors found.
 #.
-#: ../src/orca/structural_navigation.py:1899
+#: ../src/orca/structural_navigation.py:1900
 msgid "No more anchors."
 msgstr "Ni več sider."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1916
+#: ../src/orca/structural_navigation.py:1917
 msgid "Goes to previous blockquote."
 msgstr "Skoči na predhodno bločno besedilo."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1921
+#: ../src/orca/structural_navigation.py:1922
 msgid "Goes to next blockquote."
 msgstr "Skoči na naslednje bločno besedilo."
 
@@ -8313,21 +8313,21 @@ msgstr "Skoči na naslednje bločno besedilo."
 #. moving from blockquote to blockquote. This string is what
 #. Orca will say if there are no more blockquotes found.
 #.
-#: ../src/orca/structural_navigation.py:1981
+#: ../src/orca/structural_navigation.py:1982
 msgid "No more blockquotes."
 msgstr "Ni več bločnega besedila."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:1998
+#: ../src/orca/structural_navigation.py:1999
 msgid "Goes to previous button."
 msgstr "Premakne se na predhodni gumb."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2003
+#: ../src/orca/structural_navigation.py:2004
 msgid "Goes to next button."
 msgstr "Premakne se na naslednji gumb."
 
@@ -8336,21 +8336,21 @@ msgstr "Premakne se na naslednji gumb."
 #. string is what Orca will say if there are no more buttons
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:2060
+#: ../src/orca/structural_navigation.py:2061
 msgid "No more buttons."
 msgstr "Ni več gumbov."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2077
+#: ../src/orca/structural_navigation.py:2078
 msgid "Goes to previous check box."
 msgstr "Skoči na predhodno potrditveno polje."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2082
+#: ../src/orca/structural_navigation.py:2083
 msgid "Goes to next check box."
 msgstr "Skoči na naslednje potrditveno polje."
 
@@ -8359,7 +8359,7 @@ msgstr "Skoči na naslednje potrditveno polje."
 #. string is what Orca will say if there are no more check
 #. boxes found.
 #.
-#: ../src/orca/structural_navigation.py:2139
+#: ../src/orca/structural_navigation.py:2140
 msgid "No more check boxes."
 msgstr "Ni več  potrditvenih polj"
 
@@ -8367,7 +8367,7 @@ msgstr "Ni več  potrditvenih polj"
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2157
+#: ../src/orca/structural_navigation.py:2158
 msgid "Goes to previous large object."
 msgstr "Skoči na predhodni večji predmet."
 
@@ -8375,7 +8375,7 @@ msgstr "Skoči na predhodni večji predmet."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2163
+#: ../src/orca/structural_navigation.py:2164
 msgid "Goes to next large object."
 msgstr "Skoči na naslednji večji predmet spletne strani."
 
@@ -8385,21 +8385,21 @@ msgstr "Skoči na naslednji večji predmet spletne strani."
 #. a list, a table, etc. This string is what Orca will say
 #. if there are no more large objects found.
 #.
-#: ../src/orca/structural_navigation.py:2232
+#: ../src/orca/structural_navigation.py:2233
 msgid "No more large objects."
 msgstr "Ni več velikih predmetov."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2249
+#: ../src/orca/structural_navigation.py:2250
 msgid "Goes to previous combo box."
 msgstr "Skoči na predhodni pojavni meni."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2254
+#: ../src/orca/structural_navigation.py:2255
 msgid "Goes to next combo box."
 msgstr "Skoči na naslednji pojavni meni."
 
@@ -8408,21 +8408,21 @@ msgstr "Skoči na naslednji pojavni meni."
 #. string is what Orca will say if there are no more combo
 #. boxes found.
 #.
-#: ../src/orca/structural_navigation.py:2311
+#: ../src/orca/structural_navigation.py:2312
 msgid "No more combo boxes."
 msgstr "Ni več pojavnih menijev."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2328
+#: ../src/orca/structural_navigation.py:2329
 msgid "Goes to previous entry."
 msgstr "Premakne se na predhodni vnos."
 
 #. Translators: this is for navigating among text entries
 #. in a form.
 #.
-#: ../src/orca/structural_navigation.py:2333
+#: ../src/orca/structural_navigation.py:2334
 msgid "Goes to next entry."
 msgstr "Premakne se na naslednji vnos."
 
@@ -8431,21 +8431,21 @@ msgstr "Premakne se na naslednji vnos."
 #. string is what Orca will say if there are no more entries
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:2399
+#: ../src/orca/structural_navigation.py:2400
 msgid "No more entries."
 msgstr "Ni več vnosov."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2416
+#: ../src/orca/structural_navigation.py:2417
 msgid "Goes to previous form field."
 msgstr "Skoči na predhodno polje obrazca."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2423
+#: ../src/orca/structural_navigation.py:2424
 msgid "Goes to next form field."
 msgstr "Skoči na naslednje polje obrazca."
 
@@ -8453,28 +8453,28 @@ msgstr "Skoči na naslednje polje obrazca."
 #. by moving from form field to form field. This string is
 #. what Orca will say if there are no more form fields found.
 #.
-#: ../src/orca/structural_navigation.py:2493
+#: ../src/orca/structural_navigation.py:2494
 msgid "No more form fields."
 msgstr "Ni več polj obrazca."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2510
+#: ../src/orca/structural_navigation.py:2511
 msgid "Goes to previous heading."
 msgstr "Skoči na predhodni naslov."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g., <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2515
+#: ../src/orca/structural_navigation.py:2516
 msgid "Goes to next heading."
 msgstr "Skoči na naslednji naslov."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2525
+#: ../src/orca/structural_navigation.py:2526
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "Skoči na predhodni naslov %d ravni."
@@ -8482,7 +8482,7 @@ msgstr "Skoči na predhodni naslov %d ravni."
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2532
+#: ../src/orca/structural_navigation.py:2533
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "Skoči na naslednji naslov %d ravni."
@@ -8492,7 +8492,7 @@ msgstr "Skoči na naslednji naslov %d ravni."
 #. This string is what Orca will say if there are no more
 #. headings found.
 #.
-#: ../src/orca/structural_navigation.py:2604
+#: ../src/orca/structural_navigation.py:2605
 msgid "No more headings."
 msgstr "Ni več naslovov."
 
@@ -8501,7 +8501,7 @@ msgstr "Ni več naslovov."
 #. (i.e. only <h1> or only <h2>, etc.) This string is
 #. what Orca will say if there are no more headings found.
 #.
-#: ../src/orca/structural_navigation.py:2611
+#: ../src/orca/structural_navigation.py:2612
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Ni več naslovov na %d ravni."
@@ -8511,7 +8511,7 @@ msgstr "Ni več naslovov na %d ravni."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2630
+#: ../src/orca/structural_navigation.py:2631
 msgid "Goes to previous landmark."
 msgstr "Skoči na predhodno mestno oznako."
 
@@ -8520,7 +8520,7 @@ msgstr "Skoči na predhodno mestno oznako."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2637
+#: ../src/orca/structural_navigation.py:2638
 msgid "Goes to next landmark."
 msgstr "Skoči na naslednjo mestno oznako."
 
@@ -8530,21 +8530,21 @@ msgstr "Skoči na naslednjo mestno oznako."
 #. of webpage like banners, main context, search etc.  This
 #. is an indication that one was not found.
 #.
-#: ../src/orca/structural_navigation.py:2711
+#: ../src/orca/structural_navigation.py:2712
 msgid "No landmark found."
 msgstr "Ni najdenih mestnih oznak."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2728
+#: ../src/orca/structural_navigation.py:2729
 msgid "Goes to previous list."
 msgstr "Skoči na predhodni seznam."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2733
+#: ../src/orca/structural_navigation.py:2734
 msgid "Goes to next list."
 msgstr "Skoči na naslednji seznam."
 
@@ -8552,21 +8552,21 @@ msgstr "Skoči na naslednji seznam."
 #. from bulleted/numbered list to bulleted/numbered list. This
 #. string is what Orca will say if there are no more lists found.
 #.
-#: ../src/orca/structural_navigation.py:2816
+#: ../src/orca/structural_navigation.py:2817
 msgid "No more lists."
 msgstr "Ni več seznamov"
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:2833
+#: ../src/orca/structural_navigation.py:2834
 msgid "Goes to previous list item."
 msgstr "Skoči na predhodni predmet seznama."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:2838
+#: ../src/orca/structural_navigation.py:2839
 msgid "Goes to next list item."
 msgstr "Skoči na naslednji predmet seznama."
 
@@ -8575,26 +8575,26 @@ msgstr "Skoči na naslednji predmet seznama."
 #. numbered list item.  This string is what Orca will say
 #. if there are no more list items found.
 #.
-#: ../src/orca/structural_navigation.py:2901
+#: ../src/orca/structural_navigation.py:2902
 msgid "No more list items."
 msgstr "Ni več predmetov seznama"
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:2917
+#: ../src/orca/structural_navigation.py:2918
 msgid "Goes to previous live region."
 msgstr "Skoči na predhodni samodejno posodobljeni predel"
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:2921
+#: ../src/orca/structural_navigation.py:2922
 msgid "Goes to next live region."
 msgstr "Skoči na naslednji samodejno posodobljeni predel"
 
 #. Translators: this is for navigating to the last live region
 #. to make an announcement.
 #.
-#: ../src/orca/structural_navigation.py:2926
+#: ../src/orca/structural_navigation.py:2927
 msgid "Goes to last live region."
 msgstr "Skoči na zadnji samodejno posodobljeni predel"
 
@@ -8602,19 +8602,19 @@ msgstr "Skoči na zadnji samodejno posodobljeni predel"
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/structural_navigation.py:2975
+#: ../src/orca/structural_navigation.py:2976
 msgid "No more live regions."
 msgstr "Ni več samodejno posodobljenih predelov"
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:2991
+#: ../src/orca/structural_navigation.py:2992
 msgid "Goes to previous paragraph."
 msgstr "Gre na predhodni odstavek."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:2995
+#: ../src/orca/structural_navigation.py:2996
 msgid "Goes to next paragraph."
 msgstr "Gre na naslednji odstavek."
 
@@ -8622,21 +8622,21 @@ msgstr "Gre na naslednji odstavek."
 #. moving from paragraph to paragraph. This string is what
 #. Orca will say if there are no more large objects found.
 #.
-#: ../src/orca/structural_navigation.py:3055
+#: ../src/orca/structural_navigation.py:3056
 msgid "No more paragraphs."
 msgstr "Ni več odstavkov."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3072
+#: ../src/orca/structural_navigation.py:3073
 msgid "Goes to previous radio button."
 msgstr "Skoči na predhodni radijski gumb."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3077
+#: ../src/orca/structural_navigation.py:3078
 msgid "Goes to next radio button."
 msgstr "Skoči na naslednji radijski gumb."
 
@@ -8645,19 +8645,42 @@ msgstr "Skoči na naslednji radijski gumb."
 #. This string is what Orca will say if there are no more
 #. radio buttons found.
 #.
-#: ../src/orca/structural_navigation.py:3134
+#: ../src/orca/structural_navigation.py:3135
 msgid "No more radio buttons."
 msgstr "Ni več radijskih gumbov"
 
+#. Translators: this is for navigating among separators, such as the
+#. <hr> tag, in a document.
+#.
+#: ../src/orca/structural_navigation.py:3152
+msgid "Goes to previous separator."
+msgstr "Skoči na predhodni ločilnik."
+
+#. Translators: this is for navigating among separators, such as the
+#. <hr> tag, in a document.
+#.
+#: ../src/orca/structural_navigation.py:3157
+msgid "Goes to next separator."
+msgstr "Skoči na naslednji ločilnik."
+
+#. Translators: this is for navigating document content by
+#. moving amongst separators (e.g. <hr> tags). This string
+#. is what Orca will say if there are no more separators
+#. found.
+#.
+#: ../src/orca/structural_navigation.py:3205
+msgid "No more separators."
+msgstr "Ni več ločilnikov."
+
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3150
+#: ../src/orca/structural_navigation.py:3221
 msgid "Goes to previous table."
 msgstr "Skoči na predhodno preglednico."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3154
+#: ../src/orca/structural_navigation.py:3225
 msgid "Goes to next table."
 msgstr "Skoči na naslednjo preglednico."
 
@@ -8665,57 +8688,57 @@ msgstr "Skoči na naslednjo preglednico."
 #. from table to table.  This string is what Orca will say if there
 #. are no more tables found.
 #.
-#: ../src/orca/structural_navigation.py:3213
+#: ../src/orca/structural_navigation.py:3284
 msgid "No more tables."
 msgstr "Ni več preglednic."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3229
+#: ../src/orca/structural_navigation.py:3300
 msgid "Goes left one cell."
 msgstr "Skoči levo eno celico."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3233
+#: ../src/orca/structural_navigation.py:3304
 msgid "Goes right one cell."
 msgstr "Skoči desno eno celico."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3237
+#: ../src/orca/structural_navigation.py:3308
 msgid "Goes up one cell."
 msgstr "Skoči navzgor eno celico."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3241
+#: ../src/orca/structural_navigation.py:3312
 msgid "Goes down one cell."
 msgstr "Skoči navzdol eno celico."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3245
+#: ../src/orca/structural_navigation.py:3316
 msgid "Goes to the first cell in a table."
 msgstr "Skoči na prvo celico v preglednici."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3249
+#: ../src/orca/structural_navigation.py:3320
 msgid "Goes to the last cell in a table."
 msgstr "Skoči na zadnjo celico v preglednici."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3333
+#: ../src/orca/structural_navigation.py:3404
 msgid "Goes to previous unvisited link."
 msgstr "Skoči na predhodno neobiskano povezavo."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3338
+#: ../src/orca/structural_navigation.py:3409
 msgid "Goes to next unvisited link."
 msgstr "Skoči na naslednjo neobiskano povezavo."
 
@@ -8724,21 +8747,21 @@ msgstr "Skoči na naslednjo neobiskano povezavo."
 #. is what Orca will say if there are no more unvisited links
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3401
+#: ../src/orca/structural_navigation.py:3472
 msgid "No more unvisited links."
 msgstr "Ni več neobiskanih povezav"
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3418
+#: ../src/orca/structural_navigation.py:3489
 msgid "Goes to previous visited link."
 msgstr "Skoči na predhodno obiskano povezavo."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3423
+#: ../src/orca/structural_navigation.py:3494
 msgid "Goes to next visited link."
 msgstr "Skoči na naslednjo obiskano povezavo."
 
@@ -8747,7 +8770,7 @@ msgstr "Skoči na naslednjo obiskano povezavo."
 #. what Orca will say if there are no more visited links
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3479
+#: ../src/orca/structural_navigation.py:3550
 msgid "No more visited links."
 msgstr "Ni več obiskanih povezav."
 
