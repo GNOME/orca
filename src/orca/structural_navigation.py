@@ -169,9 +169,9 @@ class StructuralNavigationObject:
         # Set up the basic handlers.  These are our traditional goPrevious
         # and goNext functions.
         #
-        previous = self.bindings.get("previous")
-        if previous:
-            [keysymstring, modifiers, description] = previous
+        previousBinding = self.bindings.get("previous")
+        if previousBinding:
+            [keysymstring, modifiers, description] = previousBinding
             handlerName = "%sGoPrevious" % self.objType
             self.inputEventHandlers[handlerName] = \
                 input_event.InputEventHandler(self.goPrevious, description)
@@ -185,9 +185,9 @@ class StructuralNavigationObject:
 
             self.functions.append(self.goPrevious)
 
-        next = self.bindings.get("next")
-        if next:
-            [keysymstring, modifiers, description] = next
+        nextBinding = self.bindings.get("next")
+        if nextBinding:
+            [keysymstring, modifiers, description] = nextBinding
             handlerName = "%sGoNext" % self.objType
             self.inputEventHandlers[handlerName] = \
                 input_event.InputEventHandler(self.goNext, description)
@@ -760,14 +760,14 @@ class StructuralNavigation:
             arg = [rowDiff, colDiff, oldRowHeaders, oldColHeaders]
             structuralNavigationObject.present(cell, arg)
 
-    def goObject(self, structuralNavigationObject, next, obj=None, arg=None):
+    def goObject(self, structuralNavigationObject, isNext, obj=None, arg=None):
         """The method used for navigation among StructuralNavigationObjects
         which are not table cells.
 
         Arguments:
         - structuralNavigationObject: the StructuralNavigationObject which
           represents the object of interest.
-        - next: If True, we're interested in the next accessible object
+        - isNext: If True, we're interested in the next accessible object
           which matches structuralNavigationObject.  If False, we're 
           interested in the previous accessible object which matches.
         - obj: the current object (typically the locusOfFocus).
@@ -807,7 +807,7 @@ class StructuralNavigation:
         objType = structuralNavigationObject.objType
         if self.collectionEnabled \
            and not objType in formObjects \
-           and (next or objType != self.CHUNK):
+           and (isNext or objType != self.CHUNK):
             try:
                 document = self._getDocument()
                 collection = document.queryCollection()
@@ -822,7 +822,7 @@ class StructuralNavigation:
                 # result in our starting at the top when looking for the next
                 # object rather than the current caret offset. See bug 567984.
                 #
-                if next and self._script.isSameObject(obj, document):
+                if isNext and self._script.isSameObject(obj, document):
                     criteria = None
 
         if criteria:
@@ -841,7 +841,7 @@ class StructuralNavigation:
                 else:
                     predicate = None
 
-                if not next:
+                if not isNext:
                     [obj, wrapped] = self._findPrevByMatchRule(collection,
                                                                rule,
                                                                wrap,
@@ -866,7 +866,7 @@ class StructuralNavigation:
         #
         if not success:
             pred = structuralNavigationObject.predicate
-            if not next:
+            if not isNext:
                 [obj, wrapped] = self._findPrevByPredicate(pred, wrap,
                                                            obj, arg)
             else:
@@ -874,7 +874,7 @@ class StructuralNavigation:
                                                            obj, arg)
             # print "predicate", structuralNavigationObject.objType
         if wrapped:
-            if not next:
+            if not isNext:
                 # Translators: when the user is attempting to locate a
                 # particular object and the top of the web page has been
                 # reached without that object being found, we "wrap" to
