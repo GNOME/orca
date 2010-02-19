@@ -343,6 +343,7 @@ class Script(default.Script):
                         GeckoStructuralNavigation.LIVE_REGION,
                         GeckoStructuralNavigation.PARAGRAPH,
                         GeckoStructuralNavigation.RADIO_BUTTON,
+                        GeckoStructuralNavigation.SEPARATOR,
                         GeckoStructuralNavigation.TABLE,
                         GeckoStructuralNavigation.TABLE_CELL,
                         GeckoStructuralNavigation.UNVISITED_LINK,

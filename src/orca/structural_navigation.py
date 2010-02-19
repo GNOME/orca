@@ -445,6 +445,7 @@ class StructuralNavigation:
     LIVE_REGION     = "liveRegion"
     PARAGRAPH       = "paragraph"
     RADIO_BUTTON    = "radioButton"
+    SEPARATOR       = "separator"
     TABLE           = "table"
     TABLE_CELL      = "tableCell"
     UNVISITED_LINK  = "unvisitedLink"
@@ -3132,6 +3133,76 @@ class StructuralNavigation:
             # radio buttons found.
             #
             speech.speak(_("No more radio buttons."))
+
+    ########################
+    #                      #
+    # Separators           #
+    #                      #
+    ########################
+
+    def _separatorBindings(self):
+        """Returns a dictionary of [keysymstring, modifiers, description]
+        lists for navigating amongst separators.
+        """
+
+        bindings = {}
+        # Translators: this is for navigating among separators, such as the
+        # <hr> tag, in a document.
+        #
+        prevDesc = _("Goes to previous separator.")
+        bindings["previous"] = ["", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        # Translators: this is for navigating among separators, such as the
+        # <hr> tag, in a document.
+        #
+        nextDesc = _("Goes to next separator.")
+        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        return bindings
+
+    def _separatorCriteria(self, collection, arg=None):
+        """Returns the MatchCriteria to be used for locating separators
+        by collection.
+
+        Arguments:
+        - collection: the collection interface for the document
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        role = [pyatspi.ROLE_SEPARATOR]
+        return MatchCriteria(collection, roles=role, applyPredicate=False)
+
+    def _separatorPredicate(self, obj, arg=None):
+        """The predicate to be used for verifying that the object
+        obj is a separator.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        return obj and obj.getRole() == pyatspi.ROLE_SEPARATOR
+
+    def _separatorPresentation(self, obj, arg=None):
+        """Presents the separator or indicates that one was not found.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        if obj:
+            [newObj, characterOffset] = self._getCaretPosition(obj)
+            self._setCaretPosition(newObj, characterOffset)
+            self._presentObject(obj, 0)
+        else:
+            # Translators: this is for navigating document content by
+            # moving amongst separators (e.g. <hr> tags). This string
+            # is what Orca will say if there are no more separators
+            # found.
+            #
+            speech.speak(_("No more separators."))
 
     ########################
     #                      #
