@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2009 Sun Microsystems Inc.
+# Copyright 2010 Willie Walker
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -29,9 +30,12 @@ __license__   = "LGPL"
 
 import dbus
 _bus = dbus.SessionBus()
-_proxy_obj = _bus.get_object("org.freedesktop.Magnifier", "/org/freedesktop/Magnifier")
+_proxy_obj = _bus.get_object("org.freedesktop.Magnifier",
+                             "/org/freedesktop/Magnifier")
 _magnifier = dbus.Interface(_proxy_obj, "org.freedesktop.Magnifier")
+_zoomer = None
 
+import debug
 import eventsynthesizer
 import settings
 import speech
@@ -60,6 +64,25 @@ _screen = _display.get_default_screen()
 _screenWidth = _screen.get_width()
 _screenHeight = _screen.get_height()
 
+# The width and height, in unzoomed system coordinates of the rectangle that,
+# when magnified, will fill the viewport of the magnifier - this needs to be
+# sync'd with the magnification factors of the zoom area.
+#
+_roiWidth = 0
+_roiHeight = 0
+
+# The current region of interest as specified by the upper left corner.
+#
+_roi = None
+
+# Minimum/maximum values for the center of the ROI
+# in source screen coordinates.
+#
+_minROIX = 0
+_maxROIX = 0
+_minROIY = 0
+_maxROIY = 0
+
 ########################################################################
 #                                                                      #
 # Methods for magnifying objects                                       #
@@ -73,7 +96,9 @@ def _setROICenter(x, y):
     - x: integer in unzoomed system coordinates representing x component
     - y: integer in unzoomed system coordinates representing y component
     """
-    _magnifier.shiftContentsTo(x, y)
+    x = max(0, x - (_roiWidth / 2))
+    y = max(0, y - (_roiHeight / 2))
+    _zoomer.setRoi([x, y, _roiWidth, _roiHeight])
 
 def _setROICursorPush(x, y, width, height, edgeMargin = 0):
     """Nudges the ROI if the caret or control is not visible.
@@ -98,7 +123,7 @@ def _setROICursorPush(x, y, width, height, edgeMargin = 0):
     # above, or below the current region of interest (ROI).
     # [[[WDW - probably should not make a D-Bus call each time.]]]
     #
-    (roiLeft, roiTop, roiWidth, roiHeight) = _magnifier.getROI()
+    [roiLeft, roiTop, roiWidth, roiHeight] = _zoomer.getRoi()
     leftOfROI = (x - edgeMarginX) <= roiLeft
     rightOfROI = (x + width + edgeMarginX) >= (roiLeft + roiWidth)
     aboveROI = (y - edgeMarginY)  <= roiTop
@@ -200,9 +225,9 @@ def magnifyAccessible(event, obj, extents=None):
 
             # Be sure that the upper-left corner of the object will still
             # be visible on the screen.
-            # [[[WDW - probably should not make a getROI call each time]]]
+            # [[[WDW - probably should not make a getRoi call each time]]]
             #
-            (roiLeft, roiTop, roiWidth, roiHeight) = _magnifier.getROI()
+            [roiLeft, roiTop, roiWidth, roiHeight] = _zoomer.getRoi()
             if width > roiWidth:
                 centerX = x
             if height > roiHeight:
@@ -303,21 +328,6 @@ def finishLiveUpdating():
 #                                                                      #
 ########################################################################
 
-def _setScreenPosition(position):
-    if position == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
-        positionValue = 1
-    elif position == settings.MAG_ZOOMER_TYPE_TOP_HALF:
-        positionValue = 2
-    elif position == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
-        positionValue = 3
-    elif position == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
-        positionValue = 4
-    elif position == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
-        positionValue = 5
-    else:
-        positionValue = 1
-    _magnifier.setScreenPosition(positionValue)
-    
 def applySettings():
     """Looks at the user settings and applies them to the magnifier."""
     global _mouseTracking
@@ -327,9 +337,6 @@ def applySettings():
     global _pointerFollowsZoomer
     global _pointerFollowsFocus
 
-    _magnifier.setMagFactor(settings.magZoomFactor, settings.magZoomFactor)
-    _setScreenPosition(settings.magZoomerType)
-  
     _mouseTracking = settings.magMouseTrackingMode
     _controlTracking = settings.magControlTrackingMode
     _textTracking = settings.magTextTrackingMode
@@ -343,8 +350,102 @@ def hideSystemPointer(hidePointer):
     Arguments:
     -hidePointer: If True, hide the system pointer, otherwise show it.
     """
-    # [[[WDW - To be implemented]]]
-    pass
+    try:
+        if hidePointer:
+            _magnifier.hideCursor()
+        else:
+            _magnifier.showCursor()
+    except:
+        debug.printException(debug.LEVEL_FINEST)
+
+def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
+                     restore=None):
+    """Creates the magnifier in the position specified.
+
+    Arguments:
+    - position: the position/type of zoomer (full, left half, etc.)
+    - left:     the left edge of the zoomer (only applicable for custom)
+    - top:      the top edge of the zoomer (only applicable for custom)
+    - right:    the right edge of the zoomer (only applicable for custom)
+    - bottom:   the top edge of the zoomer (only applicable for custom)
+    - restore:  a dictionary of all of the settings which should be restored
+    """
+
+    # [[[WDW - just go full screen for now.]]]
+    #
+    try:
+        _magnifier.clearAllZoomRegions()
+    except:
+        pass
+
+    if not restore:
+        restore = {}
+
+    # If we are running in full screen mode, try to hide the original cursor
+    # (assuming the user wants to). See bug #533095 for more details.
+    # Depends upon new functionality in gnome-mag, so just catch the
+    # exception if this functionality isn't there.
+    #
+    hideCursor = restore.get('magHideCursor', settings.magHideCursor)
+    if hideCursor:
+        hideSystemPointer(True)
+    else:
+        hideSystemPointer(False)
+
+def __setupZoomer(restore=None):
+    """Creates a zoomer in the magnifier
+    Arguments:
+    - restore:  a dictionary of all of the settings which should be restored
+    """
+
+    # [[[WDW - just go full screen for now.]]]
+    #
+    global _zoomer
+    global _roiWidth
+    global _roiHeight
+
+    if not restore:
+        restore = {}
+
+    _roiWidth = _screenWidth / settings.magZoomFactor
+    _roiHeight = _screenHeight / settings.magZoomFactor
+
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier zoomer ROI size desired: width=%d, height=%d)" \
+                  % (_roiWidth, _roiHeight))
+
+    zoomerPath = _magnifier.createZoomRegion(
+        settings.magZoomFactor, settings.magZoomFactor,
+	[0, 0, _roiWidth, _roiHeight],
+	[0, 0, _screenWidth, _screenHeight])
+    __updateROIDimensions()
+    _magnifier.addZoomRegion(zoomerPath)
+    _zoomer= _bus.get_object('org.freedesktop.Magnifier', zoomerPath);
+
+def __updateROIDimensions():
+    """Updates the ROI width, height, and maximum and minimum values.
+    """
+    # [[[WDW - full screen for now.]]]
+    #
+    global _roiWidth
+    global _roiHeight
+    global _minROIX
+    global _minROIY
+    global _maxROIX
+    global _maxROIY
+
+    _roiWidth = _screenWidth / settings.magZoomFactor
+    _roiHeight = _screenHeight / settings.magZoomFactor
+
+    _minROIX = _roiWidth / 2
+    _minROIY = _roiHeight / 2
+
+    _maxROIX = _screenWidth - (_roiWidth / 2)
+    _maxROIY = _screenHeight - (_roiHeight / 2)
+
+    debug.println(debug.LEVEL_ALL,
+                  "Magnifier ROI min/max center: (%d, %d), (%d, %d)" \
+                  % (_minROIX, _minROIY, _maxROIX, _maxROIY))
 
 def setupMagnifier(position, left=None, top=None, right=None, bottom=None,
                    restore=None):
@@ -358,9 +459,11 @@ def setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     - bottom:   the top edge of the zoomer (only applicable for custom)
     - restore:  a dictionary of all of the settings that should be restored
     """
-    # [[[WDW - To be implemented]]]
+    # [[[WDW - To be implemented - full screen for now]]]
     global _liveUpdatingMagnifier
     _liveUpdatingMagnifier = True
+    __setupMagnifier(position, left, top, right, bottom, restore)
+    __setupZoomer(restore)
 
 def setMagnifierCursor(enabled, customEnabled, size, updateScreen=True):
     """Sets the cursor.
@@ -472,7 +575,7 @@ def setZoomerMagFactor(x, y, updateScreen=True):
     - y: The vertical magnification level
     - updateScreen:  Whether or not to update the screen
     """
-    _magnifier.setMagFactor(x, y)
+    _zoomer.setMagFactor(x, y)
 
 def setZoomerObjectColor(magProperty, colorSetting, updateScreen=True):
     """Sets the specified zoomer property to the specified color.
@@ -581,8 +684,9 @@ def isFullScreenCapable():
 
 def init():
     global _isActive
-    _magnifier.setActive(True)
+    setupMagnifier(settings.magZoomerType)
     applySettings()
+    _magnifier.setActive(True)
     _isActive = _magnifier.isActive()
     
 def shutdown():
