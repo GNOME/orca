@@ -1,3 +1,47 @@
+2.29.91 - 20-Feb-2010
+
+General:
+
+* Work on getting the regression tests working on Ubuntu.
+
+* Update the gsmag.py experimental module to work with the emerging
+  magnifier D-Bus API.  This is throwaway code and the support is not
+  fully working.
+
+* Fix for bgo#593666 - Add structural navigation key for separators
+
+* More work related to bgo#608149 - Orca's caret navigation for
+  Firefox is broken effective the 30th Sept build of FF 3.6.  This
+  adds a new per-script settings for yelp and thunderbird because they
+  may use different versions of Gecko than firefox.
+
+* Fix for bgo#609633 - Orca can lock up the desktop when exiting apps
+  if in flat review
+
+* Fix for bgo#610134 - Missing liblouis information can cause Orca to
+  stop presenting
+
+* Fix for bgo#610472 - Orca is redefining the built-in function
+  'next' in structural_navigation.py
+
+Firefox:
+
+* Fix for bgo#608150 - Firefox 3.6's changes to the hierarchy of
+  tables needs to be handled by Orca
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es          Spanish              Francisco Javier Dorado Martinez and
+                                     Jorge Gonzalez
+    gl          Galician             Fran Diéguez
+    hu          Hungarian            Attila Hammer and Gabor Kelemen
+    ro          Romanian             Lucian Adrian Grijincu
+    sl          Slovenian            Matej Urbančič
+    ta          Tamil                Vasudeven
+    zh_CN       Simplified Chinese   YunQiang Su
+
+==========
+
 2.29.90 - 08-Feb-2010
 
 General:
@@ -25,7 +69,7 @@ New and updated translations (THANKS EVERYONE!!!):
                                      Jorge Gonzalez
     et          Estonian             Mattias Põldaru
     hu          Hungarian            Attila Hammer and Gabor Kelemen
-    sl	     	Slovenian	     Matej Urbančič
+    sl          Slovenian            Matej Urbančič
 
 ==========
 
@@ -72,7 +116,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
     es          Spanish              Francisco Javier Dorado Martinez and
                                      Jorge Gonzalez
-    sv	        Swedish              Daniel Nylander
+    sv          Swedish              Daniel Nylander
 
 ==========
 
@@ -91,8 +135,8 @@ General:
 New and updated translations (THANKS EVERYONE!!!):
 
     hu          Hungarian            Attila Hammer and Gabor Kelemen
-    sv	        Swedish              Daniel Nylander
-    uk	     	Ukrainian	     Maxim V. Dziumanenko
+    sv          Swedish              Daniel Nylander
+    uk          Ukrainian            Maxim V. Dziumanenko
 
 ==========
 
@@ -119,8 +163,8 @@ General:
 
 New and updated translations (THANKS EVERYONE!!!):
 
-    zh_HK    	Traditional Chinese  Chao-Hsiung Liao
-    zh_TW    	Traditional Chinese  Chao-Hsiung Liao
+    zh_HK       Traditional Chinese  Chao-Hsiung Liao
+    zh_TW       Traditional Chinese  Chao-Hsiung Liao
 
 ==========
 
@@ -159,10 +203,10 @@ General:
 
 New and updated translations (THANKS EVERYONE!!!):
 
-    ca	        Catalan		     Gil Forcada
+    ca          Catalan              Gil Forcada
     hu          Hungarian            Attila Hammer and Gabor Kelemen
-    nb		Norwegian bokmål     Kjartan Marass
-    sl	     	Slovenian	     Matej Urbančič
+    nb          Norwegian bokmål     Kjartan Marass
+    sl          Slovenian            Matej Urbančič
 
 ==========
 
@@ -218,30 +262,30 @@ Firefox:
 
 New and updated translations (THANKS EVERYONE!!!):
 
-    bg	        Bulgarian	     Alexander Shopov
-    ca	        Catalan		     Gil Forcada
+    bg          Bulgarian            Alexander Shopov
+    ca          Catalan              Gil Forcada
     ca@valencia Catalan (Valencian)  Carles Ferrando
-    cs		Czech		     Lucas Lommer and Petr Kovar
-    da     	Danish	     	     Kenneth Nielsen
-    de	     	German	     	     Simon Bienlein and
-    	     			     Mario Blättermann
-    el	 	Greek		     Kostas Papadimas and Jennie Petoumenou
-    en_GB    	British English	     Bruce Cowan
-    es		Spanish		     Francisco Javier Dorado Martinez
-    eu		Basque		     Inaki Larranaga
-    fi	     	Finnish		     Ilkka Tuohela
-    gl	     	Galician	     Antón Méixome
-    it       	Italian              Luca Ferretti
-    nb		Norwegian bokmål     Kjartan Marass
-    pl	     	Polish		     Piotr Leszczyński
-    pt		Portuguese	     Duarte Loreto
-    pt_BR	Brazilian Portuguese Og B. Maciel and Marco de Freitas
-    ro	     	Romanian	     Adi Roiban
-    ta	     	Tamil		     drtvasudevan
-    sl	     	Slovenian	     Matej Urbančič
-    uk	     	Ukrainian	     Maxim V. Dziumanenko
-    zh_HK    	Traditional Chinese  Chao-Hsiung Liao
-    zh_TW    	Traditional Chinese  Chao-Hsiung Liao
+    cs          Czech                Lucas Lommer and Petr Kovar
+    da          Danish               Kenneth Nielsen
+    de          German               Simon Bienlein and
+                                     Mario Blättermann
+    el          Greek                Kostas Papadimas and Jennie Petoumenou
+    en_GB       British English      Bruce Cowan
+    es          Spanish              Francisco Javier Dorado Martinez
+    eu          Basque               Inaki Larranaga
+    fi          Finnish              Ilkka Tuohela
+    gl          Galician             Antón Méixome
+    it          Italian              Luca Ferretti
+    nb          Norwegian bokmål     Kjartan Marass
+    pl          Polish               Piotr Leszczyński
+    pt          Portuguese           Duarte Loreto
+    pt_BR       Brazilian Portuguese Og B. Maciel and Marco de Freitas
+    ro          Romanian             Adi Roiban
+    ta          Tamil                drtvasudevan
+    sl          Slovenian            Matej Urbančič
+    uk          Ukrainian            Maxim V. Dziumanenko
+    zh_HK       Traditional Chinese  Chao-Hsiung Liao
+    zh_TW       Traditional Chinese  Chao-Hsiung Liao
 
 ==========
 
@@ -327,7 +371,7 @@ New and updated translations (THANKS EVERYONE!!!):
     hu       Hungarian            Attila Hammer and Gabor Kelemen
     pt       Portuguese           Rui Batista
     pt_BR    Brazilian Portuguese Leonardo Ferreira Fontenelle
-    sv	     Swedish              Daniel Nylander
+    sv       Swedish              Daniel Nylander
 
 ==========
 
@@ -651,7 +695,7 @@ New and updated translations (THANKS EVERYONE!!!):
   http://l10n.gnome.org/module/orca
 
     es       Spanish              Francisco Javier Dorado Martinez
-    sv	     Swedish              Daniel Nylander
+    sv       Swedish              Daniel Nylander
     ta       Tamil                drtvasudevan
 
 ==========
