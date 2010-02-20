@@ -28,8 +28,8 @@ htmlURLPrefix = "file://" + htmlDir + "/"
 # to do various things with the app and frame names from release to release. 
 # These regex's attempt to provide a way to manage those differences.
 #
-firefoxAppNames = "(Firefox|Minefield)"
-firefoxFrameNames = "(Mozilla Firefox|Mozilla Firefox 3.1 Beta 2|Mozilla Firefox 3.1 Beta 3|Minefield|Mozilla Firefox 3.5 Beta 4)"
+firefoxAppNames = "(Firefox|Minefield|Namoroka)"
+firefoxFrameNames = "(Mozilla Firefox|Mozilla Firefox 3.1 Beta 2|Mozilla Firefox 3.1 Beta 3|Minefield|Mozilla Firefox 3.5 Beta 4|Namoroka)"
 firefoxLocationBarNames = "(Location|Search Bookmarks and History)"
 
 # Various OpenOffice names as a regex.  These are needed because OOo likes
