@@ -40,6 +40,8 @@ import eventsynthesizer
 import settings
 import speech
 
+from orca_i18n import _
+
 # If True, the magnifier is active
 #
 _isActive = False
@@ -420,7 +422,7 @@ def __setupZoomer(restore=None):
 	[0, 0, _screenWidth, _screenHeight])
     __updateROIDimensions()
     _magnifier.addZoomRegion(zoomerPath)
-    _zoomer= _bus.get_object('org.freedesktop.Magnifier', zoomerPath);
+    _zoomer = _bus.get_object('org.freedesktop.Magnifier', zoomerPath)
 
 def __updateROIDimensions():
     """Updates the ROI width, height, and maximum and minimum values.
