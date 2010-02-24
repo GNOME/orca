@@ -19,9 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-02-20 22:56+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-24 22:54+0100\n"
 "PO-Revision-Date: 2010-02-21 21:21+0100\n"
 "Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -3549,7 +3548,7 @@ msgstr "Soll das Wortecho aktiviert werden? Geben Sie »j« oder »n« ein: "
 #: ../src/orca/orca_console_prefs.py:563 ../src/orca/orca_console_prefs.py:581
 #: ../src/orca/orca_console_prefs.py:624
 msgid "Please enter y or n."
-msgstr "Bitte geben Sie »j« oder »n« ein. "
+msgstr "Bitte geben Sie »j« oder »n« ein."
 
 #. Translators: if key echo is enabled, Orca will speak the
 #. name of a key as the user types on the keyboard.  If the
@@ -3761,7 +3760,7 @@ msgid ""
 msgstr ""
 "Ein freier, quelloffener, durch Skripte erweiterbarer Bildschirmleser, "
 "welcher Zugriff auf Anwendungen und Toolkits bietet, die AT-SPI unterstützen "
-"(z.B. die GNOME-Arbeitsumgebung)"
+"(z. B. die GNOME-Arbeitsumgebung)."
 
 #. Translators: This text is used in the Orca About dialog.
 #.
