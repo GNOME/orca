@@ -352,7 +352,11 @@ class KeyBindings:
                 if keyBinding.modifier_mask == keyboardEvent.modifiers and \
                    keyBinding.click_count == clickCount:
                     return keyBinding.handler
-                candidates.append(keyBinding)
+                # If there's no keysymstring, it's unbound and cannot be
+                # a match.
+                #
+                if keyBinding.keysymstring:
+                    candidates.append(keyBinding)
 
         # If we're still here, we don't have an exact match. Prefer
         # the one whose click count is closest to, but does not exceed,
