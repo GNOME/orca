@@ -1,3 +1,28 @@
+2.29.92 - 07-Mar-2010
+
+General:
+
+* Fix for bgo#611321 - keybindings.getInputHandler returns unbound
+  commands as potential keybinding candidates
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg          Bulgarian            Alexander Shopov
+    de          German               Simon Bienlein and
+                                     Mario Blättermann
+    en_GB       British English      Bruce Cowan
+    es          Spanish              Francisco Javier Dorado Martínez
+                                     and Jorge González
+    fr          French               Claude Paroz
+    gl          Galician             Fran Diéguez and Antón Méixome
+    pl          Polish               Piotr Drąg
+    pt          Portuguese           Rui Batista
+    pt_BR       Brazilian Portuguese Felipe Vieira Borges
+    ru          Russian              Юрий Козлов and Leonid Kanter
+    ta          Tamil                Vasudeven
+
+==========
+
 2.29.91 - 20-Feb-2010
 
 General:
