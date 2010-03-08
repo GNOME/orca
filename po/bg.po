@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-23 07:43+0200\n"
-"PO-Revision-Date: 2010-02-23 07:43+0200\n"
+"POT-Creation-Date: 2010-03-08 07:03+0200\n"
+"PO-Revision-Date: 2010-03-08 07:03+0200\n"
 "Last-Translator: Alexander Shopov <ash@kambanaria.org>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
@@ -899,7 +899,7 @@ msgstr "Главно о с тежко ударение"
 #.
 #: ../src/orca/chnames.py:388
 msgid "O ACUTE"
-msgstr "главно о с остро ударение<"
+msgstr "главно о с остро ударение"
 
 #. Translators: this is the spoken word for the character 'Ô' (U+00d4)
 #.
