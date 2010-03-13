@@ -1135,6 +1135,9 @@ setScriptMapping(re.compile('Pidgin'), "pidgin")
 #setScriptMapping(re.compile(_('gnome-help')), "yelp")
 setScriptMapping(re.compile('gnome-help'), "yelp")
 
+# Gnome-calculator is symbolically linked to gcalctool so we associate it here.
+setScriptMapping(re.compile('gnome-calculator'), "gcalctool")
+
 # This is for development builds of Banshee
 setScriptMapping(re.compile('Nereid'), "Banshee")
 
