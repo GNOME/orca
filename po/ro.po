@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-02-11 14:16+0000\n"
-"PO-Revision-Date: 2010-02-13 16:59+0200\n"
+"POT-Creation-Date: 2010-02-19 16:57+0000\n"
+"PO-Revision-Date: 2010-03-14 23:11+0200\n"
 "Last-Translator: Adi Roiban <adi@roiban.ro>\n"
 "Language-Team: Romanian GNOME Team <gnomero-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -1479,7 +1479,7 @@ msgstr "Execută clic dreapta pe elementul curent în prezentarea plată."
 #: ../src/orca/default.py:197
 #: ../src/orca/scripts/apps/acroread.py:114
 #: ../src/orca/scripts/apps/evolution/script.py:153
-#: ../src/orca/scripts/toolkits/Gecko/script.py:535
+#: ../src/orca/scripts/toolkits/Gecko/script.py:536
 msgid "Speaks entire document."
 msgstr "Citește întreg documentul."
 
@@ -1918,7 +1918,7 @@ msgstr "Raportează informații despre scriptul curent."
 #. this line.
 #.
 #: ../src/orca/default.py:682
-#: ../src/orca/scripts/toolkits/Gecko/script.py:549
+#: ../src/orca/scripts/toolkits/Gecko/script.py:550
 msgid "Pans the braille display to the left."
 msgstr "Mută afișajul Braille la stânga."
 
@@ -1932,7 +1932,7 @@ msgstr "Mută afișajul Braille la stânga."
 #. this line.
 #.
 #: ../src/orca/default.py:697
-#: ../src/orca/scripts/toolkits/Gecko/script.py:564
+#: ../src/orca/scripts/toolkits/Gecko/script.py:565
 msgid "Pans the braille display to the right."
 msgstr "Mută afișajul Braille la dreapta."
 
@@ -2281,11 +2281,11 @@ msgstr[2] "%d de taburi"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:360
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:469
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5875
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5882
 #: ../src/orca/settings.py:1293
 #: ../src/orca/speech_generator.py:473
 #: ../src/orca/speech_generator.py:779
-#: ../src/orca/structural_navigation.py:3304
+#: ../src/orca/structural_navigation.py:3375
 msgid "blank"
 msgstr "linie goală"
 
@@ -2743,7 +2743,7 @@ msgstr "comută"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/focus_tracking_presenter.py:952
+#: ../src/orca/focus_tracking_presenter.py:958
 msgid "No focus"
 msgstr "Nimic nu este focalizat"
 
@@ -6731,9 +6731,9 @@ msgstr "Apasă Tab și Enter pentru a termina."
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:394
 #: ../src/orca/scripts/apps/gedit/script.py:477
-#: ../src/orca/scripts/apps/Thunderbird/script.py:152
-#: ../src/orca/scripts/apps/Thunderbird/script.py:303
-#: ../src/orca/scripts/apps/Thunderbird/script.py:529
+#: ../src/orca/scripts/apps/Thunderbird/script.py:163
+#: ../src/orca/scripts/apps/Thunderbird/script.py:314
+#: ../src/orca/scripts/apps/Thunderbird/script.py:540
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:88
 msgid "Check Spelling"
 msgstr "Verificare ortografică"
@@ -6866,7 +6866,7 @@ msgstr "Notifică-mă când au fost scrise erori în jurnal."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:221
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1961
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1962
 msgid "Loading.  Please wait."
 msgstr "Pagina se încarcă. Așteptați."
 
@@ -6874,7 +6874,7 @@ msgstr "Pagina se încarcă. Așteptați."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:229
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1974
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1975
 msgid "Finished loading."
 msgstr "Pagina s-a încărcat."
 
@@ -7051,7 +7051,7 @@ msgstr "Citește coordonatele celulelor foii de calcul"
 #. should speak table cell coordinates in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:367
-#: ../src/orca/scripts/toolkits/Gecko/script.py:918
+#: ../src/orca/scripts/toolkits/Gecko/script.py:919
 msgid "Speak _cell coordinates"
 msgstr "Citește coordonatele _celulii"
 
@@ -7060,7 +7060,7 @@ msgstr "Citește coordonatele _celulii"
 #. rows and columns a particular table cell spans in a table).
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:379
-#: ../src/orca/scripts/toolkits/Gecko/script.py:930
+#: ../src/orca/scripts/toolkits/Gecko/script.py:931
 msgid "Speak _multiple cell spans"
 msgstr "Citește întinderile celulelor _multiple"
 
@@ -7068,7 +7068,7 @@ msgstr "Citește întinderile celulelor _multiple"
 #. the header of a table cell in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:390
-#: ../src/orca/scripts/toolkits/Gecko/script.py:941
+#: ../src/orca/scripts/toolkits/Gecko/script.py:942
 msgid "Announce cell _header"
 msgstr "Anunță _antetul celulii"
 
@@ -7076,7 +7076,7 @@ msgstr "Anunță _antetul celulii"
 #. empty/blank cells when navigating tables in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:401
-#: ../src/orca/scripts/toolkits/Gecko/script.py:952
+#: ../src/orca/scripts/toolkits/Gecko/script.py:953
 msgid "Skip _blank cells"
 msgstr "Omite celulele _goale"
 
@@ -7084,7 +7084,7 @@ msgstr "Omite celulele _goale"
 #. for specifying how to navigate tables in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:412
-#: ../src/orca/scripts/toolkits/Gecko/script.py:963
+#: ../src/orca/scripts/toolkits/Gecko/script.py:964
 msgid "Table Navigation"
 msgstr "Navigare tabel"
 
@@ -7215,15 +7215,15 @@ msgstr[2] "%d de caractere prea lung"
 #. a cell in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:123
-#: ../src/orca/structural_navigation.py:3311
+#: ../src/orca/structural_navigation.py:3382
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Rândul %(row)d, coloana %(column)d."
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:567
-#: ../src/orca/scripts/apps/Thunderbird/script.py:584
+#: ../src/orca/scripts/apps/Thunderbird/script.py:578
+#: ../src/orca/scripts/apps/Thunderbird/script.py:595
 #, python-format
 msgid "%s panel"
 msgstr "Panoul %s"
@@ -7249,119 +7249,119 @@ msgstr "legătură de pe o imagine-hartă"
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:382
+#: ../src/orca/scripts/toolkits/Gecko/script.py:383
 msgid "Goes to next character."
 msgstr "Sare la caracterul următor."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:390
+#: ../src/orca/scripts/toolkits/Gecko/script.py:391
 msgid "Goes to previous character."
 msgstr "Sare la caracterul anterior."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:398
+#: ../src/orca/scripts/toolkits/Gecko/script.py:399
 msgid "Goes to next word."
 msgstr "Sare la cuvântul următor."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:406
+#: ../src/orca/scripts/toolkits/Gecko/script.py:407
 msgid "Goes to previous word."
 msgstr "Sare la cuvântul anterior."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:414
+#: ../src/orca/scripts/toolkits/Gecko/script.py:415
 msgid "Goes to next line."
 msgstr "Sare la linia următoare."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:422
+#: ../src/orca/scripts/toolkits/Gecko/script.py:423
 msgid "Goes to previous line."
 msgstr "Sare la linia anterioară."
 
 #. Translators: this command will move the user to the
 #. beginning of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:430
+#: ../src/orca/scripts/toolkits/Gecko/script.py:431
 msgid "Goes to the top of the file."
 msgstr "Sare la începutul fișierului."
 
 #. Translators: this command will move the user to the
 #. end of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:438
+#: ../src/orca/scripts/toolkits/Gecko/script.py:439
 msgid "Goes to the bottom of the file."
 msgstr "Sare la sfârșitul fișierului."
 
 #. Translators: this command will move the user to the
 #. beginning of the line in an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:446
+#: ../src/orca/scripts/toolkits/Gecko/script.py:447
 msgid "Goes to the beginning of the line."
 msgstr "Sare la începutul liniei."
 
 #. Translators: this command will move the user to the
 #. end of the line in an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:454
+#: ../src/orca/scripts/toolkits/Gecko/script.py:455
 msgid "Goes to the end of the line."
 msgstr "Sare la sfârșitul liniei."
 
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:462
+#: ../src/orca/scripts/toolkits/Gecko/script.py:463
 msgid "Causes the current combo box to be expanded."
 msgstr "Cauzează expandarea listei de selecție curente."
 
 #. Translators: this is for advancing the live regions
 #. politeness setting
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:470
+#: ../src/orca/scripts/toolkits/Gecko/script.py:471
 msgid "Advance live region politeness setting."
 msgstr "Avansează configurările de politețe ale regiunii dinamice."
 
 #. Translators: this is for setting all live regions
 #. to 'off' politeness.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:478
+#: ../src/orca/scripts/toolkits/Gecko/script.py:479
 msgid "Set default live region politeness level to off."
 msgstr "Stabilește nivelul implicit de politețe al regiunii dinamice ca dezactivat."
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:486
+#: ../src/orca/scripts/toolkits/Gecko/script.py:487
 msgid "Monitor live regions."
 msgstr "Monitorizează regiunile dinamice."
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:494
+#: ../src/orca/scripts/toolkits/Gecko/script.py:495
 msgid "Review live region announcement."
 msgstr "Revizualizează anunțurile regiunii dinamice."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:502
+#: ../src/orca/scripts/toolkits/Gecko/script.py:503
 msgid "Goes to the previous object."
 msgstr "Sare la obiectul anterior."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:510
+#: ../src/orca/scripts/toolkits/Gecko/script.py:511
 msgid "Goes to the next object."
 msgstr "Sare la obiectul următor."
 
@@ -7372,7 +7372,7 @@ msgstr "Sare la obiectul următor."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:522
+#: ../src/orca/scripts/toolkits/Gecko/script.py:523
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Comută între modul de navigare cu cursor nativ Gecko și cel din Orca."
 
@@ -7384,7 +7384,7 @@ msgstr "Comută între modul de navigare cu cursor nativ Gecko și cel din Orca.
 #. mouse over object, this command will hide the mouse
 #. over and return the user to the object he/she was in.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:578
+#: ../src/orca/scripts/toolkits/Gecko/script.py:579
 msgid "Moves focus into and away from the current mouse over."
 msgstr "Mută focalizarea în și în afara obiectului de sub maus."
 
@@ -7395,7 +7395,7 @@ msgstr "Mută focalizarea în și în afara obiectului de sub maus."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:825
+#: ../src/orca/scripts/toolkits/Gecko/script.py:826
 msgid "Use _Orca Caret Navigation"
 msgstr "Folosește navigarea cu cursor _Orca"
 
@@ -7403,7 +7403,7 @@ msgstr "Folosește navigarea cu cursor _Orca"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:838
+#: ../src/orca/scripts/toolkits/Gecko/script.py:839
 msgid "Use Orca _Structural Navigation"
 msgstr "Folosește navigarea _structurală Orca"
 
@@ -7416,7 +7416,7 @@ msgstr "Folosește navigarea _structurală Orca"
 #. situation the user is in, so we must provide this as an option
 #. within Orca.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:855
+#: ../src/orca/scripts/toolkits/Gecko/script.py:856
 msgid "_Grab focus on objects when navigating"
 msgstr "_Preia focalizarea obiectelor în timpul navigării"
 
@@ -7426,7 +7426,7 @@ msgstr "_Preia focalizarea obiectelor în timpul navigării"
 #. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:870
+#: ../src/orca/scripts/toolkits/Gecko/script.py:871
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "_Poziționează cursorul la începutul liniei când se navighează pe verticală"
 
@@ -7434,7 +7434,7 @@ msgstr "_Poziționează cursorul la începutul liniei când se navighează pe ve
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:883
+#: ../src/orca/scripts/toolkits/Gecko/script.py:884
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Citește pagina automat _la prima încărcare"
 
@@ -7442,7 +7442,7 @@ msgstr "Citește pagina automat _la prima încărcare"
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:895
+#: ../src/orca/scripts/toolkits/Gecko/script.py:896
 msgid "Page Navigation"
 msgstr "Navigare pagină"
 
@@ -7450,7 +7450,7 @@ msgstr "Navigare pagină"
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:987
+#: ../src/orca/scripts/toolkits/Gecko/script.py:988
 msgid "Speak results during _find"
 msgstr "Citește rezultatele în _timpul câutării"
 
@@ -7459,7 +7459,7 @@ msgstr "Citește rezultatele în _timpul câutării"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1000
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1001
 msgid "Onl_y speak changed lines during find"
 msgstr "Citește doar liniile modificare în timpul căută_rii"
 
@@ -7467,14 +7467,14 @@ msgstr "Citește doar liniile modificare în timpul căută_rii"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1017
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1018
 msgid "Minimum length of matched text:"
 msgstr "Lungimea minimă a textului care se potrivește"
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1042
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1043
 msgid "Find Options"
 msgstr "Opțiuni de căutare"
 
@@ -7482,19 +7482,19 @@ msgstr "Opțiuni de căutare"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1631
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1632
 msgid "line selected down from cursor position"
 msgstr "linie selectată sub poziția curentă a cursorului"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1632
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1633
 msgid "line unselected down from cursor position"
 msgstr "linie deselectată sub poziția curentă a cursorului"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1633
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1634
 msgid "line selected up from cursor position"
 msgstr "linie selectată deasupra poziției curentă a cursorului"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1634
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1635
 msgid "line unselected up from cursor position"
 msgstr "linie deselectată deasupra poziției curentă a cursorului"
 
@@ -7503,14 +7503,14 @@ msgstr "linie deselectată deasupra poziției curentă a cursorului"
 #. moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1677
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1678
 msgid "New item has been added"
 msgstr "Noul element a fost adăugat"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1967
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1968
 #, python-format
 msgid "Finished loading %s."
 msgstr "Pagina se încarcă %s."
@@ -7522,7 +7522,7 @@ msgstr "Pagina se încarcă %s."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2457
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2458
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -7533,13 +7533,13 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6046
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6053
 msgid "Mouse over object not found."
 msgstr "Obiectul de sub maus nu a fost găsit."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6532
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6539
 msgid "open"
 msgstr "deschide"
 
@@ -7549,8 +7549,8 @@ msgstr "deschide"
 #. the bottom of the page and continuing looking upwards.
 #. We need to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6605
-#: ../src/orca/structural_navigation.py:883
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6612
+#: ../src/orca/structural_navigation.py:884
 msgid "Wrapping to bottom."
 msgstr "Înfășurare în jos."
 
@@ -7560,17 +7560,17 @@ msgstr "Înfășurare în jos."
 #. top of the page and continuing looking downwards. We need
 #. to inform the user when this is taking place.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6673
-#: ../src/orca/structural_navigation.py:891
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6680
+#: ../src/orca/structural_navigation.py:892
 msgid "Wrapping to top."
 msgstr "Înfășurare în sus."
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6699
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6723
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6733
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6706
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6730
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6740
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Suportul pentru regiuni dinamice este dezactivat"
@@ -7578,11 +7578,11 @@ msgstr "Suportul pentru regiuni dinamice este dezactivat"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6707
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6714
 msgid "Live regions monitoring on"
 msgstr "Suportul pentru regiuni dinamice este activat"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6714
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6721
 msgid "Live regions monitoring off"
 msgstr "Suportul pentru monitorizarea regiunilor dinamice este dezactivat"
 
@@ -7593,7 +7593,7 @@ msgstr "Suportul pentru monitorizarea regiunilor dinamice este dezactivat"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6749
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6756
 msgid "Gecko is controlling the caret."
 msgstr "Gecko controlează cursorul."
 
@@ -7604,7 +7604,7 @@ msgstr "Gecko controlează cursorul."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6761
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6768
 msgid "Orca is controlling the caret."
 msgstr "Orca controlează cursorul."
 
@@ -7621,7 +7621,7 @@ msgstr "%(role)s nivel %(level)d"
 #. Translators: this represents a list in HTML.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:281
-#: ../src/orca/structural_navigation.py:2792
+#: ../src/orca/structural_navigation.py:2793
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -7848,7 +7848,7 @@ msgstr "nivelul în arbore %d"
 #. inside another list).
 #.
 #: ../src/orca/settings.py:1353
-#: ../src/orca/structural_navigation.py:2807
+#: ../src/orca/structural_navigation.py:2808
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nivel de imbricare %d"
@@ -8098,7 +8098,7 @@ msgstr "Butonul implicit este %s"
 #. This feature needs to be toggle-able so that it does not
 #. interfere with normal writing functions.
 #.
-#: ../src/orca/structural_navigation.py:589
+#: ../src/orca/structural_navigation.py:590
 msgid "Toggles structural navigation keys."
 msgstr "Comută tastele de navigare structurală."
 
@@ -8112,7 +8112,7 @@ msgstr "Comută tastele de navigare structurală."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/structural_navigation.py:643
+#: ../src/orca/structural_navigation.py:644
 msgid "Structural navigation keys on."
 msgstr "Tastele de navigare structurală sunt activate."
 
@@ -8126,7 +8126,7 @@ msgstr "Tastele de navigare structurală sunt activate."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/structural_navigation.py:655
+#: ../src/orca/structural_navigation.py:656
 msgid "Structural navigation keys off."
 msgstr "Tastele de navigare structurală sunt dezactivate."
 
@@ -8135,7 +8135,7 @@ msgstr "Tastele de navigare structurală sunt dezactivate."
 #. table navigation command but is not in a table, Orca speaks
 #. this message.
 #.
-#: ../src/orca/structural_navigation.py:695
+#: ../src/orca/structural_navigation.py:696
 msgid "Not in a table."
 msgstr "Nu sunt într-un tabel."
 
@@ -8145,7 +8145,7 @@ msgstr "Nu sunt într-un tabel."
 #. to move to the left of the current cell and is
 #. already in the first column.
 #.
-#: ../src/orca/structural_navigation.py:715
+#: ../src/orca/structural_navigation.py:716
 msgid "Beginning of row."
 msgstr "Început de rând."
 
@@ -8155,7 +8155,7 @@ msgstr "Început de rând."
 #. to move to the right of the current cell and is
 #. already in the last column.
 #.
-#: ../src/orca/structural_navigation.py:724
+#: ../src/orca/structural_navigation.py:725
 msgid "End of row."
 msgstr "Sfărșit de rând."
 
@@ -8165,7 +8165,7 @@ msgstr "Sfărșit de rând."
 #. to move to the cell above the current cell and is
 #. already in the first row.
 #.
-#: ../src/orca/structural_navigation.py:733
+#: ../src/orca/structural_navigation.py:734
 msgid "Top of column."
 msgstr "Început de coloană."
 
@@ -8175,7 +8175,7 @@ msgstr "Început de coloană."
 #. to move to the cell below the current cell and is
 #. already in the last row.
 #.
-#: ../src/orca/structural_navigation.py:742
+#: ../src/orca/structural_navigation.py:743
 msgid "Bottom of column."
 msgstr "Sfârșit de coloană."
 
@@ -8184,13 +8184,13 @@ msgstr "Sfârșit de coloană."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1326
+#: ../src/orca/structural_navigation.py:1327
 msgid "Non-uniform"
 msgstr "Ne uniform"
 
 #. Translators: this represents the number of rows in a table.
 #.
-#: ../src/orca/structural_navigation.py:1333
+#: ../src/orca/structural_navigation.py:1334
 #, python-format
 msgid "Table with %d row"
 msgid_plural "Table with %d rows"
@@ -8200,7 +8200,7 @@ msgstr[2] "Tabel cu %d de rânduri"
 
 #. Translators: this represents the number of cols in a table.
 #.
-#: ../src/orca/structural_navigation.py:1338
+#: ../src/orca/structural_navigation.py:1339
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -8212,7 +8212,7 @@ msgstr[2] "%d de coloane"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1486
+#: ../src/orca/structural_navigation.py:1487
 #, python-format
 msgid "Cell spans %(rows)d rows and %(columns)d columns"
 msgstr "Celula se întinde pe %(rows)d rânduri și %(columns)d coloane"
@@ -8221,7 +8221,7 @@ msgstr "Celula se întinde pe %(rows)d rânduri și %(columns)d coloane"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1494
+#: ../src/orca/structural_navigation.py:1495
 #, python-format
 msgid "Cell spans %d columns"
 msgstr "Celula se întinde pe %d coloane"
@@ -8230,7 +8230,7 @@ msgstr "Celula se întinde pe %d coloane"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1500
+#: ../src/orca/structural_navigation.py:1501
 #, python-format
 msgid "Cell spans %d rows"
 msgstr "Celula se întinde pe %d rânduri"
@@ -8238,14 +8238,14 @@ msgstr "Celula se întinde pe %d rânduri"
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1837
+#: ../src/orca/structural_navigation.py:1838
 msgid "Goes to previous anchor."
 msgstr "Sari la ancora anterioară."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1842
+#: ../src/orca/structural_navigation.py:1843
 msgid "Goes to next anchor."
 msgstr "Sari la ancora următoare."
 
@@ -8254,21 +8254,21 @@ msgstr "Sari la ancora următoare."
 #. that one can jump to. This stirng is what orca will say
 #. if there are no more anchors found.
 #.
-#: ../src/orca/structural_navigation.py:1899
+#: ../src/orca/structural_navigation.py:1900
 msgid "No more anchors."
 msgstr "Nu mai există ancore."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1916
+#: ../src/orca/structural_navigation.py:1917
 msgid "Goes to previous blockquote."
 msgstr "Sari la blocul de citare anterior."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1921
+#: ../src/orca/structural_navigation.py:1922
 msgid "Goes to next blockquote."
 msgstr "Sari la blocul de citare următor."
 
@@ -8276,21 +8276,21 @@ msgstr "Sari la blocul de citare următor."
 #. moving from blockquote to blockquote. This string is what
 #. Orca will say if there are no more blockquotes found.
 #.
-#: ../src/orca/structural_navigation.py:1981
+#: ../src/orca/structural_navigation.py:1982
 msgid "No more blockquotes."
 msgstr "Nu mai sunt blocuri de citare."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:1998
+#: ../src/orca/structural_navigation.py:1999
 msgid "Goes to previous button."
 msgstr "Sari la butonul anterior."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2003
+#: ../src/orca/structural_navigation.py:2004
 msgid "Goes to next button."
 msgstr "Sari la butonul următor."
 
@@ -8299,21 +8299,21 @@ msgstr "Sari la butonul următor."
 #. string is what Orca will say if there are no more buttons
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:2060
+#: ../src/orca/structural_navigation.py:2061
 msgid "No more buttons."
 msgstr "Nu mai există butoane."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2077
+#: ../src/orca/structural_navigation.py:2078
 msgid "Goes to previous check box."
 msgstr "Sari la căsuța de bifare anterioară."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2082
+#: ../src/orca/structural_navigation.py:2083
 msgid "Goes to next check box."
 msgstr "Sari la căsuța de bifare următoare."
 
@@ -8322,7 +8322,7 @@ msgstr "Sari la căsuța de bifare următoare."
 #. string is what Orca will say if there are no more check
 #. boxes found.
 #.
-#: ../src/orca/structural_navigation.py:2139
+#: ../src/orca/structural_navigation.py:2140
 msgid "No more check boxes."
 msgstr "Nu mai există căsuțe de bifare."
 
@@ -8330,7 +8330,7 @@ msgstr "Nu mai există căsuțe de bifare."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2157
+#: ../src/orca/structural_navigation.py:2158
 msgid "Goes to previous large object."
 msgstr "Sari la obiectul mare anterior."
 
@@ -8338,7 +8338,7 @@ msgstr "Sari la obiectul mare anterior."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2163
+#: ../src/orca/structural_navigation.py:2164
 msgid "Goes to next large object."
 msgstr "Sari la obiectul mare următor."
 
@@ -8348,21 +8348,21 @@ msgstr "Sari la obiectul mare următor."
 #. a list, a table, etc. This string is what Orca will say
 #. if there are no more large objects found.
 #.
-#: ../src/orca/structural_navigation.py:2232
+#: ../src/orca/structural_navigation.py:2233
 msgid "No more large objects."
 msgstr "Nu mai există obiecte mari."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2249
+#: ../src/orca/structural_navigation.py:2250
 msgid "Goes to previous combo box."
 msgstr "Sari la lista de selecție anterioară."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2254
+#: ../src/orca/structural_navigation.py:2255
 msgid "Goes to next combo box."
 msgstr "Sari la lista de selecție următoare."
 
@@ -8371,21 +8371,21 @@ msgstr "Sari la lista de selecție următoare."
 #. string is what Orca will say if there are no more combo
 #. boxes found.
 #.
-#: ../src/orca/structural_navigation.py:2311
+#: ../src/orca/structural_navigation.py:2312
 msgid "No more combo boxes."
 msgstr "Nu mai există liste de selecție."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2328
+#: ../src/orca/structural_navigation.py:2329
 msgid "Goes to previous entry."
 msgstr "Sari la înregistrarea anterioară."
 
 #. Translators: this is for navigating among text entries
 #. in a form.
 #.
-#: ../src/orca/structural_navigation.py:2333
+#: ../src/orca/structural_navigation.py:2334
 msgid "Goes to next entry."
 msgstr "Sari la înregistrarea următoare."
 
@@ -8394,21 +8394,21 @@ msgstr "Sari la înregistrarea următoare."
 #. string is what Orca will say if there are no more entries
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:2399
+#: ../src/orca/structural_navigation.py:2400
 msgid "No more entries."
 msgstr "Nu mai există înregistrări."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2416
+#: ../src/orca/structural_navigation.py:2417
 msgid "Goes to previous form field."
 msgstr "Sari la intrarea de formular anterioară."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2423
+#: ../src/orca/structural_navigation.py:2424
 msgid "Goes to next form field."
 msgstr "Sari la intrarea de formular următoare."
 
@@ -8416,28 +8416,28 @@ msgstr "Sari la intrarea de formular următoare."
 #. by moving from form field to form field. This string is
 #. what Orca will say if there are no more form fields found.
 #.
-#: ../src/orca/structural_navigation.py:2493
+#: ../src/orca/structural_navigation.py:2494
 msgid "No more form fields."
 msgstr "Nu mai există intrări de formular."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2510
+#: ../src/orca/structural_navigation.py:2511
 msgid "Goes to previous heading."
 msgstr "Sari la antetul anterior."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g., <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2515
+#: ../src/orca/structural_navigation.py:2516
 msgid "Goes to next heading."
 msgstr "Sari la antetul următor."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2525
+#: ../src/orca/structural_navigation.py:2526
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "Sari la antetul anterior de nivel %d."
@@ -8445,7 +8445,7 @@ msgstr "Sari la antetul anterior de nivel %d."
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2532
+#: ../src/orca/structural_navigation.py:2533
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "Sari la antetul următor de nivel %d."
@@ -8455,7 +8455,7 @@ msgstr "Sari la antetul următor de nivel %d."
 #. This string is what Orca will say if there are no more
 #. headings found.
 #.
-#: ../src/orca/structural_navigation.py:2604
+#: ../src/orca/structural_navigation.py:2605
 msgid "No more headings."
 msgstr "Nu mai există antete."
 
@@ -8464,7 +8464,7 @@ msgstr "Nu mai există antete."
 #. (i.e. only <h1> or only <h2>, etc.) This string is
 #. what Orca will say if there are no more headings found.
 #.
-#: ../src/orca/structural_navigation.py:2611
+#: ../src/orca/structural_navigation.py:2612
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Nu mai există antete de nivel %d."
@@ -8474,7 +8474,7 @@ msgstr "Nu mai există antete de nivel %d."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2630
+#: ../src/orca/structural_navigation.py:2631
 msgid "Goes to previous landmark."
 msgstr "Sari la semnul de carte anterior."
 
@@ -8483,7 +8483,7 @@ msgstr "Sari la semnul de carte anterior."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2637
+#: ../src/orca/structural_navigation.py:2638
 msgid "Goes to next landmark."
 msgstr "Sari la semnul de carte următor."
 
@@ -8493,21 +8493,21 @@ msgstr "Sari la semnul de carte următor."
 #. of webpage like banners, main context, search etc.  This
 #. is an indication that one was not found.
 #.
-#: ../src/orca/structural_navigation.py:2711
+#: ../src/orca/structural_navigation.py:2712
 msgid "No landmark found."
 msgstr "Nu mai există semne de carte."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2728
+#: ../src/orca/structural_navigation.py:2729
 msgid "Goes to previous list."
 msgstr "Sari la lista anterioară."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2733
+#: ../src/orca/structural_navigation.py:2734
 msgid "Goes to next list."
 msgstr "Sari la lista următoare."
 
@@ -8515,21 +8515,21 @@ msgstr "Sari la lista următoare."
 #. from bulleted/numbered list to bulleted/numbered list. This
 #. string is what Orca will say if there are no more lists found.
 #.
-#: ../src/orca/structural_navigation.py:2816
+#: ../src/orca/structural_navigation.py:2817
 msgid "No more lists."
 msgstr "Nu mai există liste."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:2833
+#: ../src/orca/structural_navigation.py:2834
 msgid "Goes to previous list item."
 msgstr "Sari la elementul de listă anterior."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:2838
+#: ../src/orca/structural_navigation.py:2839
 msgid "Goes to next list item."
 msgstr "Sari la elementul de listă următor."
 
@@ -8538,26 +8538,26 @@ msgstr "Sari la elementul de listă următor."
 #. numbered list item.  This string is what Orca will say
 #. if there are no more list items found.
 #.
-#: ../src/orca/structural_navigation.py:2901
+#: ../src/orca/structural_navigation.py:2902
 msgid "No more list items."
 msgstr "Nu mai există elemente în listă."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:2917
+#: ../src/orca/structural_navigation.py:2918
 msgid "Goes to previous live region."
 msgstr "Sari la regiunea dinamică anterioară."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:2921
+#: ../src/orca/structural_navigation.py:2922
 msgid "Goes to next live region."
 msgstr "Sari la regiunea dinamică următoare."
 
 #. Translators: this is for navigating to the last live region
 #. to make an announcement.
 #.
-#: ../src/orca/structural_navigation.py:2926
+#: ../src/orca/structural_navigation.py:2927
 msgid "Goes to last live region."
 msgstr "Sari la ultima regiune dinamică."
 
@@ -8565,19 +8565,19 @@ msgstr "Sari la ultima regiune dinamică."
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/structural_navigation.py:2975
+#: ../src/orca/structural_navigation.py:2976
 msgid "No more live regions."
 msgstr "Nu mai există regiuni dinamice."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:2991
+#: ../src/orca/structural_navigation.py:2992
 msgid "Goes to previous paragraph."
 msgstr "Sari la paragraful anterior."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:2995
+#: ../src/orca/structural_navigation.py:2996
 msgid "Goes to next paragraph."
 msgstr "Sari la paragraful următor."
 
@@ -8585,21 +8585,21 @@ msgstr "Sari la paragraful următor."
 #. moving from paragraph to paragraph. This string is what
 #. Orca will say if there are no more large objects found.
 #.
-#: ../src/orca/structural_navigation.py:3055
+#: ../src/orca/structural_navigation.py:3056
 msgid "No more paragraphs."
 msgstr "Nu mai există paragrafe."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3072
+#: ../src/orca/structural_navigation.py:3073
 msgid "Goes to previous radio button."
 msgstr "Sari la butonul radio anterior."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3077
+#: ../src/orca/structural_navigation.py:3078
 msgid "Goes to next radio button."
 msgstr "Sari la butonul radio următor."
 
@@ -8608,19 +8608,45 @@ msgstr "Sari la butonul radio următor."
 #. This string is what Orca will say if there are no more
 #. radio buttons found.
 #.
-#: ../src/orca/structural_navigation.py:3134
+#: ../src/orca/structural_navigation.py:3135
 msgid "No more radio buttons."
 msgstr "Nu mai există butoane radio."
 
+#. Translators: this is for navigating among separators, such as the
+#. <hr> tag, in a document.
+#.
+#: ../src/orca/structural_navigation.py:3152
+#| msgid "Goes to previous character."
+msgid "Goes to previous separator."
+msgstr "Sare la separatorul anterior."
+
+#. Translators: this is for navigating among separators, such as the
+#. <hr> tag, in a document.
+#.
+#: ../src/orca/structural_navigation.py:3157
+#| msgid "Goes to next character."
+msgid "Goes to next separator."
+msgstr "Sare la separatorul următor."
+
+#. Translators: this is for navigating document content by
+#. moving amongst separators (e.g. <hr> tags). This string
+#. is what Orca will say if there are no more separators
+#. found.
+#.
+#: ../src/orca/structural_navigation.py:3205
+#| msgid "No more paragraphs."
+msgid "No more separators."
+msgstr "Nu mai există separatori."
+
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3150
+#: ../src/orca/structural_navigation.py:3221
 msgid "Goes to previous table."
 msgstr "Sari la tabelul anterior."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3154
+#: ../src/orca/structural_navigation.py:3225
 msgid "Goes to next table."
 msgstr "Sari la tabelul următor."
 
@@ -8628,57 +8654,57 @@ msgstr "Sari la tabelul următor."
 #. from table to table.  This string is what Orca will say if there
 #. are no more tables found.
 #.
-#: ../src/orca/structural_navigation.py:3213
+#: ../src/orca/structural_navigation.py:3284
 msgid "No more tables."
 msgstr "Nu mai există tabele."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3229
+#: ../src/orca/structural_navigation.py:3300
 msgid "Goes left one cell."
 msgstr "Sari cu o celulă în stânga."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3233
+#: ../src/orca/structural_navigation.py:3304
 msgid "Goes right one cell."
 msgstr "Sari cu o celulă în dreapta."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3237
+#: ../src/orca/structural_navigation.py:3308
 msgid "Goes up one cell."
 msgstr "Sari cu o celulă în sus."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3241
+#: ../src/orca/structural_navigation.py:3312
 msgid "Goes down one cell."
 msgstr "Sari cu o celulă în jos."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3245
+#: ../src/orca/structural_navigation.py:3316
 msgid "Goes to the first cell in a table."
 msgstr "Sari la prima celulă din tabel."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3249
+#: ../src/orca/structural_navigation.py:3320
 msgid "Goes to the last cell in a table."
 msgstr "Sari la ultima celulă din tabel."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3333
+#: ../src/orca/structural_navigation.py:3404
 msgid "Goes to previous unvisited link."
 msgstr "Sari la legătura nevizitată anterioară."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3338
+#: ../src/orca/structural_navigation.py:3409
 msgid "Goes to next unvisited link."
 msgstr "Sari la legătura nevizitată următoare."
 
@@ -8687,21 +8713,21 @@ msgstr "Sari la legătura nevizitată următoare."
 #. is what Orca will say if there are no more unvisited links
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3401
+#: ../src/orca/structural_navigation.py:3472
 msgid "No more unvisited links."
 msgstr "Nu mai există legături nevizitate."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3418
+#: ../src/orca/structural_navigation.py:3489
 msgid "Goes to previous visited link."
 msgstr "Sari la legătura vizitată anterioară."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3423
+#: ../src/orca/structural_navigation.py:3494
 msgid "Goes to next visited link."
 msgstr "Sari la legătura vizitată următoare."
 
@@ -8710,7 +8736,7 @@ msgstr "Sari la legătura vizitată următoare."
 #. what Orca will say if there are no more visited links
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3479
+#: ../src/orca/structural_navigation.py:3550
 msgid "No more visited links."
 msgstr "Nu mai există legături vizitate."
 
