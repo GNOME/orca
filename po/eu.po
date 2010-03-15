@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-15 12:44+0100\n"
-"PO-Revision-Date: 2010-03-15 16:04+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
+"POT-Creation-Date: 2010-03-15 14:58+0000\n"
+"PO-Revision-Date: 2010-03-15 16:22+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1853,9 +1853,7 @@ msgstr "Ikuspegi laueko uneko karakterea fonetikoki irakurtzen du."
 #.
 #: ../src/orca/default.py:620
 msgid "Speaks unicode value of the current flat review character."
-msgstr ""
-"Uneko karakterearen ikuspegi lauaren unicode balioa "
-"irakurtzen du."
+msgstr "Uneko karakterearen ikuspegi lauaren unicode balioa irakurtzen du."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -2286,6 +2284,35 @@ msgstr "hutsik"
 msgid "Progress bar %d."
 msgstr "%d. aurrerapen-barra."
 
+#. Translators: this object is now selected.
+#. Let the user know this.
+#.
+#.
+#. Translators: when the user selects (highlights) text in
+#. a document, Orca lets them know this.
+#.
+#: ../src/orca/default.py:3974 ../src/orca/default.py:4403
+#: ../src/orca/default.py:8124 ../src/orca/speech_generator.py:863
+#: ../src/orca/speech_generator.py:887
+#| msgid "delete"
+msgctxt "text"
+msgid "selected"
+msgstr "hautatuta"
+
+#. Translators: this object is now unselected.
+#. Let the user know this.
+#.
+#.
+#. Translators: when the user unselects
+#. (unhighlights) text in a document, Orca lets
+#. them know this.
+#.
+#: ../src/orca/default.py:3980 ../src/orca/default.py:8130
+#| msgid "multi-select"
+msgctxt "text"
+msgid "unselected"
+msgstr "desautatuta"
+
 #. Translators: this is to inform the user of the presence
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
@@ -2628,6 +2655,27 @@ msgstr "sakatua"
 #: ../src/orca/flat_review.py:371 ../src/orca/settings.py:1332
 msgid "not pressed"
 msgstr "sakatu gabea"
+
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#: ../src/orca/flat_review.py:379 ../src/orca/settings.py:1327
+#| msgid "delete"
+msgctxt "radiobutton"
+msgid "selected"
+msgstr "hautatuta"
+
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#. Translators: this represents the state of a radio button.  It is
+#. meant to be spoken to the user.
+#.
+#: ../src/orca/flat_review.py:384 ../src/orca/settings.py:1326
+#| msgid "not checked"
+msgctxt "radiobutton"
+msgid "not selected"
+msgstr "hautatu gabea"
 
 #. Translators: The component orientation is horizontal.
 #.
@@ -3673,9 +3721,9 @@ msgid ""
 "A free, open source scriptable screen reader, which provides access to "
 "applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
 msgstr ""
-"Iturburu irekiko pantaila-irakurle libre 'script'-agarri bat, "
-"AT-SPI euskarria onartzen duten aplikazio eta tresna multzoetara (adib. "
-"GNOME mahaigaina) atzipena eskaintzen du."
+"Iturburu irekiko pantaila-irakurle libre 'script'-agarri bat, AT-SPI "
+"euskarria onartzen duten aplikazio eta tresna multzoetara (adib. GNOME "
+"mahaigaina) atzipena eskaintzen du."
 
 #. Translators: This text is used in the Orca About dialog.
 #.
@@ -3806,6 +3854,35 @@ msgstr "Txandakatu"
 msgid "Modified"
 msgstr "Aldatuta"
 
+#. Translators: This refers to the default/typical voice used
+#. by Orca when presenting the content of the screen and other
+#. messages.
+#.
+#: ../src/orca/orca_gui_prefs.py:730
+#| msgid "Default"
+msgctxt "VoiceType"
+msgid "Default"
+msgstr "Lehenetsia"
+
+#. Translators: This refers to the voice used by Orca when
+#. presenting one or more characters which is in uppercase.
+#.
+#: ../src/orca/orca_gui_prefs.py:734
+#| msgid "Uppercase"
+msgctxt "VoiceType"
+msgid "Uppercase"
+msgstr "Maiuskulak"
+
+#. Translators: This refers to the voice used by Orca when
+#. presenting one or more characters which is part of a
+#. hyperlink.
+#.
+#: ../src/orca/orca_gui_prefs.py:739
+#| msgid "Hyperlink"
+msgctxt "VoiceType"
+msgid "Hyperlink"
+msgstr "Hiperesteka"
+
 #. Attribute Name column (NAME).
 #.
 #. Translators: Attribute here refers to text attributes such
@@ -3908,6 +3985,40 @@ msgstr "Lerroa"
 #: ../src/orca/orca-setup.ui.h:122
 msgid "Sentence"
 msgstr "Esaldia"
+
+#. Translators: Orca has a setting which determines which progress
+#. bar updates should be announced. Choosing "All" means that Orca
+#. will present progress bar updates regardless of what application
+#. and window they happen to be in.
+#.
+#: ../src/orca/orca_gui_prefs.py:1579 ../src/orca/orca_gui_prefs.py:3016
+#| msgid "All"
+msgctxt "ProgressBar"
+msgid "All"
+msgstr "Denak"
+
+#. Translators: Orca has a setting which determines which progress
+#. bar updates should be announced. Choosing "Application" means
+#. that Orca will present progress bar updates as long as the
+#. progress bar is in the active application (but not necessarily
+#. in the current window).
+#.
+#: ../src/orca/orca_gui_prefs.py:1586
+#| msgid "Application"
+msgctxt "ProgressBar"
+msgid "Application"
+msgstr "Aplikazioa"
+
+#. Translators: Orca has a setting which determines which progress
+#. bar updates should be announced. Choosing "Window" means that
+#. Orca will present progress bar updates as long as the progress
+#. bar is in the active window.
+#.
+#: ../src/orca/orca_gui_prefs.py:1592 ../src/orca/orca_gui_prefs.py:3024
+#| msgid "Window"
+msgctxt "ProgressBar"
+msgid "Window"
+msgstr "Leihoa"
 
 #. Translators: When this option is enabled, dead keys will be
 #. announced when pressed.
@@ -5167,6 +5278,17 @@ msgstr "MahaigainekoMarkoa"
 msgid "desktop frame"
 msgstr "mahaigaineko markoa"
 
+#. Translators: short braille for the rolename of a dial.
+#. You should attempt to treat it as an abbreviation of
+#. the translated word for "dial".  It is OK to use an
+#. unabbreviated word as long as it is relatively short.
+#.
+#: ../src/orca/rolenames.py:375
+#| msgid "dial"
+msgctxt "shortbraille"
+msgid "dial"
+msgstr "markatu"
+
 #. Translators: long braille for the rolename of a dial.
 #.
 #: ../src/orca/rolenames.py:378
@@ -5306,6 +5428,17 @@ msgstr "LetraAukeratzailea"
 #: ../src/orca/rolenames.py:465
 msgid "font chooser"
 msgstr "letra-tipoen aukeratzailea"
+
+#. Translators: short braille for the rolename of a form.
+#. You should attempt to treat it as an abbreviation of
+#. the translated word for "form".  It is OK to use an
+#. unabbreviated word as long as it is relatively short.
+#.
+#: ../src/orca/rolenames.py:474
+#| msgid "form"
+msgctxt "shortbraille"
+msgid "form"
+msgstr "inprimakia"
 
 #. Translators: long braille for the rolename of a form.
 #.
@@ -7566,6 +7699,14 @@ msgstr "gaim"
 msgid "required"
 msgstr "beharrezkoa"
 
+#. Translators: this is used to indicate the user is in a text
+#. area that is not editable.  It is meant to be spoken to the user.
+#.
+#: ../src/orca/settings.py:1309
+msgctxt "text"
+msgid "read only"
+msgstr "irakurtzeko soilik"
+
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
@@ -7633,6 +7774,16 @@ msgstr " %(index)d / %(total)d"
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d / %(total)d"
+
+#. Translators: this is used to indicate the user is in a text
+#. area that is not editable.  It is meant to be a short abbreviation
+#. to be presented on the braille display.
+#.
+#: ../src/orca/settings.py:1387
+#| msgid "ordinal"
+msgctxt "text"
+msgid "rdonly"
+msgstr "iraksoili"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).  It is meant to
@@ -7751,6 +7902,15 @@ msgstr "%.2f kilobyte"
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabyte"
+
+#. Translators: this is in reference to a table cell being
+#. selected or not.
+#.
+#: ../src/orca/speech_generator.py:521
+#| msgid "not checked"
+msgctxt "tablecell"
+msgid "not selected"
+msgstr "hautatu gabea"
 
 #. Translators: this is in references to a row in a table.
 #.
@@ -8474,6 +8634,1041 @@ msgstr "Bisitatutako hurrengo estekara joaten da."
 #: ../src/orca/structural_navigation.py:3550
 msgid "No more visited links."
 msgstr "Ez dago bisitatutako esteka gehiago."
+
+#. Translators: this attribute specifies the background color of the text.
+#. The value is an RGB value of the format "u,u,u".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:62
+msgctxt "textattr"
+msgid "background color"
+msgstr "atzeko planoaren kolorea"
+
+#. Translators: this attribute specifies whether to make the background
+#. color for each character the height of the highest font used on the
+#. current line, or the height of the font used for the current character.
+#. It will be a "true" or "false" value.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:71
+msgctxt "textattr"
+msgid "background full height"
+msgstr "atzeko planoaren altuera osoa"
+
+#. Translators: this attribute specifies whether a GdkBitmap is set for
+#. stippling the background color. It will be a "true" or "false" value.
+#. See
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:78
+msgctxt "textattr"
+msgid "background stipple"
+msgstr "atzeko planoa puntukatua"
+
+#. Translators: this attribute specifies the direction of the text.
+#. Values are "none", "ltr" or "rtl".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:85
+#| msgid "section"
+msgctxt "textattr"
+msgid "direction"
+msgstr "norantza"
+
+#. Translators: this attribute specifies whether the text is editable.
+#. It will be a "true" or "false" value.
+#. See
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:92
+#| msgid "table"
+msgctxt "textattr"
+msgid "editable"
+msgstr "editagarria"
+
+#. Translators: this attribute specifies the font family name of the text.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:98
+msgctxt "textattr"
+msgid "family name"
+msgstr "letra-familia"
+
+#. Translators: this attribute specifies the foreground color of the text.
+#. The value is an RGB value of the format "u,u,u".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:105
+#| msgid "Border color:"
+msgctxt "textattr"
+msgid "foreground color"
+msgstr "aurreko planoaren kolorea"
+
+#. Translators: this attribute specifies whether a GdkBitmap is set for
+#. stippling the foreground color. It will be a "true" or "false" value.
+#. See
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:112
+msgctxt "textattr"
+msgid "foreground stipple"
+msgstr "aurreko planoa puntukatua"
+
+#. Translators: this attribute specifies the effect applied to the font
+#. used by the text.
+#. See:
+#. http://www.w3.org/TR/2002/WD-css3-fonts-20020802/#font-effect
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:120
+msgctxt "textattr"
+msgid "font effect"
+msgstr "letra-efektua"
+
+#. Translators: this attribute specifies the indentation of the text
+#. (in pixels).
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:127
+#| msgid "insert"
+msgctxt "textattr"
+msgid "indent"
+msgstr "koska"
+
+#. Translators: this attribute specifies there is something "wrong" with
+#. the text, such as it being a misspelled word. See:
+#. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#.
+#: ../src/orca/text_attribute_names.py:133
+#| msgid "stroke"
+msgctxt "textattr"
+msgid "mistake"
+msgstr "gaizki idatzita"
+
+#. Translators: this attribute specifies whether the text is invisible.
+#. It will be a "true" or "false" value.
+#. See
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:140
+#| msgid "inaccessible"
+msgctxt "textattr"
+msgid "invisible"
+msgstr "ikusezina"
+
+#. Translators: this attribute specifies how the justification of the text.
+#. Values are "left", "right", "center" or "fill".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:147
+#| msgid "Notification %s"
+msgctxt "textattr"
+msgid "justification"
+msgstr "justifikazioa"
+
+#. Translators: this attribute specifies the language that the text is
+#. written in.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:154
+#| msgid "Flagged"
+msgctxt "textattr"
+msgid "language"
+msgstr "hizkuntza"
+
+#. Translators: this attribute specifies the pixel width of the left margin.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:160
+#| msgid "left paren"
+msgctxt "textattr"
+msgid "left margin"
+msgstr "ezkerreko marjina"
+
+#. Translators: this attribute specifies the height of the line of text.
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-line-height
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:167
+#| msgid "Line Right"
+msgctxt "textattr"
+msgid "line height"
+msgstr "lerroaren altuera"
+
+#. Translators: this attribute refers to the named style which is associated
+#. with the entire paragraph and which controls the default formatting
+#. (font, text size, alignment, etc.) of that paragraph. Examples of
+#. paragraph styles include "Heading 1", "Heading 2", "Caption", "Footnote",
+#. "Text Body", "Title", and "Subtitle".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:177
+#| msgid "paragraph"
+msgctxt "textattr"
+msgid "paragraph style"
+msgstr "paragrafo-estiloa"
+
+#. Translators: this attribute specifies the pixels of blank space to
+#. leave above each newline-terminated line.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:184
+msgctxt "textattr"
+msgid "pixels above lines"
+msgstr "lerroen gaineko pixelak"
+
+#. Translators: this attribute specifies the pixels of blank space to
+#. leave below each newline-terminated line.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:191
+#| msgid "Speak blank lines"
+msgctxt "textattr"
+msgid "pixels below lines"
+msgstr "lerroen azpiko pixelak"
+
+#. Translators: this attribute specifies the pixels of blank space to
+#. leave between wrapped lines inside the same newline-terminated line
+#. (paragraph).
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:199
+msgctxt "textattr"
+msgid "pixels inside wrap"
+msgstr "itzulbiratzearen barruko pixelak"
+
+#. Translators: this attribute specifies the pixel width of the right margin.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:205
+#| msgid "right paren"
+msgctxt "textattr"
+msgid "right margin"
+msgstr "eskuineko marjina"
+
+#. Translators: this attribute specifies the number of pixels that the
+#. text characters are risen above the baseline.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:212
+#| msgid "prime"
+msgctxt "textattr"
+msgid "rise"
+msgstr "goratu"
+
+#. Translators: this attribute specifies the scale of the characters. The
+#. value is a string representation of a double.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:219
+#| msgid "cale"
+msgctxt "textattr"
+msgid "scale"
+msgstr "eskala"
+
+#. Translators: this attribute specifies the size of the text.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:225
+#| msgid "slider"
+msgctxt "textattr"
+msgid "size"
+msgstr "tamaina"
+
+#. Translators: this attribute specifies the stretch of he text, if set.
+#. Values are "ultra_condensed", "extra_condensed", "condensed",
+#. "semi_condensed", "normal", "semi_expanded", "expanded",
+#. "extra_expanded" or "ultra_expanded".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:234
+#| msgid "stroke"
+msgctxt "textattr"
+msgid "stretch"
+msgstr "tiratu"
+
+#. Translators: this attribute specifies whether the text is strike though
+#. (in other words, whether there is a line drawn through it). Values are
+#. "true" or "false".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:242
+msgctxt "textattr"
+msgid "strike through"
+msgstr "marratu"
+
+#. Translators: this attribute specifies the slant style of the text,
+#. if set. Values are "normal", "oblique" or "italic".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:249
+#| msgid "tilde"
+msgctxt "textattr"
+msgid "style"
+msgstr "estiloa"
+
+#. Translators: this attribute specifies the decoration of the text.
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-decoration
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:256
+msgctxt "textattr"
+msgid "text decoration"
+msgstr "testuaren dekorazioa"
+
+#. Translators: this attribute specifies the angle at which the text is
+#. displayed (i.e. rotated from the norm) and is represented in degrees
+#. of rotation.
+#. See:
+#. http://www.w3.org/TR/2003/CR-css3-text-20030514/#glyph-orientation-horizontal
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:265
+#| msgid "C_urrent location"
+msgctxt "textattr"
+msgid "text rotation"
+msgstr "testuaren biraketa"
+
+#. Translators: this attribute specifies the shadow effects applied to the text.
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-shadow
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:272
+msgctxt "textattr"
+msgid "text shadow"
+msgstr "testuaren itzala"
+
+#. Translators: this attributes specifies whether the text is underlined.
+#. Values are "none", "single", "double" or "low".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:279
+#| msgid "underline"
+msgctxt "textattr"
+msgid "underline"
+msgstr "azpimarra"
+
+#. Translators: this attribute specifies the capitalization variant of
+#. the text, if set. Values are "normal" or "small_caps".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:286
+#| msgid "a ring"
+msgctxt "textattr"
+msgid "variant"
+msgstr "aldaera"
+
+#. Translators: this attributes specifies what vertical alignment property
+#. has been applied to the text.
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:293
+#| msgid "vertical bar"
+msgctxt "textattr"
+msgid "vertical align"
+msgstr "vertical align"
+
+#. Translators: this attribute specifies the weight of the text.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
+#.
+#: ../src/orca/text_attribute_names.py:300
+#| msgid "right"
+msgctxt "textattr"
+msgid "weight"
+msgstr "pisua"
+
+#. Translators: this attribute specifies the wrap mode of the text, if any.
+#. Values are "none", "char" or "word".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:307
+msgctxt "textattr"
+msgid "wrap mode"
+msgstr "itzulbiratze modua"
+
+#. Translators: this attribute specifies the way the text is written.
+#. Values are "lr-tb", "rl-tb", "tb-rl", "tb-lr", "bt-rl", "bt-lr", "lr",
+#. "rl" and "tb".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:316
+#| msgid "Exiting learn mode."
+msgctxt "textattr"
+msgid "writing mode"
+msgstr "idazketa modua"
+
+#. The following are the known values of some of these text attributes.
+#. These values were found in the Atk documentation at:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#. No doubt there will be more, and as they are found, they can be added
+#. to this table so they can be translated.
+#.
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "invisible", "editable", bg-full-height", "strikethrough",
+#. "bg-stipple" and "fg-stipple".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:332
+#| msgid "tre"
+msgctxt "textattr"
+msgid "true"
+msgstr "egia"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "invisible", "editable", bg-full-height", "strikethrough",
+#. "bg-stipple" and "fg-stipple".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:340
+#| msgid "faster."
+msgctxt "textattr"
+msgid "false"
+msgstr "faltsua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "font-effect", "underline", "text-shadow", "wrap mode"
+#. and "direction".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:349
+#| msgid "None"
+msgctxt "textattr"
+msgid "none"
+msgstr "bat ere ez"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "font-effect".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:356
+#| msgid "e grave"
+msgctxt "textattr"
+msgid "engrave"
+msgstr "grabatu"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "font-effect".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:363
+#| msgid "emb"
+msgctxt "textattr"
+msgid "emboss"
+msgstr "bozeldu"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "font-effect".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:370
+#| msgid "Cut Line"
+msgctxt "textattr"
+msgid "outline"
+msgstr "eskema"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "text-decoration".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:377
+#| msgid "underline"
+msgctxt "textattr"
+msgid "overline"
+msgstr "goimarra"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "text-decoration".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:384
+msgctxt "textattr"
+msgid "line through"
+msgstr "marratua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "text-decoration".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:391
+#| msgid "link"
+msgctxt "textattr"
+msgid "blink"
+msgstr "keinuka"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "text-shadow".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:398
+#| msgid "blank"
+msgctxt "textattr"
+msgid "black"
+msgstr "beltza"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "underline".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:405
+#| msgid "ring"
+msgctxt "textattr"
+msgid "single"
+msgstr "bakuna"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "underline".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:412
+#| msgid "double prime"
+msgctxt "textattr"
+msgid "double"
+msgstr "bikoitza"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "underline".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:419
+#| msgid "lower."
+msgctxt "textattr"
+msgid "low"
+msgstr "baxua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "wrap mode".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:426
+#| msgid "caret"
+msgctxt "textattr"
+msgid "char"
+msgstr "karakterea"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "wrap mode".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:433
+#| msgid "Password"
+msgctxt "textattr"
+msgid "word"
+msgstr "hitza"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "wrap mode." It corresponds to GTK_WRAP_WORD_CHAR,
+#. defined in the Gtk documentation as "Wrap text, breaking lines in
+#. between words, or if that is not enough, also between graphemes."
+#. See:
+#. http://library.gnome.org/devel/atk/1.27/AtkText.html#AtkTextAttribute
+#. http://library.gnome.org/devel/gtk/stable/GtkTextTag.html#GtkWrapMode
+#.
+#: ../src/orca/text_attribute_names.py:443
+msgctxt "textattr"
+msgid "word char"
+msgstr "hitz-karakterea"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "direction".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:450
+#| msgid "flr"
+msgctxt "textattr"
+msgid "ltr"
+msgstr "ezk->esk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "direction".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:457
+#| msgid "trtbl"
+msgctxt "textattr"
+msgid "rtl"
+msgstr "esk->ezk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:464
+#| msgid "left"
+msgctxt "textattr"
+msgid "left"
+msgstr "ezkerrera"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:471
+#| msgid "right"
+msgctxt "textattr"
+msgid "right"
+msgstr "eskuinera"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:478
+#| msgid "enter"
+msgctxt "textattr"
+msgid "center"
+msgstr "zentratuta"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification". In Gecko, when no justification has
+#. be explicitly set, they report a justification of "start".
+#.
+#: ../src/orca/text_attribute_names.py:484
+#| msgid "Notification %s"
+msgctxt "textattr"
+msgid "no justification"
+msgstr "justifikaziorik gabe"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:491
+#| msgid "filler"
+msgctxt "textattr"
+msgid "fill"
+msgstr "betegarria"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:498
+msgctxt "textattr"
+msgid "ultra condensed"
+msgstr "ultra-estutua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:505
+#| msgid "expanded"
+msgctxt "textattr"
+msgid "extra condensed"
+msgstr "estra-estutua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:512
+msgctxt "textattr"
+msgid "condensed"
+msgstr "estutua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:519
+#| msgid "semicolon"
+msgctxt "textattr"
+msgid "semi condensed"
+msgstr "erdi-estutua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch" and "variant".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:526
+#| msgid "ordinal"
+msgctxt "textattr"
+msgid "normal"
+msgstr "normala"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:533
+#| msgid "expanded"
+msgctxt "textattr"
+msgid "semi expanded"
+msgstr "erdi-hedatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:540
+#| msgid "expanded"
+msgctxt "textattr"
+msgid "expanded"
+msgstr "hedatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:547
+#| msgid "expanded"
+msgctxt "textattr"
+msgid "extra expanded"
+msgstr "estra-hedatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:554
+#| msgid "expanded"
+msgctxt "textattr"
+msgid "ultra expanded"
+msgstr "ultra-hedatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "variant".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:561
+msgctxt "textattr"
+msgid "small caps"
+msgstr "maiuskula txikiak"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "style".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:568
+msgctxt "textattr"
+msgid "oblique"
+msgstr "zeiharra"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "style".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:575
+#| msgid "invalid"
+msgctxt "textattr"
+msgid "italic"
+msgstr "etzana"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "paragraph-style".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:582
+#| msgid "Default"
+msgctxt "textattr"
+msgid "Default"
+msgstr "Lehenetsia"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "paragraph-style".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:589
+#| msgid "Text"
+msgctxt "textattr"
+msgid "Text body"
+msgstr "Testuaren gorputza"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "paragraph-style".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:596
+#| msgid "Heading"
+msgctxt "textattr"
+msgid "Heading"
+msgstr "Izenburua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:604
+#| msgid "newline"
+msgctxt "textattr"
+msgid "baseline"
+msgstr "oinarri-lerroa"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:611
+msgctxt "textattr"
+msgid "sub"
+msgstr "azpindizea"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:618
+#| msgid "Super"
+msgctxt "textattr"
+msgid "super"
+msgstr "goi-indizea"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:625
+#| msgid "Stop"
+msgctxt "textattr"
+msgid "top"
+msgstr "goian"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:632
+#| msgid "text"
+msgctxt "textattr"
+msgid "text-top"
+msgstr "testua goian"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:639
+#| msgid "middle dot"
+msgctxt "textattr"
+msgid "middle"
+msgstr "erdian"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:646
+#| msgid "_Bottom:"
+msgctxt "textattr"
+msgid "bottom"
+msgstr "behean"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:653
+#| msgid "Move to _bottom"
+msgctxt "textattr"
+msgid "text-bottom"
+msgstr "testua behean"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align" and "writing-mode".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:661
+#| msgid "insert"
+msgctxt "textattr"
+msgid "inherit"
+msgstr "heredatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:668
+#| msgid "alrt"
+msgctxt "textattr"
+msgid "lr-tb"
+msgstr "ezkesk-goibehe"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:675
+#| msgid "trtbl"
+msgctxt "textattr"
+msgid "rl-tb"
+msgstr "eskezk-goibehe"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:682
+#| msgid "tbl"
+msgctxt "textattr"
+msgid "tb-rl"
+msgstr "goibehe-eskezk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:689
+#| msgid "tbl"
+msgctxt "textattr"
+msgid "tb-lr"
+msgstr "goibehe-ezkesk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:696
+#| msgid "Ctrl"
+msgctxt "textattr"
+msgid "bt-rl"
+msgstr "behegoi-eskezk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:703
+msgctxt "textattr"
+msgid "bt-lr"
+msgstr "behegoi-ezkesk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:710
+#| msgid "flr"
+msgctxt "textattr"
+msgid "lr"
+msgstr "ezkesk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:717
+#| msgid "Ctrl"
+msgctxt "textattr"
+msgid "rl"
+msgstr "eskezk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:724
+#| msgid "tab"
+msgctxt "textattr"
+msgid "tb"
+msgstr "goibehe"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "strikethrough." It refers to the line style.
+#.
+#: ../src/orca/text_attribute_names.py:729
+#| msgid "slider"
+msgctxt "textattr"
+msgid "solid"
+msgstr "lisoa"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "invalid". It is an indication that the text is not
+#. spelled correctly. See:
+#. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#.
+#: ../src/orca/text_attribute_names.py:736
+#| msgid "spin"
+msgctxt "textattr"
+msgid "spelling"
+msgstr "akats ortografikoa"
 
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: ../src/orca/tutorialgenerator.py:158
