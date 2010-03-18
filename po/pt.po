@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.30\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-22 01:14+0000\n"
-"PO-Revision-Date: 2010-02-16 17:35+0000\n"
+"POT-Creation-Date: 2010-03-18 01:14+0000\n"
+"PO-Revision-Date: 2010-03-18 01:15+0000\n"
 "Last-Translator: Rui Batista <ruiandrebatista@gmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -2271,7 +2271,7 @@ msgstr[1] "%d tabulações"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:469
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5882
-#: ../src/orca/settings.py:1293 ../src/orca/speech_generator.py:473
+#: ../src/orca/settings.py:1296 ../src/orca/speech_generator.py:473
 #: ../src/orca/speech_generator.py:779
 #: ../src/orca/structural_navigation.py:3375
 msgid "blank"
@@ -2625,13 +2625,13 @@ msgstr "Voltando Para Cima"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:352 ../src/orca/settings.py:1318
+#: ../src/orca/flat_review.py:352 ../src/orca/settings.py:1321
 msgid "partially checked"
 msgstr "parcialmente seleccionada"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:356 ../src/orca/settings.py:1317
+#: ../src/orca/flat_review.py:356 ../src/orca/settings.py:1320
 msgid "checked"
 msgstr "seleccionada"
 
@@ -2640,13 +2640,13 @@ msgstr "seleccionada"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:360 ../src/orca/settings.py:1316
+#: ../src/orca/flat_review.py:360 ../src/orca/settings.py:1319
 msgid "not checked"
 msgstr "não seleccionado"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:367 ../src/orca/settings.py:1329
+#: ../src/orca/flat_review.py:367 ../src/orca/settings.py:1332
 msgid "pressed"
 msgstr "pressionado"
 
@@ -2655,14 +2655,14 @@ msgstr "pressionado"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:371 ../src/orca/settings.py:1329
+#: ../src/orca/flat_review.py:371 ../src/orca/settings.py:1332
 msgid "not pressed"
 msgstr "não pressionado"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:379 ../src/orca/settings.py:1324
+#: ../src/orca/flat_review.py:379 ../src/orca/settings.py:1327
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seleccionado"
@@ -2673,7 +2673,7 @@ msgstr "seleccionado"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:384 ../src/orca/settings.py:1323
+#: ../src/orca/flat_review.py:384 ../src/orca/settings.py:1326
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "não seleccionado"
@@ -4757,7 +4757,7 @@ msgstr "Restringir a:"
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.ui.h:120
 msgid "Say All B_y:"
-msgstr "Leitura contínua por:"
+msgstr "Leit_ura Contínua Por:"
 
 #: ../src/orca/orca-setup.ui.h:121
 msgid "Scale _factor:"
@@ -7703,14 +7703,14 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1301 ../src/orca/settings.py:1378
+#: ../src/orca/settings.py:1304 ../src/orca/settings.py:1381
 msgid "required"
 msgstr "requerido"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:1306
+#: ../src/orca/settings.py:1309
 msgctxt "text"
 msgid "read only"
 msgstr "só de leitura"
@@ -7718,7 +7718,7 @@ msgstr "só de leitura"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:1311 ../src/orca/settings.py:1389
+#: ../src/orca/settings.py:1314 ../src/orca/settings.py:1392
 msgid "grayed"
 msgstr "acinzentado"
 
@@ -7726,18 +7726,18 @@ msgstr "acinzentado"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:1335 ../src/orca/settings.py:1401
+#: ../src/orca/settings.py:1338 ../src/orca/settings.py:1404
 msgid "collapsed"
 msgstr "recolhido"
 
-#: ../src/orca/settings.py:1335 ../src/orca/settings.py:1401
+#: ../src/orca/settings.py:1338 ../src/orca/settings.py:1404
 msgid "expanded"
 msgstr "expandido"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:1340
+#: ../src/orca/settings.py:1343
 msgid "multi-select"
 msgstr "lista de multi-selecção"
 
@@ -7745,7 +7745,7 @@ msgstr "lista de multi-selecção"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:1346
+#: ../src/orca/settings.py:1349
 #, python-format
 msgid "tree level %d"
 msgstr "nível de árvore %d"
@@ -7760,7 +7760,7 @@ msgstr "nível de árvore %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1353 ../src/orca/structural_navigation.py:2808
+#: ../src/orca/settings.py:1356 ../src/orca/structural_navigation.py:2808
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nível de encadeamento %d"
@@ -7769,7 +7769,7 @@ msgstr "Nível de encadeamento %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:1359
+#: ../src/orca/settings.py:1362
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "em %(index)d de %(total)d"
@@ -7778,7 +7778,7 @@ msgstr "em %(index)d de %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:1365
+#: ../src/orca/settings.py:1368
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d de %(total)d"
@@ -7787,7 +7787,7 @@ msgstr "%(index)d de %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:1384
+#: ../src/orca/settings.py:1387
 msgctxt "text"
 msgid "rdonly"
 msgstr "soleitura"
@@ -7796,7 +7796,7 @@ msgstr "soleitura"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1407
+#: ../src/orca/settings.py:1410
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NÍVEL DE ÁRVORE %d"
@@ -7807,7 +7807,7 @@ msgstr "NÍVEL DE ÁRVORE %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1415
+#: ../src/orca/settings.py:1418
 #, python-format
 msgid "LEVEL %d"
 msgstr "NÍVEL %d"
@@ -8520,17 +8520,15 @@ msgstr "Não existe mais nenhum botão exclusivo."
 #. <hr> tag, in a document.
 #.
 #: ../src/orca/structural_navigation.py:3152
-#, fuzzy
 msgid "Goes to previous separator."
-msgstr "Retrocede para o caracter anterior."
+msgstr "Retrocede para o separador anterior."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
 #: ../src/orca/structural_navigation.py:3157
-#, fuzzy
 msgid "Goes to next separator."
-msgstr "Avança para o caracter seguinte."
+msgstr "Avança para o separador seguinte."
 
 #. Translators: this is for navigating document content by
 #. moving amongst separators (e.g. <hr> tags). This string
@@ -8538,9 +8536,8 @@ msgstr "Avança para o caracter seguinte."
 #. found.
 #.
 #: ../src/orca/structural_navigation.py:3205
-#, fuzzy
 msgid "No more separators."
-msgstr "Não existe mais nenhum parágrafo."
+msgstr "Não existe mais nenhum separador."
 
 #. Translators: this is for navigating among tables in a document.
 #.
