@@ -4,13 +4,13 @@
 #
 # Inaki Larranaga Murgoitio <dooteo@euskalgnu.org>, 2008.
 # Inaki Larranaga Murgoitio <dooteo@zundan.com>, 2009.
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
 "POT-Creation-Date: 2009-08-28 09:02+0000\n"
-"PO-Revision-Date: 2009-08-28 11:38+0200\n"
+"PO-Revision-Date: 2010-03-24 15:32+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -258,7 +258,7 @@ msgstr "Gaztelera 1. maila"
 
 #: ../src/orca/braille.py:243
 msgid "Canada French Grade 2"
-msgstr "Kanadiako frantsesa 2. maila"
+msgstr "Kanadako frantsesa 2. maila"
 
 #: ../src/orca/braille.py:244
 msgid "France French Grade 2"
@@ -314,15 +314,15 @@ msgstr "Galesera 2. maila"
 
 #: ../src/orca/braille.py:257
 msgid "German Grade 0"
-msgstr "Alemaniera 0. maila"
+msgstr "Alemana 0. maila"
 
 #: ../src/orca/braille.py:258
 msgid "German Grade 1"
-msgstr "Alemaniera 1. maila"
+msgstr "Alemana 1. maila"
 
 #: ../src/orca/braille.py:259
 msgid "German Grade 2"
-msgstr "Alemaniera 2. maila"
+msgstr "Alemana 2. maila"
 
 #: ../src/orca/braille.py:260
 msgid "U.K. English Grade 2"
@@ -1500,7 +1500,7 @@ msgstr "'Non nago' oinarrizko eragiketa gauzatzen du."
 #.
 #: ../src/orca/default.py:218
 msgid "Performs the detailed where am I operation."
-msgstr "'Non nago' eragiketa xehetua gauzatzen du."
+msgstr "'Non nago' eragiketa xehatua gauzatzen du."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -1992,7 +1992,7 @@ msgstr "Testuaren hautapenaren amaiera markatzen du."
 #.
 #: ../src/orca/default.py:759
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Ikasteko modua aktibatzen du.  Sakatu Ihes ikasteko modutik ateratzeko."
+msgstr "Ikasteko modua aktibatzen du. Sakatu Ihes ikasteko modutik ateratzeko."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
@@ -2501,7 +2501,7 @@ msgstr "paragrafoa desautatu da, kurtsorearen posiziotik gora"
 #.
 #: ../src/orca/default.py:7852
 msgid "line selected to end from previous cursor position"
-msgstr "lerroa amaieraino hautatu da kurtsorearen aurreko posiziotik"
+msgstr "lerroa amaieraraino hautatu da kurtsorearen aurreko posiziotik"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -3114,13 +3114,13 @@ msgstr "ez da aktibitatearen mezurik gorde"
 #. have been turned off.
 #: ../src/orca/liveregions.py:316
 msgid "All live regions set to off"
-msgstr "Eskualde aktibo guztiak desaktubatu dira"
+msgstr "Eskualde aktibo guztiak desaktibatu dira"
 
 #. Translators: This lets the user know that all live regions
 #. have been restored to their original politeness level.
 #: ../src/orca/liveregions.py:344
 msgid "live regions politeness levels restored"
-msgstr "eskualde aktiboen adietasun mailak berrezarri dira"
+msgstr "eskualde aktiboen adeitasun mailak berrezarri dira"
 
 #. Translators: output the politeness level
 #.
@@ -4646,7 +4646,7 @@ msgstr "Erakutsi Orca-ren leiho _nagusia"
 
 #: ../src/orca/orca-setup.ui.h:102
 msgid "Spea_k object mnemonics"
-msgstr "I_rakurri mnemoniko objektuak"
+msgstr "I_rakurri objektu mnemoteknikoak"
 
 #: ../src/orca/orca-setup.ui.h:103
 msgid "Speak _indentation and justification"
