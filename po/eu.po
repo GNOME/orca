@@ -2,19 +2,19 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-29 18:37+0200\n"
-"PO-Revision-Date: 2008-08-29 18:36+0200\n"
+"PO-Revision-Date: 2010-03-24 15:35+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../orca.desktop.in.h:1
@@ -22,8 +22,7 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "Orca pantaila-irakurlea eta lupa"
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 "Pantailako informazioa ahoz edo braillez ematen du, edo pantailan "
 "handiagotzen du"
@@ -62,7 +61,7 @@ msgstr "Gaztelera 1. maila"
 
 #: ../src/louis/constants.py.in:30
 msgid "Canada French Grade 2"
-msgstr "Kanadiako frantsesa 2. maila"
+msgstr "Kanadako frantsesa 2. maila"
 
 #: ../src/louis/constants.py.in:31
 msgid "France French Grade 2"
@@ -118,15 +117,15 @@ msgstr "Galesera 2. maila"
 
 #: ../src/louis/constants.py.in:44
 msgid "German Grade 0"
-msgstr "Alemaniera 0. maila"
+msgstr "Alemana 0. maila"
 
 #: ../src/louis/constants.py.in:45
 msgid "German Grade 1"
-msgstr "Alemaniera 1. maila"
+msgstr "Alemana 1. maila"
 
 #: ../src/louis/constants.py.in:46
 msgid "German Grade 2"
-msgstr "Alemaniera 2. maila"
+msgstr "Alemana 2. maila"
 
 #: ../src/louis/constants.py.in:47
 msgid "U.K. English Grade 2"
@@ -1478,7 +1477,7 @@ msgstr "'Non nago' oinarrizko eragiketa gauzatzen du."
 #.
 #: ../src/orca/default.py:200
 msgid "Performs the detailed where am I operation."
-msgstr "'Non nago' eragiketa xehetua gauzatzen du."
+msgstr "'Non nago' eragiketa xehatua gauzatzen du."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -1934,8 +1933,7 @@ msgstr "Teklatu-fokua duen objektura itzultzen da."
 #.
 #: ../src/orca/default.py:693
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
-"Ikasteko modua aktibatzen du.  Sakatu Ihes ikasteko modutik ateratzeko."
+msgstr "Ikasteko modua aktibatzen du.  Sakatu Ihes ikasteko modutik ateratzeko."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
@@ -1985,8 +1983,7 @@ msgstr "Hobespenak konfiguratzeko elkarrizketa-koadroa bistaratzen du."
 #.
 #: ../src/orca/default.py:750
 msgid "Displays the application preferences configuration dialog."
-msgstr ""
-"Aplikazioaren hobespenak konfiguratzeko elkarrizketa-koadroa bistaratzen du."
+msgstr "Aplikazioaren hobespenak konfiguratzeko elkarrizketa-koadroa bistaratzen du."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -2040,8 +2037,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:803
 msgid "Prints debug information about the ancestry of the object with focus."
-msgstr ""
-"Fokua duen objektuaren jatorriari buruzko arazketa-informazioa erakusten du."
+msgstr "Fokua duen objektuaren jatorriari buruzko arazketa-informazioa erakusten du."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2436,7 +2432,7 @@ msgstr[1] "%(count)d karaktere: %(repeatChar)s"
 #.
 #: ../src/orca/default.py:7350
 msgid "line selected to end from previous cursor position"
-msgstr "lerroa amaieraino hautatu da kurtsorearen aurreko posiziotik"
+msgstr "lerroa amaieraraino hautatu da kurtsorearen aurreko posiziotik"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -3033,13 +3029,13 @@ msgstr "ez da aktibitatearen mezurik gorde"
 #. have been turned off.
 #: ../src/orca/liveregions.py:316
 msgid "All live regions set to off"
-msgstr "Eskualde aktibo guztiak desaktubatu dira"
+msgstr "Eskualde aktibo guztiak desaktibatu dira"
 
 #. Translators: This lets the user know that all live regions
 #. have been restored to their original politeness level.
 #: ../src/orca/liveregions.py:344
 msgid "live regions politeness levels restored"
-msgstr "eskualde aktiboen adietasun mailak berrezarri dira"
+msgstr "eskualde aktiboen adeitasun mailak berrezarri dira"
 
 #. Translators: output the politeness level
 #.
@@ -3333,8 +3329,7 @@ msgstr "Oraintxe gaitu da GNOMEren erabilerraztasun-euskarria."
 
 #: ../src/orca/orca_console_prefs.py:475 ../src/orca/orca_gui_prefs.py:456
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
-"Saioa amaitu eta berriro hasi behar duzu aldaketek eragina izan dezaten."
+msgstr "Saioa amaitu eta berriro hasi behar duzu aldaketek eragina izan dezaten."
 
 #: ../src/orca/orca_console_prefs.py:483
 msgid "Do you want to logout now?  Enter y or n: "
@@ -6477,8 +6472,7 @@ msgid "Notification %s"
 msgstr "%s jakinarazpena"
 
 #: ../src/orca/scripts/apps/pidgin/script.py:192
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
 "Berriketa-gelako mezuen aurretik berriketa-gelaren izena jartzearen eta ez "
 "jartzearen artean txandakatzen du."
@@ -6637,8 +6631,7 @@ msgstr "Zutabe-goiburu dinamikoak garbitzen ditu."
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:211
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 "Ezarri zutabea, kalkulu-gelaxkak irakurtzean errenkaden goiburu dinamiko "
 "gisa erabiltzeko."
@@ -9175,8 +9168,7 @@ msgstr "Sakatu zuriunea aktibatzeko."
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:397
-msgid ""
-"Use up or down arrow to select value. Or type in the desired numerical value."
+msgid "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
 "Erabili gora edo behera balioa hautatzeko. Edo idatzi nahi den balio "
 "numerikoa."
@@ -9336,3 +9328,4 @@ msgstr "%d / %d elementua"
 #, python-format
 msgid "Default button is %s"
 msgstr "Botoi lehenetsia %s da."
+
