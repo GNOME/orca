@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
 "POT-Creation-Date: 2010-03-15 14:58+0000\n"
-"PO-Revision-Date: 2010-03-15 16:22+0100\n"
+"PO-Revision-Date: 2010-03-24 15:28+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -253,7 +253,7 @@ msgstr "Gaztelera 1. maila"
 
 #: ../src/orca/braille.py:263
 msgid "Canada French Grade 2"
-msgstr "Kanadiako frantsesa 2. maila"
+msgstr "Kanadako frantsesa 2. maila"
 
 #: ../src/orca/braille.py:264
 msgid "France French Grade 2"
@@ -309,15 +309,15 @@ msgstr "Galesera 2. maila"
 
 #: ../src/orca/braille.py:277
 msgid "German Grade 0"
-msgstr "Alemaniera 0. maila"
+msgstr "Alemana 0. maila"
 
 #: ../src/orca/braille.py:278
 msgid "German Grade 1"
-msgstr "Alemaniera 1. maila"
+msgstr "Alemana 1. maila"
 
 #: ../src/orca/braille.py:279
 msgid "German Grade 2"
-msgstr "Alemaniera 2. maila"
+msgstr "Alemana 2. maila"
 
 #: ../src/orca/braille.py:280
 msgid "U.K. English Grade 2"
@@ -337,7 +337,7 @@ msgstr "AEBko ingelesa 2. maila"
 
 #: ../src/orca/braille.py:284
 msgid "Canada French Grade 1"
-msgstr "Kanadiako frantsesa 1. maila"
+msgstr "Kanadako frantsesa 1. maila"
 
 #: ../src/orca/braille.py:285
 msgid "France French Grade 1"
@@ -1491,7 +1491,7 @@ msgstr "'Non nago' oinarrizko eragiketa gauzatzen du."
 #.
 #: ../src/orca/default.py:221
 msgid "Performs the detailed where am I operation."
-msgstr "'Non nago' eragiketa xehetua gauzatzen du."
+msgstr "'Non nago' eragiketa xehatua gauzatzen du."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -2418,7 +2418,7 @@ msgstr "Ikuspegi lautik ateratzen da."
 
 #: ../src/orca/default.py:5004
 msgid "Entering flat review."
-msgstr "Ikuspegi lauaan sartzen da."
+msgstr "Ikuspegi lauan sartzen da."
 
 #. Translators: Orca has a command that allows the user
 #. to move the mouse pointer to the current object. If
@@ -2509,7 +2509,7 @@ msgstr "paragrafoa desautatu da, kurtsorearen posiziotik gorantz"
 #.
 #: ../src/orca/default.py:7982
 msgid "line selected to end from previous cursor position"
-msgstr "lerroa amaieraino hautatu da kurtsorearen aurreko posiziotik"
+msgstr "lerroa amaieraraino hautatu da kurtsorearen aurreko posiziotik"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -3136,13 +3136,13 @@ msgstr "ez da aktibitatearen mezurik gorde"
 #. have been turned off.
 #: ../src/orca/liveregions.py:316
 msgid "All live regions set to off"
-msgstr "Eskualde aktibo guztiak desaktubatu dira"
+msgstr "Eskualde aktibo guztiak desaktibatu dira"
 
 #. Translators: This lets the user know that all live regions
 #. have been restored to their original politeness level.
 #: ../src/orca/liveregions.py:344
 msgid "live regions politeness levels restored"
-msgstr "eskualde aktiboen adietasun mailak berrezarri dira"
+msgstr "eskualde aktiboen adeitasun mailak berrezarri dira"
 
 #. Translators: output the politeness level
 #.
@@ -4767,7 +4767,7 @@ msgstr "Erakutsi Orca-ren leiho _nagusia"
 
 #: ../src/orca/orca-setup.ui.h:125
 msgid "Spea_k object mnemonics"
-msgstr "I_rakurri mnemoniko objektuak"
+msgstr "I_rakurri objektu mnemoteknikoak"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
 #: ../src/orca/orca-setup.ui.h:127
@@ -8676,7 +8676,7 @@ msgstr "atzeko planoa puntukatua"
 #| msgid "section"
 msgctxt "textattr"
 msgid "direction"
-msgstr "norantza"
+msgstr "norabidea"
 
 #. Translators: this attribute specifies whether the text is editable.
 #. It will be a "true" or "false" value.
@@ -8992,7 +8992,7 @@ msgstr "aldaera"
 #| msgid "vertical bar"
 msgctxt "textattr"
 msgid "vertical align"
-msgstr "vertical align"
+msgstr "lerrokatze-bertikala"
 
 #. Translators: this attribute specifies the weight of the text.
 #. See:
