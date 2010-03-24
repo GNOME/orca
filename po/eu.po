@@ -2,19 +2,19 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2009.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-02-19 20:01+0100\n"
-"PO-Revision-Date: 2009-02-19 20:01+0100\n"
+"PO-Revision-Date: 2010-03-24 15:33+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../orca.desktop.in.h:1
@@ -60,7 +60,7 @@ msgstr "Gaztelera 1. maila"
 
 #: ../src/louis/constants.py.in:29
 msgid "Canada French Grade 2"
-msgstr "Kanadiako frantsesa 2. maila"
+msgstr "Kanadako frantsesa 2. maila"
 
 #: ../src/louis/constants.py.in:30
 msgid "France French Grade 2"
@@ -116,15 +116,15 @@ msgstr "Galesera 2. maila"
 
 #: ../src/louis/constants.py.in:43
 msgid "German Grade 0"
-msgstr "Alemaniera 0. maila"
+msgstr "Alemana 0. maila"
 
 #: ../src/louis/constants.py.in:44
 msgid "German Grade 1"
-msgstr "Alemaniera 1. maila"
+msgstr "Alemana 1. maila"
 
 #: ../src/louis/constants.py.in:45
 msgid "German Grade 2"
-msgstr "Alemaniera 2. maila"
+msgstr "Alemana 2. maila"
 
 #: ../src/louis/constants.py.in:46
 msgid "U.K. English Grade 2"
@@ -1496,7 +1496,7 @@ msgstr "'Non nago' oinarrizko eragiketa gauzatzen du."
 #.
 #: ../src/orca/default.py:191
 msgid "Performs the detailed where am I operation."
-msgstr "'Non nago' eragiketa xehetua gauzatzen du."
+msgstr "'Non nago' eragiketa xehatua gauzatzen du."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -2445,7 +2445,7 @@ msgstr[1] "%(count)d karaktere: %(repeatChar)s"
 #.
 #: ../src/orca/default.py:7376
 msgid "line selected to end from previous cursor position"
-msgstr "lerroa amaieraino hautatu da kurtsorearen aurreko posiziotik"
+msgstr "lerroa amaieraraino hautatu da kurtsorearen aurreko posiziotik"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -3040,13 +3040,13 @@ msgstr "ez da aktibitatearen mezurik gorde"
 #. have been turned off.
 #: ../src/orca/liveregions.py:316
 msgid "All live regions set to off"
-msgstr "Eskualde aktibo guztiak desaktubatu dira"
+msgstr "Eskualde aktibo guztiak desaktibatu dira"
 
 #. Translators: This lets the user know that all live regions
 #. have been restored to their original politeness level.
 #: ../src/orca/liveregions.py:344
 msgid "live regions politeness levels restored"
-msgstr "eskualde aktiboen adietasun mailak berrezarri dira"
+msgstr "eskualde aktiboen adeitasun mailak berrezarri dira"
 
 #. Translators: output the politeness level
 #.
@@ -4428,7 +4428,7 @@ msgstr "Erakutsi Orca-ren leiho _nagusia"
 
 #: ../src/orca/orca-setup.glade.h:127
 msgid "Spea_k object mnemonics"
-msgstr "I_rakurri mnemoniko objektuak"
+msgstr "I_rakurri objektu mnemoteknikoak"
 
 #: ../src/orca/orca-setup.glade.h:128
 msgid "Speak _indentation and justification"
