@@ -1,3 +1,28 @@
+2.30.0 - 28-Mar-2010
+
+General:
+
+* Fix for bgo#612558 - Need to map gnome-calculator to the gcalctool
+  script Note that gnome-calculator is symbolic link to gcalctool.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg          Bulgarian            Alexander Shopov
+    ca          Catalan              Gil Forcada
+    cs          Czech                Lucas Lommer and Petr Kovar
+    da          Danish               Kenneth Nielsen
+    eu          Basque               Inaki Larranaga Murgoitio
+    fi          Finnish              Tommi Vainikainen
+    it          Italian              Luca Ferretti
+    lt          Lithuanian           Romas Mažeika and Gintautas Miliauskas
+    pt          Portuguese           Duarte Loreto
+    ro          Romanian             Adi Roiban
+    sv          Swedish              Daniel Nylander
+    uk          Ukrainian            Maxim V. Dziumanenko
+    vi          Vietnamese           Clytie Siddall
+
+==========
+
 2.29.92 - 07-Mar-2010
 
 General:
