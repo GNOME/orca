@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-19 23:29+0100\n"
-"PO-Revision-Date: 2010-03-16 21:38+0100\n"
+"PO-Revision-Date: 2010-03-29 20:25+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -1488,7 +1488,7 @@ msgstr "Pronuncia el document sencer."
 #.
 #: ../src/orca/default.py:209
 msgid "Performs the basic where am I operation."
-msgstr "Fa la operació bàsica d'on sóc."
+msgstr "Fa l'operació bàsica d'on sóc."
 
 #. Translators: the "Where am I" feature of Orca allows
 #. a user to press a key and then have information
@@ -1499,7 +1499,7 @@ msgstr "Fa la operació bàsica d'on sóc."
 #.
 #: ../src/orca/default.py:221
 msgid "Performs the detailed where am I operation."
-msgstr "Fa la operació detallada d'on sóc."
+msgstr "Fa l'operació detallada d'on sóc."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -1877,7 +1877,7 @@ msgstr "Pronuncia el valor unicode del caràcter de la ressenya plana actual."
 #.
 #: ../src/orca/default.py:637
 msgid "Moves flat review to the next character."
-msgstr "Mou la ressenya plana al següent caràcter"
+msgstr "Mou la ressenya plana al següent caràcter."
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -3587,7 +3587,7 @@ msgstr "Voleu habilitar les tecles d'acció? Teclegeu y (sí) o n (no): "
 #.
 #: ../src/orca/orca_console_prefs.py:460
 msgid "Select desired keyboard layout."
-msgstr "Seleccioneu la disposició de teclat desitjada:"
+msgstr "Seleccioneu la disposició de teclat desitjada."
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -4253,7 +4253,7 @@ msgstr "actiu"
 #.
 #: ../src/orca/orca.py:961
 msgid "Speech enabled."
-msgstr "S'ha habilitat la pronunciació"
+msgstr "S'ha habilitat la pronunciació."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
@@ -7435,7 +7435,7 @@ msgstr "S'ha afegit un element nou"
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1968
 #, python-format
 msgid "Finished loading %s."
-msgstr "S'ha acabat de carregar el %s"
+msgstr "S'ha acabat de carregar el %s."
 
 #. Translators: the 'h' below represents a heading level
 #. attribute for content that you might find in something
@@ -8159,7 +8159,7 @@ msgstr "Vés a l'àncora següent."
 #.
 #: ../src/orca/structural_navigation.py:1900
 msgid "No more anchors."
-msgstr "No hi ha cap més àncores"
+msgstr "No hi ha cap més àncores."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
@@ -8443,7 +8443,7 @@ msgstr "Vés a l'element de la llista següent."
 #.
 #: ../src/orca/structural_navigation.py:2902
 msgid "No more list items."
-msgstr "No hi ha cap més element de llista"
+msgstr "No hi ha cap més element de llista."
 
 #. Translators: this is for navigating between live regions
 #.
@@ -9714,7 +9714,7 @@ msgid ""
 "minimum press home, and for maximum press end."
 msgstr ""
 "Per retrocedir premeu la tecla cap a l'esquerra, per avançar premeu la tecla "
-"cap a la dreta. Per anar al inici premeu la tecla d'inici i per anar al "
+"cap a la dreta. Per anar a l'inici premeu la tecla d'inici i per anar al "
 "final premeu la tecla de final."
 
 #~ msgid "Invalid choice. Selecting desktop keyboard layout.\n"
