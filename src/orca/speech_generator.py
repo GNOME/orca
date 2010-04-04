@@ -1296,16 +1296,16 @@ class SpeechGenerator(generator.Generator):
 
         if not total:
             for child in obj:
-                next = self._generateName(child)
+                nextName = self._generateName(child)
                 state = child.getState()
-                if not next or next[0] in ["", "Empty", "separator"] \
+                if not nextName or nextName[0] in ["", "Empty", "separator"] \
                    or not state.contains(pyatspi.STATE_VISIBLE):
                     continue
 
                 index += 1
                 total += 1
 
-                if next == name:
+                if nextName == name:
                     position = index
 
         if (settings.enablePositionSpeaking \
