@@ -1217,14 +1217,18 @@ class SpeechGenerator(generator.Generator):
         relations = obj.getRelationSet()
         for relation in relations:
             if relation.getRelationType() == pyatspi.RELATION_MEMBER_OF:
-                total = relation.getNTargets()
-                for i in range(0, total):
+                total = 0
+                for i in range(0, relation.getNTargets()):
                     target = relation.getTarget(i)
-                    if target == obj:
-                        position = total - i
-                        break
+                    if target.getState().contains(pyatspi.STATE_SHOWING):
+                        total += 1
+                        if target == obj:
+                            position = total
 
         if position >= 0:
+            # Adjust the position because the relations tend to be given
+            # in the reverse order.
+            position = total - position + 1
             result.append(self._script.formatting.getString(
                               mode='speech',
                               stringType='groupindex') \
