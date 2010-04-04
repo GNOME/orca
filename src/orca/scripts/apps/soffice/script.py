@@ -2345,6 +2345,23 @@ class Script(default.Script):
         else:
             default.Script.onTextInserted(self, event)
 
+    def isWordMisspelled(self, obj, offset):
+        """Identifies if the current word is flagged as misspelled by the
+        application.
+
+        Arguments:
+        - obj: An accessible which implements the accessible text interface.
+        - offset: Offset in the accessible's text for which to retrieve the
+          attributes.
+
+        Returns True if the word is flagged as misspelled.
+        """
+
+        attributes, start, end  = self.getTextAttributes(obj, offset, True)
+        error = attributes.get("text-spelling")
+
+        return error == "misspelled"
+
     def getTextAttributes(self, acc, offset, get_defaults=False):
         """Get the text attributes run for a given offset in a given accessible
 

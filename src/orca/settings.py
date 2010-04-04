@@ -714,8 +714,8 @@ allTextAttributes = \
     "pixels-below-lines:; pixels-inside-wrap:; right-margin:; rise:; " \
     "scale:; size:; stretch:; strikethrough:false; style:normal; " \
     "text-decoration:none; text-rotation:0; text-shadow:none; " \
-    "underline:none; variant:; vertical-align:baseline; weight:400; " \
-    "wrap-mode:; writing-mode:lr-tb;"
+    "text-spelling:none; underline:none; variant:; " \
+    "vertical-align:baseline; weight:400; wrap-mode:; writing-mode:lr-tb;"
 
 # The default set of text attributes to speak to the user. Specific
 # application scripts (or individual users can override these values if
@@ -728,7 +728,7 @@ allTextAttributes = \
 enabledSpokenTextAttributes = \
     "size:; family-name:; weight:400; indent:0; underline:none; " \
     "strikethrough:false; justification:left; style:normal; " \
-    "paragraph-style:;"
+    "paragraph-style:; text-spelling:none;"
 
 # The default set of text attributes to be brailled for the user. Specific
 # application scripts (or individual users can override these values if
@@ -740,7 +740,8 @@ enabledSpokenTextAttributes = \
 
 enabledBrailledTextAttributes = \
     "size:; family-name:; weight:400; indent:0; underline:none; " \
-    "strikethrough:false; justification:left; style:normal;"
+    "strikethrough:false; justification:left; style:normal; " \
+    "text-spelling:none;"
 
 # Text Attributes Braille Indicator (see textAttributesBrailleIndicator).
 # The values represent the character to be used in the attrOr
