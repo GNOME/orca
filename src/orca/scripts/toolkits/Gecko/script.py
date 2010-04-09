@@ -2379,7 +2379,7 @@ class Script(default.Script):
         # full line, however.
         #
         presentOnlyFocusedObj = False
-        if focusedObj.getRole() == pyatspi.ROLE_SLIDER:
+        if focusedObj and focusedObj.getRole() == pyatspi.ROLE_SLIDER:
             presentOnlyFocusedObj = True
 
         contents = self.currentLineContents
