@@ -25,6 +25,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.chat as chat
 import orca.default as default
 
@@ -39,12 +41,19 @@ class Script(default.Script):
     def __init__(self, app):
         """Creates a new script for the given application."""
 
+        # So we can take an educated guess at identifying the buddy list.
+        #
+        self._buddyListAncestries = [[pyatspi.ROLE_TREE_TABLE,
+                                      pyatspi.ROLE_SCROLL_PANE,
+                                      pyatspi.ROLE_FILLER,
+                                      pyatspi.ROLE_FRAME]]
+
         default.Script.__init__(self, app)
 
     def getChat(self):
         """Returns the 'chat' class for this script."""
 
-        return chat.Chat(self, [])
+        return chat.Chat(self, self._buddyListAncestries)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
