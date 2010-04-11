@@ -105,3 +105,14 @@ class Script(default.Script):
             return
 
         default.Script.onTextInserted(self, event)
+
+    def onWindowActivated(self, event):
+        """Called whenever a toplevel window is activated."""
+
+        # Hack to "tickle" the accessible hierarchy. Otherwise, the
+        # events we need to present text added to the chatroom are
+        # missing.
+        #
+        allPageTabs = self.findByRole(event.source, pyatspi.ROLE_PAGE_TAB)
+
+        default.Script.onWindowActivated(self, event)
