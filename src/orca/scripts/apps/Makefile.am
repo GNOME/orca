@@ -10,6 +10,7 @@ SUBDIRS = \
 	gedit \
 	gnome-window-properties \
 	Banshee \
+	empathy \
 	yelp
 
 orca_pathdir=$(pyexecdir)

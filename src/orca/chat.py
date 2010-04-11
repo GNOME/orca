@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +22,7 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
 import pyatspi
@@ -731,6 +731,8 @@ class Chat:
             else:
                 speech.speak(text)
             return True
+
+        return False
 
     def presentTypingStatusChange(self, event, status):
         """Presents a change in typing status for the current conversation
