@@ -11,6 +11,7 @@ SUBDIRS = \
 	gnome-window-properties \
 	Banshee \
 	empathy \
+	Instantbird \
 	yelp
 
 orca_pathdir=$(pyexecdir)

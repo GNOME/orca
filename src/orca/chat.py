@@ -662,6 +662,19 @@ class Chat:
             speech.speak(text)
         braille.displayMessage(text)
 
+    def getMessageFromEvent(self, event):
+        """Get the actual displayed message. This will almost always be the
+        unaltered any_data from an event of type object:text-changed:insert.
+
+        Arguments:
+        - event: the Event from which to take the text.
+
+        Returns the string which should be presented as the newly-inserted
+        text. (Things like chatroom name prefacing get handled elsewhere.)
+        """
+
+        return event.any_data
+
     def presentInsertedText(self, event):
         """Gives the Chat class an opportunity to present the text from the
         text inserted Event.
@@ -711,8 +724,9 @@ class Chat:
             else:
                 conversation = self.getConversation(event.source)
                 name = conversation.name
-            message = event.any_data.strip("\n")
-            self.addMessageToHistory(message, conversation)
+            message = self.getMessageFromEvent(event).strip("\n")
+            if message:
+                self.addMessageToHistory(message, conversation)
 
             # The user may or may not want us to present this message. Also,
             # don't speak the name if it's the focused chat.
@@ -720,7 +734,8 @@ class Chat:
             focused = self.isFocusedChat(event.source)
             if focused:
                 name = ""
-            self.utterMessage(name, event.any_data, focused)
+            if message:
+                self.utterMessage(name, message, focused)
             return True
 
         elif self.isAutoCompletedTextEvent(event):

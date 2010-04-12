@@ -79,6 +79,7 @@ src/orca/scripts/apps/soffice/Makefile
 src/orca/scripts/apps/empathy/Makefile
 src/orca/scripts/apps/evolution/Makefile
 src/orca/scripts/apps/gcalctool/Makefile
+src/orca/scripts/apps/Instantbird/Makefile
 src/orca/scripts/apps/packagemanager/Makefile
 src/orca/scripts/apps/pidgin/Makefile
 src/orca/scripts/apps/planner/Makefile
