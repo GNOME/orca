@@ -12,6 +12,7 @@ SUBDIRS = \
 	Banshee \
 	empathy \
 	Instantbird \
+	gajim \
 	yelp
 
 orca_pathdir=$(pyexecdir)

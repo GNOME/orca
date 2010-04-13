@@ -939,12 +939,30 @@ class Chat:
                                             [pyatspi.ROLE_PAGE_TAB,
                                              pyatspi.ROLE_FRAME],
                                             [pyatspi.ROLE_APPLICATION])
+        name = ""
         try:
             text = self._script.getDisplayedText(ancestor)
             if text.lower().strip() != self._script.name.lower().strip():
-                return text
+                name = text
         except:
-            return ""
+            pass
+
+        # Some applications don't trash their page tab list when there is
+        # only one active chat, but instead they remove the text or hide
+        # the item. Therefore, we'll give it one more shot.
+        #
+        if not name:
+            ancestor = self._script.getAncestor(ancestor,
+                                                [pyatspi.ROLE_FRAME],
+                                                [pyatspi.ROLE_APPLICATION])
+            try:
+                text = self._script.getDisplayedText(ancestor)
+                if text.lower().strip() != self._script.name.lower().strip():
+                    name = text
+            except:
+                pass     
+
+        return name
 
     def isAutoCompletedTextEvent(self, event):
         """Returns True if event is associated with text being autocompleted.

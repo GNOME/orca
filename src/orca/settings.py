@@ -1171,6 +1171,10 @@ setScriptMapping(re.compile('Nereid'), "Banshee")
 #
 setScriptMapping(re.compile('ddu.py'), "ddu")
 
+# Strip off the extra 'py' that Gajim includes as part of its name.
+#
+setScriptMapping(re.compile('gajim.py'), "gajim")
+
 # Show deprecated messeges in debug output.
 # Set this to True to help find potential pyatspi porting problems
 #
