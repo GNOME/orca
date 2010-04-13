@@ -875,7 +875,7 @@ class Chat:
         # things working. And people should not be in multiple chat
         # rooms with identical names anyway. :-)
         #
-        if obj.getRole() == pyatspi.ROLE_TEXT \
+        if obj.getRole() in [pyatspi.ROLE_TEXT, pyatspi.ROLE_ENTRY] \
            and obj.getState().contains(pyatspi.STATE_EDITABLE):
             name = self.getChatRoomName(obj)
 
@@ -883,7 +883,10 @@ class Chat:
             if name:
                 if name == conversation.name:
                     return conversation
-            elif self._script.isSameObject(obj, conversation.accHistory):
+            # Doing an equality check seems to be preferable here
+            # to isSameObject as a result of false positives.
+            #
+            elif obj == conversation.accHistory:
                 return conversation
 
         return None

@@ -27,7 +27,13 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.braille as braille
 import orca.default as default
+import orca.orca as orca
+import orca.orca_state as orca_state
+import orca.settings as settings
+import orca.speech as speech
+
 
 from chat import Chat
 
@@ -109,6 +115,32 @@ class Script(default.Script):
             return
 
         default.Script.onTextInserted(self, event)
+
+    def onFocus(self, event):
+        """Called whenever an object gets focus.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # This seems to be the most reliable way to identify that the
+        # active chatroom was changed via keyboard from within the entry.
+        # In this case, speak and flash braille the new room name.
+        #
+        if orca_state.locusOfFocus and event.source \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_ENTRY \
+           and event.source.getRole() == pyatspi.ROLE_ENTRY \
+           and orca_state.locusOfFocus != event.source:
+            room1 = self.chat.getChatRoomName(orca_state.locusOfFocus)
+            room2 = self.chat.getChatRoomName(event.source)
+            if room1 != room2:
+                speech.speak(room2)
+                braille.displayMessage(
+                    room2, flashTime=settings.brailleFlashTime)
+                orca.setLocusOfFocus(event, event.source)
+                return
+
+        default.Script.onFocus(self, event)
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated."""

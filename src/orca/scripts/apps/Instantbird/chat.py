@@ -41,7 +41,8 @@ class Chat(chat.Chat):
         # IMs get inserted as embedded object characters in these roles.
         #
         self._messageParentRoles = [pyatspi.ROLE_DOCUMENT_FRAME,
-                                    pyatspi.ROLE_SECTION]
+                                    pyatspi.ROLE_SECTION,
+                                    pyatspi.ROLE_PARAGRAPH]
 
         chat.Chat.__init__(self, script, buddyListAncestries)
 
@@ -72,6 +73,13 @@ class Chat(chat.Chat):
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             bubble = event.source[event.detail1]
             paragraphs = self._script.findByRole(bubble, pyatspi.ROLE_PARAGRAPH)
+
+            # If the user opted the non-default, "simple" appearance, then this
+            # might not be a bubble at all, but a paragraph.
+            #
+            if not paragraphs and bubble.getRole() == pyatspi.ROLE_PARAGRAPH:
+                paragraphs.append(bubble)
+
             for paragraph in paragraphs:
                 try:
                     msg = paragraph.queryText().getText(0, -1)
@@ -130,6 +138,7 @@ class Chat(chat.Chat):
         Returns a string containing what we think is the chat room name.
         """
 
+        name = ""
         ancestor = self._script.getAncestor(obj,
                                             [pyatspi.ROLE_SCROLL_PANE,
                                              pyatspi.ROLE_FRAME],
@@ -138,14 +147,17 @@ class Chat(chat.Chat):
         if ancestor and ancestor.getRole() == pyatspi.ROLE_SCROLL_PANE:
             # The scroll pane has a proper labelled by relationship set.
             #
-            return self._script.getDisplayedLabel(ancestor)
+            name = self._script.getDisplayedLabel(ancestor)
 
-        try:
-            text = self._script.getDisplayedText(ancestor)
-            if text.lower().strip() != self._script.name.lower().strip():
-                return text
-        except:
-            return ""
+        if not name:
+            try:
+                text = self._script.getDisplayedText(ancestor)
+                if text.lower().strip() != self._script.name.lower().strip():
+                    name = text
+            except:
+                pass
+
+        return name
 
     def isFocusedChat(self, obj):
         """Returns True if we plan to treat this chat as focused for
