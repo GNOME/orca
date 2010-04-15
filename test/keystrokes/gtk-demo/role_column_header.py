@@ -72,12 +72,13 @@ sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "Enter table for first time",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table'",
+    ["KNOWN ISSUE -   Currently we are speaking the selected state here. We probably should not be doing this.",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table'",
      "     VISIBLE:  'Table', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Description ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  'scrollable notebooks and hidden ', cursor=1",
      "SPEECH OUTPUT: 'table'",
-     "SPEECH OUTPUT: 'Description column header Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'Description column header Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs not selected'"]))
 
 ########################################################################
 # Now move to the cell to the left containing the word "Normal".
@@ -91,7 +92,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Normal cell",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
      "SPEECH OUTPUT: 'Severity column header Normal'"]))
 
@@ -103,9 +104,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Normal cell basic Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 4 row 1 of 14'"]))
+     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 5 row 1 of 14'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -129,12 +130,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Normal cell detailed Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Severity ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  'Normal scrollable notebooks and ', cursor=1",
-     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 4 row 1 of 14'",
-     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 4 row 1 of 14 Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 5 row 1 of 14'",
+     "SPEECH OUTPUT: 'table Severity cell Normal column 3 of 5 row 1 of 14 Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
 
 ########################################################################
 # Now move to the cell to the left containing the number "60482".
@@ -148,7 +149,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "60482 cell",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  '60482 Normal scrollable notebook', cursor=1",
      "SPEECH OUTPUT: 'Bug number column header 60482'"]))
 
@@ -164,7 +165,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Checkbox cell",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
      "SPEECH OUTPUT: 'Fixed? column header check box not checked'"]))
 
@@ -178,7 +179,7 @@ sequence.append(utils.AssertPresentationAction(
     "Checkbox cell basic Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 4 row 1 of 14'"]))
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 5 row 1 of 14'"]))
 
 ########################################################################
 # Do a detailed "Where Am I" via KP_Enter.
@@ -189,12 +190,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Checkbox cell detailed Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
-     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 4 row 1 of 14'",
-     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 4 row 1 of 14 Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 5 row 1 of 14'",
+     "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 5 row 1 of 14 Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs'"]))
  
 ########################################################################
 # Close the GtkListStore demo

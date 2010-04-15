@@ -129,20 +129,21 @@ sequence.append(TypeAction("Four"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box typing",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel F $l'",
-     "     VISIBLE:  'F $l', cursor=2",
+    ["KNOWN ISSUE - Looks like we are getting more events than we would like causing us to update braille frequently;",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  $l'",
+     "     VISIBLE:  ' $l', cursor=2",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel F $l'",
      "     VISIBLE:  'F $l', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel F $l'",
+     "     VISIBLE:  'F $l', cursor=3",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fo $l'",
      "     VISIBLE:  'Fo $l', cursor=3",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fo $l'",
-     "     VISIBLE:  'Fo $l', cursor=3",
+     "     VISIBLE:  'Fo $l', cursor=4",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fou $l'",
      "     VISIBLE:  'Fou $l', cursor=4",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fou $l'",
-     "     VISIBLE:  'Fou $l', cursor=4",
-     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
-     "     VISIBLE:  'Four $l', cursor=5",
+     "     VISIBLE:  'Fou $l', cursor=5",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5"]))
 
@@ -234,13 +235,10 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box menu",
     ["BRAILLE LINE:  'gtk-demo Application Window'",
      "     VISIBLE:  'gtk-demo Application Window', cursor=22",
-     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Menu'",
-     "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour $l One'",
      "     VISIBLE:  'One', cursor=1",
      "SPEECH OUTPUT: 'window'",
-     "SPEECH OUTPUT: 'Editable panel menu'",
-     "SPEECH OUTPUT: 'One'"]))
+     "SPEECH OUTPUT: 'Editable panel One'"]))
 
 ########################################################################
 # Now down arrow to the "Two" item.
@@ -265,6 +263,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l Combo'",
      "     VISIBLE:  'Two $l Combo', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
+     "     VISIBLE:  'Two $l', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
      "SPEECH OUTPUT: 'Editable panel Two combo box'"]))
 
@@ -278,9 +278,10 @@ sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box Two text selected",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
+    ["KNOWN ISSUE -   We used to speak selected at the end; now we do not.",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
      "     VISIBLE:  'Two $l', cursor=4",
-     "SPEECH OUTPUT: 'text Two selected'"]))
+     "SPEECH OUTPUT: 'text Two'"]))
 
 ########################################################################
 # Close the Combo boxes demo

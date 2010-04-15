@@ -63,7 +63,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=9",
      "SPEECH OUTPUT: 'Hue: spin button 240 selected.'",
-     "SPEECH OUTPUT: 'Alt h'"]))
+     "SPEECH OUTPUT: 'Alt h'",
+     "SPEECH OUTPUT: 'Position on the color wheel.'"]))
 
 ########################################################################
 # Change the value by arrowing down.
@@ -133,7 +134,8 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
      "     VISIBLE:  'Hue: 240 $l', cursor=7",
      "SPEECH OUTPUT: 'Hue: spin button 240.'",
-     "SPEECH OUTPUT: 'Alt h'"]))
+     "SPEECH OUTPUT: 'Alt h'",
+     "SPEECH OUTPUT: 'Position on the color wheel.'"]))
 
 ########################################################################
 # Close the Color Chooser dialog

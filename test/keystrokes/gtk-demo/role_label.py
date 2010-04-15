@@ -45,7 +45,7 @@ sequence.append(WaitAction("object:state-changed:focused",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label",
-    ["KNOWN ISSUE: We normally speak 'selected' for the selected text. In this test, however, we do not because the label gets STATE_FOCUSED immediately after the selection-changed event.",
+    ["KNOWN ISSUE - We normally speak 'selected' for the selected text. In this test, however, we do not because the label gets STATE_FOCUSED immediately after the selection-changed event.",
      "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
      "     VISIBLE:  'This message box has been popped', cursor=1",
      "BRAILLE LINE:  'number of times: $l'",
