@@ -93,12 +93,6 @@ sequence.append(KeyComboAction("<Alt>F4", 500))
 sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("Home"))
 
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TREE_TABLE,
-                           5000))
-
 # Just a little extra wait to let some events get through.
 #
 sequence.append(PauseAction(3000))

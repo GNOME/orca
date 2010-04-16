@@ -18,7 +18,7 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 # Once gtk-demo is running, invoke the Icon View Basics demo
 #
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(PauseAction(1000))
 sequence.append(TypeAction("Icon View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Right"))
@@ -29,7 +29,7 @@ sequence.append(WaitAction("object:state-changed:expanded",
                            5000))
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(PauseAction(1000))
 sequence.append(TypeAction("Icon View Basics", 1000))
 
 sequence.append(utils.StartRecordingAction())
@@ -37,7 +37,10 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_LAYERED_PANE))
 sequence.append(utils.AssertPresentationAction(
     "Layered pane focus",
-    ["BRAILLE LINE:  'Window Icon View Basics $l'",
+    ["KNOWN ISSUE - Sometimes we get the 'Icon View Basics' stuff; other times we don't. Probably a timing issue.",
+     "BRAILLE LINE:  'gtk-demo Application Window Icon View Basics $l'",
+     "     VISIBLE:  'Icon View Basics $l', cursor=17",
+     "BRAILLE LINE:  'Window Icon View Basics $l'",
      "     VISIBLE:  'Window Icon View Basics $l', cursor=24",
      "BRAILLE LINE:  'Window Icon View Basics $l'",
      "     VISIBLE:  'Window Icon View Basics $l', cursor=8",
@@ -47,6 +50,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'GtkIconView demo Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'",
      "     VISIBLE:  'LayeredPane', cursor=1",
+     "SPEECH OUTPUT: 'text Icon View Basics'",
      "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Icon View Basics tree level 2'",
      "SPEECH OUTPUT: 'GtkIconView demo frame'",
      "SPEECH OUTPUT: 'layered pane'"]))

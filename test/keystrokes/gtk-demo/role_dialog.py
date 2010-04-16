@@ -60,8 +60,7 @@ sequence.append(utils.AssertPresentationAction(
 # Now close the demo and leave.
 #
 sequence.append(KeyComboAction("Tab"))
-
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################

@@ -18,7 +18,7 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 # Once gtk-demo is running, invoke the List Store demo
 #
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(PauseAction(1000))
 sequence.append(TypeAction("Tree View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Right"))
@@ -29,7 +29,7 @@ sequence.append(WaitAction("object:state-changed:expanded",
                            5000))
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(PauseAction(1000))
 sequence.append(TypeAction("List Store", 1000))
 
 ########################################################################

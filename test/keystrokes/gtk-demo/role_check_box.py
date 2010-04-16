@@ -131,9 +131,9 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'checked'"]))
 
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_CHECK_BOX))
+sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_CHECK_BOX))
+sequence.append(PauseAction(1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))

@@ -18,7 +18,7 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 # Once gtk-demo is running, invoke the Editable Cells demo
 #
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(PauseAction(1000))
 sequence.append(TypeAction("Tree View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Right"))
@@ -29,7 +29,7 @@ sequence.append(WaitAction("object:state-changed:expanded",
                            5000))
 
 sequence.append(KeyComboAction("<Control>f"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(PauseAction(1000))
 sequence.append(TypeAction("Editable Cells", 1000))
 
 sequence.append(utils.StartRecordingAction())
@@ -162,7 +162,7 @@ sequence.append(KeyComboAction("<Alt>F4", 1000))
 sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("<Control>f"))
 
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+sequence.append(PauseAction(1000))
 sequence.append(TypeAction("Tree View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Left"))
@@ -173,12 +173,6 @@ sequence.append(WaitAction("object:state-changed:expanded",
                            5000))
 
 sequence.append(KeyComboAction("Home"))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TREE_TABLE,
-                           5000))
 
 # Just a little extra wait to let some events get through.
 #

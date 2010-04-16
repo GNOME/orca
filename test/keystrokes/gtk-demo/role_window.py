@@ -13,7 +13,6 @@ sequence = MacroSequence()
 # The following should be presented:
 #
 sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
 # Once gtk-demo is running, do a "Where Am I" to get the title info via

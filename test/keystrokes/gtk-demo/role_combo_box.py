@@ -25,7 +25,7 @@ sequence.append(KeyComboAction("Return", 500))
 # When the Combo boxes demo window appears, open the combo box.
 #
 #sequence.append(WaitForWindowActivate("Combo boxes",None))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(PauseAction(1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -128,7 +128,7 @@ sequence.append(TypeAction("Four"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box typing",
-    ["KNOWN ISSUE - Looks like we are getting more events than we would like causing us to update braille frequently;",
+    ["KNOWN ISSUE - Looks like we are getting more events than we would like causing us to update braille frequently; plus from run to run I am seeing different amounts of text displayed. This is a timing issue.",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  $l'",
      "     VISIBLE:  ' $l', cursor=2",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel F $l'",
