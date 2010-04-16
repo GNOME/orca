@@ -27,7 +27,8 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Open button initial focus",
-    ["BRAILLE LINE:  'Window Application main window $l'",
+    ["KNOWN ISSUE - Sometimes we are more verbose here than others. Seems to be a timing issue that needs to be investigated.",
+     "BRAILLE LINE:  'Window Application main window $l'",
      "     VISIBLE:  'Window Application main window $', cursor=31",
      "BRAILLE LINE:  'Window Application main window $l'",
      "     VISIBLE:  'Window Application main window $', cursor=8",
