@@ -13,7 +13,6 @@ sequence = MacroSequence()
 # We wait for the demo to come up and for focus to be on the tree table
 #
 sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
 # Once gtk-demo is running, invoke the List Store demo
@@ -177,7 +176,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Checkbox cell basic Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs'",
+    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs '",
      "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
      "SPEECH OUTPUT: 'table Fixed? cell check box not checked column 1 of 5 row 1 of 14'"]))
 
@@ -207,19 +206,7 @@ sequence.append(KeyComboAction("<Alt>F4", 1000))
 # "Application main window" menu.  Let the harness kill the app.
 #
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
-sequence.append(KeyComboAction("<Control>f"))
-
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Tree View", 1000))
-sequence.append(KeyComboAction("Return", 500))
-sequence.append(KeyComboAction("<Shift>Left"))
-sequence.append(WaitAction("object:state-changed:expanded",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE_CELL,
-                           5000))
-
+sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("Home"))
 
 sequence.append(WaitAction("object:active-descendant-changed",

@@ -12,7 +12,6 @@ sequence = MacroSequence()
 # We wait for the demo to come up and for focus to be on the tree table
 #
 sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
 # Once gtk-demo is running, invoke the Paned Widgets demo
@@ -87,7 +86,7 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(KeyComboAction("<Alt>F4", 500))
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
+sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("Home"))
 
 sequence.append(WaitAction("object:active-descendant-changed",

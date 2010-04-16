@@ -13,7 +13,6 @@ sequence = MacroSequence()
 # We wait for the demo to come up and for focus to be on the tree table
 #
 sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
 # Once gtk-demo is running, invoke the Icon View Basics demo
@@ -128,17 +127,16 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Close the GtkIconView demo window
 #
-sequence.append(KeyComboAction("<Alt>F4"))
+sequence.append(KeyComboAction("<Alt>F4", 1000))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the
 # "Application main window" menu.  Let the harness kill the app.
 #
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 sequence.append(KeyComboAction("<Control>f"))
-
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
+
 sequence.append(TypeAction("Icon View", 1000))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(KeyComboAction("<Shift>Left"))
@@ -148,6 +146,7 @@ sequence.append(WaitAction("object:state-changed:expanded",
                            pyatspi.ROLE_TABLE_CELL,
                            5000))
 
+sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("Home"))
 
 sequence.append(WaitAction("object:active-descendant-changed",

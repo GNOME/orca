@@ -12,7 +12,6 @@ sequence = MacroSequence()
 # We wait for the demo to come up and for focus to be on the tree table
 #
 sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
 # Once gtk-demo is running, invoke the Combo boxes demo 
@@ -278,10 +277,10 @@ sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box Two text selected",
-    ["KNOWN ISSUE -   We used to speak selected at the end; now we do not.",
+    ["KNOWN ISSUE -   Sometimes we speak selected at the end; sometimes we do not. Probably a timing issue which we need to investigate.",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
      "     VISIBLE:  'Two $l', cursor=4",
-     "SPEECH OUTPUT: 'text Two'"]))
+     "SPEECH OUTPUT: 'text Two selected'"]))
 
 ########################################################################
 # Close the Combo boxes demo
@@ -293,7 +292,7 @@ sequence.append(KeyComboAction("<Alt>F4", 500))
 # "Application main window" menu.  Let the harness kill the app.
 #
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
+sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("Home"))
 
 sequence.append(WaitAction("object:active-descendant-changed",

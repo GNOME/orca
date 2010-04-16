@@ -13,7 +13,6 @@ sequence = MacroSequence()
 # We wait for the demo to come up and for focus to be on the tree table
 #
 sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
 
 ########################################################################
 # Once gtk-demo is running, invoke the Printing demo 
@@ -33,14 +32,17 @@ sequence.append(KeyComboAction("Right"))
 
 sequence.append(WaitForFocus("Page Setup", acc_role=pyatspi.ROLE_PAGE_TAB))
 
+sequence.append(KeyComboAction("Tab"))
+sequence.append(PauseAction(1000))
+
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction         ("Tab"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("All sheets", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "All sheets combo box item",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: All sheets Combo'",
      "     VISIBLE:  'Only print: All sheets Combo', cursor=13",
-     "SPEECH OUTPUT: 'Layout Only print: All sheets combo box'"]))
+     "SPEECH OUTPUT: 'Only print: All sheets combo box'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -60,15 +62,15 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitAction("object:selection-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_COMBO_BOX,
-                           5000))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
-    "Event sheets combo box item",
-    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
+    "Even sheets combo box item",
+    ["KNOWN ISSUE - We're presenting this thing twice. We shouldn't be doing so.",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
      "     VISIBLE:  'Only print: Even sheets Combo', cursor=13",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
+     "     VISIBLE:  'Only print: Even sheets Combo', cursor=13",
+     "SPEECH OUTPUT: 'Even sheets'",
      "SPEECH OUTPUT: 'Even sheets'"]))
 
 ########################################################################
@@ -95,14 +97,8 @@ sequence.append(KeyComboAction("<Alt>c", 500))
 # "Application main window" menu.  Let the harness kill the app.
 #
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TREE_TABLE))
+sequence.append(PauseAction(1000))
 sequence.append(KeyComboAction("Home"))
-
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TREE_TABLE,
-                           5000))
 
 # Just a little extra wait to let some events get through.
 #
