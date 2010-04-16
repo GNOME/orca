@@ -204,11 +204,13 @@ class BrailleGenerator(generator.Generator):
             # page tab lists might be a nice thing to include. Logged
             # as bugzilla bug 319751.]]]
             #
-            if (parent.getRole() != pyatspi.ROLE_FILLER) \
-                and (parent.getRole() != pyatspi.ROLE_SECTION) \
-                and (parent.getRole() != pyatspi.ROLE_SPLIT_PANE) \
+            role = parent.getRole()
+            if (role != pyatspi.ROLE_FILLER) \
+                and (role != pyatspi.ROLE_SECTION) \
+                and (role != pyatspi.ROLE_SPLIT_PANE) \
+                and (role != pyatspi.ROLE_DESKTOP_FRAME) \
                 and (not self._script.isLayoutOnly(parent)):
-                args['role'] = parent.getRole()
+                args['role'] = role
                 parentResult = self.generate(parent, **args)
             # [[[TODO: HACK - we've discovered oddness in hierarchies
             # such as the gedit Edit->Preferences dialog.  In this
