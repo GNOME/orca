@@ -5,24 +5,23 @@
 # Francisco Diéguez <fran.dieguez@mabishu.com>, 2009.
 # Antón Méixome <meixome@mancomun.org>, 2009.
 # Anton Meixome <certima@certima.net>, 2009.
-# Fran Diéguez <frandieguez@ubuntu.com>, 2010.
 # Antón Méixome <meixome@certima.net>, 2010.
 # This file is distributed under the same license as the PACKAGE package.
 # translation of orca-master-po-gl-70969.merged.po to Galician
+# Fran Diéguez <frandieguez@ubuntu.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-03-02 11:41+0000\n"
-"PO-Revision-Date: 2010-03-03 00:56+0100\n"
-"Last-Translator: Antón Méixome <meixome@certima.net>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-17 21:36+0200\n"
+"PO-Revision-Date: 2010-04-14 12:03+0200\n"
+"Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: gl\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:210
@@ -368,6 +367,119 @@ msgstr "Italiano grao 1"
 msgid "Belgium Dutch Grade 1"
 msgstr "Holandés de Bélxica grao 1"
 
+#: ../src/orca/chat.py:335 ../src/orca/scripts/apps/pidgin/script.py:191
+msgid ""
+"Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr ""
+"Alternar entre se prefixar as mensaxes da sala de conversa co nome da sala "
+"de conversa."
+
+#: ../src/orca/chat.py:341 ../src/orca/scripts/apps/pidgin/script.py:197
+msgid "Toggle whether we announce when our buddies are typing."
+msgstr "Conmutar se se anuncia cando os nosos amigos están tecleando."
+
+#: ../src/orca/chat.py:346 ../src/orca/scripts/apps/pidgin/script.py:202
+msgid "Toggle whether we provide chat room specific message histories."
+msgstr ""
+"Alternar se se proporcionan historiais de mensaxes de cada sala de conversa."
+
+#: ../src/orca/chat.py:354 ../src/orca/scripts/apps/pidgin/script.py:210
+msgid "Speak and braille a previous chat room message."
+msgstr "Ler e ler en braille unha mensaxe anterior dunha sala de conversa."
+
+#. Translators: If this checkbox is checked, then Orca will speak
+#. the name of the chat room.
+#.
+#: ../src/orca/chat.py:412 ../src/orca/scripts/apps/pidgin/script.py:275
+msgid "_Speak Chat Room name"
+msgstr "_Ler o nome da sala de conversa"
+
+#. Translators: If this checkbox is checked, then Orca will tell
+#. you when one of your buddies is typing a message.
+#.
+#: ../src/orca/chat.py:422 ../src/orca/scripts/apps/pidgin/script.py:285
+msgid "Announce when your _buddies are typing"
+msgstr "Anunciar cando os seus _amigos están tecleando"
+
+#. Translators: If this checkbox is checked, then Orca will provide
+#. the user with chat room specific message histories rather than just
+#. a single history which contains the latest messages from all the
+#. chat rooms that they are currently in.
+#.
+#: ../src/orca/chat.py:434 ../src/orca/scripts/apps/pidgin/script.py:297
+msgid "Provide chat room specific _message histories"
+msgstr ""
+"Proporcionar historiais de _mensaxes específicas de cada sala de conversa"
+
+#. Translators: Orca will speak all new chat messages as they appear
+#. irrespective of whether the chat application currently has focus.
+#. This is the default behaviour.
+#.
+#. Translators: Orca will speak all new chat messages as they appear
+#. irrespective of whether the pidgin application currently has focus.
+#. This is the default behaviour.
+#.
+#: ../src/orca/chat.py:461 ../src/orca/scripts/apps/pidgin/script.py:324
+msgid "All cha_nnels"
+msgstr "Todas as ca_nles"
+
+#. Translators: Orca will speak only new chat messages for the channel
+#. that currently has focus, irrespective of whether the chat
+#. application has focus.
+#.
+#. Translators: Orca will speak only new chat messages for the channel
+#. that currently has focus, irrespective of whether the pidgin
+#. application has focus.
+#.
+#: ../src/orca/chat.py:474 ../src/orca/scripts/apps/pidgin/script.py:339
+msgid "A channel only if its _window is active"
+msgstr "Unha canle só se a súa _xanela está activa"
+
+#: ../src/orca/chat.py:487
+#, python-format
+msgid "All channels when an_y %s window is active"
+msgstr "Todas as canles _cando calquera xanela de %s está activa"
+
+#. Translators: this is the title of a panel holding options for
+#. how messages in this application's chat rooms should be spoken.
+#.
+#. Translators: this is the title of a panel holding options for
+#. how messages in the pidgin chat rooms should be spoken.
+#.
+#: ../src/orca/chat.py:499 ../src/orca/scripts/apps/pidgin/script.py:363
+msgid "Speak messages from"
+msgstr "Ler as mensaxes de"
+
+#: ../src/orca/chat.py:561 ../src/orca/scripts/apps/pidgin/script.py:447
+msgid "speak chat room name."
+msgstr "ler o nome da sala de conversa."
+
+#: ../src/orca/chat.py:564 ../src/orca/scripts/apps/pidgin/script.py:451
+msgid "Do not speak chat room name."
+msgstr "Non ler o nome da sala de conversa."
+
+#: ../src/orca/chat.py:577 ../src/orca/scripts/apps/pidgin/script.py:466
+msgid "announce when your buddies are typing."
+msgstr "anunciar cando os seus amigos están tecleando."
+
+#: ../src/orca/chat.py:580 ../src/orca/scripts/apps/pidgin/script.py:470
+msgid "Do not announce when your buddies are typing."
+msgstr "Non anunciar cando os seus amigos están tecleando."
+
+#: ../src/orca/chat.py:593 ../src/orca/scripts/apps/pidgin/script.py:485
+msgid "Provide chat room specific message histories."
+msgstr ""
+"Proporcionar historiais de mensaxes específicas de cada sala de conversa."
+
+#: ../src/orca/chat.py:596 ../src/orca/scripts/apps/pidgin/script.py:489
+msgid "Do not provide chat room specific message histories."
+msgstr "Non proporcionar historiais de mensaxes de cada sala de conversa."
+
+#: ../src/orca/chat.py:658 ../src/orca/scripts/apps/pidgin/script.py:518
+#, python-format
+msgid "Message from chat room %s"
+msgstr "Mensaxe da sala de conversa %s"
+
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/default.py:7463
@@ -491,7 +603,7 @@ msgstr "dous puntos"
 msgid "semicolon"
 msgstr "punto e coma"
 
-#. Translators: this is the spoken word for the character '< ' (U+003c)
+#. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
 #: ../src/orca/chnames.py:119
 msgid "less"
@@ -503,7 +615,7 @@ msgstr "menor que"
 msgid "equals"
 msgstr "igual a"
 
-#. Translators: this is the spoken word for the character '> ' (U+003e)
+#. Translators: this is the spoken word for the character '> ' (U+003e)
 #.
 #: ../src/orca/chnames.py:127
 msgid "greater"
@@ -2280,7 +2392,7 @@ msgstr[1] "%d separadores"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:469
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5882
-#: ../src/orca/settings.py:1293 ../src/orca/speech_generator.py:473
+#: ../src/orca/settings.py:1325 ../src/orca/speech_generator.py:473
 #: ../src/orca/speech_generator.py:779
 #: ../src/orca/structural_navigation.py:3375
 msgid "blank"
@@ -2631,13 +2743,13 @@ msgstr "Saltando ao principio"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:352 ../src/orca/settings.py:1318
+#: ../src/orca/flat_review.py:352 ../src/orca/settings.py:1350
 msgid "partially checked"
 msgstr "parcialmente marcado"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:356 ../src/orca/settings.py:1317
+#: ../src/orca/flat_review.py:356 ../src/orca/settings.py:1349
 msgid "checked"
 msgstr "seleccionado"
 
@@ -2646,13 +2758,13 @@ msgstr "seleccionado"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:360 ../src/orca/settings.py:1316
+#: ../src/orca/flat_review.py:360 ../src/orca/settings.py:1348
 msgid "not checked"
 msgstr "non seleccionado"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:367 ../src/orca/settings.py:1329
+#: ../src/orca/flat_review.py:367 ../src/orca/settings.py:1361
 msgid "pressed"
 msgstr "premido"
 
@@ -2661,14 +2773,14 @@ msgstr "premido"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:371 ../src/orca/settings.py:1329
+#: ../src/orca/flat_review.py:371 ../src/orca/settings.py:1361
 msgid "not pressed"
 msgstr "non premido"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:379 ../src/orca/settings.py:1324
+#: ../src/orca/flat_review.py:379 ../src/orca/settings.py:1356
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seleccionado"
@@ -2679,7 +2791,7 @@ msgstr "seleccionado"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:384 ../src/orca/settings.py:1323
+#: ../src/orca/flat_review.py:384 ../src/orca/settings.py:1355
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "non seleccionado"
@@ -6806,106 +6918,9 @@ msgstr "Produciuse un erro. Vexa o erro rexistrado para máis detalles."
 msgid "Use Ctrl+L to move focus to the results."
 msgstr "Usar Ctrl+L para mover o foco aos resultados."
 
-#: ../src/orca/scripts/apps/pidgin/script.py:191
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr ""
-"Alternar entre se prefixar as mensaxes da sala de conversa co nome da sala "
-"de conversa."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:197
-msgid "Toggle whether we announce when our buddies are typing."
-msgstr "Conmutar se se anuncia cando os nosos amigos están tecleando."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:202
-msgid "Toggle whether we provide chat room specific message histories."
-msgstr ""
-"Alternar se se proporcionan historiais de mensaxes de cada sala de conversa."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:210
-msgid "Speak and braille a previous chat room message."
-msgstr "Ler e ler en braille unha mensaxe anterior dunha sala de conversa."
-
-#. Translators: If this checkbox is checked, then Orca will speak
-#. the name of the chat room.
-#.
-#: ../src/orca/scripts/apps/pidgin/script.py:275
-msgid "_Speak Chat Room name"
-msgstr "_Ler o nome da sala de conversa"
-
-#. Translators: If this checkbox is checked, then Orca will tell
-#. you when one of your buddies is typing a message.
-#.
-#: ../src/orca/scripts/apps/pidgin/script.py:285
-msgid "Announce when your _buddies are typing"
-msgstr "Anunciar cando os seus _amigos están tecleando"
-
-#. Translators: If this checkbox is checked, then Orca will provide
-#. the user with chat room specific message histories rather than just
-#. a single history which contains the latest messages from all the
-#. chat rooms that they are currently in.
-#.
-#: ../src/orca/scripts/apps/pidgin/script.py:297
-msgid "Provide chat room specific _message histories"
-msgstr ""
-"Proporcionar historiais de _mensaxes específicas de cada sala de conversa"
-
-#. Translators: Orca will speak all new chat messages as they appear
-#. irrespective of whether the pidgin application currently has focus.
-#. This is the default behaviour.
-#.
-#: ../src/orca/scripts/apps/pidgin/script.py:324
-msgid "All cha_nnels"
-msgstr "Todas as ca_nles"
-
-#. Translators: Orca will speak only new chat messages for the channel
-#. that currently has focus, irrespective of whether the pidgin
-#. application has focus.
-#.
-#: ../src/orca/scripts/apps/pidgin/script.py:339
-msgid "A channel only if its _window is active"
-msgstr "Unha canle só se a súa _xanela está activa"
-
 #: ../src/orca/scripts/apps/pidgin/script.py:352
 msgid "All channels when an_y Pidgin window is active"
 msgstr "Todas as canles _cando calquer xanela de Pidgin está activa"
-
-#. Translators: this is the title of a panel holding options for
-#. how messages in the pidgin chat rooms should be spoken.
-#.
-#: ../src/orca/scripts/apps/pidgin/script.py:363
-msgid "Speak messages from"
-msgstr "Ler as mensaxes de"
-
-#: ../src/orca/scripts/apps/pidgin/script.py:447
-msgid "speak chat room name."
-msgstr "ler o nome da sala de conversa."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:451
-msgid "Do not speak chat room name."
-msgstr "Non ler o nome da sala de conversa."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:466
-msgid "announce when your buddies are typing."
-msgstr "anunciar cando os seus amigos están tecleando."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:470
-msgid "Do not announce when your buddies are typing."
-msgstr "Non anunciar cando os seus amigos están tecleando."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:485
-msgid "Provide chat room specific message histories."
-msgstr ""
-"Proporcionar historiais de mensaxes específicas de cada sala de conversa."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:489
-msgid "Do not provide chat room specific message histories."
-msgstr "Non proporcionar historiais de mensaxes de cada sala de conversa."
-
-#: ../src/orca/scripts/apps/pidgin/script.py:518
-#, python-format
-msgid "Message from chat room %s"
-msgstr "Mensaxe da sala de conversa %s"
 
 #: ../src/orca/scripts/apps/pidgin/script.py:607
 #, python-format
@@ -7623,28 +7638,28 @@ msgstr "lido %d por cento do documento"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:1046
+#: ../src/orca/settings.py:1071
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:1051
+#: ../src/orca/settings.py:1076
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:1056
+#: ../src/orca/settings.py:1081
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:1061
+#: ../src/orca/settings.py:1086
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
@@ -7652,7 +7667,7 @@ msgstr "[Ee]volution"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1067
+#: ../src/orca/settings.py:1092
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -7660,7 +7675,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1073
+#: ../src/orca/settings.py:1098
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
@@ -7668,35 +7683,35 @@ msgstr "Bon Echo"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1079
+#: ../src/orca/settings.py:1104
 msgid "Minefield"
 msgstr "Minefield"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:1110
+#: ../src/orca/settings.py:1135
 msgid "Mail/News"
 msgstr "Correo/noticias"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:1115
+#: ../src/orca/settings.py:1140
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:1120
+#: ../src/orca/settings.py:1145
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:1125
+#: ../src/orca/settings.py:1150
 msgid "gaim"
 msgstr "gaim"
 
@@ -7706,14 +7721,14 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1301 ../src/orca/settings.py:1378
+#: ../src/orca/settings.py:1333 ../src/orca/settings.py:1410
 msgid "required"
 msgstr "requerido"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:1306
+#: ../src/orca/settings.py:1338
 msgctxt "text"
 msgid "read only"
 msgstr "só lectura"
@@ -7721,7 +7736,7 @@ msgstr "só lectura"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:1311 ../src/orca/settings.py:1389
+#: ../src/orca/settings.py:1343 ../src/orca/settings.py:1421
 msgid "grayed"
 msgstr "agrisado"
 
@@ -7729,18 +7744,18 @@ msgstr "agrisado"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:1335 ../src/orca/settings.py:1401
+#: ../src/orca/settings.py:1367 ../src/orca/settings.py:1433
 msgid "collapsed"
 msgstr "contraído"
 
-#: ../src/orca/settings.py:1335 ../src/orca/settings.py:1401
+#: ../src/orca/settings.py:1367 ../src/orca/settings.py:1433
 msgid "expanded"
 msgstr "expandido"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:1340
+#: ../src/orca/settings.py:1372
 msgid "multi-select"
 msgstr "selección múltipla"
 
@@ -7748,7 +7763,7 @@ msgstr "selección múltipla"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:1346
+#: ../src/orca/settings.py:1378
 #, python-format
 msgid "tree level %d"
 msgstr "nivel de árbore %d"
@@ -7763,7 +7778,7 @@ msgstr "nivel de árbore %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1353 ../src/orca/structural_navigation.py:2808
+#: ../src/orca/settings.py:1385 ../src/orca/structural_navigation.py:2808
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nivel de aniñamento %d"
@@ -7772,7 +7787,7 @@ msgstr "Nivel de aniñamento %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:1359
+#: ../src/orca/settings.py:1391
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "sobre o %(index)d de %(total)d"
@@ -7781,7 +7796,7 @@ msgstr "sobre o %(index)d de %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:1365
+#: ../src/orca/settings.py:1397
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d de %(total)d"
@@ -7790,7 +7805,7 @@ msgstr "%(index)d de %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:1384
+#: ../src/orca/settings.py:1416
 msgctxt "text"
 msgid "rdonly"
 msgstr "sólect"
@@ -7799,7 +7814,7 @@ msgstr "sólect"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1407
+#: ../src/orca/settings.py:1439
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVEL DE ÁRBORE %d"
@@ -7810,7 +7825,7 @@ msgstr "NIVEL DE ÁRBORE %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1415
+#: ../src/orca/settings.py:1447
 #, python-format
 msgid "LEVEL %d"
 msgstr "NIVEL %d"
@@ -7977,7 +7992,7 @@ msgstr[1] "%(index)d de %(total)d ítems seleccionados"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1114 ../src/orca/speech_generator.py:1383
+#: ../src/orca/speech_generator.py:1114 ../src/orca/speech_generator.py:1387
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -7995,7 +8010,7 @@ msgstr "Panel de iconas"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1332
+#: ../src/orca/speech_generator.py:1336
 #, python-format
 msgid "Default button is %s"
 msgstr "O botón predefinido é %s"
@@ -9714,4 +9729,3 @@ msgid ""
 msgstr ""
 "Para decrementar prema frecha esquerda, para incrementar prema frecha "
 "dereita, para mínimo prema inicio e para o máximo prema fin."
-
