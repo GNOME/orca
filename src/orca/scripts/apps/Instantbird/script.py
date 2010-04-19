@@ -27,13 +27,14 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.bookmarks as bookmarks
 import orca.braille as braille
 import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
+import orca.scripts.toolkits.Gecko as Gecko
 import orca.settings as settings
 import orca.speech as speech
-
 
 from chat import Chat
 
@@ -43,7 +44,7 @@ from chat import Chat
 #                                                                      #
 ########################################################################
 
-class Script(default.Script):
+class Script(Gecko.Script):
 
     def __init__(self, app):
         """Creates a new script for the given application."""
@@ -53,17 +54,31 @@ class Script(default.Script):
         self._buddyListAncestries = [[pyatspi.ROLE_LIST,
                                       pyatspi.ROLE_FRAME]]
 
-        # We want the functionality of the default script without the
-        # conflicting enhancements we'd pull in from the Gecko script.
-        # (Widgets may be a different story, but for now let's try
-        # subclassing the default script rather than the Gecko script.)
+        Gecko.Script.__init__(self, app)
+
+    def getBookmarks(self):
+        """Returns the "bookmarks" class for this script."""
+
+        # This is a copy of orca.script.getBookmarks(). It's here to
+        # prevent the Gecko script's from being used.
         #
-        default.Script.__init__(self, app)
+        try:
+            return self.bookmarks
+        except AttributeError:
+            self.bookmarks = bookmarks.Bookmarks(self)
+            return self.bookmarks
 
     def getChat(self):
         """Returns the 'chat' class for this script."""
 
         return Chat(self, self._buddyListAncestries)
+
+    def getEnabledStructuralNavigationTypes(self):
+        """Returns a list of the structural navigation object types
+        enabled in this script.
+        """
+
+        return []
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -71,7 +86,7 @@ class Script(default.Script):
         handlers for chat functionality.
         """
 
-        default.Script.setupInputEventHandlers(self)
+        Gecko.Script.setupInputEventHandlers(self)
         self.inputEventHandlers.update(self.chat.inputEventHandlers)
 
     def getKeyBindings(self):
@@ -81,7 +96,7 @@ class Script(default.Script):
         Returns an instance of keybindings.KeyBindings.
         """
 
-        keyBindings = default.Script.getKeyBindings(self)
+        keyBindings = Gecko.Script.getKeyBindings(self)
 
         bindings = self.chat.keyBindings
         for keyBinding in bindings.keyBindings:
@@ -108,6 +123,47 @@ class Script(default.Script):
 
         self.chat.setAppPreferences(prefs)
 
+    def getDisplayedLabel(self, obj):
+        """If there is an object labelling the given object, return the
+        text being displayed for the object labelling this object.
+        Otherwise, return None.
+
+        Argument:
+        - obj: the object in question
+
+        Returns the string of the object labelling this object, or None
+        if there is nothing of interest here.
+        """
+
+        if self.inDocumentContent():
+            return Gecko.Script.getDisplayedLabel(self, obj)
+
+        return default.Script.getDisplayedLabel(self, obj)
+
+    def getDisplayedText(self, obj):
+        """Returns the text being displayed for an object.
+
+        Arguments:
+        - obj: the object
+
+        Returns the text being displayed for an object or None if there isn't
+        any text being shown.
+        """
+
+        if self.inDocumentContent(obj):
+            return Gecko.Script.getDisplayedText(self, obj)
+
+        return default.Script.getDisplayedText(self, obj)
+
+    def onTextDeleted(self, event):
+        """Called whenever text is deleted from an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        default.Script.onTextDeleted(self, event)
+
     def onTextInserted(self, event):
         """Called whenever text is added to an object."""
 
@@ -115,6 +171,49 @@ class Script(default.Script):
             return
 
         default.Script.onTextInserted(self, event)
+
+    def onCaretMoved(self, event):
+        """Caret movement in Gecko is somewhat unreliable and
+        unpredictable, but we need to handle it.  When we detect caret
+        movement, we make sure we update our own notion of the caret
+        position: our caretContext is an [obj, characterOffset] that
+        points to our current item and character (if applicable) of
+        interest.  If our current item doesn't implement the
+        accessible text specialization, the characterOffset value
+        is meaningless (and typically -1)."""
+
+        if self.inDocumentContent(event.source):
+            orca.setLocusOfFocus(event, event.source)
+            Gecko.Script.onCaretMoved(self, event)
+        else:
+            default.Script.onCaretMoved(self, event)
+
+    def onChildrenChanged(self, event):
+        """Called when a child node has changed.  In particular, we are looking
+        for addition events often associated with Javascipt insertion. One such
+        such example would be the programmatic insertion of a tooltip or alert
+        dialog."""
+
+        return
+
+    def onDocumentLoadComplete(self, event):
+        """Called when a web page load is completed."""
+
+        return
+
+    def onDocumentLoadStopped(self, event):
+        """Called when a web page load is interrupted."""
+
+        return
+
+    def onNameChanged(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        default.Script.onNameChanged(self, event)
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -140,7 +239,10 @@ class Script(default.Script):
                 orca.setLocusOfFocus(event, event.source)
                 return
 
-        default.Script.onFocus(self, event)
+        if self.inDocumentContent(event.source):
+            Gecko.Script.onFocus(self, event)
+        else:
+            default.Script.onFocus(self, event)
 
     def onWindowActivated(self, event):
         """Called whenever a toplevel window is activated."""

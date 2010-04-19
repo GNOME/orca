@@ -86,6 +86,13 @@ class Chat(chat.Chat):
                 except:
                     pass
                 else:
+                    if msg == self._script.EMBEDDED_OBJECT_CHARACTER:
+                        # This seems to occur for non-focused conversations.
+                        #
+                        try:
+                            msg = paragraph[0].queryText().getText(0, -1)
+                        except:
+                            msg = ""
                     string = self._script.appendString(string, msg)
 
             return string
