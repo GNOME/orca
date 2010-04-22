@@ -59,30 +59,46 @@ class Script(default.Script):
         """Returns the formatting strings for this script."""
         return Formatting(self)
 
-    def consumesKeyboardEvent(self, keyboardEvent):
-        """Called when a key is pressed on the keyboard.
+    def checkKeyboardEventData(self, keyboardEvent):
+        """Checks the data on the keyboard event.
+
+        Some toolkits don't fill all the key event fields, and/or fills
+        them out with unexpected data. This method tries to fill in the
+        missing fields and validate/standardize the data we've been given.
+        While any script can override this method, it is expected that
+        this will only be done at the toolkit script level.
 
         Arguments:
         - keyboardEvent: an instance of input_event.KeyboardEvent
-
-        Returns True if the event is of interest.
         """
 
-        # The Java platform chooses to give us keycodes different from
-        # the native platform keycodes.  So, we hack here by converting
-        # the keysym we get from Java into a keycode.
+        default.Script.checkKeyboardEventData(self, keyboardEvent)
 
-        keysym = keyboardEvent.event_string
+        if not keyboardEvent.keyval_name:
+            return
 
-        # We need to make sure we have a keysym-like thing.  The space
-        # character is not a keysym, so we convert it into the string,
-        # 'space', which is.
+        import gtk.gdk as gdk
+
+        # Standardize the hw_code from a Java-unique one to a gdk one.
         #
-        if keysym == " ":
-            keysym = "space"
+        keymap = gdk.keymap_get_default()
+        keyval = gdk.keyval_from_name(keyboardEvent.keyval_name)
+        entries = keymap.get_entries_for_keyval(keyval)
+        for entry in entries:
+            if entry[1] == 0:  # group = 0
+                keyboardEvent.hw_code = entry[0]
+                break
 
-        keyboardEvent.hw_code = keybindings.getKeycode(keysym)
-        return default.Script.consumesKeyboardEvent(self, keyboardEvent)
+        # Put the event_string back to what it was prior to the Java
+        # Atk Wrapper hack which gives us the keyname and not the
+        # expected and needed printable character for punctuation
+        # marks.
+        #
+        if keyboardEvent.event_string == keyboardEvent.keyval_name \
+           and len(keyboardEvent.event_string) > 1:
+            keyval = gdk.keyval_from_name(keyboardEvent.keyval_name)
+            if 0 < keyval < 256:
+                keyboardEvent.event_string = unichr(keyval).encode("UTF-8")
 
     def getNodeLevel(self, obj):
         """Determines the node level of this object if it is in a tree
