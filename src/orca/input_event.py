@@ -32,6 +32,7 @@ __license__   = "LGPL"
 import debug
 import settings
 import time
+import orca_state
 
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
@@ -60,6 +61,32 @@ class KeyboardEvent(InputEvent):
         - event: the AT-SPI keyboard event
         """
 
+        # We start just copying the pyatspi event.
+        #
+        InputEvent.__init__(self, KEYBOARD_EVENT)
+        self.id = event.id
+        self.type = event.type
+        self.hw_code = event.hw_code
+        self.modifiers = event.modifiers
+        self.event_string = event.event_string
+        self.is_text = event.is_text
+        self.time = time.time()
+        self.timestamp = event.timestamp
+
+        # Add an empty field for the keyval_name because there are a number
+        # of places we might want to know this information, and we don't
+        # want to have to keep calculating it. The default calculation will
+        # take place in script.checkKeyboardEventData.
+        #
+        self.keyval_name = ""
+
+        # Call the specific toolkit method, to ensure that all fields
+        # are filled.
+        #
+        script = orca_state.activeScript
+        if (script):
+            script.checkKeyboardEventData(self)
+
         # Control characters come through as control characters, so we
         # just turn them into their ASCII equivalent.  NOTE that the
         # upper case ASCII characters will be used (e.g., ctrl+a will
@@ -68,26 +95,27 @@ class KeyboardEvent(InputEvent):
         # conversion. [[[WDW - this is making assumptions about
         # mapping ASCII control characters to UTF-8.]]]
         #
-        event_string = event.event_string
-        if (event.modifiers & settings.CTRL_MODIFIER_MASK) \
-            and (not event.is_text) and (len(event_string) == 1):
-            value = ord(event.event_string[0])
+        if (self.modifiers & settings.CTRL_MODIFIER_MASK) \
+            and (not self.is_text) and (len(self.event_string) == 1):
+            value = ord(self.event_string[0])
             if value < 32:
-                event_string = chr(value + 0x40)
+                self.event_string = chr(value + 0x40)
 
         # Filter out the NUMLOCK modifier -- it always causes problems.
         #
-        event.modifiers = event.modifiers \
+        self.modifiers = self.modifiers \
                           & settings.ALL_BUT_NUMLOCK_MODIFIER_MASK
 
-        InputEvent.__init__(self, KEYBOARD_EVENT)
-        self.type = event.type
-        self.hw_code = event.hw_code
-        self.modifiers = event.modifiers
-        self.event_string = event_string
-        self.is_text = event.is_text
-        self.time = time.time()
-        self.timestamp = event.timestamp
+    def toString(self):
+        return ("KEYBOARDEVENT: type=%d\n" % self.type) \
+            + ("                id=%d\n" % self.id) \
+            + ("                hw_code=%d\n" % self.hw_code) \
+            + ("                modifiers=%d\n" % self.modifiers) \
+            + ("                event_string=(%s)\n" % self.event_string) \
+            + ("                keyval_name=(%s)\n" % self.keyval_name) \
+            + ("                is_text=%s\n" % self.is_text) \
+            + ("                timestamp=%d\n" % self.timestamp) \
+            + ("                time=%f" % time.time())
 
 class BrailleEvent(InputEvent):
 
@@ -192,6 +220,7 @@ class InputEventHandler:
 
 def keyEventToString(event):
     return ("KEYEVENT: type=%d\n" % event.type) \
+        + ("          id=%d\n" % event.id) \
         + ("          hw_code=%d\n" % event.hw_code) \
         + ("          modifiers=%d\n" % event.modifiers) \
         + ("          event_string=(%s)\n" % event.event_string) \

@@ -375,6 +375,27 @@ class Script:
             if event.type.startswith(key):
                 self.listeners[key](event)
 
+    def checkKeyboardEventData(self, keyboardEvent):
+        """Checks the data on the keyboard event.
+
+        Some toolkits don't fill all the key event fields, and/or fills
+        them out with unexpected data. This method tries to fill in the
+        missing fields and validate/standardize the data we've been given.
+        While any script can override this method, it is expected that
+        this will only be done at the toolkit script level.
+
+        Arguments:
+        - keyboardEvent: an instance of input_event.KeyboardEvent
+        """
+
+        try:
+            import gtk.gdk as gdk
+            keyboardEvent.keyval_name = gdk.keyval_name(keyboardEvent.id)
+        except:
+            debug.println(debug.LEVEL_FINE,
+                          "Could not obtain keyval_name for id: %d" \
+                          % keyboardEvent.id)
+
     def consumesKeyboardEvent(self, keyboardEvent):
         """Called when a key is pressed on the keyboard.
 

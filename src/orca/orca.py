@@ -784,6 +784,11 @@ def _processKeyboardEvent(event):
 
     keyboardEvent = KeyboardEvent(event)
 
+    # Log the KeyboardEvent translated from the pyatspi keyboardEvent.
+    #
+    string = keyboardEvent.toString()
+    debug.printInputEvent(debug.LEVEL_FINE, string)
+
     if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
         braille.killFlash()
 
