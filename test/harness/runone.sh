@@ -80,7 +80,7 @@ if [ -f $PARAMS_FILE ]
 then
     if [ "x$JDK_DEMO_DIR" == "x" ]
     then
-        JDK_DEMO_DIR="/usr/share/doc/sun-java6-jdk/demo"
+        JDK_DEMO_DIR="/usr/jdk/latest/demo"
     fi
     TEST_DIR=`dirname $1`
     source $PARAMS_FILE

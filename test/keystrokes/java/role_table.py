@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-"""Test of push buttons in Java's SwingSet2.
-"""
+"""Test of push buttons in Java's SwingSet2."""
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -86,25 +86,27 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TABLE))
 
 ##########################################################################
-# Tab through the cells.
-#
-
-##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on "Mike" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
+sequence.append(utils.AssertPresentationAction(
+    "1. Control Right Arrow into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
 
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on "Albers" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "2. Control Right Arrow into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ########################################################################
 # [[[BUG 483217: Where am i in JTable cells gives no info]]]
 # Do a basic "Where Am I" via KP_Enter.  The following should be
@@ -112,89 +114,134 @@ sequence.append(WaitAction("object:selection-changed", None, None,
 #
 # SPEECH OUTPUT: ''
 # SPEECH OUTPUT: 'table'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
-
+sequence.append(utils.AssertPresentationAction(
+    "3. Basic Where Am I",
+    ["KNOWN ISSUE - Because of the cell problem, we think the locusOfFocus is the Table",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table'",
+     "     VISIBLE:  'Table', cursor=1",
+     "SPEECH OUTPUT: 'table'"]))
+    
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # TODO: Is there a keboard way to edit a combo box in a cell?
 # Expected output when focus is on "Green" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "4 Control Right Arrow into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on "Bazil" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "5. Control Right Arrow into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on "44" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "6. Control Right Arrow into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on picture cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
+sequence.append(utils.AssertPresentationAction(
+    "7. Control Right Arrow into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
 
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on picture cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Down"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "8. Control Down Arrow into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on "3" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "9. Control Left into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on "Curse of the Demon" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "10. Control Left into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on "Blue" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "11. Control Left into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ##########################################################################
-# [[[BUG 483214: No output when navigating JTable with cursor]]]
 # Expected output when focus is on "Andrews" cell:
 # 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(WaitAction("object:selection-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "12. Control Left into the cell",
+    ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
+    
 ##########################################################################
 # TODO: Also, we get different behavior from Swing when we edit the cell by pressing space as opposed to double clicking with the pointer, in the former the caret is not shown, and pressing return puts us in the cell below it. In the latter the caret is visible, and after pressing return focus stays on the edited cell.
 # Edit a cell.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
+sequence.append(utils.AssertPresentationAction(
+    "13. Space Bar on the cell",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Andrews'",
+     "     VISIBLE:  'Andrews', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Mark'",
+     "     VISIBLE:  'Mark', cursor=1",
+     "SPEECH OUTPUT: 'Last Name column header Andrews'",
+     "SPEECH OUTPUT: 'First Name column header Mark'"]))
+    
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(KeyComboAction("BackSpace"))
@@ -204,130 +251,158 @@ sequence.append(KeyComboAction("BackSpace"))
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(KeyComboAction("BackSpace"))
+sequence.append(utils.AssertPresentationAction(
+    "14. Remove the text in the cell.",
+    ["BUG? - We aren't told what text is being removed. I believe this is due to the lack of any_data."]))
+    
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("Andy"))
+sequence.append(utils.AssertPresentationAction(
+    "15. Type 'Andy' into the cell",
+    ["BUG? - We're not presenting anything here."]))
 
 ##########################################################################
-# TODO: Pressing return should not put us in the cell below, see todo above.
 # Expected output when focus is on cell:
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo ScrollPane Viewport Table Beck Label'
-#      VISIBLE:  'Beck Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Beck label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
+sequence.append(utils.AssertPresentationAction(
+    "16. Press Return",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Brian'",
+     "     VISIBLE:  'Brian', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Beck'",
+     "     VISIBLE:  'Beck', cursor=1",
+     "SPEECH OUTPUT: 'First Name column header Brian'",
+     "SPEECH OUTPUT: 'Last Name column header Beck'"]))
 
 ##########################################################################
 # Expected output when focus is on cell:
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo ScrollPane Viewport Table Brian Label'
-#      VISIBLE:  'Brian Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Brian label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "17. Press Left Arrow",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Brian'",
+     "     VISIBLE:  'Brian', cursor=1",
+     "SPEECH OUTPUT: 'First Name column header Brian'"]))
+    
 ##########################################################################
 # Expected output when focus is on cell:
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo ScrollPane Viewport Table Mark Label'
-#      VISIBLE:  'Mark Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mark label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "18. Press Up Arrow",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Mark'",
+     "     VISIBLE:  'Mark', cursor=1",
+     "SPEECH OUTPUT: 'First Name column header Mark'"]))
+    
 ##########################################################################
 # Expected output when focus is on cell:
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo ScrollPane Viewport Table Andy Label'
-#      VISIBLE:  'Andy Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Andy label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "19. Press Right Arrow",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Andy'",
+     "     VISIBLE:  'Andy', cursor=1",
+     "SPEECH OUTPUT: 'Last Name column header Andy'"]))
+    
 ##########################################################################
-# Return cell to previuos text.
+# Return cell to previous text.
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "20. Press Space Bar",
+    ["BUG? - We're not presenting anything here."]))
+    
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(TypeAction("ndrews "))
-
+sequence.append(utils.AssertPresentationAction(
+    "21. BackSpace over the newly-added text and type 'ndrews'",
+    ["BUG? - We're not presenting anything here."]))
+    
 ##########################################################################
-# TODO: Pressing return should not put us in the cell below, see todo above.
 # Expected output when focus is on cell:
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo ScrollPane Viewport Table Beck Label'
-#      VISIBLE:  'Beck Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Beck label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "22. Press Return",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Brian'",
+     "     VISIBLE:  'Brian', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Beck'",
+     "     VISIBLE:  'Beck', cursor=1",
+     "SPEECH OUTPUT: 'First Name column header Brian'",
+     "SPEECH OUTPUT: 'Last Name column header Beck'"]))
+    
 ##########################################################################
 # Expected output when focus is on cell:
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo ScrollPane Viewport Table Brian Label'
-#      VISIBLE:  'Brian Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Brian label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
-##########################################################################
-# Select multiple rows.
-#
-
-##########################################################################
-# Expected output when row is selected:
-# 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo ScrollPane Viewport Table Mark Label'
-#      VISIBLE:  'Mark Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mark label selected'
-sequence.append(KeyComboAction("<Shift>Up"))
-sequence.append(WaitAction("object:active-descendant-changed", None, None,
-                           pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "23. Press Left Arrow",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Brian'",
+     "     VISIBLE:  'Brian', cursor=1",
+     "SPEECH OUTPUT: 'First Name column header Brian'"]))
+    
 ##########################################################################
 # Expected output when row is selected:
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo ScrollPane Viewport Table Mike Label'
-#      VISIBLE:  'Mike Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mike label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Up"))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
-
+sequence.append(utils.AssertPresentationAction(
+    "24. Shift Up Arrow to select the row",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Mark'",
+     "     VISIBLE:  'Mark', cursor=1",
+     "SPEECH OUTPUT: 'First Name column header Mark'"]))
+    
+##########################################################################
+# Expected output when row is selected:
+# 
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>Up"))
+sequence.append(WaitAction("object:active-descendant-changed", None, None,
+                           pyatspi.ROLE_TABLE, 5000))
+sequence.append(utils.AssertPresentationAction(
+    "25. Shift Up Arrow to select the row",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Mike'",
+     "     VISIBLE:  'Mike', cursor=1",
+     "SPEECH OUTPUT: 'Mike'"]))
+    
 ########################################################################
-# [[[BUG 483217: Where am i in JTable cells gives no info]]]
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# SPEECH OUTPUT: 'Mike'
-# SPEECH OUTPUT: 'label'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
-
+sequence.append(utils.AssertPresentationAction(
+    "26. Basic Where Am I",
+    ["BUG? - Not much detail. See bug 483217.",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Mike'",
+     "     VISIBLE:  'Mike', cursor=1",
+     "SPEECH OUTPUT: 'Mike'"]))
+    
 ##########################################################################
 # Unselect rows. First select only current row, then unselect it.
 
@@ -338,9 +413,6 @@ sequence.append(KeyComboAction("Left"))
 sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
 
-sequence.append(KeyComboAction("<Control>Space"))
-
-
 ##########################################################################
 # Leave table.
 
@@ -349,8 +421,12 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TEXT))
 sequence.append(KeyComboAction("Tab"))
 
 # Toggle the top left button, to return to normal state.
-sequence.append(TypeAction           (" "))
+sequence.append(TypeAction(" "))
 
+# Just a little extra wait to let some events get through.
+#
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

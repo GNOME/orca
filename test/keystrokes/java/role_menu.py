@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-"""Test of menus in Java's SwingSet2.
-"""
+"""Test of menus in Java's SwingSet2."""
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -16,95 +16,135 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
 # Wait for entire window to get populated.
 sequence.append(PauseAction(5000))
 
+# Hack to deal with a timing issue which seems to interfere with our
+# setting the locusOfFocus reliably.
+sequence.append(KeyComboAction("Tab"))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
+
+##########################################################################
+# Open File menu
+# 
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
-
-##########################################################################
-# Expected output when File menu is invoked.
-# 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane File Menu'
-#      VISIBLE:  'File Menu', cursor=1
-# 
-# SPEECH OUTPUT: 'Swing demo menu bar menu bar'
-# SPEECH OUTPUT: 'File menu'
 sequence.append(WaitForFocus("File", acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "1. Open File menu",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane File Menu'",
+     "     VISIBLE:  'File Menu', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane File Menu'",
+     "     VISIBLE:  'File Menu', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane PopupMenu About'",
+     "     VISIBLE:  'About', cursor=1",
+     "SPEECH OUTPUT: 'Swing demo menu bar menu bar File menu'",
+     "SPEECH OUTPUT: 'About'"]))
 
 ########################################################################
-# [[[Bug 483208: Exception raised when performing where am I]]]
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech:
+# Basic Where Am I
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
-
-sequence.append(KeyComboAction("Right"))
+sequence.append(utils.AssertPresentationAction(
+    "2. Basic Where Am I",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane PopupMenu About'",
+     "     VISIBLE:  'About', cursor=1",
+     "SPEECH OUTPUT: 'SwingSet2 application SwingSet2 frame About 1 of 5.'",
+     "SPEECH OUTPUT: 'B'",
+     "SPEECH OUTPUT: 'Find out about the SwingSet2 application'"]))
 
 ##########################################################################
-# Expected output when Look & Feel menu is in focus.
+# Move to Look & Feel menu
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Look & Feel Menu'
-#      VISIBLE:  'Look & Feel Menu', cursor=1
-#
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Look & Feel menu'
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Look & Feel", acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "3. Move to Look & Feel menu",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Look & Feel Menu'",
+     "     VISIBLE:  'Look & Feel Menu', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Look & Feel Menu'",
+     "     VISIBLE:  'Look & Feel Menu', cursor=1",
+     "SPEECH OUTPUT: 'Swing demo menu bar menu bar Look & Feel menu'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech:
+# Basic Where Am I
 #
-# SPEECH OUTPUT: 'Swing demo menu bar menu bar'
-# SPEECH OUTPUT: 'Look & Feel'
-# SPEECH OUTPUT: 'menu'
-# SPEECH OUTPUT: ''
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "4. Basic Where Am I",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Look & Feel Menu'",
+     "     VISIBLE:  'Look & Feel Menu', cursor=1",
+     "SPEECH OUTPUT: 'SwingSet2 application SwingSet2 frame Swing demo menu bar menu bar Look & Feel menu 2 of 5.'",
+     "SPEECH OUTPUT: 'L'",
+     "SPEECH OUTPUT: 'Menu that allows Look & Feel switching'"]))
 
+##########################################################################
+# Move to Themes menu
+#
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
-
-##########################################################################
-# Expected output when Themes menu is in focus.
-# 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Themes Menu'
-#      VISIBLE:  'Themes Menu', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Themes menu'
 sequence.append(WaitForFocus("Themes", acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "5. Move to Themes menu",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Look & Feel Menu'",
+     "     VISIBLE:  'Look & Feel Menu', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Themes Menu'",
+     "     VISIBLE:  'Themes Menu', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Themes Menu'",
+     "     VISIBLE:  'Themes Menu', cursor=1",
+     "SPEECH OUTPUT: 'Themes menu'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech:
+# Basic Where Am I
 #
-# SPEECH OUTPUT: 'Swing demo menu bar menu bar'
-# SPEECH OUTPUT: 'Themes'
-# SPEECH OUTPUT: 'menu'
-# SPEECH OUTPUT: ''
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
-
-sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "6. Basic Where Am I",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Themes Menu'",
+     "     VISIBLE:  'Themes Menu', cursor=1",
+     "SPEECH OUTPUT: 'SwingSet2 application SwingSet2 frame Swing demo menu bar menu bar Themes menu 3 of 5.'",
+     "SPEECH OUTPUT: 'T'",
+     "SPEECH OUTPUT: 'Menu to switch Metal color themes'"]))
 
 ##########################################################################
-# Expected output when Themes menu is in focus.
-# 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar Audio Menu'
-#      VISIBLE:  'Audio Menu', cursor=1
+# Move to Audio menu
 #
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Audio menu'
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Audio", acc_role=pyatspi.ROLE_MENU))
+sequence.append(utils.AssertPresentationAction(
+    "7. Move to Audio menu",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar Audio Menu'",
+     "     VISIBLE:  'Audio Menu', cursor=1",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar Audio Menu'",
+     "     VISIBLE:  'Audio Menu', cursor=1",
+     "SPEECH OUTPUT: 'Audio menu'"]))
 
 ########################################################################
-# [[[Bug 483208: Exception raised when performing where am I]]]
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech:
+# Basic Where Am I
 #
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "8. Basic Where Am I",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar Audio Menu'",
+     "     VISIBLE:  'Audio Menu', cursor=1",
+     "SPEECH OUTPUT: 'SwingSet2 application SwingSet2 frame Swing demo menu bar menu bar Themes menu Audio menu 1 of 9.'",
+     "SPEECH OUTPUT: 'A'",
+     "SPEECH OUTPUT: 'Menu to switch the amount of auditory feedback available within the Java look and feel'"]))
 
 # Leave menus.
 sequence.append(KeyComboAction("Escape"))
 
-sequence.append(PauseAction(5000))
+# Just a little extra wait to let some events get through.
+#
+sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()

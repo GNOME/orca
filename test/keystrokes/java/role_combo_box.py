@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-"""Test of combo boxes in Java's SwingSet2.
-"""
+"""Test of combo boxes in Java's SwingSet2."""
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -58,66 +58,64 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("ComboBox Demo", acc_role=pyatspi.ROLE_PAGE_TAB))
 
 ##########################################################################
-# Expected output when focusing over first combo box
+# Focusing over first combo box
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Presets: Philip, Howard, Jeff Combo'
-#      VISIBLE:  'Philip, Howard, Jeff Combo', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Presets: Philip, Howard, Jeff combo box'
-
-
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Philip, Howard, Jeff", 
                              acc_role=pyatspi.ROLE_COMBO_BOX))
-
+sequence.append(utils.AssertPresentationAction(
+    "1. focusing over first combo box",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Howard, Jeff Combo'",
+     "     VISIBLE:  'Presets: Philip, Howard, Jeff Co', cursor=10",
+     "SPEECH OUTPUT: 'ComboBox Demo page Presets: Philip, Howard, Jeff combo box'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# SPEECH OUTPUT: 'Presets:'
-# SPEECH OUTPUT: 'combo box'
-# SPEECH OUTPUT: 'Philip, Howard, Jeff'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "2. basic Where Am I",
+    ["BUG? - Missing the item count. See bug 483212",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Howard, Jeff Combo'",
+     "     VISIBLE:  'Presets: Philip, Howard, Jeff Co', cursor=10",
+     "SPEECH OUTPUT: 'Presets: combo box Philip, Howard, Jeff'"]))
 
 ##########################################################################
-# Bring up combo box list by pressing space, the following should be 
-# in output:
-# 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo  ComboPhilip, Howard, JeffPresets:  PopupMenu ScrollPane Viewport List Philip, Howard, Jeff Label'
-#      VISIBLE:  'Philip, Howard, Jeff Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Philip, Howard, Jeff label unselected'
-
+# Bring up combo box list by pressing space
+#
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
-
+sequence.append(utils.AssertPresentationAction(
+    "3. Expand combo box",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Howard, Jeff Combo'",
+     "     VISIBLE:  'Presets: Philip, Howard, Jeff Co', cursor=10",
+     "SPEECH OUTPUT: 'Philip, Howard, Jeff'"]))
 ##########################################################################
 # Arrow down to next list item.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo  ComboHoward, Scott, HansPresets:  PopupMenu ScrollPane Viewport List Jeff, Larry, Philip Label'
-#      VISIBLE:  'Jeff, Larry, Philip Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Jeff, Larry, Philip label unselected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Jeff, Larry, Philip", acc_role=pyatspi.ROLE_LABEL))
+sequence.append(utils.AssertPresentationAction(
+    "4. Arrow Down",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Jeff, Larry, Philip Combo'",
+     "     VISIBLE:  'Presets: Jeff, Larry, Philip Com', cursor=10",
+     "SPEECH OUTPUT: 'Jeff, Larry, Philip'"]))
 
 ##########################################################################
 # Arrow down to next list item.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo  ComboPhilip, Jeff, HansPresets:  PopupMenu ScrollPane Viewport List Howard, Scott, Hans Label'
-#      VISIBLE:  'Howard, Scott, Hans Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Howard, Scott, Hans label unselected'
-
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Howard, Scott, Hans", acc_role=pyatspi.ROLE_LABEL))
+sequence.append(utils.AssertPresentationAction(
+    "5. Arrow Down",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Howard, Scott, Hans Combo'",
+     "     VISIBLE:  'Presets: Howard, Scott, Hans Com', cursor=10",
+     "SPEECH OUTPUT: 'Howard, Scott, Hans'"]))
 
 ########################################################################
 # [[[BUG 483212: Missing significant information when performing where am i on combo box items]]]
@@ -126,132 +124,142 @@ sequence.append(WaitForFocus("Howard, Scott, Hans", acc_role=pyatspi.ROLE_LABEL)
 #
 # SPEECH OUTPUT: 'Howard, Scott, Hans'
 # SPEECH OUTPUT: 'label'
-
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "6. basic Where Am I",
+    ["BUG? - Missing the item count. See bug 483212",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Howard, Scott, Hans Combo'",
+     "     VISIBLE:  'Presets: Howard, Scott, Hans Com', cursor=10",
+     "SPEECH OUTPUT: 'Presets: combo box Howard, Scott, Hans'"]))
 
 ##########################################################################
 # Arrow down to next list item.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo  ComboPhilip, Jeff, HansPresets:  PopupMenu ScrollPane Viewport List Philip, Jeff, Hans Label'
-#      VISIBLE:  'Philip, Jeff, Hans Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Philip, Jeff, Hans label selected'
-
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Philip, Jeff, Hans", acc_role=pyatspi.ROLE_LABEL))
+sequence.append(utils.AssertPresentationAction(
+    "7. Arrow Down",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Jeff, Hans Combo'",
+     "     VISIBLE:  'Presets: Philip, Jeff, Hans Comb', cursor=10",
+     "SPEECH OUTPUT: 'Philip, Jeff, Hans'"]))
 
 ##########################################################################
 # Press return to close list and select current item.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Presets: Philip, Jeff, Hans Combo'
-#      VISIBLE:  'Philip, Jeff, Hans Combo', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Presets: Philip, Jeff, Hans combo box'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
+sequence.append(utils.AssertPresentationAction(
+    "8. Collapse combo box",
+    ["KNOWN ISSUE - Orca often doesn't speak when Return is used to collapse a combo box; this is not limited to Java."]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# SPEECH OUTPUT: 'Presets:'
-# SPEECH OUTPUT: 'combo box'
-# SPEECH OUTPUT: 'Philip, Jeff, Hans'
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: ''
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
+sequence.append(utils.AssertPresentationAction(
+    "9. basic Where Am I",
+    ["BUG? - Missing the item count. See bug 483212",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Jeff, Hans Combo'",
+     "     VISIBLE:  'Presets: Philip, Jeff, Hans Comb', cursor=10",
+     "SPEECH OUTPUT: 'Presets: combo box Philip, Jeff, Hans'"]))
 
 ##########################################################################
 # Bring up combo box list by pressing space, the following should be 
 # in output:
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo  ComboPhilip, Jeff, HansPresets:  PopupMenu ScrollPane Viewport List Philip, Jeff, Hans Label'
-#      VISIBLE:  'Philip, Jeff, Hans Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Philip, Jeff, Hans label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
+sequence.append(utils.AssertPresentationAction(
+    "10. Expand combo box",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Jeff, Hans Combo'",
+     "     VISIBLE:  'Presets: Philip, Jeff, Hans Comb', cursor=10",
+     "SPEECH OUTPUT: 'Philip, Jeff, Hans'"]))
 
 ##########################################################################
 # Arrow up to previous list item.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo  ComboHoward, Scott, HansPresets:  PopupMenu ScrollPane Viewport List Howard, Scott, Hans Label'
-#      VISIBLE:  'Howard, Scott, Hans Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Howard, Scott, Hans label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("Howard, Scott, Hans", acc_role=pyatspi.ROLE_LABEL))
+sequence.append(utils.AssertPresentationAction(
+    "11. Arrow Up",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Howard, Scott, Hans Combo'",
+     "     VISIBLE:  'Presets: Howard, Scott, Hans Com', cursor=10",
+     "SPEECH OUTPUT: 'Howard, Scott, Hans'"]))
 
 ##########################################################################
 # Arrow up to previous list item.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Combo
-# Box Demo TabList ComboBox Demo  ComboJeff, Larry, PhilipPresets:  PopupMenu ScrollPane Viewport List Jeff, Larry, Philip Label'
-#      VISIBLE:  'Jeff, Larry, Philip Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Jeff, Larry, Philip label unselected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("Jeff, Larry, Philip", acc_role=pyatspi.ROLE_LABEL))
+sequence.append(utils.AssertPresentationAction(
+    "12. Arrow Up",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Jeff, Larry, Philip Combo'",
+     "     VISIBLE:  'Presets: Jeff, Larry, Philip Com', cursor=10",
+     "SPEECH OUTPUT: 'Jeff, Larry, Philip'"]))
 
 ##########################################################################
 # Arrow up to previous list item.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo  ComboPhilip, Howard, JeffPresets:  PopupMenu ScrollPane Viewport List Philip, Howard, Jeff Label'
-#      VISIBLE:  'Philip, Howard, Jeff Label', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Philip, Howard, Jeff label selected'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("Philip, Howard, Jeff", acc_role=pyatspi.ROLE_LABEL))
+sequence.append(utils.AssertPresentationAction(
+    "13. Arrow Up",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Howard, Jeff Combo'",
+     "     VISIBLE:  'Presets: Philip, Howard, Jeff Co', cursor=10",
+     "SPEECH OUTPUT: 'Philip, Howard, Jeff'"]))
 
 ##########################################################################
 # Press return to close list and select current item.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Presets: Philip, Howard, Jeff Combo'
-#      VISIBLE:  'Philip, Howard, Jeff Combo', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Presets: Philip, Howard, Jeff combo box'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
+sequence.append(utils.AssertPresentationAction(
+    "14. Collapse combo box",
+    ["KNOWN ISSUE - Orca often doesn't speak when Return is used to collapse a combo box; this is not limited to Java."]))
 
 ##########################################################################
 # Tab to next combo box.
 # 
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Hair: Philip Combo'
-#      VISIBLE:  'Philip Combo', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Hair: Philip combo box'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Philip", acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(utils.AssertPresentationAction(
+    "15. Tab to next combo box",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Hair: Philip Combo'",
+     "     VISIBLE:  'Hair: Philip Combo', cursor=7",
+     "SPEECH OUTPUT: 'Hair: Philip combo box'"]))
 
 ##########################################################################
 # Tab to next combo box.
 #
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Eyes & Nose: Howard Combo'
-#      VISIBLE:  'Howard Combo', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Eyes & Nose: Howard combo box'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Howard", acc_role=pyatspi.ROLE_COMBO_BOX))
+sequence.append(utils.AssertPresentationAction(
+    "16. Tab to next combo box",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Eyes & Nose: Howard Combo'",
+     "     VISIBLE:  'Eyes & Nose: Howard Combo', cursor=14",
+     "SPEECH OUTPUT: 'Eyes & Nose: Howard combo box'"]))
 
 ##########################################################################
 # Tab to next combo box.
 #
-# BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Mouth: Jeff Combo'
-#      VISIBLE:  'Jeff Combo', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'Mouth: Jeff combo box'
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Jeff", acc_role=pyatspi.ROLE_COMBO_BOX))
-
+sequence.append(utils.AssertPresentationAction(
+    "17. Tab to next combo box",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Mouth: Jeff Combo'",
+     "     VISIBLE:  'Mouth: Jeff Combo', cursor=8",
+     "SPEECH OUTPUT: 'Mouth: Jeff combo box'"]))
 
 ##########################################################################
 # Tab back up to starting state

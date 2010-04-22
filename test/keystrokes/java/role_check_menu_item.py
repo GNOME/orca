@@ -16,9 +16,13 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
 
 sequence.append(PauseAction(5000))
 
+# Hack to deal with a timing issue which seems to interfere with our
+# setting the locusOfFocus reliably.
+sequence.append(KeyComboAction("Tab"))
+sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
+
 sequence.append(KeyComboAction("F10"))
 sequence.append(WaitForFocus("File", acc_role=pyatspi.ROLE_MENU))
-
 sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Look & Feel", acc_role=pyatspi.ROLE_MENU))
 sequence.append(KeyComboAction("Right"))
@@ -37,7 +41,6 @@ sequence.append(utils.AssertPresentationAction(
     "Enable Tool Tips checked check menu item",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar <x> Enable Tool Tips CheckBox'",
      "     VISIBLE:  '<x> Enable Tool Tips CheckBox', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Enable Tool Tips check box checked'"]))
 
 ########################################################################
@@ -51,7 +54,6 @@ sequence.append(utils.AssertPresentationAction(
     "Enable Drag Support unchecked menu item",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar < > Enable Drag Support CheckBox'",
      "     VISIBLE:  '< > Enable Drag Support CheckBox', cursor=1",
-     "SPEECH OUTPUT: ''",
      "SPEECH OUTPUT: 'Enable Drag Support check box not checked'"]))
 
 ########################################################################
@@ -64,7 +66,7 @@ sequence.append(utils.AssertPresentationAction(
     "Enable Drag Support unchecked menu item Where Am I",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar < > Enable Drag Support CheckBox'",
      "     VISIBLE:  '< > Enable Drag Support CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'Enable Drag Support check box not checked'",
+     "SPEECH OUTPUT: 'Enable Drag Support check box not checked.'",
      "SPEECH OUTPUT: 'D'",
      "SPEECH OUTPUT: 'Enable or disable drag support'"]))
 
@@ -89,8 +91,7 @@ sequence.append(utils.AssertPresentationAction(
     "Enable Drag Support checked menu item",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar <x> Enable Drag Support CheckBox'",
      "     VISIBLE:  '<x> Enable Drag Support CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'Swing demo menu bar menu bar Options menu'",
-     "SPEECH OUTPUT: 'Enable Drag Support check box checked'"]))
+     "SPEECH OUTPUT: 'Swing demo menu bar menu bar Options menu Enable Drag Support check box checked'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -102,7 +103,7 @@ sequence.append(utils.AssertPresentationAction(
     "Enable Drag Support checked menu item Where Am I",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar <x> Enable Drag Support CheckBox'",
      "     VISIBLE:  '<x> Enable Drag Support CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'Enable Drag Support check box checked'",
+     "SPEECH OUTPUT: 'Enable Drag Support check box checked.'",
      "SPEECH OUTPUT: 'D'",
      "SPEECH OUTPUT: 'Enable or disable drag support'"]))
 
@@ -111,7 +112,9 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(TypeAction(" "))
 
-sequence.append(PauseAction(5000))
+# Just a little extra wait to let some events get through.
+#
+sequence.append(PauseAction(3000))
 
 sequence.append(utils.AssertionSummaryAction())
 

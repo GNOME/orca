@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
-"""Test of dialogs in Java's SwingSet2.
-"""
+"""Test of dialogs in Java's SwingSet2."""
 
-from macaroon.playback.keypress_mimic import *
+from macaroon.playback import *
+import utils
 
 sequence = MacroSequence()
 
@@ -59,64 +59,56 @@ sequence.append(WaitForFocus("Option Pane Demo", acc_role=pyatspi.ROLE_PAGE_TAB)
 
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Show Input Dialog", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(TypeAction(" "))
 
 ########################################################################
-# [[[BUG 483213: Braille does not output unrelated text when a dialog pops up]]]
-# Expected output when "Input" dialog is activated
-# 
-# BRAILLE LINE:  'SwingSet2 Application Input Dialog'
-#      VISIBLE:  'Input Dialog', cursor=1
-# 
-# SPEECH OUTPUT: 'Input What is your favorite movie?'
-# sequence.append(WaitForWindowActivate("Input",None))
-
-########################################################################
-# Expected output when the text input field gets focus.
+# Dialog is activated
 #
-# BRAILLE LINE:  'SwingSet2 Application Input Dialog RootPane LayeredPane OptionPane  $l'
-#      VISIBLE:  ' $l', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'text '
+sequence.append(utils.StartRecordingAction())
+sequence.append(TypeAction(" "))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TEXT))
+sequence.append(utils.AssertPresentationAction(
+    "1. Dialog is activated",
+    ["BRAILLE LINE:  'SwingSet2 Application Input Dialog'",
+     "     VISIBLE:  'Input Dialog', cursor=1",
+     "BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: 'Input What is your favorite movie?'",
+     "SPEECH OUTPUT: 'text '"]))
 
 ########################################################################
 # Type the best movie ever, and press return.
+#
+sequence.append(PauseAction(3000))
 sequence.append(TypeAction("RoboCop"))
+sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Return"))
-
-########################################################################
-# [[[BUG 483213: Braille does not output unrelated text when a dialog pops up]]]
-# Expected output when "Message" dialog gets activated.
-# 
-# BRAILLE LINE:  'SwingSet2 Application Message Dialog'
-#      VISIBLE:  'Message Dialog', cursor=1
-# 
-# SPEECH OUTPUT: 'Message RoboCop: That was a pretty good movie!'
-# sequence.append(WaitForWindowActivate("Message",None))
 
 ########################################################################
 # Expected output when "OK" button gets focus.
 # 
-# BRAILLE LINE:  'SwingSet2 Application Message Dialog RootPane LayeredPane Alert OK Button'
-#      VISIBLE:  'OK Button', cursor=1
-# 
-# SPEECH OUTPUT: ''
-# SPEECH OUTPUT: 'OK button'
+sequence.append(utils.StartRecordingAction())
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.AssertPresentationAction(
+    "2. OK button gains focus",
+    ["BUG? - We don't always present anything here. Need to investigate.",
+     "BRAILLE LINE:  'SwingSet2 Application Message Dialog RootPane LayeredPane Alert OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
+     "SPEECH OUTPUT: 'SwingSet2 frame 1 unfocused dialog'",
+     "SPEECH OUTPUT: 'Option Pane Demo tab list Option Pane Demo page Show Input Dialog button'",
+     "SPEECH OUTPUT: 'Message RoboCop: That was a pretty good movie!'",
+     "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
-# TODO: Is where am i giving enough?
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented in speech:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# SPEECH OUTPUT: 'OK'
-# SPEECH OUTPUT: 'button'
-# SPEECH OUTPUT: ''
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
-
+sequence.append(utils.AssertPresentationAction(
+    "3. Where Am I",
+    ["BRAILLE LINE:  'SwingSet2 Application Message Dialog RootPane LayeredPane Alert OK Button'",
+     "     VISIBLE:  'OK Button', cursor=1",
+     "SPEECH OUTPUT: 'OK button'"]))
 
 ########################################################################
 # Press return to close dialog.
@@ -140,8 +132,12 @@ sequence.append(KeyComboAction("Tab"))
 
 
 # Toggle the top left button, to return to normal state.
-sequence.append(TypeAction           (" "))
+sequence.append(TypeAction(" "))
 
+# Just a little extra wait to let some events get through.
+#
 sequence.append(PauseAction(3000))
+
+sequence.append(utils.AssertionSummaryAction())
 
 sequence.start()
