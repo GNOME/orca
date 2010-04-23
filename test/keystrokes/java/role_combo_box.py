@@ -57,6 +57,8 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("ComboBox Demo", acc_role=pyatspi.ROLE_PAGE_TAB))
 
+sequence.append(PauseAction(5000))
+
 ##########################################################################
 # Focusing over first combo box
 # 
@@ -78,10 +80,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "2. basic Where Am I",
-    ["BUG? - Missing the item count. See bug 483212",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Howard, Jeff Combo'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Howard, Jeff Combo'",
      "     VISIBLE:  'Presets: Philip, Howard, Jeff Co', cursor=10",
-     "SPEECH OUTPUT: 'Presets: combo box Philip, Howard, Jeff'"]))
+     "SPEECH OUTPUT: 'Presets: combo box Philip, Howard, Jeff 1 of 10'"]))
 
 ##########################################################################
 # Bring up combo box list by pressing space
@@ -129,10 +130,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "6. basic Where Am I",
-    ["BUG? - Missing the item count. See bug 483212",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Howard, Scott, Hans Combo'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Howard, Scott, Hans Combo'",
      "     VISIBLE:  'Presets: Howard, Scott, Hans Com', cursor=10",
-     "SPEECH OUTPUT: 'Presets: combo box Howard, Scott, Hans'"]))
+     "SPEECH OUTPUT: 'Presets: combo box Howard, Scott, Hans 3 of 8'"]))
 
 ##########################################################################
 # Arrow down to next list item.
@@ -163,10 +163,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "9. basic Where Am I",
-    ["BUG? - Missing the item count. See bug 483212",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Jeff, Hans Combo'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Jeff, Hans Combo'",
      "     VISIBLE:  'Presets: Philip, Jeff, Hans Comb', cursor=10",
-     "SPEECH OUTPUT: 'Presets: combo box Philip, Jeff, Hans'"]))
+     "SPEECH OUTPUT: 'Presets: combo box Philip, Jeff, Hans 4 of 8'"]))
 
 ##########################################################################
 # Bring up combo box list by pressing space, the following should be 

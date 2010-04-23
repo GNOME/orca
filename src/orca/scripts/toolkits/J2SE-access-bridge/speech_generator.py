@@ -25,6 +25,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.settings as settings
 import orca.speech_generator as speech_generator
 
 ########################################################################
@@ -52,6 +53,47 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         del args['requireText']
         return result
 
+    def _generatePositionInList(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the relative position of an
+        object in a list.
+        """
+
+        listObj = None
+        if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX:
+            allLists = self._script.findByRole(obj, pyatspi.ROLE_LIST, False)
+            if len(allLists) == 1:
+                listObj = allLists[0]
+
+        if not listObj:
+            return speech_generator.SpeechGenerator._generatePositionInList(
+                self, obj, **args)
+
+        result = []
+        name = self._generateName(obj)
+        position = -1
+        index = total = 0
+
+        for child in listObj:
+            nextName = self._generateName(child)
+            if not nextName or nextName[0] in ["", "Empty", "separator"] \
+               or not child.getState().contains(pyatspi.STATE_VISIBLE):
+                continue
+
+            index += 1
+            total += 1
+
+            if nextName == name:
+                position = index
+
+        if (settings.enablePositionSpeaking or args.get('forceList', False)) \
+           and position >= 0:
+            result.append(self._script.formatting.getString(
+                              mode='speech', stringType='groupindex') \
+                              %  {"index" : position, "total" : total})
+
+        return result
+        
     def generateSpeech(self, obj, **args):
         result = []
         if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
