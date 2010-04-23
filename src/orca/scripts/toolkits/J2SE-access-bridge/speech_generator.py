@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -20,13 +21,16 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc., " \
+                "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
 import pyatspi
 
 import orca.settings as settings
 import orca.speech_generator as speech_generator
+
+from orca.orca_i18n import ngettext
 
 ########################################################################
 #                                                                      #
@@ -51,6 +55,26 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = speech_generator.SpeechGenerator._generateAncestors(
             self, obj, **args)
         del args['requireText']
+        return result
+
+    def _generateNumberOfChildren(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represents the number of children the
+        object has."""
+
+        result = []
+        if obj and obj.getState().contains(pyatspi.STATE_EXPANDED) \
+           and obj.getRole() == pyatspi.ROLE_LABEL and obj.childCount:
+            children = obj.childCount
+            # Translators: this is the number of items in a layered
+            # pane or table.
+            #
+            items = ngettext("%d item", "%d items", children) % children
+            result.append(items)
+        else:
+            result.extend(speech_generator.SpeechGenerator.\
+                          _generateNumberOfChildren(self, obj, **args))
+
         return result
 
     def _generatePositionInList(self, obj, **args):

@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2006-2009 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,7 +23,8 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc., "  \
+                "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
 import copy
@@ -39,8 +41,9 @@ formatting = {
         # states in order to tell whether they are expanded or collapsed.
         #
         pyatspi.ROLE_LABEL: {
-            'unfocused': '(displayedText or roleName) + expandableState',
-            'focused': 'expandableState'
+            'unfocused': '(displayedText or roleName) + expandableState + numberOfChildren',
+            'focused': 'expandableState + numberOfChildren',
+            'basicWhereAmI': '(displayedText or roleName) + expandableState + numberOfChildren + nodeLevel',
             },
     },
     'braille': {

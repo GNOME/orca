@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2006-2009 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -20,7 +21,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc., "  \
+                "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
 import pyatspi
@@ -120,16 +122,25 @@ class Script(default.Script):
         if not obj:
             return -1
 
-        treeLikeThing = self.getAncestor(obj,
-                                         [pyatspi.ROLE_TREE,
-                                          pyatspi.ROLE_TABLE,
-                                          pyatspi.ROLE_TREE_TABLE],
-                                         None)
-        if not treeLikeThing:
-            return -1
+        if not self._lastDescendantChangedSource:
+            return default.Script.getNodeLevel(self, obj)
+
+        # It would seem that Java is making multiple copies of accessibles
+        # and/or killing them frequently. This is messing up our ability to
+        # ascend the hierarchy. We need to see if we can find our clone and
+        # set obj to it before trying to get the node level.
+        #
+        items = self.findByRole(
+            self._lastDescendantChangedSource, obj.getRole())
+        for item in items:
+            if item.name == obj.name and self.isSameObject(item, obj):
+                obj = item
+                break
+        else:
+            return default.Script.getNodeLevel(self, obj)
 
         count = 0
-        while True:
+        while obj:
             state = obj.getState()
             if state.contains(pyatspi.STATE_EXPANDABLE) \
                or state.contains(pyatspi.STATE_COLLAPSED):
