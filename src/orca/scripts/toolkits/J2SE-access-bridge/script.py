@@ -58,7 +58,7 @@ class Script(default.Script):
         # parent it shouldn't. See bgo#616582. [[[TODO - JD: remove
         # this hack if and when we get a fix for that bug]]]
         # 
-        self._lastDescendantChangedSource = None
+        self.lastDescendantChangedSource = None
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
@@ -110,6 +110,31 @@ class Script(default.Script):
             if 0 < keyval < 256:
                 keyboardEvent.event_string = unichr(keyval).encode("UTF-8")
 
+    def getValidObj(self, rootObj, obj, onlyShowing=True):
+        """Attempts to convert an older copy of an accessible into the
+        current, active version. We need to do this in order to ascend
+        the hierarchy.
+
+        Arguments:
+        - rootObj: the top-most ancestor of interest
+        - obj: the old object we're attempting to replace
+        - onlyShowing: whether or not we should limit matches to those
+          which have STATE_SHOWING
+
+         Returns an accessible replacement for obj if one can be found;
+         otherwise, None.
+         """
+
+        if not (obj and rootObj):
+            return None
+
+        items = self.findByRole(rootObj, obj.getRole(), onlyShowing)
+        for item in items:
+            if item.name == obj.name and self.isSameObject(item, obj):
+                return item
+
+        return None
+
     def getNodeLevel(self, obj):
         """Determines the node level of this object if it is in a tree
         relation, with 0 being the top level node.  If this object is
@@ -119,34 +144,18 @@ class Script(default.Script):
         -obj: the Accessible object
         """
 
-        if not obj:
-            return -1
-
-        if not self._lastDescendantChangedSource:
-            return default.Script.getNodeLevel(self, obj)
-
-        # It would seem that Java is making multiple copies of accessibles
-        # and/or killing them frequently. This is messing up our ability to
-        # ascend the hierarchy. We need to see if we can find our clone and
-        # set obj to it before trying to get the node level.
-        #
-        items = self.findByRole(
-            self._lastDescendantChangedSource, obj.getRole())
-        for item in items:
-            if item.name == obj.name and self.isSameObject(item, obj):
-                obj = item
-                break
-        else:
+        newObj = self.getValidObj(self.lastDescendantChangedSource, obj)
+        if not newObj:
             return default.Script.getNodeLevel(self, obj)
 
         count = 0
-        while obj:
-            state = obj.getState()
+        while newObj:
+            state = newObj.getState()
             if state.contains(pyatspi.STATE_EXPANDABLE) \
                or state.contains(pyatspi.STATE_COLLAPSED):
                 if state.contains(pyatspi.STATE_VISIBLE):
                     count += 1
-                obj = obj.parent
+                newObj = newObj.parent
             else:
                 break
 
@@ -161,10 +170,23 @@ class Script(default.Script):
             return True
         elif (not obj1) or (not obj2):
             return False
-
-        if obj1.getIndexInParent() != obj2.getIndexInParent() \
-           or obj1.childCount != obj2.childCount:
+        elif (obj1.name != obj2.name) or (obj1.childCount != obj2.childCount):
             return False
+
+        # This is to handle labels in trees. In some cases the default
+        # script's method gives us false positives; other times false
+        # negatives.
+        #
+        if obj1.getRole() == obj2.getRole() == pyatspi.ROLE_LABEL:
+            try:
+                ext1 = obj1.queryComponent().getExtents(0)
+                ext2 = obj2.queryComponent().getExtents(0)
+            except:
+                pass
+            else:
+                if ext1.x == ext2.x and ext1.y == ext2.y \
+                   and ext1.width == ext2.width and ext1.height == ext2.height:
+                    return True
 
         return default.Script.isSameObject(self, obj1, obj2)
 
@@ -202,7 +224,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        self._lastDescendantChangedSource = event.source
+        self.lastDescendantChangedSource = event.source
 
         # In Java comboboxes, when the list of options is popped up via
         # an up or down action, control (but not focus) goes to a LIST
@@ -262,7 +284,7 @@ class Script(default.Script):
         # equality check is intentional; isSameObject() is especially
         # thorough with trees and tables, which is not performant.
         #
-        if event.source == self._lastDescendantChangedSource:
+        if event.source == self.lastDescendantChangedSource:
             return
 
         # We treat selected children as the locus of focus. When the
