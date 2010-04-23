@@ -82,10 +82,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Classical collapsed'",
      "     VISIBLE:  'Classical collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Classical collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Classical collapsed'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -98,10 +95,7 @@ sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Jazz collapsed'",
      "     VISIBLE:  'Jazz collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Jazz collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Jazz collapsed'"]))
     
 ##########################################################################
 # Expected output when node is expanded:
@@ -112,7 +106,9 @@ sequence.append(WaitAction("object:state-changed:expanded", None, None,
                            pyatspi.ROLE_LABEL, 5000))
 sequence.append(utils.AssertPresentationAction(
     "4. Right Arrow in the tree",
-    ["BUG? - We're not presenting anything here. Should be told Jazz is expanded."]))
+    ["BRAILLE LINE:  'SwingSet2 Application Jazz expanded'",
+     "     VISIBLE:  'Jazz expanded', cursor=1",
+     "SPEECH OUTPUT: 'expanded'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -125,10 +121,7 @@ sequence.append(utils.AssertPresentationAction(
     "5. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Albert Ayler collapsed'",
      "     VISIBLE:  'Albert Ayler collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Albert Ayler collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Albert Ayler collapsed'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -141,10 +134,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Chet Baker collapsed'",
      "     VISIBLE:  'Chet Baker collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Chet Baker collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Chet Baker collapsed'"]))
 
 ##########################################################################
 # Expected output when node is expanded:
@@ -155,7 +145,9 @@ sequence.append(WaitAction("object:state-changed:expanded", None, None,
                            pyatspi.ROLE_LABEL, 5000))
 sequence.append(utils.AssertPresentationAction(
     "7. Right Arrow in the tree",
-    ["BUG? - We're not presenting anything here. Should be told Chet Baker is expanded."]))
+    ["BRAILLE LINE:  'SwingSet2 Application Chet Baker expanded'",
+     "     VISIBLE:  'Chet Baker expanded', cursor=1",
+     "SPEECH OUTPUT: 'expanded'"]))
     
 ##########################################################################
 # [[[BUG 483219: JTree nodes don't show expanded or collapsed in braille]]]
@@ -174,10 +166,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Sings and Plays collapsed'",
      "     VISIBLE:  'Sings and Plays collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Sings and Plays collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Sings and Plays collapsed'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -190,10 +179,7 @@ sequence.append(utils.AssertPresentationAction(
     "9. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application My Funny Valentine collapsed'",
      "     VISIBLE:  'My Funny Valentine collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'My Funny Valentine collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'My Funny Valentine collapsed'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -204,28 +190,22 @@ sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TREE, 5000))
 sequence.append(utils.AssertPresentationAction(
     "10. Down Arrow in the tree",
-    ["BUG? - Looks like the tree is becoming the locusOfFocus. It shouldn't be.",
-     "BRAILLE LINE:  'SwingSet2 Application Grey December collapsed'",
+    ["BRAILLE LINE:  'SwingSet2 Application Grey December collapsed'",
      "     VISIBLE:  'Grey December collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Grey December collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Grey December collapsed'"]))
     
 ########################################################################
-# [[[BUG 483222: Where am i in JTree nodes gives little info]]]
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "11. Basic Where Am I",
-    ["BUG? - Little detail - see bug 483222. Also, why is the tree the locusOfFocus?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'tree'"]))
+    ["BUG? - Little detail - see bug 483222.",
+     "BRAILLE LINE:  'SwingSet2 Application Grey December collapsed'",
+     "     VISIBLE:  'Grey December collapsed', cursor=1",
+     "SPEECH OUTPUT: 'Grey December collapsed'"]))
     
 ##########################################################################
 # Expected output when node is expanded:
@@ -236,7 +216,9 @@ sequence.append(WaitAction("object:state-changed:expanded", None, None,
                            pyatspi.ROLE_LABEL, 5000))
 sequence.append(utils.AssertPresentationAction(
     "12. Right Arrow in the tree",
-    ["BUG? - We're not presenting anything here. Should be told Grey December is expanded."]))
+    ["BRAILLE LINE:  'SwingSet2 Application Grey December expanded'",
+     "     VISIBLE:  'Grey December expanded', cursor=1",
+     "SPEECH OUTPUT: 'expanded'"]))
     
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -246,10 +228,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "13. Basic Where Am I",
-    ["BUG? - Little detail - see bug 483222. Also, why is the tree the locusOfFocus?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'tree'"]))
+    ["BUG? - Little detail - see bug 483222.",
+     "BRAILLE LINE:  'SwingSet2 Application Grey December expanded'",
+     "     VISIBLE:  'Grey December expanded', cursor=1",
+     "SPEECH OUTPUT: 'Grey December expanded'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -262,10 +244,7 @@ sequence.append(utils.AssertPresentationAction(
     "14. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Grey December'",
      "     VISIBLE:  'Grey December', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Grey December'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Grey December'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -278,10 +257,7 @@ sequence.append(utils.AssertPresentationAction(
     "15. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application I Wish I Knew'",
      "     VISIBLE:  'I Wish I Knew', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'I Wish I Knew'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'I Wish I Knew'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -294,27 +270,20 @@ sequence.append(utils.AssertPresentationAction(
     "16. Down Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Someone To Watch Over Me'",
      "     VISIBLE:  'Someone To Watch Over Me', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Someone To Watch Over Me'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Someone To Watch Over Me'"]))
     
 ########################################################################
-# [[[BUG 483222: Where am i in JTree nodes gives little info]]]
-# Do a basic "Where Am I" via KP_Enter.  The following should be
-# presented:
+# Do a basic "Where Am I" via KP_Enter.
 #
-# SPEECH OUTPUT: 'Someone To Watch Over Me'
-# SPEECH OUTPUT: 'label'
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "17. Basic Where Am I",
-    ["BUG? - Little detail - see bug 483222. Also, why is the tree the locusOfFocus?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'tree'"]))
+    ["BUG? - Little detail - see bug 483222.",
+     "BRAILLE LINE:  'SwingSet2 Application Someone To Watch Over Me'",
+     "     VISIBLE:  'Someone To Watch Over Me', cursor=1",
+     "SPEECH OUTPUT: 'Someone To Watch Over Me'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -327,10 +296,7 @@ sequence.append(utils.AssertPresentationAction(
     "18. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application I Wish I Knew'",
      "     VISIBLE:  'I Wish I Knew', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'I Wish I Knew'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'I Wish I Knew'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -343,10 +309,7 @@ sequence.append(utils.AssertPresentationAction(
     "19. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Grey December'",
      "     VISIBLE:  'Grey December', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Grey December'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Grey December'"]))
 
 ##########################################################################
 # Expected output when node is selected:
@@ -359,10 +322,7 @@ sequence.append(utils.AssertPresentationAction(
     "20. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Grey December expanded'",
      "     VISIBLE:  'Grey December expanded', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Grey December expanded'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Grey December expanded'"]))
     
 ##########################################################################
 # Expected output when node is collaped:
@@ -373,7 +333,9 @@ sequence.append(WaitAction("object:state-changed:expanded", None, None,
                            pyatspi.ROLE_LABEL, 5000))
 sequence.append(utils.AssertPresentationAction(
     "21. Left Arrow in the tree",
-    ["BUG? - We're not presenting anything here. Should be told Grey December is collapsed."]))
+    ["BRAILLE LINE:  'SwingSet2 Application Grey December collapsed'",
+     "     VISIBLE:  'Grey December collapsed', cursor=1",
+     "SPEECH OUTPUT: 'collapsed'"]))
 
 ##########################################################################
 # Expected output when node is selected:
@@ -386,10 +348,7 @@ sequence.append(utils.AssertPresentationAction(
     "22. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application My Funny Valentine collapsed'",
      "     VISIBLE:  'My Funny Valentine collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'My Funny Valentine collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'My Funny Valentine collapsed'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -402,10 +361,7 @@ sequence.append(utils.AssertPresentationAction(
     "23. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Sings and Plays collapsed'",
      "     VISIBLE:  'Sings and Plays collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Sings and Plays collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Sings and Plays collapsed'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -418,10 +374,7 @@ sequence.append(utils.AssertPresentationAction(
     "24. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Chet Baker expanded'",
      "     VISIBLE:  'Chet Baker expanded', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Chet Baker expanded'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Chet Baker expanded'"]))
     
 ##########################################################################
 # Expected output when node is collaped:
@@ -432,7 +385,9 @@ sequence.append(WaitAction("object:state-changed:expanded", None, None,
                            pyatspi.ROLE_LABEL, 5000))
 sequence.append(utils.AssertPresentationAction(
     "25. Left Arrow in the tree",
-    ["BUG? - We're not presenting anything here. Should be told Chet Baker is collapsed."]))
+    ["BRAILLE LINE:  'SwingSet2 Application Chet Baker collapsed'",
+     "     VISIBLE:  'Chet Baker collapsed', cursor=1",
+     "SPEECH OUTPUT: 'collapsed'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -445,10 +400,7 @@ sequence.append(utils.AssertPresentationAction(
     "26. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Albert Ayler collapsed'",
      "     VISIBLE:  'Albert Ayler collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Albert Ayler collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Albert Ayler collapsed'"]))
 
 ##########################################################################
 # Expected output when node is selected:
@@ -461,10 +413,7 @@ sequence.append(utils.AssertPresentationAction(
     "27. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Jazz expanded'",
      "     VISIBLE:  'Jazz expanded', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Jazz expanded'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Jazz expanded'"]))
 
 ##########################################################################
 # Expected output when node is collaped:
@@ -475,7 +424,9 @@ sequence.append(WaitAction("object:state-changed:expanded", None, None,
                            pyatspi.ROLE_LABEL, 5000))
 sequence.append(utils.AssertPresentationAction(
     "28. Left Arrow in the tree",
-    ["BUG? - We're not presenting anything here. Should be told Jazz is collapsed."]))
+    ["BRAILLE LINE:  'SwingSet2 Application Jazz collapsed'",
+     "     VISIBLE:  'Jazz collapsed', cursor=1",
+     "SPEECH OUTPUT: 'collapsed'"]))
 
 ##########################################################################
 # Expected output when node is selected:
@@ -488,10 +439,7 @@ sequence.append(utils.AssertPresentationAction(
     "29. Up Arrow in the tree",
     ["BRAILLE LINE:  'SwingSet2 Application Classical collapsed'",
      "     VISIBLE:  'Classical collapsed', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree'",
-     "     VISIBLE:  'Tree', cursor=1",
-     "SPEECH OUTPUT: 'Classical collapsed'",
-     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page tree'"]))
+     "SPEECH OUTPUT: 'Classical collapsed'"]))
     
 ##########################################################################
 # Expected output when node is selected:
@@ -502,9 +450,10 @@ sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TREE, 5000))
 sequence.append(utils.AssertPresentationAction(
     "30. Up Arrow in the tree",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree Music expanded TREE LEVEL 1'",
+    ["BUG? - Seems a bit chatty",
+     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Tree Demo TabList Tree Demo Page ScrollPane Viewport Tree Music expanded TREE LEVEL 1'",
      "     VISIBLE:  'Music expanded TREE LEVEL 1', cursor=1",
-     "SPEECH OUTPUT: 'Music expanded tree level 1'"]))
+     "SPEECH OUTPUT: 'SwingSet2 frame Tree Demo tab list Tree Demo page Music expanded tree level 1'"]))
     
 ##########################################################################
 # Leave tree

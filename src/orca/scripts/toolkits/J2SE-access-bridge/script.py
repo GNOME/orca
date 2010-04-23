@@ -29,7 +29,6 @@ import orca.default as default
 import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
-import orca.keybindings as keybindings
 
 from speech_generator import SpeechGenerator
 from formatting import Formatting
@@ -49,6 +48,15 @@ class Script(default.Script):
         - app: the application to create a script for.
         """
         default.Script.__init__(self, app)
+
+        # Some objects which issue descendant changed events lack
+        # STATE_MANAGES_DESCENDANTS. As a result, onSelectionChanged
+        # doesn't ignore these objects. That in turn causes Orca to
+        # double-speak some items and/or set the locusOfFocus to a
+        # parent it shouldn't. See bgo#616582. [[[TODO - JD: remove
+        # this hack if and when we get a fix for that bug]]]
+        # 
+        self._lastDescendantChangedSource = None
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
@@ -133,6 +141,22 @@ class Script(default.Script):
 
         return count - 1
 
+    def isSameObject(self, obj1, obj2):
+        """Compares two objects to determine if they are functionally
+        the same object. This is needed because some applications and
+        toolkits kill and replace accessibles."""
+
+        if (obj1 == obj2):
+            return True
+        elif (not obj1) or (not obj2):
+            return False
+
+        if obj1.getIndexInParent() != obj2.getIndexInParent() \
+           or obj1.childCount != obj2.childCount:
+            return False
+
+        return default.Script.isSameObject(self, obj1, obj2)
+
     def onFocus(self, event):
         """Called whenever an object gets focus.
 
@@ -166,6 +190,8 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        self._lastDescendantChangedSource = event.source
 
         # In Java comboboxes, when the list of options is popped up via
         # an up or down action, control (but not focus) goes to a LIST
@@ -219,6 +245,14 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        # Avoid doing this with objects that manage their descendants
+        # because they'll issue a descendant changed event. (Note: This
+        # equality check is intentional; isSameObject() is especially
+        # thorough with trees and tables, which is not performant.
+        #
+        if event.source == self._lastDescendantChangedSource:
+            return
 
         # We treat selected children as the locus of focus. When the
         # selection changes in a list we want to update the locus of

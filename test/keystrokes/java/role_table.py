@@ -225,8 +225,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BUG? - No output when navigating JTable with cursor. See bug 483214."]))
     
 ##########################################################################
-# TODO: Also, we get different behavior from Swing when we edit the cell by pressing space as opposed to double clicking with the pointer, in the former the caret is not shown, and pressing return puts us in the cell below it. In the latter the caret is visible, and after pressing return focus stays on the edited cell.
-# Edit a cell.
+# Press Space Bar on the current cell
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -236,10 +235,7 @@ sequence.append(utils.AssertPresentationAction(
     "13. Space Bar on the cell",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Andrews'",
      "     VISIBLE:  'Andrews', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Mark'",
-     "     VISIBLE:  'Mark', cursor=1",
-     "SPEECH OUTPUT: 'Last Name column header Andrews'",
-     "SPEECH OUTPUT: 'First Name column header Mark'"]))
+     "SPEECH OUTPUT: 'Last Name column header Andrews'"]))
     
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
@@ -270,11 +266,8 @@ sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
 sequence.append(utils.AssertPresentationAction(
     "16. Press Return",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Brian'",
-     "     VISIBLE:  'Brian', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Beck'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Beck'",
      "     VISIBLE:  'Beck', cursor=1",
-     "SPEECH OUTPUT: 'First Name column header Brian'",
      "SPEECH OUTPUT: 'Last Name column header Beck'"]))
 
 ##########################################################################
@@ -344,11 +337,8 @@ sequence.append(WaitAction("object:active-descendant-changed", None, None,
                            pyatspi.ROLE_TABLE, 5000))
 sequence.append(utils.AssertPresentationAction(
     "22. Press Return",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table First Name ColumnHeader Brian'",
-     "     VISIBLE:  'Brian', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Beck'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Table Demo TabList Table Demo Page ScrollPane Viewport Table Last Name ColumnHeader Beck'",
      "     VISIBLE:  'Beck', cursor=1",
-     "SPEECH OUTPUT: 'First Name column header Brian'",
      "SPEECH OUTPUT: 'Last Name column header Beck'"]))
     
 ##########################################################################
