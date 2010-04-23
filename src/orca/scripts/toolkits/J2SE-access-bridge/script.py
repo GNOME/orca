@@ -344,7 +344,10 @@ class Script(default.Script):
         # We'll ignore value changed events for Java's toggle buttons since
         # they also send a redundant object:state-changed:checked event.
         #
-        if event.source.getRole() == pyatspi.ROLE_TOGGLE_BUTTON:
+        ignoreRoles = [pyatspi.ROLE_TOGGLE_BUTTON,
+                       pyatspi.ROLE_RADIO_BUTTON,
+                       pyatspi.ROLE_CHECK_BOX]
+        if event.source.getRole() in ignoreRoles:
             return
 
         # Java's SpinButtons are the most caret movement happy thing

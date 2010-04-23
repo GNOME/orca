@@ -102,12 +102,8 @@ sequence.append(WaitAction("object:state-changed:checked", None,
                            None, pyatspi.ROLE_CHECK_BOX,5000))
 sequence.append(utils.AssertPresentationAction(
     "One checkbox checked",
-    ["BUG? - Why are we presenting the state twice?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Text CheckBoxes Panel <x> One  CheckBox'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Text CheckBoxes Panel <x> One  CheckBox'",
      "     VISIBLE:  '<x> One  CheckBox', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Text CheckBoxes Panel <x> One  CheckBox'",
-     "     VISIBLE:  '<x> One  CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'checked'",
      "SPEECH OUTPUT: 'checked'"]))
 
 ########################################################################
@@ -132,12 +128,8 @@ sequence.append(WaitAction("object:state-changed:checked", None,
                            None, pyatspi.ROLE_CHECK_BOX, 5000))
 sequence.append(utils.AssertPresentationAction(
     "One checkbox unchecked",
-    ["BUG? - Why are we presenting the state twice?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Text CheckBoxes Panel < > One  CheckBox'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Text CheckBoxes Panel < > One  CheckBox'",
      "     VISIBLE:  '< > One  CheckBox', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Text CheckBoxes Panel < > One  CheckBox'",
-     "     VISIBLE:  '< > One  CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: 'not checked'"]))
 
 sequence.append(KeyComboAction("Tab"))
@@ -179,12 +171,8 @@ sequence.append(WaitAction("object:state-changed:checked", None,
                            None, pyatspi.ROLE_CHECK_BOX, 5000))
 sequence.append(utils.AssertPresentationAction(
     "One lightbulb checkbox checked",
-    ["BUG? - Why are we presenting the state twice?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Image CheckBoxes Panel <x> One  CheckBox'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Image CheckBoxes Panel <x> One  CheckBox'",
      "     VISIBLE:  '<x> One  CheckBox', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Image CheckBoxes Panel <x> One  CheckBox'",
-     "     VISIBLE:  '<x> One  CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'checked'",
      "SPEECH OUTPUT: 'checked'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -193,12 +181,8 @@ sequence.append(WaitAction("object:state-changed:checked", None,
                            None, pyatspi.ROLE_CHECK_BOX, 5000))
 sequence.append(utils.AssertPresentationAction(
     "One lightbulb unchecked checkbox",
-    ["BUG? - Why are we presenting the state twice?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Image CheckBoxes Panel < > One  CheckBox'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Image CheckBoxes Panel < > One  CheckBox'",
      "     VISIBLE:  '< > One  CheckBox', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Image CheckBoxes Panel < > One  CheckBox'",
-     "     VISIBLE:  '< > One  CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'not checked'",
      "SPEECH OUTPUT: 'not checked'"]))
 
 sequence.append(KeyComboAction("Tab"))

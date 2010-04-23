@@ -91,12 +91,8 @@ sequence.append(WaitAction("object:property-change:accessible-value", None,
                            None, pyatspi.ROLE_RADIO_BUTTON, 5000))
 sequence.append(utils.AssertPresentationAction(
     "2. Select the focused radio button",
-    ["BUG? - Why are we presenting the state twice?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio One  RadioButton'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio One  RadioButton'",
      "     VISIBLE:  '&=y Radio One  RadioButton', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio One  RadioButton'",
-     "     VISIBLE:  '&=y Radio One  RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
@@ -120,12 +116,8 @@ sequence.append(WaitAction("object:property-change:accessible-value", None,
                            None, pyatspi.ROLE_RADIO_BUTTON, 5000))
 sequence.append(utils.AssertPresentationAction(
     "4. Select the focused radio button",
-    ["BUG? - Why are we presenting the state twice?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio Two RadioButton'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio Two RadioButton'",
      "     VISIBLE:  '&=y Radio Two RadioButton', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio Two RadioButton'",
-     "     VISIBLE:  '&=y Radio Two RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'selected'"]))
 
 ########################################################################
@@ -149,12 +141,8 @@ sequence.append(WaitAction("object:property-change:accessible-value", None,
                            None, pyatspi.ROLE_RADIO_BUTTON, 5000))
 sequence.append(utils.AssertPresentationAction(
     "6. Select the focused radio button",
-    ["BUG? - Why are we presenting the state twice?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio Three RadioButton'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio Three RadioButton'",
      "     VISIBLE:  '&=y Radio Three RadioButton', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Text Radio Buttons Panel Text Radio Buttons &=y Radio Three RadioButton'",
-     "     VISIBLE:  '&=y Radio Three RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'selected'"]))
     
 ########################################################################
@@ -192,9 +180,6 @@ sequence.append(utils.AssertPresentationAction(
     "9. Select the focused radio button",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Image Radio Buttons Panel Image Radio Buttons &=y Radio One  RadioButton'",
      "     VISIBLE:  '&=y Radio One  RadioButton', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Image Radio Buttons Panel Image Radio Buttons &=y Radio One  RadioButton'",
-     "     VISIBLE:  '&=y Radio One  RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'selected'"]))
     
 ########################################################################
@@ -244,9 +229,6 @@ sequence.append(utils.AssertPresentationAction(
     "13. Select the focused radio button",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Image Radio Buttons Panel Image Radio Buttons &=y Radio Two RadioButton'",
      "     VISIBLE:  '&=y Radio Two RadioButton', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Image Radio Buttons Panel Image Radio Buttons &=y Radio Two RadioButton'",
-     "     VISIBLE:  '&=y Radio Two RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'selected'"]))
     
 ########################################################################
@@ -284,9 +266,6 @@ sequence.append(utils.AssertPresentationAction(
     "16. Select the focused radio button",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Image Radio Buttons Panel Image Radio Buttons &=y Radio Three RadioButton'",
      "     VISIBLE:  '&=y Radio Three RadioButton', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Radio Buttons TabList Radio Buttons Page Image Radio Buttons Panel Image Radio Buttons &=y Radio Three RadioButton'",
-     "     VISIBLE:  '&=y Radio Three RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'selected'"]))
     
 # Tab back up to begining
