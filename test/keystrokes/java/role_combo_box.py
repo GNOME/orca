@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. focusing over first combo box",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Howard, Jeff Combo'",
      "     VISIBLE:  'Presets: Philip, Howard, Jeff Co', cursor=10",
-     "SPEECH OUTPUT: 'ComboBox Demo page Presets: Philip, Howard, Jeff combo box'"]))
+     "SPEECH OUTPUT: 'Presets: Philip, Howard, Jeff combo box'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -99,7 +99,6 @@ sequence.append(utils.AssertPresentationAction(
 # 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Jeff, Larry, Philip", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "4. Arrow Down",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Jeff, Larry, Philip Combo'",
@@ -111,7 +110,6 @@ sequence.append(utils.AssertPresentationAction(
 # 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Howard, Scott, Hans", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "5. Arrow Down",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Howard, Scott, Hans Combo'",
@@ -139,7 +137,6 @@ sequence.append(utils.AssertPresentationAction(
 # 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitForFocus("Philip, Jeff, Hans", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "7. Arrow Down",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Jeff, Hans Combo'",
@@ -184,7 +181,6 @@ sequence.append(utils.AssertPresentationAction(
 # 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Howard, Scott, Hans", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "11. Arrow Up",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Howard, Scott, Hans Combo'",
@@ -196,7 +192,6 @@ sequence.append(utils.AssertPresentationAction(
 # 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Jeff, Larry, Philip", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "12. Arrow Up",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Jeff, Larry, Philip Combo'",
@@ -208,7 +203,6 @@ sequence.append(utils.AssertPresentationAction(
 # 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
-sequence.append(WaitForFocus("Philip, Howard, Jeff", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "13. Arrow Up",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane ComboBox Demo TabList ComboBox Demo Page Presets: Philip, Howard, Jeff Combo'",

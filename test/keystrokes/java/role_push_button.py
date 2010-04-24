@@ -70,7 +70,7 @@ sequence.append(utils.AssertPresentationAction(
     "1. Move to One button",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Buttons TabList Buttons Page Text Buttons Panel One  Button'",
      "     VISIBLE:  'One  Button', cursor=1",
-     "SPEECH OUTPUT: 'Buttons page Text Buttons panel One  button'"]))
+     "SPEECH OUTPUT: 'Text Buttons panel One  button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.

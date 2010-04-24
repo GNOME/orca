@@ -199,6 +199,19 @@ class Script(default.Script):
 
         role = event.source.getRole()
 
+        # Ignore bogus/senseless focus claims because they just cause us to
+        # be more chatty as a result of the event and then later as a result
+        # of the changed locusOfFocus.
+        #
+        if role == pyatspi.ROLE_ROOT_PANE:
+            return
+
+        if role == pyatspi.ROLE_PAGE_TAB_LIST and orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_PAGE_TAB \
+           and orca_state.locusOfFocus.getState().\
+               contains(pyatspi.STATE_FOCUSED):
+            return
+
         if role == pyatspi.ROLE_MENU:
             # Override default.py's onFocus decision to ignore focus
             # events on MENU items with selected children.  This is

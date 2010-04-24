@@ -73,13 +73,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Laine", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.AssertPresentationAction(
     "1. Move to Laine tab",
-    ["BUG? - Seems extra chatty",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane TabbedPane Demo TabList TabbedPane Demo Page Laine Page'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane TabbedPane Demo TabList TabbedPane Demo Page Laine Page'",
      "     VISIBLE:  'Laine Page', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane TabbedPane Demo TabList TabbedPane Demo Page Laine TabList'",
-     "     VISIBLE:  'Laine TabList', cursor=1",
-     "SPEECH OUTPUT: 'Laine tab list Laine page'",
-     "SPEECH OUTPUT: 'Laine tab list'"]))
+     "SPEECH OUTPUT: 'Laine tab list Laine page'"]))
 
 ########################################################################
 # Expected output when "Ewan" tab gets focus.

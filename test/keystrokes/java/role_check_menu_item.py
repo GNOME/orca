@@ -16,11 +16,6 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
 
 sequence.append(PauseAction(5000))
 
-# Hack to deal with a timing issue which seems to interfere with our
-# setting the locusOfFocus reliably.
-sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
-
 sequence.append(KeyComboAction("F10"))
 sequence.append(WaitForFocus("File", acc_role=pyatspi.ROLE_MENU))
 sequence.append(KeyComboAction("Right"))
@@ -91,7 +86,7 @@ sequence.append(utils.AssertPresentationAction(
     "Enable Drag Support checked menu item",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar <x> Enable Drag Support CheckBox'",
      "     VISIBLE:  '<x> Enable Drag Support CheckBox', cursor=1",
-     "SPEECH OUTPUT: 'Swing demo menu bar menu bar Options menu Enable Drag Support check box checked'"]))
+     "SPEECH OUTPUT: 'Enable Drag Support check box checked'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.

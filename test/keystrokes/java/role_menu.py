@@ -35,7 +35,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'File Menu', cursor=1",
      "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane PopupMenu About'",
      "     VISIBLE:  'About', cursor=1",
-     "SPEECH OUTPUT: 'Swing demo menu bar menu bar File menu'",
+     "SPEECH OUTPUT: 'File menu'",
      "SPEECH OUTPUT: 'About'"]))
 
 ########################################################################
@@ -64,7 +64,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Look & Feel Menu', cursor=1",
      "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Look & Feel Menu'",
      "     VISIBLE:  'Look & Feel Menu', cursor=1",
-     "SPEECH OUTPUT: 'Swing demo menu bar menu bar Look & Feel menu'"]))
+     "SPEECH OUTPUT: 'Look & Feel menu'"]))
 
 ########################################################################
 # Basic Where Am I

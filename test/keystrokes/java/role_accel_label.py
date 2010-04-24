@@ -25,10 +25,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'File Menu', cursor=1",
      "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane File Menu'",
      "     VISIBLE:  'File Menu', cursor=1",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane'",
-     "     VISIBLE:  'RootPane', cursor=1",
-     "SPEECH OUTPUT: 'SwingSet2 frame Swing demo menu bar menu bar File menu'",
-     "SPEECH OUTPUT: 'root pane'"]))
+     "SPEECH OUTPUT: 'File menu'"]))
     
 ########################################################################
 # Down Arrow to the About menu item
@@ -39,10 +36,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("About", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "2. Arrow Down",
-    ["BUG? - Too chatty.",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar About'",
+    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Swing demo menu bar MenuBar About'",
      "     VISIBLE:  'About', cursor=1",
-     "SPEECH OUTPUT: 'Swing demo menu bar menu bar File menu About'"]))
+     "SPEECH OUTPUT: 'About'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
