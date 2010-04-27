@@ -1835,12 +1835,12 @@ class StructuralNavigation:
         # An anchor is a named spot that one can jump to.
         #
         prevDesc = _("Goes to previous anchor.")
-        bindings["previous"] = ["", settings.NO_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["a", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating among anchors in a document.
         # An anchor is a named spot that one can jump to.
         #
         nextDesc = _("Goes to next anchor.")
-        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["a", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _anchorCriteria(self, collection, arg=None):
@@ -1996,12 +1996,12 @@ class StructuralNavigation:
         # within a document.
         #
         prevDesc = _("Goes to previous button.")
-        bindings["previous"] = ["", settings.NO_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["b", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating among buttons in a form
         # within a document.
         #
         nextDesc = _("Goes to next button.")
-        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["b", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _buttonCriteria(self, collection, arg=None):
@@ -2075,12 +2075,12 @@ class StructuralNavigation:
         # within a document.
         #
         prevDesc = _("Goes to previous check box.")
-        bindings["previous"] = ["", settings.NO_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["x", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating among check boxes in a form
         # within a document.
         #
         nextDesc = _("Goes to next check box.")
-        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["x", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _checkBoxCriteria(self, collection, arg=None):
@@ -2247,12 +2247,12 @@ class StructuralNavigation:
         # within a document.
         #
         prevDesc = _("Goes to previous combo box.")
-        bindings["previous"] = ["", settings.NO_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["c", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating among combo boxes in a form
         # within a document.
         #
         nextDesc = _("Goes to next combo box.")
-        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["c", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _comboBoxCriteria(self, collection, arg=None):
@@ -2326,12 +2326,12 @@ class StructuralNavigation:
         # within a document.
         #
         prevDesc = _("Goes to previous entry.")
-        bindings["previous"] = ["", settings.NO_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["e", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating among text entries
         # in a form.
         #
         nextDesc = _("Goes to next entry.")
-        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["e", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _entryCriteria(self, collection, arg=None):
@@ -3149,12 +3149,12 @@ class StructuralNavigation:
         # <hr> tag, in a document.
         #
         prevDesc = _("Goes to previous separator.")
-        bindings["previous"] = ["", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["s", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating among separators, such as the
         # <hr> tag, in a document.
         #
         nextDesc = _("Goes to next separator.")
-        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["s", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _separatorCriteria(self, collection, arg=None):
