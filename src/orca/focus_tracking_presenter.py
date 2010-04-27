@@ -817,11 +817,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                 debug.println(debug.LEVEL_ALL,
                               "---------> QUEUEING EVENT %s" % e.type)
 
-            # Some toolkits (e.g., Java - see bug #531869) need to
+            # Some toolkits (e.g., Java - see bug #531869) may need to
             # have their events processed immediately.
             #
             try:
-                if event.host_application.toolkitName \
+                if len(settings.synchronousToolkits) > 0 and \
+                    event.host_application.toolkitName \
                     in settings.synchronousToolkits:
                     asyncMode = False
             except:
