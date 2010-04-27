@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
@@ -441,9 +440,7 @@ class Script(default.Script):
             utterances = \
                  self.speechGenerator.generateSpeech(newLocusOfFocus)
             speech.speak(utterances)
-            brailleRegions = \
-                 self.brailleGenerator.generateBraille(newLocusOfFocus)
-            braille.displayRegions(brailleRegions)
+            self.displayBrailleForObject(newLocusOfFocus)
             orca.setLocusOfFocus(
                 event, newLocusOfFocus, notifyPresentationManager=False)
             return
@@ -475,9 +472,7 @@ class Script(default.Script):
             for utterance in utterances:
                 adjustedUtterances.append(self.adjustForRepeats(utterance))
             speech.speak(adjustedUtterances)
-            brailleRegions = \
-                     self.brailleGenerator.generateBraille(newLocusOfFocus)
-            braille.displayRegions(brailleRegions)
+            self.displayBrailleForObject(newLocusOfFocus)
             orca.setLocusOfFocus(
                 event, newLocusOfFocus, notifyPresentationManager=False)
             return
@@ -557,9 +552,7 @@ class Script(default.Script):
                 utterances = \
                      self.speechGenerator.generateSpeech(event.source)
                 speech.speak(utterances)
-                brailleRegions = \
-                     self.brailleGenerator.generateBraille(event.source)
-                braille.displayRegions(brailleRegions)
+                self.displayBrailleForObject(event.source)
                 orca.setLocusOfFocus(
                     event, event.source, notifyPresentationManager=False)
                 return

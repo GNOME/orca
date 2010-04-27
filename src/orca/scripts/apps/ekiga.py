@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.braille as braille
 import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -136,7 +135,7 @@ class Script(default.Script):
 
         if self.isChatRoomMsg(event.source):
             speech.speak(event.any_data)
-            braille.displayMessage(event.any_data)
+            self.displayBrailleMessage(event.any_data)
             return
 
         default.Script.onTextInserted(self, event)

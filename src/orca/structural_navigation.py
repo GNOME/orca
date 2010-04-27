@@ -29,7 +29,6 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import braille
 import debug
 import input_event
 import keybindings
@@ -657,7 +656,7 @@ class StructuralNavigation:
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
         speech.speak(string)
-        braille.displayMessage(string)
+        self._script.displayBrailleMessage(string)
 
     #########################################################################
     #                                                                       #

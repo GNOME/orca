@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2004-2009 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -25,7 +26,8 @@ for GTK."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
+                "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
 import locale
@@ -2640,7 +2642,7 @@ class Script(script.Script):
         if speechResult:
             speech.speak(speechResult)
         if brailleResult:
-            braille.displayMessage(brailleResult)
+            self.displayBrailleMessage(brailleResult)
 
     def doWhereAmI(self, inputEvent, basicOnly):
         """Peforms the whereAmI operation.
@@ -3217,9 +3219,9 @@ class Script(script.Script):
         if not obj:
             return
 
-        braille.clear()
+        self.clearBraille()
 
-        line = braille.Line()
+        line = self.getNewBrailleLine()
         braille.addLine(line)
 
         # For multiline text areas, we only show the context if we
@@ -3232,17 +3234,17 @@ class Script(script.Script):
             text = None
 
         result = self.brailleGenerator.generateBraille(obj)
-        line.addRegions(result[0])
+        self.addBrailleRegionsToLine(result[0], line)
 
         if extraRegion:
-            line.addRegion(extraRegion)
+            self.addBrailleRegionToLine(extraRegion, line)
 
         if extraRegion:
-            braille.setFocus(extraRegion)
+            self.setBrailleFocus(extraRegion)
         else:
-            braille.setFocus(result[1])
+            self.setBrailleFocus(result[1])
 
-        braille.refresh(True)
+        self.refreshBraille(True)
 
     ########################################################################
     #                                                                      #
@@ -3434,7 +3436,7 @@ class Script(script.Script):
             if isinstance(region, braille.Text) \
                and (region.accessible == obj):
                 if region.repositionCursor():
-                    braille.refresh(True)
+                    self.refreshBraille(True)
                     brailleNeedsRepainting = False
                 break
 
@@ -4352,7 +4354,7 @@ class Script(script.Script):
             # focus to an inaccessible application. See bug #519901 for
             # more details.
             #
-            braille.clear()
+            self.clearBraille()
 
             # Hide the flat review window and reset it so that it will be
             # recreated.
@@ -4759,7 +4761,7 @@ class Script(script.Script):
             debug.println(debug.LEVEL_OFF, infoString)
             print infoString
             speech.speak(infoString)
-            braille.displayMessage(infoString)
+            self.displayBrailleMessage(infoString)
 
         return True
 
@@ -4812,7 +4814,7 @@ class Script(script.Script):
         # This text here is what is to be presented on the braille
         # display.
         #
-        braille.displayMessage(_("Learn mode.  Press escape to exit."))
+        self.displayBrailleMessage(_("Learn mode.  Press escape to exit."))
         settings.learnModeEnabled = True
         return True
 
@@ -4962,7 +4964,7 @@ class Script(script.Script):
             # keep the position the same as we move to characters above
             # and below us.
             #
-            self.targetCursorCell = braille.cursorCell
+            self.targetCursorCell = self.getBrailleCursorCell()
 
         return self.flatReviewContext
 
@@ -5024,19 +5026,19 @@ class Script(script.Script):
             regions = []
             regionWithFocus = None
 
-        line = braille.Line()
-        line.addRegions(regions)
+        line = self.getNewBrailleLine()
+        self.addBrailleRegionsToLine(regions, line)
         braille.setLines([line])
-        braille.setFocus(regionWithFocus, False)
+        self.setBrailleFocus(regionWithFocus, False)
         if regionWithFocus:
-            braille.panToOffset(regionWithFocus.brailleOffset \
-                                + regionWithFocus.cursorOffset)
+            self.panBrailleToOffset(regionWithFocus.brailleOffset \
+                                    + regionWithFocus.cursorOffset)
 
         if self.justEnteredFlatReviewMode:
-            braille.refresh(True, self.targetCursorCell)
+            self.refreshBraille(True, self.targetCursorCell)
             self.justEnteredFlatReviewMode = False
         else:
-            braille.refresh(True, targetCursorCell)
+            self.refreshBraille(True, targetCursorCell)
 
     def _setFlatReviewContextToBeginningOfBrailleDisplay(self):
         """Sets the character of interest to be the first character showing
@@ -5079,11 +5081,11 @@ class Script(script.Script):
         associated with cell 0."""
 
         if self.flatReviewContext:
-            if braille.beginningIsShowing:
+            if self.isBrailleBeginningShowing():
                 self.flatReviewContext.goBegin(flat_review.Context.LINE)
                 self.reviewPreviousCharacter(inputEvent)
             else:
-                braille.panLeft(panAmount)
+                self.panBrailleInDirection(panAmount, panToLeft=True)
 
             # This will update our target cursor cell
             #
@@ -5095,7 +5097,7 @@ class Script(script.Script):
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
-        elif braille.beginningIsShowing and orca_state.locusOfFocus \
+        elif self.isBrailleBeginningShowing() and orca_state.locusOfFocus \
              and self.isTextArea(orca_state.locusOfFocus):
 
             # If we're at the beginning of a line of a multiline text
@@ -5125,11 +5127,11 @@ class Script(script.Script):
                 context.goBegin(flat_review.Context.LINE)
                 self.reviewPreviousCharacter(inputEvent)
         else:
-            braille.panLeft(panAmount)
+            self.panBrailleInDirection(panAmount, panToLeft=True)
             # We might be panning through a flashed message.
             #
             braille.resetFlashTimer()
-            braille.refresh(False, stopFlash=False)
+            self.refreshBraille(False, stopFlash=False)
 
         return True
 
@@ -5153,11 +5155,11 @@ class Script(script.Script):
         associated with cell 0."""
 
         if self.flatReviewContext:
-            if braille.endIsShowing:
+            if self.isBrailleEndShowing():
                 self.flatReviewContext.goEnd(flat_review.Context.LINE)
                 self.reviewNextCharacter(inputEvent)
             else:
-                braille.panRight(panAmount)
+                self.panBrailleInDirection(panAmount, panToLeft=False)
 
             # This will update our target cursor cell
             #
@@ -5170,7 +5172,7 @@ class Script(script.Script):
 
             self.targetCursorCell = 1
             self.updateBrailleReview(self.targetCursorCell)
-        elif braille.endIsShowing and orca_state.locusOfFocus \
+        elif self.isBrailleEndShowing() and orca_state.locusOfFocus \
              and self.isTextArea(orca_state.locusOfFocus):
             # If we're at the end of a line of a multiline text area, then
             # force it's caret to the beginning of the next line.  The
@@ -5186,11 +5188,11 @@ class Script(script.Script):
             if endOffset < text.characterCount:
                 text.setCaretOffset(endOffset)
         else:
-            braille.panRight(panAmount)
+            self.panBrailleInDirection(panAmount, panToLeft=False)
             # We might be panning through a flashed message.
             #
             braille.resetFlashTimer()
-            braille.refresh(False, stopFlash=False)
+            self.refreshBraille(False, stopFlash=False)
 
         return True
 
@@ -5214,7 +5216,7 @@ class Script(script.Script):
     def setContractedBraille(self, inputEvent=None):
         """Toggles contracted braille."""
 
-        braille.setContractedBraille(inputEvent)
+        self._setContractedBraille(inputEvent)
         return True
 
     def processRoutingKey(self, inputEvent=None):
@@ -5228,7 +5230,7 @@ class Script(script.Script):
         active text area.
         """
 
-        obj, caretOffset = braille.getCaretContext(inputEvent)
+        obj, caretOffset = self.getBrailleCaretContext(inputEvent)
 
         if caretOffset >= 0:
             self.clearTextSelection(obj)
@@ -5240,7 +5242,7 @@ class Script(script.Script):
         """Extends the text selection in the currently active text
         area and also copies the selected text to the system clipboard."""
 
-        obj, caretOffset = braille.getCaretContext(inputEvent)
+        obj, caretOffset = self.getBrailleCaretContext(inputEvent)
 
         if caretOffset >= 0:
             self.adjustTextSelection(obj, caretOffset)
@@ -5408,7 +5410,7 @@ class Script(script.Script):
 
         if moved:
             self._reviewCurrentLine(inputEvent)
-            self.targetCursorCell = braille.cursorCell
+            self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5421,7 +5423,7 @@ class Script(script.Script):
         context.goBegin()
 
         self._reviewCurrentLine(inputEvent)
-        self.targetCursorCell = braille.cursorCell
+        self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5437,7 +5439,7 @@ class Script(script.Script):
 
         if moved:
             self._reviewCurrentLine(inputEvent)
-            self.targetCursorCell = braille.cursorCell
+            self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5451,7 +5453,7 @@ class Script(script.Script):
         context.goEnd(flat_review.Context.WINDOW)
         context.goBegin(flat_review.Context.LINE)
         self._reviewCurrentLine(inputEvent)
-        self.targetCursorCell = braille.cursorCell
+        self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5464,7 +5466,7 @@ class Script(script.Script):
         context.goEnd()
 
         self._reviewCurrentLine(inputEvent)
-        self.targetCursorCell = braille.cursorCell
+        self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5589,7 +5591,7 @@ class Script(script.Script):
 
         if moved:
             self._reviewCurrentItem(inputEvent)
-            self.targetCursorCell = braille.cursorCell
+            self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5604,7 +5606,7 @@ class Script(script.Script):
 
         if moved:
             self._reviewCurrentItem(inputEvent)
-            self.targetCursorCell = braille.cursorCell
+            self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5725,7 +5727,7 @@ class Script(script.Script):
 
         if moved:
             self._reviewCurrentCharacter(inputEvent)
-            self.targetCursorCell = braille.cursorCell
+            self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5737,7 +5739,7 @@ class Script(script.Script):
         context.goEnd(flat_review.Context.LINE)
 
         self.reviewCurrentCharacter(inputEvent)
-        self.targetCursorCell = braille.cursorCell
+        self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5752,7 +5754,7 @@ class Script(script.Script):
 
         if moved:
             self._reviewCurrentCharacter(inputEvent)
-            self.targetCursorCell = braille.cursorCell
+            self.targetCursorCell = self.getBrailleCursorCell()
 
         return True
 
@@ -5823,13 +5825,13 @@ class Script(script.Script):
                 # they were searching for was not found.
                 #
                 message = _("string not found")
-                braille.displayMessage(message)
+                self.displayBrailleMessage(message)
                 speech.speak(message)
             else:
                 context.setCurrent(location.lineIndex, location.zoneIndex, \
                                    location.wordIndex, location.charIndex)
                 self.reviewCurrentItem(None)
-                self.targetCursorCell = braille.cursorCell
+                self.targetCursorCell = self.getBrailleCursorCell()
 
     def findNext(self, inputEvent):
         """Searches forward for the next instance of the string
@@ -8556,6 +8558,348 @@ class Script(script.Script):
                     if bb.isInBox(x, y):
                         return text_contents[start+a:start+b], start+a, start+b
         return '', 0, 0
+
+    ########################################################################
+    #                                                                      #
+    # Braille methods                                                      #
+    # (scripts should not call methods in braille.py directly)             #
+    #                                                                      #
+    ########################################################################
+
+    # [[[TODO - JD: Soon I'll add a check to only do the braille
+    # presentation if the user has braille or the braille monitor
+    # enabled. For now, the easiest way to regression test these
+    # changes is to always present braille.]]]
+
+    @staticmethod
+    def addBrailleRegionToLine(region, line):
+        """Adds the braille region to the line.
+
+        Arguments:
+        - region: a braille.Region (e.g. what is returned by the braille
+          generator's generateBraille() method.
+        - line: a braille.Line
+        """
+
+        line.addRegion(region)
+
+    @staticmethod
+    def addBrailleRegionsToLine(regions, line):
+        """Adds the braille region to the line.
+
+        Arguments:
+        - regions: a series of braille.Region instances (a single instance
+          being what is returned by the braille generator's generateBraille()
+          method.
+        - line: a braille.Line
+        """
+
+        line.addRegions(regions)
+
+    @staticmethod
+    def addToLineAsBrailleRegion(string, line):
+        """Creates a Braille Region out of string and adds it to the line.
+
+        Arguments:
+        - string: the string to be displayed
+        - line: a braille.Line
+        """
+
+        line.addRegion(braille.Region(string))
+
+    @staticmethod
+    def brailleRegionsFromStrings(strings):
+        """Creates a list of braille regions from the list of strings.
+
+        Arguments:
+        - strings: a list of strings from which to create the list of
+          braille Region instances
+
+        Returns the list of braille Region instances
+        """
+
+        brailleRegions = []
+        for string in strings:
+            brailleRegions.append(braille.Region(string))
+
+        return brailleRegions
+
+    @staticmethod
+    def clearBraille():
+        """Clears the logical structure, but keeps the Braille display as is
+        (until a refresh operation)."""
+
+        braille.clear()
+
+    @staticmethod
+    def displayBrailleMessage(message, cursor=-1, flashTime=0):
+        """Displays a single line, setting the cursor to the given position,
+        ensuring that the cursor is in view.
+
+        Arguments:
+        - message: the string to display
+        - cursor: the 0-based cursor position, where -1 (default) means no
+          cursor
+        - flashTime:  if non-0, the number of milliseconds to display the
+          regions before reverting back to what was there before. A 0 means
+          to not do any flashing.  A negative number means to display the
+          message until some other message comes along or the user presses
+          a cursor routing key.
+        """
+
+        braille.displayMessage(message, cursor, flashTime)
+
+    @staticmethod
+    def displayBrailleRegions(regionInfo, flashTime=0):
+        """Displays a list of regions on a single line, setting focus to the
+        specified region.  The regionInfo parameter is something that is
+        typically returned by a call to braille_generator.generateBraille.
+
+        Arguments:
+        - regionInfo: a list where the first element is a list of regions
+          to display and the second element is the region with focus (must
+          be in the list from element 0)
+        - flashTime:  if non-0, the number of milliseconds to display the
+          regions before reverting back to what was there before. A 0 means
+          to not do any flashing. A negative number means to display the
+          message until some other message comes along or the user presses
+          a cursor routing key.
+        """
+
+        braille.displayRegions(regionInfo, flashTime)
+
+    def displayBrailleForObject(self, obj):
+        """Convenience method for scripts combining the call to the braille
+        generator for the script with the call to displayBrailleRegions.
+
+        Arguments:
+        - obj: the accessible object to display in braille
+        """
+
+        regions = self.brailleGenerator.generateBraille(obj)
+        self.displayBrailleRegions(regions)
+
+    @staticmethod
+    def getBrailleCaretContext(event):
+        """Gets the accesible and caret offset associated with the given
+        event.  The event should have a BrlAPI event that contains an
+        argument value that corresponds to a cell on the display.
+
+        Arguments:
+        - event: an instance of input_event.BrailleEvent.  event.event is
+          the dictionary form of the expanded BrlAPI event.
+        """
+
+        return braille.getCaretContext(event)
+
+    @staticmethod
+    def getBrailleCursorCell():
+        """Returns the value of position of the braille cell which has the
+        cursor. A value of 0 means no cell has the cursor."""
+
+        return braille.cursorCell
+
+    @staticmethod
+    def getNewBrailleLine(clearBraille=False, addLine=False):
+        """Creates a new braille Line.
+
+        Arguments:
+        - clearBraille: Whether the display should be cleared.
+        - addLine: Whether the line should be added to the logical display
+          for painting.
+
+        Returns the new Line.
+        """
+
+        if clearBraille:
+            braille.clear()
+        line = braille.Line()
+        if addLine:
+            braille.addLine(line)
+
+        return braille.Line()
+
+    @staticmethod
+    def getNewBrailleComponent(accessible, string, cursorOffset=0,
+                               indicator='', expandOnCursor=False):
+        """Creates a new braille Component.
+
+        Arguments:
+        - accessible: the accessible associated with this region
+        - string: the string to be displayed
+        - cursorOffset: a 0-based index saying where to draw the cursor
+          for this Region if it gets focus
+
+        Returns the new Component.
+        """
+
+        return braille.Component(accessible, string, cursorOffset,
+                                 indicator, expandOnCursor)
+
+    @staticmethod
+    def getNewBrailleRegion(string, cursorOffset=0, expandOnCursor=False):
+        """Creates a new braille Region.
+
+        Arguments:
+        - string: the string to be displayed
+        - cursorOffset: a 0-based index saying where to draw the cursor
+          for this Region if it gets focus
+
+        Returns the new Region.
+        """
+
+        return braille.Region(string, cursorOffset, expandOnCursor)
+
+    @staticmethod
+    def getNewBrailleText(accessible, label="", eol="", startOffset=None,
+                          endOffset=None):
+
+        """Creates a new braille Text region.
+
+        Arguments:
+        - accessible: the accessible associated with this region and which
+          implements AtkText
+        - label: an optional label to display
+        - eol: the endOfLine indicator
+
+        Returns the new Text region.
+        """
+
+        return braille.Text(accessible, label, eol, startOffset, endOffset)
+
+    @staticmethod
+    def isBrailleBeginningShowing():
+        """If True, the beginning of the line is showing on the braille
+        display."""
+
+        return braille.beginningIsShowing
+
+    @staticmethod
+    def isBrailleEndShowing():
+        """If True, the end of the line is showing on the braille display."""
+
+        return braille.endIsShowing
+
+    @staticmethod
+    def panBrailleInDirection(panAmount=0, panToLeft=True):
+        """Pans the display to the left, limiting the pan to the beginning
+        of the line being displayed.
+
+        Arguments:
+        - panAmount: the amount to pan.  A value of 0 means the entire
+          width of the physical display.
+        - panToLeft: if True, pan to the left; otherwise to the right
+
+        Returns True if a pan actually happened.
+        """
+
+        if panToLeft:
+            return braille.panLeft(panAmount)
+        else:
+            return braille.panRight(panAmount)
+
+    @staticmethod
+    def panBrailleToOffset(offset):
+        """Automatically pan left or right to make sure the current offset
+        is showing."""
+
+        braille.panToOffset(offset)
+
+    @staticmethod
+    def presentItemsInBraille(items):
+        """Method to braille a list of items. Scripts should call this
+        method rather than handling the creation and displaying of a
+        braille line directly.
+
+        Arguments:
+        - items: a list of strings to be presented
+        """
+
+        line = braille.getShowingLine()
+        for item in items:
+            line.addRegion(braille.Region(" " + item))
+
+        braille.refresh()
+
+    @staticmethod
+    def refreshBraille(panToCursor=True, targetCursorCell=0, getLinkMask=True,
+                       stopFlash=True):
+        """This is the method scripts should use to refresh braille rather
+        than calling self.refreshBraille() directly. The intent is to centralize
+        such calls into as few places as possible so that we can easily and
+        safely not perform braille-related functions for users who do not
+        have braille and/or the braille monitor enabled.
+
+        Arguments:
+
+        - panToCursor: if True, will adjust the viewport so the cursor is
+          showing.
+        - targetCursorCell: Only effective if panToCursor is True.
+          0 means automatically place the cursor somewhere on the display so
+          as to minimize movement but show as much of the line as possible.
+          A positive value is a 1-based target cell from the left side of
+          the display and a negative value is a 1-based target cell from the
+          right side of the display.
+        - getLinkMask: Whether or not we should take the time to get the
+          attributeMask for links. Reasons we might not want to include
+          knowing that we will fail and/or it taking an unreasonable
+          amount of time (AKA Gecko).
+        - stopFlash: if True, kill any flashed message that may be showing.
+        """
+
+        braille.refresh(panToCursor, targetCursorCell, getLinkMask, stopFlash)
+
+    @staticmethod
+    def setBrailleFocus(region, panToFocus=True, getLinkMask=True):
+        """Specififes the region with focus.  This region will be positioned
+        at the home position if panToFocus is True.
+
+        Arguments:
+        - region: the given region, which much be in a line that has been
+          added to the logical display
+        - panToFocus: whether or not to position the region at the home
+          position
+        - getLinkMask: Whether or not we should take the time to get the
+          attributeMask for links. Reasons we might not want to include
+          knowning that we will fail and/or it taking an unreasonable
+          amount of time (AKA Gecko).
+        """
+
+        braille.setFocus(region, panToFocus, getLinkMask)
+
+    @staticmethod
+    def _setContractedBraille(event):
+        """Turns contracted braille on or off based upon the event.
+
+        Arguments:
+        - event: an instance of input_event.BrailleEvent.  event.event is
+          the dictionary form of the expanded BrlAPI event.
+        """
+
+        braille.setContractedBraille(event)
+
+    ########################################################################
+    #                                                                      #
+    # Speech methods                                                       #
+    # (scripts should not call methods in speech.py directly)              #
+    #                                                                      #
+    ########################################################################
+
+    @staticmethod
+    def presentItemsInSpeech(items):
+        """Method to speak a list of items. Scripts should call this
+        method rather than handling the creation and speaking of
+        utterances directly.
+
+        Arguments:
+        - items: a list of strings to be presented
+        """
+
+        utterances = []
+        for item in items:
+            utterances.append(item)
+
+        speech.speak(utterances)
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list

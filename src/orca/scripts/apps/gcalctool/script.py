@@ -25,7 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.braille as braille
 import orca.default as default
 import orca.input_event as input_event
 import orca.orca_state as orca_state
@@ -85,11 +84,11 @@ class Script(default.Script):
                 #
                 contents = _("Unable to get calculator display")
                 speech.speak(contents)
-                braille.displayMessage(contents)
+                self.displayBrailleMessage(contents)
             else:
                 self._resultsDisplay = objs[0]
                 contents = self.getText(self._resultsDisplay, 0, -1)
-                braille.displayMessage(contents)
+                self.displayBrailleMessage(contents)
                 # The status line in gcalctool 5.29 is a sibling of the
                 # edit bar.
                 #
@@ -123,7 +122,7 @@ class Script(default.Script):
         #
         if self.isSameObject(event.source, self._resultsDisplay):
             contents = self.getText(self._resultsDisplay, 0, -1)
-            braille.displayMessage(contents)
+            self.displayBrailleMessage(contents)
 
             if (orca_state.lastInputEvent is None) \
                    or \

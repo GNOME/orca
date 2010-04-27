@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
@@ -419,17 +418,12 @@ class Script(default.Script):
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                           "gedit.onStateChanged - print preview - page #.")
-            line = braille.getShowingLine()
             parent = event.source.parent
             label1 = self.getDisplayedText(parent[1])
             label2 = self.getDisplayedText(parent[2])
-
-            utterances = [ label1, label2 ]
-            line.addRegion(braille.Region(" " + label1))
-            line.addRegion(braille.Region(" " + label2))
-
-            speech.speak(utterances)
-            braille.refresh()
+            items = [label1, label2]
+            self.presentItemsInSpeech(items)
+            self.presentItemsInBraille(items)
 
     # This method tries to detect and handle the following cases:
     # 1) check spelling dialog.

@@ -25,7 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.braille as braille
 import orca.default as default
 try:
     import orca.gsmag as mag
@@ -114,7 +113,7 @@ class Script(default.Script):
             #
             text += ". " + _("inaccessible")
 
-        braille.displayMessage(text)
+        self.displayBrailleMessage(text)
         speech.speak(text)
         mag.magnifyAccessible(None, obj)
 

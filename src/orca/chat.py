@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import braille
 import input_event
 import keybindings
 import orca_state
@@ -660,7 +659,7 @@ class Chat:
 
         if len(text.strip()):
             speech.speak(text)
-        braille.displayMessage(text)
+        self._script.displayBrailleMessage(text)
 
     def getMessageFromEvent(self, event):
         """Get the actual displayed message. This will almost always be the

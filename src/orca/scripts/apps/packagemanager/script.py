@@ -1,6 +1,7 @@
 # Orca
 #
-# Copyright 2005-2010 Sun Microsystems Inc.
+# Copyright 2009-2010 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,13 +23,13 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2010 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2009-2010 Sun Microsystems Inc."  \
+                "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
 import gtk
 import pyatspi
 
-import orca.braille as braille
 import orca.default as default
 import orca.input_event as input_event
 import orca.orca as orca
@@ -220,7 +221,8 @@ class Script(default.Script):
                 #
                 msg = _("Loading.  Please wait.")
                 speech.speak(msg)
-                braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
+                self.displayBrailleMessage(
+                    msg, flashTime=settings.brailleFlashTime)
                 self._isBusy = True
             elif event.detail1 == 0 and self._isBusy:
                 # Translators: this is in reference to loading a web page
@@ -228,7 +230,8 @@ class Script(default.Script):
                 #
                 msg = _("Finished loading.")
                 speech.speak(msg)
-                braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
+                self.displayBrailleMessage(
+                    msg, flashTime=settings.brailleFlashTime)
                 self._isBusy = False
             return
 
@@ -249,7 +252,8 @@ class Script(default.Script):
                 #
                 msg = _("An error occurred. View the error log for details.")
                 speech.speak(msg)
-                braille.displayMessage(msg, flashTime=settings.brailleFlashTime)
+                self.displayBrailleMessage(
+                    msg, flashTime=settings.brailleFlashTime)
                 self._presentedStatusBarIcon = True
 
         default.Script.onStateChanged(self, event)
@@ -418,29 +422,25 @@ class Script(default.Script):
         except:
             return default.Script.updateBraille(self, obj, extraRegion)
 
-        braille.clear()
-        line = braille.Line()
-        braille.addLine(line)
-
+        line = self.getNewBrailleLine(clearBraille=True, addLine=True)
         focusedRegion = None
         contents = self.getLineContentsAtOffset(obj, text.caretOffset)
         for i, content in enumerate(contents):
             child, startOffset, endOffset, string = content
             isFocusedObj = self.isSameObject(child, obj)
-            regions = [braille.Text(child,
-                                    startOffset=startOffset,
-                                    endOffset=endOffset)]
-
+            regions = [self.getNewBrailleText(child,
+                                              startOffset=startOffset,
+                                              endOffset=endOffset)]
             if isFocusedObj:
                 focusedRegion = regions[0]
 
-            line.addRegions(regions)
+            self.addBrailleRegionsToLine(regions, line)
 
         if extraRegion:
-            line.addRegion(extraRegion)
+            self.addBrailleRegionToLine(extraRegion, line)
 
-        braille.setFocus(focusedRegion, getLinkMask=False)
-        braille.refresh(panToCursor=True, getLinkMask=False)
+        self.setBrailleFocus(focusedRegion, getLinkMask=False)
+        self.refreshBraille(panToCursor=True, getLinkMask=False)
 
     def sayCharacter(self, obj):
         """Speak the character at the caret. Overridden here because the

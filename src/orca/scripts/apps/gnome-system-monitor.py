@@ -28,10 +28,8 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.braille as braille
 import orca.default as default
 import orca.debug as debug
-import orca.speech as speech
 
 ########################################################################
 #                                                                      #
@@ -82,17 +80,14 @@ class Script(default.Script):
         if self.isDesiredFocusedItem(event.source, rolesList):
             debug.println(self.debugLevel,
                   "GNOME System Monitor.locusOfFocusChanged - page tab.")
-            line = braille.getShowingLine()
-            utterances = []
+            context = []
             panels = self.findByRole(newLocusOfFocus, pyatspi.ROLE_PANEL)
             for panel in panels:
                 if panel.name and len(panel.name) > 0:
-                    line.addRegion(braille.Region(" " + panel.name))
-                    utterances.append(panel.name)
+                    context.append(panel.name)
                     labels = self.findUnrelatedLabels(panel)
                     for label in labels:
-                        line.addRegion(braille.Region(" " + label.name))
-                        utterances.append(label.name)
+                        context.append(label.name)
 
-            speech.speak(utterances)
-            braille.refresh()
+            self.presentItemsInSpeech(context)
+            self.presentItemsInBraille(context)

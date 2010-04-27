@@ -28,7 +28,6 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.bookmarks as bookmarks
-import orca.braille as braille
 import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -234,7 +233,7 @@ class Script(Gecko.Script):
             room2 = self.chat.getChatRoomName(event.source)
             if room1 != room2:
                 speech.speak(room2)
-                braille.displayMessage(
+                self.displayBrailleMessage(
                     room2, flashTime=settings.brailleFlashTime)
                 orca.setLocusOfFocus(event, event.source)
                 return

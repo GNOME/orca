@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2006-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
 import orca.speech as speech
@@ -209,7 +208,7 @@ class Script(default.Script):
                 string += self.getItemCount(event.source)
                 debug.println(debug.LEVEL_INFO, string)
                 speech.speak(string)
-                braille.displayMessage(string)
+                self.displayBrailleMessage(string)
 
             self.oldFolderName = newFolderName
             return

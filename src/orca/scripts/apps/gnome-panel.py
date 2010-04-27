@@ -28,7 +28,6 @@ __license__   = "LGPL"
 
 import orca.default as default
 import orca.debug as debug
-import orca.braille as braille
 import orca.speech as speech
 import pyatspi
 
@@ -87,7 +86,7 @@ class Script(default.Script):
         if obj.getRole() == pyatspi.ROLE_TOOL_TIP:
             if event.type.startswith("object:state-changed:showing") and \
                event.detail1 == 1:
-                braille.displayMessage(obj.name)
+                self.displayBrailleMessage(obj.name)
                 utterances = self.speechGenerator.generateSpeech(obj)
                 speech.speak(utterances)
 

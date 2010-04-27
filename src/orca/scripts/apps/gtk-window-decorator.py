@@ -25,7 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.braille as braille
 import orca.default as default
 import orca.speech as speech
 import pyatspi
@@ -89,7 +88,7 @@ class Script(default.Script):
             #
             text += ". " + _("inaccessible")
 
-        braille.displayMessage(text)
+        self.displayBrailleMessage(text)
         speech.stop()
         speech.speak(text)
 

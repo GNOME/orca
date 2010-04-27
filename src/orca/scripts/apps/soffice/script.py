@@ -43,7 +43,6 @@ import pyatspi
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
-import orca.braille as braille
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
@@ -1034,7 +1033,7 @@ class Script(default.Script):
             #
             line = _("Dynamic column header set for row %d") % (row+1)
             speech.speak(line)
-            braille.displayMessage(line)
+            self.displayBrailleMessage(line)
 
         return True
 
@@ -1058,7 +1057,7 @@ class Script(default.Script):
                 line = _("Dynamic column header cleared.")
                 speech.stop()
                 speech.speak(line)
-                braille.displayMessage(line)
+                self.displayBrailleMessage(line)
             except:
                 pass
 
@@ -1111,7 +1110,7 @@ class Script(default.Script):
             line = _("Dynamic row header set for column %s") \
                    % self.columnConvert(column+1)
             speech.speak(line)
-            braille.displayMessage(line)
+            self.displayBrailleMessage(line)
 
         return True
 
@@ -1135,7 +1134,7 @@ class Script(default.Script):
                 line = _("Dynamic row header cleared.")
                 speech.stop()
                 speech.speak(line)
-                braille.displayMessage(line)
+                self.displayBrailleMessage(line)
             except:
                 pass
 
@@ -1506,8 +1505,7 @@ class Script(default.Script):
                 result = self.getTextLineAtCaret(event.source)
                 textToSpeak = result[0].decode("UTF-8")
                 self._speakWriterText(event, textToSpeak)
-                braille.displayRegions(\
-                    brailleGen.generateBraille(event.source))
+                self.displayBrailleForObject(event.source)
                 return
 
         # Check to see if the object that just got focus is in the Setup
@@ -2115,12 +2113,10 @@ class Script(default.Script):
                                             # has a formula
                                             # (e.g., "=sum(a1:d1)")
                                             #
-                                            hf = " " + _("has formula")
-                                            speech.speak(hf, None, False)
-
-                                            line = braille.getShowingLine()
-                                            line.addRegion(braille.Region(hf))
-                                            braille.refresh()
+                                            hf = _("has formula")
+                                            speech.speak(" %s" % hf,
+                                                         None, False)
+                                            self.presentItemsInBraille([hf])
                                             #
                                             # Fall-thru to process the event
                                             # with the default handler.
@@ -2279,8 +2275,7 @@ class Script(default.Script):
             result = self.getText(event.source, 0, -1)
             textToSpeak = result.decode("UTF-8")
             self._speakWriterText(event, textToSpeak)
-            braille.displayRegions( \
-                self.brailleGenerator.generateBraille(event.source))
+            self.displayBrailleForObject(event.source)
         else:
             # The lists and combo boxes in the Formatting toolbar emit
             # object:active-descendant-changed events which cause us

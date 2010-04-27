@@ -21,7 +21,6 @@
 
 import orca.debug as debug
 import orca.default as default
-import orca.braille as braille
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.eventsynthesizer as eventsynthesizer
@@ -72,7 +71,7 @@ class Script(default.Script):
         if self.isDesiredFocusedItem(orca_state.locusOfFocus, rolesList):
             speech.stop()
             speech.speak(event.source.name)
-            braille.displayMessage(event.source.name)
+            self.displayBrailleMessage(event.source.name)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -89,6 +88,12 @@ class Script(default.Script):
         debug.printObjectEvent(self.debugLevel,
                                event,
                                debug.getAccessibleDetails(event.source))
+
+        # [[[TODO - JD: what follows here should be replaced with methods
+        # in this script's speech and braille generators. That will require
+        # making each generator, moving this script into a new directory,
+        # etc.]]]
+        #
 
         # Here we handle the case when focus is in the "Work online/offline" 
         # button near the status bar that has an image without a description.
@@ -126,8 +131,8 @@ class Script(default.Script):
             speech.speak(utterances)
            
             regions = brailleGen.generateBraille(event.source)
-            regions[0].insert(0, braille.Region(utterances[0] + " "))
-            braille.displayRegions(regions)
+            regions[0].insert(0, self.getNewBrailleRegion(utterances[0] + " "))
+            self.displayBrailleRegions(regions)
            
             return
 

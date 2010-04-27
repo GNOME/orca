@@ -36,7 +36,6 @@ __license__   = "LGPL"
 import gtk
 import pyatspi
 
-import orca.braille as braille
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
@@ -521,7 +520,7 @@ class Script(default.Script):
 
         if len(text.strip()):
             speech.speak(text)
-        braille.displayMessage(text)
+        self.displayBrailleMessage(text)
 
     def readPreviousMessage(self, inputEvent):
         """ Speak/braille a previous chat room message. Up to nine
