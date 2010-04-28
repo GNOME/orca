@@ -101,6 +101,11 @@ class Script(default.Script):
     def onTextInserted(self, event):
         """Called whenever text is added to an object."""
 
+        if event.source.getRole() == pyatspi.ROLE_LABEL:
+            # The is the timer of a call.
+            #
+            return
+
         if self.chat.presentInsertedText(event):
             return
 
@@ -116,3 +121,18 @@ class Script(default.Script):
         allPageTabs = self.findByRole(event.source, pyatspi.ROLE_PAGE_TAB)
 
         default.Script.onWindowActivated(self, event)
+
+    def onValueChanged(self, event):
+        """Called whenever an object's value changes.  Currently, the
+        value changes for non-focused objects are ignored.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if event.source.getRole() == pyatspi.ROLE_WINDOW:
+            # The is the timer of a call.
+            #
+            return
+
+        default.Script.onValueChanged(self, event)
