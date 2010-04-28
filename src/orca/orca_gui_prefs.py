@@ -3098,7 +3098,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             # sometimes want the entire row of a table read, or
             # they just want the current cell to be presented to them.
             #
-            if widget.get_label() == _("Speak current _cell"):
+            if widget.get_label() == _("Speak _cell"):
                 self.prefsDict["readTableCellRow"] = False
             else:
                 self.prefsDict["readTableCellRow"] = True
