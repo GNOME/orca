@@ -847,6 +847,15 @@ class Script(script.Script):
                 #
                 _("Toggles the silencing of speech."))
 
+        self.inputEventHandlers[ \
+          "toggleSpeakingIndentationJustificationHandler"] = \
+            input_event.InputEventHandler(
+                Script.toggleSpeakingIndentationJustification,
+                # Translators: Orca allows the user to enable/disable
+                # the speaking of indentation and justification.
+                #
+                _("Toggles the speaking of indentation and justification."))
+
         self.inputEventHandlers["listAppsHandler"] = \
             input_event.InputEventHandler(
                 Script.printAppsHandler,
@@ -2041,6 +2050,14 @@ class Script(script.Script):
                 settings.defaultModifierMask,
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers["toggleMouseReviewHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                settings.defaultModifierMask,
+                settings.NO_MODIFIER_MASK,
+                self.inputEventHandlers[ \
+                  "toggleSpeakingIndentationJustificationHandler"]))
 
         try:
             keyBindings = settings.overrideKeyBindings(self, keyBindings)
@@ -4448,6 +4465,25 @@ class Script(script.Script):
                           % obj)
 
         return layoutOnly
+
+    def toggleSpeakingIndentationJustification(self, inputEvent=None):
+        """Toggles the speaking of indentation and justification."""
+
+        settings.enableSpeechIndentation = not settings.enableSpeechIndentation 
+        if settings.enableSpeechIndentation :
+            # Translators: A message indicating that
+            # indentation and justification will be spoken.
+            #
+            line = _("Speaking of indentation and justification enabled.")
+        else:
+            # Translators: A message indicating that
+            # indentation and justification will not be spoken.
+            #
+            line = _("Speaking of indentation and justification disabled.")
+
+        speech.speak(line)
+
+        return True
 
     def toggleTableCellReadMode(self, inputEvent=None):
         """Toggles an indicator for whether we should just read the current
