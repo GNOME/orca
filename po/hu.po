@@ -4884,7 +4884,7 @@ msgstr "_Törlés"
 
 #: ../src/orca/orca-setup.ui.h:156
 msgid "_Enable Contracted Braille"
-msgstr "A braille _fordítási tábla engedélyezése"
+msgstr "I_rodalmi braille támogatás engedélyezése"
 
 #: ../src/orca/orca-setup.ui.h:157
 msgid "_Enable speech"
