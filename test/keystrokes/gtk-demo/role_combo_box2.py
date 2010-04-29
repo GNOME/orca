@@ -65,12 +65,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Even sheets combo box item",
-    ["KNOWN ISSUE - We're presenting this thing twice. We shouldn't be doing so.",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
      "     VISIBLE:  'Only print: Even sheets Combo', cursor=13",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
-     "     VISIBLE:  'Only print: Even sheets Combo', cursor=13",
-     "SPEECH OUTPUT: 'Even sheets'",
      "SPEECH OUTPUT: 'Even sheets'"]))
 
 ########################################################################
