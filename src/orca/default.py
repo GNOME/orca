@@ -3327,7 +3327,10 @@ class Script(script.Script):
         # didn't change.  I'm guessing this is going to be a vagary in all
         # of GTK+.]]]
         #
-        if event.source and (event.source.getRole() == pyatspi.ROLE_DIALOG) \
+        # We are ignoring name changes in comboboxes that have focus
+        # see bgo#617204
+        ignoreList = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_COMBO_BOX]
+        if event.source and (event.source.getRole() in ignoreList) \
            and (event.source == orca_state.locusOfFocus):
             return
 
