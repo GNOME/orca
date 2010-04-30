@@ -2915,15 +2915,15 @@ class StructuralNavigation:
         # Translators: this is for navigating between live regions
         #
         prevDesc = _("Goes to previous live region.")
-        bindings["previous"] = ["r", settings.SHIFT_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["d", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating between live regions
         #
         nextDesc = _("Goes to next live region.")
-        bindings["next"] = ["r", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["d", settings.NO_MODIFIER_MASK, nextDesc]
         # Translators: this is for navigating to the last live region
-        # to make an announcement.
+        # which made an announcement.
         #
-        desc = _("Goes to last live region.")
+        desc = _("Goes to the last live region which made an announcement.")
         bindings["last"] = ["y", settings.NO_MODIFIER_MASK, desc]
         return bindings
 
@@ -3070,12 +3070,12 @@ class StructuralNavigation:
         # form within a document.
         #
         prevDesc = _("Goes to previous radio button.")
-        bindings["previous"] = ["", settings.NO_MODIFIER_MASK, prevDesc]
+        bindings["previous"] = ["r", settings.SHIFT_MODIFIER_MASK, prevDesc]
         # Translators: this is for navigating among radio buttons in a
         # form within a document.
         #
         nextDesc = _("Goes to next radio button.")
-        bindings["next"] = ["", settings.NO_MODIFIER_MASK, nextDesc]
+        bindings["next"] = ["r", settings.NO_MODIFIER_MASK, nextDesc]
         return bindings
 
     def _radioButtonCriteria(self, collection, arg=None):
