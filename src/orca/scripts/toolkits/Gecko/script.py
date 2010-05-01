@@ -1975,7 +1975,7 @@ class Script(default.Script):
                     message = _("Finished loading.")
                     finishedLoading = True
 
-                braille.displayMessage(message)
+                self.displayBrailleMessage(message)
                 speech.speak(message)
 
                 if finishedLoading:
@@ -2052,7 +2052,7 @@ class Script(default.Script):
 
             self._currentFrame = documentFrame
 
-            braille.displayMessage(documentFrame.name)
+            self.displayBrailleMessage(documentFrame.name)
             speech.stop()
             speech.speak(
                 "%s %s" \
@@ -2336,9 +2336,7 @@ class Script(default.Script):
         if not obj:
             return
 
-        braille.clear()
-        line = braille.Line()
-        braille.addLine(line)
+        line = self.getNewBrailleLine(clearBraille=True, addLine=True)
 
         # Some text areas have a character offset of -1 when you tab
         # into them.  In these cases, they show all the text as being
@@ -2420,12 +2418,12 @@ class Script(default.Script):
                     focusedRegion = fRegion
 
             else:
-                regions = [braille.Text(obj,
-                                        startOffset=startOffset,
-                                        endOffset=endOffset)]
+                regions = [self.getNewBrailleText(obj,
+                                                  startOffset=startOffset,
+                                                  endOffset=endOffset)]
 
                 if role == pyatspi.ROLE_CAPTION:
-                    regions.append(braille.Region(
+                    regions.append(self.getNewBrailleRegion(
                         " " + rolenames.getBrailleForRoleName(obj)))
 
                 if isFocusedObj:
@@ -2460,7 +2458,7 @@ class Script(default.Script):
                     headingString = " " + headingString
                 if not isLastObject:
                     headingString += " "
-                regions.append(braille.Region(headingString))
+                regions.append(self.getNewBrailleRegion((headingString)))
 
             # Add whitespace if we need it. [[[TODO: JD - But should we be
             # doing this in the braille generators rather than here??]]]
@@ -2485,7 +2483,7 @@ class Script(default.Script):
                                                      braille.Region] \
                    or lastObj.getRole() == pyatspi.ROLE_IMAGE \
                    or obj.getRole() == pyatspi.ROLE_IMAGE:
-                    line.addRegion(braille.Region(" "))
+                    self.addToLineAsBrailleRegion(" ", line)
 
                 # The above check will catch table cells with uniform
                 # contents and form fields -- and do so more efficiently
@@ -2511,9 +2509,9 @@ class Script(default.Script):
                                                 layoutRoles,
                                                 [pyatspi.ROLE_DOCUMENT_FRAME])
                         if not self.isSameObject(acc1, acc2):
-                            line.addRegion(braille.Region(" "))
+                            self.addToLineAsBrailleRegion(" ", line)
 
-            line.addRegions(regions)
+            self.addBrailleRegionsToLine(regions, line)
 
             if isLastObject:
                 line.regions[-1].string = line.regions[-1].string.rstrip(" ")
@@ -2526,10 +2524,10 @@ class Script(default.Script):
                 break
 
         if extraRegion:
-            line.addRegion(extraRegion)
+            self.addBrailleRegionToLine(extraRegion, line)
 
-        braille.setFocus(focusedRegion, getLinkMask=False)
-        braille.refresh(panToCursor=True, getLinkMask=False)
+        self.setBrailleFocus(focusedRegion, getLinkMask=False)
+        self.refreshBraille(panToCursor=True, getLinkMask=False)
 
     def sayCharacter(self, obj):
         """Speaks the character at the current caret position."""
@@ -2638,13 +2636,13 @@ class Script(default.Script):
         if self.flatReviewContext \
            or self.isAriaWidget(orca_state.locusOfFocus) \
            or not self.inDocumentContent() \
-           or not braille.beginningIsShowing:
+           or not self.isBrailleBeginningShowing():
             default.Script.panBrailleLeft(self, inputEvent, panAmount)
         else:
             self.goPreviousLine(inputEvent)
-            while braille.panRight():
+            while self.panBrailleInDirection(panToLeft=False):
                 pass
-            braille.refresh(False)
+            self.refreshBraille(False)
         return True
 
     def panBrailleRight(self, inputEvent=None, panAmount=0):
@@ -2654,12 +2652,12 @@ class Script(default.Script):
         if self.flatReviewContext \
            or self.isAriaWidget(orca_state.locusOfFocus) \
            or not self.inDocumentContent() \
-           or not braille.endIsShowing:
+           or not self.isBrailleEndShowing():
             default.Script.panBrailleRight(self, inputEvent, panAmount)
         elif self.goNextLine(inputEvent):
-            while braille.panLeft():
+            while self.panBrailleInDirection(panToLeft=True):
                 pass
-            braille.refresh(False)
+            self.refreshBraille(False)
         return True
 
     ####################################################################
@@ -6769,7 +6767,7 @@ class Script(default.Script):
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
         speech.speak(string)
-        braille.displayMessage(string)
+        self.displayBrailleMessage(string)
 
     def speakWordUnderMouse(self, acc):
         """Determine if the speak-word-under-mouse capability applies to

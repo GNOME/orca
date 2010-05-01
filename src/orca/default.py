@@ -8756,7 +8756,7 @@ class Script(script.Script):
         if addLine:
             braille.addLine(line)
 
-        return braille.Line()
+        return line
 
     @staticmethod
     def getNewBrailleComponent(accessible, string, cursorOffset=0,
