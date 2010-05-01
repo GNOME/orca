@@ -7408,7 +7408,7 @@ class Script(script.Script):
                 if relation.getRelationType() == \
                         pyatspi.RELATION_NODE_PARENT_OF:
                     for target in range(relation.getNTargets()):
-                        nodes.append(target)
+                        nodes.append(relation.getTarget(target))
                     return nodes
         except:
             pass
