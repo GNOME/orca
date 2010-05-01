@@ -98,6 +98,25 @@ class Script(default.Script):
 
         self.chat.setAppPreferences(prefs)
 
+    def getChildNodes(self, obj):
+        """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
+        to this expanded table cell.
+
+        Arguments:
+        -obj: the Accessible Object
+
+        Returns: a list of all the child nodes
+        """
+
+        reportedNodes = default.Script.getChildNodes(self, obj)
+        actualNodes = []
+        for node in reportedNodes:
+            child = self.getRealActiveDescendant(node)
+            if child and child.name:
+                actualNodes.append(child)
+
+        return actualNodes
+
     def onTextInserted(self, event):
         """Called whenever text is added to an object."""
 
