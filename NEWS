@@ -1,3 +1,96 @@
+2.31.1 - 02-May-2010
+
+General:
+
+  * Fix for bgo#616848 - Application and toolkit scripts should not
+    call methods in braille.py
+
+  * Fix for bgo#617345 - getChildNodes() is returning a list of
+    integers rather than accessibles if NODE_PARENT_OF relationship
+    is present
+    
+  * Fix for bgo#617204 - Name changed on comboboxes that have focus
+    should not be announced
+ 
+  * Fix for bgo#617113 - Need unbound keybinding for toggling speaking
+    of indentation and justification
+ 
+  * Fix for bgo#617118 - Speak table cell preference is not getting
+    saved
+
+  * Fix for bgo#615969 - Do not query toolkitName when queueing events
+
+  * Fix for bgo#616459 - Add needed fields to Orca's keyboardEvent and
+    the ability to validate keyboardEvent data
+
+  * Fix for bgo#615966 - Ignore the desktop when generating braille
+
+  * Fix for bgo#614844 - Orca's debug output for events should include
+    the any_data
+
+  * Fix for bgo#614826 - Orca is redefining the built-in function
+    'next' in speech_generator.py
+
+  * Fix for bgo#594152 - positionInGroup includes non-showing objects
+
+  * Fix for bgo#614218 - In orca.desktop.in file the --replace
+    parameter is not present in the exec line
+
+Chat:
+
+  * Fix for bgo#557009 - Orca should provide access to Empathy
+
+  * Fix for bgo#615485 - Orca should support the Instantbird chat
+    client
+
+  * Fix for bgo#607663 - Create a script for Gajim
+
+  * Fix for bgo#589925 - Need to generalize chat support
+
+Firefox:
+
+  * Fix for bgo#616945 - Unbound structural navigation keys should
+    be bound
+
+  * Fix for bgo#615304 - Sanity check needed in the Gecko script's
+    updateBraille
+
+Java:
+
+  * Fix for bgo#616691 - Orca is too "chatty" in certain Java widgets
+    due to extraneous events
+
+  * Fix for bgo#483222 - (Java) Where am i in JTree nodes gives little
+    info
+
+  * Fix for bgo#616637 - Orca is double-presenting state changes for
+    radio buttons and checkboxes in Java
+
+  * Fix for bgo#616618 - Node level and number of children not
+    presented for Java trees
+
+  * Fix for bgo#616587 - Orca does not present Java trees correctly
+
+  * Fix for bgo#483212 - (Java) Missing significant information when
+    performing where am i on combo box items
+
+  * Fix for bgo#616464 - Correct the issues with Java keyboardEvents
+
+OpenOffice:
+
+  * Fix for bgo#364772 - Orca cannot detect misspelled words on the
+    fly in Openoffice
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca          Catalan              Carles Ferrando and Jordi Serratosa
+    gl          Galician             Francisco Diéguez
+    hu          Hungarian            Attila Hammer and Gabor Kelemen
+    ms          Malay                Ahmed Noor Kader Mustajir Md Eusoff 
+    uk          Ukrainian            Sergiy Gavrylov
+
+==========
+
 2.30.0 - 28-Mar-2010
 
 General:
