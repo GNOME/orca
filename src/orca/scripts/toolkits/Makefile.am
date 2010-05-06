@@ -1,4 +1,4 @@
-SUBDIRS = Gecko J2SE-access-bridge
+SUBDIRS = Gecko J2SE-access-bridge CALLY
 
 orca_pathdir=$(pyexecdir)
 
