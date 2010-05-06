@@ -696,7 +696,7 @@ class Script(default.Script):
             else:
                 return False
         else:
-            return table.nRows == 65536
+            return table.nRows in [65536, 1048576]
 
     def isDesiredFocusedItem(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of
