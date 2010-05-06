@@ -225,13 +225,13 @@ class Script(default.Script):
         self.inputEventHandlers.update(\
             self.structuralNavigation.inputEventHandlers)
 
-        self.inputEventHandlers["speakInputLineHandler"] = \
+        self.inputEventHandlers["presentInputLineHandler"] = \
             input_event.InputEventHandler(
-                Script.speakInputLine,
+                Script.presentInputLine,
                 # Translators: this is the input line of a spreadsheet
                 # (i.e., the place where enter formulas)
                 #
-                _("Speaks the contents of the input line."))
+                _("Presents the contents of the input line."))
 
         self.inputEventHandlers["setDynamicColumnHeadersHandler"] = \
             input_event.InputEventHandler(
@@ -281,7 +281,7 @@ class Script(default.Script):
                 "a",
                 settings.defaultModifierMask,
                 settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["speakInputLineHandler"]))
+                self.inputEventHandlers["presentInputLineHandler"]))
 
         keyBindings.add(
             keybindings.KeyBinding(
@@ -929,8 +929,8 @@ class Script(default.Script):
 
         return True
 
-    def speakInputLine(self, inputEvent):
-        """Speak the contents of the spread sheet input line (assuming we
+    def presentInputLine(self, inputEvent):
+        """Presents the contents of the spread sheet input line (assuming we
         have a handle to it - generated when we first focus on a spread
         sheet table cell.
 
@@ -956,6 +956,8 @@ class Script(default.Script):
                         inputLine = _("empty")
                     debug.println(self.debugLevel,
                         "StarOffice.speakInputLine: contents: %s" % inputLine)
+                    self.displayBrailleMessage(inputLine, \
+                      flashTime=settings.brailleFlashTime)
                     speech.speak(inputLine)
             except NotImplementedError:
                 pass
