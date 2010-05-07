@@ -741,7 +741,7 @@ class StructuralNavigation:
                     #
                     speech.speak(_("Bottom of column."))
                     desiredRow = iTable.nRows - 1
-            elif self._script.isSameObject(thisCell, cell) \
+            elif self._script.utilities.isSameObject(thisCell, cell) \
                  or settings.skipBlankCells and self._isBlankCell(cell):
                 if colDiff < 0:
                     desiredCol -= 1
@@ -821,7 +821,8 @@ class StructuralNavigation:
                 # result in our starting at the top when looking for the next
                 # object rather than the current caret offset. See bug 567984.
                 #
-                if isNext and self._script.isSameObject(obj, document):
+                if isNext \
+                   and self._script.utilities.isSameObject(obj, document):
                     criteria = None
 
         if criteria:
@@ -931,7 +932,7 @@ class StructuralNavigation:
         # danger of skipping over the objects in between our present
         # location and top of the document.
         #
-        if self._script.isSameObject(currentObj, document):
+        if self._script.utilities.isSameObject(currentObj, document):
             currentObj = self._findNextObject(currentObj, document)
 
         ancestors = []
@@ -1072,7 +1073,7 @@ class StructuralNavigation:
         # danger of skipping over the objects in between our present
         # location and top of the document.
         #
-        if self._script.isSameObject(currentObj, document):
+        if self._script.utilities.isSameObject(currentObj, document):
             currentObj = self._findNextObject(currentObj, document)
 
         ancestors = []
@@ -1094,7 +1095,8 @@ class StructuralNavigation:
                         and currentObj.parent.getRole() == obj.getRole() \
                         and obj.getRole() in nestableRoles)
             if (not obj in ancestors or isNested) and pred(obj):
-                if wrapped and self._script.isSameObject(currentObj, obj):
+                if wrapped \
+                   and self._script.utilities.isSameObject(currentObj, obj):
                     break
                 else:
                     match = obj
@@ -1138,7 +1140,8 @@ class StructuralNavigation:
 
         while obj and not match:
             if (not obj in ancestors) and pred(obj, arg):
-                if wrapped and self._script.isSameObject(currentObj, obj):
+                if wrapped \
+                   and self._script.utilities.isSameObject(currentObj, obj):
                     break
                 else:
                     match = obj
@@ -1172,7 +1175,7 @@ class StructuralNavigation:
             prevObj = obj.parent[index]
             if prevObj.childCount:
                 prevObj = prevObj[prevObj.childCount - 1]
-        elif not self._script.isSameObject(obj.parent, stopAncestor):
+        elif not self._script.utilities.isSameObject(obj.parent, stopAncestor):
             prevObj = obj.parent
 
         return prevObj
@@ -1201,7 +1204,8 @@ class StructuralNavigation:
             index = obj.getIndexInParent() + 1
             if 0 < index < obj.parent.childCount:
                 nextObj = obj.parent[index]
-            elif not self._script.isSameObject(obj.parent, stopAncestor):
+            elif not self._script.utilities.isSameObject(
+                    obj.parent, stopAncestor):
                 obj = obj.parent
             else:
                 break
@@ -1272,7 +1276,7 @@ class StructuralNavigation:
 
         document = self._getDocument()
         while obj and obj.parent:
-            if self._script.isSameObject(obj.parent, document):
+            if self._script.utilities.isSameObject(obj.parent, document):
                 return True
             else:
                 obj = obj.parent
@@ -1310,7 +1314,7 @@ class StructuralNavigation:
         except:
             return None
         else:
-            return self._script.getDisplayedText(caption)
+            return self._script.utilities.displayedText(caption)
 
     def _getTableDescription(self, obj):
         """Returns a string which describes the table."""
@@ -1372,9 +1376,8 @@ class StructuralNavigation:
 
         if obj and obj.getRole() != pyatspi.ROLE_TABLE_CELL:
             document = self._getDocument()
-            obj = self._script.getAncestor(obj,
-                                           [pyatspi.ROLE_TABLE_CELL],
-                                           [document.getRole()])
+            obj = self._script.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_TABLE_CELL], [document.getRole()])
         return obj
 
     def getTableForCell(self, obj):
@@ -1386,9 +1389,8 @@ class StructuralNavigation:
 
         if obj and obj.getRole() != pyatspi.ROLE_TABLE:
             document = self._getDocument()
-            obj = self._script.getAncestor(obj,
-                                           [pyatspi.ROLE_TABLE],
-                                           [document.getRole()])
+            obj = self._script.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_TABLE], [document.getRole()])
         return obj
 
     def _isBlankCell(self, obj):
@@ -1398,12 +1400,12 @@ class StructuralNavigation:
         - obj: the accessible table cell to examime
         """
 
-        text = self._script.getDisplayedText(obj)
+        text = self._script.utilities.displayedText(obj)
         if text and len(text.strip()) and text != obj.name:
             return False
         else:
             for child in obj:
-                text = self._script.getDisplayedText(child)
+                text = self._script.utilities.displayedText(child)
                 if text and len(text.strip()) \
                    or child.getRole() == pyatspi.ROLE_LINK:
                     return False
@@ -1419,11 +1421,11 @@ class StructuralNavigation:
 
         text = ""
         if obj and not obj.childCount:
-            text = self._script.getDisplayedText(obj)
+            text = self._script.utilities.displayedText(obj)
         else:
             for child in obj:
-                childText = self._script.getDisplayedText(child)
-                text = self._script.appendString(text, childText)
+                childText = self._script.utilities.displayedText(child)
+                text = self._script.utilities.appendString(text, childText)
 
         return text
 
@@ -1525,10 +1527,10 @@ class StructuralNavigation:
             #
             lastRow, lastCol = self.lastTableCell
             lastKnownCell = table.getAccessibleAt(lastRow, lastCol)
-            if self._script.isSameObject(lastKnownCell, obj):
+            if self._script.utilities.isSameObject(lastKnownCell, obj):
                 return [lastRow, lastCol]
             else:
-                index = self._script.getCellIndex(obj)
+                index = self._script.utilities.cellIndex(obj)
                 thisRow = table.getRowAtIndex(index)
                 thisCol = table.getColumnAtIndex(index)
                 return [thisRow, thisCol]
@@ -1639,7 +1641,7 @@ class StructuralNavigation:
 
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = obj.parent.queryTable()
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             row = table.getRowAtIndex(index)
             for col in xrange(table.nColumns):
                 cell = table.getAccessibleAt(row, col)
@@ -1658,7 +1660,7 @@ class StructuralNavigation:
 
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = obj.parent.queryTable()
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             col = table.getColumnAtIndex(index)
             for row in xrange(table.nRows):
                 cell = table.getAccessibleAt(row, col)

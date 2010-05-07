@@ -96,14 +96,14 @@ class Bookmarks:
         cur_obj = orca_state.locusOfFocus
 
         # Are they the same object?
-        if self._script.isSameObject(cur_obj, obj):
+        if self._script.utilities.isSameObject(cur_obj, obj):
             # Translators: this announces that the current object is the same
             # object pointed to by the bookmark.
             #
             speech.speak(_('bookmark is current object'))
             return
         # Are their parents the same?
-        elif self._script.isSameObject(cur_obj.parent, obj.parent):
+        elif self._script.utilities.isSameObject(cur_obj.parent, obj.parent):
             # Translators: this announces that the current object's parent and 
             # the parent of the object pointed to by the bookmark are the same.
             #

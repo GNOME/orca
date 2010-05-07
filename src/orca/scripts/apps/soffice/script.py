@@ -55,6 +55,7 @@ from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
 from formatting import Formatting
 from structural_navigation import StructuralNavigation
+from script_utilities import Utilities
 import script_settings
 
 class Script(default.Script):
@@ -198,6 +199,11 @@ class Script(default.Script):
     def getFormatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
     def getStructuralNavigation(self):
         """Returns the 'structural navigation' class for this script.
@@ -492,17 +498,6 @@ class Script(default.Script):
 
         return False
 
-    def isReadOnlyTextArea(self, obj):
-        """Returns True if obj is a text entry area that is read only."""
-        state = obj.getState()
-        readOnly = obj.getRole() == pyatspi.ROLE_TEXT \
-                   and state.contains(pyatspi.STATE_FOCUSABLE) \
-                   and not state.contains(pyatspi.STATE_EDITABLE)
-        debug.println(debug.LEVEL_ALL,
-                      "soffice.script.py:isReadOnlyTextArea=%s for %s" \
-                      % (readOnly, debug.getAccessibleDetails(obj)))
-        return readOnly
-
     def adjustForWriterTable(self, obj):
         """Check to see if we are in Writer, where the object with focus
         is a paragraph, and the parent is the table cell. If it is, then,
@@ -562,7 +557,7 @@ class Script(default.Script):
             parentTable = None
 
         if parent and parentTable:
-            index = self.getCellIndex(obj)
+            index = self.utilities.cellIndex(obj)
             row = parentTable.getRowAtIndex(index)
             accCell = parentTable.getAccessibleAt(row, column)
 
@@ -589,7 +584,7 @@ class Script(default.Script):
             parentTable = None
 
         if parent and parentTable:
-            index = self.getCellIndex(obj)
+            index = self.utilities.cellIndex(obj)
             column = parentTable.getColumnAtIndex(index)
             accCell = parentTable.getAccessibleAt(row, column)
 
@@ -612,7 +607,8 @@ class Script(default.Script):
         inputLine = None
         panel = obj.parent.parent.parent.parent
         if panel and panel.getRole() == pyatspi.ROLE_PANEL:
-            allParagraphs = self.findByRole(panel, pyatspi.ROLE_PARAGRAPH)
+            allParagraphs = self.utilities.descendantsWithRole(
+                panel, pyatspi.ROLE_PARAGRAPH)
             if len(allParagraphs) == 1:
                 inputLine = allParagraphs[0]
             else:
@@ -652,7 +648,7 @@ class Script(default.Script):
                 parent.queryComponent().getAccessibleAtPoint(leftX, y, 0)
             if leftCell:
                 table = leftCell.parent.queryTable()
-                index = self.getCellIndex(leftCell)
+                index = self.utilities.cellIndex(leftCell)
                 startIndex = table.getColumnAtIndex(index)
 
             rightX = extents.x + extents.width - 1
@@ -660,7 +656,7 @@ class Script(default.Script):
                 parent.queryComponent().getAccessibleAtPoint(rightX, y, 0)
             if rightCell:
                 table = rightCell.parent.queryTable()
-                index = self.getCellIndex(rightCell)
+                index = self.utilities.cellIndex(rightCell)
                 endIndex = table.getColumnAtIndex(index)
 
         return [startIndex, endIndex]
@@ -690,138 +686,12 @@ class Script(default.Script):
             # a carry-over from the whereAmI code.
             #
             if cell.getRole() == pyatspi.ROLE_PARAGRAPH:
-                top = self.getTopLevel(cell)
+                top = self.utilities.topLevelObject(cell)
                 return (top and top.name.endswith(" Calc"))
             else:
                 return False
         else:
             return table.nRows in [65536, 1048576]
-
-    def isDesiredFocusedItem(self, obj, rolesList):
-        """Called to determine if the given object and it's hierarchy of
-           parent objects, each have the desired roles.
-
-           This is an override because of bugs in OOo's child/parent symmetry.
-           See Script._getParent().
-
-        Arguments:
-        - obj: the accessible object to check.
-        - rolesList: the list of desired roles for the components and the
-          hierarchy of its parents.
-
-        Returns True if all roles match.
-        """
-        current = obj
-        for role in rolesList:
-            if current is None:
-                return False
-
-            if not isinstance(role, list):
-                role = [role]
-
-            if isinstance(role[0], str):
-                current_role = current.getRoleName()
-            else:
-                current_role = current.getRole()
-
-            if not current_role in role:
-                return False
-
-            current = self._getParent(current)
-
-        return True
-
-    def findFrameAndDialog(self, obj):
-        """Returns the frame and (possibly) the dialog containing
-        the object. Overridden here for presentation of the title
-        bar information: If the locusOfFocus is a spreadsheet cell,
-        1) we are not in a dialog and 2) we need to present both the
-        frame name and the sheet name. So we might as well return the
-        sheet in place of the dialog so that the default code can do
-        its thing.
-        """
-
-        if not self.isSpreadSheetCell(obj):
-            return default.Script.findFrameAndDialog(self, obj)
-
-        results = [None, None]
-
-        parent = obj.parent
-        while parent and (parent.parent != parent):
-            if parent.getRole() == pyatspi.ROLE_FRAME:
-                results[0] = parent
-            if parent.getRole() == pyatspi.ROLE_TABLE:
-                results[1] = parent
-            parent = parent.parent
-
-        return results
-
-    def printHierarchy(self, root, ooi, indent="",
-                       onlyShowing=True, omitManaged=True):
-        """Prints the accessible hierarchy of all children
-
-        This is an override because of bugs in OOo's child/parent symmetry.
-        See Script._getParent().
-
-        Arguments:
-        -indent:      Indentation string
-        -root:        Accessible where to start
-        -ooi:         Accessible object of interest
-        -onlyShowing: If True, only show children painted on the screen
-        -omitManaged: If True, omit children that are managed descendants
-        """
-
-        if not root:
-            return
-
-        if root == ooi:
-            print indent + "(*)", debug.getAccessibleDetails(root)
-        else:
-            print indent + "+-", debug.getAccessibleDetails(root)
-
-        rootManagesDescendants = root.getState().contains( \
-                                      pyatspi.STATE_MANAGES_DESCENDANTS)
-
-        for child in root:
-            if child == root:
-                print indent + "  " + "WARNING CHILD == PARENT!!!"
-            elif not child:
-                print indent + "  " + "WARNING CHILD IS NONE!!!"
-            elif self._getParent(child) != root:
-                print indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
-            else:
-                paint = (not onlyShowing) or (onlyShowing and \
-                         child.getState().contains(pyatspi.STATE_SHOWING))
-                paint = paint \
-                        and ((not omitManaged) \
-                             or (omitManaged and not rootManagesDescendants))
-
-                if paint:
-                    self.printHierarchy(child,
-                                        ooi,
-                                        indent + "  ",
-                                        onlyShowing,
-                                        omitManaged)
-
-    def _getParent(self, obj):
-        """This method gets a node's parent will be doubly linked.
-        See bugs:
-        http://www.openoffice.org/issues/show_bug.cgi?id=78117
-        http://bugzilla.gnome.org/show_bug.cgi?id=489490
-        """
-        parent = obj.parent
-        if parent and parent.getRole() in (pyatspi.ROLE_ROOT_PANE,
-                                           pyatspi.ROLE_DIALOG):
-            app = obj.getApplication()
-            for frame in app:
-                if frame.childCount < 1 or \
-                      frame[0].getRole() not in (pyatspi.ROLE_ROOT_PANE,
-                                                 pyatspi.ROLE_OPTION_PANE):
-                    continue
-                root_pane = frame[0]
-                if obj in root_pane:
-                    return root_pane
-        return parent
 
     def presentTableInfo(self, oldFocus, newFocus):
         """Presents information relevant to a table that was just entered
@@ -836,16 +706,18 @@ class Script(default.Script):
         Returns True if table info was presented.
         """
 
-        oldAncestor = self.getAncestor(oldFocus,
-                                       [pyatspi.ROLE_TABLE,
-                                        pyatspi.ROLE_UNKNOWN,
-                                        pyatspi.ROLE_DOCUMENT_FRAME],
-                                       [pyatspi.ROLE_FRAME])
-        newAncestor = self.getAncestor(newFocus,
-                                       [pyatspi.ROLE_TABLE,
-                                        pyatspi.ROLE_UNKNOWN,
-                                        pyatspi.ROLE_DOCUMENT_FRAME],
-                                       [pyatspi.ROLE_FRAME])
+        oldAncestor = self.utilities.ancestorWithRole(
+            oldFocus,
+            [pyatspi.ROLE_TABLE,
+             pyatspi.ROLE_UNKNOWN,
+             pyatspi.ROLE_DOCUMENT_FRAME],
+            [pyatspi.ROLE_FRAME])
+        newAncestor = self.utilities.ancestorWithRole(
+            newFocus,
+            [pyatspi.ROLE_TABLE,
+             pyatspi.ROLE_UNKNOWN,
+             pyatspi.ROLE_DOCUMENT_FRAME],
+            [pyatspi.ROLE_FRAME])
 
         if not (oldAncestor and newAncestor):
             # At least one of the objects not only is not in a table, but is
@@ -876,7 +748,7 @@ class Script(default.Script):
             #
             return False
 
-        if not self.isSameObject(oldAncestor, newAncestor):
+        if not self.utilities.isSameObject(oldAncestor, newAncestor):
             if oldTable:
                 # We've left a table.  Announce this fact.
                 #
@@ -893,9 +765,8 @@ class Script(default.Script):
             self.lastCell = [None, -1]
             return True
 
-        cell = self.getAncestor(newFocus,
-                                [pyatspi.ROLE_TABLE_CELL],
-                                [pyatspi.ROLE_TABLE])
+        cell = self.utilities.ancestorWithRole(
+            newFocus, [pyatspi.ROLE_TABLE_CELL], [pyatspi.ROLE_TABLE])
         if not cell or self.lastCell[0] == cell:
             # If we haven't found a cell, who knows what's going on? If
             # the cell is the same as our last location, odds are that
@@ -921,7 +792,7 @@ class Script(default.Script):
             offset = text.caretOffset
 
         self.lastCell = [cell, offset]
-        index = self.getCellIndex(cell)
+        index = self.utilities.cellIndex(cell)
         column = newTable.getColumnAtIndex(index)
         self.pointOfReference['lastColumn'] = column
         row = newTable.getRowAtIndex(index)
@@ -948,7 +819,8 @@ class Script(default.Script):
         if self.isSpreadSheetCell(orca_state.locusOfFocus):
             try:
                 if self.inputLineForCell and self.inputLineForCell.queryText():
-                    inputLine = self.getText(self.inputLineForCell, 0, -1)
+                    inputLine = \
+                        self.utilities.substring(self.inputLineForCell, 0, -1)
                     if not inputLine:
                         # Translators: this is used to announce that the
                         # current input line in a spreadsheet is blank/empty.
@@ -982,7 +854,7 @@ class Script(default.Script):
                 parentTable = None
 
             if parent and parentTable:
-                index = self.getCellIndex(cell)
+                index = self.utilities.cellIndex(cell)
                 row = parentTable.getRowAtIndex(index)
 
         return row
@@ -1007,7 +879,7 @@ class Script(default.Script):
                 parentTable = None
 
             if parent and parentTable:
-                index = self.getCellIndex(cell)
+                index = self.utilities.cellIndex(cell)
                 column = parentTable.getColumnAtIndex(index)
 
         return column
@@ -1158,7 +1030,8 @@ class Script(default.Script):
         wind up reading the word or not).
         """
 
-        paragraph = self.findByRole(pane, pyatspi.ROLE_PARAGRAPH)
+        paragraph = self.utilities.descendantsWithRole(
+            pane, pyatspi.ROLE_PARAGRAPH)
 
         # If there is not exactly one paragraph, this isn't the spellcheck
         # dialog.
@@ -1207,7 +1080,7 @@ class Script(default.Script):
             #
             return False
 
-        badWord = self.getText(paragraph[0], startOff, endOff - 1)
+        badWord = self.utilities.substring(paragraph[0], startOff, endOff - 1)
 
         # Note that we often get two or more of these focus or property-change
         # events each time there is a new misspelt word. We extract the
@@ -1228,7 +1101,7 @@ class Script(default.Script):
 
         # Create a list of all the words found in the misspelt paragraph.
         #
-        text = self.getText(paragraph[0], 0, -1)
+        text = self.utilities.substring(paragraph[0], 0, -1)
         allTokens = text.split()
         self.speakMisspeltWord(allTokens, badWord)
 
@@ -1284,7 +1157,7 @@ class Script(default.Script):
         voices = settings.voices
 
         for i in range(startOffset, endOffset):
-            if self.getLinkIndex(obj, i) >= 0:
+            if self.utilities.linkIndex(obj, i) >= 0:
                 voice = voices[settings.HYPERLINK_VOICE]
                 break
             elif word.decode("UTF-8").isupper():
@@ -1334,7 +1207,7 @@ class Script(default.Script):
         - label: the Setup dialog Label.
         """
 
-        text = self.getDisplayedText(label)
+        text = self.utilities.displayedText(label)
         if text:
             speech.speak(text)
 
@@ -1345,7 +1218,8 @@ class Script(default.Script):
         - panel: the Setup panel.
         """
 
-        allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
+        allLabels = self.utilities.descendantsWithRole(
+            panel, pyatspi.ROLE_LABEL)
         for label in allLabels:
             self.speakSetupLabel(label)
 
@@ -1375,7 +1249,7 @@ class Script(default.Script):
                          pyatspi.ROLE_OPTION_PANE,
                          pyatspi.ROLE_DIALOG,
                          pyatspi.ROLE_APPLICATION]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 tmp = event.source.parent.parent
                 if tmp.name.startswith(panelName):
                     isPanel = True
@@ -1386,7 +1260,7 @@ class Script(default.Script):
                              pyatspi.ROLE_OPTION_PANE,
                              pyatspi.ROLE_DIALOG,
                              pyatspi.ROLE_APPLICATION]
-                if self.isDesiredFocusedItem(event.source, rolesList):
+                if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                     if event.source.parent.name.startswith(panelName):
                         isPanel = True
 
@@ -1395,7 +1269,7 @@ class Script(default.Script):
                              pyatspi.ROLE_OPTION_PANE,
                              pyatspi.ROLE_DIALOG,
                              pyatspi.ROLE_APPLICATION]
-                if self.isDesiredFocusedItem(event.source, rolesList):
+                if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                     if event.source.name.startswith(panelName):
                         isPanel = True
 
@@ -1500,7 +1374,7 @@ class Script(default.Script):
                          pyatspi.ROLE_PANEL,
                          pyatspi.ROLE_ROOT_PANE,
                          pyatspi.ROLE_FRAME]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 debug.println(self.debugLevel,
                    "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
@@ -1522,7 +1396,7 @@ class Script(default.Script):
                          pyatspi.ROLE_OPTION_PANE,
                          pyatspi.ROLE_DIALOG,
                          pyatspi.ROLE_APPLICATION]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "License Agreement screen: Scroll Down button.")
@@ -1538,7 +1412,7 @@ class Script(default.Script):
                          pyatspi.ROLE_OPTION_PANE,
                          pyatspi.ROLE_DIALOG,
                          pyatspi.ROLE_APPLICATION]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "License Agreement screen: accept button.")
@@ -1552,7 +1426,7 @@ class Script(default.Script):
                          pyatspi.ROLE_OPTION_PANE,
                          pyatspi.ROLE_DIALOG,
                          pyatspi.ROLE_APPLICATION]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "Personal Data: Transfer Personal Data check box.")
@@ -1571,8 +1445,8 @@ class Script(default.Script):
             # is using.  We hate keying off stuff like this, but we're
             # forced to in this case.
             #
-            if self.isDesiredFocusedItem(event.source, rolesList) and \
-               event.source.name == _("First name"):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
+               and event.source.name == _("First name"):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "User name: First Name text field.")
@@ -1581,7 +1455,8 @@ class Script(default.Script):
                 # (and not the ones that have LABEL_FOR relationships).
                 #
                 panel = event.source.parent
-                allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
+                allLabels = self.utilities.descendantsWithRole(
+                    panel, pyatspi.ROLE_LABEL)
                 for label in allLabels:
                     relations = label.getRelationSet()
                     hasLabelFor = False
@@ -1599,7 +1474,7 @@ class Script(default.Script):
                          pyatspi.ROLE_OPTION_PANE,
                          pyatspi.ROLE_DIALOG,
                          pyatspi.ROLE_APPLICATION]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "Registration: Register Now radio button.")
@@ -1616,7 +1491,7 @@ class Script(default.Script):
                      pyatspi.ROLE_ROOT_PANE,
                      pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
                           + "Calc: cell editor.")
             return
@@ -1635,7 +1510,7 @@ class Script(default.Script):
                      pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
 
-        if self.isDesiredFocusedItem(event.source, rolesList) \
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
             and (not event.source.name or len(event.source.name) == 0):
             debug.println(self.debugLevel, "StarOffice.locusOfFocusChanged - " \
                           + "Calc: name box.")
@@ -1669,7 +1544,7 @@ class Script(default.Script):
                 except:
                     pass
                 else:
-                    index = self.getCellIndex(newLocusOfFocus)
+                    index = self.utilities.cellIndex(newLocusOfFocus)
                     column = table.getColumnAtIndex(index)
                     self.pointOfReference['lastColumn'] = column
                     row = table.getRowAtIndex(index)
@@ -1686,7 +1561,7 @@ class Script(default.Script):
                      pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
 
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             debug.println(self.debugLevel, "soffice.locusOfFocusChanged - " \
                           + "Impress: scroll pane.")
 
@@ -1713,11 +1588,12 @@ class Script(default.Script):
                      pyatspi.ROLE_ROOT_PANE,
                      pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             default.Script.locusOfFocusChanged(self, event,
                                     oldLocusOfFocus, newLocusOfFocus)
             for child in event.source:
-                speech.speak(self.getText(child, 0, -1), None, False)
+                speech.speak(self.utilities.substring(child, 0, -1),
+                             None, False)
             return
 
         # Combo boxes in OOo typically have two children: a text object
@@ -1731,7 +1607,7 @@ class Script(default.Script):
         if newLocusOfFocus and oldLocusOfFocus \
            and newLocusOfFocus.getRole() == pyatspi.ROLE_LIST \
            and newLocusOfFocus.parent.getRole() == pyatspi.ROLE_COMBO_BOX \
-           and not self.isSameObject(newLocusOfFocus.parent,
+           and not self.utilities.isSameObject(newLocusOfFocus.parent,
                                      oldLocusOfFocus.parent):
 
             # If the combo box contents cannot be edited, just present the
@@ -1770,11 +1646,12 @@ class Script(default.Script):
             debug.println(self.debugLevel,
                 "StarOffice.onWindowActivated - Setup dialog: Welcome screen.")
 
-            allPanels = self.findByRole(event.source.parent,
-                                        pyatspi.ROLE_PANEL)
+            allPanels = self.utilities.descendantsWithRole(
+                event.source.parent, pyatspi.ROLE_PANEL)
             for panel in allPanels:
                 if not panel.name:
-                    allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
+                    allLabels = self.utilities.descendantsWithRole(
+                        panel, pyatspi.ROLE_LABEL)
                     for label in allLabels:
                         self.speakSetupLabel(label)
         else:
@@ -1820,8 +1697,9 @@ class Script(default.Script):
         rolesList = [pyatspi.ROLE_OPTION_PANE, \
                      pyatspi.ROLE_DIALOG, \
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList) \
-           and self.isSameObject(event.source.parent, orca_state.activeWindow):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
+           and self.utilities.isSameObject(
+                event.source.parent, orca_state.activeWindow):
             self.readMisspeltWord(event, event.source)
 
         default.Script.onNameChanged(self, event)
@@ -1850,7 +1728,7 @@ class Script(default.Script):
                      pyatspi.ROLE_ROOT_PANE,
                      pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             debug.println(self.debugLevel, "StarOffice.onFocus - " \
                           + "Calc: Name combo box.")
             orca.setLocusOfFocus(event, event.source)
@@ -1861,7 +1739,8 @@ class Script(default.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_LIST \
            and orca_state.locusOfFocus \
-           and self.isSameObject(orca_state.locusOfFocus.parent, event.source):
+           and self.utilities.isSameObject(
+                orca_state.locusOfFocus.parent, event.source):
             return
 
         default.Script.onFocus(self, event)
@@ -1890,19 +1769,19 @@ class Script(default.Script):
                          pyatspi.ROLE_PANEL,
                          pyatspi.ROLE_PANEL,
                          pyatspi.ROLE_LIST_ITEM]
-            if self.isDesiredFocusedItem(event.source, rolesList) \
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
                and event.any_data:
                 handleEvent = True
 
             # The style list in the Formatting toolbar also lacks state
             # focused.
             #
-            elif event.any_data and self.getAncestor(event.source,
-                                                     [pyatspi.ROLE_TOOL_BAR],
-                                                     [pyatspi.ROLE_FRAME]):
+            elif event.any_data and self.utilities.ancestorWithRole(
+                event.source, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME]):
                 handleEvent = True
 
-        elif self.isSameObject(orca_state.locusOfFocus, event.source.parent) \
+        elif self.utilities.isSameObject(
+                orca_state.locusOfFocus, event.source.parent) \
              and event.source.getRole() == pyatspi.ROLE_LIST \
              and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_COMBO_BOX:
             # Combo boxes which have been explicitly given focus by the user
@@ -1921,7 +1800,8 @@ class Script(default.Script):
             presentEvent = False
 
         if orca_state.locusOfFocus \
-           and self.isSameObject(orca_state.locusOfFocus, event.any_data):
+           and self.utilities.isSameObject(
+            orca_state.locusOfFocus, event.any_data):
             # We're already on the new item. If we (or the default script)
             # presents it, the speech.stop() will cause us to interrupt the
             # presentation we're probably about to make due to an earlier
@@ -2033,7 +1913,7 @@ class Script(default.Script):
                          pyatspi.ROLE_PANEL,
                          pyatspi.ROLE_ROOT_PANE,
                          pyatspi.ROLE_FRAME]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 orca.setLocusOfFocus(
                     event, event.source, notifyPresentationManager=False)
                 if event.source != self.currentParagraph:
@@ -2087,7 +1967,8 @@ class Script(default.Script):
                      pyatspi.ROLE_ROOT_PANE,
                      pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
+           and orca_state.locusOfFocus:
             if orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
                 cell = orca_state.locusOfFocus
 
@@ -2101,12 +1982,12 @@ class Script(default.Script):
 
                     try:
                         if cell.queryText():
-                            cellText = self.getText(cell, 0, -1)
+                            cellText = self.utilities.substring(cell, 0, -1)
                             if cellText and len(cellText):
                                 try:
                                     if self.inputLineForCell and \
                                        self.inputLineForCell.queryText():
-                                        inputLine = self.getText( \
+                                        inputLine = self.utilities.substring( \
                                                  self.inputLineForCell, 0, -1)
                                         if inputLine and (len(inputLine) > 1) \
                                             and (inputLine[0] == "="):
@@ -2128,34 +2009,6 @@ class Script(default.Script):
                         pass
 
         default.Script.onSelectionChanged(self, event)
-
-    def getText(self, obj, startOffset, endOffset):
-        """Returns the substring of the given object's text specialization.
-
-        NOTE: This is here to handle the problematic implementation of
-        getText by OpenOffice.  See the bug discussion at:
-
-           http://bugzilla.gnome.org/show_bug.cgi?id=356425)
-
-        Once the OpenOffice issue has been resolved, this method probably
-        should be removed.
-
-        Arguments:
-        - obj: an accessible supporting the accessible text specialization
-        - startOffset: the starting character position
-        - endOffset: the ending character position
-        """
-
-        text = obj.queryText().getText(0, -1).decode("UTF-8")
-        if startOffset >= len(text):
-            startOffset = len(text) - 1
-        if endOffset == -1:
-            endOffset = len(text)
-        elif startOffset >= endOffset:
-            endOffset = startOffset + 1
-        string = text[max(0, startOffset):min(len(text), endOffset)]
-        string = string.encode("UTF-8")
-        return string
 
     def speakCellName(self, name):
         """Speaks the given cell name.
@@ -2212,15 +2065,15 @@ class Script(default.Script):
                           pyatspi.ROLE_FRAME,
                           pyatspi.ROLE_APPLICATION]
             if settings.enableEchoByWord and \
-               (self.isDesiredFocusedItem(event.source, rolesList) or
-                self.isDesiredFocusedItem(event.source, rolesList1)):
+               (self.utilities.hasMatchingHierarchy(event.source, rolesList) or
+                self.utilities.hasMatchingHierarchy(event.source, rolesList1)):
                 if isinstance(orca_state.lastInputEvent,
                               input_event.KeyboardEvent):
                     keyString = orca_state.lastNonModifierKeyEvent.event_string
                     focusRole = orca_state.locusOfFocus.getRole()
                     if focusRole != pyatspi.ROLE_UNKNOWN and \
                        keyString == "Return":
-                        result = self.getText(event.source, 0, -1)
+                        result = self.utilities.substring(event.source, 0, -1)
                         line = result.decode("UTF-8")
                         self.echoPreviousWord(event.source, len(line))
                         return
@@ -2274,7 +2127,7 @@ class Script(default.Script):
                or (event_string == "Up" and (eventIndex - paraIndex >= 0)):
                 return
 
-            result = self.getText(event.source, 0, -1)
+            result = self.utilities.substring(event.source, 0, -1)
             textToSpeak = result.decode("UTF-8")
             self._speakWriterText(event, textToSpeak)
             self.displayBrailleForObject(event.source)
@@ -2286,9 +2139,8 @@ class Script(default.Script):
             # to the event not being from the locusOfFocus.
             #
             if event.source.getRole() == pyatspi.ROLE_TEXT \
-               and self.getAncestor(event.source,
-                                    [pyatspi.ROLE_TOOL_BAR],
-                                    [pyatspi.ROLE_FRAME]):
+               and self.utilities.ancestorWithRole(
+                event.source, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME]):
                 orca.setLocusOfFocus(event, event.source, False)
             default.Script.onCaretMoved(self, event)
 
@@ -2342,77 +2194,6 @@ class Script(default.Script):
         else:
             default.Script.onTextInserted(self, event)
 
-    def isWordMisspelled(self, obj, offset):
-        """Identifies if the current word is flagged as misspelled by the
-        application.
-
-        Arguments:
-        - obj: An accessible which implements the accessible text interface.
-        - offset: Offset in the accessible's text for which to retrieve the
-          attributes.
-
-        Returns True if the word is flagged as misspelled.
-        """
-
-        attributes, start, end  = self.getTextAttributes(obj, offset, True)
-        error = attributes.get("text-spelling")
-
-        return error == "misspelled"
-
-    def getTextAttributes(self, acc, offset, get_defaults=False):
-        """Get the text attributes run for a given offset in a given accessible
-
-        Arguments:
-        - acc: An accessible.
-        - offset: Offset in the accessible's text for which to retrieve the
-        attributes.
-        - get_defaults: Get the default attributes as well as the unique ones.
-        Default is True
-
-        Returns a dictionary of attributes, a start offset where the attributes
-        begin, and an end offset. Returns ({}, 0, 0) if the accessible does not
-        supprt the text attribute.
-        """
-        rv, start, end = \
-            default.Script.getTextAttributes(self, acc, offset, get_defaults)
-
-        # If there are no text attributes associated with the text at a
-        # given offset, we might get some seriously bogus offsets, in
-        # particular, an extremely large start offset and an extremely
-        # large, but negative end offset. As a result, any text attributes
-        # which are present on the line after the specified offset will
-        # not be indicated by braille.py's getAttributeMask. Therefore,
-        # we'll set the start offset to the character being examined,
-        # and the end offset to the next character.
-        #
-        start = min(start, offset)
-        if end < 0:
-            debug.println(debug.LEVEL_WARNING,
-                "soffice.script.py:getTextAttributes: detected a bogus " +
-                "end offset. Start offset: %s, end offset: %s" % (start, end))
-            end = offset + 1
-        else:
-            end -= 1
-
-        return rv, start, end
-
-    def getDisplayedText(self, obj):
-        """Returns the text being displayed for an object. Overridden here
-        because OpenOffice uses symbols (e.g. ">>" for buttons but exposes
-        more useful information via the accessible's name.
-
-        Arguments:
-        - obj: the object
-
-        Returns the text being displayed for an object or None if there isn't
-        any text being shown.
-        """
-
-        if obj.getRole() == pyatspi.ROLE_PUSH_BUTTON and obj.name:
-            return obj.name
-        else:
-            return default.Script.getDisplayedText(self, obj)
-
     def getTextLineAtCaret(self, obj, offset=None):
         """Gets the line of text where the caret is. Overridden here to
         handle combo boxes who have a text object with a caret offset
@@ -2447,33 +2228,3 @@ class Script(default.Script):
                 return [content.encode("UTF-8"), 0, startOffset]
 
         return default.Script.getTextLineAtCaret(self, obj, offset)
-
-    def isFunctionalDialog(self, obj):
-        """Returns true if the window is functioning as a dialog."""
-
-        # The OOo Navigator window looks like a dialog, acts like a
-        # dialog, and loses focus requiring the user to know that it's
-        # there and needs Alt+F6ing into.  But officially it's a normal
-        # window.
-
-        # There doesn't seem to be (an efficient) top-down equivalent
-        # of isDesiredFocusedItem(). But OOo documents have root panes;
-        # this thing does not.
-        #
-        rolesList = [pyatspi.ROLE_FRAME,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_PANEL,
-                     pyatspi.ROLE_TOOL_BAR,
-                     pyatspi.ROLE_PUSH_BUTTON]
-
-        if obj.getRole() != rolesList[0]:
-            # We might be looking at the child.
-            #
-            rolesList.pop(0)
-
-        while obj and obj.childCount and len(rolesList):
-            if obj.getRole() != rolesList.pop(0):
-                return False
-            obj = obj[0]
-
-        return True

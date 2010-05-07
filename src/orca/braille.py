@@ -699,7 +699,8 @@ class Text(Region):
         if caretOffset < 0:
             return
 
-        orca_state.activeScript.setCaretOffset(self.accessible, caretOffset)
+        orca_state.activeScript.utilities.setCaretOffset(
+            self.accessible, caretOffset)
 
     def getAttributeMask(self, getLinkMask=True):
         """Creates a string which can be used as the attrOr field of brltty's
@@ -748,14 +749,14 @@ class Text(Region):
                 n += 1
 
         if attrIndicator:
-            enabledAttributes = script.attributeStringToDictionary(
+            keys, enabledAttributes = script.utilities.stringToKeysAndDict(
                 settings.enabledBrailledTextAttributes)
 
             offset = self.lineOffset
             while offset < lineEndOffset:
                 attributes, startOffset, endOffset = \
-                            script.getTextAttributes(self.accessible,
-                                                     offset, True)
+                    script.utilities.textAttributes(self.accessible,
+                                                    offset, True)
                 if endOffset <= offset:
                     break
                 mask = settings.TEXT_ATTR_BRAILLE_NONE
@@ -772,7 +773,7 @@ class Text(Region):
                         regionMask[i] |= attrIndicator
 
         if selIndicator:
-            selections = script.getAllTextSelections(self.accessible)
+            selections = script.utilities.allTextSelections(self.accessible)
             for startOffset, endOffset in selections:
                 maskStart = max(startOffset - self.lineOffset, 0)
                 maskEnd = min(endOffset - self.lineOffset, stringLength)
@@ -879,7 +880,8 @@ class ReviewText(Region):
         been scrolled off the display."""
 
         caretOffset = self.getCaretOffset(offset)
-        orca_state.activeScript.setCaretOffset(self.accessible, caretOffset)
+        orca_state.activeScript.utilities.setCaretOffset(
+            self.accessible, caretOffset)
 
 class Line:
     """A horizontal line on the display.  Each Line is composed of a sequential

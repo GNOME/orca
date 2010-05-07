@@ -100,14 +100,14 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         [cur_obj, cur_characterOffset] = self._script.getCaretContext()
         
         # Are they the same object?
-        if self._script.isSameObject(cur_obj, obj):
+        if self._script.utilities.isSameObject(cur_obj, obj):
             # Translators: this announces that the current object is the same
             # object pointed to by the bookmark.
             #
             speech.speak(_('bookmark is current object'))
             return
         # Are their parents the same?
-        elif self._script.isSameObject(cur_obj.parent, obj.parent):
+        elif self._script.utilities.isSameObject(cur_obj.parent, obj.parent):
             # Translators: this announces that the current object's parent and 
             # the parent of the object pointed to by the bookmark are the same.
             #
@@ -271,7 +271,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
     def pathToObj(self, path):
         """Return the object with the given path (relative to the
         document frame). """
-        returnobj = self._script.getDocumentFrame()
+        returnobj = self._script.utilities.documentFrame()
         for childnumber in path:
             try:
                 returnobj = returnobj[childnumber]
@@ -283,7 +283,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
     def getURIKey(self):
         """Returns the URI key for a given page as a URI stripped of 
         parameters?query#fragment as seen in urlparse."""
-        uri = self._script.getDocumentFrameURI()
+        uri = self._script.utilities.documentFrameURI()
         if uri:
             parsed_uri = urlparse.urlparse(uri)
             return ''.join(parsed_uri[0:3])

@@ -148,7 +148,7 @@ class Script(default.Script):
 
                 if mode == pyatspi.TEXT_BOUNDARY_LINE_START or \
                    len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
-                    string = self.adjustForRepeats(string)
+                    string = self.utilities.adjustForRepeats(string)
                     if string.decode("UTF-8").isupper():
                         voice = settings.voices[settings.UPPERCASE_VOICE]
                     else:
@@ -186,7 +186,7 @@ class Script(default.Script):
         # If there is anything left unspoken, speak it now.
         #
         if len(string) != 0:
-            string = self.adjustForRepeats(string)
+            string = self.utilities.adjustForRepeats(string)
             if string.decode("UTF-8").isupper():
                 voice = settings.voices[settings.UPPERCASE_VOICE]
             else:
@@ -219,7 +219,8 @@ class Script(default.Script):
         # Spelling dialog. Look for the one that isn't a label to
         # another component.
         #
-        allLabels = self.findByRole(panel, pyatspi.ROLE_LABEL)
+        allLabels = self.utilities.descendantsWithRole(
+            panel, pyatspi.ROLE_LABEL)
         for label in allLabels:
             # Translators: these are labels from the gedit spell checking
             # dialog and must be the same strings gedit uses.  We hate
@@ -240,7 +241,8 @@ class Script(default.Script):
         # was called. If they are the same then we ignore it.
 
         if self.textArea != None:
-            allText = self.findByRole(self.textArea, pyatspi.ROLE_TEXT)
+            allText = self.utilities.descendantsWithRole(
+                self.textArea, pyatspi.ROLE_TEXT)
             caretPosition = allText[0].queryText().caretOffset
 
             debug.println(self.debugLevel, \
@@ -273,7 +275,7 @@ class Script(default.Script):
             #
             allTokens = []
             for i in range(0, len(allText)):
-                text = self.getText(allText[i], 0, -1)
+                text = self.utilities.substring(allText[i], 0, -1)
                 tokens = text.split()
                 allTokens += tokens
 
@@ -315,9 +317,9 @@ class Script(default.Script):
         # we're forced to do so in this case.
         #
         tmp = obj.parent.parent
-        if (self.isDesiredFocusedItem(obj, rolesList1) \
+        if (self.utilities.hasMatchingHierarchy(obj, rolesList1) \
             and obj.name == _("Find")) \
-            or (self.isDesiredFocusedItem(obj, rolesList2) \
+            or (self.utilities.hasMatchingHierarchy(obj, rolesList2) \
                 and tmp.parent.parent.parent.name == _("Find")):
             return True
         else:
@@ -358,7 +360,7 @@ class Script(default.Script):
                      pyatspi.ROLE_PAGE_TAB,
                      pyatspi.ROLE_PAGE_TAB_LIST,
                      pyatspi.ROLE_SPLIT_PANE]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             debug.println(self.debugLevel,
                           "gedit.locusOfFocusChanged - text area.")
 
@@ -382,7 +384,7 @@ class Script(default.Script):
                      pyatspi.ROLE_PANEL,
                      pyatspi.ROLE_FILLER,
                      pyatspi.ROLE_FRAME]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             tmp = event.source.parent.parent
             frame = tmp.parent.parent
             # Translators: this is the name of the "Check Spelling" window
@@ -415,12 +417,12 @@ class Script(default.Script):
                      pyatspi.ROLE_FILLER,
                      pyatspi.ROLE_PAGE_TAB,
                      pyatspi.ROLE_PAGE_TAB_LIST]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             debug.println(self.debugLevel,
                           "gedit.onStateChanged - print preview - page #.")
             parent = event.source.parent
-            label1 = self.getDisplayedText(parent[1])
-            label2 = self.getDisplayedText(parent[2])
+            label1 = self.utilities.displayedText(parent[1])
+            label2 = self.utilities.displayedText(parent[2])
             items = [label1, label2]
             self.presentItemsInSpeech(items)
             self.presentItemsInBraille(items)
@@ -461,7 +463,7 @@ class Script(default.Script):
                      pyatspi.ROLE_PANEL,
                      pyatspi.ROLE_FILLER,
                      pyatspi.ROLE_FRAME]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             frame = event.source.parent.parent.parent
             # Translators: this is the name of the "Check Spelling" window
             # in gedit and must be the same as what gedit uses.  We hate
@@ -553,10 +555,10 @@ class Script(default.Script):
            and orca_state.lastNonModifierKeyEvent \
            and orca_state.lastNonModifierKeyEvent.event_string == "Return":
             debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
-            allComboBoxes = \
-                     self.findByRole(orca_state.locusOfFocus.getApplication(),
-                                     pyatspi.ROLE_COMBO_BOX)
-            phrase = self.getDisplayedText(allComboBoxes[0])
+            allComboBoxes = self.utilities.descendantsWithRole(
+                orca_state.locusOfFocus.getApplication(),
+                pyatspi.ROLE_COMBO_BOX)
+            phrase = self.utilities.displayedText(allComboBoxes[0])
             [text, caretOffset, startOffset] = \
                 self.getTextLineAtCaret(event.source)
             if text.lower().find(phrase) != -1:

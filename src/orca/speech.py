@@ -159,7 +159,7 @@ def _speak(text, acss, interrupt):
     if settings.speakMultiCaseStringsAsWords:
         text = _processMultiCaseString(text)
     if orca_state.activeScript and orca_state.usePronunciationDictionary:
-        text = orca_state.activeScript.adjustForPronunciation(text)
+        text = orca_state.activeScript.utilities.adjustForPronunciation(text)
     if settings.speakMultiCaseStringsAsWords:
         text = _processMultiCaseString(text)
 

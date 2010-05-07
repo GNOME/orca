@@ -46,6 +46,7 @@ import orca.speech as speech
 
 from orca.orca_i18n import _
 
+from script_utilities import Utilities
 from speech_generator import SpeechGenerator
 import script_settings
 
@@ -258,6 +259,11 @@ class Script(default.Script):
         """
 
         return SpeechGenerator(self)
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
     def getAppPreferencesGUI(self):
         """Return a GtkVBox contain the application unique configuration
@@ -537,7 +543,7 @@ class Script(default.Script):
 
         if script_settings.chatRoomHistories:
             chatRoomTab = self.getChatRoomTab(orca_state.locusOfFocus)
-            chatRoomName = self.getDisplayedText(chatRoomTab)
+            chatRoomName = self.utilities.displayedText(chatRoomTab)
             if not chatRoomName in self.chatRoomMessages:
                 return
             messages = self.chatRoomMessages[chatRoomName].get()
@@ -587,7 +593,7 @@ class Script(default.Script):
             rolesList = [pyatspi.ROLE_PAGE_TAB_LIST, \
                          pyatspi.ROLE_FILLER, \
                          pyatspi.ROLE_FRAME]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 # As it's possible to get this component hierarchy in other
                 # places than the chat room (i.e. the Preferences dialog),
                 # we check to see if the name of the frame is the same as one
@@ -624,7 +630,7 @@ class Script(default.Script):
                      pyatspi.ROLE_FILLER, \
                      pyatspi.ROLE_PAGE_TAB, \
                      pyatspi.ROLE_PAGE_TAB_LIST]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             isBuddyListEvent = True
 
         return isBuddyListEvent
@@ -716,9 +722,8 @@ class Script(default.Script):
             # text field. Hopefully this is true for other types of chat
             # as well, but is currently untested.
             #
-            allTextFields = self.findByRole(chatRoomTab,
-                                            pyatspi.ROLE_TEXT,
-                                            False)
+            allTextFields = self.utilities.descendantsWithRole(
+                chatRoomTab, pyatspi.ROLE_TEXT, False)
             index = len(allTextFields) - 2
             if index >= 0:
                 self.chatAreas[chatRoomTab] = allTextFields[index]
@@ -730,7 +735,7 @@ class Script(default.Script):
         # (if one doesn't already exist) and populate it with empty
         # strings.
         #
-        chatRoomName = self.getDisplayedText(chatRoomTab)
+        chatRoomName = self.utilities.displayedText(chatRoomTab)
         if not chatRoomName in self.chatRoomMessages:
             self.chatRoomMessages[chatRoomName] = \
                                  RingList(Script.MESSAGE_LIST_LENGTH)
@@ -746,13 +751,13 @@ class Script(default.Script):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
 
-            message = self.getText(event.source,
-                                   event.detail1,
-                                   event.detail1 + event.detail2)
+            message = self.utilities.substring(event.source,
+                                               event.detail1,
+                                               event.detail1 + event.detail2)
             if message and message[0] == "\n":
                 message = message[1:]
 
-            chatRoomName = self.getDisplayedText(chatRoomTab)
+            chatRoomName = self.utilities.displayedText(chatRoomTab)
 
             # If the user doesn't want announcements for when their buddies
             # are typing (or have stopped typing), and this is such a message,
@@ -763,7 +768,7 @@ class Script(default.Script):
             # stream of "is typing" updates.
             #
             attr, start, end = \
-                self.getTextAttributes(event.source, event.detail1)
+                self.utilities.textAttributes(event.source, event.detail1)
             if float(attr.get('scale', '1')) < 1 \
                or int(attr.get('weight', '400')) < 400:
                 if not script_settings.announceBuddyTyping or \
@@ -788,7 +793,7 @@ class Script(default.Script):
             # We don't want to do this for the status messages however.
             #
             if not self.lastStatus:
-                chatRoomName = self.getDisplayedText(chatRoomTab)
+                chatRoomName = self.utilities.displayedText(chatRoomTab)
 
                 self.allPreviousMessages.append(message)
                 self.previousChatRoomNames.append(chatRoomName)
@@ -828,118 +833,8 @@ class Script(default.Script):
                      pyatspi.ROLE_FILLER,
                      pyatspi.ROLE_PAGE_TAB]
 
-        return self.isDesiredFocusedItem(obj, rolesList)
+        return self.utilities.hasMatchingHierarchy(obj, rolesList)
         
-    def getNodeLevel(self, obj):
-        """Determines the node level of this object if it is in a tree
-        relation, with 0 being the top level node.  If this object is
-        not in a tree relation, then -1 will be returned. Overridden
-        here because the accessible we need is in a hidden column.
-
-        Arguments:
-        -obj: the Accessible object
-        """
-
-        if not obj:
-            return -1
-
-        if not self.isInBuddyList(obj):
-            return default.Script.getNodeLevel(self, obj)
-
-        try:
-            obj = obj.parent[obj.getIndexInParent() - 1]
-        except:
-            return -1
-
-        try:
-            table = obj.parent.queryTable()
-        except:
-            return -1
-
-        nodes = []
-        node = obj
-        done = False
-        while not done:
-            relations = node.getRelationSet()
-            node = None
-            for relation in relations:
-                if relation.getRelationType() \
-                       == pyatspi.RELATION_NODE_CHILD_OF:
-                    node = relation.getTarget(0)
-                    break
-
-            # We want to avoid situations where something gives us an
-            # infinite cycle of nodes.  Bon Echo has been seen to do
-            # this (see bug 351847).
-            #
-            if (len(nodes) > 100) or nodes.count(node):
-                debug.println(debug.LEVEL_WARNING,
-                              "pidgin.getNodeLevel detected a cycle!!!")
-                done = True
-            elif node:
-                nodes.append(node)
-                debug.println(debug.LEVEL_FINEST,
-                              "pidgin.getNodeLevel %d" % len(nodes))
-            else:
-                done = True
-
-        return len(nodes) - 1
-
-    def getChildNodes(self, obj):
-        """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
-        to this expanded table cell. Overridden here because the object
-        which contains the relation is in a hidden column and thus doesn't
-        have a column number (necessary for using getAccessibleAt()).
-
-        Arguments:
-        -obj: the Accessible Object
-
-        Returns: a list of all the child nodes
-        """
-
-        if not self.isInBuddyList(obj):
-            return default.Script.getChildNodes(self, obj)
-
-        try:
-            table = obj.parent.queryTable()
-        except:
-            return []
-        else:
-            if not obj.getState().contains(pyatspi.STATE_EXPANDED):
-                return []
-
-        nodes = []        
-        index = self.getCellIndex(obj)
-        row = table.getRowAtIndex(index)
-        col = table.getColumnAtIndex(index + 1)
-        nodeLevel = self.getNodeLevel(obj)
-        done = False
-
-        # Candidates will be in the rows beneath the current row.
-        # Only check in the current column and stop checking as
-        # soon as the node level of a candidate is equal or less
-        # than our current level.
-        #
-        for i in range(row+1, table.nRows):
-            cell = table.getAccessibleAt(i, col)
-            nodeCell = cell.parent[cell.getIndexInParent() - 1]
-            relations = nodeCell.getRelationSet()
-            for relation in relations:
-                if relation.getRelationType() \
-                       == pyatspi.RELATION_NODE_CHILD_OF:
-                    nodeOf = relation.getTarget(0)
-                    if self.isSameObject(obj, nodeOf):
-                        nodes.append(cell)
-                    else:
-                        currentLevel = self.getNodeLevel(nodeOf)
-                        if currentLevel <= nodeLevel:
-                            done = True
-                    break
-            if done:
-                break
-
-        return nodes
-
     def visualAppearanceChanged(self, event, obj):
         """Called when the visual appearance of an object changes.
         Overridden here because we get object:state-changed:expanded

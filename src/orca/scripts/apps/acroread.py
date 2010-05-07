@@ -223,7 +223,7 @@ class Script(default.Script):
                      pyatspi.ROLE_UNKNOWN,
                      pyatspi.ROLE_UNKNOWN,
                      pyatspi.ROLE_TABLE]
-        if self.isDesiredFocusedItem(obj, rolesList):
+        if self.utilities.hasMatchingHierarchy(obj, rolesList):
             table = obj.parent.parent.parent
             rows = table.childCount
             columns = table[0].childCount
@@ -330,9 +330,11 @@ class Script(default.Script):
         try:
             while obj.getRole() != pyatspi.ROLE_DRAWING_AREA:
                 obj = obj.parent
-            if self.isDesiredFocusedItem(obj, rolesList):
+            if self.utilities.hasMatchingHierarchy(obj, rolesList):
                 inFindToolbar = True
-                self.findToolbarName = self.getFrame(obj).name
+                frame = self.utilities.ancestorWithRole(
+                    obj, [pyatspi.ROLE_FRAME], [])
+                self.findToolbarName = frame.name
         except:
             pass
 
@@ -470,7 +472,8 @@ class Script(default.Script):
             utterances = self.speechGenerator.generateSpeech(newLocusOfFocus)
             adjustedUtterances = []
             for utterance in utterances:
-                adjustedUtterances.append(self.adjustForRepeats(utterance))
+                adjustedUtterances.append(
+                    self.utilities.adjustForRepeats(utterance))
             speech.speak(adjustedUtterances)
             self.displayBrailleForObject(newLocusOfFocus)
             orca.setLocusOfFocus(
@@ -678,14 +681,14 @@ class Script(default.Script):
                     if lastWord == word:
                         return
 
-            if self.getLinkIndex(obj, offset) >= 0:
+            if self.utilities.linkIndex(obj, offset) >= 0:
                 voice = self.voices[settings.HYPERLINK_VOICE]
             elif word.decode("UTF-8").isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
-            word = self.adjustForRepeats(word)
+            word = self.utilities.adjustForRepeats(word)
             orca_state.lastWord = word
             speech.speak(word, voice)
             self.speakTextSelectionState(obj, startOffset, endOffset)

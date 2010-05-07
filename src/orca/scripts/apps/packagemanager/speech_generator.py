@@ -40,7 +40,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def generateSpeech(self, obj, **args):
         results = []
         oldRole = None
-        if self._script.isLink(obj):
+        if self._script.utilities.isLink(obj):
             oldRole = self._overrideRole(pyatspi.ROLE_LINK, args)
         results.extend(
             speech_generator.SpeechGenerator.generateSpeech(self, obj, **args))
@@ -82,7 +82,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         inactive).  Otherwise, and empty array will be returned.
         """
         result = []
-        if not self._script.isLink(obj):
+        if not self._script.utilities.isLink(obj):
             result.extend(speech_generator.SpeechGenerator.\
                 _generateAvailability(self, obj, **args))
         return result
@@ -93,7 +93,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         This method should initially be called with a top-level window.
         """
         result = []
-        statusBar = self._script.findStatusBar(obj)
+        statusBar = self._script.utilities.statusBar(obj)
         if statusBar:
             name = self._generateName(statusBar)
             if name:

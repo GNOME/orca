@@ -41,8 +41,10 @@ import orca.settings as settings
 
 from orca.orca_i18n import _ # for gettext support
 
-from speech_generator import SpeechGenerator
 from formatting import Formatting
+from speech_generator import SpeechGenerator
+from script_utilities import Utilities
+
 ########################################################################
 #                                                                      #
 # The Evolution script class.                                          #
@@ -139,6 +141,11 @@ class Script(default.Script):
         """Returns the formatting strings for this script."""
         return Formatting(self)
 
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
+
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings. In this particular case,
@@ -192,46 +199,23 @@ class Script(default.Script):
 
         return listeners
 
-    def findUnrelatedLabels(self, root):
-        """Returns a list containing all the unrelated (i.e., have no
-        relations to anything and are not a fundamental element of a
-        more atomic component like a combo box) labels under the given
-        root.  Note that the labels must also be showing on the display.
-
-        Arguments:
-        - root the Accessible object to traverse
-
-        Returns a list of unrelated labels under the given root.
+    def isActivatableEvent(self, event):
+        """Returns True if the given event is one that should cause this
+        script to become the active script.  This is only a hint to
+        the focus tracking manager and it is not guaranteed this
+        request will be honored.  Note that by the time the focus
+        tracking manager calls this method, it thinks the script
+        should become active.  This is an opportunity for the script
+        to say it shouldn't.
         """
 
-        labels = default.Script.findUnrelatedLabels(self, root)
-        for i, label in enumerate(labels):
-            if not label.getState().contains(pyatspi.STATE_SENSITIVE):
-                labels.remove(label)
-            else:
-                try:
-                    text = label.queryText()
-                except:
-                    pass
-                else:
-                    attr = text.getAttributes(0)
-                    if attr[0]:
-                        [charKeys, charDict] = \
-                            self.textAttrsToDictionary(attr[0])
-                        if charDict.get('weight', '400') == '700':
-                            if self.isWizard(root):
-                                # We've passed the wizard info at the top,
-                                # which is what we want to present. The rest
-                                # is noise.
-                                #
-                                return labels[0:i]
-                            else:
-                                # This label is bold and thus serving as a
-                                # heading. As such, it's not really unrelated.
-                                #
-                                labels.remove(label)
+        # If the Evolution window is not focused, ignore this event.
+        #
+        window = self.utilities.topLevelObject(event.source)
+        if window and not window.getState().contains(pyatspi.STATE_ACTIVE):
+            return False
 
-        return labels
+        return True
 
     def toggleReadMail(self, inputEvent):
         """ Toggle whether we present new mail if we not not the active script.+
@@ -258,478 +242,6 @@ class Script(default.Script):
 
         return True
 
-    def readPageTab(self, tab):
-        """Speak/Braille the given page tab. The speech verbosity is set
-           to VERBOSITY_LEVEL_BRIEF for this operation and then restored
-           to its previous value on completion.
-
-        Arguments:
-        - tab: the page tab to speak/braille.
-        """
-
-        brailleGen = self.brailleGenerator
-        speechGen = self.speechGenerator
-
-        savedSpeechVerbosityLevel = settings.speechVerbosityLevel
-        settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
-        utterances = speechGen.generateSpeech(tab)
-        speech.speak(utterances)
-        settings.speechVerbosityLevel = savedSpeechVerbosityLevel
-
-        self.displayBrailleRegions(brailleGen.generateBraille(tab))
-
-    def getTimeForCalRow(self, row, noIncs):
-        """Return a string equivalent to the time of the given row in
-           the calendar day view. Each calendar row is equivalent to
-           a certain time interval (from 5 minutes upto 1 hour), with
-           time (row 0) starting at 12 am (midnight).
-
-        Arguments:
-        - row: the row number.
-        - noIncs: the number of equal increments that the 24 hour period
-                  is divided into.
-
-        Returns the time as a string.
-        """
-
-        totalMins = timeIncrements[noIncs] * row
-
-        if totalMins < 720:
-            suffix = 'A.M.'
-        else:
-            totalMins -= 720
-            suffix = 'P.M.'
-
-        hrs = hours[totalMins / 60]
-        mins = minutes[totalMins % 60]
-
-        return hrs + ' ' + mins + ' ' + suffix
-
-    def getAllSelectedText(self, obj):
-        """Get all the text applicable text selections for the given object.
-        If there is selected text, look to see if there are any previous
-        or next text objects that also have selected text and add in their
-        text contents.
-
-        Arguments:
-        - obj: the text object to start extracting the selected text from.
-
-        Returns: all the selected text contents plus the start and end
-        offsets within the text for the given object.
-        """
-
-        textContents = ""
-        startOffset = 0
-        endOffset = 0
-        if obj.queryText().getNSelections() > 0:
-            [textContents, startOffset, endOffset] = \
-                                            self.getSelectedText(obj)
-
-        # Unfortunately, Evolution doesn't use the FLOWS_FROM and
-        # FLOWS_TO relationships to easily allow us to get to previous
-        # and next text objects. Instead we have to move up the
-        # component hierarchy until we get to the object containing all
-        # the panels (with each line containing a single text item).
-        # We can then check in both directions to see if there is other
-        # contiguous text that is selected. We also have to jump over
-        # zero length (empty) text lines and continue checking on the
-        # other side.
-        #
-        container = obj.parent.parent
-        current = obj.parent.getIndexInParent()
-        morePossibleSelections = True
-        while morePossibleSelections:
-            morePossibleSelections = False
-            if (current-1) >= 0:
-                prevPanel = container[current-1]
-                try:
-                    prevObj = prevPanel[0]
-                    displayedText = prevObj.queryText().getText(0, -1)
-                    if len(displayedText) == 0:
-                        current -= 1
-                        morePossibleSelections = True
-                    elif prevObj.queryText().getNSelections() > 0:
-                        [newTextContents, start, end] = \
-                                     self.getSelectedText(prevObj)
-                        textContents = newTextContents + " " + textContents
-                        current -= 1
-                        morePossibleSelections = True
-                except:
-                    pass
-
-        current = obj.parent.getIndexInParent()
-        morePossibleSelections = True
-        while morePossibleSelections:
-            morePossibleSelections = False
-            if (current+1) < container.childCount:
-                nextPanel = container[current+1]
-                try:
-                    nextObj = nextPanel[0]
-                    displayedText = nextObj.queryText().getText(0, -1)
-                    if len(displayedText) == 0:
-                        current += 1
-                        morePossibleSelections = True
-                    elif nextObj.queryText().getNSelections() > 0:
-                        [newTextContents, start, end] = \
-                                     self.getSelectedText(nextObj)
-                        textContents += " " + newTextContents
-                        current += 1
-                        morePossibleSelections = True
-                except:
-                    pass
-
-        return [textContents, startOffset, endOffset]
-
-    def hasTextSelections(self, obj):
-        """Return an indication of whether this object has selected text.
-        Note that it's possible that this object has no text, but is part
-        of a selected text area. Because of this, we need to check the
-        objects on either side to see if they are none zero length and
-        have text selections.
-
-        Arguments:
-        - obj: the text object to start checking for selected text.
-
-        Returns: an indication of whether this object has selected text,
-        or adjacent text objects have selected text.
-        """
-
-        currentSelected = False
-        otherSelected = False
-        nSelections = obj.queryText().getNSelections()
-        if nSelections:
-            currentSelected = True
-        else:
-            otherSelected = False
-            displayedText = obj.queryText().getText(0, -1)
-            if len(displayedText) == 0:
-                container = obj.parent.parent
-                current = obj.parent.getIndexInParent()
-                morePossibleSelections = True
-                while morePossibleSelections:
-                    morePossibleSelections = False
-                    if (current-1) >= 0:
-                        prevPanel = container[current-1]
-                        prevObj = prevPanel[0]
-                        try:
-                            prevObjText = prevObj.queryText()
-                        except:
-                            prevObjText = None
-
-                        if prevObj and prevObjText:
-                            if prevObjText.getNSelections() > 0:
-                                otherSelected = True
-                            else:
-                                displayedText = prevObjText.getText(0, -1)
-                                if len(displayedText) == 0:
-                                    current -= 1
-                                    morePossibleSelections = True
-
-                current = obj.parent.getIndexInParent()
-                morePossibleSelections = True
-                while morePossibleSelections:
-                    morePossibleSelections = False
-                    if (current+1) < container.childCount:
-                        nextPanel = container[current+1]
-                        nextObj = nextPanel[0]
-                        try:
-                            nextObjText = nextObj.queryText()
-                        except:
-                            nextObjText = None
-
-                        if nextObj and nextObjText:
-                            if nextObjText.getNSelections() > 0:
-                                otherSelected = True
-                            else:
-                                displayedText = nextObjText.getText(0, -1)
-                                if len(displayedText) == 0:
-                                    current += 1
-                                    morePossibleSelections = True
-
-        return [currentSelected, otherSelected]
-
-    def textLines(self, obj):
-        """Creates a generator that can be used to iterate over each line
-        of a text object, starting at the caret offset.
-
-        We have to subclass this because Evolution lays out its messages
-        such that each paragraph is in its own panel, each of which is
-        in a higher level panel.  So, we just traverse through the
-        children.
-
-        Arguments:
-        - obj: an Accessible that has a text specialization
-
-        Returns an iterator that produces elements of the form:
-        [SayAllContext, acss], where SayAllContext has the text to be
-        spoken and acss is an ACSS instance for speaking the text.
-        """
-
-        if not obj:
-            return
-
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            return
-
-        panel = obj.parent
-        htmlPanel = panel.parent
-        startIndex = panel.getIndexInParent()
-        i = startIndex
-        total = htmlPanel.childCount
-        textObjs = []
-        startOffset = text.caretOffset
-        offset = text.caretOffset
-        string = ""
-        done = False
-
-        # Determine the correct "say all by" mode to use.
-        #
-        if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
-            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
-        elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
-            mode = pyatspi.TEXT_BOUNDARY_LINE_START
-        else:
-            mode = pyatspi.TEXT_BOUNDARY_LINE_START
-
-        while not done:
-            panel = htmlPanel.getChildAtIndex(i)
-            if panel != None:
-                textObj = panel.getChildAtIndex(0)
-                try:
-                    text = textObj.queryText()
-                except NotImplementedError:
-                    return
-                textObjs.append(textObj)
-                length = text.characterCount
-
-                while offset <= length:
-                    [mystr, start, end] = text.getTextAtOffset(offset, mode)
-                    endOffset = end
-
-                    if len(mystr) != 0:
-                        string += " " + mystr
-
-                    if mode == pyatspi.TEXT_BOUNDARY_LINE_START or \
-                       len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
-                        string = self.adjustForRepeats(string)
-                        if string.decode("UTF-8").isupper():
-                            voice = settings.voices[settings.UPPERCASE_VOICE]
-                        else:
-                            voice = settings.voices[settings.DEFAULT_VOICE]
-
-                        if not textObjs:
-                            textObjs.append(textObj)
-                        if len(string) != 0:
-                            yield [speechserver.SayAllContext(textObjs, string,
-                                                      startOffset, endOffset),
-                               voice]
-                        textObjs = []
-                        string = ""
-                        startOffset = endOffset
-
-                    if len(mystr) == 0 or end == length:
-                        break
-                    else:
-                        offset = end
-
-            offset = 0
-            i += 1
-            if i == total:
-                done = True
-
-        # If there is anything left unspoken, speak it now.
-        #
-        if len(string) != 0:
-            string = self.adjustForRepeats(string)
-            if string.decode("UTF-8").isupper():
-                voice = settings.voices[settings.UPPERCASE_VOICE]
-            else:
-                voice = settings.voices[settings.DEFAULT_VOICE]
-
-            yield [speechserver.SayAllContext(textObjs, string,
-                                              startOffset, endOffset),
-                   voice]
-
-    def __sayAllProgressCallback(self, context, callbackType):
-        """Provide feedback during the sayAll operation.
-        """
-
-        if callbackType == speechserver.SayAllContext.PROGRESS:
-            #print "PROGRESS", context.utterance, context.currentOffset
-            return
-        elif callbackType == speechserver.SayAllContext.INTERRUPTED:
-            #print "INTERRUPTED", context.utterance, context.currentOffset
-            offset = context.currentOffset
-            for i in range(0, len(context.obj)):
-                obj = context.obj[i]
-                charCount = obj.queryText().characterCount
-                if offset > charCount:
-                    offset -= charCount
-                else:
-                    obj.queryText().setCaretOffset(offset)
-                    break
-        elif callbackType == speechserver.SayAllContext.COMPLETED:
-            #print "COMPLETED", context.utterance, context.currentOffset
-            obj = context.obj[len(context.obj)-1]
-            obj.queryText().setCaretOffset(context.currentOffset)
-            orca.setLocusOfFocus(None, obj, notifyPresentationManager=False)
-
-        # If there is a selection, clear it. See bug #489504 for more details.
-        # This is not straight forward with Evolution. all the text is in
-        # an HTML panel which contains multiple panels, each containing a
-        # single text object.
-        #
-        panel = obj.parent
-        htmlPanel = panel.parent
-        for i in range(0, htmlPanel.childCount):
-            panel = htmlPanel.getChildAtIndex(i)
-            if panel != None:
-                textObj = panel.getChildAtIndex(0)
-                try:
-                    text = textObj.queryText()
-                except:
-                    pass
-                else:
-                    if text.getNSelections():
-                        text.removeSelection(0)
-
-    def isSpellingSuggestionsList(self, obj):
-        """Returns True if obj is the list of spelling suggestions
-        in the spellcheck dialog.
-
-        Arguments:
-        - obj: the Accessible object of interest.
-        """
-
-        # The list of spelling suggestions is a table whose parent is
-        # a scroll pane. This in and of itself is not sufficiently
-        # unique. What makes the spell check dialog unique is the
-        # quantity of push buttons found. If we find this combination,
-        # we'll assume its the spelling dialog.
-        #
-        if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            obj = obj.parent
-
-        if not obj \
-           or obj.getRole() != pyatspi.ROLE_TABLE \
-           or obj.parent.getRole() != pyatspi.ROLE_SCROLL_PANE:
-            return False
-
-        topLevel = self.getTopLevel(obj.parent)
-        if not self.isSameObject(topLevel, self.spellCheckDialog):
-            # The group of buttons is found in a filler which is a
-            # sibling of the scroll pane.
-            #
-            for sibling in obj.parent.parent:
-                if sibling.getRole() == pyatspi.ROLE_FILLER:
-                    buttonCount = 0
-                    for child in sibling:
-                        if child.getRole() == pyatspi.ROLE_PUSH_BUTTON:
-                            buttonCount += 1
-                    if buttonCount >= 5:
-                        self.spellCheckDialog = topLevel
-                        return True
-        else:
-            return True
-
-        return False
-
-    def getMisspelledWordAndBody(self, suggestionsList, messagePanel):
-        """Gets the misspelled word from the spelling dialog and the
-        list of words from the message body.
-
-        Arguments:
-        - suggestionsList: the list of spelling suggestions from the
-          spellcheck dialog
-        - messagePanel: the panel containing the message being checked
-          for spelling
-
-        Returns [mispelledWord, messageBody]
-        """
-
-        misspelledWord, messageBody = "", []
-
-        # Look for the "Suggestions for "xxxxx" label in the spell
-        # checker dialog panel. Extract out the xxxxx. This will be
-        # the misspelled word.
-        #
-        text = self.getDisplayedLabel(suggestionsList) or ""
-        words = text.split()
-        for word in words:
-            if word[0] in ["'", '"']:
-                misspelledWord = word[1:len(word) - 1]
-                break
-
-        if messagePanel != None:
-            allTextObjects = self.findByRole(messagePanel, pyatspi.ROLE_TEXT)
-            for obj in allTextObjects:
-                for word in self.getText(obj, 0, -1).split():
-                    messageBody.append(word)
-
-        return [misspelledWord, messageBody]
-
-    def isMessageBodyText(self, obj):
-        """Returns True if obj is in the body of an email message.
-
-        Arguments:
-        - obj: the Accessible object of interest.
-        """
-
-        try:
-            obj.queryHypertext()
-            ancestor = obj.parent.parent
-        except:
-            return False
-        else:
-            # The accessible text objects in the header at the top
-            # of the message also have STATE_MULTI_LINE. But they
-            # are inside panels which are inside table cells; the
-            # body text is not. See bug #567428.
-            #
-            return (obj.getState().contains(pyatspi.STATE_MULTI_LINE) \
-                    and ancestor.getRole() != pyatspi.ROLE_TABLE_CELL)
-
-    def presentMessageLine(self, obj, newLocusOfFocus):
-        """Speak/braille the line at the current text caret offset.
-        """
-
-        [string, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
-        self.updateBraille(newLocusOfFocus)
-        if settings.enableSpeechIndentation:
-            self.speakTextIndentation(obj, string)
-        line = self.adjustForRepeats(string)
-
-        if self.speakBlankLine(obj):
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"), None, False)
-        else:
-            speech.speak(line, None, False)
-
-    def sayAll(self, inputEvent):
-        """Speak all the text associated with the text object that has
-           focus. We have to define our own method here because Evolution
-           does not implement the FLOWS_TO relationship and all the text
-           are in an HTML panel which contains multiple panels, each
-           containing a single text object.
-
-        Arguments:
-        - inputEvent: if not None, the input event that caused this action.
-        """
-
-        debug.println(self.debugLevel, "evolution.sayAll.")
-        try:
-            if orca_state.locusOfFocus and orca_state.locusOfFocus.queryText():
-                speech.sayAll(self.textLines(orca_state.locusOfFocus),
-                              self.__sayAllProgressCallback)
-        except:
-            default.Script.sayAll(self, inputEvent)
-
-        return True
-
     # This method tries to detect and handle the following cases:
     # 1) Mail view: current message pane: individual lines of text.
     # 2) Mail view: current message pane: "standard" mail header lines.
@@ -742,6 +254,8 @@ class Script(default.Script):
     # 9) Spell Checking Dialog
     # 10) Mail view: message area - attachments.
 
+    # [[[TODO - JD: This method is way, way too huge]]]
+    #
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
@@ -787,7 +301,7 @@ class Script(default.Script):
         # "text", "panel" and "unknown". If we find that, then (hopefully)
         # it's a line in the mail message and we get the utterances to
         # speak for that Text.
-        if self.isMessageBodyText(event.source) \
+        if self.utilities.isMessageBody(event.source) \
            and not event.source.getState().contains(pyatspi.STATE_EDITABLE):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
@@ -821,7 +335,8 @@ class Script(default.Script):
                           pyatspi.ROLE_PANEL, \
                           pyatspi.ROLE_TABLE_CELL]
         if settings.readTableCellRow \
-            and (self.isDesiredFocusedItem(event.source, self.rolesList)):
+            and (self.utilities.hasMatchingHierarchy(
+                    event.source, self.rolesList)):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "current message pane: " \
@@ -831,7 +346,7 @@ class Script(default.Script):
             parent = obj.parent
             if parent.getRole() == pyatspi.ROLE_TABLE:
                 parentTable = parent.queryTable()
-                index = self.getCellIndex(obj)
+                index = self.utilities.cellIndex(obj)
                 row = parentTable.getRowAtIndex(index)
                 utterances = []
                 regions = []
@@ -872,8 +387,8 @@ class Script(default.Script):
 
         self.rolesList = [pyatspi.ROLE_TABLE_CELL, \
                           pyatspi.ROLE_TREE_TABLE]
-        if settings.readTableCellRow \
-            and (self.isDesiredFocusedItem(event.source, self.rolesList)):
+        if settings.readTableCellRow and self.utilities.hasMatchingHierarchy(
+                event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "message header list.")
@@ -888,7 +403,7 @@ class Script(default.Script):
 
             parent = event.source.parent
             parentTable = parent.queryTable()
-            index = self.getCellIndex(event.source)
+            index = self.utilities.cellIndex(event.source)
             row = parentTable.getRowAtIndex(index)
             column = parentTable.getColumnAtIndex(index)
 
@@ -1136,7 +651,7 @@ class Script(default.Script):
 
         self.rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
                           rolenames.ROLE_CALENDAR_VIEW]
-        if self.isDesiredFocusedItem(event.source, self.rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - calendar view: " \
                           + "day view: tabbing to day with appts.")
@@ -1170,13 +685,14 @@ class Script(default.Script):
                             speech.speak(utterances)
 
                             startTime = 'Start time ' + \
-                                self.getTimeForCalRow(j, noRows)
+                                self.utilities.timeForCalRow(j, noRows)
                             brailleRegions.append(braille.Region(startTime))
                             speech.speak(startTime)
 
                             apptLen = apptExtents.height / extents.height
                             endTime = 'End time ' + \
-                                self.getTimeForCalRow(j + apptLen, noRows)
+                                self.utilities.timeForCalRow(j + apptLen,
+                                                             noRows)
                             brailleRegions.append(braille.Region(endTime))
                             speech.speak(endTime)
                             self.displayBrailleRegions([brailleRegions,
@@ -1206,7 +722,7 @@ class Script(default.Script):
         self.rolesList = [pyatspi.ROLE_UNKNOWN, \
                           pyatspi.ROLE_TABLE, \
                           rolenames.ROLE_CALENDAR_VIEW]
-        if self.isDesiredFocusedItem(event.source, self.rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, self.rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - calendar view: " \
                       + "day view: moving with arrow keys.")
@@ -1234,13 +750,14 @@ class Script(default.Script):
                         speech.speak(utterances)
 
                         startTime = 'Start time ' + \
-                            self.getTimeForCalRow(index, noRows)
+                            self.utilities.timeForCalRow(index, noRows)
                         brailleRegions.append(braille.Region(startTime))
                         speech.speak(startTime)
 
                         apptLen = apptExtents.height / extents.height
                         endTime = 'End time ' + \
-                            self.getTimeForCalRow(index + apptLen, noRows)
+                            self.utilities.timeForCalRow(index + apptLen,
+                                                         noRows)
                         brailleRegions.append(braille.Region(endTime))
                         speech.speak(endTime)
                         self.displayBrailleRegions([brailleRegions,
@@ -1248,7 +765,8 @@ class Script(default.Script):
                         found = True
 
             if not found:
-                startTime = 'Start time ' + self.getTimeForCalRow(index, noRows)
+                startTime = 'Start time ' + \
+                    self.utilities.timeForCalRow(index, noRows)
                 brailleRegions.append(braille.Region(startTime))
                 speech.speak(startTime)
 
@@ -1288,7 +806,7 @@ class Script(default.Script):
                           pyatspi.ROLE_TABLE, \
                           pyatspi.ROLE_UNKNOWN, \
                           pyatspi.ROLE_SCROLL_PANE]
-        if self.isDesiredFocusedItem(event.source, self.rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, self.rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - preferences dialog: " \
                       + "table cell in options list.")
@@ -1322,7 +840,7 @@ class Script(default.Script):
                           pyatspi.ROLE_FILLER, \
                           pyatspi.ROLE_FILLER, \
                           pyatspi.ROLE_DIALOG]
-        if self.isDesiredFocusedItem(event.source, self.rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail insert " \
                           + "attachment dialog: unlabelled button.")
@@ -1349,7 +867,7 @@ class Script(default.Script):
         #
         # Note that this drops through to then use the default event
         # processing in the parent class for this "focus:" event.
-        if self.isMessageBodyText(event.source) \
+        if self.utilities.isMessageBody(event.source) \
            and event.source.getState().contains(pyatspi.STATE_EDITABLE):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail " \
@@ -1364,10 +882,10 @@ class Script(default.Script):
             # ignore it. See bug #490317 for more details.
             #
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-                if self.isSameObject(event.source.parent,
+                if self.utilities.isSameObject(event.source.parent,
                                      orca_state.locusOfFocus.parent):
                     lastKey = orca_state.lastNonModifierKeyEvent.event_string
-                    if self.isMessageBodyText(orca_state.locusOfFocus) \
+                    if self.utilities.isMessageBody(orca_state.locusOfFocus) \
                        and lastKey not in ["Left", "Right", "Up", "Down",
                                            "Home", "End", "Return", "Tab"]:
                         return
@@ -1395,8 +913,8 @@ class Script(default.Script):
         # caret currently is, and use this to speak a selection of the
         # surrounding text, to give the user context for the current misspelt
         # word.
-        if self.isSpellingSuggestionsList(event.source) \
-           or self.isSpellingSuggestionsList(newLocusOfFocus):
+        if self.utilities.isSpellingSuggestionsList(event.source) \
+           or self.utilities.isSpellingSuggestionsList(newLocusOfFocus):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - spell checking dialog.")
 
@@ -1406,8 +924,8 @@ class Script(default.Script):
 
             if not self.pointOfReference.get('activeDescendantInfo'):
                 [badWord, allTokens] = \
-                    self.getMisspelledWordAndBody(event.source,
-                                                  self.message_panel)
+                    self.utilities.misspelledWordAndBody(event.source,
+                                                         self.message_panel)
                 self.speakMisspeltWord(allTokens, badWord)
 
         # 10) Mail view: message area - attachments.
@@ -1431,7 +949,7 @@ class Script(default.Script):
                          pyatspi.ROLE_TABLE_CELL, \
                          pyatspi.ROLE_TABLE, \
                          pyatspi.ROLE_PANEL]
-        if self.isDesiredFocusedItem(event.source, self.rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - " \
                           + "mail message area attachments.")
@@ -1444,8 +962,9 @@ class Script(default.Script):
             tmp = event.source.parent.parent
             table = tmp.parent.parent.parent
             cell = table[table.childCount-1]
-            allText = self.findByRole(cell, pyatspi.ROLE_TEXT)
-            utterance = "for " + self.getText(allText[0], 0, -1)
+            allText = self.utilities.descendantsWithRole(
+                cell, pyatspi.ROLE_TEXT)
+            utterance = "for " + self.utilities.substring(allText[0], 0, -1)
             speech.speak(utterance)
             return
 
@@ -1458,32 +977,93 @@ class Script(default.Script):
         default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
 
-    def speakBlankLine(self, obj):
-        """Returns True if a blank line should be spoken.
-        Otherwise, returns False.
+    def stopSpeechOnActiveDescendantChanged(self, event):
+        """Whether or not speech should be stopped prior to setting the
+        locusOfFocus in onActiveDescendantChanged.
+
+        Arguments:
+        - event: the Event
+
+        Returns True if speech should be stopped; False otherwise.
         """
 
-        # Get the the AccessibleText interrface.
-        try:
-            text = obj.queryText()
-        except NotImplementedError:
-            return False
+        return False
 
-        # Get the line containing the caret
-        caretOffset = text.caretOffset
-        line = text.getTextAtOffset(caretOffset, \
-            pyatspi.TEXT_BOUNDARY_LINE_START)
+    ########################################################################
+    #                                                                      #
+    # AT-SPI OBJECT EVENT HANDLERS                                         #
+    #                                                                      #
+    ########################################################################
 
-        debug.println(debug.LEVEL_FINEST,
-            "speakBlankLine: start=%d, end=%d, line=<%s>" % \
-            (line[1], line[2], line[0]))
+    def onActiveDescendantChanged(self, event):
+        """Called when an object who manages its own descendants detects a
+        change in one of its children.
 
-        # If this is a blank line, announce it if the user requested
-        # that blank lines be spoken.
-        if line[1] == 0 and line[2] == 0:
-            return settings.speakBlankLines
-        else:
-            return False
+        Arguments:
+        - event: the Event
+        """
+
+        # The default script's onActiveDescendantChanged method is cutting
+        # off speech with a speech.stop. If we're in the spellcheck dialog,
+        # this interrupts the presentation of the context.
+        #
+        if self.utilities.isSpellingSuggestionsList(event.source):
+            orca.setLocusOfFocus(event, event.any_data)
+
+            # We'll tuck away the activeDescendant information for future
+            # reference since the AT-SPI gives us little help in finding
+            # this.
+            #
+            if orca_state.locusOfFocus \
+               and (orca_state.locusOfFocus != event.source):
+                self.pointOfReference['activeDescendantInfo'] = \
+                    [orca_state.locusOfFocus.parent,
+                     orca_state.locusOfFocus.getIndexInParent()]
+            return
+
+        default.Script.onActiveDescendantChanged(self, event)
+
+    def onFocus(self, event):
+        """Called whenever an object gets focus.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # When a message is deleted from within the table of messages, we get
+        # two focus events:  One for the index of the new message prior to
+        # deletion and one for the index of the new message after deletion.
+        # This causes us to speak the message after the one that gets focus
+        # prior to speaking the actual message that gets focus.
+        # See bug #347964.
+        #
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent:
+            string = orca_state.lastNonModifierKeyEvent.event_string
+            if string == "Delete":
+                rolesList = [pyatspi.ROLE_TABLE_CELL,
+                             pyatspi.ROLE_TREE_TABLE,
+                             pyatspi.ROLE_UNKNOWN,
+                             pyatspi.ROLE_SCROLL_PANE]
+                oldLocusOfFocus = orca_state.locusOfFocus
+                if self.utilities.hasMatchingHierarchy(
+                        event.source, rolesList) \
+                   and self.utilities.hasMatchingHierarchy(
+                        oldLocusOfFocus, rolesList):
+                    parent = event.source.parent
+                    parentTable = parent.queryTable()
+                    newIndex = self.utilities.cellIndex(event.source)
+                    newRow = parentTable.getRowAtIndex(newIndex)
+                    oldIndex = self.utilities.cellIndex(oldLocusOfFocus)
+                    oldRow = parentTable.getRowAtIndex(oldIndex)
+                    nRows = parentTable.nRows
+                    if (newRow != oldRow) and (oldRow != nRows):
+                        return
+
+        # For everything else, pass the event onto the parent class
+        # to be handled in the default way.
+        #
+        default.Script.onFocus(self, event)
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.  We are only
@@ -1494,16 +1074,81 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if self.isWizardNewInfoEvent(event):
+        if self.utilities.isWizardNewInfoEvent(event):
             if event.source.getRole() == pyatspi.ROLE_PANEL:
                 self.lastSetupPanel = event.source
-            self.presentWizardNewInfo(self.getTopLevel(event.source))
+            self.presentWizardNewInfo(
+                self.utilities.topLevelObject(event.source))
             return
 
         # For everything else, pass the event onto the parent class
         # to be handled in the default way.
         #
         default.Script.onStateChanged(self, event)
+
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # When the active descendant in the list of misspelled words
+        # changes, we typically get an object:active-descendant-changed
+        # event. Unfortunately, we don't seem to get this event (or a
+        # focus: event) when the user presses a button without moving
+        # focus there explicitly. (e.g. pressing Alt+R) The label which
+        # is associated with the spelling list gets new text. So we'll
+        # try to look for that instead.
+        #
+        if event.source.getRole() == pyatspi.ROLE_LABEL:
+            relations = event.source.getRelationSet()
+            for relation in relations:
+                if relation.getRelationType() == pyatspi.RELATION_LABEL_FOR:
+                    target = relation.getTarget(0)
+                    if self.utilities.isSpellingSuggestionsList(target):
+                        [badWord, allTokens] = \
+                            self.utilities.misspelledWordAndBody(
+                                target, self.message_panel)
+                        self.speakMisspeltWord(allTokens, badWord)
+
+                        try:
+                            selection = target.querySelection()
+                        except NotImplementedError:
+                            selection = None
+                        if selection and selection.nSelectedChildren > 0:
+                            newFocus = selection.getSelectedChild(0)
+                            orca.setLocusOfFocus(event, newFocus)
+                            self.pointOfReference['activeDescendantInfo'] = \
+                                [target, newFocus.getIndexInParent()]
+
+                        return
+
+        default.Script.onTextInserted(self, event)
+
+    ########################################################################
+    #                                                                      #
+    # Methods for presenting content                                       #
+    #                                                                      #
+    ########################################################################
+
+    def presentMessageLine(self, obj, newLocusOfFocus):
+        """Speak/braille the line at the current text caret offset.
+        """
+
+        [string, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
+        self.updateBraille(newLocusOfFocus)
+        if settings.enableSpeechIndentation:
+            self.speakTextIndentation(obj, string)
+        line = self.utilities.adjustForRepeats(string)
+
+        if self.utilities.speakBlankLine(obj):
+            # Translators: "blank" is a short word to mean the
+            # user has navigated to an empty line.
+            #
+            speech.speak(_("blank"), None, False)
+        else:
+            speech.speak(line, None, False)
 
     def presentWizardNewInfo(self, obj):
         """Causes the new information displayed in a wizard to be presented
@@ -1538,207 +1183,190 @@ class Script(default.Script):
 
         speech.speak(utterances)
 
-    def isWizard(self, obj):
-        """Returns True if this object is, or is within, a wizard.
+    def readPageTab(self, tab):
+        """Speak/Braille the given page tab. The speech verbosity is set
+           to VERBOSITY_LEVEL_BRIEF for this operation and then restored
+           to its previous value on completion.
 
         Arguments:
-        - obj: the Accessible object
+        - tab: the page tab to speak/braille.
         """
 
-        # The Setup Assistant is a frame whose child is a panel. That panel
-        # holds a bunch of other panels, one for each stage in the wizard.
-        # Only the active stage's panel has STATE_SHOWING. There is also
-        # one child of ROLE_FILLER which holds the buttons.
-        #
-        window = self.getTopLevel(obj) or obj
-        if window and window.getRole() == pyatspi.ROLE_FRAME \
-           and window.childCount and window[0].getRole() == pyatspi.ROLE_PANEL:
-            allPanels = panelsNotShowing = 0
-            for child in window[0]:
-                if child.getRole() == pyatspi.ROLE_PANEL:
-                    allPanels += 1
-                    if not child.getState().contains(pyatspi.STATE_SHOWING):
-                        panelsNotShowing += 1
-            if allPanels - panelsNotShowing == 1 \
-               and window[0].childCount - allPanels == 1:
-                return True
+        brailleGen = self.brailleGenerator
+        speechGen = self.speechGenerator
 
-        return False
+        savedSpeechVerbosityLevel = settings.speechVerbosityLevel
+        settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
+        utterances = speechGen.generateSpeech(tab)
+        speech.speak(utterances)
+        settings.speechVerbosityLevel = savedSpeechVerbosityLevel
 
-    def isWizardNewInfoEvent(self, event):
-        """Returns True if the event is judged to be the presentation of
-        new information in a wizard. This method should be subclassed by
-        application scripts as needed.
+        self.displayBrailleRegions(brailleGen.generateBraille(tab))
+
+    def textLines(self, obj):
+        """Creates a generator that can be used to iterate over each line
+        of a text object, starting at the caret offset.
+
+        We have to subclass this because Evolution lays out its messages
+        such that each paragraph is in its own panel, each of which is
+        in a higher level panel.  So, we just traverse through the
+        children.
 
         Arguments:
-        - event: the Accessible event being examined
+        - obj: an Accessible that has a text specialization
+
+        Returns an iterator that produces elements of the form:
+        [SayAllContext, acss], where SayAllContext has the text to be
+        spoken and acss is an ACSS instance for speaking the text.
         """
 
-        if event.source.getRole() == pyatspi.ROLE_FRAME \
-           and (event.type.startswith("window:activate") \
-                or (event.type.startswith("object:state-changed:active") \
-                    and event.detail1 == 1)):
-            return self.isWizard(event.source)
-
-        elif event.source.getRole() == pyatspi.ROLE_PANEL \
-             and event.type.startswith("object:state-changed:showing") \
-             and event.detail1 == 1 \
-             and not self.isSameObject(event.source, self.lastSetupPanel):
-            rolesList = [pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_PANEL,
-                         pyatspi.ROLE_FRAME]
-            if self.isDesiredFocusedItem(event.source, rolesList):
-                return self.isWizard(event.source)
-
-        return False
-
-    def isActivatableEvent(self, event):
-        """Returns True if the given event is one that should cause this
-        script to become the active script.  This is only a hint to
-        the focus tracking manager and it is not guaranteed this
-        request will be honored.  Note that by the time the focus
-        tracking manager calls this method, it thinks the script
-        should become active.  This is an opportunity for the script
-        to say it shouldn't.
-        """
-
-        # If the Evolution window is not focused, ignore this event.
-        #
-        window = self.getTopLevel(event.source)
-        if window and not window.getState().contains(pyatspi.STATE_ACTIVE):
-            return False
-
-        return True
-
-    def onFocus(self, event):
-        """Called whenever an object gets focus.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # When a message is deleted from within the table of messages, we get
-        # two focus events:  One for the index of the new message prior to
-        # deletion and one for the index of the new message after deletion.
-        # This causes us to speak the message after the one that gets focus
-        # prior to speaking the actual message that gets focus.
-        # See bug #347964.
-        #
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent:
-            string = orca_state.lastNonModifierKeyEvent.event_string
-            if string == "Delete":
-                rolesList = [pyatspi.ROLE_TABLE_CELL, \
-                             pyatspi.ROLE_TREE_TABLE, \
-                             pyatspi.ROLE_UNKNOWN, \
-                             pyatspi.ROLE_SCROLL_PANE]
-                oldLocusOfFocus = orca_state.locusOfFocus
-                if self.isDesiredFocusedItem(event.source, rolesList) and \
-                   self.isDesiredFocusedItem(oldLocusOfFocus, rolesList):
-                    parent = event.source.parent
-                    parentTable = parent.queryTable()
-                    newIndex = self.getCellIndex(event.source)
-                    newRow = parentTable.getRowAtIndex(newIndex)
-                    oldIndex = self.getCellIndex(oldLocusOfFocus)
-                    oldRow = parentTable.getRowAtIndex(oldIndex)
-                    nRows = parentTable.nRows
-                    if (newRow != oldRow) and (oldRow != nRows):
-                        return
-
-        # For everything else, pass the event onto the parent class
-        # to be handled in the default way.
-        #
-        default.Script.onFocus(self, event)
-
-    def onActiveDescendantChanged(self, event):
-        """Called when an object who manages its own descendants detects a
-        change in one of its children.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # The default script's onActiveDescendantChanged method is cutting
-        # off speech with a speech.stop. If we're in the spellcheck dialog,
-        # this interrupts the presentation of the context.
-        #
-        if self.isSpellingSuggestionsList(event.source):
-            orca.setLocusOfFocus(event, event.any_data)
-
-            # We'll tuck away the activeDescendant information for future
-            # reference since the AT-SPI gives us little help in finding
-            # this.
-            #
-            if orca_state.locusOfFocus \
-               and (orca_state.locusOfFocus != event.source):
-                self.pointOfReference['activeDescendantInfo'] = \
-                    [orca_state.locusOfFocus.parent,
-                     orca_state.locusOfFocus.getIndexInParent()]
+        if not obj:
             return
 
-        default.Script.onActiveDescendantChanged(self, event)
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            return
 
-    def onTextInserted(self, event):
-        """Called whenever text is inserted into an object.
+        panel = obj.parent
+        htmlPanel = panel.parent
+        startIndex = panel.getIndexInParent()
+        i = startIndex
+        total = htmlPanel.childCount
+        textObjs = []
+        startOffset = text.caretOffset
+        offset = text.caretOffset
+        string = ""
+        done = False
 
-        Arguments:
-        - event: the Event
+        # Determine the correct "say all by" mode to use.
+        #
+        if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
+            mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
+        elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
+            mode = pyatspi.TEXT_BOUNDARY_LINE_START
+        else:
+            mode = pyatspi.TEXT_BOUNDARY_LINE_START
+
+        while not done:
+            panel = htmlPanel.getChildAtIndex(i)
+            if panel != None:
+                textObj = panel.getChildAtIndex(0)
+                try:
+                    text = textObj.queryText()
+                except NotImplementedError:
+                    return
+                textObjs.append(textObj)
+                length = text.characterCount
+
+                while offset <= length:
+                    [mystr, start, end] = text.getTextAtOffset(offset, mode)
+                    endOffset = end
+
+                    if len(mystr) != 0:
+                        string += " " + mystr
+
+                    if mode == pyatspi.TEXT_BOUNDARY_LINE_START or \
+                       len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
+                        string = self.utilities.adjustForRepeats(string)
+                        if string.decode("UTF-8").isupper():
+                            voice = settings.voices[settings.UPPERCASE_VOICE]
+                        else:
+                            voice = settings.voices[settings.DEFAULT_VOICE]
+
+                        if not textObjs:
+                            textObjs.append(textObj)
+                        if len(string) != 0:
+                            yield [speechserver.SayAllContext(textObjs, string,
+                                                      startOffset, endOffset),
+                               voice]
+                        textObjs = []
+                        string = ""
+                        startOffset = endOffset
+
+                    if len(mystr) == 0 or end == length:
+                        break
+                    else:
+                        offset = end
+
+            offset = 0
+            i += 1
+            if i == total:
+                done = True
+
+        # If there is anything left unspoken, speak it now.
+        #
+        if len(string) != 0:
+            string = self.utilities.adjustForRepeats(string)
+            if string.decode("UTF-8").isupper():
+                voice = settings.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = settings.voices[settings.DEFAULT_VOICE]
+
+            yield [speechserver.SayAllContext(textObjs, string,
+                                              startOffset, endOffset),
+                   voice]
+
+    def __sayAllProgressCallback(self, context, callbackType):
+        """Provide feedback during the sayAll operation.
         """
 
-        # When the active descendant in the list of misspelled words
-        # changes, we typically get an object:active-descendant-changed
-        # event. Unfortunately, we don't seem to get this event (or a
-        # focus: event) when the user presses a button without moving
-        # focus there explicitly. (e.g. pressing Alt+R) The label which
-        # is associated with the spelling list gets new text. So we'll
-        # try to look for that instead.
+        if callbackType == speechserver.SayAllContext.PROGRESS:
+            #print "PROGRESS", context.utterance, context.currentOffset
+            return
+        elif callbackType == speechserver.SayAllContext.INTERRUPTED:
+            #print "INTERRUPTED", context.utterance, context.currentOffset
+            offset = context.currentOffset
+            for i in range(0, len(context.obj)):
+                obj = context.obj[i]
+                charCount = obj.queryText().characterCount
+                if offset > charCount:
+                    offset -= charCount
+                else:
+                    obj.queryText().setCaretOffset(offset)
+                    break
+        elif callbackType == speechserver.SayAllContext.COMPLETED:
+            #print "COMPLETED", context.utterance, context.currentOffset
+            obj = context.obj[len(context.obj)-1]
+            obj.queryText().setCaretOffset(context.currentOffset)
+            orca.setLocusOfFocus(None, obj, notifyPresentationManager=False)
+
+        # If there is a selection, clear it. See bug #489504 for more details.
+        # This is not straight forward with Evolution. all the text is in
+        # an HTML panel which contains multiple panels, each containing a
+        # single text object.
         #
-        if event.source.getRole() == pyatspi.ROLE_LABEL:
-            relations = event.source.getRelationSet()
-            for relation in relations:
-                if relation.getRelationType() == pyatspi.RELATION_LABEL_FOR:
-                    target = relation.getTarget(0)
-                    if self.isSpellingSuggestionsList(target):
-                        [badWord, allTokens] = \
-                            self.getMisspelledWordAndBody(target,
-                                                          self.message_panel)
-                        self.speakMisspeltWord(allTokens, badWord)
+        panel = obj.parent
+        htmlPanel = panel.parent
+        for i in range(0, htmlPanel.childCount):
+            panel = htmlPanel.getChildAtIndex(i)
+            if panel != None:
+                textObj = panel.getChildAtIndex(0)
+                try:
+                    text = textObj.queryText()
+                except:
+                    pass
+                else:
+                    if text.getNSelections():
+                        text.removeSelection(0)
 
-                        try:
-                            selection = target.querySelection()
-                        except NotImplementedError:
-                            selection = None
-                        if selection and selection.nSelectedChildren > 0:
-                            newFocus = selection.getSelectedChild(0)
-                            orca.setLocusOfFocus(event, newFocus)
-                            self.pointOfReference['activeDescendantInfo'] = \
-                                [target, newFocus.getIndexInParent()]
+    def sayAll(self, inputEvent):
+        """Speak all the text associated with the text object that has
+           focus. We have to define our own method here because Evolution
+           does not implement the FLOWS_TO relationship and all the text
+           are in an HTML panel which contains multiple panels, each
+           containing a single text object.
 
-                        return
+        Arguments:
+        - inputEvent: if not None, the input event that caused this action.
+        """
 
-        default.Script.onTextInserted(self, event)
+        debug.println(self.debugLevel, "evolution.sayAll.")
+        try:
+            if orca_state.locusOfFocus and orca_state.locusOfFocus.queryText():
+                speech.sayAll(self.textLines(orca_state.locusOfFocus),
+                              self.__sayAllProgressCallback)
+        except:
+            default.Script.sayAll(self, inputEvent)
 
-# Values used to construct a time string for calendar appointments.
-#
-timeIncrements = {}
-timeIncrements[288] = 5
-timeIncrements[144] = 10
-timeIncrements[96] = 15
-timeIncrements[48] = 30
-timeIncrements[24] = 60
-
-minutes = {}
-minutes[0] = ''
-minutes[5] = '5'
-minutes[10] = '10'
-minutes[15] = '15'
-minutes[20] = '20'
-minutes[25] = '25'
-minutes[30] = '30'
-minutes[35] = '35'
-minutes[40] = '40'
-minutes[45] = '45'
-minutes[50] = '50'
-minutes[55] = '55'
-
-hours = ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+        return True

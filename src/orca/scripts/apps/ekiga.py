@@ -78,7 +78,7 @@ class Script(default.Script):
         # has STATE_FOCUSABLE, but not STATE_FOCUSED. The default script
         # will ignore these events as a result. See bug 574221.
         #
-        window = self.getTopLevel(event.source)
+        window = self.utilities.topLevelObject(event.source)
         if not window or window.getRole() != pyatspi.ROLE_DIALOG:
             return default.Script.onActiveDescendantChanged(self, event)
 
@@ -152,7 +152,8 @@ class Script(default.Script):
         """
 
         if event.source.getRole() == pyatspi.ROLE_SPLIT_PANE:
-            textObjects = self.findByRole(event.source, pyatspi.ROLE_TEXT)
+            textObjects = self.utilities.descendantsWithRole(
+                event.source, pyatspi.ROLE_TEXT)
             return
 
         default.Script.onValueChanged(self, event)

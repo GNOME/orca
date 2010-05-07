@@ -108,7 +108,7 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
         blank = self._isBlankCell(cell)
         if not blank:
             for child in cell:
-                speech.speak(self._script.getDisplayedText(child))
+                speech.speak(self._script.utilities.displayedText(child))
         else:
             # Translators: "blank" is a short word to mean the
             # user has navigated to an empty line.

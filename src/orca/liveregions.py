@@ -304,7 +304,7 @@ class LiveRegionManager:
         """User toggle to set all live regions to LIVE_OFF or back to their
         original politeness."""
         # start at the document frame
-        docframe = self._script.getDocumentFrame()
+        docframe = self._script.utilities.documentFrame()
         # get the URI of the page.  It is used as a partial key.
         uri = self._script.bookmarks.getURIKey()
 
@@ -406,13 +406,16 @@ class LiveRegionManager:
             try:
                 if attrs['container-atomic'] == 'true':
                     # expand the source if atomic is true
-                    newcontent = self._script.expandEOCs(event.source)
+                    newcontent = \
+                        self._script.utilities.expandEOCs(event.source)
                 else:
                     # expand the target if atomic is false
-                    newcontent = self._script.expandEOCs(event.any_data)
+                    newcontent = \
+                        self._script.utilities.expandEOCs(event.any_data)
             except (KeyError, TypeError):
                 # expand the target if there is no ARIA markup
-                newcontent = self._script.expandEOCs(event.any_data)
+                newcontent = \
+                    self._script.utilities.expandEOCs(event.any_data)
 
             # add our content to the returned message or return None if no
             # content
@@ -478,7 +481,7 @@ class LiveRegionManager:
     def _getLabelsAsUtterances(self, obj):
         """Get the labels for a given object"""
         # try the Gecko label getter first
-        uttstring = self._script.getDisplayedLabel(obj)
+        uttstring = self._script.utilities.displayedLabel(obj)
         if uttstring:
             return [uttstring.strip()]
         # often we see a table cell.  I'll implement my own label getter
@@ -493,11 +496,11 @@ class LiveRegionManager:
                 # Note: getRowHeader() fails for most markup.  We will use the
                 # relation when the markup is good (when getRowHeader() works) 
                 # so we won't see this code in those cases.  
-                index = self._script.getCellIndex(obj)
+                index = self._script.utilities.cellIndex(obj)
                 row = itable.getRowAtIndex(index)
                 header = itable.getAccessibleAt(row, 0)
                 # expand the header
-                return [self._script.expandEOCs(header).strip()]
+                return [self._script.utilities.expandEOCs(header).strip()]
             except NotImplementedError:
                 pass
 
@@ -505,7 +508,7 @@ class LiveRegionManager:
             # element.
             parentattrs = self._getAttrDictionary(obj.parent) 
             if 'tag' in parentattrs and parentattrs['tag'] == 'TR':
-                return [self._script.expandEOCs( \
+                return [self._script.utilities.expandEOCs( \
                                   obj.parent.getChildAtIndex(0)).strip()]
 
         # Sorry, no valid labels found
@@ -578,7 +581,7 @@ class LiveRegionManager:
     def _getPath(self, obj):
         """ Returns, as a tuple of integers, the path from the given object 
         to the document frame."""
-        docframe = self._script.getDocumentFrame()
+        docframe = self._script.utilities.documentFrame()
         path = []
         while 1:
             if obj.parent is None or obj == docframe:

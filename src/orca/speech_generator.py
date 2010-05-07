@@ -153,7 +153,7 @@ class SpeechGenerator(generator.Generator):
         hierarchy and which are not in a label for or labelled by
         relation.
         """
-        labels = self._script.findUnrelatedLabels(obj)
+        labels = self._script.utilities.unrelatedLabels(obj)
         result = []
         for label in labels:
             name = self._generateName(label, **args)
@@ -212,7 +212,7 @@ class SpeechGenerator(generator.Generator):
         # URI is returned as a tuple containing six components:
         # scheme://netloc/path;parameters?query#fragment.
         #
-        link_uri = self._script.getURI(obj)
+        link_uri = self._script.utilities.uri(obj)
         if not link_uri:
             # [[[TODO - JD: For some reason, this is failing for certain
             # links. The current whereAmI code says, "It might be an anchor.
@@ -223,7 +223,7 @@ class SpeechGenerator(generator.Generator):
             #
             result.extend(self._generateLabel(obj))
             result.extend(self._generateRoleName(obj))
-            result.append(self._script.getDisplayedText(obj))
+            result.append(self._script.utilities.displayedText(obj))
         else:
             link_uri_info = urlparse.urlparse(link_uri)
             if link_uri_info[0] in ["ftp", "ftps", "file"]:
@@ -240,7 +240,7 @@ class SpeechGenerator(generator.Generator):
                 # Translators: this is the protocol of a link eg. http, mailto.
                 #
                 linkOutput = _("%s link") % link_uri_info[0]
-                text = self._script.getDisplayedText(obj)
+                text = self._script.utilities.displayedText(obj)
                 if not text:
                     # If there's no text for the link, expose part of the
                     # URI to the user.
@@ -259,12 +259,12 @@ class SpeechGenerator(generator.Generator):
         pointed to by the URI of the link associated with obj.
         """
         result = []
-        link_uri = self._script.getURI(obj)
+        link_uri = self._script.utilities.uri(obj)
         if link_uri:
             link_uri_info = urlparse.urlparse(link_uri)
         else:
             return result
-        doc_uri = self._script.getDocumentFrameURI()
+        doc_uri = self._script.utilities.documentFrameURI()
         if doc_uri:
             doc_uri_info = urlparse.urlparse(doc_uri)
             if link_uri_info[1] == doc_uri_info[1]:
@@ -308,7 +308,7 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         sizeString = ""
-        uri = self._script.getURI(obj)
+        uri = self._script.utilities.uri(obj)
         if not uri:
             return result
         try:
@@ -389,7 +389,7 @@ class SpeechGenerator(generator.Generator):
                 if table \
                    and ((priorObj.getRole() == pyatspi.ROLE_TABLE_CELL) \
                          or (priorObj.getRole() == pyatspi.ROLE_TABLE)):
-                    index = self._script.getCellIndex(priorObj)
+                    index = self._script.utilities.cellIndex(priorObj)
                     oldRow = table.getRowAtIndex(index)
                 else:
                     oldRow = -1
@@ -399,7 +399,7 @@ class SpeechGenerator(generator.Generator):
                 except:
                     pass
                 else:
-                    index = self._script.getCellIndex(obj)
+                    index = self._script.utilities.cellIndex(obj)
                     newRow = table.getRowAtIndex(index)
                     if (newRow >= 0) \
                        and (index != newRow) \
@@ -435,7 +435,7 @@ class SpeechGenerator(generator.Generator):
                 if table \
                    and ((priorObj.getRole() == pyatspi.ROLE_TABLE_CELL) \
                          or (priorObj.getRole() == pyatspi.ROLE_TABLE)):
-                    index = self._script.getCellIndex(priorObj)
+                    index = self._script.utilities.cellIndex(priorObj)
                     oldCol = table.getColumnAtIndex(index)
                 else:
                     oldCol = -1
@@ -445,7 +445,7 @@ class SpeechGenerator(generator.Generator):
                 except:
                     pass
                 else:
-                    index = self._script.getCellIndex(obj)
+                    index = self._script.utilities.cellIndex(obj)
                     newCol = table.getColumnAtIndex(index)
                     if (newCol >= 0) \
                        and (index != newCol) \
@@ -537,7 +537,7 @@ class SpeechGenerator(generator.Generator):
             if args.get('guessCoordinates', False):
                 col = self._script.pointOfReference.get('lastColumn', -1)
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             col = table.getColumnAtIndex(index)
         if col >= 0:
             # Translators: this is in references to a column in a
@@ -560,7 +560,7 @@ class SpeechGenerator(generator.Generator):
             if args.get('guessCoordinates', False):
                 row = self._script.pointOfReference.get('lastRow', -1)
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             row = table.getRowAtIndex(index)
         if row >= 0:
             # Translators: this is in references to a row in a table.
@@ -583,7 +583,7 @@ class SpeechGenerator(generator.Generator):
         except:
             table = None
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             col = table.getColumnAtIndex(index)
             row = table.getRowAtIndex(index)
             # Translators: this is in references to a column in a
@@ -608,15 +608,14 @@ class SpeechGenerator(generator.Generator):
             if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
                 cell = obj
             else:
-                cell = self._script.getAncestor(obj,
-                                                [pyatspi.ROLE_TABLE_CELL],
-                                                [pyatspi.ROLE_FRAME])
+                cell = self._script.utilities.ancestorWithRole(
+                    obj, [pyatspi.ROLE_TABLE_CELL], [pyatspi.ROLE_FRAME])
             try:
                 table = cell.parent.queryTable()
             except:
                 pass
             else:
-                index = self._script.getCellIndex(cell)
+                index = self._script.utilities.cellIndex(cell)
                 row = table.getRowAtIndex(index)
                 col = table.getColumnAtIndex(index)
                 if row + 1 == table.nRows and col + 1 == table.nColumns:
@@ -641,11 +640,12 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         title = None
-        frame = self._script.getFrame(obj)
+        frame = self._script.utilities.ancestorWithRole(
+            obj, [pyatspi.ROLE_FRAME], [])
         if frame:
             title = frame.name
         if not title:
-            title = self._script.getDisplayedLabel(obj)
+            title = self._script.utilities.displayedLabel(obj)
         result.append(title)
         return result
 
@@ -667,14 +667,14 @@ class SpeechGenerator(generator.Generator):
         attribStr = ""
 
         defaultAttributes = text.getDefaultAttributes()
-        attributesDictionary = \
-            self._script.attributeStringToDictionary(defaultAttributes)
+        keyList, attributesDictionary = \
+            self._script.utilities.stringToKeysAndDict(defaultAttributes)
 
         charAttributes = text.getAttributes(textOffset)
         if charAttributes[0]:
-            charDict = \
-                self._script.attributeStringToDictionary(charAttributes[0])
-            for key in charDict.keys():
+            keyList, charDict = \
+                self._script.utilities.stringToKeysAndDict(charAttributes[0])
+            for key in keyList:
                 attributesDictionary[key] = charDict[key]
 
         if attributesDictionary:
@@ -708,7 +708,7 @@ class SpeechGenerator(generator.Generator):
 
             # Also check to see if this is a hypertext link.
             #
-            if self._script.getLinkIndex(obj, textOffset) >= 0:
+            if self._script.utilities.linkIndex(obj, textOffset) >= 0:
                 attribStr += " "
                 # Translators: this indicates that this piece of
                 # text is a hypertext link.
@@ -742,11 +742,11 @@ class SpeechGenerator(generator.Generator):
 
         nSelections = textObj.getNSelections()
 
-        [current, other] = self._script.hasTextSelections(obj)
+        [current, other] = self._script.utilities.hasTextSelections(obj)
         if current or other:
             selected = True
             [textContents, startOffset, endOffset] = \
-                self._script.getAllSelectedText(obj)
+                self._script.utilities.allSelectedText(obj)
         else:
             # Get the line containing the caret
             #
@@ -765,8 +765,9 @@ class SpeechGenerator(generator.Generator):
                 #
                 unicodeText = line.decode("UTF-8")
                 if self._script.EMBEDDED_OBJECT_CHARACTER in unicodeText:
-                    line = self._script.expandEOCs(obj, startOffset, endOffset)
-                line = self._script.adjustForRepeats(line)
+                    line = self._script.utilities.expandEOCs(
+                        obj, startOffset, endOffset)
+                line = self._script.utilities.adjustForRepeats(line)
                 textContents = line
             else:
                 char = textObj.getTextAtOffset(caretOffset,
@@ -903,8 +904,8 @@ class SpeechGenerator(generator.Generator):
         focus.
         """
         result = []
-        oldLevel = self._script.getNodeLevel(args.get('priorObj', None))
-        newLevel = self._script.getNodeLevel(obj)
+        oldLevel = self._script.utilities.nodeLevel(args.get('priorObj', None))
+        newLevel = self._script.utilities.nodeLevel(obj)
         if (oldLevel != newLevel) and (newLevel >= 0):
             result.extend(self._generateNodeLevel(obj, **args))
         return result
@@ -976,7 +977,8 @@ class SpeechGenerator(generator.Generator):
                             inSameGroup = True
                             break
             if (not inSameGroup) and radioGroupLabel:
-                result.append(self._script.getDisplayedText(radioGroupLabel))
+                result.append(self._script.utilities.\
+                                  displayedText(radioGroupLabel))
         return result
 
     def _generateNumberOfChildren(self, obj, **args):
@@ -987,7 +989,7 @@ class SpeechGenerator(generator.Generator):
         be moved to settings.py.]]]
         """
         result = []
-        childNodes = self._script.getChildNodes(obj)
+        childNodes = self._script.utilities.childNodes(obj)
         children = len(childNodes)
         if children:
             # Translators: this is the number of items in a layered
@@ -1106,7 +1108,7 @@ class SpeechGenerator(generator.Generator):
         # to let the user know.
         #
         alertAndDialogCount = \
-            self._script.getUnfocusedAlertAndDialogCount(obj)
+            self._script.utilities.unfocusedAlertAndDialogCount(obj)
         if alertAndDialogCount > 0:
             # Translators: this tells the user how many unfocused
             # alert and dialog windows that this application has.
@@ -1130,7 +1132,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         priorObj = args.get('priorObj', None)
         requireText = args.get('requireText', True)
-        commonAncestor = self._script.findCommonAncestor(priorObj, obj)
+        commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
         if obj != commonAncestor:
             parent = obj.parent
             if parent \
@@ -1140,13 +1142,13 @@ class SpeechGenerator(generator.Generator):
             while parent and (parent.parent != parent):
                 if parent == commonAncestor:
                     break
-                if not self._script.isLayoutOnly(parent):
-                    text = self._script.getDisplayedLabel(parent)
+                if not self._script.utilities.isLayoutOnly(parent):
+                    text = self._script.utilities.displayedLabel(parent)
                     if not text \
                        and (not requireText \
                             or (requireText \
                                 and 'Text' in pyatspi.listInterfaces(parent))):
-                        text = self._script.getDisplayedText(parent)
+                        text = self._script.utilities.displayedText(parent)
                     if text and len(text.strip()):
                         # Push announcement of cell to the end
                         #
@@ -1197,9 +1199,8 @@ class SpeechGenerator(generator.Generator):
         which contains obj.
         """
         result = []
-        ancestor = self._script.getAncestor(obj,
-                                            [pyatspi.ROLE_TOOL_BAR],
-                                            [pyatspi.ROLE_FRAME])
+        ancestor = self._script.utilities.ancestorWithRole(
+            obj, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME])
         if ancestor:
             result.extend(self._generateLabelAndName(ancestor))
             result.extend(self._generateRoleName(ancestor))
@@ -1264,7 +1265,7 @@ class SpeechGenerator(generator.Generator):
             for relation in obj.getRelationSet():
                 if relation.getRelationType() == \
                         pyatspi.RELATION_NODE_CHILD_OF:
-                    # getChildNodes assumes that we have an accessible table
+                    # childNodes assumes that we have an accessible table
                     # interface to work with. If we don't, it will fail. So
                     # don't set the parent until verifying the interface we
                     # expect actually exists.
@@ -1286,7 +1287,7 @@ class SpeechGenerator(generator.Generator):
         # uses the NODE_CHILD_OF relationship, we need to use it instead
         # of the childCount.
         #
-        childNodes = self._script.getChildNodes(obj)
+        childNodes = self._script.utilities.childNodes(obj)
         total = len(childNodes)
         for i in range(0, total):
             childName = self._generateName(childNodes[i])
@@ -1325,7 +1326,7 @@ class SpeechGenerator(generator.Generator):
         This method should initially be called with a top-level window.
         """
         result = []
-        button = self._script.findDefaultButton(obj)
+        button = self._script.utilities.defaultButton(obj)
         if button and button.getState().contains(pyatspi.STATE_SENSITIVE):
             name = self._generateName(button)
             if name:
@@ -1349,7 +1350,7 @@ class SpeechGenerator(generator.Generator):
         This method should initially be called with a top-level window.
         """
         result = []
-        statusBar = self._script.findStatusBar(obj)
+        statusBar = self._script.utilities.statusBar(obj)
         if statusBar:
             name = self._generateName(statusBar)
             if name:
@@ -1373,13 +1374,13 @@ class SpeechGenerator(generator.Generator):
         any unfocused dialog boxes.
         """
         result = []
-        frame, dialog = self._script.findFrameAndDialog(obj)
+        frame, dialog = self._script.utilities.frameAndDialog(obj)
         if frame:
             result.append(self._generateLabelAndName(frame))
         if dialog:
             result.append(self._generateLabelAndName(dialog))
         alertAndDialogCount = \
-                    self._script.getUnfocusedAlertAndDialogCount(obj)
+                    self._script.utilities.unfocusedAlertAndDialogCount(obj)
         if alertAndDialogCount > 0:
             # Translators: this tells the user how many unfocused
             # alert and dialog windows that this application has.
@@ -1401,7 +1402,8 @@ class SpeechGenerator(generator.Generator):
         or an empty array if no accelerator can be found.
         """
         result = []
-        [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
+        [mnemonic, shortcut, accelerator] = \
+            self._script.utilities.mnemonicShortcutAccelerator(obj)
         if accelerator:
             result.append(accelerator)
         return result
@@ -1413,7 +1415,8 @@ class SpeechGenerator(generator.Generator):
         """
         result = []
         if settings.enableMnemonicSpeaking or args.get('forceMnemonic', False):
-            [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
+            [mnemonic, shortcut, accelerator] = \
+                self._script.utilities.mnemonicShortcutAccelerator(obj)
             if mnemonic:
                 mnemonic = mnemonic[-1] # we just want a single character
             if not mnemonic and shortcut:
@@ -1445,7 +1448,7 @@ class SpeechGenerator(generator.Generator):
                 forceTutorial))
         if args.get('role', obj.getRole()) == pyatspi.ROLE_ICON \
             and args.get('formatType', 'unfocused') == 'basicWhereAmI':
-            frame, dialog = self._script.findFrameAndDialog(obj)
+            frame, dialog = self._script.utilities.frameAndDialog(obj)
             if frame:
                 result.extend(self._script.tutorialGenerator.getTutorial(
                         frame,

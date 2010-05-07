@@ -76,7 +76,8 @@ class Script(default.Script):
         #
         if not (self._resultsDisplay and self._statusLine) \
            and event.source.getRole() == pyatspi.ROLE_FRAME:
-            objs = self.findByRole(event.source, pyatspi.ROLE_EDITBAR)
+            objs = self.utilities.descendantsWithRole(
+                event.source, pyatspi.ROLE_EDITBAR)
             if len(objs) == 0:
                 # Translators: this is an indication that Orca is unable to
                 # obtain the display of the gcalctool calculator, which is
@@ -87,13 +88,13 @@ class Script(default.Script):
                 self.displayBrailleMessage(contents)
             else:
                 self._resultsDisplay = objs[0]
-                contents = self.getText(self._resultsDisplay, 0, -1)
+                contents = self.utilities.substring(self._resultsDisplay, 0, -1)
                 self.displayBrailleMessage(contents)
                 # The status line in gcalctool 5.29 is a sibling of the
                 # edit bar.
                 #
-                objs = self.findByRole(self._resultsDisplay.parent,
-                                       pyatspi.ROLE_TEXT)
+                objs = self.utilities.descendantsWithRole(
+                    self._resultsDisplay.parent, pyatspi.ROLE_TEXT)
                 for obj in objs:
                     if not obj.getState().contains(pyatspi.STATE_EDITABLE):
                         self._statusLine = obj
@@ -102,9 +103,10 @@ class Script(default.Script):
                     # The status line in gcalctool 5.28 is a label in the
                     # status bar in which text is inserted as need be.
                     #
-                    statusBar = self.findStatusBar(event.source)
+                    statusBar = self.utilities.statusBar(event.source)
                     if statusBar:
-                        objs = self.findByRole(statusBar, pyatspi.ROLE_LABEL)
+                        objs = self.utilities.descendantsWithRole(
+                            statusBar, pyatspi.ROLE_LABEL)
                         if len(objs):
                             self._statusLine = objs[0]
 
@@ -120,8 +122,8 @@ class Script(default.Script):
         # Always update the Braille display but only speak if the last
         # key pressed was Return, space, or equals.
         #
-        if self.isSameObject(event.source, self._resultsDisplay):
-            contents = self.getText(self._resultsDisplay, 0, -1)
+        if self.utilities.isSameObject(event.source, self._resultsDisplay):
+            contents = self.utilities.substring(self._resultsDisplay, 0, -1)
             self.displayBrailleMessage(contents)
 
             if (orca_state.lastInputEvent is None) \
@@ -185,7 +187,7 @@ class Script(default.Script):
             self._lastProcessedKeyEvent = \
                 input_event.KeyboardEvent(orca_state.lastNonModifierKeyEvent)
 
-        elif self.isSameObject(event.source, self._statusLine):
-            contents = self.getText(self._statusLine, 0, -1)
+        elif self.utilities.isSameObject(event.source, self._statusLine):
+            contents = self.utilities.substring(self._statusLine, 0, -1)
             speech.speak(contents)
             return

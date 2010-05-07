@@ -86,7 +86,7 @@ class SpeechGenerator(Gecko.SpeechGenerator):
         # off stuff like this, but we're forced to do so in this case.
         #
         if obj.name.startswith(_("Check Spelling")) \
-           and self._script.isDesiredFocusedItem(
+           and self._script.utilities.hasMatchingHierarchy(
                    obj, [pyatspi.ROLE_DIALOG,
                          pyatspi.ROLE_APPLICATION]):
             pass

@@ -203,8 +203,8 @@ class SpeechServer(object):
         #
         event_string = keynames.getKeyName(event_string)
         if orca_state.activeScript and orca_state.usePronunciationDictionary:
-            event_string = \
-                orca_state.activeScript.adjustForPronunciation(event_string)
+            event_string = orca_state.activeScript.\
+                utilities.adjustForPronunciation(event_string)
 
         if eventType == orca.KeyEventType.LOCKING_LOCKED:
             # Translators: this represents the state of a locking modifier

@@ -750,7 +750,8 @@ class SpeechServer(speechserver.SpeechServer):
         """
         chname = chnames.getCharacterName(character)
         if orca_state.activeScript and orca_state.usePronunciationDictionary:
-            chname = orca_state.activeScript.adjustForPronunciation(chname)
+            chname = orca_state.activeScript.\
+                utilities.adjustForPronunciation(chname)
         self.speak(chname, acss)
 
     def speakUtterances(self, utterances, acss=None, interrupt=True):

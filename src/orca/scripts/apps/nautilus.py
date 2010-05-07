@@ -108,13 +108,14 @@ class Script(default.Script):
 
         itemCount = -1
         itemCountString = " "
-        allScrollPanes = self.findByRole(frame, pyatspi.ROLE_SCROLL_PANE)
-        rolesList = [pyatspi.ROLE_SCROLL_PANE, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_FILLER, \
-                     pyatspi.ROLE_SPLIT_PANE, \
-                     pyatspi.ROLE_PANEL, \
-                     pyatspi.ROLE_FRAME, \
+        allScrollPanes = self.utilities.descendantsWithRole(
+            frame, pyatspi.ROLE_SCROLL_PANE)
+        rolesList = [pyatspi.ROLE_SCROLL_PANE,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_FILLER,
+                     pyatspi.ROLE_SPLIT_PANE,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
 
         # Look for the scroll pane containing the folder items. If this
@@ -123,7 +124,7 @@ class Script(default.Script):
         # Create a string of the number of items in the folder.
         #
         for pane in allScrollPanes:
-            if self.isDesiredFocusedItem(pane, rolesList):
+            if self.utilities.hasMatchingHierarchy(pane, rolesList):
                 for i in range(0, pane.childCount):
                     child = pane.getChildAtIndex(i)
                     if child.getRole() == pyatspi.ROLE_LAYERED_PANE:
@@ -173,17 +174,18 @@ class Script(default.Script):
             allTokens = event.source.name.split(" - ")
             newFolderName = allTokens[0]
 
-            allPanels = self.findByRole(event.source, pyatspi.ROLE_PANEL)
-            rolesList = [pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_FILLER, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_TOOL_BAR, \
-                         pyatspi.ROLE_PANEL, \
-                         pyatspi.ROLE_FRAME, \
+            allPanels = self.utilities.descendantsWithRole(
+                event.source, pyatspi.ROLE_PANEL)
+            rolesList = [pyatspi.ROLE_PANEL,
+                         pyatspi.ROLE_FILLER,
+                         pyatspi.ROLE_PANEL,
+                         pyatspi.ROLE_TOOL_BAR,
+                         pyatspi.ROLE_PANEL,
+                         pyatspi.ROLE_FRAME,
                          pyatspi.ROLE_APPLICATION]
             locationBarFound = False
             for panel in allPanels:
-                if self.isDesiredFocusedItem(panel, rolesList):
+                if self.utilities.hasMatchingHierarchy(panel, rolesList):
                     locationBarFound = True
                     desiredPanel = panel
                     break
@@ -194,7 +196,8 @@ class Script(default.Script):
                     child = desiredPanel.getChildAtIndex(i)
                     if child.getRole() == pyatspi.ROLE_TOGGLE_BUTTON and \
                        child.getState().contains(pyatspi.STATE_CHECKED):
-                        if not self.isSameObject(child, self.pathChild):
+                        if not self.utilities.isSameObject(
+                                child, self.pathChild):
                             self.pathChild = child
                             shouldAnnounce = True
                             break
@@ -242,7 +245,7 @@ class Script(default.Script):
                          pyatspi.ROLE_PANEL, \
                          pyatspi.ROLE_FRAME, \
                          pyatspi.ROLE_APPLICATION]
-            if self.isDesiredFocusedItem(event.source, rolesList):
+            if self.utilities.hasMatchingHierarchy(event.source, rolesList):
                 debug.println(self.debugLevel, "nautilus.onStateChanged - " \
                               + "Location: label.")
                 return

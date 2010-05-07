@@ -19,3 +19,4 @@ orca.settings.commFailureAttemptLimit = 0
 
 import orca.scripts.toolkits.Gecko
 orca.scripts.toolkits.Gecko.sayAllOnLoad = False
+orca.scripts.toolkits.Gecko.script_settings.grabFocusOnAncestor = True

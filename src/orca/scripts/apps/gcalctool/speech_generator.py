@@ -49,7 +49,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if obj.name:
             name = obj.name
         else:
-            name = self._script.getDisplayedText(obj)
+            name = self._script.utilities.displayedText(obj)
 
         if name:
             return [name]

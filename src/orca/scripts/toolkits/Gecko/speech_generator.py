@@ -91,15 +91,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(speech_generator.SpeechGenerator._generateName(
                               self, obj, **args))
         if not result and role == pyatspi.ROLE_LIST_ITEM:
-            result.append(self._script.expandEOCs(obj))
+            result.append(self._script.utilities.expandEOCs(obj))
 
         link = None
         if role == pyatspi.ROLE_LINK:
             link = obj
         elif role == pyatspi.ROLE_IMAGE and not result:
-            link = self._script.getAncestor(obj,
-                                            [pyatspi.ROLE_LINK],
-                                            [pyatspi.ROLE_DOCUMENT_FRAME])
+            link = self._script.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
         if link and (not result or len(result[0].strip()) == 0):
             # If there's no text for the link, expose part of the
             # URI to the user.
@@ -173,7 +172,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # we need to add it to utterances.
         #
         if role == pyatspi.ROLE_RADIO_BUTTON \
-           and self._script.getDisplayedLabel(obj):
+           and self._script.utilities.displayedLabel(obj):
             pass
         else:
             result.extend(
@@ -206,9 +205,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # navigating in the combo box)
         #
         if not obj.getState().contains(pyatspi.STATE_FOCUSED):
-            comboBox = self._script.getAncestor(obj,
-                                                [pyatspi.ROLE_COMBO_BOX],
-                                                [pyatspi.ROLE_DOCUMENT_FRAME])
+            comboBox = self._script.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_DOCUMENT_FRAME])
             if comboBox:
                 return self._generateRoleName(comboBox, **args)
 
@@ -233,9 +231,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not (role in doNotSpeak):
             if role == pyatspi.ROLE_IMAGE:
-                link = self._script.getAncestor(obj,
-                                                [pyatspi.ROLE_LINK],
-                                                [pyatspi.ROLE_DOCUMENT_FRAME])
+                link = self._script.utilities.ancestorWithRole(
+                    obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
                 if link:
                     result.append(rolenames.getSpeechForRoleName(link))
 
@@ -267,7 +264,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []
-        text = self._script.expandEOCs(obj)
+        text = self._script.utilities.expandEOCs(obj)
         if text:
             result.append(text)
         return result
@@ -307,7 +304,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateAncestors(self, obj, **args):
         result = []
         priorObj = args.get('priorObj', None)
-        commonAncestor = self._script.findCommonAncestor(priorObj, obj)
+        commonAncestor = self._script.utilities.commonAncestor(priorObj, obj)
 
         if obj is commonAncestor:
             return result
@@ -316,7 +313,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # children, and autocompletes.  (With autocompletes, we
         # wind up speaking the text object). Beginning with Firefox
         # 3.2, list items have names corresponding with their text.
-        # This results in getDisplayedText returning actual text
+        # This results in displayedText returning actual text
         # and the parent list item being spoken when it should not
         # be. So we'll take list items out of the context.
         #
@@ -348,11 +345,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         parent = obj.parent
         while parent and (parent.parent != parent):
             role = parent.getRole()
-            if self._script.isSameObject(parent, commonAncestor) \
+            if self._script.utilities.isSameObject(parent, commonAncestor) \
                or role in stopRoles:
                 break
 
-            if role in skipRoles or self._script.isLayoutOnly(parent):
+            if role in skipRoles or self._script.utilities.isLayoutOnly(parent):
                 parent = parent.parent
                 continue
 
@@ -365,18 +362,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 continue
 
             # Also skip the parent if its accessible text is a single
-            # EMBEDDED_OBJECT_CHARACTER: Script.getDisplayedText will
-            # end up coming back to the child of an object for the text
-            # if an object's text contains a single EOC. In addition,
+            # EMBEDDED_OBJECT_CHARACTER: displayedText will end up
+            # coming back to the child of an object for the text if
+            # an object's text contains a single EOC. In addition,
             # beginning with Firefox 3.2, a table cell may derive its
             # accessible name from focusable objects it contains (e.g.
-            # links, form fields). getDisplayedText will return the
+            # links, form fields). displayedText will return the
             # object's name in this case (because of the presence of
             # the EOC and other characters). This causes us to be
             # chatty. So if it's a table cell which contains an EOC,
             # we will also skip the parent.
             #
-            parentText = self._script.queryNonEmptyText(parent)
+            parentText = self._script.utilities.queryNonEmptyText(parent)
             if parentText:
                 unicodeText = parentText.getText(0, -1).decode("UTF-8")
                 if self._script.EMBEDDED_OBJECT_CHARACTER in unicodeText \
@@ -387,8 +384,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
             # Put in the text and label (if they exist).
             #
-            text = self._script.getDisplayedText(parent)
-            label = self._script.getDisplayedLabel(parent)
+            text = self._script.utilities.displayedText(parent)
+            label = self._script.utilities.displayedLabel(parent)
             newResult = []
             if text and (text != label) and len(text.strip()) \
                 and (not text.startswith("chrome://")):

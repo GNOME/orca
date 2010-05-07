@@ -99,7 +99,7 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         interest is contained.
         """
 
-        return self._script.getDocumentFrame()
+        return self._script.utilities.documentFrame()
 
     def _isInDocument(self, obj):
         """Returns True of the object is inside of the document."""

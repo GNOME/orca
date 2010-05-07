@@ -50,7 +50,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         rolesList = [pyatspi.ROLE_TABLE_CELL, \
                      pyatspi.ROLE_TREE_TABLE, \
                      pyatspi.ROLE_UNKNOWN]
-        if self._script.isDesiredFocusedItem(obj, rolesList):
+        if self._script.utilities.hasMatchingHierarchy(obj, rolesList):
             state = obj.getState()
             if state and state.contains(pyatspi.STATE_EXPANDABLE):
                 if state.contains(pyatspi.STATE_EXPANDED):
@@ -90,9 +90,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         except NotImplementedError:
             parentTable = None
         if parentTable and parentTable.nColumns > 1 \
-           and not self._script.isLayoutOnly(obj.parent):
+           and not self._script.utilities.isLayoutOnly(obj.parent):
             for i in range(0, parentTable.nColumns):
-                index = self._script.getCellIndex(obj)
+                index = self._script.utilities.cellIndex(obj)
                 row = parentTable.getRowAtIndex(index)
                 cell = parentTable.getAccessibleAt(row, i)
                 if not cell:
@@ -119,8 +119,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     if notChecked:
                         continue
 
-                    descendant = self._script.getRealActiveDescendant(cell)
-                    text = self._script.getDisplayedText(descendant)
+                    descendant = self._script.utilities.\
+                        realActiveDescendant(cell)
+                    text = self._script.utilities.displayedText(descendant)
                     if text == "Status":
                         # Translators: this in reference to an e-mail message
                         # status of having been read or unread.
@@ -137,12 +138,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         relation.
         """
 
-        if not self._script.isWizard(obj):
+        if not self._script.utilities.isWizard(obj):
             return speech_generator.SpeechGenerator.\
                 _generateUnrelatedLabels(self, obj, **args)
 
         result = []
-        labels = self._script.findUnrelatedLabels(obj)
+        labels = self._script.utilities.unrelatedLabels(obj)
         for label in labels:
             name = self._generateName(label, **args)
             try:
@@ -153,11 +154,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 attr = text.getAttributes(0)
                 if attr[0]:
                     [charKeys, charDict] = \
-                        self._script.textAttrsToDictionary(attr[0])
+                        self._script.utilities.stringToKeysAndDict(attr[0])
                     if charDict.get('weight', '400') == '800':
                         # It's a new "screen" in the Setup Assistant.
                         #
-                        name = self._script.getDisplayedText(label)
+                        name = self._script.utilities.displayedText(label)
                         # Translators: this is the name of a setup
                         # assistant window/screen in Evolution.
                         #

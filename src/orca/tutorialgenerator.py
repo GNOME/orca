@@ -207,7 +207,7 @@ class TutorialGenerator:
         """
 
         utterances = []
-        name = self._script.getDisplayedText(obj)
+        name = self._script.utilities.displayedText(obj)
         if not name and obj.description:
             name = obj.description
 
@@ -218,7 +218,7 @@ class TutorialGenerator:
         # If this application has more than one unfocused alert or
         # dialog window, tell user how to give them focus.
         alertAndDialogCount = \
-                    self._script.getUnfocusedAlertAndDialogCount(obj)
+                    self._script.utilities.unfocusedAlertAndDialogCount(obj)
         if alertAndDialogCount > 0:
             utterances.append(childWindowsMsg)
 
@@ -268,7 +268,7 @@ class TutorialGenerator:
         """
 
         utterances = []
-        name = self._script.getDisplayedText(obj)
+        name = self._script.utilities.displayedText(obj)
         if not name and obj.description:
             name = obj.description
 
@@ -385,7 +385,7 @@ class TutorialGenerator:
         msg = _("Type in text.")
 
         if (not alreadyFocused or forceTutorial) and \
-           not self._script.isReadOnlyTextArea(obj):
+           not self._script.utilities.isReadOnlyTextArea(obj):
             utterances.append(msg)
 
         self._debugGenerator("_getTutorialForText",
@@ -603,9 +603,9 @@ class TutorialGenerator:
             except NotImplementedError:
                 parent_table = None
             if settings.readTableCellRow and parent_table \
-                and (not self._script.isLayoutOnly(obj.parent)):
+                and not self._script.utilities.isLayoutOnly(obj.parent):
                 parent = obj.parent
-                index = self._script.getCellIndex(obj)
+                index = self._script.utilities.cellIndex(obj)
                 row = parent_table.getRowAtIndex(index)
                 column = parent_table.getColumnAtIndex(index)
 

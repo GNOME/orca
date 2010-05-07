@@ -68,7 +68,8 @@ class Script(default.Script):
         # We only speak the statusbar's changes when the application is 
         # with the focus and is the "work online/offline button is focused.
         #
-        if self.isDesiredFocusedItem(orca_state.locusOfFocus, rolesList):
+        if self.utilities.hasMatchingHierarchy(
+                orca_state.locusOfFocus, rolesList):
             speech.stop()
             speech.speak(event.source.name)
             self.displayBrailleMessage(event.source.name)
@@ -112,7 +113,7 @@ class Script(default.Script):
         # hierarchically located in the main window of the application 
         # (frame), inside a filler and inside another filler.
         #
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             # If we are focusing this button we construct a utterance and 
             # a braille region to speak/braille "online/offline button".
             # Here we declare utterances and add the localized string 
@@ -143,7 +144,8 @@ class Script(default.Script):
         if orca_state.locusOfFocus.getRole() == \
                                         pyatspi.ROLE_TABLE_COLUMN_HEADER:
             table = event.source.parent
-            cells = self.findByRole(table, pyatspi.ROLE_TABLE_CELL)
+            cells = self.utilities.descendantsWithRole(
+                table, pyatspi.ROLE_TABLE_CELL)
             eventsynthesizer.clickObject(cells[1], 1)
 
         default.Script.locusOfFocusChanged(self, event, 

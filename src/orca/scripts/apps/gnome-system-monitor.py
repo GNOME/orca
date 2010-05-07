@@ -77,15 +77,16 @@ class Script(default.Script):
                      pyatspi.ROLE_PAGE_TAB_LIST,
                      pyatspi.ROLE_FILLER,
                      pyatspi.ROLE_FRAME]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             debug.println(self.debugLevel,
                   "GNOME System Monitor.locusOfFocusChanged - page tab.")
             context = []
-            panels = self.findByRole(newLocusOfFocus, pyatspi.ROLE_PANEL)
+            panels = self.utilities.descendantsWithRole(
+                newLocusOfFocus, pyatspi.ROLE_PANEL)
             for panel in panels:
                 if panel.name and len(panel.name) > 0:
                     context.append(panel.name)
-                    labels = self.findUnrelatedLabels(panel)
+                    labels = self.utilities.unrelatedLabels(panel)
                     for label in labels:
                         context.append(label.name)
 

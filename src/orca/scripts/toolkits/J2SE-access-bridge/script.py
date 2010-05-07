@@ -32,6 +32,7 @@ import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
 
+from script_utilities import Utilities
 from speech_generator import SpeechGenerator
 from formatting import Formatting
 
@@ -61,13 +62,16 @@ class Script(default.Script):
         self.lastDescendantChangedSource = None
 
     def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
+        """Returns the speech generator for this script."""
         return SpeechGenerator(self)
 
     def getFormatting(self):
         """Returns the formatting strings for this script."""
         return Formatting(self)
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+        return Utilities(self)
 
     def checkKeyboardEventData(self, keyboardEvent):
         """Checks the data on the keyboard event.
@@ -109,86 +113,6 @@ class Script(default.Script):
             keyval = gdk.keyval_from_name(keyboardEvent.keyval_name)
             if 0 < keyval < 256:
                 keyboardEvent.event_string = unichr(keyval).encode("UTF-8")
-
-    def getValidObj(self, rootObj, obj, onlyShowing=True):
-        """Attempts to convert an older copy of an accessible into the
-        current, active version. We need to do this in order to ascend
-        the hierarchy.
-
-        Arguments:
-        - rootObj: the top-most ancestor of interest
-        - obj: the old object we're attempting to replace
-        - onlyShowing: whether or not we should limit matches to those
-          which have STATE_SHOWING
-
-         Returns an accessible replacement for obj if one can be found;
-         otherwise, None.
-         """
-
-        if not (obj and rootObj):
-            return None
-
-        items = self.findByRole(rootObj, obj.getRole(), onlyShowing)
-        for item in items:
-            if item.name == obj.name and self.isSameObject(item, obj):
-                return item
-
-        return None
-
-    def getNodeLevel(self, obj):
-        """Determines the node level of this object if it is in a tree
-        relation, with 0 being the top level node.  If this object is
-        not in a tree relation, then -1 will be returned.
-
-        Arguments:
-        -obj: the Accessible object
-        """
-
-        newObj = self.getValidObj(self.lastDescendantChangedSource, obj)
-        if not newObj:
-            return default.Script.getNodeLevel(self, obj)
-
-        count = 0
-        while newObj:
-            state = newObj.getState()
-            if state.contains(pyatspi.STATE_EXPANDABLE) \
-               or state.contains(pyatspi.STATE_COLLAPSED):
-                if state.contains(pyatspi.STATE_VISIBLE):
-                    count += 1
-                newObj = newObj.parent
-            else:
-                break
-
-        return count - 1
-
-    def isSameObject(self, obj1, obj2):
-        """Compares two objects to determine if they are functionally
-        the same object. This is needed because some applications and
-        toolkits kill and replace accessibles."""
-
-        if (obj1 == obj2):
-            return True
-        elif (not obj1) or (not obj2):
-            return False
-        elif (obj1.name != obj2.name) or (obj1.childCount != obj2.childCount):
-            return False
-
-        # This is to handle labels in trees. In some cases the default
-        # script's method gives us false positives; other times false
-        # negatives.
-        #
-        if obj1.getRole() == obj2.getRole() == pyatspi.ROLE_LABEL:
-            try:
-                ext1 = obj1.queryComponent().getExtents(0)
-                ext2 = obj2.queryComponent().getExtents(0)
-            except:
-                pass
-            else:
-                if ext1.x == ext2.x and ext1.y == ext2.y \
-                   and ext1.width == ext2.width and ext1.height == ext2.height:
-                    return True
-
-        return default.Script.isSameObject(self, obj1, obj2)
 
     def onFocus(self, event):
         """Called whenever an object gets focus.
@@ -249,9 +173,8 @@ class Script(default.Script):
             return
 
         if event.source.getRole() == pyatspi.ROLE_LIST:
-            combobox = self.getAncestor(event.source,
-                                        [pyatspi.ROLE_COMBO_BOX],
-                                        [pyatspi.ROLE_PANEL])
+            combobox = self.utilities.ancestorWithRole(
+                event.source, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_PANEL])
             if combobox:
                 orca.visualAppearanceChanged(event, combobox)
                 return
@@ -268,10 +191,10 @@ class Script(default.Script):
         # ignore caret movement events caused by value changes and
         # just process the single value changed event.
         #
-        isSpinBox = self.isDesiredFocusedItem(event.source,
-                                              [pyatspi.ROLE_TEXT,
-                                               pyatspi.ROLE_PANEL,
-                                               pyatspi.ROLE_SPIN_BUTTON])
+        isSpinBox = self.utilities.hasMatchingHierarchy(
+            event.source, [pyatspi.ROLE_TEXT,
+                           pyatspi.ROLE_PANEL,
+                           pyatspi.ROLE_SPIN_BUTTON])
         if isSpinBox:
             if isinstance(orca_state.lastInputEvent,
                           input_event.KeyboardEvent):
@@ -294,8 +217,9 @@ class Script(default.Script):
 
         # Avoid doing this with objects that manage their descendants
         # because they'll issue a descendant changed event. (Note: This
-        # equality check is intentional; isSameObject() is especially
-        # thorough with trees and tables, which is not performant.
+        # equality check is intentional; utilities.isSameObject() is
+        # especially thorough with trees and tables, which is not
+        # performant.
         #
         if event.source == self.lastDescendantChangedSource:
             return
@@ -347,12 +271,12 @@ class Script(default.Script):
             for child in event.source:
                 # search the layered pane for a popup menu
                 if child.getRole() == pyatspi.ROLE_LAYERED_PANE:
-                    popup = self.findByRole(child,
-                                            pyatspi.ROLE_POPUP_MENU, False)
+                    popup = self.utilities.descendantsWithRole(
+                        child, pyatspi.ROLE_POPUP_MENU, False)
                     if len(popup) > 0:
                         # set the locus of focus to the armed menu item
-                        items = self.findByRole(popup[0],
-                                                pyatspi.ROLE_MENU_ITEM, False)
+                        items = self.utilities.descendantsWithRole(
+                            popup[0], pyatspi.ROLE_MENU_ITEM, False)
                         for item in items:
                             if item.getState().contains(pyatspi.STATE_ARMED):
                                 orca.setLocusOfFocus(event, item)

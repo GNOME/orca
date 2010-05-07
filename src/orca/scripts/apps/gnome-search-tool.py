@@ -133,7 +133,7 @@ class Script(default.Script):
         # is using.  We hate keying off stuff like this, but we're forced
         # to do so in this case.
         #
-        if self.isDesiredFocusedItem(event.source, rolesList) and \
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList) and \
            event.source.name == _("Stop") and visible:
             debug.println(self.debugLevel,
                           "gnome-search-tool.onNameChanged - " \
@@ -145,8 +145,9 @@ class Script(default.Script):
             # list of files found, then get it now.
             #
             if not self.fileTable:
-                frame = self.getTopLevel(event.source)
-                allTables = self.findByRole(frame, pyatspi.ROLE_TABLE)
+                frame = self.utilities.topLevelObject(event.source)
+                allTables = self.utilities.descendantsWithRole(
+                    frame, pyatspi.ROLE_TABLE)
                 self.fileTable = allTables[0]
 
             gobject.idle_add(self._speakSearching)
@@ -161,8 +162,8 @@ class Script(default.Script):
         # is using.  We hate keying off stuff like this, but we're forced
         # to do so in this case.
         #
-        if self.isDesiredFocusedItem(event.source, rolesList) and \
-           event.source.name == _("Find") and visible and self.searching:
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList) \
+           and event.source.name == _("Find") and visible and self.searching:
             debug.println(self.debugLevel,
                           "gnome-search-tool.onNameChanged - " \
                           + "search completed.")

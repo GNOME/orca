@@ -47,6 +47,7 @@ import flat_review
 import formatting
 import keybindings
 import orca_state
+import script_utilities
 import settings
 import speech_generator
 import structural_navigation
@@ -81,6 +82,7 @@ class Script:
         #
         self.presentIfInactive = True
 
+        self.utilities = self.getUtilities()
         self.structuralNavigation = self.getStructuralNavigation()
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -211,6 +213,11 @@ class Script:
         """Returns the 'chat' class for this script.
         """
         return None
+
+    def getUtilities(self):
+        """Returns the utilites for this script.
+        """
+        return script_utilities.Utilities(self)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types

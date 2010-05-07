@@ -17,8 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-""" Custom script for Thunderbird 3.
-"""
+""" Custom script for Thunderbird 3."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -41,6 +40,7 @@ import orca.scripts.toolkits.Gecko as Gecko
 from orca.orca_i18n import _
 
 from speech_generator import SpeechGenerator
+from script_utilities import Utilities
 import script_settings
 
 ########################################################################
@@ -86,9 +86,14 @@ class Script(Gecko.Script):
         self.textArea = None
 
     def getSpeechGenerator(self):
-        """Returns the speech generator for this script.
-        """
+        """Returns the speech generator for this script."""
+
         return SpeechGenerator(self)
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
     def getAppPreferencesGUI(self):
         """Return a GtkVBox contain the application unique configuration
@@ -133,8 +138,8 @@ class Script(Gecko.Script):
         script_settings.grabFocusOnAncestor = value
 
     def _debug(self, msg):
-        """ Convenience method for printing debug messages
-        """
+        """ Convenience method for printing debug messages"""
+
         debug.println(self.debugLevel, "Thunderbird.py: "+msg)
 
     def _isSpellCheckListItemFocus(self, event):
@@ -152,7 +157,7 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_LIST, \
                      pyatspi.ROLE_DIALOG, \
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             dialog = event.source.parent.parent
 
             # Translators: this is what the name of the spell checking
@@ -237,7 +242,7 @@ class Script(Gecko.Script):
         """
         obj = event.source
         parent = obj.parent
-        top = self.getTopLevel(obj)
+        top = self.utilities.topLevelObject(obj)
         consume = False
 
         # Clear the stored autocomplete string.
@@ -258,7 +263,7 @@ class Script(Gecko.Script):
         #
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
             table = parent.queryTable()
-            row = table.getRowAtIndex(self.getCellIndex(obj))
+            row = table.getRowAtIndex(self.utilities.cellIndex(obj))
             for i in range(0, table.nColumns):
                 acc = table.getAccessibleAt(row, i)
                 if acc.name:
@@ -288,7 +293,7 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_INTERNAL_FRAME,
                      pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             self._debug("onFocus - message text area.")
 
             self.textArea = event.source
@@ -303,7 +308,7 @@ class Script(Gecko.Script):
             rolesList = [pyatspi.ROLE_ENTRY, \
                          pyatspi.ROLE_DIALOG, \
                          pyatspi.ROLE_APPLICATION]
-            if self.isDesiredFocusedItem(obj, rolesList):
+            if self.utilities.hasMatchingHierarchy(obj, rolesList):
                 dialog = obj.parent
 
                 # Translators: this is what the name of the spell checking
@@ -388,7 +393,7 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_TREE_TABLE,
                      pyatspi.ROLE_SCROLL_PANE,
                      pyatspi.ROLE_SCROLL_PANE]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 string = orca_state.lastNonModifierKeyEvent.event_string
                 if string == "Delete":
@@ -402,7 +407,7 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_INTERNAL_FRAME, \
                      pyatspi.ROLE_FRAME, \
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 string = orca_state.lastNonModifierKeyEvent.event_string
                 if string == "Delete":
@@ -510,7 +515,7 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_INTERNAL_FRAME, \
                      pyatspi.ROLE_FRAME, \
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
                 string = orca_state.lastNonModifierKeyEvent.event_string
                 if string == "Delete":
@@ -529,7 +534,7 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_LIST, \
                      pyatspi.ROLE_DIALOG, \
                      pyatspi.ROLE_APPLICATION]
-        if self.isDesiredFocusedItem(obj, rolesList):
+        if self.utilities.hasMatchingHierarchy(obj, rolesList):
             dialog = obj.parent.parent
 
             # Translators: this is what the name of the spell checking 
@@ -539,7 +544,7 @@ class Script(Gecko.Script):
             #
             if dialog.name.startswith(_("Check Spelling")):
                 if obj.getIndexInParent() == 0:
-                    badWord = self.getDisplayedText(dialog[1])
+                    badWord = self.utilities.displayedText(dialog[1])
 
                     if self.textArea != None:
                         # If we have a handle to the Thunderbird message text
@@ -547,7 +552,7 @@ class Script(Gecko.Script):
                         # create a list of all the words found in them.
                         #
                         allTokens = []
-                        text = self.getText(self.textArea, 0, -1)
+                        text = self.utilities.substring(self.textArea, 0, -1)
                         tokens = text.split()
                         allTokens += tokens
                         self.speakMisspeltWord(allTokens, badWord)
@@ -624,24 +629,6 @@ class Script(Gecko.Script):
 
         return [obj, offset]
 
-    def getDocumentFrame(self):
-        """Returns the document frame that holds the content being shown.
-        Overridden here because multiple open messages are not arranged
-        in tabs like they are in Firefox."""
-
-        if self.inFindToolbar():
-            return Gecko.Script.getDocumentFrame(self)
-
-        obj = orca_state.locusOfFocus
-        while obj:
-            role = obj.getRole()
-            if role in [pyatspi.ROLE_DOCUMENT_FRAME, pyatspi.ROLE_EMBEDDED]:
-                return obj
-            else:
-                obj = obj.parent
-
-        return None
-
     def toggleFlatReviewMode(self, inputEvent=None):
         """Toggles between flat review mode and focus tracking mode."""
 
@@ -659,9 +646,8 @@ class Script(Gecko.Script):
         Returns True is this is something like the Subject: entry
         """
         result = obj and obj.getRole() == pyatspi.ROLE_ENTRY \
-            and None == self.getAncestor(obj,
-                                         [pyatspi.ROLE_DOCUMENT_FRAME],
-                                         [pyatspi.ROLE_FRAME])
+            and not self.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_DOCUMENT_FRAME], [pyatspi.ROLE_FRAME])
         return result
 
     def isEditableMessage(self, obj):

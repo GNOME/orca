@@ -134,7 +134,7 @@ class _ItemContext:
         """
         if not self.script or not self.script.speakWordUnderMouse(self.acc):
             return None
-        word, start, end = self.script.getWordAtCoords(self.acc, x, y)
+        word, start, end = self.script.utilities.wordAtCoords(self.acc, x, y)
         return _WordContext(word, self.acc, start, end)
 
 class MouseReviewer:
@@ -305,7 +305,7 @@ class MouseReviewer:
             for frame in app:
                 if not frame:
                     continue
-                acc = script.getComponentAtDesktopCoords(frame, x, y)
+                acc = script.utilities.componentAtDesktopCoords(frame, x, y)
                 if acc:
                     try:
                         z_order = self._getZOrder(frame.name)

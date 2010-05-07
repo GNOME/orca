@@ -42,6 +42,8 @@ from orca.orca_i18n import _
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from tutorialgenerator import TutorialGenerator
+from script_utilities import Utilities
+
 import script_settings
 
 ########################################################################
@@ -90,6 +92,11 @@ class Script(default.Script):
         """Returns the tutorial generator for this script."""
 
         return TutorialGenerator(self)
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
     def getAppPreferencesGUI(self):
         """Return a GtkVBox contain the application unique configuration
@@ -149,7 +156,8 @@ class Script(default.Script):
            and orca_state.lastNonModifierKeyEvent.event_string in \
                ["Left", "Right", "Up", "Down"] \
            and event and event.type.startswith("focus:") \
-           and (self.isLink(oldLocusOfFocus) or self.isLink(newLocusOfFocus)):
+           and (self.utilities.isLink(oldLocusOfFocus) \
+           or self.utilities.isLink(newLocusOfFocus)):
             orca.setLocusOfFocus(event, newLocusOfFocus, False)
             return
 
@@ -175,9 +183,8 @@ class Script(default.Script):
         # script doesn't ignore this event.
         #
         if event.source != orca_state.locusOfFocus \
-           and self.getAncestor(event.source,
-                                [pyatspi.ROLE_HTML_CONTAINER],
-                                [pyatspi.ROLE_FRAME]):
+           and self.utilities.ancestorWithRole(
+            event.source, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
             orca.setLocusOfFocus(event, event.source, False)
 
         default.Script.onCaretMoved(self, event)
@@ -241,7 +248,7 @@ class Script(default.Script):
            and event.type.startswith("object:state-changed:showing") \
            and event.detail1:
             obj = self.findStatusBarIcon()
-            while obj and not self.isSameObject(obj, event.source):
+            while obj and not self.utilities.isSameObject(obj, event.source):
                 obj = obj.parent
             if obj:
                 # Translators: The Package Manager application notifies the
@@ -270,41 +277,6 @@ class Script(default.Script):
 
         default.Script.onWindowActivated(self, event)
 
-    def findStatusBar(self, obj):
-        """Returns the status bar in the window which contains obj.
-        Overridden here because Packagemanager seems to have multiple
-        status bars which claim to be SHOWING and VISIBLE. The one we
-        want should be displaying text, whereas the others are not.
-        """
-
-        # There are some objects which are not worth descending.
-        #
-        skipRoles = [pyatspi.ROLE_TREE,
-                     pyatspi.ROLE_TREE_TABLE,
-                     pyatspi.ROLE_TABLE]
-
-        if obj.getState().contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
-           or obj.getRole() in skipRoles:
-            return
-
-        statusBar = None
-        for i in range(obj.childCount - 1, -1, -1):
-            if obj[i].getRole() == pyatspi.ROLE_STATUS_BAR:
-                statusBar = obj[i]
-            elif not obj[i] in skipRoles:
-                statusBar = self.findStatusBar(obj[i])
-
-            if statusBar:
-                try:
-                    text = statusBar.queryText()
-                except:
-                    pass
-                else:
-                    if text.characterCount:
-                        break
-
-        return statusBar
-
     def findStatusBarIcon(self, statusBar=None):
         """Locates the icon which is sometimes found to the left of the
         packagemanager status bar.
@@ -320,12 +292,12 @@ class Script(default.Script):
         if not statusBar and self.app.childCount:
             # Be sure we're looking in PM's main window.
             #
-            statusBar = self.findStatusBar(self.app[0])
+            statusBar = self.utilities.statusBar(self.app[0])
 
         if statusBar:
             i = statusBar.getIndexInParent()
             if i > 0:
-                icons = self.findByRole(
+                icons = self.utilities.descendantsWithRole(
                     statusBar.parent[i - 1], pyatspi.ROLE_ICON)
                 if icons:
                     icon = icons[0]
@@ -398,8 +370,9 @@ class Script(default.Script):
 
         default.Script._presentTextAtNewCaretPosition(self, event, otherObj)
 
-        if not self.isSameObject(event.source, self._lastObjectPresented) \
-           and self.getAncestor(
+        if not self.utilities.isSameObject(
+            event.source, self._lastObjectPresented) \
+           and self.utilities.ancestorWithRole(
             event.source, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
             self.updateBraille(event.source)
 
@@ -413,7 +386,7 @@ class Script(default.Script):
         - extra: extra Region to add to the end
         """
 
-        if not self.getAncestor(
+        if not self.utilities.ancestorWithRole(
            obj, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
             return default.Script.updateBraille(self, obj, extraRegion)
 
@@ -427,7 +400,7 @@ class Script(default.Script):
         contents = self.getLineContentsAtOffset(obj, text.caretOffset)
         for i, content in enumerate(contents):
             child, startOffset, endOffset, string = content
-            isFocusedObj = self.isSameObject(child, obj)
+            isFocusedObj = self.utilities.isSameObject(child, obj)
             regions = [self.getNewBrailleText(child,
                                               startOffset=startOffset,
                                               endOffset=endOffset)]
@@ -452,7 +425,7 @@ class Script(default.Script):
                interface
         """
 
-        if not self.getAncestor(
+        if not self.utilities.ancestorWithRole(
            obj, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
             return default.Script.sayCharacter(self, obj)
 
@@ -474,7 +447,7 @@ class Script(default.Script):
     def sayLine(self, obj):
         """Speaks the line at the current caret position."""
 
-        if not self.getAncestor(
+        if not self.utilities.ancestorWithRole(
            obj, [pyatspi.ROLE_HTML_CONTAINER], [pyatspi.ROLE_FRAME]):
             return default.Script.sayLine(self, obj)
 
@@ -489,7 +462,7 @@ class Script(default.Script):
             if len(contents) > 1 and not line.strip():
                 continue
 
-            isLink = self.isLink(child)
+            isLink = self.utilities.isLink(child)
 
             if len(line) and line != "\n":
                 if line.decode("UTF-8").isupper():
@@ -499,7 +472,7 @@ class Script(default.Script):
                 else:
                     voice = self.voices[settings.DEFAULT_VOICE]
 
-                line = self.adjustForRepeats(line)
+                line = self.utilities.adjustForRepeats(line)
                 speech.speak(line, voice)
                 if isLink:
                     speech.speak(self.speechGenerator.getRoleName(
@@ -632,45 +605,6 @@ class Script(default.Script):
         verticalCenter2 = extents2[1] + extents2[3] / 2
         return abs(verticalCenter1 - verticalCenter2) <= 5
 
-    def isLink(self, obj):
-        """Returns True if this is a text object serving as a link.
-
-        Arguments:
-        - obj: an accessible
-        """
-
-        if not obj:
-            return False
-
-        # Images seem to be exposed as ROLE_PANEL and implement very few of
-        # the accessibility interfaces.
-        #
-        if obj.getRole() == pyatspi.ROLE_PANEL and not obj.childCount \
-           and obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
-           and self.getAncestor(obj,
-                                [pyatspi.ROLE_HTML_CONTAINER],
-                                [pyatspi.ROLE_FRAME]):
-            return True
-
-        try:
-            text = obj.queryText()
-        except:
-            return False
-        else:
-            return self.getLinkIndex(obj, text.caretOffset) >= 0
-
-    def isTextArea(self, obj):
-        """Returns True if obj is a GUI component that is for entering text.
-
-        Arguments:
-        - obj: an accessible
-        """
-
-        if self.isLink(obj):
-            return False
-
-        return default.Script.isTextArea(self, obj)
-
     def isSearchEntry(self, obj):
         """Attempts to distinguish the Search entry from other accessibles.
 
@@ -684,7 +618,7 @@ class Script(default.Script):
         # should change, we'll need to make our criteria more specific.
         #
         if obj and obj.getRole() == pyatspi.ROLE_TEXT \
-           and self.getAncestor( \
+           and self.utilities.ancestorWithRole(
             obj, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME]):
             return True
 
@@ -717,10 +651,10 @@ class Script(default.Script):
                         except:
                             col = -1
                         else:
-                            index = self.getCellIndex(obj)
+                            index = self.utilities.cellIndex(obj)
                             col = table.getColumnAtIndex(index)
                         if col == 0:
-                            top = self.getTopLevel(obj)
+                            top = self.utilities.topLevelObject(obj)
                             if top and top.getRole() == pyatspi.ROLE_FRAME:
                                 return True
                         return False

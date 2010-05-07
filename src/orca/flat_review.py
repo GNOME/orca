@@ -628,8 +628,8 @@ class Context:
 
         if orca_state.locusOfFocus and \
            orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
-            searchZone = orca_state.activeScript.getRealActiveDescendant(\
-                                                   orca_state.locusOfFocus)
+            searchZone = orca_state.activeScript.\
+                utilities.realActiveDescendant(orca_state.locusOfFocus)
         else:
             searchZone = orca_state.locusOfFocus
 
@@ -639,7 +639,8 @@ class Context:
             currentZoneIndex = 0
             while currentZoneIndex < len(line.zones):
                 zone = line.zones[currentZoneIndex]
-                if self.script.isSameObject(zone.accessible, searchZone):
+                if self.script.utilities.isSameObject(
+                        zone.accessible, searchZone):
                     foundZoneWithFocus = True
                     break
                 else:
@@ -784,11 +785,12 @@ class Context:
                 substringEndOffset   = substringStartOffset
                 unicodeStartOffset   = i + 1
             else:
-                [x, y, width, height] = text.getRangeExtents( \
-                          substringStartOffset, substringEndOffset, 0)
-                if self.script.visible(x, y, width, height,
-                                       cliprect.x, cliprect.y,
-                                       cliprect.width, cliprect.height):
+                [x, y, width, height] = text.getRangeExtents(
+                        substringStartOffset, substringEndOffset, 0)
+                if self.script.utilities.isVisibleRegion(
+                        x, y, width, height,
+                        cliprect.x, cliprect.y,
+                        cliprect.width, cliprect.height):
 
                     anyVisible = True
 
@@ -1096,10 +1098,11 @@ class Context:
         #
         extents = icomponent.getExtents(0)
 
-        if not self.script.visible(extents.x, extents.y,
-                                   extents.width, extents.height,
-                                   cliprect.x, cliprect.y,
-                                   cliprect.width, cliprect.height):
+        if not self.script.utilities.isVisibleRegion(
+                extents.x, extents.y,
+                extents.width, extents.height,
+                cliprect.x, cliprect.y,
+                cliprect.width, cliprect.height):
             return []
 
         debug.println(
@@ -1144,10 +1147,11 @@ class Context:
             [x, y] = iimage.getImagePosition(0)
             [width, height] = iimage.getImageSize()
 
-            if (width != 0) and (height != 0) \
-                   and self.script.visible(x, y, width, height,
-                                           cliprect.x, cliprect.y,
-                                           cliprect.width, cliprect.height):
+            if width != 0 and height != 0 \
+               and self.script.utilities.isVisibleRegion(
+                    x, y, width, height,
+                    cliprect.x, cliprect.y,
+                    cliprect.width, cliprect.height):
 
                 clipping = self.clip(x, y, width, height,
                                      cliprect.x, cliprect.y,
@@ -1200,7 +1204,7 @@ class Context:
                 try:
                     selection = accessible[0].querySelection()
                 except:
-                    string = self.script.getDisplayedText(accessible[0])
+                    string = self.script.utilities.displayedText(accessible[0])
                 else:
                     item = selection.getSelectedChild(0)
                     if item:
@@ -1311,7 +1315,7 @@ class Context:
             pass
 
         showingDescendants = \
-            self.script.getShowingDescendants(root)
+            self.script.utilities.showingDescendants(root)
         if len(showingDescendants):
             for child in showingDescendants:
                 zones.extend(self.getShowingZones(child))
@@ -1333,7 +1337,7 @@ class Context:
                                   "flat_review.getShowingZones: " +
                                   "WARNING CHILD.PARENT != PARENT!!!")
                                   
-                if self.script.pursueForFlatReview(child):
+                if self.script.utilities.pursueForFlatReview(child):
                     zones.extend(self.getShowingZones(child))
 
         return zones

@@ -30,6 +30,8 @@ import pyatspi
 import orca.chat as chat
 import orca.default as default
 
+from script_utilities import Utilities
+
 ########################################################################
 #                                                                      #
 # The Empathy script class.                                            #
@@ -54,6 +56,11 @@ class Script(default.Script):
         """Returns the 'chat' class for this script."""
 
         return chat.Chat(self, self._buddyListAncestries)
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -98,25 +105,6 @@ class Script(default.Script):
 
         self.chat.setAppPreferences(prefs)
 
-    def getChildNodes(self, obj):
-        """Gets all of the children that have RELATION_NODE_CHILD_OF pointing
-        to this expanded table cell.
-
-        Arguments:
-        -obj: the Accessible Object
-
-        Returns: a list of all the child nodes
-        """
-
-        reportedNodes = default.Script.getChildNodes(self, obj)
-        actualNodes = []
-        for node in reportedNodes:
-            child = self.getRealActiveDescendant(node)
-            if child and child.name:
-                actualNodes.append(child)
-
-        return actualNodes
-
     def onTextInserted(self, event):
         """Called whenever text is added to an object."""
 
@@ -137,7 +125,8 @@ class Script(default.Script):
         # events we need to present text added to the chatroom are
         # missing.
         #
-        allPageTabs = self.findByRole(event.source, pyatspi.ROLE_PAGE_TAB)
+        allPageTabs = self.utilities.descendantsWithRole(
+            event.source, pyatspi.ROLE_PAGE_TAB)
 
         default.Script.onWindowActivated(self, event)
 

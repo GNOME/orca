@@ -74,7 +74,7 @@ class Script(default.Script):
         # not.
         #
         found = False
-        for app in self.getKnownApplications():
+        for app in self.utilities.knownApplications():
             for child in app:
                 if child.name.startswith(objName):
                     found = True

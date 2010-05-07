@@ -56,6 +56,7 @@ orca_python_PYTHON = \
 	punctuation_settings.py \
 	rolenames.py \
 	script.py \
+	script_utilities.py \
 	settings.py \
 	sound.py \
 	speech.py \

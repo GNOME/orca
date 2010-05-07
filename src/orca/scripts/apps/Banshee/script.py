@@ -1,7 +1,7 @@
 import orca.default as default
 import orca.orca_state as orca_state
-import pyatspi
 
+from script_utilities import Utilities
 from speech_generator import SpeechGenerator
 from formatting import Formatting
 
@@ -16,7 +16,6 @@ class Script(default.Script):
         default.Script.__init__(self, app)
         self._last_seek_value = 0
 
-
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
         """
@@ -26,50 +25,28 @@ class Script(default.Script):
         """Returns the formatting strings for this script."""
         return Formatting(self)
 
-    def _formatDuration(self, s):
-        seconds = '%02d' % (s%60)
-        minutes = '%02d' % (s/60)
-        hours = '%02d' % (s/3600)
-        
-        duration = [minutes, seconds]
-        
-        if hours != '00':
-            duration.insert(0, hours)
+    def getUtilities(self):
+        """Returns the utilites for this script."""
 
-        return ':'.join(duration)
-
-    def _isSeekSlider(self, obj):
-        return bool(pyatspi.findAncestor(
-                obj, lambda x: x.getRole() == pyatspi.ROLE_TOOL_BAR))
+        return Utilities(self)
 
     def visualAppearanceChanged(self, event, obj):
         if event.type == 'object:property-change:accessible-value' and \
-                self._isSeekSlider(obj):
+                self.utilities.isSeekSlider(obj):
             try:
                 value = obj.queryValue()
             except NotImplementedError:
-                return default.Script.getTextForValue(self, obj)
+                return default.Script.visualAppearanceChanged(self, event, obj)
 
             current_value = int(value.currentValue)/1000
 
             if current_value in \
                     range(self._last_seek_value, self._last_seek_value + 4):
-                if self.isSameObject(obj, orca_state.locusOfFocus):
+                if self.utilities.isSameObject(obj, orca_state.locusOfFocus):
                     self.updateBraille(obj)
                 return
 
             self._last_seek_value = current_value
 
         default.Script.visualAppearanceChanged(self, event, obj)
-            
 
-    def getTextForValue(self, obj):
-        if not self._isSeekSlider(obj):
-            return default.Script.getTextForValue(self, obj)
-
-        try:
-            value = obj.queryValue()
-        except NotImplementedError:
-            return default.Script.getTextForValue(self, obj)
-        else:
-            return self._formatDuration(int(value.currentValue)/1000)

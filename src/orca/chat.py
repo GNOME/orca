@@ -655,7 +655,7 @@ class Chat:
         text = ""
         if settings.chatSpeakRoomName and chatRoomName:
             text = _("Message from chat room %s") % chatRoomName
-        text = self._script.appendString(text, message)
+        text = self._script.utilities.appendString(text, message)
 
         if len(text.strip()):
             speech.speak(text)
@@ -816,7 +816,7 @@ class Chat:
 
         if obj:
             for roleList in self._buddyListAncestries:
-                if self._script.isDesiredFocusedItem(obj, roleList):
+                if self._script.utilities.hasMatchingHierarchy(obj, roleList):
                     return True
 
         return False
@@ -835,7 +835,7 @@ class Chat:
 
         for roleList in self._buddyListAncestries:
             buddyListRole = roleList[0]
-            candidate = self._script.getAncestor( \
+            candidate = self._script.utilities.ancestorWithRole(
                 obj, [buddyListRole], [pyatspi.ROLE_FRAME])
             if self.isBuddyList(candidate):
                 return True
@@ -882,8 +882,8 @@ class Chat:
             if name:
                 if name == conversation.name:
                     return conversation
-            # Doing an equality check seems to be preferable here
-            # to isSameObject as a result of false positives.
+            # Doing an equality check seems to be preferable here to
+            # utilities.isSameObject as a result of false positives.
             #
             elif obj == conversation.accHistory:
                 return conversation
@@ -917,7 +917,7 @@ class Chat:
         """
 
         if obj and obj.getState().contains(pyatspi.STATE_SHOWING):
-            topLevel = self._script.getTopLevel(obj)
+            topLevel = self._script.utilities.topLevelObject(obj)
             if topLevel and topLevel.getState().contains(pyatspi.STATE_ACTIVE):
                 return True
 
@@ -937,13 +937,13 @@ class Chat:
         # that, we'll look at the frame name. Failing that, scripts
         # should override this method. :-)
         #
-        ancestor = self._script.getAncestor(obj,
-                                            [pyatspi.ROLE_PAGE_TAB,
-                                             pyatspi.ROLE_FRAME],
-                                            [pyatspi.ROLE_APPLICATION])
+        ancestor = self._script.utilities.ancestorWithRole(
+            obj,
+            [pyatspi.ROLE_PAGE_TAB, pyatspi.ROLE_FRAME],
+            [pyatspi.ROLE_APPLICATION])
         name = ""
         try:
-            text = self._script.getDisplayedText(ancestor)
+            text = self._script.utilities.displayedText(ancestor)
             if text.lower().strip() != self._script.name.lower().strip():
                 name = text
         except:
@@ -954,11 +954,10 @@ class Chat:
         # the item. Therefore, we'll give it one more shot.
         #
         if not name:
-            ancestor = self._script.getAncestor(ancestor,
-                                                [pyatspi.ROLE_FRAME],
-                                                [pyatspi.ROLE_APPLICATION])
+            ancestor = self._script.utilities.ancestorWithRole(
+                ancestor, [pyatspi.ROLE_FRAME], [pyatspi.ROLE_APPLICATION])
             try:
-                text = self._script.getDisplayedText(ancestor)
+                text = self._script.utilities.displayedText(ancestor)
                 if text.lower().strip() != self._script.name.lower().strip():
                     name = text
             except:

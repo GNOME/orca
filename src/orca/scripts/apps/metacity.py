@@ -86,7 +86,7 @@ class Script(default.Script):
         # not.
         #
         found = False
-        for app in self.getKnownApplications():
+        for app in self.utilities.knownApplications():
             i = 0
             while i < app.childCount:
                 win = app.getChildAtIndex(i)

@@ -139,7 +139,8 @@ class BrailleGenerator(generator.Generator):
         or an empty array if no accelerator can be found.
         """
         result = []
-        [mnemonic, shortcut, accelerator] = self._script.getKeyBinding(obj)
+        [mnemonic, shortcut, accelerator] = \
+            self._script.utilities.mnemonicShortcutAccelerator(obj)
         if accelerator:
             result.append("(" + accelerator + ")")
         return result
@@ -157,7 +158,7 @@ class BrailleGenerator(generator.Generator):
         """
         result = []
         alertAndDialogCount = \
-            self._script.getUnfocusedAlertAndDialogCount(obj)
+            self._script.utilities.unfocusedAlertAndDialogCount(obj)
         if alertAndDialogCount > 0:
             # Translators: this tells the user how many unfocused
             # alert and dialog windows plus the total number of
@@ -205,11 +206,11 @@ class BrailleGenerator(generator.Generator):
             # as bugzilla bug 319751.]]]
             #
             role = parent.getRole()
-            if (role != pyatspi.ROLE_FILLER) \
-                and (role != pyatspi.ROLE_SECTION) \
-                and (role != pyatspi.ROLE_SPLIT_PANE) \
-                and (role != pyatspi.ROLE_DESKTOP_FRAME) \
-                and (not self._script.isLayoutOnly(parent)):
+            if role != pyatspi.ROLE_FILLER \
+                and role != pyatspi.ROLE_SECTION \
+                and role != pyatspi.ROLE_SPLIT_PANE \
+                and role != pyatspi.ROLE_DESKTOP_FRAME \
+                and not self._script.utilities.isLayoutOnly(parent):
                 args['role'] = role
                 parentResult = self.generate(parent, **args)
             # [[[TODO: HACK - we've discovered oddness in hierarchies
@@ -222,7 +223,7 @@ class BrailleGenerator(generator.Generator):
             #
             if parent.getRole() in [pyatspi.ROLE_FILLER,
                                     pyatspi.ROLE_PANEL]:
-                label = self._script.getDisplayedLabel(parent)
+                label = self._script.utilities.displayedLabel(parent)
                 if label and len(label) and not label.isspace():
                     if not excludeRadioButtonGroup:
                         args['role'] = parent.getRole()
@@ -299,7 +300,7 @@ class BrailleGenerator(generator.Generator):
             text = obj.queryText()
         except NotImplementedError:
             text = None
-        if text and (self._script.isTextArea(obj) \
+        if text and (self._script.utilities.isTextArea(obj) \
                      or (obj.getRole() in [pyatspi.ROLE_LABEL])):
             [lineString, startOffset, endOffset] = text.getTextAtOffset(
                 text.caretOffset,
@@ -309,8 +310,8 @@ class BrailleGenerator(generator.Generator):
                 for relation in obj.getRelationSet():
                     if relation.getRelationType() \
                             == pyatspi.RELATION_FLOWS_FROM:
-                        include = \
-                            not self._script.isTextArea(relation.getTarget(0))
+                        include = not self._script.utilities.\
+                            isTextArea(relation.getTarget(0))
         return include
 
     #####################################################################
@@ -352,7 +353,6 @@ class BrailleGenerator(generator.Generator):
                     prior = None
                 else:
                     prior = self.asString(element)
-                    combined = self._script.appendString(combined,
-                                                         prior,
-                                                         delimiter)
+                    combined = self._script.utilities.appendString(
+                        combined, prior, delimiter)
         return combined

@@ -36,6 +36,7 @@ import orca.settings as settings
 import orca.speech as speech
 
 from chat import Chat
+from script_utilities import Utilities
 
 ########################################################################
 #                                                                      #
@@ -71,6 +72,11 @@ class Script(Gecko.Script):
         """Returns the 'chat' class for this script."""
 
         return Chat(self, self._buddyListAncestries)
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types
@@ -121,38 +127,6 @@ class Script(Gecko.Script):
         """
 
         self.chat.setAppPreferences(prefs)
-
-    def getDisplayedLabel(self, obj):
-        """If there is an object labelling the given object, return the
-        text being displayed for the object labelling this object.
-        Otherwise, return None.
-
-        Argument:
-        - obj: the object in question
-
-        Returns the string of the object labelling this object, or None
-        if there is nothing of interest here.
-        """
-
-        if self.inDocumentContent():
-            return Gecko.Script.getDisplayedLabel(self, obj)
-
-        return default.Script.getDisplayedLabel(self, obj)
-
-    def getDisplayedText(self, obj):
-        """Returns the text being displayed for an object.
-
-        Arguments:
-        - obj: the object
-
-        Returns the text being displayed for an object or None if there isn't
-        any text being shown.
-        """
-
-        if self.inDocumentContent(obj):
-            return Gecko.Script.getDisplayedText(self, obj)
-
-        return default.Script.getDisplayedText(self, obj)
 
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
@@ -250,6 +224,7 @@ class Script(Gecko.Script):
         # events we need to present text added to the chatroom are
         # missing.
         #
-        allPageTabs = self.findByRole(event.source, pyatspi.ROLE_PAGE_TAB)
+        allPageTabs = self.utilities.descendantsWithRole(
+            event.source, pyatspi.ROLE_PAGE_TAB)
 
         default.Script.onWindowActivated(self, event)

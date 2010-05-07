@@ -665,7 +665,7 @@ def keyEcho(event):
             eventType == KeyEventType.PRINTABLE \
             and not _orcaModifierPressed \
             and orca_state.activeScript \
-            and orca_state.activeScript.willEchoCharacter(event)
+            and orca_state.activeScript.utilities.willEchoCharacter(event)
 
         # One last check for echoing -- a PRINTABLE key may have squeaked
         # through due to the enableEchoByCharacter check above.  We only

@@ -287,7 +287,7 @@ class Generator:
         needed a _generateDescription for whereAmI. :-) See below.
         """
         result = []
-        name = self._script.getDisplayedText(obj)
+        name = self._script.utilities.displayedText(obj)
         if name:
             result.append(name)
         elif obj.description:
@@ -327,19 +327,19 @@ class Generator:
         is different from that of the name and label.
         """
         result = []
-        label = self._script.getDisplayedLabel(obj)
+        label = self._script.utilities.displayedLabel(obj)
         if obj.description and not obj.description in [obj.name, label]:
             result.append(obj.description)
         return result
 
     def _generateLabel(self, obj, **args):
         """Returns the label for an object as an array of strings for use by
-        speech and braille.  The label is determined by the
-        getDisplayedLabel of the script, and an empty array will be
-        returned if no label can be found.
+        speech and braille.  The label is determined by the displayedLabel
+        method of the script utility, and an empty array will be returned if
+        no label can be found.
         """
         result = []
-        label = self._script.getDisplayedLabel(obj)
+        label = self._script.utilities.displayedLabel(obj)
         if label:
             result.append(label)
         return result
@@ -413,7 +413,7 @@ class Generator:
             args['mode'] = self._mode
         args['stringType'] = 'readonly'
         if settings.presentReadOnlyText \
-           and self._script.isReadOnlyTextArea(obj):
+           and self._script.utilities.isReadOnlyTextArea(obj):
             result.append(self._script.formatting.getString(**args))
         return result
 
@@ -560,7 +560,7 @@ class Generator:
         except:
             pass
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             rowIndex = table.getRowAtIndex(index)
             if rowIndex >= 0:
                 # Get the header information.  In Java Swing, the
@@ -578,7 +578,7 @@ class Generator:
                 if not desc:
                     header = table.getRowHeader(rowIndex)
                     if header:
-                        desc = self._script.getDisplayedText(header)
+                        desc = self._script.utilities.displayedText(header)
                 if desc and len(desc):
                     text = desc
                     if args['mode'] == 'speech':
@@ -621,7 +621,7 @@ class Generator:
         except:
             pass
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             columnIndex = table.getColumnAtIndex(index)
             if columnIndex >= 0:
                 # Get the header information.  In Java Swing, the
@@ -639,7 +639,7 @@ class Generator:
                 if not desc:
                     header = table.getColumnHeader(columnIndex)
                     if header:
-                        desc = self._script.getDisplayedText(header)
+                        desc = self._script.utilities.displayedText(header)
                 if desc and len(desc):
                     text = desc
                     if args['mode'] == 'speech':
@@ -765,13 +765,13 @@ class Generator:
             return result
         try:
             action = obj.queryAction()
-            label = self._script.getDisplayedText(
-                        self._script.getRealActiveDescendant(obj))
+            label = self._script.utilities.displayedText(
+                        self._script.utilities.realActiveDescendant(obj))
         except NotImplementedError:
             action = None
             label = None
         if action and (label == None or len(label) == 0):
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             column = parentTable.getColumnAtIndex(index)
             for j in range(0, action.nActions):
                 # Translators: this is the action name for
@@ -816,9 +816,9 @@ class Generator:
             parentTable = None
         isDetailedWhereAmI = args.get('formatType', None) == 'detailedWhereAmI'
         if (settings.readTableCellRow or isDetailedWhereAmI) and parentTable \
-           and (not self._script.isLayoutOnly(obj.parent)):
+           and (not self._script.utilities.isLayoutOnly(obj.parent)):
             parent = obj.parent
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             row = parentTable.getRowAtIndex(index)
             column = parentTable.getColumnAtIndex(index)
 
@@ -881,7 +881,7 @@ class Generator:
         - consider returning an empty array if this is not a text
         object.]]]
         """
-        return [self._script.getDisplayedText(obj)]
+        return [self._script.utilities.displayedText(obj)]
 
     #####################################################################
     #                                                                   #
@@ -898,7 +898,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'nodelevel'
-        level = self._script.getNodeLevel(obj)
+        level = self._script.utilities.nodeLevel(obj)
         if level >= 0:
             result.append(self._script.formatting.getString(**args)\
                           % (level + 1))
@@ -917,7 +917,7 @@ class Generator:
         attribute if it exists on the object.  [[[WDW - we should
         consider returning an empty array if there is no value.
         """
-        return [self._script.getTextForValue(obj)]
+        return [self._script.utilities.textForValue(obj)]
 
     #####################################################################
     #                                                                   #
@@ -944,7 +944,7 @@ class Generator:
         if not args.get('mode', None):
             args['mode'] = self._mode
         args['stringType'] = 'nestinglevel'
-        nestingLevel = self._script.getNestingLevel(obj)
+        nestingLevel = self._script.utilities.nestingLevel(obj)
         if nestingLevel:
             result.append(self._script.formatting.getString(**args)\
                           % nestingLevel)
@@ -966,7 +966,8 @@ class Generator:
                     radioGroupLabel = relation.getTarget(0)
                     break
             if radioGroupLabel:
-                result.append(self._script.getDisplayedText(radioGroupLabel))
+                result.append(self._script.utilities.\
+                                  displayedText(radioGroupLabel))
             else:
                 parent = obj.parent
                 while parent and (parent.parent != parent):
@@ -987,8 +988,8 @@ class Generator:
         found.  Otherwise, an empty array is returned.
         """
         result = []
-        text = self._script.getDisplayedText(
-          self._script.getRealActiveDescendant(obj))
+        text = self._script.utilities.displayedText(
+            self._script.utilities.realActiveDescendant(obj))
         if text:
             result = [text]
         return result
@@ -999,7 +1000,7 @@ class Generator:
         array of strings for use by speech and braille that represents
         the role of the object actually being painted in the cell.
         """
-        rad = self._script.getRealActiveDescendant(obj)
+        rad = self._script.utilities.realActiveDescendant(obj)
         args['role'] = rad.getRole()
         return self._generateRoleName(rad, **args)
 

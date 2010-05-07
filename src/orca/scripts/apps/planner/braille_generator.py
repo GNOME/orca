@@ -66,7 +66,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if handleRibbonButton:
             result.append(_("Display more options"))
         elif handleTabButton:
-            result.append(self._script.getDisplayedText(obj.parent[1]))
+            result.append(self._script.utilities.displayedText(obj.parent[1]))
         else:
             result.extend(
                 braille_generator.BrailleGenerator._generateDisplayedText(

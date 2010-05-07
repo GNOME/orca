@@ -164,7 +164,7 @@ class Script(default.Script):
         #locusOfFocus. 
         rolesList = [pyatspi.ROLE_TERMINAL,
                      pyatspi.ROLE_FILLER]
-        if self.isDesiredFocusedItem(event.source, rolesList):
+        if self.utilities.hasMatchingHierarchy(event.source, rolesList):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
             message = event.any_data

@@ -48,11 +48,11 @@ class WhereAmI:
         list items and table cells.
         """
         # [[[TODO: WDW - we purposely omit ROLE_ENTRY here because
-        # there is a bug in getRealActiveDescendant: it doesn't dive
+        # there is a bug in realActiveDescendant: it doesn't dive
         # deep enough into the hierarchy (see comment #12 of bug
         # #542714).  So, we won't treat entries inside cells as cells
         # until we're more comfortable with mucking around with
-        # getRealActiveDescendant.]]]
+        # realActiveDescendant.]]]
         #
         role = obj.getRole()
         if role in [pyatspi.ROLE_TEXT,
@@ -62,11 +62,12 @@ class WhereAmI:
                     pyatspi.ROLE_SECTION,
                     pyatspi.ROLE_HEADING,
                     pyatspi.ROLE_DOCUMENT_FRAME]:
-            ancestor = self._script.getAncestor(obj,
-                                                [pyatspi.ROLE_TABLE_CELL,
-                                                 pyatspi.ROLE_LIST_ITEM],
-                                                [pyatspi.ROLE_FRAME])
-            if ancestor and not self._script.isLayoutOnly(ancestor.parent):
+            ancestor = self._script.utilities.ancestorWithRole(
+                obj,
+                [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_LIST_ITEM],
+                [pyatspi.ROLE_FRAME])
+            if ancestor \
+               and not self._script.utilities.isLayoutOnly(ancestor.parent):
                 obj = ancestor
         return obj
 

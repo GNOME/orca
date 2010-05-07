@@ -952,9 +952,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         defScript = default.Script(None)
 
         [attrList, attrDict] = \
-           defScript.textAttrsToDictionary(setAttributes)
+           defScript.utilities.stringToKeysAndDict(setAttributes)
         [allAttrList, allAttrDict] = \
-           defScript.textAttrsToDictionary(settings.allTextAttributes)
+           defScript.utilities.stringToKeysAndDict(settings.allTextAttributes)
 
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
@@ -992,9 +992,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         defScript = default.Script(None)
         [attrList, attrDict] = \
-            defScript.textAttrsToDictionary(setAttributes)
+            defScript.utilities.stringToKeysAndDict(setAttributes)
         [allAttrList, allAttrDict] = \
-            defScript.textAttrsToDictionary(settings.allTextAttributes)
+            defScript.utilities.stringToKeysAndDict(settings.allTextAttributes)
 
         for i in range(0, len(attrList)):
             for path in range(0, len(allAttrList)):
@@ -1146,8 +1146,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # the known text attributes.
         #
         defScript = default.Script(None)
-        [allAttrList, allAttrDict] = \
-                defScript.textAttrsToDictionary(settings.allTextAttributes)
+        [allAttrList, allAttrDict] = defScript.utilities.stringToKeysAndDict(
+            settings.allTextAttributes)
         for i in range(0, len(allAttrList)):
             thisIter = model.append()
             localizedKey = \

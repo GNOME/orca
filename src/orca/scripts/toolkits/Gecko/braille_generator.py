@@ -61,9 +61,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         imageLink = None
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_IMAGE:
-            imageLink = self._script.getAncestor(obj,
-                                                 [pyatspi.ROLE_LINK],
-                                                 [pyatspi.ROLE_DOCUMENT_FRAME])
+            imageLink = self._script.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
         return imageLink
 
     def _generateRoleName(self, obj, **args):
@@ -116,7 +115,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result.extend(braille_generator.BrailleGenerator._generateName(
                               self, obj, **args))
         if not result and role == pyatspi.ROLE_LIST_ITEM:
-            result.append(self._script.expandEOCs(obj))
+            result.append(self._script.utilities.expandEOCs(obj))
 
         link = None
         if role == pyatspi.ROLE_LINK:
@@ -200,7 +199,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not len(result):
             parent = obj.parent
             if parent and parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
-                label = self._script.getDisplayedLabel(parent)
+                label = self._script.utilities.displayedLabel(parent)
                 if not label or not len(label):
                     label = parent.name
                 result.append(label)
@@ -210,7 +209,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateExpandedEOCs(self, obj, **args):
         """Returns the expanded embedded object characters for an object."""
         result = []
-        text = self._script.expandEOCs(obj)
+        text = self._script.utilities.expandEOCs(obj)
         if text:
             result.append(text)
         return result
@@ -246,9 +245,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         # present combo boxes outside of Gecko.
         #
         if obj.getRole() == pyatspi.ROLE_MENU_ITEM:
-            comboBox = self._script.getAncestor(obj,
-                                                [pyatspi.ROLE_COMBO_BOX],
-                                                [pyatspi.ROLE_FRAME])
+            comboBox = self._script.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_FRAME])
             if comboBox \
                and not comboBox.getState().contains(pyatspi.STATE_EXPANDED):
                 obj = comboBox

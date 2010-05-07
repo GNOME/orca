@@ -127,9 +127,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if orca_state.lastInputEvent \
-               and isinstance(orca_state.lastInputEvent,
-                              input_event.KeyboardEvent):
+        if orca_state.lastInputEvent and orca_state.lastNonModifierKeyEvent \
+           and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
             event_string = orca_state.lastNonModifierKeyEvent.event_string
         else:
             event_string = None
@@ -279,7 +278,7 @@ class Script(default.Script):
                 speech.speak(text)
 
         if settings.enableEchoByWord \
-           and self.isWordDelimiter(text.decode("UTF-8")[-1:]):
+           and self.utilities.isWordDelimiter(text.decode("UTF-8")[-1:]):
             if matchFound:
                 self.echoPreviousWord(event.source)
 

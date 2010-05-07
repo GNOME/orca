@@ -47,9 +47,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateAncestors(self, obj, **args):
         """The Swing toolkit has labelled panels that do not implement the
-        AccessibleText interface, but getDisplayedText returns a
-        meaningful string that needs to be used if getDisplayedLabel
-        returns None.
+        AccessibleText interface, but displayedText returns a meaningful
+        string that needs to be used if displayedLabel returns None.
         """
         args['requireText'] = False
         result = speech_generator.SpeechGenerator._generateAncestors(
@@ -108,7 +107,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         listObj = None
         if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX:
-            allLists = self._script.findByRole(obj, pyatspi.ROLE_LIST, False)
+            allLists = self._script.utilities.descendantsWithRole(
+                obj, pyatspi.ROLE_LIST, False)
             if len(allLists) == 1:
                 listObj = allLists[0]
 
@@ -145,9 +145,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
            and obj.getRole() == pyatspi.ROLE_TEXT:
-            spinbox = self._script.getAncestor(obj,
-                                               [pyatspi.ROLE_SPIN_BUTTON],
-                                               None)
+            spinbox = self._script.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_SPIN_BUTTON], None)
             if spinbox:
                 obj = spinbox
         result.extend(speech_generator.SpeechGenerator.\

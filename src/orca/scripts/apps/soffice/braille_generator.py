@@ -58,7 +58,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         except:
             pass
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             rowIndex = table.getRowAtIndex(index)
             if rowIndex >= 0 \
                and table in self._script.dynamicRowHeaders:
@@ -70,11 +70,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                     headerText = None
                 if header.childCount > 0:
                     for child in header:
-                        text = self._script.getText(child, 0, -1)
+                        text = self._script.utilities.substring(child, 0, -1)
                         if text:
                             result.append(text)
                 elif headerText:
-                    text = self._script.getText(header, 0, -1)
+                    text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
         return result
@@ -91,7 +91,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         except:
             pass
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             columnIndex = table.getColumnAtIndex(index)
             if columnIndex >= 0 \
                and table in self._script.dynamicColumnHeaders:
@@ -103,11 +103,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                     headerText = None
                 if header.childCount > 0:
                     for child in header:
-                        text = self._script.getText(child, 0, -1)
+                        text = self._script.utilities.substring(child, 0, -1)
                         if text:
                             result.append(text)
                 elif headerText:
-                    text = self._script.getText(header, 0, -1)
+                    text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
         return result
@@ -117,15 +117,14 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.inputLineForCell == None:
             self._script.inputLineForCell = \
                 self._script.locateInputLine(obj)
-        # If the spread sheet table cell has something in it, then we
-        # want to append the name of the cell (which will be its
-        # location).  Note that if the cell was empty, then
-        # self._script.getDisplayedText will have already done this
-        # for us.
+        # If the spread sheet table cell has something in it, then we want
+        # to append the name of the cell (which will be its location). Note
+        # that if the cell was empty, self._script.utilities.displayedText
+        # will have already done this for us.
         #
         try:
             if obj.queryText():
-                objectText = self._script.getText(obj, 0, -1)
+                objectText = self._script.utilities.substring(obj, 0, -1)
                 if objectText and len(objectText) != 0:
                     result.append(braille.Component(
                         obj, objectText + " " + obj.name))
@@ -188,7 +187,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             parent = obj.parent
             parentTable = parent.queryTable()
             if settings.readTableCellRow and parentTable:
-                index = self._script.getCellIndex(obj)
+                index = self._script.utilities.cellIndex(obj)
                 row = parentTable.getRowAtIndex(index)
                 column = parentTable.getColumnAtIndex(index)
                 # This is an indication of whether we should present all the
@@ -241,7 +240,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                      pyatspi.ROLE_ROOT_PANE, \
                      pyatspi.ROLE_FRAME, \
                      pyatspi.ROLE_APPLICATION]
-        if self._script.isDesiredFocusedItem(obj, rolesList):
+        if self._script.utilities.hasMatchingHierarchy(obj, rolesList):
             for child in obj.parent:
                 if child.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
                     for tab in child:

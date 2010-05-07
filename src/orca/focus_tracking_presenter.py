@@ -1089,7 +1089,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         self._registerEventListener("window:deactivate")
         self._registerEventListener("object:children-changed:remove")
 
-        win = orca_state.activeScript.findActiveWindow()
+        win = orca_state.activeScript.utilities.activeWindow()
         if win:
             # Generate a fake window activation event so the application
             # can tell the user about itself.

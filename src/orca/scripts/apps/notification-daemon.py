@@ -56,9 +56,9 @@ class Script(default.Script):
         Arguments:
         - event: the Event.
         """
-        a = self.findByRole(event.source, pyatspi.ROLE_LABEL)
+        a = self.utilities.descendantsWithRole(event.source, pyatspi.ROLE_LABEL)
         print a
-        texts = [self.getDisplayedText(acc) for acc in a]
+        texts = [self.utilities.displayedText(acc) for acc in a]
         # Translators: This denotes a notification to the user of some sort.
         #
         text = _('Notification %s') % ' '.join(texts)

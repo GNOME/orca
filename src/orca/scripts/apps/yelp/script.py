@@ -29,13 +29,13 @@ import gtk
 import pyatspi
 
 import orca.orca as orca
-import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.speech as speech
 
 import orca.scripts.toolkits.Gecko as Gecko
 
 import script_settings
+from script_utilities import Utilities
 
 class Script(Gecko.Script):
 
@@ -56,10 +56,15 @@ class Script(Gecko.Script):
 
         # When the user presses Escape to leave the Find tool bar, we do not
         # seem to get any events for the document frame reclaiming focus. If
-        # we try to get the caret context, getDocumentFrame() returns None.
+        # we try to get the caret context, documentFrame() returns None.
         # Store a copy of the context so that we can return it.
         #
-        self._lastFindContext = [None, -1]
+        self.lastFindContext = [None, -1]
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
     def getAppPreferencesGUI(self):
         """Return a GtkVBox contain the application unique configuration
@@ -95,54 +100,6 @@ class Script(Gecko.Script):
         prefs.writelines("%s.grabFocusOnAncestor = %s\n" % (prefix, value))
         script_settings.grabFocusOnAncestor = value
 
-    def inFindToolbar(self, obj=None):
-        """Returns True if the given object is in the Find toolbar.
-
-        Arguments:
-        - obj: an accessible object
-        """
-
-        if not obj:
-            obj = orca_state.locusOfFocus
-
-        if obj and obj.getRole() == pyatspi.ROLE_TEXT \
-           and obj.parent.getRole() == pyatspi.ROLE_FILLER:
-            return True
-
-        return False
-
-    def getDocumentFrame(self):
-        """Returns the document frame that holds the content being shown."""
-
-        obj = orca_state.locusOfFocus
-        #print "getDocumentFrame", obj
-
-        if not obj:
-            return None
-
-        role = obj.getRole()
-        if role == pyatspi.ROLE_DOCUMENT_FRAME:
-            # We caught a lucky break.
-            #
-            return obj
-        elif role == pyatspi.ROLE_FRAME:
-            # The window was just activated. Do not look from the top down;
-            # it will cause the yelp hierarchy to become crazy, resulting in
-            # all future events having an empty name for the application.
-            # See bug 356041 for more information.
-            #
-            return None
-        else:
-            if self.inFindToolbar():
-                obj = self._lastFindContext[0]
-
-            # We might be in some content. In this case, look up.
-            #
-            return self.getAncestor(obj,
-                                    [pyatspi.ROLE_DOCUMENT_FRAME,
-                                     pyatspi.ROLE_EMBEDDED],
-                                    [pyatspi.ROLE_FRAME])
-
     def onCaretMoved(self, event):
         """Called whenever the caret moves.
 
@@ -150,8 +107,9 @@ class Script(Gecko.Script):
         - event: the Event
         """
 
-        if self.inFindToolbar() and not self.inFindToolbar(event.source):
-            self._lastFindContext = [event.source, event.detail1]
+        if self.utilities.utilities.inFindToolbar() \
+           and not self.utilities.utilities.inFindToolbar(event.source):
+            self.lastFindContext = [event.source, event.detail1]
 
         # Unlike the unpredictable wild, wild web, odds are good that a
         # caret-moved event from document content in Yelp is valid. But
@@ -160,7 +118,7 @@ class Script(Gecko.Script):
         # Rather than risk breaking access to web content, we'll just set
         # the locusOfFocus here before sending this event on.
         #
-        elif self.inDocumentContent(event.source):
+        elif self.utilities.inDocumentContent(event.source):
             obj = event.source
             characterOffset = event.detail1
 
@@ -168,7 +126,7 @@ class Script(Gecko.Script):
             # something more meaningful.
             #
             while obj and obj.getRole() == pyatspi.ROLE_LINK \
-                  and not self.queryNonEmptyText(obj):
+                  and not self.utilities.queryNonEmptyText(obj):
                 [obj, characterOffset] = \
                     self.findNextCaretInOrder(obj, characterOffset)
 
@@ -179,7 +137,7 @@ class Script(Gecko.Script):
             # handled by onStateChanged(). Therefore, we need to notify the
             # presentation managers if this event is not for an empty anchor.
             #
-            notify = self.isSameObject(event.source, obj)
+            notify = self.utilities.isSameObject(event.source, obj)
             orca.setLocusOfFocus(
                 event, obj, notifyPresentationManager=notify)
             self.setCaretPosition(obj, characterOffset)
@@ -208,9 +166,10 @@ class Script(Gecko.Script):
         # button. For now, let's stop that from happening.
         #
         if event.type.startswith("object:state-changed:showing") \
-           and not event.detail1 and self.inFindToolbar(event.source):
-            [obj, characterOffset] = self._lastFindContext
-            self._lastFindContext = [None, -1]
+           and not event.detail1 \
+           and self.utilities.utilities.inFindToolbar(event.source):
+            [obj, characterOffset] = self.lastFindContext
+            self.lastFindContext = [None, -1]
             self.setCaretPosition(obj, characterOffset)
 
         if event.type.startswith("object:state-changed:busy") \
@@ -228,7 +187,7 @@ class Script(Gecko.Script):
             # find something more meaningful and set the caret there.
             #
             while obj and obj.getRole() == pyatspi.ROLE_LINK \
-                  and not self.queryNonEmptyText(obj):
+                  and not self.utilities.queryNonEmptyText(obj):
                 [obj, characterOffset] = \
                     self.findNextCaretInOrder(obj, characterOffset)
 

@@ -50,9 +50,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         override = \
             role == "text frame" \
             or (role == pyatspi.ROLE_PARAGRAPH \
-                and self._script.getAncestor(obj,
-                                             [pyatspi.ROLE_DIALOG],
-                                             [pyatspi.ROLE_APPLICATION]))
+                and self._script.utilities.ancestorWithRole(
+                      obj, [pyatspi.ROLE_DIALOG], [pyatspi.ROLE_APPLICATION]))
         return override
 
     def _generateRoleName(self, obj, **args):
@@ -93,14 +92,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateLabel(self, obj, **args):
         """Returns the label for an object as an array of strings (and
         possibly voice and audio specifications).  The label is
-        determined by the getDisplayedLabel of the script, and an
-        empty array will be returned if no label can be found.
+        determined by the displayedLabel method of the script utility,
+        and an empty array will be returned if no label can be found.
         """
         result = []
         override = self.__overrideParagraph(obj, **args)
-        label = self._script.getDisplayedLabel(obj) or ""
+        label = self._script.utilities.displayedLabel(obj) or ""
         if not label and override:
-            label = self._script.getDisplayedLabel(obj.parent) or ""
+            label = self._script.utilities.displayedLabel(obj.parent) or ""
         result.append(label.strip())
         return result
 
@@ -143,7 +142,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # and the displayed text, with punctuation added. Try to spot
             # this and, if found, ignore the description.
             #
-            text = self._script.getDisplayedText(obj) or ""
+            text = self._script.utilities.displayedText(obj) or ""
             desc = obj.description.replace(text, "")
             for item in obj.name.split():
                 desc = desc.replace(item, "")
@@ -188,7 +187,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         except:
             pass
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             rowIndex = table.getRowAtIndex(index)
             if rowIndex >= 0 \
                and table in self._script.dynamicRowHeaders:
@@ -200,11 +199,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     headerText = None
                 if header.childCount > 0:
                     for child in header:
-                        text = self._script.getText(child, 0, -1)
+                        text = self._script.utilities.substring(child, 0, -1)
                         if text:
                             result.append(text)
                 elif headerText:
-                    text = self._script.getText(header, 0, -1)
+                    text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
         return result
@@ -220,7 +219,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             parentTable = parent.queryTable()
         except NotImplementedError:
             parentTable = None
-        index = self._script.getCellIndex(obj)
+        index = self._script.utilities.cellIndex(obj)
         if "lastRow" in self._script.pointOfReference and \
            self._script.pointOfReference["lastRow"] != \
            parentTable.getRowAtIndex(index):
@@ -233,11 +232,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     headerText = None
                 if header.childCount > 0:
                     for child in header:
-                        text = self._script.getText(child, 0, -1)
+                        text = self._script.utilities.substring(child, 0, -1)
                         if text:
                             result.append(text)
                 elif headerText:
-                    text = self._script.getText(header, 0, -1)
+                    text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
         return result
@@ -255,7 +254,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         except:
             pass
         else:
-            index = self._script.getCellIndex(obj)
+            index = self._script.utilities.cellIndex(obj)
             columnIndex = table.getColumnAtIndex(index)
             if columnIndex >= 0 \
                and table in self._script.dynamicColumnHeaders:
@@ -267,11 +266,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     headerText = None
                 if header.childCount > 0:
                     for child in header:
-                        text = self._script.getText(child, 0, -1)
+                        text = self._script.utilities.substring(child, 0, -1)
                         if text:
                             result.append(text)
                 elif headerText:
-                    text = self._script.getText(header, 0, -1)
+                    text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
         return result
@@ -287,7 +286,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             parentTable = parent.queryTable()
         except NotImplementedError:
             parentTable = None
-        index = self._script.getCellIndex(obj)
+        index = self._script.utilities.cellIndex(obj)
         if "lastColumn" in self._script.pointOfReference and \
            self._script.pointOfReference["lastColumn"] != \
            parentTable.getColumnAtIndex(index):
@@ -300,11 +299,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     headerText = None
                 if header.childCount > 0:
                     for child in header:
-                        text = self._script.getText(child, 0, -1)
+                        text = self._script.utilities.substring(child, 0, -1)
                         if text:
                             result.append(text)
                 elif headerText:
-                    text = self._script.getText(header, 0, -1)
+                    text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
         return result
@@ -320,7 +319,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result = []
         try:
             text = obj.queryText()
-            objectText = self._script.getText(obj, 0, -1).decode("UTF-8")
+            objectText = \
+                self._script.utilities.substring(obj, 0, -1).decode("UTF-8")
             extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
         except NotImplementedError:
             pass
@@ -350,7 +350,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 self._script.locateInputLine(obj)
         try:
             if obj.queryText():
-                objectText = self._script.getText(obj, 0, -1)
+                objectText = self._script.utilities.substring(obj, 0, -1)
                 if (not script_settings.speakSpreadsheetCoordinates \
                     or args.get('formatType', 'unfocused') == 'basicWhereAmI') \
                    and len(objectText) == 0:
@@ -429,7 +429,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if settings.readTableCellRow:
                 parent = obj.parent
                 parentTable = parent.queryTable()
-                index = self._script.getCellIndex(obj)
+                index = self._script.utilities.cellIndex(obj)
                 row = parentTable.getRowAtIndex(index)
                 column = parentTable.getColumnAtIndex(index)
                 # This is an indication of whether we should speak all the

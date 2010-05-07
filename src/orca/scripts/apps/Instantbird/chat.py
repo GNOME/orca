@@ -72,7 +72,8 @@ class Chat(chat.Chat):
         #
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             bubble = event.source[event.detail1]
-            paragraphs = self._script.findByRole(bubble, pyatspi.ROLE_PARAGRAPH)
+            paragraphs = self._script.utilities.descendantsWithRole(
+                bubble, pyatspi.ROLE_PARAGRAPH)
 
             # If the user opted the non-default, "simple" appearance, then this
             # might not be a bubble at all, but a paragraph.
@@ -81,19 +82,12 @@ class Chat(chat.Chat):
                 paragraphs.append(bubble)
 
             for paragraph in paragraphs:
-                try:
-                    msg = paragraph.queryText().getText(0, -1)
-                except:
-                    pass
-                else:
-                    if msg == self._script.EMBEDDED_OBJECT_CHARACTER:
-                        # This seems to occur for non-focused conversations.
-                        #
-                        try:
-                            msg = paragraph[0].queryText().getText(0, -1)
-                        except:
-                            msg = ""
-                    string = self._script.appendString(string, msg)
+                msg = self._script.utilities.substring(paragraph, 0, -1)
+                if msg == self._script.EMBEDDED_OBJECT_CHARACTER:
+                    # This seems to occur for non-focused conversations.
+                    #
+                    msg = self._script.utilities.substring(paragraph[0], 0, -1)
+                string = self._script.utilities.appendString(string, msg)
 
             return string
 
@@ -146,19 +140,19 @@ class Chat(chat.Chat):
         """
 
         name = ""
-        ancestor = self._script.getAncestor(obj,
-                                            [pyatspi.ROLE_SCROLL_PANE,
-                                             pyatspi.ROLE_FRAME],
-                                            [pyatspi.ROLE_APPLICATION])
+        ancestor = self._script.utilities.ancestorWithRole(
+            obj,
+            [pyatspi.ROLE_SCROLL_PANE, pyatspi.ROLE_FRAME],
+            [pyatspi.ROLE_APPLICATION])
 
         if ancestor and ancestor.getRole() == pyatspi.ROLE_SCROLL_PANE:
             # The scroll pane has a proper labelled by relationship set.
             #
-            name = self._script.getDisplayedLabel(ancestor)
+            name = self._script.utilities.displayedLabel(ancestor)
 
         if not name:
             try:
-                text = self._script.getDisplayedText(ancestor)
+                text = self._script.utilities.displayedText(ancestor)
                 if text.lower().strip() != self._script.name.lower().strip():
                     name = text
             except:
@@ -182,7 +176,8 @@ class Chat(chat.Chat):
         # we're in the buddy list instead.
         #
         if obj and obj.getState().contains(pyatspi.STATE_SHOWING) \
-           and self._script.isInActiveApp(obj) and not self.isInBuddyList(obj):
+           and self._script.utilities.isInActiveApp(obj) \
+           and not self.isInBuddyList(obj):
             return True
 
         return False
