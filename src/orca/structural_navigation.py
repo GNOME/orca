@@ -2681,9 +2681,8 @@ class StructuralNavigation:
 
         attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
         try:
-            import sets
-            if sets.Set(attrs['xml-roles']).intersection(\
-                sets.Set(settings.ariaLandmarks)):
+            if set(attrs['xml-roles']).intersection(\
+                set(settings.ariaLandmarks)):
                 return True
             else:
                 return False

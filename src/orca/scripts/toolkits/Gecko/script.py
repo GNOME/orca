@@ -2956,9 +2956,8 @@ class Script(default.Script):
 
         try:
             # ARIA landmark widgets
-            import sets
-            if sets.Set(attrs['xml-roles'].split()).intersection(\
-               sets.Set(settings.ariaLandmarks)):
+            if set(attrs['xml-roles'].split()).intersection(\
+               set(settings.ariaLandmarks)):
                 return True
             # ARIA live region
             elif 'container-live' in attrs:
