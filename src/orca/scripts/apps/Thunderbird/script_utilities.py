@@ -62,7 +62,7 @@ class Utilities(Gecko.Utilities):
         Overridden here because multiple open messages are not arranged
         in tabs like they are in Firefox."""
 
-        if self._script.inFindToolbar():
+        if self.inFindToolbar():
             return Gecko.Utilities.documentFrame(self)
 
         obj = orca_state.locusOfFocus
