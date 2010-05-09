@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2005-2008 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for DDU."""
+"""Custom script for Mozilla."""
 
 from script import Script
 

@@ -17,8 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-""" Custom script for The notify-osd
-"""
+""" Custom script for The notify-osd"""
 
 __id__        = ""
 __version__   = ""

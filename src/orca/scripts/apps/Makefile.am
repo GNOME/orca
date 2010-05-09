@@ -1,43 +1,43 @@
 SUBDIRS = \
-	soffice \
+	acroread \
+	Banshee \
+	ddu \
+	ekiga \
+	empathy \
 	evolution \
+	gajim \
 	gcalctool \
+	gdmlogin \
+	gedit \
+	gnome_segv2 \
+	gnome-keyring-ask \
+	gnome-mud \
+	gnome-panel \
+	gnome-screensaver-dialog \
+	gnome-search-tool \
+	gnome-system-monitor \
+	gnome-terminal \
+	gnome-window-properties \
+	gtk-window-decorator \
+	Instantbird \
+	liferea \
+	metacity \
+	notification-daemon \
+	notify-osd \
+	nautilus \
+	Mozilla \
 	packagemanager \
 	pidgin \
 	planner \
 	rhythmbox \
+	soffice \
 	Thunderbird \
-	gedit \
-	gnome-window-properties \
-	Banshee \
-	empathy \
-	Instantbird \
-	gajim \
-	ddu \
 	yelp
 
 orca_pathdir=$(pyexecdir)
 
 orca_python_PYTHON = \
-	__init__.py \
-	acroread.py \
-	ekiga.py \
-	gdmlogin.py \
-	gnome-keyring-ask.py \
-	gnome-mud.py \
-	gnome-panel.py \
-	gnome-screensaver-dialog.py \
-	gnome-search-tool.py \
-	gnome_segv2.py \
-	gnome-system-monitor.py \
-	gnome-terminal.py \
-	gtk-window-decorator.py \
-	liferea.py \
-	metacity.py \
-	Mozilla.py \
-	nautilus.py \
-	notification-daemon.py \
-	notify-osd.py
+	__init__.py
 
 orca_pythondir=$(pyexecdir)/orca/scripts/apps
 

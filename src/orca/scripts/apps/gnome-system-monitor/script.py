@@ -17,8 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-""" Custom script for Gnome System Monitor.
-"""
+""" Custom script for Gnome System Monitor."""
 
 __id__        = ""
 __version__   = ""

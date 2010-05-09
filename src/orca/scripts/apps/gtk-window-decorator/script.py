@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for metacity."""
+"""Custom script for gtk-window-decorator."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"

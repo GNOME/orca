@@ -17,7 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for DDU."""
+"""Custom script for gdmlogin."""
 
 from script import Script
 

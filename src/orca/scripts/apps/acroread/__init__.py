@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -17,20 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Custom script for Mozilla.  NOT WORKING WELL AT THE MOMENT."""
+"""Custom script for Acrobat Reader."""
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
-__license__   = "LGPL"
+from script import Script
 
-import orca.scripts.toolkits.Gecko as Gecko
-
-class Script(Gecko.Script):
-    def __init__(self, app):
-        Gecko.Script.__init__(self, app)
-
-        # By default, don't present if Mozilla is not the active application.
-        #
-        self.presentIfInactive = False

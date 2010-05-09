@@ -17,8 +17,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-""" Custom script for The notification daemon.
-"""
+""" Custom script for The notification daemon."""
 
 __id__        = ""
 __version__   = ""
