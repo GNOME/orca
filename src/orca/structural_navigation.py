@@ -655,8 +655,7 @@ class StructuralNavigation:
             string = _("Structural navigation keys off.")
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
-        speech.speak(string)
-        self._script.displayBrailleMessage(string)
+        self._script.presentMessage(string)
 
     #########################################################################
     #                                                                       #
@@ -692,7 +691,7 @@ class StructuralNavigation:
             # table navigation command but is not in a table, Orca speaks
             # this message.
             #
-            speech.speak(_("Not in a table."))
+            self._script.presentMessage(_("Not in a table."))
             return None
 
         currentRow, currentCol = currentCoordinates
@@ -712,7 +711,7 @@ class StructuralNavigation:
                     # to move to the left of the current cell and is
                     # already in the first column.
                     #
-                    speech.speak(_("Beginning of row."))
+                    self._script.presentMessage(_("Beginning of row."))
                     desiredCol = 0
                 elif desiredCol > iTable.nColumns - 1:
                     # Translators: this is for navigating document
@@ -721,7 +720,7 @@ class StructuralNavigation:
                     # to move to the right of the current cell and is
                     # already in the last column.
                     #
-                    speech.speak(_("End of row."))
+                    self._script.presentMessage(_("End of row."))
                     desiredCol = iTable.nColumns - 1
                 if desiredRow < 0:
                     # Translators: this is for navigating document
@@ -730,7 +729,7 @@ class StructuralNavigation:
                     # to move to the cell above the current cell and is
                     # already in the first row.
                     #
-                    speech.speak(_("Top of column."))
+                    self._script.presentMessage(_("Top of column."))
                     desiredRow = 0
                 elif desiredRow > iTable.nRows - 1:
                     # Translators: this is for navigating document
@@ -739,7 +738,7 @@ class StructuralNavigation:
                     # to move to the cell below the current cell and is
                     # already in the last row.
                     #
-                    speech.speak(_("Bottom of column."))
+                    self._script.presentMessage(_("Bottom of column."))
                     desiredRow = iTable.nRows - 1
             elif self._script.utilities.isSameObject(thisCell, cell) \
                  or settings.skipBlankCells and self._isBlankCell(cell):
@@ -881,7 +880,7 @@ class StructuralNavigation:
                 # the bottom of the page and continuing looking upwards.
                 # We need to inform the user when this is taking place.
                 #
-                speech.speak(_("Wrapping to bottom."))
+                self._script.presentMessage(_("Wrapping to bottom."))
             else:
                 # Translators: when the user is attempting to locate a
                 # particular object and the bottom of the web page has been
@@ -889,7 +888,7 @@ class StructuralNavigation:
                 # top of the page and continuing looking downwards. We need
                 # to inform the user when this is taking place.
                 #
-                speech.speak(_("Wrapping to top."))
+                self._script.presentMessage(_("Wrapping to top."))
 
         structuralNavigationObject.present(obj, arg)
 
@@ -1898,7 +1897,7 @@ class StructuralNavigation:
             # that one can jump to. This stirng is what orca will say
             # if there are no more anchors found.
             #
-            speech.speak(_("No more anchors."))
+            self._script.presentMessage(_("No more anchors."))
 
     ########################
     #                      #
@@ -1980,7 +1979,7 @@ class StructuralNavigation:
             # moving from blockquote to blockquote. This string is what
             # Orca will say if there are no more blockquotes found.
             #
-            speech.speak(_("No more blockquotes."))
+            self._script.presentMessage(_("No more blockquotes."))
 
     ########################
     #                      #
@@ -2059,7 +2058,7 @@ class StructuralNavigation:
             # string is what Orca will say if there are no more buttons
             # found.
             #
-            speech.speak(_("No more buttons."))
+            self._script.presentMessage(_("No more buttons."))
 
     ########################
     #                      #
@@ -2138,7 +2137,7 @@ class StructuralNavigation:
             # string is what Orca will say if there are no more check
             # boxes found.
             #
-            speech.speak(_("No more check boxes."))
+            self._script.presentMessage(_("No more check boxes."))
 
     ########################
     #                      #
@@ -2231,7 +2230,7 @@ class StructuralNavigation:
             # a list, a table, etc. This string is what Orca will say
             # if there are no more large objects found.
             #
-            speech.speak(_("No more large objects."))
+            self._script.presentMessage(_("No more large objects."))
 
     ########################
     #                      #
@@ -2310,7 +2309,7 @@ class StructuralNavigation:
             # string is what Orca will say if there are no more combo
             # boxes found.
             #
-            speech.speak(_("No more combo boxes."))
+            self._script.presentMessage(_("No more combo boxes."))
 
     ########################
     #                      #
@@ -2398,7 +2397,7 @@ class StructuralNavigation:
             # string is what Orca will say if there are no more entries
             # found.
             #
-            speech.speak(_("No more entries."))
+            self._script.presentMessage(_("No more entries."))
 
     ########################
     #                      #
@@ -2492,7 +2491,7 @@ class StructuralNavigation:
             # by moving from form field to form field. This string is
             # what Orca will say if there are no more form fields found.
             #
-            speech.speak(_("No more form fields."))
+            self._script.presentMessage(_("No more form fields."))
 
     ########################
     #                      #
@@ -2603,14 +2602,15 @@ class StructuralNavigation:
             # This string is what Orca will say if there are no more
             # headings found.
             #
-            speech.speak(_("No more headings."))
+            self._script.presentMessage(_("No more headings."))
         else:
             # Translators: this is for navigating HTML content by
             # moving from heading to heading at a particular level
             # (i.e. only <h1> or only <h2>, etc.) This string is
             # what Orca will say if there are no more headings found.
             #
-            speech.speak(_("No more headings at level %d.") % arg)
+            self._script.presentMessage(_("No more headings at level %d.") \
+                                            % arg)
 
     ########################
     #                      #
@@ -2709,7 +2709,7 @@ class StructuralNavigation:
             # of webpage like banners, main context, search etc.  This
             # is an indication that one was not found.
             #
-            speech.speak(_("No landmark found."))
+            self._script.presentMessage(_("No landmark found."))
 
     ########################
     #                      #
@@ -2814,7 +2814,7 @@ class StructuralNavigation:
             # from bulleted/numbered list to bulleted/numbered list. This
             # string is what Orca will say if there are no more lists found.
             #
-            speech.speak(_("No more lists."))
+            self._script.presentMessage(_("No more lists."))
 
     ########################
     #                      #
@@ -2899,7 +2899,7 @@ class StructuralNavigation:
             # numbered list item.  This string is what Orca will say
             # if there are no more list items found.
             #
-            speech.speak(_("No more list items."))
+            self._script.presentMessage(_("No more list items."))
 
     ########################
     #                      #
@@ -2973,7 +2973,7 @@ class StructuralNavigation:
             # manner, where a 'live region' is a location in a web page
             # that are updated without having to refresh the entire page.
             #
-            speech.speak(_("No more live regions."))
+            self._script.presentMessage(_("No more live regions."))
 
     ########################
     #                      #
@@ -3053,7 +3053,7 @@ class StructuralNavigation:
             # moving from paragraph to paragraph. This string is what
             # Orca will say if there are no more large objects found.
             #
-            speech.speak(_("No more paragraphs."))
+            self._script.presentMessage(_("No more paragraphs."))
 
     ########################
     #                      #
@@ -3132,7 +3132,7 @@ class StructuralNavigation:
             # This string is what Orca will say if there are no more
             # radio buttons found.
             #
-            speech.speak(_("No more radio buttons."))
+            self._script.presentMessage(_("No more radio buttons."))
 
     ########################
     #                      #
@@ -3202,7 +3202,7 @@ class StructuralNavigation:
             # is what Orca will say if there are no more separators
             # found.
             #
-            speech.speak(_("No more separators."))
+            self._script.presentMessage(_("No more separators."))
 
     ########################
     #                      #
@@ -3281,7 +3281,7 @@ class StructuralNavigation:
             # from table to table.  This string is what Orca will say if there
             # are no more tables found.
             #
-            speech.speak(_("No more tables."))
+            self._script.presentMessage(_("No more tables."))
 
     ########################
     #                      #
@@ -3469,7 +3469,7 @@ class StructuralNavigation:
             # is what Orca will say if there are no more unvisited links
             # found.
             #
-            speech.speak(_("No more unvisited links."))
+            self._script.presentMessage(_("No more unvisited links."))
 
     ########################
     #                      #
@@ -3547,4 +3547,4 @@ class StructuralNavigation:
             # what Orca will say if there are no more visited links
             # found.
             #
-            speech.speak(_("No more visited links."))
+            self._script.presentMessage(_("No more visited links."))

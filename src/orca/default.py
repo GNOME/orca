@@ -5427,9 +5427,6 @@ class Script(script.Script):
 
         return self._unicodeCurrencySymbols
 
-# Routines that were previously in util.py, but that have now been moved
-# here so that they can be customized in application scripts if so desired.
-#
     def speakMisspeltWord(self, allTokens, badWord):
         """Called by various spell checking routine to speak the misspelt word,
            plus the context that it is being used in.
@@ -5995,12 +5992,34 @@ class Script(script.Script):
             #
             orca_state.lastWordCheckedForSpelling = wordAndOffsets[0]
 
-    ########################################################################
-    #                                                                      #
-    # Braille methods                                                      #
-    # (scripts should not call methods in braille.py directly)             #
-    #                                                                      #
-    ########################################################################
+    ############################################################################
+    #                                                                          #
+    # Presentation methods                                                     #
+    # (scripts should not call methods in braille.py or speech.py directly)    #
+    #                                                                          #
+    ############################################################################
+
+    @staticmethod
+    def presentMessage(message):
+        """Convenience method to speak a message and 'flash' it in braille.
+
+        Arguments:
+        - message: This can be a string or a list.
+        """
+
+        if not message:
+            return
+
+        if settings.enableSpeech:
+            speech.speak(message)
+
+        if settings.enableBraille or settings.enableBrailleMonitor:
+            if isinstance(message[0], list):
+                message = message[0]
+            if isinstance(message, list):
+                message = " ".join(message)
+
+            braille.displayMessage(message, flashTime=settings.brailleFlashTime)
 
     # [[[TODO - JD: Soon I'll add a check to only do the braille
     # presentation if the user has braille or the braille monitor
