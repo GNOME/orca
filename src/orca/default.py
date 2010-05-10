@@ -2751,18 +2751,21 @@ class Script(script.Script):
             # speak the status bar info immediately and then go looking
             # for a default button.
             #
-            speech.speak(self.speechGenerator.generateStatusBar(frame))
+            msg = self.speechGenerator.generateStatusBar(frame)
+            if msg:
+                self.presentMessage(msg)
+
         window = dialog or frame
         if window:
-            speech.speak(self.speechGenerator.generateDefaultButton(window))
+            msg = self.speechGenerator.generateDefaultButton(window)
+            if msg:
+                self.presentMessage(msg)
 
     def presentTitle(self, inputEvent):
-        """Speaks and brailles the title of the window with focus.
-        """
+        """Speaks and brailles the title of the window with focus."""
 
-        obj = orca_state.locusOfFocus
-        self.updateBraille(obj)
-        speech.speak(self.speechGenerator.generateTitle(obj))
+        self.presentMessage(self.speechGenerator.generateTitle(
+                orca_state.locusOfFocus))
 
     def readCharAttributes(self, inputEvent=None):
         """Reads the attributes associated with the current text character.
