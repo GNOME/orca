@@ -2,6 +2,7 @@ SUBDIRS = \
 	acroread \
 	Banshee \
 	ddu \
+	Eclipse \
 	ekiga \
 	empathy \
 	evolution \
