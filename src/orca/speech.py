@@ -317,6 +317,20 @@ def stop():
     if _speechserver:
         _speechserver.stop()
 
+
+
+def updatePunctuationLevel(script=None, inputEvent=None):
+    """ Punctuation level changed, inform this speechServer. """
+
+    if _speechserver:
+        _speechserver.updatePunctuationLevel()
+    else:
+        logLine = "SPEECH OUTPUT: 'punctuation level' updated"
+        debug.println(debug.LEVEL_INFO, logLine)
+        log.info(logLine)
+
+    return True
+
 def increaseSpeechRate(script=None, inputEvent=None):
     if _speechserver:
         _speechserver.increaseSpeechRate()
