@@ -85,8 +85,8 @@ cleanup()
 {
     USERID=`id | cut -f2 -d= | cut -f1 -d\(`
     PIDS=`ps -eo pid,ruid,args | grep $USERID | \
-	egrep "orca[.]orca|OAFIID[:]GNOME_Speech|OAFIID[:]GNOME_Magnifier|festival [-][-]server"|\
-	grep -v grep | awk '{ print $1 }'`
+        egrep "orca[.]orca|OAFIID[:]GNOME_Speech|OAFIID[:]GNOME_Magnifier|festival [-][-]server"|\
+        grep -v grep | awk '{ print $1 }'`
     IFS='
     '
     PIDS=`echo $PIDS`
@@ -123,7 +123,7 @@ runOrca()
 #
 if [ "x$LOGNAME" != "xgdm" ] ; then
     ACCESSIBILITY_ENABLED=`gconftool-2 \
-	--get /desktop/gnome/interface/accessibility`
+        --get /desktop/gnome/interface/accessibility`
     if [ "x$ACCESSIBILITY_ENABLED" != "xtrue" ] ; then
         # Because we will be running Orca in text-setup mode, we want to
         # make sure it is run in a terminal window.  If we're already in
@@ -133,7 +133,7 @@ if [ "x$LOGNAME" != "xgdm" ] ; then
         tty -s && IN_TTY="true" || IN_TTY="false"
         if [ "x$IN_TTY" = "xfalse" ] ; then
             exec gnome-terminal -x $0 $ARGS
-	    exit
+            exit
         fi
     fi
 fi
@@ -147,7 +147,7 @@ else
     # Allow a --replace to kill other orca processes.
     #
     if [ `echo $ARGS | grep -c "\-\-replace"` -gt 0 ] ; then
-	cleanup
+        cleanup
     fi
 
     # If the user passed in a flag that results in orca only
@@ -161,31 +161,31 @@ else
     if [ "x$ARGS" = "x" ] ; then
         WONT_EXIT=1
     else
-	WONT_EXIT=`echo $ARGS | egrep -c "\-s|\-t|\-n|\-u|\-e|\-d"`
+        WONT_EXIT=`echo $ARGS | egrep -c "\-s|\-t|\-n|\-u|\-e|\-d"`
     fi
 
     # Do not run if another Orca is already running.
     #
     if [ "x$DBUS_SESSION_BUS_ADDRESS" != "x" ] && [ $WONT_EXIT -gt 0 ] ; then
-	IFS=:
-	DBUSSENDCMD=
-	for dir in $PATH:/usr/sfw/bin:/usr/local/bin; do
-	    test -x "$dir/dbus-send" && {
-		DBUSSENDCMD="$dir/dbus-send"
-		break
-	    }
-	done
-	if [ "x$DBUSSENDCMD" != "x" ] ; then
-	    $DBUSSENDCMD --reply-timeout=5000 --print-reply \
-		--dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping \
-		> /dev/null 2>&1
-	    if [ "$?" -eq 0 ] ; then
-		echo "Another Orca process is already running for this session."
-		echo "Run \"orca --replace\" if you want to replace the current"
-		echo "process with a new one."
-		exit
-	    fi
-	fi
+        IFS=:
+        DBUSSENDCMD=
+        for dir in $PATH:/usr/sfw/bin:/usr/local/bin; do
+            test -x "$dir/dbus-send" && {
+                DBUSSENDCMD="$dir/dbus-send"
+                break
+            }
+        done
+        if [ "x$DBUSSENDCMD" != "x" ] ; then
+            $DBUSSENDCMD --reply-timeout=5000 --print-reply \
+                --dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping \
+                > /dev/null 2>&1
+            if [ "$?" -eq 0 ] ; then
+                echo "Another Orca process is already running for this session."
+                echo "Run \"orca --replace\" if you want to replace the current"
+                echo "process with a new one."
+                exit
+            fi
+        fi
     fi
     runOrca
 fi
