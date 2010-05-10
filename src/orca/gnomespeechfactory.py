@@ -905,6 +905,14 @@ class SpeechServer(speechserver.SpeechServer):
 
         return newText
 
+    def updatePunctuationLevel(self):
+        """ Punctuation level changed, inform this speechServer. """
+
+        # We dont need to do anything, __addVerbalizedPunctuation
+        # already does this work for us.
+        #
+        pass
+
     def __speak(self, text=None, acss=None, interrupt=True):
         """Speaks all queued text immediately.  If text is not None,
         it is added to the queue before speaking.

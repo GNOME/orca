@@ -852,6 +852,15 @@ class Script(script.Script):
                 #
                 _("Toggles the speaking of indentation and justification."))
 
+        self.inputEventHandlers["cycleSpeakingPunctuationLevelHandler"] = \
+            input_event.InputEventHandler(
+                Script.cycleSpeakingPunctuationLevel,
+                # Translators: Orca allows users to cycle through
+                # punctuation levels.
+                # None, some, most, or all, punctuation will be spoken.
+                #
+                _("Cycles to the next speaking of punctuation level."))
+
         self.inputEventHandlers["listAppsHandler"] = \
             input_event.InputEventHandler(
                 Script.printAppsHandler,
@@ -2054,6 +2063,14 @@ class Script(script.Script):
                 settings.NO_MODIFIER_MASK,
                 self.inputEventHandlers[ \
                   "toggleSpeakingIndentationJustificationHandler"]))
+
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "",
+                settings.defaultModifierMask,
+                settings.NO_MODIFIER_MASK,
+                self.inputEventHandlers[ \
+                  "cycleSpeakingPunctuationLevelHandler"]))
 
         try:
             keyBindings = settings.overrideKeyBindings(self, keyBindings)
@@ -3418,6 +3435,47 @@ class Script(script.Script):
 
         speech.speak(line)
 
+        return True
+
+
+    def cycleSpeakingPunctuationLevel(self, inputEvent=None):
+        """ Cycle through the punctuation levels for speech. """
+
+        currentLevel = settings.verbalizePunctuationStyle 
+        if currentLevel == settings.PUNCTUATION_STYLE_NONE:
+            newLevel = settings.PUNCTUATION_STYLE_SOME
+
+            # Translators: This message will be presented
+            # when user cycles through the available punctuation levels.
+            #
+            line = _("Punctuation level set to some.")
+        elif currentLevel == settings.PUNCTUATION_STYLE_SOME:
+            newLevel = settings.PUNCTUATION_STYLE_MOST
+
+            # Translators: This message will be presented
+            # when user cycles through the available punctuation levels.
+            #
+            line = _("Punctuation level set to most.")
+        elif currentLevel == settings.PUNCTUATION_STYLE_MOST:
+            newLevel = settings.PUNCTUATION_STYLE_ALL
+
+            # Translators: This message will be presented
+            # when user cycles through the available punctuation levels.
+            #
+            line = _("Punctuation level set to all.")
+        else: 
+            # the all case, so cycle to none.
+            newLevel = settings.PUNCTUATION_STYLE_NONE
+
+            # Translators: This message will be presented
+            # when user cycles through the available punctuation levels.
+            #
+            line = _("Punctuation level set to none.")
+
+        settings.verbalizePunctuationStyle = newLevel
+        speech.speak(line)
+        speech.updatePunctuationLevel()
+        self.displayBrailleMessage(line, flashTime=settings.brailleFlashTime)
         return True
 
     def toggleTableCellReadMode(self, inputEvent=None):

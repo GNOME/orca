@@ -188,7 +188,12 @@ class SpeechServer(speechserver.SpeechServer):
         self._current_voice_properties = {}
         mode = self._PUNCTUATION_MODE_MAP[settings.verbalizePunctuationStyle]
         client.set_punctuation(mode)
-        
+
+    def updatePunctuationLevel(self):
+        """ Punctuation level changed, inform this speechServer. """
+        mode = self._PUNCTUATION_MODE_MAP[settings.verbalizePunctuationStyle]
+        self._client.set_punctuation(mode)
+
     def _send_command(self, command, *args, **kwargs):
         if hasattr(speechd, 'SSIPCommunicationError'):
             try:
