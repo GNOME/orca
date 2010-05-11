@@ -4535,7 +4535,7 @@ msgstr "_Mindent"
 #.
 #: ../src/orca/orca-setup.ui.h:33 ../src/orca/rolenames.py:1127
 msgid "Application"
-msgstr "A_lkalmazás"
+msgstr "Alkalmazás"
 
 #: ../src/orca/orca-setup.ui.h:34
 msgid "Border color:"
