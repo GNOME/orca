@@ -906,8 +906,7 @@ class Script(default.Script):
             # row of a spreadsheet or table counts as column headers.
             #
             line = _("Dynamic column header set for row %d") % (row+1)
-            speech.speak(line)
-            self.displayBrailleMessage(line)
+            self.presentMessage(line)
 
         return True
 
@@ -930,8 +929,7 @@ class Script(default.Script):
                 #
                 line = _("Dynamic column header cleared.")
                 speech.stop()
-                speech.speak(line)
-                self.displayBrailleMessage(line)
+                self.presentMessage(line)
             except:
                 pass
 
@@ -983,8 +981,7 @@ class Script(default.Script):
             #
             line = _("Dynamic row header set for column %s") \
                    % self.columnConvert(column+1)
-            speech.speak(line)
-            self.displayBrailleMessage(line)
+            self.presentMessage(line)
 
         return True
 
@@ -1007,8 +1004,7 @@ class Script(default.Script):
                 #
                 line = _("Dynamic row header cleared.")
                 speech.stop()
-                speech.speak(line)
-                self.displayBrailleMessage(line)
+                self.presentMessage(line)
             except:
                 pass
 

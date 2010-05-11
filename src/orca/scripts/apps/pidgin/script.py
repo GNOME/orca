@@ -455,7 +455,7 @@ class Script(default.Script):
         if not script_settings.prefixChatMessage:
             line = _("Do not speak chat room name.")
 
-        speech.speak(line)
+        self.presentMessage(line)
 
         return True
 
@@ -474,7 +474,7 @@ class Script(default.Script):
         if not script_settings.announceBuddyTyping:
             line = _("Do not announce when your buddies are typing.")
 
-        speech.speak(line)
+        self.presentMessage(line)
 
         return True
 
@@ -493,7 +493,7 @@ class Script(default.Script):
         if not script_settings.chatRoomHistories:
             line = _("Do not provide chat room specific message histories.")
 
-        speech.speak(line)
+        self.presentMessage(line)
 
         return True
 

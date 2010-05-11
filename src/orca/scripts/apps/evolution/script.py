@@ -238,7 +238,7 @@ class Script(default.Script):
             #
             line = _("do not present new mail if this script is not active.")
 
-        speech.speak(line)
+        self.presentMessage(line)
 
         return True
 

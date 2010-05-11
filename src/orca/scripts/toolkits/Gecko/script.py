@@ -1904,8 +1904,7 @@ class Script(default.Script):
                     message = _("Finished loading.")
                     finishedLoading = True
 
-                self.displayBrailleMessage(message)
-                speech.speak(message)
+                self.presentMessage(message)
 
                 if finishedLoading:
                     # Store the document frame otherwise the first time it
@@ -5637,8 +5636,7 @@ class Script(default.Script):
             # which just appeared as a result of the user hovering the
             # mouse. If this command fails, Orca will present this message.
             #
-            message = _("Mouse over object not found.")
-            speech.speak(message)
+            self.presentMessage(_("Mouse over object not found."))
             return
 
         if not self.inMouseOverObject:
@@ -6195,7 +6193,7 @@ class Script(default.Script):
             # the bottom of the page and continuing looking upwards.
             # We need to inform the user when this is taking place.
             #
-            speech.speak(_("Wrapping to bottom."))
+            self.presentMessage(_("Wrapping to bottom."))
             [prevObj, prevOffset] = self.getBottomOfFile()
             line = self.getLineContentsAtOffset(prevObj, prevOffset)
             useful = self.getMeaningfulObjectsFromLine(line)
@@ -6263,7 +6261,7 @@ class Script(default.Script):
             # top of the page and continuing looking downwards. We need
             # to inform the user when this is taking place.
             #
-            speech.speak(_("Wrapping to top."))
+            self.presentMessage(_("Wrapping to top."))
             [nextObj, nextOffset] = self.getTopOfFile()
             line = self.getLineContentsAtOffset(nextObj, nextOffset)
             useful = self.getMeaningfulObjectsFromLine(line)
@@ -6289,7 +6287,7 @@ class Script(default.Script):
             # Translators: this announces to the user that live region
             # support has been turned off.
             #
-            speech.speak(_("Live region support is off"))
+            self.presentMessage(_("Live region support is off"))
 
     def monitorLiveRegions(self, inputEvent):
         if not settings.inferLiveRegions:
@@ -6297,14 +6295,14 @@ class Script(default.Script):
             # Translators: this announces to the user that live region
             # are being monitored.
             #
-            speech.speak(_("Live regions monitoring on"))
+            self.presentMessage(_("Live regions monitoring on"))
         else:
             settings.inferLiveRegions = False
             # Translators: this announces to the user that live region
             # are not being monitored.
             #
             self.liveMngr.flushMessages()
-            speech.speak(_("Live regions monitoring off"))
+            self.presentMessage(_("Live regions monitoring off"))
 
     def setLivePolitenessOff(self, inputEvent):
         if settings.inferLiveRegions:
@@ -6313,7 +6311,7 @@ class Script(default.Script):
             # Translators: this announces to the user that live region
             # support has been turned off.
             #
-            speech.speak(_("Live region support is off"))
+            self.presentMessage(_("Live region support is off"))
 
     def reviewLiveAnnouncement(self, inputEvent):
         if settings.inferLiveRegions:
@@ -6323,7 +6321,7 @@ class Script(default.Script):
             # Translators: this announces to the user that live region
             # support has been turned off.
             #
-            speech.speak(_("Live region support is off"))
+            self.presentMessage(_("Live region support is off"))
 
     def toggleCaretNavigation(self, inputEvent):
         """Toggles between Firefox native and Orca caret navigation."""
@@ -6354,8 +6352,7 @@ class Script(default.Script):
             string = _("Orca is controlling the caret.")
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
-        speech.speak(string)
-        self.displayBrailleMessage(string)
+        self.presentMessage(string)
 
     def speakWordUnderMouse(self, acc):
         """Determine if the speak-word-under-mouse capability applies to

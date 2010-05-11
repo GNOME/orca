@@ -561,7 +561,7 @@ class Chat:
         settings.chatSpeakRoomName = not settings.chatSpeakRoomName
         if not settings.chatSpeakRoomName:
             line = _("Do not speak chat room name.")
-        speech.speak(line)
+        self._script.presentMessage(line)
 
         return True
 
@@ -577,7 +577,7 @@ class Chat:
         settings.chatAnnounceBuddyTyping = not settings.chatAnnounceBuddyTyping
         if not settings.chatAnnounceBuddyTyping:
             line = _("Do not announce when your buddies are typing.")
-        speech.speak(line)
+        self._script.presentMessage(line)
 
         return True
 
@@ -593,7 +593,7 @@ class Chat:
         settings.chatRoomHistories = not settings.chatRoomHistories
         if not settings.chatRoomHistories:
             line = _("Do not provide chat room specific message histories.")
-        speech.speak(line)
+        self._script.presentMessage(line)
 
         return True
 

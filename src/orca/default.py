@@ -2415,7 +2415,7 @@ class Script(script.Script):
         # along to the current application, bypassing Orca's
         # interception of it.
         #
-        speech.speak(_("Bypass mode enabled."))
+        self.presentMessage(_("Bypass mode enabled."))
         orca_state.bypassNextCommand = True
         return True
 
@@ -2731,7 +2731,7 @@ class Script(script.Script):
                     # for some reason Orca cannot identify the current
                     # location, it will speak this message.
                     #
-                    speech.speak(_("Could not find current location."))
+                    self.presentMessage(_("Could not find current location."))
 
         return True
 
@@ -2885,7 +2885,7 @@ class Script(script.Script):
                     # for some reason Orca cannot identify the current
                     # location, it will speak this message.
                     #
-                    speech.speak(_("Could not find current location."))
+                    self.presentMessage(_("Could not find current location."))
         return True
 
     def spellCurrentItem(self, itemString):
@@ -3381,7 +3381,8 @@ class Script(script.Script):
         """Toggles between flat review mode and focus tracking mode."""
 
         if self.flatReviewContext:
-            if inputEvent:
+            if inputEvent and (settings.speechVerbosityLevel != \
+                                   settings.VERBOSITY_LEVEL_BRIEF):
                 # Translators: the 'flat review' feature of Orca
                 # allows the blind user to explore the text in a
                 # window in a 2D fashion.  That is, Orca treats all
@@ -3392,14 +3393,13 @@ class Script(script.Script):
                 # {line,word,character}.  This message lets the user know
                 # they have left the flat review feature.
                 #
-                if settings.speechVerbosityLevel \
-                   != settings.VERBOSITY_LEVEL_BRIEF:
-                    speech.speak(_("Leaving flat review."))
+                self.presentMessage(_("Leaving flat review."))
             self.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
             self.updateBraille(orca_state.locusOfFocus)
         else:
-            if inputEvent:
+            if inputEvent and (settings.speechVerbosityLevel != \
+                                   settings.VERBOSITY_LEVEL_BRIEF):
                 # Translators: the 'flat review' feature of Orca
                 # allows the blind user to explore the text in a
                 # window in a 2D fashion.  That is, Orca treats all
@@ -3410,9 +3410,7 @@ class Script(script.Script):
                 # {line,word,character}.  This message lets the user know
                 # they have entered the flat review feature.
                 #
-                if settings.speechVerbosityLevel \
-                   != settings.VERBOSITY_LEVEL_BRIEF:
-                    speech.speak(_("Entering flat review."))
+                self.presentMessage(_("Entering flat review."))
             context = self.getFlatReviewContext()
             [wordString, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
@@ -3436,7 +3434,7 @@ class Script(script.Script):
             #
             line = _("Speaking of indentation and justification disabled.")
 
-        speech.speak(line)
+        self.presentMessage(line)
 
         return True
 
@@ -3476,9 +3474,8 @@ class Script(script.Script):
             line = _("Punctuation level set to none.")
 
         settings.verbalizePunctuationStyle = newLevel
-        speech.speak(line)
+        self.presentMessage(line)
         speech.updatePunctuationLevel()
-        self.displayBrailleMessage(line, flashTime=settings.brailleFlashTime)
         return True
 
     def toggleTableCellReadMode(self, inputEvent=None):
@@ -3499,7 +3496,7 @@ class Script(script.Script):
             #
             line = _("Speak cell")
 
-        speech.speak(line)
+        self.presentMessage(line)
 
         return True
 

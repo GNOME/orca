@@ -963,12 +963,12 @@ def toggleSilenceSpeech(script=None, inputEvent=None):
         # Translators: this is a spoken prompt letting the user know
         # that speech synthesis has been turned back on.
         #
-        speech.speak(_("Speech enabled."))
+        orca_state.activeScript.presentMessage(_("Speech enabled."))
     else:
         # Translators: this is a spoken prompt letting the user know
         # that speech synthesis has been temporarily turned off.
         #
-        speech.speak(_("Speech disabled."))
+        orca_state.activeScript.presentMessage(_("Speech disabled."))
         settings.silenceSpeech = True
     return True
 
