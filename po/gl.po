@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-12 22:34+0200\n"
-"PO-Revision-Date: 2010-05-12 22:42+0200\n"
+"POT-Creation-Date: 2010-05-13 00:50+0200\n"
+"PO-Revision-Date: 2010-05-13 00:50+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <gnome@g11n.net>\n"
 "MIME-Version: 1.0\n"
@@ -2186,15 +2186,16 @@ msgstr "Alterna o silenciamento da voz."
 #.
 #: ../src/orca/default.py:853
 msgid "Toggles the speaking of indentation and justification."
-msgstr ""
+msgstr "Alterna a redacción da indentación e xustificación."
 
 #. Translators: Orca allows users to cycle through
 #. punctuation levels.
 #. None, some, most, or all, punctuation will be spoken.
 #.
 #: ../src/orca/default.py:862
+#, fuzzy
 msgid "Cycles to the next speaking of punctuation level."
-msgstr ""
+msgstr "Cambia ao seguinte nivel de redacción da indentación."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2498,43 +2499,45 @@ msgstr "Entrando no modo de revisión plana."
 #. indentation and justification will be spoken.
 #.
 #: ../src/orca/default.py:2516
+#, fuzzy
 msgid "Speaking of indentation and justification enabled."
-msgstr ""
+msgstr "Redacción da indentación e xustificación activada."
 
 #. Translators: A message indicating that
 #. indentation and justification will not be spoken.
 #.
 #: ../src/orca/default.py:2521
+#, fuzzy
 msgid "Speaking of indentation and justification disabled."
-msgstr ""
+msgstr "Redacción da indentación e xustificación desactivada."
 
 #. Translators: This message will be presented
 #. when user cycles through the available punctuation levels.
 #.
 #: ../src/orca/default.py:2538
 msgid "Punctuation level set to some."
-msgstr ""
+msgstr "Nivel de puntuación estabelecido a algúns."
 
 #. Translators: This message will be presented
 #. when user cycles through the available punctuation levels.
 #.
 #: ../src/orca/default.py:2545
 msgid "Punctuation level set to most."
-msgstr ""
+msgstr "Nivel de puntuación estabelecido á maioría."
 
 #. Translators: This message will be presented
 #. when user cycles through the available punctuation levels.
 #.
 #: ../src/orca/default.py:2552
 msgid "Punctuation level set to all."
-msgstr ""
+msgstr "Nivel de puntuación estabelecido a todos."
 
 #. Translators: This message will be presented
 #. when user cycles through the available punctuation levels.
 #.
 #: ../src/orca/default.py:2560
 msgid "Punctuation level set to none."
-msgstr ""
+msgstr "Nivel de puntuación estabelecido a ningún."
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
