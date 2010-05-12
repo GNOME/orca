@@ -388,6 +388,35 @@ class KeyBindings:
 
         return consumed
 
+    def load(self, keymap, handlers):
+        """ Takes the keymappings and tries to find a matching named
+           function in handlers.
+           keymap is a list of lists, each list contains 5 elements
+           If addUnbound is set to true, then at the end of loading all the
+           keybindings, any remaining functions will be unbound.
+        """
+
+
+        for i in keymap:
+            keysymstring = i[0]
+            modifierMask = i[1]
+            modifiers = i[2]
+            handler = i[3]
+            try:
+                clickCount = i[4]
+            except:
+                clickCount = 1
+
+            if handlers.has_key(handler):
+                # add the keybinding
+                self.add(KeyBinding( \
+                  keysymstring, modifierMask, modifiers, \
+                    handlers[handler], clickCount))
+            else:
+                debug.println(debug.LEVEL_WARNING, \
+                  "WARNING: could not find %s handler to associate " \
+                  "with keybinding." % handler)
+
     def validate(self):
         """Tries to find keybindings where the keysym is not set for the
         keyboard layout or where multiple keybindings map to the same

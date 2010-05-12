@@ -17,10 +17,12 @@ orca_python_PYTHON = \
 	brlmon.py \
 	chat.py \
 	chnames.py \
+	common_keyboardmap.py \
 	dbusserver.py \
 	debug.py \
 	dectalk.py \
 	default.py \
+	desktop_keyboardmap.py \
 	espeechfactory.py \
 	eventsynthesizer.py \
 	find.py \
@@ -34,6 +36,7 @@ orca_python_PYTHON = \
 	input_event.py \
 	keybindings.py \
 	keynames.py \
+	laptop_keyboardmap.py \
 	liveregions.py \
 	mag.py \
 	mouse_review.py \
