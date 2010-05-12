@@ -30,7 +30,6 @@ import pyatspi
 import orca.debug as debug
 import orca.default as default
 import orca.input_event as input_event
-import orca.keybindings as keybindings
 import orca.rolenames as rolenames
 import orca.braille as braille
 import orca.orca as orca
@@ -181,12 +180,11 @@ class Script(default.Script):
 
         keyBindings = default.Script.getKeyBindings(self)
 
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "n",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["toggleReadMailHandler"]))
+        keymap = (
+          ("n", settings.defaultModifierMask, settings.ORCA_MODIFIER_MASK,
+          "toggleReadMailHandler")
+        )
+        keyBindings.load(keymap, self.inputEventHandlers)
         return keyBindings
 
     def getListeners(self):
