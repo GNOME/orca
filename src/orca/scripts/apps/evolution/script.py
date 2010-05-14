@@ -182,7 +182,7 @@ class Script(default.Script):
 
         keymap = (
           ("n", settings.defaultModifierMask, settings.ORCA_MODIFIER_MASK,
-          "toggleReadMailHandler")
+          "toggleReadMailHandler"),
         )
         keyBindings.load(keymap, self.inputEventHandlers)
         return keyBindings

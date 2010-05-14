@@ -1,6 +1,7 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs, Mesar Hameed.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -37,7 +38,7 @@ http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2010 Joanmarie Diggs, Mesar Hameed."
 __license__   = "LGPL"
 
 import atk
@@ -65,6 +66,7 @@ import orca.settings as settings
 import orca.speech as speech
 import orca.speechserver as speechserver
 
+import keymaps
 import script_settings
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
@@ -625,84 +627,7 @@ class Script(default.Script):
         """
 
         keyBindings = keybindings.KeyBindings()
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextCharacterHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousCharacterHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                settings.defaultModifierMask,
-                settings.CTRL_MODIFIER_MASK,
-                self.inputEventHandlers["goNextWordHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                settings.defaultModifierMask,
-                settings.CTRL_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousWordHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Up",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousLineHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Down",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goNextLineHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Down",
-                settings.defaultModifierMask,
-                settings.ALT_MODIFIER_MASK,
-                self.inputEventHandlers["expandComboBoxHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Home",
-                settings.defaultModifierMask,
-                settings.CTRL_MODIFIER_MASK,
-                self.inputEventHandlers["goTopOfFileHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "End",
-                settings.defaultModifierMask,
-                settings.CTRL_MODIFIER_MASK,
-                self.inputEventHandlers["goBottomOfFileHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Home",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goBeginningOfLineHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "End",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["goEndOfLineHandler"]))
-
+        keyBindings.load(keymaps.arrowKeymap, self.inputEventHandlers)
         return keyBindings
 
     def getKeyBindings(self):
@@ -713,80 +638,14 @@ class Script(default.Script):
 
         keyBindings = default.Script.getKeyBindings(self)
 
-        # keybindings to provide chat room message history.
-        messageKeys = [ "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9" ]
-        for messageKey in messageKeys:
-            keyBindings.add(
-                keybindings.KeyBinding(
-                    messageKey,
-                    settings.defaultModifierMask,
-                    settings.ORCA_MODIFIER_MASK,
-                    self.inputEventHandlers["reviewLiveAnnouncement"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "backslash",
-                settings.defaultModifierMask,
-                settings.SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["setLivePolitenessOff"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "backslash",
-                settings.defaultModifierMask,
-                settings.ORCA_SHIFT_MODIFIER_MASK,
-                self.inputEventHandlers["monitorLiveRegions"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "backslash",
-                settings.defaultModifierMask,
-                settings.NO_MODIFIER_MASK,
-                self.inputEventHandlers["advanceLivePoliteness"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "F12",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["toggleCaretNavigationHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "SunF37",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["toggleCaretNavigationHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Right",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["goNextObjectInOrderHandler"]))
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "Left",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["goPreviousObjectInOrderHandler"]))
+        # load common keymap
+        keyBindings.load(keymaps.commonKeymap, self.inputEventHandlers)
 
         if orca.settings.keyboardLayout == \
-                orca.settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
-            keyBindings.add(
-                keybindings.KeyBinding(
-                    "KP_Multiply",
-                    settings.defaultModifierMask,
-                    settings.ORCA_MODIFIER_MASK,
-                    self.inputEventHandlers["moveToMouseOverHandler"]))
+          orca.settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+            keyBindings.load(keymaps.desktopKeymap, self.inputEventHandlers)
         else:
-            keyBindings.add(
-                keybindings.KeyBinding(
-                    "0",
-                    settings.defaultModifierMask,
-                    settings.ORCA_MODIFIER_MASK,
-                    self.inputEventHandlers["moveToMouseOverHandler"]))
+            keyBindings.load(keymaps.laptopKeymap, self.inputEventHandlers)
 
         if script_settings.controlCaretNavigation:
             for keyBinding in self.__getArrowBindings().keyBindings:
