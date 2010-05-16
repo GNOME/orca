@@ -469,6 +469,21 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.append(_("blank"))
         return result
 
+    def _generateEndOfTableIndicator(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) indicating that this cell is the last cell
+        in the table. Overridden here because Orca keeps saying "end
+        of table" in certain lists (e.g. the Templates and Documents
+        dialog).
+        """
+
+        topLevel = self._script.utilities.topLevelObject(obj)
+        if topLevel and topLevel.getRole() == pyatspi.ROLE_DIALOG:
+            return []
+
+        return (speech_generator.SpeechGenerator._generateEndOfTableIndicator(
+                self, obj, **args))
+
     def generateSpeech(self, obj, **args):
         result = []
         if args.get('formatType', 'unfocused') == 'basicWhereAmI' \
