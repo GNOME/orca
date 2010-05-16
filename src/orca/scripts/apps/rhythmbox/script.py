@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -22,10 +23,15 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."  \
+                "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
+import pyatspi
+
 import orca.default as default
+import orca.orca as orca
+import orca.orca_state as orca_state
 
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
@@ -64,3 +70,45 @@ class Script(default.Script):
             return obj[3]
         else:
             return obj
+
+    def onActiveDescendantChanged(self, event):
+        """Called when an object who manages its own descendants detects a
+        change in one of its children. Overridden here because the table
+        on the left-hand side lacks STATE_FOCUSED which causes the default
+        script to reject this event.
+
+        Arguments:
+        - event: the Event
+        """
+
+        child = event.any_data
+        if child:
+            orca.setLocusOfFocus(event, child)
+        else:
+            orca.setLocusOfFocus(event, event.source)
+
+        # We'll tuck away the activeDescendant information for future
+        # reference since the AT-SPI gives us little help in finding
+        # this.
+        #
+        if orca_state.locusOfFocus \
+           and (orca_state.locusOfFocus != event.source):
+            self.pointOfReference['activeDescendantInfo'] = \
+                [orca_state.locusOfFocus.parent,
+                 orca_state.locusOfFocus.getIndexInParent()]
+
+    def onFocus(self, event):
+        """Called whenever an object gets focus. Overridden here because a
+        page tab keeps making bogus focus claims when the user is in the
+        tree on the left-hand side.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if event.source.getRole() == pyatspi.ROLE_PAGE_TAB \
+           and not event.source.name and orca_state.locusOfFocus \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
+            return
+
+        default.Script.onFocus(self, event)
