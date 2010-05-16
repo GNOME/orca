@@ -251,6 +251,12 @@ class SpeechServer(speechserver.SpeechServer):
         # synthesizers cannot handle them.  See bug #591734.
         #
         text = text.decode("UTF-8").replace(u'\u00a0', ' ').encode("UTF-8")
+
+        # Replace newline followed by full stop, since
+        # this seems to crash sd, see bgo#618334.
+        #
+        text = text.replace('\n.', '\n')
+
         self._apply_acss(acss)
         self._send_command(self._client.speak, text, **kwargs)
 
