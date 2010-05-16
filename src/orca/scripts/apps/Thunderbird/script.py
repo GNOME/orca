@@ -389,7 +389,8 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_SCROLL_PANE,
                      pyatspi.ROLE_SCROLL_PANE]
         if self.isDesiredFocusedItem(event.source, rolesList):
-            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent)\
+               and orca_state.lastNonModifierKeyEvent:
                 string = orca_state.lastNonModifierKeyEvent.event_string
                 if string == "Delete":
                     oldLocusOfFocus = None
