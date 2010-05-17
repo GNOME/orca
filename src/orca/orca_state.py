@@ -1,6 +1,7 @@
 # Orca
 #
-# Copyright 2006-2008 Sun Microsystems Inc.
+# Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2010 Joanmarie Diggs, Mesar Hameed
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
@@ -23,7 +24,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc." \
+                "Copyright (c) 2010 Joanmarie Diggs, Mesar Hameed."
 __license__   = "LGPL"
 
 # NOTE: resist the temptation to do any imports here.  They can
@@ -134,3 +136,15 @@ mouseEnhancementsEnabled = True
 # The current zoomer type.
 #
 zoomerType = None
+
+# The state of the xmodmap modifiers before
+# orca modifier keys are allowed to effect the system.
+# Note this variable should be read-only, only written to
+# from orca.storeXmodmapMods()
+#
+xmodmapMods = {}
+
+# A hash of keys, from xmodmapMods that had to be cleared
+# when the orca modifier keys were set.
+#
+clearedXmodmapMods = {}
