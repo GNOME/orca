@@ -38,30 +38,24 @@ firefoxLocationBarNames = "(Location|Search Bookmarks and History)"
 #
 OOoWriterNames = "(StarOffice Writer|OpenOffice.org Writer|OOo-dev Writer Beta)"
 
-#OOO_VERSION="OpenOffice 2.4"
-#OOO_VERSION="StarOffice 8"
-#OOO_VERSION="DEV300_m25"
-#OOO_VERSION="OpenOffice 3.0"
-OOO_VERSION="DEV300_m54" # This is the current dev build of 3.2
+OOO_VERSION="Release"
+#OOO_VERSION="Beta"
+#OOO_VERSION="Dev"
 
 def getOOoName(app):
-    if OOO_VERSION in ["OpenOffice 2.4", "OpenOffice 3.0"]:
+    if OOO_VERSION == "Release":
         return "OpenOffice.org %s" % app
-    elif OOO_VERSION == "StarOffice 8":
-        return "StarOffice %s" % app
-    elif OOO_VERSION == "DEV300_m25":
+    elif OOO_VERSION == "Beta":
         return "OOo-dev %s Beta" % app
-    elif OOO_VERSION == "DEV300_m54":
+    elif OOO_VERSION == "Dev":
         return "OOo-dev %s" % app
         
 def getOOoBrailleLine(app, title, remainder):
-    if OOO_VERSION in ["OpenOffice 2.4", "OpenOffice 3.0"]:
+    if OOO_VERSION == "Release":
         return "soffice Application " + title + " - OpenOffice.org " + app + " Frame " +  title + " - OpenOffice.org " + app + " RootPane ScrollPane Document view " + remainder
-    elif OOO_VERSION == "StarOffice 8":
-        return "soffice Application " + title + " - StarOffice " + app + " Frame " +  title + " - StarOffice " + app + " RootPane ScrollPane Document view " + remainder
-    elif OOO_VERSION == "DEV300_m25":
+    elif OOO_VERSION == "Beta":
         return "soffice Application " + title + " - OOo-dev " + app + " Beta Frame " +  title + " - OOo-dev " + app + " Beta RootPane ScrollPane Document view " + remainder
-    elif OOO_VERSION == "DEV300_m54":
+    elif OOO_VERSION == "Dev":
         return "soffice Application " + title + " - OOo-dev " + app + " Frame " +  title + " - OOo-dev " + app + " RootPane ScrollPane Document view " + remainder
 
 createDiffs = True
