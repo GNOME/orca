@@ -970,8 +970,8 @@ class SpeechServer(speechserver.SpeechServer):
             # On failure, remember what we said, reset our connection to the
             # speech synthesis driver, and try to say it again.
             #
-            debug.printException(debug.LEVEL_SEVERE)
-            debug.println(debug.LEVEL_SEVERE, "Restarting speech...")
+            debug.printException(debug.LEVEL_WARNING)
+            debug.println(debug.LEVEL_WARNING, "Restarting speech...")
             self.reset()
             return -1
 

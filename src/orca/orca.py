@@ -1544,6 +1544,15 @@ def usage():
     print "-q, --quit                   " + \
           _("Quits Orca (if shell script used)")
 
+    # Translators: this is the Orca command line option that will force 
+    # the termination of Orca.
+    # The user would run the Orca shell script again from a terminal window.
+    # If this command line option is specified, the script will quit any
+    # instances of Orca that are already running.
+    #
+    print "-f, --forcequit              " + \
+          _("Forces orca to be terminated immediately.")
+
     # Translators: this is the Orca command line option to tell Orca to
     # replace any existing Orca process(es) that might be running.
     #
