@@ -1009,6 +1009,13 @@ class Script(default.Script):
         Returns True if the event is of interest.
         """
 
+        # We need to do this here. Orca caret and structural navigation
+        # often result in the user being repositioned without our getting
+        # a corresponding AT-SPI event. Without an AT-SPI event, script.py
+        # won't know to dump the generator cache. See bgo#618827.
+        #
+        self.generatorCache = {}
+
         # The reason we override this method is that we only want
         # to consume keystrokes under certain conditions.  For
         # example, we only control the arrow keys when we're
