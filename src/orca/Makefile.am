@@ -40,6 +40,7 @@ orca_python_PYTHON = \
 	liveregions.py \
 	mag.py \
 	mouse_review.py \
+	openttsfactory.py \
 	orca.py \
 	orca_console_prefs.py \
 	orca_gtkbuilder.py \

@@ -363,6 +363,7 @@ silenceSpeech           = False
 #
 speechFactoryModules    = ["espeechfactory", \
                            "gnomespeechfactory", \
+                           "openttsfactory", \
                            "speechdispatcherfactory"]
 speechServerFactory     = "gnomespeechfactory"
 speechServerInfo        = None # None means let the factory decide.
