@@ -504,6 +504,21 @@ class Script(default.Script):
                       % (readOnly, debug.getAccessibleDetails(obj)))
         return readOnly
 
+    def isSameObject(self, obj1, obj2):
+        same = default.Script.isSameObject(self, obj1, obj2)
+
+        # Handle the case of false positives in dialog boxes resulting
+        # from getIndexInParent() returning a bogus value. bgo#618790.
+        #
+        if same and (obj1 != obj2) and not obj1.name \
+           and obj1.getRole() == pyatspi.ROLE_TABLE_CELL \
+           and obj1.getIndexInParent() == obj2.getIndexInParent() == -1:
+            top = self.getTopLevel(obj1)
+            if top and top.getRole() == pyatspi.ROLE_DIALOG:
+                same = False
+
+        return same
+
     def adjustForWriterTable(self, obj):
         """Check to see if we are in Writer, where the object with focus
         is a paragraph, and the parent is the table cell. If it is, then,
