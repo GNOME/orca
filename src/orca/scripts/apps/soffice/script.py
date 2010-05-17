@@ -1675,6 +1675,24 @@ class Script(default.Script):
                 event.source.parent, orca_state.activeWindow):
             self.readMisspeltWord(event, event.source)
 
+        # Impress slide navigation.
+        #
+        if self.utilities.isInImpress(event.source) \
+           and self.utilities.isDrawingView(event.source):
+            title, position, count = \
+                self.utilities.slideTitleAndPosition(event.source)
+            if title:
+                title += "."
+
+            # Translators: this is an indication of the position of the
+            # focused Impress slide and the total number of slides in the
+            # presentation.
+            #
+            msg = _("slide %(position)d of %(count)d") % \
+                    {"position" : position, "count" : count}
+            msg = self.utilities.appendString(title, msg)
+            self.presentMessage(msg)
+
         default.Script.onNameChanged(self, event)
 
     def onFocus(self, event):

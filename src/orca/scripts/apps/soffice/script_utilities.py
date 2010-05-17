@@ -31,6 +31,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.debug as debug
+import orca.orca_state as orca_state
 import orca.script_utilities as script_utilities
 
 #############################################################################
@@ -185,6 +186,112 @@ class Utilities(script_utilities.Utilities):
                     return root_pane
 
         return parent
+
+    #########################################################################
+    #                                                                       #
+    # Impress-Specific Utilities                                            #
+    #                                                                       #
+    #########################################################################
+
+    def drawingView(self, obj=orca_state.locusOfFocus):
+        """Attempts to locate the Impress drawing view, which is the
+        area in which slide editing occurs."""
+
+        # TODO - JD: We should probably add this to the generatorCache.
+        #
+        docFrames = self.descendantsWithRole(
+            self.topLevelObject(obj), pyatspi.ROLE_DOCUMENT_FRAME)
+        docFrame = filter(lambda o: ":" in o.name and "/" in o.name, docFrames)
+        if docFrame:
+            return docFrame[0]
+
+        return None
+
+    def isDrawingView(self, obj):
+        """Returns True if obj is the Impress Drawing View."""
+
+        if obj and obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            return (":" in obj.name and "/" in obj.name)
+
+        return False
+
+    def isInImpress(self, obj=orca_state.locusOfFocus):
+        """Returns True if obj is in OOo Impress."""
+
+        # Having checked English, Spanish, and Arabic, it would seem
+        # that the Frame name will end with "Impress", unlocalized.
+        #
+        if obj:
+            topLevel = self.topLevelObject(obj)
+            if topLevel and topLevel.name.endswith("Impress"):
+                return True
+
+        return False
+
+    def slideAndTaskPanes(self, obj=orca_state.locusOfFocus):
+        """Attempts to locate the Impress slide pane and task pane."""
+
+        drawingView = self.drawingView(obj)
+        if not drawingView:
+            return None, None
+
+        parent = drawingView.parent
+        if parent:
+            parent = parent.parent
+        if not parent:
+            return None, None
+
+        panes = self.descendantsWithRole(parent, pyatspi.ROLE_SPLIT_PANE)
+        if not panes:
+            return None, None
+
+        slidePane = taskPane = None
+        if self.descendantsWithRole(panes[0], pyatspi.ROLE_DOCUMENT_FRAME):
+            slidePane = panes[0]
+            if len(panes) == 2:
+                taskPane = panes[1]
+        else:
+            taskPane = panes[0]
+            if len(panes) == 2:
+                slidePane = panes[1]
+
+        return slidePane, taskPane
+
+    def slideTitleAndPosition(self, obj):
+        """Attempts to obtain the title, position of the slide which contains
+        or is represented by obj.
+
+        Returns a (title, position, count) tuple.
+        """
+
+        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            dv = obj
+        else:
+            dv = self.ancestorWithRole(obj, [pyatspi.ROLE_DOCUMENT_FRAME], [])
+
+        if not dv or not self.isDrawingView(dv):
+            return "", 0, 0
+
+        positionAndCount = dv.name.split(":")[1]
+        position, count = positionAndCount.split("/")
+        title = ""
+        for child in dv:
+            if not child.childCount:
+                continue
+            # We want an actual Title.
+            #
+            if child.name.startswith("ImpressTitle"):
+                title = self.displayedText(child[0])
+                break
+            # But we'll live with a Subtitle if we can't find a title.
+            # Unlike Titles, a single subtitle can be made up of multiple
+            # accessibles.
+            #
+            elif child.name.startswith("ImpressSubtitle"):
+                for line in child:
+                    title = self.appendString(title, self.displayedText(line))
+
+        return title, int(position), int(count)
 
     #########################################################################
     #                                                                       #
