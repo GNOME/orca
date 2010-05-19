@@ -4483,7 +4483,7 @@ class Script(default.Script):
                 else:
                     break
 
-            lastExtents = aboveExtents
+            lastExtents = belowExtents
 
         if above:
             if not below:
