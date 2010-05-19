@@ -153,7 +153,7 @@ if [ `echo $ARGS | grep -c "\-q"` -gt 0 ] ; then
     # existing orca process to quit.  So, we just do a cleanup.
     #
     cleanup
-elif [ `echo $ARGS | grep -c "\-f"` -gt 0 ] ; then
+elif [ `echo $ARGS | egrep -c " \-f|^\-f|\-\-forcequit"` -gt 0 ] ; then
     # If the user has done -f or --forcequit, that means 
     # that Orca has probably hung badly, and needs to be killed with force.
     #
