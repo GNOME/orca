@@ -619,6 +619,17 @@ class Script(Gecko.Script):
             self.sayAll(None)
         self._messageLoaded = False
 
+    def sayCharacter(self, obj):
+        """Speaks the character at the current caret position."""
+
+        if self.isEditableMessage(obj):
+            text = self.utilities.queryNonEmptyText(obj)
+            if text and text.caretOffset + 1 >= text.characterCount:
+                default.Script.sayCharacter(self, obj)
+                return
+
+        Gecko.Script.sayCharacter(self, obj)
+
     def getBottomOfFile(self):
         """Returns the object and last caret offset at the bottom of the
         document frame. Overridden here to handle editable messages.
