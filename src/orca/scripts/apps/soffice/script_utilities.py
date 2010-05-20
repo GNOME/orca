@@ -89,6 +89,28 @@ class Utilities(script_utilities.Utilities):
 
         return readOnly
 
+    def isDuplicateEvent(self, event):
+        """Returns True if we believe this event is a duplicate which we
+        wish to ignore."""
+
+        if not event:
+            return False
+
+        if event.type.startswith("object:text-caret-moved"):
+            try:
+                obj, offset = \
+                    self._script.pointOfReference["lastCursorPosition"]
+            except:
+                return False
+            else:
+                # Doing an intentional equality check rather than calling
+                # isSameObject() because we'd rather double-present an
+                # object than not present it at all.
+                #
+                return obj == event.source and offset == event.detail1
+
+        return False
+
     def isSameObject(self, obj1, obj2):
         same = script_utilities.Utilities.isSameObject(self, obj1, obj2)
 
