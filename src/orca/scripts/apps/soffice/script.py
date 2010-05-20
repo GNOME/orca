@@ -472,6 +472,27 @@ class Script(default.Script):
         except:
             debug.printException(debug.LEVEL_WARNING)
 
+    def isDuplicateEvent(self, event):
+        """Returns True if we believe this event is a duplicate which we
+        wish to ignore."""
+
+        if not event:
+            return False
+
+        if event.type.startswith("object:text-caret-moved"):
+            try:
+                obj, offset = self.pointOfReference["lastCursorPosition"]
+            except:
+                return False
+            else:
+                # Doing an intentional equality check rather than calling
+                # isSameObject() because we'd rather double-present an
+                # object than not present it at all.
+                #
+                return obj == event.source and offset == event.detail1
+
+        return False
+
     def isStructuralNavigationCommand(self, inputEvent=None):
         """Checks to see if the inputEvent was a structural navigation
         command. This is necessary to prevent double-presentation of
@@ -2199,6 +2220,9 @@ class Script(default.Script):
         # The subsequent event will result in redundant presentation.
         #
         if self.isStructuralNavigationCommand():
+            return
+
+        if self.isDuplicateEvent(event):
             return
 
         # If we are losing focus and we in:
