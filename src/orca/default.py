@@ -4142,8 +4142,18 @@ class Script(script.Script):
                     speech.speak(_("blank"), voice, False)
                 return
 
-        self.speakMisspelledIndicator(obj, offset)
-        speech.speakCharacter(character, voice)
+        if character in ["\n", "\r\n"]:
+            # This is a blank line. Announce it if the user requested
+            # that blank lines be spoken.
+            if settings.speakBlankLines:
+                # Translators: "blank" is a short word to mean the
+                # user has navigated to an empty line.
+                #
+                speech.speak(_("blank"), voice, False)
+            return
+        else:
+            self.speakMisspelledIndicator(obj, offset)
+            speech.speakCharacter(character, voice)
 
     def sayLine(self, obj):
         """Speaks the line of an AccessibleText object that contains the
