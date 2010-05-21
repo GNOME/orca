@@ -2999,6 +2999,7 @@ class Script(script.Script):
                 elif orca_state.locusOfFocus \
                     and isinstance(orca_state.lastInputEvent,
                                    input_event.KeyboardEvent) \
+                    and orca_state.lastNonModifierKeyEvent \
                     and (orca_state.lastNonModifierKeyEvent.event_string \
                          == "F1"):
                     self.updateBraille(orca_state.locusOfFocus)
