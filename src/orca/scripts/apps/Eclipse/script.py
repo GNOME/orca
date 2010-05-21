@@ -27,13 +27,14 @@ __license__   = "LGPL"
 
 import orca.default as default
 import orca.orca_state as orca_state
+import pyatspi
+from script_utilities import Utilities
 
 ########################################################################
 #                                                                      #
 # The Eclipse script class.                                            #
 #                                                                      #
 ########################################################################
-
 class Script(default.Script):
 
     def __init__(self, app):
@@ -43,7 +44,11 @@ class Script(default.Script):
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
         """Updates braille, magnification, and outputs speech for the
         event.source or the otherObj. Overridden here so that we can
-        speak the line when a breakpoint is reached."""
+        speak the line when a breakpoint is reached.
+        """
+
+        if self.utilities.isDuplicateEvent(event):
+            return
 
         # Let the default script's normal behavior do its thing
         #
@@ -54,4 +59,30 @@ class Script(default.Script):
            and orca_state.lastNonModifierKeyEvent.event_string in debugKeys:
             obj = otherObj or event.source
             self.sayLine(obj)
+
+    def onFocus(self, event):
+        """Called whenever an object gets focus.
+           Overridden here so that we can save the current text cursor position when:
+           event is an object:state-changed:focused and
+           source is a pyatspi.ROLE_TEXT
+           Perhaps this should be moved to the default.py???
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Let the default script's normal behavior do its thing
+        #
+        default.Script.onFocus(self, event)
+        #
+        if event.type.startswith("object:state-changed:focused") \
+                 and event.source.getRole() == pyatspi.ROLE_TEXT:
+            # probably it was announced, time to save.
+            self._saveLastCursorPosition(event.source, \
+                   event.source.queryText().caretOffset)
+
+    def getUtilities(self):
+        """Returns the utilites for this script."""
+
+        return Utilities(self)
 
