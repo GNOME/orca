@@ -188,8 +188,13 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         # relationship.  But, they will make their names be
         # the string of the thing labelling them.
         #
+        # And certain entries (e.g. in the Downloads window) lack a proper
+        # label, instead prefering to display text within the entry which
+        # is deleted when the widget gets focus. We want to treat this
+        # pseudo label as the actual label.
+        #
         if not len(result) \
-           and role == pyatspi.ROLE_COMBO_BOX \
+           and role in [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_ENTRY] \
            and not self._script.inDocumentContent(obj):
             result.append(obj.name)
 
