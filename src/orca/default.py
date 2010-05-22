@@ -1812,12 +1812,19 @@ class Script(script.Script):
                 try:
                     eventsynthesizer.routeToObject(orca_state.locusOfFocus)
                 except:
-                    # Translators: Orca has a command that allows the user
-                    # to move the mouse pointer to the current object. If
-                    # for some reason Orca cannot identify the current
-                    # location, it will speak this message.
+                    # Translators: Orca has a command that allows the user to
+                    # move the mouse pointer to the current object. This is a
+                    # detailed message which will be presented if for some
+                    # reason Orca cannot identify/find the current location.
                     #
-                    self.presentMessage(_("Could not find current location."))
+                    full = _("Could not find current location.")
+                    # Translators: Orca has a command that allows the user to
+                    # move the mouse pointer to the current object. This is a
+                    # brief message which will be presented if for some reason
+                    # Orca cannot identify/find the current location.
+                    #
+                    brief = C_("location", "Not found")
+                    self.presentMessage(full, brief)
 
         return True
 
@@ -1966,12 +1973,20 @@ class Script(script.Script):
                 try:
                     eventsynthesizer.clickObject(orca_state.locusOfFocus, 3)
                 except:
-                    # Translators: Orca has a command that allows the user
-                    # to move the mouse pointer to the current object. If
-                    # for some reason Orca cannot identify the current
-                    # location, it will speak this message.
+                    # Translators: Orca has a command that allows the user to
+                    # move the mouse pointer to the current object. This is a
+                    # detailed message which will be presented if for some
+                    # reason Orca cannot identify/find the current location.
                     #
-                    self.presentMessage(_("Could not find current location."))
+                    full = _("Could not find current location.")
+                    # Translators: Orca has a command that allows the user to
+                    # move the mouse pointer to the current object. This is a
+                    # brief message which will be presented if for some reason
+                    # Orca cannot identify/find the current location.
+                    #
+                    brief = C_("location", "Not found")
+                    self.presentMessage(full, brief)
+
         return True
 
     def spellCurrentItem(self, itemString):
@@ -2510,20 +2525,29 @@ class Script(script.Script):
 
         settings.enableSpeechIndentation = not settings.enableSpeechIndentation 
         if settings.enableSpeechIndentation :
-            # Translators: A message indicating that
+            # Translators: This is a detailed message indicating that
             # indentation and justification will be spoken.
             #
-            line = _("Speaking of indentation and justification enabled.")
+            full = _("Speaking of indentation and justification enabled.")
+            # Translators: This is a brief message that will be presented
+            # to the user who has just enabled/disabled the speaking of
+            # indentation and justification information.
+            #
+            brief = C_("indentation and justification", "Enabled")
         else:
-            # Translators: A message indicating that
+            # Translators: This is a detailed message indicating that
             # indentation and justification will not be spoken.
             #
-            line = _("Speaking of indentation and justification disabled.")
+            full = _("Speaking of indentation and justification disabled.")
+            # Translators: This is a brief message that will be presented
+            # to the user who has just enabled/disabled the speaking of
+            # indentation and justification information.
+            #
+            brief = C_("indentation and justification", "Disabled")
 
-        self.presentMessage(line)
+        self.presentMessage(full, brief)
 
         return True
-
 
     def cycleSpeakingPunctuationLevel(self, inputEvent=None):
         """ Cycle through the punctuation levels for speech. """
@@ -2531,36 +2555,64 @@ class Script(script.Script):
         currentLevel = settings.verbalizePunctuationStyle 
         if currentLevel == settings.PUNCTUATION_STYLE_NONE:
             newLevel = settings.PUNCTUATION_STYLE_SOME
-
-            # Translators: This message will be presented
-            # when user cycles through the available punctuation levels.
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different levels of spoken punctuation.
+            # The options are: All puntuation marks will be spoken, None
+            # will be spoken, Most will be spoken, or Some will be spoken.
             #
-            line = _("Punctuation level set to some.")
+            full = _("Punctuation level set to some.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different levels of spoken punctuation.
+            # The options are: All puntuation marks will be spoken, None
+            # will be spoken, Most will be spoken, or Some will be spoken.
+            #
+            brief = C_("spoken punctuation", "Some")
         elif currentLevel == settings.PUNCTUATION_STYLE_SOME:
             newLevel = settings.PUNCTUATION_STYLE_MOST
-
-            # Translators: This message will be presented
-            # when user cycles through the available punctuation levels.
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different levels of spoken punctuation.
+            # The options are: All puntuation marks will be spoken, None
+            # will be spoken, Most will be spoken, or Some will be spoken.
             #
-            line = _("Punctuation level set to most.")
+            full = _("Punctuation level set to most.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different levels of spoken punctuation.
+            # The options are: All puntuation marks will be spoken, None
+            # will be spoken, Most will be spoken, or Some will be spoken.
+            #
+            brief = C_("spoken punctuation", "Most")
         elif currentLevel == settings.PUNCTUATION_STYLE_MOST:
             newLevel = settings.PUNCTUATION_STYLE_ALL
-
-            # Translators: This message will be presented
-            # when user cycles through the available punctuation levels.
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different levels of spoken punctuation.
+            # The options are: All puntuation marks will be spoken, None
+            # will be spoken, Most will be spoken, or Some will be spoken.
             #
-            line = _("Punctuation level set to all.")
+            full = _("Punctuation level set to all.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different levels of spoken punctuation.
+            # The options are: All puntuation marks will be spoken, None
+            # will be spoken, Most will be spoken, or Some will be spoken.
+            #
+            brief = C_("spoken punctuation", "All")
         else: 
             # the all case, so cycle to none.
             newLevel = settings.PUNCTUATION_STYLE_NONE
-
-            # Translators: This message will be presented
-            # when user cycles through the available punctuation levels.
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different levels of spoken punctuation.
+            # The options are: All puntuation marks will be spoken, None
+            # will be spoken, Most will be spoken, or Some will be spoken.
             #
-            line = _("Punctuation level set to none.")
+            full = _("Punctuation level set to none.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different levels of spoken punctuation.
+            # The options are: All puntuation marks will be spoken, None
+            # will be spoken, Most will be spoken, or Some will be spoken.
+            #
+            brief = C_("spoken punctuation", "None")
 
         settings.verbalizePunctuationStyle = newLevel
-        self.presentMessage(line)
+        self.presentMessage(full, brief)
         speech.updatePunctuationLevel()
         return True
 
@@ -5097,26 +5149,54 @@ class Script(script.Script):
     ############################################################################
 
     @staticmethod
-    def presentMessage(message):
+    def presentMessage(fullMessage, briefMessage=None):
         """Convenience method to speak a message and 'flash' it in braille.
 
         Arguments:
-        - message: This can be a string or a list.
+        - fullMessage: This can be a string or a list. This will be presented
+          as the message for users whose flash or message verbosity level is
+          verbose.
+        - briefMessage: This can be a string or a list. This will be presented
+          as the message for users whose flash or message verbosity level is
+          brief. Note that providing no briefMessage will result in the full
+          message being used for either. Callers wishing to present nothing as
+          the briefMessage should set briefMessage to an empty string.
         """
 
-        if not message:
+        if not fullMessage:
             return
 
-        if settings.enableSpeech:
-            speech.speak(message)
+        if briefMessage is None:
+            briefMessage = fullMessage
 
-        if settings.enableBraille or settings.enableBrailleMonitor:
+        if settings.enableSpeech:
+            if settings.messageVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
+                message = briefMessage
+            else:
+                message = fullMessage
+            if message:
+                speech.speak(message)
+
+        if (settings.enableBraille or settings.enableBrailleMonitor) \
+           and settings.enableFlashMessages:
+            if settings.flashVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
+                message = briefMessage
+            else:
+                message = fullMessage
+            if not message:
+                return
+
             if isinstance(message[0], list):
                 message = message[0]
             if isinstance(message, list):
                 message = " ".join(message)
 
-            braille.displayMessage(message, flashTime=settings.brailleFlashTime)
+            if settings.flashIsPersistent:
+                duration = -1
+            else:
+                duration = settings.brailleFlashTime
+
+            braille.displayMessage(message, flashTime=duration)
 
     # [[[TODO - JD: Soon I'll add a check to only do the braille
     # presentation if the user has braille or the braille monitor

@@ -191,6 +191,11 @@ userCustomizableSettings = [
     "chatPrefixMessageWithName",
     "chatAnnounceBuddyTyping",
     "chatSeparateRoomHistories",
+    "enableFlashMessages",
+    "brailleFlashTime",
+    "flashIsPersistent",
+    "flashVerbosityLevel",
+    "messageVerbosityLevel",
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -250,6 +255,8 @@ VERBOSITY_LEVEL_BRIEF   = 0
 VERBOSITY_LEVEL_VERBOSE = 1
 speechVerbosityLevel    = VERBOSITY_LEVEL_VERBOSE
 brailleVerbosityLevel   = VERBOSITY_LEVEL_VERBOSE
+flashVerbosityLevel     = VERBOSITY_LEVEL_VERBOSE
+messageVerbosityLevel   = VERBOSITY_LEVEL_VERBOSE
 
 BRAILLE_ROLENAME_STYLE_SHORT = 0 # three letter abbreviations
 BRAILLE_ROLENAME_STYLE_LONG  = 1 # full rolename
@@ -390,9 +397,19 @@ enableBrailleContext    = True
 #
 enableBrailleGrouping   = False
 
+# If True, enable braille flash messages. Note that braille or braille
+# monitor will also need to be enabled for this setting to work.
+#
+enableFlashMessages     = True
+
 # The timeout (in milliseconds) to use for messages flashed in braille.
 #
 brailleFlashTime        = 5000
+
+# If True, flash messages should continue to be displayed until some
+# other message comes along, or the user presses a key.
+#
+flashIsPersistent       = False
 
 # If True, enable braille monitor.
 #
