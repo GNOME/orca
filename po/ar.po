@@ -1,26 +1,25 @@
 # translation of orca.HEAD.po to Arabic
-# translation of orca.HEAD.ar.po to
-# Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2004-2010 Orca contributors
+# This file is distributed under the same license as the Orca package.
 #
 # Djihed Afifi <djihed@gmail.com>, 2006.
 # Khaled Hosny <khaledhosny@eglug.org>, 2006, 2007.
 # Ahmad Farghal <ahmad.farghal@gmail.com>, 2007.
 # Usama Akkad <uak@aya.sy>, 2008.
+# Fatma Mehanna <arabictranslationteam@googlegroups.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-18 02:58+0100\n"
-"PO-Revision-Date: 2008-08-20 20:46-0000\n"
-"Last-Translator: Youssef Chahibi <chahibi@gmail.com>\n"
+"PO-Revision-Date: 2010-04-06 18:55+0200\n"
+"Last-Translator: \n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 "X-Poedit-Language: Arabic\n"
 
 #: ../orca.desktop.in.h:1
@@ -28,9 +27,8 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "قارئ الشاشة و المكبّر أوركا"
 
 #: ../orca.desktop.in.h:2
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
-msgstr "اظهر معلومات الشاشة ككلام أو برايل, أو كبّر الشاشة"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
+msgstr "إظهار المعلومات الموجودة على الشاشة إما عن طريق النطق أو البرايل أو تكبير الشاشة"
 
 #. Liblouis Python bindings
 #.
@@ -58,27 +56,27 @@ msgstr "اظهر معلومات الشاشة ككلام أو برايل, أو ك
 #.
 #: ../src/louis/constants.py.in:28
 msgid "Czech Grade 1"
-msgstr "التشيكية الدرجة 1"
+msgstr "تشيكي بدون اختصارات"
 
 #: ../src/louis/constants.py.in:29
 msgid "Spanish Grade 1"
-msgstr "الإسبانية الدرجة 1"
+msgstr "إسباني بدون اختصارات"
 
 #: ../src/louis/constants.py.in:30
 msgid "Canada French Grade 2"
-msgstr "الفرنسية الكندية الدرجة 2"
+msgstr "الفرنسية الكندية باختصارات "
 
 #: ../src/louis/constants.py.in:31
 msgid "France French Grade 2"
-msgstr "الفرنسية الفرنسية الدرجة 2"
+msgstr "الفرنسية الفرنسية باختصارات"
 
 #: ../src/louis/constants.py.in:32
 msgid "Latvian Grade 1"
-msgstr "اللاتيفية الدرجة 1"
+msgstr "اللاتيفية بدون اختصارات "
 
 #: ../src/louis/constants.py.in:33
 msgid "Netherlands Dutch Grade 1"
-msgstr "الألمانية الهولندية الدرجة 1"
+msgstr "الألمانية الهولندية بدون اختصارات"
 
 #: ../src/louis/constants.py.in:34
 msgid "Norwegian Grade 0"
@@ -177,21 +175,24 @@ msgstr "الألمانية البلجيكية الدرجة 1"
 msgid "Orca Preferences for %s"
 msgstr "تفضيلات أوركا لـ %s"
 
-#: ../src/orca/app_gui_prefs.py:189 ../src/orca/keybindings.py:157
-#: ../src/orca/orca_gui_prefs.py:2110 ../src/orca/orca_gui_prefs.py:2211
+#: ../src/orca/app_gui_prefs.py:189
+#: ../src/orca/keybindings.py:157
+#: ../src/orca/orca_gui_prefs.py:2110
+#: ../src/orca/orca_gui_prefs.py:2211
 msgid "Orca"
 msgstr " أوركا"
 
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:194 ../src/orca/orca_gui_prefs.py:2217
+#: ../src/orca/app_gui_prefs.py:194
+#: ../src/orca/orca_gui_prefs.py:2217
 msgid "Unbound"
 msgstr "فك التقييد"
 
 #: ../src/orca/app_gui_prefs.py:288
 msgid "No application has focus."
-msgstr "ليس لأي تطبيق التركيز"
+msgstr "لا يوجد تطبيق نشط"
 
 #. Translators: Orca Preferences in this case, is a configuration GUI
 #. for allowing users to set application specific settings from within
@@ -209,7 +210,7 @@ msgstr "بدأ تفضيلات أوركا ل %s."
 #.
 #: ../src/orca/bookmarks.py:79
 msgid "bookmark entered"
-msgstr "تم ادخال علامة موقع"
+msgstr "تم إدخال علامة مرجعية"
 
 #. Translators: this announces that the current object is the same
 #. object pointed to by the bookmark.
@@ -217,7 +218,7 @@ msgstr "تم ادخال علامة موقع"
 #: ../src/orca/bookmarks.py:102
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:108
 msgid "bookmark is current object"
-msgstr "علامة الموقع هي الكائن الحالي"
+msgstr "هذا هو الكائن الذي تم الإشارة إليه بعلامة مرجعية من قبل"
 
 #. Translators: this announces that the current object's parent and
 #. the parent of the object pointed to by the bookmark are the same.
@@ -225,7 +226,7 @@ msgstr "علامة الموقع هي الكائن الحالي"
 #: ../src/orca/bookmarks.py:109
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:115
 msgid "bookmark and current object have same parent"
-msgstr "علامة الموقع و الكائن الحالي لهما نفس الوالد"
+msgstr "الكائن الرئيسي للكائن الحالي هو الكائن الرئيسي للكائن المشار إليه بعلامة مرجعية "
 
 #. Translators: this announces that the bookmark and the current
 #. object share a common ancestor
@@ -242,7 +243,7 @@ msgstr "جد مشترك %s"
 #: ../src/orca/bookmarks.py:133
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:139
 msgid "comparison unknown"
-msgstr "مقارنة مجهولة"
+msgstr "مقارنة غير معروفة"
 
 #. Translators: this announces that a bookmark has been saved to
 #. disk
@@ -250,7 +251,7 @@ msgstr "مقارنة مجهولة"
 #: ../src/orca/bookmarks.py:142
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:154
 msgid "bookmarks saved"
-msgstr "تم حفظ علامات المواقع"
+msgstr "تم حفظ العلامات المرجعية "
 
 #. Translators: this announces that a bookmark could not be saved to
 #. disk
@@ -258,14 +259,15 @@ msgstr "تم حفظ علامات المواقع"
 #: ../src/orca/bookmarks.py:147
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:159
 msgid "bookmarks could not be saved"
-msgstr "لم يمكن حفظ علامات المواقع"
+msgstr "لا يمكن حفظ العلامات المرجعية "
 
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/braillegenerator.py:195 ../src/orca/speechgenerator.py:192
+#: ../src/orca/braillegenerator.py:195
+#: ../src/orca/speechgenerator.py:192
 msgid "grayed"
-msgstr "رمادي"
+msgstr "غير مفعل"
 
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows plus the total number of
@@ -286,29 +288,35 @@ msgstr[5] "(%d حوارا)"
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:757 ../src/orca/braillegenerator.py:1402
+#: ../src/orca/braillegenerator.py:757
+#: ../src/orca/braillegenerator.py:1402
 #: ../src/orca/scripts/apps/pidgin/speech_generator.py:91
 #: ../src/orca/scripts/apps/pidgin/where_am_i.py:144
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge/braillegenerator.py:70
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge/speechgenerator.py:70
-#: ../src/orca/speechgenerator.py:885 ../src/orca/speechgenerator.py:1483
-#: ../src/orca/where_am_I.py:674 ../src/orca/where_am_I.py:739
+#: ../src/orca/speechgenerator.py:885
+#: ../src/orca/speechgenerator.py:1483
+#: ../src/orca/where_am_I.py:674
+#: ../src/orca/where_am_I.py:739
 msgid "expanded"
-msgstr "ممدد"
+msgstr "مفتوح"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #.
-#: ../src/orca/braillegenerator.py:763 ../src/orca/braillegenerator.py:1408
+#: ../src/orca/braillegenerator.py:763
+#: ../src/orca/braillegenerator.py:1408
 #: ../src/orca/scripts/apps/pidgin/speech_generator.py:110
 #: ../src/orca/scripts/apps/pidgin/where_am_i.py:150
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge/braillegenerator.py:76
 #: ../src/orca/scripts/toolkits/J2SE-access-bridge/speechgenerator.py:77
-#: ../src/orca/speechgenerator.py:891 ../src/orca/speechgenerator.py:1502
-#: ../src/orca/where_am_I.py:680 ../src/orca/where_am_I.py:745
+#: ../src/orca/speechgenerator.py:891
+#: ../src/orca/speechgenerator.py:1502
+#: ../src/orca/where_am_I.py:680
+#: ../src/orca/where_am_I.py:745
 msgid "collapsed"
-msgstr "منهار"
+msgstr "مغلق"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -322,16 +330,20 @@ msgstr "المستوى %d"
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/braillegenerator.py:1298 ../src/orca/braillegenerator.py:1339
+#: ../src/orca/braillegenerator.py:1298
+#: ../src/orca/braillegenerator.py:1339
 #: ../src/orca/flat_review.py:1035
 #: ../src/orca/scripts/apps/evolution/script.py:815
 #: ../src/orca/scripts/apps/evolution/where_am_i.py:61
-#: ../src/orca/speechgenerator.py:1407 ../src/orca/speechgenerator.py:1447
-#: ../src/orca/speechgenerator.py:1581 ../src/orca/tutorialgenerator.py:456
-#: ../src/orca/tutorialgenerator.py:496 ../src/orca/where_am_I.py:1349
+#: ../src/orca/speechgenerator.py:1407
+#: ../src/orca/speechgenerator.py:1447
+#: ../src/orca/speechgenerator.py:1581
+#: ../src/orca/tutorialgenerator.py:456
+#: ../src/orca/tutorialgenerator.py:496
+#: ../src/orca/where_am_I.py:1349
 #: ../src/orca/where_am_I.py:1379
 msgid "toggle"
-msgstr "بدّل"
+msgstr "تنقل"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).
@@ -403,8 +415,10 @@ msgstr "موقع المؤشّر"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/default.py:6800
-#: ../src/orca/default.py:6807 ../src/orca/keynames.py:133
+#: ../src/orca/chnames.py:39
+#: ../src/orca/default.py:6800
+#: ../src/orca/default.py:6807
+#: ../src/orca/keynames.py:133
 msgid "space"
 msgstr "فراغ"
 
@@ -418,7 +432,8 @@ msgstr "سطر جديد"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: ../src/orca/chnames.py:47 ../src/orca/keynames.py:117
+#: ../src/orca/chnames.py:47
+#: ../src/orca/keynames.py:117
 msgid "tab"
 msgstr "لسان"
 
@@ -654,7 +669,8 @@ msgstr "خط عمودي منكسر"
 #.
 #. Translators: spoken words for the rolename of a section (e.g., in html).
 #.
-#: ../src/orca/chnames.py:203 ../src/orca/rolenames.py:844
+#: ../src/orca/chnames.py:203
+#: ../src/orca/rolenames.py:844
 msgid "section"
 msgstr "قسم"
 
@@ -1339,7 +1355,8 @@ msgstr "لانهاية"
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:658 ../src/orca/chnames.py:721
+#: ../src/orca/chnames.py:658
+#: ../src/orca/chnames.py:721
 msgid "black square"
 msgstr "مربع أسود"
 
@@ -1357,7 +1374,8 @@ msgstr "مربع أبيض"
 #. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:668 ../src/orca/chnames.py:727
+#: ../src/orca/chnames.py:668
+#: ../src/orca/chnames.py:727
 msgid "black diamond"
 msgstr "معين أسود"
 
@@ -1460,7 +1478,8 @@ msgstr "أداء نقر الزر الأيمن على عنصر المراجعة �
 #. be positioned at the point where the speech was
 #. interrupted.
 #.
-#: ../src/orca/default.py:162 ../src/orca/scripts/apps/acroread.py:114
+#: ../src/orca/default.py:162
+#: ../src/orca/scripts/apps/acroread.py:114
 #: ../src/orca/scripts/apps/evolution/script.py:156
 #: ../src/orca/scripts/toolkits/Gecko/script.py:434
 msgid "Speaks entire document."
@@ -2005,9 +2024,7 @@ msgstr "تفعيل/تعطيل اسكات القراءة."
 #. running on the desktop, to stdout.
 #.
 #: ../src/orca/default.py:754
-msgid ""
-"Prints a debug listing of all known applications to the console where Orca "
-"is running."
+msgid "Prints a debug listing of all known applications to the console where Orca is running."
 msgstr "يطبع تنقيح حول كل التطبيقات المعروفة أين يوجد أوركا"
 
 #. Translators: this is a debug message that Orca users
@@ -2025,9 +2042,7 @@ msgstr "يدير مستوى التنقيح عند التشغيل."
 #. for the application that is currently running (has focus).
 #.
 #: ../src/orca/default.py:775
-msgid ""
-"Prints debug information about the currently active application to the "
-"console where Orca is running."
+msgid "Prints debug information about the currently active application to the console where Orca is running."
 msgstr "اطبع معلومات التنقيح حول التطبيق الحالي إلى هيكل تشغيل أوركا"
 
 #. Translators: this is a debug message that Orca users
@@ -2050,9 +2065,8 @@ msgstr "يطبع معلومات التنقيح حول أصل الكائن الح
 #. their descendants in the component tree).
 #.
 #: ../src/orca/default.py:802
-#, fuzzy
 msgid "Prints debug information about the application with focus."
-msgstr "اطبع معلومات التنقيح حول التطبيق الحاصل على التركيز"
+msgstr "طبع الأخطاء البرمجية حول التطبيق الحالي"
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2184,9 +2198,12 @@ msgstr "يمرر الأمر التالي إلى التطبيق الحالي."
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
-#: ../src/orca/default.py:2133 ../src/orca/default.py:2445
-#: ../src/orca/default.py:4931 ../src/orca/default.py:5086
-#: ../src/orca/default.py:5094 ../src/orca/default.py:5202
+#: ../src/orca/default.py:2133
+#: ../src/orca/default.py:2445
+#: ../src/orca/default.py:4931
+#: ../src/orca/default.py:5086
+#: ../src/orca/default.py:5094
+#: ../src/orca/default.py:5202
 #: ../src/orca/default.py:5210
 #: ../src/orca/scripts/apps/evolution/script.py:531
 #: ../src/orca/scripts/apps/soffice/script.py:731
@@ -2194,7 +2211,8 @@ msgstr "يمرر الأمر التالي إلى التطبيق الحالي."
 #: ../src/orca/scripts/apps/soffice/script.py:2015
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:275
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5157
-#: ../src/orca/structural_navigation.py:3281 ../src/orca/where_am_I.py:1625
+#: ../src/orca/structural_navigation.py:3281
+#: ../src/orca/where_am_I.py:1625
 msgid "blank"
 msgstr "فارغ"
 
@@ -2244,7 +2262,8 @@ msgstr "عمود التقدم %d."
 #.
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/default.py:2687 ../src/orca/flat_review.py:443
+#: ../src/orca/default.py:2687
+#: ../src/orca/flat_review.py:443
 #: ../src/orca/speechgenerator.py:1097
 #, python-format
 msgid "%d percent."
@@ -2255,7 +2274,8 @@ msgstr "%d نسبة مئوية"
 #.
 #: ../src/orca/default.py:2936
 #: ../src/orca/scripts/apps/pidgin/where_am_i.py:158
-#: ../src/orca/where_am_I.py:688 ../src/orca/where_am_I.py:753
+#: ../src/orca/where_am_I.py:688
+#: ../src/orca/where_am_I.py:753
 #, python-format
 msgid "tree level %d"
 msgstr "مستوى الشجرة %d"
@@ -2281,10 +2301,12 @@ msgstr " غير محددة"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3869 ../src/orca/default.py:4213
+#: ../src/orca/default.py:3869
+#: ../src/orca/default.py:4213
 #: ../src/orca/default.py:7460
 #: ../src/orca/scripts/apps/soffice/where_am_i.py:161
-#: ../src/orca/speechgenerator.py:242 ../src/orca/where_am_I.py:569
+#: ../src/orca/speechgenerator.py:242
+#: ../src/orca/where_am_I.py:569
 #: ../src/orca/where_am_I.py:990
 msgctxt "text"
 msgid "selected"
@@ -2302,7 +2324,8 @@ msgstr "منتقى"
 #.
 #. ONLY TRANSLATE THE PART AFTER THE PIPE CHARACTER |
 #.
-#: ../src/orca/default.py:3877 ../src/orca/default.py:7468
+#: ../src/orca/default.py:3877
+#: ../src/orca/default.py:7468
 msgctxt "text"
 msgid "unselected"
 msgstr "غير منتقى"
@@ -2325,7 +2348,8 @@ msgstr "انطق خلية"
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:4329 ../src/orca/where_am_I.py:1682
+#: ../src/orca/default.py:4329
+#: ../src/orca/where_am_I.py:1682
 msgid "bold"
 msgstr "سميك"
 
@@ -2355,7 +2379,8 @@ msgstr[5] "%s %s من البكسلات"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/default.py:4424 ../src/orca/default.py:6331
+#: ../src/orca/default.py:4424
+#: ../src/orca/default.py:6331
 #: ../src/orca/rolenames.py:604
 #: ../src/orca/scripts/apps/soffice/script.py:1117
 #: ../src/orca/where_am_I.py:1704
@@ -2382,9 +2407,7 @@ msgstr "وضع التجاوز مفعل."
 #. This text here is what is spoken to the user.
 #.
 #: ../src/orca/default.py:4494
-msgid ""
-"Entering learn mode.  Press any key to hear its function.  To exit learn "
-"mode, press the escape key."
+msgid "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
 msgstr "الدخول إلى نمط التعلم. اضغط أي زر لسماع وظيفته. للخروج اضغط على ESC."
 
 #. Translators: Orca has a "Learn Mode" that will allow
@@ -2403,7 +2426,8 @@ msgstr "نسق التعلم. اضغط  ESC للخروج."
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:4936 ../src/orca/default.py:5099
+#: ../src/orca/default.py:4936
+#: ../src/orca/default.py:5099
 msgid "white space"
 msgstr "فراغ"
 
@@ -2438,7 +2462,6 @@ msgstr "السياق هو %s"
 #. is the spoken word for the character.
 #.
 #: ../src/orca/default.py:6283
-#, fuzzy, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
 msgstr[0] " %d %s من المحارف"
@@ -2599,7 +2622,8 @@ msgstr "اللف للأعلى"
 #.
 #: ../src/orca/flat_review.py:347
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:605
-#: ../src/orca/speechgenerator.py:423 ../src/orca/where_am_I.py:421
+#: ../src/orca/speechgenerator.py:423
+#: ../src/orca/where_am_I.py:421
 #: ../src/orca/where_am_I.py:1389
 msgid "partially checked"
 msgstr "دُقق جزئيا"
@@ -2612,8 +2636,10 @@ msgstr "دُقق جزئيا"
 #.
 #: ../src/orca/flat_review.py:351
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:609
-#: ../src/orca/speechgenerator.py:427 ../src/orca/speechgenerator.py:970
-#: ../src/orca/where_am_I.py:425 ../src/orca/where_am_I.py:1393
+#: ../src/orca/speechgenerator.py:427
+#: ../src/orca/speechgenerator.py:970
+#: ../src/orca/where_am_I.py:425
+#: ../src/orca/where_am_I.py:1393
 msgid "checked"
 msgstr "مؤكّد"
 
@@ -2621,7 +2647,8 @@ msgstr "مؤكّد"
 #.
 #: ../src/orca/flat_review.py:355
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:613
-#: ../src/orca/speechgenerator.py:431 ../src/orca/where_am_I.py:429
+#: ../src/orca/speechgenerator.py:431
+#: ../src/orca/where_am_I.py:429
 #: ../src/orca/where_am_I.py:1397
 msgid "not checked"
 msgstr "غير مؤكّد"
@@ -2631,7 +2658,8 @@ msgstr "غير مؤكّد"
 #: ../src/orca/flat_review.py:362
 #: ../src/orca/scripts/apps/planner/speech_generator.py:63
 #: ../src/orca/scripts/apps/planner/speech_generator.py:71
-#: ../src/orca/speechgenerator.py:1708 ../src/orca/where_am_I.py:886
+#: ../src/orca/speechgenerator.py:1708
+#: ../src/orca/where_am_I.py:886
 msgid "pressed"
 msgstr "مضغوط"
 
@@ -2640,7 +2668,8 @@ msgstr "مضغوط"
 #: ../src/orca/flat_review.py:366
 #: ../src/orca/scripts/apps/planner/speech_generator.py:65
 #: ../src/orca/scripts/apps/planner/speech_generator.py:73
-#: ../src/orca/speechgenerator.py:1712 ../src/orca/where_am_I.py:890
+#: ../src/orca/speechgenerator.py:1712
+#: ../src/orca/where_am_I.py:890
 msgid "not pressed"
 msgstr "غير مضغوط"
 
@@ -2651,7 +2680,8 @@ msgstr "غير مضغوط"
 #.
 #: ../src/orca/flat_review.py:376
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:547
-#: ../src/orca/speechgenerator.py:1156 ../src/orca/where_am_I.py:225
+#: ../src/orca/speechgenerator.py:1156
+#: ../src/orca/where_am_I.py:225
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "منتقى"
@@ -2663,7 +2693,8 @@ msgstr "منتقى"
 #.
 #: ../src/orca/flat_review.py:383
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:554
-#: ../src/orca/speechgenerator.py:1163 ../src/orca/where_am_I.py:232
+#: ../src/orca/speechgenerator.py:1163
+#: ../src/orca/where_am_I.py:232
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "غير منتقى"
@@ -2698,7 +2729,8 @@ msgstr "خدمات القراءة لجنوم"
 #. new string well.  For example, "Open..." turns into
 #. "Open dot dot dot".
 #.
-#: ../src/orca/gnomespeechfactory.py:769 ../src/orca/gnomespeechfactory.py:770
+#: ../src/orca/gnomespeechfactory.py:769
+#: ../src/orca/gnomespeechfactory.py:770
 msgid " dot dot dot"
 msgstr "نقطة نقطة نقطة"
 
@@ -2866,15 +2898,19 @@ msgstr "إقفال اللف"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: ../src/orca/keynames.py:85 ../src/orca/keynames.py:89
-#: ../src/orca/keynames.py:93 ../src/orca/keynames.py:97
+#: ../src/orca/keynames.py:85
+#: ../src/orca/keynames.py:89
+#: ../src/orca/keynames.py:93
+#: ../src/orca/keynames.py:97
 msgid "page up"
 msgstr "صفحة أعلى"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: ../src/orca/keynames.py:101 ../src/orca/keynames.py:105
-#: ../src/orca/keynames.py:109 ../src/orca/keynames.py:113
+#: ../src/orca/keynames.py:101
+#: ../src/orca/keynames.py:105
+#: ../src/orca/keynames.py:109
+#: ../src/orca/keynames.py:113
 msgid "page down"
 msgstr "صفحة أسفل"
 
@@ -2916,25 +2952,29 @@ msgstr "إدخال"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: ../src/orca/keynames.py:149 ../src/orca/keynames.py:153
+#: ../src/orca/keynames.py:149
+#: ../src/orca/keynames.py:153
 msgid "up"
 msgstr "فوق"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: ../src/orca/keynames.py:157 ../src/orca/keynames.py:161
+#: ../src/orca/keynames.py:157
+#: ../src/orca/keynames.py:161
 msgid "down"
 msgstr "تحت"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: ../src/orca/keynames.py:165 ../src/orca/keynames.py:169
+#: ../src/orca/keynames.py:165
+#: ../src/orca/keynames.py:169
 msgid "left"
 msgstr "يسار"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: ../src/orca/keynames.py:173 ../src/orca/keynames.py:177
+#: ../src/orca/keynames.py:173
+#: ../src/orca/keynames.py:177
 msgid "right"
 msgstr "يمين"
 
@@ -2954,7 +2994,8 @@ msgstr "السوبر اليميني"
 #.
 #. Translators: spoken words for the rolename of a menu.
 #.
-#: ../src/orca/keynames.py:189 ../src/orca/rolenames.py:640
+#: ../src/orca/keynames.py:189
+#: ../src/orca/rolenames.py:640
 msgid "menu"
 msgstr "قائمة"
 
@@ -2973,7 +3014,6 @@ msgstr "مساعدة"
 #. Translators: this is how someone would speak the name of the multi key
 #.
 #: ../src/orca/keynames.py:201
-#, fuzzy
 msgid "multi"
 msgstr "متعدد"
 
@@ -2991,25 +3031,29 @@ msgstr "اهرب"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: ../src/orca/keynames.py:213 ../src/orca/keynames.py:217
+#: ../src/orca/keynames.py:213
+#: ../src/orca/keynames.py:217
 msgid "insert"
 msgstr "أدرج"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: ../src/orca/keynames.py:221 ../src/orca/keynames.py:225
+#: ../src/orca/keynames.py:221
+#: ../src/orca/keynames.py:225
 msgid "delete"
 msgstr "إحذف"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: ../src/orca/keynames.py:229 ../src/orca/keynames.py:233
+#: ../src/orca/keynames.py:229
+#: ../src/orca/keynames.py:233
 msgid "home"
 msgstr "المنزل"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: ../src/orca/keynames.py:237 ../src/orca/keynames.py:241
+#: ../src/orca/keynames.py:237
+#: ../src/orca/keynames.py:241
 msgid "end"
 msgstr "النهاية"
 
@@ -3028,7 +3072,6 @@ msgstr "إعداد المنطقة الحية كمهذبة"
 #. Translators:  sets the live region politeness level to assertive
 #.
 #: ../src/orca/liveregions.py:270
-#, fuzzy
 msgid "setting live region to assertive"
 msgstr "إعداد المنطقة الحية كمؤكدة"
 
@@ -3125,7 +3168,8 @@ msgstr "المكبر معطل."
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/mag.py:1752 ../src/orca/orca_gui_prefs.py:1712
+#: ../src/orca/mag.py:1752
+#: ../src/orca/orca_gui_prefs.py:1712
 #: ../src/orca/orca_gui_prefs.py:1738
 msgid "Full Screen"
 msgstr "ملئ الشاشة"
@@ -3139,32 +3183,37 @@ msgstr "وضع ملئ الشاشة غير متاح"
 
 #. Translators: magnification will use the top half of the screen.
 #.
-#: ../src/orca/mag.py:1761 ../src/orca/orca_gui_prefs.py:1716
+#: ../src/orca/mag.py:1761
+#: ../src/orca/orca_gui_prefs.py:1716
 msgid "Top Half"
 msgstr "النصف الاعلى"
 
 #. Translators: magnification will use the bottom half of the screen.
 #.
-#: ../src/orca/mag.py:1765 ../src/orca/orca_gui_prefs.py:1720
+#: ../src/orca/mag.py:1765
+#: ../src/orca/orca_gui_prefs.py:1720
 msgid "Bottom Half"
 msgstr "النصف الأسفل"
 
 #. Translators: magnification will use the left half of the screen.
 #.
-#: ../src/orca/mag.py:1769 ../src/orca/orca_gui_prefs.py:1724
+#: ../src/orca/mag.py:1769
+#: ../src/orca/orca_gui_prefs.py:1724
 msgid "Left Half"
 msgstr "النصف الأيسراري"
 
 #. Translators: magnification will use the right half of the screen.
 #.
-#: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:1728
+#: ../src/orca/mag.py:1773
+#: ../src/orca/orca_gui_prefs.py:1728
 msgid "Right Half"
 msgstr "النصف الأيمن"
 
 #. Translators: the user has selected a custom area of the screen
 #. to use for magnification.
 #.
-#: ../src/orca/mag.py:1778 ../src/orca/orca_gui_prefs.py:1733
+#: ../src/orca/mag.py:1778
+#: ../src/orca/orca_gui_prefs.py:1733
 msgid "Custom"
 msgstr "مخصص"
 
@@ -3191,7 +3240,8 @@ msgstr "^[ن1Yy]"
 #. Translators: this means speech synthesis (i.e., the machine
 #. speaks to you from its speakers) is not installed or working.
 #.
-#: ../src/orca/orca_console_prefs.py:136 ../src/orca/orca_console_prefs.py:155
+#: ../src/orca/orca_console_prefs.py:136
+#: ../src/orca/orca_console_prefs.py:155
 msgid "Speech is unavailable."
 msgstr "الكلام غير متوفّر"
 
@@ -3211,15 +3261,19 @@ msgstr "اختيار نظام الكلام المطلوب:"
 
 #. Translators: this is prompting for a numerical choice.
 #.
-#: ../src/orca/orca_console_prefs.py:175 ../src/orca/orca_console_prefs.py:207
-#: ../src/orca/orca_console_prefs.py:254 ../src/orca/orca_console_prefs.py:403
+#: ../src/orca/orca_console_prefs.py:175
+#: ../src/orca/orca_console_prefs.py:207
+#: ../src/orca/orca_console_prefs.py:254
+#: ../src/orca/orca_console_prefs.py:403
 msgid "Enter choice: "
 msgstr "أدخل الإختيار:"
 
 #. Translators: this means speech synthesis will not be used.
 #.
-#: ../src/orca/orca_console_prefs.py:179 ../src/orca/orca_console_prefs.py:190
-#: ../src/orca/orca_console_prefs.py:211 ../src/orca/orca_console_prefs.py:227
+#: ../src/orca/orca_console_prefs.py:179
+#: ../src/orca/orca_console_prefs.py:190
+#: ../src/orca/orca_console_prefs.py:211
+#: ../src/orca/orca_console_prefs.py:227
 #: ../src/orca/orca_console_prefs.py:261
 msgid "Speech will not be used.\n"
 msgstr "لن يتم استعمال الكلام.\n"
@@ -3349,11 +3403,13 @@ msgstr "تفعيل البرايل؟ ادخل y أو n: "
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "تفعيل ملاحظ البرايل؟ ادخل y أو n: "
 
-#: ../src/orca/orca_console_prefs.py:469 ../src/orca/orca_gui_prefs.py:454
+#: ../src/orca/orca_console_prefs.py:469
+#: ../src/orca/orca_gui_prefs.py:454
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "تم تفعيل الوصولية لجنوم"
 
-#: ../src/orca/orca_console_prefs.py:475 ../src/orca/orca_gui_prefs.py:456
+#: ../src/orca/orca_console_prefs.py:475
+#: ../src/orca/orca_gui_prefs.py:456
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "ستحتاج للخروج من النظام ليأخذ التغيير أثره."
 
@@ -3373,7 +3429,8 @@ msgstr "تثبيت كامل. اضغط زر الإدخال للمواصلة."
 msgid "<b>Start from:</b>"
 msgstr "<b>ابدأ من:</b>"
 
-#: ../src/orca/orca-find.glade.h:2 ../src/orca/orca_gui_find.py:147
+#: ../src/orca/orca-find.glade.h:2
+#: ../src/orca/orca_gui_find.py:147
 msgid "C_urrent location"
 msgstr "الموقع ال_حالي"
 
@@ -3455,9 +3512,12 @@ msgstr "موسَّط"
 #. with the magnifier.  None means that Orca does nothing to
 #. track the mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:81 ../src/orca/orca_gui_prefs.py:4169
-#: ../src/orca/orca_gui_prefs.py:4198 ../src/orca/orca_gui_prefs.py:4371
-#: ../src/orca/orca_gui_prefs.py:4438 ../src/orca/orca_gui_prefs.py:4461
+#: ../src/orca/orca_gui_prefs.py:81
+#: ../src/orca/orca_gui_prefs.py:4169
+#: ../src/orca/orca_gui_prefs.py:4198
+#: ../src/orca/orca_gui_prefs.py:4371
+#: ../src/orca/orca_gui_prefs.py:4438
+#: ../src/orca/orca_gui_prefs.py:4461
 msgid "None"
 msgstr "لا شيء"
 
@@ -3521,21 +3581,24 @@ msgstr "مُعدَّل"
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use most of the time.
 #.
-#: ../src/orca/orca_gui_prefs.py:427 ../src/orca/orca_gui_prefs.py:476
+#: ../src/orca/orca_gui_prefs.py:427
+#: ../src/orca/orca_gui_prefs.py:476
 msgid "Default"
 msgstr "افتراضي"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak capitalized words and letters.
 #.
-#: ../src/orca/orca_gui_prefs.py:433 ../src/orca/orca_gui_prefs.py:482
+#: ../src/orca/orca_gui_prefs.py:433
+#: ../src/orca/orca_gui_prefs.py:482
 msgid "Uppercase"
 msgstr "حروف كبيرة"
 
 #. Translators: this refers to the speech synthesis voice that Orca
 #. will use to speak text associated with hyperlinks in HTML content.
 #.
-#: ../src/orca/orca_gui_prefs.py:439 ../src/orca/orca_gui_prefs.py:492
+#: ../src/orca/orca_gui_prefs.py:439
+#: ../src/orca/orca_gui_prefs.py:492
 msgid "Hyperlink"
 msgstr "وصله"
 
@@ -3632,7 +3695,8 @@ msgstr "(نقر ثلاثي)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2158 ../src/orca/orca_gui_prefs.py:2252
+#: ../src/orca/orca_gui_prefs.py:2158
+#: ../src/orca/orca_gui_prefs.py:2252
 msgid "Braille Bindings"
 msgstr "ارتباطات برايل"
 
@@ -3641,8 +3705,10 @@ msgstr "ارتباطات برايل"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2613 ../src/orca/orca_gui_prefs.py:2654
-#: ../src/orca/orca_gui_prefs.py:2694 ../src/orca/orca-setup.glade.h:52
+#: ../src/orca/orca_gui_prefs.py:2613
+#: ../src/orca/orca_gui_prefs.py:2654
+#: ../src/orca/orca_gui_prefs.py:2694
+#: ../src/orca/orca-setup.glade.h:52
 msgid "Dot _7"
 msgstr "النقطة _7"
 
@@ -3650,8 +3716,10 @@ msgstr "النقطة _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2620 ../src/orca/orca_gui_prefs.py:2661
-#: ../src/orca/orca_gui_prefs.py:2701 ../src/orca/orca-setup.glade.h:53
+#: ../src/orca/orca_gui_prefs.py:2620
+#: ../src/orca/orca_gui_prefs.py:2661
+#: ../src/orca/orca_gui_prefs.py:2701
+#: ../src/orca/orca-setup.glade.h:53
 msgid "Dot _8"
 msgstr "النقطة _8"
 
@@ -3659,15 +3727,18 @@ msgstr "النقطة _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2627 ../src/orca/orca_gui_prefs.py:2668
-#: ../src/orca/orca_gui_prefs.py:2708 ../src/orca/orca-setup.glade.h:54
+#: ../src/orca/orca_gui_prefs.py:2627
+#: ../src/orca/orca_gui_prefs.py:2668
+#: ../src/orca/orca_gui_prefs.py:2708
+#: ../src/orca/orca-setup.glade.h:54
 msgid "Dots 7 an_d 8"
 msgstr "النقطة 7 _و 8"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2731 ../src/orca/orca-setup.glade.h:163
+#: ../src/orca/orca_gui_prefs.py:2731
+#: ../src/orca/orca-setup.glade.h:163
 msgid "_None"
 msgstr "_لا شيء"
 
@@ -3676,7 +3747,8 @@ msgstr "_لا شيء"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2739 ../src/orca/orca-setup.glade.h:126
+#: ../src/orca/orca_gui_prefs.py:2739
+#: ../src/orca/orca-setup.glade.h:126
 msgid "So_me"
 msgstr "ب_عض"
 
@@ -3684,7 +3756,8 @@ msgstr "ب_عض"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2746 ../src/orca/orca-setup.glade.h:88
+#: ../src/orca/orca_gui_prefs.py:2746
+#: ../src/orca/orca-setup.glade.h:88
 msgid "M_ost"
 msgstr "م_عظم"
 
@@ -3708,7 +3781,8 @@ msgstr "جملة"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2793 ../src/orca/orca_gui_prefs.py:2923
+#: ../src/orca/orca_gui_prefs.py:2793
+#: ../src/orca/orca_gui_prefs.py:2923
 #: ../src/orca/orca-setup.glade.h:31
 msgid "Brie_f"
 msgstr "م_لخّص"
@@ -3717,7 +3791,8 @@ msgstr "م_لخّص"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/orca_gui_prefs.py:2817 ../src/orca/orca-setup.glade.h:130
+#: ../src/orca/orca_gui_prefs.py:2817
+#: ../src/orca/orca-setup.glade.h:130
 msgid "Speak current _cell"
 msgstr "الكلام بال_خلية ال_حالية"
 
@@ -3775,14 +3850,16 @@ msgstr "حُذف ارتباط المفتاح."
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3755 ../src/orca/orca-setup.glade.h:156
+#: ../src/orca/orca_gui_prefs.py:3755
+#: ../src/orca/orca-setup.glade.h:156
 msgid "_Desktop"
 msgstr "_حاسوب مكتبي"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/orca_gui_prefs.py:4163 ../src/orca/orca_gui_prefs.py:4174
+#: ../src/orca/orca_gui_prefs.py:4163
+#: ../src/orca/orca_gui_prefs.py:4174
 #: ../src/orca/orca_gui_prefs.py:4196
 msgid "Bilinear"
 msgstr "ثنائي خطّي"
@@ -3792,7 +3869,8 @@ msgstr "ثنائي خطّي"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4379 ../src/orca/orca_gui_prefs.py:4469
+#: ../src/orca/orca_gui_prefs.py:4379
+#: ../src/orca/orca_gui_prefs.py:4469
 msgid "Saturate red"
 msgstr "احمر مشبع"
 
@@ -3801,7 +3879,8 @@ msgstr "احمر مشبع"
 #. pixels on the screen.  For example, an RGB value of
 #. (75, 100, 125) would become (75, 255, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4387 ../src/orca/orca_gui_prefs.py:4477
+#: ../src/orca/orca_gui_prefs.py:4387
+#: ../src/orca/orca_gui_prefs.py:4477
 msgid "Saturate green"
 msgstr "اخضر مشبع"
 
@@ -3810,7 +3889,8 @@ msgstr "اخضر مشبع"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 255).
 #.
-#: ../src/orca/orca_gui_prefs.py:4395 ../src/orca/orca_gui_prefs.py:4485
+#: ../src/orca/orca_gui_prefs.py:4395
+#: ../src/orca/orca_gui_prefs.py:4485
 msgid "Saturate blue"
 msgstr "ازرق مشبع"
 
@@ -3819,7 +3899,8 @@ msgstr "ازرق مشبع"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4403 ../src/orca/orca_gui_prefs.py:4493
+#: ../src/orca/orca_gui_prefs.py:4403
+#: ../src/orca/orca_gui_prefs.py:4493
 msgid "Desaturate red"
 msgstr "احمر "
 
@@ -3828,7 +3909,8 @@ msgstr "احمر "
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 0, 125).
 #.
-#: ../src/orca/orca_gui_prefs.py:4411 ../src/orca/orca_gui_prefs.py:4501
+#: ../src/orca/orca_gui_prefs.py:4411
+#: ../src/orca/orca_gui_prefs.py:4501
 msgid "Desaturate green"
 msgstr "أخضر باهت"
 
@@ -3837,7 +3919,8 @@ msgstr "أخضر باهت"
 #. pixels on the screen. For example, an RGB value of
 #. (75, 100, 125) would become (75, 100, 0).
 #.
-#: ../src/orca/orca_gui_prefs.py:4419 ../src/orca/orca_gui_prefs.py:4509
+#: ../src/orca/orca_gui_prefs.py:4419
+#: ../src/orca/orca_gui_prefs.py:4509
 msgid "Desaturate blue"
 msgstr "ازرق باهت"
 
@@ -3846,8 +3929,8 @@ msgstr "ازرق باهت"
 #. example, an RGB value of (75, 100, 125) would become
 #. (125, 75, 100).
 #.
-#: ../src/orca/orca_gui_prefs.py:4427 ../src/orca/orca_gui_prefs.py:4517
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:4427
+#: ../src/orca/orca_gui_prefs.py:4517
 msgid "Positive hue shift"
 msgstr "تغيير إشباع ايجابي"
 
@@ -3856,8 +3939,8 @@ msgstr "تغيير إشباع ايجابي"
 #. example, an RGB value of (75, 100, 125) would become
 #. (100, 125, 75).
 #.
-#: ../src/orca/orca_gui_prefs.py:4435 ../src/orca/orca_gui_prefs.py:4525
-#, fuzzy
+#: ../src/orca/orca_gui_prefs.py:4435
+#: ../src/orca/orca_gui_prefs.py:4525
 msgid "Negative hue shift"
 msgstr "تغيير إشباع سلبي"
 
@@ -3873,7 +3956,9 @@ msgstr "قارئ الشاشة و المكبّر أوركا"
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:281 ../src/orca/orca.py:1268 ../src/orca/orca.py:1269
+#: ../src/orca/orca.py:281
+#: ../src/orca/orca.py:1268
+#: ../src/orca/orca.py:1269
 msgid "Goodbye."
 msgstr "وداعا."
 
@@ -4057,16 +4142,14 @@ msgid "<b>Braille Indicator</b>"
 msgstr "<b>مبيّن برايل</b>"
 
 #: ../src/orca/orca-setup.glade.h:7
-#, fuzzy
 msgid "<b>Brightness</b>"
-msgstr "<b>السطوع</b>"
+msgstr "<b>الضوء</b>"
 
 #: ../src/orca/orca-setup.glade.h:8
 msgid "<b>Color Settings</b>"
 msgstr "<b>إعدادات الألوان</b>"
 
 #: ../src/orca/orca-setup.glade.h:9
-#, fuzzy
 msgid "<b>Contracted Braille</b>"
 msgstr "<b>برايل متقلص</b>"
 
@@ -4156,7 +4239,6 @@ msgid "Brightness:"
 msgstr "السطوع:"
 
 #: ../src/orca/orca-setup.glade.h:33
-#, fuzzy
 msgid ""
 "Centered\n"
 "Proportional\n"
@@ -4169,7 +4251,6 @@ msgstr ""
 "بلا"
 
 #: ../src/orca/orca-setup.glade.h:37
-#, fuzzy
 msgid ""
 "Centered\n"
 "Push\n"
@@ -4188,7 +4269,6 @@ msgid "Contrast:"
 msgstr "التباين:"
 
 #: ../src/orca/orca-setup.glade.h:42
-#, fuzzy
 msgid "Cross-hair color:"
 msgstr "لون عابر-الشعر:"
 
@@ -4384,7 +4464,6 @@ msgstr ""
 "خطي مزدوج"
 
 #: ../src/orca/orca-setup.glade.h:101
-#, fuzzy
 msgid ""
 "None\n"
 "Saturate red\n"
@@ -4486,7 +4565,6 @@ msgid "Speak progress bar _updates"
 msgstr "انطق بتحديث عمود التقدم"
 
 #: ../src/orca/orca-setup.glade.h:134
-#, fuzzy
 msgid "Speak tutorial messages"
 msgstr "انطق بالرسائل من"
 
@@ -4507,7 +4585,6 @@ msgid "Start Orca when you lo_gin"
 msgstr "إبدا أوركا عند _ولوجك"
 
 #: ../src/orca/orca-setup.glade.h:139
-#, fuzzy
 msgid "Target displa_y:"
 msgstr "الشاشة ال_هدف:"
 
@@ -4674,16 +4751,8 @@ msgstr "ثوان"
 #. "Additions in German, Danish and Norwegian" and "Variants".
 #.
 #: ../src/orca/phonnames.py:53
-msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
-msgstr ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+msgid "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+msgstr "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -4850,7 +4919,8 @@ msgstr "تسمية"
 #.
 #. Translators: short braille for the rolename of a check menu item.
 #.
-#: ../src/orca/rolenames.py:276 ../src/orca/rolenames.py:288
+#: ../src/orca/rolenames.py:276
+#: ../src/orca/rolenames.py:288
 msgid "chk"
 msgstr "خيار"
 
@@ -4900,7 +4970,8 @@ msgstr "مختار الألوان"
 #.
 #. Translators: short braille for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:312 ../src/orca/rolenames.py:934
+#: ../src/orca/rolenames.py:312
+#: ../src/orca/rolenames.py:934
 msgid "colhdr"
 msgstr "رأس العمود"
 
@@ -4908,7 +4979,8 @@ msgstr "رأس العمود"
 #.
 #. Translators: long braille for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:315 ../src/orca/rolenames.py:937
+#: ../src/orca/rolenames.py:315
+#: ../src/orca/rolenames.py:937
 msgid "ColumnHeader"
 msgstr "رأس العمود"
 
@@ -4916,7 +4988,8 @@ msgstr "رأس العمود"
 #.
 #. Translators: spoken words for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:318 ../src/orca/rolenames.py:940
+#: ../src/orca/rolenames.py:318
+#: ../src/orca/rolenames.py:940
 msgid "column header"
 msgstr "رأس العمود"
 
@@ -4960,7 +5033,8 @@ msgstr "محرر التاريخ"
 #.
 #. Translators: short braille for the rolename of a icon.
 #.
-#: ../src/orca/rolenames.py:348 ../src/orca/rolenames.py:538
+#: ../src/orca/rolenames.py:348
+#: ../src/orca/rolenames.py:538
 msgid "icn"
 msgstr "أقن"
 
@@ -4980,7 +5054,8 @@ msgstr "أيقونة المكتب"
 #.
 #. Translators: short braille for the rolename of a frame.
 #.
-#: ../src/orca/rolenames.py:360 ../src/orca/rolenames.py:490
+#: ../src/orca/rolenames.py:360
+#: ../src/orca/rolenames.py:490
 msgid "frm"
 msgstr "إطار"
 
@@ -5060,7 +5135,8 @@ msgstr "شباك الدلائل"
 #.
 #. Translators: short braille for the rolename of an html container.
 #.
-#: ../src/orca/rolenames.py:413 ../src/orca/rolenames.py:526
+#: ../src/orca/rolenames.py:413
+#: ../src/orca/rolenames.py:526
 msgid "html"
 msgstr "HTML"
 
@@ -5614,7 +5690,8 @@ msgstr "لوح الجذر"
 #.
 #. Translators: short braille for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:802 ../src/orca/rolenames.py:946
+#: ../src/orca/rolenames.py:802
+#: ../src/orca/rolenames.py:946
 msgid "rwhdr"
 msgstr "ترويسة السطر"
 
@@ -5622,7 +5699,8 @@ msgstr "ترويسة السطر"
 #.
 #. Translators: long braille for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:805 ../src/orca/rolenames.py:949
+#: ../src/orca/rolenames.py:805
+#: ../src/orca/rolenames.py:949
 msgid "RowHeader"
 msgstr "ترويسة السطر"
 
@@ -5630,7 +5708,8 @@ msgstr "ترويسة السطر"
 #.
 #. Translators: spoken words for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:808 ../src/orca/rolenames.py:952
+#: ../src/orca/rolenames.py:808
+#: ../src/orca/rolenames.py:952
 msgid "row header"
 msgstr "ترويسة السطر"
 
@@ -6354,7 +6433,6 @@ msgstr "اقرأ"
 #. the area where calculation results are presented.
 #.
 #: ../src/orca/scripts/apps/gcalctool/script.py:108
-#, fuzzy
 msgid "Unable to get calculator display"
 msgstr "تعذر جلب عارض الحاسبة"
 
@@ -6513,8 +6591,7 @@ msgid "Notification %s"
 msgstr "اشعار  %s"
 
 #: ../src/orca/scripts/apps/pidgin/script.py:192
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "تغيير ما إذا يجب بدأ رسالات المحاديثة باسم غرفة المحادثة."
 
 #: ../src/orca/scripts/apps/pidgin/script.py:198
@@ -6662,7 +6739,6 @@ msgstr "حدد الصف المستعمل كترويسات أعمدة دينام�
 #. row of a spreadsheet or table counts as column headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:216
-#, fuzzy
 msgid "Clears the dynamic column headers."
 msgstr "يمسح رؤوس الاعمدة المتغيرة."
 
@@ -6670,8 +6746,7 @@ msgstr "يمسح رؤوس الاعمدة المتغيرة."
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:224
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr "حدد العمود المستعمل كترويسات صفوف ديناميكية عند التكلم بخلايا كالك."
 
 #. Translators: Orca allows you to dynamically define which
@@ -6809,7 +6884,8 @@ msgstr "الخلية %s"
 #. or table.
 #.
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:128
-#: ../src/orca/speechgenerator.py:830 ../src/orca/speechgenerator.py:1370
+#: ../src/orca/speechgenerator.py:830
+#: ../src/orca/speechgenerator.py:1370
 msgid "0 items"
 msgstr "0 عناصر"
 
@@ -6820,7 +6896,8 @@ msgstr "0 عناصر"
 #.
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:362
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:392
-#: ../src/orca/speechserver.py:208 ../src/orca/speech.py:188
+#: ../src/orca/speechserver.py:208
+#: ../src/orca/speech.py:188
 msgid "on"
 msgstr "مشتغل"
 
@@ -6831,7 +6908,8 @@ msgstr "مشتغل"
 #.
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:366
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:396
-#: ../src/orca/speechserver.py:213 ../src/orca/speech.py:193
+#: ../src/orca/speechserver.py:213
+#: ../src/orca/speech.py:193
 msgid "off"
 msgstr "موقف"
 
@@ -7433,7 +7511,8 @@ msgstr "جييم"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1188 ../src/orca/settings.py:1196
+#: ../src/orca/settings.py:1188
+#: ../src/orca/settings.py:1196
 msgid "required"
 msgstr "مطلوب"
 
@@ -7471,7 +7550,8 @@ msgstr " %s صوت افتراضي"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speechgenerator.py:685 ../src/orca/where_am_I.py:1763
+#: ../src/orca/speechgenerator.py:685
+#: ../src/orca/where_am_I.py:1763
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -9229,100 +9309,95 @@ msgstr "tb"
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: ../src/orca/tutorialgenerator.py:154
 msgid "Press space to toggle."
-msgstr ""
+msgstr "اضغط مسطرة المسافات لتغيير حالة مربع الاختيار"
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
 #: ../src/orca/tutorialgenerator.py:180
 msgid "Press space to expand, and use up and down to select an item."
-msgstr ""
+msgstr "اضغط مسطرة المسافات لإظهار الخيارات واستخدم الأسهم الرأسية لتحديد أحد العناصر"
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, giving tips on how to navigate.
 #. Also describing how to access the menues.
 #: ../src/orca/tutorialgenerator.py:211
-msgid ""
-"To move to items, use either the arrow keys, or type ahead searching. To get "
-"to the system menues press the alt+f1 key."
-msgstr ""
+msgid "To move to items, use either the arrow keys, or type ahead searching. To get to the system menues press the alt+f1 key."
+msgstr "للتحرك بين العناصر استخدم الأسهم أو اكتب الأحرف الأولى من العنصر واضغط مفتاح القوائم زائد f1 لتفعيل قائمة النظام"
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
 #: ../src/orca/tutorialgenerator.py:217
 msgid "Press alt+f6 to give focus to child windows."
-msgstr ""
+msgstr "اضغط مفتاح القوائم زائد f6 لتنشيط النوافذ الفرعية"
 
 #. Translators: this is the tutorial string when navigating lists.
 #: ../src/orca/tutorialgenerator.py:250
 msgid "Use up and down to select an item."
-msgstr ""
+msgstr "استخدم الأسهم الرأسية لتحديد أحد العناصر"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:279 ../src/orca/tutorialgenerator.py:427
+#: ../src/orca/tutorialgenerator.py:279
+#: ../src/orca/tutorialgenerator.py:427
 msgid "To collapse, press shift plus left."
-msgstr ""
+msgstr "اضغط مفتاح التبديل زائد السهم الأيسر للإخفاء"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:285 ../src/orca/tutorialgenerator.py:433
+#: ../src/orca/tutorialgenerator.py:285
+#: ../src/orca/tutorialgenerator.py:433
 msgid "To expand, press shift plus right."
-msgstr ""
+msgstr "اضغط مفتاح التبديل زائد السهم الأيمن للإظهار"
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
 #: ../src/orca/tutorialgenerator.py:317
 msgid "Type in text."
-msgstr ""
+msgstr "اكتب نص"
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:345
 msgid "Use left and right to view other tabs."
-msgstr ""
+msgstr "استخدم الأسهم الأفقية لعرض الصحائف الأخرى"
 
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:370
 msgid "To activate press space."
-msgstr ""
+msgstr "اضغط مسطرة المسافات للتفعيل "
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:397
-msgid ""
-"Use up or down arrow to select value. Or type in the desired numerical value."
-msgstr ""
+msgid "Use up or down arrow to select value. Or type in the desired numerical value."
+msgstr "استخدم الأسهم الرأسية لاختيار أحد القيم أو قم بكتابة القيمة الرقمية التي تفضلها"
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: ../src/orca/tutorialgenerator.py:584
 msgid "Use arrow keys to change."
-msgstr ""
+msgstr "استخدم الأسهم للتغيير"
 
 #. Translators: this is a tip for the user, how to navigate menues.
 #: ../src/orca/tutorialgenerator.py:608
-msgid ""
-"To navigate, press left or right arrow. To move through items press up or "
-"down arrow."
-msgstr ""
+msgid "To navigate, press left or right arrow. To move through items press up or down arrow."
+msgstr "استخدم الأسهم الأفقية للتحرك والأسهم الرأسية للاختيار"
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
 #: ../src/orca/tutorialgenerator.py:613
 msgid "To enter sub menu, press right arrow."
-msgstr ""
+msgstr "اضغط السهم الأيمن لتفعيل القائمة الفرعية"
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
 #: ../src/orca/tutorialgenerator.py:645
-msgid ""
-"To decrease press left arrow, to increase press right arrow. To go to "
-"minimum press home, and for maximum press end."
-msgstr ""
+msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
+msgstr "اضغط السهم الأيمن لخفض الصوت والسهم الأيسر لرفعه واضغط مفتاح البداية لأدنى درجة ومفتاح النهاية لأعلى درجة"
 
 #. Translators: this is the percentage value of a slider.
 #.
@@ -9383,7 +9458,8 @@ msgstr "%s وصلة لـ %s"
 msgid "same page"
 msgstr "نفس الصفحة"
 
-#: ../src/orca/where_am_I.py:850 ../src/orca/where_am_I.py:858
+#: ../src/orca/where_am_I.py:850
+#: ../src/orca/where_am_I.py:858
 msgid "same site"
 msgstr "نفس الموقع"
 
@@ -9444,7 +9520,8 @@ msgstr "%.2f ميغابايت"
 
 #. Translators: this is an item in a list.
 #.
-#: ../src/orca/where_am_I.py:1205 ../src/orca/where_am_I.py:1249
+#: ../src/orca/where_am_I.py:1205
+#: ../src/orca/where_am_I.py:1249
 #, python-format
 msgid "item %d of %d"
 msgstr "العنصر %d من %d"
@@ -9460,15 +9537,12 @@ msgstr "الزر الإفتراضي هو %s"
 
 #~ msgid "Calc"
 #~ msgstr "احسب"
-
 #~ msgid "Text Document"
 #~ msgstr "مستند نصي"
-
 #~ msgid "Spellcheck:"
 #~ msgstr "تحقق املائي:"
-
 #~ msgid "Writer"
 #~ msgstr "الكاتب"
-
 #~ msgid "yelp"
 #~ msgstr "يلب"
+
