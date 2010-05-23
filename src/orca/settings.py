@@ -840,6 +840,11 @@ cacheAccessibles        = True
 #
 learnModeEnabled        = False
 
+# Assists with list shortcuts mode (what you enter when you press 
+# Insert + H (double click) and exit when you press escape.
+#
+listShortcutsModeEnabled = False
+
 # The location of the user's preferences. By default this is ~/.orca.
 # It can be overridden by the Orca -d command line option.
 #

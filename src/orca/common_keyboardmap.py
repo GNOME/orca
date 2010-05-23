@@ -54,7 +54,10 @@ keymap = (
     "readCharAttributesHandler"),
 
     ("h", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "enterLearnModeHandler"),
+    "enterLearnModeHandler", 1),
+
+    ("h", defaultModifierMask, ORCA_MODIFIER_MASK,
+    "enterListShortcutsModeHandler", 2),
 
     ("q", defaultModifierMask, ORCA_MODIFIER_MASK,
     "shutdownHandler"),

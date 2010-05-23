@@ -79,6 +79,7 @@ else:
 import pyatspi
 import braille
 import debug
+import default
 import httpserver
 import keynames
 import keybindings
@@ -372,8 +373,32 @@ def exitLearnMode(self, inputEvent=None):
     #
     message = _("Exiting learn mode.")
     speech.speak(message)
-    braille.displayMessage(message)
+    default.Script.displayBrailleMessage(message, settings.brailleFlashTime)
     settings.learnModeEnabled = False
+    return True
+
+def exitListShortcutsMode(self, inputEvent=None):
+    """Turns list shortcuts mode off.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    orca_state.listOfShortcuts = []
+    orca_state.typeOfShortcuts = ""
+    orca_state.ptrToShortcut = -1
+    settings.listShortcutsModeEnabled = False
+
+    # Translators: Orca has a "List Shortcuts Mode" that allows
+    # the user to list a group of keyboard shortcuts. The Orca
+    # default shortcuts can be listed by pressing 1, and Orca
+    # shortcuts for the application under focus can be listed by
+    # pressing 2. User can press Up/ Down to navigate and hear
+    # the list, toggle among the lists pressing 1 or 2,
+    # and exit the "List Shortcuts Mode" by pressing Escape.
+    #
+    message = _("Exiting list shortcuts mode.")
+    speech.speak(message)
+    default.Script.displayBrailleMessage(message, settings.brailleFlashTime)
     return True
 
 ########################################################################
@@ -880,7 +905,11 @@ def _processKeyboardEvent(event):
         if orca_state.capturingKeys:
             consumed = _processKeyCaptured(keyboardEvent)
         else:
-            consumed = _keyBindings.consumeKeyboardEvent(None, keyboardEvent)
+            if settings.listShortcutsModeEnabled:
+                consumed = listShortcuts(keyboardEvent)
+            if (not consumed):
+                consumed = _keyBindings.consumeKeyboardEvent( \
+                  None, keyboardEvent)
             if (not consumed) and (_currentPresentationManager >= 0):
                 consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
                            processKeyboardEvent(keyboardEvent)
@@ -1230,6 +1259,212 @@ def helpForOrca(script=None, inputEvent=None):
                  "ghelp:gnome-access-guide#ats-2",
                  gtk.get_current_event_time())
     return True
+
+def listShortcuts(event):
+    """When list shortcuts mode is enabled, this function enables user to list
+    Orca shortcuts. If 1 is pressed, it creates a list of Orca default
+    shortcuts. If 2 is pressed, it creates a list of Orca shortcuts
+    (if any) which are specific to the focussed application. In list shortcuts
+    mode, user can either navigate the list using Up and Down keys or 
+    can toggle among the lists by pressing 1 or 2, or exit the list
+    shortcuts mode by pressing the Escape key; other keys are disabled.
+
+    Arguments:
+    - event: an AT-SPI DeviceEvent
+
+    Returns True if the event is consumed (and False if not).
+    """
+    numShortcuts = len(orca_state.listOfShortcuts)
+    consumed = False
+    clickCount = 0
+    message = ""
+
+    if event.type == pyatspi.KEY_PRESSED_EVENT:
+        clickCount = orca_state.activeScript.getClickCount()
+        if (event.event_string == "1"):
+            if (numShortcuts == 0) or (orca_state.typeOfShortcuts != \
+              "orcaDefault"):
+                orca_state.listOfShortcuts = getListOfShortcuts("orcaDefault")
+                orca_state.typeOfShortcuts = "orcaDefault"
+                numShortcuts = len(orca_state.listOfShortcuts)
+            orca_state.ptrToShortcut = 0
+
+            # Translators: This message is presented when
+            # the user is in 'list of shortcuts mode'
+            # We inform them how many general Orca shortcuts are available
+            # and how to return to normal interaction mode.
+            #
+            message = _("%d Orca default shortcuts are listed. Use Up and " \
+              "Down keys to navigate the list; or press Escape to exit.") % \
+              numShortcuts
+            speech.speak(message)
+            default.Script.displayBrailleMessage(message, -1, -1) 
+            message = orca_state.listOfShortcuts[orca_state.ptrToShortcut][0]+ \
+              "\t" + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
+            speech.speak(message)
+            default.Script.displayBrailleMessage(message, -1, -1)
+            consumed = True
+        elif (event.event_string == "2"):
+            if (numShortcuts==0) or (orca_state.typeOfShortcuts!="orcaAppln"):
+                orca_state.listOfShortcuts = getListOfShortcuts("orcaAppln")
+                orca_state.typeOfShortcuts = "orcaAppln"  
+                numShortcuts = len(orca_state.listOfShortcuts)
+            if numShortcuts > 0: 
+                orca_state.ptrToShortcut = 0
+
+                # Translators: This message is presented when
+                # the user is in 'list of shortcuts mode'
+                # We inform them how many application specific Orca shortcuts 
+                # are available and how to return to normal interaction mode.
+                #
+                message = _("%d Orca %s shortcuts are listed. Use Up and Down "\
+                  "keys to navigate the list; or press Escape to exit.") % \
+                  (numShortcuts, orca_state.activeScript.app.name)
+                speech.speak(message)
+                default.Script.displayBrailleMessage(message, -1, -1)
+                message = \
+                  orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
+                  "\t" + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
+                speech.speak(message)
+                default.Script.displayBrailleMessage(message, -1, -1)
+            else:
+                # Translators: This message is presented when
+                # the user is in 'list of shortcuts mode'
+                # Inform that no application specific Orca shortcuts are
+                # defined, and how to return to normal interaction mode.
+                #
+                message = _("There are no Orca shortcuts, specific to %s") % \
+                  (orca_state.activeScript.app.name)
+                speech.speak(message)
+                default.Script.displayBrailleMessage(message, -1, -1)
+            consumed = True
+        elif (event.event_string == "Up"):
+            if (numShortcuts > 0):
+                if orca_state.ptrToShortcut > 0: 
+                    orca_state.ptrToShortcut = orca_state.ptrToShortcut-1
+                else:
+                    orca_state.ptrToShortcut = numShortcuts-1 
+
+                    # Translators: This message is presented when
+                    # the user is in 'list of shortcuts mode'
+                    # The user has reached the top of the list and we are
+                    # informing them that we are cycling round to the bottom.
+                    #
+                    message = _("Wrapping down to end of list.")
+                    speech.speak(message)
+                    default.Script.displayBrailleMessage(message, -1, -1)
+                message = \
+                  orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
+                  "\t" + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
+                speech.speak(message)
+                default.Script.displayBrailleMessage(message, -1, -1)
+            consumed = True
+        elif (event.event_string == "Down"):
+            if (numShortcuts > 0): 
+                if orca_state.ptrToShortcut < numShortcuts-1: 
+                    orca_state.ptrToShortcut = orca_state.ptrToShortcut+1
+                else:
+                    orca_state.ptrToShortcut = 0 
+                    # Translators: This message is presented when
+                    # the user is in 'list of shortcuts mode'
+                    # The user has reached the bottom of the list and we
+                    # are informing them that we are cycling round to the top.
+                    #
+                    message = _("Wrapping up to beginning of list.")
+                    speech.speak(message)
+                    default.Script.displayBrailleMessage(message, -1, -1)
+                message = \
+                  orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
+                  "\t" + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
+                speech.speak(message)
+                default.Script.displayBrailleMessage(message, -1, -1)
+            consumed = True
+        elif (event.event_string == "Escape"):
+            exitListShortcutsMode(event)
+            consumed = True 
+        else:
+
+            # Translators: User is in 'list of shortcuts' mode,
+            # We give them the choice of displaying the general Orca shortcuts
+            # or the application specific Orca shortcuts.
+            # Also inform them how to exit this mode into
+            # normal interaction.
+            #
+            message = _("Press 1 to list Orca default shortcuts. Press 2 " \
+              "to list Orca shortcuts for the application under focus. " \
+              "To exit list shortcuts mode, press the escape key.")
+            speech.speak(message)
+            default.Script.displayBrailleMessage(message, -1, -1)
+            consumed = True
+    elif (event.type == pyatspi.KEY_RELEASED_EVENT) and (event.event_string \
+      == "Escape"):
+        consumed = True
+    return consumed
+
+
+def getListOfShortcuts(typeOfShortcuts):
+    """This function returns a list of Orca default shortcuts if the argument 
+    is "orcaDefault". It returns a list of Orca shortcuts which are specific  
+    to the application under focus, if the argument is "orcaAppln". Orca 
+    default shortcuts are those found in the default script. Application 
+    specific shortcuts are those which are present in the active script, 
+    but not in the default script. Only one shortcut per handler is listed. 
+    The list is sorted on shortcuts.    
+
+    Arguments:
+    - typeOfShortcuts: a string specifying the desired type of shortcuts.
+
+    Returns a list of shortcuts; depending on the value of argument.
+    """
+    numShortcuts = len(orca_state.listOfShortcuts)
+    shortcuts = []
+    shortcut = ""
+    clickCount = ""
+    brlKeyName = ""     
+    brlHandler = None
+    defScript = default.Script(None)
+    defKeyBindings = defScript.getKeyBindings()
+    defBrlBindings = defScript.getBrailleBindings()
+    kbindings = keybindings.KeyBindings()
+    if typeOfShortcuts == "orcaDefault":
+        for kb in defKeyBindings.keyBindings:
+            if kb.keysymstring:
+                if not kbindings.hasKeyBinding(kb,"description"):
+                    kbindings.add(kb)
+    elif typeOfShortcuts == "orcaAppln":
+        for kb in orca_state.activeScript.keyBindings.keyBindings:
+            if kb.keysymstring:
+                if not (defKeyBindings.hasKeyBinding(kb,"description") or \
+                kbindings.hasKeyBinding(kb,"description")):
+                    kbindings.add(kb)
+
+    for kb in kbindings.keyBindings:
+        keysymString = kb.keysymstring.replace("KP_", _("keypad "))
+        clickCount = ""
+        if kb.click_count == 2:
+            # Translators: Orca keybindings support double
+            # and triple "clicks" or key presses, similar to
+            # using a mouse.
+            #
+            clickCount = _("double click")
+        elif kb.click_count == 3:
+            # Translators: Orca keybindings support double
+            # and triple "clicks" or key presses, similar to
+            # using a mouse.
+            #
+            clickCount = _("triple click")
+        shortcut = (kb.handler.description, keybindings.getModifierNames\
+        (kb.modifiers) + keysymString.upper() + " " + clickCount)
+        shortcuts.append(shortcut)
+        shortcuts = sorted(shortcuts, key=lambda shortcut: shortcut[1])
+
+    if typeOfShortcuts == "orcaDefault":
+        for bb in defBrlBindings.keys():
+            brlKeyName = braille.command_name[bb]
+            brlHandler = defBrlBindings[bb]
+            shortcut = (brlHandler.description, brlKeyName)
+            shortcuts.append(shortcut) 
+    return shortcuts
 
 def quitOrca(script=None, inputEvent=None):
     """Quit Orca. Check if the user wants to confirm this action.

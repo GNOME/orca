@@ -778,6 +778,21 @@ class Script(script.Script):
                 #
                 _("Enters learn mode.  Press escape to exit learn mode."))
 
+        self.inputEventHandlers["enterListShortcutsModeHandler"] = \
+            input_event.InputEventHandler(
+                Script.enterListShortcutsMode,
+                # Translators: Orca has a "List Shortcuts Mode" that will allow
+                # the user to list a group of keyboard shortcuts. The Orca
+                # default shortcuts can be listed by pressing 1, and Orca 
+                # shortcuts for the application under focus can be listed by
+                # pressing 2. User can press Up/ Down to navigate and hear
+                # the list, changeover to another list by pressing 1/2,
+                # and exit the "List Shortcuts Mode" by pressing Escape. 
+                #
+                _("Enters list shortcuts mode.  Press escape to exit " \
+                  "list shortcuts mode."),False)
+                # Do not enable learn mode for this action
+
         self.inputEventHandlers["decreaseSpeechRateHandler"] = \
             input_event.InputEventHandler(
                 speech.decreaseSpeechRate,
@@ -1538,6 +1553,49 @@ class Script(script.Script):
         #
         self.displayBrailleMessage(_("Learn mode.  Press escape to exit."))
         settings.learnModeEnabled = True
+        return True
+
+    def enterListShortcutsMode(self, inputEvent):
+        """Turns list shortcuts mode on.  The user must press the escape key to
+        exit list shortcuts mode. Key bindings for learn mode & list shortcuts
+        mode are Orca+H & Orca+H(double click) respectively. So, while enabling
+        list shortcuts mode, learn mode is enabled as a side effect. We start by
+        disabling it.
+
+        Returns True to indicate the input event has been consumed.
+        """
+        settings.learnModeEnabled = False
+        if settings.listShortcutsModeEnabled:
+            return True
+
+        # Translators: Orca has a "List Shortcuts Mode" that allows 
+        # the user to list a group of keyboard shortcuts. The Orca
+        # default shortcuts can be listed by pressing 1, and Orca 
+        # shortcuts for the application under focus can be listed by
+        # pressing 2. User can press Up/ Down to navigate and hear
+        # the list, toggle among the lists pressing 1 or 2,
+        # and exit the "List Shortcuts Mode" by pressing Escape. 
+        # This text here is what is spoken to the user.
+        #
+        speech.speak(_("Entering list shortcuts mode.  Press 1 to list and " \
+          "hear, Orca default shortcuts.  Press 2 to list and hear, Orca " \
+          "shortcuts for the application under focus.  To exit list " \
+          "shortcuts mode, press the escape key."))
+
+        # Translators: Orca has a "List Shortcuts Mode" that allows 
+        # the user to list a group of keyboard shortcuts. The Orca
+        # default shortcuts can be listed by pressing 1, and Orca 
+        # shortcuts for the application under focus can be listed by
+        # pressing 2. User can press Up/ Down to navigate and hear
+        # the list, toggle among the lists pressing 1 or 2,
+        # and exit the "List Shortcuts Mode" by pressng Escape. 
+        # This text here is what is to be presented on the braille
+        # display.
+        #
+        self.displayBrailleMessage(_("List shortcuts mode.  Press 1 for " \
+          "Orca default shortcuts.  Press 2 for Orca application " \
+          "shortcuts.  Press escape to exit."))
+        settings.listShortcutsModeEnabled = True
         return True
 
     def findNext(self, inputEvent):
