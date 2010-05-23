@@ -1579,21 +1579,28 @@ class Script(script.Script):
         if settings.listShortcutsModeEnabled:
             return True
 
-        # Translators: Orca has a "List Shortcuts Mode" that allows 
-        # the user to list a group of keyboard shortcuts. The Orca
-        # default shortcuts can be listed by pressing 1, and Orca 
-        # shortcuts for the application under focus can be listed by
-        # pressing 2. User can press Up/ Down to navigate and hear
-        # the list, toggle among the lists pressing 1 or 2,
-        # and exit the "List Shortcuts Mode" by pressng Escape. 
-        # This text here is what is to be presented on the braille
-        # display.
+        # Translators: Orca has a 'List Shortcuts' mode by which a user can
+        # navigate through a list of the bound commands in Orca. This is the
+        # message that is presented to the user as confirmation that this
+        # mode has been entered.
         #
-        message = _("List shortcuts mode.  Press 1 for " \
-          "Orca default shortcuts.  Press 2 for Orca application " \
-          "shortcuts.  Press escape to exit.")
+        mode = _("List shortcuts mode.")
+
+        # Translators: Orca has a 'List Shortcuts' mode by which a user can
+        # navigate through a list of the bound commands in Orca. Pressing 1
+        # presents the commands/shortcuts available for all applications.
+        # These are the "default" commands/shortcuts. Pressing 2 presents
+        # commands/shortcuts Orca provides for the application with focus.
+        # The following message is presented to the user upon entering this
+        # mode.
+        #
+        message = _("Press 1 for Orca's default shortcuts. Press 2 for " \
+                    "Orca's shortcuts for the current application. " \
+                    "Press escape to exit.")
+
+        message = mode + " " + message
         speech.speak(message)
-        self.displayBrailleMessage(message, -1, -1) 
+        self.displayBrailleMessage(message, -1, -1)
         settings.listShortcutsModeEnabled = True
         return True
 

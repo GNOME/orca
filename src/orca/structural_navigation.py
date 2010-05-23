@@ -876,18 +876,18 @@ class StructuralNavigation:
         if wrapped:
             if not isNext:
                 # Translators: when the user is attempting to locate a
-                # particular object and the top of the web page has been
+                # particular object and the top of a page or list is
                 # reached without that object being found, we "wrap" to
-                # the bottom of the page and continuing looking upwards.
-                # We need to inform the user when this is taking place.
+                # the bottom and continue looking upwards. We need to
+                # inform the user when this is taking place.
                 #
                 self._script.presentMessage(_("Wrapping to bottom."))
             else:
                 # Translators: when the user is attempting to locate a
-                # particular object and the bottom of the web page has been
+                # particular object and the bottom of a page or list is
                 # reached without that object being found, we "wrap" to the
-                # top of the page and continuing looking downwards. We need
-                # to inform the user when this is taking place.
+                # top and continue looking downwards. We need to inform the
+                # user when this is taking place.
                 #
                 self._script.presentMessage(_("Wrapping to top."))
 

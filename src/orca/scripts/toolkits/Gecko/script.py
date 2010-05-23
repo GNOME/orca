@@ -6054,10 +6054,10 @@ class Script(default.Script):
 
         if not found:
             # Translators: when the user is attempting to locate a
-            # particular object and the top of the web page has been
+            # particular object and the top of the page or list is
             # reached without that object being found, we "wrap" to
-            # the bottom of the page and continuing looking upwards.
-            # We need to inform the user when this is taking place.
+            # the bottom and continue looking upwards. We need to
+            # inform the user when this is taking place.
             #
             self.presentMessage(_("Wrapping to bottom."))
             [prevObj, prevOffset] = self.getBottomOfFile()
@@ -6122,10 +6122,10 @@ class Script(default.Script):
 
         if not found:
             # Translators: when the user is attempting to locate a
-            # particular object and the bottom of the web page has been
+            # particular object and the bottom of the page or list is
             # reached without that object being found, we "wrap" to the
-            # top of the page and continuing looking downwards. We need
-            # to inform the user when this is taking place.
+            # top and continue looking downwards. We need to inform the
+            # user when this is taking place.
             #
             self.presentMessage(_("Wrapping to top."))
             [nextObj, nextOffset] = self.getTopOfFile()
