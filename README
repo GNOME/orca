@@ -1,4 +1,4 @@
-Orca v2.31.1pre
+Orca v2.31.2
 
 Introduction
 ========================================================================
@@ -30,7 +30,7 @@ http://library.gnome.org/users/gnome-access-guide/
 Build Requirements
 ========================================================================
 
-Orca v2.29.x is supported on GNOME 2.29.x only.  We highly suggest you
+Orca v2.31.x is supported on GNOME 2.31.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 

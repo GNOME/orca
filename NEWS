@@ -1,3 +1,133 @@
+2.31.2 - 23-May-2010
+
+General:
+
+  * Fix for bgo#619046 - Opentts/sd does not accept '\r\n', prevent
+    orca from sending this sequence.
+
+  * Fix for bgo#619047 - I can not run orca with --debug-file flag
+
+  * Fix for bgo#591034 - Caps_lock does not get re-enabled after orca
+    shutdown and when switching from laptop to desktop layout.
+
+  * Fix for bgo#618285 - Orca -q and --replace should quit gracefully
+    using kill.
+
+  * Fix for bgo3#618334 - SD python bindings crashes when receiving
+    newline followed by full stop.
+
+  * Fix for bgo#618464 - Convert scripts/apps/{evolution,soffice}/
+    script.py to be more legible.
+
+  * Fix for bgo#618381 - Remove verbose keybinding code from default.py
+
+  * Fix for bgo#618311 - orca.in should use spaces rather than tabs.
+
+  * Fix for bgo#618192 - All application scripts should have their own
+    directory
+
+  * Fix for bgo#609175 - The sets module is deprecated in python 2.6
+
+  * Fix for bgo#618165 - Create a Utilities class for scripts
+
+  * Fix for bgo#618166 - Orca's method names are inconsistent and
+    sometimes confusing
+
+New Commands:
+
+  * Fix for bgo#619383 - Need unbound keybinding for cycling through
+    key echo options.
+
+  * Fix for bgo#616820 - There is no command to present the list of
+    available Orca keyboard shortcuts.
+
+  * Fix for bgo#617420 - Need unbound keybinding for rotating through
+    punctuation levels.
+
+Braille:
+
+  * Fix for bgo#618728 - Orca should have short and detailed messages
+    in both speech and braille
+
+  * Fix for bgo#618337 - Orca fails to present command-related
+    confirmation messages in braille
+
+  * Fix for bgo#618291 - Orca fails to present title bar, status bar,
+    and default button in braille
+
+  * Fix for bgo618288 - Orca fails to present the "no more found"
+    structural navigation messages in braille
+
+  * Fix for bgo#533660 - Orca does not display labels for unlabeled
+    XUL entries
+
+  * Fix for bgo#618800 - Some items spoken but not brailled in the OOo
+    Writer Templates and Documents dialog
+
+  * Fix for bgo#617976 - OO spreadsheet should present the equation on
+    the braille display when pressing orca+a
+
+Gecko:
+
+  * Fix for bgo#618981 - Orca sometimes speaks the entire line of a
+    Thunderbird message when Home or End are pressed
+
+  * Fix for bgo#619139 - Traceback in guessLabelFromOtherLines()
+
+  * Fix for bgo#618863 - Table structural navigation not working with
+    th element in Firefox 3.6
+
+  * Fix for bgo#618806 - WhereAmI in Thunderbird presents the full
+    message text when a message is editable
+
+  * Fix for bgo#618827 - The generatorCache is not getting dumped when
+    using Gecko's caret or structural navigation due to lack of AT-SPI
+    events
+
+  * Fix for bgo#618801 - Traceback in Thunderbird
+
+  * Fix for bgo#618633 - Remove keybindings code from Gecko script.
+
+OpenOffice:
+
+  * Fix for bgo#619101 - Duplicate caret-moved events in OOo Writer
+    are causing Orca to double-speak lines of text
+
+  * Fix for bgo#538050 - Orca should announce the slide title, number,
+    and count when Page Up/Page Down is pressed in Impress
+
+  * Fix for bgo#618790 - The active descendant in OOo Writer 3.2's
+    Templates and Documents dialog are not presented
+
+  * Fix for bgo#618794 - Orca speaks "end of table" when the selection
+    changes in OOo Writer's Templates and Documents dialog
+
+  * Fix for bgo#617603 - OO Cell numbers not spoken in Ubuntu.
+
+Eclipse:
+
+  * Fix for bgo#618589 - when debugging in eclipse, sometimes orca
+    reads the same line twice
+
+  * Fix for bgo#618303 - orca needs a custom script for eclipse
+
+Rhythmbox:
+
+  * Fix for bgo#618774 - Active descendant in Rhythmbox sidebar not
+    presented
+
+Clutter/Cally:
+
+  * Fix for bgo#616206 - Add new specific toolkit script CALLY
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ar          Arabic              Fatma Mehanna
+    gl          Galician            Fran Diéguez
+    hu          Hungarian           Gabor Keleman
+
+==========
+
 2.31.1 - 02-May-2010
 
 General:
