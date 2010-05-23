@@ -1585,27 +1585,15 @@ class Script(script.Script):
         # shortcuts for the application under focus can be listed by
         # pressing 2. User can press Up/ Down to navigate and hear
         # the list, toggle among the lists pressing 1 or 2,
-        # and exit the "List Shortcuts Mode" by pressing Escape. 
-        # This text here is what is spoken to the user.
-        #
-        speech.speak(_("Entering list shortcuts mode.  Press 1 to list and " \
-          "hear, Orca default shortcuts.  Press 2 to list and hear, Orca " \
-          "shortcuts for the application under focus.  To exit list " \
-          "shortcuts mode, press the escape key."))
-
-        # Translators: Orca has a "List Shortcuts Mode" that allows 
-        # the user to list a group of keyboard shortcuts. The Orca
-        # default shortcuts can be listed by pressing 1, and Orca 
-        # shortcuts for the application under focus can be listed by
-        # pressing 2. User can press Up/ Down to navigate and hear
-        # the list, toggle among the lists pressing 1 or 2,
         # and exit the "List Shortcuts Mode" by pressng Escape. 
         # This text here is what is to be presented on the braille
         # display.
         #
-        self.displayBrailleMessage(_("List shortcuts mode.  Press 1 for " \
+        message = _("List shortcuts mode.  Press 1 for " \
           "Orca default shortcuts.  Press 2 for Orca application " \
-          "shortcuts.  Press escape to exit."))
+          "shortcuts.  Press escape to exit.")
+        speech.speak(message)
+        self.displayBrailleMessage(message, -1, -1) 
         settings.listShortcutsModeEnabled = True
         return True
 

@@ -79,7 +79,6 @@ else:
 import pyatspi
 import braille
 import debug
-import default
 import httpserver
 import keynames
 import keybindings
@@ -372,8 +371,7 @@ def exitLearnMode(self, inputEvent=None):
     # mode.
     #
     message = _("Exiting learn mode.")
-    speech.speak(message)
-    default.Script.displayBrailleMessage(message, settings.brailleFlashTime)
+    orca_state.activeScript.presentMessage(message)
     settings.learnModeEnabled = False
     return True
 
@@ -397,8 +395,7 @@ def exitListShortcutsMode(self, inputEvent=None):
     # and exit the "List Shortcuts Mode" by pressing Escape.
     #
     message = _("Exiting list shortcuts mode.")
-    speech.speak(message)
-    default.Script.displayBrailleMessage(message, settings.brailleFlashTime)
+    orca_state.activeScript.presentMessage(message)
     return True
 
 ########################################################################
@@ -1294,15 +1291,15 @@ def listShortcuts(event):
             # We inform them how many general Orca shortcuts are available
             # and how to return to normal interaction mode.
             #
-            message = _("%d Orca default shortcuts are listed. Use Up and " \
+            msg1 = _("%d Orca default shortcuts are listed. Use Up and " \
               "Down keys to navigate the list; or press Escape to exit.") % \
               numShortcuts
-            speech.speak(message)
-            default.Script.displayBrailleMessage(message, -1, -1) 
+
             message = orca_state.listOfShortcuts[orca_state.ptrToShortcut][0]+ \
               "\t" + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
             speech.speak(message)
-            default.Script.displayBrailleMessage(message, -1, -1)
+            orca_state.activeScript.displayBrailleMessage(message, -1, -1)
+            orca_state.activeScript.presentMessage(msg1)
             consumed = True
         elif (event.event_string == "2"):
             if (numShortcuts==0) or (orca_state.typeOfShortcuts!="orcaAppln"):
@@ -1321,12 +1318,12 @@ def listShortcuts(event):
                   "keys to navigate the list; or press Escape to exit.") % \
                   (numShortcuts, orca_state.activeScript.app.name)
                 speech.speak(message)
-                default.Script.displayBrailleMessage(message, -1, -1)
+                orca_state.activeScript.displayBrailleMessage(message, -1, -1)
                 message = \
                   orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
                   "\t" + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
                 speech.speak(message)
-                default.Script.displayBrailleMessage(message, -1, -1)
+                orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             else:
                 # Translators: This message is presented when
                 # the user is in 'list of shortcuts mode'
@@ -1336,7 +1333,7 @@ def listShortcuts(event):
                 message = _("There are no Orca shortcuts, specific to %s") % \
                   (orca_state.activeScript.app.name)
                 speech.speak(message)
-                default.Script.displayBrailleMessage(message, -1, -1)
+                orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
         elif (event.event_string == "Up"):
             if (numShortcuts > 0):
@@ -1351,13 +1348,12 @@ def listShortcuts(event):
                     # informing them that we are cycling round to the bottom.
                     #
                     message = _("Wrapping down to end of list.")
-                    speech.speak(message)
-                    default.Script.displayBrailleMessage(message, -1, -1)
+                    orca_state.activeScript.presentMessage(message)
+
                 message = \
                   orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
                   "\t" + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
-                speech.speak(message)
-                default.Script.displayBrailleMessage(message, -1, -1)
+                orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
         elif (event.event_string == "Down"):
             if (numShortcuts > 0): 
@@ -1371,13 +1367,13 @@ def listShortcuts(event):
                     # are informing them that we are cycling round to the top.
                     #
                     message = _("Wrapping up to beginning of list.")
-                    speech.speak(message)
-                    default.Script.displayBrailleMessage(message, -1, -1)
+                    orca_state.activeScript.presentMessage(message)
+
                 message = \
                   orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
                   "\t" + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
                 speech.speak(message)
-                default.Script.displayBrailleMessage(message, -1, -1)
+                orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
         elif (event.event_string == "Escape"):
             exitListShortcutsMode(event)
@@ -1394,7 +1390,7 @@ def listShortcuts(event):
               "to list Orca shortcuts for the application under focus. " \
               "To exit list shortcuts mode, press the escape key.")
             speech.speak(message)
-            default.Script.displayBrailleMessage(message, -1, -1)
+            orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
     elif (event.type == pyatspi.KEY_RELEASED_EVENT) and (event.event_string \
       == "Escape"):
@@ -1422,7 +1418,7 @@ def getListOfShortcuts(typeOfShortcuts):
     clickCount = ""
     brlKeyName = ""     
     brlHandler = None
-    defScript = default.Script(None)
+    defScript = orca_state.activeScript.Script(None)
     defKeyBindings = defScript.getKeyBindings()
     defBrlBindings = defScript.getBrailleBindings()
     kbindings = keybindings.KeyBindings()
