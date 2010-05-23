@@ -207,4 +207,7 @@ keymap = (
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "cycleSpeakingPunctuationLevelHandler"),
 
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "cycleKeyEchoHandler"),
+
 )

@@ -592,7 +592,7 @@ enableEchoByCharacter   = False
 #
 enableEchoByWord        = False
 
-# if True, enable word echo.
+# if True, enable Sentence echo.
 # Note that it is allowable for both enableEchoByWord and enableEchoBySentence
 # to be True.
 #

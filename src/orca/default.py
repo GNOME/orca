@@ -876,6 +876,17 @@ class Script(script.Script):
                 #
                 _("Cycles to the next speaking of punctuation level."))
 
+        self.inputEventHandlers["cycleKeyEchoHandler"] = \
+            input_event.InputEventHandler(
+                Script.cycleKeyEcho,
+                # Translators: Orca allows users to cycle through
+                # the possible key echo options
+                # none, key, word, sentence, key and word, word and sentence.
+                # This is how often orca should give feedback when a user 
+                # is typing.
+                #
+                _("Cycles to the next key echo level."))
+
         self.inputEventHandlers["listAppsHandler"] = \
             input_event.InputEventHandler(
                 Script.printAppsHandler,
@@ -2673,6 +2684,124 @@ class Script(script.Script):
         self.presentMessage(full, brief)
         speech.updatePunctuationLevel()
         return True
+
+    def cycleKeyEcho(self, inputEvent=None):
+        (newKey, newWord, newSentence) = (False, False, False)
+        key = settings.enableKeyEcho
+        word = settings.enableEchoByWord
+        sentence = settings.enableEchoBySentence
+
+        # check if we are in the none case.
+        if (key, word, sentence) == (False, False, False):
+            # cycle to key echo
+            (newKey, newWord, newSentence) = (True, False, False)
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            full = _("Key echo set to key.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            brief = C_("key echo", "key")
+
+        # The key echo only case
+        elif (key, word, sentence) == (True, False, False):
+            # cycle to word echo
+            (newKey, newWord, newSentence) = (False, True, False)
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            full = _("Key echo set to word.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            brief = C_("key echo", "word")
+
+        # the word only case
+        elif (key, word, sentence) == (False, True, False):
+            # cycle to sentence echo
+            (newKey, newWord, newSentence) = (False, False, True)
+
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            full = _("Key echo set to sentence.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            brief = C_("key echo", "sentence")
+
+        # the sentence only case
+        elif (key, word, sentence) == (False, False, True):
+            # cycle to word and key echo
+            (newKey, newWord, newSentence) = (True, True, False)
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            full = _("Key echo set to key and word.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            brief = C_("key echo", "key and word")
+
+        # the key and word case
+        elif (key, word, sentence) == (True, True, False):
+            # cycle to word and sentence echo
+            (newKey, newWord, newSentence) = (False, True, True)
+
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            full = _("Key echo set to word and sentence.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            brief = C_("key echo", "word and sentence")
+
+        # cycle round
+        else:
+            # cycle to none
+            (newKey, newWord, newSentence) = (False, False, False)
+
+            # Translators: This detailed message will be presented as the
+            # user cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            full = _("Key echo set to None.")
+            # Translators: This brief message will be presented as the user
+            # cycles through the different key echo options.
+            # The options are: key, word, sentence,
+            # key and word, word and sentence.
+            #
+            brief = C_("key echo", "None")
+
+        settings.enableKeyEcho = newKey
+        settings.enableEchoByWord = newWord
+        settings.enableEchoBySentence = newSentence
+        self.presentMessage(full, brief)
+        return True
+
 
     def toggleTableCellReadMode(self, inputEvent=None):
         """Toggles an indicator for whether we should just read the current
