@@ -40,32 +40,62 @@ class Script(default.Script):
     def __init__(self, app):
         """Creates a new script for the given application."""
         default.Script.__init__(self, app)
+        self._textInserted = False
+        self.movementKeys = ["Up", "Down", "Left", "Right", "Page_Up",
+                             "Page_Down", "Home", "End"]
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
         """Updates braille, magnification, and outputs speech for the
         event.source or the otherObj. Overridden here so that we can
-        speak the line when a breakpoint is reached.
+        give more feedback to user
         """
 
         if self.utilities.isDuplicateEvent(event):
             return
 
+        # We will retrieve information from the last object spoken
+        try:
+            oldObj, oldOffset = self.pointOfReference["lastCursorPosition"]
+        except:
+            oldObj = None
+            oldOffset = -1
+
         # Let the default script's normal behavior do its thing
         #
         default.Script._presentTextAtNewCaretPosition(self, event, otherObj)
-        debugKeys = ["F5", "F6", "F7", "F8", "F11"]
-        #
+
+        textInserted = self._textInserted
+        self._textInserted = False
+        # check if the obj was spoken in the default script
         if orca_state.lastNonModifierKeyEvent \
-           and orca_state.lastNonModifierKeyEvent.event_string in debugKeys:
-            obj = otherObj or event.source
-            self.sayLine(obj)
+                and orca_state.lastNonModifierKeyEvent.event_string in \
+                self.movementKeys:
+            # already spoken in default script
+            return
+
+        # check if text was inserted before
+        if textInserted:
+            # we will ignore this event because text was spoken in
+            # onTextInserted
+            return
+
+        obj = otherObj or event.source
+        offset = obj.queryText().caretOffset
+
+        difChars = offset - oldOffset
+        if obj == oldObj and (difChars == 1 or difChars == -1):
+            # it seems that the caret moved one position, forward or backward
+            # probably the user is typing, we don't want to speak the entire
+            # line
+            return
+
+        self.sayLine(obj)
 
     def onFocus(self, event):
-        """Called whenever an object gets focus.
-           Overridden here so that we can save the current text cursor position when:
-           event is an object:state-changed:focused and
-           source is a pyatspi.ROLE_TEXT
-           Perhaps this should be moved to the default.py???
+        """Called whenever an object gets focus.  Overridden here so that
+        we can save the current text cursor position when the event is an
+        object:state-changed:focused and source is a pyatspi.ROLE_TEXT
+        Perhaps this should be moved to the default.py???
 
         Arguments:
         - event: the Event
@@ -86,3 +116,17 @@ class Script(default.Script):
 
         return Utilities(self)
 
+    def onTextInserted(self, event):
+        """Called whenever text is inserted into an object. Overridden here
+        so that we can avoid speaking text when caret moves after new text
+        is inserted.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # Let the default script's normal behavior do its thing
+        #
+        default.Script.onTextInserted(self, event)
+
+        self._textInserted = (event.source.getRole() == pyatspi.ROLE_TEXT)
