@@ -724,6 +724,15 @@ class Script(default.Script):
             #
             allTextFields = self.utilities.descendantsWithRole(
                 chatRoomTab, pyatspi.ROLE_TEXT, False)
+
+            # Pidgin 2.7 includes a Find text object, hidden by default.
+            # We can identify (and eliminate) it by STATE_SINGLE_LINE.
+            #
+            allTextFields = \
+                filter(lambda o: 
+                       not o.getState().contains(pyatspi.STATE_SINGLE_LINE),
+                       allTextFields)
+
             index = len(allTextFields) - 2
             if index >= 0:
                 self.chatAreas[chatRoomTab] = allTextFields[index]
