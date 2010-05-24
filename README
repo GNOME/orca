@@ -1,4 +1,4 @@
-Orca v2.31.2
+Orca v2.31.3pre
 
 Introduction
 ========================================================================
@@ -8,7 +8,7 @@ that provides access to the graphical desktop via user-customizable
 combinations of speech, braille, and/or magnification. Orca development
 was led by the Sun Microsystems, Inc., Accessibility Program Office with
 generous contributions from the Mozilla Foundation and Corporation.
-Orca is currently a community project driven completely by volunteers.
+Orca is currently a community project driven by volunteers.
 
 Orca works with applications and toolkits that support the assistive
 technology service provider interface (AT-SPI), which is the primary

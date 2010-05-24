@@ -102,10 +102,10 @@ Subject: Announcing Orca v2.29.92
 
 Orca is a free, open source, flexible, and extensible screen reader
 that provides access to the graphical desktop via user-customizable
-combinations of speech, braille, and/or magnification.  Orca
-development has been led by the Sun Microsystems, Inc., Accessibility
-Program Office via continued engagement with its end users and
-contributions from wonderful community members.
+combinations of speech, braille, and/or magnification. Orca development
+was led by the Sun Microsystems, Inc., Accessibility Program Office with
+generous contributions from the Mozilla Foundation and Corporation.
+Orca is currently a community project driven by volunteers.
 
 You can also read more about Orca at http://live.gnome.org/Orca.
 
