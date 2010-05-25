@@ -4346,7 +4346,7 @@ class Script(script.Script):
 
         character, startOffset, endOffset = \
             text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
-        if not character:
+        if not character or character == '\r':
             character = "\n"
 
         if self.utilities.linkIndex(obj, offset) >= 0:
@@ -4975,8 +4975,15 @@ class Script(script.Script):
             # Sometimes we get the trailing line-feed-- remove it
             #
             content = lineString.decode("UTF-8")
-            if content[-1:] == "\n":
-                content = content[:-1]
+
+            # It is important that these are in order.
+            # In some circumstances we might get:
+            # word word\r\n
+            # so remove \n, and then remove \r.
+            # See bgo#619332.
+            #
+            content = content.rstrip('\n')
+            content = content.rstrip('\r')
 
         return [content.encode("UTF-8"), text.caretOffset, startOffset]
 
