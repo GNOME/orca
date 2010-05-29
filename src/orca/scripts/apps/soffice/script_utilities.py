@@ -399,8 +399,6 @@ class Utilities(script_utilities.Utilities):
                 "soffice.script.py:getTextAttributes: detected a bogus " +
                 "end offset. Start offset: %s, end offset: %s" % (start, end))
             end = offset + 1
-        else:
-            end -= 1
 
         return rv, start, end
 
