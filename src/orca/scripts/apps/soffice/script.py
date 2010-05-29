@@ -2023,7 +2023,8 @@ class Script(default.Script):
             elif isinstance(orca_state.lastInputEvent, \
                             input_event.KeyboardEvent):
                 keyString = orca_state.lastNonModifierKeyEvent.event_string
-                navKeys = ["Up", "Down", "Page_Up", "Page_Down", "Home", "End"]
+                navKeys = ["Up", "Down", "Left", "Right", "Page_Up",
+                           "Page_Down", "Home", "End"]
                 wasCommand = orca_state.lastInputEvent.modifiers \
                              & settings.COMMAND_MODIFIER_MASK
                 weToggledIt = wasCommand and keyString not in navKeys
