@@ -1726,6 +1726,21 @@ class Script(default.Script):
                 orca_state.locusOfFocus.parent, event.source):
             return
 
+        # Auto-inserted bullets and numbers are presented in braille, but not
+        # spoken. So we'll speak them before sending this event off to the
+        # default script.
+        #
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent \
+           and orca_state.lastNonModifierKeyEvent.event_string == "Return" \
+           and event.source.getRole() == pyatspi.ROLE_PARAGRAPH:
+            try:
+                charCount = event.source.queryText().characterCount
+            except:
+                charCount = 0
+            if charCount:
+                speech.speak(self.speechGenerator.generateSpeech(event.source))
+
         default.Script.onFocus(self, event)
 
     def onActiveDescendantChanged(self, event):
