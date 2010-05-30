@@ -116,15 +116,6 @@ class Script(default.Script):
         #
         self.commFailureAttemptLimit = 1
 
-        # Additional default set of text attributes to present to the
-        # user. The only difference over the default set in
-        # settings.py is to add in "left-margin:" and "right-margin:".
-        #
-        self.additionalBrailledTextAttributes = \
-          " left-margin:0mm; right-margin:0mm;"
-        self.additionalSpokenTextAttributes = \
-          " left-margin:0mm; right-margin:0mm;"
-
     def activate(self):
         """Called when this script is activated."""
         self.savedreadTableCellRow = settings.readTableCellRow
@@ -132,17 +123,18 @@ class Script(default.Script):
 
         self.savedEnabledBrailledTextAttributes = \
             settings.enabledBrailledTextAttributes
-        settings.enabledBrailledTextAttributes += \
-            self.additionalBrailledTextAttributes
 
         self.savedEnabledSpokenTextAttributes = \
             settings.enabledSpokenTextAttributes
-        settings.enabledSpokenTextAttributes += \
-            self.additionalSpokenTextAttributes
 
-        # Account for the differences in how OOo expresses indent and
-        # strikethrough.
+        # Account for the differences in how OOo expresses indent, 
+        # strikethrough, and margins.
         #
+        settings.allTextAttributes = \
+            settings.allTextAttributes.replace(
+            "margin:;",
+            "margin:0mm;")
+
         settings.enabledBrailledTextAttributes = \
             settings.enabledBrailledTextAttributes.replace(
             "strikethrough:false;",
