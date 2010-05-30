@@ -2363,7 +2363,9 @@ class Utilities:
             if startOffset < link.endIndex < endOffset:
                 index = link.endIndex - startOffset
             elif startOffset <= link.startIndex < endOffset:
-                index = len(line) - 1
+                index = len(line)
+                if link.endIndex < endOffset:
+                    index -= 1
             else:
                 continue
 
@@ -2375,7 +2377,9 @@ class Utilities:
             # If the link was not followed by a whitespace or punctuation
             # character, then add in a space to make it more presentable.
             #
-            nextChar = adjustedLine[index]
+            nextChar = ""
+            if index < len(line):
+                nextChar = adjustedLine[index]
             if not (nextChar in self._script.whitespace \
                     or punctuation_settings.getPunctuationInfo(nextChar)):
                 linkString += " "
