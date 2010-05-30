@@ -6847,7 +6847,7 @@ class Script(script.Script):
             # Translators: this indicates that this piece of
             # text is a hypertext link.
             #
-            linkString = " " + _("link")
+            linkString = " " + _("link").decode("UTF-8")
 
             # If the link was not followed by a whitespace or punctuation
             # character, then add in a space to make it more presentable.
