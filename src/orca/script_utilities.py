@@ -2360,7 +2360,7 @@ class Utilities:
 
             # We only care about links in the string, line:
             #
-            if startOffset < link.endIndex < endOffset:
+            if startOffset < link.endIndex <= endOffset:
                 index = link.endIndex - startOffset
             elif startOffset <= link.startIndex < endOffset:
                 index = len(line)
