@@ -26,7 +26,6 @@ __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
 import orca.default as default
-import orca.orca_state as orca_state
 import pyatspi
 from script_utilities import Utilities
 
@@ -67,9 +66,8 @@ class Script(default.Script):
         textInserted = self._textInserted
         self._textInserted = False
         # check if the obj was spoken in the default script
-        if orca_state.lastNonModifierKeyEvent \
-                and orca_state.lastNonModifierKeyEvent.event_string in \
-                self.movementKeys:
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+        if lastKey in self.movementKeys:
             # already spoken in default script
             return
 

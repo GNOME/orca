@@ -31,7 +31,6 @@ import pyatspi
 import orca.orca as orca
 import orca.debug as debug
 import orca.default as default
-import orca.input_event as input_event
 import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.speech as speech
@@ -201,10 +200,8 @@ class Script(Gecko.Script):
         # based on the locusOfFocus other times Gecko is because of the
         # caret context.
         #
-        updatePosition = False
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            string = orca_state.lastNonModifierKeyEvent.event_string
-            updatePosition = string in ["Page_Up", "Page_Down"]
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+        updatePosition = lastKey in ["Page_Up", "Page_Down"]
 
         # Unlike the unpredictable wild, wild web, odds are good that a
         # caret-moved event in a message composition window is valid. But
@@ -399,11 +396,9 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_SCROLL_PANE,
                      pyatspi.ROLE_SCROLL_PANE]
         if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent)\
-               and orca_state.lastNonModifierKeyEvent:
-                string = orca_state.lastNonModifierKeyEvent.event_string
-                if string == "Delete":
-                    oldLocusOfFocus = None
+            lastKey, mods = self.utilities.lastKeyAndModifiers()
+            if lastKey == "Delete":
+                oldLocusOfFocus = None
 
         # If the user has just deleted an open mail message, then we want to
         # try to speak the new name of the open mail message frame.
@@ -414,13 +409,12 @@ class Script(Gecko.Script):
                      pyatspi.ROLE_FRAME, \
                      pyatspi.ROLE_APPLICATION]
         if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-                string = orca_state.lastNonModifierKeyEvent.event_string
-                if string == "Delete":
-                    oldLocusOfFocus = None
-                    state = newLocusOfFocus.getState()
-                    if state.contains(pyatspi.STATE_DEFUNCT):
-                        newLocusOfFocus = event.source
+            lastKey, mods = self.utilities.lastKeyAndModifiers()
+            if lastKey == "Delete":
+                oldLocusOfFocus = None
+                state = newLocusOfFocus.getState()
+                if state.contains(pyatspi.STATE_DEFUNCT):
+                    newLocusOfFocus = event.source
 
         # Pass the event onto the parent class to be handled in the default way.
 
@@ -517,18 +511,17 @@ class Script(Gecko.Script):
         # we do when a new message window is opened. See bug #540039 for more
         # details.
         #
-        rolesList = [pyatspi.ROLE_DOCUMENT_FRAME, \
-                     pyatspi.ROLE_INTERNAL_FRAME, \
-                     pyatspi.ROLE_FRAME, \
+        rolesList = [pyatspi.ROLE_DOCUMENT_FRAME,
+                     pyatspi.ROLE_INTERNAL_FRAME,
+                     pyatspi.ROLE_FRAME,
                      pyatspi.ROLE_APPLICATION]
         if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-                string = orca_state.lastNonModifierKeyEvent.event_string
-                if string == "Delete":
-                    speech.speak(obj.name)
-                    [obj, offset] = self.findFirstCaretContext(obj, 0)
-                    self.setCaretPosition(obj, offset)
-                    return
+            lastKey, mods = self.utilities.lastKeyAndModifiers()
+            if lastKey == "Delete":
+                speech.speak(obj.name)
+                [obj, offset] = self.findFirstCaretContext(obj, 0)
+                self.setCaretPosition(obj, offset)
+                return
 
         # If we get a "object:property-change:accessible-name" event for 
         # the first item in the Suggestions lists for the spell checking
@@ -536,9 +529,9 @@ class Script(Gecko.Script):
         # will by the "Misspelled word:" label and the currently misspelled
         # word. See bug #535192 for more details.
         #
-        rolesList = [pyatspi.ROLE_LIST_ITEM, \
-                     pyatspi.ROLE_LIST, \
-                     pyatspi.ROLE_DIALOG, \
+        rolesList = [pyatspi.ROLE_LIST_ITEM,
+                     pyatspi.ROLE_LIST,
+                     pyatspi.ROLE_DIALOG,
                      pyatspi.ROLE_APPLICATION]
         if self.utilities.hasMatchingHierarchy(obj, rolesList):
             dialog = obj.parent.parent

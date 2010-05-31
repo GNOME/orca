@@ -1446,11 +1446,8 @@ class Script(script.Script):
         # for example.
         #
         if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
-            if orca_state.lastNonModifierKeyEvent \
-               and orca_state.lastNonModifierKeyEvent.event_string \
-                   in [" ", "space"]:
-                pass
-            else:
+            eventStr, mods = self.utilities.lastKeyAndModifiers()
+            if not eventStr in [" ", "space"]:
                 return
 
         if event:
@@ -3154,54 +3151,45 @@ class Script(script.Script):
             # user know the selection state.
             # See bugs #486908 and #519564 for more details.
             #
-            if isinstance(orca_state.lastInputEvent,
-                          input_event.KeyboardEvent):
-                if orca_state.lastNonModifierKeyEvent:
-                    keyString = orca_state.lastNonModifierKeyEvent.event_string
-                else:
-                    keyString = None
-                mods = orca_state.lastInputEvent.modifiers
-                isControlKey = mods & settings.CTRL_MODIFIER_MASK
-                state = orca_state.locusOfFocus.getState()
-                announceState = False
+            announceState = False
+            keyString, mods = self.utilities.lastKeyAndModifiers()
+            state = orca_state.locusOfFocus.getState()
+            if state.contains(pyatspi.STATE_FOCUSED) \
+               and self.utilities.isSameObject(
+                event.source, orca_state.locusOfFocus):
 
-                if state.contains(pyatspi.STATE_FOCUSED) and \
-                   self.utilities.isSameObject(
-                    event.source, orca_state.locusOfFocus):
-
-                    if keyString == "space":
-                        if isControlKey:
-                            announceState = True
-                        else:
-                            # Weed out a bogus situation. If we are already
-                            # selected and the user presses "space" again,
-                            # we don't want to speak the intermediate
-                            # "unselected" state.
-                            #
-                            eventState = event.source.getState()
-                            selected = eventState.contains(\
-                                           pyatspi.STATE_SELECTED)
-                            announceState = (selected and event.detail1)
-
-                    if (keyString == "Down" or keyString == "Up") \
-                       and event.source.getRole() == pyatspi.ROLE_TABLE_CELL \
-                       and state.contains(pyatspi.STATE_SELECTED):
+                if keyString == "space":
+                    if mods & settings.CTRL_MODIFIER_MASK:
                         announceState = True
-
-                if announceState:
-                    if event.detail1:
-                        # Translators: this object is now selected.
-                        # Let the user know this.
-                        #
-                        #
-                        speech.speak(C_("text", "selected"), None, False)
                     else:
-                        # Translators: this object is now unselected.
-                        # Let the user know this.
+                        # Weed out a bogus situation. If we are already
+                        # selected and the user presses "space" again,
+                        # we don't want to speak the intermediate
+                        # "unselected" state.
                         #
-                        #
-                        speech.speak(C_("text", "unselected"), None, False)
-                    return
+                        eventState = event.source.getState()
+                        selected = eventState.contains(pyatspi.STATE_SELECTED)
+                        announceState = (selected and event.detail1)
+
+                elif keyString in ["Down", "Up"] \
+                     and event.source.getRole() == pyatspi.ROLE_TABLE_CELL \
+                     and state.contains(pyatspi.STATE_SELECTED):
+                    announceState = True
+
+            if announceState:
+                if event.detail1:
+                    # Translators: this object is now selected.
+                    # Let the user know this.
+                    #
+                    #
+                    speech.speak(C_("text", "selected"), None, False)
+                else:
+                    # Translators: this object is now unselected.
+                    # Let the user know this.
+                    #
+                    #
+                    speech.speak(C_("text", "unselected"), None, False)
+                return
 
         if event.type.startswith("object:state-changed:focused"):
             iconified = False
@@ -3230,18 +3218,15 @@ class Script(script.Script):
             if event.type.startswith("object:state-changed:showing"):
                 if event.detail1 == 1:
                     self.presentToolTip(obj)
-                elif orca_state.locusOfFocus \
-                    and isinstance(orca_state.lastInputEvent,
-                                   input_event.KeyboardEvent) \
-                    and orca_state.lastNonModifierKeyEvent \
-                    and (orca_state.lastNonModifierKeyEvent.event_string \
-                         == "F1"):
-                    self.updateBraille(orca_state.locusOfFocus)
-                    utterances = self.speechGenerator.generateSpeech(
-                        orca_state.locusOfFocus)
-                    utterances.extend(self.tutorialGenerator.getTutorial(
-                                      orca_state.locusOfFocus, False))
-                    speech.speak(utterances)
+                elif orca_state.locusOfFocus:
+                    keyString, mods = self.utilities.lastKeyAndModifiers()
+                    if keyString == "F1":
+                        self.updateBraille(orca_state.locusOfFocus)
+                        utterances = self.speechGenerator.generateSpeech(
+                            orca_state.locusOfFocus)
+                        utterances.extend(self.tutorialGenerator.getTutorial(
+                            orca_state.locusOfFocus, False))
+                        speech.speak(utterances)
             return
 
         if event.source.getRole() in state_change_notifiers:
@@ -3336,31 +3321,24 @@ class Script(script.Script):
         # about the ramifications of this when it comes to editors such
         # as vi or emacs.
         #
-        if (not orca_state.lastInputEvent) \
-            or \
-            (not isinstance(orca_state.lastInputEvent,
-                            input_event.KeyboardEvent)):
+        keyString, mods = self.utilities.lastKeyAndModifiers()
+        if not keyString:
             return
 
-        keyString = orca_state.lastNonModifierKeyEvent.event_string
-        controlPressed = orca_state.lastInputEvent.modifiers \
-                         & settings.CTRL_MODIFIER_MASK
         text = event.source.queryText()
         if keyString == "BackSpace":
             # Speak the character that has just been deleted.
             #
             character = event.any_data
 
-        elif (keyString == "Delete") \
-             or (keyString == "D" and controlPressed):
+        elif keyString == "Delete" \
+             or (keyString == "D" and mods & settings.CTRL_MODIFIER_MASK):
             # Speak the character to the right of the caret after
             # the current right character has been deleted.
             #
             offset = text.caretOffset
             [character, startOffset, endOffset] = \
-                text.getTextAtOffset(
-                    offset,
-                    pyatspi.TEXT_BOUNDARY_CHAR)
+                text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_CHAR)
 
         else:
             return
@@ -3404,18 +3382,13 @@ class Script(script.Script):
 
         self.updateBraille(event.source)
 
-        text = event.any_data
-
-        # If this is a spin button, then speak the text and return.
-        #
         if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
-            # We are using getTextLineAtCaret here instead of the "text"
-            # variable, because of a problem with selected text in spin
-            # buttons. See bug #520395 for more details.
+            # We cannot use the event.any_data due to a problem with
+            # selected text in spin buttons. See bug #520395 for more
+            # details.
             #
-            [spinValue, caretOffset, startOffset] = \
-                self.getTextLineAtCaret(event.source)
-            speech.speak(spinValue)
+            [value, caret, start] = self.getTextLineAtCaret(event.source)
+            speech.speak(value)
             return
 
         # If the last input event was a keyboard event, check to see if
@@ -3433,61 +3406,49 @@ class Script(script.Script):
         # comes across as "space" in the keyboard event and " " in the
         # text event.
         #
+        string = event.any_data
         speakThis = False
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            keyString = orca_state.lastNonModifierKeyEvent.event_string
-            wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT and \
-                               event.source.queryText().getNSelections())
-            wasCommand = orca_state.lastInputEvent.modifiers \
-                         & settings.COMMAND_MODIFIER_MASK
-            if (text == " " and keyString == "space") \
-                or (text == keyString):
+        if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent) \
+           and orca_state.lastInputEvent.button == "2":
+            speakThis = True
+
+        else:
+            keyString, mods = self.utilities.lastKeyAndModifiers()
+            wasCommand = mods & settings.COMMAND_MODIFIER_MASK
+            wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT \
+                               and event.source.queryText().getNSelections())
+
+            if (string == " " and keyString == "space") or string == keyString:
                 pass
             elif wasCommand or wasAutoComplete:
                 speakThis = True
-            elif (event.source.getRole() == pyatspi.ROLE_PASSWORD_TEXT) and \
-                 settings.enableKeyEcho and settings.enablePrintableKeys:
+            elif event.source.getRole() == pyatspi.ROLE_PASSWORD_TEXT \
+                 and settings.enableKeyEcho and settings.enablePrintableKeys:
                 # Echoing "star" is preferable to echoing the descriptive
                 # name of the bullet that has appeared (e.g. "black circle")
                 #
-                text = "*"
+                string = "*"
                 speakThis = True
-
-        elif isinstance(orca_state.lastInputEvent, \
-                        input_event.MouseButtonEvent) and \
-             orca_state.lastInputEvent.button == "2":
-            speakThis = True
 
         # We might need to echo this if it is a single character.
         #
         speakThis = speakThis \
                     or (settings.enableEchoByCharacter \
-                        and text \
+                        and string \
                         and event.source.getRole() \
                             != pyatspi.ROLE_PASSWORD_TEXT \
-                        and len(text.decode("UTF-8")) == 1)
+                        and len(string.decode("UTF-8")) == 1)
 
         if speakThis:
-            if text.decode("UTF-8").isupper():
-                speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
+            if string.decode("UTF-8").isupper():
+                speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
             else:
-                speech.speak(text)
+                speech.speak(string)
 
         try:
             text = event.source.queryText()
         except NotImplementedError:
             return
-
-        # Pylint is confused and flags this and similar lines, with the
-        # following error:
-        #
-        # E1103:3673:Script.onTextInserted: Instance of 'str' has no
-        #'caretOffset' member (but some types could not be inferred)
-        #
-        # But it does, so we'll just tell pylint that we know what we
-        # are doing.
-        #
-        # pylint: disable-msg=E1103
 
         offset = min(event.detail1, text.caretOffset - 1)
         previousOffset = offset - 1
@@ -3735,18 +3696,15 @@ class Script(script.Script):
         # down is done via other actions such as "i" or "j".  We may
         # need to think about this a little harder.]]]
         #
-        if not isinstance(orca_state.lastInputEvent,
-                          input_event.KeyboardEvent):
+        keyString, mods = self.utilities.lastKeyAndModifiers()
+        if not keyString:
             return
-
-        keyString = orca_state.lastNonModifierKeyEvent.event_string
-        mods = orca_state.lastInputEvent.modifiers
         isControlKey = mods & settings.CTRL_MODIFIER_MASK
         isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
         lastPos = self.pointOfReference.get("lastCursorPosition")
         hasLastPos = (lastPos != None)
 
-        if (keyString == "Up") or (keyString == "Down"):
+        if keyString in ["Up", "Down"]:
             # If the user has typed Shift-Up or Shift-Down, then we want
             # to speak the text that has just been selected or unselected,
             # otherwise we speak the new line where the text cursor is
@@ -3790,7 +3748,7 @@ class Script(script.Script):
                 [startOffset, endOffset] = self.utilities.offsetsForLine(obj)
                 self.sayLine(obj)
 
-        elif (keyString == "Left") or (keyString == "Right"):
+        elif keyString in ["Left", "Right"]:
             # If the user has typed Control-Shift-Up or Control-Shift-Dowm,
             # then we want to speak the text that has just been selected
             # or unselected, otherwise if the user has typed Control-Left
@@ -3843,7 +3801,7 @@ class Script(script.Script):
                 [startOffset, endOffset] = self.utilities.offsetsForLine(obj)
                 self.sayLine(obj)
 
-        elif (keyString == "Home") or (keyString == "End"):
+        elif keyString in ["Home", "End"]:
             # If the user has typed Shift-Home or Shift-End, then we want
             # to speak the text that has just been selected or unselected,
             # otherwise if the user has typed Control-Home or Control-End,
@@ -4333,13 +4291,7 @@ class Script(script.Script):
         # right, then speak the character to the left of where the text
         # caret is (i.e. the selected character).
         #
-        try:
-            mods = orca_state.lastInputEvent.modifiers
-            eventString = orca_state.lastInputEvent.event_string
-        except:
-            mods = 0
-            eventString = ""
-
+        eventString, mods = self.utilities.lastKeyAndModifiers()
         if (mods & settings.SHIFT_MODIFIER_MASK) \
            and eventString in ["Right", "Down"]:
             offset -= 1
@@ -4461,7 +4413,7 @@ class Script(script.Script):
 
         text = obj.queryText()
         offset = text.caretOffset
-        lastKey = orca_state.lastNonModifierKeyEvent.event_string
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
         lastWord = orca_state.lastWord
 
         [word, startOffset, endOffset] = \
@@ -5102,14 +5054,7 @@ class Script(script.Script):
         # where <state> is either "selected" or "unselected" depending
         # upon whether there are any text selections.
         #
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent:
-            eventStr = orca_state.lastNonModifierKeyEvent.event_string
-            mods = orca_state.lastInputEvent.modifiers
-        else:
-            eventStr = None
-            mods = 0
-
+        eventStr, mods = self.utilities.lastKeyAndModifiers()
         isControlKey = mods & settings.CTRL_MODIFIER_MASK
         isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
         selectedText = (text.getNSelections() != 0)

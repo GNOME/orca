@@ -196,14 +196,9 @@ class Script(default.Script):
                            pyatspi.ROLE_PANEL,
                            pyatspi.ROLE_SPIN_BUTTON])
         if isSpinBox:
-            if isinstance(orca_state.lastInputEvent,
-                          input_event.KeyboardEvent):
-                eventStr = orca_state.lastNonModifierKeyEvent.event_string
-            else:
-                eventStr = None
-            if (eventStr in ["Up", "Down"]) \
-               or isinstance(orca_state.lastInputEvent,
-                             input_event.MouseButtonEvent):
+            eventStr, mods = self.utilities.lastKeyAndModifiers()
+            if eventStr in ["Up", "Down"] or isinstance(
+               orca_state.lastInputEvent, input_event.MouseButtonEvent):
                 return
 
         default.Script.onCaretMoved(self, event)

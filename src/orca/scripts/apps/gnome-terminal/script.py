@@ -127,11 +127,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        if orca_state.lastInputEvent and orca_state.lastNonModifierKeyEvent \
-           and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            event_string = orca_state.lastNonModifierKeyEvent.event_string
-        else:
-            event_string = None
+        event_string, mods = self.utilities.lastKeyAndModifiers()
 
         # We only do special things when people press backspace
         # in terminals.
@@ -204,12 +200,9 @@ class Script(default.Script):
         matchFound = False
         speakThis = False
         if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            keyString = orca_state.lastNonModifierKeyEvent.event_string
-
-            controlPressed = orca_state.lastInputEvent.modifiers \
-                             & settings.CTRL_MODIFIER_MASK
-
-            if (keyString == "Delete") or (keyString == "BackSpace"):
+            keyString, mods = self.utilities.lastKeyAndModifiers()
+            controlPressed = mods & settings.CTRL_MODIFIER_MASK
+            if keyString in ["Delete", "BackSpace"]:
                 return
             elif (keyString == "D") and controlPressed:
                 text = text.decode("UTF-8")[0].decode("UTF-8")
@@ -238,13 +231,8 @@ class Script(default.Script):
             # us a string typically longer than what the length of a
             # compressed string is (we choose 5 here), then output that.
             #
-            wasCommand = orca_state.lastInputEvent.modifiers \
-                         & settings.COMMAND_MODIFIER_MASK
-            wasCommand = wasCommand \
-                         or (keyString == "Return") \
-                         or (keyString == "Tab")
-            if (text == " " and keyString == "space") \
-                or (text == keyString):
+            wasCommand = controlPressed or keyString in ["Return", "Tab"]
+            if (text == " " and keyString == "space") or text == keyString:
                 matchFound = True
             elif wasCommand or (len(text) > 5):
                 speakThis = True

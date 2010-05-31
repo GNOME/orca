@@ -385,11 +385,7 @@ class Script(default.Script):
             # to the default script.
             #
             debug.println(self.debugLevel, "acroread: Drawing area bug")
-            lastKey = None
-            try:
-                lastKey = orca_state.lastNonModifierKeyEvent.event_string
-            except:
-                pass
+            lastKey, mods = self.utilities.lastKeyAndModifiers()
             locusOfFocusIndex = orca_state.locusOfFocus.getIndexInParent()
             childIndex = None
 
@@ -493,7 +489,7 @@ class Script(default.Script):
         """
 
         lastInputEvent = orca_state.lastInputEvent
-        lastKey = lastInputEvent.event_string
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
 
         # A single keypress usually results in multiple, not necessarily
         # identical, caret-moved events.  Check to see if the events are
@@ -650,8 +646,7 @@ class Script(default.Script):
         else:
             text = obj.queryText()
             offset = text.caretOffset
-            lastKey = orca_state.lastNonModifierKeyEvent.event_string
-
+            lastKey, mods = self.utilities.lastKeyAndModifiers()
             if lastKey == "Right":
                 penultimateWord = orca_state.lastWord
                 [lastWord, startOffset, endOffset] = \

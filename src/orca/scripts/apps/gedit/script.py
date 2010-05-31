@@ -29,7 +29,6 @@ import pyatspi
 
 import orca.debug as debug
 import orca.default as default
-import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -489,6 +488,8 @@ class Script(default.Script):
         # apparently get two identical "object:property-change:accessible-name"
         # events.]]]
 
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+
         # Translators: the "Phrase not found" is the result of a failed
         # find command.  It must be the same as what gedit uses.  We hate
         # keying off stuff like this, but we're forced to do so in this
@@ -496,12 +497,10 @@ class Script(default.Script):
         #
         if event.source.getRole() == pyatspi.ROLE_STATUS_BAR \
            and self.isFocusOnFindDialog() \
-           and orca_state.lastNonModifierKeyEvent \
-           and orca_state.lastNonModifierKeyEvent.event_string == "Return" \
+           and lastKey == "Return" \
            and event.source.name == _("Phrase not found"):
             debug.println(self.debugLevel,
                           "gedit.onNameChanged - phrase not found.")
-
             speech.speak(event.source.name)
 
         # Pass the event onto the parent class to be handled in the default way.
@@ -551,9 +550,8 @@ class Script(default.Script):
         # then speak the current text line, to give an indication of what
         # we've just found.
         #
-        if self.isFocusOnFindDialog() \
-           and orca_state.lastNonModifierKeyEvent \
-           and orca_state.lastNonModifierKeyEvent.event_string == "Return":
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+        if self.isFocusOnFindDialog() and lastKey == "Return":
             debug.println(self.debugLevel, "gedit.onCaretMoved - find dialog.")
             allComboBoxes = self.utilities.descendantsWithRole(
                 orca_state.locusOfFocus.getApplication(),
@@ -573,11 +571,7 @@ class Script(default.Script):
         # If Ctrl+G was used to repeat a find command, speak the line that
         # the caret moved to.
         #
-        if orca_state.lastInputEvent \
-           and isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent)\
-           and orca_state.lastInputEvent.event_string == 'G' \
-           and orca_state.lastInputEvent.modifiers \
-               & (1 << pyatspi.MODIFIER_CONTROL):
+        if lastKey == 'G' and mods & settings.CTRL_MODIFIER_MASK:
             self.sayLine(event.source)
 
         # For everything else, pass the caret moved event onto the parent

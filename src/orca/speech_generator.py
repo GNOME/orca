@@ -28,7 +28,6 @@ __license__   = "LGPL"
 import urlparse, urllib2
 
 import generator
-import orca_state
 import pyatspi
 import rolenames
 import settings
@@ -504,9 +503,8 @@ class SpeechGenerator(generator.Generator):
         # moving left or right on the same row, then don't announce the
         # selection state to the user. See bug #523235 for more details.
         #
-        if checkIfSelected and orca_state.lastNonModifierKeyEvent \
-           and orca_state.lastNonModifierKeyEvent.event_string \
-               in ["Left", "Right"]:
+        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
+        if checkIfSelected and lastKey in ["Left", "Right"]:
             checkIfSelected = False
 
         if objRole == pyatspi.ROLE_ICON \

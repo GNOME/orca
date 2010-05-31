@@ -1730,9 +1730,8 @@ class Script(default.Script):
         # spoken. So we'll speak them before sending this event off to the
         # default script.
         #
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent \
-           and orca_state.lastNonModifierKeyEvent.event_string == "Return" \
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+        if lastKey == "Return" \
            and event.source.getRole() == pyatspi.ROLE_PARAGRAPH:
             try:
                 charCount = event.source.queryText().characterCount
@@ -1888,13 +1887,11 @@ class Script(default.Script):
                 y = orca_state.lastInputEvent.y
                 weToggledIt = event.source.queryComponent().contains(x, y, 0)
 
-            elif isinstance(orca_state.lastInputEvent, \
-                            input_event.KeyboardEvent):
-                keyString = orca_state.lastNonModifierKeyEvent.event_string
+            else:
+                keyString, mods = self.utilities.lastKeyAndModifiers()
                 navKeys = ["Up", "Down", "Left", "Right", "Page_Up",
                            "Page_Down", "Home", "End"]
-                wasCommand = orca_state.lastInputEvent.modifiers \
-                             & settings.COMMAND_MODIFIER_MASK
+                wasCommand = mods & settings.COMMAND_MODIFIER_MASK
                 weToggledIt = wasCommand and keyString not in navKeys
 
             if weToggledIt:
@@ -2074,16 +2071,13 @@ class Script(default.Script):
             if settings.enableEchoByWord and \
                (self.utilities.hasMatchingHierarchy(event.source, rolesList) or
                 self.utilities.hasMatchingHierarchy(event.source, rolesList1)):
-                if isinstance(orca_state.lastInputEvent,
-                              input_event.KeyboardEvent):
-                    keyString = orca_state.lastNonModifierKeyEvent.event_string
-                    focusRole = orca_state.locusOfFocus.getRole()
-                    if focusRole != pyatspi.ROLE_UNKNOWN and \
-                       keyString == "Return":
-                        result = self.utilities.substring(event.source, 0, -1)
-                        line = result.decode("UTF-8")
-                        self.echoPreviousWord(event.source, len(line))
-                        return
+                keyString, mods = self.utilities.lastKeyAndModifiers()
+                focusRole = orca_state.locusOfFocus.getRole()
+                if focusRole != pyatspi.ROLE_UNKNOWN and keyString == "Return":
+                    result = self.utilities.substring(event.source, 0, -1)
+                    line = result.decode("UTF-8")
+                    self.echoPreviousWord(event.source, len(line))
+                    return
 
         # Otherwise, if the object is losing focus, then just ignore this event.
         #
@@ -2103,13 +2097,7 @@ class Script(default.Script):
                 #
                 self.lastCell[1] = event.detail1
 
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent:
-            event_string = orca_state.lastNonModifierKeyEvent.event_string
-            mods = orca_state.lastInputEvent.modifiers
-        else:
-            event_string = ''
-            mods = 0
+        event_string, mods = self.utilities.lastKeyAndModifiers()
         isControlKey = mods & settings.CTRL_MODIFIER_MASK
         isShiftKey = mods & settings.SHIFT_MODIFIER_MASK
 

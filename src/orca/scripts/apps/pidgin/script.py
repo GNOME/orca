@@ -753,6 +753,7 @@ class Script(default.Script):
                 self.chatRoomMessages[chatRoomName].append("")
                 i += 1
 
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
         if event.source and (event.source == chatArea):
             # We always automatically go back to focus tracking mode when
             # someone sends us a message.
@@ -809,10 +810,7 @@ class Script(default.Script):
 
                 self.chatRoomMessages[chatRoomName].append(message)
 
-        elif isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-             and orca_state.lastNonModifierKeyEvent \
-             and (orca_state.lastNonModifierKeyEvent.event_string == "Tab") \
-             and event.any_data and (event.any_data != "\t"):
+        elif lastKey == "Tab" and event.any_data and event.any_data != "\t":
             # This is autocompleted text (the name of a user in an IRC
             # chatroom).  The default script isn't announcing it because
             # it's not selected.

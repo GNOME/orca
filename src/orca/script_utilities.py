@@ -33,6 +33,7 @@ import pyatspi
 import re
 
 import debug
+import input_event
 import mouse_review
 import orca_state
 import settings
@@ -1849,8 +1850,8 @@ class Utilities:
         except:
             return [0, 0]
 
-        if orca_state.lastInputEvent.modifiers & settings.SHIFT_MODIFIER_MASK \
-           and orca_state.lastNonModifierKeyEvent.event_string == "Right":
+        lastKey, mods = self.lastKeyAndModifiers()
+        if mods & settings.SHIFT_MODIFIER_MASK and lastKey == "Right":
             startOffset = text.caretOffset - 1
             endOffset = text.caretOffset
         else:
@@ -2551,6 +2552,22 @@ class Utilities:
             return lowestTop <= highestBottom
 
         return False
+
+    @staticmethod
+    def lastKeyAndModifiers():
+        """Convenience method which returns a tuple containing the event
+        string and modifiers of the last non-modifier key event or ("", 0)
+        if there is no such event."""
+
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
+           and orca_state.lastNonModifierKeyEvent:
+            eventStr = orca_state.lastNonModifierKeyEvent.event_string
+            mods = orca_state.lastInputEvent.modifiers
+        else:
+            eventStr = ""
+            mods = 0
+
+        return (eventStr, mods)
 
     def mnemonicShortcutAccelerator(self, obj):
         """Gets the mnemonic, accelerator string and possibly shortcut

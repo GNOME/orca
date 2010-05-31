@@ -1270,9 +1270,8 @@ class Script(default.Script):
            and self.utilities.isSameObject(obj, event.source):
             return
 
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent:
-            string = orca_state.lastNonModifierKeyEvent.event_string
+        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
+            string, mods = self.utilities.lastKeyAndModifiers()
             if self.useCaretNavigationModel(orca_state.lastInputEvent):
                 # Orca is set to control the caret and is in a place where
                 # doing so is appropriate.  Therefore, this event is likely

@@ -423,11 +423,9 @@ class Script(default.Script):
             # changed, then speak all the table cells.
             #
             justDeleted = False
-            if isinstance(orca_state.lastInputEvent,
-                          input_event.KeyboardEvent):
-                string = orca_state.lastNonModifierKeyEvent.event_string
-                if string == "Delete":
-                    justDeleted = True
+            string, mods = self.utilities.lastKeyAndModifiers()
+            if string == "Delete":
+                justDeleted = True
 
             speakAll = (self.lastMessageRow != row) or \
                        ((row == 0 or row == parentTable.nRows-1) and \
@@ -879,26 +877,24 @@ class Script(default.Script):
             # the last key pressed wasn't a navigation key, then just
             # ignore it. See bug #490317 for more details.
             #
-            if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-                if self.utilities.isSameObject(event.source.parent,
-                                     orca_state.locusOfFocus.parent):
-                    lastKey = orca_state.lastNonModifierKeyEvent.event_string
-                    if self.utilities.isMessageBody(orca_state.locusOfFocus) \
-                       and lastKey not in ["Left", "Right", "Up", "Down",
-                                           "Home", "End", "Return", "Tab"]:
-                        return
+            if self.utilities.isSameObject(event.source.parent,
+                                           orca_state.locusOfFocus.parent):
+                lastKey, mods = self.utilities.lastKeyAndModifiers()
+                if self.utilities.isMessageBody(orca_state.locusOfFocus) \
+                   and lastKey not in ["Left", "Right", "Up", "Down",
+                                       "Home", "End", "Return", "Tab"]:
+                    return
 
-                    # If the last keyboard event was a "same line"
-                    # navigation key, then pass this event onto the
-                    # onCaretMoved() method in the parent class for
-                    # speaking. See bug #516565 for more details.
-                    #
-                    if lastKey in ["Left", "Right", "Home", "End"]:
-                        default.Script.onCaretMoved(self, event)
-                        return
+                # If the last keyboard event was a "same line"
+                # navigation key, then pass this event onto the
+                # onCaretMoved() method in the parent class for
+                # speaking. See bug #516565 for more details.
+                #
+                if lastKey in ["Left", "Right", "Home", "End"]:
+                    default.Script.onCaretMoved(self, event)
+                    return
 
             self.message_panel = event.source.parent.parent
-
             self.presentMessageLine(event.source, newLocusOfFocus)
             return
 
@@ -1035,28 +1031,24 @@ class Script(default.Script):
         # prior to speaking the actual message that gets focus.
         # See bug #347964.
         #
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent:
-            string = orca_state.lastNonModifierKeyEvent.event_string
-            if string == "Delete":
-                rolesList = [pyatspi.ROLE_TABLE_CELL,
-                             pyatspi.ROLE_TREE_TABLE,
-                             pyatspi.ROLE_UNKNOWN,
-                             pyatspi.ROLE_SCROLL_PANE]
-                oldLocusOfFocus = orca_state.locusOfFocus
-                if self.utilities.hasMatchingHierarchy(
-                        event.source, rolesList) \
-                   and self.utilities.hasMatchingHierarchy(
-                        oldLocusOfFocus, rolesList):
-                    parent = event.source.parent
-                    parentTable = parent.queryTable()
-                    newIndex = self.utilities.cellIndex(event.source)
-                    newRow = parentTable.getRowAtIndex(newIndex)
-                    oldIndex = self.utilities.cellIndex(oldLocusOfFocus)
-                    oldRow = parentTable.getRowAtIndex(oldIndex)
-                    nRows = parentTable.nRows
-                    if (newRow != oldRow) and (oldRow != nRows):
-                        return
+        string, mods = self.utilities.lastKeyAndModifiers()
+        if string == "Delete":
+            roles = [pyatspi.ROLE_TABLE_CELL,
+                     pyatspi.ROLE_TREE_TABLE,
+                     pyatspi.ROLE_UNKNOWN,
+                     pyatspi.ROLE_SCROLL_PANE]
+            oldLocusOfFocus = orca_state.locusOfFocus
+            if self.utilities.hasMatchingHierarchy(event.source, roles) \
+               and self.utilities.hasMatchingHierarchy(oldLocusOfFocus, roles):
+                parent = event.source.parent
+                parentTable = parent.queryTable()
+                newIndex = self.utilities.cellIndex(event.source)
+                newRow = parentTable.getRowAtIndex(newIndex)
+                oldIndex = self.utilities.cellIndex(oldLocusOfFocus)
+                oldRow = parentTable.getRowAtIndex(oldIndex)
+                nRows = parentTable.nRows
+                if (newRow != oldRow) and (oldRow != nRows):
+                    return
 
         # For everything else, pass the event onto the parent class
         # to be handled in the default way.

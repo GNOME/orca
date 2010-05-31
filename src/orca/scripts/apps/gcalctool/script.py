@@ -125,18 +125,8 @@ class Script(default.Script):
         if self.utilities.isSameObject(event.source, self._resultsDisplay):
             contents = self.utilities.substring(self._resultsDisplay, 0, -1)
             self.displayBrailleMessage(contents)
-
-            if (orca_state.lastInputEvent is None) \
-                   or \
-                   (not isinstance(orca_state.lastInputEvent,
-                                   input_event.KeyboardEvent)):
-                return
-
-            if (orca_state.lastNonModifierKeyEvent.event_string == "space") \
-                   or (orca_state.lastNonModifierKeyEvent.event_string \
-                       == "Return") \
-                   or (orca_state.lastNonModifierKeyEvent.event_string == "="):
-
+            lastKey, mods = self.utilities.lastKeyAndModifiers()
+            if lastKey in ["space", "Return", "="]:
                 # gcalctool issues several identical text inserted events
                 # for a single press of keys such as enter, space, or equals.
                 # In fact, it's usually about 4, but we cannot depend upon
@@ -183,6 +173,9 @@ class Script(default.Script):
                 if speakIt:
                     speech.speak(contents)
                     self._lastSpokenContents = contents
+
+            if not lastKey:
+                return
 
             self._lastProcessedKeyEvent = \
                 input_event.KeyboardEvent(orca_state.lastNonModifierKeyEvent)

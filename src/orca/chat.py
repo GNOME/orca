@@ -972,10 +972,8 @@ class Chat:
         - event: the accessible event being examined
         """
 
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent \
-           and (orca_state.lastNonModifierKeyEvent.event_string == "Tab") \
-           and event.any_data and (event.any_data != "\t"):
+        lastKey, mods = self._script.utilities.lastKeyAndModifiers()
+        if lastKey == "Tab" and event.any_data and event.any_data != "\t":
             return True
 
         return False

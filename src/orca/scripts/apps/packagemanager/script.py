@@ -31,7 +31,6 @@ import gtk
 import pyatspi
 
 import orca.default as default
-import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -151,10 +150,8 @@ class Script(default.Script):
 
         # Prevent chattiness when arrowing out of or into a link.
         #
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent \
-           and orca_state.lastNonModifierKeyEvent.event_string in \
-               ["Left", "Right", "Up", "Down"] \
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+        if lastKey in ["Left", "Right", "Up", "Down"] \
            and event and event.type.startswith("focus:") \
            and (self.utilities.isLink(oldLocusOfFocus) \
            or self.utilities.isLink(newLocusOfFocus)):
@@ -434,10 +431,8 @@ class Script(default.Script):
         except:
             return
 
-        if text.caretOffset == text.characterCount \
-           and isinstance(orca_state.lastInputEvent,
-                          input_event.KeyboardEvent) \
-           and orca_state.lastNonModifierKeyEvent.event_string == "Right":
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+        if text.caretOffset == text.characterCount and lastKey == "Right":
             nextObj = self.getRelationTarget(obj, pyatspi.RELATION_FLOWS_TO)
             if nextObj and nextObj.getRole() == pyatspi.ROLE_TEXT:
                 obj = nextObj
