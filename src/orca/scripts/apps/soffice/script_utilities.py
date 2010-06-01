@@ -407,3 +407,35 @@ class Utilities(script_utilities.Utilities):
     # Miscellaneous Utilities                                               #
     #                                                                       #
     #########################################################################
+
+    def isAutoTextEvent(self, event):
+        """Returns True if event is associated with text being autocompleted
+        or autoinserted or autocorrected or autosomethingelsed.
+
+        Arguments:
+        - event: the accessible event being examined
+        """
+
+        if event.source.getRole() != pyatspi.ROLE_PARAGRAPH:
+            return False
+
+        lastKey, mods = self.lastKeyAndModifiers()
+        if event.type.startswith("object:text-changed:insert"):
+            if not event.any_data:
+                return False
+
+            if lastKey == "Tab" and event.any_data != "\t":
+                return True
+
+            if lastKey in ["BackSpace", "ISO_Left_Tab"]:
+                return True
+
+        if event.type.startswith("focus:"):
+            if lastKey == "Return":
+                try:
+                    charCount = event.source.queryText().characterCount
+                except:
+                    charCount = 0
+                return charCount > 0
+
+        return False

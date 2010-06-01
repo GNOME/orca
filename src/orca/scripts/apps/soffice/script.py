@@ -1730,15 +1730,8 @@ class Script(default.Script):
         # spoken. So we'll speak them before sending this event off to the
         # default script.
         #
-        lastKey, mods = self.utilities.lastKeyAndModifiers()
-        if lastKey == "Return" \
-           and event.source.getRole() == pyatspi.ROLE_PARAGRAPH:
-            try:
-                charCount = event.source.queryText().characterCount
-            except:
-                charCount = 0
-            if charCount:
-                speech.speak(self.speechGenerator.generateSpeech(event.source))
+        if self.utilities.isAutoTextEvent(event):
+            speech.speak(self.speechGenerator.generateSpeech(event.source))
 
         default.Script.onFocus(self, event)
 

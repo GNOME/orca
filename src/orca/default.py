@@ -3430,6 +3430,10 @@ class Script(script.Script):
                 string = "*"
                 speakThis = True
 
+        # Auto-completed, auto-corrected, auto-inserted, etc.
+        #
+        speakThis = speakThis or self.utilities.isAutoTextEvent(event)
+
         # We might need to echo this if it is a single character.
         #
         speakThis = speakThis \

@@ -2489,6 +2489,16 @@ class Utilities:
         else:
             return newText
 
+    def isAutoTextEvent(self, event):
+        """Returns True if event is associated with text being autocompleted
+        or autoinserted or autocorrected or autosomethingelsed.
+
+        Arguments:
+        - event: the accessible event being examined
+        """
+
+        return False
+
     def isSentenceDelimiter(self, currentChar, previousChar):
         """Returns True if we are positioned at the end of a sentence.
         This is determined by checking if the current character is a
