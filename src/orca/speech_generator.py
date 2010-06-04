@@ -886,6 +886,65 @@ class SpeechGenerator(generator.Generator):
                     result = [C_("text", "selected")]
         return result
 
+    def generateTextIndentation(self, obj, **args):
+        return self._generateTextIndentation(obj, **args)
+
+    def _generateTextIndentation(self, obj, **args):
+        """Speaks a summary of the number of spaces and/or tabs at the
+        beginning of the given line.
+
+        Arguments:
+        - obj: the text object.
+        - line: the string to check for spaces and tabs.
+        """
+        if not settings.enableSpeechIndentation:
+            return []
+        line =  args.get('alreadyFocused', "")
+        if not line:
+            [line, caretOffset, startOffset] = \
+              self._script.getTextLineAtCaret(obj)
+        # For the purpose of speaking the text indentation, replace
+        # occurances of UTF-8 '\302\240' (non breaking space) with
+        # spaces.
+        #
+        line = line.replace("\302\240",  " ")
+        line = line.decode("UTF-8")
+
+        spaceCount = 0
+        tabCount = 0
+        utterance = ""
+        offset = 0
+        while True:
+            while (offset < len(line)) and line[offset] == ' ':
+                spaceCount += 1
+                offset += 1
+            if spaceCount:
+                # Translators: this is the number of space characters on a line
+                # of text.
+                #
+                utterance += ngettext("%d space",
+                                      "%d spaces",
+                                      spaceCount) % spaceCount + " "
+
+            while (offset < len(line)) and line[offset] == '\t':
+                tabCount += 1
+                offset += 1
+            if tabCount:
+                # Translators: this is the number of tab characters on a line
+                # of text.
+                #
+                utterance += ngettext("%d tab",
+                                      "%d tabs",
+                                      tabCount) % tabCount + " "
+
+            if not (spaceCount  or tabCount):
+                break
+            spaceCount  = tabCount = 0
+
+        if len(utterance):
+            return [utterance]
+        return []
+
     #####################################################################
     #                                                                   #
     # Tree interface information                                        #

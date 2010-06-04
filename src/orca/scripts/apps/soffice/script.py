@@ -1265,9 +1265,11 @@ class Script(default.Script):
             hypertext = None
 
         if not hypertext or (hypertext.getNLinks() == 0):
-            if settings.enableSpeechIndentation:
-                self.speakTextIndentation(event.source,
-                                          textToSpeak.encode("UTF-8"))
+            result = self.speechGenerator.generateTextIndentation( \
+              event.source, line=textToSpeak.encode("UTF-8"))
+            if result:
+                speech.speak(result[0])
+
             speech.speak(textToSpeak.encode("UTF-8"), None, False)
         else:
             started = False

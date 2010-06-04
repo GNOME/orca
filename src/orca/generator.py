@@ -221,8 +221,9 @@ class Generator:
 
             debug.println(
                 debug.LEVEL_ALL,
-                "generate %s for %s (args=%s) using '%s'" \
+                "\n\n\ngenerate %s for %s %s (args=%s) using '%s'" \
                 % (self._mode,
+                   args['formatType'], 
                    debug.getAccessibleDetails(obj),
                    repr(args),
                    format))
@@ -254,6 +255,7 @@ class Generator:
         debug.println(debug.LEVEL_ALL, "generate %s results:" % self._mode)
         for element in result:
             debug.println(debug.LEVEL_ALL, "  " + str(element))
+        debug.println(debug.LEVEL_ALL, "\n\n\n")
 
         return result
 

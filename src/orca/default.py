@@ -4370,8 +4370,10 @@ class Script(script.Script):
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
 
-            if settings.enableSpeechIndentation:
-                self.speakTextIndentation(obj, line)
+            result = \
+              self.speechGenerator.generateTextIndentation(obj, line=line)
+            if result:
+                speech.speak(result[0])
             line = self.utilities.adjustForLinks(obj, line, startOffset)
             line = self.utilities.adjustForRepeats(line)
             speech.speak(line, voice)
@@ -4454,56 +4456,6 @@ class Script(script.Script):
         word = self.utilities.adjustForRepeats(word)
         orca_state.lastWord = word
         speech.speak(word, voice)
-
-    def speakTextIndentation(self, obj, line):
-        """Speaks a summary of the number of spaces and/or tabs at the
-        beginning of the given line.
-
-        Arguments:
-        - obj: the text object.
-        - line: the string to check for spaces and tabs.
-        """
-
-        # For the purpose of speaking the text indentation, replace
-        # occurances of UTF-8 '\302\240' (non breaking space) with
-        # spaces.
-        #
-        line = line.replace("\302\240",  " ")
-        line = line.decode("UTF-8")
-
-        spaceCount = 0
-        tabCount = 0
-        utterance = ""
-        offset = 0
-        while True:
-            while (offset < len(line)) and line[offset] == ' ':
-                spaceCount += 1
-                offset += 1
-            if spaceCount:
-                # Translators: this is the number of space characters on a line
-                # of text.
-                #
-                utterance += ngettext("%d space",
-                                      "%d spaces",
-                                      spaceCount) % spaceCount + " "
-
-            while (offset < len(line)) and line[offset] == '\t':
-                tabCount += 1
-                offset += 1
-            if tabCount:
-                # Translators: this is the number of tab characters on a line
-                # of text.
-                #
-                utterance += ngettext("%d tab",
-                                      "%d tabs",
-                                      tabCount) % tabCount + " "
-
-            if not (spaceCount  or tabCount):
-                break
-            spaceCount  = tabCount = 0
-
-        if len(utterance):
-            speech.speak(utterance)
 
     def stopSpeechOnActiveDescendantChanged(self, event):
         """Whether or not speech should be stopped prior to setting the
