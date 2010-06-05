@@ -237,9 +237,12 @@ def getAccessibleDetails(acc, indent="", includeApp=True):
     else:
         rel_string = ''
 
-    string += "name='%s' role='%s' state='%s' relations='%s'" \
-              % (acc.name or 'None', acc.getRoleName(),
-                 state_string, rel_string)
+    try:
+        string += "name='%s' role='%s' state='%s' relations='%s'" \
+                  % (acc.name or 'None', acc.getRoleName(),
+                     state_string, rel_string)
+    except DataError:
+        string += "(exception fetching data)"
 
     return string
 

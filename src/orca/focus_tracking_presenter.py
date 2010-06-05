@@ -563,6 +563,12 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
 
         except LookupError:
+            if event.type.startswith("window:deactivate"):
+                debug.println(debug.LEVEL_FINEST,
+                              "LookupError in deactivate event; clearing focus")
+                orca.setLocusOfFocus(event, None)
+                orca_state.activeWindow = None
+            return
             debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_WARNING,
                           "LookupError above while processing event: %s" %\
