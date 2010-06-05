@@ -2633,8 +2633,8 @@ class Script(default.Script):
         try:
             return self.generatorCache['inDocumentContent'][obj]
         except:
-            if not self.generatorCache.has_key('inDocumentContent'):
-                self.generatorCache['inDocumentContent'] = {}
+            pass
+
         result = False
         while obj:
             role = obj.getRole()
@@ -2644,8 +2644,14 @@ class Script(default.Script):
                 break
             else:
                 obj = obj.parent
-        self.generatorCache['inDocumentContent'][obj] = result
-        return self.generatorCache['inDocumentContent'][obj]
+
+        if not self.generatorCache.has_key('inDocumentContent'):
+            self.generatorCache['inDocumentContent'] = {}
+
+        if obj:
+            self.generatorCache['inDocumentContent'][obj] = result
+            
+        return result
 
     def useCaretNavigationModel(self, keyboardEvent):
         """Returns True if we should do our own caret navigation.
@@ -2855,10 +2861,11 @@ class Script(default.Script):
         try:
             return self.generatorCache['isAria'][obj]
         except:
-            if not self.generatorCache.has_key('isAria'):
-                self.generatorCache['isAria'] = {}
+            pass
         obj = obj or orca_state.locusOfFocus
         attrs = self._getAttrDictionary(obj)
+        if not self.generatorCache.has_key('isAria'):
+            self.generatorCache['isAria'] = {}
         self.generatorCache['isAria'][obj] = \
             ('xml-roles' in attrs and 'live' not in attrs)
         return self.generatorCache['isAria'][obj]

@@ -531,8 +531,6 @@ class Utilities:
         try:
             return self._script.generatorCache[self.DISPLAYED_TEXT][obj]
         except:
-            if not self._script.generatorCache.has_key(self.DISPLAYED_TEXT):
-                self._script.generatorCache[self.DISPLAYED_TEXT] = {}
             displayedText = None
 
         role = obj.getRole()
@@ -593,6 +591,9 @@ class Utilities:
                     if childText and len(childText):
                         displayedText = \
                             self.appendString(displayedText, childText)
+
+        if not self._script.generatorCache.has_key(self.DISPLAYED_TEXT):
+            self._script.generatorCache[self.DISPLAYED_TEXT] = {}
 
         self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
         return self._script.generatorCache[self.DISPLAYED_TEXT][obj]
