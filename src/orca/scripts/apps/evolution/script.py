@@ -1128,7 +1128,7 @@ class Script(default.Script):
 
         [string, caretOffset, startOffset] = self.getTextLineAtCaret(obj)
         self.updateBraille(newLocusOfFocus)
-        result = self.speechGenerator.generateTextIndentation(obj, string)
+        result = self.speechGenerator.generateTextIndentation(obj, line=string)
         if result:
             speech.speak(result[0])
         line = self.utilities.adjustForRepeats(string)
