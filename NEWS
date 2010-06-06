@@ -1,3 +1,76 @@
+2.31.3 - 06-June-2010
+
+General:
+
+  * Fix for bgo#615968 - Catch some exceptions
+
+  * Fix for bgo#620671 - Timing problem with generator cache
+
+  * Fix for bgo#619306 - Indentation and justification is not always
+    spoken
+
+  * Fix for bgo#620320 - Speaking of indentation should be handled by
+    the speech generator
+
+  * Fix for bgo#620163 - There should be a script utility to get the
+    last key and modifiers
+
+  * Fix for bgo#618927 - Need to add Open TTS to speech servers
+
+  * Fix for bgo#619332 - Generators should filter out '\r' line endings
+
+OpenOffice:
+
+  * Fix for bgo#620205 - Orca doesn't speak changes in bullets and
+    numbers resulting from Tab, Shift+Tab, or BackSpace being pressed
+
+  * Fix for bgo#619648 - Orca doesn't speak list bullets and numbers
+    when they are automatically inserted by OOo Writer
+
+  * Fix for bgo#620156 - Caret-moved events not presented in OOo Writer
+    3.2's Hyperlink dialog
+
+  * Fix for bgo#619574 - Orca fails to speak links in OOo Writer when
+    the localized form of 'link' contains an accented character
+
+  * Fix for bgo#620098 - When a line in an OOo Writer document ends
+    with a link which began on an earlier line, Orca doesn't speak
+    'link'
+
+  * Fix for bgo#620097 - When a line in an OOo Writer document ends
+    with a link, the final character is spoken as if it were not part
+    of the link
+
+  * Fix for bgo#620055 - Orca insists vehemently that you be told about
+    margin-related text attributes in OOo
+
+  * Fix for bgo#620045 - Left and Right are missing from the list of
+    keys the OOo script uses to determine when to speak toggle button
+    state changes
+
+  * Fix for bgo#619949 - Atrributes in oowriter are not being presented
+
+  * Fix for bgo#613299 - Orca should not present changes in the active
+    descendant for unfocused widgets in OOo
+
+Eclipse:
+
+  * Fix for bgo#619486 - Orca does not give feedback when performing an
+    incremental find in Eclipse
+
+Pidgin:
+
+  * Fix for bgo#619473 - Orca is not presenting incoming chatroom
+    messages with Pidgin 2.7.0
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    gl          Galician            Fran Diéguez
+    hu          Hungarian           Attila Hammer and Gabor Keleman
+    nb          Norwegian bokmål    Kjartan Maraas
+
+==========
+
 2.31.2 - 23-May-2010
 
 General:
