@@ -834,6 +834,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             except:
                 pass
 
+            script = self.getScript(
+                event.host_application or event.source.getApplication())
+            script.eventCache[event.type] = (event, time.time())
+
         if event:
             if settings.debugEventQueue:
                 debug.println(debug.LEVEL_ALL,

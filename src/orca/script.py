@@ -100,6 +100,7 @@ class Script:
         self.brailleGenerator = self.getBrailleGenerator()
         self.speechGenerator = self.getSpeechGenerator()
         self.generatorCache = {}
+        self.eventCache = {}
         self.whereAmI = self.getWhereAmI()
         self.bookmarks = self.getBookmarks()
         self.voices = settings.voices
@@ -364,6 +365,9 @@ class Script:
         if not processEvent:
             return
 
+        if self.skipObjectEvent(event):
+            return
+
         # Clear the generator cache for each event.
         #
         self.generatorCache = {}
@@ -381,6 +385,42 @@ class Script:
         for key in self.listeners.keys():
             if event.type.startswith(key):
                 self.listeners[key](event)
+
+    def skipObjectEvent(self, event):
+        """Gives us, and scripts, the ability to decide an event isn't
+        worth taking the time to process under the current circumstances.
+
+        Arguments:
+        - event: the Event
+
+        Returns True if we shouldn't bother processing this object event.
+        """
+
+        cachedEvent, eventTime = self.eventCache.get(event.type, [None, 0])
+        if not cachedEvent or cachedEvent == event:
+            return False
+
+        focus    = ["focus:", "object:state-changed:focused"]
+        typing   = ["object:text-changed:insert", "object:text-changed:delete"]
+        arrowing = ["object:text-caret-moved", "object:text-selection-changed",
+                    "object:selection-changed"]
+
+        skip = False
+        if (event.type in arrowing or event.type in typing) \
+           and event.source == cachedEvent.source:
+            skip = True
+            reason = "more recent event of the same type in the same object"
+        elif event.type in focus and event.source != cachedEvent.source \
+             and event.detail1 == cachedEvent.detail1:
+            skip = True
+            reason = "more recent event of the same type in a different object"
+
+        if skip:
+            debug.println(debug.LEVEL_FINE,
+                          "script.skipObjectEvent: skipped due to %s" \
+                          % reason)
+
+        return skip
 
     def checkKeyboardEventData(self, keyboardEvent):
         """Checks the data on the keyboard event.
