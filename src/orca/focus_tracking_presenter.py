@@ -568,7 +568,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                               "LookupError in deactivate event; clearing focus")
                 orca.setLocusOfFocus(event, None)
                 orca_state.activeWindow = None
-            return
+                return
             debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_WARNING,
                           "LookupError above while processing event: %s" %\
