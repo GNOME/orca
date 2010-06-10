@@ -536,6 +536,8 @@ class Utilities:
         role = obj.getRole()
         if role == pyatspi.ROLE_COMBO_BOX:
             displayedText = self._displayedTextInComboBox(obj)
+            if not self._script.generatorCache.has_key(self.DISPLAYED_TEXT):
+                self._script.generatorCache[self.DISPLAYED_TEXT] = {}
             self._script.generatorCache[self.DISPLAYED_TEXT][obj] = \
                 displayedText
             return self._script.generatorCache[self.DISPLAYED_TEXT][obj]

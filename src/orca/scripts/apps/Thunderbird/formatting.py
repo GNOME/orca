@@ -31,6 +31,7 @@ import copy
 import pyatspi
 
 import orca.formatting
+import orca.scripts.toolkits.Gecko.formatting as GeckoFormatting
 
 formatting = {
     'speech': {
@@ -41,9 +42,9 @@ formatting = {
         }
     }
 
-class Formatting(orca.formatting.Formatting):
+class Formatting(GeckoFormatting.Formatting):
     def __init__(self, script):
-        orca.formatting.Formatting.__init__(self, script)
+        GeckoFormatting.Formatting.__init__(self, script)
         self.update(copy.deepcopy(formatting))
         self._defaultFormatting = orca.formatting.Formatting(script)
 
@@ -51,4 +52,4 @@ class Formatting(orca.formatting.Formatting):
         if args.get('useDefaultFormatting', False):
             return self._defaultFormatting.getFormat(**args)
         else:
-            return orca.formatting.Formatting.getFormat(self, **args)
+            return GeckoFormatting.Formatting.getFormat(self, **args)
