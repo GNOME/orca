@@ -54,6 +54,9 @@ GS_MAG_NONE         = 0
 GS_MAG_CENTERED     = 1
 GS_MAG_PUSH         = 2
 GS_MAG_PROPORTIONAL = 3
+CROSSHAIRS_SHOW_KEY = A11Y_MAG_PREFS_DIR + "/show_cross_hairs"
+
+_gconfClient = gconf.client_get_default()
 
 # If True, the magnifier is active
 #
@@ -84,6 +87,7 @@ _screenHeight = _screen.get_height()
 _initialized = False
 _fullScreenCapable = False
 _wasActiveOnInit = False
+_crossHairsShownOnInit = False
 
 # The width and height, in unzoomed system coordinates of the rectangle that,
 # when magnified, will fill the viewport of the magnifier - this needs to be
@@ -296,7 +300,7 @@ def updateMouseTracking(newMode):
     #
     gsMagModes = \
         [GS_MAG_CENTERED, GS_MAG_PROPORTIONAL, GS_MAG_PUSH, GS_MAG_NONE]
-    gconf.client_get_default().set_int(MOUSE_MODE_KEY, gsMagModes[newMode])
+    _gconfClient.set_int(MOUSE_MODE_KEY, gsMagModes[newMode])
 
 def updatePointerFollowsFocus(enabled):
     """Updates the pointer follows focus setting.
@@ -592,6 +596,7 @@ def setMagnifierCrossHair(enabled, updateScreen=True):
         size = settings.magCrossHairSize
 
     _magnifier.setCrosswireSize(size)
+    _gconfClient.set_bool(CROSSHAIRS_SHOW_KEY, enabled)
 
 def setMagnifierCrossHairClip(enabled, updateScreen=True):
     """Sets the cross-hair clip.
@@ -829,6 +834,7 @@ def init():
     global _initialized
     global _isActive
     global _wasActiveOnInit
+    global _crossHairsShownOnInit
 
     if _initialized:
         return False
@@ -836,6 +842,7 @@ def init():
     try:
         _initialized = True
         _wasActiveOnInit = _magnifier.isActive()
+        _crossHairsShownOnInit = _gconfClient.get_bool(CROSSHAIRS_SHOW_KEY)
         applySettings()
         _magnifier.setActive(True)
         _isActive = _magnifier.isActive()
@@ -858,6 +865,7 @@ def shutdown():
         return False
 
     _magnifier.setActive(_wasActiveOnInit)
+    _gconfClient.set_bool(CROSSHAIRS_SHOW_KEY, _crossHairsShownOnInit)
     _isActive = _magnifier.isActive()
     if not _isActive:
         hideSystemPointer(False)
