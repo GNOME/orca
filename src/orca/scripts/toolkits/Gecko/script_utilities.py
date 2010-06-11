@@ -213,6 +213,23 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
+    def isEntry(self, obj):
+        """Returns True if we should treat this object as an entry."""
+
+        if not obj:
+            return False
+
+        if obj.getRole() == pyatspi.ROLE_ENTRY:
+            return True
+
+        if obj.getState().contains(pyatspi.STATE_EDITABLE) \
+           and obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                 pyatspi.ROLE_PARAGRAPH,
+                                 pyatspi.ROLE_TEXT]:
+            return True
+
+        return False
+
     def isLayoutOnly(self, obj):
         """Returns True if the given object is for layout purposes only."""
 
@@ -223,6 +240,11 @@ class Utilities(script_utilities.Utilities):
 
         else:
             return script_utilities.Utilities.isLayoutOnly(self, obj)
+
+    def isPasswordText(self, obj):
+        """Returns True if we should treat this object as password text."""
+
+        return obj and obj.getRole() == pyatspi.ROLE_PASSWORD_TEXT
 
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""

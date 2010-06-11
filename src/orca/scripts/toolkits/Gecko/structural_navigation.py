@@ -232,3 +232,56 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
                     eocs = float(string.count(embeddedObjectChar))
                     # print "Guess #2", string, eocs/len(string)
                     return eocs/len(string) < 0.005
+
+    ########################
+    #                      #
+    # Entries              #
+    #                      #
+    ########################
+
+    def _entryPredicate(self, obj, arg=None):
+        """The predicate to be used for verifying that the object
+        obj is an entry.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        isMatch = False
+        if self._script.utilities.isEntry(obj) \
+           or self._script.utilities.isPasswordText(obj):
+            state = obj.getState()
+            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
+                  and state.contains(pyatspi.STATE_SENSITIVE) \
+                  and state.contains(pyatspi.STATE_EDITABLE)
+
+        return isMatch
+
+    ########################
+    #                      #
+    # Form Fields          #
+    #                      #
+    ########################
+
+    def _formFieldPredicate(self, obj, arg=None):
+        """The predicate to be used for verifying that the object
+        obj is a form field.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        isMatch = False
+        if obj and obj.getRole() in self.FORM_ROLES:
+            state = obj.getState()
+            isMatch = state.contains(pyatspi.STATE_FOCUSABLE) \
+                  and state.contains(pyatspi.STATE_SENSITIVE)
+
+            if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+                isMatch = isMatch and state.contains(pyatspi.STATE_EDITABLE)
+
+        return isMatch

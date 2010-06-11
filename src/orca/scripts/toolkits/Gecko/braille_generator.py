@@ -245,6 +245,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             self._script.isAriaWidget(obj) \
             or ((obj.getRole() == pyatspi.ROLE_LIST) \
                 and (not obj.getState().contains(pyatspi.STATE_FOCUSABLE)))
+
+        oldRole = None
+        if self._script.utilities.isEntry(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_ENTRY, args)
+
         # Treat menu items in collapsed combo boxes as if the combo box
         # had focus. This will make things more consistent with how we
         # present combo boxes outside of Gecko.
@@ -259,4 +264,6 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                           generateBraille(self, obj, **args))
         del args['includeContext']
         del args['useDefaultFormatting']
+        if oldRole:
+            self._restoreRole(oldRole, args)
         return result

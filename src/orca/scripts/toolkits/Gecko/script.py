@@ -1284,7 +1284,7 @@ class Script(default.Script):
                 #    caret moved event for some object within the document
                 #    frame.
                 #
-                if eventSourceRole != pyatspi.ROLE_ENTRY \
+                if not self.utilities.isEntry(event.source) \
                    and self.utilities.isSameObject(
                         event.source, orca_state.locusOfFocus):
                     return
@@ -1351,7 +1351,7 @@ class Script(default.Script):
         # onCaretMoved will handle.
         #
         if eventSourceInDocument and not self.isAriaWidget(event.source):
-            if event.source.getRole() != pyatspi.ROLE_ENTRY:
+            if not self.utilities.isEntry(event.source):
                 [obj, characterOffset] = \
                     self.findFirstCaretContext(event.source, event.detail1)
             else:
@@ -1595,7 +1595,8 @@ class Script(default.Script):
         # caret context for the document frame.  If we succeed, then
         # we set the focus on the object that's holding the caret.
         #
-        if eventSourceRole == pyatspi.ROLE_DOCUMENT_FRAME:
+        if eventSourceRole == pyatspi.ROLE_DOCUMENT_FRAME \
+           and not event.source.getState().contains(pyatspi.STATE_EDITABLE):
             try:
                 [obj, characterOffset] = self.getCaretContext()
                 state = obj.getState()
@@ -2202,9 +2203,9 @@ class Script(default.Script):
 
             role = obj.getRole()
             if (not len(string) and role != pyatspi.ROLE_PARAGRAPH) \
-               or role in [pyatspi.ROLE_ENTRY,
-                           pyatspi.ROLE_PASSWORD_TEXT,
-                           pyatspi.ROLE_LINK]:
+               or self.utilities.isEntry(obj) \
+               or self.utilities.isPasswordText(obj) \
+               or role == pyatspi.ROLE_LINK:
                 [regions, fRegion] = \
                           self.brailleGenerator.generateBraille(obj)
 
@@ -2330,8 +2331,7 @@ class Script(default.Script):
         # things, however, we can defer to the default scripts.
         #
 
-        if not self.inDocumentContent() \
-           or obj.getRole() == pyatspi.ROLE_ENTRY:
+        if not self.inDocumentContent() or self.utilities.isEntry(obj):
             default.Script.sayCharacter(self, obj)
             return
 
@@ -2386,7 +2386,7 @@ class Script(default.Script):
         wordContents = self.getWordContentsAtOffset(obj, characterOffset)
         [textObj, startOffset, endOffset, word] = wordContents[0]
         self.speakMisspelledIndicator(textObj, startOffset)
-        if obj.getRole() != pyatspi.ROLE_ENTRY:
+        if not self.utilities.isEntry(textObj):
             self.speakContents(wordContents)
         else:
             word = self.utilities.substring(textObj, startOffset, endOffset)
@@ -2399,8 +2399,7 @@ class Script(default.Script):
         # EMBEDDED_OBJECT_CHARACTER model of Gecko.  For all other
         # things, however, we can defer to the default scripts.
         #
-        if not self.inDocumentContent() or \
-           obj.getRole() == pyatspi.ROLE_ENTRY:
+        if not self.inDocumentContent() or self.utilities.isEntry(obj):
             default.Script.sayLine(self, obj)
             return
 
@@ -2674,7 +2673,7 @@ class Script(default.Script):
 
         weHandleIt = True
         obj = orca_state.locusOfFocus
-        if obj and (obj.getRole() == pyatspi.ROLE_ENTRY):
+        if self.utilities.isEntry(obj):
             text        = obj.queryText()
             length      = text.characterCount
             caretOffset = text.caretOffset
@@ -3236,6 +3235,7 @@ class Script(default.Script):
         formRoles = [pyatspi.ROLE_CHECK_BOX,
                      pyatspi.ROLE_RADIO_BUTTON,
                      pyatspi.ROLE_COMBO_BOX,
+                     pyatspi.ROLE_DOCUMENT_FRAME,
                      pyatspi.ROLE_LIST,
                      pyatspi.ROLE_ENTRY,
                      pyatspi.ROLE_PASSWORD_TEXT,
@@ -3245,6 +3245,9 @@ class Script(default.Script):
         isField = obj.getRole() in formRoles \
                   and state.contains(pyatspi.STATE_FOCUSABLE) \
                   and state.contains(pyatspi.STATE_SENSITIVE)
+
+        if obj.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            isField = isField and state.contains(pyatspi.STATE_EDITABLE)
 
         return isField
 
@@ -3631,7 +3634,7 @@ class Script(default.Script):
             # of several objects, so we'll examine the strings of what
             # we've got and pop off the ones that match.
             #
-            elif role == pyatspi.ROLE_ENTRY:
+            elif self.utilities.isEntry(item[0]):
                 labelGuess = self.guessLabelFromLine(item[0])
                 index = len(lineContents) - 1
                 while labelGuess and index >= 0:
@@ -4237,7 +4240,7 @@ class Script(default.Script):
         if text:
             unicodeText = self.utilities.unicodeText(obj)
             if characterOffset >= len(unicodeText):
-                if obj.getRole() != pyatspi.ROLE_ENTRY:
+                if not self.utilities.isEntry(obj):
                     return [obj, -1]
                 else:
                     # We're at the end of an entry.  If we return -1,
@@ -4760,12 +4763,9 @@ class Script(default.Script):
         # We'll let the default script handle entries and other entry-like
         # things (e.g. the text portion of a dojo spin button).
         #
-        isEntry = obj.getState().contains(pyatspi.STATE_EDITABLE) \
-                  or obj.getRole() in [pyatspi.ROLE_ENTRY,
-                                       pyatspi.ROLE_TEXT,
-                                       pyatspi.ROLE_PASSWORD_TEXT]
-
-        if not self.inDocumentContent(obj) or isEntry:
+        if not self.inDocumentContent(obj) \
+           or self.utilities.isEntry(obj) \
+           or self.utilities.isPasswordText(obj):
             return default.Script.getTextLineAtCaret(self, obj, offset)
 
         # Find the current line.
@@ -5281,7 +5281,8 @@ class Script(default.Script):
             # role.
             #
             if not len(string) \
-               or role in [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]:
+               or self.utilities.isEntry(obj) \
+               or self.utilities.isPasswordText(obj):
                 utterance = self.speechGenerator.generateSpeech(obj)
             else:
                 utterance = [string]
@@ -5365,7 +5366,7 @@ class Script(default.Script):
             if character and character != self.EMBEDDED_OBJECT_CHARACTER:
                 speech.speakCharacter(character,
                                       self.getACSS(obj, character))
-            elif obj.getRole() != pyatspi.ROLE_ENTRY:
+            elif not self.utilities.isEntry(obj):
                 # We won't have a character if we move to the end of an
                 # entry (in which case we're not on a character and therefore
                 # have nothing to say), or when we hit a component with no

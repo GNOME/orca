@@ -499,6 +499,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(speech_generator.SpeechGenerator.\
                                            generateSpeech(self, obj, **args))
             self._restoreRole(oldRole, args)
+        elif self._script.utilities.isEntry(obj):
+            oldRole = self._overrideRole(pyatspi.ROLE_ENTRY, args)
+            result.extend(speech_generator.SpeechGenerator.\
+                                           generateSpeech(self, obj, **args))
+            self._restoreRole(oldRole, args)
         # ARIA widgets get treated like regular default widgets.
         #
         else:

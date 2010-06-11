@@ -465,6 +465,7 @@ class StructuralNavigation:
     FORM_ROLES = [pyatspi.ROLE_CHECK_BOX,
                   pyatspi.ROLE_RADIO_BUTTON,
                   pyatspi.ROLE_COMBO_BOX,
+                  pyatspi.ROLE_DOCUMENT_FRAME, # rich text editing
                   pyatspi.ROLE_LIST,
                   pyatspi.ROLE_ENTRY,
                   pyatspi.ROLE_PASSWORD_TEXT,
@@ -2438,7 +2439,8 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        role = [pyatspi.ROLE_ENTRY,
+        role = [pyatspi.ROLE_DOCUMENT_FRAME,
+                pyatspi.ROLE_ENTRY,
                 pyatspi.ROLE_PASSWORD_TEXT,
                 pyatspi.ROLE_TEXT]
         roleMatch = collection.MATCH_ANY
@@ -2450,7 +2452,8 @@ class StructuralNavigation:
                              states=state,
                              matchStates=stateMatch,
                              roles=role,
-                             matchRoles=roleMatch)
+                             matchRoles=roleMatch,
+                             applyPredicate=True)
 
     def _entryPredicate(self, obj, arg=None):
         """The predicate to be used for verifying that the object
@@ -2463,7 +2466,8 @@ class StructuralNavigation:
         """
 
         isMatch = False
-        if obj and obj.getRole() in [pyatspi.ROLE_ENTRY,
+        if obj and obj.getRole() in [pyatspi.ROLE_DOCUMENT_FRAME,
+                                     pyatspi.ROLE_ENTRY,
                                      pyatspi.ROLE_PASSWORD_TEXT,
                                      pyatspi.ROLE_TEXT]:
             state = obj.getState()
@@ -2547,7 +2551,8 @@ class StructuralNavigation:
                              states=state,
                              matchStates=stateMatch,
                              roles=role,
-                             matchRoles=roleMatch)
+                             matchRoles=roleMatch,
+                             applyPredicate=True)
 
     def _formFieldPredicate(self, obj, arg=None):
         """The predicate to be used for verifying that the object
