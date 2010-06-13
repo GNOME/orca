@@ -319,14 +319,14 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="confirmQuitCheckButton">
+                      <object class="GtkCheckButton" id="quitOrcaNoConfirmationCheckButton">
                         <property name="label" translatable="yes">Quit Orca _without confirmation</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="confirmQuitChecked"/>
+                        <signal name="toggled" handler="checkButtonToggled"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -375,7 +375,7 @@
                         <property name="use_underline">True</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="showMainWindowChecked"/>
+                        <signal name="toggled" handler="checkButtonToggled"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -384,7 +384,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="autostartOrcaCheckbutton">
+                      <object class="GtkCheckButton" id="autostartOrcaCheckButton">
                         <property name="label" translatable="yes">Start Orca when you lo_gin</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -400,7 +400,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="speakUnderMouseCheckButton">
+                      <object class="GtkCheckButton" id="enableMouseReviewCheckButton">
                         <property name="label" translatable="yes">Speak object under mo_use</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -408,7 +408,7 @@
                         <property name="use_underline">True</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="speakUnderMouseChecked"/>
+                        <signal name="toggled" handler="checkButtonToggled"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -433,7 +433,7 @@
                     <property name="border_width">12</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkCheckButton" id="speechSupportCheckbutton">
+                      <object class="GtkCheckButton" id="speechSupportCheckButton">
                         <property name="label" translatable="yes">_Enable speech</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -1000,7 +1000,7 @@
                                                     <property name="yscale">0</property>
                                                     <property name="top_padding">3</property>
                                                     <child>
-                                                      <object class="GtkCheckButton" id="speechProgressBarCheckbutton">
+                                                      <object class="GtkCheckButton" id="speechProgressBarCheckButton">
                                                         <property name="label" translatable="yes" context="ProgressBarUpdates" comments="Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.">Enable_d</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
@@ -1164,18 +1164,18 @@
                                 <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="speakBlankLinesChecked"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="speechIndentationCheckbutton">
+                              <object class="GtkCheckButton" id="enableSpeechIndentationCheckButton">
                                 <property name="label" translatable="yes">Speak _indentation and justification</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="speechIndentationChecked"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1183,7 +1183,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="speakMnemonicsCheckButton">
+                              <object class="GtkCheckButton" id="enableMnemonicSpeakingCheckButton">
                                 <property name="label" translatable="yes">Spea_k object mnemonics</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1191,7 +1191,7 @@
                                 <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="mnemonicSpeakingChecked"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1201,7 +1201,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="speakTutorialMessagesCheckButton">
+                              <object class="GtkCheckButton" id="enableTutorialMessagesCheckButton">
                                 <property name="label" translatable="yes">Speak tutorial messages</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1209,7 +1209,7 @@
                                 <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="speakTutorialMessagesToggled"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="top_attach">2</property>
@@ -1217,7 +1217,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="speakPositionCheckButton">
+                              <object class="GtkCheckButton" id="enablePositionSpeakingCheckButton">
                                 <property name="label" translatable="yes" comments="Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').">Speak child p_osition</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1225,7 +1225,7 @@
                                 <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="speakPositionToggled"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -1235,7 +1235,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="speakMultiCaseAsWordsCheckButton">
+                              <object class="GtkCheckButton" id="speakMultiCaseStringsAsWordsCheckButton">
                                 <property name="label" translatable="yes" comments="Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.">Speak multicase strings as wor_ds</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1243,7 +1243,7 @@
                                 <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="speakMultiCaseStringsToggled"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="top_attach">1</property>
@@ -1251,7 +1251,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="pauseBreaksCheckButton">
+                              <object class="GtkCheckButton" id="enablePauseBreaksCheckButton">
                                 <property name="label" translatable="yes" comments="Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.">Break speech into ch_unks between pauses</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1259,7 +1259,7 @@
                                 <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="pauseBreaksToggled"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="top_attach">3</property>
@@ -1363,7 +1363,7 @@
                             <property name="visible">True</property>
                             <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkCheckButton" id="brailleSupportCheckbutton">
+                              <object class="GtkCheckButton" id="enableBrailleCheckButton">
                                 <property name="label" translatable="yes">Enable Braille _support</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1371,7 +1371,7 @@
                                 <property name="use_underline">True</property>
                                 <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="brailleSupportChecked"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1380,14 +1380,14 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="brailleMonitorCheckbutton">
+                              <object class="GtkCheckButton" id="enableBrailleMonitorCheckButton">
                                 <property name="label" translatable="yes">Enable Braille _monitor</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="brailleMonitorChecked"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1396,7 +1396,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="contractedBrailleCheckbutton">
+                              <object class="GtkCheckButton" id="contractedBrailleCheckButton">
                                 <property name="label" translatable="yes">_Enable Contracted Braille</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -1472,14 +1472,14 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="disableBrailleEOL">
+                              <object class="GtkCheckButton" id="disableBrailleEOLCheckButton">
                                 <property name="label" translatable="yes">Disable _end of line symbol</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="disableBrailleEOLChecked"/>
+                                <signal name="toggled" handler="checkButtonToggled"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1785,7 +1785,7 @@
                     <property name="border_width">12</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkCheckButton" id="keyEchoCheckbutton">
+                      <object class="GtkCheckButton" id="keyEchoCheckButton">
                         <property name="label" translatable="yes">Enable _key echo</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -1805,14 +1805,14 @@
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkCheckButton" id="printableCheckbutton">
+                          <object class="GtkCheckButton" id="enablePrintableKeysCheckButton">
                             <property name="label" translatable="yes">Enable _alphanumeric and punctuation keys</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="printableKeysChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1827,14 +1827,14 @@
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkCheckButton" id="modifierCheckbutton">
+                          <object class="GtkCheckButton" id="enableModifierKeysCheckButton">
                             <property name="label" translatable="yes">Enable _modifier keys</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="modifierKeysChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1849,14 +1849,14 @@
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkCheckButton" id="lockingCheckbutton">
+                          <object class="GtkCheckButton" id="enableLockingKeysCheckButton">
                             <property name="label" translatable="yes">Enable lockin_g keys</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="lockingKeysChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1871,14 +1871,14 @@
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkCheckButton" id="functionCheckbutton">
+                          <object class="GtkCheckButton" id="enableFunctionKeysCheckButton">
                             <property name="label" translatable="yes">Enable _function keys</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="functionKeysChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1893,14 +1893,14 @@
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkCheckButton" id="actionCheckbutton">
+                          <object class="GtkCheckButton" id="enableActionKeysCheckButton">
                             <property name="label" translatable="yes">Enable ac_tion keys</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="actionKeysChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1915,14 +1915,14 @@
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkCheckButton" id="navigationCheckbutton">
+                          <object class="GtkCheckButton" id="enableNavigationKeysCheckButton">
                             <property name="label" translatable="yes">Enable _navigation keys</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="navigationKeysChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1937,14 +1937,14 @@
                         <property name="visible">True</property>
                         <property name="left_padding">12</property>
                         <child>
-                          <object class="GtkCheckButton" id="diacriticalCheckbutton">
+                          <object class="GtkCheckButton" id="enableDiacriticalKeysCheckButton">
                             <property name="label" translatable="yes" comments="Translators: When this option is enabled, dead keys will be announced when pressed.">Enable non-spacing _diacritical keys</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="diacriticalKeysChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1959,14 +1959,14 @@
                         <property name="visible">True</property>
                         <property name="top_padding">12</property>
                         <child>
-                          <object class="GtkCheckButton" id="echoByCharacterCheckbutton">
+                          <object class="GtkCheckButton" id="enableEchoByCharacterCheckButton">
                             <property name="label" translatable="yes" comments="Translators: When this option is enabled, inserted text of length 1 is spoken.">Enable echo by cha_racter</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="echoByCharacterChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1980,14 +1980,14 @@
                       <object class="GtkAlignment" id="alignment49">
                         <property name="visible">True</property>
                         <child>
-                          <object class="GtkCheckButton" id="echoByWordCheckbutton">
+                          <object class="GtkCheckButton" id="enableEchoByWordCheckButton">
                             <property name="label" translatable="yes">Enable echo by _word</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_underline">True</property>
                             <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="echoByWordChecked"/>
+                            <signal name="toggled" handler="checkButtonToggled"/>
                           </object>
                         </child>
                       </object>
@@ -1998,14 +1998,14 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="echoBySentenceCheckbutton">
+                      <object class="GtkCheckButton" id="enableEchoBySentenceCheckButton">
                         <property name="label" translatable="yes">Enable echo by _sentence</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="echoBySentenceChecked"/>
+                        <signal name="toggled" handler="checkButtonToggled"/>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -2035,7 +2035,7 @@
                     <property name="border_width">12</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkCheckButton" id="magnifierSupportCheckbutton">
+                      <object class="GtkCheckButton" id="magnifierSupportCheckButton">
                         <property name="label" translatable="yes">Enable _magnifier</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>

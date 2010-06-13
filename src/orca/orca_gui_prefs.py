@@ -1498,7 +1498,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # Speech pane.
         #
         enable = prefs["enableSpeech"]
-        self.get_widget("speechSupportCheckbutton").set_active(enable)
+        self.get_widget("speechSupportCheckButton").set_active(enable)
         self.get_widget("speechVbox").set_sensitive(enable)
 
         if prefs["verbalizePunctuationStyle"] == \
@@ -1523,17 +1523,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             self.get_widget("cellSpeechButton").set_active(True)
 
-        self.get_widget("speechIndentationCheckbutton").set_active(\
+        self.get_widget("enableSpeechIndentationCheckButton").set_active(\
             prefs["enableSpeechIndentation"])
 
         self.get_widget("speakBlankLinesCheckButton").set_active(\
             prefs["speakBlankLines"])
-        self.get_widget("speakMultiCaseAsWordsCheckButton").set_active(\
+        self.get_widget("speakMultiCaseStringsAsWordsCheckButton").set_active(\
             prefs["speakMultiCaseStringsAsWords"])
-        self.get_widget("speakTutorialMessagesCheckButton").set_active(\
+        self.get_widget("enableTutorialMessagesCheckButton").set_active(\
             prefs["enableTutorialMessages"])
 
-        self.get_widget("pauseBreaksCheckButton").set_active(\
+        self.get_widget("enablePauseBreaksCheckButton").set_active(\
             prefs["enablePauseBreaks"])
 
         # Translators: different speech systems and speech engines work
@@ -1549,10 +1549,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # (which we have for the above string) are not getting sucked in
         # to orca.pot. :-(
 
-        self.get_widget("speakPositionCheckButton").set_active(\
+        self.get_widget("enablePositionSpeakingCheckButton").set_active(\
             prefs["enablePositionSpeaking"])
 
-        self.get_widget("speakMnemonicsCheckButton").set_active(\
+        self.get_widget("enableMnemonicSpeakingCheckButton").set_active(\
             prefs["enableMnemonicSpeaking"])
 
         combobox = self.get_widget("sayAllStyle")
@@ -1563,7 +1563,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # upon whether the "Speak progress bar updates" checkbox is checked.
         #
         enable = prefs["enableProgressBarUpdates"]
-        self.get_widget("speechProgressBarCheckbutton").set_active(enable)
+        self.get_widget("speechProgressBarCheckButton").set_active(enable)
         self.get_widget("speakUpdateIntervalHBox").set_sensitive(enable)
 
         interval = prefs["progressBarUpdateInterval"]
@@ -1594,26 +1594,26 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         comboBox.set_active(prefs["progressBarVerbosity"])
 
         enable = prefs["enableMouseReview"]
-        self.get_widget("speakUnderMouseCheckButton").set_active(enable)
+        self.get_widget("enableMouseReviewCheckButton").set_active(enable)
 
         # Braille pane.
         #
-        self.get_widget("brailleSupportCheckbutton").set_active( \
+        self.get_widget("enableBrailleCheckButton").set_active( \
                         prefs["enableBraille"])
-        self.get_widget("brailleMonitorCheckbutton").set_active( \
+        self.get_widget("enableBrailleMonitorCheckButton").set_active( \
                         prefs["enableBrailleMonitor"])
         state = prefs["brailleRolenameStyle"] == \
                             settings.BRAILLE_ROLENAME_STYLE_SHORT
         self.get_widget("abbrevRolenames").set_active(state)
 
-        self.get_widget("disableBrailleEOL").set_active(
+        self.get_widget("disableBrailleEOLCheckButton").set_active(
             prefs["disableBrailleEOL"])
 
         if louis is None:
             self.get_widget( \
-                "contractedBrailleCheckbutton").set_sensitive(False)
+                "contractedBrailleCheckButton").set_sensitive(False)
         else:
-            self.get_widget("contractedBrailleCheckbutton").set_active( \
+            self.get_widget("contractedBrailleCheckButton").set_active( \
                 prefs["enableContractedBraille"])
             # Set up contraction table combo box and set it to the
             # currently used one.
@@ -1670,27 +1670,27 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # Key Echo pane.
         #
-        self.get_widget("keyEchoCheckbutton").set_active( \
+        self.get_widget("keyEchoCheckButton").set_active( \
                         prefs["enableKeyEcho"])
-        self.get_widget("printableCheckbutton").set_active( \
+        self.get_widget("enablePrintableKeysCheckButton").set_active( \
                         prefs["enablePrintableKeys"])
-        self.get_widget("modifierCheckbutton").set_active( \
+        self.get_widget("enableModifierKeysCheckButton").set_active( \
                         prefs["enableModifierKeys"])
-        self.get_widget("lockingCheckbutton").set_active( \
+        self.get_widget("enableLockingKeysCheckButton").set_active( \
                         prefs["enableLockingKeys"])
-        self.get_widget("functionCheckbutton").set_active( \
+        self.get_widget("enableFunctionKeysCheckButton").set_active( \
                         prefs["enableFunctionKeys"])
-        self.get_widget("actionCheckbutton").set_active( \
+        self.get_widget("enableActionKeysCheckButton").set_active( \
                         prefs["enableActionKeys"])
-        self.get_widget("navigationCheckbutton").set_active( \
+        self.get_widget("enableNavigationKeysCheckButton").set_active( \
                         prefs["enableNavigationKeys"])
-        self.get_widget("diacriticalCheckbutton").set_active( \
+        self.get_widget("enableDiacriticalKeysCheckButton").set_active( \
                         prefs["enableDiacriticalKeys"])
-        self.get_widget("echoByCharacterCheckbutton").set_active( \
+        self.get_widget("enableEchoByCharacterCheckButton").set_active( \
                         prefs["enableEchoByCharacter"])
-        self.get_widget("echoByWordCheckbutton").set_active( \
+        self.get_widget("enableEchoByWordCheckButton").set_active( \
                         prefs["enableEchoByWord"])
-        self.get_widget("echoBySentenceCheckbutton").set_active( \
+        self.get_widget("enableEchoBySentenceCheckButton").set_active( \
                         prefs["enableEchoBySentence"])
 
         # Translators: When this option is enabled, dead keys will be
@@ -1720,7 +1720,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # upon whether the "Enable Magnifier" checkbox is checked.
         #
         enable = prefs["enableMagnifier"]
-        self.get_widget("magnifierSupportCheckbutton").set_active(enable)
+        self.get_widget("magnifierSupportCheckButton").set_active(enable)
         self.get_widget("magnifierTable").set_sensitive(enable)
 
         # Get the 'Cursor on/off' preference and set the checkbox accordingly.
@@ -2011,7 +2011,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         self.get_widget("showMainWindowCheckButton").set_active( \
                         prefs["showMainWindow"])
-        self.get_widget("confirmQuitCheckButton").set_active( \
+        self.get_widget("quitOrcaNoConfirmationCheckButton").set_active( \
                         prefs["quitOrcaNoConfirmation"])
         self.get_widget("presentToolTipsCheckButton").set_active( \
             prefs["presentToolTips"] and settings.canPresentToolTips)
@@ -2028,7 +2028,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.enableLiveUpdating = liveUpdating
 
         self.enableAutostart = settings.isOrcaAutostarted()
-        self.get_widget("autostartOrcaCheckbutton").set_active( \
+        self.get_widget("autostartOrcaCheckButton").set_active( \
                          self.enableAutostart)
 
     def populateComboBox(self, combobox, items):
@@ -2144,14 +2144,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         depending upon whether the value of the key echo check button is set.
         """
 
-        enable = self.get_widget("keyEchoCheckbutton").get_active()
-        self.get_widget("printableCheckbutton").set_sensitive(enable)
-        self.get_widget("modifierCheckbutton").set_sensitive(enable)
-        self.get_widget("lockingCheckbutton").set_sensitive(enable)
-        self.get_widget("functionCheckbutton").set_sensitive(enable)
-        self.get_widget("actionCheckbutton").set_sensitive(enable)
-        self.get_widget("navigationCheckbutton").set_sensitive(enable)
-        self.get_widget("diacriticalCheckbutton").set_sensitive(enable)
+        enable = self.get_widget("keyEchoCheckButton").get_active()
+        self.get_widget("enablePrintableKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enableModifierKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enableLockingKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enableFunctionKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enableActionKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enableNavigationKeysCheckButton").set_sensitive(enable)
+        self.get_widget("enableDiacriticalKeysCheckButton").set_sensitive( \
+          enable)
 
     def _say(self, text, stop=False):
         """If the text field is not None, speaks the given text, optionally
@@ -2456,7 +2457,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def speechSupportChecked(self, widget):
         """Signal handler for the "toggled" signal for the
-           speechSupportCheckbutton GtkCheckButton widget. The user has
+           speechSupportCheckButton GtkCheckButton widget. The user has
            [un]checked the 'Enable Speech' checkbox. Set the 'enableSpeech'
            preference to the new value. Set the rest of the speech pane items
            [in]sensensitive depending upon whether this checkbox is checked.
@@ -2601,109 +2602,23 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._setVolumeForVoiceType(voiceType, volume)
         settings.voices[settings.DEFAULT_VOICE][acss.ACSS.GAIN] = volume
 
-    def speechIndentationChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           speechIndentationCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Speak indentation and justification' checkbox.
-           Set the 'enableSpeechIndentation' preference to the new value.
+    def checkButtonToggled(self, widget):
+        """Signal handler for "toggled" signal for basic GtkCheckButton 
+           widgets. The user has altered the state of the checkbox.
+           Set the preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
         """
 
-        enable = widget.get_active()
-        self.prefsDict["enableSpeechIndentation"] = enable
-
-    def speakBlankLinesChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           speakBlankLinesCheckButton GtkCheckButton widget. The user has
-           [un]checked the 'Speak blank lines' checkbox.
-           Set the 'speakBlankLines' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["speakBlankLines"] = widget.get_active()
-
-    def speakMultiCaseStringsToggled(self, widget):
-        """Signal handler for the "toggled" signal for the
-           speakMultiCaseAsWordsCheckButton GtkCheckButton widget. The user has
-           [un]checked the checkbox.
-           Set the 'speakMultiCaseStringsAsWords' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["speakMultiCaseStringsAsWords"] = widget.get_active()
-
-    def speakTutorialMessagesToggled(self, widget):
-        """Signal handler for the "toggled" signal for the
-           speakTutorialMessagesCheckButton GtkCheckButton widget.
-           Set the 'enableTutorialMessages' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableTutorialMessages"] = widget.get_active()
-
-    def pauseBreaksToggled (self, widget):
-        """Signal handler for the "toggled" signal for the
-           pauseBreaksCheckButton GtkCheckButton widget.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enablePauseBreaks"] = widget.get_active()
-
-    def speakPositionToggled(self, widget):
-        """Signal handler for the "toggled" signal for the
-           speakPositionCheckButton GtkCheckButton widget.
-           Set the 'enablePositionSpeaking' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enablePositionSpeaking"] = widget.get_active()
-
-    def mnemonicSpeakingChecked (self, widget):
-        """Signal handler for the "toggled" signal for the
-           speakMnemonicsCheckButton GtkCheckButton widget.
-           Set the 'Speak mnemonics automaticaly' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableMnemonicSpeaking"] = widget.get_active()
-
-    def brailleSupportChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           brailleSupportCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable Braille support' checkbox. Set the
-           'enableBraille' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableBraille"] = widget.get_active()
-
-    def brailleMonitorChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           brailleMonitorCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable Braille monitor' checkbox. Set the
-           'enableBrailleMonitor' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableBrailleMonitor"] = widget.get_active()
+        # To use this default handler please make sure:
+        # The name of the setting that will be changed is: settingName
+        # The id of the widget in the ui should be: settingNameCheckButton
+        #
+        settingName = gtk.Buildable.get_name(widget)
+        # strip "CheckButton" from the end.
+        settingName = settingName[:-11] 
+        self.prefsDict[settingName] = widget.get_active()
 
     def keyEchoChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -2719,124 +2634,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.prefsDict["enableKeyEcho"] = widget.get_active()
         self._setKeyEchoItems()
-
-    def printableKeysChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           printableCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable alphanumeric and punctuation keys'
-           checkbox. Set the 'enablePrintableKeys' preference to the
-           new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enablePrintableKeys"] = widget.get_active()
-
-    def modifierKeysChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           modifierCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable modifier keys' checkbox. Set the
-           'enableModifierKeys' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableModifierKeys"] = widget.get_active()
-
-    def lockingKeysChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           lockingCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable locking keys' checkbox. Set the
-           'enableLockingKeys' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableLockingKeys"] = widget.get_active()
-
-    def functionKeysChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           functionCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable locking keys' checkbox. Set the
-           'enableLockingKeys' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableFunctionKeys"] = widget.get_active()
-
-    def actionKeysChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           actionCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable action keys' checkbox. Set the
-           'enableActionKeys' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-        self.prefsDict["enableActionKeys"] = widget.get_active()
-
-    def navigationKeysChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           navigationCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable navigation keys' checkbox. Set the
-           'enableNavigationKeys' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-        self.prefsDict["enableNavigationKeys"] = widget.get_active()
-
-    def diacriticalKeysChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           diacriticalCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable diacritical keys' checkbox. Set the
-           'enableDiacriticalKeys' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-        self.prefsDict["enableDiacriticalKeys"] = widget.get_active()
-
-    def echoByCharacterChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           echoByCharacterCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable Echo by Character' checkbox. Set the
-           'enableEchoByCharacter' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableEchoByCharacter"] = widget.get_active()
-
-    def echoByWordChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           echoByWordCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable Echo by Word' checkbox. Set the
-           'enableEchoByWord' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableEchoByWord"] = widget.get_active()
-
-    def echoBySentenceChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           echoBySentenceCheckbutton GtkCheckButton widget. The user has
-           [un]checked the 'Enable Echo by Sentence' checkbox. Set the
-           'enableEchoBySentence' preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["enableEchoBySentence"] = widget.get_active()
 
     def brailleSelectionChanged(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -3105,7 +2902,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def speechProgressBarChecked(self, widget):
         """Signal handler for the "toggled" signal for the
-           speechProgressBarCheckbutton GtkCheckButton widget.
+           speechProgressBarCheckButton GtkCheckButton widget.
            The user has [un]checked the "Speak progress bar updates" checkbox.
            Set the 'enableProgressBarUpdates' preference to the new value.
            Set the rest of the 'update interval' hbox items [in]sensensitive
@@ -3133,21 +2930,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.prefsDict["progressBarUpdateInterval"] = widget.get_value_as_int()
 
-
-    def speakUnderMouseChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           speakUnderMouseCheckButton GtkCheckButton widget.
-           The user has [un]checked the "Speak object under mouse" checkbox.
-           Set the 'enableMouseReview' preference to the new value.
-           Set the rest of the 'dwell time' hbox items [in]sensensitive
-           depending upon whether this checkbox is checked.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        enable = widget.get_active()
-        self.prefsDict["enableMouseReview"] = enable
 
     def autostartOrcaChecked(self, widget):
         """Signal handler for the "toggled" signal for the
@@ -3179,18 +2961,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             self.prefsDict["brailleRolenameStyle"] = \
                 settings.BRAILLE_ROLENAME_STYLE_LONG
-
-    def disableBrailleEOLChecked(self, widget):
-        """Signal handler for the "toggled" signal for the disableBrailleEOL
-           GtkCheckButton widget. The user has [un]checked the 'Disable
-           braille end of line symbol' checkbox. Set the 'disableBrailleEOL'
-           preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["disableBrailleEOL"] = widget.get_active()
 
     def brailleVerbosityChanged(self, widget):
         """Signal handler for the "toggled" signal for the brailleBriefButton,
@@ -3967,32 +3737,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         return
 
-    def showMainWindowChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           showMainWindowCheckButton GtkCheckButton widget.
-           The user has [un]checked the 'Show Orca main window'
-           checkbox. Set the 'showMainWindow' preference
-           to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["showMainWindow"] = widget.get_active()
-
-    def confirmQuitChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           confirmQuitCheckButton GtkCheckButton widget.
-           The user has [un]checked the 'Quit Orca without
-           confirmation' checkbox. Set the 'quitOrcaNoConfirmation'
-           preference to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.prefsDict["quitOrcaNoConfirmation"] = widget.get_active()
-
     def presentToolTipsChecked(self, widget):
         """Signal handler for the "toggled" signal for the
            presentToolTipsCheckButton GtkCheckButton widget.
@@ -4254,7 +3998,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if not self._isInitialSetup:
             self.restoreSettings()
 
-        enable = self.get_widget("speechSupportCheckbutton").get_active()
+        enable = self.get_widget("speechSupportCheckButton").get_active()
         self.prefsDict["enableSpeech"] = enable
 
         if self.speechSystemsChoice:
@@ -4276,7 +4020,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         try:
             status = settings.setOrcaAutostart(self.enableAutostart)
-            self.get_widget("autostartOrcaCheckbutton").set_active(\
+            self.get_widget("autostartOrcaCheckButton").set_active(\
                 settings.isOrcaAutostarted())
         except:
             # If we are pressing Apply or OK from an application preferences
