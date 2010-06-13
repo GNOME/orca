@@ -43,7 +43,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateExpandableState(self, obj, **args):
         result = []
-        if self._script.isInBuddyList(obj):
+        if self._script.chat.isInBuddyList(obj):
             # The Pidgin buddy list consists of two columns. The
             # column which is set as the expander column and which
             # also contains the node relationship is hidden.  Hidden
@@ -68,7 +68,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateNumberOfChildren(self, obj, **args):
         result = []
-        if self._script.isInBuddyList(obj):
+        if self._script.chat.isInBuddyList(obj):
             # The Pidgin buddy list consists of two columns. The
             # column which is set as the expander column and which
             # also contains the node relationship is hidden.  Hidden

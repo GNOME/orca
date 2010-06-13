@@ -68,7 +68,7 @@ class Utilities(script_utilities.Utilities):
         Returns: a list of all the child nodes
         """
 
-        if not self._script.isInBuddyList(obj):
+        if not self._script.chat.isInBuddyList(obj):
             return script_utilities.Utilities.childNodes(self, obj)
 
         try:
@@ -124,7 +124,7 @@ class Utilities(script_utilities.Utilities):
         if not obj:
             return -1
 
-        if not self._script.isInBuddyList(obj):
+        if not self._script.chat.isInBuddyList(obj):
             return script_utilities.Utilities.nodeLevel(self, obj)
 
         try:

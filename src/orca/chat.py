@@ -704,7 +704,7 @@ class Chat:
             #
             return True
 
-        elif self.isTypingStatusChangedEvent(event.source):
+        elif self.isTypingStatusChangedEvent(event):
             self.presentTypingStatusChange(event, event.any_data)
             return True
 

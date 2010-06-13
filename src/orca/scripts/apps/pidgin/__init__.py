@@ -18,4 +18,3 @@
 # Boston MA  02110-1301 USA.
 
 from script import Script
-import script_settings
