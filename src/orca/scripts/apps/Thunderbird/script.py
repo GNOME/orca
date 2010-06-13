@@ -464,6 +464,14 @@ class Script(Gecko.Script):
         obj = event.source
         parent = obj.parent
 
+        # Try to stop unwanted chatter when a new message is being
+        # replied to. See bgo#618484.
+        #
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
+           and event.source.getState().contains(pyatspi.STATE_EDITABLE) \
+           and event.type.endswith("system"):
+            return
+
         # Speak the autocompleted text, but only if it is different
         # address so that we're not too "chatty." See bug #533042.
         #
