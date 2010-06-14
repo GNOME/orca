@@ -71,6 +71,12 @@ keymap = (
     ("s", defaultModifierMask, ORCA_MODIFIER_MASK,
     "toggleSilenceSpeechHandler"),
 
+    ("t", defaultModifierMask, ORCA_MODIFIER_MASK,
+    "presentTimeHandler", 1),
+
+    ("t", defaultModifierMask, ORCA_MODIFIER_MASK,
+    "presentDateHandler", 2),
+
     ("End", defaultModifierMask, ORCA_CTRL_ALT_MODIFIER_MASK,
     "listAppsHandler"),
     ("Home", defaultModifierMask, ORCA_CTRL_ALT_MODIFIER_MASK,

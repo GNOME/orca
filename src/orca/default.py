@@ -1058,6 +1058,24 @@ class Script(script.Script):
                 #
                 _("Toggle mouse review mode."))
 
+        self.inputEventHandlers["presentTimeHandler"] = \
+            input_event.InputEventHandler(
+                Script.presentTime,
+                # Translators: Orca can present the current time to the
+                # user when the user presses 
+                # a shortcut key.
+                #
+                _("Present current time."))
+
+        self.inputEventHandlers["presentDateHandler"] = \
+            input_event.InputEventHandler(
+                Script.presentDate,
+                # Translators: Orca can present the current date to the
+                # user when the user presses 
+                # a shortcut key.
+                #
+                _("Present current date."))
+
         self.inputEventHandlers["bypassNextCommandHandler"] = \
             input_event.InputEventHandler(
                 Script.bypassNextCommand,
@@ -5644,6 +5662,18 @@ class Script(script.Script):
         #
         speech.speak(_("Unicode %s") % \
                          self.utilities.unicodeValueString(character))
+
+    def presentTime(self, inputEvent):
+        """ Presents the current time. """
+        message = time.strftime(settings.presentTimeFormat, time.localtime())
+        self.presentMessage(message)
+        return True
+
+    def presentDate(self, inputEvent):
+        """ Presents the current date. """
+        message = time.strftime(settings.presentDateFormat, time.localtime())
+        self.presentMessage(message)
+        return True
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list

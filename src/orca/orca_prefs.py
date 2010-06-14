@@ -338,6 +338,26 @@ class OrcaPrefs:
         else:
             return "orca.settings.PUNCTUATION_STYLE_ALL"
 
+    def _getPresentTimeString(self, val):
+        if val == settings.TIME_FORMAT_24_HMS:
+            return "orca.settings.TIME_FORMAT_24_HMS"
+        elif val == settings.TIME_FORMAT_24_HMS_WITH_WORDS:
+            return "orca.settings.TIME_FORMAT_24_HMS_WITH_WORDS"
+        elif val == settings.TIME_FORMAT_24_HM:
+            return "orca.settings.TIME_FORMAT_24_HM"
+        elif val == settings.TIME_FORMAT_24_HM_WITH_WORDS:
+            return "orca.settings.TIME_FORMAT_24_HM_WITH_WORDS"
+        else:
+            return "orca.settings.TIME_FORMAT_LOCALE"
+
+    def _getPresentDateString(self, val):
+        if val == settings.DATE_FORMAT_WITH_LONG_NAMES:
+            return "orca.settings.DATE_FORMAT_WITH_LONG_NAMES"
+        elif val == settings.DATE_FORMAT_WITH_SHORT_NAMES:
+            return "orca.settings.DATE_FORMAT_WITH_SHORT_NAMES"
+        else:
+            return "orca.settings.DATE_FORMAT_LOCALE"
+
     def _getSayAllStyleString(self, sayAllStyle):
         """Returns a string that represents the say all style passed in."""
 
@@ -717,6 +737,10 @@ class OrcaPrefs:
                 value = self._getBrailleAlignmentStyleString(prefsDict[key])
             elif key == "verbalizePunctuationStyle":
                 value = self._getVerbalizePunctuationStyleString(prefsDict[key])
+            elif key == "presentDateFormat":
+                value = self._getPresentDateString(prefsDict[key])
+            elif key == "presentTimeFormat":
+                value = self._getPresentTimeString(prefsDict[key])
             elif key == "sayAllStyle":
                 value = self._getSayAllStyleString(prefsDict[key])
             elif key in ["magCursorColor",

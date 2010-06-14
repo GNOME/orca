@@ -196,6 +196,8 @@ userCustomizableSettings = [
     "flashIsPersistent",
     "flashVerbosityLevel",
     "messageVerbosityLevel",
+    "presentDateFormat",
+    "presentTimeFormat",
 ]
 
 # The name of the module that hold the user interface for the main window
@@ -1484,3 +1486,37 @@ useExperimentalSpeechProsody = True
 # some introduce unnaturally long pauses between requests to speak.
 #
 enablePauseBreaks = True
+
+# Format directives to use in presentTime function.
+# By default we use the time format according to the current locale.
+# These format strings are passed to python's time.strftime function. To see
+# possible directives to embed in the format strings check:
+# http://docs.python.org/library/time.html#time.strftime
+#
+TIME_FORMAT_LOCALE = "%X"
+TIME_FORMAT_24_HMS = "%H:%M:%S"
+# Translators: Orca has a feature to speak the time
+# when the user presses a shortcut key.
+# This is one of the alternative formats that the 
+# user may wish to be presented with.
+#
+TIME_FORMAT_24_HMS_WITH_WORDS = _("%H hours, %M minutes and %S seconds.")
+TIME_FORMAT_24_HM = "%H:%M"
+# Translators: Orca has a feature to speak the time
+# when the user presses a shortcut key.
+# This is one of the alternative formats that the 
+# user may wish to be presented with.
+#
+TIME_FORMAT_24_HM_WITH_WORDS = _("%H hours and %M minutes.")
+presentTimeFormat = TIME_FORMAT_LOCALE
+
+# Format directives to use in presentDate function.
+# By default we use the date format according to the current locale.
+# These format strings are passed to python's time.strftime function. To see
+# possible directives to embed in the format strings check:
+# http://docs.python.org/library/time.html#time.strftime
+#
+DATE_FORMAT_LOCALE = "%x"
+DATE_FORMAT_WITH_LONG_NAMES = "%A, %d, %B, %Y."
+DATE_FORMAT_WITH_SHORT_NAMES = "%a, %d, %b, %Y."
+presentDateFormat = DATE_FORMAT_LOCALE
