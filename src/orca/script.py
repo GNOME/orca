@@ -326,6 +326,26 @@ class Script:
 
         return orca_state.clickCount
 
+    def getSettings(self):
+        """Returns the settings associated with this script, regardless of
+        whether or not the script is active.
+        """
+
+        scriptSettings = settings
+        if orca_state.activeScript != self:
+            name = settings.getScriptModuleName(self.app)
+            if name:
+                for package in settings.settingsPackages:
+                    name = package + "." + name
+                    try:
+                        module = __import__(name, globals(), locals(), [''])
+                        reload(module)
+                        scriptSettings = module.orca.settings
+                    except:
+                        pass
+
+        return scriptSettings
+
     # [[[WDW - There is a circular reference going on somewhere (see
     # bug 333168).  In the presence of this reference, the existence
     # of a __del__ method prevents the garbage collector from
