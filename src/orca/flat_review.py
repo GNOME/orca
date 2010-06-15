@@ -45,6 +45,8 @@ from orca_i18n import C_        # to provide qualified translatable strings
 #
 whitespace_re = re.compile(r'(\s+)', re.DOTALL | re.IGNORECASE | re.M)
 
+EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
+
 class Char:
     """Represents a single char of an Accessibility_Text object."""
 
@@ -777,8 +779,7 @@ class Context:
         #print "LOOKING AT '%s'" % unicodeString
         for i in range(0, len(unicodeString) + 1):
             if (i != len(unicodeString)) \
-               and (unicodeString[i] != \
-                        orca_state.activeScript.EMBEDDED_OBJECT_CHARACTER):
+               and (unicodeString[i] != EMBEDDED_OBJECT_CHARACTER):
                 substringEndOffset += 1
             elif (substringEndOffset == substringStartOffset):
                 substringStartOffset += 1
