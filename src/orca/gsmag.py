@@ -502,7 +502,7 @@ def __setupZoomer(restore=None, left=None, top=None, right=None, bottom=None):
         top = 0
         bottom = _screenHeight
 
-    viewWidth = right = left
+    viewWidth = right - left
     viewHeight = bottom - top
     _roiWidth = viewWidth / settings.magZoomFactor
     _roiHeight = viewHeight / settings.magZoomFactor
