@@ -4902,10 +4902,12 @@ class Script(script.Script):
         while currentY < (parentExtents.y + parentExtents.height):
             currentX = parentExtents.x
             minHeight = sys.maxint
+            index = -1
             while currentX < (parentExtents.x + parentExtents.width):
                 child = \
                     icomponent.getAccessibleAtPoint(currentX, currentY + 1, 0)
                 if child:
+                    index = child.getIndexInParent()
                     extents = child.queryComponent().getExtents(0)
                     if extents.x >= 0 and extents.y >= 0:
                         newX = extents.x + extents.width
@@ -4915,7 +4917,10 @@ class Script(script.Script):
                     else:
                         newX = currentX + gridSize
                 else:
-                    newX = currentX + gridSize
+                    debug.println(debug.LEVEL_FINEST,
+                            "script_utilities.showingDescendants failed. " \
+                            "Last valid child at index %d" % index)
+                    break
                 if newX <= currentX:
                     currentX += gridSize
                 else:
