@@ -360,34 +360,6 @@ def finishLiveUpdating():
 #                                                                      #
 ########################################################################
 
-def _setScreenPosition(position, left=None, top=None, right=None, bottom=None):
-
-    # full screen is the default.
-    #
-    prefLeft = 0
-    prefTop = 0
-    prefRight = prefLeft + _screenWidth
-    prefBottom = prefTop + _screenHeight
-
-    if position == settings.MAG_ZOOMER_TYPE_TOP_HALF:
-        prefBottom = prefTop + _screenHeight/2
-    elif position == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
-        prefTop = _screenHeight/2
-        prefBottom = prefTop + _screenHeight/2
-    elif position == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
-        prefRight = prefLeft + _screenWidth/2
-    elif position == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
-        prefLeft = _screenWidth/2
-        prefRight = prefLeft + _screenWidth/2
-    elif position == settings.MAG_ZOOMER_TYPE_CUSTOM:
-        prefLeft = left or settings.magZoomerLeft
-        prefTop = top or settings.magZoomerTop
-        prefRight = right or settings.magZoomerRight
-        prefBottom = bottom or settings.magZoomerBottom
-
-    viewPort = [prefLeft, prefTop, prefRight - prefLeft, prefBottom - prefTop]
-    _zoomer.moveResize(viewPort)
-
 def applySettings():
     """Looks at the user settings and applies them to the magnifier."""
     global _mouseTracking
@@ -398,7 +370,7 @@ def applySettings():
     global _pointerFollowsFocus
 
     __setupMagnifier(settings.magZoomerType)
-    __setupZoomer()
+    __setupZoomer(settings.magZoomerType)
 
     _mouseTracking = settings.magMouseTrackingMode
     _controlTracking = settings.magControlTrackingMode
@@ -470,42 +442,56 @@ def __setupMagnifier(position, restore=None):
 
     orca_state.mouseEnhancementsEnabled = enableCrossHair
 
-def __setupZoomer(restore=None, left=None, top=None, right=None, bottom=None):
-    """Creates a zoomer in the magnifier
+def __setupZoomer(position, left=None, top=None, right=None, bottom=None,
+                  restore=None):
+    """Creates a zoomer in the magnifier.
+    The position of the zoomer onscreen is based on the given arguments.  If
+    none are supplied, defaults to the settings for the given zoomer position.
+
     Arguments:
-    - restore:  a dictionary of all of the settings which should be restored
+    - position: position of the zoomer view port (top half, left half, custom)
+    - left:     left edge of zoomer's viewport (for custom -- optional)
+    - top:      top edge of zoomer's viewport (for custom -- optional)
+    - right:    right edge of zoomer's viewport (for custom -- optional)
+    - bottom:   bottom edge of zoomer's viewport (for custom -- optional)
+    - restore:  dictionary of the settings; used for zoom factor (optional)
     """
 
     global _zoomer
     global _roiWidth
     global _roiHeight
 
-    viewWidth = 0
-    viewHeight = 0
-    zoomerType = settings.magZoomerType
+    if not restore:
+        restore = {}
 
-    # Assume custom position of zoomer if rectangle coords are passed.
-    # Otherwise, if restore is passed, use its zoomer type and coords.  Default
-    # is full screen.
-    if left and right and bottom and top:
-        zoomerType = settings.MAG_ZOOMER_TYPE_CUSTOM
-    elif restore:
-        zoomerType = restore["magZoomerType"]
-        left = restore["magZoomerLeft"]
-        top = restore["magZoomerTop"]
-        right = restore["magZoomerRight"]
-        bottom = restore["magZoomerBottom"]
-    else:
-        zoomerType = settings.MAG_ZOOMER_TYPE_FULL_SCREEN
-        left = 0
-        right = _screenWidth
-        top = 0
-        bottom = _screenHeight
+    # full screen is the default.
+    #
+    prefLeft = 0
+    prefTop = 0
+    prefRight = prefLeft + _screenWidth
+    prefBottom = prefTop + _screenHeight
 
-    viewWidth = right - left
-    viewHeight = bottom - top
-    _roiWidth = viewWidth / settings.magZoomFactor
-    _roiHeight = viewHeight / settings.magZoomFactor
+    if position == settings.MAG_ZOOMER_TYPE_TOP_HALF:
+        prefBottom = prefTop + _screenHeight/2
+    elif position == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
+        prefTop = _screenHeight/2
+        prefBottom = prefTop + _screenHeight/2
+    elif position == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
+        prefRight = prefLeft + _screenWidth/2
+    elif position == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
+        prefLeft = _screenWidth/2
+        prefRight = prefLeft + _screenWidth/2
+    elif position == settings.MAG_ZOOMER_TYPE_CUSTOM:
+        prefLeft = settings.magZoomerLeft if left == None else left
+        prefTop = settings.magZoomerTop if top == None else top
+        prefRight = settings.magZoomerRight if right == None else right
+        prefBottom = settings.magZoomerBottom if bottom == None else bottom
+
+    magFactor = restore.get('magZoomFactor', settings.magZoomFactor)
+    viewWidth = prefRight - prefLeft
+    viewHeight = prefBottom - prefTop
+    _roiWidth = viewWidth / magFactor
+    _roiHeight = viewHeight / magFactor
 
     debug.println(debug.LEVEL_ALL,
                   "Magnifier zoomer ROI size desired: width=%d, height=%d)" \
@@ -516,15 +502,16 @@ def __setupZoomer(restore=None, left=None, top=None, right=None, bottom=None):
     zoomerPaths = _magnifier.getZoomRegions()
     if len(zoomerPaths) > 0:
         _zoomer = _bus.get_object('org.gnome.Magnifier', zoomerPaths[0])
-        _zoomer.setMagFactor(settings.magZoomFactor, settings.magZoomFactor)
-        _setScreenPosition(zoomerType, left, top, right, bottom)
+        _zoomer.setMagFactor(magFactor, magFactor)
+        _zoomer.moveResize([prefLeft, prefTop, viewWidth, viewHeight])
     else:
         zoomerPath = _magnifier.createZoomRegion(
-            settings.magZoomFactor, settings.magZoomFactor,
+            magFactor, magFactor,
 	        [0, 0, _roiWidth, _roiHeight],
-	        [left, right, viewWidth, viewHeight])
+	        [prefLeft, prefTop, viewWidth, viewHeight])
         _zoomer = _bus.get_object('org.gnome.Magnifier', zoomerPath)
         _magnifier.addZoomRegion(zoomerPath)
+
     __updateROIDimensions()
 
 def __updateROIDimensions():
@@ -566,7 +553,7 @@ def setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     global _liveUpdatingMagnifier
     _liveUpdatingMagnifier = True
     __setupMagnifier(position, restore)
-    __setupZoomer(restore, left, top, right, bottom)
+    __setupZoomer(position, left, top, right, bottom, restore)
 
 def setMagnifierCursor(enabled, customEnabled, size, updateScreen=True):
     """Sets the cursor.
