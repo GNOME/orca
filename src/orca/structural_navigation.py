@@ -1371,10 +1371,11 @@ class StructuralNavigation:
         - obj: the accessible object of interest.
         """
 
-        if obj and obj.getRole() != pyatspi.ROLE_TABLE_CELL:
+        cellRoles = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_COLUMN_HEADER]
+        if obj and not obj.getRole() in cellRoles:
             document = self._getDocument()
             obj = self._script.getAncestor(obj,
-                                           [pyatspi.ROLE_TABLE_CELL],
+                                           cellRoles,
                                            [document.getRole()])
         return obj
 
@@ -1398,6 +1399,9 @@ class StructuralNavigation:
         Arguments:
         - obj: the accessible table cell to examime
         """
+
+        if obj and obj.getRole() == pyatspi.ROLE_COLUMN_HEADER and obj.name:
+            return False
 
         text = self._script.getDisplayedText(obj)
         if text and len(text.strip()) and text != obj.name:
@@ -1474,8 +1478,13 @@ class StructuralNavigation:
         if not obj or (obj.getRole() != pyatspi.ROLE_TABLE_CELL):
             return
 
+        parentTable = self.getTableForCell(obj)
+        try:
+            table = parentTable.queryTable()
+        except:
+            return
+
         [row, col] = self.getCellCoordinates(obj)
-        table = obj.parent.queryTable()
         rowspan = table.getRowExtentAt(row, col)
         colspan = table.getColumnExtentAt(row, col)
         spanString = ""
@@ -1548,8 +1557,9 @@ class StructuralNavigation:
         if not obj:
             return rowHeaders
 
+        parentTable = self.getTableForCell(obj)
         try:
-            table = obj.parent.queryTable()
+            table = parentTable.queryTable()
         except:
             pass
         else:
@@ -1595,8 +1605,9 @@ class StructuralNavigation:
         if not obj:
             return columnHeaders
 
+        parentTable = self.getTableForCell(obj)
         try:
-            table = obj.parent.queryTable()
+            table = parentTable.queryTable()
         except:
             pass
         else:
@@ -1639,7 +1650,12 @@ class StructuralNavigation:
         """
 
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            table = obj.parent.queryTable()
+            parentTable = self.getTableForCell(obj)
+            try:
+                table = parentTable.queryTable()
+            except:
+                return True 
+
             index = self._script.getCellIndex(obj)
             row = table.getRowAtIndex(index)
             for col in xrange(table.nColumns):
@@ -1658,7 +1674,12 @@ class StructuralNavigation:
         """
 
         if obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-            table = obj.parent.queryTable()
+            parentTable = self.getTableForCell(obj)
+            try:
+                table = parentTable.queryTable()
+            except:
+                return True 
+
             index = self._script.getCellIndex(obj)
             col = table.getColumnAtIndex(index)
             for row in xrange(table.nRows):
@@ -1679,7 +1700,8 @@ class StructuralNavigation:
             return False
 
         elif obj.getRole() in [pyatspi.ROLE_TABLE_COLUMN_HEADER,
-                               pyatspi.ROLE_TABLE_ROW_HEADER]:
+                               pyatspi.ROLE_TABLE_ROW_HEADER,
+                               pyatspi.ROLE_COLUMN_HEADER]:
             return True
 
         else:
@@ -1688,6 +1710,8 @@ class StructuralNavigation:
                 for attribute in attributes:
                     if attribute == "tag:TH":
                         return True
+
+        return False
 
     def _getHeadingLevel(self, obj):
         """Determines the heading level of the given object.  A value
@@ -3331,7 +3355,7 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        role = [pyatspi.ROLE_TABLE_CELL]
+        role = [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_COLUMN_HEADER]
         return MatchCriteria(collection, roles=role)
 
     def _tableCellPredicate(self, obj, arg=None):
@@ -3344,7 +3368,8 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        return (obj and obj.getRole() == pyatspi.ROLE_TABLE_CELL)
+        return (obj and obj.getRole() in [pyatspi.ROLE_COLUMN_HEADER,
+                                          pyatspi.ROLE_TABLE_CELL])
 
     def _tableCellPresentation(self, cell, arg):
         """Presents the table cell or indicates that one was not found.
