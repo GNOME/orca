@@ -2330,11 +2330,14 @@ class Script(default.Script):
             # object:active-descendant-changed events which cause us
             # to set the locusOfFocus to the list item. If the user then
             # arrows within the text portion, we will not present it due
-            # to the event not being from the locusOfFocus.
+            # to the event not being from the locusOfFocus. A similar
+            # issue is present in the Target entry of the Hyperlink dialog
+            # for OOo 3.2.
             #
             if event.source.getRole() == pyatspi.ROLE_TEXT \
                and self.getAncestor(event.source,
-                                    [pyatspi.ROLE_TOOL_BAR],
+                                    [pyatspi.ROLE_TOOL_BAR,
+                                     pyatspi.ROLE_DIALOG],
                                     [pyatspi.ROLE_FRAME]):
                 orca.setLocusOfFocus(event, event.source, False)
             default.Script.onCaretMoved(self, event)
