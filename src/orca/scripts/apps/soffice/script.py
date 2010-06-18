@@ -1933,9 +1933,13 @@ class Script(default.Script):
             # The style list in the Formatting toolbar also lacks state
             # focused.
             #
-            elif event.any_data and self.getAncestor(event.source,
-                                                     [pyatspi.ROLE_TOOL_BAR],
-                                                     [pyatspi.ROLE_FRAME]):
+            elif event.any_data \
+                 and self.getAncestor(event.source,
+                                      [pyatspi.ROLE_TOOL_BAR],
+                                      [pyatspi.ROLE_FRAME]) \
+                 and self.getAncestor(orca_state.locusOfFocus,
+                                      [pyatspi.ROLE_TOOL_BAR],
+                                      [pyatspi.ROLE_FRAME]):
                 handleEvent = True
 
         elif self.isSameObject(orca_state.locusOfFocus, event.source.parent) \
