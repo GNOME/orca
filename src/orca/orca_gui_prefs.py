@@ -3490,10 +3490,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
+        bottomSpinButton = self.get_widget("magZoomerBottomSpinButton")
+        bottomSpinButton.get_adjustment().set_lower(top)
+
         left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
         right = self.get_widget("magZoomerRightSpinButton").get_value_as_int()
-        bottom = \
-               self.get_widget("magZoomerBottomSpinButton").get_value_as_int()
+        bottom = bottomSpinButton.get_value_as_int()
         mag.setupMagnifier(settings.MAG_ZOOMER_TYPE_CUSTOM,
                            left, top, right, bottom, self.prefsDict)
 
@@ -3513,8 +3515,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
+        topSpinButton = self.get_widget("magZoomerTopSpinButton")
+        topSpinButton.get_adjustment().set_upper(bottom)
+
         left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
-        top = self.get_widget("magZoomerTopSpinButton").get_value_as_int()
+        top = topSpinButton.get_value_as_int()
         right = self.get_widget("magZoomerRightSpinButton").get_value_as_int()
         mag.setupMagnifier(settings.MAG_ZOOMER_TYPE_CUSTOM,
                            left, top, right, bottom, self.prefsDict)
@@ -3535,8 +3540,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
+        rightSpinButton = self.get_widget("magZoomerRightSpinButton")
+        rightSpinButton.get_adjustment().set_lower(left)
+
         top = self.get_widget("magZoomerTopSpinButton").get_value_as_int()
-        right = self.get_widget("magZoomerRightSpinButton").get_value_as_int()
+        right = rightSpinButton.get_value_as_int()
         bottom = \
                self.get_widget("magZoomerBottomSpinButton").get_value_as_int()
         mag.setupMagnifier(settings.MAG_ZOOMER_TYPE_CUSTOM,
@@ -3558,7 +3566,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if not (self.enableLiveUpdating and widget.is_focus()):
             return
 
-        left = self.get_widget("magZoomerLeftSpinButton").get_value_as_int()
+        leftSpinButton = self.get_widget("magZoomerLeftSpinButton")
+        leftSpinButton.get_adjustment().set_upper(right)
+
+        left = leftSpinButton.get_value_as_int()
         top = self.get_widget("magZoomerTopSpinButton").get_value_as_int()
         bottom = \
                self.get_widget("magZoomerBottomSpinButton").get_value_as_int()
