@@ -879,11 +879,18 @@ class Script(script.Script):
         self.inputEventHandlers["cycleKeyEchoHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleKeyEcho,
-                # Translators: Orca allows users to cycle through
-                # the possible key echo options
-                # none, key, word, sentence, key and word, word and sentence.
-                # This is how often orca should give feedback when a user 
-                # is typing.
+                # Translators: Orca has an "echo" setting which allows
+                # the user to configure what is spoken in response to a
+                # key press. Given a user who typed "Hello world.":
+                # - key echo: "H e l l o space w o r l d period"
+                # - word echo: "Hello" spoken when the space is pressed;
+                #   "world" spoken when the period is pressed.
+                # - sentence echo: "Hello world" spoken when the period
+                #   is pressed.
+                # A user can choose to have no echo, one type of echo, or
+                # multiple types of echo.
+                # The following string refers to a command that allows the
+                # user to quickly choose which type of echo is being used.
                 #
                 _("Cycles to the next key echo level."))
 
@@ -2705,16 +2712,32 @@ class Script(script.Script):
         if (key, word, sentence) == (False, False, False):
             # cycle to key echo
             (newKey, newWord, newSentence) = (True, False, False)
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command.
             #
             full = _("Key echo set to key.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command. The following string is a
+            # brief message which will be presented to the user who is
+            # cycling amongst the various echo options.
             #
             brief = C_("key echo", "key")
 
@@ -2722,16 +2745,32 @@ class Script(script.Script):
         elif (key, word, sentence) == (True, False, False):
             # cycle to word echo
             (newKey, newWord, newSentence) = (False, True, False)
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command.
             #
             full = _("Key echo set to word.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command. The following string is a
+            # brief message which will be presented to the user who is
+            # cycling amongst the various echo options.
             #
             brief = C_("key echo", "word")
 
@@ -2739,17 +2778,32 @@ class Script(script.Script):
         elif (key, word, sentence) == (False, True, False):
             # cycle to sentence echo
             (newKey, newWord, newSentence) = (False, False, True)
-
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command.
             #
             full = _("Key echo set to sentence.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command. The following string is a
+            # brief message which will be presented to the user who is
+            # cycling amongst the various echo options.
             #
             brief = C_("key echo", "sentence")
 
@@ -2757,16 +2811,32 @@ class Script(script.Script):
         elif (key, word, sentence) == (False, False, True):
             # cycle to word and key echo
             (newKey, newWord, newSentence) = (True, True, False)
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command.
             #
             full = _("Key echo set to key and word.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command. The following string is a
+            # brief message which will be presented to the user who is
+            # cycling amongst the various echo options.
             #
             brief = C_("key echo", "key and word")
 
@@ -2774,17 +2844,32 @@ class Script(script.Script):
         elif (key, word, sentence) == (True, True, False):
             # cycle to word and sentence echo
             (newKey, newWord, newSentence) = (False, True, True)
-
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command.
             #
             full = _("Key echo set to word and sentence.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command. The following string is a
+            # brief message which will be presented to the user who is
+            # cycling amongst the various echo options.
             #
             brief = C_("key echo", "word and sentence")
 
@@ -2792,17 +2877,32 @@ class Script(script.Script):
         else:
             # cycle to none
             (newKey, newWord, newSentence) = (False, False, False)
-
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command.
             #
             full = _("Key echo set to None.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different key echo options.
-            # The options are: key, word, sentence,
-            # key and word, word and sentence.
+            # Translators: Orca has an "echo" setting which allows
+            # the user to configure what is spoken in response to a
+            # key press. Given a user who typed "Hello world.":
+            # - key echo: "H e l l o space w o r l d period"
+            # - word echo: "Hello" spoken when the space is pressed;
+            #   "world" spoken when the period is pressed.
+            # - sentence echo: "Hello world" spoken when the period
+            #   is pressed.
+            # A user can choose to have no echo, one type of echo, or
+            # multiple types of echo and can cycle through the various
+            # levels quickly via a command. The following string is a
+            # brief message which will be presented to the user who is
+            # cycling amongst the various echo options.
             #
             brief = C_("key echo", "None")
 
