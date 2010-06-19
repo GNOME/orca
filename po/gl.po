@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-19 15:35+0200\n"
-"PO-Revision-Date: 2010-06-19 15:37+0200\n"
+"POT-Creation-Date: 2010-06-19 21:31+0200\n"
+"PO-Revision-Date: 2010-06-19 21:39+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <gnome@g11.net>\n"
 "MIME-Version: 1.0\n"
@@ -2684,7 +2684,7 @@ msgstr "Ningunha"
 #.
 #: ../src/orca/default.py:2713
 msgid "Key echo set to key."
-msgstr ""
+msgstr "Chave de redacción estabelecida á tecla."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different key echo options.
@@ -2702,9 +2702,8 @@ msgstr "chave"
 #. key and word, word and sentence.
 #.
 #: ../src/orca/default.py:2730
-#, fuzzy
 msgid "Key echo set to word."
-msgstr "Vai á seguinte palabra."
+msgstr "Chave de redacción estabelecida a palabra."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different key echo options.
@@ -2722,9 +2721,8 @@ msgstr "palabra"
 #. key and word, word and sentence.
 #.
 #: ../src/orca/default.py:2748
-#, fuzzy
 msgid "Key echo set to sentence."
-msgstr "Activar o eco por _frases"
+msgstr "Chave de redacción estabelecida a frase."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different key echo options.
@@ -2743,7 +2741,7 @@ msgstr "frase"
 #.
 #: ../src/orca/default.py:2765
 msgid "Key echo set to key and word."
-msgstr ""
+msgstr "Chave de redacción estabelecida a tecla e palabra."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different key echo options.
@@ -2762,7 +2760,7 @@ msgstr "chave e palabra"
 #.
 #: ../src/orca/default.py:2783
 msgid "Key echo set to word and sentence."
-msgstr ""
+msgstr "Chave de redacción estabelecida a palabra e frase."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different key echo options.
@@ -2781,7 +2779,7 @@ msgstr "palabra e sentenza"
 #.
 #: ../src/orca/default.py:2801
 msgid "Key echo set to None."
-msgstr ""
+msgstr "Chave de redacción estabelecida a Ningunha."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different key echo options.
@@ -3679,7 +3677,7 @@ msgstr "Sintetizador predefinido"
 #.
 #: ../src/orca/openttsfactory.py:90
 msgid "Open TTS"
-msgstr ""
+msgstr "Abrir TTS"
 
 #. Translators: This string will appear in the list of
 #. available voices for the current speech engine.  %s will be
@@ -3720,8 +3718,8 @@ msgstr "_Azul:"
 #. on the screen.
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:6
-#: ../src/orca/orca_gui_prefs.py:4235 ../src/orca/orca_gui_prefs.py:4246
-#: ../src/orca/orca_gui_prefs.py:4248 ../src/orca/orca_gui_prefs.py:4269
+#: ../src/orca/orca_gui_prefs.py:4246 ../src/orca/orca_gui_prefs.py:4257
+#: ../src/orca/orca_gui_prefs.py:4259 ../src/orca/orca_gui_prefs.py:4280
 msgid "Bilinear"
 msgstr "Bilineal"
 
@@ -3731,8 +3729,8 @@ msgstr "Bilineal"
 #. (75, 100, 125) would become (75, 100, 0).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:7
-#: ../src/orca/orca_gui_prefs.py:4492 ../src/orca/orca_gui_prefs.py:4519
-#: ../src/orca/orca_gui_prefs.py:4590
+#: ../src/orca/orca_gui_prefs.py:4503 ../src/orca/orca_gui_prefs.py:4530
+#: ../src/orca/orca_gui_prefs.py:4601
 msgid "Desaturate blue"
 msgstr "Desaturar azul"
 
@@ -3742,7 +3740,7 @@ msgstr "Desaturar azul"
 #. (75, 100, 125) would become (75, 0, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:8
-#: ../src/orca/orca_gui_prefs.py:4484 ../src/orca/orca_gui_prefs.py:4582
+#: ../src/orca/orca_gui_prefs.py:4495 ../src/orca/orca_gui_prefs.py:4593
 msgid "Desaturate green"
 msgstr "Desaturar verde"
 
@@ -3752,8 +3750,8 @@ msgstr "Desaturar verde"
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:9
-#: ../src/orca/orca_gui_prefs.py:4476 ../src/orca/orca_gui_prefs.py:4518
-#: ../src/orca/orca_gui_prefs.py:4574
+#: ../src/orca/orca_gui_prefs.py:4487 ../src/orca/orca_gui_prefs.py:4529
+#: ../src/orca/orca_gui_prefs.py:4585
 msgid "Desaturate red"
 msgstr "Desaturar vermello"
 
@@ -3767,8 +3765,8 @@ msgstr "_Verde:"
 #. (100, 125, 75).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:11
-#: ../src/orca/orca_gui_prefs.py:4508 ../src/orca/orca_gui_prefs.py:4521
-#: ../src/orca/orca_gui_prefs.py:4606
+#: ../src/orca/orca_gui_prefs.py:4519 ../src/orca/orca_gui_prefs.py:4532
+#: ../src/orca/orca_gui_prefs.py:4617
 msgid "Negative hue shift"
 msgstr "Cambio de matiz negativo"
 
@@ -3782,10 +3780,10 @@ msgstr "Cambio de matiz negativo"
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:12
 #: ../src/orca/orca_gui_prefs.py:92 ../src/orca/orca_gui_prefs.py:1929
-#: ../src/orca/orca_gui_prefs.py:1949 ../src/orca/orca_gui_prefs.py:4241
-#: ../src/orca/orca_gui_prefs.py:4248 ../src/orca/orca_gui_prefs.py:4271
-#: ../src/orca/orca_gui_prefs.py:4444 ../src/orca/orca_gui_prefs.py:4511
-#: ../src/orca/orca_gui_prefs.py:4514 ../src/orca/orca_gui_prefs.py:4542
+#: ../src/orca/orca_gui_prefs.py:1949 ../src/orca/orca_gui_prefs.py:4252
+#: ../src/orca/orca_gui_prefs.py:4259 ../src/orca/orca_gui_prefs.py:4282
+#: ../src/orca/orca_gui_prefs.py:4455 ../src/orca/orca_gui_prefs.py:4522
+#: ../src/orca/orca_gui_prefs.py:4525 ../src/orca/orca_gui_prefs.py:4553
 #: ../src/orca/orca-setup.ui.h:103
 msgid "None"
 msgstr "Ningún"
@@ -3796,8 +3794,8 @@ msgstr "Ningún"
 #. (125, 75, 100).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:13
-#: ../src/orca/orca_gui_prefs.py:4500 ../src/orca/orca_gui_prefs.py:4520
-#: ../src/orca/orca_gui_prefs.py:4598
+#: ../src/orca/orca_gui_prefs.py:4511 ../src/orca/orca_gui_prefs.py:4531
+#: ../src/orca/orca_gui_prefs.py:4609
 msgid "Positive hue shift"
 msgstr "Cambio de matiz positivo"
 
@@ -3815,8 +3813,8 @@ msgstr "Pantalla de _orixe:"
 #. (75, 100, 125) would become (75, 100, 255).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:16
-#: ../src/orca/orca_gui_prefs.py:4468 ../src/orca/orca_gui_prefs.py:4517
-#: ../src/orca/orca_gui_prefs.py:4566
+#: ../src/orca/orca_gui_prefs.py:4479 ../src/orca/orca_gui_prefs.py:4528
+#: ../src/orca/orca_gui_prefs.py:4577
 msgid "Saturate blue"
 msgstr "Saturar azul"
 
@@ -3826,8 +3824,8 @@ msgstr "Saturar azul"
 #. (75, 100, 125) would become (75, 255, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:17
-#: ../src/orca/orca_gui_prefs.py:4460 ../src/orca/orca_gui_prefs.py:4516
-#: ../src/orca/orca_gui_prefs.py:4558
+#: ../src/orca/orca_gui_prefs.py:4471 ../src/orca/orca_gui_prefs.py:4527
+#: ../src/orca/orca_gui_prefs.py:4569
 msgid "Saturate green"
 msgstr "Saturar verde"
 
@@ -3837,8 +3835,8 @@ msgstr "Saturar verde"
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:18
-#: ../src/orca/orca_gui_prefs.py:4452 ../src/orca/orca_gui_prefs.py:4515
-#: ../src/orca/orca_gui_prefs.py:4550
+#: ../src/orca/orca_gui_prefs.py:4463 ../src/orca/orca_gui_prefs.py:4526
+#: ../src/orca/orca_gui_prefs.py:4561
 msgid "Saturate red"
 msgstr "Saturar vermello"
 
@@ -4595,7 +4593,7 @@ msgstr "Ler _cela"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:3625
+#: ../src/orca/orca_gui_prefs.py:3636
 msgid "enter new key"
 msgstr "introduza unha nova tecla"
 
@@ -4603,7 +4601,7 @@ msgstr "introduza unha nova tecla"
 #. Orca has deleted an existing key combination based upon
 #. their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3654
+#: ../src/orca/orca_gui_prefs.py:3665
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "Atallo de teclado eliminado. Prema intro para confirmar."
 
@@ -4611,7 +4609,7 @@ msgstr "Atallo de teclado eliminado. Prema intro para confirmar."
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:3678
+#: ../src/orca/orca_gui_prefs.py:3689
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "A tecla introducida xa está asociada a %s"
@@ -4620,7 +4618,7 @@ msgstr "A tecla introducida xa está asociada a %s"
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3685
+#: ../src/orca/orca_gui_prefs.py:3696
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Capturouse a tecla: %s. Prema Intro para confirmar."
@@ -4629,7 +4627,7 @@ msgstr "Capturouse a tecla: %s. Prema Intro para confirmar."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:3724
+#: ../src/orca/orca_gui_prefs.py:3735
 #, python-format
 msgid "The new key is: %s"
 msgstr "A nova tecla é: %s"
@@ -4638,20 +4636,20 @@ msgstr "A nova tecla é: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:3732
+#: ../src/orca/orca_gui_prefs.py:3743
 msgid "The keybinding has been removed."
 msgstr "O atallo de teclado foi eliminado."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3784 ../src/orca/orca-setup.ui.h:155
+#: ../src/orca/orca_gui_prefs.py:3795 ../src/orca/orca-setup.ui.h:155
 msgid "_Desktop"
 msgstr "_Escritorio"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:4843
+#: ../src/orca/orca_gui_prefs.py:4854
 msgid "Starting Orca Preferences."
 msgstr "Iniciando as Preferencias de Orca."
 
@@ -7570,9 +7568,9 @@ msgstr "Mover á cela"
 #. presentation.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1685
-#, fuzzy, python-format
+#, python-format
 msgid "slide %(position)d of %(count)d"
-msgstr "sobre o %(index)d de %(total)d"
+msgstr "desprazar %(position)d de %(count)d"
 
 #. Translators: this is the title of the window that
 #. you get when using StarOffice Presentation Wizard. The
@@ -8280,7 +8278,7 @@ msgstr "NIVEL %d"
 #.
 #: ../src/orca/settings.py:1503
 msgid "%H hours, %M minutes and %S seconds."
-msgstr ""
+msgstr "%H horas, %M minutos e %S segundos."
 
 #. Translators: Orca has a feature to speak the time
 #. when the user presses a shortcut key.
@@ -8289,7 +8287,7 @@ msgstr ""
 #.
 #: ../src/orca/settings.py:1510
 msgid "%H hours and %M minutes."
-msgstr ""
+msgstr "%H horas e %M minutos."
 
 #. Translators: this is the name of a speech synthesis system
 #. called "Speech Dispatcher".
