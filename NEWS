@@ -1,3 +1,65 @@
+2.30.2 - 21-Jun-2010
+
+General
+
+* Fix for bgo#621800 - GUI: should not be possible to set the right
+  coordinate of zoomer position to less than left (ditto for bottom
+  less than top)
+
+* Fix for bgo#619809 - Orca freezes when building the flat review
+  context of the Keybindings table
+
+* Fix for bgo#618334 - SD python bindings crashes when receiving
+  newline followed by full stop
+
+* Fix for bgo#617345 - getChildNodes() is returning a list of integers
+  rather than accessibles if NODE_PARENT_OF relationship is present
+
+* Fix for bgo#617204 - Name changed on comboboxes that have focus
+  should not be announced
+
+* Fix for bgo#617118 - Speak table cell preference is not being saved
+
+Gecko
+
+* Fix for bgo#618863 - Table structural navigation not working with
+  th element in Firefox 3.6
+
+* Fix for bgo#618827 - The generatorCache is not getting dumped when
+  using Gecko's caret or structural navigation due to lack of AT-SPI
+  events
+
+* Fix for bgo#618801 - Traceback in Thunderbird
+
+OpenOffice
+
+* Fix for bgo#620156 - Caret-moved events not presented in OOo Writer
+  3.2's Hyperlink dialog
+
+* Fix for bgo#613299 - Orca should not present changes in the active
+  descendant for unfocused widgets in OOo
+
+* Fix for bgo#619101 - Duplicate caret-moved events in OOo Writer are
+  causing Orca to double-speak lines of text
+
+* Fix for bgo#620045 - Left and Right are missing from the list of
+  keys the OOo script uses to determine when to speak toggle button
+  state changes
+
+* Fix for bgo#619574 - Orca fails to speak links in OOo Writer when
+  the localized form of 'link' contains an accented character
+
+* Fix for bgo#618790 - The active descendant in OOo Writer 3.2's
+  Templates and Documents dialog are not presented
+
+* Fix for bgo#617603 - OO Cell numbers not spoken in Ubuntu.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    hu          Hungarian            Attila Hammer and Gabor Kelemen
+
+==========
+
 2.30.1 - 25-Apr-2010
 
 General
