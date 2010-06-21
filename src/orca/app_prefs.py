@@ -57,8 +57,8 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         self.appScript = appScript
 
     def _writeKeyBindingsPreamble(self, prefs):
-        """Writes the preamble to the  ~/.orca/app-settings/<APPNAME>.py
-        keyBindings section."""
+        """Writes the preamble to the
+        XDG_DATA_HOME/orca/app-settings/<APPNAME>.py keyBindings section."""
 
         prefs.writelines("\n")
         prefs.writelines("# Set up a user key-bindings profile\n")
@@ -66,8 +66,8 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         prefs.writelines('def overrideAppKeyBindings(script, keyB):\n')
 
     def _writeAppKeyBindingsPostamble(self, prefs, appName, appScript):
-        """Writes the postamble to the ~/.orca/app-settings/<APPNAME>.py
-        keyBindings section.
+        """Writes the postamble to the
+        XDG_DATA_HOME/orca/app-settings/<APPNAME>.py keyBindings section.
 
         Arguments:
         - prefs: file handle for application preferences.
@@ -94,8 +94,8 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         self._writeAppKeyBindingsPostamble(prefs, appName, appScript)
 
     def _writePronunciationsPreamble(self, prefs):
-        """Writes the preamble to the  ~/.orca/app-settings/<APPNAME>.py
-        pronunciations section."""
+        """Writes the preamble to the
+        XDG_DATA_HOME/orca/app-settings/<APPNAME>.py pronunciations section."""
 
         prefs.writelines("\n")
         prefs.writelines("# User customized application specific ")
@@ -106,8 +106,8 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
                     'def overridePronunciations(script, pronunciations):\n')
 
     def _writePronunciationsPostamble(self, prefs):
-        """Writes the postamble to the ~/.orca/app-settings/<APPNAME>.py
-        pronunciations section."""
+        """Writes the postamble to the
+        XDG_DATA_HOME/orca/app-settings/<APPNAME>.py pronunciations section."""
 
         prefs.writelines('    return pronunciations')
         prefs.writelines("\n\n")
@@ -117,7 +117,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
 
     def _writePronunciation(self, prefs, word, value):
         """Write out a single pronunciation entry to the
-        ~/.orca/app-settings/<APPNAME>.py settings file.
+        XDG_DATA_HOME/orca/app-settings/<APPNAME>.py settings file.
 
         Arguments:
         - prefs: file handle for application specific preferences.
@@ -142,7 +142,8 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         self._writePronunciationsPostamble(prefs)
 
     def _writeAppPreferencesPreamble(self, prefs, appName):
-        """Writes the preamble to the ~/.orca/app-settings/<APPNAME>.py file.
+        """Writes the preamble to the
+        XDG_DATA_HOME/orca/app-settings/<APPNAME>.py file.
 
         Arguments:
         - prefs: file handle for application preferences.
@@ -163,7 +164,8 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         prefs.writelines("\n")
 
     def _writeAppPreferencesPostamble(self, prefs, appName):
-        """Writes the postamble to the ~/.orca/app-settings/<APPNAME>.py file.
+        """Writes the postamble to the
+        XDG_DATA_HOME/orca/app-settings/<APPNAME>.py file.
 
         Arguments:
         - prefs: file handle for application preferences.
@@ -191,7 +193,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
 
         oldPrefsDict = orca_prefs.readPreferences()
 
-        # Write ~/.orca/app-settings/<APPNAME>.py
+        # Write XDG_DATA_HOME/orca/app-settings/<APPNAME>.py
         #
         orcaDir = settings.userPrefsDir
         orcaSettingsDir = os.path.join(orcaDir, "app-settings")

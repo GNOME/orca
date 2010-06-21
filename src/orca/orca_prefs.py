@@ -652,7 +652,7 @@ class OrcaPrefs:
         self._writeKeyBindingsPostamble(prefs)
 
     def _writePronunciationsPreamble(self, prefs):
-        """Writes the preamble to the  ~/.orca/user-settings.py
+        """Writes the preamble to the  XDG_DATA_HOME/orca/user-settings.py
         pronunciations section."""
 
         prefs.writelines("\n")
@@ -664,7 +664,7 @@ class OrcaPrefs:
 
     def _writePronunciation(self, prefs, word, value):
         """Write out a single pronunciation entry to the 
-        ~/.orca/user-setting.py settings file.
+        XDG_DATA_HOME/orca/user-setting.py settings file.
 
         Arguments:
         - prefs: file handle for user preferences.
@@ -708,12 +708,13 @@ class OrcaPrefs:
         """Creates the directories and standard files to hold user 
         preferences."""
 
-        # Set up the user's preferences directory (~/.orca by default).
+        # Set up the user's preferences directory
+        # (XDG_DATA_HOME/orca by default).
         #
         orcaDir = settings.userPrefsDir
         self._createDir(orcaDir)
 
-        # Set up ~/.orca/orca-scripts as a Python package
+        # Set up XDG_DATA_HOME/orca/orca-scripts as a Python package
         #
         orcaScriptDir = os.path.join(orcaDir, "orca-scripts")
         self._createDir(orcaScriptDir)
@@ -721,7 +722,7 @@ class OrcaPrefs:
         if not os.path.exists(initFile):
             os.close(os.open(initFile, os.O_CREAT, 0700))
 
-        # Set up ~/.orca/app-settings as a Python package.
+        # Set up XDG_DATA_HOME/orca/app-settings as a Python package.
         #
         orcaSettingsDir = os.path.join(orcaDir, "app-settings")
         self._createDir(orcaSettingsDir)
@@ -821,7 +822,7 @@ class OrcaPrefs:
 
         self._setupPreferencesDirs()
 
-        # Write ~/.orca/user-settings.py
+        # Write XDG_DATA_HOME/orca/user-settings.py
         #
         orcaDir = settings.userPrefsDir
         prefs = open(os.path.join(orcaDir, "user-settings.py"), "w")
