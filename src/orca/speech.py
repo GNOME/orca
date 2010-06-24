@@ -106,8 +106,15 @@ def _initSpeechServer(moduleName, speechServerInfo):
     speechServerInfo = settings.speechServerInfo
     if speechServerInfo:
         _speechserver = factory.SpeechServer.getSpeechServer(speechServerInfo)
-    else:
+
+    if not _speechserver:
         _speechserver = factory.SpeechServer.getSpeechServer()
+        if speechServerInfo:
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "Invalid speechServerInfo: %s" % speechServerInfo)
+
+    if not _speechserver:
+        raise Exception("No speech server for factory: %s" % moduleName)
 
 def init():
 
