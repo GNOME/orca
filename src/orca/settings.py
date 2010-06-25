@@ -367,7 +367,7 @@ speechFactoryModules    = ["espeechfactory", \
                            "gnomespeechfactory", \
                            "openttsfactory", \
                            "speechdispatcherfactory"]
-speechServerFactory     = "gnomespeechfactory"
+speechServerFactory     = "speechdispatcherfactory"
 speechServerInfo        = None # None means let the factory decide.
 
 DEFAULT_VOICE           = "default"
