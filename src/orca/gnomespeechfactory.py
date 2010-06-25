@@ -33,12 +33,18 @@ import Queue
 import threading
 import time
 
-import bonobo
-import ORBit
+_gnomespeechAvailable = False
 
-# Init the ORB if we need to.  With AT-SPI/CORBA, we depend upon the pyatspi
-# implementation to init the ORB for us.  [[[WDW: With AT-SPI/D-Bus, we need
-# to do it ourselves.  I'm not sure how to ask ORBit itself if it's been
+try:
+    import bonobo
+    import ORBit
+    _gnomespeechAvailable = True
+except:
+    pass
+
+# Init the ORB if we need to. With AT-SPI/CORBA, we depend upon the pyatspi
+# implementation to init the ORB for us. [[[WDW: With AT-SPI/D-Bus, we need
+# to do it ourselves. I'm not sure how to ask ORBit itself if it's been
 # init'ed yet, so I do so indirectly by looking for an attribute of pyatspi.
 # This attribute has been set if AT-SPI/CORBA is in use and it not set if
 # AT-SPI/D-Bus is in use.]]]
@@ -47,7 +53,8 @@ try:
     import pyatspi
     poa = pyatspi.Accessibility__POA
 except AttributeError:
-    orb = ORBit.CORBA.ORB_init()
+    if _gnomespeechAvailable:
+        orb = ORBit.CORBA.ORB_init()
 
 import chnames
 import debug
@@ -192,6 +199,9 @@ class SpeechServer(speechserver.SpeechServer):
 
     def __activateDriver(iid):
 
+        if not _gnomespeechAvailable:
+            return None
+
         # We know what we are doing here, so tell pylint not to flag
         # the _narrow method call as a warning.  The disable-msg is
         # localized to just this method.
@@ -245,8 +255,10 @@ class SpeechServer(speechserver.SpeechServer):
         # Get a list of all the drivers on the system and find out how many
         # of them work.
         #
-        knownServers = bonobo.activation.query(
-            "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
+        knownServers = []
+        if _gnomespeechAvailable:
+            knownServers = bonobo.activation.query(
+                "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
         for server in knownServers:
             if server.iid not in SpeechServer.__activeServers:
@@ -263,6 +275,9 @@ class SpeechServer(speechserver.SpeechServer):
         """Gets a given SpeechServer based upon the info.
         See SpeechServer.getInfo() for more info.
         """
+
+        if not _gnomespeechAvailable:
+            return None
 
         if info and info[1] in SpeechServer.__activeServers:
             return SpeechServer.__activeServers[info[1]]
@@ -1196,8 +1211,10 @@ class SpeechServer(speechserver.SpeechServer):
         speakers = self.__speakers
         self.shutdown()
 
-        servers = bonobo.activation.query(
-            "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
+        servers = []
+        if _gnomespeechAvailable:
+            servers = bonobo.activation.query(
+                "repo_ids.has('IDL:GNOME/Speech/SynthesisDriver:0.3')")
 
         for server in servers:
             if server.iid == self.__iid:

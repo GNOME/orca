@@ -612,12 +612,14 @@ def showPreferencesUI(commandLineSettings):
                                     speechVoiceChoice)
                         time.sleep(2)
 
-                        import bonobo
                         import gobject
-
                         gobject.threads_init()
                         gobject.idle_add(logoutUser)
-                        bonobo.main()
+                        try:
+                            import bonobo
+                            bonobo.main()
+                        except:
+                            pass
                     break
                 except:
                     stop = False

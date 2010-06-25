@@ -26,7 +26,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import bonobo
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
@@ -50,6 +49,7 @@ from orca_i18n import _  # for gettext support
 _magnifierAvailable = False
 
 try:
+    import bonobo
     import ORBit
     ORBit.load_typelib('GNOME_Magnifier')
     import GNOME.Magnifier

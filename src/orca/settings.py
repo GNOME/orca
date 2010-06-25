@@ -885,7 +885,7 @@ useBlockPreventor       = False
 # If True, we use the bonobo main loop provided by bonobo to handle
 # all events in atspi.py.  If False, we create our own loop.
 #
-useBonoboMain           = True
+useBonoboMain           = False
 
 # If True, we handle events asynchronously - our normal mode of
 # queueing events and processing them later on the gidle thread.
