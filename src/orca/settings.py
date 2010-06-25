@@ -363,10 +363,10 @@ silenceSpeech           = False
 # Settings that apply to the particular speech engine to
 # use as well details on the default voices to use.
 #
-speechFactoryModules    = ["espeechfactory", \
-                           "gnomespeechfactory", \
-                           "openttsfactory", \
-                           "speechdispatcherfactory"]
+speechFactoryModules    = ["gnomespeechfactory",
+                           "openttsfactory",
+                           "speechdispatcherfactory",
+                           "espeechfactory"]
 speechServerFactory     = "speechdispatcherfactory"
 speechServerInfo        = None # None means let the factory decide.
 
