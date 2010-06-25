@@ -112,7 +112,10 @@ class SpeechServer(speechserver.SpeechServer):
         """
 
         haveNewServers = False
-        serversConf = file(os.path.join(SpeechServer.location, '.servers'))
+        try:
+            serversConf = file(os.path.join(SpeechServer.location, '.servers'))
+        except:
+            return SpeechServer.__activeServers.values()
         for name in serversConf:
             name = name.strip()
             if name == '' or name[0] == '#':
