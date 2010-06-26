@@ -112,6 +112,13 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
         """
 
         obj, offset = self._script.findFirstCaretContext(obj, 0)
+        if not obj:
+            return obj, offset
+
+        if obj.getRole() == pyatspi.ROLE_SECTION \
+           and not self._script.utilities.queryNonEmptyText(obj):
+            obj, offset = self._script.findNextCaretInOrder(obj, offset)
+
         # If it's an anchor, look for the first object of use.
         # See bug #591592.
         #
