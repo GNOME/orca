@@ -213,6 +213,24 @@ class Utilities(script_utilities.Utilities):
 
         return None
 
+    def grabFocusBeforeRouting(self, obj, offset):
+        """Whether or not we should perform a grabFocus before routing
+        the cursor via the braille cursor routing keys.
+
+        Arguments:
+        - obj: the accessible object where the cursor should be routed
+        - offset: the offset to which it should be routed
+
+        Returns True if we should do an explicit grabFocus on obj prior
+        to routing the cursor.
+        """
+
+        if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX \
+           and not self.isSameObject(obj, orca_state.locusOfFocus):
+            return True
+
+        return False
+
     def isEntry(self, obj):
         """Returns True if we should treat this object as an entry."""
 

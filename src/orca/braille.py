@@ -521,6 +521,13 @@ class Component(Region):
         associated with this region.  Note that the zeroeth character may have
         been scrolled off the display."""
 
+        if orca_state.activeScript and orca_state.activeScript.utilities.\
+           grabFocusBeforeRouting(self.accessible, offset):
+            try:
+                self.accessible.queryComponent().grabFocus()
+            except:
+                pass
+
         try:
             action = self.accessible.queryAction()
         except:

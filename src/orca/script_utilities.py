@@ -657,6 +657,20 @@ class Utilities:
 
         return results
 
+    def grabFocusBeforeRouting(self, obj, offset):
+        """Whether or not we should perform a grabFocus before routing
+        the cursor via the braille cursor routing keys.
+
+        Arguments:
+        - obj: the accessible object where the cursor should be routed
+        - offset: the offset to which it should be routed
+
+        Returns True if we should do an explicit grabFocus on obj prior
+        to routing the cursor.
+        """
+
+        return False
+
     def hasMatchingHierarchy(self, obj, rolesList):
         """Called to determine if the given object and it's hierarchy of
         parent objects, each have the desired roles. Please note: You
