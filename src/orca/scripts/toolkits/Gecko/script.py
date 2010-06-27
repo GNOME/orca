@@ -1906,6 +1906,13 @@ class Script(default.Script):
         - obj: the Accessible whose visual appearance changed.
         """
 
+        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON \
+           and self.utilities.isSameObject(orca_state.locusOfFocus, obj):
+            msg = self.speechGenerator.generateSpeech(obj, alreadyFocused=True)
+            speech.speak(msg)
+            self.updateBraille(obj)
+            return
+
         if (obj.getRole() == pyatspi.ROLE_CHECK_BOX) \
             and obj.getState().contains(pyatspi.STATE_FOCUSED):
             orca.setLocusOfFocus(
