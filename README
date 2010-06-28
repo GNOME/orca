@@ -1,14 +1,11 @@
-Orca v2.31.4pre
+Orca v2.31.4
 
 Introduction
 ========================================================================
 
 Orca is a free, open source, flexible, and extensible screen reader
 that provides access to the graphical desktop via user-customizable
-combinations of speech, braille, and/or magnification. Orca development
-was led by the Sun Microsystems, Inc., Accessibility Program Office with
-generous contributions from the Mozilla Foundation and Corporation.
-Orca is currently a community project driven by volunteers.
+combinations of speech, braille, and/or magnification.
 
 Orca works with applications and toolkits that support the assistive
 technology service provider interface (AT-SPI), which is the primary
@@ -41,23 +38,23 @@ to be installed:
 * pyorbit          - Python bindings for ORBit2
 * pygtk            - GTK+ Python bindings
 * gnome-python     - Python bindings for various GNOME libraries
-* gnome-speech-1.0 - Python bindings for gnome-speech
+* gnome-speech-1.0 - Python bindings for gnome-speech (optional)
 * gnome-mag-1.0    - Python bindings for gnome-mag (optional) 
 * BrlTTY           - BrlTTY support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 2.29.x
+YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 2.31.x
 DEVELOPMENT RELEASES.  THEY MAY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
 on your machine, you should set the PYTHON environment variable when 
 configuring Orca.  For example:
 
-   PYTHON=/usr/bin/python2.4 ./autogen.sh
+   PYTHON=/usr/bin/python2.6 ./autogen.sh
 
 or
 
-   PYTHON=/usr/bin/python2.4 ./configure
+   PYTHON=/usr/bin/python2.6 ./configure
 
 NOTE FOR BRLTTY USERS:
 ========================================================================

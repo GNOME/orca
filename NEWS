@@ -1,3 +1,88 @@
+2.31.4 - 28-June-2010
+
+General:
+
+  * Fix for bgo#622755 - Traceback when the Preferences dialog box is
+    opened but espeak is not installed
+
+  * Fix for bgo#622752 - espeechfactory should be the last factory
+    tried when the default factory is unavailable
+
+  * Fix for bgo#606978 - Detect working speech factory upon failure to
+    initialize the preferred factory
+
+  * Fix for bgo#606975 - Move to SpeechDispatcher for GNOME 3
+
+  * Fix for bgo#622042 - Misordered dependencies in configure.in
+
+  * Fix for bgo#622120 - Insert comments on "echo option" for clarify
+    translations
+
+  * Fix for bgo#621800 - GUI: should not be possible to set the right
+    coordinate of zoomer position to less than left (ditto for bottom
+    less than top)
+
+  * Fix for bgo#619809 - Orca freezes when building the flat review
+    context of the Keybindings table
+
+  * Fix for bgo#621675 - Custom zoomer size has zero width (GnomeShell
+    magnifier)
+
+  * Fix for bgo#611576 - Present date/time
+
+  * Fix for bgo#621000 - GtkCheckbuttons that simply change prefsDict
+    can be handled by one handler
+
+  * Fix for bgo#621325 - Dbus call to gs-mag to show crosshairs fails
+    in some cases
+
+  * Fix for bgo#621020 - Fix DBus interface to GNOME Shell Magnifier
+    (GNOME Shell 2.31.2)
+
+  * Fix for bgo#591925 - Give scripts a means by which to filter out
+    events which are no longer relevant
+
+Gecko:
+
+  * Fix for bgo#622812 - Firefox: Combo boxes cannot be activated via
+    cursor routing keys
+
+  * Fix for bgo#622811 - Firefox: Braille not updated when checking a
+    radio button
+
+  * Fix for bgo#622821 - Structural navigation should not move to
+    empty sections
+
+  * Fix for bgo#618484 - Heuristic method of handling Thunderbird's
+    flooded text insertions
+
+  * Fix for bgo#620299 - Orca does not treat editable document frames
+    as entries
+
+  * Fix for bgo#621158 - Thunderbird combo box content does not show
+    in Braille when combo has focus
+
+Eclipse:
+
+  * Fix for bgo#620018 - By reformatting a text or comment in eclipse,
+    Orca speaks all the file contents
+
+  * Fix for bgo#621873 - custom script for Eclipse may be refactored
+
+Chat:
+
+  * Fix for bgo#615489 - Migrate Pidgin script to new chat.py
+
+  * Fix for bgo#621469 - The chat-only-if-focused options aren't
+    respected when another script is active
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    gl          Galician            Fran Diéguez
+    nb          Norwegian bokmål    Kjartan Maraas
+
+==========
+
 2.31.3 - 06-June-2010
 
 General:
