@@ -32,6 +32,7 @@ import gtk
 import gobject
 import pango   # for ellipsize property constants of CellRendererText
 import locale
+import time
 
 import acss
 try:
@@ -75,6 +76,17 @@ from orca_i18n import C_ # to provide qualified translatable strings
 # Must match the order of voice types in the GtkBuilder file.
 #
 (DEFAULT, UPPERCASE, HYPERLINK) = range(3)
+
+# Must match the order that the timeFormatCombo is populated.
+#
+(TIME_FORMAT_LOCALE, TIME_FORMAT_24_HMS,
+ TIME_FORMAT_24_HMS_WITH_WORDS, TIME_FORMAT_24_HM,
+ TIME_FORMAT_24_HM_WITH_WORDS) = range(5)
+
+# Must match the order that the dateFormatCombo is populated.
+#
+(DATE_FORMAT_LOCALE, DATE_FORMAT_WITH_LONG_NAMES,
+ DATE_FORMAT_WITH_SHORT_NAMES) = range(3)
 
 class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
@@ -1559,6 +1571,46 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.populateComboBox(combobox, [_("Line"), _("Sentence")])
         combobox.set_active(prefs["sayAllStyle"])
 
+        combobox2 = self.get_widget("dateFormatCombo")
+        sdtime = time.strftime
+        ltime = time.localtime
+        self.populateComboBox(combobox2,
+          [sdtime(settings.DATE_FORMAT_LOCALE, ltime()),
+           sdtime(settings.DATE_FORMAT_WITH_LONG_NAMES, ltime()),
+           sdtime(settings.DATE_FORMAT_WITH_SHORT_NAMES, ltime())
+          ])
+    
+        indexdate = DATE_FORMAT_LOCALE
+        dateFormat = self.prefsDict["presentDateFormat"]
+        if dateFormat == settings.DATE_FORMAT_LOCALE:
+            indexdate = DATE_FORMAT_LOCALE
+        elif dateFormat == settings.DATE_FORMAT_WITH_LONG_NAMES:
+            indexdate = DATE_FORMAT_WITH_LONG_NAMES
+        elif dateFormat == settings.DATE_FORMAT_WITH_SHORT_NAMES:
+            indexdate = DATE_FORMAT_WITH_SHORT_NAMES
+        combobox2.set_active (indexdate)
+        
+        combobox3 = self.get_widget("timeFormatCombo")
+        self.populateComboBox(combobox3,
+          [sdtime(settings.TIME_FORMAT_LOCALE, ltime()),
+           sdtime(settings.TIME_FORMAT_24_HMS, ltime()),
+           sdtime(settings.TIME_FORMAT_24_HMS_WITH_WORDS, ltime()),
+           sdtime(settings.TIME_FORMAT_24_HM, ltime()),
+           sdtime(settings.TIME_FORMAT_24_HM_WITH_WORDS, ltime())])
+        indextime = TIME_FORMAT_LOCALE
+        timeFormat = self.prefsDict["presentTimeFormat"]
+        if timeFormat == settings.TIME_FORMAT_LOCALE:
+            indextime = TIME_FORMAT_LOCALE
+        elif timeFormat == settings.TIME_FORMAT_24_HMS:
+            indextime = TIME_FORMAT_24_HMS
+        elif timeFormat == settings.TIME_FORMAT_24_HMS_WITH_WORDS:
+            indextime = TIME_FORMAT_24_HMS_WITH_WORDS
+        elif timeFormat == settings.TIME_FORMAT_24_HM:
+            indextime = TIME_FORMAT_24_HM
+        elif timeFormat == settings.TIME_FORMAT_24_HM_WITH_WORDS:
+            indextime = TIME_FORMAT_24_HM_WITH_WORDS
+        combobox3.set_active (indextime)
+
         # Set the sensitivity of the "Update Interval" items, depending
         # upon whether the "Speak progress bar updates" checkbox is checked.
         #
@@ -2853,6 +2905,46 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         elif sayAllStyle == _("Sentence"):
             self.prefsDict["sayAllStyle"] = settings.SAYALL_STYLE_SENTENCE
+
+    def dateFormatChanged(self, widget):
+        """Signal handler for the "changed" signal for the dateFormat
+           GtkComboBox widget. Set the 'dateFormat' preference to the
+           new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        dateFormatCombo = widget.get_active()
+        if dateFormatCombo == DATE_FORMAT_LOCALE:
+            newFormat = settings.DATE_FORMAT_LOCALE
+        elif dateFormatCombo == DATE_FORMAT_WITH_LONG_NAMES:
+            newFormat = settings.DATE_FORMAT_WITH_LONG_NAMES
+        elif dateFormatCombo == DATE_FORMAT_WITH_SHORT_NAMES:
+            newFormat = settings.DATE_FORMAT_WITH_SHORT_NAMES
+        self.prefsDict["presentDateFormat"] = newFormat
+    
+    def timeFormatChanged(self, widget):
+        """Signal handler for the "changed" signal for the timeFormat
+           GtkComboBox widget. Set the 'timeFormat' preference to the
+           new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        timeFormatCombo = widget.get_active()
+        if timeFormatCombo == TIME_FORMAT_LOCALE:
+            newFormat = settings.TIME_FORMAT_LOCALE
+        elif timeFormatCombo == TIME_FORMAT_24_HMS:
+            newFormat = settings.TIME_FORMAT_24_HMS
+        elif timeFormatCombo == TIME_FORMAT_24_HMS_WITH_WORDS:
+            newFormat = settings.TIME_FORMAT_24_HMS_WITH_WORDS
+        elif timeFormatCombo == TIME_FORMAT_24_HM:
+            newFormat = settings.TIME_FORMAT_24_HM
+        elif timeFormatCombo == TIME_FORMAT_24_HM_WITH_WORDS:
+            newFormat  = settings.TIME_FORMAT_24_HM_WITH_WORDS
+        self.prefsDict["presentTimeFormat"] =  newFormat
 
     def speechVerbosityChanged(self, widget):
         """Signal handler for the "toggled" signal for the speechBriefButton,
