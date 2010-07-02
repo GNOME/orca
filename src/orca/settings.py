@@ -1517,6 +1517,6 @@ presentTimeFormat = TIME_FORMAT_LOCALE
 # http://docs.python.org/library/time.html#time.strftime
 #
 DATE_FORMAT_LOCALE = "%x"
-DATE_FORMAT_WITH_LONG_NAMES = "%A, %d, %B, %Y."
-DATE_FORMAT_WITH_SHORT_NAMES = "%a, %d, %b, %Y."
+DATE_FORMAT_WITH_LONG_NAMES = "%A, %d %B, %Y."
+DATE_FORMAT_WITH_SHORT_NAMES = "%a, %d %b, %Y."
 presentDateFormat = DATE_FORMAT_LOCALE
