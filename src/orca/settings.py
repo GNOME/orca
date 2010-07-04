@@ -1512,6 +1512,7 @@ TIME_FORMAT_24_HM = "%H:%M"
 # user may wish to be presented with.
 #
 TIME_FORMAT_24_HM_WITH_WORDS = _("%H hours and %M minutes.")
+TIME_FORMAT_CUSTOM = "%X"
 presentTimeFormat = TIME_FORMAT_LOCALE
 
 # Format directives to use in presentDate function.
@@ -1521,6 +1522,25 @@ presentTimeFormat = TIME_FORMAT_LOCALE
 # http://docs.python.org/library/time.html#time.strftime
 #
 DATE_FORMAT_LOCALE = "%x"
-DATE_FORMAT_WITH_LONG_NAMES = "%A, %d %B, %Y."
-DATE_FORMAT_WITH_SHORT_NAMES = "%a, %d %b, %Y."
+DATE_FORMAT_NUMBERS_DM = "%d/%m"
+DATE_FORMAT_NUMBERS_MD = "%m/%d"
+DATE_FORMAT_NUMBERS_DMY = "%d/%m/%Y"
+DATE_FORMAT_NUMBERS_MDY = "%m/%d/%Y"
+DATE_FORMAT_NUMBERS_YMD = "%Y/%m/%d"
+DATE_FORMAT_FULL_DM = "%A, %d %B"
+DATE_FORMAT_FULL_MD = "%A, %B %d"
+DATE_FORMAT_FULL_DMY = "%A, %d %B, %Y"
+DATE_FORMAT_FULL_MDY = "%A, %B %d, %Y"
+DATE_FORMAT_FULL_YMD = "%Y. %B %d, %A."
+DATE_FORMAT_ABBREVIATED_DM = "%a, %d %b"
+DATE_FORMAT_ABBREVIATED_MD = "%a, %b %d"
+DATE_FORMAT_ABBREVIATED_DMY = "%a, %d %b, %Y"
+DATE_FORMAT_ABBREVIATED_MDY = "%a, %b %d, %Y"
+DATE_FORMAT_ABBREVIATED_YMD = "%Y. %b %d, %a."
+
+# To keep Orca from spitting up upon launch.
+#
+DATE_FORMAT_WITH_LONG_NAMES = DATE_FORMAT_FULL_DMY
+DATE_FORMAT_WITH_SHORT_NAMES = DATE_FORMAT_ABBREVIATED_DMY
+
 presentDateFormat = DATE_FORMAT_LOCALE

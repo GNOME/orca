@@ -351,10 +351,36 @@ class OrcaPrefs:
             return "orca.settings.TIME_FORMAT_LOCALE"
 
     def _getPresentDateString(self, val):
-        if val == settings.DATE_FORMAT_WITH_LONG_NAMES:
-            return "orca.settings.DATE_FORMAT_WITH_LONG_NAMES"
-        elif val == settings.DATE_FORMAT_WITH_SHORT_NAMES:
-            return "orca.settings.DATE_FORMAT_WITH_SHORT_NAMES"
+        if val == settings.DATE_FORMAT_NUMBERS_DM:
+            return "orca.settings.DATE_FORMAT_NUMBERS_DM"
+        elif val == settings.DATE_FORMAT_NUMBERS_MD:
+            return "orca.settings.DATE_FORMAT_NUMBERS_MD"
+        elif val == settings.DATE_FORMAT_NUMBERS_DMY:
+            return "orca.settings.DATE_FORMAT_NUMBERS_DMY"
+        elif val == settings.DATE_FORMAT_NUMBERS_MDY:
+            return "orca.settings.DATE_FORMAT_NUMBERS_MDY"
+        elif val == settings.DATE_FORMAT_NUMBERS_YMD:
+            return "orca.settings.DATE_FORMAT_NUMBERS_YMD"
+        elif val == settings.DATE_FORMAT_FULL_DM:
+            return "orca.settings.DATE_FORMAT_FULL_DM"
+        elif val == settings.DATE_FORMAT_FULL_MD:
+            return "orca.settings.DATE_FORMAT_FULL_MD"
+        elif val == settings.DATE_FORMAT_FULL_DMY:
+            return "orca.settings.DATE_FORMAT_FULL_DMY"
+        elif val == settings.DATE_FORMAT_FULL_MDY:
+            return "orca.settings.DATE_FORMAT_FULL_MDY"
+        elif val == settings.DATE_FORMAT_FULL_YMD:
+            return "orca.settings.DATE_FORMAT_FULL_YMD"
+        elif val == settings.DATE_FORMAT_ABBREVIATED_DM:
+            return "orca.settings.DATE_FORMAT_ABBREVIATED_DM"
+        elif val == settings.DATE_FORMAT_ABBREVIATED_MD:
+            return "orca.settings.DATE_FORMAT_ABBREVIATED_MD"
+        elif val == settings.DATE_FORMAT_ABBREVIATED_DMY:
+            return "orca.settings.DATE_FORMAT_ABBREVIATED_DMY"
+        elif val == settings.DATE_FORMAT_ABBREVIATED_MDY:
+            return "orca.settings.DATE_FORMAT_ABBREVIATED_MDY"
+        elif val == settings.DATE_FORMAT_ABBREVIATED_YMD:
+            return "orca.settings.DATE_FORMAT_ABBREVIATED_YMD"
         else:
             return "orca.settings.DATE_FORMAT_LOCALE"
 

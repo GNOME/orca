@@ -85,8 +85,12 @@ from orca_i18n import C_ # to provide qualified translatable strings
 
 # Must match the order that the dateFormatCombo is populated.
 #
-(DATE_FORMAT_LOCALE, DATE_FORMAT_WITH_LONG_NAMES,
- DATE_FORMAT_WITH_SHORT_NAMES) = range(3)
+(DATE_FORMAT_LOCALE, DATE_FORMAT_NUMBERS_DM, DATE_FORMAT_NUMBERS_MD,
+ DATE_FORMAT_NUMBERS_DMY, DATE_FORMAT_NUMBERS_MDY, DATE_FORMAT_NUMBERS_YMD,
+ DATE_FORMAT_FULL_DM, DATE_FORMAT_FULL_MD, DATE_FORMAT_FULL_DMY,
+ DATE_FORMAT_FULL_MDY, DATE_FORMAT_FULL_YMD, DATE_FORMAT_ABBREVIATED_DM,
+ DATE_FORMAT_ABBREVIATED_MD, DATE_FORMAT_ABBREVIATED_DMY,
+ DATE_FORMAT_ABBREVIATED_MDY, DATE_FORMAT_ABBREVIATED_YMD) = range(16)
 
 class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
@@ -1576,18 +1580,57 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         ltime = time.localtime
         self.populateComboBox(combobox2,
           [sdtime(settings.DATE_FORMAT_LOCALE, ltime()),
-           sdtime(settings.DATE_FORMAT_WITH_LONG_NAMES, ltime()),
-           sdtime(settings.DATE_FORMAT_WITH_SHORT_NAMES, ltime())
+           sdtime(settings.DATE_FORMAT_NUMBERS_DM, ltime()),
+           sdtime(settings.DATE_FORMAT_NUMBERS_MD, ltime()),
+           sdtime(settings.DATE_FORMAT_NUMBERS_DMY, ltime()),
+           sdtime(settings.DATE_FORMAT_NUMBERS_MDY, ltime()),
+           sdtime(settings.DATE_FORMAT_NUMBERS_YMD, ltime()),
+           sdtime(settings.DATE_FORMAT_FULL_DM, ltime()),
+           sdtime(settings.DATE_FORMAT_FULL_MD, ltime()),
+           sdtime(settings.DATE_FORMAT_FULL_DMY, ltime()),
+           sdtime(settings.DATE_FORMAT_FULL_MDY, ltime()),
+           sdtime(settings.DATE_FORMAT_FULL_YMD, ltime()),
+           sdtime(settings.DATE_FORMAT_ABBREVIATED_DM, ltime()),
+           sdtime(settings.DATE_FORMAT_ABBREVIATED_MD, ltime()),
+           sdtime(settings.DATE_FORMAT_ABBREVIATED_DMY, ltime()),
+           sdtime(settings.DATE_FORMAT_ABBREVIATED_MDY, ltime()),
+           sdtime(settings.DATE_FORMAT_ABBREVIATED_YMD, ltime())
           ])
-    
+
         indexdate = DATE_FORMAT_LOCALE
         dateFormat = self.prefsDict["presentDateFormat"]
         if dateFormat == settings.DATE_FORMAT_LOCALE:
             indexdate = DATE_FORMAT_LOCALE
-        elif dateFormat == settings.DATE_FORMAT_WITH_LONG_NAMES:
-            indexdate = DATE_FORMAT_WITH_LONG_NAMES
-        elif dateFormat == settings.DATE_FORMAT_WITH_SHORT_NAMES:
-            indexdate = DATE_FORMAT_WITH_SHORT_NAMES
+        elif dateFormat == settings.DATE_FORMAT_NUMBERS_DM:
+            indexdate = DATE_FORMAT_NUMBERS_DM
+        elif dateFormat == settings.DATE_FORMAT_NUMBERS_MD:
+            indexdate = DATE_FORMAT_NUMBERS_MD
+        elif dateFormat == settings.DATE_FORMAT_NUMBERS_DMY:
+            indexdate = DATE_FORMAT_NUMBERS_DMY
+        elif dateFormat == settings.DATE_FORMAT_NUMBERS_MDY:
+            indexdate = DATE_FORMAT_NUMBERS_MDY
+        elif dateFormat == settings.DATE_FORMAT_NUMBERS_YMD:
+            indexdate = DATE_FORMAT_NUMBERS_YMD
+        elif dateFormat == settings.DATE_FORMAT_FULL_DM:
+            indexdate = DATE_FORMAT_FULL_DM
+        elif dateFormat == settings.DATE_FORMAT_FULL_MD:
+            indexdate = DATE_FORMAT_FULL_MD
+        elif dateFormat == settings.DATE_FORMAT_FULL_DMY:
+            indexdate = DATE_FORMAT_FULL_DMY
+        elif dateFormat == settings.DATE_FORMAT_FULL_MDY:
+            indexdate = DATE_FORMAT_FULL_MDY
+        elif dateFormat == settings.DATE_FORMAT_FULL_YMD:
+            indexdate = DATE_FORMAT_FULL_YMD
+        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_DM:
+            indexdate = DATE_FORMAT_ABBREVIATED_DM
+        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_MD:
+            indexdate = DATE_FORMAT_ABBREVIATED_MD
+        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_DMY:
+            indexdate = DATE_FORMAT_ABBREVIATED_DMY
+        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_MDY:
+            indexdate = DATE_FORMAT_ABBREVIATED_MDY
+        elif dateFormat == settings.DATE_FORMAT_ABBREVIATED_YMD:
+            indexdate = DATE_FORMAT_ABBREVIATED_YMD
         combobox2.set_active (indexdate)
         
         combobox3 = self.get_widget("timeFormatCombo")
@@ -2918,10 +2961,36 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         dateFormatCombo = widget.get_active()
         if dateFormatCombo == DATE_FORMAT_LOCALE:
             newFormat = settings.DATE_FORMAT_LOCALE
-        elif dateFormatCombo == DATE_FORMAT_WITH_LONG_NAMES:
-            newFormat = settings.DATE_FORMAT_WITH_LONG_NAMES
-        elif dateFormatCombo == DATE_FORMAT_WITH_SHORT_NAMES:
-            newFormat = settings.DATE_FORMAT_WITH_SHORT_NAMES
+        elif dateFormatCombo == DATE_FORMAT_NUMBERS_DM:
+            newFormat = settings.DATE_FORMAT_NUMBERS_DM
+        elif dateFormatCombo == DATE_FORMAT_NUMBERS_MD:
+            newFormat = settings.DATE_FORMAT_NUMBERS_MD
+        elif dateFormatCombo == DATE_FORMAT_NUMBERS_DMY:
+            newFormat = settings.DATE_FORMAT_NUMBERS_DMY
+        elif dateFormatCombo == DATE_FORMAT_NUMBERS_MDY:
+            newFormat = settings.DATE_FORMAT_NUMBERS_MDY
+        elif dateFormatCombo == DATE_FORMAT_NUMBERS_YMD:
+            newFormat = settings.DATE_FORMAT_NUMBERS_YMD
+        elif dateFormatCombo == DATE_FORMAT_FULL_DM:
+            newFormat = settings.DATE_FORMAT_FULL_DM
+        elif dateFormatCombo == DATE_FORMAT_FULL_MD:
+            newFormat = settings.DATE_FORMAT_FULL_MD
+        elif dateFormatCombo == DATE_FORMAT_FULL_DMY:
+            newFormat = settings.DATE_FORMAT_FULL_DMY
+        elif dateFormatCombo == DATE_FORMAT_FULL_MDY:
+            newFormat = settings.DATE_FORMAT_FULL_MDY
+        elif dateFormatCombo == DATE_FORMAT_FULL_YMD:
+            newFormat = settings.DATE_FORMAT_FULL_YMD
+        elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_DM:
+            newFormat = settings.DATE_FORMAT_ABBREVIATED_DM
+        elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_MD:
+            newFormat = settings.DATE_FORMAT_ABBREVIATED_MD
+        elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_DMY:
+            newFormat = settings.DATE_FORMAT_ABBREVIATED_DMY
+        elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_MDY:
+            newFormat = settings.DATE_FORMAT_ABBREVIATED_MDY
+        elif dateFormatCombo == DATE_FORMAT_ABBREVIATED_YMD:
+            newFormat = settings.DATE_FORMAT_ABBREVIATED_YMD
         self.prefsDict["presentDateFormat"] = newFormat
     
     def timeFormatChanged(self, widget):
