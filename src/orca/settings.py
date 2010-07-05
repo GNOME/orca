@@ -1157,6 +1157,10 @@ setScriptMapping(re.compile('Shredder'), "Thunderbird")
 #
 setScriptMapping(re.compile(_('Mail/News')), "Thunderbird")
 
+# This is for a 3.1 version of Thunderbird, which chooses to now call itself
+# by a different name, Lanikai.
+setScriptMapping(re.compile('Lanikai'), "Thunderbird")
+
 # Translators: see the regular expression note above.  This is for
 # gnome_segv2, which calls itself bug-buddy in at-poke.
 #
