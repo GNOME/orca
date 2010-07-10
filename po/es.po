@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-07-03 13:08+0000\n"
-"PO-Revision-Date: 2010-07-04 13:46+0200\n"
+"POT-Creation-Date: 2010-07-04 11:51+0000\n"
+"PO-Revision-Date: 2010-07-10 10:25+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -426,7 +426,6 @@ msgstr "Un canal sólo si su _ventana está activa"
 
 #: ../src/orca/chat.py:486
 #, python-format
-#| msgid "All channels when an_y Pidgin window is active"
 msgid "All channels when an_y %s window is active"
 msgstr "Todos los canales cuando c_ualquier ventana de %s está activa"
 
@@ -2118,7 +2117,6 @@ msgstr ""
 #. and exit the "List Shortcuts Mode" by pressing Escape.
 #.
 #: ../src/orca/default.py:792
-#| msgid "Enters learn mode.  Press escape to exit learn mode."
 msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
 msgstr ""
 "Entra en modo de lista de atajos. Pulse escape para salir del modo de lista "
@@ -2186,7 +2184,6 @@ msgstr "Conmuta el silencio de la voz."
 #. the speaking of indentation and justification.
 #.
 #: ../src/orca/default.py:868
-#| msgid "Speak _indentation and justification"
 msgid "Toggles the speaking of indentation and justification."
 msgstr "Activa o desactiva la lectura del sangrado y la justificación."
 
@@ -2382,7 +2379,7 @@ msgstr "Conmutar el modo de revisión del ratón."
 #.
 #: ../src/orca/default.py:1075
 msgid "Present current time."
-msgstr ""
+msgstr "Hora actual."
 
 #. Translators: Orca can present the current date to the
 #. user when the user presses
@@ -2390,7 +2387,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:1084
 msgid "Present current date."
-msgstr ""
+msgstr "Fecha actual."
 
 #. Translators: Orca normally intercepts all keyboard
 #. commands and only passes them along to the current
@@ -2492,7 +2489,6 @@ msgstr "No se pudo encontrar la posición actual."
 #. Orca cannot identify/find the current location.
 #.
 #: ../src/orca/default.py:1912 ../src/orca/default.py:2073
-#| msgid "No focus"
 msgctxt "location"
 msgid "Not found"
 msgstr "No encontrada"
@@ -2594,7 +2590,6 @@ msgstr "Indicar _sangrado y justificación"
 #. indentation and justification information.
 #.
 #: ../src/orca/default.py:2622
-#| msgid "Enable_d"
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "Activada"
@@ -2613,7 +2608,6 @@ msgstr "Indicar _sangrado y justificación"
 #. indentation and justification information.
 #.
 #: ../src/orca/default.py:2632
-#| msgid "Dial"
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "Desactivada"
@@ -2633,7 +2627,6 @@ msgstr ""
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2655
-#| msgid "So_me"
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Alguna"
@@ -2653,11 +2646,10 @@ msgstr ""
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2669
-#, fuzzy
 #| msgid "M_ost"
 msgctxt "spoken punctuation"
 msgid "Most"
-msgstr "La _mayoría"
+msgstr "La mayoría"
 
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
@@ -2665,10 +2657,9 @@ msgstr "La _mayoría"
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2677
-#, fuzzy
 #| msgid "<b>Punctuation Level</b>"
 msgid "Punctuation level set to all."
-msgstr "<b>Nivel de puntuación</b>"
+msgstr "El nivel de puntuación está establecido a todo."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different levels of spoken punctuation.
@@ -2676,7 +2667,6 @@ msgstr "<b>Nivel de puntuación</b>"
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2683
-#, fuzzy
 #| msgid "All"
 msgctxt "spoken punctuation"
 msgid "All"
@@ -2697,11 +2687,10 @@ msgstr ""
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2698
-#, fuzzy
 #| msgid "None"
 msgctxt "spoken punctuation"
 msgid "None"
-msgstr "Ninguno"
+msgstr "Nada"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2771,7 +2760,6 @@ msgstr "Va a la siguiente palabra."
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2775
-#, fuzzy
 #| msgctxt "textattr"
 #| msgid "word"
 msgctxt "key echo"
@@ -2811,11 +2799,10 @@ msgstr "Activar eco por _frases"
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2808
-#, fuzzy
 #| msgid "Sentence"
 msgctxt "key echo"
 msgid "sentence"
-msgstr "Frase"
+msgstr "frase"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2918,11 +2905,10 @@ msgstr ""
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2907
-#, fuzzy
 #| msgid "None"
 msgctxt "key echo"
 msgid "None"
-msgstr "Ninguno"
+msgstr "Ninguna"
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -4953,27 +4939,25 @@ msgstr "Saltando al principio."
 
 #: ../src/orca/orca.py:1444
 msgid "keypad "
-msgstr ""
+msgstr "teclado numérico"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
 #: ../src/orca/orca.py:1451
-#, fuzzy
 #| msgid "(double click)"
 msgid "double click"
-msgstr "(doble pulsación)"
+msgstr "doble pulsación"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
 #: ../src/orca/orca.py:1457
-#, fuzzy
 #| msgid "(triple click)"
 msgid "triple click"
-msgstr "(triple pulsación)"
+msgstr "triple pulsación"
 
 #: ../src/orca/orca.py:1725
 msgid "Usage: orca [OPTION...]"
@@ -7718,10 +7702,10 @@ msgstr "Ir a la celda"
 #. presentation.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1685
-#, fuzzy, python-format
+#, python-format
 #| msgid "item %(index)d of %(total)d"
 msgid "slide %(position)d of %(count)d"
-msgstr "elemento %(index)d de %(total)d"
+msgstr "diapositiva %(position)d de %(count)d"
 
 #. Translators: this is the title of the window that
 #. you get when using StarOffice Presentation Wizard. The
@@ -8429,7 +8413,7 @@ msgstr "NIVEL %d"
 #.
 #: ../src/orca/settings.py:1503
 msgid "%H hours, %M minutes and %S seconds."
-msgstr ""
+msgstr "%H horas, %M minutos y %S segundos."
 
 #. Translators: Orca has a feature to speak the time
 #. when the user presses a shortcut key.
@@ -8438,7 +8422,7 @@ msgstr ""
 #.
 #: ../src/orca/settings.py:1510
 msgid "%H hours and %M minutes."
-msgstr ""
+msgstr "%H horas y %M minutos."
 
 #. Translators: this is the name of a speech synthesis system
 #. called "Speech Dispatcher".
@@ -8815,11 +8799,10 @@ msgstr "No hay más ancla."
 #: ../src/orca/structural_navigation.py:3514
 #: ../src/orca/structural_navigation.py:3714
 #: ../src/orca/structural_navigation.py:3803
-#, fuzzy
 #| msgid "No focus"
 msgctxt "structural navigation"
 msgid "Not found"
-msgstr "Sin foco"
+msgstr "No encontrado"
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
@@ -9125,10 +9108,9 @@ msgstr "Va a la siguiente región activa."
 #. which made an announcement.
 #.
 #: ../src/orca/structural_navigation.py:3103
-#, fuzzy
 #| msgid "Review live region announcement."
 msgid "Goes to the last live region which made an announcement."
-msgstr "Revisar anuncio de región activa."
+msgstr "Va a la última región activa que hizo un anuncio."
 
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'live region' is a location in a web page
