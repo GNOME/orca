@@ -1909,7 +1909,8 @@ class Script(default.Script):
         if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON \
            and self.utilities.isSameObject(orca_state.locusOfFocus, obj):
             msg = self.speechGenerator.generateSpeech(obj, alreadyFocused=True)
-            speech.speak(msg)
+            if self.inDocumentContent(obj):
+                speech.speak(msg)
             self.updateBraille(obj)
             return
 
