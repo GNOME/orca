@@ -226,6 +226,26 @@
       </row>
     </data>
   </object>
+  <object class="GtkListStore" id="model8">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0">Insert, KP_Insert</col>
+      </row>
+      <row>
+        <col id="0">KP_Insert</col>
+      </row>
+      <row>
+        <col id="0">Insert</col>
+      </row>
+      <row>
+        <col id="0">Caps_Lock</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkListStore" id="liststore2">
     <columns>
       <!-- column-name gchararray1 -->
@@ -3588,9 +3608,9 @@
                             <property name="visible">True</property>
                             <property name="label" translatable="yes">Orca _Modifier Key(s):</property>
                             <property name="use_underline">True</property>
-                            <property name="mnemonic_widget">orcaModKeyEntry</property>
+                            <property name="mnemonic_widget">orcaModifierComboBox</property>
                             <accessibility>
-                              <relation type="label-for" target="orcaModKeyEntry"/>
+                              <relation type="label-for" target="orcaModifierComboBox"/>
                             </accessibility>
                           </object>
                           <packing>
@@ -3600,14 +3620,20 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="orcaModKeyEntry">
+                          <object class="GtkComboBox" id="orcaModifierComboBox">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="tooltip_text" translatable="yes">Orca Modifier Keys</property>
-                            <property name="editable">False</property>
-                            <property name="invisible_char">&#x25CF;</property>
+                            <property name="model">model8</property>
+                            <signal name="changed" handler="orcaModifierChanged"/>
+                            <child>
+                              <object class="GtkCellRendererText" id="orcaModifierRenderer"/>
+                              <attributes>
+                              <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
                           </object>
                           <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
                             <property name="position">1</property>
                           </packing>
                         </child>

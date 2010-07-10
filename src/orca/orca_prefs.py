@@ -229,10 +229,7 @@ class OrcaPrefs:
     def _getOrcaModifierKeysString(self, orcaModifierKeys):
         """Returns a string that represents the Orca modifier keys passed in."""
 
-        if orcaModifierKeys == settings.DESKTOP_MODIFIER_KEYS:
-            return "orca.settings.DESKTOP_MODIFIER_KEYS"
-        else:
-            return "orca.settings.LAPTOP_MODIFIER_KEYS"
+        return "%s" % orcaModifierKeys
 
     def _getSpokenTextAttributesString(self, enabledSpokenTextAttributes):
         """ Returns a string that represents the enabled spoken text attributes 

@@ -153,7 +153,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.keyBindingsModel = None
         self.keyBindView = None
         self.newBinding = None
-        self.orcaModKeyEntry = None
         self.pendingKeyBindings = None
         self.planeCellRendererText = None
         self.pronunciationModel = None
@@ -2126,6 +2125,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("autostartOrcaCheckButton").set_active( \
                          self.enableAutostart)
 
+    def _updateOrcaModifier(self):
+        combobox = self.get_widget("orcaModifierComboBox")
+        keystring = ", ".join(self.prefsDict["orcaModifierKeys"])
+        combobox.set_active(self.getComboBoxIndex(combobox, keystring))
+
     def populateComboBox(self, combobox, items):
         """Populates the combobox with the items provided.
 
@@ -2509,10 +2513,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if not self.keyBindingsModel.iter_has_child(iterUnbound):
             self.keyBindingsModel.remove(iterUnbound)
 
-        self.orcaModKeyEntry = self.get_widget("orcaModKeyEntry")
-        self.orcaModKeyEntry.set_text(
-            str(settings.orcaModifierKeys)[1:-1].replace("'",""))
-
+        self._updateOrcaModifier()
         self._markModified()
 
         # Translators: an external braille device has buttons on it that
@@ -2889,6 +2890,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             else:
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_ALL
+
+    def orcaModifierChanged(self, widget):
+        """Signal handler for the changed signal for the orcaModifierComboBox
+           Set the 'orcaModifierKeys' preference to the new value.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        orcaModifier = widget.get_active_text()
+        self.prefsDict["orcaModifierKeys"] = orcaModifier.split(', ')
 
     def progressBarVerbosityChanged(self, widget):
         """Signal handler for the changed signal for the progressBarVerbosity
