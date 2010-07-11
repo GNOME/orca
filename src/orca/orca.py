@@ -59,7 +59,6 @@ except RuntimeError:
 
 import getopt
 import os
-import re
 import signal
 import time
 import unicodedata
@@ -122,6 +121,8 @@ _debugFile = None
 # Right now, this is just for the user's chosen Orca modifier(s).
 #
 _originalXmodmap = ""
+_orcaModifiers = settings.DESKTOP_MODIFIER_KEYS + settings.LAPTOP_MODIFIER_KEYS
+_capsLockCleared = False
 
 ########################################################################
 #                                                                      #
@@ -1006,6 +1007,30 @@ def toggleSilenceSpeech(script=None, inputEvent=None):
         settings.silenceSpeech = True
     return True
 
+def _createOrcaXmodmap():
+    """Makes an Orca-specific Xmodmap so that the keys behave as we
+    need them to do. This is especially the case for the Orca modifier.
+    """
+
+    global _capsLockCleared
+
+    cmd = []
+    if "Caps_Lock" in settings.orcaModifierKeys:
+        cmd.append("clear Lock")
+        _capsLockCleared = True
+    elif _capsLockCleared:
+        cmd.append("add Lock = Caps_Lock")
+        _capsLockCleared = False
+
+    # Clear other keysyms so that we always treat the Orca modifier as
+    # the Orca modifier (e.g. remove KP_0 from KP_Insert).
+    #
+    for keyName in settings.orcaModifierKeys:
+        if keyName in ["Caps_Lock", "KP_Insert", "Insert"]:
+            cmd.append("keysym %s = %s" % (keyName, keyName))
+
+    os.system("echo '%s' | xmodmap - > /dev/null 2>&1" % "\n".join(cmd))
+
 def _storeXmodmap(keyList):
     """Save the original xmodmap for the keys in keyList before we alter it.
 
@@ -1037,6 +1062,12 @@ def _restoreXmodmap(keyList=[]):
     for key in keyList:
         line = filter(lambda k: " %s" % key in k, lines)
         toRestore.extend(line)
+
+    global _capsLockCleared
+    if _capsLockCleared:
+        toRestore.append("add Lock = Caps_Lock")
+        _capsLockCleared = False
+
     os.system("echo '%s' | xmodmap - > /dev/null 2>&1" % "\n".join(toRestore))
 
 def loadUserSettings(script=None, inputEvent=None):
@@ -1141,61 +1172,16 @@ def loadUserSettings(script=None, inputEvent=None):
     except NameError:
         pass
 
-    _storeXmodmap(settings.orcaModifierKeys)
-
-    # We don't want the Caps_Lock modifier to act as a locking
-    # modifier if it used as the Orca modifier key.  In addition, if
-    # the KP_Insert key is used as the Orca modifier key, we want to
-    # make sure we clear any other keysyms that might be in use on
-    # that key since we won't be able to detect them as being the Orca
-    # modifier key.  For example, KP_Insert produces "KP_Insert" when
-    # pressed by itself, but Shift+KP_Insert produces "0".
+    global _orcaModifiers
+    custom = [k for k in settings.orcaModifierKeys if k not in _orcaModifiers]
+    _orcaModifiers += custom
+    # Handle the case where a change was made in the Orca Preferences dialog.
     #
-    # The original values are saved/reset in the orca shell script.
-    #
-    # [[[TODO: WDW - we probably should just to a 'xmodmap -e "%s = %s"'
-    # for all of the orcaModifierKeys, but saving/restoring the values
-    # becomes a little more difficult.  If we could assume a writeable
-    # filesystem (we cannot), we could do a 'xmodmap -pke > /tmp/foo'
-    # to save the keymap and a 'xmodmap /tmp/foo' to restore it.
-    # For now, we'll just look at the Orca modifier keys we support
-    # (Caps Lock, KP_Insert, and Insert).]]]
-    #
-    clearedMods = {}
-    cmd = ""
-    for keyName in settings.orcaModifierKeys:
-        # We don't want an X Windows System modifier key to change the
-        # X modifier if it is used as the Orca modifier key.
-        #
-        if keyName in orca_state.xmodmapMods:
-            orca_state.clearedXmodmapMods[keyName] = True
-            clearedMods[keyName] = True
+    if _originalXmodmap:
+        _restoreXmodmap(_orcaModifiers)
 
-        # In addition, if the KP_Insert key is used as the Orca
-        # modifier key, we want to make sure we clear any other
-        # keysyms that might be in use on that key since we won't be
-        # able to detect them as being the Orca modifier key.  For
-        # example, KP_Insert produces "KP_Insert" when pressed by
-        # itself, but Shift+KP_Insert produces "0". The original
-        # values are saved/reset in the orca shell script.
-        #
-        if keyName in ["Caps_Lock", "KP_Insert", "Insert"]:
-            cmd += "keysym %s = %s\n" % (keyName, keyName)
-
-    modifyXmodmapMods()
-
-    # If some keys were previously the Orca key and were also
-    # originally a normal X Window System modifier, we may need to
-    # re-enable them as modifiers if they are no longer the Orca key.
-    #
-    for i in orca_state.clearedXmodmapMods:
-        if orca_state.clearedXmodmapMods[i] and i not in clearedMods:
-            cmd += "add " + orca_state.xmodmapMods[i] + " = " + i + "\n"
-            orca_state.clearedXmodmapMods[i] = False
-    if cmd:
-        cmd = "echo \"" + cmd + "\" | xmodmap - >/dev/null 2>&1"
-        os.system(cmd)
-        debug.println(debug.LEVEL_FINEST,"%s" % cmd)
+    _storeXmodmap(_orcaModifiers)
+    _createOrcaXmodmap()
 
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
@@ -1636,10 +1622,6 @@ def start(registry):
 
 def die(exitCode=1):
 
-    # Restore any xmodmap modifiers that we might have changed.
-    #
-    restoreXmodmapMods()
-
     # We know what we are doing here, so tell pylint not to flag
     # the _exit method call as a warning.  The disable-msg is
     # localized to just this method.
@@ -1703,14 +1685,7 @@ def shutdown(script=None, inputEvent=None):
         signal.alarm(0)
 
     _initialized = False
-
-    # Restore any xmodmap modifiers that we might have changed.
-    #
-    restoreXmodmapMods()
-
-    # TODO - JD: See if this can be expanded to take over the above.
-    #
-    _restoreXmodmap(settings.orcaModifierKeys)
+    _restoreXmodmap(_orcaModifiers)
 
     return True
 
@@ -2076,9 +2051,6 @@ def main():
         print "environment variable has been set."
         return 1
 
-    # Save the current xmodmap modifiers before we change anything.
-    storeXmodmapMods()
-
     userprefs = settings.userPrefsDir
     sys.path.insert(0, userprefs)
     sys.path.insert(0, '') # current directory
@@ -2115,55 +2087,6 @@ def main():
 
     start(pyatspi.Registry) # waits until we stop the registry
     return 0
-
-
-def storeXmodmapMods():
-    """ Save the state of the xmodmap modifiers before we customize them. """
-
-    cmd = "xmodmap | tail -n 9 | head -n 8 | sed " + \
-    "-e 's/([^)]*)//g' -e 's/,//g'"
-    filehandle = os.popen(cmd)
-    txt = filehandle.read()
-    filehandle.close()
-    lines = txt.splitlines()
-    for i in range(0, len(lines)):
-        lines[i] = re.sub('\ +', ' ', lines[i])
-        lines[i] = re.sub('\ +$', '', lines[i])
-        lst = lines[i].split(" ")
-        tag = lst[0]
-        for i in lst[1:]:
-            orca_state.xmodmapMods[i] = tag
-    return
-
-def modifyXmodmapMods():
-    """ Modify the xmodmap modifiers to suit our orca modifier keys. """
-
-    return _xmodmapMods("remove ")
-
-def restoreXmodmapMods():
-    """ Restore the xmodmap modifiers to their initial state, before we 
-        changed them to suit our orca modifier keys.
-    """
-
-    return _xmodmapMods("add ")
-  
-def _xmodmapMods(keyWord):
-
-    # add/remove any xmodmap modifiers that we might have changed.
-    #
-    cmd = ""
-    # We know what we are doing,
-    # disable warning about i being possibly undefined.
-    # pylint: disable-msg=W0631
-    #
-    for i in orca_state.clearedXmodmapMods:
-        if orca_state.clearedXmodmapMods[i]:
-            cmd += keyWord + orca_state.xmodmapMods[i] + " = " + i + "\n"
-    if cmd:
-        cmd = "echo \"" + cmd + "\" | xmodmap - >/dev/null 2>&1"
-        os.system(cmd)
-        debug.println(debug.LEVEL_FINEST,"%s" % cmd)
-    return
 
 if __name__ == "__main__":
     sys.exit(main())

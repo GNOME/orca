@@ -141,15 +141,3 @@ mouseEnhancementsEnabled = True
 # The current zoomer type.
 #
 zoomerType = None
-
-# The state of the xmodmap modifiers before
-# orca modifier keys are allowed to effect the system.
-# Note this variable should be read-only, only written to
-# from orca.storeXmodmapMods()
-#
-xmodmapMods = {}
-
-# A hash of keys, from xmodmapMods that had to be cleared
-# when the orca modifier keys were set.
-#
-clearedXmodmapMods = {}
