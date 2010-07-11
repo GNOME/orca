@@ -118,6 +118,11 @@ _debugSwitch = False
 #
 _debugFile = None
 
+# A subset of the original Xmodmap info prior to our stomping on it.
+# Right now, this is just for the user's chosen Orca modifier(s).
+#
+_originalXmodmap = ""
+
 ########################################################################
 #                                                                      #
 # METHODS FOR HANDLING PRESENTATION MANAGERS                           #
@@ -1001,6 +1006,39 @@ def toggleSilenceSpeech(script=None, inputEvent=None):
         settings.silenceSpeech = True
     return True
 
+def _storeXmodmap(keyList):
+    """Save the original xmodmap for the keys in keyList before we alter it.
+
+    Arguments:
+    - keyList: A list of named keys to look for.
+    """
+
+    global _originalXmodmap
+
+    items = "|".join(keyList)
+    cmd = "xmodmap -pke | grep -E '(%s)'" % items
+    filehandle = os.popen(cmd)
+    _originalXmodmap = filehandle.read()
+    filehandle.close()
+
+def _restoreXmodmap(keyList=[]):
+    """Restore the original xmodmap values for the keys in keyList.
+
+    Arguments:
+    - keyList: A list of named keys to look for. An empty list means
+      to restore the entire saved xmodmap.
+    """
+
+    toRestore = []
+    lines = _originalXmodmap.split("\n")
+    if not keyList:
+        toRestore = lines
+
+    for key in keyList:
+        line = filter(lambda k: " %s" % key in k, lines)
+        toRestore.extend(line)
+    os.system("echo '%s' | xmodmap - > /dev/null 2>&1" % "\n".join(toRestore))
+
 def loadUserSettings(script=None, inputEvent=None):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
@@ -1102,6 +1140,8 @@ def loadUserSettings(script=None, inputEvent=None):
         mouse_review.mouse_reviewer.toggle(on=settings.enableMouseReview)
     except NameError:
         pass
+
+    _storeXmodmap(settings.orcaModifierKeys)
 
     # We don't want the Caps_Lock modifier to act as a locking
     # modifier if it used as the Orca modifier key.  In addition, if
@@ -1667,6 +1707,10 @@ def shutdown(script=None, inputEvent=None):
     # Restore any xmodmap modifiers that we might have changed.
     #
     restoreXmodmapMods()
+
+    # TODO - JD: See if this can be expanded to take over the above.
+    #
+    _restoreXmodmap(settings.orcaModifierKeys)
 
     return True
 
