@@ -60,12 +60,24 @@ class Script(default.Script):
         if lastKey in self.movementKeys:
             # already spoken in default script
             return
-
         obj = otherObj or event.source
+
         if obj.getState().contains(pyatspi.STATE_SINGLE_LINE):
             return
 
-        self.sayLine(obj)
+        # if Tab key is pressed and there is text selected, we must announce
+        # the text selected because probably we are in a parameter list
+        # and we are jumping between the parameters with the tab key. 
+        hasSelection = False
+        if lastKey in ["Tab", "ISO_Left_Tab"]:
+            [text, startOffset, endOffset] = self.utilities.selectedText(obj)
+            hasSelection = startOffset > 0 or endOffset > 0
+
+        if hasSelection:
+            self.sayPhrase(obj, startOffset, endOffset)
+        else:
+            self.sayLine(obj)
+
         self._saveLastTextPosition(obj)
 
     def onFocus(self, event):
