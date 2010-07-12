@@ -177,7 +177,7 @@ sequence.append(utils.AssertPresentationAction(
     "End to end of line",
     ["BRAILLE LINE:  'time in the lab and not enough time $l'",
      "     VISIBLE:  ' in the lab and not enough time ', cursor=32",
-     "SPEECH OUTPUT: 'newline'"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
@@ -321,7 +321,7 @@ sequence.append(utils.AssertPresentationAction(
     "End of line",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=21",
-     "SPEECH OUTPUT: 'newline'"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -624,7 +624,7 @@ sequence.append(utils.AssertPresentationAction(
     "End of line",
     ["BRAILLE LINE:  'This is only a test. $l'",
      "     VISIBLE:  'This is only a test. $l', cursor=21",
-     "SPEECH OUTPUT: 'newline'"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 # [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
 # the regression tests use, the BackSpace will not give the same output
@@ -1125,7 +1125,8 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "KP_Divide to left click on 'l'",
-    ["BRAILLE LINE:  'This is only  $l'",
+    ["BUG? - This started failing recently. Why?",
+     "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=11",
      "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=11"]))

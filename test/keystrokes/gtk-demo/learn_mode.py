@@ -74,8 +74,6 @@ sequence.append(utils.AssertPresentationAction(
     "Exit learn mode",
     ["BRAILLE LINE:  'Escape'",
      "     VISIBLE:  'Escape', cursor=0",
-     "BRAILLE LINE:  'Exiting learn mode.'",
-     "     VISIBLE:  'Exiting learn mode.', cursor=0",
      "SPEECH OUTPUT: 'escape'",
      "SPEECH OUTPUT: 'Exiting learn mode.'"]))
 

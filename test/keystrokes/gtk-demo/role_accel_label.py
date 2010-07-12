@@ -122,8 +122,6 @@ sequence.append(utils.AssertPresentationAction(
     "Where Am I default button",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame close Button'",
      "     VISIBLE:  'close Button', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application UI Manager Frame close Button'",
-     "     VISIBLE:  'close Button', cursor=1",
      "SPEECH OUTPUT: 'UI Manager'",
      "SPEECH OUTPUT: 'Default button is close'"]))
 

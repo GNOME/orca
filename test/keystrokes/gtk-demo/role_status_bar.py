@@ -39,8 +39,6 @@ sequence.append(utils.AssertPresentationAction(
     "Status bar Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
-     "     VISIBLE:  'Open Button', cursor=1",
      "SPEECH OUTPUT: 'Application Window'",
      "SPEECH OUTPUT: 'Cursor at row 0 column 0 - 0 chars in document'"]))
 

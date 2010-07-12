@@ -234,10 +234,13 @@ sequence.append(utils.AssertPresentationAction(
     "Editable text combo box menu",
     ["BRAILLE LINE:  'gtk-demo Application Window'",
      "     VISIBLE:  'gtk-demo Application Window', cursor=22",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Menu'",
+     "     VISIBLE:  'Menu', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel  ComboFour $l One'",
      "     VISIBLE:  'One', cursor=1",
      "SPEECH OUTPUT: 'window'",
-     "SPEECH OUTPUT: 'Editable panel One'"]))
+     "SPEECH OUTPUT: 'Editable panel menu'",
+     "SPEECH OUTPUT: 'One'"]))
 
 ########################################################################
 # Now down arrow to the "Two" item.
