@@ -1,3 +1,53 @@
+2.31.5 - 12-July-2010
+
+General:
+
+  * Fix for bgo#624153 - I see performance slowing with Orca after bug
+    373387 fix
+
+  * Fix for bgo#373387 - Users should be able to lock/unlock the "Lock"
+    modifier even if Caps Lock is the Orca modifier
+
+  * Fix for bgo#616585 - Numpad 0 can't work after launch and quit orca
+
+  * Fix for bgo#536827 - Provide configuration GUI option to set the
+    Orca key/modifier
+
+  * Fix for bgo#623099 - Present date needs a few more formatting strings
+
+  * Fix for bgo#621535 - User should be able to select date and time
+    format from gui
+
+  * Fix for bgo#623414 - Orca's date format strings contain an extraneous
+    comma
+
+  * Fix for bgo#622739 - Make bonobo optional
+
+Magnification:
+
+  * Fix for bgo#621330 - Setting screen position of magnifier reverts to
+   "Full Screen" upon closing prefs dialog (gs-mag)
+
+Gecko:
+
+  * Fix for bgo#623825 - Regression: Orca speaks unselected XUL radio
+    buttons in Gecko dialog boxes
+
+  * Fix for bgo#623561 - Thunderbird script needs to be associated with
+    Lanikai
+
+gnome-terminal:
+
+  * Fix for bgo#623897 - uppercase accented deleted in the terminal are
+    not spoken with the correct voice
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es          Spanish             Jorge González
+    gl          Galician            Fran Diéguez
+
+==========
+
 2.31.4 - 28-June-2010
 
 General:
