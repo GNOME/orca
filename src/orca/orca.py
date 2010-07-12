@@ -123,6 +123,7 @@ _debugFile = None
 _originalXmodmap = ""
 _orcaModifiers = settings.DESKTOP_MODIFIER_KEYS + settings.LAPTOP_MODIFIER_KEYS
 _capsLockCleared = False
+_restoreOrcaKeys = False
 
 ########################################################################
 #                                                                      #
@@ -942,12 +943,15 @@ def _processKeyboardEvent(event):
 
                 consumed = True
 
+            global _restoreOrcaKeys
             if not consumed \
                and keyboardEvent.type == pyatspi.KEY_RELEASED_EVENT:
                 if isOrcaModifier and orca_state.bypassNextCommand:
                     _restoreXmodmap()
-                elif not orca_state.bypassNextCommand:
+                    _restoreOrcaKeys = True
+                elif _restoreOrcaKeys and not orca_state.bypassNextCommand:
                     _createOrcaXmodmap()
+                    _restoreOrcaKeys = False
 
             if not consumed \
                and not isModifierKey(keyboardEvent.event_string) \
