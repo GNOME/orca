@@ -455,7 +455,9 @@ def isModifierKey(event_string):
 
     modifierKeys = [ 'Alt_L', 'Alt_R', 'Control_L', 'Control_R', \
                      'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R' ]
-    modifierKeys.extend(settings.orcaModifierKeys)
+
+    if not orca_state.bypassNextCommand:
+        modifierKeys.extend(settings.orcaModifierKeys)
 
     reply = event_string in modifierKeys
     debug.println(debug.LEVEL_FINEST,
@@ -473,8 +475,9 @@ def isLockingKey(event_string):
 
     lockingKeys = [ "Caps_Lock", "Num_Lock", "Scroll_Lock" ]
 
-    reply = event_string in lockingKeys \
-            and not event_string in settings.orcaModifierKeys
+    reply = event_string in lockingKeys
+    if not orca_state.bypassNextCommand:
+        reply = reply and not event_string in settings.orcaModifierKeys
     debug.println(debug.LEVEL_FINEST,
                   "orca.isLockingKey: returning: %s" % reply)
     return reply
@@ -530,7 +533,9 @@ def isNavigationKey(event_string):
 
     navigationKeys = [ "Left", "Right", "Up", "Down" ]
 
-    reply = (event_string in navigationKeys) or _orcaModifierPressed
+    reply = event_string in navigationKeys
+    if not reply and not orca_state.bypassNextCommand:
+        reply = _orcaModifierPressed
 
     debug.println(debug.LEVEL_FINEST,
                   "orca.isNavigationKey: returning: %s" % reply)
@@ -936,6 +941,13 @@ def _processKeyboardEvent(event):
                     exitLearnMode(keyboardEvent)
 
                 consumed = True
+
+            if not consumed \
+               and keyboardEvent.type == pyatspi.KEY_RELEASED_EVENT:
+                if isOrcaModifier and orca_state.bypassNextCommand:
+                    _restoreXmodmap()
+                elif not orca_state.bypassNextCommand:
+                    _createOrcaXmodmap()
 
             if not consumed \
                and not isModifierKey(keyboardEvent.event_string) \
