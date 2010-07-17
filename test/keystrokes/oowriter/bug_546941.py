@@ -47,27 +47,32 @@ sequence.append(KeyComboAction("<Alt>o"))
 sequence.append(WaitForFocus("Default Formatting", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 ######################################################################
-# 6. Press "h" to select "Character".
+# 6. Press "h" to select "Character". Then Control Page Down to move to
+# Font Effects.
 #
 sequence.append(TypeAction("h"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LIST))
+sequence.append(WaitForWindowActivate("Character", None))
+sequence.append(KeyComboAction("<Control>Page_Down"))
 
 ######################################################################
-# 7. Press Tab to move to move to Strikethrough.
+# 7. Press Alt+S to move to move to Strikethrough.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Tab"))
-sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_LIST))
+sequence.append(KeyComboAction("<Alt>s"))
 sequence.append(utils.AssertPresentationAction(
     "Move to Strikethrough",
-    ["BRAILLE LINE:  'soffice Application Character Dialog Character OptionPane TabList Font Effects Page Strikethrough (Without) Combo'",
-     "     VISIBLE:  '(Without) Combo', cursor=1",
-     "SPEECH OUTPUT: ''",
-     "SPEECH OUTPUT: 'Strikethrough (Without) combo box'"]))
+    ["BUG? - Some panel is claiming focus and needs to be ignored.",
+     "BRAILLE LINE:  'soffice Application Character Dialog Character OptionPane TabList Font Effects Page Strikethrough (Without) Combo'",
+     "     VISIBLE:  'Strikethrough (Without) Combo', cursor=15",
+     "BRAILLE LINE:  'soffice Application Character Dialog Character OptionPane TabList Font Effects Page Strikethrough Panel'",
+     "     VISIBLE:  'Strikethrough Panel', cursor=1",
+     "SPEECH OUTPUT: 'Strikethrough (Without) combo box'",
+     "SPEECH OUTPUT: 'Font Effects page Strikethrough combo box Strikethrough panel'",]))
 
 ######################################################################
-# 8. Press Escape to exit the dialog.
+# 8. Put things back to the way the were and exit the dialog.
 #
+sequence.append(KeyComboAction("<Control>Page_Up"))
 sequence.append(KeyComboAction("Escape"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 

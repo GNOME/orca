@@ -276,7 +276,9 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Up - Speak Row",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 24 25 26 27 28 29 30") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Paragraph") + "'",
+     "     VISIBLE:  'Paragraph', cursor=1",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table 24 25 26 27 28 29 30") + "'",
      "     VISIBLE:  '30', cursor=1",
      "SPEECH OUTPUT: '24 25 26 27 28 29 30'"]))
 

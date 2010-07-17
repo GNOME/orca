@@ -35,7 +35,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to move to the next line",
-    ["BRAILLE LINE:  'This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application table-sample.odt - OOo-dev Writer Frame table-sample.odt - OOo-dev Writer RootPane ScrollPane Document view December 2006 \$l'",
+     "     VISIBLE:  'December 2006 $l', cursor=1",
+     "BRAILLE LINE:  'This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=16",
      "BRAILLE LINE:  'This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=16",

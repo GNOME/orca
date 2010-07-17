@@ -36,15 +36,15 @@ sequence.append(WaitForWindowActivate("aw-5blue (read-only) - " + utils.getOOoNa
 sequence.append(WaitForFocus("Page design", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "Press 'a' to bring up the Agenda... wizard",
-    ["BRAILLE LINE:  " + utils.getOOoName("Writer") + " Frame (1 dialog)'",
+    ["BRAILLE LINE:  " + utils.getOOoBrailleLine("Writer") + " Frame (1 dialog)'",
      "     VISIBLE:  'Frame (1 dialog)', cursor=1",
-     "BRAILLE LINE:  " + utils.getOOoName("Writer") + " Agenda Wizard Dialog'",
+     "BRAILLE LINE:  " + utils.getOOoBrailleLine("Writer") + " Agenda Wizard Dialog'",
      "     VISIBLE:  'Agenda Wizard Dialog', cursor=1",
-     "BRAILLE LINE:  " + utils.getOOoName("Writer") + " Agenda Wizard Dialog Agenda Wizard OptionPane Steps Panel  \$l'",
+     "BRAILLE LINE:  " + utils.getOOoBrailleLine("Writer") + " Agenda Wizard Dialog Agenda Wizard OptionPane Steps Panel  \$l'",
      "     VISIBLE:  ' \$l', cursor=1",
      "SPEECH OUTPUT: 'frame 1 unfocused dialog'",
-     "SPEECH OUTPUT: 'Agenda Wizard Please choose the page design for the agenda 1. Page design 2. General information 3. Headings to include 4. Names 5. Agenda items 6. Name and location'",
-     "SPEECH OUTPUT: 'Page design'"]))
+     "SPEECH OUTPUT: 'Agenda Wizard'",
+     "SPEECH OUTPUT: 'Steps panel'"]))
 
 ######################################################################
 # 5. Press Escape to put focus back in the document.

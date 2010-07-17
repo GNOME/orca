@@ -18,7 +18,7 @@ orca.settings.enableFunctionKeys = False
 orca.settings.enableActionKeys = False
 
 orca.settings.enableBraille = False
-orca.settings.enableBrailleMonitor = False
+orca.settings.enableBrailleMonitor = True
 
 import orca.orca_state
 try:

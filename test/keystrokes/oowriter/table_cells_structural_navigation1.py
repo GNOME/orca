@@ -82,7 +82,9 @@ sequence.append(KeyComboAction("<Alt><Shift>Left"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "1. Alt Shift Left.",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 3 Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
+     "     VISIBLE:  '4 Paragraph', cursor=1",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 3 Paragraph") + "'",
      "     VISIBLE:  '3 Paragraph', cursor=1",
      "SPEECH OUTPUT: '3'",
      "SPEECH OUTPUT: 'Row 3, column 1.'"]))
@@ -91,14 +93,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "2. Alt Shift Left.",
-    ["SPEECH OUTPUT: 'Beginning of row."]))
+    ["BRAILLE LINE:  'Beginning of row.'",
+     "     VISIBLE:  'Beginning of row.', cursor=0",
+     "SPEECH OUTPUT: 'Beginning of row.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Right"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "3. Alt Shift Right.",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 3 Paragraph") + "'",
+     "     VISIBLE:  '3 Paragraph', cursor=1",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table 4 Paragraph") + "'",
      "     VISIBLE:  '4 Paragraph', cursor=1",
      "SPEECH OUTPUT: '4'",
      "SPEECH OUTPUT: 'Row 3, column 2.'"]))
@@ -149,40 +155,48 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Alt Shift Up.",
-    ["SPEECH OUTPUT: 'Top of column."]))
+    ["BRAILLE LINE:  'Top of column.'",
+     "     VISIBLE:  'Top of column.', cursor=0",
+     "SPEECH OUTPUT: 'Top of column.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>End"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "9. Alt Shift End.",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Paragraph") + "'",
-     "     VISIBLE:  'Paragraph', cursor=1",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Wed Paragraph") + "'",
+     "     VISIBLE:  'Wed Paragraph', cursor=1",
      "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Paragraph") + "'",
      "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'Row 7, column 7.'",
-     "SPEECH OUTPUT: 'End of table blank'",
-     "SPEECH OUTPUT: 'Cell G7'"]))
+     "SPEECH OUTPUT: 'Row 7, column 7.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "10. Alt Shift Down.",
-    ["SPEECH OUTPUT: 'Bottom of column."]))
+    ["BRAILLE LINE:  'Bottom of column.'",
+     "     VISIBLE:  'Bottom of column.', cursor=0",
+     "SPEECH OUTPUT: 'Bottom of column.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "11. Alt Shift Right.",
-    ["SPEECH OUTPUT: 'End of row."]))
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Paragraph") + "'",
+     "     VISIBLE:  'Paragraph', cursor=1",
+     "BRAILLE LINE:  'End of row.'",
+     "     VISIBLE:  'End of row.', cursor=0",
+     "SPEECH OUTPUT: 'End of row.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "12. Alt Shift Home.",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Sun Paragraph") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Paragraph") + "'",
+     "     VISIBLE:  'Paragraph', cursor=1",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample2(.odt|)", "Calendar-1 Table Sun Paragraph") + "'",
      "     VISIBLE:  'Sun Paragraph', cursor=1",
      "SPEECH OUTPUT: 'Sun'",
      "SPEECH OUTPUT: 'Row 1, column 1.'"]))
@@ -191,7 +205,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "13. Alt Shift Up.",
-    ["SPEECH OUTPUT: 'Top of column."]))
+    ["BRAILLE LINE:  'Top of column.'",
+     "     VISIBLE:  'Top of column.', cursor=0",
+     "SPEECH OUTPUT: 'Top of column.'"]))
 
 ######################################################################
 # Enter Alt-f, Alt-c to close this Writer application.

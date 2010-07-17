@@ -60,6 +60,7 @@ sequence.append(utils.AssertPresentationAction(
 ######################################################################
 # 5. Enter F7 to bring up the spell checking dialog.
 #
+language = "(English \(USA\)|\[None\])"
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("F7"))
 sequence.append(WaitForFocus("Change", acc_role=pyatspi.ROLE_PUSH_BUTTON))
@@ -95,11 +96,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=22",
      "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=23",
-     "BRAILLE LINE:  'soffice Application Spell(ing|check): [ \(]*English \(USA\)[\)]* Dialog'",
-     "     VISIBLE:  'Spell(ing|check): [ \(]*English \(USA\)[\)]* Dia(log|)', cursor=1",
-     "BRAILLE LINE:  'soffice Application Spell(ing|check): [ \(]*English \(USA\)[\)]* Dialog Spell(ing|check): [ \(]*English \(USA\)[\)]* OptionPane Change Button'",
+     "BRAILLE LINE:  'soffice Application Spelling: " + language + " Dialog'",
+     "     VISIBLE:  'Spelling: " + language + " Dialog', cursor=1",
+     "BRAILLE LINE:  'soffice Application Spelling: " + language + " Dialog Spelling: " + language + " OptionPane Change Button'",
      "     VISIBLE:  'Change Button', cursor=1",
-     "SPEECH OUTPUT: 'Spell(ing|check): [ \(]*English \(USA\)[\)]*'",
+     "SPEECH OUTPUT: 'Spelling: " + language + "'",
      "SPEECH OUTPUT: 'Misspelled word: quuuiick Context is The quuuiick brown fox'",
      "SPEECH OUTPUT: 'Change button'"]))
 

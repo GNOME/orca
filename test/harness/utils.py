@@ -38,9 +38,9 @@ firefoxLocationBarNames = "(Location|Search Bookmarks and History)"
 #
 OOoWriterNames = "(StarOffice Writer|OpenOffice.org Writer|OOo-dev Writer Beta)"
 
-OOO_VERSION="Release"
+#OOO_VERSION="Release"
 #OOO_VERSION="Beta"
-#OOO_VERSION="Dev"
+OOO_VERSION="Dev"
 
 def getOOoName(app):
     if OOO_VERSION == "Release":
