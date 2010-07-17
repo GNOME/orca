@@ -14,7 +14,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -97,7 +97,7 @@ sequence.append(KeyComboAction("Return"))
 ######################################################################
 # 11. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
 

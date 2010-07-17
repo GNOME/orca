@@ -29,8 +29,6 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8", 3000))
 sequence.append(utils.AssertPresentationAction(
     "Read first line in flat review mode",
-# [[[TODO: WDW - StarOffice 8 doesn't give the scrollbar.  DEV300_m25 does.]]]
-#
     ["BRAILLE LINE:  'panel EFFector Vol. 19, No. 38  October  Intercept Personal  $l'",
      "     VISIBLE:  'EFFector Vol. 19, No. 38  Octobe', cursor=1",
      "SPEECH OUTPUT: 'panel EFFector Vol. 19, No. 38  October  Intercept Personal ",

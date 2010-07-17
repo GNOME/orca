@@ -116,8 +116,11 @@ sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Discard", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
 sequence.append(KeyComboAction("Return"))
+
+sequence.append(KeyComboAction("<Alt>f"))
+sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU))
+sequence.append(KeyComboAction("<Alt>c"))
 
 ######################################################################
 # 11. Wait for things to get back to normal.

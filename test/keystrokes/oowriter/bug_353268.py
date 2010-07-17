@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -47,9 +47,9 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Return to top of document",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
      "SPEECH OUTPUT: 'Line 1'"]))
 

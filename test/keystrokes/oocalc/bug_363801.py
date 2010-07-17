@@ -10,7 +10,7 @@ import utils
 sequence = MacroSequence()
 
 ######################################################################
-# 1. Start oocalc. There is a bug_361167.params file that will
+# 1. Start oocalc. There is a bug_363801.params file that will
 #    automatically load fruit.ods.
 #
 sequence.append(PauseAction(3000))
@@ -42,7 +42,9 @@ sequence.append(KeyComboAction("c"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Type Insert-c to set the dynamical row headers to the first row.",
-    ["BRAILLE LINE:  'Dynamic row header set for column A'",
+    ["BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+     "     VISIBLE:  'Cell A1 ', cursor=1",
+     "BRAILLE LINE:  'Dynamic row header set for column A'",
      "     VISIBLE:  'Dynamic row header set for colum', cursor=0",
      "SPEECH OUTPUT: 'Dynamic row header set for column A'"]))
 
@@ -57,8 +59,12 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Type Insert-r twice to clear the dynamical column headers",
-    ["BRAILLE LINE:  'Dynamic column header set for row 1'",
+    ["BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+     "     VISIBLE:  'Cell A1 ', cursor=1",
+     "BRAILLE LINE:  'Dynamic column header set for row 1'",
      "     VISIBLE:  'Dynamic column header set for ro', cursor=0",
+     "BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+     "     VISIBLE:  'Cell A1 ', cursor=1",
      "BRAILLE LINE:  'Dynamic column header cleared.'",
      "     VISIBLE:  'Dynamic column header cleared.', cursor=0",
      "SPEECH OUTPUT: 'Dynamic column header set for row 1'",
@@ -77,6 +83,8 @@ sequence.append(utils.AssertPresentationAction(
     "Type Insert-c twice to clear the dynamical row headers",
     ["BRAILLE LINE:  'Dynamic row header set for column A'",
      "     VISIBLE:  'Dynamic row header set for colum', cursor=0",
+     "BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell A1 '",
+     "     VISIBLE:  'Cell A1 ', cursor=1",
      "BRAILLE LINE:  'Dynamic row header cleared.'",
      "     VISIBLE:  'Dynamic row header cleared.', cursor=0",
      "SPEECH OUTPUT: 'Dynamic row header set for column A'",

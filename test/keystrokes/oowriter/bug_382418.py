@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -25,7 +25,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled[ ]*2 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 2 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -64,13 +64,10 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to start of document",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Line 1 \$l'",
      "     VISIBLE:  'Line 1 $l', cursor=1",
-# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
-#
-#     "SPEECH OUTPUT: 'leaving table.'",
      "SPEECH OUTPUT: 'Line 1'"]))
 
 ######################################################################
@@ -81,9 +78,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to enter the table",
-# [[[TODO: WDW - StarOffice 8 gives us this.  DEV300_m25 does not.]]]
-#
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",
+
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",
      "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: 'blank'",
@@ -110,8 +106,9 @@ sequence.append(KeyComboAction("Return"))
 ######################################################################
 # 10. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
+
 sequence.append(PauseAction(3000))
 
 sequence.append(utils.AssertionSummaryAction())

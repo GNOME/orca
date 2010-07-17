@@ -13,7 +13,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -26,7 +26,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled[ ]*2 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 2 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -61,9 +61,9 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to start of document",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view The quick \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view The quick \$l'",
      "     VISIBLE:  'The quick $l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view The quick \$l'",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view The quick \$l'",
      "     VISIBLE:  'The quick $l', cursor=1",
      "SPEECH OUTPUT: 'The quick'"]))
 
@@ -98,7 +98,7 @@ sequence.append(KeyComboAction("Return"))
 ######################################################################
 # 8. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
 

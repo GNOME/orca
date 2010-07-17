@@ -13,7 +13,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -30,9 +30,9 @@ sequence.append(TypeAction("w"))
 sequence.append(WaitForFocus("Letter...", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Press W to open the Wizards submenu",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*1 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*1 - " + utils.getOOoName("Writer") + " RootPane MenuBar Wizards Menu'",
+    ["BRAILLE LINE:  'soffice Application Untitled 1 - " + utils.getOOoName("Writer") + " Frame Untitled 1 - " + utils.getOOoName("Writer") + " RootPane MenuBar Wizards Menu'",
      "     VISIBLE:  'Wizards Menu', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*1 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*1 - " + utils.getOOoName("Writer") + " RootPane MenuBar File Menu Letter...'",
+     "BRAILLE LINE:  'soffice Application Untitled 1 - " + utils.getOOoName("Writer") + " Frame Untitled 1 - " + utils.getOOoName("Writer") + " RootPane MenuBar File Menu Letter...'",
      "     VISIBLE:  'Letter...', cursor=1",
      "SPEECH OUTPUT: 'Wizards menu'",
      "SPEECH OUTPUT: 'Letter...'"]))
@@ -45,7 +45,7 @@ sequence.append(KeyComboAction("Escape"))
 sequence.append(WaitForFocus("Wizards", acc_role=pyatspi.ROLE_MENU))
 sequence.append(utils.AssertPresentationAction(
     "Press Escape to close the Wizards submenu",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*1 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*1 - " + utils.getOOoName("Writer") + " RootPane MenuBar Wizards Menu'",
+    ["BRAILLE LINE:  'soffice Application Untitled 1 - " + utils.getOOoName("Writer") + " Frame Untitled 1 - " + utils.getOOoName("Writer") + " RootPane MenuBar Wizards Menu'",
      "     VISIBLE:  'Wizards Menu', cursor=1",
      "SPEECH OUTPUT: 'Wizards menu'"]))
 

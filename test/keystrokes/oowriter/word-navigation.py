@@ -10,7 +10,7 @@ sequence = MacroSequence()
 ######################################################################
 # Start Writer
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -37,9 +37,9 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Top of document",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=1",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=1",
      "SPEECH OUTPUT: 'This is a test.'"]))
 
@@ -50,7 +50,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "1. Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=6",
      "SPEECH OUTPUT: 'is '"]))
 
@@ -58,7 +58,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "2. Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=9",
      "SPEECH OUTPUT: 'a '"]))
 
@@ -66,7 +66,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=11",
      "SPEECH OUTPUT: 'test.'"]))
 
@@ -74,7 +74,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=15",
      "SPEECH OUTPUT: 'dot'"]))
 
@@ -82,13 +82,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "5. Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=16",
      "BRAILLE LINE:  'So is this. \$l'",
      "     VISIBLE:  'So is this. \$l', cursor=1",
      "BRAILLE LINE:  'So is this. \$l'",
      "     VISIBLE:  'So is this. \$l', cursor=1",
-     "SPEECH OUTPUT: 'newline'",
+     "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'So '"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -114,20 +114,20 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "2. Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=16",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=16",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=15",
-     "SPEECH OUTPUT: 'newline'",
+     "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: 'dot'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "3. Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=11",
      "SPEECH OUTPUT: 'test.'"]))
 
@@ -135,7 +135,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "4. Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=9",
      "SPEECH OUTPUT: 'a '"]))
 
@@ -143,7 +143,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "5. Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=6",
      "SPEECH OUTPUT: 'is '"]))
 
@@ -151,7 +151,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "6. Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=1",
      "SPEECH OUTPUT: 'This '"]))
 
@@ -162,7 +162,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "1. Select Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=6",
      "SPEECH OUTPUT: 'This '",
      "SPEECH OUTPUT: 'selected'"]))
@@ -171,7 +171,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "2. Select Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=9",
      "SPEECH OUTPUT: 'is '",
      "SPEECH OUTPUT: 'selected'"]))
@@ -180,7 +180,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "3. Select Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=11",
      "SPEECH OUTPUT: 'a '",
      "SPEECH OUTPUT: 'selected'"]))
@@ -189,7 +189,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Select Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=15",
      "SPEECH OUTPUT: 'test'",
      "SPEECH OUTPUT: 'selected'"]))
@@ -202,7 +202,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'So is this. \$l', cursor=1",
      "BRAILLE LINE:  'So is this. \$l'",
      "     VISIBLE:  'So is this. \$l', cursor=1",
-     "SPEECH OUTPUT: 'newline'"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Right"))
@@ -229,9 +229,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "2. Unselect Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=15",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=15",
      "SPEECH OUTPUT: 'dot'",
      "SPEECH OUTPUT: 'unselected'"]))
@@ -240,7 +240,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "3. Unselect Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=11",
      "SPEECH OUTPUT: 'test'",
      "SPEECH OUTPUT: 'unselected'"]))
@@ -249,7 +249,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "4. Unselect Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=9",
      "SPEECH OUTPUT: 'a '",
      "SPEECH OUTPUT: 'unselected'"]))
@@ -258,7 +258,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "5. Unselect Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=6",
      "SPEECH OUTPUT: 'is '",
      "SPEECH OUTPUT: 'unselected'"]))
@@ -267,7 +267,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "6. Unselect Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=1",
      "SPEECH OUTPUT: 'This '",
      "SPEECH OUTPUT: 'unselected'"]))
@@ -333,9 +333,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "5. Select Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=15",
-     "BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=15",
      "SPEECH OUTPUT: 'dot'",
      "SPEECH OUTPUT: 'selected'"]))
@@ -344,7 +344,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "6. Select Previous Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=11",
      "SPEECH OUTPUT: 'test'",
      "SPEECH OUTPUT: 'selected'"]))
@@ -356,7 +356,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "1. Unselect Next Word",
-    ["BRAILLE LINE:  'soffice Application Untitled[ ]*2 - " + utils.getOOoName("Writer") + " Frame Untitled[ ]*2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view This is a test. \$l'",
      "     VISIBLE:  'This is a test. \$l', cursor=15",
      "SPEECH OUTPUT: 'test'",
      "SPEECH OUTPUT: 'unselected'"]))
@@ -370,7 +370,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'So is this. \$l', cursor=1",
      "BRAILLE LINE:  'So is this. \$l'",
      "     VISIBLE:  'So is this. \$l', cursor=1",
-     "SPEECH OUTPUT: 'newline'"]))
+     "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control><Shift>Right"))

@@ -13,7 +13,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -26,7 +26,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled[ ]*2 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 2 - " + utils.getOOoName("Writer"),None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -51,9 +51,9 @@ sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type Control-Home to move to the start of the document",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=1",
      "SPEECH OUTPUT: 'The quuuiick brown fox'"]))
 
@@ -66,35 +66,35 @@ sequence.append(KeyComboAction("F7"))
 sequence.append(WaitForFocus("Change", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Enter F7 to bring up the spell checking dialog",
-    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+    ["BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=2",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=3",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=4",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=5",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=23",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=14",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=15",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=16",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=17",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=18",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=19",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=20",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=21",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=22",
-     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled[ ]*2", "The quuuiick brown fox \$l") + "'",
+     "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "Untitled 2", "The quuuiick brown fox \$l") + "'",
      "     VISIBLE:  'The quuuiick brown fox $l', cursor=23",
      "BRAILLE LINE:  'soffice Application Spelling: " + language + " Dialog'",
      "     VISIBLE:  'Spelling: " + language + " Dialog', cursor=1",
@@ -129,7 +129,7 @@ sequence.append(KeyComboAction("Return"))
 ######################################################################
 # 9. Wait for things to get back to normal.
 #
-sequence.append(WaitForWindowActivate("Untitled[ ]*1 - " + utils.getOOoName("Writer"), None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(PauseAction(3000))
 
