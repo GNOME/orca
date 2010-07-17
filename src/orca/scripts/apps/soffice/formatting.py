@@ -59,6 +59,7 @@ formatting = {
             'focused': 'labelAndName + toggleState'
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
+            'unfocused': 'labelAndName + toggleState',
             'focused': 'labelAndName + toggleState'
             },
         pyatspi.ROLE_TABLE_CELL: {
