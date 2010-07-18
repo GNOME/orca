@@ -71,7 +71,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'SwingSet2 Application Input Dialog'",
      "     VISIBLE:  'Input Dialog', cursor=1",
      "BRAILLE LINE:  ' $l'",
-     "     VISIBLE:  ' $l', cursor=1",
+     "     VISIBLE:  ' $l', cursor=0",
      "SPEECH OUTPUT: 'Input What is your favorite movie?'",
      "SPEECH OUTPUT: 'text '"]))
 

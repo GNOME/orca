@@ -68,7 +68,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("One ", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "1. Move to One button",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Buttons TabList Buttons Page Text Buttons Panel One  Button'",
+    ["BRAILLE LINE:  'SwingSet2 Application (SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page |)Buttons TabList Buttons Page Text Buttons Panel One  Button'",
      "     VISIBLE:  'One  Button', cursor=1",
      "SPEECH OUTPUT: 'Text Buttons panel One  button'"]))
 
@@ -80,7 +80,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "2. Basic Where Am I",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Buttons TabList Buttons Page Text Buttons Panel One  Button'",
+    ["BRAILLE LINE:  'SwingSet2 Application (SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page |)Buttons TabList Buttons Page Text Buttons Panel One  Button'",
      "     VISIBLE:  'One  Button', cursor=1",
      "SPEECH OUTPUT: 'One  button'"]))
 
@@ -92,7 +92,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Two", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "3. Move to Two button",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Buttons TabList Buttons Page Text Buttons Panel Two Button'",
+    ["BRAILLE LINE:  'SwingSet2 Application (SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page |)Buttons TabList Buttons Page Text Buttons Panel Two Button'",
      "     VISIBLE:  'Two Button', cursor=1",
      "SPEECH OUTPUT: 'Two button'"]))
 
@@ -105,7 +105,7 @@ sequence.append(WaitForFocus("<html><font size=2 color=red><bold>Three!</font></
 sequence.append(utils.AssertPresentationAction(
     "4. Move to Three button",
     ["BUG? - What's up with the extra whitespace in the speech?",
-     "BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Buttons TabList Buttons Page Text Buttons Panel Three! Button'",
+     "BRAILLE LINE:  'SwingSet2 Application (SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page |)Buttons TabList Buttons Page Text Buttons Panel Three! Button'",
      "     VISIBLE:  'Three! Button', cursor=1",
      "SPEECH OUTPUT: '",
 "Three! button'"]))
@@ -120,7 +120,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "5. Move to first image button",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Buttons TabList Buttons Page Image Buttons Panel Button'",
+    ["BRAILLE LINE:  'SwingSet2 Application (SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page |)Buttons TabList Buttons Page Image Buttons Panel Button'",
      "     VISIBLE:  'Button', cursor=1",
      "SPEECH OUTPUT: 'Image Buttons panel button'"]))
 
@@ -132,7 +132,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "6. Move to second image button",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Buttons TabList Buttons Page Image Buttons Panel Button'",
+    ["BRAILLE LINE:  'SwingSet2 Application (SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page |)Buttons TabList Buttons Page Image Buttons Panel Button'",
      "     VISIBLE:  'Button', cursor=1",
      "SPEECH OUTPUT: 'button'"]))
 
@@ -144,7 +144,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "7. Move to third image button",
-    ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Buttons TabList Buttons Page Image Buttons Panel Button'",
+    ["BRAILLE LINE:  'SwingSet2 Application (SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page |)Buttons TabList Buttons Page Image Buttons Panel Button'",
      "     VISIBLE:  'Button', cursor=1",
      "SPEECH OUTPUT: 'button'"]))
 
