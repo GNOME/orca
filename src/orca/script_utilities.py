@@ -1913,6 +1913,7 @@ class Utilities:
         """
 
         textContents = ""
+        startOffset = endOffset = 0
         textObj = obj.queryText()
         nSelections = textObj.getNSelections()
         for i in range(0, nSelections):
