@@ -53,10 +53,7 @@ sequence.append(utils.AssertPresentationAction(
     "Type Return to check it",
     ["BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view4 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
-     "BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view4 Sheet Sheet1 Table Apples Cell B1 '",
-     "     VISIBLE:  'Apples Cell B1 ', cursor=1",
-     "SPEECH OUTPUT: 'Sheet Sheet1 table'",
-     "SPEECH OUTPUT: 'Apples B1'"]))
+     "SPEECH OUTPUT: 'Sheet Sheet1 table'"]))
 
 ######################################################################
 # 7. Type Alt-w to bring up the Windows menu.
