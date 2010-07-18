@@ -31,8 +31,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "File->New->Spreadsheet",
-    ["BUG? - Shouldn't we also be saying the cell?",
-     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame'",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame'",
      "     VISIBLE:  'Untitled 2 - " + utils.getOOoName("Calc") + " (Frame|)', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
@@ -70,8 +69,17 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "Type 'c3' followed by Return to jump to cell C3 in the spreadsheet",
-    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell C3 '",
+    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ToolBar c3 \$l'",
+     "     VISIBLE:  'c3 \$l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ToolBar C3 \$l'",
+     "     VISIBLE:  'C3 \$l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ToolBar C3 \$l'",
+     "     VISIBLE:  'C3 \$l', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
+     "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Cell C3 '",
      "     VISIBLE:  'Cell C3 ', cursor=1",
+     "SPEECH OUTPUT: 'Sheet Sheet1 table'",
      "SPEECH OUTPUT: 'C3'"]))
 
 ######################################################################

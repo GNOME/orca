@@ -120,8 +120,14 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Where Am I default button",
-    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame close Button'",
+    ["BRAILLE LINE:  'UI Manager'",
+     "     VISIBLE:  'UI Manager', cursor=0",
+     "BRAILLE LINE:  'gtk-demo Application UI Manager Frame close Button'",
      "     VISIBLE:  'close Button', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application UI Manager Frame close Button'",
+     "     VISIBLE:  'close Button', cursor=1",
+     "BRAILLE LINE:  'Default button is close'",
+     "     VISIBLE:  'Default button is close', cursor=0",
      "SPEECH OUTPUT: 'UI Manager'",
      "SPEECH OUTPUT: 'Default button is close'"]))
 

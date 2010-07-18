@@ -353,7 +353,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Subtract to enter flat review",
-    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+    ["BRAILLE LINE:  'Entering flat review.'",
+     "     VISIBLE:  'Entering flat review.', cursor=0",
+     "BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
      "SPEECH OUTPUT: 'Entering flat review.'",
      "SPEECH OUTPUT: 'PLEASE' voice=uppercase"]))
@@ -1024,8 +1026,8 @@ sequence.append(KeyComboAction("KP_9"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Insert+KP_9 to flat review end",
-    ["BRAILLE LINE:  'Cursor at row 1 column 5 - 243 chars in document $l'",
-     "     VISIBLE:  'hars in document $l', cursor=16",
+    ["BRAILLE LINE:  ' Cursor at row 1 column 5 - 243 chars in document $l'",
+     "     VISIBLE:  'chars in document $l', cursor=17",
      "SPEECH OUTPUT: 'Cursor at row 1 column 5 - 243 chars in document'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1080,7 +1082,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Subtract to exit flat review",
-    ["BRAILLE LINE:  'This is only  $l'",
+    ["BRAILLE LINE:  'Leaving flat review.'",
+     "     VISIBLE:  'Leaving flat review.', cursor=0",
+     "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=6",
      "SPEECH OUTPUT: 'Leaving flat review.'"]))
 
@@ -1125,8 +1129,7 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "KP_Divide to left click on 'l'",
-    ["BUG? - This started failing recently. Why?",
-     "BRAILLE LINE:  'This is only  $l'",
+    ["BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=11",
      "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=11"]))

@@ -93,9 +93,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Interactive Dialog Where Am I",
-    ["BUG? - For some reason, we're not always getting the braille.",
-#     "BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog Entry 1 Testing $l'",
-#     "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
+    ["BRAILLE LINE:  'Interactive Dialog'",
+     "     VISIBLE:  'Interactive Dialog', cursor=0",
      "SPEECH OUTPUT: 'Interactive Dialog'"]))
 
 ########################################################################

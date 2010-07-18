@@ -33,7 +33,7 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "File->New->Spreadsheet",
-    ["BUG? - Shouldn't we also be saying the cell?",
+    ["KNOWN ISSUE - OOo Calc doesn't initially emit any events to tell us which cell has focus",
      "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame'",
      "     VISIBLE:  'Untitled 2 - " + utils.getOOoName("Calc") + " (Frame|)', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",

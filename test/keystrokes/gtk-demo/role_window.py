@@ -25,9 +25,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Window Where Am I",
-    ["BUG? - Another case where we are not getting the braille during a Where Am I",
-#     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Application main window TREE LEVEL 1'",
-#     "     VISIBLE:  'Application main window TREE LEV', cursor=1",
+    ["BRAILLE LINE:  'GTK+ Code Demos'",
+     "     VISIBLE:  'GTK+ Code Demos', cursor=0",
      "SPEECH OUTPUT: 'GTK+ Code Demos'"]))
 
 # Just a little extra wait to let some events get through.

@@ -56,18 +56,14 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Editable Cells TREE LEVEL 2', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Shopping list Frame'",
      "     VISIBLE:  'Shopping list Frame', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke[ ]*'",
-     "     VISIBLE:  '3 bottles of coke[ ]*', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table'",
+     "     VISIBLE:  'Table', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
+     "     VISIBLE:  '3 bottles of coke', cursor=1",
      "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Editable Cells tree level 2'",
      "SPEECH OUTPUT: 'Shopping list frame'",
+     "SPEECH OUTPUT: 'table'",
      "SPEECH OUTPUT: 'Number column header 3 bottles of coke'"]))
-     # [WDW - the [ ]* re is to account for the last
-     # column not showing on some systems (e.g.,
-     # Ubuntu, but showing on others (e.g., Solaris).
-     # When the last column is showing, the speech
-     # generator will join a ' ' to the end.]
-     # We will add this regular expression to the
-     # rest of the tests as well.
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -77,8 +73,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Table Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke[ ]*'",
-     "     VISIBLE:  '3 bottles of coke[ ]*', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
+     "     VISIBLE:  '3 bottles of coke', cursor=1",
      "SPEECH OUTPUT: 'table Number cell 3 column 1 of 3 row 1 of 5'"]))
 
 ########################################################################
@@ -93,8 +89,8 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Table down one line",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles[ ]*'",
-     "     VISIBLE:  '5 packages of noodles[ ]*', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles'",
+     "     VISIBLE:  '5 packages of noodles', cursor=1",
      "SPEECH OUTPUT: '5 packages of noodles'"]))
 
 ########################################################################
@@ -104,8 +100,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(utils.AssertPresentationAction(
     "Table Where Am I (again)",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles[ ]*'",
-     "     VISIBLE:  '5 packages of noodles[ ]*', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles'",
+     "     VISIBLE:  '5 packages of noodles', cursor=1",
      "SPEECH OUTPUT: 'table Number cell 5 column 1 of 3 row 2 of 5'"]))
 
 ########################################################################
@@ -117,7 +113,9 @@ sequence.append(KeyComboAction("F11"))
 sequence.append(KeyReleaseAction(0, None,"KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Turn row reading off",
-    ["SPEECH OUTPUT: 'Speak cell'"]))
+    ["BRAILLE LINE:  'Speak cell'",
+     "     VISIBLE:  'Speak cell', cursor=0",
+     "SPEECH OUTPUT: 'Speak cell'"]))
 
 ########################################################################
 # Move right one cell to the "packages of noodles" cell and then go
@@ -132,7 +130,9 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Table up to packages of noodles",
-    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Product ColumnHeader packages of noodles Cell'",
+    ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles'",
+     "     VISIBLE:  '5 packages of noodles', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Product ColumnHeader packages of noodles Cell'",
      "     VISIBLE:  'packages of noodles Cell', cursor=1",
      "SPEECH OUTPUT: 'Product column header packages of noodles'"]))
 
