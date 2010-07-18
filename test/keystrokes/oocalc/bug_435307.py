@@ -44,7 +44,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
      "BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view4 Sheet Sheet1 Table Apples Cell B1 '",
      "     VISIBLE:  'Apples Cell B1 ', cursor=1",
-     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
+     "SPEECH OUTPUT: 'Sheet Sheet1 table'",
      "SPEECH OUTPUT: 'Apples B1.'"]))
 
 ######################################################################
@@ -60,12 +60,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(utils.AssertPresentationAction(
     "Type Alt-f to select the Freeze menu item [2]",
-    ["BUG? - Our 'text does not fit feature might need some tweaking. In this case the contents are not too long. False positive likely due to the height",
+    ["BUG? - Our 'text does not fit feature might need some tweaking. In this case the contents are not too long. This only seems to happen with the regression tests; not when performing the same task manually. So it might be a KNOWN ISSUE instead.",
      "BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
      "BRAILLE LINE:  'soffice Application fruit.ods - " + utils.getOOoName("Calc") + " Frame fruit.ods - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table Apples Cell B1 '",
      "     VISIBLE:  'Apples Cell B1 ', cursor=1",
-     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'",
+     "SPEECH OUTPUT: 'Sheet Sheet1 table'",
      "SPEECH OUTPUT: 'Apples B1.'",
      "SPEECH OUTPUT: '6 characters too long'"]))
 

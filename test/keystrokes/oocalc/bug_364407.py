@@ -31,13 +31,13 @@ sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForFocus("Sheet Sheet1", acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "File->New->Spreadsheet",
-    ["BUG? - Shouldn't we also be saying the cell? And the 'grayed' bit is probably not desirable.",
+    ["BUG? - Shouldn't we also be saying the cell?",
      "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame'",
      "     VISIBLE:  'Untitled 2 - " + utils.getOOoName("Calc") + " (Frame|)', cursor=1",
      "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Calc") + " Frame Untitled 2 - " + utils.getOOoName("Calc") + " RootPane ScrollPane Document view3 Sheet Sheet1 Table'",
      "     VISIBLE:  'Sheet Sheet1 Table', cursor=1",
      "SPEECH OUTPUT: 'Untitled 2 - " + utils.getOOoName("Calc") + " frame'",
-     "SPEECH OUTPUT: 'Sheet Sheet1 table grayed'"]))
+     "SPEECH OUTPUT: 'Sheet Sheet1 table'"]))
 
 ######################################################################
 # 3. Type Control-Shift-t to give focus to the spreadsheet cell locator.

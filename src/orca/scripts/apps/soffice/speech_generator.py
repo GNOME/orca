@@ -130,6 +130,20 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 self, obj, **args))
         return result
 
+    def _generateAvailability(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the grayed/sensitivity/availability state of the
+        object, but only if it is insensitive (i.e., grayed out and
+        inactive).  Otherwise, and empty array will be returned.
+        """
+
+        result = []
+        if not self._script.isSpreadSheetCell(obj, startFromTable=True):
+            result.extend(speech_generator.SpeechGenerator.\
+                _generateAvailability(self, obj, **args))
+
+        return result
+
     def _generateDescription(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) that represent the description of the object,
