@@ -1,23 +1,23 @@
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the orca package.
+# translation of orca-master-po-gl-70969.merged.po to Galician
+# Copyright (C) 2010 Fran Diéguez
+#
 # Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2006.
 # Ignacio Casal Quinteiro <icq@svn.gnome.org>, 2007, 2008.
 # Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2008.
 # Francisco Diéguez <fran.dieguez@mabishu.com>, 2009.
 # Antón Méixome <meixome@mancomun.org>, 2009.
-# Anton Meixome <certima@certima.net>, 2009.
 # Antón Méixome <meixome@certima.net>, 2010.
-# This file is distributed under the same license as the PACKAGE package.
-# translation of orca-master-po-gl-70969.merged.po to Galician
 # Fran Diéguez <frandieguez@ubuntu.com>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-14 11:26+0200\n"
-"PO-Revision-Date: 2010-07-14 11:26+0200\n"
+"POT-Creation-Date: 2010-07-21 14:41+0200\n"
+"PO-Revision-Date: 2010-07-21 14:43+0200\n"
 "Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
-"Language-Team: Galician <gnome@g11n.net>\n"
+"Language-Team: Galician <gnome-gl-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -473,7 +473,7 @@ msgstr "Mensaxe da sala de conversa %s"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2662 ../src/orca/script_utilities.py:2669
+#: ../src/orca/script_utilities.py:2663 ../src/orca/script_utilities.py:2670
 msgid "space"
 msgstr "espazo"
 
@@ -1593,7 +1593,7 @@ msgstr "Le todo o documento."
 #.
 #: ../src/orca/default.py:207
 msgid "Performs the basic where am I operation."
-msgstr "Realiza a operación básica \"onde estou?\"."
+msgstr "Realiza a operación básica «onde estou?»."
 
 #. Translators: the "Where am I" feature of Orca allows
 #. a user to press a key and then have information
@@ -1604,7 +1604,7 @@ msgstr "Realiza a operación básica \"onde estou?\"."
 #.
 #: ../src/orca/default.py:219
 msgid "Performs the detailed where am I operation."
-msgstr "Realiza a operación detallada \"onde estou?\"."
+msgstr "Realiza a operación detallada «onde estou?»."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -2275,7 +2275,7 @@ msgstr "Imprime información do uso da memoria."
 #.
 #: ../src/orca/default.py:960
 msgid "Bookmark where am I with respect to current position."
-msgstr "Marcador \"onde estou?\" con respecto á posición actual."
+msgstr "Marcador «onde estou?» con respecto á posición actual."
 
 #. Translators: this command moves the current position to the
 #. location stored at the bookmark.
@@ -2502,7 +2502,7 @@ msgstr "Non encontrado"
 #. text is a hypertext link.
 #.
 #: ../src/orca/default.py:2019 ../src/orca/rolenames.py:600
-#: ../src/orca/script_utilities.py:2398
+#: ../src/orca/script_utilities.py:2399
 #: ../src/orca/scripts/apps/soffice/script.py:1135
 #: ../src/orca/speech_generator.py:714
 msgid "link"
@@ -2531,8 +2531,8 @@ msgstr "ligazón"
 #: ../src/orca/default.py:4460
 #: ../src/orca/scripts/apps/evolution/script.py:1140
 #: ../src/orca/scripts/apps/soffice/script.py:1255
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:360
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:469
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:374
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:483
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5352
 #: ../src/orca/settings.py:1352 ../src/orca/speech_generator.py:472
@@ -4306,8 +4306,10 @@ msgstr ""
 #: ../src/orca/orca_gui_main.py:111
 msgid "translator-credits"
 msgstr ""
-"Fran Diéguez <frandieguez@ubuntu.com>, 2009, 2010; Antón Méixome "
-"<meixoem@certima.net> 2009, 2010;"
+"Fran Diéguez <frandieguez@ubuntu.com>, 2009, 2010.\n"
+"Antón Méixome <meixome@certima.net>, 2010.\n"
+"Antón Méixome <meixome@mancomun.org>, 2009.\n"
+"Ignacio Casal Quinteiro <icq@gnome.org>, 2005, 2006, 2007, 2008."
 
 #. Translators: This text is used in the Orca About dialog. Orca is
 #. licensed under GPL2+.
@@ -4797,7 +4799,7 @@ msgstr "Saíndo do modo de lista de atallos."
 #. key (e.g., Caps Lock)
 #.
 #: ../src/orca/orca.py:656
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:171
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:185
 #: ../src/orca/speech.py:282 ../src/orca/speechserver.py:218
 msgid "off"
 msgstr "desactivado"
@@ -4808,7 +4810,7 @@ msgstr "desactivado"
 #. key (e.g., Caps Lock)
 #.
 #: ../src/orca/orca.py:660
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:167
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:181
 #: ../src/orca/speech.py:277 ../src/orca/speechserver.py:213
 msgid "on"
 msgstr "activado"
@@ -7088,7 +7090,7 @@ msgstr "compoñente incorporado"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2322
+#: ../src/orca/script_utilities.py:2323
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -7712,7 +7714,7 @@ msgstr "Cela %s"
 #. too wide for a spreadsheet cell.  This string will be
 #. spoken if such a cell is encountered.
 #.
-#: ../src/orca/scripts/apps/soffice/speech_generator.py:341
+#: ../src/orca/scripts/apps/soffice/speech_generator.py:355
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
