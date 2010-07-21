@@ -39,21 +39,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Home Image Bugzilla'",
-     "     VISIBLE:  'Home Image Bugzilla', cursor=1",
-     "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
+    ["BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
+     "     VISIBLE:  'Home Image Bugzilla New bug', cursor=1",
+     "BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
+     "     VISIBLE:  'Home Image Bugzilla New bug', cursor=1",
+     "SPEECH OUTPUT: 'Home link Image Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'",
+     "SPEECH OUTPUT: Home link image'"]))
 
 ########################################################################
 # Down Arrow.
 #
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down",
-    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
-     "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
-     "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
-
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
@@ -1163,17 +1158,13 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
-     "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
-     "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Up",
     ["BRAILLE LINE:  'Home Image Bugzilla'",
      "     VISIBLE:  'Home Image Bugzilla', cursor=1",
-     "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
+     "BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
+     "     VISIBLE:  'Home Image Bugzilla New bug', cursor=1",
+     "SPEECH OUTPUT: 'Home link Image Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'",
+     "SPEECH OUTPUT: 'Home link image Bugzilla'"
+     "SPEECH OUTPUT: Home link image'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

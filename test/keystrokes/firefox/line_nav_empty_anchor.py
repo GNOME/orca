@@ -38,7 +38,9 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'FAQ h1'",
      "     VISIBLE:  'FAQ h1', cursor=1",
-     "SPEECH OUTPUT: 'FAQ '",
+     "BRAILLE LINE:  'FAQ h1'",
+     "     VISIBLE:  'FAQ h1', cursor=1",
+     "SPEECH OUTPUT: 'FAQ ' voice=uppercase",
      "SPEECH OUTPUT: 'heading level 1'"]))
 
 ########################################################################
@@ -73,18 +75,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Q. Why did Orca used to get stuck on this page?'",
+    ["BRAILLE LINE:  'Q. Why did Orca used to get stuck on this page? h2'",
      "     VISIBLE:  'Q. Why did Orca used to get stuc', cursor=1",
      "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page? link ",
-     "'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down",
-    ["BRAILLE LINE:  ' h2'",
-     "     VISIBLE:  ' h2', cursor=1",
-     "SPEECH OUTPUT: '",
+     " ",
      " heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -109,18 +103,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Q. What is the airspeed velocity of an unladen swallow?'",
+    ["BRAILLE LINE:  'Q. What is the airspeed velocity of an unladen swallow? h2'",
      "     VISIBLE:  'Q. What is the airspeed velocity', cursor=1",
      "SPEECH OUTPUT: 'Q. What is the airspeed velocity of an unladen swallow? link ",
-     "'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "Line Down",
-    ["BRAILLE LINE:  ' h2'",
-     "     VISIBLE:  ' h2', cursor=1",
-     "SPEECH OUTPUT: '",
+     " ",
      " heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -249,10 +235,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Q. What is the airspeed velocity of an unladen swallow?'",
+    ["BRAILLE LINE:  'Q. What is the airspeed velocity of an unladen swallow? h2'",
      "     VISIBLE:  'Q. What is the airspeed velocity', cursor=1",
      "SPEECH OUTPUT: 'Q. What is the airspeed velocity of an unladen swallow? link ",
-     "'"]))
+     "",
+     " heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -285,10 +272,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Q. Why did Orca used to get stuck on this page?'",
+    ["BRAILLE LINE:  'Q. Why did Orca used to get stuck on this page? h2'",
      "     VISIBLE:  'Q. Why did Orca used to get stuc', cursor=1",
      "SPEECH OUTPUT: 'Q. Why did Orca used to get stuck on this page? link ",
-     "'"]))
+     " ",
+     " heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

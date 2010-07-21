@@ -34,10 +34,12 @@ sequence.append(WaitForFocus("Test",
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
-    "Top of file", 
+    "Top of file",
     ["BRAILLE LINE:  'This is a normal paragraph.'",
      "     VISIBLE:  'This is a normal paragraph.', cursor=1",
-     "SPEECH OUTPUT: 'This is a normal paragraph."]))
+     "BRAILLE LINE:  'This is a normal paragraph.'",
+     "     VISIBLE:  'This is a normal paragraph.', cursor=1",
+     "SPEECH OUTPUT: 'This is a normal paragraph.'"]))
 
 ########################################################################
 # Press Down Arrow to move line by line to the end.

@@ -198,7 +198,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
+    ["BRAILLE LINE:  'Wrapping to top.'",
+     "     VISIBLE:  'Wrapping to top.', cursor=0",
+     "BRAILLE LINE:  'Enter your Name:  $l text field using default type=text'",
      "     VISIBLE:  ' $l text field using default typ', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'Enter your Name: text'"]))

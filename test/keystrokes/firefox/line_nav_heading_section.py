@@ -38,6 +38,8 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Heading 1. h1'",
      "     VISIBLE:  'Heading 1. h1', cursor=1",
+     "BRAILLE LINE:  'Heading 1. h1'",
+     "     VISIBLE:  'Heading 1. h1', cursor=1",
      "SPEECH OUTPUT: 'Heading 1. heading level 1'"]))
 
 ########################################################################

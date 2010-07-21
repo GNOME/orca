@@ -38,13 +38,21 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'nested-tables Image Campus  .  Classroom  .  Communicate  .  Reports '",
-     "     VISIBLE:  'nested-tables Image Campus  .  C', cursor=1",
-     "SPEECH OUTPUT: 'nested-tables link image Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
+    ["BRAILLE LINE:  'nested-tables Image'",
+     "     VISIBLE:  'nested-tables Image', cursor=1",
+     "SPEECH OUTPUT: 'nested-tables link image'"]))
 
 ########################################################################
 # Down Arrow to the End.
 #
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "0. line Down",
+    ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports '",
+     "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
+     "SPEECH OUTPUT: 'Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
@@ -220,9 +228,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "11. line Up",
-    ["BRAILLE LINE:  'nested-tables Image Campus  .  Classroom  .  Communicate  .  Reports '",
-     "     VISIBLE:  'nested-tables Image Campus  .  C', cursor=1",
-     "SPEECH OUTPUT: 'nested-tables link image Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
+    ["BRAILLE LINE:  'Campus  .  Classroom  .  Communicate  .  Reports '",
+     "     VISIBLE:  'Campus  .  Classroom  .  Communi', cursor=1",
+     "SPEECH OUTPUT: 'Campus link   .   Classroom link   .   Communicate link   .   Reports link  '"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

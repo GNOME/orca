@@ -29,23 +29,25 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down Arrow", 
-    ["BUG? - Not presenting anything for the initial arrow"]))
+    ["BRAILLE LINE:  'Tab Zero Page'",
+     "     VISIBLE:  'Tab Zero Page', cursor=1",
+     "SPEECH OUTPUT: 'Tab Zero scroll pane'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow", 
-    ["BRAILLE LINE:  'This example requires Firefox 3 or later to work with screen readers -- it uses ARIA properties without namespaces, which is now'",
-     "     VISIBLE:  'This example requires Firefox 3 ', cursor=4",
-     "SPEECH OUTPUT: 'This example requires Firefox 3 or later to work with screen readers -- it uses ARIA properties without namespaces, which is now'"]))
+    ["BRAILLE LINE:  'This example requires Firefox 3 or later to work with screen readers -- it uses ARIA properties without'",
+     "     VISIBLE:  'This example requires Firefox 3 ', cursor=1",
+     "SPEECH OUTPUT: 'This example requires Firefox 3 or later to work with screen readers -- it uses ARIA properties without'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow", 
-    ["BRAILLE LINE:  'the correct markup.'",
-     "     VISIBLE:  'the correct markup.', cursor=1",
-     "SPEECH OUTPUT: 'the correct markup.'"]))
+    ["BRAILLE LINE:  'namespaces, which is now the correct markup.'",
+     "     VISIBLE:  'namespaces, which is now the cor', cursor=1",
+     "SPEECH OUTPUT: 'namespaces, which is now the correct markup.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -59,17 +61,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "5. Down Arrow", 
-    ["BRAILLE LINE:  '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'",
+    ["BRAILLE LINE:  '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not'",
      "     VISIBLE:  '• left and right arrows to move ', cursor=1",
-     "SPEECH OUTPUT: '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'"]))
+     "SPEECH OUTPUT: '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Down Arrow", 
-    ["BRAILLE LINE:  'tabs'",
-     "     VISIBLE:  'tabs', cursor=1",
-     "SPEECH OUTPUT: 'tabs'"]))
+    ["BRAILLE LINE:  'cycle around the tabs'",
+     "     VISIBLE:  'cycle around the tabs', cursor=1",
+     "SPEECH OUTPUT: 'cycle around the tabs'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -83,17 +85,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "8. Down Arrow", 
-    ["BRAILLE LINE:  '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'",
+    ["BRAILLE LINE:  '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab'",
      "     VISIBLE:  '• ctrl-shift-pageup / ctrl-shift', cursor=1",
-     "SPEECH OUTPUT: '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'"]))
+     "SPEECH OUTPUT: '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. Down Arrow", 
-    ["BRAILLE LINE:  'as a modifier so as not to conflict with the Firefox tabbing keys\)'",
-     "     VISIBLE:  'as a modifier so as not to confl', cursor=1",
-     "SPEECH OUTPUT: 'as a modifier so as not to conflict with the Firefox tabbing keys\)'"]))
+    ["BRAILLE LINE:  'order \(shift was added as a modifier so as not to conflict with the Firefox tabbing keys\)'",
+     "     VISIBLE:  'order \(shift was added as a modi', cursor=1",
+     "SPEECH OUTPUT: 'order \(shift was added as a modifier so as not to conflict with the Firefox tabbing keys\)'"]))
 
 ########################################################################
 # Up Arrow through the panel text back to the page tab.
@@ -102,9 +104,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
-    ["BRAILLE LINE:  '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'",
+    ["BRAILLE LINE:  '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab'",
      "     VISIBLE:  '• ctrl-shift-pageup / ctrl-shift', cursor=1",
-     "SPEECH OUTPUT: '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab order \(shift was added'"]))
+     "SPEECH OUTPUT: '• ctrl-shift-pageup / ctrl-shift-pagedown is the same as left and right arrows but WILL cycle around the tab'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -118,17 +120,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow", 
-    ["BRAILLE LINE:  'tabs'",
-     "     VISIBLE:  'tabs', cursor=1",
-     "SPEECH OUTPUT: 'tabs'"]))
+    ["BRAILLE LINE:  'cycle around the tabs'",
+     "     VISIBLE:  'cycle around the tabs', cursor=1",
+     "SPEECH OUTPUT: 'cycle around the tabs'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Up Arrow", 
-    ["BRAILLE LINE:  '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'",
+    ["BRAILLE LINE:  '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not'",
      "     VISIBLE:  '• left and right arrows to move ', cursor=1",
-     "SPEECH OUTPUT: '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not cycle around the'"]))
+     "SPEECH OUTPUT: '• left and right arrows to move from tab to tab. Panel is made visible when tab gets focus. Arrow keys do not'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -142,17 +144,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Up Arrow", 
-    ["BRAILLE LINE:  'the correct markup.'",
-     "     VISIBLE:  'the correct markup.', cursor=1",
-     "SPEECH OUTPUT: 'the correct markup.'"]))
+    ["BRAILLE LINE:  'namespaces, which is now the correct markup.'",
+     "     VISIBLE:  'namespaces, which is now the cor', cursor=1",
+     "SPEECH OUTPUT: 'namespaces, which is now the correct markup.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "7. Up Arrow", 
-    ["BRAILLE LINE:  'This example requires Firefox 3 or later to work with screen readers -- it uses ARIA properties without namespaces, which is now'",
+    ["BRAILLE LINE:  'This example requires Firefox 3 or later to work with screen readers -- it uses ARIA properties without'",
      "     VISIBLE:  'This example requires Firefox 3 ', cursor=1",
-     "SPEECH OUTPUT: 'This example requires Firefox 3 or later to work with screen readers -- it uses ARIA properties without namespaces, which is now'"]))
+     "SPEECH OUTPUT: 'This example requires Firefox 3 or later to work with screen readers -- it uses ARIA properties without'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

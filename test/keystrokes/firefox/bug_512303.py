@@ -33,6 +33,8 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Below is a table, with some sample table data'",
      "     VISIBLE:  'Below is a table, with some samp', cursor=1",
+     "BRAILLE LINE:  'Below is a table, with some sample table data'",
+     "     VISIBLE:  'Below is a table, with some samp', cursor=1",
      "SPEECH OUTPUT: 'Below is a table, with some sample table data'"]))
 
 ########################################################################
@@ -52,7 +54,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'col1 col2 col3'",
      "     VISIBLE:  'col1 col2 col3', cursor=1",
-     "SPEECH OUTPUT: 'col1 col2 col3'"]))
+     "SPEECH OUTPUT: 'col1 column header col2 column header col3 column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -119,7 +121,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'col1 col2 col3'",
      "     VISIBLE:  'col1 col2 col3', cursor=1",
-     "SPEECH OUTPUT: 'col1 col2 col3'"]))
+     "SPEECH OUTPUT: 'col1 column header col2 column header col3 column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

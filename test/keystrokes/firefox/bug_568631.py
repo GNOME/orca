@@ -45,7 +45,7 @@ sequence.append(utils.AssertPresentationAction(
 # This assertion isn't even necessary as we actually care about what
 # comes after we press Return.
 #
-for i in range(25):
+for i in range(24):
     sequence.append(KeyComboAction("Tab", 1000))
 
 # Just a little extra wait to let some events get through.
@@ -77,9 +77,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Line Down", 
-    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and powerful assistive'",
+    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and powerful'",
      "     VISIBLE:  'Orca is a free, open source, fle', cursor=1",
-     "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and powerful assistive'"]))
+     "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and powerful'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

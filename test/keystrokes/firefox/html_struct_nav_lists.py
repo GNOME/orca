@@ -37,6 +37,8 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file", 
     ["BRAILLE LINE:  'Welcome to a List of Lists h1'",
      "     VISIBLE:  'Welcome to a List of Lists h1', cursor=1",
+     "BRAILLE LINE:  'Welcome to a List of Lists h1'",
+     "     VISIBLE:  'Welcome to a List of Lists h1', cursor=1",
      "SPEECH OUTPUT: 'Welcome to a List of Lists heading level 1'"]))
 
 ########################################################################
@@ -162,7 +164,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l - should wrap to top", 
-    ["BRAILLE LINE:  '1. remember what the heck we are doing each day'",
+    ["BRAILLE LINE:  'Wrapping to top.'",
+     "     VISIBLE:  'Wrapping to top.', cursor=0",
+     "BRAILLE LINE:  '1. remember what the heck we are doing each day'",
      "     VISIBLE:  '1. remember what the heck we are', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'List with 4 items'",
@@ -175,8 +179,10 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
-    "shift + l - should wrap to bottom", 
-    ["BRAILLE LINE:  '• feeling listless'",
+    "shift + l - should wrap to bottom",
+    ["BRAILLE LINE:  'Wrapping to bottom.'",
+     "     VISIBLE:  'Wrapping to bottom.', cursor=0",
+     "BRAILLE LINE:  '• feeling listless'",
      "     VISIBLE:  '• feeling listless', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'List with 3 items'",

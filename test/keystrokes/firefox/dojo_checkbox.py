@@ -37,9 +37,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb0 checkbox", 
-    ["BRAILLE LINE:  '< > CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)'",
-     "     VISIBLE:  '< > CheckBox cb0: Vanilla (non-d', cursor=1",
-     "SPEECH OUTPUT: 'cb0: Vanilla (non-dojo) checkbox (for comparison purposes) check box not checked'"]))
+    ["BRAILLE LINE:  '<x> CheckBox cb0: Vanilla \(non-dojo\) checkbox \(for comparison purposes\)'",
+     "     VISIBLE:  '<x> CheckBox cb0: Vanilla (non-d', cursor=1",
+     "SPEECH OUTPUT: 'cb0: Vanilla \(non-dojo\) checkbox \(for comparison purposes\) check box checked'"]))
 
 ########################################################################
 # Now, change its state.  
@@ -48,9 +48,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state on cb0 checkbox", 
-    ["BRAILLE LINE:  '<x> CheckBox cb0: Vanilla (non-dojo) checkbox (for comparison purposes)'",
-     "     VISIBLE:  '<x> CheckBox cb0: Vanilla (non-d', cursor=1",
-     "SPEECH OUTPUT: 'checked'"]))
+    ["BRAILLE LINE:  '< > CheckBox cb0: Vanilla \(non-dojo\) checkbox \(for comparison purposes\)'",
+     "     VISIBLE:  '< > CheckBox cb0: Vanilla \(non-d', cursor=1",
+     "SPEECH OUTPUT: 'not checked'"]))
 
 ########################################################################
 # Tab to the cb1 checkbox.  
@@ -59,7 +59,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb1 checkbox", 
-    ["BRAILLE LINE:  '< > CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages attr('value')'",
+    ["BRAILLE LINE:  '< > CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages get\('value'\)'",
      "     VISIBLE:  '< > CheckBox cb1: normal checkbo', cursor=1",
      "SPEECH OUTPUT: 'cb1: normal checkbox, with value=foo, clicking generates console log messages check box not checked'"]))
 
@@ -70,7 +70,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "change state on cb1 checkbox", 
-    ["BRAILLE LINE:  '<x> CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages attr('value')'",
+    ["BRAILLE LINE:  '<x> CheckBox cb1: normal checkbox, with value=foo, clicking generates console log messages get\('value'\)'",
      "     VISIBLE:  '<x> CheckBox cb1: normal checkbo', cursor=1",
      "SPEECH OUTPUT: 'checked'"]))
 
@@ -82,19 +82,30 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb2 checkbox", 
-    ["BRAILLE LINE:  '<x> CheckBox cb2: normal checkbox, with default value, initially turned on. \"onChange\" handler updates: [] attr('value')'",
+    ["BRAILLE LINE:  '<x> CheckBox cb2: normal checkbox, with default value, initially turned on. \"onChange\" handler updates: \[false\] get\('value'\)'",
      "     VISIBLE:  '<x> CheckBox cb2: normal checkbo', cursor=1",
      "SPEECH OUTPUT: 'cb2: normal checkbox, with default value, initially turned on. check box checked'"]))
 
 ########################################################################
-# Tab to the cb5 checkbox.  Note: cb3 and cb4 are disabled.
+# Tab to the cb4 checkbox.  Note: cb3 is disabled.
 #
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
+    "Tab to the cb4 checkbox", 
+    ["BRAILLE LINE:  '<x> CheckBox cb4: readOnly checkbox, turned on'",
+     "     VISIBLE:  '<x> CheckBox cb4: readOnly check', cursor=1",
+     "SPEECH OUTPUT: 'cb4: readOnly checkbox, turned on check box checked'"]))
+
+########################################################################
+# Tab to the cb5 checkbox.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
     "Tab to the cb5 checkbox", 
-    ["BRAILLE LINE:  '< > CheckBox cb5: normal checkbox, with specified value=\"\", clicking generates console log messages attr('value')'",
+    ["BRAILLE LINE:  '< > CheckBox cb5: normal checkbox, with specified value=\"\", clicking generates console log messages get\('value'\)'",
      "     VISIBLE:  '< > CheckBox cb5: normal checkbo', cursor=1",
      "SPEECH OUTPUT: 'cb5: normal checkbox, with specified value=\"\", clicking generates console log messages check box not checked'"]))
 
@@ -117,7 +128,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the cb7 checkbox", 
-    ["BRAILLE LINE:  '< > CheckBox cb7: normal checkbox. disable Button enable Button set value to \"fish\" Button Reset value+checked Button \"onChange\" handler updates: []'",
+    ["BRAILLE LINE:  '< > CheckBox cb7: normal checkbox. disable enable set value to \"fish\" Reset value+checked \"onChange\" handler updates: [false]'",
      "     VISIBLE:  '< > CheckBox cb7: normal checkbo', cursor=1",
      "SPEECH OUTPUT: 'cb7: normal checkbox. check box not checked'"]))
 
@@ -129,7 +140,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '< > CheckBox cb7: normal checkbox. disable Button enable Button set value to \"fish\" Button Reset value+checked Button \"onChange\" handler updates: []'",
+    ["BRAILLE LINE:  '< > CheckBox cb7: normal checkbox. disable enable set value to \"fish\" Reset value+checked \"onChange\" handler updates: [false]'",
      "     VISIBLE:  '< > CheckBox cb7: normal checkbo', cursor=1",
      "SPEECH OUTPUT: 'cb7: normal checkbox. check box not checked'"]))
 

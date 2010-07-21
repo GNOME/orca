@@ -35,9 +35,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "1. Top of file",
-    ["BRAILLE LINE:  'Index Vakbarát Hírportál h1'",
-     "     VISIBLE:  'Index Vakbarát Hírportál h1', cursor=1",
-     "SPEECH OUTPUT: 'Index Vakbarát Hírportál heading level 1'"]))
+    ["BRAILLE LINE:  'Index Vakbarát Hírportál h1 '",
+     "     VISIBLE:  'Index Vakbarát Hírportál h1 ', cursor=1",
+     "SPEECH OUTPUT: 'Index Vakbarát Hírportál heading level 1 ",
+     "'"]))
 
 ########################################################################
 # H to move amongst headings

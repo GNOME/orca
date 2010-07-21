@@ -109,7 +109,7 @@ sequence.append(KeyComboAction("<Alt>Left"))
 sequence.append(WaitForDocLoad())
 sequence.append(PauseAction(3000))
 
-# Hack to ignore a focus event that will temporarily update braillle
+# Hack to ignore a focus event that will temporarily update braille
 #
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Up"))
@@ -122,7 +122,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up to anchors.html", 
-    ["BRAILLE LINE:  '• anchors.html'",
+    ["BUG? - Focus is not leaving the link we were on. Probably one of those recent Gecko/Mozilla regressions. Need to investigate further.",
+     "BRAILLE LINE:  '• anchors.html'",
      "     VISIBLE:  '• anchors.html', cursor=1",
      "SPEECH OUTPUT: '• anchors.html link'"]))
 

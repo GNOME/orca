@@ -35,12 +35,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to the tree",
-    ["BRAILLE LINE:  ' Fruits'",
-     "     VISIBLE:  ' Fruits', cursor=1",
-     "BRAILLE LINE:  ' Fruits'",
-     "     VISIBLE:  ' Fruits', cursor=1",
-     "SPEECH OUTPUT: 'Foods tree'",
-     "SPEECH OUTPUT: 'Fruits expanded tree level 1'"]))
+    ["BUG? - Why the double braille? 4.0 issue??",
+     "BRAILLE LINE:  'Fruits Fruits expanded ListItem'",
+     "     VISIBLE:  'Fruits Fruits expanded ListItem', cursor=1",
+     "SPEECH OUTPUT: 'Foods tree Fruits expanded tree level 1'"]))
 
 ########################################################################
 # Left Arrow to collapse fruits.
@@ -49,10 +47,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow to collapse fruits", 
-    ["BRAILLE LINE:  ' Fruits'",
-     "     VISIBLE:  ' Fruits', cursor=1",
-     "BRAILLE LINE:  ' Fruits'",
-     "     VISIBLE:  ' Fruits', cursor=1",
+    ["BRAILLE LINE:  'Fruits Fruits collapsed ListItem'",
+     "     VISIBLE:  'Fruits Fruits collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################
@@ -63,8 +59,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  ' Fruits'",
-     "     VISIBLE:  ' Fruits', cursor=1",
+    ["BRAILLE LINE:  'Fruits Fruits collapsed ListItem'",
+     "     VISIBLE:  'Fruits Fruits collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'Fruits list item Fruits 1 of 2 collapsed tree level 1'"]))
 
 ########################################################################
@@ -74,10 +70,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Right Arrow to expand fruits", 
-    ["BRAILLE LINE:  ' Fruits'",
-     "     VISIBLE:  ' Fruits', cursor=1",
-     "BRAILLE LINE:  ' Fruits'",
-     "     VISIBLE:  ' Fruits', cursor=1",
+    ["BRAILLE LINE:  'Fruits Fruits expanded ListItem'",
+     "     VISIBLE:  'Fruits Fruits expanded ListItem', cursor=1",
+     "BRAILLE LINE:  'Fruits Fruits expanded ListItem'",
+     "     VISIBLE:  'Fruits Fruits expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'expanded'"]))
 
 ########################################################################
@@ -88,8 +84,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  ' Fruits'",
-     "     VISIBLE:  ' Fruits', cursor=1",
+    ["BRAILLE LINE:  'Fruits Fruits expanded ListItem'",
+     "     VISIBLE:  'Fruits Fruits expanded ListItem', cursor=1",
      "SPEECH OUTPUT: 'Fruits list item Fruits 1 of 2 expanded tree level 1'"]))
 
 ########################################################################

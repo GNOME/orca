@@ -50,8 +50,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Check Now", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Check Now push button",
-    ["BRAILLE LINE:  'Check Now Button Check to see if your order has been shipped.  $l'",
-     "     VISIBLE:  'Check Now Button Check to see if', cursor=1",
+    ["BRAILLE LINE:  'Check Now Button $l'",
+     "     VISIBLE:  'Check Now Button $l', cursor=1",
      "SPEECH OUTPUT: 'Check Now button'"]))
 
 ########################################################################
@@ -63,8 +63,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereamI", 
-    ["BRAILLE LINE:  'Check Now Button Check to see if your order has been shipped.  $l'",
-     "     VISIBLE:  'Check Now Button Check to see if', cursor=1",
+    ["BRAILLE LINE:  'Check Now Button $l'",
+     "     VISIBLE:  'Check Now Button $l', cursor=1",
      "SPEECH OUTPUT: 'Check Now button Check to see if your order has been shipped.'"]))
 
 ########################################################################
@@ -91,11 +91,11 @@ sequence.append(WaitForFocus("Check Now", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Dismiss dialog", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application ARIA Button - " + utils.firefoxFrameNames + " Frame'",
-     "     VISIBLE:  'ARIA Button - [3.a-zA-Z ]+', cursor=1",
-     "BRAILLE LINE:  'Check Now Button Check to see if your order has been shipped.  $l'",
-     "     VISIBLE:  'Check Now Button Check to see if', cursor=1",
+     "     VISIBLE:  'ARIA Button - " + utils.firefoxFrameNames + " Frame', cursor=1",
+     "BRAILLE LINE:  'Check Now Button $l'",
+     "     VISIBLE:  'Check Now Button $l', cursor=1",
      "SPEECH OUTPUT: 'ARIA Button - " + utils.firefoxFrameNames + " frame'",
-     "SPEECH OUTPUT: 'Check Now button text Check to see if your order has been shipped.'"]))
+     "SPEECH OUTPUT: 'Order tracking panel Check Now button'"]))
 
 ########################################################################
 # Close the demo

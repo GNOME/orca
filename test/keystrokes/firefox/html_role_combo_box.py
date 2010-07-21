@@ -59,8 +59,7 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Severity combo box", 
-    ["BUG? - Where should the cursor be? If we're not IN the combo box should it be as is with the label showing or not?",
-     "BRAILLE LINE:  'Severity: Severity normal Combo'",
+    ["BRAILLE LINE:  'Severity: Severity normal Combo'",
      "     VISIBLE:  'Severity: Severity normal Combo', cursor=20",
      "SPEECH OUTPUT: 'Severity normal combo box'"]))
 
@@ -162,9 +161,35 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left out of combo box", 
+    ["BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
+     "SPEECH OUTPUT: 'Resolution: FIXED combo box'"]))
+
+########################################################################
+# Press Down Arrow once to move to the next line.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down",
+    ["BRAILLE LINE:  'Resolution:'",
+     "     VISIBLE:  'Resolution:', cursor=1",
+     "SPEECH OUTPUT: 'Resolution:",
+     "'"]))
+
+########################################################################
+# Press Down Arrow again to move to the next line which contains a
+# combo box.
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "Line Down", 
     ["BRAILLE LINE:  'FIXED Combo'",
      "     VISIBLE:  'FIXED Combo', cursor=1",
-     "SPEECH OUTPUT: 'Resolution: FIXED combo box'"]))
+     "SPEECH OUTPUT: 'Resolution:'",
+     "SPEECH OUTPUT: 'FIXED' voice=uppercase",
+     "SPEECH OUTPUT: 'combo box'"]))
 
 ########################################################################
 # Press Down Arrow once to move to the next line.

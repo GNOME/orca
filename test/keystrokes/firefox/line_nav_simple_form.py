@@ -216,10 +216,7 @@ sequence.append(utils.AssertPresentationAction(
     "6. line Up",
     ["BRAILLE LINE:  '      $l'",
      "     VISIBLE:  '      $l', cursor=1",
-     "BRAILLE LINE:  '      $l'",
-     "     VISIBLE:  '      $l', cursor=1",
-     "SPEECH OUTPUT: 'Tell me a little more about yourself: text'",
-     "SPEECH OUTPUT: '     '"]))
+     "SPEECH OUTPUT: 'Tell me a little more about yourself: text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

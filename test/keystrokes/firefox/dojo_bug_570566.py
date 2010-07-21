@@ -33,15 +33,9 @@ sequence.append(PauseAction(10000))
 
 ########################################################################
 # Give focus to the toolbar. The buttons may vary based on what's in
-# the clipboard, so we won't have an assertion here. The Tab and Shift
-# Tab is to force the page to finish loading. It sometimes seems to 
-# stall.
+# the clipboard, so we won't have an assertion here. The Tabbing is
+# to force the page to finish loading. It sometimes seems to stall.
 #
-sequence.append(KeyComboAction("Tab"))
-sequence.append(PauseAction(5000))
-sequence.append(KeyComboAction("<Shift>Tab"))
-sequence.append(PauseAction(5000))
-sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_PUSH_BUTTON))
@@ -55,26 +49,29 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(PauseAction(2000))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
+    ["BUG? - We say the text is selected here, but it's not. Firefox is lying to us.",
+     "BRAILLE LINE:  'input before editor1 $l'",
+     "     VISIBLE:  'input before editor1 $l', cursor=0",
+     "SPEECH OUTPUT: 'input before editor1'",
+     "SPEECH OUTPUT: 'selected'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Up"))
+sequence.append(PauseAction(2000))
+sequence.append(utils.AssertPresentationAction(
+    "2. Up Arrow", 
     ["BRAILLE LINE:  'Created from div h2'",
      "     VISIBLE:  'Created from div h2', cursor=1",
      "SPEECH OUTPUT: 'Created from div heading level 2'"]))
-
-#sequence.append(utils.StartRecordingAction())
-#sequence.append(KeyComboAction("Up"))
-#sequence.append(PauseAction(2000))
-#sequence.append(utils.AssertPresentationAction(
-#    "2. Up Arrow", 
-#    ["BRAILLE LINE:  'Created from div h2'",
-#     "     VISIBLE:  'Created from div h2', cursor=1",
-#     "SPEECH OUTPUT: 'Created from div heading level 2'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow", 
-    ["BRAILLE LINE:  ' '",
-     "     VISIBLE:  ' ', cursor=1",
-     "SPEECH OUTPUT: ' '"]))
+    ["BUG? - The speech output sucks here.",
+     "BRAILLE LINE:  ' $l'",
+     "     VISIBLE:  ' $l', cursor=1",
+     "SPEECH OUTPUT: 'javascript:parent.dijit.byId(\"editor0\")._iframeSrc text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -106,7 +103,7 @@ sequence.append(utils.AssertPresentationAction(
     "7. Up Arrow", 
     ["BUG? - The braille is not ideal, nor does it jive with the speech.",
      "BRAILLE LINE:  '<x> CheckBox<x> CheckBox<x> CheckBox<x> CheckBox<x> CheckBox'",
-     "     VISIBLE:  '', cursor=1",
+     "     VISIBLE:  'CheckBox<x> CheckBox<x> CheckBox', cursor=1",
      "SPEECH OUTPUT: 'blank'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -115,7 +112,7 @@ sequence.append(utils.AssertPresentationAction(
     "8. Up Arrow", 
     ["BRAILLE LINE:  'Focus:<x> CheckBox Value:<x> CheckBox Change:<x> CheckBox Blur:<x> CheckBox Disabled:<x> CheckBox'",
      "     VISIBLE:  'Focus:<x> CheckBox Value:<x> Che', cursor=1",
-     "SPEECH OUTPUT: 'Focus: check box checked grayed  Value: check box checked grayed  Change: check box checked grayed  Blur: check box checked grayed  Disabled: check box checked grayed  ",
+     "SPEECH OUTPUT: 'Focus: check box checked grayed  Value: check box checked grayed  Change: check box checked grayed  Blur: check box checked grayed  Disabled: check box checked grayed ",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())

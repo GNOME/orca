@@ -39,6 +39,8 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file", 
     ["BRAILLE LINE:  'On weaponry:'",
      "     VISIBLE:  'On weaponry:', cursor=1",
+     "BRAILLE LINE:  'On weaponry:'",
+     "     VISIBLE:  'On weaponry:', cursor=1",
      "SPEECH OUTPUT: 'On weaponry:'"]))
 
 ########################################################################
@@ -86,7 +88,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("q"))
 sequence.append(utils.AssertPresentationAction(
     "q wrap to top", 
-    ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'",
+    ["BRAILLE LINE:  'Wrapping to top.'",
+     "     VISIBLE:  'Wrapping to top.', cursor=0",
+     "BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and'"]))
@@ -100,7 +104,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>q"))
 sequence.append(utils.AssertPresentationAction(
     "Shift+q wrap to bottom", 
-    ["BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'",
+    ["BRAILLE LINE:  'Wrapping to bottom.'",
+     "     VISIBLE:  'Wrapping to bottom.', cursor=0",
+     "BRAILLE LINE:  'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'",
      "     VISIBLE:  'Hm! She is made of harder stuff!', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'Hm! She is made of harder stuff! Cardinal Fang! Fetch the COMFY CHAIR!'"]))

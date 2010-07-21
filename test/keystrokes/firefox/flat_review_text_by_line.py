@@ -35,8 +35,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8", 1000))
 sequence.append(utils.AssertPresentationAction(
     "flat review current line", 
-    ["BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=1",
+    ["BRAILLE LINE:  'On weaponry:'",
+     "     VISIBLE:  'On weaponry:', cursor=1",
+     "BRAILLE LINE:  'On weaponry: $l'",
+     "     VISIBLE:  'On weaponry: $l', cursor=12",
      "SPEECH OUTPUT: 'On weaponry:'"]))
 
 ########################################################################

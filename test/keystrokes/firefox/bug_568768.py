@@ -32,9 +32,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and powerful assistive'",
+    ["BRAILLE LINE:  'Orca is a free, open source, flexible, extensible, and powerful'",
      "     VISIBLE:  'Orca is a free, open source, fle', cursor=1",
-     "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and powerful assistive'"]))
+     "SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and powerful'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

@@ -30,15 +30,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Navigate to the treegrid",
     ["KNOWN ISSUE - This output and the output of all the assertions that follow are merely designed to illustrate the current state of affairs, namely that Orca's caret navigation is not stomping on the built-in navigation of this treegrid, and to ensure that subsequent changes to Orca do not change that. This output should NOT be seen as what we think is an ideal presentation of a treegrid. See http://bugzilla.gnome.org/show_bug.cgi?id=570556 for more information.",
-#     "BRAILLE LINE:  'Selectable Grid with Text with 9 Rows Selectable Grid with Text with 9 Rows TreeTable'",
-#     "     VISIBLE:  'Selectable Grid with Text with 9', cursor=1",
-     "BRAILLE LINE:  'Title Title TreeTable'",
-     "     VISIBLE:  'Title Title TreeTable', cursor=1",
-     "BRAILLE LINE:  '+A Question of Love'",
-     "     VISIBLE:  '+A Question of Love', cursor=0",
-#     "SPEECH OUTPUT: 'Selectable Grid with Text with 9 Rows tree table'",
-     "SPEECH OUTPUT: 'Title tree table'",
-     "SPEECH OUTPUT: '+A Question of Love'"]))
+     "BRAILLE LINE:  '+A Question of Love+A Question of Love collapsed +A Question of Love'",
+     "     VISIBLE:  '+A Question of Love collapsed +A', cursor=1",
+     "SPEECH OUTPUT: 'Title tree table +A Question of Love'"]))
 
 ########################################################################
 # Down Arrow to the next two items.
@@ -74,8 +68,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
-    ["BRAILLE LINE:  '+A Question of Love'",
-     "     VISIBLE:  '+A Question of Love', cursor=0",
+    ["BUG? - What's with the repetition in the braille? Might be a 4.0 issue?",
+     "BRAILLE LINE:  '+A Question of Love+A Question of Love collapsed +A Question of Love'",
+     "     VISIBLE:  '+A Question of Love collapsed +A', cursor=1",
      "SPEECH OUTPUT: '+A Question of Love'"]))
 
 ########################################################################
@@ -86,9 +81,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  '+A Question of Love'",
-     "     VISIBLE:  '+A Question of Love', cursor=0",
-     "SPEECH OUTPUT: '+A Question of Love'"]))
+    ["BRAILLE LINE:  '+A Question of Love+A Question of Love collapsed +A Question of Love'",
+     "     VISIBLE:  '+A Question of Love collapsed +A', cursor=1",
+     "SPEECH OUTPUT: 'list item +A Question of Love'"]))
 
 ########################################################################
 # Space to expand the current item.
@@ -97,10 +92,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "Space to expand the current item", 
-    ["BRAILLE LINE:  '+A Question of Love'",
-     "     VISIBLE:  '+A Question of Love', cursor=0",
-     "BRAILLE LINE:  '-A Question of Love'",
-     "     VISIBLE:  '-A Question of Love', cursor=0"]))
+    ["BUG? - Why aren't we also speaking this?",
+     "BRAILLE LINE:  '-A Question of Love-A Question of Love expanded -A Question of Love'",
+     "     VISIBLE:  '-A Question of Love expanded -A ', cursor=1",
+     "BRAILLE LINE:  '-A Question of Love-A Question of Love expanded -A Question of Love'",
+     "     VISIBLE:  '-A Question of Love expanded -A ', cursor=1"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -110,9 +106,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  '-A Question of Love'",
-     "     VISIBLE:  '-A Question of Love', cursor=0",
-     "SPEECH OUTPUT: '-A Question of Love'"]))
+    ["BRAILLE LINE:  '-A Question of Love-A Question of Love expanded -A Question of Love'",
+     "     VISIBLE:  '-A Question of Love expanded -A ', cursor=1",
+     "SPEECH OUTPUT: 'list item -A Question of Love'"]))
 
 ########################################################################
 # Down Arrow to the child item.
@@ -170,8 +166,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow back to parent", 
-    ["BRAILLE LINE:  '-A Question of Love'",
-     "     VISIBLE:  '-A Question of Love', cursor=0",
+    ["BRAILLE LINE:  '-A Question of Love-A Question of Love expanded -A Question of Love'",
+     "     VISIBLE:  '-A Question of Love expanded -A ', cursor=1",
      "SPEECH OUTPUT: '-A Question of Love'"]))
 
 ########################################################################

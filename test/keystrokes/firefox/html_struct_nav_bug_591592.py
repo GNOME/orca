@@ -63,7 +63,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("h"))
 sequence.append(utils.AssertPresentationAction(
     "3. h",
-    ["BRAILLE LINE:  'This is a test. h1'",
+    ["BRAILLE LINE:  'Wrapping to top.'",
+     "     VISIBLE:  'Wrapping to top.', cursor=0",
+     "BRAILLE LINE:  'This is a test. h1'",
      "     VISIBLE:  'This is a test. h1', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'This is a test. heading level 1'"]))

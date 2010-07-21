@@ -33,6 +33,8 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Here is a result:'",
      "     VISIBLE:  'Here is a result:', cursor=1",
+     "BRAILLE LINE:  'Here is a result:'",
+     "     VISIBLE:  'Here is a result:', cursor=1",
      "SPEECH OUTPUT: 'Here is a result:'"]))
 
 ########################################################################
@@ -53,15 +55,23 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Press Return to active the link",
-    ["BRAILLE LINE:  'Loading.  Please wait.'",
-     "     VISIBLE:  'Loading.  Please wait.', cursor=0",
+    ["BUG? - With Firefox 4 it seems we don't say 'Loading. Please wait.' Perhaps we're missing an event?? Also, we're presenting the first line multiple times.",
+#    "BRAILLE LINE:  'Loading.  Please wait.'",
+#    "     VISIBLE:  'Loading.  Please wait.', cursor=0",
+     "BRAILLE LINE:  'Here are some of our local test files:'",
+     "     VISIBLE:  'Here are some of our local test ', cursor=1",
+     "BRAILLE LINE:  'Links to test files'",
+     "     VISIBLE:  'Links to test files', cursor=0",
+     "BRAILLE LINE:  'Here are some of our local test files:'",
+     "     VISIBLE:  'Here are some of our local test ', cursor=1",
      "BRAILLE LINE:  'Finished loading Links to test files.'",
      "     VISIBLE:  'Finished loading Links to test f', cursor=0",
      "BRAILLE LINE:  'Here are some of our local test files:'",
      "     VISIBLE:  'Here are some of our local test ', cursor=1",
-     "BRAILLE LINE:  'Here are some of our local test files:'",
-     "     VISIBLE:  'Here are some of our local test ', cursor=1",
-     "SPEECH OUTPUT: 'Loading.  Please wait.'",
+#    "SPEECH OUTPUT: 'Loading.  Please wait.'",
+     "SPEECH OUTPUT: 'Here are some of our local test files:'",
+     "SPEECH OUTPUT: 'Links to test files page'",
+     "SPEECH OUTPUT: 'Here are some of our local test files:'",
      "SPEECH OUTPUT: 'Finished loading Links to test files.'",
      "SPEECH OUTPUT: 'Here are some of our local test files:'",
      "SPEECH OUTPUT: '• anchors.html link'",
@@ -79,9 +89,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: '• slash-test.html link'",
      "SPEECH OUTPUT: '• status-bar.html link'",
      "SPEECH OUTPUT: '• tables.html link'",
-     "SPEECH OUTPUT: '• textattributes.html link'",
-     "SPEECH OUTPUT: 'Here are some of our local test files:'",
-     "SPEECH OUTPUT: '100 percent'"]))
+     "SPEECH OUTPUT: '• textattributes.html link'"]))
 
 ########################################################################
 # Close the demo

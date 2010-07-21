@@ -50,7 +50,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'col 1 col 2 col 3'",
      "     VISIBLE:  'col 1 col 2 col 3', cursor=1",
      "SPEECH OUTPUT: 'Table with 2 rows 3 columns'",
-     "SPEECH OUTPUT: 'col 1'"]))
+     "SPEECH OUTPUT: 'col 1 column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("t"))
@@ -64,12 +64,14 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("t"))
 sequence.append(utils.AssertPresentationAction(
-    "3. t", 
-    ["BRAILLE LINE:  'col 1 col 2 col 3'",
+    "3. t",
+    ["BRAILLE LINE:  'Wrapping to top.'",
+     "     VISIBLE:  'Wrapping to top.', cursor=0",
+     "BRAILLE LINE:  'col 1 col 2 col 3'",
      "     VISIBLE:  'col 1 col 2 col 3', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'Table with 2 rows 3 columns'",
-     "SPEECH OUTPUT: 'col 1'"]))
+     "SPEECH OUTPUT: 'col 1 column header'"]))
 
 ########################################################################
 # Press Shift+t to move amongst the tables
@@ -78,7 +80,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>t"))
 sequence.append(utils.AssertPresentationAction(
     "1. shift+t", 
-    ["BRAILLE LINE:  '1 2 4'",
+    ["BRAILLE LINE:  'Wrapping to bottom.'",
+     "     VISIBLE:  'Wrapping to bottom.', cursor=0",
+     "BRAILLE LINE:  '1 2 4'",
      "     VISIBLE:  '1 2 4', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'Table with 2 rows 3 columns'",
@@ -91,13 +95,15 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'col 1 col 2 col 3'",
      "     VISIBLE:  'col 1 col 2 col 3', cursor=1",
      "SPEECH OUTPUT: 'Table with 2 rows 3 columns'",
-     "SPEECH OUTPUT: 'col 1'"]))
+     "SPEECH OUTPUT: 'col 1 column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>t"))
 sequence.append(utils.AssertPresentationAction(
-    "3. shift+t", 
-    ["BRAILLE LINE:  '1 2 4'",
+    "3. shift+t",
+    ["BRAILLE LINE:  'Wrapping to bottom.'",
+     "     VISIBLE:  'Wrapping to bottom.', cursor=0", 
+     "BRAILLE LINE:  '1 2 4'",
      "     VISIBLE:  '1 2 4', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'Table with 2 rows 3 columns'",
