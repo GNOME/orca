@@ -48,12 +48,19 @@ sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "spell current word", 
     ["BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=1",
+     "     VISIBLE:  'On weaponry: $l', cursor=12",
      "BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=1",
-     "SPEECH OUTPUT: 'On'",
-     "SPEECH OUTPUT: 'O'",
-     "SPEECH OUTPUT: 'n'"]))
+     "     VISIBLE:  'On weaponry: $l', cursor=12",
+     "SPEECH OUTPUT: 'Weaponry:'",
+     "SPEECH OUTPUT: 'w'",
+     "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: 'p'",
+     "SPEECH OUTPUT: 'o'",
+     "SPEECH OUTPUT: 'n'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 'y'",
+     "SPEECH OUTPUT: ':'"]))
 
 ########################################################################
 # Spell the current word phonetically with KP_5 3x.
@@ -65,16 +72,27 @@ sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "spell current word phonetically", 
     ["BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=1",
+     "     VISIBLE:  'On weaponry: $l', cursor=12",
      "BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=1",
+     "     VISIBLE:  'On weaponry: $l', cursor=12",
      "BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=1",
-     "SPEECH OUTPUT: 'On'",
-     "SPEECH OUTPUT: 'O'",
+     "     VISIBLE:  'On weaponry: $l', cursor=12",
+     "SPEECH OUTPUT: 'Weaponry:'",
+     "SPEECH OUTPUT: 'w'",
+     "SPEECH OUTPUT: 'e'",
+     "SPEECH OUTPUT: 'a'",
+     "SPEECH OUTPUT: 'p'",
+     "SPEECH OUTPUT: 'o'",
      "SPEECH OUTPUT: 'n'",
+     "SPEECH OUTPUT: 'r'",
+     "SPEECH OUTPUT: 'y'",
+     "SPEECH OUTPUT: 'whiskey'",
+     "SPEECH OUTPUT: 'echo'",
+     "SPEECH OUTPUT: 'alpha'",
+     "SPEECH OUTPUT: 'papa'",
      "SPEECH OUTPUT: 'oscar'",
-     "SPEECH OUTPUT: 'november'"]))
+     "SPEECH OUTPUT: 'november'",
+     "SPEECH OUTPUT: 'yankee'"]))
 
 ########################################################################
 # Read forward word by word with KP_6.
@@ -83,17 +101,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next word", 
-    ["BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=4",
-     "SPEECH OUTPUT: 'weaponry:'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("KP_6"))
-sequence.append(utils.AssertPresentationAction(
-    "flat review next word", 
     ["BRAILLE LINE:  'NOBODY expects the Spanish Inquisition! Our chief weapon is surprise. Surprise and fear. Fear and surprise. Our two weapons are fear and  $l'",
      "     VISIBLE:  'NOBODY expects the Spanish Inqui', cursor=1",
-     "SPEECH OUTPUT: 'NOBODY'"]))
+     "SPEECH OUTPUT: 'NOBODY' voice=uppercase"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_6"))

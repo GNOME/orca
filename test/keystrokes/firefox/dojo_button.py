@@ -33,8 +33,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the <button> button", 
-    ["BRAILLE LINE:  '<button> <input type='button'> Create  View  Createsave options Menu'",
-     "     VISIBLE:  '<button> <input type='button'> C', cursor=1",
+    ["BRAILLE LINE:  '<button> Button <input type='button'> Button Create  View  Create Button save options Menu'",
+     "     VISIBLE:  '<button> Button <input type='but', cursor=1",
      "SPEECH OUTPUT: '<button> button'"]))
 
 ########################################################################
@@ -45,9 +45,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on <button>", 
-    ["BRAILLE LINE:  '<button> <input type='button'> Create  View  Createsave options Menu'",
-     "     VISIBLE:  '<button> <input type='button'> C', cursor=1",
+    ["BRAILLE LINE:  '<button> Button <input type='button'> Button Create  View  Create Button save options Menu'",
+     "     VISIBLE:  '<button> Button <input type='but', cursor=1",
      "SPEECH OUTPUT: '<button> button'"]))
+
 
 ########################################################################
 # Tab to <input type='button'>  
@@ -56,9 +57,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to <input type='button'>",
-    ["BUG? - Missing a space between 'Create' and 'save'",
-     "BRAILLE LINE:  '<button> <input type='button'> Create  View  Createsave options Menu'",
-     "     VISIBLE:  '<input type='button'> Create  Vi', cursor=1",
+    ["BRAILLE LINE:  '<button> Button <input type='button'> Button Create  View  Create Button save options Menu'",
+     "     VISIBLE:  '<input type='button'> Button Cre', cursor=1",
      "SPEECH OUTPUT: '<input type='button'> button'"]))
 
 ########################################################################
@@ -69,8 +69,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on <input type='button'>", 
-    ["BRAILLE LINE:  '<button> <input type='button'> Create  View  Createsave options Menu'",
-     "     VISIBLE:  '<input type='button'> Create  Vi', cursor=1",
+    ["BRAILLE LINE:  '<button> Button <input type='button'> Button Create  View  Create Button save options Menu'",
+     "     VISIBLE:  '<input type='button'> Button Cre', cursor=1",
      "SPEECH OUTPUT: '<input type='button'> button'"]))
 
 ########################################################################
@@ -82,7 +82,7 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Tab to Create",
     ["BRAILLE LINE:  '<button> <input type='button'> Create  View  Createsave options Menu'",
-     "     VISIBLE:  'Create  View  Createsave options', cursor=1",
+     "     VISIBLE:  'Create  View  Create Button save', cursor=1",
      "SPEECH OUTPUT: 'Create button'",
      "SPEECH OUTPUT: 'tooltip on button'"]))
 
@@ -95,7 +95,7 @@ sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I on Create", 
     ["BRAILLE LINE:  '<button> <input type='button'> Create  View  Createsave options Menu'",
-     "     VISIBLE:  'Create  View  Createsave options', cursor=1",
+     "     VISIBLE:  'Create  View  Create Button save', cursor=1",
      "SPEECH OUTPUT: 'Create button'"]))
 
 # WDW - Tabbing to the Create button pops up a tooltip.  Should we present
@@ -164,8 +164,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Go to Edit!", 
-    ["BRAILLE LINE:  'Edit! Color Savesave options Menu Disabled '",
-     "     VISIBLE:  'Edit! Color Savesave options Men', cursor=1",
+    ["BRAILLE LINE:  'Edit! Color Save Button save options Menu Disabled '",
+     "     VISIBLE:  'Edit! Color Save Button save opt', cursor=1",
      "SPEECH OUTPUT: 'Edit! menu'"]))
 
 ########################################################################
@@ -308,8 +308,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the Color button", 
-    ["BRAILLE LINE:  'Color Savesave options Menu Disabled '",
-     "     VISIBLE:  'Color Savesave options Menu Disa', cursor=1",
+    ["BRAILLE LINE:  'Color Save Button save options Menu Disabled '",
+     "     VISIBLE:  'Color Save Button save options M', cursor=1",
      "SPEECH OUTPUT: 'Color menu'"]))
 
 #sequence.append(utils.StartRecordingAction())

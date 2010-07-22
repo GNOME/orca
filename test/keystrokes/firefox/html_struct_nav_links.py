@@ -84,7 +84,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
 sequence.append(utils.AssertPresentationAction(
     "shift + u wrapping to bottom",
-    ["BRAILLE LINE:  '• textattributes.html'",
+    ["BRAILLE LINE:  'Wrapping to bottom.'",
+     "     VISIBLE:  'Wrapping to bottom.', cursor=0",
+     "BRAILLE LINE:  '• textattributes.html'",
      "     VISIBLE:  '• textattributes.html', cursor=3",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'textattributes.html link'"])) 
@@ -119,7 +121,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
 sequence.append(utils.AssertPresentationAction(
     "u to textattributes.html link", 
-    ["BRAILLE LINE:  '• textattributes.html'",
+    ["KNOWN ISSUE - Due to the Gecko bug/regression with focus, we wind up at the top on anchors",
+     "BRAILLE LINE:  '• textattributes.html'",
      "     VISIBLE:  '• textattributes.html', cursor=3",
      "SPEECH OUTPUT: 'textattributes.html link'"])) 
 
@@ -129,8 +132,9 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
 sequence.append(utils.AssertPresentationAction(
-    "u to anchors.html link", 
-    ["BRAILLE LINE:  '• anchors.html'",
+    "u to anchors.html link",
+    ["KNOWN ISSUE - Due to the Gecko bug/regression with focus, this result is wrong",
+     "BRAILLE LINE:  '• anchors.html'",
      "     VISIBLE:  '• anchors.html', cursor=3",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'anchors.html link'"]))
@@ -154,7 +158,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("v"))
 sequence.append(utils.AssertPresentationAction(
     "v to tables.html link", 
-    ["BRAILLE LINE:  '• tables.html'",
+    ["BUG? - This is failing. Possibly due to the Gecko bug/regression with focus.",
+     "BRAILLE LINE:  '• tables.html'",
      "     VISIBLE:  '• tables.html', cursor=3",
      "SPEECH OUTPUT: 'tables.html link'"]))
 
@@ -164,8 +169,9 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("v"))
 sequence.append(utils.AssertPresentationAction(
-    "v to blockquotes.html link", 
-    ["BRAILLE LINE:  '• anchors.html'",
+    "v to blockquotes.html link",
+    ["BUG? - This is failing. Possibly due to the Gecko bug/regression with focus.",
+     "BRAILLE LINE:  '• anchors.html'",
      "     VISIBLE:  '• anchors.html', cursor=3",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'anchors.html link'"]))
@@ -176,8 +182,10 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>v"))
 sequence.append(utils.AssertPresentationAction(
-    "shift + v to tables.html link", 
-    ["BRAILLE LINE:  '• tables.html'",
+    "shift + v to tables.html link",
+    ["BRAILLE LINE:  'Wrapping to bottom.'",
+     "     VISIBLE:  'Wrapping to bottom.', cursor=0",
+     "BRAILLE LINE:  '• tables.html'",
      "     VISIBLE:  '• tables.html', cursor=3",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'tables.html link'"]))

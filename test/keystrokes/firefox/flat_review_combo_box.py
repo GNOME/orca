@@ -57,9 +57,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8", 1000))
 sequence.append(utils.AssertPresentationAction(
     "flat review current line", 
-    ["BRAILLE LINE:  'Severity Severity :  normal   $l'",
-     "     VISIBLE:  'Severity Severity :  normal   $l', cursor=10",
-     "SPEECH OUTPUT: 'Severity Severity :  normal  '"]))
+    ["BRAILLE LINE:  'Severity Severity :  normal $l'",
+     "     VISIBLE:  'Severity Severity :  normal $l', cursor=10",
+     "SPEECH OUTPUT: 'Severity Severity :  normal'"]))
 
 ########################################################################
 # Read the rest of the document with KP_9.
@@ -68,9 +68,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'Priority :  Normal   $l'",
-     "     VISIBLE:  'Priority :  Normal   $l', cursor=1",
-     "SPEECH OUTPUT: 'Priority :  Normal  '"]))
+    ["BRAILLE LINE:  'Priority :  Normal $l'",
+     "     VISIBLE:  'Priority :  Normal $l', cursor=1",
+     "SPEECH OUTPUT: 'Priority :  Normal'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
@@ -85,9 +85,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'FIXED   $l'",
-     "     VISIBLE:  'FIXED   $l', cursor=1",
-     "SPEECH OUTPUT: 'FIXED  '"]))
+    ["BRAILLE LINE:  'FIXED $l'",
+     "     VISIBLE:  'FIXED $l', cursor=1",
+     "SPEECH OUTPUT: 'FIXED' voice=uppercase"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))

@@ -47,9 +47,7 @@ sequence.append(KeyComboAction("KP_Divide"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Route the pointer to Communications",
-    ["BUG? - It would be nice to filter out multiple events, but until we figure out the magical way to identify what not to report, we report the resulting new children. All of them.",
-     "SPEECH OUTPUT: 'New item has been added PIM link'",
-     "SPEECH OUTPUT: 'New item has been added section'",
+    ["BUG? - This should also be brailled.",
      "SPEECH OUTPUT: 'New item has been added section'"]))
 
 ########################################################################

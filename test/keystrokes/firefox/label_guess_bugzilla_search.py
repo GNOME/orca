@@ -41,9 +41,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Home Image Bugzilla'",
-     "     VISIBLE:  'Home Image Bugzilla', cursor=1",
-     "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
+    ["BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
+     "     VISIBLE:  'Home Image Bugzilla New bug · Br', cursor=1",
+     "BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
+     "     VISIBLE:  'Home Image Bugzilla New bug · Br', cursor=1",
+     "SPEECH OUTPUT: 'Home link image'"]))
 
 ########################################################################
 # Press Insert+Tab to move from form field to form field.
@@ -411,9 +413,10 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l and Now $l'",
+    ["BUG? - Looks like we are no longer guessing the correct thing.",
+     "BRAILLE LINE:  ' $l and Now $l'",
      "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "SPEECH OUTPUT: 'Only bugs changed between: text'"]))
+     "SPEECH OUTPUT: 'Email and Numbering text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -432,10 +435,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BUG? - The VISIBLE line positions the cursor so the first character in the list is showing. Since the list is focused, should the full list be displayed instead?",
-     "BRAILLE LINE:  'where one or more of the following changed: [Bug creation] List'",
-     "     VISIBLE:  'more of the following changed: [', cursor=32",
-     "SPEECH OUTPUT: 'where one or more of the following changed: [Bug creation] multi-select List with 26 items'"]))
+    ["BRAILLE LINE:  'Email and Numbering [Bug creation] List'",
+     "     VISIBLE:  'Email and Numbering [Bug creatio', cursor=21",
+     "SPEECH OUTPUT: 'Email and Numbering [Bug creation] multi-select List with 26 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -443,10 +445,11 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 sequence.append(utils.AssertPresentationAction(
-    "Next form field", 
-    ["BRAILLE LINE:  ' $l'",
+    "Next form field",
+    ["BUG? - Looks like we are no longer guessing the correct thing.",
+     "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'and the new value was: text'"]))
+     "SPEECH OUTPUT: 'Email and Numbering text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

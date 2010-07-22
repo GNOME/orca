@@ -53,7 +53,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Where Am I on New bug link", 
-    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In william.walker@sun.com | Log Out'",
+    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help'",
      "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
      "SPEECH OUTPUT: 'http link New bug different site'"]))
 

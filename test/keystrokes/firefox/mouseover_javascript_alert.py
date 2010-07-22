@@ -42,8 +42,11 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow to Image",
-    ["BRAILLE LINE:  'Orca Logo Image'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application MouseOvers - " + utils.firefoxFrameNames + " Frame'",
+     "     VISIBLE:  'MouseOvers - " + utils.firefoxFrameNames + " Fra(me|)', cursor=1",
+     "BRAILLE LINE:  'Orca Logo Image'",
      "     VISIBLE:  'Orca Logo Image', cursor=1",
+     "SPEECH OUTPUT: 'MouseOvers - " + utils.firefoxFrameNames + " frame'",
      "SPEECH OUTPUT: 'Orca Logo image'"]))
 
 ########################################################################

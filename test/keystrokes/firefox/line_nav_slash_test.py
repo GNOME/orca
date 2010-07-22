@@ -103,16 +103,18 @@ sequence.append(utils.AssertPresentationAction(
     "8. Line Down",
     ["BRAILLE LINE:  'What is your favorite poison?'",
      "     VISIBLE:  'What is your favorite poison?', cursor=1",
-     "SPEECH OUTPUT: 'What is your favorite poison? ",
+     "SPEECH OUTPUT: 'What is your favorite poison?",
      " panel'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "9. Line Down",
-    ["BRAILLE LINE:  '& y RadioButton Some polls'",
+    ["KNOWN ISSUE - Sometimes we also say 'Recent Tags'. Might be a timing issue.",
+     "BRAILLE LINE:  '& y RadioButton Some polls'",
      "     VISIBLE:  '& y RadioButton Some polls', cursor=1",
-     "SPEECH OUTPUT: 'Some polls not selected radio button'"]))
+     "SPEECH OUTPUT: 'Some polls not selected radio button'",
+     "SPEECH OUTPUT: 'Recent Tags'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -139,7 +141,7 @@ sequence.append(utils.AssertPresentationAction(
     "2. Line Up",
     ["BRAILLE LINE:  'What is your favorite poison?'",
      "     VISIBLE:  'What is your favorite poison?', cursor=1",
-     "SPEECH OUTPUT: 'What is your favorite poison? ",
+     "SPEECH OUTPUT: 'What is your favorite poison?",
      " panel'"]))
 
 sequence.append(utils.StartRecordingAction())

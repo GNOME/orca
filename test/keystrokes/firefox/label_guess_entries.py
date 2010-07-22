@@ -192,10 +192,10 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  ' $l $l $l'",
+    ["BUG? - We're now only guessing the previous line and not the entire field.",
+     "BRAILLE LINE:  ' $l $l $l'",
      "     VISIBLE:  ' $l $l $l', cursor=4",
-     "SPEECH OUTPUT: 'Middle",
-     "initial text'"]))
+     "SPEECH OUTPUT: 'initial text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -420,8 +420,8 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Magic disappearing text trick: tab to me and I disappear $l'",
-     "     VISIBLE:  'tab to me and I disappear $l', cursor=26",
+    ["BRAILLE LINE:  'Magic disappearing text trick: $l'",
+     "     VISIBLE:  ' $l', cursor=1",
      "BRAILLE LINE:  'Magic disappearing text trick:  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Magic disappearing text trick: text'"]))
@@ -453,7 +453,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Type something rather amusing here:  $l'",
+    ["BRAILLE LINE:  'Wrapping to top.'",
+     "     VISIBLE:  'Wrapping to top.', cursor=0",
+     "BRAILLE LINE:  'Type something rather amusing here:  $l'",
      "     VISIBLE:  ' $l', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
      "SPEECH OUTPUT: 'Type something rather amusing here: text'"]))

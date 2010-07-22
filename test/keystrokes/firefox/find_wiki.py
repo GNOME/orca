@@ -47,10 +47,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F"))
 sequence.append(utils.AssertPresentationAction(
     "Get into the Find Toolbar", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar  \$l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar  \$l'",
-     "     VISIBLE:  ' $l', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar Find: \$l'",
+     "     VISIBLE:  'Find: $l', cursor=1",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar Find: \$l'",
+     "     VISIBLE:  'Find: $l', cursor=1",
      "SPEECH OUTPUT: 'Find: text '"]))
 
 # We won't use an assert here because different builds of Firefox give
@@ -77,19 +77,19 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "3. Return",
-    ["SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and powerful assistive'"]))
+    ["SPEECH OUTPUT: 'Orca is a free, open source, flexible, extensible, and powerful'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "4. Return",
-    ["SPEECH OUTPUT: 'combinations of speech synthesis, braille, and magnification, Orca'"]))
+    ["SPEECH OUTPUT: 'magnification, Orca helps provide access to applications and'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "5. Return",
-    ["SPEECH OUTPUT: 'AT-SPI \(e.g., the GNOME desktop\). The development of Orca has'"]))
+    ["SPEECH OUTPUT: 'development of Orca has been led by the Accessibility Program link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

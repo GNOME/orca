@@ -49,7 +49,8 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar < > Full Screen CheckItem\(F11\)'",
      "     VISIBLE:  '< > Full Screen CheckItem(F11)', cursor=1",
-     "SPEECH OUTPUT: 'tool bar View menu Full Screen check item not checked F11 10 of 10'"]))
+     "SPEECH OUTPUT: 'tool bar View menu Full Screen check item not checked F11 10 of 10.'",
+     "SPEECH OUTPUT: 'F'"]))
 
 ########################################################################
 # Dismiss the menu by pressing Escape and wait for the location bar

@@ -47,7 +47,10 @@ sequence.append(utils.AssertPresentationAction(
     "1. Line Down",
     ["BRAILLE LINE:  'foo Image h2'",
      "     VISIBLE:  'foo Image h2', cursor=1",
-     "SPEECH OUTPUT: 'foo link image heading level 2'"]))
+     "BRAILLE LINE:  'foo Image h2'",
+     "     VISIBLE:  'foo Image h2', cursor=1",
+     "SPEECH OUTPUT: 'foo link image heading level 2'",
+     "SPEECH OUTPUT: 'foo link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))

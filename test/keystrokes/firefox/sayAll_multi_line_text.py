@@ -47,9 +47,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Add"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Add to do a SayAll",
-    ["SPEECH OUTPUT: 'Table test foo bar foo",
-     "foo bar",
-     "bar Hello heading level 3 • This is a test link  that is not very interesting. • But it looks like link  a real-world example. • And that's link  why this silly test is here. So it's far more interesting link  than it looks. World heading level 3 • The thing is link  we can't copy content. • So we must link  create silly tests. • Oh link  well. At least it's over link .'"]))
+    ["SPEECH OUTPUT: 'Table test foo bar foo foo bar bar Hello heading level 3 • This is a test link  that is not very interesting. • But it looks like link  a real-world example. • And that's link  why this silly test is here. So it's far more interesting link  than it looks. World heading level 3 • The thing is link  we can't copy content. • So we must link  create silly tests. • Oh link  well. At least it's over link .'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
