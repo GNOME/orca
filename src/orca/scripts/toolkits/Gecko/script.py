@@ -2213,7 +2213,7 @@ class Script(default.Script):
             if (not len(string) and role != pyatspi.ROLE_PARAGRAPH) \
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj) \
-               or role == pyatspi.ROLE_LINK:
+               or role in [pyatspi.ROLE_LINK, pyatspi.ROLE_PUSH_BUTTON]:
                 [regions, fRegion] = \
                           self.brailleGenerator.generateBraille(obj)
 
