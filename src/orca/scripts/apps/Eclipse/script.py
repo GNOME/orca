@@ -71,7 +71,7 @@ class Script(default.Script):
         hasSelection = False
         if lastKey in ["Tab", "ISO_Left_Tab"]:
             [text, startOffset, endOffset] = self.utilities.selectedText(obj)
-            hasSelection = startOffset > 0 or endOffset > 0
+            hasSelection = endOffset > 0
 
         if hasSelection:
             self.sayPhrase(obj, startOffset, endOffset)
