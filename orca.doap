@@ -13,37 +13,16 @@
   <category rdf:resource="http://api.gnome.org/doap-extensions#desktop" />
   <maintainer>
     <foaf:Person>
-      <foaf:name>Willie Walker</foaf:name>
-      <foaf:mbox rdf:resource="mailto:william.walker@sun.com" />
-      <gnome:userid>wwalker</gnome:userid>
-    </foaf:Person>
-  </maintainer>
-  <maintainer>
-    <foaf:Person>
-      <foaf:name>Mike Pedersen</foaf:name>
-      <foaf:mbox rdf:resource="mailto:michael.pedersen@sun.com" />
-      <gnome:userid>mpeders</gnome:userid>
-    </foaf:Person>
-  </maintainer>
-  <maintainer>
-    <foaf:Person>
       <foaf:name>Joanmarie Diggs</foaf:name>
-      <foaf:mbox rdf:resource="mailto:joanmarie.diggs@gmail.com" />
+      <foaf:mbox rdf:resource="mailto:joanied@gnome.org" />
       <gnome:userid>joanied</gnome:userid>
     </foaf:Person>
   </maintainer>
   <maintainer>
     <foaf:Person>
-      <foaf:name>Eitan Isaacson</foaf:name>
-      <foaf:mbox rdf:resource="mailto:eitan@ascender.com" />
-      <gnome:userid>eitani</gnome:userid>
-    </foaf:Person>
-  </maintainer>
-  <maintainer>
-    <foaf:Person>
-      <foaf:name>Mesar Hameed</foaf:name>
-      <foaf:mbox rdf:resource="mailto:M.M.Hameed@bath.ac.uk" />
-      <gnome:userid>jon</gnome:userid>
+      <foaf:name>Alejandro Leiva</foaf:name>
+      <foaf:mbox rdf:resource="mailto:aleiva@emergya.es" />
+      <gnome:userid>aleiva</gnome:userid>
     </foaf:Person>
   </maintainer>
 </Project>
