@@ -1814,11 +1814,9 @@ def usage():
     print "-n, --no-setup               " +  \
           _("Skip set up of user preferences")
 
-    # Translators: by default, Orca expects to find its user preferences
-    # in a directory called .orca under the user's home directory. This
-    # is the description of the command line option
+    # Translators: this is the description of the command line option
     # '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
-    # location for those user preferences.
+    # location for the user preferences.
     #
     print "-u, --user-prefs-dir=dirname " + \
           _("Use alternate directory for user preferences")
@@ -1865,6 +1863,9 @@ def usage():
     #
     print "-f, --forcequit              " + \
           _("Forces orca to be terminated immediately.")
+
+    print "-m, --migrate-config         " +\
+          "Move the user's preferences from ~/.orca to XDG-DATA-HOME/orca."
 
     # Translators: this is the Orca command line option to tell Orca to
     # replace any existing Orca process(es) that might be running.
@@ -1949,6 +1950,7 @@ def main():
         # d is for disabling a feature
         # h is for help
         # u is for alternate user preferences location
+        # m is for migrate the user preferences location from ~/.orca
         # s is for setup
         # n is for no setup
         # t is for text setup
@@ -1957,7 +1959,7 @@ def main():
         #
         opts, args = getopt.getopt(
             arglist,
-            "?stnvld:e:u:",
+            "?stnvlmd:e:u:",
             ["help",
              "user-prefs-dir=",
              "enable=",
@@ -1970,6 +1972,7 @@ def main():
              "debug",
              "debug-file=",
              "version",
+             "migrate-config",
              "replace"])
         for opt, val in opts:
             if opt in ("-u", "--user-prefs-dir"):
@@ -1979,6 +1982,14 @@ def main():
                     settings.userPrefsDir = userPrefsDir
                 except:
                     debug.printException(debug.LEVEL_FINEST)
+
+            if opt in ("-m", "--migrate-config"):
+                from xdg.BaseDirectory import xdg_data_home
+                userPrefsDir = os.path.join(xdg_data_home, "orca")
+                oldUserPrefsDir = os.path.join(os.environ["HOME"], ".orca")
+                if os.path.exists(oldUserPrefsDir):
+                    os.renames(oldUserPrefsDir, userPrefsDir)
+                settings.userPrefsDir = userPrefsDir
 
             if opt in ("-e", "--enable"):
                 feature = val.strip()
