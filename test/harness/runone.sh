@@ -24,6 +24,10 @@ harnessDir=`cd $foo; pwd`
 export PYTHONPATH=$harnessDir:$PYTHONPATH
 export PATH=$harnessDir/bin:$PATH
 
+# Switch off i18n transformation.
+export LANG=C
+export LC_ALL=C
+
 #echo runone.sh: $*
 
 debugFile=`basename $1 .py`
