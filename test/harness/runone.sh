@@ -165,7 +165,7 @@ if [ $orcaRunning -eq 0 ]
 then
     # Terminate Orca
     #echo terminating Orca
-    orca --quit > /dev/null 2>&1
+    orca --forcequit > /dev/null 2>&1
 fi
 
 # Terminate the running application
