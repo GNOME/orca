@@ -1988,7 +1988,15 @@ def main():
                 userPrefsDir = os.path.join(xdg_data_home, "orca")
                 oldUserPrefsDir = os.path.join(os.environ["HOME"], ".orca")
                 if os.path.exists(oldUserPrefsDir):
-                    os.renames(oldUserPrefsDir, userPrefsDir)
+                    try:
+                        os.renames(oldUserPrefsDir, userPrefsDir)
+                    except:
+                       print "It seems like you are trying to migrate your " \
+                           + "preferences but the new location is not " \
+                           + "empty.\n" \
+                           + "Probably it was already migrated. \n" \
+                           + "Please, check it before you try again."
+                       die(2)
                 settings.userPrefsDir = userPrefsDir
 
             if opt in ("-e", "--enable"):
