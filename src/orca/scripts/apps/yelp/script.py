@@ -107,8 +107,8 @@ class Script(Gecko.Script):
         - event: the Event
         """
 
-        if self.utilities.utilities.inFindToolbar() \
-           and not self.utilities.utilities.inFindToolbar(event.source):
+        if self.utilities.inFindToolbar() \
+           and not self.utilities.inFindToolbar(event.source):
             self.lastFindContext = [event.source, event.detail1]
 
         # Unlike the unpredictable wild, wild web, odds are good that a
@@ -118,7 +118,7 @@ class Script(Gecko.Script):
         # Rather than risk breaking access to web content, we'll just set
         # the locusOfFocus here before sending this event on.
         #
-        elif self.utilities.inDocumentContent(event.source):
+        elif self.inDocumentContent(event.source):
             obj = event.source
             characterOffset = event.detail1
 
@@ -167,7 +167,7 @@ class Script(Gecko.Script):
         #
         if event.type.startswith("object:state-changed:showing") \
            and not event.detail1 \
-           and self.utilities.utilities.inFindToolbar(event.source):
+           and self.utilities.inFindToolbar(event.source):
             [obj, characterOffset] = self.lastFindContext
             self.lastFindContext = [None, -1]
             self.setCaretPosition(obj, characterOffset)
