@@ -26,4 +26,4 @@ __license__   = "LGPL"
 # Whether we should grab focus on a focusable ancestor when setting
 # the caret position. See bug 608149.
 #
-grabFocusOnAncestor = True
+grabFocusOnAncestor = False
