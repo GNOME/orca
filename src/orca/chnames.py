@@ -728,6 +728,118 @@ chnames[u'\u2717'] = _("x-shaped bullet")
 #
 chnames[u'\u2794'] = _("right-pointing arrow")
 
+# Translators: this is the spoken word for the character '⁰' (U+2070)
+#
+chnames[u'\u2070'] = _("superscript 0")
+
+# Translators: this is the spoken word for the character '⁴' (U+2074)
+#
+chnames[u'\u2074'] = _("superscript 4")
+
+# Translators: this is the spoken word for the character '⁵' (U+2075)
+#
+chnames[u'\u2075'] = _("superscript 5")
+
+# Translators: this is the spoken word for the character '⁶' (U+2076)
+#
+chnames[u'\u2076'] = _("superscript 6")
+
+# Translators: this is the spoken word for the character '⁷' (U+2077)
+#
+chnames[u'\u2077'] = _("superscript 7")
+
+# Translators: this is the spoken word for the character '⁸' (U+2078)
+#
+chnames[u'\u2078'] = _("superscript 8")
+
+# Translators: this is the spoken word for the character '⁹' (U+2079)
+#
+chnames[u'\u2079'] = _("superscript 9")
+
+# Translators: this is the spoken word for the character '⁺' (U+207a)
+#
+chnames[u'\u207a'] = _("superscript plus")
+
+# Translators: this is the spoken word for the character '⁻' (U+207b)
+#
+chnames[u'\u207b'] = _("superscript minus")
+
+# Translators: this is the spoken word for the character '⁼' (U+207c)
+#
+chnames[u'\u207c'] = _("superscript equals")
+
+# Translators: this is the spoken word for the character '⁽' (U+207d)
+#
+chnames[u'\u207d'] = _("superscript left paren")
+
+# Translators: this is the spoken word for the character '⁾' (U+207e)
+#
+chnames[u'\u207e'] = _("superscript right paren")
+
+# Translators: this is the spoken word for the character 'ⁿ' (U+207f)
+#
+chnames[u'\u207f'] = _("superscript n")
+
+# Translators: this is the spoken word for the character '₀' (U+2080)
+#
+chnames[u'\u2080'] = _("subscript 0")
+
+# Translators: this is the spoken word for the character '₁' (U+2081)
+#
+chnames[u'\u2081'] = _("subscript 1")
+
+# Translators: this is the spoken word for the character '₂' (U+2082)
+#
+chnames[u'\u2082'] = _("subscript 2")
+
+# Translators: this is the spoken word for the character '₃' (U+2083)
+#
+chnames[u'\u2083'] = _("subscript 3")
+
+# Translators: this is the spoken word for the character '₄' (U+2084)
+#
+chnames[u'\u2084'] = _("subscript 4")
+
+# Translators: this is the spoken word for the character '₅' (U+2085)
+#
+chnames[u'\u2085'] = _("subscript 5")
+
+# Translators: this is the spoken word for the character '₆' (U+2086)
+#
+chnames[u'\u2086'] = _("subscript 6")
+
+# Translators: this is the spoken word for the character '₇' (U+2087)
+#
+chnames[u'\u2087'] = _("subscript 7")
+
+# Translators: this is the spoken word for the character '₈' (U+2088)
+#
+chnames[u'\u2088'] = _("subscript 8")
+
+# Translators: this is the spoken word for the character '₉' (U+2089)
+#
+chnames[u'\u2089'] = _("subscript 9")
+
+# Translators: this is the spoken word for the character '₊' (U+208a)
+#
+chnames[u'\u208a'] = _("subscript plus")
+
+# Translators: this is the spoken word for the character '₋' (U+208b)
+#
+chnames[u'\u208b'] = _("subscript minus")
+
+# Translators: this is the spoken word for the character '₌' (U+208c)
+#
+chnames[u'\u208c'] = _("subscript equals")
+
+# Translators: this is the spoken word for the character '₍' (U+208d)
+#
+chnames[u'\u208d'] = _("subscript left paren")
+
+# Translators: this is the spoken word for the character '₎' (U+208e)
+#
+chnames[u'\u208e'] = _("subscript right paren")
+
 # Translators: this is the spoken word for the character '➢' (U+27a2)
 # This symbol is included here because it can be used as a bullet in an 
 # OOo list. The goal is to inform the user of the appearance of the bullet 
