@@ -726,7 +726,7 @@ chnames[u'\u2717'] = _("x-shaped bullet")
 # an OOo list. The goal is to inform the user of the appearance of 
 # the bullet without too much verbiage, hence simply "right-pointing arrow".
 #
-chnames[u'\u2974'] = _("right-pointing arrow")
+chnames[u'\u2794'] = _("right-pointing arrow")
 
 # Translators: this is the spoken word for the character '➢' (U+27a2)
 # This symbol is included here because it can be used as a bullet in an 
