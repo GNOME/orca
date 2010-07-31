@@ -40,11 +40,15 @@ __copyright__ = "Copyright (c) 2006-2008 Brailcom, o.p.s."
 __license__   = "LGPL"
 
 import gobject
+import re
 
+import chnames
 import debug
 import speechserver
 import settings
 import orca
+import orca_state
+import punctuation_settings
 from acss import ACSS
 from orca_i18n import _
 
@@ -60,6 +64,9 @@ else:
         _opentts_version_ok = False
     else:
         _opentts_version_ok = True
+
+PUNCTUATION = re.compile('[^\w\s]', re.UNICODE)
+ELLIPSIS = re.compile('(\342\200\246|\.\.\.\s*)')
 
 class SpeechServer(speechserver.SpeechServer):
     # See the parent class for documentation.
@@ -247,7 +254,50 @@ class SpeechServer(speechserver.SpeechServer):
                 method(value)
                 current[acss_property] = value
 
+    def __addVerbalizedPunctuation(self, oldText):
+        """Depending upon the users verbalized punctuation setting,
+        adjust punctuation symbols in the given text to their pronounced
+        equivalents. The pronounced text will either replace the
+        punctuation symbol or be inserted before it. In the latter case,
+        this is to retain spoken prosity.
+
+        Arguments:
+        - oldText: text to be parsed for punctuation.
+
+        Returns a text string with the punctuation symbols adjusted accordingly.
+        """
+
+        # Translators: we replace the ellipses (both manual and UTF-8)
+        # with a spoken string.  The extra space you see at the beginning
+        # is because we need the speech synthesis engine to speak the
+        # new string well.  For example, "Open..." turns into
+        # "Open dot dot dot".
+        #
+        spokenEllipsis = _(" dot dot dot")
+        newText = re.sub(ELLIPSIS, spokenEllipsis, oldText)
+        newText = newText.decode("UTF-8")
+
+        symbols = set(re.findall(PUNCTUATION, newText))
+        for symbol in symbols:
+            try:
+                level, action = punctuation_settings.getPunctuationInfo(symbol)
+            except:
+                continue
+
+            if level != punctuation_settings.LEVEL_NONE:
+                # OpenTTS should handle it.
+                #
+                continue
+
+            charName = " %s " % chnames.getCharacterName(symbol)
+            if action == punctuation_settings.PUNCTUATION_INSERT:
+                charName += symbol
+            newText = re.sub(symbol, charName, newText)
+
+        return newText.encode("UTF-8")
+
     def _speak(self, text, acss, **kwargs):
+        text = self.__addVerbalizedPunctuation(text)
         # Replace no break space characters with plain spaces since some
         # synthesizers cannot handle them.  See bug #591734.
         #
@@ -366,8 +416,17 @@ class SpeechServer(speechserver.SpeechServer):
         self._apply_acss(acss)
         if character == '\n':
             self._send_command(self._client.sound_icon, 'end-of-line')
-        else:
+            return
+
+        name = chnames.getCharacterName(character)
+        if not name:
             self._send_command(self._client.char, character)
+            return
+
+        if orca_state.activeScript and orca_state.usePronunciationDictionary:
+            name = orca_state.activeScript.\
+                utilities.adjustForPronunciation(name)
+        self.speak(name, acss)
 
     def speakKeyEvent(self, event_string, eventType):
         if eventType == orca.KeyEventType.PRINTABLE:
