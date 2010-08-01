@@ -293,6 +293,9 @@ class SpeechServer(speechserver.SpeechServer):
                 charName += symbol
             newText = re.sub(symbol, charName, newText)
 
+        if orca_state.activeScript:
+            newText = orca_state.activeScript.utilities.adjustForDigits(newText)
+
         return newText.encode("UTF-8")
 
     def _speak(self, text, acss, **kwargs):

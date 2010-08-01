@@ -50,7 +50,17 @@ from orca_i18n import ngettext  # for ngettext support
 class Utilities:
 
     EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
-    WORDS_RE = re.compile("(\W+)", re.UNICODE)
+    SUPERSCRIPT_DIGITS = \
+        [u'\u2070', u'\u00b9', u'\u00b2', u'\u00b3', u'\u2074',
+         u'\u2075', u'\u2076', u'\u2077', u'\u2078', u'\u2079']
+    SUBSCRIPT_DIGITS = \
+        [u'\u2080', u'\u2081', u'\u2082', u'\u2083', u'\u2084',
+         u'\u2085', u'\u2086', u'\u2087', u'\u2088', u'\u2089']
+
+    flags = re.UNICODE
+    WORDS_RE = re.compile("(\W+)", flags)
+    SUPERSCRIPTS_RE = re.compile("[%s]+" % "".join(SUPERSCRIPT_DIGITS), flags)
+    SUBSCRIPTS_RE = re.compile("[%s]+" % "".join(SUBSCRIPT_DIGITS), flags)
 
     # generatorCache
     #
@@ -2488,6 +2498,42 @@ class Utilities:
         # pylint: disable-msg=E1103
 
         return newLine.encode("UTF-8")
+
+    def adjustForDigits(self, string):
+        """Adjusts the string to convert digit-like text, such as subscript
+        and superscript numbers, into actual digits.
+
+        Arguments:
+        - string: the string to be adjusted
+
+        Returns: a new string which contains actual digits.
+        """
+
+        uString = string.decode("UTF-8")
+        subscripted = set(re.findall(self.SUBSCRIPTS_RE, uString))
+        superscripted = set(re.findall(self.SUPERSCRIPTS_RE, uString))
+
+        for number in superscripted:
+            new = map(lambda d: str(self.SUPERSCRIPT_DIGITS.index(d)), number)
+            # Translators: This string is part of the presentation of an
+            # item that includes one or several consequtive superscripted
+            # characters, e.g. 'X' followed by 'superscript 2' followed by
+            # 'superscript 3' should be presented as 'X superscript 23'.
+            #
+            newString = _(" superscript %s" % "".join(new))
+            uString = re.sub(number, newString, uString)
+
+        for number in subscripted:
+            new = map(lambda d: str(self.SUBSCRIPT_DIGITS.index(d)), number)
+            # Translators: This string is part of the presentation of an
+            # item that includes one or several consequtive subscripted
+            # characters, e.g. 'X' followed by 'subscript 2' followed by
+            # 'subscript 3', should be presented as 'X subscript 23.'
+            #
+            newString = _(" subscript %s" % "".join(new))
+            uString = re.sub(number, newString, uString)
+
+        return uString.encode("UTF-8")
 
     @staticmethod
     def absoluteMouseCoordinates():
