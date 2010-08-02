@@ -1,3 +1,62 @@
+2.31.6 - 02-August-2010
+
+General:
+
+  * Fix for bgo#625737 - Orca should attempt to clump superscripted and
+    subscripted numbers together
+
+  * Fix for bgo#625719 - "Right-pointing arrow" string is associated
+    with the incorrect Unicode character
+
+  * Fix for bgo#596108 - Use XDG locations for storing configuration
+    files
+
+  * Fix for bgo#624640 - Traceback in script_utilities.selectedText()
+
+
+Gecko:
+
+  * Fix for bgo#616650 - The default value of grabFocusOnAncestor for
+    Yelp 2.x should (now) be False
+
+  * Fix for bgo#625458 - Orca is not presenting the new location when
+    Tabbing amongst content in Gecko-based Yelp
+
+  * Fix for bgo#624979 - Push buttons no longer showing up in braille
+    for Firefox 4.0
+
+OpenOffice.org:
+
+  * Fix for bgo#620109 - Speech Dispatcher (and OpenTTS?) do not present
+    bullets from OOo Writer
+
+  * Fix for bgo#624641 - Orca says "grayed" when focus is initially
+    given to the table in OOo Calc
+
+  * Fix for bgo#624628 - Orca does not announce the state of formatting
+    toggle buttons in OOo 3.3 dev
+
+GCalctool:
+
+  * Fix for bgo#625729 - Orca does not present superscripted and
+    subscripted numbers in gcalctool
+
+Eclipse:
+
+  * Fix for bgo#624243 - When editing in Eclipse by pressing the Tab key
+    Orca sometimes reads the contents of the line
+
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de          German                Mario Blättermann
+    es          Spanish               Francisco Javier Dorado Martínez
+    gl          Galician              Fran Diéguez
+    hu          Hungarian             Attila Hammer
+    zh          Chinese (Simplified)  Ray Wang
+
+==========
+
 2.31.5 - 12-July-2010
 
 General:
