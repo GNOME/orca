@@ -9,14 +9,15 @@
 # Antón Méixome <meixome@mancomun.org>, 2009.
 # Antón Méixome <meixome@certima.net>, 2010.
 # Fran Diéguez <frandieguez@ubuntu.com>, 2010.
+# Fran Dieguez <frandieguez@ubuntu.com>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-21 14:41+0200\n"
-"PO-Revision-Date: 2010-07-21 14:43+0200\n"
-"Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
+"POT-Creation-Date: 2010-08-03 13:30+0200\n"
+"PO-Revision-Date: 2010-08-03 13:34+0200\n"
+"Last-Translator: Fran Dieguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <gnome-gl-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -473,7 +474,7 @@ msgstr "Mensaxe da sala de conversa %s"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2663 ../src/orca/script_utilities.py:2670
+#: ../src/orca/script_utilities.py:2709 ../src/orca/script_utilities.py:2716
 msgid "space"
 msgstr "espazo"
 
@@ -1448,7 +1449,7 @@ msgstr "infinito"
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:679 ../src/orca/chnames.py:742
+#: ../src/orca/chnames.py:679 ../src/orca/chnames.py:854
 msgid "black square"
 msgstr "cadrado negro"
 
@@ -1466,7 +1467,7 @@ msgstr "cadrado branco"
 #. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:689 ../src/orca/chnames.py:748
+#: ../src/orca/chnames.py:689 ../src/orca/chnames.py:860
 msgid "black diamond"
 msgstr "diamante negro"
 
@@ -1524,12 +1525,180 @@ msgstr "signo de viñeta con forma de x "
 msgid "right-pointing arrow"
 msgstr "frecha á dereita"
 
+#. Translators: this is the spoken word for the character '⁰' (U+2070)
+#.
+#: ../src/orca/chnames.py:733
+msgid "superscript 0"
+msgstr "superíndice 0"
+
+#. Translators: this is the spoken word for the character '⁴' (U+2074)
+#.
+#: ../src/orca/chnames.py:737
+msgid "superscript 4"
+msgstr "superíndice 4"
+
+#. Translators: this is the spoken word for the character '⁵' (U+2075)
+#.
+#: ../src/orca/chnames.py:741
+msgid "superscript 5"
+msgstr "superíndice 5"
+
+#. Translators: this is the spoken word for the character '⁶' (U+2076)
+#.
+#: ../src/orca/chnames.py:745
+msgid "superscript 6"
+msgstr "superíndice 6"
+
+#. Translators: this is the spoken word for the character '⁷' (U+2077)
+#.
+#: ../src/orca/chnames.py:749
+msgid "superscript 7"
+msgstr "superíndice 7"
+
+#. Translators: this is the spoken word for the character '⁸' (U+2078)
+#.
+#: ../src/orca/chnames.py:753
+msgid "superscript 8"
+msgstr "superíndice 8"
+
+#. Translators: this is the spoken word for the character '⁹' (U+2079)
+#.
+#: ../src/orca/chnames.py:757
+msgid "superscript 9"
+msgstr "superíndice 9"
+
+#. Translators: this is the spoken word for the character '⁺' (U+207a)
+#.
+#: ../src/orca/chnames.py:761
+msgid "superscript plus"
+msgstr "superíndice máis"
+
+#. Translators: this is the spoken word for the character '⁻' (U+207b)
+#.
+#: ../src/orca/chnames.py:765
+msgid "superscript minus"
+msgstr "superíndice menos"
+
+#. Translators: this is the spoken word for the character '⁼' (U+207c)
+#.
+#: ../src/orca/chnames.py:769
+msgid "superscript equals"
+msgstr "superíndice igual"
+
+#. Translators: this is the spoken word for the character '⁽' (U+207d)
+#.
+#: ../src/orca/chnames.py:773
+msgid "superscript left paren"
+msgstr "superíndice paréntese esquerdo"
+
+#. Translators: this is the spoken word for the character '⁾' (U+207e)
+#.
+#: ../src/orca/chnames.py:777
+msgid "superscript right paren"
+msgstr "superíndice paréntese dereito"
+
+#. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
+#.
+#: ../src/orca/chnames.py:781
+msgid "superscript n"
+msgstr "superíndice n"
+
+#. Translators: this is the spoken word for the character '₀' (U+2080)
+#.
+#: ../src/orca/chnames.py:785
+msgid "subscript 0"
+msgstr "subíndice 0"
+
+#. Translators: this is the spoken word for the character '₁' (U+2081)
+#.
+#: ../src/orca/chnames.py:789
+msgid "subscript 1"
+msgstr "subíndice 1"
+
+#. Translators: this is the spoken word for the character '₂' (U+2082)
+#.
+#: ../src/orca/chnames.py:793
+msgid "subscript 2"
+msgstr "subíndice 2"
+
+#. Translators: this is the spoken word for the character '₃' (U+2083)
+#.
+#: ../src/orca/chnames.py:797
+msgid "subscript 3"
+msgstr "subíndice 3"
+
+#. Translators: this is the spoken word for the character '₄' (U+2084)
+#.
+#: ../src/orca/chnames.py:801
+msgid "subscript 4"
+msgstr "subíndice 4"
+
+#. Translators: this is the spoken word for the character '₅' (U+2085)
+#.
+#: ../src/orca/chnames.py:805
+msgid "subscript 5"
+msgstr "subíndice 5"
+
+#. Translators: this is the spoken word for the character '₆' (U+2086)
+#.
+#: ../src/orca/chnames.py:809
+msgid "subscript 6"
+msgstr "subíndice 6"
+
+#. Translators: this is the spoken word for the character '₇' (U+2087)
+#.
+#: ../src/orca/chnames.py:813
+msgid "subscript 7"
+msgstr "subíndice 7"
+
+#. Translators: this is the spoken word for the character '₈' (U+2088)
+#.
+#: ../src/orca/chnames.py:817
+msgid "subscript 8"
+msgstr "subíndice 8"
+
+#. Translators: this is the spoken word for the character '₉' (U+2089)
+#.
+#: ../src/orca/chnames.py:821
+msgid "subscript 9"
+msgstr "subíndice 9"
+
+#. Translators: this is the spoken word for the character '₊' (U+208a)
+#.
+#: ../src/orca/chnames.py:825
+msgid "subscript plus"
+msgstr "subíndice máis"
+
+#. Translators: this is the spoken word for the character '₋' (U+208b)
+#.
+#: ../src/orca/chnames.py:829
+msgid "subscript minus"
+msgstr "subíndice menos"
+
+#. Translators: this is the spoken word for the character '₌' (U+208c)
+#.
+#: ../src/orca/chnames.py:833
+msgid "subscript equals"
+msgstr "subíndice igual"
+
+#. Translators: this is the spoken word for the character '₍' (U+208d)
+#.
+#: ../src/orca/chnames.py:837
+msgid "subscript left paren"
+msgstr "subíndice paréntese esquerdo"
+
+#. Translators: this is the spoken word for the character '₎' (U+208e)
+#.
+#: ../src/orca/chnames.py:841
+msgid "subscript right paren"
+msgstr "subíndice paréntese dereito"
+
 #. Translators: this is the spoken word for the character '➢' (U+27a2)
 #. This symbol is included here because it can be used as a bullet in an
 #. OOo list. The goal is to inform the user of the appearance of the bullet
 #. without too much verbiage, hence simply "right-pointing arrowhead".
 #.
-#: ../src/orca/chnames.py:736
+#: ../src/orca/chnames.py:848
 msgid "right-pointing arrowhead"
 msgstr "cabeza de frecha á dereita"
 
@@ -2502,7 +2671,7 @@ msgstr "Non encontrado"
 #. text is a hypertext link.
 #.
 #: ../src/orca/default.py:2019 ../src/orca/rolenames.py:600
-#: ../src/orca/script_utilities.py:2399
+#: ../src/orca/script_utilities.py:2409
 #: ../src/orca/scripts/apps/soffice/script.py:1135
 #: ../src/orca/speech_generator.py:714
 msgid "link"
@@ -2535,7 +2704,7 @@ msgstr "ligazón"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:483
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5352
-#: ../src/orca/settings.py:1352 ../src/orca/speech_generator.py:472
+#: ../src/orca/settings.py:1360 ../src/orca/speech_generator.py:472
 #: ../src/orca/speech_generator.py:778
 #: ../src/orca/structural_navigation.py:3607
 msgid "blank"
@@ -3150,13 +3319,13 @@ msgstr "Saltando ao principio"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:354 ../src/orca/settings.py:1377
+#: ../src/orca/flat_review.py:354 ../src/orca/settings.py:1385
 msgid "partially checked"
 msgstr "parcialmente marcado"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:358 ../src/orca/settings.py:1376
+#: ../src/orca/flat_review.py:358 ../src/orca/settings.py:1384
 msgid "checked"
 msgstr "seleccionado"
 
@@ -3165,13 +3334,13 @@ msgstr "seleccionado"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:362 ../src/orca/settings.py:1375
+#: ../src/orca/flat_review.py:362 ../src/orca/settings.py:1383
 msgid "not checked"
 msgstr "non seleccionado"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:369 ../src/orca/settings.py:1388
+#: ../src/orca/flat_review.py:369 ../src/orca/settings.py:1396
 msgid "pressed"
 msgstr "premido"
 
@@ -3180,14 +3349,14 @@ msgstr "premido"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:373 ../src/orca/settings.py:1388
+#: ../src/orca/flat_review.py:373 ../src/orca/settings.py:1396
 msgid "not pressed"
 msgstr "non premido"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:381 ../src/orca/settings.py:1383
+#: ../src/orca/flat_review.py:381 ../src/orca/settings.py:1391
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seleccionado"
@@ -3198,7 +3367,7 @@ msgstr "seleccionado"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:386 ../src/orca/settings.py:1382
+#: ../src/orca/flat_review.py:386 ../src/orca/settings.py:1390
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "non seleccionado"
@@ -3257,6 +3426,8 @@ msgstr "Servizos de voz do GNOME"
 #. "Open dot dot dot".
 #.
 #: ../src/orca/gnomespeechfactory.py:831 ../src/orca/gnomespeechfactory.py:832
+#: ../src/orca/openttsfactory.py:276
+#: ../src/orca/speechdispatcherfactory.py:275
 msgid " dot dot dot"
 msgstr " punto punto punto"
 
@@ -3274,8 +3445,8 @@ msgstr "menos"
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking in a higher pitch.
 #.
-#: ../src/orca/gnomespeechfactory.py:1071 ../src/orca/openttsfactory.py:315
-#: ../src/orca/speechdispatcherfactory.py:314
+#: ../src/orca/gnomespeechfactory.py:1071 ../src/orca/openttsfactory.py:368
+#: ../src/orca/speechdispatcherfactory.py:367
 msgid "higher."
 msgstr "máis alto."
 
@@ -3283,8 +3454,8 @@ msgstr "máis alto."
 #. synthesis engine is now speaking in a lower pitch.
 #.
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/gnomespeechfactory.py:1102 ../src/orca/openttsfactory.py:315
-#: ../src/orca/speechdispatcherfactory.py:314
+#: ../src/orca/gnomespeechfactory.py:1102 ../src/orca/openttsfactory.py:368
+#: ../src/orca/speechdispatcherfactory.py:367
 msgid "lower."
 msgstr "máis baixo."
 
@@ -3292,8 +3463,8 @@ msgstr "máis baixo."
 #. synthesis engine is now speaking at a faster rate (words
 #. per minute).
 #.
-#: ../src/orca/gnomespeechfactory.py:1131 ../src/orca/openttsfactory.py:305
-#: ../src/orca/speechdispatcherfactory.py:304
+#: ../src/orca/gnomespeechfactory.py:1131 ../src/orca/openttsfactory.py:358
+#: ../src/orca/speechdispatcherfactory.py:357
 msgid "faster."
 msgstr "máis rápido."
 
@@ -3302,8 +3473,8 @@ msgstr "máis rápido."
 #. per minute).
 #.
 #. Translators: This string announces speech rate change.
-#: ../src/orca/gnomespeechfactory.py:1165 ../src/orca/openttsfactory.py:305
-#: ../src/orca/speechdispatcherfactory.py:304
+#: ../src/orca/gnomespeechfactory.py:1165 ../src/orca/openttsfactory.py:358
+#: ../src/orca/speechdispatcherfactory.py:357
 msgid "slower."
 msgstr "máis lento."
 
@@ -3771,14 +3942,14 @@ msgstr "Personalizado"
 #. will have a chance to select a particular speech engine by its real
 #. name, such as Festival, IBMTTS, etc.
 #.
-#: ../src/orca/openttsfactory.py:77 ../src/orca/speechdispatcherfactory.py:76
+#: ../src/orca/openttsfactory.py:84 ../src/orca/speechdispatcherfactory.py:83
 msgid "Default Synthesizer"
 msgstr "Sintetizador predefinido"
 
 #. Translators: this is the name of a speech synthesis system
 #. called "Open TTS".
 #.
-#: ../src/orca/openttsfactory.py:90
+#: ../src/orca/openttsfactory.py:97
 msgid "Open TTS"
 msgstr "Abrir TTS"
 
@@ -3791,8 +3962,8 @@ msgstr "Abrir TTS"
 #. the list will contain the names of all available "real"
 #. voices provided by the speech engine.
 #.
-#: ../src/orca/openttsfactory.py:174
-#: ../src/orca/speechdispatcherfactory.py:173
+#: ../src/orca/openttsfactory.py:181
+#: ../src/orca/speechdispatcherfactory.py:180
 #, python-format
 msgid "%s default voice"
 msgstr "voz predefinida %s"
@@ -5006,13 +5177,11 @@ msgstr "Configura as preferencias do usuario (versión en texto)"
 msgid "Skip set up of user preferences"
 msgstr "Salta a configuración das preferencias de usuario"
 
-#. Translators: by default, Orca expects to find its user preferences
-#. in a directory called .orca under the user's home directory. This
-#. is the description of the command line option
+#. Translators: this is the description of the command line option
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
-#. location for those user preferences.
+#. location for the user preferences.
 #.
-#: ../src/orca/orca.py:1824
+#: ../src/orca/orca.py:1822
 msgid "Use alternate directory for user preferences"
 msgstr "Usa un cartafol alternativo para as preferencias do usuario"
 
@@ -5020,7 +5189,7 @@ msgstr "Usa un cartafol alternativo para as preferencias do usuario"
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:1837
+#: ../src/orca/orca.py:1835
 msgid "Force use of option"
 msgstr "Forzar o uso da opción"
 
@@ -5028,7 +5197,7 @@ msgstr "Forzar o uso da opción"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:1850
+#: ../src/orca/orca.py:1848
 msgid "Prevent use of option"
 msgstr "Prever o uso da opción"
 
@@ -5037,7 +5206,7 @@ msgstr "Prever o uso da opción"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:1858
+#: ../src/orca/orca.py:1856
 msgid "Quits Orca (if shell script used)"
 msgstr "Sae de Orca (se se usou guión de shell)"
 
@@ -5047,18 +5216,18 @@ msgstr "Sae de Orca (se se usou guión de shell)"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:1867
+#: ../src/orca/orca.py:1865
 msgid "Forces orca to be terminated immediately."
 msgstr "Forza que orca remate inmediatamente."
 
 #. Translators: this is the Orca command line option to tell Orca to
 #. replace any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:1873
+#: ../src/orca/orca.py:1874
 msgid "Replace a currently running Orca"
 msgstr "Substitúe un Orca actualmente en execución"
 
-#: ../src/orca/orca.py:1879
+#: ../src/orca/orca.py:1880
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -5068,7 +5237,7 @@ msgstr ""
 "lanzará automaticamente a configuración das preferencias a menos que\n"
 "se use a opción -n ou --no-setup."
 
-#: ../src/orca/orca.py:1887
+#: ../src/orca/orca.py:1888
 msgid ""
 "WARNING: suspending Orca, e.g. by pressing Control-Z, from\n"
 "an AT-SPI enabled shell (such as gnome-terminal), can also\n"
@@ -5078,11 +5247,11 @@ msgstr ""
 "unha terminal soportada por AT-SPI (como gnome-terminal),\n"
 "pode suspender tamén o escritorio ata que Orca sexa rematado."
 
-#: ../src/orca/orca.py:1892
+#: ../src/orca/orca.py:1893
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Informe de erros a orca-list@gnome.org."
 
-#: ../src/orca/orca.py:2077
+#: ../src/orca/orca.py:2096
 msgid "Welcome to Orca."
 msgstr "Benvido/a ao Orca."
 
@@ -7090,12 +7259,32 @@ msgstr "compoñente incorporado"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2323
+#: ../src/orca/script_utilities.py:2333
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
 msgstr[0] "%(count)d %(repeatChar)s carácter"
 msgstr[1] "%(count)d %(repeatChar)s caracteres"
+
+#. Translators: This string is part of the presentation of an
+#. item that includes one or several consequtive superscripted
+#. characters, e.g. 'X' followed by 'superscript 2' followed by
+#. 'superscript 3' should be presented as 'X superscript 23'.
+#.
+#: ../src/orca/script_utilities.py:2523
+#, python-format
+msgid " superscript %s"
+msgstr " superíndice %s"
+
+#. Translators: This string is part of the presentation of an
+#. item that includes one or several consequtive subscripted
+#. characters, e.g. 'X' followed by 'subscript 2' followed by
+#. 'subscript 3', should be presented as 'X subscript 23.'
+#.
+#: ../src/orca/script_utilities.py:2533
+#, python-format
+msgid " subscript %s"
+msgstr " subíndice %s"
 
 #. Translators: short braille for the
 #. rolename of a document.
@@ -8190,28 +8379,28 @@ msgstr "lido %d por cento do documento"
 #. I wish the AT-SPI spec'd this out as machine readable (unlocalized)
 #. names, but it's what we're stuck with (unfortunately).
 #.
-#: ../src/orca/settings.py:1094
+#: ../src/orca/settings.py:1102
 msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:1099
+#: ../src/orca/settings.py:1107
 msgid "soffice.bin"
 msgstr "soffice.bin"
 
 #. Translators: see the regular expression note above.  This is for
 #. OpenOffice and StarOffice.
 #.
-#: ../src/orca/settings.py:1104
+#: ../src/orca/settings.py:1112
 msgid "soffice"
 msgstr "soffice"
 
 #. Translators: see the regular expression note above.  This is for the
 #. Evolution mail application.
 #.
-#: ../src/orca/settings.py:1109
+#: ../src/orca/settings.py:1117
 msgid "[Ee]volution"
 msgstr "[Ee]volution"
 
@@ -8219,7 +8408,7 @@ msgstr "[Ee]volution"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1115
+#: ../src/orca/settings.py:1123
 msgid "Deer Park"
 msgstr "Deer Park"
 
@@ -8227,7 +8416,7 @@ msgstr "Deer Park"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1121
+#: ../src/orca/settings.py:1129
 msgid "Bon Echo"
 msgstr "Bon Echo"
 
@@ -8235,35 +8424,35 @@ msgstr "Bon Echo"
 #. version of Mozilla Firefox, which chooses to create strange names
 #. for itself at the drop of a hat.
 #.
-#: ../src/orca/settings.py:1127
+#: ../src/orca/settings.py:1135
 msgid "Minefield"
 msgstr "Minefield"
 
 #. Translators: see the regular expression note above.  This is for
 #. the Thunderbird e-mail application.
 #.
-#: ../src/orca/settings.py:1158
+#: ../src/orca/settings.py:1166
 msgid "Mail/News"
 msgstr "Correo/noticias"
 
 #. Translators: see the regular expression note above.  This is for
 #. gnome_segv2, which calls itself bug-buddy in at-poke.
 #.
-#: ../src/orca/settings.py:1167
+#: ../src/orca/settings.py:1175
 msgid "bug-buddy"
 msgstr "bug-buddy"
 
 #. Translators: see the regular expression note above.  This is for
 #. the underlying terminal support in gnome-terminal.
 #.
-#: ../src/orca/settings.py:1172
+#: ../src/orca/settings.py:1180
 msgid "vte"
 msgstr "vte"
 
 #. Translators: see the regular expression note above.  This is for
 #. supporting gaim, which has recently be renamed to pidgin.
 #.
-#: ../src/orca/settings.py:1177
+#: ../src/orca/settings.py:1185
 msgid "gaim"
 msgstr "gaim"
 
@@ -8273,14 +8462,14 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1360 ../src/orca/settings.py:1437
+#: ../src/orca/settings.py:1368 ../src/orca/settings.py:1445
 msgid "required"
 msgstr "requerido"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:1365
+#: ../src/orca/settings.py:1373
 msgctxt "text"
 msgid "read only"
 msgstr "só lectura"
@@ -8288,7 +8477,7 @@ msgstr "só lectura"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:1370 ../src/orca/settings.py:1448
+#: ../src/orca/settings.py:1378 ../src/orca/settings.py:1456
 msgid "grayed"
 msgstr "agrisado"
 
@@ -8296,18 +8485,18 @@ msgstr "agrisado"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:1394 ../src/orca/settings.py:1460
+#: ../src/orca/settings.py:1402 ../src/orca/settings.py:1468
 msgid "collapsed"
 msgstr "contraído"
 
-#: ../src/orca/settings.py:1394 ../src/orca/settings.py:1460
+#: ../src/orca/settings.py:1402 ../src/orca/settings.py:1468
 msgid "expanded"
 msgstr "expandido"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:1399
+#: ../src/orca/settings.py:1407
 msgid "multi-select"
 msgstr "selección múltipla"
 
@@ -8315,7 +8504,7 @@ msgstr "selección múltipla"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:1405
+#: ../src/orca/settings.py:1413
 #, python-format
 msgid "tree level %d"
 msgstr "nivel de árbore %d"
@@ -8330,7 +8519,7 @@ msgstr "nivel de árbore %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1412 ../src/orca/structural_navigation.py:2961
+#: ../src/orca/settings.py:1420 ../src/orca/structural_navigation.py:2961
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nivel de aniñamento %d"
@@ -8339,7 +8528,7 @@ msgstr "Nivel de aniñamento %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:1418
+#: ../src/orca/settings.py:1426
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "sobre o %(index)d de %(total)d"
@@ -8348,7 +8537,7 @@ msgstr "sobre o %(index)d de %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:1424
+#: ../src/orca/settings.py:1432
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d de %(total)d"
@@ -8357,7 +8546,7 @@ msgstr "%(index)d de %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:1443
+#: ../src/orca/settings.py:1451
 msgctxt "text"
 msgid "rdonly"
 msgstr "sólect"
@@ -8366,7 +8555,7 @@ msgstr "sólect"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1466
+#: ../src/orca/settings.py:1474
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVEL DE ÁRBORE %d"
@@ -8377,7 +8566,7 @@ msgstr "NIVEL DE ÁRBORE %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1474
+#: ../src/orca/settings.py:1482
 #, python-format
 msgid "LEVEL %d"
 msgstr "NIVEL %d"
@@ -8387,7 +8576,7 @@ msgstr "NIVEL %d"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1507
+#: ../src/orca/settings.py:1515
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H horas, %M minutos e %S segundos."
 
@@ -8396,14 +8585,14 @@ msgstr "%H horas, %M minutos e %S segundos."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1514
+#: ../src/orca/settings.py:1522
 msgid "%H hours and %M minutes."
 msgstr "%H horas e %M minutos."
 
 #. Translators: this is the name of a speech synthesis system
 #. called "Speech Dispatcher".
 #.
-#: ../src/orca/speechdispatcherfactory.py:89
+#: ../src/orca/speechdispatcherfactory.py:96
 msgid "Speech Dispatcher"
 msgstr "Sistema de voz"
 
