@@ -138,6 +138,9 @@ keymap = (
     ("comma", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewSpellCurrentCharacterHandler",2),
 
+    ("comma", defaultModifierMask, ORCA_MODIFIER_MASK,
+    "reviewUnicodeCurrentCharacterHandler", 3),
+
     ("period", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewNextCharacterHandler"),
 
