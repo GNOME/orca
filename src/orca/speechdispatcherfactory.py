@@ -228,9 +228,12 @@ class SpeechServer(speechserver.SpeechServer):
         self._send_command(self._client.set_volume, volume)
 
     def _set_family(self, acss_family):
-        locale = acss_family[speechserver.VoiceFamily.LOCALE]
-        if locale:
-            lang = locale.split('_')[0]
+        familyLocale = acss_family.get(speechserver.VoiceFamily.LOCALE)
+        if not familyLocale:
+            import locale
+            familyLocale, encoding = locale.getdefaultlocale()
+        if familyLocale:
+            lang = familyLocale.split('_')[0]
             if lang and len(lang) == 2:
                 self._send_command(self._client.set_language, lang)
         try:
@@ -239,7 +242,7 @@ class SpeechServer(speechserver.SpeechServer):
         except AttributeError:
             pass
         else:
-            name = acss_family[speechserver.VoiceFamily.NAME]
+            name = acss_family.get(speechserver.VoiceFamily.NAME)
             if name != self._default_voice_name:
                 self._send_command(set_synthesis_voice, name)
             
@@ -249,9 +252,17 @@ class SpeechServer(speechserver.SpeechServer):
         current = self._current_voice_properties
         for acss_property, method in self._acss_manipulators:
             value = acss.get(acss_property)
-            if value is not None and current.get(acss_property) != value:
-                method(value)
-                current[acss_property] = value
+            if value is not None:
+                if current.get(acss_property) != value:
+                    method(value)
+                    current[acss_property] = value
+            elif acss_property == ACSS.FAMILY and current.get(acss_property) \
+                    and acss == settings.voices[settings.DEFAULT_VOICE]:
+                # We need to explicitly reset (at least) the family.
+                # See bgo#626072.
+                #
+                method({})
+                current[acss_property] = {}
 
     def __addVerbalizedPunctuation(self, oldText):
         """Depending upon the users verbalized punctuation setting,
