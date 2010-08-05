@@ -33,6 +33,7 @@ src/orca/orca.py
 [type: gettext/glade]src/orca/orca-preferences-warning.ui
 [type: gettext/glade]src/orca/orca-quit.ui
 [type: gettext/glade]src/orca/orca-setup.ui
+[type: gettext/glade]src/orca/orca-splash.ui
 src/orca/phonnames.py
 src/orca/rolenames.py
 src/orca/script_utilities.py

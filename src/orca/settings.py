@@ -225,6 +225,10 @@ quitModule = "orca_quit"
 #
 findModule = "orca_gui_find"
 
+# The name of the module that holds the splash screen.
+#
+splashModule = "orca_gui_splash"
+
 # A list of keys that can serve as the Orca modifier key.  The list is
 # so we can provide better cross platform support (e.g., Sun keyboard
 # vs. PC-104 keyboard layouts).  When any of these keys is pressed,

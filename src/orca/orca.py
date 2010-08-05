@@ -1553,6 +1553,24 @@ def showFindGUI(script=None, inputEvent=None):
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
+def showSplashGUI(script=None, inputEvent=None):
+    """Displays a splash screen.
+
+    Returns True to indicate the input event has been consumed.
+    """
+
+    try:
+        module = __import__(settings.splashModule,
+                            globals(),
+                            locals(),
+                            [''])
+        module.showSplashUI()
+    except:
+        debug.printException(debug.LEVEL_SEVERE)
+
+    return True
+
+
 # If True, this module has been initialized.
 #
 _initialized = False
@@ -1593,6 +1611,8 @@ def init(registry):
     #
     registry.registerEventListener(_onMouseButton,
                                    "mouse:button")
+
+    showSplashGUI()
 
     loadUserSettings()
 

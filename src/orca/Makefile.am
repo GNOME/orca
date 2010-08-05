@@ -3,6 +3,7 @@ orca_SCRIPTS = \
 
 orcadir=$(bindir)
 uidir=$(datadir)/orca/ui
+gfxdir=$(datadir)/orca/gfx
 
 orca_pathdir=$(pyexecdir)
 
@@ -47,6 +48,7 @@ orca_python_PYTHON = \
 	orca_gui_find.py \
 	orca_gui_main.py \
 	orca_gui_prefs.py \
+	orca_gui_splash.py \
 	orca_i18n.py \
 	orca_prefs.py \
 	orca_quit.py \
@@ -82,7 +84,12 @@ ui_DATA = \
 	orca-mainwin.ui \
 	orca-preferences-warning.ui \
 	orca-quit.ui \
-	orca-setup.ui
+	orca-setup.ui \
+	orca-splash.ui
+
+gfx_DATA = \
+	orca-splash.png
 
 EXTRA_DIST = \
 	$(ui_DATA)
+	$(gfx_DATA)
