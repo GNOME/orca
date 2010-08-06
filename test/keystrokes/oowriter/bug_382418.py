@@ -79,7 +79,9 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Type a down arrow to enter the table",
 
-    ["BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",
+    ["BRAILLE LINE:  'table with 2 rows and 2 columns.'",
+     "     VISIBLE:  'table with 2 rows and 2 columns.', cursor=0",
+     "BRAILLE LINE:  'soffice Application Untitled 2 - " + utils.getOOoName("Writer") + " Frame Untitled 2 - " + utils.getOOoName("Writer") + " RootPane ScrollPane Document view Table1-1 Table Paragraph'",
      "     VISIBLE:  'Paragraph', cursor=1",
      "SPEECH OUTPUT: 'table with 2 rows and 2 columns.'",
      "SPEECH OUTPUT: 'blank'",

@@ -491,9 +491,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if orca_prefs.writePreferences(self.prefsDict, self.keyBindingsModel,
                                        self.pronunciationModel):
-            self._say( \
+            self._presentMessage(
                 _("Accessibility support for GNOME has just been enabled."))
-            self._say( \
+            self._presentMessage(
                 _("You need to log out and log back in for the change to " \
                   "take effect."))
 
@@ -2253,19 +2253,21 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("enableDiacriticalKeysCheckButton").set_sensitive( \
           enable)
 
-    def _say(self, text, stop=False):
-        """If the text field is not None, speaks the given text, optionally
+    def _presentMessage(self, text, interrupt=False):
+        """If the text field is not None, presents the given text, optionally
         interrupting anything currently being spoken.
 
         Arguments:
-        - text: the text to print and speak
-        - stop: if True, interrupt any speech currently being spoken
+        - text: the text to present
+        - interrupt: if True, interrupt any speech currently being spoken
         """
 
-        if stop:
-            speech.stop()
-
-        speech.speak(text)
+        defScript = default.Script(None)
+        defScript.speakMessage(text, interrupt=interrupt)
+        try:
+            defScript.displayBrailleMessage(text, flashTime=-1)
+        except:
+            pass
 
     def _createNode(self, appName):
         """Create a new root node in the TreeStore model with the name of the
@@ -3806,7 +3808,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # a new key combination (e.g., Alt+Ctrl+g) to create a new
         # key bindings.
         #
-        speech.speak(_("enter new key"))
+        self._presentMessage(_("enter new key"))
         orca_state.capturingKeys = True
         editable.connect('key-press-event', self.kbKeyPressed)
         return
@@ -3835,7 +3837,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             # Orca has deleted an existing key combination based upon
             # their input.
             #
-            speech.speak(_("Key binding deleted. Press enter to confirm."))
+            self._presentMessage(
+                _("Key binding deleted. Press enter to confirm."))
             return True
 
         clickCount = orca_state.clickCount
@@ -3859,17 +3862,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             # that the key combination (e.g., Ctrl+Alt+f) they just
             # entered has already been bound to another command.
             #
-            speech.speak(_("The key entered is already bound to %s") % \
-                         description)
+            msg = _("The key entered is already bound to %s") % description
         else:
             # Translators: this is a spoken prompt letting the user know Orca
             # know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
             # based upon their input.
             #
-            speech.speak(_("Key captured: %s. Press enter to confirm.") % \
-                         newString)
+            msg = _("Key captured: %s. Press enter to confirm.") % newString
             editable.set_text(newString)
 
+        self._presentMessage(msg)
         return True
             
     def editedKey(self, cell, path, new_text, treeModel, 
@@ -3916,7 +3918,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             message = _("The keybinding has been removed.")
 
         if modified:
-            speech.speak(message)
+            self._presentMessage(message)
             self.pendingKeyBindings[originalBinding] = ""
 
         return
@@ -5025,8 +5027,12 @@ def showPreferencesUI():
         # Translators: Orca Preferences is the configuration GUI for Orca.
         #
         line = _("Starting Orca Preferences.")
-        braille.displayMessage(line)
-        speech.speak(line)
+        defScript = default.Script(None)
+        defScript.speakMessage(line)
+        try:
+            defScript.displayBrailleMessage(line, flashTime=-1)
+        except:
+            pass
 
         prefsDict = orca_prefs.readPreferences()
         orca_state.prefsUIFile = \

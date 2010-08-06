@@ -721,14 +721,14 @@ class Script(default.Script):
             if oldTable:
                 # We've left a table.  Announce this fact.
                 #
-                speech.speak(_("leaving table."))
+                self.presentMessage(_("leaving table."))
             if newTable:
                 # We've entered a table.  Announce the dimensions.
                 #
                 line = _("table with %(rows)d rows and %(columns)d columns.") \
                        % {"rows" : newTable.nRows,
                           "columns" : newTable.nColumns}
-                speech.speak(line)
+                self.presentMessage(line)
 
         if not newTable:
             self.lastCell = [None, -1]
@@ -1368,8 +1368,8 @@ class Script(default.Script):
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "License Agreement screen: Scroll Down button.")
                 self.handleSetupPanel(event.source.parent)
-                speech.speak(_("Note that the Scroll Down button has " \
-                               "to be pressed numerous times."))
+                self.presentMessage(_("Note that the Scroll Down button has " \
+                                      "to be pressed numerous times."))
 
             # Check for 2. License Agreement: Accept button.
             #
@@ -1383,7 +1383,7 @@ class Script(default.Script):
                 debug.println(self.debugLevel,
                     "StarOffice.locusOfFocusChanged - Setup dialog: " \
                     + "License Agreement screen: accept button.")
-                speech.speak( \
+                self.presentMessage(
                     _("License Agreement Accept button now has focus."))
 
             # Check for 3. Personal Data: Transfer Personal Data check box.
@@ -1488,7 +1488,7 @@ class Script(default.Script):
             # in StarOffice/OpenOffice calc that allows you to type in a
             # cell coordinate (e.g., A4) and then move to it.
             #
-            speech.speak(_("Move to cell"))
+            self.presentMessage(_("Move to cell"))
             return
 
         # Check to see if this is a Calc: spread sheet cell. If it is then

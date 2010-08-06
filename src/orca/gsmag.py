@@ -40,7 +40,6 @@ _zoomer = None
 import debug
 import eventsynthesizer
 import settings
-import speech
 import orca_state
 import gconf
 
@@ -777,14 +776,14 @@ def toggleMagnifier(script=None, inputEvent=None):
         # magnifier.  In addition to screen magnification, the user's
         # preferred colors and mouse customizations are loaded.
         #
-        speech.speak(_("Magnifier enabled."))
+        orca_state.activeScript.presentMessage(_("Magnifier enabled."))
     else:
         shutdown()
         # Translators: this is the message spoken when a user disables the
         # magnifier, restoring the screen contents to their normal colors
         # and sizes.
         #
-        speech.speak(_("Magnifier disabled."))
+        orca_state.activeScript.presentMessage(_("Magnifier disabled."))
 
 ########################################################################
 #                                                                      #

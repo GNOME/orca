@@ -393,7 +393,7 @@ class StructuralNavigationObject:
                 # Translators: this announces to the user that live region
                 # support has been turned off.
                 #
-                speech.speak(_("Live region support is off"))
+                script.presentMessage(_("Live region support is off"))
 
         if self.objType == StructuralNavigation.TABLE_CELL:
             return goCell
@@ -2946,7 +2946,7 @@ class StructuralNavigation:
             itemString = ngettext("List with %d item",
                                   "List with %d items",
                                   nItems) % nItems
-            speech.speak(itemString)
+            self._script.presentMessage(itemString)
             nestingLevel = 0
             parent = obj.parent
             while parent.getRole() == pyatspi.ROLE_LIST:
@@ -2958,7 +2958,8 @@ class StructuralNavigation:
                 # level of 2 represents a list item inside a list that's
                 # inside another list).
                 #
-                speech.speak(_("Nesting level %d") % nestingLevel)
+                self._script.presentMessage(_("Nesting level %d") % \
+                                            nestingLevel)
             [obj, characterOffset] = self._getCaretPosition(obj)
             self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
@@ -3489,8 +3490,8 @@ class StructuralNavigation:
         if obj:
             caption = self._getTableCaption(obj)
             if caption:
-                speech.speak(caption)
-            speech.speak(self._getTableDescription(obj))
+                self._script.presentMessage(caption)
+            self._script.presentMessage(self._getTableDescription(obj))
             cell = obj.queryTable().getAccessibleAt(0, 0)
             self.lastTableCell = [0, 0]
             [cell, characterOffset] = self._getCaretPosition(cell)
@@ -3611,12 +3612,12 @@ class StructuralNavigation:
             # Translators: this represents the (row, col) position of
             # a cell in a table.
             #
-            speech.speak(_("Row %(row)d, column %(column)d.") \
-                         % {"row" : row + 1, "column" : col + 1})
+            self._script.presentMessage(_("Row %(row)d, column %(column)d.") \
+                                        % {"row" : row + 1, "column" : col + 1})
 
         spanString = self._getCellSpanInfo(cell)
         if spanString and settings.speakCellSpan:
-            speech.speak(spanString)
+            self._script.presentMessage(spanString)
 
     ########################
     #                      #

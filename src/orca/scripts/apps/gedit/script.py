@@ -263,9 +263,9 @@ class Script(default.Script):
             #
             if badWord == _("Completed spell checking"):
                 utterance = _("Spell checking is complete.")
-                speech.speak(utterance)
+                self.presentMessage(utterance)
                 utterance = _("Press Tab and Return to terminate.")
-                speech.speak(utterance)
+                self.presentMessage(utterance)
                 return
 
             # If we have a handle to the gedit text area, then extract out
@@ -563,7 +563,7 @@ class Script(default.Script):
                 # Translators: this indicates a find command succeeded in
                 # finding something.
                 #
-                speech.speak(_("Phrase found."))
+                self.presentMessage(_("Phrase found."))
                 utterances = self.speechGenerator.generateSpeech(
                     event.source, alreadyFocused=True)
                 speech.speak(utterances)

@@ -1563,7 +1563,7 @@ class Script(script.Script):
         if settings.learnModeEnabled:
             return True
 
-        speech.speak(
+        self.speakMessage(
             # Translators: Orca has a "Learn Mode" that will allow
             # the user to type any key on the keyboard and hear what
             # the effects of that key would be.  The effects might
@@ -1621,7 +1621,7 @@ class Script(script.Script):
                     "Press escape to exit.")
 
         message = mode + " " + message
-        speech.speak(message)
+        self.speakMessage(message)
         self.displayBrailleMessage(message, -1, -1)
         settings.listShortcutsModeEnabled = True
         return True
@@ -2044,7 +2044,7 @@ class Script(script.Script):
                     # for some reason Orca cannot identify the current
                     # location, it will speak this message.
                     #
-                    speech.speak(_("Could not find current location."))
+                    self.speakMessage(_("Could not find current location."))
         return True
 
     def rightClickReviewItem(self, inputEvent=None):
@@ -3397,7 +3397,7 @@ class Script(script.Script):
                 # of the red squiggly line which indicates that a given
                 # word is not spelled correctly.
                 #
-                speech.speak(_("misspelled"))
+                self.speakMessage(_("misspelled"))
 
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
@@ -4374,7 +4374,7 @@ class Script(script.Script):
                             attribute.split(",")[0].strip().strip('"')
 
                     line = line or (localizedKey + " " + localizedValue)
-                    speech.speak(line)
+                    self.speakMessage(line)
 
     def presentToolTip(self, obj):
         """
@@ -4491,7 +4491,7 @@ class Script(script.Script):
             result = \
               self.speechGenerator.generateTextIndentation(obj, line=line)
             if result:
-                speech.speak(result[0])
+                self.speakMessage(result[0])
             line = self.utilities.adjustForLinks(obj, line, startOffset)
             line = self.utilities.adjustForRepeats(line)
             speech.speak(line, voice)
@@ -4739,8 +4739,7 @@ class Script(script.Script):
                 # they were searching for was not found.
                 #
                 message = _("string not found")
-                self.displayBrailleMessage(message)
-                speech.speak(message)
+                self.presentMessage(message)
             else:
                 context.setCurrent(location.lineIndex, location.zoneIndex, \
                                    location.wordIndex, location.charIndex)
@@ -5342,7 +5341,7 @@ class Script(script.Script):
                 # of the red squiggly line which indicates that a given
                 # word is not spelled correctly.
                 #
-                speech.speak(_("misspelled"))
+                self.speakMessage(_("misspelled"))
             # Store this word so that we do not continue to present the
             # presence of the red squiggly as the user arrows amongst
             # the characters.

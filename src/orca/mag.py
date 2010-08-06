@@ -41,7 +41,6 @@ import pyatspi
 import debug
 import eventsynthesizer
 import settings
-import speech
 import orca_state
 
 from orca_i18n import _  # for gettext support
@@ -1553,7 +1552,8 @@ def toggleColorEnhancements(script=None, inputEvent=None):
         # make to the appearance of the screen to make things easier
         # to see, such as inverting the colors or applying a tint.
         #
-        speech.speak(_("Color enhancements disabled."))
+        orca_state.activeScript.presentMessage(
+            _("Color enhancements disabled."))
     else:
         toRestore = {'magZoomFactor': levelX}
         __setupZoomer(restore = toRestore)
@@ -1561,7 +1561,7 @@ def toggleColorEnhancements(script=None, inputEvent=None):
         # make to the appearance of the screen to make things easier
         # to see, such as inverting the colors or applying a tint.
         #
-        speech.speak(_("Color enhancements enabled."))
+        orca_state.activeScript.presentMessage(_("Color enhancements enabled."))
 
     orca_state.colorEnhancementsEnabled = \
                                     not orca_state.colorEnhancementsEnabled
@@ -1583,7 +1583,8 @@ def toggleMouseEnhancements(script=None, inputEvent=None):
         # easier to see, such as increasing its size, changing its
         # color, and surrounding it with crosshairs.
         #
-        speech.speak(_("Mouse enhancements disabled."))
+        orca_state.activeScript.presentMessage(
+            _("Mouse enhancements disabled."))
     else:
         # We normally toggle "on" what the user has enabled by default.
         # However, if the user's default settings are to disable all mouse
@@ -1616,7 +1617,7 @@ def toggleMouseEnhancements(script=None, inputEvent=None):
         # easier to see, such as increasing its size, changing its
         # color, and surrounding it with crosshairs.
         #
-        speech.speak(_("Mouse enhancements enabled."))
+        orca_state.activeScript.presentMessage(_("Mouse enhancements enabled."))
 
     orca_state.mouseEnhancementsEnabled = \
                                     not orca_state.mouseEnhancementsEnabled
@@ -1643,7 +1644,7 @@ def increaseMagnification(script=None, inputEvent=None):
     newLevel = levelX + increment
     if newLevel <= 16:
         setZoomerMagFactor(newLevel, newLevel)
-        speech.speak(str(newLevel))
+        orca_state.activeScript.presentMessage(str(newLevel))
 
     return True
 
@@ -1668,7 +1669,7 @@ def decreaseMagnification(script=None, inputEvent=None):
     newLevel = levelX - increment
     if newLevel >= 1:
         setZoomerMagFactor(newLevel, newLevel)
-        speech.speak(str(newLevel))
+        orca_state.activeScript.presentMessage(str(newLevel))
 
     return True
 
@@ -1681,14 +1682,14 @@ def toggleMagnifier(script=None, inputEvent=None):
         # magnifier.  In addition to screen magnification, the user's
         # preferred colors and mouse customizations are loaded.
         #
-        speech.speak(_("Magnifier enabled."))
+        orca_state.activeScript.presentMessage(_("Magnifier enabled."))
     else:
         shutdown()
         # Translators: this is the message spoken when a user disables the
         # magnifier, restoring the screen contents to their normal colors
         # and sizes.
         #
-        speech.speak(_("Magnifier disabled."))
+        orca_state.activeScript.presentMessage(_("Magnifier disabled."))
 
     return True
 
@@ -1774,6 +1775,6 @@ def cycleZoomerType(script=None, inputEvent=None):
         # This shouldn't happen, but just in case....
         zoomerType = ""
 
-    speech.speak(zoomerType)
+    orca_state.activeScript.presentMessage(zoomerType)
 
     return True

@@ -104,14 +104,15 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             # Translators: this announces that the current object is the same
             # object pointed to by the bookmark.
             #
-            speech.speak(_('bookmark is current object'))
+            self._script.presentMessage(_('bookmark is current object'))
             return
         # Are their parents the same?
         elif self._script.utilities.isSameObject(cur_obj.parent, obj.parent):
             # Translators: this announces that the current object's parent and 
             # the parent of the object pointed to by the bookmark are the same.
             #
-            speech.speak(_('bookmark and current object have same parent'))
+            self._script.presentMessage(
+                _('bookmark and current object have same parent'))
             return
         
         # Do they share a common ancestor?
@@ -128,14 +129,15 @@ class GeckoBookmarks(bookmarks.Bookmarks):
                 # Translators: this announces that the bookmark and the current
                 # object share a common ancestor
                 #
-                speech.speak(_('shared ancestor %s') %p.getRole())
+                self._script.presentMessage(
+                    _('shared ancestor %s') % p.getRole())
                 return
             p = p.parent
         
         # Translators: This announces that a comparison between the bookmark
         # and the current object can not be determined.
         #
-        speech.speak(_('comparison unknown'))
+        self._script.presentMessage(_('comparison unknown'))
         
     def saveBookmarks(self, inputEvent):
         """ Save the bookmarks for this script. """
@@ -150,12 +152,12 @@ class GeckoBookmarks(bookmarks.Bookmarks):
             # Translators: this announces that a bookmark has been saved to 
             # disk
             #
-            speech.speak(_('bookmarks saved'))
+            self._script.presentMessage(_('bookmarks saved'))
         except IOError:
             # Translators: this announces that a bookmark could not be saved to 
             # disk
             #
-            speech.speak(_('bookmarks could not be saved'))
+            self._script.presentMessage(_('bookmarks could not be saved'))
 
         # Notify the observers
         for o in self._saveObservers:

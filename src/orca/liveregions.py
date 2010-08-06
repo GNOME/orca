@@ -215,7 +215,7 @@ class LiveRegionManager:
                 utts = message['content']
             else:
                 utts = message['labels'] + message['content']
-            speech.speak(utts)
+            self._script.presentMessage(utts)
 
             # set the last live obj to be announced
             self.lastliveobj = obj
@@ -296,9 +296,9 @@ class LiveRegionManager:
             # Tranlators: this tells the user that a cached message
             # is not available.
             #
-            speech.speak(_('no live message saved'))
+            self._script.presentMessage(_('no live message saved'))
         else:
-            speech.speak(self.msg_cache[-msgnum])
+            self._script.presentMessage(self.msg_cache[-msgnum])
 
     def setLivePolitenessOff(self):
         """User toggle to set all live regions to LIVE_OFF or back to their
@@ -313,8 +313,7 @@ class LiveRegionManager:
         if self.monitoring:
             # Translators: This lets the user know that all live regions
             # have been turned off.
-            speech.speak(_("All live regions set to off"))
-
+            self._script.presentMessage(_("All live regions set to off"))
             self.msg_queue.clear()
             
             # First we'll save off a copy for quick restoration
@@ -341,7 +340,8 @@ class LiveRegionManager:
                 self._politenessOverrides[key] = value
             # Translators: This lets the user know that all live regions
             # have been restored to their original politeness level.
-            speech.speak(_("live regions politeness levels restored"))
+            self._script.presentMessage(
+                _("live regions politeness levels restored"))
 
             # Toggle our flag
             self.monitoring = True  
@@ -463,8 +463,9 @@ class LiveRegionManager:
             utts = labels + content
             speech.stop()
             # Note: we would like to use a different ACSS for alerts.  This work
-            # should be done as part of bug #412656.
-            speech.speak(utts)
+            # should be done as part of bug #412656. For now, however, we will
+            # also present the message in braille.
+            self._script.presentMessage(utts)
             return None
         else:
             return {'content':content, 'labels':labels}

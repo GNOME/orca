@@ -32,7 +32,6 @@ import re
 import debug
 import flat_review
 import orca_state
-import speech
 
 from orca_i18n import _    # for gettext support
 
@@ -251,6 +250,7 @@ class SearchQuery:
                     # Then we're at the screen's edge.
                     #
                     if self.windowWrap and not wrappedYet:
+                        script = orca_state.activeScript
                         doneWithLine = False
                         wrappedYet = True
                         if self.searchBackwards:
@@ -263,7 +263,7 @@ class SearchQuery:
                             # direction is wrapping from the top of
                             # the window down to the bottom.
                             #
-                            speech.speak(_("Wrapping to Bottom"))
+                            script.presentMessage(_("Wrapping to Bottom"))
                             moved = context.goPrevious( \
                                     flat_review.Context.LINE, \
                                     flat_review.Context.WRAP_ALL)
@@ -278,7 +278,7 @@ class SearchQuery:
                             # direction is wrapping from the bottom of
                             # the window up to the top.
                             #
-                            speech.speak(_("Wrapping to Top"))
+                            script.presentMessage(_("Wrapping to Top"))
                             moved = context.goNext( \
                                     flat_review.Context.LINE, \
                                     flat_review.Context.WRAP_ALL)

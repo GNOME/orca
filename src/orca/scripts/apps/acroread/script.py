@@ -274,12 +274,12 @@ class Script(default.Script):
             #
             line = _("table with %(rows)d rows and %(columns)d columns.") \
                    % {"rows" : newFocusRows, "columns" : newFocusColumns}
-            speech.speak(line)
+            self.presentMessage(line)
 
         elif oldFocusIsTable and not newFocusIsTable:
             # We've left a table.  Announce this fact.
             #
-            speech.speak(_("leaving table."))
+            self.presentMessage(_("leaving table."))
 
         elif oldFocusIsTable and newFocusIsTable:
             # See if we've crossed a cell boundary.  If so, speak
@@ -299,13 +299,13 @@ class Script(default.Script):
                 #
                 line = _("row %(row)d, column %(column)d") \
                        % {"row": newRow, "column": newCol}
-                speech.speak(line)
+                self.presentMessage(line)
             elif newCol != oldCol:
                 # Translators: this represents the column we're
                 # on in a table.
                 #
                 line = _("column %d") % newCol
-                speech.speak(line)
+                self.presentMessage(line)
 
     def isInFindToolbar(self, obj):
         """Examines the current object to identify if it is in the Find

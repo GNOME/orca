@@ -27,7 +27,6 @@ __license__   = "LGPL"
 
 import orca.debug as debug
 import orca.default as default
-import orca.speech as speech
 
 from orca.orca_i18n import _        # for gettext support
 from orca.orca_i18n import ngettext # for gettext support
@@ -97,7 +96,7 @@ class Script(default.Script):
         currentTime = time.time()
         if not self.startTime or \
            (currentTime > (self.startTime + self.searchInterval)):
-            speech.speak(_("Searching."))
+            self.presentMessage(_("Searching."))
             self.startTime = time.time()
 
         return True
@@ -169,7 +168,7 @@ class Script(default.Script):
                           + "search completed.")
 
             self.searching = False
-            speech.speak(_("Search complete."))
+            self.presentMessage(_("Search complete."))
             sensitive = self.fileTable.getState().contains( \
                                                 pyatspi.STATE_SENSITIVE)
             if sensitive:
@@ -180,9 +179,9 @@ class Script(default.Script):
                 noFilesString = ngettext("%d file found",
                                          "%d files found",
                                          fileCount) % fileCount
-                speech.speak(noFilesString)
+                self.presentMessage(noFilesString)
             else:
-                speech.speak(_("No files found."))
+                self.presentMessage(_("No files found."))
 
         # Pass the event onto the parent class to be handled in the default way.
         #

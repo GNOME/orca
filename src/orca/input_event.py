@@ -203,12 +203,7 @@ class InputEventHandler:
 
         if settings.learnModeEnabled and self._learnModeEnabled:
             if self.description:
-                # These imports are here to eliminate circular imports.
-                #
-                import braille
-                import speech
-                braille.displayMessage(self.description)
-                speech.speak(self.description)
+                script.presentMessage(self.description)
                 consumed = True
         else:
             try:

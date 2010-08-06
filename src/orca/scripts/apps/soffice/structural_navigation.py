@@ -120,9 +120,9 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
             # Translators: this represents the (row, col) position of
             # a cell in a table.
             #
-            speech.speak(_("Row %(row)d, column %(column)d.") \
-                         % {"row" : row + 1, "column" : col + 1})
+            self._script.presentMessage(_("Row %(row)d, column %(column)d.") \
+                                       % {"row" : row + 1, "column" : col + 1})
 
         spanString = self._getCellSpanInfo(cell)
         if spanString and settings.speakCellSpan:
-            speech.speak(spanString)
+            self._script.presentMessage(spanString)

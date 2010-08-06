@@ -358,7 +358,9 @@ def cycleDebugLevel(script=None, inputEvent=None):
 
     debug.debugLevel = levels[levelIndex]
 
-    speech.speak("Debug level %s." % levels[levelIndex + 1])
+    briefMessage = levels[levelIndex + 1]
+    fullMessage =  "Debug level %s." % briefMessage
+    orca_state.activeScript.presentMessage(fullMessage, briefMessage)
 
     return True
 
@@ -1342,7 +1344,7 @@ def listShortcuts(event):
             orca_state.activeScript.presentMessage(message)
             message = orca_state.listOfShortcuts[orca_state.ptrToShortcut][0]+ \
               " " + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
-            speech.speak(message)
+            orca_state.activeScript.speakMessage(message)
             orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
         elif (event.event_string == "2"):
@@ -1365,7 +1367,7 @@ def listShortcuts(event):
                 message = \
                   orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
                   " " + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
-                speech.speak(message)
+                orca_state.activeScript.speakMessage(message)
                 orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             else:
                 # Translators: This message is presented when the user is in
@@ -1375,7 +1377,7 @@ def listShortcuts(event):
                 #
                 message = _("No Orca shortcuts for %s found.") % \
                     (orca_state.activeScript.app.name)
-                speech.speak(message)
+                orca_state.activeScript.speakMessage(message)
                 orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
         elif (event.event_string == "Up"):
@@ -1396,7 +1398,7 @@ def listShortcuts(event):
                 message = \
                   orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
                   " " + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
-                speech.speak(message)
+                orca_state.activeScript.speakMessage(message)
                 orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
         elif (event.event_string == "Down"):
@@ -1416,7 +1418,7 @@ def listShortcuts(event):
                 message = \
                   orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
                   " " + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
-                speech.speak(message)
+                orca_state.activeScript.speakMessage(message)
                 orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
         elif (event.event_string == "Escape"):
@@ -1434,7 +1436,7 @@ def listShortcuts(event):
             message = _("Press 1 for Orca's default shortcuts. Press 2 for " \
                         "Orca's shortcuts for the current application. " \
                         "Press escape to exit.")
-            speech.speak(message)
+            orca_state.activeScript.speakMessage(message)
             orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
     elif (event.type == pyatspi.KEY_RELEASED_EVENT) and (event.event_string \
@@ -1673,8 +1675,7 @@ def shutdown(script=None, inputEvent=None):
 
     # Translators: this is what Orca speaks and brailles when it quits.
     #
-    speech.speak(_("Goodbye."))
-    braille.displayMessage(_("Goodbye."))
+    orca_state.activeScript.presentMessage(_("Goodbye."))
 
     # Deregister our event listeners
     #
