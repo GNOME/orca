@@ -43,7 +43,7 @@ import orca
 import orca_gtkbuilder
 import orca_prefs
 import orca_state
-import platform
+import orca_platform
 import settings
 import default    # for the default keyBindings
 import input_event
@@ -58,7 +58,7 @@ try:
     import louis
 except ImportError:
     louis = None
-from platform import tablesdir
+from orca_platform import tablesdir
 if louis and not tablesdir:
     louis = None
 
@@ -5030,15 +5030,15 @@ def showPreferencesUI():
 
         prefsDict = orca_prefs.readPreferences()
         orca_state.prefsUIFile = \
-            os.path.join(platform.prefix,
-                         platform.datadirname,
-                         platform.package,
+            os.path.join(orca_platform.prefix,
+                         orca_platform.datadirname,
+                         orca_platform.package,
                          "ui",
                          "orca-setup.ui")
         orca_state.advancedMagUIFile = \
-            os.path.join(platform.prefix,
-                         platform.datadirname,
-                         platform.package,
+            os.path.join(orca_platform.prefix,
+                         orca_platform.datadirname,
+                         orca_platform.package,
                          "ui",
                          "orca-advanced-magnification.ui")
         orca_state.advancedMag = \
@@ -5054,9 +5054,9 @@ def showPreferencesUI():
     else:
         if not orca_state.orcaWD:
             orca_state.orcaWarningDialogUIFile = \
-                os.path.join(platform.prefix,
-                             platform.datadirname,
-                             platform.package,
+                os.path.join(orca_platform.prefix,
+                             orca_platform.datadirname,
+                             orca_platform.package,
                              "ui",
                              "orca-preferences-warning.ui")
             orca_state.orcaWD = \

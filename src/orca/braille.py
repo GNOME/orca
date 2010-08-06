@@ -72,14 +72,14 @@ import settings
 
 # Right now, the orca autogen.sh/configure needs a priori knowledge of
 # where the liblouis tables are.  When running autogen.sh/configure,
-# platform.py:tablesdir will be set to point to the liblouis table
+# orca_platform.py:tablesdir will be set to point to the liblouis table
 # location.  If not found, it will be the empty string.  We need to
 # capture that error condition, otherwise braille contraction will
 # just plain fail.  See also bgo#610134.  [[TODO: WDW - see if the
 # liblouis bindings can give us the tablesdir information at runtime
 # http://code.google.com/p/liblouis/issues/detail?id=9]]
 #
-from platform import tablesdir
+from orca_platform import tablesdir
 if louis and not tablesdir:
     debug.println(debug.LEVEL_SEVERE,
                   "Contraction tables for liblouis cannot be found.")

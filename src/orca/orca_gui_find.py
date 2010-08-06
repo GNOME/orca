@@ -34,7 +34,7 @@ import locale
 import find
 import orca_gtkbuilder
 import orca_state
-import platform
+import orca_platform
 
 from orca_i18n import _  # for gettext support
 
@@ -246,9 +246,9 @@ def showFindUI():
     global OS
 
     if not OS:
-        uiFile = os.path.join(platform.prefix,
-                              platform.datadirname,
-                              platform.package,
+        uiFile = os.path.join(orca_platform.prefix,
+                              orca_platform.datadirname,
+                              orca_platform.package,
                               "ui",
                               "orca-find.ui")
         OS = OrcaFindGUI(uiFile, "findDialog")

@@ -31,7 +31,7 @@ import threading
 import BaseHTTPServer
 
 import debug
-import platform
+import orca_platform
 import settings
 import speech
 
@@ -67,7 +67,7 @@ class _HTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.send_header("Content-type", "text/html")
         self.end_headers()
         self.wfile.write("<html><body><p>Orca %s</p></body></html>" \
-                         % platform.version)
+                         % orca_platform.version)
 
     def do_POST(self):
         contentLength = self.headers.getheader('content-length')

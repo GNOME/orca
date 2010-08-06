@@ -82,7 +82,7 @@ import httpserver
 import keynames
 import keybindings
 import orca_state
-import platform
+import orca_platform
 import speech
 
 from input_event import BrailleEvent
@@ -1765,7 +1765,7 @@ def usage():
     #
     print "-?, --help                   " + _("Show this help message")
 
-    print "-v, --version                %s" % platform.version
+    print "-v, --version                %s" % orca_platform.version
 
     # Translators: this is a testing option for the command line.  It prints
     # the names of the applications known to the accessibility infrastructure
@@ -2044,7 +2044,7 @@ def main():
                 usage()
                 die(0)
             if opt in ("-v", "--version"):
-                print "Orca %s" % platform.version
+                print "Orca %s" % orca_platform.version
                 die(0)
             if opt == "--debug":
                 _debugSwitch = True

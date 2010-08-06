@@ -34,7 +34,7 @@ import locale
 import orca
 import orca_gtkbuilder
 import orca_state
-import platform
+import orca_platform
 import settings
 
 OS = None
@@ -111,9 +111,9 @@ def showQuitUI():
     global OS
 
     if not OS:
-        uiFile = os.path.join(platform.prefix,
-                              platform.datadirname,
-                              platform.package,
+        uiFile = os.path.join(orca_platform.prefix,
+                              orca_platform.datadirname,
+                              orca_platform.package,
                               "ui",
                               "orca-quit.ui")
         OS = OrcaQuitGUI(uiFile, "quitDialog")

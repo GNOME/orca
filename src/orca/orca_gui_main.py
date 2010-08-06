@@ -32,7 +32,7 @@ import locale
 
 import orca
 import orca_gtkbuilder
-import platform
+import orca_platform
 
 from orca_i18n import _           # for gettext support
 
@@ -139,7 +139,7 @@ class OrcaMainGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.aboutDialog.set_license(licenseText)
         self.aboutDialog.set_logo_icon_name('orca')
         self.aboutDialog.set_name(_('Orca'))
-        self.aboutDialog.set_version(platform.version)
+        self.aboutDialog.set_version(orca_platform.version)
         self.aboutDialog.set_website(url)
         self.aboutDialog.connect('response', self.aboutDialogOnResponse)
         self.aboutDialog.show()
@@ -201,9 +201,9 @@ def showMainUI():
     global OS
 
     if not OS:
-        uiFile = os.path.join(platform.prefix,
-                              platform.datadirname,
-                              platform.package,
+        uiFile = os.path.join(orca_platform.prefix,
+                              orca_platform.datadirname,
+                              orca_platform.package,
                               "ui",
                               "orca-mainwin.ui")
         OS = OrcaMainGUI(uiFile, "mainWindow")

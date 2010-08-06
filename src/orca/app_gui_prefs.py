@@ -41,7 +41,7 @@ import orca_gtkbuilder
 import orca_gui_prefs
 import orca_prefs
 import orca_state
-import platform
+import orca_platform
 import settings
 import speech
 
@@ -329,15 +329,15 @@ def showPreferencesUI():
 
         prefsDict = orca_prefs.readPreferences()
         orca_state.prefsUIFile = \
-            os.path.join(platform.prefix,
-                         platform.datadirname,
-                         platform.package,
+            os.path.join(orca_platform.prefix,
+                         orca_platform.datadirname,
+                         orca_platform.package,
                          "ui",
                          "orca-setup.ui")
         orca_state.advancedMagUIFile = \
-            os.path.join(platform.prefix,
-                         platform.datadirname,
-                         platform.package,
+            os.path.join(orca_platform.prefix,
+                         orca_platform.datadirname,
+                         orca_platform.package,
                          "ui",
                          "orca-advanced-magnification.ui")
         orca_state.advancedMag = \
@@ -354,9 +354,9 @@ def showPreferencesUI():
     else:
         if not orca_state.orcaWD:
             orca_state.orcaWarningDialogUIFile = \
-                os.path.join(platform.prefix,
-                             platform.datadirname,
-                             platform.package,
+                os.path.join(orca_platform.prefix,
+                             orca_platform.datadirname,
+                             orca_platform.package,
                              "ui",
                              "orca-preferences-warning.ui")
             orca_state.orcaWD = \
