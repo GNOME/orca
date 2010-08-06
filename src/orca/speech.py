@@ -184,11 +184,21 @@ def _speak(text, acss, interrupt):
     if _speechserver:
         _speechserver.speak(text, __resolveACSS(acss), interrupt)
 
-
 def speak(content, acss=None, interrupt=True):
     """Speaks the given content.  The content can be either a simple
     string or an array of arrays of objects returned by a speech
     generator."""
+
+    if settings.silenceSpeech:
+        return
+
+    validTypes = (basestring, list, sound.Sound, speech_generator.Pause,
+                  speech_generator.LineBreak, ACSS)
+    error = "bad content sent to speech.speak: '%s'"
+    if not isinstance(content, validTypes):
+        debug.printStack(debug.LEVEL_WARNING)
+        debug.println(debug.LEVEL_WARNING, error % content)
+        return
 
     # We will not interrupt a key echo in progress.
     #
@@ -196,59 +206,48 @@ def speak(content, acss=None, interrupt=True):
         interrupt = interrupt \
             and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
 
-    if settings.silenceSpeech:
-        return
-
-    subString = None
     if isinstance(content, basestring):
-        subString = content
-    elif isinstance(content, list):
-        for element in content:
-            if isinstance(element, basestring):
-                if subString:
-                    subString += " " + element
-                else:
-                    subString = element
-            elif isinstance(element, speech_generator.Pause):
-                if subString:
-                    if subString[-1] != ".":
-                        subString += "."
-                    if settings.enablePauseBreaks:
-                        _speak(subString, acss, interrupt)
-                        subString = None
-            elif isinstance(element, speech_generator.LineBreak):
-                if subString:
-                    _speak(subString, acss, interrupt)
-                    subString = None
-            elif isinstance(element, sound.Sound):
-                if subString:
-                    _speak(subString, acss, interrupt)
-                    subString = None
-                element.play()
-            else:
-                if subString:
-                    _speak(subString, acss, interrupt)
-                subString = None
-                if isinstance(element, list):
-                    speak(element, acss, interrupt)
-                elif isinstance(element, ACSS):
-                    acss = ACSS(acss)
-                    acss.update(element)
-                else:
-                    debug.println(debug.LEVEL_WARNING,
-                                  "UNKNOWN speech element: '%s'" % element)
+        _speak(content, acss, interrupt)
     elif isinstance(content, sound.Sound):
         content.play()
-    elif isinstance(content, (speech_generator.Pause,
-                              speech_generator.LineBreak)):
-        pass
-    else:
-        debug.printStack(debug.LEVEL_WARNING)
-        debug.println(debug.LEVEL_WARNING, 
-                      "bad content sent to speech.speak: '%s'" % repr(content))
+    if not isinstance(content, list):
+        return
 
-    if subString:
-        _speak(subString, acss, interrupt)
+    toSpeak = []
+    activeVoice = ACSS(acss)
+    for element in content:
+        if not isinstance(element, validTypes):
+            debug.println(debug.LEVEL_WARNING, error % element)
+        elif isinstance(element, list):
+            speak(element, acss, interrupt)
+        elif isinstance(element, basestring):
+            if len(element):
+                toSpeak.append(element)
+        elif toSpeak:
+            newVoice = ACSS(acss)
+            newItemsToSpeak = []
+            if isinstance(element, speech_generator.Pause):
+                if not toSpeak[-1].endswith('.'):
+                    toSpeak[-1] += '.'
+                if not settings.enablePauseBreaks:
+                    continue
+            elif isinstance(element, ACSS):
+                newVoice.update(element)
+                if newVoice and newVoice == activeVoice:
+                    continue
+                newItemsToSpeak.append(toSpeak.pop())
+
+            string = " ".join(toSpeak)
+            _speak(string, activeVoice, interrupt)
+            activeVoice = newVoice
+            toSpeak = newItemsToSpeak
+
+        if isinstance(element, sound.Sound):
+            element.play()
+
+    if toSpeak:
+        string = " ".join(toSpeak)
+        _speak(string, activeVoice, interrupt)
 
 def speakKeyEvent(event_string, eventType):
     """Speaks a key event immediately.
