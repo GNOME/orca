@@ -5725,11 +5725,11 @@ class Script(script.Script):
     ########################################################################
 
     @staticmethod
-    def speakMessage(string):
+    def speakMessage(string, interrupt=True):
         """Method to speak a single string. Scripts should use this
         method rather than calling speech.speak directly."""
 
-        speech.speak(string)
+        speech.speak(string, interrupt=interrupt)
 
     @staticmethod
     def presentItemsInSpeech(items):
