@@ -64,6 +64,18 @@ if test x$louis_available = "xyes"; then
 fi
 AC_SUBST(LOUIS_TABLE_DIR)
 
+dnl Check for the OS. On *Solaris systems the PATH must be setted
+PLATFORM=`uname -a`
+case "${PLATFORM}" in
+    *SunOS*)
+            PLATFORM_PATH=":/usr/ccs/bin:/usr/bin:/usr/sbin:/bin:/usr/sfw/bin:/usr/openwin/bin:/usr/X11R6/bin"
+            ;;
+    *Linux*)
+            PLATFORM_PATH=":/usr/bin:/usr/sbin:/bin"
+            ;;
+esac
+AC_SUBST(PLATFORM_PATH)
+
 AC_OUTPUT([ 
 run_pylint.sh
 Makefile
