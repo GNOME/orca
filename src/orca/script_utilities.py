@@ -2520,7 +2520,7 @@ class Utilities:
             # characters, e.g. 'X' followed by 'superscript 2' followed by
             # 'superscript 3' should be presented as 'X superscript 23'.
             #
-            newString = _(" superscript %s" % "".join(new))
+            newString = _(" superscript %s") % "".join(new)
             uString = re.sub(number, newString, uString)
 
         for number in subscripted:
@@ -2530,7 +2530,7 @@ class Utilities:
             # characters, e.g. 'X' followed by 'subscript 2' followed by
             # 'subscript 3', should be presented as 'X subscript 23.'
             #
-            newString = _(" subscript %s" % "".join(new))
+            newString = _(" subscript %s") % "".join(new)
             uString = re.sub(number, newString, uString)
 
         return uString.encode("UTF-8")
