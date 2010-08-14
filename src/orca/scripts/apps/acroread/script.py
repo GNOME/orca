@@ -37,6 +37,7 @@ import orca.settings as settings
 import orca.speech as speech
 
 from orca.orca_i18n import _ # for gettext support
+from orca.orca_i18n import ngettext
 
 ########################################################################
 #                                                                      #
@@ -270,10 +271,18 @@ class Script(default.Script):
         # need to detect this and adjust accordingly.]]]
 
         if not oldFocusIsTable and newFocusIsTable:
-            # We've entered a table.  Announce the dimensions.
+            # Translators: this represents the number of rows in a table.
             #
-            line = _("table with %(rows)d rows and %(columns)d columns.") \
-                   % {"rows" : newFocusRows, "columns" : newFocusColumns}
+            rowString = ngettext("table with %d row",
+                                 "table with %d rows",
+                                 newFocusRows) % newFocusRows
+            # Translators: this represents the number of columns in a table.
+            #
+            colString = ngettext("%d column",
+                                 "%d columns",
+                                 newFocusColumns) % newFocusColumns
+
+            line = rowString + " " + colString
             self.presentMessage(line)
 
         elif oldFocusIsTable and not newFocusIsTable:

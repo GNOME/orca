@@ -49,6 +49,7 @@ import orca.speech as speech
 import orca.settings as settings
 
 from orca.orca_i18n import _ # for gettext support
+from orca.orca_i18n import ngettext
 
 from speech_generator import SpeechGenerator
 from braille_generator import BrailleGenerator
@@ -723,11 +724,20 @@ class Script(default.Script):
                 #
                 self.presentMessage(_("leaving table."))
             if newTable:
-                # We've entered a table.  Announce the dimensions.
+                nRows = newTable.nRows
+                nColumns = newTable.nColumns
+                # Translators: this represents the number of rows in a table.
                 #
-                line = _("table with %(rows)d rows and %(columns)d columns.") \
-                       % {"rows" : newTable.nRows,
-                          "columns" : newTable.nColumns}
+                rowString = ngettext("table with %d row",
+                                     "table with %d rows",
+                                     nRows) % nRows
+                # Translators: this represents the number of columns in a table.
+                #
+                colString = ngettext("%d column",
+                                     "%d columns",
+                                     nColumns) % nColumns
+
+                line = rowString + " " + colString
                 self.presentMessage(line)
 
         if not newTable:

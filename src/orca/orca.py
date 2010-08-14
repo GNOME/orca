@@ -91,6 +91,7 @@ from input_event import MouseButtonEvent
 from input_event import keyEventToString
 
 from orca_i18n import _           # for gettext support
+from orca_i18n import ngettext
 
 if settings.debugMemoryUsage:
     import gc
@@ -1339,7 +1340,9 @@ def listShortcuts(event):
             # 'list of shortcuts mode'. In this messsage, we present the
             # number of shortcuts found.
             #
-            message = _("%d Orca default shortcuts found.") % numShortcuts
+            message = ngettext("%d Orca default shortcut found.",
+                               "%d Orca default shortcuts found.",
+                               numShortcuts) % numShortcuts
             message = message + " " + navigation
             orca_state.activeScript.presentMessage(message)
             message = orca_state.listOfShortcuts[orca_state.ptrToShortcut][0]+ \
@@ -1358,10 +1361,12 @@ def listShortcuts(event):
                 # 'list of shortcuts mode'. In this message, we present the
                 # number of shortcuts found for the named application.
                 #
-                message = \
-                    _("%(count)d Orca shortcuts for %(application)s found.") % \
-                     {"count" : numShortcuts,
-                      "application" : orca_state.activeScript.app.name}
+                message = ngettext( \
+                    "%(count)d Orca shortcut for %(application)s found.",
+                    "%(count)d Orca shortcuts for %(application)s found.",
+                    numShortcuts) % \
+                    {"count" : numShortcuts,
+                     "application" : orca_state.activeScript.app.name}
                 message = message + " " + navigation
                 orca_state.activeScript.presentMessage(message)
                 message = \

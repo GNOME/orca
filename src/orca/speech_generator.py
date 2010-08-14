@@ -991,7 +991,9 @@ class SpeechGenerator(generator.Generator):
                 * 100.0
             # Translators: this is the percentage value of a progress bar.
             #
-            percentage = _("%d percent") % percentValue
+            percentage = ngettext("%d percent",
+                                  "%d percent",
+                                  percentValue) % percentValue
             result.append(percentage)
         return result
 

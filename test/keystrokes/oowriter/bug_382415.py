@@ -42,11 +42,11 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 sequence.append(utils.AssertPresentationAction(
     "Down arrow to move to the Mon table column header",
-    ["BRAILLE LINE:  'table with 7 rows and 7 columns.'",
-     "     VISIBLE:  'table with 7 rows and 7 columns.', cursor=0",
+    ["BRAILLE LINE:  'table with 7 rows 7 columns'",
+     "     VISIBLE:  'table with 7 rows 7 columns', cursor=0",
      "BRAILLE LINE:  '" + utils.getOOoBrailleLine("Writer", "table-sample(.odt|)", "Calendar-1 Table Mon Paragraph") + "'",
      "     VISIBLE:  'Mon Paragraph', cursor=1",
-     "SPEECH OUTPUT: 'table with 7 rows and 7 columns.'",
+     "SPEECH OUTPUT: 'table with 7 rows 7 columns'",
      "SPEECH OUTPUT: 'Mon'",
      "SPEECH OUTPUT: 'Cell B1'"]))
 

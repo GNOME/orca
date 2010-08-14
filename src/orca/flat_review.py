@@ -37,6 +37,7 @@ import settings
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import C_        # to provide qualified translatable strings
+from orca_i18n import ngettext
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of
@@ -443,7 +444,10 @@ class ValueZone(Zone):
             # progress bar or other component that displays a value as 
             # a percentage.
             #
-            speechValue = speechValue + " " + _("%d percent.") % percentValue
+            percentString = ngettext("%d percent.",
+                                     "%d percent.",
+                                     percentValue) % percentValue
+            speechValue = speechValue + " " + percentString
 
             if orientation:
                 brailleValue = "%s %s %d%%" % (orientation,

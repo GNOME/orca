@@ -484,7 +484,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # current position divided by the total number of objects on the
             # page.
             #
-            result.append(_('%d percent of document read') % percent)
+            result.append(ngettext \
+                ('%d percent of document read',
+                 '%d percent of document read',
+                 percent) % percent)
 
         return result
 
