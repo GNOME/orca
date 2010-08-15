@@ -2100,7 +2100,7 @@ def main():
 
     try:
         message = _("Welcome to Orca.")
-        speech.speak(message)
+        speech.speak(message, settings.voices.get(settings.SYSTEM_VOICE))
         braille.displayMessage(message)
     except:
         debug.printException(debug.LEVEL_SEVERE)

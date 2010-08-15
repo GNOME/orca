@@ -1921,6 +1921,7 @@ class Script(script.Script):
 
         obj = orca_state.locusOfFocus
         self.updateBraille(obj)
+        voice = self.voices[settings.DEFAULT_VOICE]
 
         frame, dialog = self.utilities.frameAndDialog(obj)
         if frame:
@@ -1932,19 +1933,20 @@ class Script(script.Script):
             #
             msg = self.speechGenerator.generateStatusBar(frame)
             if msg:
-                self.presentMessage(msg)
+                self.presentMessage(msg, voice=voice)
 
         window = dialog or frame
         if window:
             msg = self.speechGenerator.generateDefaultButton(window)
             if msg:
-                self.presentMessage(msg)
+                self.presentMessage(msg, voice=voice)
 
     def presentTitle(self, inputEvent):
         """Speaks and brailles the title of the window with focus."""
 
-        self.presentMessage(self.speechGenerator.generateTitle(
-                orca_state.locusOfFocus))
+        title = self.speechGenerator.generateTitle(orca_state.locusOfFocus)
+        for (string, voice) in title:
+            self.presentMessage(string, voice=voice)
 
     def readCharAttributes(self, inputEvent=None):
         """Reads the attributes associated with the current text character.
@@ -3295,18 +3297,19 @@ class Script(script.Script):
                     announceState = True
 
             if announceState:
+                voice = self.voices.get(settings.SYSTEM_VOICE)
                 if event.detail1:
                     # Translators: this object is now selected.
                     # Let the user know this.
                     #
                     #
-                    speech.speak(C_("text", "selected"), None, False)
+                    speech.speak(C_("text", "selected"), voice, False)
                 else:
                     # Translators: this object is now unselected.
                     # Let the user know this.
                     #
                     #
-                    speech.speak(C_("text", "unselected"), None, False)
+                    speech.speak(C_("text", "unselected"), voice, False)
                 return
 
         if event.type.startswith("object:state-changed:focused"):
@@ -5277,17 +5280,18 @@ class Script(script.Script):
         except:
             debug.printException(debug.LEVEL_FINEST)
 
+        voice = self.voices.get(settings.SYSTEM_VOICE)
         if self.utilities.isTextSelected(obj, startOffset, endOffset):
             # Translators: when the user selects (highlights) text in
             # a document, Orca lets them know this.
             #
-            speech.speak(C_("text", "selected"), None, False)
+            speech.speak(C_("text", "selected"), voice, False)
         elif len(text.getText(startOffset, endOffset)):
             # Translators: when the user unselects
             # (unhighlights) text in a document, Orca lets
             # them know this.
             #
-            speech.speak(C_("text", "unselected"), None, False)
+            speech.speak(C_("text", "unselected"), voice, False)
 
         self._saveLastTextSelections(text)
 
@@ -5355,8 +5359,7 @@ class Script(script.Script):
     #                                                                          #
     ############################################################################
 
-    @staticmethod
-    def presentMessage(fullMessage, briefMessage=None):
+    def presentMessage(self, fullMessage, briefMessage=None, voice=None):
         """Convenience method to speak a message and 'flash' it in braille.
 
         Arguments:
@@ -5368,6 +5371,8 @@ class Script(script.Script):
           brief. Note that providing no briefMessage will result in the full
           message being used for either. Callers wishing to present nothing as
           the briefMessage should set briefMessage to an empty string.
+        - voice: The voice to use when speaking this message. By default, the
+          "system" voice will be used.
         """
 
         if not fullMessage:
@@ -5382,7 +5387,8 @@ class Script(script.Script):
             else:
                 message = fullMessage
             if message:
-                speech.speak(message)
+                voice = voice or self.voices.get(settings.SYSTEM_VOICE)
+                speech.speak(message, voice)
 
         if (settings.enableBraille or settings.enableBrailleMonitor) \
            and settings.enableFlashMessages:
@@ -5396,6 +5402,7 @@ class Script(script.Script):
             if isinstance(message[0], list):
                 message = message[0]
             if isinstance(message, list):
+                message = filter(lambda i: isinstance(i, str), message)
                 message = " ".join(message)
 
             if settings.flashIsPersistent:
@@ -5724,12 +5731,19 @@ class Script(script.Script):
     #                                                                      #
     ########################################################################
 
-    @staticmethod
-    def speakMessage(string, interrupt=True):
+    def speakMessage(self, string, voice=None, interrupt=True):
         """Method to speak a single string. Scripts should use this
-        method rather than calling speech.speak directly."""
+        method rather than calling speech.speak directly.
 
-        speech.speak(string, interrupt=interrupt)
+        - string: The string to be spoken.
+        - voice: The voice to use. By default, the "system" voice will
+          be used.
+        - interrupt: If True, any current speech should be interrupted
+          prior to speaking the new text.
+        """
+
+        voice = voice or self.voices.get(settings.SYSTEM_VOICE)
+        speech.speak(string, voice, interrupt)
 
     @staticmethod
     def presentItemsInSpeech(items):

@@ -85,6 +85,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # toggle columns. That's really the difference here.]]]
         #
         result = []
+        acss = self.voice(speech_generator.SYSTEM)
         try:
             parentTable = obj.parent.queryTable()
         except NotImplementedError:
@@ -129,6 +130,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         text = _("Read")
                     result.append(text)
 
+        if result:
+            result.extend(acss)
         return result
 
     def _generateUnrelatedLabels(self, obj, **args):
@@ -143,6 +146,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 _generateUnrelatedLabels(self, obj, **args)
 
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         labels = self._script.utilities.unrelatedLabels(obj)
         for label in labels:
             name = self._generateName(label, **args)
@@ -164,4 +168,5 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         #
                         name = [_("%s screen") % name]
             result.extend(name)
+            result.extend(acss)
         return result

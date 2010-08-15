@@ -96,16 +96,20 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         and an empty array will be returned if no label can be found.
         """
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         override = self.__overrideParagraph(obj, **args)
         label = self._script.utilities.displayedLabel(obj) or ""
         if not label and override:
             label = self._script.utilities.displayedLabel(obj.parent) or ""
         result.append(label.strip())
+        if result:
+            result.extend(acss)
         return result
 
     def _generateLabelOrName(self, obj, **args):
         """Gets the label or the name if the label is not preset."""
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         override = self.__overrideParagraph(obj, **args)
         # Treat a paragraph which is serving as a text entry in a dialog
         # as a text object.
@@ -125,6 +129,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 #
                 if not parentLabel and obj.name and len(obj.name):
                     result.append(obj.name)
+                if result:
+                    result.extend(acss)
         else:
             result.extend(speech_generator.SpeechGenerator._generateLabelOrName(
                 self, obj, **args))
@@ -151,6 +157,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         label.
         """
         result = []
+        acss = self.voice(speech_generator.SYSTEM)
         if obj.description:
             # The description of some OOo paragraphs consists of the name
             # and the displayed text, with punctuation added. Try to spot
@@ -165,6 +172,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.append(obj.description)
                     break
 
+        if result:
+            result.extend(acss)
         return result
 
     def _generateToggleState(self, obj, **args):
@@ -196,6 +205,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         row header(s).
         """
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         try:
             table = obj.parent.queryTable()
         except:
@@ -220,10 +230,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
+        if result:
+            result.extend(acss)
         return result
 
     def _generateNewRowHeader(self, obj, **args):
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         # Check to see if this spread sheet cell has either a dynamic
         # row heading associated with it.
         #
@@ -253,6 +266,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
+        if result:
+            result.extend(acss)
         return result
 
     def _generateColumnHeader(self, obj, **args):
@@ -263,6 +278,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         column header(s).
         """
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         try:
             table = obj.parent.queryTable()
         except:
@@ -287,10 +303,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
+        if result:
+            result.extend(acss)
         return result
 
     def _generateNewColumnHeader(self, obj, **args):
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         # Check to see if this spread sheet cell has either a dynamic
         # row heading associated with it.
         #
@@ -320,6 +339,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     text = self._script.utilities.substring(header, 0, -1)
                     if text:
                         result.append(text)
+        if result:
+            result.extend(acss)
         return result
 
     def _generateTooLong(self, obj, **args):
@@ -331,6 +352,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         of the spread sheet cell, or None if the message fits.
         """
         result = []
+        acss = self.voice(speech_generator.SYSTEM)
         try:
             text = obj.queryText()
             objectText = \
@@ -355,10 +377,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result = [ngettext("%d character too long",
                                    "%d characters too long",
                                    tooLongCount) % tooLongCount]
+        if result:
+            result.extend(acss)
         return result
 
     def _generateSpreadSheetCell(self, obj, **args):
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         if self._script.inputLineForCell == None:
             self._script.inputLineForCell = \
                 self._script.locateInputLine(obj)
@@ -373,6 +398,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     #
                     objectText = _("blank")
                 result.append(objectText)
+                result.extend(acss)
         except NotImplementedError:
             pass
 
@@ -390,6 +416,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     if char.isdigit():
                         result.append(name)
                         break
+
+        if result:
+            result.extend(acss)
 
         tooLong = self._generateTooLong(obj, **args)
         if tooLong and len(tooLong):

@@ -75,7 +75,7 @@ from orca_i18n import C_ # to provide qualified translatable strings
 
 # Must match the order of voice types in the GtkBuilder file.
 #
-(DEFAULT, UPPERCASE, HYPERLINK) = range(3)
+(DEFAULT, UPPERCASE, HYPERLINK, SYSTEM) = range(4)
 
 # Must match the order that the timeFormatCombo is populated.
 #
@@ -168,6 +168,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.speechSystemsChoice = None
         self.speechSystemsChoices = None
         self.speechSystemsModel = None
+        self.systemVoice = None
         self.uppercaseVoice = None
         self.window = None
         self.workingFactories = None
@@ -469,7 +470,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Return the ACSS value for the the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
 
         Returns the voice dictionary for the given voice type.
         """
@@ -480,6 +481,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             voiceACSS = self.uppercaseVoice
         elif voiceType == HYPERLINK:
             voiceACSS = self.hyperlinkVoice
+        elif voiceType == SYSTEM:
+            voiceACSS = self.systemVoice
         else:
             voiceACSS = self.defaultVoice
 
@@ -502,7 +505,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
            for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
         - key: the key to look for in the voice dictionary.
         - useDefault: if True, and the key isn't found for the given voice
                       type, the look for it in the default voice dictionary
@@ -525,6 +528,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 if not useDefault:
                     return None
                 voice = self.defaultVoice
+        elif voiceType == SYSTEM:
+            voice = self.systemVoice
+            if key not in voice:
+                if not useDefault:
+                    return None
+                voice = self.defaultVoice
         else:
             voice = self.defaultVoice
 
@@ -537,7 +546,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Gets the name of the voice family for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
 
         Returns the name of the voice family for the given voice type,
         or None if not set.
@@ -555,7 +564,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Sets the name of the voice family for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
         - name: the name of the voice family to set.
         - language: the locale of the voice family to set.
         """
@@ -580,7 +589,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Gets the speaking rate value for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
 
         Returns the rate value for the given voice type, or None if
         not set.
@@ -592,7 +601,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Sets the speaking rate value for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
         - value: the rate value to set.
         """
 
@@ -604,7 +613,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Gets the pitch value for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
 
         Returns the pitch value for the given voice type, or None if
         not set.
@@ -617,7 +626,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Sets the pitch value for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
         - value: the pitch value to set.
         """
 
@@ -629,7 +638,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Gets the volume (gain) value for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
 
         Returns the volume (gain) value for the given voice type, or
         None if not set.
@@ -641,7 +650,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Sets the volume (gain) value for the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
         - value: the volume (gain) value to set.
         """
 
@@ -654,7 +663,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         on the given voice type.
 
         Arguments:
-        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK
+        - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
         """
 
         familyName = self._getFamilyNameForVoiceType(voiceType)
@@ -752,6 +761,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # hyperlink.
         #
         types.append(C_("VoiceType", "Hyperlink"))
+        # Translators: This refers to the voice used by Orca when
+        # presenting information which is not displayed on the screen
+        # as text, but is still being communicated by the system in
+        # some visual fashion. For instance, Orca says "misspelled"
+        # to indicate the presence of the red squiggly line found
+        # under a spelling error; Orca might say "3 of 6" when a
+        # user Tabs into a list of six items and the third item is
+        # selected. And so on.
+        #
+        types.append(C_("VoiceType", "System"))
         self.populateComboBox(comboBox, types)
         comboBox.set_active(DEFAULT)
         voiceType = comboBox.get_active()
@@ -910,9 +929,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         voices = self.prefsDict["voices"]
-        self.defaultVoice   = acss.ACSS(voices[settings.DEFAULT_VOICE])
-        self.uppercaseVoice = acss.ACSS(voices[settings.UPPERCASE_VOICE])
-        self.hyperlinkVoice = acss.ACSS(voices[settings.HYPERLINK_VOICE])
+        self.defaultVoice   = acss.ACSS(voices.get(settings.DEFAULT_VOICE))
+        self.uppercaseVoice = acss.ACSS(voices.get(settings.UPPERCASE_VOICE))
+        self.hyperlinkVoice = acss.ACSS(voices.get(settings.HYPERLINK_VOICE))
+        self.systemVoice    = acss.ACSS(voices.get(settings.SYSTEM_VOICE))
 
         # Just a note on general naming pattern:
         #
@@ -2612,6 +2632,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             del self.defaultVoice[acss.ACSS.FAMILY]
             del self.uppercaseVoice[acss.ACSS.FAMILY]
             del self.hyperlinkVoice[acss.ACSS.FAMILY]
+            del self.systemVoice[acss.ACSS.FAMILY]
         except:
             pass
 
@@ -4199,7 +4220,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.prefsDict["voices"] = {
                 settings.DEFAULT_VOICE   : acss.ACSS(self.defaultVoice),
                 settings.UPPERCASE_VOICE : acss.ACSS(self.uppercaseVoice),
-                settings.HYPERLINK_VOICE : acss.ACSS(self.hyperlinkVoice)
+                settings.HYPERLINK_VOICE : acss.ACSS(self.hyperlinkVoice),
+                settings.SYSTEM_VOICE    : acss.ACSS(self.systemVoice),
             }
 
         settings.setGKSUGrabDisabled(self.disableKeyGrabPref)

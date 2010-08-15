@@ -308,11 +308,13 @@ def setupSpeech(prefsDict):
     defaultACSS[acss.ACSS.AVERAGE_PITCH] = 5
     uppercaseACSS = acss.ACSS({acss.ACSS.AVERAGE_PITCH : 6})
     hyperlinkACSS = acss.ACSS({})
+    systemACSS = acss.ACSS({})
 
     voices = {
         settings.DEFAULT_VOICE   : defaultACSS,
         settings.UPPERCASE_VOICE : uppercaseACSS,
-        settings.HYPERLINK_VOICE : hyperlinkACSS
+        settings.HYPERLINK_VOICE : hyperlinkACSS,
+        settings.SYSTEM_VOICE    : systemACSS
     }
 
     prefsDict["enableSpeech"] = True

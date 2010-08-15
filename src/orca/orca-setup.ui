@@ -113,6 +113,9 @@
       <row>
         <col id="0" translatable="yes">Hyperlink</col>
       </row>
+      <row>
+        <col id="0" translatable="yes">System</col>
+      </row>
     </data>
   </object>
   <object class="GtkListStore" id="model2">

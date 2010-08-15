@@ -46,14 +46,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return speech_generator.SpeechGenerator._generateName(\
                 self, obj)
 
+        result = []
+        acss = self.voice(speech_generator.DEFAULT)
         if obj.name:
             name = obj.name
         else:
             name = self._script.utilities.displayedText(obj)
 
         if name:
-            return [name]
+            result.append(name)
         elif obj.description:
-            return [obj.description]
-        else:
-            return []
+            result.append(obj.description)
+        if result:
+            result.extend(acss)
+        return result

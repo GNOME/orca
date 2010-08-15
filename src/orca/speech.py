@@ -233,12 +233,13 @@ def speak(content, acss=None, interrupt=True):
                     continue
             elif isinstance(element, ACSS):
                 newVoice.update(element)
-                if newVoice and newVoice == activeVoice:
+                if newVoice == activeVoice:
                     continue
                 newItemsToSpeak.append(toSpeak.pop())
 
-            string = " ".join(toSpeak)
-            _speak(string, activeVoice, interrupt)
+            if toSpeak:
+                string = " ".join(toSpeak)
+                _speak(string, activeVoice, interrupt)
             activeVoice = newVoice
             toSpeak = newItemsToSpeak
 

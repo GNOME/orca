@@ -54,6 +54,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateName(self, obj, **args):
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_COMBO_BOX:
             # With Gecko, a combo box has a menu as a child.  The text being
@@ -87,12 +88,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                             break
                 if child and child.name:
                     result.append(child.name)
+                if result:
+                    result.extend(acss)
+
         else:
             result.extend(speech_generator.SpeechGenerator._generateName(
                               self, obj, **args))
         if not result and role == pyatspi.ROLE_LIST_ITEM:
             result.append(self._script.utilities.expandEOCs(obj))
 
+        acss = self.voice(speech_generator.HYPERLINK)
         link = None
         if role == pyatspi.ROLE_LINK:
             link = obj
@@ -106,6 +111,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             basename = self._script.getLinkBasename(link)
             if basename:
                 result.append(basename)
+                result.extend(acss)
 
         return result
 
@@ -132,6 +138,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateLabel(self, obj, **args):
+        acss = self.voice(speech_generator.DEFAULT)
         result = speech_generator.SpeechGenerator._generateLabel(self,
                                                                  obj,
                                                                  **args)
@@ -162,6 +169,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
            and not self._script.inDocumentContent():
             result.append(obj.name)
 
+        if result:
+            result.extend(acss)
         return result
 
     def _generateLabelAndName(self, obj, **args):
@@ -196,6 +205,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being spoken."""
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
 
@@ -252,12 +262,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             else:
                 result.append(rolenames.getSpeechForRoleName(obj, role))
 
+            if result:
+                result.extend(acss)
+
             if role == pyatspi.ROLE_LINK \
                and obj.childCount and obj[0].getRole() == pyatspi.ROLE_IMAGE:
                 # If this is a link with a child which is an image, we
                 # want to indicate that.
                 #
+                acss = self.voice(speech_generator.HYPERLINK)
                 result.append(rolenames.getSpeechForRoleName(obj[0]))
+                result.extend(acss)
 
         return result
 
@@ -271,6 +286,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateNumberOfChildren(self, obj, **args):
         result = []
+        acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_LIST:
             # Translators: this represents a list in HTML.
@@ -278,6 +294,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.append(ngettext("List with %d item",
                                    "List with %d items",
                                    obj.childCount) % obj.childCount)
+            result.extend(acss)
         else:
             result.extend(
                 speech_generator.SpeechGenerator._generateNumberOfChildren(
@@ -387,17 +404,24 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             text = self._script.utilities.displayedText(parent)
             label = self._script.utilities.displayedLabel(parent)
             newResult = []
+            acss = self.voice(speech_generator.DEFAULT)
             if text and (text != label) and len(text.strip()) \
                 and (not text.startswith("chrome://")):
+                newResult.extend(acss)
                 newResult.append(text)
             if label and len(label.strip()):
+                newResult.extend(acss)
                 newResult.append(label)
 
             # Finally add the role if it's not among the roles we don't
             # wish to speak.
             #
+            acss = self.voice(speech_generator.SYSTEM)
             if not (role in dontSpeakRoles) and len(newResult):
-                result.append(rolenames.getSpeechForRoleName(parent))
+                roleInfo = rolenames.getSpeechForRoleName(parent)
+                if roleInfo:
+                    result.extend(acss)
+                    result.append(roleInfo)
 
             # If this object is an ARIA widget with STATE_REQUIRED, add
             # that. (Note that for the most part, the ARIA widget itself
@@ -448,6 +472,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         containing obj.
         """
         result = []
+        acss = self.voice(speech_generator.DEFAULT)
         headings, forms, tables, vlinks, uvlinks, percent = \
             self._script.getPageSummary(obj)
         if headings:
@@ -489,6 +514,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                  '%d percent of document read',
                  percent) % percent)
 
+        if result:
+            result.extend(acss)
         return result
 
     def generateSpeech(self, obj, **args):

@@ -373,11 +373,13 @@ speechServerInfo        = None # None means let the factory decide.
 DEFAULT_VOICE           = "default"
 UPPERCASE_VOICE         = "uppercase"
 HYPERLINK_VOICE         = "hyperlink"
+SYSTEM_VOICE            = "system"
 
 voices = {
     DEFAULT_VOICE   : ACSS({}),
     UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 5.6}),
-    HYPERLINK_VOICE : ACSS({})
+    HYPERLINK_VOICE : ACSS({}),
+    SYSTEM_VOICE    : ACSS({}),
 }
 
 # If True, enable speaking of speech indentation and justification.
