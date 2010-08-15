@@ -103,10 +103,9 @@ cleanup()
     if [ "x$PIDS" != "x" ] ; then
         kill $KILLARG $PIDS > /dev/null 2>&1
     fi
-    restoreXmodmap
 }
 
-trap cleanup HUP QUIT TERM INT ABRT
+trap cleanup HUP QUIT TERM INT ABRT EXIT
 
 # Runs orca.
 #
@@ -116,7 +115,7 @@ runOrca()
     PYTHONPATH=${PYTHONPATH}:@pyexecdir@
     export PYTHONPATH
     saveXmodmap
-    exec @PYTHON@ -c "import orca.orca; orca.orca.main()" "$ARGS"
+    @PYTHON@ -c "import orca.orca; orca.orca.main()" "$ARGS"
     restoreXmodmap
 }
 
