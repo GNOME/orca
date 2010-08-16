@@ -4450,7 +4450,7 @@ class Script(script.Script):
                     # Translators: "blank" is a short word to mean the
                     # user has navigated to an empty line.
                     #
-                    speech.speak(_("blank"), voice, False)
+                    self.speakMessage(_("blank"), interrupt=False)
                 return
 
         if character in ["\n", "\r\n"]:
@@ -4460,7 +4460,7 @@ class Script(script.Script):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #
-                speech.speak(_("blank"), voice, False)
+                self.speakMessage(_("blank"), interrupt=False)
             return
         else:
             self.speakMisspelledIndicator(obj, offset)
