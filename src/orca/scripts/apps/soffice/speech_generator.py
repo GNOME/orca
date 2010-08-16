@@ -106,6 +106,28 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(acss)
         return result
 
+    def _generateName(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the name of the object.  If the object is directly
+        displaying any text, that text will be treated as the name.
+        Otherwise, the accessible name of the object will be used.  If
+        there is no accessible name, then the description of the
+        object will be used.  This method will return an empty array
+        if nothing can be found.
+        """
+        role = args.get('role', obj.getRole())
+        if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON] \
+           and self._script.utilities.ancestorWithRole(
+                obj, [pyatspi.ROLE_TOOL_BAR], [pyatspi.ROLE_FRAME]):
+            acss = self.voice(speech_generator.SYSTEM)
+            result = [obj.name]
+            if result:
+                result.extend(acss)
+                return result
+
+        return speech_generator.SpeechGenerator._generateName(
+            self, obj, **args)
+
     def _generateLabelOrName(self, obj, **args):
         """Gets the label or the name if the label is not preset."""
         result = []
@@ -180,6 +202,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """Treat push buttons (which act like toggle buttons) and toggle
         buttons in the toolbar specially.  This is so we can have more
         natural sounding speech such as "bold on", "bold off", etc."""
+        acss = self.voice(speech_generator.SYSTEM)
         result = []
         role = args.get('role', obj.getRole())
         if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON] \
@@ -192,6 +215,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 # Translators: this represents the state of a check box
                 #
                 result.append(_("off"))
+            result.extend(acss)
         elif role == pyatspi.ROLE_TOGGLE_BUTTON:
             result.extend(speech_generator.SpeechGenerator._generateToggleState(
                 self, obj, **args))
