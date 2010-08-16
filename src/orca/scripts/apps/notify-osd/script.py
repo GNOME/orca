@@ -26,6 +26,7 @@ __copyright__ = "Copyright (c) 2009 Eitan Isaacson"
 __license__   = "LGPL"
 
 import orca.default as default
+import orca.settings as settings
 import orca.speech as speech
 
 from orca.orca_i18n import _
@@ -74,14 +75,21 @@ class Script(default.Script):
         except NotImplementedError:
             value = -1
             
+        utterances = []
         if value < 0:
-            # Not a gauge notification.
-            texts = [event.source.name, event.source.description]
             # Translators: This denotes a notification to the user of some sort.
             #
-            text = _('Notification %s') % ' '.join(texts)
+            utterances.append(_('Notification'))
+            utterances.append(self.voices.get(settings.SYSTEM_VOICE))
+            utterances.append('%s %s' \
+                              % (event.source.name, event.source.description))
+            utterances.append(self.voices.get(settings.DEFAULT_VOICE))
         else:
-            text = '%s %d' % (event.source.name, value)
+            # A gauge notification, e.g. the Ubuntu volume notification that
+            # appears when you press the multimedia keys.
+            #
+            utterances.append('%s %d' % (event.source.name, value))
+            utterances.append(self.voices.get(settings.SYSTEM_VOICE))
         
-        speech.speak(text, None, True)
+        speech.speak(utterances, None, True)
 
