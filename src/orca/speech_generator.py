@@ -178,6 +178,17 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateReadOnly(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the read only state of this object, but only if it
+        is read only (i.e., it is a text area that cannot be edited).
+        """
+        acss = self.voice(SYSTEM)
+        result = generator.Generator._generateReadOnly(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
     def _generateTextRole(self, obj, **args):
         """A convenience method to prevent the pyatspi.ROLE_PARAGRAPH role
         from being spoken. In the case of a pyatspi.ROLE_PARAGRAPH
@@ -191,11 +202,9 @@ class SpeechGenerator(generator.Generator):
         override.]]]
         """
         result = []
-        acss = self.voice(SYSTEM)
         role = args.get('role', obj.getRole())
         if role != pyatspi.ROLE_PARAGRAPH:
             result.extend(self._generateRoleName(obj, **args))
-            result.extend(acss)
         return result
 
     def _generateRoleName(self, obj, **args):
