@@ -183,7 +183,10 @@ def _speak(text, acss, interrupt):
 
     if _speechserver:
         voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
-        voice.update(acss)
+        try:
+            voice.update(acss)
+        except:
+            pass
         _speechserver.speak(text, __resolveACSS(voice), interrupt)
 
 def speak(content, acss=None, interrupt=True):
