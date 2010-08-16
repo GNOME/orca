@@ -182,7 +182,9 @@ def _speak(text, acss, interrupt):
     log.info(logLine + extraDebug)
 
     if _speechserver:
-        _speechserver.speak(text, __resolveACSS(acss), interrupt)
+        voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
+        voice.update(acss)
+        _speechserver.speak(text, __resolveACSS(voice), interrupt)
 
 def speak(content, acss=None, interrupt=True):
     """Speaks the given content.  The content can be either a simple

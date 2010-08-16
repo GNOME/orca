@@ -1152,7 +1152,8 @@ def loadUserSettings(script=None, inputEvent=None):
                 # preferences.  This is a spoken prompt to let the user
                 # know when the preferences has been reloaded.
                 #
-                speech.speak(_("Orca user settings reloaded."))
+                msg = _("Orca user settings reloaded.")
+                speech.speak(msg, settings.voices.get(settings.SYSTEM_VOICE))
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Speech module has been initialized.")
         except:
