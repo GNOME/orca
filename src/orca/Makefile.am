@@ -91,5 +91,5 @@ gfx_DATA = \
 	orca-splash.png
 
 EXTRA_DIST = \
-	$(ui_DATA)
+	$(ui_DATA) \
 	$(gfx_DATA)
