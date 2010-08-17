@@ -76,19 +76,6 @@ restoreXmodmap()
     fi
 }
 
-getOrcaInstances()
-{
-    USERID=`id | cut -f2 -d= | cut -f1 -d\(`
-
-    PIDS=`ps -eo pid,ruid,args | grep $USERID | \
-        egrep "orca[.]orca|OAFIID[:]GNOME_Speech|OAFIID[:]GNOME_Magnifier|festival [-][-]server"|\
-        grep -v grep | awk '{ print $1 }'`
-
-    PIDS=`echo $PIDS`
-
-    return $PIDS
-}
-
 # Cleans up any orca-related processes that might be running,
 # restricting it to those processes owned by the user. These include
 # orca itself, any gnome-speech synthesis drivers, and festival
@@ -100,38 +87,23 @@ cleanup()
     # Check if we should force orca to quit, or just ask it nicely.
     # kill -15, will give orca time to shutdown gracefully
     # kill -9 will terminate immediately
-    if test "$1" = "-f"; then
-        KILLARG=-9
+    if [ "$1" = "-f" ];then
+        KILLARG="-KILL"
     else
-        KILLARG=-15
+        KILLARG="-TERM"
     fi
+    USERID=$(id -u)
+    PATTERN="orca[.]orca|OAFIID[:]GNOME_Speech|OAFIID[:]GNOME_Magnifier|festival [-][-]server"
 
-    IFS='
-    '
-
-    getOrcaInstances
-    PIDS=$?
-
-    if [ "$PIDS" != "0" ] ; then
-        kill $KILLARG $PIDS > /dev/null 2>&1
-    fi
+    pkill $KILLARG -U $USERID -f "$PATTERN"
 }
 
 waitForCleanup()
 {
-    getOrcaInstances
-    PIDS=$?
-
-    while [ "$PIDS" != "0"  ]; do
-        if [ "$PIDS" = "$$" ]; then
-            break
-        fi
+    while $(cleanup) ; do
         sleep 0.5
-        getOrcaInstances
-        PIDS=$?
     done
 }
-
 
 trap cleanup HUP QUIT TERM INT ABRT EXIT
 
@@ -189,7 +161,6 @@ else
     # Allow a --replace to kill other orca processes.
     #
     if [ `echo $ARGS | grep -c "\-\-replace"` -gt 0 ] ; then
-        cleanup
         waitForCleanup
     fi
 
