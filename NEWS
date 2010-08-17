@@ -1,3 +1,54 @@
+2.31.90 - 16-August-2010
+
+General:
+
+  * Fix for bug #577705 - When Orca starts doesn't get to the component
+    with focus
+
+  * Fix for bug #623571 - Use %-d format directive, not %d, for non-
+    numeric date format strings
+
+  * Fix for bug #626967 - Orca's shellscript shouldn't use 'exec' for
+    calling the Python script
+
+  * Fix for bug #626272 - Plural forms needed for correct localization
+
+  * Fix for bug #626640 - The Solaris user's PATH is hardcoded
+
+  * Fix for bug #626498 - Traceback seen in orca_gui_prefs.py when
+    trying to bind an unbound command
+
+  * Fix for bug #626200 -  Modules should use script methods for
+    presenting messages
+
+  * Fix for bug #626075 - Speak unicode value of current character has
+    been omitted from the laptop layout
+
+Speech:
+
+  * Fix for bug #543157 - It is not always possible to distinguish on-
+    screen text from Orca's "system" messages
+
+  * Fix for bug #626713 - Orca fails to speak superscript symbols in the
+    correct language when Up/Down Arrow is used
+
+  * Fix for bug #626197 - Orca often fails to associate the correct
+    voice with the correct string when multiple voices are present in
+    an utterance
+
+  * Fix for bug #626072 - Speech Dispatcher can get stuck in a language
+    if the default voice has no language defined
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    gl          Galician                 Fran Diéguez
+    sl          Slovenian                Matej Urbančič
+    sv          Swedish                  Daniel Nylander
+    ta          Tamil                    Dr.T.Vasudevan
+    zh          Chinese (Simplified)     Ray Wang
+
+==========
+
 2.31.6 - 02-August-2010
 
 General:
