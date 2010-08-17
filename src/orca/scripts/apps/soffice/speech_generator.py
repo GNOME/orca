@@ -178,6 +178,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if that description is different from that of the name and
         label.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         if obj.description:
@@ -375,6 +378,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         Returns an indication of how many characters are greater than the size
         of the spread sheet cell, or None if the message fits.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         try:

@@ -1536,6 +1536,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("speechSupportCheckButton").set_active(enable)
         self.get_widget("speechVbox").set_sensitive(enable)
 
+        enable = prefs["onlySpeakDisplayedText"]
+        self.get_widget("onlySpeakDisplayedTextCheckButton").set_active(enable)
+        self.get_widget("speechContextVBox").set_sensitive(not enable)
+
         if prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_NONE:
             self.get_widget("noneButton").set_active(True)
@@ -1557,6 +1561,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.get_widget("rowSpeechButton").set_active(True)
         else:
             self.get_widget("cellSpeechButton").set_active(True)
+
+        self.get_widget("onlySpeakDisplayedTextCheckButton").set_active(
+            prefs["onlySpeakDisplayedText"])
 
         self.get_widget("enableSpeechIndentationCheckButton").set_active(\
             prefs["enableSpeechIndentation"])
@@ -2587,6 +2594,19 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         enable = widget.get_active()
         self.prefsDict["enableSpeech"] = enable
         self.get_widget("speechVbox").set_sensitive(enable)
+
+    def onlySpeakDisplayedTextToggled(self, widget):
+        """Signal handler for the "toggled" signal for the GtkCheckButton
+        onlySpeakDisplayedText. In addition to updating the preferences,
+        set the sensitivity of the speechContextVBox.
+
+        Arguments:
+        - widget: the component that generated the signal.
+        """
+
+        enable = widget.get_active()
+        self.prefsDict["onlySpeakDisplayedText"] = enable
+        self.get_widget("speechContextVBox").set_sensitive(not enable)
 
     def speechSystemsChanged(self, widget):
         """Signal handler for the "changed" signal for the speechSystems

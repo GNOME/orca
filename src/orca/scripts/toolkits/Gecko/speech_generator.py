@@ -32,6 +32,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.rolenames as rolenames
+import orca.settings as settings
 import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _
@@ -285,6 +286,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateNumberOfChildren(self, obj, **args):
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
@@ -416,12 +420,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # Finally add the role if it's not among the roles we don't
             # wish to speak.
             #
-            acss = self.voice(speech_generator.SYSTEM)
-            if not (role in dontSpeakRoles) and len(newResult):
-                roleInfo = rolenames.getSpeechForRoleName(parent)
-                if roleInfo:
-                    result.extend(acss)
-                    result.append(roleInfo)
+            if not settings.onlySpeakDisplayedText:
+                acss = self.voice(speech_generator.SYSTEM)
+                if not (role in dontSpeakRoles) and len(newResult):
+                    roleInfo = rolenames.getSpeechForRoleName(parent)
+                    if roleInfo:
+                        result.extend(acss)
+                        result.append(roleInfo)
 
             # If this object is an ARIA widget with STATE_REQUIRED, add
             # that. (Note that for the most part, the ARIA widget itself

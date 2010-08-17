@@ -1272,175 +1272,196 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkTable" id="checkBoxTable">
+                          <object class="GtkHBox" id="checkboxHBox">
                             <property name="visible">True</property>
-                            <property name="n_rows">4</property>
-                            <property name="n_columns">2</property>
+                            <property name="homogeneous">True</property>
                             <child>
-                              <object class="GtkCheckButton" id="speakBlankLinesCheckButton">
-                                <property name="label" translatable="yes">Speak blank lines</property>
+                              <object class="GtkVBox" id="vbox1">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="active">True</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="checkButtonToggled"/>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="enableSpeechIndentationCheckButton">
-                                <property name="label" translatable="yes">Speak _indentation and justification</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="checkButtonToggled"/>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="enableMnemonicSpeakingCheckButton">
-                                <property name="label" translatable="yes">Spea_k object mnemonics</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="active">True</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="checkButtonToggled"/>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="enableTutorialMessagesCheckButton">
-                                <property name="label" translatable="yes">Speak tutorial messages</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="active">True</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="checkButtonToggled"/>
-                              </object>
-                              <packing>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="enablePositionSpeakingCheckButton">
-                                <property name="label" translatable="yes" comments="Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').">Speak child p_osition</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="active">True</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="checkButtonToggled"/>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">2</property>
-                                <property name="bottom_attach">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="speakMultiCaseStringsAsWordsCheckButton">
-                                <property name="label" translatable="yes" comments="Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.">Speak multicase strings as wor_ds</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="active">True</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="checkButtonToggled"/>
-                              </object>
-                              <packing>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkCheckButton" id="enablePauseBreaksCheckButton">
-                                <property name="label" translatable="yes" comments="Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.">Break speech into ch_unks between pauses</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">False</property>
-                                <property name="use_underline">True</property>
-                                <property name="active">True</property>
-                                <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="checkButtonToggled"/>
-                              </object>
-                              <packing>
-                                <property name="top_attach">3</property>
-                                <property name="bottom_attach">4</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkHBox" id="hbox39">
-                                <property name="visible">True</property>
-                                <property name="spacing">3</property>
                                 <child>
-                                  <object class="GtkLabel" id="sayAllLabel">
+                                  <object class="GtkCheckButton" id="onlySpeakDisplayedTextCheckButton">
+                                    <property name="label" translatable="yes" comments="Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.">Only speak displayed text</property>
                                     <property name="visible">True</property>
-                                    <property name="label" translatable="yes" comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.">Say All B_y:</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
                                     <property name="use_underline">True</property>
-                                    <property name="mnemonic_widget">sayAllStyle</property>
-                                    <accessibility>
-                                      <relation type="label-for" target="sayAllStyle"/>
-                                    </accessibility>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="onlySpeakDisplayedTextToggled"/>
                                   </object>
                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkComboBox" id="sayAllStyle">
+                                  <object class="GtkCheckButton" id="speakMultiCaseStringsAsWordsCheckButton">
+                                    <property name="label" translatable="yes" comments="Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.">Speak multicase strings as wor_ds</property>
                                     <property name="visible">True</property>
-                                    <property name="model">model2</property>
-                                    <accessibility>
-                                      <relation type="labelled-by" target="sayAllLabel"/>
-                                    </accessibility>
-                                    <signal name="changed" handler="sayAllStyleChanged"/>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled"/>
+                                  </object>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="enablePauseBreaksCheckButton">
+                                    <property name="label" translatable="yes" comments="Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.">Break speech into ch_unks between pauses</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled"/>
+                                  </object>
+                                  <packing>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkHBox" id="hbox39">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">3</property>
                                     <child>
-                                      <object class="GtkCellRendererText" id="renderer2"/>
-                                      <attributes>
-                                        <attribute name="text">0</attribute>
-                                      </attributes>
+                                      <object class="GtkLabel" id="sayAllLabel">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes" comments="Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.">Say All B_y:</property>
+                                        <property name="use_underline">True</property>
+                                        <property name="mnemonic_widget">sayAllStyle</property>
+                                        <accessibility>
+                                          <relation type="label-for" target="sayAllStyle"/>
+                                        </accessibility>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkComboBox" id="sayAllStyle">
+                                        <property name="visible">True</property>
+                                        <property name="model">model2</property>
+                                        <accessibility>
+                                          <relation type="labelled-by" target="sayAllLabel"/>
+                                        </accessibility>
+                                        <signal name="changed" handler="sayAllStyleChanged"/>
+                                        <child>
+                                          <object class="GtkCellRendererText" id="renderer2"/>
+                                          <attributes>
+                                            <attribute name="text">0</attribute>
+                                          </attributes>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="padding">3</property>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </object>
                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="padding">3</property>
+                                    <property name="position">3</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkVBox" id="speechContextVBox">
+                                <property name="visible">True</property>
+                                <child>
+                                  <object class="GtkCheckButton" id="speakBlankLinesCheckButton">
+                                    <property name="label" translatable="yes">Speak blank lines</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled"/>
+                                  </object>
+                                  <packing>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="enableSpeechIndentationCheckButton">
+                                    <property name="label" translatable="yes">Speak _indentation and justification</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled"/>
+                                  </object>
+                                  <packing>
                                     <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="enableMnemonicSpeakingCheckButton">
+                                    <property name="label" translatable="yes">Spea_k object mnemonics</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled"/>
+                                  </object>
+                                  <packing>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="enablePositionSpeakingCheckButton">
+                                    <property name="label" translatable="yes" comments="Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').">Speak child p_osition</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled"/>
+                                  </object>
+                                  <packing>
+                                    <property name="position">3</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkCheckButton" id="enableTutorialMessagesCheckButton">
+                                    <property name="label" translatable="yes">Speak tutorial messages</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="active">True</property>
+                                    <property name="draw_indicator">True</property>
+                                    <signal name="toggled" handler="checkButtonToggled"/>
+                                  </object>
+                                  <packing>
+                                    <property name="position">4</property>
                                   </packing>
                                 </child>
                               </object>
                               <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">3</property>
-                                <property name="bottom_attach">4</property>
+                                <property name="position">1</property>
                               </packing>
                             </child>
                           </object>
                           <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
                             <property name="position">1</property>
                           </packing>
                         </child>

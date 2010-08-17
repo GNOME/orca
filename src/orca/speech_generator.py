@@ -172,6 +172,9 @@ class SpeechGenerator(generator.Generator):
         represent the description of the object, if that description
         is different from that of the name and label.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         acss = self.voice(SYSTEM)
         result = generator.Generator._generateDescription(self, obj, **args)
         if result:
@@ -201,6 +204,9 @@ class SpeechGenerator(generator.Generator):
         of a speech generator that we can update and the user can
         override.]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         role = args.get('role', obj.getRole())
         if role != pyatspi.ROLE_PARAGRAPH:
@@ -214,6 +220,9 @@ class SpeechGenerator(generator.Generator):
         Note that a 'role' attribute in args will override the
         accessible role of the obj.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         role = args.get('role', obj.getRole())
@@ -277,6 +286,9 @@ class SpeechGenerator(generator.Generator):
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         acss = self.voice(STATE)
         result = generator.Generator._generateCheckedState(self, obj, **args)
         if result:
@@ -289,6 +301,9 @@ class SpeechGenerator(generator.Generator):
         tree node. If the object is not expandable, an empty array
         will be returned.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         acss = self.voice(STATE)
         result = generator.Generator._generateExpandableState(self, obj, **args)
         if result:
@@ -300,6 +315,9 @@ class SpeechGenerator(generator.Generator):
         represent the checked state of the menu item, only if it is
         checked. Otherwise, and empty array will be returned.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         acss = self.voice(STATE)
         result = generator.Generator.\
             _generateMenuItemCheckedState(self, obj, **args)
@@ -313,6 +331,9 @@ class SpeechGenerator(generator.Generator):
         the object.  This is typically for check boxes. If the object
         is not multiselectable, an empty array will be returned.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(STATE)
         if obj.getState().contains(pyatspi.STATE_MULTISELECTABLE):
@@ -331,6 +352,9 @@ class SpeechGenerator(generator.Generator):
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         acss = self.voice(STATE)
         result = generator.Generator._generateRadioState(self, obj, **args)
         if result:
@@ -343,6 +367,9 @@ class SpeechGenerator(generator.Generator):
         for check boxes. [[[WDW - should we return an empty array if
         we can guarantee we know this thing is not checkable?]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         acss = self.voice(STATE)
         result = generator.Generator._generateToggleState(self, obj, **args)
         if result:
@@ -655,6 +682,9 @@ class SpeechGenerator(generator.Generator):
         returned.  [[[WDW - I wonder if this string should be moved to
         settings.py.]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(STATE)
         # If this is an icon within an layered pane or a table cell
@@ -700,6 +730,9 @@ class SpeechGenerator(generator.Generator):
         """Returns an array of strings (and possibly voice and audio
         specifications) reflecting the column number of a cell.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         col = -1
@@ -726,6 +759,9 @@ class SpeechGenerator(generator.Generator):
         """Returns an array of strings (and possibly voice and audio
         specifications) reflecting the row number of a cell.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         row = -1
@@ -754,6 +790,9 @@ class SpeechGenerator(generator.Generator):
         of its column number, the total number of columns, its row,
         and the total number of rows.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         if obj.parent.getRole() == pyatspi.ROLE_TABLE_CELL:
@@ -786,6 +825,9 @@ class SpeechGenerator(generator.Generator):
         specifications) indicating that this cell is the last cell
         in the table.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
@@ -1061,6 +1103,9 @@ class SpeechGenerator(generator.Generator):
         object is selected. [[[WDW - I wonder if this string should be
         moved to settings.py.]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
 
@@ -1082,6 +1127,9 @@ class SpeechGenerator(generator.Generator):
         object is selected. [[[WDW - I wonder if this string should be
         moved to settings.py.]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         try:
@@ -1112,6 +1160,9 @@ class SpeechGenerator(generator.Generator):
         - obj: the text object.
         - line: the string to check for spaces and tabs.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         acss = self.voice(SYSTEM)
         if not settings.enableSpeechIndentation:
             return []
@@ -1177,6 +1228,9 @@ class SpeechGenerator(generator.Generator):
         is typically set by Orca to be the previous object with
         focus.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         oldLevel = self._script.utilities.nodeLevel(args.get('priorObj', None))
@@ -1198,6 +1252,9 @@ class SpeechGenerator(generator.Generator):
         object.  This is typically for progress bars. [[[WDW - we
         should consider returning an empty array if there is no value.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         try:
@@ -1271,6 +1328,9 @@ class SpeechGenerator(generator.Generator):
         this doesn't apply?]]] [[[WDW - I wonder if this string should
         be moved to settings.py.]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         childNodes = self._script.utilities.childNodes(obj)
@@ -1292,6 +1352,9 @@ class SpeechGenerator(generator.Generator):
         apply?]]] [[[WDW - I wonder if this string should be moved to
         settings.py.]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         hasItems = False
@@ -1316,6 +1379,9 @@ class SpeechGenerator(generator.Generator):
         apply?]]] [[[WDW - I wonder if this string should be moved to
         settings.py.]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         if not obj.childCount:
@@ -1332,6 +1398,9 @@ class SpeechGenerator(generator.Generator):
         and the position of the current item. This object will be an icon
         panel or a layered pane.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         # TODO - JD: Is there a better way to do this other than
@@ -1392,6 +1461,9 @@ class SpeechGenerator(generator.Generator):
         [[[WDW - I wonder if this string should be moved to
         settings.py.]]]
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         # If this application has more than one unfocused alert or
@@ -1509,6 +1581,9 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the relative position of an
         object in a group.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         position = -1
@@ -1542,6 +1617,9 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the relative position of an
         object in a list.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         position = -1
@@ -1705,6 +1783,9 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the accelerator for the object,
         or an empty array if no accelerator can be found.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         [mnemonic, shortcut, accelerator] = \
@@ -1720,6 +1801,9 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the mnemonic for the object, or
         an empty array if no mnemonic can be found.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         if settings.enableMnemonicSpeaking or args.get('forceMnemonic', False):
@@ -1749,6 +1833,9 @@ class SpeechGenerator(generator.Generator):
         tutorial generator.  A tutorial can be forced by setting the
         'forceTutorial' attribute of the args dictionary to True.
         """
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(SYSTEM)
         alreadyFocused = args.get('alreadyFocused', False)

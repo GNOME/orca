@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.settings as settings
 import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _ # for gettext support
@@ -84,6 +85,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # formatting string to address the headers associated with
         # toggle columns. That's really the difference here.]]]
         #
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         try:

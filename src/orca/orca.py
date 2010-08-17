@@ -306,7 +306,8 @@ def _onChildrenChanged(e):
         #
         try:
             if desktop.childCount == 0:
-                speech.speak(_("Goodbye."))
+                if not settings.onlySpeakDisplayedText:
+                    speech.speak(_("Goodbye."))
                 shutdown()
                 return
         except: # could be a CORBA.COMM_FAILURE
@@ -2121,7 +2122,8 @@ def main():
 
     try:
         message = _("Welcome to Orca.")
-        speech.speak(message, settings.voices.get(settings.SYSTEM_VOICE))
+        if not settings.onlySpeakDisplayedText:
+            speech.speak(message, settings.voices.get(settings.SYSTEM_VOICE))
         braille.displayMessage(message)
     except:
         debug.printException(debug.LEVEL_SEVERE)

@@ -89,6 +89,7 @@ from orca_i18n import C_          # to provide qualified translatable strings
 userCustomizableSettings = [
     "orcaModifierKeys",
     "enableSpeech",
+    "onlySpeakDisplayedText",
     "speechServerFactory",
     "speechServerInfo",
     "voices",
@@ -363,6 +364,11 @@ enableSpeechCallbacks   = True
 # If True, speech has been temporarily silenced.
 #
 silenceSpeech           = False
+
+# If True, only text which is displayed on screen will be spoken
+# (roles, states, etc. will not be).
+#
+onlySpeakDisplayedText = False
 
 # Settings that apply to the particular speech engine to
 # use as well details on the default voices to use.

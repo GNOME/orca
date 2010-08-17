@@ -84,6 +84,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         specifications) that represents the number of children the
         object has."""
 
+        if settings.onlySpeakDisplayedText:
+            return []
+
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         if obj and obj.getState().contains(pyatspi.STATE_EXPANDED) \
@@ -106,6 +109,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         specifications) that represent the relative position of an
         object in a list.
         """
+
+        if settings.onlySpeakDisplayedText:
+            return []
 
         listObj = None
         if obj and obj.getRole() == pyatspi.ROLE_COMBO_BOX:

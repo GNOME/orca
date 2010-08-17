@@ -3263,6 +3263,7 @@ class Script(script.Script):
                 return
 
         if event.type.startswith("object:state-changed:selected") \
+           and not settings.onlySpeakDisplayedText \
            and orca_state.locusOfFocus:
             # If this selection state change is for the object which
             # currently has the locus of focus, and the last keyboard
@@ -5104,6 +5105,9 @@ class Script(script.Script):
         - endOffset: text end offset.
         """
 
+        if settings.onlySpeakDisplayedText:
+            return
+
         try:
             text = obj.queryText()
         except:
@@ -5280,18 +5284,19 @@ class Script(script.Script):
         except:
             debug.printException(debug.LEVEL_FINEST)
 
-        voice = self.voices.get(settings.SYSTEM_VOICE)
-        if self.utilities.isTextSelected(obj, startOffset, endOffset):
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca lets them know this.
-            #
-            speech.speak(C_("text", "selected"), voice, False)
-        elif len(text.getText(startOffset, endOffset)):
-            # Translators: when the user unselects
-            # (unhighlights) text in a document, Orca lets
-            # them know this.
-            #
-            speech.speak(C_("text", "unselected"), voice, False)
+        if not settings.onlySpeakDisplayedText:
+            voice = self.voices.get(settings.SYSTEM_VOICE)
+            if self.utilities.isTextSelected(obj, startOffset, endOffset):
+                # Translators: when the user selects (highlights) text in
+                # a document, Orca lets them know this.
+                #
+                speech.speak(C_("text", "selected"), voice, False)
+            elif len(text.getText(startOffset, endOffset)):
+                # Translators: when the user unselects
+                # (unhighlights) text in a document, Orca lets
+                # them know this.
+                #
+                speech.speak(C_("text", "unselected"), voice, False)
 
         self._saveLastTextSelections(text)
 
@@ -5381,7 +5386,8 @@ class Script(script.Script):
         if briefMessage is None:
             briefMessage = fullMessage
 
-        if settings.enableSpeech:
+        if settings.enableSpeech \
+           and (voice != None or not settings.onlySpeakDisplayedText):
             if settings.messageVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
                 message = briefMessage
             else:
@@ -5742,8 +5748,10 @@ class Script(script.Script):
           prior to speaking the new text.
         """
 
-        voice = voice or self.voices.get(settings.SYSTEM_VOICE)
-        speech.speak(string, voice, interrupt)
+        if settings.enableSpeech \
+           and (voice != None or not settings.onlySpeakDisplayedText):
+            voice = voice or self.voices.get(settings.SYSTEM_VOICE)
+            speech.speak(string, voice, interrupt) 
 
     @staticmethod
     def presentItemsInSpeech(items):
