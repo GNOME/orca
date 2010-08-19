@@ -60,7 +60,8 @@ class Script(default.Script):
 
         if value >= 0:
             speech.speak(str(value), None, True)
-            
+            self.displayBrailleMessage("%s" % value,
+                                       flashTime=settings.brailleFlashTime)
 
     def onWindowCreate(self, event):
         """Called whenever a window is created in the notify-osd
@@ -76,20 +77,23 @@ class Script(default.Script):
             value = -1
             
         utterances = []
+        message = ""
         if value < 0:
             # Translators: This denotes a notification to the user of some sort.
             #
             utterances.append(_('Notification'))
             utterances.append(self.voices.get(settings.SYSTEM_VOICE))
-            utterances.append('%s %s' \
-                              % (event.source.name, event.source.description))
+            message = '%s %s' % (event.source.name, event.source.description)
+            utterances.append(message)
             utterances.append(self.voices.get(settings.DEFAULT_VOICE))
         else:
             # A gauge notification, e.g. the Ubuntu volume notification that
             # appears when you press the multimedia keys.
             #
-            utterances.append('%s %d' % (event.source.name, value))
+            message = '%s %d' % (event.source.name, value)
+            utterances.append(message)
             utterances.append(self.voices.get(settings.SYSTEM_VOICE))
         
         speech.speak(utterances, None, True)
+        self.displayBrailleMessage(message, flashTime=settings.brailleFlashTime)
 
