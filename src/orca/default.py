@@ -3042,6 +3042,19 @@ class Script(script.Script):
         - event: the Event
         """
 
+        if not orca_state.locusOfFocus:
+            return
+
+        # Should the event source be the locusOfFocus?
+        #
+        role = orca_state.locusOfFocus.getRole()
+        if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_DIALOG]:
+            frameApp = orca_state.locusOfFocus.getApplication()
+            eventApp = event.source.getApplication()
+            if frameApp == eventApp \
+               and event.source.getState().contains(pyatspi.STATE_FOCUSED):
+                orca.setLocusOfFocus(event, event.source, False)
+
         # Ignore caret movements from non-focused objects, unless the
         # currently focused object is the parent of the object which
         # has the caret.
