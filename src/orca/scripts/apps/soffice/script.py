@@ -175,6 +175,8 @@ class Script(default.Script):
             self.onStateChanged
         listeners["object:state-changed:checked"]           = \
             self.onStateChanged
+        listeners["object:children-changed"]                = \
+            self.onChildrenChanged
 
         return listeners
 
@@ -1833,6 +1835,58 @@ class Script(default.Script):
             return
 
         default.Script.onActiveDescendantChanged(self, event)
+
+    def onChildrenChanged(self, event):
+        """Called when a child node has changed.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if not event.any_data or not orca_state.locusOfFocus:
+            return
+
+        if event.type.startswith('object:children-changed:add') \
+           and event.any_data.getRole() == pyatspi.ROLE_TABLE_CELL:
+            activeRow = self.pointOfReference.get('lastRow', -1)
+            activeCol = self.pointOfReference.get('lastColumn', -1)
+            if activeRow < 0 or activeCol < 0:
+                return
+
+            try:
+                itable = event.source.queryTable()
+            except NotImplementedError:
+                return
+
+            index = self.utilities.cellIndex(event.any_data)
+            eventRow = itable.getRowAtIndex(index)
+            eventCol = itable.getColumnAtIndex(index)
+
+            if eventRow == itable.nRows - 1 and eventCol == itable.nColumns - 1:
+                fullMessage = briefMessage = ""
+                voice = self.voices.get(settings.SYSTEM_VOICE)
+                if activeRow == itable.nRows:
+                    # Translators: This message is to inform the user that
+                    # the last row of a table in a document was just deleted.
+                    #
+                    fullMessage = _("Last row deleted.")
+                    # Translators: This message is to inform the user that
+                    # a row in a table was just deleted.
+                    #
+                    briefMessage = _("Row deleted.")
+                else:
+                    # Translators: This message is to inform the user that a
+                    # new table row was inserted at the end of the existing
+                    # table. This typically happens when the user presses Tab
+                    # from within the last cell of the table.
+                    #
+                    fullMessage = _("Row inserted at the end of the table.")
+                    # Translators: This message is to inform the user that
+                    # a row in a table was just inserted.
+                    #
+                    briefMessage = _("Row inserted.")
+                if fullMessage:
+                    self.presentMessage(fullMessage, briefMessage, voice)
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
