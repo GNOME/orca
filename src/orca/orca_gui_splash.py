@@ -90,7 +90,14 @@ class OrcaSplashGUI(orca_gtkbuilder.GtkBuilderWrapper):
         gobject.timeout_add(3000, splashScreen.hide)
 
         return splashScreen
-            
+
+    def hideGUI(self):
+        """Hide the Orca splash screen GUI. This assumes that the GUI has
+        already been created.
+        """
+
+        self.get_widget("splashWindow").hide()
+
 
 def showSplashUI():
     global OS
@@ -106,6 +113,11 @@ def showSplashUI():
         OS.init()
 
     OS.showGUI()
+
+def hideSplashUI():
+    if OS:
+        OS.hideGUI()
+
 
 def main():
     locale.setlocale(locale.LC_ALL, '')

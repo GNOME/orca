@@ -1566,7 +1566,11 @@ def showSplashGUI(script=None, inputEvent=None):
                             globals(),
                             locals(),
                             [''])
-        module.showSplashUI()
+        if _commandLineSettings.get("showSplashWindow", True):
+            module.showSplashUI()
+        else:
+            module.hideSplashUI()
+
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
@@ -1854,7 +1858,8 @@ def usage():
         + "braille" + "|" \
         + "braille-monitor" + "|" \
         + "magnifier" + "|" \
-        + "main-window" + "]",
+        + "main-window" + "|" \
+        + "splash-window" + "]",
 
     # Translators: if the user supplies an option via the '-e, --enable'
     # command line option, it will be automatically enabled as Orca is
@@ -1867,7 +1872,8 @@ def usage():
         + "braille" + "|" \
         + "braille-monitor" + "|" \
         + "magnifier" + "|" \
-        + "main-window" + "]",
+        + "main-window" + "|" \
+        + "splash-window" + "]",
 
     # Translators: if the user supplies an option via the '-d, --disable'
     # command line option, it will be automatically disabled as Orca is
@@ -2040,6 +2046,8 @@ def main():
                     _commandLineSettings["enableMagnifier"] = True
                 elif feature == "main-window":
                     _commandLineSettings["showMainWindow"] = True
+                elif feature == "splash-window":
+                    _commandLineSettings["showSplashWindow"] = True
                 else:
                     usage()
                     die(2)
@@ -2056,6 +2064,8 @@ def main():
                     _commandLineSettings["enableMagnifier"] = False
                 elif feature == "main-window":
                     _commandLineSettings["showMainWindow"] = False
+                elif feature == "splash-window":
+                    _commandLineSettings["showSplashWindow"] = False
                 else:
                     usage()
                     die(2)
