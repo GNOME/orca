@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
 "POT-Creation-Date: 2010-08-21 10:38+0000\n"
-"PO-Revision-Date: 2010-08-23 19:25+0100\n"
+"PO-Revision-Date: 2010-08-23 19:54+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -9089,7 +9089,7 @@ msgstr[3] "%d vrstice"
 #: ../src/orca/structural_navigation.py:1508
 #, python-format
 msgid "Cell spans %(rows)s and %(columns)s"
-msgstr "Celica je razširjena preko %(rows)d in %(columns)d."
+msgstr "Celica je razširjena preko %(rows)s in %(columns)s."
 
 #. Translators: The cell here refers to a cell within a table
 #. within a document.  We need to announce when the cell occupies
@@ -9099,7 +9099,7 @@ msgstr "Celica je razširjena preko %(rows)d in %(columns)d."
 #: ../src/orca/structural_navigation.py:1522
 #, python-format
 msgid "Cell spans %s"
-msgstr "Celica je razširjena preko %d"
+msgstr "Celica je razširjena preko %s"
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
