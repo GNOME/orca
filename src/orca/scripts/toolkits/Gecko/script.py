@@ -5294,9 +5294,9 @@ class Script(default.Script):
                 utterance = self.speechGenerator.generateSpeech(obj)
             else:
                 utterance = [string]
-                utterance.append(self.voices.get(settings.DEFAULT_VOICE))
                 if speakRole and not role in doNotSpeakRoles:
-                    utterance.extend(self.speechGenerator.getRoleName(obj))
+                    utterance.extend(\
+                        self.speechGenerator.getRoleName(obj))
   
             # If the object is a heading, or is contained within a heading,
             # speak that role information at the end of the object.
