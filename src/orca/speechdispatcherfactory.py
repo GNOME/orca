@@ -310,6 +310,8 @@ class SpeechServer(speechserver.SpeechServer):
         return newText.encode("UTF-8")
 
     def _speak(self, text, acss, **kwargs):
+        if not isinstance(text, str):
+            text = ''
         text = self.__addVerbalizedPunctuation(text)
         # Replace no break space characters with plain spaces since some
         # synthesizers cannot handle them.  See bug #591734.
