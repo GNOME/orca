@@ -77,6 +77,7 @@ from script_utilities import Utilities
 
 from orca.orca_i18n import _
 from orca.speech_generator import Pause
+from orca.acss import ACSS
 
 ########################################################################
 #                                                                      #
@@ -1115,7 +1116,7 @@ class Script(default.Script):
                 [element, voice] = clumped[i]
                 if isinstance(element, basestring):
                     element = self.utilities.adjustForRepeats(element)
-                if isinstance(element, Pause):
+                if isinstance(element, (Pause, ACSS)):
                     # At the moment, SayAllContext is expecting a string; not
                     # a Pause. For now, being conservative and catching that
                     # here. See bug #591351.
