@@ -1490,36 +1490,36 @@ class StructuralNavigation:
         rowspan = table.getRowExtentAt(row, col)
         colspan = table.getColumnExtentAt(row, col)
         spanString = ""
-        # Translators: this represents the number of rows in a table.
-        #
-        rowString = ngettext("%d row",
-                             "%d rows",
-                             rowspan) % rowspan
-        # Translators: this represents the number of columns in a table.
-        #
-        colString = ngettext("%d column",
-                             "%d columns",
-                             colspan) % colspan
         if (colspan > 1) and (rowspan > 1):
             # Translators: The cell here refers to a cell within a table
             # within a document.  We need to announce when the cell occupies
             # or "spans" more than a single row and/or column.
             #
-            spanString = _("Cell spans %(rows)d and %(columns)d") \
-                         % {"rows" : rowString,
-                            "columns" : colString}
+            spanString = ngettext("Cell spans %d row",
+                                  "Cell spans %d rows",
+                                  rowspan) % rowspan
+
+            # Translators: this represents the number of columns in a table.
+            #
+            spanString += ngettext(" %d column",
+                                   " %d columns",
+                                   colspan) % colspan
         elif (colspan > 1):
             # Translators: The cell here refers to a cell within a table
             # within a document.  We need to announce when the cell occupies
             # or "spans" more than a single row and/or column.
             #
-            spanString = _("Cell spans %d") % colString
+            spanString = ngettext("Cell spans %d column",
+                                  "Cell spans %d columns",
+                                  colspan) % colspan
         elif (rowspan > 1):
             # Translators: The cell here refers to a cell within a table
             # within a document.  We need to announce when the cell occupies
             # or "spans" more than a single row and/or column.
             #
-            spanString = _("Cell spans %d") % rowString
+            spanString = ngettext("Cell spans %d row",
+                                  "Cell spans %d rows",
+                                  rowspan) % rowspan
 
         return spanString
 
