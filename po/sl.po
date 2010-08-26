@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
 "POT-Creation-Date: 2010-08-26 01:18+0000\n"
-"PO-Revision-Date: 2010-08-26 13:58+0100\n"
+"PO-Revision-Date: 2010-08-26 14:57+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -9079,10 +9079,10 @@ msgstr "Neenotna preglednica"
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
-msgstr[0] "Celica je razširjena preko %s vrstic"
-msgstr[1] "Celica je razširjena preko %s vrstice"
-msgstr[2] "Celica je razširjena preko %s vrstic"
-msgstr[3] "Celica je razširjena preko %s vrstic"
+msgstr[0] "Celica je razširjena preko %d vrstic"
+msgstr[1] "Celica je razširjena preko %d vrstice"
+msgstr[2] "Celica je razširjena preko %d vrstic"
+msgstr[3] "Celica je razširjena preko %d vrstic"
 
 #. Translators: this represents the number of columns in a table.
 #.
@@ -10707,24 +10707,19 @@ msgid "To decrease press left arrow, to increase press right arrow. To go to min
 msgstr "Za zmanjšanje pritisnite levo puščico, za povečanje pa desno. Za najmanjšo vrednost pritisnite tipko Začetek, za največjo pa tipko Konec."
 
 #~ msgid "%d row"
-
 #~ msgid_plural "%d rows"
 #~ msgstr[0] "%d vrstic"
 #~ msgstr[1] "%d vrstica"
 #~ msgstr[2] "%d vrstici"
 #~ msgstr[3] "%d vrstice"
-
 #~ msgid "Cell spans %(rows)s and %(columns)s"
 #~ msgstr "Celica je razširjena preko %(rows)s in %(columns)s."
-
 #~ msgid "table with %(rows)d rows and %(columns)d columns."
 #~ msgstr "preglednica z %(rows)d vrsticami in %(columns)d stolpci."
-
 #~ msgid "Speak current _cell"
 #~ msgstr "Izgovarjanje _celic"
-
 #~ msgid "Orca Modifier Keys"
 #~ msgstr "Spremenilne tipke Orka"
-
 #~ msgid "Goes to last live region."
 #~ msgstr "Skoči na zadnji samodejno posodobljeni predel"
+
