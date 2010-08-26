@@ -1505,7 +1505,7 @@ class StructuralNavigation:
             # within a document.  We need to announce when the cell occupies
             # or "spans" more than a single row and/or column.
             #
-            spanString = _("Cell spans %(rows)s and %(columns)s") \
+            spanString = _("Cell spans %(rows)d and %(columns)d") \
                          % {"rows" : rowString,
                             "columns" : colString}
         elif (colspan > 1):
@@ -1513,13 +1513,13 @@ class StructuralNavigation:
             # within a document.  We need to announce when the cell occupies
             # or "spans" more than a single row and/or column.
             #
-            spanString = _("Cell spans %s") % colString
+            spanString = _("Cell spans %d") % colString
         elif (rowspan > 1):
             # Translators: The cell here refers to a cell within a table
             # within a document.  We need to announce when the cell occupies
             # or "spans" more than a single row and/or column.
             #
-            spanString = _("Cell spans %s") % rowString
+            spanString = _("Cell spans %d") % rowString
 
         return spanString
 
