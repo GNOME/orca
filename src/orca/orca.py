@@ -1670,14 +1670,17 @@ def start(registry):
     registry.start(gil=settings.useGILIdleHandler)
 
 def die(exitCode=1):
+    shutdown()
+    sys.exit(exitCode)
 
-    # We know what we are doing here, so tell pylint not to flag
-    # the _exit method call as a warning.  The disable-msg is
-    # localized to just this method.
-    #
-    # pylint: disable-msg=W0212
-
-    os._exit(exitCode)
+    if exitCode > 1:
+        pid = os.getpid()
+        if exitCode == 50:
+            # Something is hung and we wish to abort.
+            sig = 9
+        else:
+            sig = 15
+        os.kill(pid, sig)
 
 def timeout(signum=None, frame=None):
     debug.println(debug.LEVEL_SEVERE,
@@ -1727,13 +1730,13 @@ def shutdown(script=None, inputEvent=None):
     if settings.enableMagnifier or settings.enableMagLiveUpdating:
         mag.shutdown()
 
-    pyatspi.Registry.stop()
-
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
 
     _initialized = False
     _restoreXmodmap(_orcaModifiers)
+
+    pyatspi.Registry.stop()
 
     return True
 
@@ -1789,22 +1792,25 @@ def abortOnSignal(signum, frame):
 
 def usage():
     """Prints out usage information."""
-    print _("Usage: orca [OPTION...]")
-    print
+    print(usageString())
+
+def usageString():
+    """Generates the usage information string."""
+    info = []
+    info.append(_("Usage: orca [OPTION...]"))
 
     # Translators: this is the description of the command line option
     # '-?, --help' that is used to display usage information.
     #
-    print "-?, --help                   " + _("Show this help message")
-
-    print "-v, --version                %s" % orca_platform.version
+    info.append("-?, --help                   " + _("Show this help message"))
+    info.append("-v, --version                %s" % orca_platform.version)
 
     # Translators: this is a testing option for the command line.  It prints
     # the names of the applications known to the accessibility infrastructure
     # to stdout and then exits.
     #
-    print "-l, --list-apps              " + \
-          _("Print the known running applications")
+    info.append("-l, --list-apps              " + \
+                _("Print the known running applications"))
 
     # Translators: this enables debug output for Orca.  The
     # YYYY-MM-DD-HH:MM:SS portion is a shorthand way of saying that
@@ -1814,21 +1820,21 @@ def usage():
     # always start with 'debug' and end with '.out', regardless of the
     # locale.).
     #
-    print "--debug                      " + \
-          _("Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out")
+    info.append("--debug                      " + \
+                _("Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"))
 
     # Translators: this enables debug output for Orca and overrides
     # the name of the debug file Orca will use for debug output if the
     # --debug option is used.
     #
-    print "--debug-file=filename        " + \
-          _("Send debug output to the specified file")
+    info.append("--debug-file=filename        " + \
+                _("Send debug output to the specified file"))
 
     # Translators: this is the description of the command line option
     # '-s, --setup, --gui-setup' that will initially display a GUI dialog
     # that would allow the user to set their Orca preferences.
     #
-    print "-s, --setup, --gui-setup     " + _("Set up user preferences")
+    info.append("-s, --setup, --gui-setup     " + _("Set up user preferences"))
 
     # Translators: this is the description of the command line option
     # '-t, --text-setup' that will initially display a list of questions
@@ -1836,58 +1842,58 @@ def usage():
     # startup. For this to happen properly, Orca will need to be run
     # from a terminal window.
     #
-    print "-t, --text-setup             " + \
-          _("Set up user preferences (text version)")
+    info.append("-t, --text-setup             " + \
+                _("Set up user preferences (text version)"))
 
     # Translators: this is the description of the command line option
     # '-n, --no-setup' that means that Orca will startup without setting
     # up any user preferences.
     #
-    print "-n, --no-setup               " +  \
-          _("Skip set up of user preferences")
+    info.append("-n, --no-setup               " +  \
+                _("Skip set up of user preferences"))
 
     # Translators: this is the description of the command line option
     # '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
     # location for the user preferences.
     #
-    print "-u, --user-prefs-dir=dirname " + \
-          _("Use alternate directory for user preferences")
+    info.append("-u, --user-prefs-dir=dirname " + \
+                _("Use alternate directory for user preferences"))
 
-    print "-e, --enable=[" \
+    info.append("-e, --enable=[" \
         + "speech" + "|" \
         + "braille" + "|" \
         + "braille-monitor" + "|" \
         + "magnifier" + "|" \
         + "main-window" + "|" \
-        + "splash-window" + "]",
+        + "splash-window" + "] ")
 
     # Translators: if the user supplies an option via the '-e, --enable'
     # command line option, it will be automatically enabled as Orca is
     # started.
     #
-    print _("Force use of option")
+    info[-1] += _("Force use of option")
 
-    print "-d, --disable=[" \
+    info.append("-d, --disable=[" \
         + "speech" + "|" \
         + "braille" + "|" \
         + "braille-monitor" + "|" \
         + "magnifier" + "|" \
         + "main-window" + "|" \
-        + "splash-window" + "]",
+        + "splash-window" + "] ")
 
     # Translators: if the user supplies an option via the '-d, --disable'
     # command line option, it will be automatically disabled as Orca is
     # started.
     #
-    print _("Prevent use of option")
+    info[-1] += _("Prevent use of option")
 
     # Translators: this is the Orca command line option that will quit Orca.
     # The user would run the Orca shell script again from a terminal window.
     # If this command line option is specified, the script will quit any
     # instances of Orca that are already running.
     #
-    print "-q, --quit                   " + \
-          _("Quits Orca (if shell script used)")
+    info.append("-q, --quit                   " + \
+                _("Quits Orca (if shell script used)"))
 
     # Translators: this is the Orca command line option that will force 
     # the termination of Orca.
@@ -1895,36 +1901,127 @@ def usage():
     # If this command line option is specified, the script will quit any
     # instances of Orca that are already running.
     #
-    print "-f, --forcequit              " + \
-          _("Forces orca to be terminated immediately.")
+    info.append("-f, --forcequit              " + \
+                _("Forces orca to be terminated immediately."))
 
-    print "-m, --migrate-config         " +\
-          "Move the user's preferences from ~/.orca to XDG-DATA-HOME/orca."
+    info.append("-m, --migrate-config         " +\
+          "Move the user's preferences from ~/.orca to XDG-DATA-HOME/orca.")
 
     # Translators: this is the Orca command line option to tell Orca to
     # replace any existing Orca process(es) that might be running.
     #
-    print "--replace                    " +\
-          _("Replace a currently running Orca")
+    info.append("--replace                    " +\
+                _("Replace a currently running Orca"))
 
     # Translators: this is text being sent to a terminal and we want to
     # keep the text lines within terminal boundaries.
     #
-    print
-    print _("If Orca has not been previously set up by the user, Orca\n" \
-            "will automatically launch the preferences set up unless\n" \
-            "the -n or --no-setup option is used.")
+    info.append("\n" + \
+                _("If Orca has not been previously set up by the user, Orca\n" \
+                  "will automatically launch the preferences set up unless\n" \
+                  "the -n or --no-setup option is used."))
 
     # Translators: this is more text being sent to a terminal and we want to
     # keep the text lines within terminal boundaries.
     #
-    print
-    print _("WARNING: suspending Orca, e.g. by pressing Control-Z, from\n" \
-            "an AT-SPI enabled shell (such as gnome-terminal), can also\n" \
-            "suspend the desktop until Orca is killed.")
+    info.append("\n" + \
+        _("WARNING: suspending Orca, e.g. by pressing Control-Z, from\n" \
+          "an AT-SPI enabled shell (such as gnome-terminal), can also\n" \
+          "suspend the desktop until Orca is killed."))
 
-    print
-    print _("Report bugs to orca-list@gnome.org.")
+    info.append("\n" + _("Report bugs to orca-list@gnome.org."))
+
+    return ("\n".join(info))
+
+def printMessageAndExit(msg):
+    # The use of os._exit() to immediately kill a child process
+    # after a fork() is documented at docs.python.org.
+    #
+    # pylint: disable-msg=W0212
+    #
+    pid = os.fork()
+    if pid:
+        os.waitpid(pid, 0)
+        os._exit(0)
+    else:
+        print msg
+        os._exit(0)
+
+def validateOptions(arglist, invalid=[]):
+    """Parses the list of options in arglist and removes those
+    which are not valid so that typos do not prevent the user
+    from starting Orca.
+
+    Arguments:
+    - arglist: The list of options and arguments provided by
+      the user.
+    - invalid: Options which have already been identified as
+      being invalid.
+
+    Returns: A list containing validated options, valided
+    arguments, and any items which were deemed invalid.
+    """
+
+    opts = []
+    args = []
+
+    # ? is for help
+    # e is for enabling a feature
+    # d is for disabling a feature
+    # h is for help
+    # u is for alternate user preferences location
+    # m is for migrate the user preferences location from ~/.orca
+    # s is for setup
+    # n is for no setup
+    # t is for text setup
+    # v is for version
+    #
+    shortopts = "?stnvlmd:e:u:"
+    longopts = ["help",
+                "user-prefs-dir=",
+                "enable=",
+                "disable=",
+                "setup",
+                "gui-setup",
+                "text-setup",
+                "no-setup",
+                "list-apps",
+                "debug",
+                "debug-file=",
+                "version",
+                "migrate-config",
+                "replace"]
+
+    try:
+        opts, args = getopt.getopt(arglist, shortopts, longopts)
+    except getopt.GetoptError as ex:
+        bogusOption = "-%s" % ex.opt
+        if len(bogusOption) >= 2:
+            bogusOption = "-%s" % bogusOption
+        invalid.append(bogusOption)
+        try:
+            arglist.remove(bogusOption)
+        except:
+            pass
+        else:
+            return validateOptions(arglist, invalid)
+    except:
+        pass
+
+    return opts, args, invalid
+
+def multipleOrcas():
+    """Returns True if multiple instances of Orca are running
+    which are owned by the same user."""
+
+    openFile = os.popen('pgrep -u %s orca' % os.getuid())
+    pids = openFile.read()
+    openFile.close()
+    orcas = [int(p) for p in pids.split()]
+
+    pid = os.getpid()
+    ppid = os.getppid()
+    return len(filter(lambda p: p not in [pid, ppid], orcas)) > 0
 
 def main():
     """The main entry point for Orca.  The exit codes for Orca will
@@ -1978,37 +2075,21 @@ def main():
     if len(arglist) == 1:
         arglist = arglist[0].split()
 
-    try:
-        # ? is for help
-        # e is for enabling a feature
-        # d is for disabling a feature
-        # h is for help
-        # u is for alternate user preferences location
-        # m is for migrate the user preferences location from ~/.orca
-        # s is for setup
-        # n is for no setup
-        # t is for text setup
-        # v is for version
-        # z is for no exit
+    validOpts, validArgs, invalidOpts = validateOptions(arglist)
+    validFeaturesListed = False
+    if invalidOpts:
+        # Translators: This message is displayed when the user tries
+        # to start Orca and includes an invalid option as an argument.
+        # After the message, the list of arguments, as typed by the
+        # user, is displayed.
         #
-        opts, args = getopt.getopt(
-            arglist,
-            "?stnvlmd:e:u:",
-            ["help",
-             "user-prefs-dir=",
-             "enable=",
-             "disable=",
-             "setup",
-             "gui-setup",
-             "text-setup",
-             "no-setup",
-             "list-apps",
-             "debug",
-             "debug-file=",
-             "version",
-             "migrate-config",
-             "replace"])
-        for opt, val in opts:
+        msg = _("The following arguments are not valid: ")
+        print (msg + " ".join(invalidOpts))
+        if multipleOrcas():
+            die(0)
+
+    try:
+        for opt, val in validOpts:
             if opt in ("-u", "--user-prefs-dir"):
                 userPrefsDir = val.strip()
                 try:
@@ -2025,50 +2106,43 @@ def main():
                     try:
                         os.renames(oldUserPrefsDir, userPrefsDir)
                     except:
-                       print "It seems like you are trying to migrate your " \
+                        print "It seems like you are trying to migrate your " \
                            + "preferences but the new location is not " \
                            + "empty.\n" \
                            + "Probably it was already migrated. \n" \
                            + "Please, check it before you try again."
-                       die(2)
+                        die(2)
                 settings.userPrefsDir = userPrefsDir
 
-            if opt in ("-e", "--enable"):
+            if opt in ("-e", "--enable", "-d", "--disable"):
                 feature = val.strip()
-
+                enable = opt in ("-e", "--enable")
                 if feature == "speech":
-                    _commandLineSettings["enableSpeech"] = True
+                    _commandLineSettings["enableSpeech"] = enable
                 elif feature == "braille":
-                    _commandLineSettings["enableBraille"] = True
+                    _commandLineSettings["enableBraille"] = enable
                 elif feature == "braille-monitor":
-                    _commandLineSettings["enableBrailleMonitor"] = True
+                    _commandLineSettings["enableBrailleMonitor"] = enable
                 elif feature == "magnifier":
-                    _commandLineSettings["enableMagnifier"] = True
+                    _commandLineSettings["enableMagnifier"] = enable
                 elif feature == "main-window":
-                    _commandLineSettings["showMainWindow"] = True
+                    _commandLineSettings["showMainWindow"] = enable
                 elif feature == "splash-window":
-                    _commandLineSettings["showSplashWindow"] = True
+                    _commandLineSettings["showSplashWindow"] = enable
                 else:
-                    usage()
-                    die(2)
-
-            if opt in ("-d", "--disable"):
-                feature = val.strip()
-                if feature == "speech":
-                    _commandLineSettings["enableSpeech"] = False
-                elif feature == "braille":
-                    _commandLineSettings["enableBraille"] = False
-                elif feature == "braille-monitor":
-                    _commandLineSettings["enableBrailleMonitor"] = False
-                elif feature == "magnifier":
-                    _commandLineSettings["enableMagnifier"] = False
-                elif feature == "main-window":
-                    _commandLineSettings["showMainWindow"] = False
-                elif feature == "splash-window":
-                    _commandLineSettings["showSplashWindow"] = False
-                else:
-                    usage()
-                    die(2)
+                    valid = "\nspeech, braille, braille-monitor, magnifier, " \
+                            "main-window, splash-window"
+                    # Translators: This message is displayed when the user
+                    # tries to enable or disable a feature via an argument,
+                    # but specified an invalid feature. Valid features are:
+                    # speech, braille, braille-monitor, magnifier, main-window,
+                    # and splash-window. These items are not localized and are
+                    # presented in a list after this message.
+                    #
+                    msg = _("The following items can be enabled or disabled:")
+                    if not validFeaturesListed:
+                        print (msg + valid)
+                        validFeaturesListed = True
 
             if opt in ("-s", "--gui-setup", "--setup"):
                 setupRequested = True
@@ -2079,11 +2153,9 @@ def main():
             if opt in ("-n", "--no-setup"):
                 bypassSetup = True
             if opt in ("-?", "--help"):
-                usage()
-                die(0)
+                printMessageAndExit(usageString())
             if opt in ("-v", "--version"):
-                print "Orca %s" % orca_platform.version
-                die(0)
+                printMessageAndExit("Orca %s" % orca_platform.version)
             if opt == "--debug":
                 _debugSwitch = True
                 if not _debugFile:
@@ -2094,10 +2166,8 @@ def main():
             if opt in ("-l", "--list-apps"):
                 apps = filter(lambda x: x is not None,
                               pyatspi.Registry.getDesktop(0))
-                for app in apps:
-                    print app.name
-                die(0)
-
+                names = [app.name for app in apps]
+                printMessageAndExit("\n".join(names))
     except:
         debug.printException(debug.LEVEL_OFF)
         usage()
