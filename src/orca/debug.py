@@ -30,6 +30,7 @@ __license__   = "LGPL"
 
 import traceback
 import pyatspi
+import sys
 
 # Used to turn off all debugging.
 #
@@ -137,7 +138,10 @@ def printStack(level):
         println(level)
 
 def println(level, text = ""):
-    """Prints the text to stdout if debug is enabled.
+    """Prints the text to stderr unless debug is enabled.
+
+    If debug is enabled the text will be redirected to the
+    file debugFile.
 
     Arguments:
     - level: the accepted debug level
@@ -148,7 +152,7 @@ def println(level, text = ""):
         if debugFile:
             debugFile.writelines([text, "\n"])
         else:
-            print text
+            sys.stderr.writelines([text, "\n"])
 
 def printObjectEvent(level, event, sourceInfo=None):
     """Prints out an Python Event object.  The given level may be
