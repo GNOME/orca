@@ -56,6 +56,7 @@ import speech
 import speechserver
 import mouse_review
 import text_attribute_names
+import notification_messages
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
@@ -1094,6 +1095,8 @@ class Script(script.Script):
                 # interception of it.
                 #
                 _("Passes the next command on to the current application."))
+
+        self.inputEventHandlers.update(notification_messages.inputEventHandlers)
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler

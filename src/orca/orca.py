@@ -84,6 +84,7 @@ import keybindings
 import orca_state
 import orca_platform
 import speech
+import notification_messages
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
@@ -920,6 +921,8 @@ def _processKeyboardEvent(event):
         else:
             if settings.listShortcutsModeEnabled:
                 consumed = listShortcuts(keyboardEvent)
+            elif notification_messages.listNotificationMessagesModeEnabled:
+                consumed = notification_messages.listNotificationMessages(keyboardEvent)
             if (not consumed):
                 consumed = _keyBindings.consumeKeyboardEvent( \
                   None, keyboardEvent)

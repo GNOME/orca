@@ -216,4 +216,13 @@ keymap = (
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "cycleKeyEchoHandler"),
 
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "repeatLastNotificationMessageHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "repeatPreviousNotificationMessageHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "enableNotificationMessageListModeHandler"),
+
 )

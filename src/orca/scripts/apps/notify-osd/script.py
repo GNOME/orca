@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import orca.default as default
 import orca.settings as settings
 import orca.speech as speech
+import orca.notification_messages as notification_messages
 
 from orca.orca_i18n import _
 
@@ -93,7 +94,8 @@ class Script(default.Script):
             message = '%s %d' % (event.source.name, value)
             utterances.append(message)
             utterances.append(self.voices.get(settings.SYSTEM_VOICE))
-        
+
         speech.speak(utterances, None, True)
         self.displayBrailleMessage(message, flashTime=settings.brailleFlashTime)
+        notification_messages.saveMessage(message)
 
