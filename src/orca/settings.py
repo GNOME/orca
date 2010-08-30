@@ -863,15 +863,9 @@ listShortcutsModeEnabled = False
 # The location of the user's preferences. By default this is
 # $XDG_DATA_HOME/orca.
 # It can be overridden by the Orca -d command line option.
-# For migration reasons the old location (~/.orca) will be
-# checking. If this path exists it will be the location.
 #
-userPrefsDir = os.path.join(os.environ["HOME"], ".orca")
-
-if not os.path.exists(userPrefsDir):
-    from xdg.BaseDirectory import xdg_data_home
-
-    userPrefsDir = os.path.join(xdg_data_home, "orca")
+from xdg.BaseDirectory import xdg_data_home
+userPrefsDir = os.path.join(xdg_data_home, "orca")
 
 # Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
 # always mean an object disappeared - there just might be a network

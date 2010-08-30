@@ -62,6 +62,7 @@ import os
 import signal
 import time
 import unicodedata
+import shutil
 
 import settings
 if settings.useDBus:
@@ -1907,9 +1908,6 @@ def usageString():
     info.append("-f, --forcequit              " + \
                 _("Forces orca to be terminated immediately."))
 
-    info.append("-m, --migrate-config         " +\
-          "Move the user's preferences from ~/.orca to XDG-DATA-HOME/orca.")
-
     # Translators: this is the Orca command line option to tell Orca to
     # replace any existing Orca process(es) that might be running.
     #
@@ -1973,7 +1971,6 @@ def validateOptions(arglist, invalid=[]):
     # d is for disabling a feature
     # h is for help
     # u is for alternate user preferences location
-    # m is for migrate the user preferences location from ~/.orca
     # s is for setup
     # n is for no setup
     # t is for text setup
@@ -1992,7 +1989,6 @@ def validateOptions(arglist, invalid=[]):
                 "debug",
                 "debug-file=",
                 "version",
-                "migrate-config",
                 "replace"]
 
     try:
@@ -2101,22 +2097,6 @@ def main():
                 except:
                     debug.printException(debug.LEVEL_FINEST)
 
-            if opt in ("-m", "--migrate-config"):
-                from xdg.BaseDirectory import xdg_data_home
-                userPrefsDir = os.path.join(xdg_data_home, "orca")
-                oldUserPrefsDir = os.path.join(os.environ["HOME"], ".orca")
-                if os.path.exists(oldUserPrefsDir):
-                    try:
-                        os.renames(oldUserPrefsDir, userPrefsDir)
-                    except:
-                        print "It seems like you are trying to migrate your " \
-                           + "preferences but the new location is not " \
-                           + "empty.\n" \
-                           + "Probably it was already migrated. \n" \
-                           + "Please, check it before you try again."
-                        die(2)
-                settings.userPrefsDir = userPrefsDir
-
             if opt in ("-e", "--enable", "-d", "--disable"):
                 feature = val.strip()
                 enable = opt in ("-e", "--enable")
@@ -2175,6 +2155,27 @@ def main():
         debug.printException(debug.LEVEL_OFF)
         usage()
         die(2)
+
+    # Check if old config location exists, try to copy all 
+    # the data from old location to the new location.
+    #
+    from xdg.BaseDirectory import xdg_data_home
+    userPrefsDir = os.path.join(xdg_data_home, "orca")
+    oldUserPrefsDir = os.path.join(os.environ["HOME"], ".orca")
+    if os.path.exists(oldUserPrefsDir):
+        try:
+            shutil.copytree(oldUserPrefsDir, userPrefsDir)
+        except:
+            for name in os.listdir(oldUserPrefsDir):
+                srcPath = os.path.join(oldUserPrefsDir, name)
+                dstPath = os.path.join(userPrefsDir, name)
+                if os.path.isfile(srcPath):
+                    shutil.copy(srcPath, dstPath)
+                elif os.path.isdir(srcPath):
+                    if not os.path.isdir(dstPath):
+                        os.mkdir(dstPath)
+    settings.userPrefsDir = userPrefsDir
+
 
     # Do not run Orca if accessibility has not been enabled.
     # We do allow, however, one to force Orca to run via the
