@@ -1,3 +1,65 @@
+2.31.91 - 30-August-2010
+
+General:
+
+  * Fix for bug #625422 - Remove XDG location 'migration' option
+
+  * Fix for bug #627451 - Orca needs a way to repeat the latest
+    notification messages.
+
+  * Fix for bug #628275 - Orca should be more forgiving when invalid
+    options and arguments are specified
+
+  * Fix for bug #628256 - orca.die() should call sys.exit() rather than
+    os._exit()
+
+  * Fix for bug #628300 - Write the errors to the sdterr instead of
+    sdtout
+
+  * Additional fix for bug 626272 - Plural forms needed for correct
+    localization
+
+  * Fix for bug #627052 - Orca shouldn't ignore of object:text-caret-
+    moved events which immediately follow a window:activate event
+
+  * Fix for bug #627477 - Orca splash screen shouldn't be displayed in
+    GDM
+
+  * Fix for bug #627216 - Orca not brailling messages received via
+    notify-osd
+
+Speech:
+
+  * Fix for bug #520595 - Orca is far too "chatty" for persons with
+    learning disabilities
+
+Gecko:
+
+  * Fix for bug #627769 - 2.31.91pre say all stops at links and headers
+    in firefox and thunderbird
+
+  * Fix for bug #627691 - When I say all a webpage content and Orca
+    attempts to speak an image description, the say all operation is
+    terminated
+
+OOo:
+
+  * Fix for bug #627498 - Orca should explicitly present the insertion
+    and deletion of the last row in an OOo Writer table
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs          Czeck                   Marek Černocký
+    es          Spanish                 Francisco Javier Dorado Martínez
+    gb          British English         Philip Withnall
+    gl          Galician                Fran Diéguez
+    hu          Hungarian               Gabor Kelemen
+    ja          Japanese                Jiro MATSUZAWA
+    sl          Slovenian               Matej Urbančič
+    zh          Traditional Chinese     Chao-Hsiung Liao
+                (Hong Kong and Taiwan)
+==========
+
 2.31.90 - 16-August-2010
 
 General:
