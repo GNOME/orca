@@ -174,11 +174,51 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
     #                                                                      #
     ########################################################################
 
+    def _createScriptForToolkit(self, app, toolkitName):
+        """For the given toolkit name, create a new script instance.
+
+        Arguments:
+        - app: the Python app
+        - toolkitName: The name of the object or application toolkit
+
+        Returns an instance of a Script if possible
+        """
+
+        script = None
+        scriptPackages = settings.scriptPackages
+        for package in scriptPackages:
+            if package:
+                name = '.'.join((package, toolkitName))
+            else:
+                name = toolkitName
+            try:
+                debug.println(
+                    debug.LEVEL_FINE,
+                    "Looking for toolkit script %s.py..." % toolkitName)
+                module = __import__(name,
+                                    globals(),
+                                    locals(),
+                                    [''])
+                script = module.Script(app)
+                debug.println(debug.LEVEL_FINE,
+                              "...found %s.py" % name)
+            except ImportError:
+                debug.println(
+                    debug.LEVEL_FINE,
+                    "...could not find %s.py" % toolkitName)
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                debug.println(
+                    debug.LEVEL_SEVERE,
+                    "While attempting to import %s" % toolkitName)
+
+        return script
+
     # The cache of the currently known scripts.  The key is the Python
     # Accessible application, and the value is the script for that app.
     #
 
-    def _createScript(self, app):
+    def _createScript(self, app, obj=None):
         """For the given application name, create a new script instance.
         We'll first see if a mapping from appName to module name exists.
         If it does, we use that.  If it doesn't, we try the app name.
@@ -186,8 +226,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         """
 
         script = None
+        objToolkit = self._toolkitForObject(obj)
 
-        if settings.enableCustomScripts:
+        if settings.enableCustomScripts and not objToolkit:
             # Look for custom scripts first.
             #
             # We'll use the LEVEL_FINEST level for debug output here as
@@ -234,6 +275,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     #
                     debug.printException(debug.LEVEL_SEVERE)
 
+        if not script and app and objToolkit:
+            script = self._createScriptForToolkit(app, objToolkit)
+
         # If there is no custom script for an application, try seeing if
         # there is a script for the toolkit of the application.  If there
         # is, then try to use it.  If there isn't, then fall back to the
@@ -241,38 +285,14 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         # package for now.
         #
         if (not script) and app and getattr(app, "toolkitName", None):
-            for package in scriptPackages:
-                if package:
-                    name = '.'.join((package, app.toolkitName))
-                else:
-                    name = app.toolkitName
-                try:
-                    debug.println(
-                        debug.LEVEL_FINE,
-                        "Looking for toolkit script %s.py..." % app.toolkitName)
-                    module = __import__(name,
-                                        globals(),
-                                        locals(),
-                                        [''])
-                    script = module.Script(app)
-                    debug.println(debug.LEVEL_FINE,
-                                  "...found %s.py" % name)
-                except ImportError:
-                    debug.println(
-                        debug.LEVEL_FINE,
-                        "...could not find %s.py" % app.toolkitName)
-                except:
-                    debug.printException(debug.LEVEL_SEVERE)
-                    debug.println(
-                        debug.LEVEL_SEVERE,
-                        "While attempting to import %s" % app.toolkitName)
+            script = self._createScriptForToolkit(app, app.toolkitName)
 
         if not script:
             script = default.Script(app)
 
         return script
 
-    def getScript(self, app):
+    def getScript(self, app, obj=None):
         """Get a script for an app (and make it if necessary).  This is used
         instead of a simple calls to Script's constructor.
 
@@ -281,6 +301,19 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
 
         Returns an instance of a Script.
         """
+
+        script = None
+
+        objToolkit = self._toolkitForObject(obj)
+        if objToolkit:
+            script = self._knownScripts.get(objToolkit)
+            if not script:
+                script = self._createScriptForToolkit(app, objToolkit)
+                if script:
+                    self._knownScripts[objToolkit] = script
+                    self._registerEventListeners(script)
+            if script:
+                return script
 
         # We might not know what the app is.  In this case, just defer
         # to the default script for support.
@@ -293,7 +326,7 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         elif app in self._knownScripts:
             script = self._knownScripts[app]
         else:
-            script = self._createScript(app)
+            script = self._createScript(app, obj)
             self._knownScripts[app] = script
             self._registerEventListeners(script)
 
@@ -382,6 +415,17 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     del script
         except:
             debug.printException(debug.LEVEL_FINEST)
+
+    def _toolkitForObject(self, obj):
+        """Returns the name of the toolkit associated with obj, if it is
+        specified."""
+
+        name = ''
+        if obj:
+            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
+            name = attrs.get('toolkit', '')
+
+        return name
 
     ########################################################################
     #                                                                      #
@@ -601,8 +645,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             # displayed. See Orca bug #409731 for more details.
             #
             if not event.type.startswith("mouse:"):
-                s = self.getScript(event.host_application or \
-                                      event.source.getApplication())
+                app = event.host_application or event.source.getApplication()
+                s = self.getScript(app, event.source)
             else:
                 s = orca_state.activeScript
             if not s:
@@ -683,9 +727,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                     # thinks it should become active.
                     #
                     if setNewActiveScript:
-                        theScript = \
-                            self.getScript(event.host_application \
-                                           or event.source.getApplication())
+                        app = event.host_application \
+                            or event.source.getApplication()
+                        theScript = self.getScript(app, event.source)
                         setNewActiveScript = theScript.isActivatableEvent(event)
                         if not reason and setNewActiveScript:
                             reason = "script requested it"
@@ -698,10 +742,10 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
                         # to stop speech or not.
                         #speech.stop()
 
-                        self.setActiveScript(
-                            self.getScript(event.host_application or \
-                                              event.source.getApplication()),
-                            reason)
+                        app = event.host_application \
+                            or event.source.getApplication()
+                        theScript = self.getScript(app, event.source)
+                        self.setActiveScript(theScript, reason)
 
                         # Load in the application specific settings for the
                         # app for this event (if found).
@@ -834,8 +878,8 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
             except:
                 pass
 
-            script = self.getScript(
-                event.host_application or event.source.getApplication())
+            app = event.host_application or event.source.getApplication()
+            script = self.getScript(app, event.source)
             script.eventCache[event.type] = (event, time.time())
 
         if event:
