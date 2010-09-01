@@ -103,6 +103,9 @@ if settings.debugMemoryUsage:
                  | gc.DEBUG_OBJECTS
                  | gc.DEBUG_SAVEALL)
 
+
+EXIT_CODE_HANG = 50
+
 # The user-settings module (see loadUserSettings).
 #
 _userSettings = None
@@ -1674,23 +1677,22 @@ def start(registry):
     registry.start(gil=settings.useGILIdleHandler)
 
 def die(exitCode=1):
+    pid = os.getpid()
+    if exitCode == EXIT_CODE_HANG:
+        # Someting is hung and we wish to abort.
+        os.kill(pid, signal.SIGKILL)
+        return
+
     shutdown()
     sys.exit(exitCode)
-
     if exitCode > 1:
-        pid = os.getpid()
-        if exitCode == 50:
-            # Something is hung and we wish to abort.
-            sig = 9
-        else:
-            sig = 15
-        os.kill(pid, sig)
+        os.kill(pid, signal.SIGTERM)
 
 def timeout(signum=None, frame=None):
     debug.println(debug.LEVEL_SEVERE,
                   "TIMEOUT: something has hung.  Aborting.")
     debug.printStack(debug.LEVEL_ALL)
-    die(50)
+    die(EXIT_CODE_HANG)
 
 def shutdown(script=None, inputEvent=None):
     """Exits Orca.  Unregisters any event listeners and cleans up.  Also
@@ -1786,7 +1788,7 @@ def shutdownOnSignal(signum, frame):
         signal.alarm(0)
 
     if not cleanExit:
-        die(signum)
+        die(EXIT_CODE_HANG)
 
 def abortOnSignal(signum, frame):
     debug.println(debug.LEVEL_ALL,
@@ -2233,7 +2235,10 @@ def main():
         else:
             _showPreferencesConsole()
 
-    start(pyatspi.Registry) # waits until we stop the registry
+    try:
+        start(pyatspi.Registry) # waits until we stop the registry
+    except:
+        die(EXIT_CODE_HANG)
     return 0
 
 if __name__ == "__main__":
