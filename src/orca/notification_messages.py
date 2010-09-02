@@ -95,8 +95,7 @@ inputEventHandlers["enableNotificationMessageListModeHandler"] = \
             # Translators: Orca can enable the notification messages
             # list mode when the user presses a shortcut key.
             #
-            _("Enable notification message list mode. " \
-                   "Press Escape to exit or h for help"))
+            _("Present notification messages list"))
 
 def _showMessage(msg):
     speech.speak(msg, None, True)
@@ -142,7 +141,7 @@ def _listModeEnable():
         indexNotificationMessages = 1
         invalidKeys = 0
         listNotificationMessagesModeEnabled = True
-        _help()
+        _help(True)
         _showNotificationMessage(indexNotificationMessages)
 
     return True
