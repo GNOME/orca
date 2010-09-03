@@ -3976,7 +3976,7 @@ msgstr "பட்டியல் அறிவிப்பு செய்தி�
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
 msgstr[0] "%d செய்தி.\n"
-msgstr[1] "%d செய்திகள்.\n "
+msgstr[1] "%d செய்திகள்.\n"
 
 #. Translators: This is a help message.
 #: ../src/orca/notification_messages.py:246
