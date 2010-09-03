@@ -65,6 +65,8 @@ src/orca/scripts/toolkits/Gecko/bookmarks.py
 src/orca/scripts/toolkits/Gecko/braille_generator.py
 src/orca/scripts/toolkits/Gecko/script.py
 src/orca/scripts/toolkits/Gecko/speech_generator.py
+src/orca/scripts/toolkits/WebKitGtk/braille_generator.py
+src/orca/scripts/toolkits/WebKitGtk/speech_generator.py
 src/orca/settings.py
 src/orca/speechdispatcherfactory.py
 src/orca/speech_generator.py

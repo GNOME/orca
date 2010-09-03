@@ -131,6 +131,17 @@ then
     ARGS="-profile $FF_PROFILE_DIR"
 fi
 
+# Consistent profile for testing Epiphany.
+#
+if [ "$APP_NAME" = "epiphany" ]
+then
+    EWB_PROFILE_DIR=/tmp/EpiphanyProfile
+    mkdir -p $EWB_PROFILE_DIR
+    cp $harnessDir/../html/EpiphanyProfile/bookmarks.rdf $EWB_PROFILE_DIR
+    cp $harnessDir/../html/EpiphanyProfile/states.xml $EWB_PROFILE_DIR
+    ARGS="-p --profile=$EWB_PROFILE_DIR"
+fi
+
 if [ $orcaRunning -eq 0 ]
 then
     # Run orca and let it settle in.
@@ -176,6 +187,12 @@ fi
 if [ "x$SOFFICE" == "x1" ]
 then
     APP_PID=$(ps -eo pid,ruid,args | grep norestore | grep -v grep | awk '{ print $1 }')
+fi
+
+if [ "$APP_NAME" == "epiphany" ]
+then
+    pkill epiphany > /dev/null 2>&1
+    rm -rf $EWB_PROFILE_DIR
 fi
 
 if [ "$APP_NAME" == "firefox" ]
