@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-09-03 06:21+0000\n"
-"PO-Revision-Date: 2010-09-03 09:06+0100\n"
+"POT-Creation-Date: 2010-09-04 20:12+0000\n"
+"PO-Revision-Date: 2010-09-04 22:24+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -3426,7 +3426,7 @@ msgstr "preklopi"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/focus_tracking_presenter.py:969
+#: ../src/orca/focus_tracking_presenter.py:1013
 msgid "No focus"
 msgstr "Ni v žarišču"
 
@@ -3915,7 +3915,7 @@ msgstr "Omogočeno poudarjanje miške."
 #: ../src/orca/orca_gui_prefs.py:1973
 #: ../src/orca/orca_gui_prefs.py:1999
 #: ../src/orca/orca_gui_prefs.py:2002
-#: ../src/orca/orca-setup.ui.h:85
+#: ../src/orca/orca-setup.ui.h:67
 msgid "Full Screen"
 msgstr "Celozaslonski način"
 
@@ -3940,7 +3940,7 @@ msgstr "Zgornja polovica"
 #: ../src/orca/mag.py:1760
 #: ../src/orca/orca_gui_prefs.py:1981
 #: ../src/orca/orca_gui_prefs.py:2004
-#: ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca-setup.ui.h:22
 msgid "Bottom Half"
 msgstr "Spodnja polovica"
 
@@ -3949,7 +3949,7 @@ msgstr "Spodnja polovica"
 #: ../src/orca/mag.py:1764
 #: ../src/orca/orca_gui_prefs.py:1985
 #: ../src/orca/orca_gui_prefs.py:2005
-#: ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca-setup.ui.h:74
 msgid "Left Half"
 msgstr "Leva polovica"
 
@@ -3968,7 +3968,7 @@ msgstr "Desna polovica"
 #: ../src/orca/mag.py:1773
 #: ../src/orca/orca_gui_prefs.py:1994
 #: ../src/orca/orca_gui_prefs.py:2007
-#: ../src/orca/orca-setup.ui.h:49
+#: ../src/orca/orca-setup.ui.h:35
 msgid "Custom"
 msgstr "Po meri"
 
@@ -4192,7 +4192,7 @@ msgstr "Negativni odmik odtenka"
 #: ../src/orca/orca_gui_prefs.py:4739
 #: ../src/orca/orca_gui_prefs.py:4742
 #: ../src/orca/orca_gui_prefs.py:4770
-#: ../src/orca/orca-setup.ui.h:105
+#: ../src/orca/orca-setup.ui.h:99
 msgid "None"
 msgstr "Brez"
 
@@ -4674,7 +4674,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:102
 #: ../src/orca/orca_gui_prefs.py:2050
 #: ../src/orca/orca_gui_prefs.py:2070
-#: ../src/orca/orca-setup.ui.h:42
+#: ../src/orca/orca-setup.ui.h:28
 msgid "Centered"
 msgstr "Sredinjeno"
 
@@ -4864,7 +4864,7 @@ msgstr "Niz zamenjave"
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
 #: ../src/orca/orca_gui_prefs.py:1589
-#: ../src/orca/orca-setup.ui.h:39
+#: ../src/orca/orca-setup.ui.h:25
 msgid "Break speech into ch_unks between pauses"
 msgstr "Razdeli govor na _zloge med premori"
 
@@ -4874,7 +4874,7 @@ msgstr "Razdeli govor na _zloge med premori"
 #.
 #: ../src/orca/orca_gui_prefs.py:1601
 #: ../src/orca/orca_gui_prefs.py:2998
-#: ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca-setup.ui.h:75
 msgid "Line"
 msgstr "vrstici"
 
@@ -4893,8 +4893,10 @@ msgstr "stavku"
 #. will present progress bar updates regardless of what application
 #. and window they happen to be in.
 #.
+#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
 #: ../src/orca/orca_gui_prefs.py:1700
 #: ../src/orca/orca_gui_prefs.py:2963
+#: ../src/orca/orca-setup.ui.h:110
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Vse"
@@ -4926,7 +4928,7 @@ msgstr "Okno"
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
 #: ../src/orca/orca_gui_prefs.py:1820
-#: ../src/orca/orca-setup.ui.h:80
+#: ../src/orca/orca-setup.ui.h:66
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Omogoči _razločevalne tipke"
 
@@ -4938,7 +4940,7 @@ msgstr "Omogoči _razločevalne tipke"
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
 #: ../src/orca/orca_gui_prefs.py:1828
-#: ../src/orca/orca-setup.ui.h:77
+#: ../src/orca/orca-setup.ui.h:63
 msgid "Enable echo by cha_racter"
 msgstr "Omogoči odmev _znakov"
 
@@ -4976,7 +4978,7 @@ msgstr "Braillove tipke"
 #: ../src/orca/orca_gui_prefs.py:2797
 #: ../src/orca/orca_gui_prefs.py:2838
 #: ../src/orca/orca_gui_prefs.py:2878
-#: ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/orca-setup.ui.h:42
 msgid "Dot _7"
 msgstr "Pika _7"
 
@@ -4987,7 +4989,7 @@ msgstr "Pika _7"
 #: ../src/orca/orca_gui_prefs.py:2804
 #: ../src/orca/orca_gui_prefs.py:2845
 #: ../src/orca/orca_gui_prefs.py:2885
-#: ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca-setup.ui.h:43
 msgid "Dot _8"
 msgstr "Pika _8"
 
@@ -4998,7 +5000,7 @@ msgstr "Pika _8"
 #: ../src/orca/orca_gui_prefs.py:2811
 #: ../src/orca/orca_gui_prefs.py:2852
 #: ../src/orca/orca_gui_prefs.py:2892
-#: ../src/orca/orca-setup.ui.h:58
+#: ../src/orca/orca-setup.ui.h:44
 msgid "Dots 7 an_d 8"
 msgstr "Piki 7 _in 8"
 
@@ -5025,7 +5027,7 @@ msgstr "_Nekateri"
 #. document.
 #.
 #: ../src/orca/orca_gui_prefs.py:2930
-#: ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca-setup.ui.h:76
 msgid "M_ost"
 msgstr "_Večina"
 
@@ -5035,7 +5037,7 @@ msgstr "_Večina"
 #.
 #: ../src/orca/orca_gui_prefs.py:3090
 #: ../src/orca/orca_gui_prefs.py:3194
-#: ../src/orca/orca-setup.ui.h:40
+#: ../src/orca/orca-setup.ui.h:26
 msgid "Brie_f"
 msgstr "_Kratko"
 
@@ -5512,313 +5514,316 @@ msgstr ""
 "<b>Prilagodi izbrane\n"
 "atribute</b>"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
-#: ../src/orca/orca-setup.ui.h:6
-msgid "<b>Border</b>"
-msgstr "<b>Obroba</b>"
-
-#: ../src/orca/orca-setup.ui.h:7
+#: ../src/orca/orca-setup.ui.h:5
 msgid "<b>Braille Indicator</b>"
 msgstr "<b>Braille kazalnik</b>"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
-#: ../src/orca/orca-setup.ui.h:9
-msgid "<b>Color</b>"
-msgstr "<b>Barva</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
-#: ../src/orca/orca-setup.ui.h:11
-msgid "<b>Cross-hair</b>"
-msgstr "<b>Merek</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
-#: ../src/orca/orca-setup.ui.h:13
-msgid "<b>Cursor</b>"
-msgstr "<b>Kazalka</b>"
-
-#: ../src/orca/orca-setup.ui.h:14
+#: ../src/orca/orca-setup.ui.h:6
 msgid "<b>Hyperlink Indicator</b>"
 msgstr "<b>Kazalnik hiperpovezave</b>"
 
-#: ../src/orca/orca-setup.ui.h:15
+#: ../src/orca/orca-setup.ui.h:7
 msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Razpored tipkovnice</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
-#: ../src/orca/orca-setup.ui.h:17
+#: ../src/orca/orca-setup.ui.h:9
 msgid "<b>Progress Bar Updates</b>"
 msgstr "<b>Posodobitve kazalnik napredka</b>"
 
-#: ../src/orca/orca-setup.ui.h:18
+#: ../src/orca/orca-setup.ui.h:10
 msgid "<b>Pronunciation Dictionary</b>"
 msgstr "<b>Slovar izgovorjav</b>"
 
-#: ../src/orca/orca-setup.ui.h:19
+#: ../src/orca/orca-setup.ui.h:11
 msgid "<b>Punctuation Level</b>"
 msgstr "<b>Raven ločil</b>"
 
-#: ../src/orca/orca-setup.ui.h:20
+#: ../src/orca/orca-setup.ui.h:12
 msgid "<b>Selection Indicator</b>"
 msgstr "<b>Kazalnik izbire</b>"
 
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
-#: ../src/orca/orca-setup.ui.h:22
+#: ../src/orca/orca-setup.ui.h:14
 msgid "<b>Table Rows</b>"
 msgstr "<b>Vrstice preglednice</b>"
 
-#: ../src/orca/orca-setup.ui.h:23
+#: ../src/orca/orca-setup.ui.h:15
 msgid "<b>Text attributes</b>"
 msgstr "<b>Atributi besedila</b>"
 
 #. Translators:  In the context of magnifying the contents of the screen, "tracking" refers to whether or not an object (mouse pointer, the caret, or the widget with focus) is of interest.  Objects of interest must always be displayed.  "Alignment" refers to where on the screen objects of interest should be displayed.
-#: ../src/orca/orca-setup.ui.h:25
+#: ../src/orca/orca-setup.ui.h:17
 msgid "<b>Tracking and Alignment</b>"
 msgstr "<b>Sledenje in poravnava</b>"
 
-#: ../src/orca/orca-setup.ui.h:26
+#: ../src/orca/orca-setup.ui.h:18
 msgid "<b>Verbosity</b>"
 msgstr "<b>Razločnost</b>"
 
-#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
-#: ../src/orca/orca-setup.ui.h:28
-msgid "<b>Zoomer</b>"
-msgstr "<b>Približevalnik</b>"
-
-#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
-#: ../src/orca/orca-setup.ui.h:30
-msgid "Advanced..."
-msgstr "Napredno ..."
-
-#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca-setup.ui.h:32
-msgid "All"
-msgstr "Vse"
-
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/orca-setup.ui.h:33
+#: ../src/orca/orca-setup.ui.h:19
 #: ../src/orca/rolenames.py:1127
 msgid "Application"
 msgstr "Program"
 
-#: ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca-setup.ui.h:20
 msgid "Border color:"
 msgstr "Barva okvirja:"
 
-#: ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/orca-setup.ui.h:21
 msgid "Border size:"
 msgstr "Velikost obrobe:"
 
-#: ../src/orca/orca-setup.ui.h:37
+#: ../src/orca/orca-setup.ui.h:23
 msgid "Braille"
 msgstr "Braillova pisava"
 
-#: ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca-setup.ui.h:27
 msgid "Brightness:"
 msgstr "Svetlost:"
 
-#: ../src/orca/orca-setup.ui.h:43
+#: ../src/orca/orca-setup.ui.h:29
 msgid "Contraction _Table:"
 msgstr "_Preglednica skrčenih zapisov"
 
-#: ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca-setup.ui.h:30
 msgid "Contrast:"
 msgstr "Kontrast:"
 
-#: ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca-setup.ui.h:31
 msgid "Cross-hair color:"
 msgstr "Barva merka:"
 
-#: ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca-setup.ui.h:32
 msgid "Cross-hair si_ze:"
 msgstr "Velikost _merka:"
 
-#: ../src/orca/orca-setup.ui.h:47
+#: ../src/orca/orca-setup.ui.h:33
 msgid "Cursor color:"
 msgstr "Barva kazalke:"
 
-#: ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/orca-setup.ui.h:34
 msgid "Cursor size:"
 msgstr "Velikost kazalke:"
 
-#: ../src/orca/orca-setup.ui.h:50
+#: ../src/orca/orca-setup.ui.h:36
 msgid "Custom siz_e"
 msgstr "V_elikost po meri"
 
 #. Translators: Orca can present the current date to the user, here they can choose how the date should be presented to them.
-#: ../src/orca/orca-setup.ui.h:52
+#: ../src/orca/orca-setup.ui.h:38
 msgid "Dat_e format:"
 msgstr "Oblika zapisa _datuma:"
 
-#: ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca-setup.ui.h:39
 msgid "Default"
 msgstr "Privzeto"
 
-#: ../src/orca/orca-setup.ui.h:54
+#: ../src/orca/orca-setup.ui.h:40
 msgid "Disable _end of line symbol"
 msgstr "Onemogoči simbol za _konec vrstice"
 
-#: ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Disable gksu _keyboard grab"
 msgstr "Onemogoči gksu prijem _tipkovnice"
 
 #. Translators: When a user chooses a tracking alignment of "push", Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The "edge margin" allows the user to specify a margin so that objects are not displayed too close to the edge.
-#: ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca-setup.ui.h:46
 msgid "Edge mar_gin:"
 msgstr "_Odmik robu:"
 
-#: ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca-setup.ui.h:47
 msgid "Enable Braille _monitor"
 msgstr "Omogoči Braillov_monitor"
 
-#: ../src/orca/orca-setup.ui.h:62
+#: ../src/orca/orca-setup.ui.h:48
 msgid "Enable Braille _support"
 msgstr "Omogoči podporo _Braillovi pisavi"
 
-#: ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/orca-setup.ui.h:49
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "Omogoči _črkovno-številčne znake in ločila"
 
-#: ../src/orca/orca-setup.ui.h:64
+#: ../src/orca/orca-setup.ui.h:50
 msgid "Enable _function keys"
 msgstr "Omogoči _funkcijske tipke"
 
-#: ../src/orca/orca-setup.ui.h:65
+#: ../src/orca/orca-setup.ui.h:51
 msgid "Enable _key echo"
 msgstr "Omogoči odmev t_ipk"
 
-#: ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/orca-setup.ui.h:52
 msgid "Enable _magnifier"
 msgstr "Omogoči _povečevalo"
 
-#: ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Enable _modifier keys"
 msgstr "Omogoči _spremenilne tipke"
 
-#: ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/orca-setup.ui.h:54
 msgid "Enable _navigation keys"
 msgstr "Omogoči _krmilne tipke"
 
-#: ../src/orca/orca-setup.ui.h:69
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Enable ac_tion keys"
 msgstr "Omogoči _tipke dejanj"
 
-#: ../src/orca/orca-setup.ui.h:70
+#: ../src/orca/orca-setup.ui.h:56
 msgid "Enable bor_der"
 msgstr "Omogoči _robove"
 
-#: ../src/orca/orca-setup.ui.h:71
+#: ../src/orca/orca-setup.ui.h:57
 msgid "Enable c_ursor"
 msgstr "Omogoči k_azalec"
 
-#: ../src/orca/orca-setup.ui.h:72
+#: ../src/orca/orca-setup.ui.h:58
 msgid "Enable cross-h_air"
 msgstr "Omogoči _merek"
 
-#: ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/orca-setup.ui.h:59
 msgid "Enable cross-hair cl_ip"
 msgstr "Omogoči _klip merka"
 
-#: ../src/orca/orca-setup.ui.h:74
+#: ../src/orca/orca-setup.ui.h:60
 msgid "Enable echo by _sentence"
 msgstr "Omogoči odmev _stavkov"
 
-#: ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/orca-setup.ui.h:61
 msgid "Enable echo by _word"
 msgstr "Omogoči odmev _besed"
 
-#: ../src/orca/orca-setup.ui.h:78
+#: ../src/orca/orca-setup.ui.h:64
 msgid "Enable lockin_g keys"
 msgstr "Omo_goči zaklepanje tipk"
 
-#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:82
-msgid "Enable_d"
-msgstr "_Omogočeno"
-
-#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:84
-msgid "Frequency (secs):"
-msgstr "Frekvenca (sek):"
-
-#: ../src/orca/orca-setup.ui.h:86
+#: ../src/orca/orca-setup.ui.h:68
 msgid "General"
 msgstr "Splošno"
 
-#: ../src/orca/orca-setup.ui.h:87
+#: ../src/orca/orca-setup.ui.h:69
 msgid "Hide s_ystem pointer"
 msgstr "Skrij _sistemski kazalnik"
 
-#: ../src/orca/orca-setup.ui.h:88
+#: ../src/orca/orca-setup.ui.h:70
 msgid "Hyperlink"
 msgstr "Hiperpovezava"
 
-#: ../src/orca/orca-setup.ui.h:89
+#: ../src/orca/orca-setup.ui.h:71
 msgid "In_vert colors"
 msgstr "_Obrni barve"
 
-#: ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca-setup.ui.h:72
 msgid "Key Bindings"
 msgstr "Tipkovne povezave"
 
-#: ../src/orca/orca-setup.ui.h:91
+#: ../src/orca/orca-setup.ui.h:73
 msgid "Key Echo"
 msgstr "Odmev tipk"
 
-#: ../src/orca/orca-setup.ui.h:95
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
+#: ../src/orca/orca-setup.ui.h:78
+msgctxt "Magnification"
+msgid "<b>Border</b>"
+msgstr "<b>Obroba</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
+#: ../src/orca/orca-setup.ui.h:80
+msgctxt "Magnification"
+msgid "<b>Color</b>"
+msgstr "<b>Barva</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
+#: ../src/orca/orca-setup.ui.h:82
+msgctxt "Magnification"
+msgid "<b>Cross-hair</b>"
+msgstr "<b>Tarča</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
+#: ../src/orca/orca-setup.ui.h:84
+msgctxt "Magnification"
+msgid "<b>Cursor</b>"
+msgstr "<b>Kazalka</b>"
+
+#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
+#: ../src/orca/orca-setup.ui.h:86
+msgctxt "Magnification"
+msgid "<b>Zoomer</b>"
+msgstr "<b>Približevalnik</b>"
+
+#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
+#: ../src/orca/orca-setup.ui.h:88
+msgctxt "Magnification"
+msgid "Advanced..."
+msgstr "Napredno ..."
+
+#: ../src/orca/orca-setup.ui.h:89
 msgid "Magnifier"
 msgstr "Povečevalo"
 
-#: ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca-setup.ui.h:90
 msgid "Mouse poi_nter:"
 msgstr "Kazalnik _miške:"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:92
 msgid "Move _down one"
 msgstr "Premakni eno navz_dol"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:100
+#: ../src/orca/orca-setup.ui.h:94
 msgid "Move _up one"
 msgstr "Premakni eno navz_gor"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:102
+#: ../src/orca/orca-setup.ui.h:96
 msgid "Move to _bottom"
 msgstr "Premakni na dn_o"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Move to _top"
 msgstr "Premakni na vr_h"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca-setup.ui.h:101
 msgid "Only speak displayed text"
 msgstr "Izgovori le prikazano besedilo"
 
-#: ../src/orca/orca-setup.ui.h:108
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Orca Preferences"
 msgstr "Nastavitve Orke"
 
-#: ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/orca-setup.ui.h:103
 msgid "Orca _Modifier Key(s):"
 msgstr "_Spremenilne tipke Orka:"
 
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca-setup.ui.h:104
 msgid "Pi_tch:"
 msgstr "_Višina:"
 
 #. Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.
-#: ../src/orca/orca-setup.ui.h:112
+#: ../src/orca/orca-setup.ui.h:106
 msgid "Pointer follows focus"
 msgstr "Kazalnik sledi oknu v žarišču"
 
 #. Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the "zoomer," which is the magnified view of the screen.  If the "pointer follows zoomer" setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.
-#: ../src/orca/orca-setup.ui.h:114
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Pointer follows zoomer"
 msgstr "Kazalnik sledi približanju"
+
+#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
+#: ../src/orca/orca-setup.ui.h:112
+msgctxt "ProgressBar"
+msgid "Frequency (secs):"
+msgstr "Frekvenca (sek):"
+
+#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
+#: ../src/orca/orca-setup.ui.h:114
+msgctxt "ProgressBarUpdates"
+msgid "Enable_d"
+msgstr "_Omogočeno"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Pronunciation"
@@ -10818,25 +10823,22 @@ msgstr "Za vstop v podrejeni meni pritisnite desno puščico."
 msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
 msgstr "Za zmanjšanje pritisnite levo puščico, za povečanje pa desno. Za najmanjšo vrednost pritisnite tipko Začetek, za največjo pa tipko Konec."
 
+#~ msgid "All"
+#~ msgstr "Vse"
 #~ msgid "%d row"
-
 #~ msgid_plural "%d rows"
 #~ msgstr[0] "%d vrstic"
 #~ msgstr[1] "%d vrstica"
 #~ msgstr[2] "%d vrstici"
 #~ msgstr[3] "%d vrstice"
-
 #~ msgid "Cell spans %(rows)s and %(columns)s"
 #~ msgstr "Celica je razširjena preko %(rows)s in %(columns)s."
-
 #~ msgid "table with %(rows)d rows and %(columns)d columns."
 #~ msgstr "preglednica z %(rows)d vrsticami in %(columns)d stolpci."
-
 #~ msgid "Speak current _cell"
 #~ msgstr "Izgovarjanje _celic"
-
 #~ msgid "Orca Modifier Keys"
 #~ msgstr "Spremenilne tipke Orka"
-
 #~ msgid "Goes to last live region."
 #~ msgstr "Skoči na zadnji samodejno posodobljeni predel"
+
