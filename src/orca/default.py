@@ -5402,8 +5402,7 @@ class Script(script.Script):
         if briefMessage is None:
             briefMessage = fullMessage
 
-        if settings.enableSpeech \
-           and (voice != None or not settings.onlySpeakDisplayedText):
+        if settings.enableSpeech:
             if settings.messageVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
                 message = briefMessage
             else:
@@ -5764,8 +5763,7 @@ class Script(script.Script):
           prior to speaking the new text.
         """
 
-        if settings.enableSpeech \
-           and (voice != None or not settings.onlySpeakDisplayedText):
+        if settings.enableSpeech:
             voice = voice or self.voices.get(settings.SYSTEM_VOICE)
             speech.speak(string, voice, interrupt) 
 
