@@ -31,6 +31,8 @@ import orca.debug as debug
 import orca.speech as speech
 import pyatspi
 
+from speech_generator import SpeechGenerator
+
 ########################################################################
 #                                                                      #
 # The gnome-panel script class.                                        #
@@ -69,6 +71,11 @@ class Script(default.Script):
             self.onStateChanged
         
         return listeners
+
+    def getSpeechGenerator(self):
+        """Returns the speech generator for this script."""
+
+        return SpeechGenerator(self)
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
