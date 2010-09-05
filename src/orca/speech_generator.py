@@ -135,7 +135,15 @@ class SpeechGenerator(generator.Generator):
         'displayedText or name or description'). [[[JD to WDW - I
         needed a _generateDescription for whereAmI. :-) See below.
         """
-        acss = self.voice(DEFAULT)
+
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_LAYERED_PANE:
+            if settings.onlySpeakDisplayedText:
+                return []
+            else:
+                acss = self.voice(SYSTEM)
+        else:
+            acss = self.voice(DEFAULT)
         result = generator.Generator._generateName(self, obj, **args)
         if result:
             result.extend(acss)
@@ -1093,7 +1101,7 @@ class SpeechGenerator(generator.Generator):
                 newLine += " ; "
             newLine += attribs
 
-        result = [newline]
+        result = [newLine]
         result.extend(acss)
         return result
 
