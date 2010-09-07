@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-05 22:51+0200\n"
-"PO-Revision-Date: 2010-09-05 23:03+0100\n"
+"POT-Creation-Date: 2010-09-08 01:42+0200\n"
+"PO-Revision-Date: 2010-09-08 01:43+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -2657,7 +2657,7 @@ msgstr "Hittades inte"
 #: ../src/orca/rolenames.py:600
 #: ../src/orca/script_utilities.py:2409
 #: ../src/orca/scripts/apps/soffice/script.py:1147
-#: ../src/orca/speech_generator.py:959
+#: ../src/orca/speech_generator.py:967
 msgid "link"
 msgstr "länk"
 
@@ -2692,8 +2692,8 @@ msgstr "länk"
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5353
 #: ../src/orca/settings.py:1366
-#: ../src/orca/speech_generator.py:671
-#: ../src/orca/speech_generator.py:1023
+#: ../src/orca/speech_generator.py:679
+#: ../src/orca/speech_generator.py:1031
 #: ../src/orca/structural_navigation.py:3618
 msgid "blank"
 msgstr "blank"
@@ -3081,8 +3081,8 @@ msgstr "Läs upp cell"
 #: ../src/orca/default.py:3190
 #: ../src/orca/default.py:3323
 #: ../src/orca/default.py:5309
-#: ../src/orca/speech_generator.py:1119
-#: ../src/orca/speech_generator.py:1148
+#: ../src/orca/speech_generator.py:1127
+#: ../src/orca/speech_generator.py:1156
 msgctxt "text"
 msgid "selected"
 msgstr "markerad"
@@ -3122,7 +3122,7 @@ msgstr "Förloppsmätare %d."
 #. Translators: bold as in the font sense.
 #.
 #: ../src/orca/default.py:4354
-#: ../src/orca/speech_generator.py:939
+#: ../src/orca/speech_generator.py:947
 msgid "bold"
 msgstr "fet"
 
@@ -3273,7 +3273,7 @@ msgstr "hela dokumentet markerat"
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/default.py:5800
+#: ../src/orca/default.py:5798
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
@@ -3982,20 +3982,20 @@ msgstr "Visa föregående notifieringsmeddelande."
 #. list mode when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:98
-msgid "Enable notification message list mode. Press Escape to exit or h for help"
-msgstr "Aktivera listläge för notifieringsmeddelanden. Tryck Escape för att avsluta eller h för hjälp"
+msgid "Present notification messages list"
+msgstr "Visa lista med notifieringsmeddelanden"
 
 #. Translators: This is a brief message presented to the user
 #. the list of notifications is empty.
 #.
-#: ../src/orca/notification_messages.py:129
+#: ../src/orca/notification_messages.py:128
 msgid "No notification messages"
 msgstr "Inga notifieringsmeddelanden"
 
 #. Translators: This is a brief message presented to the user when
 #. when the top of a list of notifications is reached.
 #.
-#: ../src/orca/notification_messages.py:160
+#: ../src/orca/notification_messages.py:159
 msgctxt "notification"
 msgid "Top"
 msgstr "Övre"
@@ -4003,7 +4003,7 @@ msgstr "Övre"
 #. Translators: This is a brief message presented to the user when
 #. when the bottom of a list of notifications is reached.
 #.
-#: ../src/orca/notification_messages.py:167
+#: ../src/orca/notification_messages.py:166
 msgctxt "notification"
 msgid "Bottom"
 msgstr "Nedre"
@@ -4014,13 +4014,13 @@ msgstr "Nedre"
 #. This string is the prompt which will be presented to the user
 #. in both speech and braille upon exiting this mode.
 #.
-#: ../src/orca/notification_messages.py:190
+#: ../src/orca/notification_messages.py:189
 msgid "Exiting list notification messages mode."
 msgstr "Avslutar listläge för notifieringsmeddelanden."
 
 #. Translators: This message inform to the user the number of
 #. messages in the list.
-#: ../src/orca/notification_messages.py:244
+#: ../src/orca/notification_messages.py:243
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -4028,7 +4028,7 @@ msgstr[0] "%d meddelande.\n"
 msgstr[1] "%d meddelanden.\n"
 
 #. Translators: This is a help message.
-#: ../src/orca/notification_messages.py:246
+#: ../src/orca/notification_messages.py:245
 msgid "Press h for help.\n"
 msgstr "Tryck h för hjälp.\n"
 
@@ -4036,7 +4036,7 @@ msgstr "Tryck h för hjälp.\n"
 #. amongst the list of commands presented in list notification
 #. messages mode as well as how to exit the list.
 #.
-#: ../src/orca/notification_messages.py:253
+#: ../src/orca/notification_messages.py:252
 msgid ""
 "Use Up, Down, Home or End to navigate in the list.\n"
 "Press Escape to exit.\n"
@@ -7574,7 +7574,7 @@ msgstr "rad %(row)d, kolumn %(column)d"
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/scripts/apps/acroread/script.py:316
-#: ../src/orca/speech_generator.py:753
+#: ../src/orca/speech_generator.py:761
 #, python-format
 msgid "column %d"
 msgstr "kolumn %d"
@@ -7850,7 +7850,7 @@ msgstr "Skrivbord "
 #. pane or table.
 #.
 #: ../src/orca/scripts/apps/nautilus/script.py:138
-#: ../src/orca/speech_generator.py:1342
+#: ../src/orca/speech_generator.py:1350
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -8866,14 +8866,14 @@ msgstr "Uppläsningsassistent"
 #. and the second item the name of the file being linked
 #. to.
 #.
-#: ../src/orca/speech_generator.py:417
+#: ../src/orca/speech_generator.py:425
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)s-länk till %(file)s"
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/speech_generator.py:423
+#: ../src/orca/speech_generator.py:431
 #, python-format
 msgid "%s link"
 msgstr "%s-länk"
@@ -8881,7 +8881,7 @@ msgstr "%s-länk"
 #. Translators: this is an indication that a given
 #. link points to an object that is on the same page.
 #.
-#: ../src/orca/speech_generator.py:459
+#: ../src/orca/speech_generator.py:467
 msgid "same page"
 msgstr "samma sida"
 
@@ -8893,8 +8893,8 @@ msgstr "samma sida"
 #. link points to an object that is at the same site
 #. (but not on the same page) as the link.
 #.
-#: ../src/orca/speech_generator.py:465
-#: ../src/orca/speech_generator.py:478
+#: ../src/orca/speech_generator.py:473
+#: ../src/orca/speech_generator.py:486
 msgid "same site"
 msgstr "samma plats"
 
@@ -8902,13 +8902,13 @@ msgstr "samma plats"
 #. link points to an object that is at a different
 #. site than that of the link.
 #.
-#: ../src/orca/speech_generator.py:484
+#: ../src/orca/speech_generator.py:492
 msgid "different site"
 msgstr "annan plats"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/speech_generator.py:514
+#: ../src/orca/speech_generator.py:522
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -8917,14 +8917,14 @@ msgstr[1] "%d byte"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/speech_generator.py:518
+#: ../src/orca/speech_generator.py:526
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobyte"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/speech_generator.py:522
+#: ../src/orca/speech_generator.py:530
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabyte"
@@ -8932,28 +8932,28 @@ msgstr "%.2f megabyte"
 #. Translators: this is in reference to a table cell being
 #. selected or not.
 #.
-#: ../src/orca/speech_generator.py:724
+#: ../src/orca/speech_generator.py:732
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "inte markerad"
 
 #. Translators: this is in references to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:782
+#: ../src/orca/speech_generator.py:790
 #, python-format
 msgid "row %d"
 msgstr "rad %d"
 
 #. Translators: this is in references to a column in a
 #. table.
-#: ../src/orca/speech_generator.py:811
+#: ../src/orca/speech_generator.py:819
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "kolumn %(index)d av %(total)d"
 
 #. Translators: this is in reference to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:816
+#: ../src/orca/speech_generator.py:824
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "rad %(index)d av %(total)d"
@@ -8961,14 +8961,14 @@ msgstr "rad %(index)d av %(total)d"
 #. Translators: This is to indicate to the user that
 #. he/she is in the last cell of a table in a document.
 #.
-#: ../src/orca/speech_generator.py:851
+#: ../src/orca/speech_generator.py:859
 msgid "End of table"
 msgstr "Slut på tabell"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1192
+#: ../src/orca/speech_generator.py:1200
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -8978,7 +8978,7 @@ msgstr[1] "%d blanksteg"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1203
+#: ../src/orca/speech_generator.py:1211
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -8987,7 +8987,7 @@ msgstr[1] "%d flikar"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/speech_generator.py:1271
+#: ../src/orca/speech_generator.py:1279
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -8997,8 +8997,8 @@ msgstr[1] "%d procent"
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/speech_generator.py:1370
-#: ../src/orca/speech_generator.py:1391
+#: ../src/orca/speech_generator.py:1378
+#: ../src/orca/speech_generator.py:1399
 msgid "0 items"
 msgstr "0 objekt"
 
@@ -9006,7 +9006,7 @@ msgstr "0 objekt"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/speech_generator.py:1426
+#: ../src/orca/speech_generator.py:1434
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -9016,8 +9016,8 @@ msgstr[1] "%(index)d av %(total)d objekt markerade"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1479
-#: ../src/orca/speech_generator.py:1768
+#: ../src/orca/speech_generator.py:1487
+#: ../src/orca/speech_generator.py:1776
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -9027,7 +9027,7 @@ msgstr[1] "%d ofokuserade dialoger"
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1561
+#: ../src/orca/speech_generator.py:1569
 msgid "Icon panel"
 msgstr "Ikonpanel"
 
@@ -9035,7 +9035,7 @@ msgstr "Ikonpanel"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1715
+#: ../src/orca/speech_generator.py:1723
 #, python-format
 msgid "Default button is %s"
 msgstr "Standardknapp är %s"
@@ -10767,6 +10767,11 @@ msgstr "Tryck på högerpil för att gå in i en undermeny."
 msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
 msgstr "Tryck på vänsterpil för att minska, tryck på högerpil för att öka. Tryck på Home för att gå till minimum och End för att gå till maximum."
 
+#~ msgid ""
+#~ "Enable notification message list mode. Press Escape to exit or h for help"
+#~ msgstr ""
+#~ "Aktivera listläge för notifieringsmeddelanden. Tryck Escape för att "
+#~ "avsluta eller h för hjälp"
 #~ msgid "%d row"
 #~ msgid_plural "%d rows"
 #~ msgstr[0] "%d rad"
