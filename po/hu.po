@@ -8,9 +8,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-08 13:43+0200\n"
-"PO-Revision-Date: 2010-09-08 13:43+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
+"POT-Creation-Date: 2010-09-07 23:43+0000\n"
+"PO-Revision-Date: 2010-09-08 13:39+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
@@ -31,8 +31,7 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "Orka képernyőolvasó és nagyító"
 
 #: ../orca.desktop.in.h:3
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 "A képernyő információinak felolvasása, Braille-kimenetté alakítása vagy a "
 "képernyő nagyítása"
@@ -361,8 +360,7 @@ msgid "Belgium Dutch Grade 1"
 msgstr "Belgiumi német 1"
 
 #: ../src/orca/chat.py:334
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "A csatorna nevének a csevegőüzenetek elé szúrása be/ki."
 
 #: ../src/orca/chat.py:340
@@ -1765,8 +1763,7 @@ msgstr "Végrehajtja a hol vagyok műveletet."
 #.
 #: ../src/orca/default.py:220
 msgid "Performs the detailed where am I operation."
-msgstr ""
-"Végrehajtja a hol vagyok műveletet, de részletesebb információt kapunk."
+msgstr "Végrehajtja a hol vagyok műveletet, de részletesebb információt kapunk."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -1902,8 +1899,7 @@ msgstr "Lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
 #.
 #: ../src/orca/default.py:378
 msgid "Phonetically spells the current flat review line."
-msgstr ""
-"Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
+msgstr "Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -2114,8 +2110,7 @@ msgstr "Kimondja azt a karaktert, ahol az egyszerű áttekintés áll."
 #.
 #: ../src/orca/default.py:601
 msgid "Phonetically speaks the current flat review character."
-msgstr ""
-"Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll."
+msgstr "Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -3882,7 +3877,7 @@ msgstr "Az egérbővítések engedélyezve."
 #.
 #: ../src/orca/mag.py:1747 ../src/orca/orca_gui_prefs.py:1973
 #: ../src/orca/orca_gui_prefs.py:1999 ../src/orca/orca_gui_prefs.py:2002
-#: ../src/orca/orca-setup.ui.h:85
+#: ../src/orca/orca-setup.ui.h:67
 msgid "Full Screen"
 msgstr "Teljes képernyő"
 
@@ -3903,14 +3898,14 @@ msgstr "Felső fél"
 #. Translators: magnification will use the bottom half of the screen.
 #.
 #: ../src/orca/mag.py:1760 ../src/orca/orca_gui_prefs.py:1981
-#: ../src/orca/orca_gui_prefs.py:2004 ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca_gui_prefs.py:2004 ../src/orca/orca-setup.ui.h:22
 msgid "Bottom Half"
 msgstr "Alsó fél"
 
 #. Translators: magnification will use the left half of the screen.
 #.
 #: ../src/orca/mag.py:1764 ../src/orca/orca_gui_prefs.py:1985
-#: ../src/orca/orca_gui_prefs.py:2005 ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca_gui_prefs.py:2005 ../src/orca/orca-setup.ui.h:74
 msgid "Left Half"
 msgstr "Bal fél"
 
@@ -3925,7 +3920,7 @@ msgstr "Jobb fél"
 #. to use for magnification.
 #.
 #: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:1994
-#: ../src/orca/orca_gui_prefs.py:2007 ../src/orca/orca-setup.ui.h:49
+#: ../src/orca/orca_gui_prefs.py:2007 ../src/orca/orca-setup.ui.h:35
 msgid "Custom"
 msgstr "Egyéni"
 
@@ -4013,8 +4008,7 @@ msgstr ""
 "A kilépéshez nyomja meg az Escape billentyűt.\n"
 "Az utolsó felolvasott értesítés megismétléséhez nyomja meg a szóköz "
 "billentyűt.\n"
-"Egy megadott számú értesítés felolvastatásához nyomja meg a megfelelő "
-"számbillentyűt.\n"
+"Egy megadott számú értesítés felolvastatásához nyomja meg a megfelelő számbillentyűt.\n"
 
 #. Translators: "Default Synthesizer" will appear in the list of available
 #. speech engines as a special item.  It refers to the default engine
@@ -4138,7 +4132,7 @@ msgstr "Negatív árnyalateltolás"
 #: ../src/orca/orca_gui_prefs.py:4476 ../src/orca/orca_gui_prefs.py:4499
 #: ../src/orca/orca_gui_prefs.py:4672 ../src/orca/orca_gui_prefs.py:4739
 #: ../src/orca/orca_gui_prefs.py:4742 ../src/orca/orca_gui_prefs.py:4770
-#: ../src/orca/orca-setup.ui.h:105
+#: ../src/orca/orca-setup.ui.h:99
 msgid "None"
 msgstr "Nincs"
 
@@ -4435,8 +4429,7 @@ msgstr "A GNOME akadálymentesítési támogatása engedélyezve."
 
 #: ../src/orca/orca_console_prefs.py:593 ../src/orca/orca_gui_prefs.py:500
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
-"Ki kell jelentkeznie és újra be kell lépnie a módosítás életbe lépéséhez."
+msgstr "Ki kell jelentkeznie és újra be kell lépnie a módosítás életbe lépéséhez."
 
 #: ../src/orca/orca_console_prefs.py:603
 msgid "Do you want to logout now?  Enter y or n: "
@@ -4601,7 +4594,7 @@ msgstr ""
 #. the object of interest in the center of the magnified window.
 #.
 #: ../src/orca/orca_gui_prefs.py:102 ../src/orca/orca_gui_prefs.py:2050
-#: ../src/orca/orca_gui_prefs.py:2070 ../src/orca/orca-setup.ui.h:42
+#: ../src/orca/orca_gui_prefs.py:2070 ../src/orca/orca-setup.ui.h:28
 msgid "Centered"
 msgstr "Középre helyezett"
 
@@ -4787,7 +4780,7 @@ msgstr "Helyettesítő szó"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1589 ../src/orca/orca-setup.ui.h:39
+#: ../src/orca/orca_gui_prefs.py:1589 ../src/orca/orca-setup.ui.h:25
 msgid "Break speech into ch_unks between pauses"
 msgstr "A beszéd megállítása s_züneteknél"
 
@@ -4796,7 +4789,7 @@ msgstr "A beszéd megállítása s_züneteknél"
 #. line.
 #.
 #: ../src/orca/orca_gui_prefs.py:1601 ../src/orca/orca_gui_prefs.py:2998
-#: ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca-setup.ui.h:75
 msgid "Line"
 msgstr "Sor"
 
@@ -4814,7 +4807,9 @@ msgstr "Mondat"
 #. will present progress bar updates regardless of what application
 #. and window they happen to be in.
 #.
+#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
 #: ../src/orca/orca_gui_prefs.py:1700 ../src/orca/orca_gui_prefs.py:2963
+#: ../src/orca/orca-setup.ui.h:110
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Mindent"
@@ -4844,7 +4839,7 @@ msgstr "Ablak"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1820 ../src/orca/orca-setup.ui.h:80
+#: ../src/orca/orca_gui_prefs.py:1820 ../src/orca/orca-setup.ui.h:66
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Nem helykitöltő _mellékjelek kimondásának engedélyezése"
 
@@ -4855,7 +4850,7 @@ msgstr "Nem helykitöltő _mellékjelek kimondásának engedélyezése"
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1828 ../src/orca/orca-setup.ui.h:77
+#: ../src/orca/orca_gui_prefs.py:1828 ../src/orca/orca-setup.ui.h:63
 msgid "Enable echo by cha_racter"
 msgstr "Karakt_erenkénti visszhang engedélyezése"
 
@@ -4890,7 +4885,7 @@ msgstr "Braille társítások"
 #. corner will be used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2797 ../src/orca/orca_gui_prefs.py:2838
-#: ../src/orca/orca_gui_prefs.py:2878 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/orca_gui_prefs.py:2878 ../src/orca/orca-setup.ui.h:42
 msgid "Dot _7"
 msgstr "_7. pont"
 
@@ -4899,7 +4894,7 @@ msgstr "_7. pont"
 #. will be used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2804 ../src/orca/orca_gui_prefs.py:2845
-#: ../src/orca/orca_gui_prefs.py:2885 ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca_gui_prefs.py:2885 ../src/orca/orca-setup.ui.h:43
 msgid "Dot _8"
 msgstr "_8. pont"
 
@@ -4908,7 +4903,7 @@ msgstr "_8. pont"
 #. used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2811 ../src/orca/orca_gui_prefs.py:2852
-#: ../src/orca/orca_gui_prefs.py:2892 ../src/orca/orca-setup.ui.h:58
+#: ../src/orca/orca_gui_prefs.py:2892 ../src/orca/orca-setup.ui.h:44
 msgid "Dots 7 an_d 8"
 msgstr "7. é_s 8. pont"
 
@@ -4932,7 +4927,7 @@ msgstr "Né_hány"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2930 ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca_gui_prefs.py:2930 ../src/orca/orca-setup.ui.h:76
 msgid "M_ost"
 msgstr "_Legtöbb"
 
@@ -4941,7 +4936,7 @@ msgstr "_Legtöbb"
 #. focus.
 #.
 #: ../src/orca/orca_gui_prefs.py:3090 ../src/orca/orca_gui_prefs.py:3194
-#: ../src/orca/orca-setup.ui.h:40
+#: ../src/orca/orca-setup.ui.h:26
 msgid "Brie_f"
 msgstr "_Tömör"
 
@@ -5230,8 +5225,7 @@ msgstr "Az ismert futó alkalmazások kiírása"
 #.
 #: ../src/orca/orca.py:1830
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr ""
-"A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-OO:PP:MM.out fájlba"
+msgstr "A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-OO:PP:MM.out fájlba"
 
 #. Translators: this enables debug output for Orca and overrides
 #. the name of the debug file Orca will use for debug output if the
@@ -5411,312 +5405,323 @@ msgstr ""
 "<b>Kiválasztott attribútumok\n"
 "beállítása</b>"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
-#: ../src/orca/orca-setup.ui.h:6
-msgid "<b>Border</b>"
-msgstr "<b>Szegélybeállítások</b>"
-
-#: ../src/orca/orca-setup.ui.h:7
+#: ../src/orca/orca-setup.ui.h:5
 msgid "<b>Braille Indicator</b>"
 msgstr "<b>Braille-kiválasztás jelző</b>"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
-#: ../src/orca/orca-setup.ui.h:9
-msgid "<b>Color</b>"
-msgstr "<b>Szín</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
-#: ../src/orca/orca-setup.ui.h:11
-msgid "<b>Cross-hair</b>"
-msgstr "<b>Szálkereszt beállításai</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
-#: ../src/orca/orca-setup.ui.h:13
-msgid "<b>Cursor</b>"
-msgstr "<b>Kurzor beállításai</b>"
-
-#: ../src/orca/orca-setup.ui.h:14
+#: ../src/orca/orca-setup.ui.h:6
 msgid "<b>Hyperlink Indicator</b>"
 msgstr "<b>Hivatkozásjelző</b>"
 
-#: ../src/orca/orca-setup.ui.h:15
+#: ../src/orca/orca-setup.ui.h:7
 msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Billentyűzetkiosztás</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
-#: ../src/orca/orca-setup.ui.h:17
+#: ../src/orca/orca-setup.ui.h:9
 msgid "<b>Progress Bar Updates</b>"
 msgstr "<b>Folyamatjelző frissítésének felolvasása</b>"
 
-#: ../src/orca/orca-setup.ui.h:18
+#: ../src/orca/orca-setup.ui.h:10
 msgid "<b>Pronunciation Dictionary</b>"
 msgstr "<b>Kiejtési szótár</b>"
 
-#: ../src/orca/orca-setup.ui.h:19
+#: ../src/orca/orca-setup.ui.h:11
 msgid "<b>Punctuation Level</b>"
 msgstr "<b>Központozás szintje</b>"
 
-#: ../src/orca/orca-setup.ui.h:20
+#: ../src/orca/orca-setup.ui.h:12
 msgid "<b>Selection Indicator</b>"
 msgstr "<b>Kiválasztásjelző</b>"
 
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
-#: ../src/orca/orca-setup.ui.h:22
+#: ../src/orca/orca-setup.ui.h:14
 msgid "<b>Table Rows</b>"
 msgstr "<b>Táblázatoszlopok olvasása</b>"
 
-#: ../src/orca/orca-setup.ui.h:23
+#: ../src/orca/orca-setup.ui.h:15
 msgid "<b>Text attributes</b>"
 msgstr "<b>Szövegattribútumok</b>"
 
 #. Translators:  In the context of magnifying the contents of the screen, "tracking" refers to whether or not an object (mouse pointer, the caret, or the widget with focus) is of interest.  Objects of interest must always be displayed.  "Alignment" refers to where on the screen objects of interest should be displayed.
-#: ../src/orca/orca-setup.ui.h:25
+#: ../src/orca/orca-setup.ui.h:17
 msgid "<b>Tracking and Alignment</b>"
 msgstr "<b>Követés és igazítás beállításai</b>"
 
-#: ../src/orca/orca-setup.ui.h:26
+#: ../src/orca/orca-setup.ui.h:18
 msgid "<b>Verbosity</b>"
 msgstr "<b>Részletesség</b>"
 
-#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
-#: ../src/orca/orca-setup.ui.h:28
-msgid "<b>Zoomer</b>"
-msgstr "<b>Nagyító beállításai</b>"
-
-#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
-#: ../src/orca/orca-setup.ui.h:30
-msgid "Advanced..."
-msgstr "Speciális…"
-
-#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca-setup.ui.h:32
-msgid "All"
-msgstr "Mindent"
-
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/orca-setup.ui.h:33 ../src/orca/rolenames.py:1127
+#: ../src/orca/orca-setup.ui.h:19 ../src/orca/rolenames.py:1127
 msgid "Application"
 msgstr "Alkalmazás"
 
-#: ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca-setup.ui.h:20
 msgid "Border color:"
 msgstr "Szegély színe:"
 
-#: ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/orca-setup.ui.h:21
 msgid "Border size:"
 msgstr "Szegély mérete:"
 
-#: ../src/orca/orca-setup.ui.h:37
+#: ../src/orca/orca-setup.ui.h:23
 msgid "Braille"
 msgstr "Braille"
 
-#: ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca-setup.ui.h:27
 msgid "Brightness:"
 msgstr "Fényerő:"
 
-#: ../src/orca/orca-setup.ui.h:43
+#: ../src/orca/orca-setup.ui.h:29
 msgid "Contraction _Table:"
 msgstr "Fordítási _tábla:"
 
-#: ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca-setup.ui.h:30
 msgid "Contrast:"
 msgstr "Kontraszt:"
 
-#: ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca-setup.ui.h:31
 msgid "Cross-hair color:"
 msgstr "Szálkereszt színe:"
 
-#: ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca-setup.ui.h:32
 msgid "Cross-hair si_ze:"
 msgstr "Szálkereszt _mérete:"
 
-#: ../src/orca/orca-setup.ui.h:47
+#: ../src/orca/orca-setup.ui.h:33
 msgid "Cursor color:"
 msgstr "Kurzor színe:"
 
-#: ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/orca-setup.ui.h:34
 msgid "Cursor size:"
 msgstr "Kurzor mérete:"
 
-#: ../src/orca/orca-setup.ui.h:50
+#: ../src/orca/orca-setup.ui.h:36
 msgid "Custom siz_e"
 msgstr "_Egyedi méret"
 
 #. Translators: Orca can present the current date to the user, here they can choose how the date should be presented to them.
-#: ../src/orca/orca-setup.ui.h:52
+#: ../src/orca/orca-setup.ui.h:38
 msgid "Dat_e format:"
 msgstr "Dá_tumformátum:"
 
-#: ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca-setup.ui.h:39
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: ../src/orca/orca-setup.ui.h:54
+#: ../src/orca/orca-setup.ui.h:40
 msgid "Disable _end of line symbol"
 msgstr "A _sorvég jel szimbólum letiltása"
 
-#: ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Disable gksu _keyboard grab"
 msgstr "A gksu _nem ragadhatja meg a billentyűzetet"
 
 #. Translators: When a user chooses a tracking alignment of "push", Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The "edge margin" allows the user to specify a margin so that objects are not displayed too close to the edge.
-#: ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca-setup.ui.h:46
 msgid "Edge mar_gin:"
 msgstr "Szélső ma_rgó:"
 
-#: ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca-setup.ui.h:47
 msgid "Enable Braille _monitor"
 msgstr "Braille _monitor engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:62
+#: ../src/orca/orca-setup.ui.h:48
 msgid "Enable Braille _support"
 msgstr "Braille támogatá_s engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/orca-setup.ui.h:49
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "Alfan_umerikus- és írásjelek engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:64
+#: ../src/orca/orca-setup.ui.h:50
 msgid "Enable _function keys"
 msgstr "_Funkcióbillentyűk engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:65
+#: ../src/orca/orca-setup.ui.h:51
 msgid "Enable _key echo"
 msgstr "Billentyű_visszhang engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/orca-setup.ui.h:52
 msgid "Enable _magnifier"
 msgstr "_Nagyító engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Enable _modifier keys"
 msgstr "_Módosítóbillentyűk engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/orca-setup.ui.h:54
 msgid "Enable _navigation keys"
 msgstr "Navigá_ciós billentyűk engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:69
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Enable ac_tion keys"
 msgstr "Művele_tbillentyűk engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:70
+#: ../src/orca/orca-setup.ui.h:56
 msgid "Enable bor_der"
 msgstr "S_zegély engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:71
+#: ../src/orca/orca-setup.ui.h:57
 msgid "Enable c_ursor"
 msgstr "K_urzor engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:72
+#: ../src/orca/orca-setup.ui.h:58
 msgid "Enable cross-h_air"
 msgstr "Szál_kereszt engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/orca-setup.ui.h:59
 msgid "Enable cross-hair cl_ip"
 msgstr "Szálkereszt ki_vágásának engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:74
+#: ../src/orca/orca-setup.ui.h:60
 msgid "Enable echo by _sentence"
 msgstr "Mon_datonkénti visszhang engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/orca-setup.ui.h:61
 msgid "Enable echo by _word"
 msgstr "Szava_nkénti visszhang engedélyezése"
 
-#: ../src/orca/orca-setup.ui.h:78
+#: ../src/orca/orca-setup.ui.h:64
 msgid "Enable lockin_g keys"
 msgstr "_Zárolóbillentyűk engedélyezése"
 
-#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:82
-msgid "Enable_d"
-msgstr "Enge_délyezve"
-
-#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:84
-msgid "Frequency (secs):"
-msgstr "Gyakoriság másodpercben:"
-
-#: ../src/orca/orca-setup.ui.h:86
+#: ../src/orca/orca-setup.ui.h:68
 msgid "General"
 msgstr "Általános"
 
-#: ../src/orca/orca-setup.ui.h:87
+#: ../src/orca/orca-setup.ui.h:69
 msgid "Hide s_ystem pointer"
 msgstr "A rendszer_mutató elrejtése"
 
-#: ../src/orca/orca-setup.ui.h:88
+#: ../src/orca/orca-setup.ui.h:70
 msgid "Hyperlink"
 msgstr "Hiperlink"
 
-#: ../src/orca/orca-setup.ui.h:89
+#: ../src/orca/orca-setup.ui.h:71
 msgid "In_vert colors"
 msgstr "S_zínek megfordítása"
 
-#: ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca-setup.ui.h:72
 msgid "Key Bindings"
 msgstr "Billentyűtársítások"
 
-#: ../src/orca/orca-setup.ui.h:91
+#: ../src/orca/orca-setup.ui.h:73
 msgid "Key Echo"
 msgstr "Billentyűvisszhang"
 
-#: ../src/orca/orca-setup.ui.h:95
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
+#: ../src/orca/orca-setup.ui.h:78
+#| msgid "<b>Border</b>"
+msgctxt "Magnification"
+msgid "<b>Border</b>"
+msgstr "<b>Szegélybeállítások</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
+#: ../src/orca/orca-setup.ui.h:80
+#| msgid "<b>Color</b>"
+msgctxt "Magnification"
+msgid "<b>Color</b>"
+msgstr "<b>Szín</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
+#: ../src/orca/orca-setup.ui.h:82
+#| msgid "<b>Cross-hair</b>"
+msgctxt "Magnification"
+msgid "<b>Cross-hair</b>"
+msgstr "<b>Szálkereszt beállításai</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
+#: ../src/orca/orca-setup.ui.h:84
+#| msgid "<b>Cursor</b>"
+msgctxt "Magnification"
+msgid "<b>Cursor</b>"
+msgstr "<b>Kurzor beállításai</b>"
+
+#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
+#: ../src/orca/orca-setup.ui.h:86
+#| msgid "<b>Zoomer</b>"
+msgctxt "Magnification"
+msgid "<b>Zoomer</b>"
+msgstr "<b>Nagyító beállításai</b>"
+
+#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
+#: ../src/orca/orca-setup.ui.h:88
+#| msgid "Advanced..."
+msgctxt "Magnification"
+msgid "Advanced..."
+msgstr "Speciális…"
+
+#: ../src/orca/orca-setup.ui.h:89
 msgid "Magnifier"
 msgstr "Nagyító"
 
-#: ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca-setup.ui.h:90
 msgid "Mouse poi_nter:"
 msgstr "Egér_mutató:"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:92
 msgid "Move _down one"
 msgstr "Eggyel _lejjebb"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:100
+#: ../src/orca/orca-setup.ui.h:94
 msgid "Move _up one"
 msgstr "Eggyel _feljebb"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:102
+#: ../src/orca/orca-setup.ui.h:96
 msgid "Move to _bottom"
 msgstr "Az aljá_ra"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Move to _top"
 msgstr "A _tetejére"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca-setup.ui.h:101
 msgid "Only speak displayed text"
 msgstr "Csak a képernyőn megjelenő szöveg kimondása"
 
-#: ../src/orca/orca-setup.ui.h:108
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Orca Preferences"
 msgstr "Beállítások"
 
-#: ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/orca-setup.ui.h:103
 msgid "Orca _Modifier Key(s):"
 msgstr "Orka _módosítóbillentyűk:"
 
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca-setup.ui.h:104
 msgid "Pi_tch:"
 msgstr "Hangmaga_sság:"
 
 #. Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.
-#: ../src/orca/orca-setup.ui.h:112
+#: ../src/orca/orca-setup.ui.h:106
 msgid "Pointer follows focus"
 msgstr "Az egérmutató követi a fókuszt"
 
 #. Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the "zoomer," which is the magnified view of the screen.  If the "pointer follows zoomer" setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.
-#: ../src/orca/orca-setup.ui.h:114
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Pointer follows zoomer"
 msgstr "Az egérmutató követi a nagyítót"
+
+#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
+#: ../src/orca/orca-setup.ui.h:112
+#| msgid "Frequency (secs):"
+msgctxt "ProgressBar"
+msgid "Frequency (secs):"
+msgstr "Gyakoriság másodpercben:"
+
+#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
+#: ../src/orca/orca-setup.ui.h:114
+#| msgid "Enable_d"
+msgctxt "ProgressBarUpdates"
+msgid "Enable_d"
+msgstr "Enge_délyezve"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Pronunciation"
@@ -7857,8 +7862,7 @@ msgstr "Dinamikus oszlopfejlécek törölve."
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:259
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 "Beállítja a dinamikus sorfejlécekként használandó oszlopot a táblázat "
 "celláinak felolvasásakor."
@@ -8206,8 +8210,7 @@ msgstr "Élő régiók udvariassági beállításának módosítása."
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:488
 msgid "Set default live region politeness level to off."
-msgstr ""
-"Az élő régió alapértelmezett udvariassági szintjének beállítása kikapcsoltra."
+msgstr "Az élő régió alapértelmezett udvariassági szintjének beállítása kikapcsoltra."
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
@@ -8258,8 +8261,7 @@ msgstr "Váltás a Gecko beépített vagy az Orka mutatónavigáció között."
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:588
 msgid "Moves focus into and away from the current mouse over."
-msgstr ""
-"A fókuszt az egérmutatónál felbukkanó objektumra, vagy arról elmozgatja."
+msgstr "A fókuszt az egérmutatónál felbukkanó objektumra, vagy arról elmozgatja."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -10635,8 +10637,7 @@ msgstr "Egy elem kijelöléséhez használja a fel- és le nyíl billentyűket."
 #. this string informs the user how to collapse the node.
 #: ../src/orca/tutorialgenerator.py:347 ../src/orca/tutorialgenerator.py:497
 msgid "To collapse, press shift plus left."
-msgstr ""
-"A fanézet összecsukásához használja a Shift+bal nyíl billentyűkombinációt."
+msgstr "A fanézet összecsukásához használja a Shift+bal nyíl billentyűkombinációt."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -10659,8 +10660,7 @@ msgstr "Gépelje be a kért információt, vagy módosítsa a meglévőt."
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:413
 msgid "Use left and right to view other tabs."
-msgstr ""
-"A lapfülek közötti váltáshoz használja a balra- és jobbra nyíl billentyűket."
+msgstr "A lapfülek közötti váltáshoz használja a balra- és jobbra nyíl billentyűket."
 
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:438
@@ -10670,8 +10670,7 @@ msgstr "Aktiválásához nyomja meg a szóköz billentyűt."
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:466
-msgid ""
-"Use up or down arrow to select value. Or type in the desired numerical value."
+msgid "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
 "Az érték megadásához használja a felfelé és lefelé nyílbillentyűket, vagy "
 "gépelje be az értéket."
@@ -10706,3 +10705,4 @@ msgstr ""
 "Az érték csökkentéséhez használja a balra nyíl, növeléséhez a jobbra nyíl "
 "billentyűt. A legkisebb értékre ugráshoz használja a Home, a legnagyobb "
 "értékre ugráshoz pedig az End billentyűt."
+
