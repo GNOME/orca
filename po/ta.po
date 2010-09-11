@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-03 20:37+0530\n"
-"PO-Revision-Date: 2010-09-03 20:53+0530\n"
+"POT-Creation-Date: 2010-09-11 15:21+0530\n"
+"PO-Revision-Date: 2010-09-11 15:22+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: Tamil <<Ubuntu-l10n-tam@lists.ubuntu.com>>\n"
 "MIME-Version: 1.0\n"
@@ -2659,7 +2659,7 @@ msgstr "காணவில்லை"
 #: ../src/orca/default.py:2024 ../src/orca/rolenames.py:600
 #: ../src/orca/script_utilities.py:2409
 #: ../src/orca/scripts/apps/soffice/script.py:1147
-#: ../src/orca/speech_generator.py:959
+#: ../src/orca/speech_generator.py:967
 msgid "link"
 msgstr "இணைப்பு"
 
@@ -2690,8 +2690,8 @@ msgstr "இணைப்பு"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:542
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5353
-#: ../src/orca/settings.py:1366 ../src/orca/speech_generator.py:671
-#: ../src/orca/speech_generator.py:1023
+#: ../src/orca/settings.py:1366 ../src/orca/speech_generator.py:679
+#: ../src/orca/speech_generator.py:1031
 #: ../src/orca/structural_navigation.py:3618
 msgid "blank"
 msgstr "வெற்று"
@@ -3076,8 +3076,8 @@ msgstr "அறையை பேசு"
 #. a document, Orca lets them know this.
 #.
 #: ../src/orca/default.py:3190 ../src/orca/default.py:3323
-#: ../src/orca/default.py:5309 ../src/orca/speech_generator.py:1119
-#: ../src/orca/speech_generator.py:1148
+#: ../src/orca/default.py:5309 ../src/orca/speech_generator.py:1127
+#: ../src/orca/speech_generator.py:1156
 msgctxt "text"
 msgid "selected"
 msgstr "தேர்ந்தெடுக்கப்பட்டது"
@@ -3114,7 +3114,7 @@ msgstr "%d முன்னேற்ற பட்டை"
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:4354 ../src/orca/speech_generator.py:939
+#: ../src/orca/default.py:4354 ../src/orca/speech_generator.py:947
 msgid "bold"
 msgstr "தடிமனான"
 
@@ -3264,7 +3264,7 @@ msgstr "முழு ஆவணம் தேர்ந்தெடுக்கப�
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/default.py:5800
+#: ../src/orca/default.py:5798
 #, python-format
 msgid "Unicode %s"
 msgstr "யூனிகோட் %s"
@@ -3931,22 +3931,20 @@ msgstr "முந்தைய அறிவிப்பு செய்திய�
 #. list mode when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:98
-msgid "Enable notification message list mode. Press Escape to exit or h for help"
-msgstr ""
-"அறிவிப்பு செய்தி முறைக்கு நுழைகிறது. வெளியேற விடுபடு விசையையும் உதவிக்கு h விசையையும் "
-"அழுத்தவும். "
+msgid "Present notification messages list"
+msgstr "செய்திகள் பட்டியல் அறிவிப்பை முன்வை"
 
 #. Translators: This is a brief message presented to the user
 #. the list of notifications is empty.
 #.
-#: ../src/orca/notification_messages.py:129
+#: ../src/orca/notification_messages.py:128
 msgid "No notification messages"
 msgstr "அறிவிப்பு செய்திகள் ஏதும் இல்லை"
 
 #. Translators: This is a brief message presented to the user when
 #. when the top of a list of notifications is reached.
 #.
-#: ../src/orca/notification_messages.py:160
+#: ../src/orca/notification_messages.py:159
 msgctxt "notification"
 msgid "Top"
 msgstr "மேல்"
@@ -3954,7 +3952,7 @@ msgstr "மேல்"
 #. Translators: This is a brief message presented to the user when
 #. when the bottom of a list of notifications is reached.
 #.
-#: ../src/orca/notification_messages.py:167
+#: ../src/orca/notification_messages.py:166
 msgctxt "notification"
 msgid "Bottom"
 msgstr "கீழ்"
@@ -3965,13 +3963,13 @@ msgstr "கீழ்"
 #. This string is the prompt which will be presented to the user
 #. in both speech and braille upon exiting this mode.
 #.
-#: ../src/orca/notification_messages.py:190
+#: ../src/orca/notification_messages.py:189
 msgid "Exiting list notification messages mode."
 msgstr "பட்டியல் அறிவிப்பு செய்திகள் முறையிலிருந்து வெளியேறுகிறது."
 
 #. Translators: This message inform to the user the number of
 #. messages in the list.
-#: ../src/orca/notification_messages.py:244
+#: ../src/orca/notification_messages.py:243
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -3979,7 +3977,7 @@ msgstr[0] "%d செய்தி.\n"
 msgstr[1] "%d செய்திகள்.\n"
 
 #. Translators: This is a help message.
-#: ../src/orca/notification_messages.py:246
+#: ../src/orca/notification_messages.py:245
 msgid "Press h for help.\n"
 msgstr "உதவிக்கு h விசையை அழுத்துக.\n"
 
@@ -3987,7 +3985,7 @@ msgstr "உதவிக்கு h விசையை அழுத்துக.\
 #. amongst the list of commands presented in list notification
 #. messages mode as well as how to exit the list.
 #.
-#: ../src/orca/notification_messages.py:253
+#: ../src/orca/notification_messages.py:252
 msgid ""
 "Use Up, Down, Home or End to navigate in the list.\n"
 "Press Escape to exit.\n"
@@ -7457,7 +7455,7 @@ msgstr "வரி%(row)d, பத்தி %(column)d"
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/scripts/apps/acroread/script.py:316
-#: ../src/orca/speech_generator.py:753
+#: ../src/orca/speech_generator.py:761
 #, python-format
 msgid "column %d"
 msgstr "பத்தி %d"
@@ -7734,7 +7732,7 @@ msgstr "மேசை"
 #. pane or table.
 #.
 #: ../src/orca/scripts/apps/nautilus/script.py:138
-#: ../src/orca/speech_generator.py:1342
+#: ../src/orca/speech_generator.py:1350
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -8746,14 +8744,14 @@ msgstr "ஸ்பீச் டிஸ்பேச்சர்"
 #. and the second item the name of the file being linked
 #. to.
 #.
-#: ../src/orca/speech_generator.py:417
+#: ../src/orca/speech_generator.py:425
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)s இணைப்பு %(file)s க்கு "
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/speech_generator.py:423
+#: ../src/orca/speech_generator.py:431
 #, python-format
 msgid "%s link"
 msgstr "%s இணைப்பு"
@@ -8761,7 +8759,7 @@ msgstr "%s இணைப்பு"
 #. Translators: this is an indication that a given
 #. link points to an object that is on the same page.
 #.
-#: ../src/orca/speech_generator.py:459
+#: ../src/orca/speech_generator.py:467
 msgid "same page"
 msgstr "அதே பக்கம்"
 
@@ -8773,7 +8771,7 @@ msgstr "அதே பக்கம்"
 #. link points to an object that is at the same site
 #. (but not on the same page) as the link.
 #.
-#: ../src/orca/speech_generator.py:465 ../src/orca/speech_generator.py:478
+#: ../src/orca/speech_generator.py:473 ../src/orca/speech_generator.py:486
 msgid "same site"
 msgstr "அதே இடம்"
 
@@ -8781,13 +8779,13 @@ msgstr "அதே இடம்"
 #. link points to an object that is at a different
 #. site than that of the link.
 #.
-#: ../src/orca/speech_generator.py:484
+#: ../src/orca/speech_generator.py:492
 msgid "different site"
 msgstr "வேறு இடம்"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/speech_generator.py:514
+#: ../src/orca/speech_generator.py:522
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -8796,14 +8794,14 @@ msgstr[1] "%d பைட்கள்"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/speech_generator.py:518
+#: ../src/orca/speech_generator.py:526
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f கிலோபைட்டுகள்"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/speech_generator.py:522
+#: ../src/orca/speech_generator.py:530
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f மெகாபைட்டுகள்"
@@ -8811,28 +8809,28 @@ msgstr "%.2f மெகாபைட்டுகள்"
 #. Translators: this is in reference to a table cell being
 #. selected or not.
 #.
-#: ../src/orca/speech_generator.py:724
+#: ../src/orca/speech_generator.py:732
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "தேர்ந்தெடுக்கப்படவில்லை"
 
 #. Translators: this is in references to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:782
+#: ../src/orca/speech_generator.py:790
 #, python-format
 msgid "row %d"
 msgstr "நிரை %d"
 
 #. Translators: this is in references to a column in a
 #. table.
-#: ../src/orca/speech_generator.py:811
+#: ../src/orca/speech_generator.py:819
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "பத்தி  %(index)d, %(total)d இல்"
 
 #. Translators: this is in reference to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:816
+#: ../src/orca/speech_generator.py:824
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "வரி %(index)d, %(total)d இல்"
@@ -8840,14 +8838,14 @@ msgstr "வரி %(index)d, %(total)d இல்"
 #. Translators: This is to indicate to the user that
 #. he/she is in the last cell of a table in a document.
 #.
-#: ../src/orca/speech_generator.py:851
+#: ../src/orca/speech_generator.py:859
 msgid "End of table"
 msgstr "அட்டவணை முடிந்தது"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1192
+#: ../src/orca/speech_generator.py:1200
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -8857,7 +8855,7 @@ msgstr[1] "%d இடைவெளிகள்"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1203
+#: ../src/orca/speech_generator.py:1211
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -8866,7 +8864,7 @@ msgstr[1] "%d கீற்றுகள்"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/speech_generator.py:1271
+#: ../src/orca/speech_generator.py:1279
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -8876,7 +8874,7 @@ msgstr[1] "%d சதவீதம்"
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/speech_generator.py:1370 ../src/orca/speech_generator.py:1391
+#: ../src/orca/speech_generator.py:1378 ../src/orca/speech_generator.py:1399
 msgid "0 items"
 msgstr "0 உருப்படி"
 
@@ -8884,7 +8882,7 @@ msgstr "0 உருப்படி"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/speech_generator.py:1426
+#: ../src/orca/speech_generator.py:1434
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -8894,7 +8892,7 @@ msgstr[1] "%(index)d, %(total)d இல் உருப்படிகள் த�
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1479 ../src/orca/speech_generator.py:1768
+#: ../src/orca/speech_generator.py:1487 ../src/orca/speech_generator.py:1776
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -8904,7 +8902,7 @@ msgstr[1] "%d குவிப்பில்லா உரையாடல்க�
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1561
+#: ../src/orca/speech_generator.py:1569
 msgid "Icon panel"
 msgstr "சின்ன பலகம்"
 
@@ -8912,7 +8910,7 @@ msgstr "சின்ன பலகம்"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1715
+#: ../src/orca/speech_generator.py:1723
 #, python-format
 msgid "Default button is %s"
 msgstr "முன்னிருப்பு பொத்தான் %s "
@@ -10651,6 +10649,12 @@ msgid ""
 msgstr ""
 "குறைக்க  இடது அம்புக்குறி, அதிகமாக்க  வலது அம்புக்குறி. குறைந்த பட்சத்துக்கு இல்லம், "
 "அதிக பட்சத்துக்கு முடிவு விசை."
+
+#~ msgid ""
+#~ "Enable notification message list mode. Press Escape to exit or h for help"
+#~ msgstr ""
+#~ "அறிவிப்பு செய்தி முறைக்கு நுழைகிறது. வெளியேற விடுபடு விசையையும் உதவிக்கு h "
+#~ "விசையையும் அழுத்தவும். "
 
 #~ msgid "table with %(rows)d rows and %(columns)d columns."
 #~ msgstr "%(rows)d வரிகள் மற்றும் %(columns)d பத்திகளுடன் அட்டவணை"
