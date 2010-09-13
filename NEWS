@@ -1,3 +1,45 @@
+2.31.92 - 13-September-2010
+
+General:
+
+  * Fix for bug #609900 - Speech page speechdispatcher defaults to zh
+
+  * Fix for bug #628367 - When Orca enters notification mode and the
+    user switches to another application, Orca stops presenting the
+    locusOfFocus
+
+  * Fix for bug #628569 - Orca preferences are not getting saved
+    permanently if a $HOME/.orca exists
+
+  * Fix for bug #628589 - Notification message list message is too long
+
+  * Additional work on bug #543157 - It is not always possible to
+    distinguish on-screen text from Orca's "system" messages
+
+  * Fix for bug #628410 - Add support for object toolkits
+
+  * Fix for bug #628568 - Orca won't die, cannot be replaced if the
+    at-spi registry daemon dies
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs          Czeck                   Marek Černocký
+    de          German                  Simon Bienlein
+    el          Greek                   Michael Kotsarinis
+    es          Spanish                 Francisco Javier Dorado Martínez
+    fr          French                  Laurent Coudeur
+    gb          British English         Bruce Cowan and Philip Withnall
+    gl          Galician                Fran Diéguez
+    hu          Hungarian               Attila Hammer
+    nb          Norwegian bokmål        Kjartan Maraas
+    pt          Portuguese              Rui Batista
+    sl          Slovenian               Matej Urbančič
+    sv          Swedish                 Daniel Nylander
+    ta          Tamil                   Dr.Tirumurti Vasudevan
+    zh          Traditional Chinese     Chao-Hsiung Liao
+                (Hong Kong and Taiwan)
+==========
+
 2.31.91 - 30-August-2010
 
 General:
