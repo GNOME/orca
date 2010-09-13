@@ -2171,7 +2171,8 @@ def main():
     for baseDirName, dirNames, fileNames in os.walk(oldUserPrefsDir):
 
         for dirName in dirNames:
-            dstDir = os.path.join(userPrefsDir, dirName)
+            relPath = os.path.relpath(baseDirName, oldUserPrefsDir)
+            dstDir = os.path.join(os.path.join(userPrefsDir, relPath), dirName)
             if not os.path.exists(dstDir):
                 os.mkdir(dstDir)
 
