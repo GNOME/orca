@@ -3795,6 +3795,14 @@ class Script(script.Script):
         # disable list notification  messages mode
         notification_messages.listNotificationMessagesModeEnabled = False
 
+        # disable learn mode
+        settings.learnModeEnabled = False
+
+        # disable list shortcuts mode
+        settings.listShortcutsModeEnabled = False
+        orca_state.listOfShortcuts = []
+        orca_state.typeOfShortcuts = ""
+
     ########################################################################
     #                                                                      #
     # Methods for presenting content                                       #
