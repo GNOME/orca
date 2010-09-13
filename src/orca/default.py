@@ -3792,6 +3792,9 @@ class Script(script.Script):
             orca.setLocusOfFocus(event, None)
             orca_state.activeWindow = None
 
+        # disable list notification  messages mode
+        notification_messages.listNotificationMessagesModeEnabled = False
+
     ########################################################################
     #                                                                      #
     # Methods for presenting content                                       #
