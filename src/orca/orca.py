@@ -2164,20 +2164,25 @@ def main():
     from xdg.BaseDirectory import xdg_data_home
     userPrefsDir = os.path.join(xdg_data_home, "orca")
     oldUserPrefsDir = os.path.join(os.environ["HOME"], ".orca")
-    if os.path.exists(oldUserPrefsDir):
-        try:
-            shutil.copytree(oldUserPrefsDir, userPrefsDir)
-        except:
-            for name in os.listdir(oldUserPrefsDir):
-                srcPath = os.path.join(oldUserPrefsDir, name)
-                dstPath = os.path.join(userPrefsDir, name)
-                if os.path.isfile(srcPath):
-                    shutil.copy(srcPath, dstPath)
-                elif os.path.isdir(srcPath):
-                    if not os.path.isdir(dstPath):
-                        os.mkdir(dstPath)
-    settings.userPrefsDir = userPrefsDir
 
+    if not os.path.exists(userPrefsDir):
+        os.mkdir(userPrefsDir)
+
+    for baseDirName, dirNames, fileNames in os.walk(oldUserPrefsDir):
+
+        for dirName in dirNames:
+            dstDir = os.path.join(userPrefsDir, dirName)
+            if not os.path.exists(dstDir):
+                os.mkdir(dstDir)
+
+        for fileName in fileNames:
+            srcFile = os.path.join(baseDirName, fileName)
+            relPath = os.path.relpath(baseDirName, oldUserPrefsDir)
+            dstFile = os.path.join(os.path.join(userPrefsDir, relPath), fileName)
+            if not os.path.exists(dstFile):
+                shutil.copy(srcFile, dstFile)
+
+    settings.userPrefsDir = userPrefsDir
 
     # Do not run Orca if accessibility has not been enabled.
     # We do allow, however, one to force Orca to run via the
