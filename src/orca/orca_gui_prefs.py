@@ -176,6 +176,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.savedPitch = None
         self.savedRate = None
         self._isInitialSetup = False
+        self.selectedFamilyChoices = {}
 
     def init(self):
         """Initialize the Orca configuration GUI. Read the users current
@@ -740,6 +741,16 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.speechFamiliesChoices.append(family)
             self.speechFamiliesModel.append((i, name))
             i += 1
+
+        # If user manually selected a family for the current speech server
+        # this choice it's restored. In other case the first family
+        # (usually the default one) is selected
+        #
+        selectedIndex = 0
+        if self.selectedFamilyChoices.has_key(self.speechServersChoice):
+            selectedIndex = self.selectedFamilyChoices[self.speechServersChoice]
+
+        self.get_widget("speechFamilies").set_active(selectedIndex)
 
         # The family name will be selected as part of selecting the
         # voice type.  Whenever the families change, we'll reset the
@@ -2679,6 +2690,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self._setFamilyNameForVoiceType(voiceType, name, language)
         except:
             debug.printException(debug.LEVEL_SEVERE)
+
+        # Remember the last family manually selected by the user for the
+        # current speech server.
+        #
+        if not selectedIndex == -1:
+            self.selectedFamilyChoices[self.speechServersChoice] = selectedIndex
 
     def voiceTypesChanged(self, widget):
         """Signal handler for the "changed" signal for the voiceTypes
