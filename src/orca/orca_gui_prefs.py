@@ -718,6 +718,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.get_widget("speechFamilies").set_active(0)
             self.speechFamiliesChoice = self.speechFamiliesChoices[0]
 
+        if valueSet:
+            self.selectedFamilyChoices[self.speechServersChoice] = i
+
     def _setupFamilies(self):
         """Gets the list of voice families for the current speech server.
         If there are families, get the information associated with
