@@ -1846,8 +1846,16 @@ class Script(default.Script):
         if not event.any_data or not orca_state.locusOfFocus:
             return
 
-        if event.type.startswith('object:children-changed:add') \
-           and event.any_data.getRole() == pyatspi.ROLE_TABLE_CELL:
+        if not event.type.startswith('object:children-changed:add'):
+            return
+
+        role = event.any_data.getRole()
+        if role == pyatspi.ROLE_TABLE:
+            if self.isSpreadSheetCell(event.any_data, True):
+                orca.setLocusOfFocus(event, event.any_data)
+            return
+
+        if role == pyatspi.ROLE_TABLE_CELL:
             activeRow = self.pointOfReference.get('lastRow', -1)
             activeCol = self.pointOfReference.get('lastColumn', -1)
             if activeRow < 0 or activeCol < 0:
