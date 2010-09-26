@@ -145,7 +145,9 @@ def _setROICursorPush(x, y, width, height, edgeMargin = 0):
     # above, or below the current region of interest (ROI).
     # [[[WDW - probably should not make a D-Bus call each time.]]]
     #
-    [roiLeft, roiTop, roiWidth, roiHeight] = _zoomer.getRoi()
+    [roiLeft, roiTop, roiRight, roiBottom] = _zoomer.getRoi()
+    roiWidth = roiRight - roiLeft
+    roiHeight = roiBottom - roiTop
     leftOfROI = (x - edgeMarginX) <= roiLeft
     rightOfROI = (x + width + edgeMarginX) >= (roiLeft + roiWidth)
     aboveROI = (y - edgeMarginY)  <= roiTop
@@ -249,7 +251,9 @@ def magnifyAccessible(event, obj, extents=None):
             # be visible on the screen.
             # [[[WDW - probably should not make a getRoi call each time]]]
             #
-            [roiLeft, roiTop, roiWidth, roiHeight] = _zoomer.getRoi()
+            [roiLeft, roiTop, roiRight, roiBottom] = _zoomer.getRoi()
+            roiWidth = roiRight - roiLeft
+            roiHeight = roiBottom - roiTop
             if width > roiWidth:
                 centerX = x
             if height > roiHeight:
@@ -502,12 +506,12 @@ def __setupZoomer(position, left=None, top=None, right=None, bottom=None,
     if len(zoomerPaths) > 0:
         _zoomer = _bus.get_object('org.gnome.Magnifier', zoomerPaths[0])
         _zoomer.setMagFactor(magFactor, magFactor)
-        _zoomer.moveResize([prefLeft, prefTop, viewWidth, viewHeight])
+        _zoomer.moveResize([prefLeft, prefTop, prefRight, prefBottom])
     else:
         zoomerPath = _magnifier.createZoomRegion(
             magFactor, magFactor,
 	        [0, 0, _roiWidth, _roiHeight],
-	        [prefLeft, prefTop, viewWidth, viewHeight])
+	        [prefLeft, prefTop, prefRight, prefBottom])
         _zoomer = _bus.get_object('org.gnome.Magnifier', zoomerPath)
         _magnifier.addZoomRegion(zoomerPath)
 
@@ -524,8 +528,8 @@ def __updateROIDimensions():
     global _maxROIY
 
     roi = _zoomer.getRoi()
-    _roiWidth = roi[2]
-    _roiHeight = roi[3]
+    _roiWidth = roi[2] - roi[0]
+    _roiHeight = roi[3] - roi[1]
 
     _minROIX = _roiWidth / 2
     _minROIY = _roiHeight / 2
