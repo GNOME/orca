@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.gnome-2-22\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-26 19:29+0200\n"
-"PO-Revision-Date: 2010-09-26 19:05+0200\n"
+"POT-Creation-Date: 2010-09-27 00:57+0200\n"
+"PO-Revision-Date: 2010-09-27 00:56+0200\n"
 "Last-Translator: Daniel K. Gartmann <dg@danielgartmann.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -2290,9 +2290,10 @@ msgstr "Går i indlæringstilstand. Tryk esc for at afslutte indlæringstilstand
 #. and exit the "List Shortcuts Mode" by pressing Escape.
 #.
 #: ../src/orca/default.py:793
-#, fuzzy
 msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
-msgstr "Går i indlæringstilstand. Tryk esc for at afslutte indlæringstilstand."
+msgstr ""
+"Går i tilstanden vis genvejstaster. Tryk esc for at afslutte tilstanden vis "
+"genvejstaster."
 
 # jeg har skrevet med en af udviklerne for at prøve at finde ud af om de steder hvor der står speech
 # om de altid bare skal oversættes til tale, eller om man bør bruge læse nogle steder (idet den jo
@@ -2770,10 +2771,9 @@ msgstr "Slå oplæsning af indrykning og justering til"
 #. indentation and justification information.
 #.
 #: ../src/orca/default.py:2627
-#, fuzzy
 msgctxt "indentation and justification"
 msgid "Enabled"
-msgstr "Slået _til"
+msgstr "Slået til"
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will not be spoken.
@@ -2844,7 +2844,6 @@ msgstr "Niveau for tegnsætning sat til alle"
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2688
-#, fuzzy
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Alle"
@@ -2864,7 +2863,6 @@ msgstr "Niveau for tegnsætning sat til ingen."
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2703
-#, fuzzy
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Ingen"
@@ -2935,7 +2933,6 @@ msgstr "Tastaturekko sat til ord."
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2780
-#, fuzzy
 msgctxt "key echo"
 msgid "word"
 msgstr "ord"
@@ -2971,10 +2968,9 @@ msgstr "Tastaturekko sat til sætning."
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2813
-#, fuzzy
 msgctxt "key echo"
 msgid "sentence"
-msgstr "Sætning"
+msgstr "sætning"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -3077,10 +3073,9 @@ msgstr "Tastaturekko sat til ingen."
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2912
-#, fuzzy
 msgctxt "key echo"
 msgid "None"
-msgstr "Ingen"
+msgstr "Intet"
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -3409,7 +3404,7 @@ msgstr "vertikal"
 #. a percentage.
 #.
 #: ../src/orca/flat_review.py:447
-#, fuzzy, python-format
+#, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
 msgstr[0] "%d procent."
@@ -3955,49 +3950,45 @@ msgstr "Tilpasset"
 #. to the user when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:82
-#, fuzzy
 msgid "Present last notification message."
-msgstr "Hæv forstørrelsesniveauet."
+msgstr "Præsentér seneste påmindelsesbeskedliste."
 
 #. Translators: Orca can present the previous notification message
 #. to the user when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:90
 msgid "Present previous notification message."
-msgstr ""
+msgstr "Præsentér forrige påmindelsesbesked."
 
 #. Translators: Orca can enable the notification messages
 #. list mode when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:98
 msgid "Present notification messages list"
-msgstr ""
+msgstr "Præsentér påmindelsesbeskedliste"
 
 #. Translators: This is a brief message presented to the user
 #. the list of notifications is empty.
 #.
 #: ../src/orca/notification_messages.py:128
-#, fuzzy
 msgid "No notification messages"
-msgstr "Påmindelse %s"
+msgstr "Ingen påmindelsesbeskeder."
 
 #. Translators: This is a brief message presented to the user when
 #. when the top of a list of notifications is reached.
 #.
 #: ../src/orca/notification_messages.py:159
-#, fuzzy
 msgctxt "notification"
 msgid "Top"
-msgstr "_Top:"
+msgstr "Top"
 
 #. Translators: This is a brief message presented to the user when
 #. when the bottom of a list of notifications is reached.
 #.
 #: ../src/orca/notification_messages.py:166
-#, fuzzy
 msgctxt "notification"
 msgid "Bottom"
-msgstr "_Bund:"
+msgstr "Bund"
 
 #. Translators: Orca has a "List notification messages Mode" that allows
 #. the user to list the latest notification messages received.
@@ -4006,23 +3997,22 @@ msgstr "_Bund:"
 #. in both speech and braille upon exiting this mode.
 #.
 #: ../src/orca/notification_messages.py:189
-#, fuzzy
 msgid "Exiting list notification messages mode."
-msgstr "Afslutter tilstanden vis genvejstaster."
+msgstr "Afslutter tilstanden vis påmindelsesbeskeder."
 
 #. Translators: This message inform to the user the number of
 #. messages in the list.
 #: ../src/orca/notification_messages.py:243
-#, fuzzy, python-format
+#, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
-msgstr[0] "%d mellemrum"
-msgstr[1] "%d mellemrum"
+msgstr[0] "%d besked\n"
+msgstr[1] "%d beskeder\n"
 
 #. Translators: This is a help message.
 #: ../src/orca/notification_messages.py:245
 msgid "Press h for help.\n"
-msgstr ""
+msgstr "Tryk h for hjælp.\n"
 
 #. Translators: The following string instructs the user how to navigate
 #. amongst the list of commands presented in list notification
@@ -4035,6 +4025,10 @@ msgid ""
 "Press Space to repeat the last message read.\n"
 "Press one digit to read a specific message.\n"
 msgstr ""
+"Brug op, ned, home eller end for at navigere i listen.\n"
+"Tryk esc for at afslutte.\n"
+"Tryk mellemrumstast for at gentage den sidste læste besked.\n"
+"Tryk et tal for at få læst en bestemt besked.\n"
 
 # tale^^
 #. Translators: "Default Synthesizer" will appear in the list of available
@@ -5391,7 +5385,7 @@ msgstr "Indrapporter fejl til orca-list@gnome.org."
 #.
 #: ../src/orca/orca.py:2087
 msgid "The following arguments are not valid: "
-msgstr ""
+msgstr "Følgende argumenter er ikke gyldige: "
 
 #. Translators: This message is displayed when the user
 #. tries to enable or disable a feature via an argument,
@@ -5402,7 +5396,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:2127
 msgid "The following items can be enabled or disabled:"
-msgstr ""
+msgstr "Følgende funktioner kan slås til eller fra:"
 
 #: ../src/orca/orca.py:2216
 msgid "Welcome to Orca."
@@ -5450,8 +5444,9 @@ msgstr ""
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
 #: ../src/orca/orca-setup.ui.h:6
+#, fuzzy
 msgid "<b>Border</b>"
-msgstr "<b>Rand</b>"
+msgstr "<b>Kant</b>"
 
 #: ../src/orca/orca-setup.ui.h:7
 msgid "<b>Braille Indicator</b>"
@@ -5459,16 +5454,19 @@ msgstr "<b>Brailleindikator</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
 #: ../src/orca/orca-setup.ui.h:9
+#, fuzzy
 msgid "<b>Color</b>"
 msgstr "<b>Farve</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
 #: ../src/orca/orca-setup.ui.h:11
+#, fuzzy
 msgid "<b>Cross-hair</b>"
 msgstr "<b>Sigtelinjer</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
 #: ../src/orca/orca-setup.ui.h:13
+#, fuzzy
 msgid "<b>Cursor</b>"
 msgstr "<b>Markør</b>"
 
@@ -5517,11 +5515,13 @@ msgstr "<b>Detaljegrad</b>"
 
 #. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
 #: ../src/orca/orca-setup.ui.h:28
+#, fuzzy
 msgid "<b>Zoomer</b>"
 msgstr "<b>Zoomer</b>"
 
 #. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
 #: ../src/orca/orca-setup.ui.h:30
+#, fuzzy
 msgid "Advanced..."
 msgstr "Avanceret..."
 
@@ -5538,11 +5538,11 @@ msgstr "Program"
 
 #: ../src/orca/orca-setup.ui.h:34
 msgid "Border color:"
-msgstr "Randfarve:"
+msgstr "Kantfarve:"
 
 #: ../src/orca/orca-setup.ui.h:35
 msgid "Border size:"
-msgstr "Randstørrelse:"
+msgstr "Kantstørrelse:"
 
 #: ../src/orca/orca-setup.ui.h:37
 msgid "Braille"
@@ -5668,11 +5668,13 @@ msgstr "Slå l_åsetaster til"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
 #: ../src/orca/orca-setup.ui.h:82
+#, fuzzy
 msgid "Enable_d"
 msgstr "Slået _til"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
 #: ../src/orca/orca-setup.ui.h:84
+#, fuzzy
 msgid "Frequency (secs):"
 msgstr "Frekvens (sek):"
 
@@ -7551,11 +7553,11 @@ msgstr "dokument"
 #: ../src/orca/scripts/apps/acroread/script.py:276
 #: ../src/orca/scripts/apps/soffice/script.py:733
 #: ../src/orca/structural_navigation.py:1338
-#, fuzzy, python-format
+#, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
-msgstr[0] "Tabel med %d række"
-msgstr[1] "Tabel med %d rækker"
+msgstr[0] "tabel med %d række"
+msgstr[1] "tabel med %d rækker"
 
 #. Translators: this represents the number of columns in a table.
 #.
@@ -7883,9 +7885,8 @@ msgstr "Påmindelse %s"
 #. Translators: This denotes a notification to the user of some sort.
 #.
 #: ../src/orca/scripts/apps/notify-osd/script.py:85
-#, fuzzy
 msgid "Notification"
-msgstr "Påmindelse %s"
+msgstr "Påmindelse"
 
 #. Translators: The Package Manager application notifies the
 #. user of minor errors by displaying an icon in the status
@@ -7947,9 +7948,8 @@ msgstr "Vis flere muligheder"
 #. (i.e., the place where enter formulas)
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:234
-#, fuzzy
 msgid "Presents the contents of the input line."
-msgstr "Læser indholdet af indskrivningsfeltet op."
+msgstr "Læser indholdet af indtastningsfeltet op."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
@@ -8648,7 +8648,7 @@ msgstr[1] "%d ubesøgte links"
 #. page.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:518
-#, fuzzy, python-format
+#, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
 msgstr[0] "%d procent af dokumentet læst"
@@ -9008,7 +9008,7 @@ msgstr[1] "%d tabulatorindryk"
 #. Translators: this is the percentage value of a progress bar.
 #.
 #: ../src/orca/speech_generator.py:1279
-#, fuzzy, python-format
+#, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
 msgstr[0] "%d procent"
@@ -9161,30 +9161,30 @@ msgstr "Ikke ensartet"
 #.
 #: ../src/orca/structural_navigation.py:1498
 #: ../src/orca/structural_navigation.py:1520
-#, fuzzy, python-format
+#, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
-msgstr[0] "Cellen spænder over %d rækker"
+msgstr[0] "Cellen spænder over %d række"
 msgstr[1] "Cellen spænder over %d rækker"
 
 #. Translators: this represents the number of columns in a table.
 #.
 #: ../src/orca/structural_navigation.py:1504
-#, fuzzy, python-format
+#, python-format
 msgid " %d column"
 msgid_plural " %d columns"
-msgstr[0] "%d kolonne"
-msgstr[1] "%d kolonner"
+msgstr[0] " %d kolonne"
+msgstr[1] " %d kolonner"
 
 #. Translators: The cell here refers to a cell within a table
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
 #: ../src/orca/structural_navigation.py:1512
-#, fuzzy, python-format
+#, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
-msgstr[0] "Cellen spænder over %d kolonner"
+msgstr[0] "Cellen spænder over %d kolonne"
 msgstr[1] "Cellen spænder over %d kolonner"
 
 #. Translators: this is for navigating among anchors in a document.
@@ -9551,7 +9551,7 @@ msgstr "Går til næste aktive region."
 #: ../src/orca/structural_navigation.py:3114
 msgid "Goes to the last live region which made an announcement."
 msgstr ""
-"Går til den senest aktive region (live region) som lavede en annoncering."
+"Går til den senest aktive region (live region) som fremkaldte en annoncering."
 
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'live region' is a location in a web page
