@@ -14,25 +14,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-05 18:02+0300\n"
+"POT-Creation-Date: 2010-09-30 15:36+0300\n"
 "PO-Revision-Date: 2010-09-05 18:02+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gnome.org>\n"
 "Language-Team: Greek <team@gnome.gr>\n"
-"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 
-#: ../orca.desktop.in.h:1
-#: ../src/orca/app_gui_prefs.py:210
-#: ../src/orca/keybindings.py:157
-#: ../src/orca/orca_gui_main.py:141
-#: ../src/orca/orca_gui_prefs.py:2410
-#: ../src/orca/orca_gui_prefs.py:2515
+#: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:210
+#: ../src/orca/keybindings.py:157 ../src/orca/orca_gui_main.py:141
+#: ../src/orca/orca_gui_prefs.py:2421 ../src/orca/orca_gui_prefs.py:2526
 #: ../src/orca/orca-splash.ui.h:1
 msgid "Orca"
 msgstr "Orca"
@@ -42,8 +39,10 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "Αναγνώστης και μεγεθυντής οθόνης Όρκα"
 
 #: ../orca.desktop.in.h:3
-msgid "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "Εμφανίζει πληροφορίες από την οθόνη ως φωνή ή μπράιγ, ή μεγεθύνει την οθόνη"
+msgid ""
+"Present on-screen information as speech or braille, or magnify the screen"
+msgstr ""
+"Εμφανίζει πληροφορίες από την οθόνη ως φωνή ή μπράιγ, ή μεγεθύνει την οθόνη"
 
 #: ../orca.desktop.in.h:4
 msgid "Screen Reader and Magnifier"
@@ -61,8 +60,7 @@ msgstr "Προτιμήσεις του Orca για το %s"
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:215
-#: ../src/orca/orca_gui_prefs.py:2521
+#: ../src/orca/app_gui_prefs.py:215 ../src/orca/orca_gui_prefs.py:2532
 msgid "Unbound"
 msgstr "Χωρίς συνδυασμό"
 
@@ -99,7 +97,8 @@ msgstr "ο σελιδοδείκτης είναι τρέχον αντικείμε
 #: ../src/orca/bookmarks.py:111
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:115
 msgid "bookmark and current object have same parent"
-msgstr "ο σελιδοδείκτης και το τρέχον αντικείμενο ανήκουν στον ίδιο γονικό κατάλογο"
+msgstr ""
+"ο σελιδοδείκτης και το τρέχον αντικείμενο ανήκουν στον ίδιο γονικό κατάλογο"
 
 #. Translators: this announces that the bookmark and the current
 #. object share a common ancestor
@@ -374,8 +373,11 @@ msgid "Belgium Dutch Grade 1"
 msgstr "Γερμανικός βαθμός 1 του Βεγίου"
 
 #: ../src/orca/chat.py:334
-msgid "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr "Επιλογή του αν θα εισάγουμε ως προθέμα σε μηνύματα chat room το όνομα του chat room."
+msgid ""
+"Toggle whether we prefix chat room messages with the name of the chat room."
+msgstr ""
+"Επιλογή του αν θα εισάγουμε ως προθέμα σε μηνύματα chat room το όνομα του "
+"chat room."
 
 #: ../src/orca/chat.py:340
 msgid "Toggle whether we announce when our buddies are typing."
@@ -383,7 +385,8 @@ msgstr "Επιλογή του αν θα ανακοινώνουμε ότι οι �
 
 #: ../src/orca/chat.py:345
 msgid "Toggle whether we provide chat room specific message histories."
-msgstr "Επιλογή του αν θα παρέχουμε ξεχωριστό ιστορικό μηνυμάτων ανά chat room."
+msgstr ""
+"Επιλογή του αν θα παρέχουμε ξεχωριστό ιστορικό μηνυμάτων ανά chat room."
 
 #: ../src/orca/chat.py:353
 msgid "Speak and braille a previous chat room message."
@@ -471,10 +474,8 @@ msgstr "Μήνυμα από το δωμάτιο συνομιλίας %s "
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39
-#: ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2709
-#: ../src/orca/script_utilities.py:2716
+#: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
+#: ../src/orca/script_utilities.py:2709 ../src/orca/script_utilities.py:2716
 msgid "space"
 msgstr "διάστημα"
 
@@ -488,8 +489,7 @@ msgstr "νέα γραμμή"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: ../src/orca/chnames.py:47
-#: ../src/orca/keynames.py:117
+#: ../src/orca/chnames.py:47 ../src/orca/keynames.py:117
 msgid "tab"
 msgstr "στηλοθέτης"
 
@@ -667,8 +667,7 @@ msgstr "υπογραμμισμένο"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the grave glyph
 #.
-#: ../src/orca/chnames.py:159
-#: ../src/orca/keynames.py:250
+#: ../src/orca/chnames.py:159 ../src/orca/keynames.py:250
 msgid "grave"
 msgstr "δασεία"
 
@@ -695,8 +694,7 @@ msgstr "δεξί άγκιστρο"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
 #.
-#: ../src/orca/chnames.py:175
-#: ../src/orca/keynames.py:265
+#: ../src/orca/chnames.py:175 ../src/orca/keynames.py:265
 msgid "tilde"
 msgstr "περισπωμένη"
 
@@ -758,8 +756,7 @@ msgstr "διακεκομμένη μπάρα"
 #.
 #. Translators: spoken words for the rolename of a section (e.g., in html).
 #.
-#: ../src/orca/chnames.py:208
-#: ../src/orca/rolenames.py:840
+#: ../src/orca/chnames.py:208 ../src/orca/rolenames.py:840
 msgid "section"
 msgstr "παράγραφος"
 
@@ -864,8 +861,7 @@ msgstr "άνω τελεία"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the cedilla glyph
 #.
-#: ../src/orca/chnames.py:276
-#: ../src/orca/keynames.py:280
+#: ../src/orca/chnames.py:276 ../src/orca/keynames.py:280
 msgid "cedilla"
 msgstr "cedilla"
 
@@ -1472,8 +1468,7 @@ msgstr "άπειρο"
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:679
-#: ../src/orca/chnames.py:854
+#: ../src/orca/chnames.py:679 ../src/orca/chnames.py:854
 msgid "black square"
 msgstr "κουκκίδα μαύρο τετράγωνο"
 
@@ -1491,8 +1486,7 @@ msgstr "κουκίδα άσπρο τετράγωνο"
 #. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:689
-#: ../src/orca/chnames.py:860
+#: ../src/orca/chnames.py:689 ../src/orca/chnames.py:860
 msgid "black diamond"
 msgstr "κουκκίδα μαύρο διαμάντι"
 
@@ -1746,7 +1740,8 @@ msgstr "Μετακινεί το δείκτη στο τρέχον αντικεί�
 #.
 #: ../src/orca/default.py:168
 msgid "Performs left click on current flat review item."
-msgstr "Πραγματοποιεί αριστερό κλικ στο τρέχον αντικείμενο επίπεδης προεπισκόπησης."
+msgstr ""
+"Πραγματοποιεί αριστερό κλικ στο τρέχον αντικείμενο επίπεδης προεπισκόπησης."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1760,7 +1755,8 @@ msgstr "Πραγματοποιεί αριστερό κλικ στο τρέχον
 #.
 #: ../src/orca/default.py:183
 msgid "Performs right click on current flat review item."
-msgstr "Πραγματοποιεί δεξί κλικ στο τρέχον αντικείμενο επίπεδης προεπισκόπησης."
+msgstr ""
+"Πραγματοποιεί δεξί κλικ στο τρέχον αντικείμενο επίπεδης προεπισκόπησης."
 
 #. Translators: the Orca "SayAll" command allows the
 #. user to press a key and have the entire document in
@@ -1770,8 +1766,7 @@ msgstr "Πραγματοποιεί δεξί κλικ στο τρέχον αντ�
 #. be positioned at the point where the speech was
 #. interrupted.
 #.
-#: ../src/orca/default.py:196
-#: ../src/orca/scripts/apps/acroread/script.py:114
+#: ../src/orca/default.py:196 ../src/orca/scripts/apps/acroread/script.py:114
 #: ../src/orca/scripts/apps/evolution/script.py:159
 #: ../src/orca/scripts/toolkits/Gecko/script.py:545
 msgid "Speaks entire document."
@@ -1876,7 +1871,8 @@ msgstr "Εισάγει και τερματίζει τη λειτουργία ε�
 #.
 #: ../src/orca/default.py:317
 msgid "Moves flat review to the beginning of the previous line."
-msgstr "Μετακινεί την επίπεδη προεπισκόπηση στην αρχή της προηγούμενης γραμμής."
+msgstr ""
+"Μετακινεί την επίπεδη προεπισκόπηση στην αρχή της προηγούμενης γραμμής."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1975,7 +1971,8 @@ msgstr "Μετακινεί την επίπεδη προεπισκόπηση στ
 #.
 #: ../src/orca/default.py:423
 msgid "Moves flat review to the previous item or word."
-msgstr "Μετακινεί την επίπεδη προεπισκόπηση στο προηγούμενο αντικείμενο ή λέξη."
+msgstr ""
+"Μετακινεί την επίπεδη προεπισκόπηση στο προηγούμενο αντικείμενο ή λέξη."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -1990,7 +1987,8 @@ msgstr "Μετακινεί την επίπεδη προεπισκόπηση στ
 #.
 #: ../src/orca/default.py:439
 msgid "Moves flat review to the word above the current word."
-msgstr "Μετακινεί την επίπεδη προεπισκόπηση στη λέξη πάνω από την τρέχουσα λέξη."
+msgstr ""
+"Μετακινεί την επίπεδη προεπισκόπηση στη λέξη πάνω από την τρέχουσα λέξη."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -2033,7 +2031,8 @@ msgstr "Συλλαβίζει το τρέχον αντικείμενο ή λέξ�
 #.
 #: ../src/orca/default.py:485
 msgid "Phonetically spells the current flat review item or word."
-msgstr "Συλλαβίζει φωνητικά το τρέχον αντικείμενο ή λέξη επίπεδης προεπισκόπησης."
+msgstr ""
+"Συλλαβίζει φωνητικά το τρέχον αντικείμενο ή λέξη επίπεδης προεπισκόπησης."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -2079,7 +2078,8 @@ msgstr "Μετακινεί την επίπεδη προεπισκόπηση στ
 #.
 #: ../src/orca/default.py:534
 msgid "Moves flat review to the word below the current word."
-msgstr "Μετακινεί την επίπεδη προεπισκόπηση στη λέξη κάτω από την τρέχουσα λέξη."
+msgstr ""
+"Μετακινεί την επίπεδη προεπισκόπηση στη λέξη κάτω από την τρέχουσα λέξη."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -2159,7 +2159,8 @@ msgstr "Αναπαράγει φωνητικά τον τρέχοντα χαρακ
 #.
 #: ../src/orca/default.py:619
 msgid "Speaks unicode value of the current flat review character."
-msgstr "Απαγγέλει την unicode τιμή του τρέχοντος χαρακτήρα επίπεδης ανασκόπησης."
+msgstr ""
+"Απαγγέλει την unicode τιμή του τρέχοντος χαρακτήρα επίπεδης ανασκόπησης."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -2182,7 +2183,9 @@ msgstr "Μετακινεί την επίπεδη προεπισκόπηση στ
 #.
 #: ../src/orca/default.py:645
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr "Πραγματοποιεί εναλλαγή αν θα γίνεται ανάγνωση του τρέχοντος κελιού του πίνακα ή ολόκληρης της γραμμής."
+msgstr ""
+"Πραγματοποιεί εναλλαγή αν θα γίνεται ανάγνωση του τρέχοντος κελιού του "
+"πίνακα ή ολόκληρης της γραμμής."
 
 #. Translators: the attributes being presented are the
 #. text attributes, such as bold, italic, font name,
@@ -2190,7 +2193,9 @@ msgstr "Πραγματοποιεί εναλλαγή αν θα γίνεται α�
 #.
 #: ../src/orca/default.py:655
 msgid "Reads the attributes associated with the current text character."
-msgstr "Κάνει ανάγνωση των ιδιοτήτων που έχουν σχέση με τον τρέχοντα χαρακτήρα κειμένου."
+msgstr ""
+"Κάνει ανάγνωση των ιδιοτήτων που έχουν σχέση με τον τρέχοντα χαρακτήρα "
+"κειμένου."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2211,8 +2216,7 @@ msgstr "Αναφέρει πληροφορίες για το τρέχον σεν�
 #. braille display so they can pan left and right over
 #. this line.
 #.
-#: ../src/orca/default.py:681
-#: ../src/orca/scripts/toolkits/Gecko/script.py:559
+#: ../src/orca/default.py:681 ../src/orca/scripts/toolkits/Gecko/script.py:559
 msgid "Pans the braille display to the left."
 msgstr "Αλλαγή της προβολής του μπράιγ στα αριστερά."
 
@@ -2225,8 +2229,7 @@ msgstr "Αλλαγή της προβολής του μπράιγ στα αρισ
 #. braille display so they can pan left and right over
 #. this line.
 #.
-#: ../src/orca/default.py:696
-#: ../src/orca/scripts/toolkits/Gecko/script.py:574
+#: ../src/orca/default.py:696 ../src/orca/scripts/toolkits/Gecko/script.py:574
 msgid "Pans the braille display to the right."
 msgstr "Αλλαγή της προβολής του μπράιγ στα δεξιά."
 
@@ -2304,7 +2307,9 @@ msgstr "Σημειώνει το τέλος του κειμένου που θα �
 #.
 #: ../src/orca/default.py:780
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Εισάγει την κατάσταση μάθησης. Πιέστε διαφυγή για να εξέλθετε από την κατάσταση μάθησης."
+msgstr ""
+"Εισάγει την κατάσταση μάθησης. Πιέστε διαφυγή για να εξέλθετε από την "
+"κατάσταση μάθησης."
 
 #. Translators: Orca has a "List Shortcuts Mode" that will allow
 #. the user to list a group of keyboard shortcuts. The Orca
@@ -2316,7 +2321,9 @@ msgstr "Εισάγει την κατάσταση μάθησης. Πιέστε δ
 #.
 #: ../src/orca/default.py:793
 msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
-msgstr "Εισαγωγή στην κατάσταση λίστας συντομεύσεων. Πιέστε escape για να εξέλθετε από την κατάσταση αυτή."
+msgstr ""
+"Εισαγωγή στην κατάσταση λίστας συντομεύσεων. Πιέστε escape για να εξέλθετε "
+"από την κατάσταση αυτή."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
@@ -2413,8 +2420,12 @@ msgstr "Προχωρά στο επόμενο επίπεδο εκφώνησης �
 #. running on the desktop, to stdout.
 #.
 #: ../src/orca/default.py:906
-msgid "Prints a debug listing of all known applications to the console where Orca is running."
-msgstr "Εμφανίζει λίστα αποσφαλμάτωσης όλων των γνωστών εφαρμογών στην κονσόλα όπου εκτελείται το Orca."
+msgid ""
+"Prints a debug listing of all known applications to the console where Orca "
+"is running."
+msgstr ""
+"Εμφανίζει λίστα αποσφαλμάτωσης όλων των γνωστών εφαρμογών στην κονσόλα όπου "
+"εκτελείται το Orca."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2435,7 +2446,9 @@ msgstr "Εναλλάσσει το επίπεδο αποσφαλμάτωσης κ
 #.
 #: ../src/orca/default.py:930
 msgid "Prints debug information about the ancestry of the object with focus."
-msgstr "Τυπώνει πληροφορίες αποσφαλμάτωσης για το ιεραρχικό δέντρο (ancestry) του εστιασμένου αντικειμένου."
+msgstr ""
+"Τυπώνει πληροφορίες αποσφαλμάτωσης για το ιεραρχικό δέντρο (ancestry) του "
+"εστιασμένου αντικειμένου."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2605,8 +2618,13 @@ msgstr "Η λειτουργία παράκαμψης ενεργοποιήθηκ�
 #. This text here is what is spoken to the user.
 #.
 #: ../src/orca/default.py:1578
-msgid "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
-msgstr "Γίνεται εισαγωγή της κατάστασης μάθησης... Παρακαλώ πιέστε οποιοδήποτε πλήκτρο για να ακούσετε την συνάρτησή του. Για να τερματίσετε την κατάσταση μάθησης, πιέστε το πλήκτρο διαφυγής."
+msgid ""
+"Entering learn mode.  Press any key to hear its function.  To exit learn "
+"mode, press the escape key."
+msgstr ""
+"Γίνεται εισαγωγή της κατάστασης μάθησης... Παρακαλώ πιέστε οποιοδήποτε "
+"πλήκτρο για να ακούσετε την συνάρτησή του. Για να τερματίσετε την κατάσταση "
+"μάθησης, πιέστε το πλήκτρο διαφυγής."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -2638,10 +2656,13 @@ msgstr "Κατάσταση λίστας συντομεύσεων."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/default.py:1622
-#: ../src/orca/orca.py:1450
-msgid "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the current application. Press escape to exit."
-msgstr "Πατήστε 1 για τις προεπιλεγμένες συντομεύσεις του Orca. Πατήστε 2 για τις συντομεύσεις του Orca για την τρέχουσα εφαρμογή. Πατήστε escape για έξοδο."
+#: ../src/orca/default.py:1622 ../src/orca/orca.py:1450
+msgid ""
+"Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
+"current application. Press escape to exit."
+msgstr ""
+"Πατήστε 1 για τις προεπιλεγμένες συντομεύσεις του Orca. Πατήστε 2 για τις "
+"συντομεύσεις του Orca για την τρέχουσα εφαρμογή. Πατήστε escape για έξοδο."
 
 #. Translators: Orca has a command that allows the user to
 #. move the mouse pointer to the current object. This is a
@@ -2658,8 +2679,7 @@ msgstr "Πατήστε 1 για τις προεπιλεγμένες συντομ
 #. detailed message which will be presented if for some
 #. reason Orca cannot identify/find the current location.
 #.
-#: ../src/orca/default.py:1909
-#: ../src/orca/default.py:2052
+#: ../src/orca/default.py:1909 ../src/orca/default.py:2052
 #: ../src/orca/default.py:2072
 msgid "Could not find current location."
 msgstr "Δε βρέθηκε η τρέχουσα τοποθεσία."
@@ -2669,8 +2689,7 @@ msgstr "Δε βρέθηκε η τρέχουσα τοποθεσία."
 #. brief message which will be presented if for some reason
 #. Orca cannot identify/find the current location.
 #.
-#: ../src/orca/default.py:1915
-#: ../src/orca/default.py:2078
+#: ../src/orca/default.py:1915 ../src/orca/default.py:2078
 msgctxt "location"
 msgid "Not found"
 msgstr "Δεν βρέθηκε"
@@ -2683,11 +2702,10 @@ msgstr "Δεν βρέθηκε"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/default.py:2024
-#: ../src/orca/rolenames.py:600
+#: ../src/orca/default.py:2024 ../src/orca/rolenames.py:600
 #: ../src/orca/script_utilities.py:2409
 #: ../src/orca/scripts/apps/soffice/script.py:1147
-#: ../src/orca/speech_generator.py:959
+#: ../src/orca/speech_generator.py:967
 msgid "link"
 msgstr "σύνδεσμος"
 
@@ -2708,22 +2726,18 @@ msgstr "σύνδεσμος"
 #. Translators: "blank" is a short word to mean the
 #. user has navigated to an empty line.
 #.
-#: ../src/orca/default.py:2123
-#: ../src/orca/default.py:2131
-#: ../src/orca/default.py:2252
-#: ../src/orca/default.py:2260
-#: ../src/orca/default.py:2396
-#: ../src/orca/default.py:4470
-#: ../src/orca/default.py:4480
+#: ../src/orca/default.py:2123 ../src/orca/default.py:2131
+#: ../src/orca/default.py:2252 ../src/orca/default.py:2260
+#: ../src/orca/default.py:2396 ../src/orca/default.py:4473
+#: ../src/orca/default.py:4483
 #: ../src/orca/scripts/apps/evolution/script.py:1140
 #: ../src/orca/scripts/apps/soffice/script.py:1267
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:429
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:542
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5353
-#: ../src/orca/settings.py:1366
-#: ../src/orca/speech_generator.py:671
-#: ../src/orca/speech_generator.py:1023
+#: ../src/orca/settings.py:1366 ../src/orca/speech_generator.py:679
+#: ../src/orca/speech_generator.py:1031
 #: ../src/orca/structural_navigation.py:3618
 msgid "blank"
 msgstr "κενό"
@@ -2731,8 +2745,7 @@ msgstr "κενό"
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/default.py:2136
-#: ../src/orca/default.py:2401
+#: ../src/orca/default.py:2136 ../src/orca/default.py:2401
 msgid "white space"
 msgstr "κενός χαρακτήρας"
 
@@ -3112,11 +3125,9 @@ msgstr "Εκφώνηση κελιού"
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
 #.
-#: ../src/orca/default.py:3190
-#: ../src/orca/default.py:3323
-#: ../src/orca/default.py:5309
-#: ../src/orca/speech_generator.py:1119
-#: ../src/orca/speech_generator.py:1148
+#: ../src/orca/default.py:3190 ../src/orca/default.py:3323
+#: ../src/orca/default.py:5312 ../src/orca/speech_generator.py:1127
+#: ../src/orca/speech_generator.py:1156
 msgctxt "text"
 msgid "selected"
 msgstr "επιλεγμένο"
@@ -3129,8 +3140,7 @@ msgstr "επιλεγμένο"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/default.py:3329
-#: ../src/orca/default.py:5315
+#: ../src/orca/default.py:3329 ../src/orca/default.py:5318
 msgctxt "text"
 msgid "unselected"
 msgstr "μη επιλεγμένο"
@@ -3139,8 +3149,7 @@ msgstr "μη επιλεγμένο"
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
 #.
-#: ../src/orca/default.py:3420
-#: ../src/orca/default.py:5369
+#: ../src/orca/default.py:3420 ../src/orca/default.py:5372
 msgid "misspelled"
 msgstr "ανορθόγραφο"
 
@@ -3148,15 +3157,14 @@ msgstr "ανορθόγραφο"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/default.py:4318
+#: ../src/orca/default.py:4321
 #, python-format
 msgid "Progress bar %d."
 msgstr "μπάρα προόδου %d."
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:4354
-#: ../src/orca/speech_generator.py:939
+#: ../src/orca/default.py:4357 ../src/orca/speech_generator.py:947
 msgid "bold"
 msgstr "έντονα"
 
@@ -3167,8 +3175,7 @@ msgstr "έντονα"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/default.py:4371
-#: ../src/orca/default.py:4383
+#: ../src/orca/default.py:4374 ../src/orca/default.py:4386
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -3181,7 +3188,7 @@ msgstr[1] "%(key)s %(value)s εικονοστοιχεία"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:4761
+#: ../src/orca/default.py:4764
 msgid "string not found"
 msgstr "το αλφαριθμητικό δεν βρέθηκε"
 
@@ -3190,12 +3197,12 @@ msgstr "το αλφαριθμητικό δεν βρέθηκε"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:4833
+#: ../src/orca/default.py:4836
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Ανορθόγραφη λέξη: %s"
 
-#: ../src/orca/default.py:4841
+#: ../src/orca/default.py:4844
 #, python-format
 msgid "Context is %s"
 msgstr "Το συμφραζόμενο είναι το %s"
@@ -3204,19 +3211,19 @@ msgstr "Το συμφραζόμενο είναι το %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5108
+#: ../src/orca/default.py:5111
 msgid "paragraph selected down from cursor position"
 msgstr "επιλέχτηκε η παράγραφος κάτω από την τοποθεσία του δρομέα"
 
-#: ../src/orca/default.py:5109
+#: ../src/orca/default.py:5112
 msgid "paragraph unselected down from cursor position"
 msgstr "αποεπιλέχτηκε η παράγραφος κάτω από την τοποθεσία του δρομέα"
 
-#: ../src/orca/default.py:5110
+#: ../src/orca/default.py:5113
 msgid "paragraph selected up from cursor position"
 msgstr "επιλέχτηκε η παράγραφος πάνω από την τοποθεσία του δρομέα"
 
-#: ../src/orca/default.py:5111
+#: ../src/orca/default.py:5114
 msgid "paragraph unselected up from cursor position"
 msgstr "αποεπιλέχτηκε η παράγραφος πάνω από την τοποθεσία του δρομέα"
 
@@ -3224,30 +3231,32 @@ msgstr "αποεπιλέχτηκε η παράγραφος πάνω από τη�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5165
+#: ../src/orca/default.py:5168
 msgid "line selected to end from previous cursor position"
-msgstr "επιλέχτηκε η γραμμή από την προηγούμενη τοποθεσία του δρομέα μέχρι το τέλος"
+msgstr ""
+"επιλέχτηκε η γραμμή από την προηγούμενη τοποθεσία του δρομέα μέχρι το τέλος"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5173
+#: ../src/orca/default.py:5176
 msgid "line selected from start to previous cursor position"
-msgstr "επιλέχτηκε η γραμμή από την αρχή μέχρι την προηγούμενη τοποθεσία του δρομέα"
+msgstr ""
+"επιλέχτηκε η γραμμή από την αρχή μέχρι την προηγούμενη τοποθεσία του δρομέα"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5182
+#: ../src/orca/default.py:5185
 msgid "page selected from cursor position"
 msgstr "επιλέχτηκε η σελίδα από την τοποθεσία του δρομέα"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:5187
+#: ../src/orca/default.py:5190
 msgid "page unselected from cursor position"
 msgstr "αποεπιλέχτηκε η σελίδα από την τοποθεσία του δρομέα"
 
@@ -3255,14 +3264,14 @@ msgstr "αποεπιλέχτηκε η σελίδα από την τοποθεσ�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5196
+#: ../src/orca/default.py:5199
 msgid "page selected to cursor position"
 msgstr "επιλέχτηκε η σελίδα στην τοποθεσία του δρομέα"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:5201
+#: ../src/orca/default.py:5204
 msgid "page unselected to cursor position"
 msgstr "αποεπιλέχτηκε η σελίδα στην τοποθεσία του δρομέα"
 
@@ -3270,14 +3279,14 @@ msgstr "αποεπιλέχτηκε η σελίδα στην τοποθεσία �
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5226
+#: ../src/orca/default.py:5229
 msgid "document selected to cursor position"
 msgstr "επιλέχτηκε το αρχείο στην τοποθεσία του δρομέα"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:5231
+#: ../src/orca/default.py:5234
 msgid "document unselected to cursor position"
 msgstr "αποεπιλέχτηκε το αρχείο στην τοποθεσία του δρομέα"
 
@@ -3285,21 +3294,21 @@ msgstr "αποεπιλέχτηκε το αρχείο στην τοποθεσία
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5240
+#: ../src/orca/default.py:5243
 msgid "document selected from cursor position"
 msgstr "επιλέχτηκε το αρχείο από την τοποθεσία του δρομέα"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:5245
+#: ../src/orca/default.py:5248
 msgid "document unselected from cursor position"
 msgstr "αποεπιλέχτηκε το αρχείο από την τοποθεσία του δρομέα"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:5262
+#: ../src/orca/default.py:5265
 msgid "entire document selected"
 msgstr "έχει επιλεγεί ολόκληρο το έγγραφο"
 
@@ -3307,7 +3316,7 @@ msgstr "έχει επιλεγεί ολόκληρο το έγγραφο"
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/default.py:5800
+#: ../src/orca/default.py:5801
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
@@ -3348,15 +3357,13 @@ msgstr "Γίνεται αναδίπλωση προς τα πάνω"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:355
-#: ../src/orca/settings.py:1391
+#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:1391
 msgid "partially checked"
 msgstr "μερικώς ελεγμένο"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:359
-#: ../src/orca/settings.py:1390
+#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:1390
 msgid "checked"
 msgstr "επιλεγμένο"
 
@@ -3365,15 +3372,13 @@ msgstr "επιλεγμένο"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:363
-#: ../src/orca/settings.py:1389
+#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:1389
 msgid "not checked"
 msgstr "μη ελεγμένο"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:370
-#: ../src/orca/settings.py:1402
+#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:1402
 msgid "pressed"
 msgstr "πατημένο"
 
@@ -3382,16 +3387,14 @@ msgstr "πατημένο"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:374
-#: ../src/orca/settings.py:1402
+#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:1402
 msgid "not pressed"
 msgstr "μη πατημένο"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:382
-#: ../src/orca/settings.py:1397
+#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:1397
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "επιλεγμένο"
@@ -3402,8 +3405,7 @@ msgstr "επιλεγμένο"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:387
-#: ../src/orca/settings.py:1396
+#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:1396
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "δεν είναι επιλεγμένο"
@@ -3436,16 +3438,13 @@ msgstr[1] "%d τοις εκατό."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078
-#: ../src/orca/generator.py:439
-#: ../src/orca/generator.py:696
-#: ../src/orca/generator.py:738
+#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:439
+#: ../src/orca/generator.py:696 ../src/orca/generator.py:738
 #: ../src/orca/generator.py:784
 #: ../src/orca/scripts/apps/evolution/script.py:496
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:120
 #: ../src/orca/scripts/apps/packagemanager/script.py:643
-#: ../src/orca/tutorialgenerator.py:526
-#: ../src/orca/tutorialgenerator.py:566
+#: ../src/orca/tutorialgenerator.py:526 ../src/orca/tutorialgenerator.py:566
 msgid "toggle"
 msgstr "εναλλαγή"
 
@@ -3467,8 +3466,7 @@ msgstr "Υπηρεσίες εκφώνησης GNOME"
 #. new string well.  For example, "Open..." turns into
 #. "Open dot dot dot".
 #.
-#: ../src/orca/gnomespeechfactory.py:831
-#: ../src/orca/gnomespeechfactory.py:832
+#: ../src/orca/gnomespeechfactory.py:831 ../src/orca/gnomespeechfactory.py:832
 #: ../src/orca/openttsfactory.py:287
 #: ../src/orca/speechdispatcherfactory.py:286
 msgid " dot dot dot"
@@ -3488,8 +3486,7 @@ msgstr "μείον"
 #. Translators: this is a short string saying that the speech
 #. synthesis engine is now speaking in a higher pitch.
 #.
-#: ../src/orca/gnomespeechfactory.py:1071
-#: ../src/orca/openttsfactory.py:379
+#: ../src/orca/gnomespeechfactory.py:1071 ../src/orca/openttsfactory.py:379
 #: ../src/orca/speechdispatcherfactory.py:380
 msgid "higher."
 msgstr "ψηλότερα."
@@ -3498,8 +3495,7 @@ msgstr "ψηλότερα."
 #. synthesis engine is now speaking in a lower pitch.
 #.
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/gnomespeechfactory.py:1102
-#: ../src/orca/openttsfactory.py:379
+#: ../src/orca/gnomespeechfactory.py:1102 ../src/orca/openttsfactory.py:379
 #: ../src/orca/speechdispatcherfactory.py:380
 msgid "lower."
 msgstr "χαμηλότερα."
@@ -3508,8 +3504,7 @@ msgstr "χαμηλότερα."
 #. synthesis engine is now speaking at a faster rate (words
 #. per minute).
 #.
-#: ../src/orca/gnomespeechfactory.py:1131
-#: ../src/orca/openttsfactory.py:369
+#: ../src/orca/gnomespeechfactory.py:1131 ../src/orca/openttsfactory.py:369
 #: ../src/orca/speechdispatcherfactory.py:370
 msgid "faster."
 msgstr "πιο γρήγορα."
@@ -3519,8 +3514,7 @@ msgstr "πιο γρήγορα."
 #. per minute).
 #.
 #. Translators: This string announces speech rate change.
-#: ../src/orca/gnomespeechfactory.py:1165
-#: ../src/orca/openttsfactory.py:369
+#: ../src/orca/gnomespeechfactory.py:1165 ../src/orca/openttsfactory.py:369
 #: ../src/orca/speechdispatcherfactory.py:370
 msgid "slower."
 msgstr "πιο αργά."
@@ -3529,8 +3523,7 @@ msgstr "πιο αργά."
 #. magnifier.  In addition to screen magnification, the user's
 #. preferred colors and mouse customizations are loaded.
 #.
-#: ../src/orca/gsmag.py:779
-#: ../src/orca/mag.py:1685
+#: ../src/orca/gsmag.py:779 ../src/orca/mag.py:1685
 msgid "Magnifier enabled."
 msgstr "Ο μεγεθυντής ενεργοποιήθηκε."
 
@@ -3538,8 +3531,7 @@ msgstr "Ο μεγεθυντής ενεργοποιήθηκε."
 #. magnifier, restoring the screen contents to their normal colors
 #. and sizes.
 #.
-#: ../src/orca/gsmag.py:786
-#: ../src/orca/mag.py:1692
+#: ../src/orca/gsmag.py:786 ../src/orca/mag.py:1692
 msgid "Magnifier disabled."
 msgstr "Ο μεγεθυντής απενεργοποιήθηκε."
 
@@ -3660,19 +3652,15 @@ msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: ../src/orca/keynames.py:85
-#: ../src/orca/keynames.py:89
-#: ../src/orca/keynames.py:93
-#: ../src/orca/keynames.py:97
+#: ../src/orca/keynames.py:85 ../src/orca/keynames.py:89
+#: ../src/orca/keynames.py:93 ../src/orca/keynames.py:97
 msgid "page up"
 msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: ../src/orca/keynames.py:101
-#: ../src/orca/keynames.py:105
-#: ../src/orca/keynames.py:109
-#: ../src/orca/keynames.py:113
+#: ../src/orca/keynames.py:101 ../src/orca/keynames.py:105
+#: ../src/orca/keynames.py:109 ../src/orca/keynames.py:113
 msgid "page down"
 msgstr "page down"
 
@@ -3714,29 +3702,25 @@ msgstr "enter"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: ../src/orca/keynames.py:149
-#: ../src/orca/keynames.py:153
+#: ../src/orca/keynames.py:149 ../src/orca/keynames.py:153
 msgid "up"
 msgstr "πάνω"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: ../src/orca/keynames.py:157
-#: ../src/orca/keynames.py:161
+#: ../src/orca/keynames.py:157 ../src/orca/keynames.py:161
 msgid "down"
 msgstr "κάτω"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: ../src/orca/keynames.py:165
-#: ../src/orca/keynames.py:169
+#: ../src/orca/keynames.py:165 ../src/orca/keynames.py:169
 msgid "left"
 msgstr "αριστερά"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: ../src/orca/keynames.py:173
-#: ../src/orca/keynames.py:177
+#: ../src/orca/keynames.py:173 ../src/orca/keynames.py:177
 msgid "right"
 msgstr "δεξιά"
 
@@ -3756,8 +3740,7 @@ msgstr "δεξί super"
 #.
 #. Translators: spoken words for the rolename of a menu.
 #.
-#: ../src/orca/keynames.py:189
-#: ../src/orca/rolenames.py:636
+#: ../src/orca/keynames.py:189 ../src/orca/rolenames.py:636
 msgid "menu"
 msgstr "μενού"
 
@@ -3793,29 +3776,25 @@ msgstr "escape"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: ../src/orca/keynames.py:213
-#: ../src/orca/keynames.py:217
+#: ../src/orca/keynames.py:213 ../src/orca/keynames.py:217
 msgid "insert"
 msgstr "insert"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: ../src/orca/keynames.py:221
-#: ../src/orca/keynames.py:225
+#: ../src/orca/keynames.py:221 ../src/orca/keynames.py:225
 msgid "delete"
 msgstr "delete"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: ../src/orca/keynames.py:229
-#: ../src/orca/keynames.py:233
+#: ../src/orca/keynames.py:229 ../src/orca/keynames.py:233
 msgid "home"
 msgstr "home"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: ../src/orca/keynames.py:237
-#: ../src/orca/keynames.py:241
+#: ../src/orca/keynames.py:237 ../src/orca/keynames.py:241
 msgid "end"
 msgstr "end"
 
@@ -3938,11 +3917,9 @@ msgstr "Οι βελτιώσεις του ποντικιού ενεργοποιή
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/mag.py:1747
-#: ../src/orca/orca_gui_prefs.py:1973
-#: ../src/orca/orca_gui_prefs.py:1999
-#: ../src/orca/orca_gui_prefs.py:2002
-#: ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/mag.py:1747 ../src/orca/orca_gui_prefs.py:1984
+#: ../src/orca/orca_gui_prefs.py:2010 ../src/orca/orca_gui_prefs.py:2013
+#: ../src/orca/orca-setup.ui.h:85
 msgid "Full Screen"
 msgstr "Πλήρης οθόνη"
 
@@ -3955,47 +3932,37 @@ msgstr "Η λειτουργία πλήρους οθόνη δεν είναι δι
 
 #. Translators: magnification will use the top half of the screen.
 #.
-#: ../src/orca/mag.py:1756
-#: ../src/orca/orca_gui_prefs.py:1977
-#: ../src/orca/orca_gui_prefs.py:2003
-#: ../src/orca/orca-setup.ui.h:149
+#: ../src/orca/mag.py:1756 ../src/orca/orca_gui_prefs.py:1988
+#: ../src/orca/orca_gui_prefs.py:2014 ../src/orca/orca-setup.ui.h:149
 msgid "Top Half"
 msgstr "Πάνω μισό"
 
 #. Translators: magnification will use the bottom half of the screen.
 #.
-#: ../src/orca/mag.py:1760
-#: ../src/orca/orca_gui_prefs.py:1981
-#: ../src/orca/orca_gui_prefs.py:2004
-#: ../src/orca/orca-setup.ui.h:22
+#: ../src/orca/mag.py:1760 ../src/orca/orca_gui_prefs.py:1992
+#: ../src/orca/orca_gui_prefs.py:2015 ../src/orca/orca-setup.ui.h:36
 msgid "Bottom Half"
 msgstr "Κάτω μισό"
 
 #. Translators: magnification will use the left half of the screen.
 #.
-#: ../src/orca/mag.py:1764
-#: ../src/orca/orca_gui_prefs.py:1985
-#: ../src/orca/orca_gui_prefs.py:2005
-#: ../src/orca/orca-setup.ui.h:74
+#: ../src/orca/mag.py:1764 ../src/orca/orca_gui_prefs.py:1996
+#: ../src/orca/orca_gui_prefs.py:2016 ../src/orca/orca-setup.ui.h:92
 msgid "Left Half"
 msgstr "Αριστερό μισό"
 
 #. Translators: magnification will use the right half of the screen.
 #.
-#: ../src/orca/mag.py:1768
-#: ../src/orca/orca_gui_prefs.py:1989
-#: ../src/orca/orca_gui_prefs.py:2006
-#: ../src/orca/orca-setup.ui.h:121
+#: ../src/orca/mag.py:1768 ../src/orca/orca_gui_prefs.py:2000
+#: ../src/orca/orca_gui_prefs.py:2017 ../src/orca/orca-setup.ui.h:121
 msgid "Right Half"
 msgstr "Δεξιό μισό"
 
 #. Translators: the user has selected a custom area of the screen
 #. to use for magnification.
 #.
-#: ../src/orca/mag.py:1773
-#: ../src/orca/orca_gui_prefs.py:1994
-#: ../src/orca/orca_gui_prefs.py:2007
-#: ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:2005
+#: ../src/orca/orca_gui_prefs.py:2018 ../src/orca/orca-setup.ui.h:49
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
@@ -4017,20 +3984,20 @@ msgstr "Παρουσίαση προηγούμενου μηνύματος ειδ�
 #. list mode when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:98
-msgid "Enable notification message list mode. Press Escape to exit or h for help"
-msgstr "Ενεργοποιεί την κατάσταση λίστας μηνυμάτων ειδοποίησης. Πιέστε Escape για να εξέλθετε ή h για βοήθεια."
+msgid "Present notification messages list"
+msgstr "Παρουσίαση λίστας μηνυμάτων ειδοποίησης"
 
 #. Translators: This is a brief message presented to the user
 #. the list of notifications is empty.
 #.
-#: ../src/orca/notification_messages.py:129
+#: ../src/orca/notification_messages.py:128
 msgid "No notification messages"
 msgstr "Δεν υπάρχουν μηνύματα ειδοποίησης"
 
 #. Translators: This is a brief message presented to the user when
 #. when the top of a list of notifications is reached.
 #.
-#: ../src/orca/notification_messages.py:160
+#: ../src/orca/notification_messages.py:159
 msgctxt "notification"
 msgid "Top"
 msgstr "Αρχή"
@@ -4038,7 +4005,7 @@ msgstr "Αρχή"
 #. Translators: This is a brief message presented to the user when
 #. when the bottom of a list of notifications is reached.
 #.
-#: ../src/orca/notification_messages.py:167
+#: ../src/orca/notification_messages.py:166
 msgctxt "notification"
 msgid "Bottom"
 msgstr "Τέλος"
@@ -4049,13 +4016,13 @@ msgstr "Τέλος"
 #. This string is the prompt which will be presented to the user
 #. in both speech and braille upon exiting this mode.
 #.
-#: ../src/orca/notification_messages.py:190
+#: ../src/orca/notification_messages.py:189
 msgid "Exiting list notification messages mode."
 msgstr "Έξοδος από την κατάσταση λίστας μηνυμάτων ειδοποίησης."
 
 #. Translators: This message inform to the user the number of
 #. messages in the list.
-#: ../src/orca/notification_messages.py:244
+#: ../src/orca/notification_messages.py:243
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -4063,7 +4030,7 @@ msgstr[0] "%d μήνυμα.\n"
 msgstr[1] "%d μηνύματα.\n"
 
 #. Translators: This is a help message.
-#: ../src/orca/notification_messages.py:246
+#: ../src/orca/notification_messages.py:245
 msgid "Press h for help.\n"
 msgstr "Πατήστε h για βοήθεια.\n"
 
@@ -4071,16 +4038,18 @@ msgstr "Πατήστε h για βοήθεια.\n"
 #. amongst the list of commands presented in list notification
 #. messages mode as well as how to exit the list.
 #.
-#: ../src/orca/notification_messages.py:253
+#: ../src/orca/notification_messages.py:252
 msgid ""
 "Use Up, Down, Home or End to navigate in the list.\n"
 "Press Escape to exit.\n"
 "Press Space to repeat the last message read.\n"
 "Press one digit to read a specific message.\n"
 msgstr ""
-"Χρησιμοποιήστε τα βέλη πάνω, κάτω, το Home και το End για να περιηγηθείτε στη λίστα.\n"
+"Χρησιμοποιήστε τα βέλη πάνω, κάτω, το Home και το End για να περιηγηθείτε "
+"στη λίστα.\n"
 "Πατήστε το Escape για έξοδο.\n"
-"Πατήστε το πλήκτρο διαστήματος για να επαναλάβετε το τελευταίο μήνυμα που διαβάστηκε.\n"
+"Πατήστε το πλήκτρο διαστήματος για να επαναλάβετε το τελευταίο μήνυμα που "
+"διαβάστηκε.\n"
 "Πατήστε ένα ψηφίο για να διαβάσετε ένα συγκεκριμένο μήνυμα.\n"
 
 #. Translators: "Default Synthesizer" will appear in the list of available
@@ -4089,8 +4058,7 @@ msgstr ""
 #. will have a chance to select a particular speech engine by its real
 #. name, such as Festival, IBMTTS, etc.
 #.
-#: ../src/orca/openttsfactory.py:84
-#: ../src/orca/speechdispatcherfactory.py:83
+#: ../src/orca/openttsfactory.py:84 ../src/orca/speechdispatcherfactory.py:83
 msgid "Default Synthesizer"
 msgstr "Προκαθορισμένος συνθέτης"
 
@@ -4140,10 +4108,8 @@ msgstr "_Γαλάζιο:"
 #. on the screen.
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:6
-#: ../src/orca/orca_gui_prefs.py:4463
-#: ../src/orca/orca_gui_prefs.py:4474
-#: ../src/orca/orca_gui_prefs.py:4476
-#: ../src/orca/orca_gui_prefs.py:4497
+#: ../src/orca/orca_gui_prefs.py:4480 ../src/orca/orca_gui_prefs.py:4491
+#: ../src/orca/orca_gui_prefs.py:4493 ../src/orca/orca_gui_prefs.py:4514
 msgid "Bilinear"
 msgstr "Διγραμμικό"
 
@@ -4153,9 +4119,8 @@ msgstr "Διγραμμικό"
 #. (75, 100, 125) would become (75, 100, 0).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:7
-#: ../src/orca/orca_gui_prefs.py:4720
-#: ../src/orca/orca_gui_prefs.py:4747
-#: ../src/orca/orca_gui_prefs.py:4818
+#: ../src/orca/orca_gui_prefs.py:4737 ../src/orca/orca_gui_prefs.py:4764
+#: ../src/orca/orca_gui_prefs.py:4835
 msgid "Desaturate blue"
 msgstr "Αποκορεσμός του γαλάζιου"
 
@@ -4165,8 +4130,7 @@ msgstr "Αποκορεσμός του γαλάζιου"
 #. (75, 100, 125) would become (75, 0, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:8
-#: ../src/orca/orca_gui_prefs.py:4712
-#: ../src/orca/orca_gui_prefs.py:4810
+#: ../src/orca/orca_gui_prefs.py:4729 ../src/orca/orca_gui_prefs.py:4827
 msgid "Desaturate green"
 msgstr "Αποκορεσμός του πράσινου"
 
@@ -4176,9 +4140,8 @@ msgstr "Αποκορεσμός του πράσινου"
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:9
-#: ../src/orca/orca_gui_prefs.py:4704
-#: ../src/orca/orca_gui_prefs.py:4746
-#: ../src/orca/orca_gui_prefs.py:4802
+#: ../src/orca/orca_gui_prefs.py:4721 ../src/orca/orca_gui_prefs.py:4763
+#: ../src/orca/orca_gui_prefs.py:4819
 msgid "Desaturate red"
 msgstr "Αποκορεσμός του κόκκινου"
 
@@ -4192,9 +4155,8 @@ msgstr "Πράσι_νο:"
 #. (100, 125, 75).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:11
-#: ../src/orca/orca_gui_prefs.py:4736
-#: ../src/orca/orca_gui_prefs.py:4749
-#: ../src/orca/orca_gui_prefs.py:4834
+#: ../src/orca/orca_gui_prefs.py:4753 ../src/orca/orca_gui_prefs.py:4766
+#: ../src/orca/orca_gui_prefs.py:4851
 msgid "Negative hue shift"
 msgstr "Αρνητική μετατόπιση της απόχρωσης "
 
@@ -4209,17 +4171,12 @@ msgstr "Αρνητική μετατόπιση της απόχρωσης "
 #. track the mouse.
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:12
-#: ../src/orca/orca_gui_prefs.py:108
-#: ../src/orca/orca_gui_prefs.py:2050
-#: ../src/orca/orca_gui_prefs.py:2070
-#: ../src/orca/orca_gui_prefs.py:4469
-#: ../src/orca/orca_gui_prefs.py:4476
-#: ../src/orca/orca_gui_prefs.py:4499
-#: ../src/orca/orca_gui_prefs.py:4672
-#: ../src/orca/orca_gui_prefs.py:4739
-#: ../src/orca/orca_gui_prefs.py:4742
-#: ../src/orca/orca_gui_prefs.py:4770
-#: ../src/orca/orca-setup.ui.h:99
+#: ../src/orca/orca_gui_prefs.py:108 ../src/orca/orca_gui_prefs.py:2061
+#: ../src/orca/orca_gui_prefs.py:2081 ../src/orca/orca_gui_prefs.py:4486
+#: ../src/orca/orca_gui_prefs.py:4493 ../src/orca/orca_gui_prefs.py:4516
+#: ../src/orca/orca_gui_prefs.py:4689 ../src/orca/orca_gui_prefs.py:4756
+#: ../src/orca/orca_gui_prefs.py:4759 ../src/orca/orca_gui_prefs.py:4787
+#: ../src/orca/orca-setup.ui.h:105
 msgid "None"
 msgstr "Κανένα"
 
@@ -4229,9 +4186,8 @@ msgstr "Κανένα"
 #. (125, 75, 100).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:13
-#: ../src/orca/orca_gui_prefs.py:4728
-#: ../src/orca/orca_gui_prefs.py:4748
-#: ../src/orca/orca_gui_prefs.py:4826
+#: ../src/orca/orca_gui_prefs.py:4745 ../src/orca/orca_gui_prefs.py:4765
+#: ../src/orca/orca_gui_prefs.py:4843
 msgid "Positive hue shift"
 msgstr "Θετική μετατόπιση της απόχρωσης "
 
@@ -4249,9 +4205,8 @@ msgstr "Προβολή πη_γαίου κώδικα:"
 #. (75, 100, 125) would become (75, 100, 255).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:16
-#: ../src/orca/orca_gui_prefs.py:4696
-#: ../src/orca/orca_gui_prefs.py:4745
-#: ../src/orca/orca_gui_prefs.py:4794
+#: ../src/orca/orca_gui_prefs.py:4713 ../src/orca/orca_gui_prefs.py:4762
+#: ../src/orca/orca_gui_prefs.py:4811
 msgid "Saturate blue"
 msgstr "Κορεσμός του γαλάζιου"
 
@@ -4261,9 +4216,8 @@ msgstr "Κορεσμός του γαλάζιου"
 #. (75, 100, 125) would become (75, 255, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:17
-#: ../src/orca/orca_gui_prefs.py:4688
-#: ../src/orca/orca_gui_prefs.py:4744
-#: ../src/orca/orca_gui_prefs.py:4786
+#: ../src/orca/orca_gui_prefs.py:4705 ../src/orca/orca_gui_prefs.py:4761
+#: ../src/orca/orca_gui_prefs.py:4803
 msgid "Saturate green"
 msgstr "Κορεσμός του πράσινου"
 
@@ -4273,9 +4227,8 @@ msgstr "Κορεσμός του πράσινου"
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:18
-#: ../src/orca/orca_gui_prefs.py:4680
-#: ../src/orca/orca_gui_prefs.py:4743
-#: ../src/orca/orca_gui_prefs.py:4778
+#: ../src/orca/orca_gui_prefs.py:4697 ../src/orca/orca_gui_prefs.py:4760
+#: ../src/orca/orca_gui_prefs.py:4795
 msgid "Saturate red"
 msgstr "Κορεσμός του κόκκινου"
 
@@ -4330,8 +4283,7 @@ msgstr "^[NnΟο0]"
 #. Translators: this means speech synthesis (i.e., the machine
 #. speaks to you from its speakers) is not installed or working.
 #.
-#: ../src/orca/orca_console_prefs.py:140
-#: ../src/orca/orca_console_prefs.py:149
+#: ../src/orca/orca_console_prefs.py:140 ../src/orca/orca_console_prefs.py:149
 #: ../src/orca/orca_console_prefs.py:167
 msgid "Speech is unavailable."
 msgstr "Η εκφώνηση δεν είναι διαθέσιμη."
@@ -4352,10 +4304,8 @@ msgstr "Επιλογή επιθυμητού συστήματος εκφώνησ�
 
 #. Translators: this is prompting for a numerical choice.
 #.
-#: ../src/orca/orca_console_prefs.py:189
-#: ../src/orca/orca_console_prefs.py:230
-#: ../src/orca/orca_console_prefs.py:282
-#: ../src/orca/orca_console_prefs.py:488
+#: ../src/orca/orca_console_prefs.py:189 ../src/orca/orca_console_prefs.py:230
+#: ../src/orca/orca_console_prefs.py:282 ../src/orca/orca_console_prefs.py:488
 msgid "Enter choice: "
 msgstr "Εισάγετε επιλογή: "
 
@@ -4363,20 +4313,16 @@ msgstr "Εισάγετε επιλογή: "
 #. invalid integer value on the command line and is
 #. also requesting they enter a valid integer value.
 #.
-#: ../src/orca/orca_console_prefs.py:196
-#: ../src/orca/orca_console_prefs.py:233
-#: ../src/orca/orca_console_prefs.py:288
-#: ../src/orca/orca_console_prefs.py:503
+#: ../src/orca/orca_console_prefs.py:196 ../src/orca/orca_console_prefs.py:233
+#: ../src/orca/orca_console_prefs.py:288 ../src/orca/orca_console_prefs.py:503
 #: ../src/orca/orca_console_prefs.py:505
 msgid "Please enter a valid number."
 msgstr "Παρακαλώ εισάγετε έναν έγκυρο αριθμό."
 
 #. Translators: this means speech synthesis will not be used.
 #.
-#: ../src/orca/orca_console_prefs.py:200
-#: ../src/orca/orca_console_prefs.py:211
-#: ../src/orca/orca_console_prefs.py:237
-#: ../src/orca/orca_console_prefs.py:253
+#: ../src/orca/orca_console_prefs.py:200 ../src/orca/orca_console_prefs.py:211
+#: ../src/orca/orca_console_prefs.py:237 ../src/orca/orca_console_prefs.py:253
 #: ../src/orca/orca_console_prefs.py:292
 msgid "Speech will not be used.\n"
 msgstr "Η εκφώνηση δεν θα χρησιμοποιηθεί.\n"
@@ -4417,18 +4363,14 @@ msgstr "Επιλέξτε την επιθυμητή φωνή:"
 #.
 #: ../src/orca/orca_console_prefs.py:331
 msgid "Enable echo by word?  Enter y or n: "
-msgstr "Ενεργοποίηση του echo με λέξη; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Ενεργοποίηση του echo με λέξη; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
 
-#: ../src/orca/orca_console_prefs.py:341
-#: ../src/orca/orca_console_prefs.py:360
-#: ../src/orca/orca_console_prefs.py:387
-#: ../src/orca/orca_console_prefs.py:404
-#: ../src/orca/orca_console_prefs.py:421
-#: ../src/orca/orca_console_prefs.py:438
-#: ../src/orca/orca_console_prefs.py:456
-#: ../src/orca/orca_console_prefs.py:546
-#: ../src/orca/orca_console_prefs.py:565
-#: ../src/orca/orca_console_prefs.py:583
+#: ../src/orca/orca_console_prefs.py:341 ../src/orca/orca_console_prefs.py:360
+#: ../src/orca/orca_console_prefs.py:387 ../src/orca/orca_console_prefs.py:404
+#: ../src/orca/orca_console_prefs.py:421 ../src/orca/orca_console_prefs.py:438
+#: ../src/orca/orca_console_prefs.py:456 ../src/orca/orca_console_prefs.py:546
+#: ../src/orca/orca_console_prefs.py:565 ../src/orca/orca_console_prefs.py:583
 #: ../src/orca/orca_console_prefs.py:628
 msgid "Please enter y or n."
 msgstr "Παρακαλώ εισάγετε ν ή y ή 1 για ναι και ο ή n ή 0 για όχι."
@@ -4440,35 +4382,44 @@ msgstr "Παρακαλώ εισάγετε ν ή y ή 1 για ναι και ο �
 #.
 #: ../src/orca/orca_console_prefs.py:350
 msgid "Enable key echo?  Enter y or n: "
-msgstr "Ενεργοποίηση του echo των πλήκτρων; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Ενεργοποίηση του echo των πλήκτρων; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
 
 #. Translators: this is in reference to key echo for
 #. normal text entry keys.
 #.
 #: ../src/orca/orca_console_prefs.py:377
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr "Ενεργοποίηση των αλφαριθμητικών πλήκτρων και των πλήκτρων σημείων στίξης; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Ενεργοποίηση των αλφαριθμητικών πλήκτρων και των πλήκτρων σημείων στίξης; "
+"Εισάγετε ν ή y για ναι και ο ή n για όχι:"
 
 #. Translators: this is in reference to key echo for
 #. CTRL, ALT, Shift, Insert, and "Fn" on laptops.
 #.
 #: ../src/orca/orca_console_prefs.py:394
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr "Ενεργοποίηση των πλήκτρων τροποποίησης; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Ενεργοποίηση των πλήκτρων τροποποίησης; Εισάγετε ν ή y για ναι και ο ή n για "
+"όχι:"
 
 #. Translators: this is in reference to key echo for
 #. Caps Lock, Num Lock, Scroll Lock, etc.
 #.
 #: ../src/orca/orca_console_prefs.py:411
 msgid "Enable locking keys?  Enter y or n: "
-msgstr "Ενεργοποίηση των πλήκτρων κλειδώματος; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Ενεργοποίηση των πλήκτρων κλειδώματος; Εισάγετε ν ή y για ναι και ο ή n για "
+"όχι:"
 
 #. Translators: this is in reference to key echo for
 #. the keys at the top of the keyboard.
 #.
 #: ../src/orca/orca_console_prefs.py:428
 msgid "Enable function keys?  Enter y or n: "
-msgstr "Ενεργοποίηση των πλήκτρων συναρτήσεων; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Ενεργοποίηση των πλήκτρων συναρτήσεων; Εισάγετε ν ή y για ναι και ο ή n για "
+"όχι:"
 
 #. Translators: this is in reference to key echo for
 #. space, enter, escape, tab, backspace, delete, arrow
@@ -4476,7 +4427,9 @@ msgstr "Ενεργοποίηση των πλήκτρων συναρτήσεων;
 #.
 #: ../src/orca/orca_console_prefs.py:446
 msgid "Enable action keys?  Enter y or n: "
-msgstr "Ενεργοποίηση των πλήκτρων ενέργειας; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Ενεργοποίηση των πλήκτρων ενέργειας; Εισάγετε ν ή y για ναι και ο ή n για "
+"όχι:"
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -4524,23 +4477,26 @@ msgstr "Ενεργοποίηση οθόνης Μπράιγ; Εισάγετε ν 
 #.
 #: ../src/orca/orca_console_prefs.py:572
 msgid "Automatically start orca when you log in?  Enter y or n: "
-msgstr "Να γίνεται αυτόματη εκκίνηση του orca κατά τη σύνδεση; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Να γίνεται αυτόματη εκκίνηση του orca κατά τη σύνδεση; Εισάγετε ν ή y για "
+"ναι και ο ή n για όχι:"
 
-#: ../src/orca/orca_console_prefs.py:587
-#: ../src/orca/orca_gui_prefs.py:498
+#: ../src/orca/orca_console_prefs.py:587 ../src/orca/orca_gui_prefs.py:499
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "Η υποστήριξη προσιτότητας του GNOME μόλις ενεργοποιήθηκε."
 
-#: ../src/orca/orca_console_prefs.py:593
-#: ../src/orca/orca_gui_prefs.py:500
+#: ../src/orca/orca_console_prefs.py:593 ../src/orca/orca_gui_prefs.py:501
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
-"Θα πρέπει να κάνετε επανεκκίνηση του συστήματος για να πραγματοποιηθεί η αλλαγή.\n"
+"Θα πρέπει να κάνετε επανεκκίνηση του συστήματος για να πραγματοποιηθεί η "
+"αλλαγή.\n"
 "Θέλετε να αποσυνδεθείτε τώρα;"
 
 #: ../src/orca/orca_console_prefs.py:603
 msgid "Do you want to logout now?  Enter y or n: "
-msgstr "Θέλετε να τερματίσετε το σύστημα τώρα; Εισάγετε ν ή y για ναι και ο ή n για όχι:"
+msgstr ""
+"Θέλετε να τερματίσετε το σύστημα τώρα; Εισάγετε ν ή y για ναι και ο ή n για "
+"όχι:"
 
 #: ../src/orca/orca_console_prefs.py:610
 msgid "Setup complete. Logging out now."
@@ -4554,8 +4510,7 @@ msgstr "Η ρύθμιση ολοκληρώθηκε. Πιέστε επιστρο�
 msgid "<b>Start from:</b>"
 msgstr "<b>Έναρξη από:</b>"
 
-#: ../src/orca/orca-find.ui.h:2
-#: ../src/orca/orca_gui_find.py:147
+#: ../src/orca/orca-find.ui.h:2 ../src/orca/orca_gui_find.py:147
 msgid "C_urrent location"
 msgstr "_Τρέχουσα τοποθεσία"
 
@@ -4573,8 +4528,7 @@ msgstr "Τερματισμός"
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.ui.h:4
-#: ../src/orca/scripts/apps/gedit/script.py:320
+#: ../src/orca/orca-find.ui.h:4 ../src/orca/scripts/apps/gedit/script.py:320
 #: ../src/orca/scripts/apps/gedit/script.py:322
 #: ../src/orca/scripts/apps/gnome-search-tool/script.py:165
 msgid "Find"
@@ -4629,8 +4583,13 @@ msgstr "Η ομάδα του Orca"
 #. Translators: This text is used in the Orca About dialog.
 #.
 #: ../src/orca/orca_gui_main.py:98
-msgid "A free, open source scriptable screen reader, which provides access to applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
-msgstr "Ένα ελεύθερο, ανοικτού κώδικα πρόγραμμα φωτοαπόδοσης οθόνης, που παρέχει πρόσβαση σε εφαρμογές και εργαλειοθήκες που υποστηρίζουν το AT-SPI (π.χ., η επιφάνεια εργασίας GNOME)."
+msgid ""
+"A free, open source scriptable screen reader, which provides access to "
+"applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
+msgstr ""
+"Ένα ελεύθερο, ανοικτού κώδικα πρόγραμμα φωτοαπόδοσης οθόνης, που παρέχει "
+"πρόσβαση σε εφαρμογές και εργαλειοθήκες που υποστηρίζουν το AT-SPI (π.χ., η "
+"επιφάνεια εργασίας GNOME)."
 
 #. Translators: This text is used in the Orca About dialog.
 #.
@@ -4683,19 +4642,24 @@ msgid ""
 "Free Software Foundation, Inc., Franklin Street, Fifth Floor,\n"
 "Boston MA  02110-1301 USA."
 msgstr ""
-"Το Orca είναι ελεύθερο λογισμικό. Επιτρέπεται η αναδιανομή ή/και τροποποίησή\n"
+"Το Orca είναι ελεύθερο λογισμικό. Επιτρέπεται η αναδιανομή ή/και "
+"τροποποίησή\n"
 "του υπό τους όρους της Γενικής Άδειας Δημόσιας Χρήσης GNU\n"
 "(GNU General Public License) όπως αυτή δημοσιεύεται από το\n"
 "Ίδρυμα Ελεύθερου Λογισμικού (Free Software Foundation) είτε της\n"
-"έκδοσης 2 της άδειας, είτε (κατ' επιλογήν) οποιασδήποτε μεταγενέστερης έκδοσης.\n"
+"έκδοσης 2 της άδειας, είτε (κατ' επιλογήν) οποιασδήποτε μεταγενέστερης "
+"έκδοσης.\n"
 "\n"
 "To Orca διανέμεται με την ελπίδα οτι θα είναι χρήσιμο, αλλά ΧΩΡΙΣ ΚΑΜΜΙΑ\n"
 "ΑΠΟΛΥΤΩΣ ΕΓΓΥΗΣΗ, χωρίς ακόμη και την έμμεση εγγύηση ΕΜΠΟΡΕΥΣΙΜΟΤΗΤΑΣ\n"
-"ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ. Δείτε την Γενική Άδεια Δημόσιας Χρήσης\n"
+"ή ΚΑΤΑΛΛΗΛΟΤΗΤΑΣ ΓΙΑ ΣΥΓΚΕΚΡΙΜΕΝΟ ΣΚΟΠΟ. Δείτε την Γενική Άδεια Δημόσιας "
+"Χρήσης\n"
 "GNU (GNU General Public License) για περισσότερες λεπτομέρειες.\n"
 "\n"
-"Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Άδειας Δημόσιας Χρήσης GNU\n"
-"(GNU General Public License) μαζί με αυτό το πρόγραμμα. Αν όχι, επικοινωνήστε γραπτώς\n"
+"Θα πρέπει να έχετε λάβει ένα αντίγραφο της Γενικής Άδειας Δημόσιας Χρήσης "
+"GNU\n"
+"(GNU General Public License) μαζί με αυτό το πρόγραμμα. Αν όχι, "
+"επικοινωνήστε γραπτώς\n"
 "με το Ίδρυμα Ελεύθερου Λογισμικού (Free Software Foundation, Inc.),\n"
 "51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA."
 
@@ -4704,10 +4668,8 @@ msgstr ""
 #. magnifier.  Centered means that Orca attempts to keep
 #. the object of interest in the center of the magnified window.
 #.
-#: ../src/orca/orca_gui_prefs.py:102
-#: ../src/orca/orca_gui_prefs.py:2050
-#: ../src/orca/orca_gui_prefs.py:2070
-#: ../src/orca/orca-setup.ui.h:28
+#: ../src/orca/orca_gui_prefs.py:102 ../src/orca/orca_gui_prefs.py:2061
+#: ../src/orca/orca_gui_prefs.py:2081 ../src/orca/orca-setup.ui.h:42
 msgid "Centered"
 msgstr "Κεντραρισμένη"
 
@@ -4720,8 +4682,7 @@ msgstr "Κεντραρισμένη"
 #. the desktop, Orca positions the mouse 25% from the left edge
 #. of the magnified region.
 #.
-#: ../src/orca/orca_gui_prefs.py:118
-#: ../src/orca/orca_gui_prefs.py:2050
+#: ../src/orca/orca_gui_prefs.py:118 ../src/orca/orca_gui_prefs.py:2061
 #: ../src/orca/orca-setup.ui.h:116
 msgid "Proportional"
 msgstr "Αναλογικό"
@@ -4731,10 +4692,8 @@ msgstr "Αναλογικό"
 #. magnifier.  Push means that Orca will move the magnified
 #. region just enough to display the object of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:125
-#: ../src/orca/orca_gui_prefs.py:2050
-#: ../src/orca/orca_gui_prefs.py:2070
-#: ../src/orca/orca-setup.ui.h:117
+#: ../src/orca/orca_gui_prefs.py:125 ../src/orca/orca_gui_prefs.py:2061
+#: ../src/orca/orca_gui_prefs.py:2081 ../src/orca/orca-setup.ui.h:117
 msgid "Push"
 msgstr "Ώθηση"
 
@@ -4752,7 +4711,7 @@ msgstr "Ώθηση"
 #. what action Orca will take when the user invokes an Orca-specific
 #. keyboard command.
 #.
-#: ../src/orca/orca_gui_prefs.py:250
+#: ../src/orca/orca_gui_prefs.py:251
 msgid "Function"
 msgstr "Λειτουργία"
 
@@ -4760,7 +4719,7 @@ msgstr "Λειτουργία"
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.
 #.
-#: ../src/orca/orca_gui_prefs.py:328
+#: ../src/orca/orca_gui_prefs.py:329
 msgid "Key Binding"
 msgstr "Συνδυασμός πλήκτρων"
 
@@ -4771,7 +4730,7 @@ msgstr "Συνδυασμός πλήκτρων"
 #. addition to the key bindings in the "Key Bindings"
 #. column.
 #.
-#: ../src/orca/orca_gui_prefs.py:407
+#: ../src/orca/orca_gui_prefs.py:408
 msgid "Alternate"
 msgstr "Εναλλακτικό"
 
@@ -4779,7 +4738,7 @@ msgstr "Εναλλακτικό"
 #. cells represent whether a key binding has been modified
 #. from the default key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:427
+#: ../src/orca/orca_gui_prefs.py:428
 msgid "Modified"
 msgstr "Τροποποιήθηκε"
 
@@ -4788,7 +4747,7 @@ msgstr "Τροποποιήθηκε"
 #. by Orca when presenting the content of the screen and other
 #. messages.
 #.
-#: ../src/orca/orca_gui_prefs.py:754
+#: ../src/orca/orca_gui_prefs.py:765
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Προεπιλογή"
@@ -4796,7 +4755,7 @@ msgstr "Προεπιλογή"
 #. Translators: This refers to the voice used by Orca when
 #. presenting one or more characters which is in uppercase.
 #.
-#: ../src/orca/orca_gui_prefs.py:758
+#: ../src/orca/orca_gui_prefs.py:769
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Κεφαλαία"
@@ -4805,7 +4764,7 @@ msgstr "Κεφαλαία"
 #. presenting one or more characters which is part of a
 #. hyperlink.
 #.
-#: ../src/orca/orca_gui_prefs.py:763
+#: ../src/orca/orca_gui_prefs.py:774
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Σύνδεσμος"
@@ -4819,7 +4778,7 @@ msgstr "Σύνδεσμος"
 #. user Tabs into a list of six items and the third item is
 #. selected. And so on.
 #.
-#: ../src/orca/orca_gui_prefs.py:773
+#: ../src/orca/orca_gui_prefs.py:784
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Σύστημα"
@@ -4829,7 +4788,7 @@ msgstr "Σύστημα"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1206
+#: ../src/orca/orca_gui_prefs.py:1217
 msgid "Attribute Name"
 msgstr "Όνομα γνωρίσματος"
 
@@ -4840,7 +4799,7 @@ msgstr "Όνομα γνωρίσματος"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1221
+#: ../src/orca/orca_gui_prefs.py:1232
 msgid "Speak"
 msgstr "Εκφώνηση"
 
@@ -4851,7 +4810,7 @@ msgstr "Εκφώνηση"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1239
+#: ../src/orca/orca_gui_prefs.py:1250
 msgid "Mark in braille"
 msgstr "Σημείωση στο μπράιγ"
 
@@ -4870,7 +4829,7 @@ msgstr "Σημείωση στο μπράιγ"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1265
+#: ../src/orca/orca_gui_prefs.py:1276
 msgid "Present Unless"
 msgstr "Χρήση του τρέχοντος εκτός κι αν"
 
@@ -4881,7 +4840,7 @@ msgstr "Χρήση του τρέχοντος εκτός κι αν"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1379
+#: ../src/orca/orca_gui_prefs.py:1390
 msgid "Actual String"
 msgstr "Αλφαριθμητικό ενέργειας"
 
@@ -4892,7 +4851,7 @@ msgstr "Αλφαριθμητικό ενέργειας"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1396
+#: ../src/orca/orca_gui_prefs.py:1407
 msgid "Replacement String"
 msgstr "Αλφαριθμητικό αντικατάστασης"
 
@@ -4905,8 +4864,7 @@ msgstr "Αλφαριθμητικό αντικατάστασης"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1589
-#: ../src/orca/orca-setup.ui.h:25
+#: ../src/orca/orca_gui_prefs.py:1600 ../src/orca/orca-setup.ui.h:39
 msgid "Break speech into ch_unks between pauses"
 msgstr "Χρήση παύσεων για κατάτμηση της ομιλίας σε _τμήματα"
 
@@ -4914,9 +4872,8 @@ msgstr "Χρήση παύσεων για κατάτμηση της ομιλία�
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:1601
-#: ../src/orca/orca_gui_prefs.py:2998
-#: ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/orca_gui_prefs.py:1612 ../src/orca/orca_gui_prefs.py:3015
+#: ../src/orca/orca-setup.ui.h:93
 msgid "Line"
 msgstr "Γραμμή"
 
@@ -4924,8 +4881,7 @@ msgstr "Γραμμή"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:1601
-#: ../src/orca/orca_gui_prefs.py:3004
+#: ../src/orca/orca_gui_prefs.py:1612 ../src/orca/orca_gui_prefs.py:3021
 #: ../src/orca/orca-setup.ui.h:125
 msgid "Sentence"
 msgstr "Πρόταση"
@@ -4935,10 +4891,7 @@ msgstr "Πρόταση"
 #. will present progress bar updates regardless of what application
 #. and window they happen to be in.
 #.
-#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca_gui_prefs.py:1700
-#: ../src/orca/orca_gui_prefs.py:2963
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca_gui_prefs.py:1711 ../src/orca/orca_gui_prefs.py:2980
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Όλα"
@@ -4949,7 +4902,7 @@ msgstr "Όλα"
 #. progress bar is in the active application (but not necessarily
 #. in the current window).
 #.
-#: ../src/orca/orca_gui_prefs.py:1707
+#: ../src/orca/orca_gui_prefs.py:1718
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Εφαρμογή"
@@ -4959,8 +4912,7 @@ msgstr "Εφαρμογή"
 #. Orca will present progress bar updates as long as the progress
 #. bar is in the active window.
 #.
-#: ../src/orca/orca_gui_prefs.py:1713
-#: ../src/orca/orca_gui_prefs.py:2971
+#: ../src/orca/orca_gui_prefs.py:1724 ../src/orca/orca_gui_prefs.py:2988
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Παράθυρο"
@@ -4969,8 +4921,7 @@ msgstr "Παράθυρο"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1820
-#: ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/orca_gui_prefs.py:1831 ../src/orca/orca-setup.ui.h:80
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Ενεργοποίηση για συνδυαζόμενα _διακριτικά σημεία"
 
@@ -4981,8 +4932,7 @@ msgstr "Ενεργοποίηση για συνδυαζόμενα _διακριτ
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1828
-#: ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/orca_gui_prefs.py:1839 ../src/orca/orca-setup.ui.h:77
 msgid "Enable echo by cha_racter"
 msgstr "Ενεργοποίηση ανακοίνωσης _χαρακτήρων"
 
@@ -4990,7 +4940,7 @@ msgstr "Ενεργοποίηση ανακοίνωσης _χαρακτήρων"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2348
+#: ../src/orca/orca_gui_prefs.py:2359
 msgid "(double click)"
 msgstr "(διπλό κλικ)"
 
@@ -4998,7 +4948,7 @@ msgstr "(διπλό κλικ)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2354
+#: ../src/orca/orca_gui_prefs.py:2365
 msgid "(triple click)"
 msgstr "(τριπλό κλικ)"
 
@@ -5007,8 +4957,7 @@ msgstr "(τριπλό κλικ)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2458
-#: ../src/orca/orca_gui_prefs.py:2553
+#: ../src/orca/orca_gui_prefs.py:2469 ../src/orca/orca_gui_prefs.py:2564
 msgid "Braille Bindings"
 msgstr "Συνδυασμοί μπράιγ"
 
@@ -5017,10 +4966,8 @@ msgstr "Συνδυασμοί μπράιγ"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2797
-#: ../src/orca/orca_gui_prefs.py:2838
-#: ../src/orca/orca_gui_prefs.py:2878
-#: ../src/orca/orca-setup.ui.h:42
+#: ../src/orca/orca_gui_prefs.py:2814 ../src/orca/orca_gui_prefs.py:2855
+#: ../src/orca/orca_gui_prefs.py:2895 ../src/orca/orca-setup.ui.h:56
 msgid "Dot _7"
 msgstr "Τελεία _7"
 
@@ -5028,10 +4975,8 @@ msgstr "Τελεία _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2804
-#: ../src/orca/orca_gui_prefs.py:2845
-#: ../src/orca/orca_gui_prefs.py:2885
-#: ../src/orca/orca-setup.ui.h:43
+#: ../src/orca/orca_gui_prefs.py:2821 ../src/orca/orca_gui_prefs.py:2862
+#: ../src/orca/orca_gui_prefs.py:2902 ../src/orca/orca-setup.ui.h:57
 msgid "Dot _8"
 msgstr "Τελεία _8"
 
@@ -5039,18 +4984,15 @@ msgstr "Τελεία _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2811
-#: ../src/orca/orca_gui_prefs.py:2852
-#: ../src/orca/orca_gui_prefs.py:2892
-#: ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca_gui_prefs.py:2828 ../src/orca/orca_gui_prefs.py:2869
+#: ../src/orca/orca_gui_prefs.py:2909 ../src/orca/orca-setup.ui.h:58
 msgid "Dots 7 an_d 8"
 msgstr "Τελείες 7 _και 8"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2915
-#: ../src/orca/orca-setup.ui.h:165
+#: ../src/orca/orca_gui_prefs.py:2932 ../src/orca/orca-setup.ui.h:165
 msgid "_None"
 msgstr "_Κανένα"
 
@@ -5059,8 +5001,7 @@ msgstr "_Κανένα"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2923
-#: ../src/orca/orca-setup.ui.h:127
+#: ../src/orca/orca_gui_prefs.py:2940 ../src/orca/orca-setup.ui.h:127
 msgid "So_me"
 msgstr "_Κάποια"
 
@@ -5068,8 +5009,7 @@ msgstr "_Κάποια"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2930
-#: ../src/orca/orca-setup.ui.h:76
+#: ../src/orca/orca_gui_prefs.py:2947 ../src/orca/orca-setup.ui.h:94
 msgid "M_ost"
 msgstr "_Περισσότερα"
 
@@ -5077,9 +5017,8 @@ msgstr "_Περισσότερα"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:3090
-#: ../src/orca/orca_gui_prefs.py:3194
-#: ../src/orca/orca-setup.ui.h:26
+#: ../src/orca/orca_gui_prefs.py:3107 ../src/orca/orca_gui_prefs.py:3211
+#: ../src/orca/orca-setup.ui.h:40
 msgid "Brie_f"
 msgstr "_Σύντομη περιγραφή"
 
@@ -5088,8 +5027,7 @@ msgstr "_Σύντομη περιγραφή"
 #. they just want the current cell to be presented to them.
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/orca_gui_prefs.py:3114
-#: ../src/orca/orca-setup.ui.h:130
+#: ../src/orca/orca_gui_prefs.py:3131 ../src/orca/orca-setup.ui.h:130
 msgid "Speak _cell"
 msgstr "Εκφώνηση κελιού"
 
@@ -5097,11 +5035,11 @@ msgstr "Εκφώνηση κελιού"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:3852
+#: ../src/orca/orca_gui_prefs.py:3869
 msgid "enter new key"
 msgstr "εισάγετε νέο πλήκτρο"
 
-#: ../src/orca/orca_gui_prefs.py:3882
+#: ../src/orca/orca_gui_prefs.py:3899
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "Διαγράφηκε ο συνδυασμός πλήκτρων. Πιέστε enter για να εφαρμοστεί."
 
@@ -5109,7 +5047,7 @@ msgstr "Διαγράφηκε ο συνδυασμός πλήκτρων. Πιέσ�
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:3906
+#: ../src/orca/orca_gui_prefs.py:3923
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "Το πλήκτρο που εισήχθηκε έχει ήδη δεσμευτεί στο %s"
@@ -5118,7 +5056,7 @@ msgstr "Το πλήκτρο που εισήχθηκε έχει ήδη δεσμε
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:3912
+#: ../src/orca/orca_gui_prefs.py:3929
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Πλήκτρο που καταγράφηκε: %s. Πιέστε enter για να εφαρμοστεί."
@@ -5127,7 +5065,7 @@ msgstr "Πλήκτρο που καταγράφηκε: %s. Πιέστε enter γ�
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:3951
+#: ../src/orca/orca_gui_prefs.py:3968
 #, python-format
 msgid "The new key is: %s"
 msgstr "Το νέο πλήκτρο είναι: %s"
@@ -5136,21 +5074,20 @@ msgstr "Το νέο πλήκτρο είναι: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:3959
+#: ../src/orca/orca_gui_prefs.py:3976
 msgid "The keybinding has been removed."
 msgstr "Έχει διαγραφεί ο συνδυασμός πλήκτρων."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:4011
-#: ../src/orca/orca-setup.ui.h:159
+#: ../src/orca/orca_gui_prefs.py:4028 ../src/orca/orca-setup.ui.h:159
 msgid "_Desktop"
 msgstr "_Επιφάνεια εργασίας"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:5071
+#: ../src/orca/orca_gui_prefs.py:5088
 msgid "Starting Orca Preferences."
 msgstr "Εκκίνηση προτιμήσεων Orca."
 
@@ -5160,8 +5097,7 @@ msgstr "Αναγνώστης/μεγεθυντής οθόνης Orca"
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:315
-#: ../src/orca/orca.py:1718
+#: ../src/orca/orca.py:315 ../src/orca/orca.py:1718
 msgid "Goodbye."
 msgstr "Αντίο."
 
@@ -5197,8 +5133,7 @@ msgstr "Έξοδος από την κατάσταση λίστας συντομ�
 #.
 #: ../src/orca/orca.py:665
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:220
-#: ../src/orca/speech.py:287
-#: ../src/orca/speechserver.py:218
+#: ../src/orca/speech.py:287 ../src/orca/speechserver.py:218
 msgid "off"
 msgstr "απενεργοποιημένο"
 
@@ -5209,8 +5144,7 @@ msgstr "απενεργοποιημένο"
 #.
 #: ../src/orca/orca.py:669
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:216
-#: ../src/orca/speech.py:282
-#: ../src/orca/speechserver.py:213
+#: ../src/orca/speech.py:282 ../src/orca/speechserver.py:213
 msgid "on"
 msgstr "ενεργοποιημένο"
 
@@ -5242,7 +5176,9 @@ msgstr "Φορτώθηκαν ξανά οι ρυθμίσεις χρήστη γι�
 #.
 #: ../src/orca/orca.py:1338
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
-msgstr "Χρησιμοποιήστε τα βέλη πάνω και κάτω για να περιηγηθείτε στη λίστα. Πατήστε το Escape για έξοδο."
+msgstr ""
+"Χρησιμοποιήστε τα βέλη πάνω και κάτω για να περιηγηθείτε στη λίστα. Πατήστε "
+"το Escape για έξοδο."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. In this messsage, we present the
@@ -5263,8 +5199,10 @@ msgstr[1] "Βρέθηκαν %d προεπιλεγμένες συντομεύσε
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
-msgstr[0] "Βρέθηκε %(count)d προεπιλεγμένη συντόμευση του Orca για %(application)s."
-msgstr[1] "Βρέθηκαν %(count)d προεπιλεγμένες συντομεύσεις του Orca για %(application)s."
+msgstr[0] ""
+"Βρέθηκε %(count)d προεπιλεγμένη συντόμευση του Orca για %(application)s."
+msgstr[1] ""
+"Βρέθηκαν %(count)d προεπιλεγμένες συντομεύσεις του Orca για %(application)s."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. This is the message we present
@@ -5294,8 +5232,7 @@ msgstr "Δεν βρέθηκαν συντομεύσεις του Orca για %s."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1410
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6078
+#: ../src/orca/orca.py:1410 ../src/orca/scripts/toolkits/Gecko/script.py:6078
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Αναδίπλωση προς τα κάτω."
@@ -5318,8 +5255,7 @@ msgstr "Αναδίπλωση προς τα κάτω."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1431
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6146
+#: ../src/orca/orca.py:1431 ../src/orca/scripts/toolkits/Gecko/script.py:6146
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Αναδίπλωση προς τα πάνω."
@@ -5373,7 +5309,8 @@ msgstr "Εκτύπωση των γνωστών εκτελούμενων εφαρ
 #.
 #: ../src/orca/orca.py:1830
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr "Αποστολή της εξόδου της αποσφαλμάτωσης στο debug-YYYY-MM-DD-HH:MM:SS.out"
+msgstr ""
+"Αποστολή της εξόδου της αποσφαλμάτωσης στο debug-YYYY-MM-DD-HH:MM:SS.out"
 
 #. Translators: this enables debug output for Orca and overrides
 #. the name of the debug file Orca will use for debug output if the
@@ -5508,9 +5445,10 @@ msgstr "Τα ακόλουθα ορίσματα δεν είναι έγκυρα:"
 #.
 #: ../src/orca/orca.py:2127
 msgid "The following items can be enabled or disabled:"
-msgstr "Τα ακόλουθα αντικείμενα μπορούν να ενεργοποιηθούν ή να απενεργοποιηθούν:"
+msgstr ""
+"Τα ακόλουθα αντικείμενα μπορούν να ενεργοποιηθούν ή να απενεργοποιηθούν:"
 
-#: ../src/orca/orca.py:2210
+#: ../src/orca/orca.py:2216
 msgid "Welcome to Orca."
 msgstr "Καλωσορίσατε στην Όρκα!"
 
@@ -5553,319 +5491,315 @@ msgstr ""
 "<b>Προσαρμογή επιλεγμένου\n"
 "ιδιότητες</b>"
 
-#: ../src/orca/orca-setup.ui.h:5
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
+#: ../src/orca/orca-setup.ui.h:6
+msgid "<b>Border</b>"
+msgstr "<b>Περίγραμμα</b>"
+
+#: ../src/orca/orca-setup.ui.h:7
 msgid "<b>Braille Indicator</b>"
 msgstr "<b>Ένδειξη Μπράιγ</b>"
 
-#: ../src/orca/orca-setup.ui.h:6
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
+#: ../src/orca/orca-setup.ui.h:9
+msgid "<b>Color</b>"
+msgstr "<b>Χρώμα</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
+#: ../src/orca/orca-setup.ui.h:11
+msgid "<b>Cross-hair</b>"
+msgstr "<b>Σταυρονήμα</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
+#: ../src/orca/orca-setup.ui.h:13
+msgid "<b>Cursor</b>"
+msgstr "<b>Δρομέας</b>"
+
+#: ../src/orca/orca-setup.ui.h:14
 msgid "<b>Hyperlink Indicator</b>"
 msgstr "<b>Ένδειξη συνδέσμων</b"
 
-#: ../src/orca/orca-setup.ui.h:7
+#: ../src/orca/orca-setup.ui.h:15
 msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Διάταξη πληκτρολογίου</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
-#: ../src/orca/orca-setup.ui.h:9
+#: ../src/orca/orca-setup.ui.h:17
 msgid "<b>Progress Bar Updates</b>"
 msgstr "<b>Ενημερώσεις γραμμής προόδου</b>"
 
-#: ../src/orca/orca-setup.ui.h:10
+#: ../src/orca/orca-setup.ui.h:18
 msgid "<b>Pronunciation Dictionary</b>"
 msgstr "<b>Λεξικό προφοράς</b>"
 
-#: ../src/orca/orca-setup.ui.h:11
+#: ../src/orca/orca-setup.ui.h:19
 msgid "<b>Punctuation Level</b>"
 msgstr "<b>Επίπεδο σημείων στίξης</b>"
 
-#: ../src/orca/orca-setup.ui.h:12
+#: ../src/orca/orca-setup.ui.h:20
 msgid "<b>Selection Indicator</b>"
 msgstr "<b>Ένδειξη επιλογών</b"
 
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
-#: ../src/orca/orca-setup.ui.h:14
+#: ../src/orca/orca-setup.ui.h:22
 msgid "<b>Table Rows</b>"
 msgstr "<b>Γραμμές πίνακα</b>"
 
-#: ../src/orca/orca-setup.ui.h:15
+#: ../src/orca/orca-setup.ui.h:23
 msgid "<b>Text attributes</b>"
 msgstr "<b>Ιδιότητες κειμένου</b>"
 
 #. Translators:  In the context of magnifying the contents of the screen, "tracking" refers to whether or not an object (mouse pointer, the caret, or the widget with focus) is of interest.  Objects of interest must always be displayed.  "Alignment" refers to where on the screen objects of interest should be displayed.
-#: ../src/orca/orca-setup.ui.h:17
+#: ../src/orca/orca-setup.ui.h:25
 msgid "<b>Tracking and Alignment</b>"
 msgstr "<b>Ανίχνευσης και ευθυγράμμιση</b>"
 
-#: ../src/orca/orca-setup.ui.h:18
+#: ../src/orca/orca-setup.ui.h:26
 msgid "<b>Verbosity</b>"
 msgstr "<b>Περιφραστικότητα</b>"
 
+#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
+#: ../src/orca/orca-setup.ui.h:28
+msgid "<b>Zoomer</b>"
+msgstr "<b>Μεγεθυντής</b>"
+
+#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
+#: ../src/orca/orca-setup.ui.h:30
+msgid "Advanced..."
+msgstr "Για προχωρημένους…"
+
+#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
+#: ../src/orca/orca-setup.ui.h:32
+msgid "All"
+msgstr "Όλα"
+
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/orca-setup.ui.h:19
-#: ../src/orca/rolenames.py:1127
+#: ../src/orca/orca-setup.ui.h:33 ../src/orca/rolenames.py:1127
 msgid "Application"
 msgstr "Εφαρμογή"
 
-#: ../src/orca/orca-setup.ui.h:20
+#: ../src/orca/orca-setup.ui.h:34
 msgid "Border color:"
 msgstr "Χρώμα πλαισίου:"
 
-#: ../src/orca/orca-setup.ui.h:21
+#: ../src/orca/orca-setup.ui.h:35
 msgid "Border size:"
 msgstr "Μέγεθος πλαισίου:"
 
-#: ../src/orca/orca-setup.ui.h:23
+#: ../src/orca/orca-setup.ui.h:37
 msgid "Braille"
 msgstr "Μπράιγ"
 
-#: ../src/orca/orca-setup.ui.h:27
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Brightness:"
 msgstr "Φωτεινότητα:"
 
-#: ../src/orca/orca-setup.ui.h:29
+#: ../src/orca/orca-setup.ui.h:43
 msgid "Contraction _Table:"
 msgstr "_Πίνακας συστολής:"
 
-#: ../src/orca/orca-setup.ui.h:30
+#: ../src/orca/orca-setup.ui.h:44
 msgid "Contrast:"
 msgstr "Αντίθεση:"
 
-#: ../src/orca/orca-setup.ui.h:31
+#: ../src/orca/orca-setup.ui.h:45
 msgid "Cross-hair color:"
 msgstr "Χρώμα στοχάστρου:"
 
-#: ../src/orca/orca-setup.ui.h:32
+#: ../src/orca/orca-setup.ui.h:46
 msgid "Cross-hair si_ze:"
 msgstr "_Μέγεθος στοχάστρου:"
 
 # #-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#
 #
-#: ../src/orca/orca-setup.ui.h:33
+#: ../src/orca/orca-setup.ui.h:47
 msgid "Cursor color:"
 msgstr "Χρώμα δρομέα:"
 
-#: ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca-setup.ui.h:48
 msgid "Cursor size:"
 msgstr "Μέγεθος δρομέα:"
 
-#: ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca-setup.ui.h:50
 msgid "Custom siz_e"
 msgstr "Προσαρμοσμένο μέγε_θος"
 
 #. Translators: Orca can present the current date to the user, here they can choose how the date should be presented to them.
-#: ../src/orca/orca-setup.ui.h:38
+#: ../src/orca/orca-setup.ui.h:52
 msgid "Dat_e format:"
 msgstr "Μορφή η_μερομηνίας"
 
 # #-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#
-#: ../src/orca/orca-setup.ui.h:39
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Default"
 msgstr "Προεπιλεγμένο"
 
-#: ../src/orca/orca-setup.ui.h:40
+#: ../src/orca/orca-setup.ui.h:54
 msgid "Disable _end of line symbol"
 msgstr "Απενεργοποίηση του συμβόλου _τέλους γραμμής"
 
-#: ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Disable gksu _keyboard grab"
 msgstr "Απενεργοποίηση διαβάθμισης gksu του _πληκτρολογίου"
 
 #. Translators: When a user chooses a tracking alignment of "push", Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The "edge margin" allows the user to specify a margin so that objects are not displayed too close to the edge.
-#: ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca-setup.ui.h:60
 msgid "Edge mar_gin:"
 msgstr "Περι_θώριο άκρων:"
 
-#: ../src/orca/orca-setup.ui.h:47
+#: ../src/orca/orca-setup.ui.h:61
 msgid "Enable Braille _monitor"
 msgstr "Ενεργοποίηση _οθόνης Μπράιγ"
 
-#: ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/orca-setup.ui.h:62
 msgid "Enable Braille _support"
 msgstr "Ενεργοποίηση _υποστήριξης Μπράιγ"
 
-#: ../src/orca/orca-setup.ui.h:49
+#: ../src/orca/orca-setup.ui.h:63
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "_Ενεργοποίηση αλφαριθμητικών και πλήκτρων σημείων στίξης"
 
-#: ../src/orca/orca-setup.ui.h:50
+#: ../src/orca/orca-setup.ui.h:64
 msgid "Enable _function keys"
 msgstr "Ενεργοποίηση πλήκτρων _συναρτήσεων"
 
-#: ../src/orca/orca-setup.ui.h:51
+#: ../src/orca/orca-setup.ui.h:65
 msgid "Enable _key echo"
 msgstr "Ενεργοποίηση πλή_κτρου echo"
 
-#: ../src/orca/orca-setup.ui.h:52
+#: ../src/orca/orca-setup.ui.h:66
 msgid "Enable _magnifier"
 msgstr "Ενεργοποίηση με_γεθυντή"
 
-#: ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca-setup.ui.h:67
 msgid "Enable _modifier keys"
 msgstr "Ενεργοποίηση π_λήκτρων μεγεθυντή"
 
-#: ../src/orca/orca-setup.ui.h:54
+#: ../src/orca/orca-setup.ui.h:68
 msgid "Enable _navigation keys"
 msgstr "Ενεργοποίηση πλήκτρων _πλοήγησης"
 
-#: ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/orca-setup.ui.h:69
 msgid "Enable ac_tion keys"
 msgstr "Ενεργοποίηση πλήκτρων ε_νέργειας"
 
-#: ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/orca-setup.ui.h:70
 msgid "Enable bor_der"
 msgstr "Ενεργοποίηση πλαι_σίου"
 
-#: ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca-setup.ui.h:71
 msgid "Enable c_ursor"
 msgstr "Ενεργοποίηση _δρομέα"
 
-#: ../src/orca/orca-setup.ui.h:58
+#: ../src/orca/orca-setup.ui.h:72
 msgid "Enable cross-h_air"
 msgstr "Ενεργοποίηση σ_τοχάστρου"
 
-#: ../src/orca/orca-setup.ui.h:59
+#: ../src/orca/orca-setup.ui.h:73
 msgid "Enable cross-hair cl_ip"
 msgstr "Ενεργοποίηση τ_μήματος στοχάστρου:"
 
-#: ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca-setup.ui.h:74
 msgid "Enable echo by _sentence"
 msgstr "Ενεργοποίηση echo ανά π_ρόταση"
 
-#: ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca-setup.ui.h:75
 msgid "Enable echo by _word"
 msgstr "Ενεργοποίηση echo ανά λέ_ξη"
 
-#: ../src/orca/orca-setup.ui.h:64
+#: ../src/orca/orca-setup.ui.h:78
 msgid "Enable lockin_g keys"
 msgstr "Ενεργοποίηση πλήκτρων κλ_ειδώματος"
 
-#: ../src/orca/orca-setup.ui.h:68
+#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
+#: ../src/orca/orca-setup.ui.h:82
+msgid "Enable_d"
+msgstr "Ε_νεργοποιημένο"
+
+#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
+#: ../src/orca/orca-setup.ui.h:84
+msgid "Frequency (secs):"
+msgstr "Συχνότητα (sec):"
+
+#: ../src/orca/orca-setup.ui.h:86
 msgid "General"
 msgstr "Γενικά"
 
-#: ../src/orca/orca-setup.ui.h:69
+#: ../src/orca/orca-setup.ui.h:87
 msgid "Hide s_ystem pointer"
 msgstr "Απόκρυψη του δρομέα του σ_υστήματος"
 
-#: ../src/orca/orca-setup.ui.h:70
+#: ../src/orca/orca-setup.ui.h:88
 msgid "Hyperlink"
 msgstr "Σύνδεσμος"
 
-#: ../src/orca/orca-setup.ui.h:71
+#: ../src/orca/orca-setup.ui.h:89
 msgid "In_vert colors"
 msgstr "Αν_τιστροφή χρωμάτων"
 
-#: ../src/orca/orca-setup.ui.h:72
+#: ../src/orca/orca-setup.ui.h:90
 msgid "Key Bindings"
 msgstr "Συνδυασμοί πλήκτρων"
 
-#: ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/orca-setup.ui.h:91
 msgid "Key Echo"
 msgstr "Πλήκτρο echo"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
-#: ../src/orca/orca-setup.ui.h:78
-msgctxt "Magnification"
-msgid "<b>Border</b>"
-msgstr "<b>Περίγραμμα</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
-#: ../src/orca/orca-setup.ui.h:80
-msgctxt "Magnification"
-msgid "<b>Color</b>"
-msgstr "<b>Χρώμα</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
-#: ../src/orca/orca-setup.ui.h:82
-msgctxt "Magnification"
-msgid "<b>Cross-hair</b>"
-msgstr "<b>Ρυθμίσεις σταυρονήματος</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
-#: ../src/orca/orca-setup.ui.h:84
-msgctxt "Magnification"
-msgid "<b>Cursor</b>"
-msgstr "<b>Δρομέας</b>"
-
-#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
-#: ../src/orca/orca-setup.ui.h:86
-msgctxt "Magnification"
-msgid "<b>Zoomer</b>"
-msgstr "<b>Μεγεθυντής</b>"
-
-#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
-#: ../src/orca/orca-setup.ui.h:88
-msgctxt "Magnification"
-msgid "Advanced..."
-msgstr "Για προχωρημένους…"
-
-#: ../src/orca/orca-setup.ui.h:89
+#: ../src/orca/orca-setup.ui.h:95
 msgid "Magnifier"
 msgstr "Μεγεθυντής"
 
-#: ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca-setup.ui.h:96
 msgid "Mouse poi_nter:"
 msgstr "Κατα_γραφέας δρομέα:"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Move _down one"
 msgstr "Μετακίνηση μια γραμμή _κάτω"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca-setup.ui.h:100
 msgid "Move _up one"
 msgstr "Μετακίνηση μια γραμμή _πάνω"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Move to _bottom"
 msgstr "Μετακίνηση στο _τέλος"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:104
 msgid "Move to _top"
 msgstr "Μετακίνηση στην κο_ρυφή"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: ../src/orca/orca-setup.ui.h:101
+#: ../src/orca/orca-setup.ui.h:107
 msgid "Only speak displayed text"
 msgstr "Εκφώνηση μόνο του εμφανιζόμενου κειμένου"
 
-#: ../src/orca/orca-setup.ui.h:102
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Orca Preferences"
 msgstr "Προτιμήσεις Orca"
 
-#: ../src/orca/orca-setup.ui.h:103
+#: ../src/orca/orca-setup.ui.h:109
 msgid "Orca _Modifier Key(s):"
 msgstr "Πλήκτρα _μεγεθυντή του Orca:"
 
-#: ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca-setup.ui.h:110
 msgid "Pi_tch:"
 msgstr "_Βήμα:"
 
 #. Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.
-#: ../src/orca/orca-setup.ui.h:106
+#: ../src/orca/orca-setup.ui.h:112
 msgid "Pointer follows focus"
 msgstr "Ο καταγραφέας δρομέα ακολουθεί την εστίαση"
 
 #. Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the "zoomer," which is the magnified view of the screen.  If the "pointer follows zoomer" setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.
-#: ../src/orca/orca-setup.ui.h:108
+#: ../src/orca/orca-setup.ui.h:114
 msgid "Pointer follows zoomer"
 msgstr "Ο καταγραφέας δρομέα ακολουθεί την εστίαση με ζουμ"
-
-#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:112
-msgctxt "ProgressBar"
-msgid "Frequency (secs):"
-msgstr "Συχνότητα (sec):"
-
-#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:114
-msgctxt "ProgressBarUpdates"
-msgid "Enable_d"
-msgstr "Ε_νεργοποιημένο"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Pronunciation"
@@ -5918,7 +5852,9 @@ msgstr "Εκφώνηση θέσης _θυγατρικού"
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: ../src/orca/orca-setup.ui.h:137
 msgid "Speak multicase strings as wor_ds"
-msgstr "Να εκφωνούνται ως _λέξεις τα αλφαριθμητικά που περιέχουν πεζά και κεφαλαία μαζί"
+msgstr ""
+"Να εκφωνούνται ως _λέξεις τα αλφαριθμητικά που περιέχουν πεζά και κεφαλαία "
+"μαζί"
 
 #: ../src/orca/orca-setup.ui.h:138
 msgid "Speak object under mo_use"
@@ -5975,8 +5911,7 @@ msgstr "_Τόμος:"
 
 #. Translators: long braille for the rolename of a window.
 #.
-#: ../src/orca/orca-setup.ui.h:153
-#: ../src/orca/rolenames.py:1079
+#: ../src/orca/orca-setup.ui.h:153 ../src/orca/rolenames.py:1079
 msgid "Window"
 msgstr "Παράθυρο"
 
@@ -6089,8 +6024,16 @@ msgstr "pixel"
 #. "Additions in German, Danish and Norwegian" and "Variants".
 #.
 #: ../src/orca/phonnames.py:53
-msgid "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
-msgstr "α : άλφα, β : βύρων, γ : γάτα, δ : δόξα, ε : ερμής, ζ : ζεύς, η : ηρώ, θ : θεά, ι : ίσκιος, κ : κενό, λ : λάμα, μ : μέλι, ν : ναός, ξ : ξέρξης, ο : οσμή, π : πέτρος, ρ : ρήγας, σ : σοφός, τ : τίγρης, υ : ύμνος, φ : φωφώ, χ : χαρά, ψ : ψυχή, ω : ωμέγα"
+msgid ""
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
+"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
+"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
+"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+msgstr ""
+"α : άλφα, β : βύρων, γ : γάτα, δ : δόξα, ε : ερμής, ζ : ζεύς, η : ηρώ, θ : "
+"θεά, ι : ίσκιος, κ : κενό, λ : λάμα, μ : μέλι, ν : ναός, ξ : ξέρξης, ο : "
+"οσμή, π : πέτρος, ρ : ρήγας, σ : σοφός, τ : τίγρης, υ : ύμνος, φ : φωφώ, χ : "
+"χαρά, ψ : ψυχή, ω : ωμέγα"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -6264,8 +6207,7 @@ msgstr "λεζάντα"
 #.
 #. Translators: short braille for the rolename of a check menu item.
 #.
-#: ../src/orca/rolenames.py:276
-#: ../src/orca/rolenames.py:288
+#: ../src/orca/rolenames.py:276 ../src/orca/rolenames.py:288
 msgid "chk"
 msgstr "κτλγχ"
 
@@ -6315,8 +6257,7 @@ msgstr "επιλογέας χρώματος"
 #.
 #. Translators: short braille for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:312
-#: ../src/orca/rolenames.py:930
+#: ../src/orca/rolenames.py:312 ../src/orca/rolenames.py:930
 msgid "colhdr"
 msgstr "κφλστλ"
 
@@ -6324,8 +6265,7 @@ msgstr "κφλστλ"
 #.
 #. Translators: long braille for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:315
-#: ../src/orca/rolenames.py:933
+#: ../src/orca/rolenames.py:315 ../src/orca/rolenames.py:933
 msgid "ColumnHeader"
 msgstr "Κεφαλίδα στήλης"
 
@@ -6333,8 +6273,7 @@ msgstr "Κεφαλίδα στήλης"
 #.
 #. Translators: spoken words for the rolename of a table column header.
 #.
-#: ../src/orca/rolenames.py:318
-#: ../src/orca/rolenames.py:936
+#: ../src/orca/rolenames.py:318 ../src/orca/rolenames.py:936
 msgid "column header"
 msgstr "κεφαλίδα στήλης"
 
@@ -6378,8 +6317,7 @@ msgstr "επεξεργαστής ημερομηνίας"
 #.
 #. Translators: short braille for the rolename of a icon.
 #.
-#: ../src/orca/rolenames.py:348
-#: ../src/orca/rolenames.py:534
+#: ../src/orca/rolenames.py:348 ../src/orca/rolenames.py:534
 msgid "icn"
 msgstr "εικ"
 
@@ -6399,8 +6337,7 @@ msgstr "εικονίδιο επιφάνειας εργασίας"
 #.
 #. Translators: short braille for the rolename of a frame.
 #.
-#: ../src/orca/rolenames.py:360
-#: ../src/orca/rolenames.py:486
+#: ../src/orca/rolenames.py:360 ../src/orca/rolenames.py:486
 msgid "frm"
 msgstr "πλσ"
 
@@ -6478,8 +6415,7 @@ msgstr "ταμπλώ καταλόγου"
 #.
 #. Translators: short braille for the rolename of an html container.
 #.
-#: ../src/orca/rolenames.py:411
-#: ../src/orca/rolenames.py:522
+#: ../src/orca/rolenames.py:411 ../src/orca/rolenames.py:522
 msgid "html"
 msgstr "html"
 
@@ -7041,8 +6977,7 @@ msgstr "ταμπλώ root"
 #.
 #. Translators: short braille for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:798
-#: ../src/orca/rolenames.py:942
+#: ../src/orca/rolenames.py:798 ../src/orca/rolenames.py:942
 msgid "rwhdr"
 msgstr "κφλδγρμ"
 
@@ -7050,8 +6985,7 @@ msgstr "κφλδγρμ"
 #.
 #. Translators: long braille for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:801
-#: ../src/orca/rolenames.py:945
+#: ../src/orca/rolenames.py:801 ../src/orca/rolenames.py:945
 msgid "RowHeader"
 msgstr "Κεφαλίδα γραμμής"
 
@@ -7059,8 +6993,7 @@ msgstr "Κεφαλίδα γραμμής"
 #.
 #. Translators: spoken words for the rolename of a table row header.
 #.
-#: ../src/orca/rolenames.py:804
-#: ../src/orca/rolenames.py:948
+#: ../src/orca/rolenames.py:804 ../src/orca/rolenames.py:948
 msgid "row header"
 msgstr "κεφαλίδα γραμμής"
 
@@ -7683,7 +7616,7 @@ msgstr "γραμμή %(row)d, στήλη %(column)d"
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/scripts/apps/acroread/script.py:316
-#: ../src/orca/speech_generator.py:753
+#: ../src/orca/speech_generator.py:761
 #, python-format
 msgid "column %d"
 msgstr "στήλη %d"
@@ -7737,7 +7670,9 @@ msgstr "γεγονός ημερολογίου"
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:168
 msgid "Toggle whether we present new mail if we are not the active script."
-msgstr "Εναλλαγή αν θα παρουσιάσουμε νέο mail ενώ δεν είμαστε η ενεργή δέσμη ενεργειών."
+msgstr ""
+"Εναλλαγή αν θα παρουσιάσουμε νέο mail ενώ δεν είμαστε η ενεργή δέσμη "
+"ενεργειών."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -7900,7 +7835,8 @@ msgstr "Η φράση βρέθηκε."
 
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
-msgstr "Ανάγνωση των τελευταίων ν μηνυμάτων στην περιοχή εισερχομένων μηνυμάτων."
+msgstr ""
+"Ανάγνωση των τελευταίων ν μηνυμάτων στην περιοχή εισερχομένων μηνυμάτων."
 
 #: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
 msgid "Searching."
@@ -7966,7 +7902,7 @@ msgstr "Γραφείο"
 #. pane or table.
 #.
 #: ../src/orca/scripts/apps/nautilus/script.py:138
-#: ../src/orca/speech_generator.py:1342
+#: ../src/orca/speech_generator.py:1350
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -7995,7 +7931,8 @@ msgstr "Ειδοποίηση"
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:116
 msgid "Notify me when errors have been logged."
-msgstr "Ειδοποίησε με όταν εισάγονται σφάλματα στο αρχείο καταγραφής σφαλμάτων."
+msgstr ""
+"Ειδοποίησε με όταν εισάγονται σφάλματα στο αρχείο καταγραφής σφαλμάτων."
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
@@ -8021,7 +7958,9 @@ msgstr "Έγινε επιτυχής φόρτωση."
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:257
 msgid "An error occurred. View the error log for details."
-msgstr "Εμφανίστηκε σφάλμα. Δείτε το αρχείο καταγραφής σφαλμάτων για τις λεπτομέρειες."
+msgstr ""
+"Εμφανίστηκε σφάλμα. Δείτε το αρχείο καταγραφής σφαλμάτων για τις "
+"λεπτομέρειες."
 
 #. Translators: This is the tutorial string associated with a
 #. specific search field in the Packagemanager application.
@@ -8054,7 +7993,9 @@ msgstr "Παρουσιάζει τα περιεχόμενα της γραμμής
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:242
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr "Ρύθμιση της γραμμής ως δυναμικές επικεφαλίδες στηλών ενώ αναπαράγονται κελιά υπολογισμών."
+msgstr ""
+"Ρύθμιση της γραμμής ως δυναμικές επικεφαλίδες στηλών ενώ αναπαράγονται κελιά "
+"υπολογισμών."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
@@ -8067,8 +8008,11 @@ msgstr "Καθαρίζει τις δυναμικές επικεφαλίδες σ
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:259
-msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
-msgstr "Ρύθμιση της στήλης για χρήση της ως δυναμικές επικεφαλίδες γραμμών ενώ αναπαράγονται κελιά υπολογισμών."
+msgid ""
+"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgstr ""
+"Ρύθμιση της στήλης για χρήση της ως δυναμικές επικεφαλίδες γραμμών ενώ "
+"αναπαράγονται κελιά υπολογισμών."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
@@ -8188,7 +8132,9 @@ msgstr "Διαθέσιμα πεδία"
 
 #: ../src/orca/scripts/apps/soffice/script.py:1383
 msgid "Note that the Scroll Down button has to be pressed numerous times."
-msgstr "Σημειώστε ότι το πλήκτρο scroll down πρέπει να πιέζεται σε αριθμητικές χρονικές στιγμές."
+msgstr ""
+"Σημειώστε ότι το πλήκτρο scroll down πρέπει να πιέζεται σε αριθμητικές "
+"χρονικές στιγμές."
 
 #: ../src/orca/scripts/apps/soffice/script.py:1399
 msgid "License Agreement Accept button now has focus."
@@ -8413,7 +8359,9 @@ msgstr "Προχωρημένη ρύθμιση ευγενικότητας ενε�
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:488
 msgid "Set default live region politeness level to off."
-msgstr "Ρύθμιση προκαθορισμένου επιπέδου ευγενικότητας ενεργής περιοχής ως απενεργοποιημένο."
+msgstr ""
+"Ρύθμιση προκαθορισμένου επιπέδου ευγενικότητας ενεργής περιοχής ως "
+"απενεργοποιημένο."
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
@@ -8452,7 +8400,8 @@ msgstr "Μεταβαίνει στο επόμενο αντικείμενο."
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:532
 msgid "Switches between Gecko native and Orca caret navigation."
-msgstr "Κάνει εναλλαγή μεταξύ του γονικού Gecko και της πλοήγησης δρομέα με το Orca."
+msgstr ""
+"Κάνει εναλλαγή μεταξύ του γονικού Gecko και της πλοήγησης δρομέα με το Orca."
 
 #. Translators: hovering the mouse over certain objects
 #. on a web page causes a new object to appear such as
@@ -8464,7 +8413,9 @@ msgstr "Κάνει εναλλαγή μεταξύ του γονικού Gecko κ�
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:588
 msgid "Moves focus into and away from the current mouse over."
-msgstr "Εστίαση στο αναδυόμενο αντικείμενο ή επιστροφή εστίασης στο αρχικό αντικείμενο."
+msgstr ""
+"Εστίαση στο αναδυόμενο αντικείμενο ή επιστροφή εστίασης στο αρχικό "
+"αντικείμενο."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -8506,7 +8457,8 @@ msgstr "_Απόδοση εστίασης πάνω σε αντικείμενα κ
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:737
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr "_Τοποθέτηση του δρομέα στην αρχή της γραμμής ενώ γίνεται κατακόρυφη πλοήγηση"
+msgstr ""
+"_Τοποθέτηση του δρομέα στην αρχή της γραμμής ενώ γίνεται κατακόρυφη πλοήγηση"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
@@ -8838,8 +8790,7 @@ msgstr "gaim"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1374
-#: ../src/orca/settings.py:1451
+#: ../src/orca/settings.py:1374 ../src/orca/settings.py:1451
 msgid "required"
 msgstr "υποχρεωτικό"
 
@@ -8854,8 +8805,7 @@ msgstr "μόνο ανάγνωση"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:1384
-#: ../src/orca/settings.py:1462
+#: ../src/orca/settings.py:1384 ../src/orca/settings.py:1462
 msgid "grayed"
 msgstr "σε γκρι"
 
@@ -8863,13 +8813,11 @@ msgstr "σε γκρι"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:1408
-#: ../src/orca/settings.py:1474
+#: ../src/orca/settings.py:1408 ../src/orca/settings.py:1474
 msgid "collapsed"
 msgstr "συμπτυγμένο"
 
-#: ../src/orca/settings.py:1408
-#: ../src/orca/settings.py:1474
+#: ../src/orca/settings.py:1408 ../src/orca/settings.py:1474
 msgid "expanded"
 msgstr "αναπτυγμένο"
 
@@ -8899,8 +8847,7 @@ msgstr "επίπεδο δένδρου %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1426
-#: ../src/orca/structural_navigation.py:2971
+#: ../src/orca/settings.py:1426 ../src/orca/structural_navigation.py:2971
 #, python-format
 msgid "Nesting level %d"
 msgstr "εμφώλευση  %d επιπέδου"
@@ -8982,14 +8929,14 @@ msgstr "Speech Dispatcher"
 #. and the second item the name of the file being linked
 #. to.
 #.
-#: ../src/orca/speech_generator.py:417
+#: ../src/orca/speech_generator.py:425
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "Σύνδεσμος %(uri)s προς το %(file)s"
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/speech_generator.py:423
+#: ../src/orca/speech_generator.py:431
 #, python-format
 msgid "%s link"
 msgstr "σύνδεσμος %s"
@@ -8997,7 +8944,7 @@ msgstr "σύνδεσμος %s"
 #. Translators: this is an indication that a given
 #. link points to an object that is on the same page.
 #.
-#: ../src/orca/speech_generator.py:459
+#: ../src/orca/speech_generator.py:467
 msgid "same page"
 msgstr "ίδια σελίδα"
 
@@ -9009,8 +8956,7 @@ msgstr "ίδια σελίδα"
 #. link points to an object that is at the same site
 #. (but not on the same page) as the link.
 #.
-#: ../src/orca/speech_generator.py:465
-#: ../src/orca/speech_generator.py:478
+#: ../src/orca/speech_generator.py:473 ../src/orca/speech_generator.py:486
 msgid "same site"
 msgstr "ίδια ιστοσελίδα"
 
@@ -9018,13 +8964,13 @@ msgstr "ίδια ιστοσελίδα"
 #. link points to an object that is at a different
 #. site than that of the link.
 #.
-#: ../src/orca/speech_generator.py:484
+#: ../src/orca/speech_generator.py:492
 msgid "different site"
 msgstr "διαφορετική ιστοσελίδα"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/speech_generator.py:514
+#: ../src/orca/speech_generator.py:522
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -9033,14 +8979,14 @@ msgstr[1] "%d bytes"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/speech_generator.py:518
+#: ../src/orca/speech_generator.py:526
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobytes"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/speech_generator.py:522
+#: ../src/orca/speech_generator.py:530
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabytes"
@@ -9048,28 +8994,28 @@ msgstr "%.2f megabytes"
 #. Translators: this is in reference to a table cell being
 #. selected or not.
 #.
-#: ../src/orca/speech_generator.py:724
+#: ../src/orca/speech_generator.py:732
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "αποεπιλεγμένο"
 
 #. Translators: this is in references to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:782
+#: ../src/orca/speech_generator.py:790
 #, python-format
 msgid "row %d"
 msgstr "γραμμή %d"
 
 #. Translators: this is in references to a column in a
 #. table.
-#: ../src/orca/speech_generator.py:811
+#: ../src/orca/speech_generator.py:819
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "στήλη %(index)d από %(total)d"
 
 #. Translators: this is in reference to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:816
+#: ../src/orca/speech_generator.py:824
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "γραμμή %(index)d από %(total)d"
@@ -9077,14 +9023,14 @@ msgstr "γραμμή %(index)d από %(total)d"
 #. Translators: This is to indicate to the user that
 #. he/she is in the last cell of a table in a document.
 #.
-#: ../src/orca/speech_generator.py:851
+#: ../src/orca/speech_generator.py:859
 msgid "End of table"
 msgstr "Τέλος πίνακα"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1192
+#: ../src/orca/speech_generator.py:1200
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -9094,7 +9040,7 @@ msgstr[1] "διαστήματα %d"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1203
+#: ../src/orca/speech_generator.py:1211
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -9103,7 +9049,7 @@ msgstr[1] "στηλοθέτες %d"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/speech_generator.py:1271
+#: ../src/orca/speech_generator.py:1279
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -9113,8 +9059,7 @@ msgstr[1] "%d τοις εκατό"
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/speech_generator.py:1370
-#: ../src/orca/speech_generator.py:1391
+#: ../src/orca/speech_generator.py:1378 ../src/orca/speech_generator.py:1399
 msgid "0 items"
 msgstr "0 αντικείμενα λίστας"
 
@@ -9122,7 +9067,7 @@ msgstr "0 αντικείμενα λίστας"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/speech_generator.py:1426
+#: ../src/orca/speech_generator.py:1434
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -9132,8 +9077,7 @@ msgstr[1] "%(index)d από %(total)d αντικείμενα έχουν επιλ
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1479
-#: ../src/orca/speech_generator.py:1768
+#: ../src/orca/speech_generator.py:1487 ../src/orca/speech_generator.py:1776
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -9143,7 +9087,7 @@ msgstr[1] "%d μη εστιασμένοι διάλογοι"
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1561
+#: ../src/orca/speech_generator.py:1569
 msgid "Icon panel"
 msgstr "Πίνακας εικονιδίων"
 
@@ -9151,7 +9095,7 @@ msgstr "Πίνακας εικονιδίων"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1715
+#: ../src/orca/speech_generator.py:1723
 #, python-format
 msgid "Default button is %s"
 msgstr "Το προκαθορισμένο κουμπί είναι το %s"
@@ -10815,7 +10759,9 @@ msgstr "Πατήστε διάστημα για εναλλαγή."
 #. with a combobox.
 #: ../src/orca/tutorialgenerator.py:185
 msgid "Press space to expand, and use up and down to select an item."
-msgstr "Πατήστε διάστημα για να εμφανίσετε τις επιλογές, και τα βέλη πάνω και κάτω για να επιλέξετε."
+msgstr ""
+"Πατήστε διάστημα για να εμφανίσετε τις επιλογές, και τα βέλη πάνω και κάτω "
+"για να επιλέξετε."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
@@ -10827,7 +10773,9 @@ msgstr "Πατήστε alt+f6 για να εστιάσετε στα θυγατρ
 #. layered pane.
 #: ../src/orca/tutorialgenerator.py:277
 msgid "To move to items, use either the arrow keys or type ahead searching."
-msgstr "Για να μετακινήσετε αντικείμενα, χρησιμοποιήστε τα βέλη, ή ξεκινήστε να πληκτρολογείτε για να γίνει αναζήτηση."
+msgstr ""
+"Για να μετακινήσετε αντικείμενα, χρησιμοποιήστε τα βέλη, ή ξεκινήστε να "
+"πληκτρολογείτε για να γίνει αναζήτηση."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
@@ -10844,8 +10792,7 @@ msgstr "Χρησιμοποιήστε τα βέλη πάνω και κάτω γι
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:347
-#: ../src/orca/tutorialgenerator.py:497
+#: ../src/orca/tutorialgenerator.py:347 ../src/orca/tutorialgenerator.py:497
 msgid "To collapse, press shift plus left."
 msgstr "Για σύμπτυξη, πατήστε shift και αριστερά."
 
@@ -10853,8 +10800,7 @@ msgstr "Για σύμπτυξη, πατήστε shift και αριστερά."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:353
-#: ../src/orca/tutorialgenerator.py:503
+#: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:503
 msgid "To expand, press shift plus right."
 msgstr "Για ανάπτυξη, πατήστε shift και δεξιά."
 
@@ -10869,7 +10815,8 @@ msgstr "Πληκτρολογήστε κείμενο"
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:413
 msgid "Use left and right to view other tabs."
-msgstr "Χρησιμοποιήστε το αριστερά και δεξιά για να προβάλετε τις άλλες ταμπέλες."
+msgstr ""
+"Χρησιμοποιήστε το αριστερά και δεξιά για να προβάλετε τις άλλες ταμπέλες."
 
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:438
@@ -10879,8 +10826,11 @@ msgstr "Πατήστε διάστημα για να το ενεργοποιήσ�
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:466
-msgid "Use up or down arrow to select value. Or type in the desired numerical value."
-msgstr "Χρησιμοποιήστε τα βέλη πάνω και κάτω για να επιλέξετε τιμή. Εναλλακτικά, πληκτρολογήστε την επιθυμητή αριθμητική τιμή."
+msgid ""
+"Use up or down arrow to select value. Or type in the desired numerical value."
+msgstr ""
+"Χρησιμοποιήστε τα βέλη πάνω και κάτω για να επιλέξετε τιμή. Εναλλακτικά, "
+"πληκτρολογήστε την επιθυμητή αριθμητική τιμή."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: ../src/orca/tutorialgenerator.py:654
@@ -10889,8 +10839,12 @@ msgstr "Για αλλαγή, χρησιμοποιήστε τα βέλη."
 
 #. Translators: this is a tip for the user, how to navigate menues.
 #: ../src/orca/tutorialgenerator.py:679
-msgid "To navigate, press left or right arrow. To move through items press up or down arrow."
-msgstr "Χρησιμοποιήστε το δεξί ή το αριστερό βέλος για περιήγηση. Για μετακίνηση από το ένα αντικείμενο στο επόμενο, χρησιμοποιήστε τα βέλη πάνω και κάτω."
+msgid ""
+"To navigate, press left or right arrow. To move through items press up or "
+"down arrow."
+msgstr ""
+"Χρησιμοποιήστε το δεξί ή το αριστερό βέλος για περιήγηση. Για μετακίνηση από "
+"το ένα αντικείμενο στο επόμενο, χρησιμοποιήστε τα βέλη πάνω και κάτω."
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
@@ -10901,8 +10855,18 @@ msgstr "Για να εισέλθετε στο υπομενού, πατήστε �
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
 #: ../src/orca/tutorialgenerator.py:716
-msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
-msgstr "Πιέστε το αριστερό βέλος για μείωση. Πιέστε το δεξί βέλος για αύξηση. Για το ελάχιστο πατήστε home και για το μέγιστο end."
+msgid ""
+"To decrease press left arrow, to increase press right arrow. To go to "
+"minimum press home, and for maximum press end."
+msgstr ""
+"Πιέστε το αριστερό βέλος για μείωση. Πιέστε το δεξί βέλος για αύξηση. Για το "
+"ελάχιστο πατήστε home και για το μέγιστο end."
+
+#~ msgid ""
+#~ "Enable notification message list mode. Press Escape to exit or h for help"
+#~ msgstr ""
+#~ "Ενεργοποιεί την κατάσταση λίστας μηνυμάτων ειδοποίησης. Πιέστε Escape για "
+#~ "να εξέλθετε ή h για βοήθεια."
 
 #~ msgid "Speak current _cell"
 #~ msgstr "Εκφώνηση τρέχοντος _κελιού"
