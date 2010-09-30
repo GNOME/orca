@@ -13,8 +13,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-30 15:36+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&component=i18n\n"
+"POT-Creation-Date: 2010-09-30 12:36+0000\n"
 "PO-Revision-Date: 2010-09-05 18:02+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gnome.org>\n"
 "Language-Team: Greek <team@gnome.gr>\n"
@@ -3919,7 +3920,7 @@ msgstr "Οι βελτιώσεις του ποντικιού ενεργοποιή
 #.
 #: ../src/orca/mag.py:1747 ../src/orca/orca_gui_prefs.py:1984
 #: ../src/orca/orca_gui_prefs.py:2010 ../src/orca/orca_gui_prefs.py:2013
-#: ../src/orca/orca-setup.ui.h:85
+#: ../src/orca/orca-setup.ui.h:67
 msgid "Full Screen"
 msgstr "Πλήρης οθόνη"
 
@@ -3940,14 +3941,14 @@ msgstr "Πάνω μισό"
 #. Translators: magnification will use the bottom half of the screen.
 #.
 #: ../src/orca/mag.py:1760 ../src/orca/orca_gui_prefs.py:1992
-#: ../src/orca/orca_gui_prefs.py:2015 ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca_gui_prefs.py:2015 ../src/orca/orca-setup.ui.h:22
 msgid "Bottom Half"
 msgstr "Κάτω μισό"
 
 #. Translators: magnification will use the left half of the screen.
 #.
 #: ../src/orca/mag.py:1764 ../src/orca/orca_gui_prefs.py:1996
-#: ../src/orca/orca_gui_prefs.py:2016 ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca_gui_prefs.py:2016 ../src/orca/orca-setup.ui.h:74
 msgid "Left Half"
 msgstr "Αριστερό μισό"
 
@@ -3962,7 +3963,7 @@ msgstr "Δεξιό μισό"
 #. to use for magnification.
 #.
 #: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:2005
-#: ../src/orca/orca_gui_prefs.py:2018 ../src/orca/orca-setup.ui.h:49
+#: ../src/orca/orca_gui_prefs.py:2018 ../src/orca/orca-setup.ui.h:35
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
 
@@ -4176,7 +4177,7 @@ msgstr "Αρνητική μετατόπιση της απόχρωσης "
 #: ../src/orca/orca_gui_prefs.py:4493 ../src/orca/orca_gui_prefs.py:4516
 #: ../src/orca/orca_gui_prefs.py:4689 ../src/orca/orca_gui_prefs.py:4756
 #: ../src/orca/orca_gui_prefs.py:4759 ../src/orca/orca_gui_prefs.py:4787
-#: ../src/orca/orca-setup.ui.h:105
+#: ../src/orca/orca-setup.ui.h:99
 msgid "None"
 msgstr "Κανένα"
 
@@ -4669,7 +4670,7 @@ msgstr ""
 #. the object of interest in the center of the magnified window.
 #.
 #: ../src/orca/orca_gui_prefs.py:102 ../src/orca/orca_gui_prefs.py:2061
-#: ../src/orca/orca_gui_prefs.py:2081 ../src/orca/orca-setup.ui.h:42
+#: ../src/orca/orca_gui_prefs.py:2081 ../src/orca/orca-setup.ui.h:28
 msgid "Centered"
 msgstr "Κεντραρισμένη"
 
@@ -4864,7 +4865,7 @@ msgstr "Αλφαριθμητικό αντικατάστασης"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1600 ../src/orca/orca-setup.ui.h:39
+#: ../src/orca/orca_gui_prefs.py:1600 ../src/orca/orca-setup.ui.h:25
 msgid "Break speech into ch_unks between pauses"
 msgstr "Χρήση παύσεων για κατάτμηση της ομιλίας σε _τμήματα"
 
@@ -4873,7 +4874,7 @@ msgstr "Χρήση παύσεων για κατάτμηση της ομιλία�
 #. line.
 #.
 #: ../src/orca/orca_gui_prefs.py:1612 ../src/orca/orca_gui_prefs.py:3015
-#: ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca-setup.ui.h:75
 msgid "Line"
 msgstr "Γραμμή"
 
@@ -4891,7 +4892,9 @@ msgstr "Πρόταση"
 #. will present progress bar updates regardless of what application
 #. and window they happen to be in.
 #.
+#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
 #: ../src/orca/orca_gui_prefs.py:1711 ../src/orca/orca_gui_prefs.py:2980
+#: ../src/orca/orca-setup.ui.h:110
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Όλα"
@@ -4921,7 +4924,7 @@ msgstr "Παράθυρο"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1831 ../src/orca/orca-setup.ui.h:80
+#: ../src/orca/orca_gui_prefs.py:1831 ../src/orca/orca-setup.ui.h:66
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Ενεργοποίηση για συνδυαζόμενα _διακριτικά σημεία"
 
@@ -4932,7 +4935,7 @@ msgstr "Ενεργοποίηση για συνδυαζόμενα _διακριτ
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1839 ../src/orca/orca-setup.ui.h:77
+#: ../src/orca/orca_gui_prefs.py:1839 ../src/orca/orca-setup.ui.h:63
 msgid "Enable echo by cha_racter"
 msgstr "Ενεργοποίηση ανακοίνωσης _χαρακτήρων"
 
@@ -4967,7 +4970,7 @@ msgstr "Συνδυασμοί μπράιγ"
 #. corner will be used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2814 ../src/orca/orca_gui_prefs.py:2855
-#: ../src/orca/orca_gui_prefs.py:2895 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/orca_gui_prefs.py:2895 ../src/orca/orca-setup.ui.h:42
 msgid "Dot _7"
 msgstr "Τελεία _7"
 
@@ -4976,7 +4979,7 @@ msgstr "Τελεία _7"
 #. will be used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2821 ../src/orca/orca_gui_prefs.py:2862
-#: ../src/orca/orca_gui_prefs.py:2902 ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca_gui_prefs.py:2902 ../src/orca/orca-setup.ui.h:43
 msgid "Dot _8"
 msgstr "Τελεία _8"
 
@@ -4985,7 +4988,7 @@ msgstr "Τελεία _8"
 #. used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2828 ../src/orca/orca_gui_prefs.py:2869
-#: ../src/orca/orca_gui_prefs.py:2909 ../src/orca/orca-setup.ui.h:58
+#: ../src/orca/orca_gui_prefs.py:2909 ../src/orca/orca-setup.ui.h:44
 msgid "Dots 7 an_d 8"
 msgstr "Τελείες 7 _και 8"
 
@@ -5009,7 +5012,7 @@ msgstr "_Κάποια"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2947 ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca_gui_prefs.py:2947 ../src/orca/orca-setup.ui.h:76
 msgid "M_ost"
 msgstr "_Περισσότερα"
 
@@ -5018,7 +5021,7 @@ msgstr "_Περισσότερα"
 #. focus.
 #.
 #: ../src/orca/orca_gui_prefs.py:3107 ../src/orca/orca_gui_prefs.py:3211
-#: ../src/orca/orca-setup.ui.h:40
+#: ../src/orca/orca-setup.ui.h:26
 msgid "Brie_f"
 msgstr "_Σύντομη περιγραφή"
 
@@ -5491,315 +5494,326 @@ msgstr ""
 "<b>Προσαρμογή επιλεγμένου\n"
 "ιδιότητες</b>"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
-#: ../src/orca/orca-setup.ui.h:6
-msgid "<b>Border</b>"
-msgstr "<b>Περίγραμμα</b>"
-
-#: ../src/orca/orca-setup.ui.h:7
+#: ../src/orca/orca-setup.ui.h:5
 msgid "<b>Braille Indicator</b>"
 msgstr "<b>Ένδειξη Μπράιγ</b>"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
-#: ../src/orca/orca-setup.ui.h:9
-msgid "<b>Color</b>"
-msgstr "<b>Χρώμα</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
-#: ../src/orca/orca-setup.ui.h:11
-msgid "<b>Cross-hair</b>"
-msgstr "<b>Σταυρονήμα</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
-#: ../src/orca/orca-setup.ui.h:13
-msgid "<b>Cursor</b>"
-msgstr "<b>Δρομέας</b>"
-
-#: ../src/orca/orca-setup.ui.h:14
+#: ../src/orca/orca-setup.ui.h:6
 msgid "<b>Hyperlink Indicator</b>"
 msgstr "<b>Ένδειξη συνδέσμων</b"
 
-#: ../src/orca/orca-setup.ui.h:15
+#: ../src/orca/orca-setup.ui.h:7
 msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Διάταξη πληκτρολογίου</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
-#: ../src/orca/orca-setup.ui.h:17
+#: ../src/orca/orca-setup.ui.h:9
 msgid "<b>Progress Bar Updates</b>"
 msgstr "<b>Ενημερώσεις γραμμής προόδου</b>"
 
-#: ../src/orca/orca-setup.ui.h:18
+#: ../src/orca/orca-setup.ui.h:10
 msgid "<b>Pronunciation Dictionary</b>"
 msgstr "<b>Λεξικό προφοράς</b>"
 
-#: ../src/orca/orca-setup.ui.h:19
+#: ../src/orca/orca-setup.ui.h:11
 msgid "<b>Punctuation Level</b>"
 msgstr "<b>Επίπεδο σημείων στίξης</b>"
 
-#: ../src/orca/orca-setup.ui.h:20
+#: ../src/orca/orca-setup.ui.h:12
 msgid "<b>Selection Indicator</b>"
 msgstr "<b>Ένδειξη επιλογών</b"
 
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
-#: ../src/orca/orca-setup.ui.h:22
+#: ../src/orca/orca-setup.ui.h:14
 msgid "<b>Table Rows</b>"
 msgstr "<b>Γραμμές πίνακα</b>"
 
-#: ../src/orca/orca-setup.ui.h:23
+#: ../src/orca/orca-setup.ui.h:15
 msgid "<b>Text attributes</b>"
 msgstr "<b>Ιδιότητες κειμένου</b>"
 
 #. Translators:  In the context of magnifying the contents of the screen, "tracking" refers to whether or not an object (mouse pointer, the caret, or the widget with focus) is of interest.  Objects of interest must always be displayed.  "Alignment" refers to where on the screen objects of interest should be displayed.
-#: ../src/orca/orca-setup.ui.h:25
+#: ../src/orca/orca-setup.ui.h:17
 msgid "<b>Tracking and Alignment</b>"
 msgstr "<b>Ανίχνευσης και ευθυγράμμιση</b>"
 
-#: ../src/orca/orca-setup.ui.h:26
+#: ../src/orca/orca-setup.ui.h:18
 msgid "<b>Verbosity</b>"
 msgstr "<b>Περιφραστικότητα</b>"
 
-#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
-#: ../src/orca/orca-setup.ui.h:28
-msgid "<b>Zoomer</b>"
-msgstr "<b>Μεγεθυντής</b>"
-
-#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
-#: ../src/orca/orca-setup.ui.h:30
-msgid "Advanced..."
-msgstr "Για προχωρημένους…"
-
-#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca-setup.ui.h:32
-msgid "All"
-msgstr "Όλα"
-
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/orca-setup.ui.h:33 ../src/orca/rolenames.py:1127
+#: ../src/orca/orca-setup.ui.h:19 ../src/orca/rolenames.py:1127
 msgid "Application"
 msgstr "Εφαρμογή"
 
-#: ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca-setup.ui.h:20
 msgid "Border color:"
 msgstr "Χρώμα πλαισίου:"
 
-#: ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/orca-setup.ui.h:21
 msgid "Border size:"
 msgstr "Μέγεθος πλαισίου:"
 
-#: ../src/orca/orca-setup.ui.h:37
+#: ../src/orca/orca-setup.ui.h:23
 msgid "Braille"
 msgstr "Μπράιγ"
 
-#: ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca-setup.ui.h:27
 msgid "Brightness:"
 msgstr "Φωτεινότητα:"
 
-#: ../src/orca/orca-setup.ui.h:43
+#: ../src/orca/orca-setup.ui.h:29
 msgid "Contraction _Table:"
 msgstr "_Πίνακας συστολής:"
 
-#: ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca-setup.ui.h:30
 msgid "Contrast:"
 msgstr "Αντίθεση:"
 
-#: ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca-setup.ui.h:31
 msgid "Cross-hair color:"
 msgstr "Χρώμα στοχάστρου:"
 
-#: ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca-setup.ui.h:32
 msgid "Cross-hair si_ze:"
 msgstr "_Μέγεθος στοχάστρου:"
 
 # #-#-#-#-#  gtkhtml.HEAD.el.po (el)  #-#-#-#-#
 #
-#: ../src/orca/orca-setup.ui.h:47
+#: ../src/orca/orca-setup.ui.h:33
 msgid "Cursor color:"
 msgstr "Χρώμα δρομέα:"
 
-#: ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/orca-setup.ui.h:34
 msgid "Cursor size:"
 msgstr "Μέγεθος δρομέα:"
 
-#: ../src/orca/orca-setup.ui.h:50
+#: ../src/orca/orca-setup.ui.h:36
 msgid "Custom siz_e"
 msgstr "Προσαρμοσμένο μέγε_θος"
 
 #. Translators: Orca can present the current date to the user, here they can choose how the date should be presented to them.
-#: ../src/orca/orca-setup.ui.h:52
+#: ../src/orca/orca-setup.ui.h:38
 msgid "Dat_e format:"
 msgstr "Μορφή η_μερομηνίας"
 
 # #-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#
-#: ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca-setup.ui.h:39
 msgid "Default"
 msgstr "Προεπιλεγμένο"
 
-#: ../src/orca/orca-setup.ui.h:54
+#: ../src/orca/orca-setup.ui.h:40
 msgid "Disable _end of line symbol"
 msgstr "Απενεργοποίηση του συμβόλου _τέλους γραμμής"
 
-#: ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Disable gksu _keyboard grab"
 msgstr "Απενεργοποίηση διαβάθμισης gksu του _πληκτρολογίου"
 
 #. Translators: When a user chooses a tracking alignment of "push", Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The "edge margin" allows the user to specify a margin so that objects are not displayed too close to the edge.
-#: ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca-setup.ui.h:46
 msgid "Edge mar_gin:"
 msgstr "Περι_θώριο άκρων:"
 
-#: ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca-setup.ui.h:47
 msgid "Enable Braille _monitor"
 msgstr "Ενεργοποίηση _οθόνης Μπράιγ"
 
-#: ../src/orca/orca-setup.ui.h:62
+#: ../src/orca/orca-setup.ui.h:48
 msgid "Enable Braille _support"
 msgstr "Ενεργοποίηση _υποστήριξης Μπράιγ"
 
-#: ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/orca-setup.ui.h:49
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "_Ενεργοποίηση αλφαριθμητικών και πλήκτρων σημείων στίξης"
 
-#: ../src/orca/orca-setup.ui.h:64
+#: ../src/orca/orca-setup.ui.h:50
 msgid "Enable _function keys"
 msgstr "Ενεργοποίηση πλήκτρων _συναρτήσεων"
 
-#: ../src/orca/orca-setup.ui.h:65
+#: ../src/orca/orca-setup.ui.h:51
 msgid "Enable _key echo"
 msgstr "Ενεργοποίηση πλή_κτρου echo"
 
-#: ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/orca-setup.ui.h:52
 msgid "Enable _magnifier"
 msgstr "Ενεργοποίηση με_γεθυντή"
 
-#: ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Enable _modifier keys"
 msgstr "Ενεργοποίηση π_λήκτρων μεγεθυντή"
 
-#: ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/orca-setup.ui.h:54
 msgid "Enable _navigation keys"
 msgstr "Ενεργοποίηση πλήκτρων _πλοήγησης"
 
-#: ../src/orca/orca-setup.ui.h:69
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Enable ac_tion keys"
 msgstr "Ενεργοποίηση πλήκτρων ε_νέργειας"
 
-#: ../src/orca/orca-setup.ui.h:70
+#: ../src/orca/orca-setup.ui.h:56
 msgid "Enable bor_der"
 msgstr "Ενεργοποίηση πλαι_σίου"
 
-#: ../src/orca/orca-setup.ui.h:71
+#: ../src/orca/orca-setup.ui.h:57
 msgid "Enable c_ursor"
 msgstr "Ενεργοποίηση _δρομέα"
 
-#: ../src/orca/orca-setup.ui.h:72
+#: ../src/orca/orca-setup.ui.h:58
 msgid "Enable cross-h_air"
 msgstr "Ενεργοποίηση σ_τοχάστρου"
 
-#: ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/orca-setup.ui.h:59
 msgid "Enable cross-hair cl_ip"
 msgstr "Ενεργοποίηση τ_μήματος στοχάστρου:"
 
-#: ../src/orca/orca-setup.ui.h:74
+#: ../src/orca/orca-setup.ui.h:60
 msgid "Enable echo by _sentence"
 msgstr "Ενεργοποίηση echo ανά π_ρόταση"
 
-#: ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/orca-setup.ui.h:61
 msgid "Enable echo by _word"
 msgstr "Ενεργοποίηση echo ανά λέ_ξη"
 
-#: ../src/orca/orca-setup.ui.h:78
+#: ../src/orca/orca-setup.ui.h:64
 msgid "Enable lockin_g keys"
 msgstr "Ενεργοποίηση πλήκτρων κλ_ειδώματος"
 
-#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:82
-msgid "Enable_d"
-msgstr "Ε_νεργοποιημένο"
-
-#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:84
-msgid "Frequency (secs):"
-msgstr "Συχνότητα (sec):"
-
-#: ../src/orca/orca-setup.ui.h:86
+#: ../src/orca/orca-setup.ui.h:68
 msgid "General"
 msgstr "Γενικά"
 
-#: ../src/orca/orca-setup.ui.h:87
+#: ../src/orca/orca-setup.ui.h:69
 msgid "Hide s_ystem pointer"
 msgstr "Απόκρυψη του δρομέα του σ_υστήματος"
 
-#: ../src/orca/orca-setup.ui.h:88
+#: ../src/orca/orca-setup.ui.h:70
 msgid "Hyperlink"
 msgstr "Σύνδεσμος"
 
-#: ../src/orca/orca-setup.ui.h:89
+#: ../src/orca/orca-setup.ui.h:71
 msgid "In_vert colors"
 msgstr "Αν_τιστροφή χρωμάτων"
 
-#: ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca-setup.ui.h:72
 msgid "Key Bindings"
 msgstr "Συνδυασμοί πλήκτρων"
 
-#: ../src/orca/orca-setup.ui.h:91
+#: ../src/orca/orca-setup.ui.h:73
 msgid "Key Echo"
 msgstr "Πλήκτρο echo"
 
-#: ../src/orca/orca-setup.ui.h:95
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
+#: ../src/orca/orca-setup.ui.h:78
+#| msgid "<b>Border</b>"
+msgctxt "Magnification"
+msgid "<b>Border</b>"
+msgstr "<b>Περίγραμμα</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
+#: ../src/orca/orca-setup.ui.h:80
+#| msgid "<b>Color</b>"
+msgctxt "Magnification"
+msgid "<b>Color</b>"
+msgstr "<b>Χρώμα</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
+#: ../src/orca/orca-setup.ui.h:82
+#| msgid "<b>Cross-hair</b>"
+msgctxt "Magnification"
+msgid "<b>Cross-hair</b>"
+msgstr "<b>Σταυρονήμα</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
+#: ../src/orca/orca-setup.ui.h:84
+#| msgid "<b>Cursor</b>"
+msgctxt "Magnification"
+msgid "<b>Cursor</b>"
+msgstr "<b>Δρομέας</b>"
+
+#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
+#: ../src/orca/orca-setup.ui.h:86
+#| msgid "<b>Zoomer</b>"
+msgctxt "Magnification"
+msgid "<b>Zoomer</b>"
+msgstr "<b>Μεγεθυντής</b>"
+
+#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
+#: ../src/orca/orca-setup.ui.h:88
+#| msgid "Advanced..."
+msgctxt "Magnification"
+msgid "Advanced..."
+msgstr "Για προχωρημένους…"
+
+#: ../src/orca/orca-setup.ui.h:89
 msgid "Magnifier"
 msgstr "Μεγεθυντής"
 
-#: ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca-setup.ui.h:90
 msgid "Mouse poi_nter:"
 msgstr "Κατα_γραφέας δρομέα:"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:92
 msgid "Move _down one"
 msgstr "Μετακίνηση μια γραμμή _κάτω"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:100
+#: ../src/orca/orca-setup.ui.h:94
 msgid "Move _up one"
 msgstr "Μετακίνηση μια γραμμή _πάνω"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:102
+#: ../src/orca/orca-setup.ui.h:96
 msgid "Move to _bottom"
 msgstr "Μετακίνηση στο _τέλος"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Move to _top"
 msgstr "Μετακίνηση στην κο_ρυφή"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca-setup.ui.h:101
 msgid "Only speak displayed text"
 msgstr "Εκφώνηση μόνο του εμφανιζόμενου κειμένου"
 
-#: ../src/orca/orca-setup.ui.h:108
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Orca Preferences"
 msgstr "Προτιμήσεις Orca"
 
-#: ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/orca-setup.ui.h:103
 msgid "Orca _Modifier Key(s):"
 msgstr "Πλήκτρα _μεγεθυντή του Orca:"
 
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca-setup.ui.h:104
 msgid "Pi_tch:"
 msgstr "_Βήμα:"
 
 #. Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.
-#: ../src/orca/orca-setup.ui.h:112
+#: ../src/orca/orca-setup.ui.h:106
 msgid "Pointer follows focus"
 msgstr "Ο καταγραφέας δρομέα ακολουθεί την εστίαση"
 
 #. Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the "zoomer," which is the magnified view of the screen.  If the "pointer follows zoomer" setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.
-#: ../src/orca/orca-setup.ui.h:114
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Pointer follows zoomer"
 msgstr "Ο καταγραφέας δρομέα ακολουθεί την εστίαση με ζουμ"
+
+#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
+#: ../src/orca/orca-setup.ui.h:112
+#| msgid "Frequency (secs):"
+msgctxt "ProgressBar"
+msgid "Frequency (secs):"
+msgstr "Συχνότητα (sec):"
+
+#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
+#: ../src/orca/orca-setup.ui.h:114
+#| msgid "Enable_d"
+msgctxt "ProgressBarUpdates"
+msgid "Enable_d"
+msgstr "Ε_νεργοποιημένο"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Pronunciation"
@@ -10861,6 +10875,9 @@ msgid ""
 msgstr ""
 "Πιέστε το αριστερό βέλος για μείωση. Πιέστε το δεξί βέλος για αύξηση. Για το "
 "ελάχιστο πατήστε home και για το μέγιστο end."
+
+#~ msgid "All"
+#~ msgstr "Όλα"
 
 #~ msgid ""
 #~ "Enable notification message list mode. Press Escape to exit or h for help"
