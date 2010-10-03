@@ -19,12 +19,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-09-14 07:03+0000\n"
-"PO-Revision-Date: 2010-09-16 19:39+0100\n"
-"Last-Translator: Mario Blättermann <mariobl@gnome.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-03 21:07+0200\n"
+"PO-Revision-Date: 2010-10-03 21:09+0200\n"
+"Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4360,8 +4360,8 @@ msgstr "Soll das Tastaturecho aktiviert werden? Geben Sie »j« oder »n« ein: 
 #: ../src/orca/orca_console_prefs.py:377
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
 msgstr ""
-"Soll das Echo für eingegebene Zeichen aktiviert werden? Geben Sie »j« oder »n« "
-"ein: "
+"Soll das Echo für eingegebene Zeichen aktiviert werden? Geben Sie »j« oder "
+"»n« ein: "
 
 #. Translators: this is in reference to key echo for
 #. CTRL, ALT, Shift, Insert, and "Fn" on laptops.
@@ -4387,8 +4387,8 @@ msgstr ""
 #: ../src/orca/orca_console_prefs.py:428
 msgid "Enable function keys?  Enter y or n: "
 msgstr ""
-"Soll das Echo für die Funktionstasten aktiviert werden? Geben Sie »j« oder »n« "
-"ein: "
+"Soll das Echo für die Funktionstasten aktiviert werden? Geben Sie »j« oder "
+"»n« ein: "
 
 #. Translators: this is in reference to key echo for
 #. space, enter, escape, tab, backspace, delete, arrow
@@ -6466,7 +6466,7 @@ msgstr "Formular"
 #.
 #: ../src/orca/rolenames.py:480
 msgid "form"
-msgstr "form"
+msgstr "Formular"
 
 #. Translators: long braille for the rolename of a frame.
 #.
@@ -6496,7 +6496,7 @@ msgstr "Transparente Leiste"
 #.
 #: ../src/orca/rolenames.py:504
 msgid "glass pane"
-msgstr "transparenter Leiste"
+msgstr "transparente Leiste"
 
 #. Translators: short braille for the rolename of a heading.
 #.
@@ -6526,7 +6526,7 @@ msgstr "HTMLContainer"
 #.
 #: ../src/orca/rolenames.py:528
 msgid "h t m l container"
-msgstr "h t m l Container"
+msgstr "html Container"
 
 #. Translators: long braille for the rolename of a icon.
 #.
@@ -6538,7 +6538,7 @@ msgstr "Symbol"
 #.
 #: ../src/orca/rolenames.py:540
 msgid "icon"
-msgstr "icon"
+msgstr "Symbol"
 
 #. Translators: short braille for the rolename of a image.
 #.
@@ -10621,8 +10621,8 @@ msgstr "Leertaste zum Umschalten betätigem"
 #: ../src/orca/tutorialgenerator.py:185
 msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
-"Leertaste zum Ausklappen betätigen und mit »Hoch«- und »Runter«-Taste Element "
-"auswählen"
+"Leertaste zum Ausklappen betätigen und mit »Hoch«- und »Runter«-Taste "
+"Element auswählen"
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
@@ -10663,7 +10663,8 @@ msgstr "Zum Einklappen die Umschalttaste zusammen mit »Links«-Taste betätigen
 #. this string informs the user how to expand the node.
 #: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:503
 msgid "To expand, press shift plus right."
-msgstr "Zum Ausklappen die Umschalttaste zusammen mit »Rechts«-Taste betätigen."
+msgstr ""
+"Zum Ausklappen die Umschalttaste zusammen mit »Rechts«-Taste betätigen."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
