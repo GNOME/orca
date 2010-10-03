@@ -324,8 +324,7 @@ def showPreferencesUI():
         # Orca for the application that currently has focus.
         #
         line = _("Starting Orca Preferences for %s.") % applicationName
-        braille.displayMessage(line)
-        speech.speak(line)
+        appScript.presentMessage(line)
 
         prefsDict = orca_prefs.readPreferences()
         orca_state.prefsUIFile = \
