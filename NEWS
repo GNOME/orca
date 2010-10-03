@@ -1,3 +1,46 @@
+2.91.0 - 03-October-2010
+
+General:
+
+  * Fix for bug #630274 - Use system voice for the "starting Orca prefs
+    for x application" message
+
+  * Fix for bug #630644 - Modified gsmag.py to pass RectBounds arrays as
+    [left, top, right, bottom] (instead of [left, top, width, height])
+    when invoking GNOME Shell magnifier via DBus
+
+  * Fix for bug #631120 - Check for pyxdg
+
+  * Fix for bug #630142 - Two incorrectly named chat settings in
+    userCustomizableSettings
+
+  * Aditional fix for bug #609900 - Speech page speechdispatcher
+    defaults to zh
+
+OpenOffice:
+
+  * Fix for bug #630584 - Orca should announce the newly-focused sheet
+    when the user navigates amongst sheets in Calc
+
+WebKitGtk:
+
+  * Fix for bug #630328 - Orca provides no access to WebKitGtk content
+    whatsoever
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg       Bulgarian               Damyan Ivanov
+    cs       Czech                   Marek Černocký
+    da       Danish                  Daniel K. Gartmann, Kenneth Nielsen
+    el       Greek                   Simos Xenitellis
+    it       Italian                 Luca Ferretti
+    ja       Japanese                Takayuki KUSANO
+    pl       Polish                  Piotr Drąg, Tomasz Dominikowski
+    pt_BR    Brazilian Portuguese    Djavan Fagundes
+    pt       Portuguese              Rui Batista
+
+==========
+
 2.31.92 - 13-September-2010
 
 General:
