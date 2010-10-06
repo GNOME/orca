@@ -1,14 +1,14 @@
-# translation of eu_to_be_translate.po to Basque
+# translation of orca.gnome-2-32.po to Basque
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008, 2009, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: eu_to_be_translate\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-06 22:59+0200\n"
-"PO-Revision-Date: 2010-10-06 23:54+0200\n"
+"Project-Id-Version: orca.gnome-2-32\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
+"POT-Creation-Date: 2010-09-14 07:03+0000\n"
+"PO-Revision-Date: 2010-10-07 00:13+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,8 +29,7 @@ msgid "Orca Screen Reader and Magnifier"
 msgstr "Orca pantaila-irakurlea eta lupa"
 
 #: ../orca.desktop.in.h:3
-msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
+msgid "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
 "Pantailako informazioa ahoz edo braillez ematen du, edo pantailan "
 "handiagotzen du"
@@ -359,8 +358,7 @@ msgid "Belgium Dutch Grade 1"
 msgstr "Belgikako nederlandera 1. maila"
 
 #: ../src/orca/chat.py:334
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr ""
 "Berriketa-gelako mezuen aurretik berriketa-gelaren izena jartzearen eta ez "
 "jartzearen artean txandakatzen du."
@@ -422,6 +420,7 @@ msgstr "Kanal bat (bere _leihoa soilik badago aktibo)"
 
 #: ../src/orca/chat.py:486
 #, python-format
+#| msgid "All channels when an_y Pidgin window is active"
 msgid "All channels when an_y %s window is active"
 msgstr "Kanal denak %s(r)en _edozein leiho aktibo badago"
 
@@ -1518,168 +1517,196 @@ msgstr "gezia eskuinerantz"
 #. Translators: this is the spoken word for the character '⁰' (U+2070)
 #.
 #: ../src/orca/chnames.py:733
+#| msgid "superscript a"
 msgid "superscript 0"
 msgstr "0 goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁴' (U+2074)
 #.
 #: ../src/orca/chnames.py:737
+#| msgid "superscript a"
 msgid "superscript 4"
 msgstr "4 goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁵' (U+2075)
 #.
 #: ../src/orca/chnames.py:741
+#| msgid "superscript a"
 msgid "superscript 5"
 msgstr "5 goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁶' (U+2076)
 #.
 #: ../src/orca/chnames.py:745
+#| msgid "superscript a"
 msgid "superscript 6"
 msgstr "6 goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁷' (U+2077)
 #.
 #: ../src/orca/chnames.py:749
+#| msgid "superscript a"
 msgid "superscript 7"
 msgstr "7 goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁸' (U+2078)
 #.
 #: ../src/orca/chnames.py:753
+#| msgid "superscript a"
 msgid "superscript 8"
 msgstr "8 goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁹' (U+2079)
 #.
 #: ../src/orca/chnames.py:757
+#| msgid "superscript a"
 msgid "superscript 9"
 msgstr "9 goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁺' (U+207a)
 #.
 #: ../src/orca/chnames.py:761
+#| msgid "superscript a"
 msgid "superscript plus"
 msgstr "plus goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁻' (U+207b)
 #.
 #: ../src/orca/chnames.py:765
+#| msgid "superscript a"
 msgid "superscript minus"
 msgstr "minus goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁼' (U+207c)
 #.
 #: ../src/orca/chnames.py:769
+#| msgid "superscript a"
 msgid "superscript equals"
 msgstr "berdin goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁽' (U+207d)
 #.
 #: ../src/orca/chnames.py:773
+#| msgid "superscript a"
 msgid "superscript left paren"
 msgstr "ezker-parentesia goi-indizea"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
 #: ../src/orca/chnames.py:777
+#| msgid "superscript a"
 msgid "superscript right paren"
 msgstr "eskuin-parentesia goi-indizea"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
 #: ../src/orca/chnames.py:781
+#| msgid "superscript a"
 msgid "superscript n"
 msgstr "n goi-indizea"
 
 #. Translators: this is the spoken word for the character '₀' (U+2080)
 #.
 #: ../src/orca/chnames.py:785
+#| msgid "superscript a"
 msgid "subscript 0"
 msgstr "0 azpindizea"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
 #: ../src/orca/chnames.py:789
+#| msgid "superscript 1"
 msgid "subscript 1"
 msgstr "1 azpindizea"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
 #: ../src/orca/chnames.py:793
+#| msgid "superscript 2"
 msgid "subscript 2"
 msgstr "2 azpindizea"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
 #: ../src/orca/chnames.py:797
+#| msgid "superscript 3"
 msgid "subscript 3"
 msgstr "3 azpindizea"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
 #: ../src/orca/chnames.py:801
+#| msgid "superscript a"
 msgid "subscript 4"
 msgstr "4 azpindizea"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
 #: ../src/orca/chnames.py:805
+#| msgid "superscript a"
 msgid "subscript 5"
 msgstr "5 azpindizea"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
 #: ../src/orca/chnames.py:809
+#| msgid "superscript a"
 msgid "subscript 6"
 msgstr "6 azpindizea"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
 #: ../src/orca/chnames.py:813
+#| msgid "superscript a"
 msgid "subscript 7"
 msgstr "7 azpindizea"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
 #: ../src/orca/chnames.py:817
+#| msgid "superscript a"
 msgid "subscript 8"
 msgstr "8 azpindizea"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
 #: ../src/orca/chnames.py:821
+#| msgid "superscript a"
 msgid "subscript 9"
 msgstr "9 azpindizea"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
 #: ../src/orca/chnames.py:825
+#| msgid "superscript a"
 msgid "subscript plus"
 msgstr "plus azpindizea"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
 #: ../src/orca/chnames.py:829
+#| msgid "superscript a"
 msgid "subscript minus"
 msgstr "minus azpindizea"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
 #: ../src/orca/chnames.py:833
+#| msgid "superscript a"
 msgid "subscript equals"
 msgstr "berdin azpindizea"
 
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
 #: ../src/orca/chnames.py:837
+#| msgid "left paren"
 msgid "subscript left paren"
 msgstr "ezker-parentesia azpindizea"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #: ../src/orca/chnames.py:841
+#| msgid "right paren"
 msgid "subscript right paren"
 msgstr "eskuin-parentesia azpindizea"
 
@@ -2268,8 +2295,7 @@ msgstr "Testu baten hautapenaren amaiera markatzen du."
 #.
 #: ../src/orca/default.py:780
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr ""
-"Ikasteko modua aktibatzen du.  Sakatu Ihes ikasteko modutik ateratzeko."
+msgstr "Ikasteko modua aktibatzen du.  Sakatu Ihes ikasteko modutik ateratzeko."
 
 #. Translators: Orca has a "List Shortcuts Mode" that will allow
 #. the user to list a group of keyboard shortcuts. The Orca
@@ -2280,10 +2306,9 @@ msgstr ""
 #. and exit the "List Shortcuts Mode" by pressing Escape.
 #.
 #: ../src/orca/default.py:793
+#| msgid "Enters learn mode.  Press escape to exit learn mode."
 msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
-msgstr ""
-"Lasterbideen zerrendaren modua aktibatzen du. Sakatu Ihes lasterbideen "
-"zerrendaren modutik ateratzeko."
+msgstr "Lasterbideen zerrendaren modua aktibatzen du. Sakatu Ihes lasterbideen zerrendaren modutik ateratzeko."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
@@ -2333,8 +2358,7 @@ msgstr "Hobespenak konfiguratzeko elkarrizketa-koadroa bistaratzen du."
 #.
 #: ../src/orca/default.py:852
 msgid "Displays the application preferences configuration dialog."
-msgstr ""
-"Aplikazioaren hobespenak konfiguratzeko elkarrizketa-koadroa bistaratzen du."
+msgstr "Aplikazioaren hobespenak konfiguratzeko elkarrizketa-koadroa bistaratzen du."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
@@ -2347,6 +2371,7 @@ msgstr "Soinua aktibatzen/desaktibatzen du."
 #. the speaking of indentation and justification.
 #.
 #: ../src/orca/default.py:869
+#| msgid "Speak _indentation and justification"
 msgid "Toggles the speaking of indentation and justification."
 msgstr "Koskak eta justifikazioak irakurtzea aldatzen du."
 
@@ -2355,6 +2380,7 @@ msgstr "Koskak eta justifikazioak irakurtzea aldatzen du."
 #. None, some, most, or all, punctuation will be spoken.
 #.
 #: ../src/orca/default.py:878
+#| msgid "Cycles to the next magnifier position."
 msgid "Cycles to the next speaking of punctuation level."
 msgstr "Begiztatu hurrengo puntuazio mailaren irakurketara."
 
@@ -2372,6 +2398,7 @@ msgstr "Begiztatu hurrengo puntuazio mailaren irakurketara."
 #. user to quickly choose which type of echo is being used.
 #.
 #: ../src/orca/default.py:896
+#| msgid "Cycles to the next magnifier position."
 msgid "Cycles to the next key echo level."
 msgstr "Begiztatu hurrengo teklen oihartzunaren mailara."
 
@@ -2407,8 +2434,7 @@ msgstr "Arazketa-mailen zikloa egiten du exekuzio-denboran."
 #.
 #: ../src/orca/default.py:930
 msgid "Prints debug information about the ancestry of the object with focus."
-msgstr ""
-"Fokua duen objektuaren jatorriari buruzko arazketa-informazioa erakusten du."
+msgstr "Fokua duen objektuaren jatorriari buruzko arazketa-informazioa erakusten du."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2620,8 +2646,9 @@ msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
 msgstr ""
-"Sakatu 1 tekla Orca-ren lasterbide lehenetsientzako. Sakatu 2 tekla Orca-ren "
-"lasterbideentzako uneko aplikazioarentzako. Sakatu Ihes tekla irtetzeko."
+"Sakatu 1 tekla Orca-ren lasterbide lehenetsientzako. Sakatu 2 tekla "
+"Orca-ren lasterbideentzako uneko aplikazioarentzako. Sakatu Ihes tekla "
+"irtetzeko."
 
 #. Translators: Orca has a command that allows the user to
 #. move the mouse pointer to the current object. This is a
@@ -2642,6 +2669,17 @@ msgstr ""
 #: ../src/orca/default.py:2072
 msgid "Could not find current location."
 msgstr "Ezin izan da uneko kokapena aurkitu."
+
+#. Translators: Orca has a command that allows the user to
+#. move the mouse pointer to the current object. This is a
+#. brief message which will be presented if for some reason
+#. Orca cannot identify/find the current location.
+#.
+#: ../src/orca/default.py:1915 ../src/orca/default.py:2078
+#| msgid "No focus"
+msgctxt "location"
+msgid "Not found"
+msgstr "Ez da aurkitu"
 
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
@@ -2730,15 +2768,37 @@ msgstr "Ikuspegi lauan sartzen da."
 #. indentation and justification will be spoken.
 #.
 #: ../src/orca/default.py:2622
+#| msgid "Speak _indentation and justification"
 msgid "Speaking of indentation and justification enabled."
 msgstr "Koskak eta justifikazioak irakurtzea gaituta."
+
+#. Translators: This is a brief message that will be presented
+#. to the user who has just enabled/disabled the speaking of
+#. indentation and justification information.
+#.
+#: ../src/orca/default.py:2627
+#| msgid "Enable_d"
+msgctxt "indentation and justification"
+msgid "Enabled"
+msgstr "Gaituta"
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will not be spoken.
 #.
 #: ../src/orca/default.py:2632
+#| msgid "Speak _indentation and justification"
 msgid "Speaking of indentation and justification disabled."
 msgstr "Koskak eta justifikazioak irakurtzea desgaituta."
+
+#. Translators: This is a brief message that will be presented
+#. to the user who has just enabled/disabled the speaking of
+#. indentation and justification information.
+#.
+#: ../src/orca/default.py:2637
+#| msgid "Dial"
+msgctxt "indentation and justification"
+msgid "Disabled"
+msgstr "Desgaituta"
 
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
@@ -2749,6 +2809,17 @@ msgstr "Koskak eta justifikazioak irakurtzea desgaituta."
 msgid "Punctuation level set to some."
 msgstr "Puntuazioaren maila batzuk gisa ezarrita."
 
+#. Translators: This brief message will be presented as the user
+#. cycles through the different levels of spoken punctuation.
+#. The options are: All puntuation marks will be spoken, None
+#. will be spoken, Most will be spoken, or Some will be spoken.
+#.
+#: ../src/orca/default.py:2660
+#| msgid "So_me"
+msgctxt "spoken punctuation"
+msgid "Some"
+msgstr "Batzuk"
+
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
 #. The options are: All puntuation marks will be spoken, None
@@ -2758,14 +2829,37 @@ msgstr "Puntuazioaren maila batzuk gisa ezarrita."
 msgid "Punctuation level set to most."
 msgstr "Puntuazioaren maila gehiena gisa ezarrita."
 
+#. Translators: This brief message will be presented as the user
+#. cycles through the different levels of spoken punctuation.
+#. The options are: All puntuation marks will be spoken, None
+#. will be spoken, Most will be spoken, or Some will be spoken.
+#.
+#: ../src/orca/default.py:2674
+#| msgid "M_ost"
+msgctxt "spoken punctuation"
+msgid "Most"
+msgstr "Gehienak"
+
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2682
+#| msgid "<b>Punctuation Level</b>"
 msgid "Punctuation level set to all."
-msgstr "Puntuazioaren maila guztiak gisa ezarrita."
+msgstr "Puntuazioaren maila denak gisa ezarrita."
+
+#. Translators: This brief message will be presented as the user
+#. cycles through the different levels of spoken punctuation.
+#. The options are: All puntuation marks will be spoken, None
+#. will be spoken, Most will be spoken, or Some will be spoken.
+#.
+#: ../src/orca/default.py:2688
+#| msgid "All"
+msgctxt "spoken punctuation"
+msgid "All"
+msgstr "Denak"
 
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
@@ -2775,6 +2869,17 @@ msgstr "Puntuazioaren maila guztiak gisa ezarrita."
 #: ../src/orca/default.py:2697
 msgid "Punctuation level set to none."
 msgstr "Puntuazioaren maila bat ere ez gisa ezarrita."
+
+#. Translators: This brief message will be presented as the user
+#. cycles through the different levels of spoken punctuation.
+#. The options are: All puntuation marks will be spoken, None
+#. will be spoken, Most will be spoken, or Some will be spoken.
+#.
+#: ../src/orca/default.py:2703
+#| msgid "None"
+msgctxt "spoken punctuation"
+msgid "None"
+msgstr "Bat ere ez"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2802,11 +2907,52 @@ msgstr "Teklen oihartzuna teklara ezarrita."
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or
 #. multiple types of echo and can cycle through the various
+#. levels quickly via a command. The following string is a
+#. brief message which will be presented to the user who is
+#. cycling amongst the various echo options.
+#.
+#: ../src/orca/default.py:2747
+msgctxt "key echo"
+msgid "key"
+msgstr "tekla"
+
+#. Translators: Orca has an "echo" setting which allows
+#. the user to configure what is spoken in response to a
+#. key press. Given a user who typed "Hello world.":
+#. - key echo: "H e l l o space w o r l d period"
+#. - word echo: "Hello" spoken when the space is pressed;
+#. "world" spoken when the period is pressed.
+#. - sentence echo: "Hello world" spoken when the period
+#. is pressed.
+#. A user can choose to have no echo, one type of echo, or
+#. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
 #: ../src/orca/default.py:2765
+#| msgid "Goes to next word."
 msgid "Key echo set to word."
 msgstr "Teklen oihartzuna hitz gisa ezarrita."
+
+#. Translators: Orca has an "echo" setting which allows
+#. the user to configure what is spoken in response to a
+#. key press. Given a user who typed "Hello world.":
+#. - key echo: "H e l l o space w o r l d period"
+#. - word echo: "Hello" spoken when the space is pressed;
+#. "world" spoken when the period is pressed.
+#. - sentence echo: "Hello world" spoken when the period
+#. is pressed.
+#. A user can choose to have no echo, one type of echo, or
+#. multiple types of echo and can cycle through the various
+#. levels quickly via a command. The following string is a
+#. brief message which will be presented to the user who is
+#. cycling amongst the various echo options.
+#.
+#: ../src/orca/default.py:2780
+#| msgctxt "textattr"
+#| msgid "word"
+msgctxt "key echo"
+msgid "word"
+msgstr "hitza"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2821,8 +2967,29 @@ msgstr "Teklen oihartzuna hitz gisa ezarrita."
 #. levels quickly via a command.
 #.
 #: ../src/orca/default.py:2798
+#| msgid "Enable echo by _sentence"
 msgid "Key echo set to sentence."
 msgstr "Teklen oihartzuna sententzia gisa ezarrita."
+
+#. Translators: Orca has an "echo" setting which allows
+#. the user to configure what is spoken in response to a
+#. key press. Given a user who typed "Hello world.":
+#. - key echo: "H e l l o space w o r l d period"
+#. - word echo: "Hello" spoken when the space is pressed;
+#. "world" spoken when the period is pressed.
+#. - sentence echo: "Hello world" spoken when the period
+#. is pressed.
+#. A user can choose to have no echo, one type of echo, or
+#. multiple types of echo and can cycle through the various
+#. levels quickly via a command. The following string is a
+#. brief message which will be presented to the user who is
+#. cycling amongst the various echo options.
+#.
+#: ../src/orca/default.py:2813
+#| msgid "Sentence"
+msgctxt "key echo"
+msgid "sentence"
+msgstr "sententzia"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2850,11 +3017,49 @@ msgstr "Teklen oihartzuna tekla eta hitzera ezarrita."
 #. is pressed.
 #. A user can choose to have no echo, one type of echo, or
 #. multiple types of echo and can cycle through the various
+#. levels quickly via a command. The following string is a
+#. brief message which will be presented to the user who is
+#. cycling amongst the various echo options.
+#.
+#: ../src/orca/default.py:2846
+msgctxt "key echo"
+msgid "key and word"
+msgstr "Teklen oihartzuna hitz gisa ezarrita."
+
+#. Translators: Orca has an "echo" setting which allows
+#. the user to configure what is spoken in response to a
+#. key press. Given a user who typed "Hello world.":
+#. - key echo: "H e l l o space w o r l d period"
+#. - word echo: "Hello" spoken when the space is pressed;
+#. "world" spoken when the period is pressed.
+#. - sentence echo: "Hello world" spoken when the period
+#. is pressed.
+#. A user can choose to have no echo, one type of echo, or
+#. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
 #: ../src/orca/default.py:2864
 msgid "Key echo set to word and sentence."
 msgstr "Teklen oihartzuna hitz eta sententziara ezarrita."
+
+#. Translators: Orca has an "echo" setting which allows
+#. the user to configure what is spoken in response to a
+#. key press. Given a user who typed "Hello world.":
+#. - key echo: "H e l l o space w o r l d period"
+#. - word echo: "Hello" spoken when the space is pressed;
+#. "world" spoken when the period is pressed.
+#. - sentence echo: "Hello world" spoken when the period
+#. is pressed.
+#. A user can choose to have no echo, one type of echo, or
+#. multiple types of echo and can cycle through the various
+#. levels quickly via a command. The following string is a
+#. brief message which will be presented to the user who is
+#. cycling amongst the various echo options.
+#.
+#: ../src/orca/default.py:2879
+msgctxt "key echo"
+msgid "word and sentence"
+msgstr "hitz eta sententzia"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2872,6 +3077,26 @@ msgstr "Teklen oihartzuna hitz eta sententziara ezarrita."
 msgid "Key echo set to None."
 msgstr "Teklen oihartzuna bat ere ez bezala ezarrita."
 
+#. Translators: Orca has an "echo" setting which allows
+#. the user to configure what is spoken in response to a
+#. key press. Given a user who typed "Hello world.":
+#. - key echo: "H e l l o space w o r l d period"
+#. - word echo: "Hello" spoken when the space is pressed;
+#. "world" spoken when the period is pressed.
+#. - sentence echo: "Hello world" spoken when the period
+#. is pressed.
+#. A user can choose to have no echo, one type of echo, or
+#. multiple types of echo and can cycle through the various
+#. levels quickly via a command. The following string is a
+#. brief message which will be presented to the user who is
+#. cycling amongst the various echo options.
+#.
+#: ../src/orca/default.py:2912
+#| msgid "None"
+msgctxt "key echo"
+msgid "None"
+msgstr "Bat ere ez"
+
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
@@ -2887,6 +3112,36 @@ msgstr "Irakurri errenkada"
 #: ../src/orca/default.py:2937
 msgid "Speak cell"
 msgstr "Irakurri gelaxka"
+
+#. Translators: when the user selects (highlights) text in
+#. a document, Orca lets them know this.
+#.
+#. Translators: this object is now selected.
+#. Let the user know this.
+#.
+#.
+#. Translators: when the user selects (highlights) text in
+#. a document, Orca lets them know this.
+#.
+#: ../src/orca/default.py:3190 ../src/orca/default.py:3323
+#: ../src/orca/default.py:5312 ../src/orca/speech_generator.py:1127
+#: ../src/orca/speech_generator.py:1156
+msgctxt "text"
+msgid "selected"
+msgstr "hautatuta"
+
+#. Translators: this object is now unselected.
+#. Let the user know this.
+#.
+#.
+#. Translators: when the user unselects
+#. (unhighlights) text in a document, Orca lets
+#. them know this.
+#.
+#: ../src/orca/default.py:3329 ../src/orca/default.py:5318
+msgctxt "text"
+msgid "unselected"
+msgstr "desautatuta"
 
 #. Translators: this is to inform the user of the presence
 #. of the red squiggly line which indicates that a given
@@ -3132,6 +3387,25 @@ msgstr "sakatua"
 msgid "not pressed"
 msgstr "sakatu gabea"
 
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:1397
+msgctxt "radiobutton"
+msgid "selected"
+msgstr "hautatuta"
+
+#. Translators: this is in reference to a radio button being
+#. selected or not.
+#.
+#. Translators: this represents the state of a radio button.  It is
+#. meant to be spoken to the user.
+#.
+#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:1396
+msgctxt "radiobutton"
+msgid "not selected"
+msgstr "hautatu gabea"
+
 #. Translators: The component orientation is horizontal.
 #.
 #: ../src/orca/flat_review.py:425
@@ -3150,6 +3424,7 @@ msgstr "bertikala"
 #.
 #: ../src/orca/flat_review.py:447
 #, python-format
+#| msgid "%d percent."
 msgid "%d percent."
 msgid_plural "%d percent."
 msgstr[0] "ehuneko %d."
@@ -3640,7 +3915,7 @@ msgstr "Saguaren hobekuntzak gaituta."
 #.
 #: ../src/orca/mag.py:1747 ../src/orca/orca_gui_prefs.py:1984
 #: ../src/orca/orca_gui_prefs.py:2010 ../src/orca/orca_gui_prefs.py:2013
-#: ../src/orca/orca-setup.ui.h:85
+#: ../src/orca/orca-setup.ui.h:67
 msgid "Full Screen"
 msgstr "Pantaila osoa"
 
@@ -3661,14 +3936,14 @@ msgstr "Goiko erdia"
 #. Translators: magnification will use the bottom half of the screen.
 #.
 #: ../src/orca/mag.py:1760 ../src/orca/orca_gui_prefs.py:1992
-#: ../src/orca/orca_gui_prefs.py:2015 ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca_gui_prefs.py:2015 ../src/orca/orca-setup.ui.h:22
 msgid "Bottom Half"
 msgstr "Beheko erdia"
 
 #. Translators: magnification will use the left half of the screen.
 #.
 #: ../src/orca/mag.py:1764 ../src/orca/orca_gui_prefs.py:1996
-#: ../src/orca/orca_gui_prefs.py:2016 ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca_gui_prefs.py:2016 ../src/orca/orca-setup.ui.h:74
 msgid "Left Half"
 msgstr "Ezkerreko erdia"
 
@@ -3683,7 +3958,7 @@ msgstr "Eskuineko erdia"
 #. to use for magnification.
 #.
 #: ../src/orca/mag.py:1773 ../src/orca/orca_gui_prefs.py:2005
-#: ../src/orca/orca_gui_prefs.py:2018 ../src/orca/orca-setup.ui.h:49
+#: ../src/orca/orca_gui_prefs.py:2018 ../src/orca/orca-setup.ui.h:35
 msgid "Custom"
 msgstr "Pertsonalizatua"
 
@@ -3691,6 +3966,7 @@ msgstr "Pertsonalizatua"
 #. to the user when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:82
+#| msgid "Increases the magnification level."
 msgid "Present last notification message."
 msgstr "Aurkeztu jakinarazpeneko azken mezua."
 
@@ -3712,8 +3988,27 @@ msgstr "Aurkeztu jakinarazpeneko mezuen zerrenda"
 #. the list of notifications is empty.
 #.
 #: ../src/orca/notification_messages.py:128
+#| msgid "Notification %s"
 msgid "No notification messages"
 msgstr "Ez dago jakinarazpeneko mezurik"
+
+#. Translators: This is a brief message presented to the user when
+#. when the top of a list of notifications is reached.
+#.
+#: ../src/orca/notification_messages.py:159
+#| msgid "_Top:"
+msgctxt "notification"
+msgid "Top"
+msgstr "Goian"
+
+#. Translators: This is a brief message presented to the user when
+#. when the bottom of a list of notifications is reached.
+#.
+#: ../src/orca/notification_messages.py:166
+#| msgid "_Bottom:"
+msgctxt "notification"
+msgid "Bottom"
+msgstr "Behean"
 
 #. Translators: Orca has a "List notification messages Mode" that allows
 #. the user to list the latest notification messages received.
@@ -3729,9 +4024,11 @@ msgstr "Jakinarazpeneko mezuak zerrendatzeko modutik irtetzen."
 #. messages in the list.
 #: ../src/orca/notification_messages.py:243
 #, python-format
+#| msgid "%d space"
+#| msgid_plural "%d spaces"
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
-msgstr[0] "Mezu %d.\n"
+msgstr[0] "mezu %d.\n"
 msgstr[1] "%d mezu.\n"
 
 #. Translators: This is a help message.
@@ -3877,7 +4174,7 @@ msgstr "Ñabarduraren desplazamendu negatiboa"
 #: ../src/orca/orca_gui_prefs.py:4493 ../src/orca/orca_gui_prefs.py:4516
 #: ../src/orca/orca_gui_prefs.py:4689 ../src/orca/orca_gui_prefs.py:4756
 #: ../src/orca/orca_gui_prefs.py:4759 ../src/orca/orca_gui_prefs.py:4787
-#: ../src/orca/orca-setup.ui.h:105
+#: ../src/orca/orca-setup.ui.h:99
 msgid "None"
 msgstr "Bat ere ez"
 
@@ -4174,8 +4471,7 @@ msgstr "Oraintxe gaitu da GNOMEren erabilerraztasun-euskarria."
 
 #: ../src/orca/orca_console_prefs.py:593 ../src/orca/orca_gui_prefs.py:501
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
-"Saioa amaitu eta berriro hasi behar duzu aldaketek eragina izan dezaten."
+msgstr "Saioa amaitu eta berriro hasi behar duzu aldaketek eragina izan dezaten."
 
 #: ../src/orca/orca_console_prefs.py:603
 msgid "Do you want to logout now?  Enter y or n: "
@@ -4338,7 +4634,7 @@ msgstr ""
 #. the object of interest in the center of the magnified window.
 #.
 #: ../src/orca/orca_gui_prefs.py:102 ../src/orca/orca_gui_prefs.py:2061
-#: ../src/orca/orca_gui_prefs.py:2081 ../src/orca/orca-setup.ui.h:42
+#: ../src/orca/orca_gui_prefs.py:2081 ../src/orca/orca-setup.ui.h:28
 msgid "Centered"
 msgstr "Zentratua"
 
@@ -4402,6 +4698,47 @@ msgstr "Txandakatu"
 #: ../src/orca/orca_gui_prefs.py:428
 msgid "Modified"
 msgstr "Aldatuta"
+
+#. Translators: This refers to the default/typical voice used
+#. by Orca when presenting the content of the screen and other
+#. messages.
+#.
+#: ../src/orca/orca_gui_prefs.py:765
+msgctxt "VoiceType"
+msgid "Default"
+msgstr "Lehenetsia"
+
+#. Translators: This refers to the voice used by Orca when
+#. presenting one or more characters which is in uppercase.
+#.
+#: ../src/orca/orca_gui_prefs.py:769
+msgctxt "VoiceType"
+msgid "Uppercase"
+msgstr "Maiuskulak"
+
+#. Translators: This refers to the voice used by Orca when
+#. presenting one or more characters which is part of a
+#. hyperlink.
+#.
+#: ../src/orca/orca_gui_prefs.py:774
+msgctxt "VoiceType"
+msgid "Hyperlink"
+msgstr "Hiperesteka"
+
+#. Translators: This refers to the voice used by Orca when
+#. presenting information which is not displayed on the screen
+#. as text, but is still being communicated by the system in
+#. some visual fashion. For instance, Orca says "misspelled"
+#. to indicate the presence of the red squiggly line found
+#. under a spelling error; Orca might say "3 of 6" when a
+#. user Tabs into a list of six items and the third item is
+#. selected. And so on.
+#.
+#: ../src/orca/orca_gui_prefs.py:784
+#| msgid "term"
+msgctxt "VoiceType"
+msgid "System"
+msgstr "Sistema"
 
 #. Attribute Name column (NAME).
 #.
@@ -4484,7 +4821,7 @@ msgstr "Ordezteko erabiliko den katea"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1600 ../src/orca/orca-setup.ui.h:39
+#: ../src/orca/orca_gui_prefs.py:1600 ../src/orca/orca-setup.ui.h:25
 msgid "Break speech into ch_unks between pauses"
 msgstr "Zatitu irakurketa _pusketatan pausen artean"
 
@@ -4493,7 +4830,7 @@ msgstr "Zatitu irakurketa _pusketatan pausen artean"
 #. line.
 #.
 #: ../src/orca/orca_gui_prefs.py:1612 ../src/orca/orca_gui_prefs.py:3015
-#: ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca-setup.ui.h:75
 msgid "Line"
 msgstr "Lerroa"
 
@@ -4506,11 +4843,44 @@ msgstr "Lerroa"
 msgid "Sentence"
 msgstr "Esaldia"
 
+#. Translators: Orca has a setting which determines which progress
+#. bar updates should be announced. Choosing "All" means that Orca
+#. will present progress bar updates regardless of what application
+#. and window they happen to be in.
+#.
+#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
+#: ../src/orca/orca_gui_prefs.py:1711 ../src/orca/orca_gui_prefs.py:2980
+#: ../src/orca/orca-setup.ui.h:110
+msgctxt "ProgressBar"
+msgid "All"
+msgstr "Denak"
+
+#. Translators: Orca has a setting which determines which progress
+#. bar updates should be announced. Choosing "Application" means
+#. that Orca will present progress bar updates as long as the
+#. progress bar is in the active application (but not necessarily
+#. in the current window).
+#.
+#: ../src/orca/orca_gui_prefs.py:1718
+msgctxt "ProgressBar"
+msgid "Application"
+msgstr "Aplikazioa"
+
+#. Translators: Orca has a setting which determines which progress
+#. bar updates should be announced. Choosing "Window" means that
+#. Orca will present progress bar updates as long as the progress
+#. bar is in the active window.
+#.
+#: ../src/orca/orca_gui_prefs.py:1724 ../src/orca/orca_gui_prefs.py:2988
+msgctxt "ProgressBar"
+msgid "Window"
+msgstr "Leihoa"
+
 #. Translators: When this option is enabled, dead keys will be
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1831 ../src/orca/orca-setup.ui.h:80
+#: ../src/orca/orca_gui_prefs.py:1831 ../src/orca/orca-setup.ui.h:66
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Gaitu tarterik gabeko tekla _diakritikoak"
 
@@ -4521,7 +4891,7 @@ msgstr "Gaitu tarterik gabeko tekla _diakritikoak"
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1839 ../src/orca/orca-setup.ui.h:77
+#: ../src/orca/orca_gui_prefs.py:1839 ../src/orca/orca-setup.ui.h:63
 msgid "Enable echo by cha_racter"
 msgstr "Gaitu oihartzuna _karaktere arabera"
 
@@ -4556,7 +4926,7 @@ msgstr "Braille-gailuko laster-botoiak"
 #. corner will be used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2814 ../src/orca/orca_gui_prefs.py:2855
-#: ../src/orca/orca_gui_prefs.py:2895 ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/orca_gui_prefs.py:2895 ../src/orca/orca-setup.ui.h:42
 msgid "Dot _7"
 msgstr "_7. botoia"
 
@@ -4565,7 +4935,7 @@ msgstr "_7. botoia"
 #. will be used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2821 ../src/orca/orca_gui_prefs.py:2862
-#: ../src/orca/orca_gui_prefs.py:2902 ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca_gui_prefs.py:2902 ../src/orca/orca-setup.ui.h:43
 msgid "Dot _8"
 msgstr "_8. botoia"
 
@@ -4574,7 +4944,7 @@ msgstr "_8. botoia"
 #. used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2828 ../src/orca/orca_gui_prefs.py:2869
-#: ../src/orca/orca_gui_prefs.py:2909 ../src/orca/orca-setup.ui.h:58
+#: ../src/orca/orca_gui_prefs.py:2909 ../src/orca/orca-setup.ui.h:44
 msgid "Dots 7 an_d 8"
 msgstr "7. _eta 8. botoiak"
 
@@ -4598,7 +4968,7 @@ msgstr "_Batzuk"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2947 ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca_gui_prefs.py:2947 ../src/orca/orca-setup.ui.h:76
 msgid "M_ost"
 msgstr "_Gehienak"
 
@@ -4607,7 +4977,7 @@ msgstr "_Gehienak"
 #. focus.
 #.
 #: ../src/orca/orca_gui_prefs.py:3107 ../src/orca/orca_gui_prefs.py:3211
-#: ../src/orca/orca-setup.ui.h:40
+#: ../src/orca/orca-setup.ui.h:26
 msgid "Brie_f"
 msgstr "_Laburra"
 
@@ -4712,6 +5082,7 @@ msgstr "Ikasteko modua desaktibatzen."
 #. braille upon exiting this mode.
 #.
 #: ../src/orca/orca.py:413
+#| msgid "Exiting learn mode."
 msgid "Exiting list shortcuts mode."
 msgstr "Lasterbideen zerrendaren modutik irtetzen."
 
@@ -4765,9 +5136,7 @@ msgstr "Erabiltzailearen Orca-ren ezarpenak berriro kargatu dira."
 #.
 #: ../src/orca/orca.py:1338
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
-msgstr ""
-"Erabili Gora eta Behera geziak zerrendan nabigatzeko. Sakatu Ihes tekla "
-"irtetzeko."
+msgstr "Erabili Gora eta Behera geziak zerrendan nabigatzeko. Sakatu Ihes tekla irtetzeko."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. In this messsage, we present the
@@ -4857,6 +5226,7 @@ msgstr "zenbakizko teklatua "
 #. using a mouse.
 #.
 #: ../src/orca/orca.py:1509
+#| msgid "(double click)"
 msgid "double click"
 msgstr "klik bikoitza"
 
@@ -4865,6 +5235,7 @@ msgstr "klik bikoitza"
 #. using a mouse.
 #.
 #: ../src/orca/orca.py:1515
+#| msgid "(triple click)"
 msgid "triple click"
 msgstr "klik hirukoitza"
 
@@ -5076,312 +5447,323 @@ msgstr ""
 "<b>Doitu hautatutako\n"
 "atributuak</b>"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
-#: ../src/orca/orca-setup.ui.h:6
-msgid "<b>Border</b>"
-msgstr "<b>Ertza</b>"
-
-#: ../src/orca/orca-setup.ui.h:7
+#: ../src/orca/orca-setup.ui.h:5
 msgid "<b>Braille Indicator</b>"
 msgstr "<b>Braille-adierazlea</b>"
 
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
-#: ../src/orca/orca-setup.ui.h:9
-msgid "<b>Color</b>"
-msgstr "<b>Kolorea</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
-#: ../src/orca/orca-setup.ui.h:11
-msgid "<b>Cross-hair</b>"
-msgstr "<b>Gurutzagunea</b>"
-
-#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
-#: ../src/orca/orca-setup.ui.h:13
-msgid "<b>Cursor</b>"
-msgstr "<b>Kurtsorea</b>"
-
-#: ../src/orca/orca-setup.ui.h:14
+#: ../src/orca/orca-setup.ui.h:6
 msgid "<b>Hyperlink Indicator</b>"
 msgstr "<b>Hiperestekaren adierazlea</b>"
 
-#: ../src/orca/orca-setup.ui.h:15
+#: ../src/orca/orca-setup.ui.h:7
 msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Teklatuaren antolamendua</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
-#: ../src/orca/orca-setup.ui.h:17
+#: ../src/orca/orca-setup.ui.h:9
 msgid "<b>Progress Bar Updates</b>"
 msgstr "<b>Aurrerapen-barraren eguneratzeak</b>"
 
-#: ../src/orca/orca-setup.ui.h:18
+#: ../src/orca/orca-setup.ui.h:10
 msgid "<b>Pronunciation Dictionary</b>"
 msgstr "<b>Ahoskera-hiztegia</b>"
 
-#: ../src/orca/orca-setup.ui.h:19
+#: ../src/orca/orca-setup.ui.h:11
 msgid "<b>Punctuation Level</b>"
 msgstr "<b>Puntuazio-maila</b>"
 
-#: ../src/orca/orca-setup.ui.h:20
+#: ../src/orca/orca-setup.ui.h:12
 msgid "<b>Selection Indicator</b>"
 msgstr "<b>Hautapen-adierazlea</b>"
 
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
-#: ../src/orca/orca-setup.ui.h:22
+#: ../src/orca/orca-setup.ui.h:14
 msgid "<b>Table Rows</b>"
 msgstr "<b>Taulako errenkadak</b>"
 
-#: ../src/orca/orca-setup.ui.h:23
+#: ../src/orca/orca-setup.ui.h:15
 msgid "<b>Text attributes</b>"
 msgstr "<b>Testuaren atributuak</b>"
 
 #. Translators:  In the context of magnifying the contents of the screen, "tracking" refers to whether or not an object (mouse pointer, the caret, or the widget with focus) is of interest.  Objects of interest must always be displayed.  "Alignment" refers to where on the screen objects of interest should be displayed.
-#: ../src/orca/orca-setup.ui.h:25
+#: ../src/orca/orca-setup.ui.h:17
 msgid "<b>Tracking and Alignment</b>"
 msgstr "<b>Jarraipena eta lerrokadura</b>"
 
-#: ../src/orca/orca-setup.ui.h:26
+#: ../src/orca/orca-setup.ui.h:18
 msgid "<b>Verbosity</b>"
 msgstr "<b>Xehetasun-maila</b>"
 
-#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
-#: ../src/orca/orca-setup.ui.h:28
-msgid "<b>Zoomer</b>"
-msgstr "<b>Zoom-egilea</b>"
-
-#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
-#: ../src/orca/orca-setup.ui.h:30
-msgid "Advanced..."
-msgstr "_Aurreratua..."
-
-#. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca-setup.ui.h:32
-msgid "All"
-msgstr "Denak"
-
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/orca-setup.ui.h:33 ../src/orca/rolenames.py:1127
+#: ../src/orca/orca-setup.ui.h:19 ../src/orca/rolenames.py:1127
 msgid "Application"
 msgstr "Aplikazioa"
 
-#: ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca-setup.ui.h:20
 msgid "Border color:"
 msgstr "Ertzaren kolorea:"
 
-#: ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/orca-setup.ui.h:21
 msgid "Border size:"
 msgstr "Ertzaren tamaina:"
 
-#: ../src/orca/orca-setup.ui.h:37
+#: ../src/orca/orca-setup.ui.h:23
 msgid "Braille"
 msgstr "Braillea"
 
-#: ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca-setup.ui.h:27
 msgid "Brightness:"
 msgstr "Distira:"
 
-#: ../src/orca/orca-setup.ui.h:43
+#: ../src/orca/orca-setup.ui.h:29
 msgid "Contraction _Table:"
 msgstr "Uzkurduraren _taula:"
 
-#: ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca-setup.ui.h:30
 msgid "Contrast:"
 msgstr "Kontrastea:"
 
-#: ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca-setup.ui.h:31
 msgid "Cross-hair color:"
 msgstr "Gurutzearen kolorea:"
 
-#: ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca-setup.ui.h:32
 msgid "Cross-hair si_ze:"
 msgstr "Gurutzearen _tamaina:"
 
-#: ../src/orca/orca-setup.ui.h:47
+#: ../src/orca/orca-setup.ui.h:33
 msgid "Cursor color:"
 msgstr "Kurtsorearen kolorea:"
 
-#: ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/orca-setup.ui.h:34
 msgid "Cursor size:"
 msgstr "Kurtsorearen tamaina:"
 
-#: ../src/orca/orca-setup.ui.h:50
+#: ../src/orca/orca-setup.ui.h:36
 msgid "Custom siz_e"
 msgstr "_Tamaina pertsonalizatua"
 
 #. Translators: Orca can present the current date to the user, here they can choose how the date should be presented to them.
-#: ../src/orca/orca-setup.ui.h:52
+#: ../src/orca/orca-setup.ui.h:38
 msgid "Dat_e format:"
 msgstr "_Dataren formatua:"
 
-#: ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca-setup.ui.h:39
 msgid "Default"
 msgstr "Lehenetsia"
 
-#: ../src/orca/orca-setup.ui.h:54
+#: ../src/orca/orca-setup.ui.h:40
 msgid "Disable _end of line symbol"
 msgstr "Desgaitu lerro amaierako ikurra"
 
-#: ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Disable gksu _keyboard grab"
 msgstr "Desgaitu gksu _teklatu-kaptura"
 
 #. Translators: When a user chooses a tracking alignment of "push", Orca moves the magnified view just enough to fit the object of interest at the very edge of the screen.  The "edge margin" allows the user to specify a margin so that objects are not displayed too close to the edge.
-#: ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca-setup.ui.h:46
 msgid "Edge mar_gin:"
 msgstr "Ertzaren_marjina:"
 
-#: ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca-setup.ui.h:47
 msgid "Enable Braille _monitor"
 msgstr "Gaitu braille-_gailua"
 
-#: ../src/orca/orca-setup.ui.h:62
+#: ../src/orca/orca-setup.ui.h:48
 msgid "Enable Braille _support"
 msgstr "Gaitu braille-_euskarria"
 
-#: ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/orca-setup.ui.h:49
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "Gaitu tekla _alfanumerikoak eta puntuazio-teklak"
 
-#: ../src/orca/orca-setup.ui.h:64
+#: ../src/orca/orca-setup.ui.h:50
 msgid "Enable _function keys"
 msgstr "Gaitu _funtzio-teklak"
 
-#: ../src/orca/orca-setup.ui.h:65
+#: ../src/orca/orca-setup.ui.h:51
 msgid "Enable _key echo"
 msgstr "Gaitu _teklen oihartzuna"
 
-#: ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/orca-setup.ui.h:52
 msgid "Enable _magnifier"
 msgstr "Gaitu _lupa"
 
-#: ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Enable _modifier keys"
 msgstr "Gaitu tekla _aldatzaileak"
 
-#: ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/orca-setup.ui.h:54
 msgid "Enable _navigation keys"
 msgstr "Gaitu _nabigazio-teklak"
 
-#: ../src/orca/orca-setup.ui.h:69
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Enable ac_tion keys"
 msgstr "Gaitu e_kintza-teklak"
 
-#: ../src/orca/orca-setup.ui.h:70
+#: ../src/orca/orca-setup.ui.h:56
 msgid "Enable bor_der"
 msgstr "Gaitu _ertza"
 
-#: ../src/orca/orca-setup.ui.h:71
+#: ../src/orca/orca-setup.ui.h:57
 msgid "Enable c_ursor"
 msgstr "Gaitu _kurtsorea"
 
-#: ../src/orca/orca-setup.ui.h:72
+#: ../src/orca/orca-setup.ui.h:58
 msgid "Enable cross-h_air"
 msgstr "Gaitu _sare-egitura"
 
-#: ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/orca-setup.ui.h:59
 msgid "Enable cross-hair cl_ip"
 msgstr "Gaitu gurutzearen k_lip-a"
 
-#: ../src/orca/orca-setup.ui.h:74
+#: ../src/orca/orca-setup.ui.h:60
 msgid "Enable echo by _sentence"
 msgstr "Gaitu oihartzuna _sententzien arabera"
 
-#: ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/orca-setup.ui.h:61
 msgid "Enable echo by _word"
 msgstr "Gaitu _hitzen oihartzuna"
 
-#: ../src/orca/orca-setup.ui.h:78
+#: ../src/orca/orca-setup.ui.h:64
 msgid "Enable lockin_g keys"
 msgstr "Gaitu _blokeo-teklak"
 
-#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:82
-msgid "Enable_d"
-msgstr "_Gaituta"
-
-#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:84
-msgid "Frequency (secs):"
-msgstr "Maiztasuna (seg.):"
-
-#: ../src/orca/orca-setup.ui.h:86
+#: ../src/orca/orca-setup.ui.h:68
 msgid "General"
 msgstr "Orokorra"
 
-#: ../src/orca/orca-setup.ui.h:87
+#: ../src/orca/orca-setup.ui.h:69
 msgid "Hide s_ystem pointer"
 msgstr "Ezkutatu _sistemako erakuslea"
 
-#: ../src/orca/orca-setup.ui.h:88
+#: ../src/orca/orca-setup.ui.h:70
 msgid "Hyperlink"
 msgstr "Hiperesteka"
 
-#: ../src/orca/orca-setup.ui.h:89
+#: ../src/orca/orca-setup.ui.h:71
 msgid "In_vert colors"
 msgstr "_Alderantzikatu koloreak"
 
-#: ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca-setup.ui.h:72
 msgid "Key Bindings"
 msgstr "Laster-teklak"
 
-#: ../src/orca/orca-setup.ui.h:91
+#: ../src/orca/orca-setup.ui.h:73
 msgid "Key Echo"
 msgstr "Teklen oihartzuna"
 
-#: ../src/orca/orca-setup.ui.h:95
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
+#: ../src/orca/orca-setup.ui.h:78
+#| msgid "<b>Border</b>"
+msgctxt "Magnification"
+msgid "<b>Border</b>"
+msgstr "<b>Ertza</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
+#: ../src/orca/orca-setup.ui.h:80
+#| msgid "<b>Color</b>"
+msgctxt "Magnification"
+msgid "<b>Color</b>"
+msgstr "<b>Kolorea</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
+#: ../src/orca/orca-setup.ui.h:82
+#| msgid "<b>Cross-hair</b>"
+msgctxt "Magnification"
+msgid "<b>Cross-hair</b>"
+msgstr "<b>Gurutzagunea</b>"
+
+#. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
+#: ../src/orca/orca-setup.ui.h:84
+#| msgid "<b>Cursor</b>"
+msgctxt "Magnification"
+msgid "<b>Cursor</b>"
+msgstr "<b>Kurtsorea</b>"
+
+#. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
+#: ../src/orca/orca-setup.ui.h:86
+#| msgid "<b>Zoomer</b>"
+msgctxt "Magnification"
+msgid "<b>Zoomer</b>"
+msgstr "<b>Zoom-egilea</b>"
+
+#. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
+#: ../src/orca/orca-setup.ui.h:88
+#| msgid "Advanced..."
+msgctxt "Magnification"
+msgid "Advanced..."
+msgstr "Aurreratua..."
+
+#: ../src/orca/orca-setup.ui.h:89
 msgid "Magnifier"
 msgstr "Lupa"
 
-#: ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca-setup.ui.h:90
 msgid "Mouse poi_nter:"
 msgstr "Saguaren _erakuslea:"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:92
 msgid "Move _down one"
 msgstr "Mugitu bat _behera"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:100
+#: ../src/orca/orca-setup.ui.h:94
 msgid "Move _up one"
 msgstr "Mugitu bat _gora"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:102
+#: ../src/orca/orca-setup.ui.h:96
 msgid "Move to _bottom"
 msgstr "Mugitu b_eheraino"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Move to _top"
 msgstr "Mugitu g_oraino"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca-setup.ui.h:101
 msgid "Only speak displayed text"
 msgstr "Soilik bistaratutako testua irakurri"
 
-#: ../src/orca/orca-setup.ui.h:108
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Orca Preferences"
 msgstr "Orca-ren hobespenak"
 
-#: ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/orca-setup.ui.h:103
 msgid "Orca _Modifier Key(s):"
 msgstr "Orca-ren tekla _aldatzailea(k):"
 
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca-setup.ui.h:104
 msgid "Pi_tch:"
 msgstr "To_nua:"
 
 #. Translators:  if this setting is enabled, the mouse pointer will move to each menu item that the user has arrowed to and each dialog box control that the user has tabbed to.
-#: ../src/orca/orca-setup.ui.h:112
+#: ../src/orca/orca-setup.ui.h:106
 msgid "Pointer follows focus"
 msgstr "Erakusleak fokua jarraitzen du"
 
 #. Translators: when using magnification software, it is possible for the mouse pointer to not be visible in the "zoomer," which is the magnified view of the screen.  If the "pointer follows zoomer" setting is enabled and the mouse is moved, the pointer will be moved so that it is visible in the zoomer.  If it is not enabled, the zoomer will be moved to display the location of the mouse pointer.
-#: ../src/orca/orca-setup.ui.h:114
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Pointer follows zoomer"
 msgstr "Erakusleak lupa jarraitzen du"
+
+#. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
+#: ../src/orca/orca-setup.ui.h:112
+#| msgid "Frequency (secs):"
+msgctxt "ProgressBar"
+msgid "Frequency (secs):"
+msgstr "Maiztasuna (seg.):"
+
+#. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
+#: ../src/orca/orca-setup.ui.h:114
+#| msgid "Enable_d"
+msgctxt "ProgressBarUpdates"
+msgid "Enable_d"
+msgstr "_Gaituta"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Pronunciation"
@@ -5465,6 +5847,7 @@ msgid "Start Orca when you lo_gin"
 msgstr "Abiarazi Orca saioa _hastean"
 
 #: ../src/orca/orca-setup.ui.h:146
+#| msgid "term"
 msgid "System"
 msgstr "Sistema"
 
@@ -5926,6 +6309,16 @@ msgstr "MahaigainekoMarkoa"
 msgid "desktop frame"
 msgstr "mahaigaineko markoa"
 
+#. Translators: short braille for the rolename of a dial.
+#. You should attempt to treat it as an abbreviation of
+#. the translated word for "dial".  It is OK to use an
+#. unabbreviated word as long as it is relatively short.
+#.
+#: ../src/orca/rolenames.py:375
+msgctxt "shortbraille"
+msgid "dial"
+msgstr "markatu"
+
 #. Translators: long braille for the rolename of a dial.
 #.
 #: ../src/orca/rolenames.py:378
@@ -6065,6 +6458,16 @@ msgstr "LetraAukeratzailea"
 #: ../src/orca/rolenames.py:465
 msgid "font chooser"
 msgstr "letra-tipoen aukeratzailea"
+
+#. Translators: short braille for the rolename of a form.
+#. You should attempt to treat it as an abbreviation of
+#. the translated word for "form".  It is OK to use an
+#. unabbreviated word as long as it is relatively short.
+#.
+#: ../src/orca/rolenames.py:474
+msgctxt "shortbraille"
+msgid "form"
+msgstr "inprimakia"
 
 #. Translators: long braille for the rolename of a form.
 #.
@@ -7045,6 +7448,7 @@ msgstr[1] "%(count)d karaktere: %(repeatChar)s"
 #.
 #: ../src/orca/script_utilities.py:2523
 #, python-format
+#| msgid "superscript a"
 msgid " superscript %s"
 msgstr " goi-indizean %s"
 
@@ -7055,6 +7459,7 @@ msgstr " goi-indizean %s"
 #.
 #: ../src/orca/script_utilities.py:2533
 #, python-format
+#| msgid "superscript a"
 msgid " subscript %s"
 msgstr " azpindizean %s "
 
@@ -7085,6 +7490,8 @@ msgstr "dokumentua"
 #: ../src/orca/scripts/apps/soffice/script.py:733
 #: ../src/orca/structural_navigation.py:1338
 #, python-format
+#| msgid "Table with %d row"
+#| msgid_plural "Table with %d rows"
 msgid "table with %d row"
 msgid_plural "table with %d rows"
 msgstr[0] "errenkada %deko taula"
@@ -7417,6 +7824,7 @@ msgstr "%s jakinarazpena"
 #. Translators: This denotes a notification to the user of some sort.
 #.
 #: ../src/orca/scripts/apps/notify-osd/script.py:85
+#| msgid "Notification %s"
 msgid "Notification"
 msgstr "Jakinarazpena"
 
@@ -7455,8 +7863,7 @@ msgstr "Kargatzen bukatu du."
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:257
 msgid "An error occurred. View the error log for details."
-msgstr ""
-"Errore bat gertatu da. Ikusi errorearen erregistroa xehetasun gehiagorako."
+msgstr "Errore bat gertatu da. Ikusi errorearen erregistroa xehetasun gehiagorako."
 
 #. Translators: This is the tutorial string associated with a
 #. specific search field in the Packagemanager application.
@@ -7481,6 +7888,7 @@ msgstr "Bistaratu aukera gehiago"
 #. (i.e., the place where enter formulas)
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:234
+#| msgid "Speaks the contents of the input line."
 msgid "Presents the contents of the input line."
 msgstr "Sarrerako lerroaren edukia aurkezten du."
 
@@ -7504,8 +7912,7 @@ msgstr "Zutabe-goiburu dinamikoak garbitzen ditu."
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:259
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 "Ezarri zutabea, kalkulu-gelaxkak irakurtzean errenkaden goiburu dinamiko "
 "gisa erabiltzeko."
@@ -7658,6 +8065,7 @@ msgstr "Joan gelaxkara"
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1697
 #, python-format
+#| msgid "on %(index)d of %(total)d"
 msgid "slide %(position)d of %(count)d"
 msgstr "diapositiba: %(position)d / %(count)d"
 
@@ -7666,12 +8074,13 @@ msgstr "diapositiba: %(position)d / %(count)d"
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1872
 msgid "Last row deleted."
-msgstr "Ezabatutako azken errenkada."
+msgstr "Azken errenkada ezabatuta."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just deleted.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1876
+#| msgid "delete"
 msgid "Row deleted."
 msgstr "Errenkada ezabatuta."
 
@@ -7681,6 +8090,7 @@ msgstr "Errenkada ezabatuta."
 #. from within the last cell of the table.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1883
+#| msgid "Goes to the end of the line."
 msgid "Row inserted at the end of the table."
 msgstr "Errenkada txertatuta taularen amaieran."
 
@@ -7688,6 +8098,7 @@ msgstr "Errenkada txertatuta taularen amaieran."
 #. a row in a table was just inserted.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1887
+#| msgid "insert"
 msgid "Row inserted."
 msgstr "Errenkada txertatuta."
 
@@ -8183,6 +8594,7 @@ msgstr[1] "Bisitatu gabeko %d esteka"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:518
 #, python-format
+#| msgid "%d percent of document read"
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
 msgstr[0] "dokumentuaren ehuneko %d irakurri da"
@@ -8284,6 +8696,14 @@ msgstr "gaim"
 msgid "required"
 msgstr "beharrezkoa"
 
+#. Translators: this is used to indicate the user is in a text
+#. area that is not editable.  It is meant to be spoken to the user.
+#.
+#: ../src/orca/settings.py:1379
+msgctxt "text"
+msgid "read only"
+msgstr "irakurtzeko soilik"
+
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
@@ -8351,6 +8771,15 @@ msgstr " %(index)d / %(total)d"
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d / %(total)d"
+
+#. Translators: this is used to indicate the user is in a text
+#. area that is not editable.  It is meant to be a short abbreviation
+#. to be presented on the braille display.
+#.
+#: ../src/orca/settings.py:1457
+msgctxt "text"
+msgid "rdonly"
+msgstr "iraksoili"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).  It is meant to
@@ -8464,6 +8893,14 @@ msgstr "%.2f kilobyte"
 msgid "%.2f megabytes"
 msgstr "%.2f megabyte"
 
+#. Translators: this is in reference to a table cell being
+#. selected or not.
+#.
+#: ../src/orca/speech_generator.py:732
+msgctxt "tablecell"
+msgid "not selected"
+msgstr "hautatu gabea"
+
 #. Translators: this is in references to a row in a table.
 #.
 #: ../src/orca/speech_generator.py:790
@@ -8516,6 +8953,7 @@ msgstr[1] "%d tabulazio"
 #.
 #: ../src/orca/speech_generator.py:1279
 #, python-format
+#| msgid "%d percent"
 msgid "%d percent"
 msgid_plural "%d percent"
 msgstr[0] "ehuneko %d"
@@ -8669,15 +9107,18 @@ msgstr "Ez da uniformea"
 #: ../src/orca/structural_navigation.py:1498
 #: ../src/orca/structural_navigation.py:1520
 #, python-format
+#| msgid "Cell spans %d rows"
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
-msgstr[0] "Gelaxkak %d errenkada hartzen ditu"
+msgstr[0] "Gelaxkak errenkada %d hartzen du"
 msgstr[1] "Gelaxkak %d errenkada hartzen ditu"
 
 #. Translators: this represents the number of columns in a table.
 #.
 #: ../src/orca/structural_navigation.py:1504
 #, python-format
+#| msgid "%d column"
+#| msgid_plural "%d columns"
 msgid " %d column"
 msgid_plural " %d columns"
 msgstr[0] "zutabe %d"
@@ -8689,9 +9130,10 @@ msgstr[1] "%d zutabe"
 #.
 #: ../src/orca/structural_navigation.py:1512
 #, python-format
+#| msgid "Cell spans %d columns"
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
-msgstr[0] "Gelaxkak %d zutabe hartzen ditu"
+msgstr[0] "Gelaxkak zutabe %d hartzen du"
 msgstr[1] "Gelaxkak %d zutabe hartzen ditu"
 
 #. Translators: this is for navigating among anchors in a document.
@@ -8716,6 +9158,40 @@ msgstr "Hurrengo aingurara joaten da."
 #: ../src/orca/structural_navigation.py:1936
 msgid "No more anchors."
 msgstr "Ez dago aingura gehiago."
+
+#. Translators: Orca has a command that allows the user to move
+#. to the next structural navigation object. In Orca, "structural
+#. navigation" refers to quickly moving through a document by
+#. jumping amongst objects of a given type, such as from link to
+#. link, or from heading to heading, or from form field to form
+#. field. This is a brief message which will be presented to the
+#. user if the desired structural navigation object could not be
+#. found.
+#.
+#: ../src/orca/structural_navigation.py:1946
+#: ../src/orca/structural_navigation.py:2040
+#: ../src/orca/structural_navigation.py:2130
+#: ../src/orca/structural_navigation.py:2220
+#: ../src/orca/structural_navigation.py:2325
+#: ../src/orca/structural_navigation.py:2415
+#: ../src/orca/structural_navigation.py:2517
+#: ../src/orca/structural_navigation.py:2624
+#: ../src/orca/structural_navigation.py:2746
+#: ../src/orca/structural_navigation.py:2764
+#: ../src/orca/structural_navigation.py:2874
+#: ../src/orca/structural_navigation.py:2992
+#: ../src/orca/structural_navigation.py:3088
+#: ../src/orca/structural_navigation.py:3173
+#: ../src/orca/structural_navigation.py:3264
+#: ../src/orca/structural_navigation.py:3354
+#: ../src/orca/structural_navigation.py:3435
+#: ../src/orca/structural_navigation.py:3525
+#: ../src/orca/structural_navigation.py:3725
+#: ../src/orca/structural_navigation.py:3814
+#| msgid "No focus"
+msgctxt "structural navigation"
+msgid "Not found"
+msgstr "Ez da aurkitu"
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
@@ -9021,6 +9497,7 @@ msgstr "Hurrengo eskualde aktibora joaten da."
 #. which made an announcement.
 #.
 #: ../src/orca/structural_navigation.py:3114
+#| msgid "Review live region announcement."
 msgid "Goes to the last live region which made an announcement."
 msgstr "Jakinarazpen bat egin duen azken eskualde aktibora joaten da."
 
@@ -9200,6 +9677,967 @@ msgstr "Bisitatutako hurrengo estekara joaten da."
 msgid "No more visited links."
 msgstr "Ez dago bisitatutako esteka gehiago."
 
+#. Translators: this attribute specifies the background color of the text.
+#. The value is an RGB value of the format "u,u,u".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:62
+msgctxt "textattr"
+msgid "background color"
+msgstr "atzeko planoaren kolorea"
+
+#. Translators: this attribute specifies whether to make the background
+#. color for each character the height of the highest font used on the
+#. current line, or the height of the font used for the current character.
+#. It will be a "true" or "false" value.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:71
+msgctxt "textattr"
+msgid "background full height"
+msgstr "atzeko planoaren altuera osoa"
+
+#. Translators: this attribute specifies whether a GdkBitmap is set for
+#. stippling the background color. It will be a "true" or "false" value.
+#. See
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:78
+msgctxt "textattr"
+msgid "background stipple"
+msgstr "atzeko planoa puntukatua"
+
+#. Translators: this attribute specifies the direction of the text.
+#. Values are "none", "ltr" or "rtl".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:85
+msgctxt "textattr"
+msgid "direction"
+msgstr "norabidea"
+
+#. Translators: this attribute specifies whether the text is editable.
+#. It will be a "true" or "false" value.
+#. See
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:92
+msgctxt "textattr"
+msgid "editable"
+msgstr "editagarria"
+
+#. Translators: this attribute specifies the font family name of the text.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:98
+msgctxt "textattr"
+msgid "family name"
+msgstr "letra-familia"
+
+#. Translators: this attribute specifies the foreground color of the text.
+#. The value is an RGB value of the format "u,u,u".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:105
+msgctxt "textattr"
+msgid "foreground color"
+msgstr "aurreko planoaren kolorea"
+
+#. Translators: this attribute specifies whether a GdkBitmap is set for
+#. stippling the foreground color. It will be a "true" or "false" value.
+#. See
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:112
+msgctxt "textattr"
+msgid "foreground stipple"
+msgstr "aurreko planoa puntukatua"
+
+#. Translators: this attribute specifies the effect applied to the font
+#. used by the text.
+#. See:
+#. http://www.w3.org/TR/2002/WD-css3-fonts-20020802/#font-effect
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:120
+msgctxt "textattr"
+msgid "font effect"
+msgstr "letra-efektua"
+
+#. Translators: this attribute specifies the indentation of the text
+#. (in pixels).
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:127
+msgctxt "textattr"
+msgid "indent"
+msgstr "koska"
+
+#. Translators: this attribute specifies there is something "wrong" with
+#. the text, such as it being a misspelled word. See:
+#. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#.
+#: ../src/orca/text_attribute_names.py:133
+msgctxt "textattr"
+msgid "mistake"
+msgstr "gaizki idatzita"
+
+#. Translators: this attribute specifies whether the text is invisible.
+#. It will be a "true" or "false" value.
+#. See
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:140
+msgctxt "textattr"
+msgid "invisible"
+msgstr "ikusezina"
+
+#. Translators: this attribute specifies how the justification of the text.
+#. Values are "left", "right", "center" or "fill".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:147
+msgctxt "textattr"
+msgid "justification"
+msgstr "justifikazioa"
+
+#. Translators: this attribute specifies the language that the text is
+#. written in.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:154
+msgctxt "textattr"
+msgid "language"
+msgstr "hizkuntza"
+
+#. Translators: this attribute specifies the pixel width of the left margin.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:160
+msgctxt "textattr"
+msgid "left margin"
+msgstr "ezkerreko marjina"
+
+#. Translators: this attribute specifies the height of the line of text.
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-line-height
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:167
+msgctxt "textattr"
+msgid "line height"
+msgstr "lerroaren altuera"
+
+#. Translators: this attribute refers to the named style which is associated
+#. with the entire paragraph and which controls the default formatting
+#. (font, text size, alignment, etc.) of that paragraph. Examples of
+#. paragraph styles include "Heading 1", "Heading 2", "Caption", "Footnote",
+#. "Text Body", "Title", and "Subtitle".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:177
+msgctxt "textattr"
+msgid "paragraph style"
+msgstr "paragrafo-estiloa"
+
+#. Translators: this attribute specifies the pixels of blank space to
+#. leave above each newline-terminated line.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:184
+msgctxt "textattr"
+msgid "pixels above lines"
+msgstr "lerroen gaineko pixelak"
+
+#. Translators: this attribute specifies the pixels of blank space to
+#. leave below each newline-terminated line.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:191
+msgctxt "textattr"
+msgid "pixels below lines"
+msgstr "lerroen azpiko pixelak"
+
+#. Translators: this attribute specifies the pixels of blank space to
+#. leave between wrapped lines inside the same newline-terminated line
+#. (paragraph).
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:199
+msgctxt "textattr"
+msgid "pixels inside wrap"
+msgstr "itzulbiratzearen barruko pixelak"
+
+#. Translators: this attribute specifies the pixel width of the right margin.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:205
+msgctxt "textattr"
+msgid "right margin"
+msgstr "eskuineko marjina"
+
+#. Translators: this attribute specifies the number of pixels that the
+#. text characters are risen above the baseline.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:212
+msgctxt "textattr"
+msgid "rise"
+msgstr "goratu"
+
+#. Translators: this attribute specifies the scale of the characters. The
+#. value is a string representation of a double.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:219
+msgctxt "textattr"
+msgid "scale"
+msgstr "eskala"
+
+#. Translators: this attribute specifies the size of the text.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:225
+msgctxt "textattr"
+msgid "size"
+msgstr "tamaina"
+
+#. Translators: this attribute specifies the stretch of he text, if set.
+#. Values are "ultra_condensed", "extra_condensed", "condensed",
+#. "semi_condensed", "normal", "semi_expanded", "expanded",
+#. "extra_expanded" or "ultra_expanded".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:234
+msgctxt "textattr"
+msgid "stretch"
+msgstr "tiratu"
+
+#. Translators: this attribute specifies whether the text is strike though
+#. (in other words, whether there is a line drawn through it). Values are
+#. "true" or "false".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:242
+msgctxt "textattr"
+msgid "strike through"
+msgstr "marratu"
+
+#. Translators: this attribute specifies the slant style of the text,
+#. if set. Values are "normal", "oblique" or "italic".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:249
+msgctxt "textattr"
+msgid "style"
+msgstr "estiloa"
+
+#. Translators: this attribute specifies the decoration of the text.
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-decoration
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:256
+msgctxt "textattr"
+msgid "text decoration"
+msgstr "testuaren dekorazioa"
+
+#. Translators: this attribute specifies the angle at which the text is
+#. displayed (i.e. rotated from the norm) and is represented in degrees
+#. of rotation.
+#. See:
+#. http://www.w3.org/TR/2003/CR-css3-text-20030514/#glyph-orientation-horizontal
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:265
+msgctxt "textattr"
+msgid "text rotation"
+msgstr "testuaren biraketa"
+
+#. Translators: this attribute specifies the shadow effects applied to the text.
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-shadow
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:272
+msgctxt "textattr"
+msgid "text shadow"
+msgstr "testuaren itzala"
+
+#. Translators: this attributes specifies whether the text is underlined.
+#. Values are "none", "single", "double" or "low".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:279
+msgctxt "textattr"
+msgid "underline"
+msgstr "azpimarra"
+
+#. Translators: this attribute specifies the capitalization variant of
+#. the text, if set. Values are "normal" or "small_caps".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:286
+msgctxt "textattr"
+msgid "variant"
+msgstr "aldaera"
+
+#. Translators: this attributes specifies what vertical alignment property
+#. has been applied to the text.
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:293
+msgctxt "textattr"
+msgid "vertical align"
+msgstr "lerrokatze-bertikala"
+
+#. Translators: this attribute specifies the weight of the text.
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
+#.
+#: ../src/orca/text_attribute_names.py:300
+msgctxt "textattr"
+msgid "weight"
+msgstr "pisua"
+
+#. Translators: this attribute specifies the wrap mode of the text, if any.
+#. Values are "none", "char" or "word".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:307
+msgctxt "textattr"
+msgid "wrap mode"
+msgstr "itzulbiratze modua"
+
+#. Translators: this attribute specifies the way the text is written.
+#. Values are "lr-tb", "rl-tb", "tb-rl", "tb-lr", "bt-rl", "bt-lr", "lr",
+#. "rl" and "tb".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:316
+msgctxt "textattr"
+msgid "writing mode"
+msgstr "idazketa modua"
+
+#. The following are the known values of some of these text attributes.
+#. These values were found in the Atk documentation at:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#. No doubt there will be more, and as they are found, they can be added
+#. to this table so they can be translated.
+#.
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "invisible", "editable", bg-full-height", "strikethrough",
+#. "bg-stipple" and "fg-stipple".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:332
+msgctxt "textattr"
+msgid "true"
+msgstr "egia"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "invisible", "editable", bg-full-height", "strikethrough",
+#. "bg-stipple" and "fg-stipple".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:340
+msgctxt "textattr"
+msgid "false"
+msgstr "faltsua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "font-effect", "underline", "text-shadow", "wrap mode"
+#. and "direction".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:349
+msgctxt "textattr"
+msgid "none"
+msgstr "bat ere ez"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "font-effect".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:356
+msgctxt "textattr"
+msgid "engrave"
+msgstr "grabatu"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "font-effect".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:363
+msgctxt "textattr"
+msgid "emboss"
+msgstr "bozeldu"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "font-effect".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:370
+msgctxt "textattr"
+msgid "outline"
+msgstr "eskema"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "text-decoration".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:377
+msgctxt "textattr"
+msgid "overline"
+msgstr "goimarra"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "text-decoration".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:384
+msgctxt "textattr"
+msgid "line through"
+msgstr "marratua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "text-decoration".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:391
+msgctxt "textattr"
+msgid "blink"
+msgstr "keinuka"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "text-shadow".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:398
+msgctxt "textattr"
+msgid "black"
+msgstr "beltza"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "underline".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:405
+msgctxt "textattr"
+msgid "single"
+msgstr "bakuna"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "underline".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:412
+msgctxt "textattr"
+msgid "double"
+msgstr "bikoitza"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "underline".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:419
+msgctxt "textattr"
+msgid "low"
+msgstr "baxua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "wrap mode".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:426
+msgctxt "textattr"
+msgid "char"
+msgstr "karakterea"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "wrap mode".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:433
+msgctxt "textattr"
+msgid "word"
+msgstr "hitza"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "wrap mode." It corresponds to GTK_WRAP_WORD_CHAR,
+#. defined in the Gtk documentation as "Wrap text, breaking lines in
+#. between words, or if that is not enough, also between graphemes."
+#. See:
+#. http://library.gnome.org/devel/atk/1.27/AtkText.html#AtkTextAttribute
+#. http://library.gnome.org/devel/gtk/stable/GtkTextTag.html#GtkWrapMode
+#.
+#: ../src/orca/text_attribute_names.py:443
+msgctxt "textattr"
+msgid "word char"
+msgstr "hitz-karakterea"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "direction".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:450
+msgctxt "textattr"
+msgid "ltr"
+msgstr "ezk->esk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "direction".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:457
+msgctxt "textattr"
+msgid "rtl"
+msgstr "esk->ezk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:464
+msgctxt "textattr"
+msgid "left"
+msgstr "ezkerrera"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:471
+msgctxt "textattr"
+msgid "right"
+msgstr "eskuinera"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:478
+msgctxt "textattr"
+msgid "center"
+msgstr "zentratuta"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification". In Gecko, when no justification has
+#. be explicitly set, they report a justification of "start".
+#.
+#: ../src/orca/text_attribute_names.py:484
+msgctxt "textattr"
+msgid "no justification"
+msgstr "justifikaziorik gabe"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "justification".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:491
+msgctxt "textattr"
+msgid "fill"
+msgstr "betegarria"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:498
+msgctxt "textattr"
+msgid "ultra condensed"
+msgstr "ultra-estutua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:505
+msgctxt "textattr"
+msgid "extra condensed"
+msgstr "estra-estutua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:512
+msgctxt "textattr"
+msgid "condensed"
+msgstr "estutua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:519
+msgctxt "textattr"
+msgid "semi condensed"
+msgstr "erdi-estutua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch" and "variant".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:526
+msgctxt "textattr"
+msgid "normal"
+msgstr "normala"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:533
+msgctxt "textattr"
+msgid "semi expanded"
+msgstr "erdi-hedatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:540
+msgctxt "textattr"
+msgid "expanded"
+msgstr "hedatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:547
+msgctxt "textattr"
+msgid "extra expanded"
+msgstr "estra-hedatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "stretch".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:554
+msgctxt "textattr"
+msgid "ultra expanded"
+msgstr "ultra-hedatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "variant".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:561
+msgctxt "textattr"
+msgid "small caps"
+msgstr "maiuskula txikiak"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "style".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:568
+msgctxt "textattr"
+msgid "oblique"
+msgstr "zeiharra"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "style".
+#. See:
+#. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
+#.
+#: ../src/orca/text_attribute_names.py:575
+msgctxt "textattr"
+msgid "italic"
+msgstr "etzana"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "paragraph-style".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:582
+msgctxt "textattr"
+msgid "Default"
+msgstr "Lehenetsia"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "paragraph-style".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:589
+msgctxt "textattr"
+msgid "Text body"
+msgstr "Testuaren gorputza"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "paragraph-style".
+#. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:596
+msgctxt "textattr"
+msgid "Heading"
+msgstr "Izenburua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:604
+msgctxt "textattr"
+msgid "baseline"
+msgstr "oinarri-lerroa"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:611
+msgctxt "textattr"
+msgid "sub"
+msgstr "azpindizea"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:618
+msgctxt "textattr"
+msgid "super"
+msgstr "goi-indizea"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:625
+msgctxt "textattr"
+msgid "top"
+msgstr "goian"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:632
+msgctxt "textattr"
+msgid "text-top"
+msgstr "testua goian"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:639
+msgctxt "textattr"
+msgid "middle"
+msgstr "erdian"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:646
+msgctxt "textattr"
+msgid "bottom"
+msgstr "behean"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#.
+#: ../src/orca/text_attribute_names.py:653
+msgctxt "textattr"
+msgid "text-bottom"
+msgstr "testua behean"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "vertical-align" and "writing-mode".
+#. See:
+#. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:661
+msgctxt "textattr"
+msgid "inherit"
+msgstr "heredatua"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:668
+msgctxt "textattr"
+msgid "lr-tb"
+msgstr "ezkesk-goibehe"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:675
+msgctxt "textattr"
+msgid "rl-tb"
+msgstr "eskezk-goibehe"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:682
+msgctxt "textattr"
+msgid "tb-rl"
+msgstr "goibehe-eskezk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:689
+msgctxt "textattr"
+msgid "tb-lr"
+msgstr "goibehe-ezkesk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:696
+msgctxt "textattr"
+msgid "bt-rl"
+msgstr "behegoi-eskezk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:703
+msgctxt "textattr"
+msgid "bt-lr"
+msgstr "behegoi-ezkesk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:710
+msgctxt "textattr"
+msgid "lr"
+msgstr "ezkesk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:717
+msgctxt "textattr"
+msgid "rl"
+msgstr "eskezk"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "writing-mode".
+#. See:
+#. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
+#.
+#: ../src/orca/text_attribute_names.py:724
+msgctxt "textattr"
+msgid "tb"
+msgstr "goibehe"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "strikethrough." It refers to the line style.
+#.
+#: ../src/orca/text_attribute_names.py:729
+msgctxt "textattr"
+msgid "solid"
+msgstr "lisoa"
+
+#. Translators: this is one of the text attribute values for the following
+#. text attributes: "invalid". It is an indication that the text is not
+#. spelled correctly. See:
+#. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#.
+#: ../src/orca/text_attribute_names.py:736
+msgctxt "textattr"
+msgid "spelling"
+msgstr "akats ortografikoa"
+
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: ../src/orca/tutorialgenerator.py:158
 msgid "Press space to toggle."
@@ -9223,8 +10661,7 @@ msgstr "Sakatu Alt+F6 teklak fokua leiho umeei emateko."
 #. layered pane.
 #: ../src/orca/tutorialgenerator.py:277
 msgid "To move to items, use either the arrow keys or type ahead searching."
-msgstr ""
-"Elementuak lekuz aldatzeko, erabili teklatuko geziak, edo idatzi bilatzeko."
+msgstr "Elementuak lekuz aldatzeko, erabili teklatuko geziak, edo idatzi bilatzeko."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
@@ -9274,8 +10711,7 @@ msgstr "Sakatu zuriunea aktibatzeko."
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:466
-msgid ""
-"Use up or down arrow to select value. Or type in the desired numerical value."
+msgid "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
 "Erabili gora edo behera balioa hautatzeko. Edo idatzi nahi den balio "
 "numerikoa."
@@ -9310,541 +10746,3 @@ msgstr ""
 "Sakatu ezkerrera gezia gutxiagotzeko, eskuinera gezi handiagotzeko. Sakatu "
 "Hasiera tekla minimora joateko, eta  Amaiera maximora joateko."
 
-#~| msgid "delete"
-#~ msgctxt "text"
-#~ msgid "selected"
-#~ msgstr "hautatuta"
-
-#~| msgid "multi-select"
-#~ msgctxt "text"
-#~ msgid "unselected"
-#~ msgstr "desautatuta"
-
-#~| msgid "delete"
-#~ msgctxt "radiobutton"
-#~ msgid "selected"
-#~ msgstr "hautatuta"
-
-#~| msgid "not checked"
-#~ msgctxt "radiobutton"
-#~ msgid "not selected"
-#~ msgstr "hautatu gabea"
-
-#~| msgid "Default"
-#~ msgctxt "VoiceType"
-#~ msgid "Default"
-#~ msgstr "Lehenetsia"
-
-#~| msgid "Uppercase"
-#~ msgctxt "VoiceType"
-#~ msgid "Uppercase"
-#~ msgstr "Maiuskulak"
-
-#~| msgid "Hyperlink"
-#~ msgctxt "VoiceType"
-#~ msgid "Hyperlink"
-#~ msgstr "Hiperesteka"
-
-#~| msgid "All"
-#~ msgctxt "ProgressBar"
-#~ msgid "All"
-#~ msgstr "Denak"
-
-#~| msgid "Application"
-#~ msgctxt "ProgressBar"
-#~ msgid "Application"
-#~ msgstr "Aplikazioa"
-
-#~| msgid "Window"
-#~ msgctxt "ProgressBar"
-#~ msgid "Window"
-#~ msgstr "Leihoa"
-
-#~ msgid "Speak current _cell"
-#~ msgstr "Irakurri uneko _gelaxka"
-
-#~ msgid "Orca Modifier Keys"
-#~ msgstr "Orca-ren tekla aldatzaileak"
-
-#~| msgid "dial"
-#~ msgctxt "shortbraille"
-#~ msgid "dial"
-#~ msgstr "markatu"
-
-#~| msgid "form"
-#~ msgctxt "shortbraille"
-#~ msgid "form"
-#~ msgstr "inprimakia"
-
-#~ msgid "table with %(rows)d rows and %(columns)d columns."
-#~ msgstr "%(rows)d errenkada eta %(columns)d zutabe dituen taula."
-
-#~ msgctxt "text"
-#~ msgid "read only"
-#~ msgstr "irakurtzeko soilik"
-
-#~| msgid "ordinal"
-#~ msgctxt "text"
-#~ msgid "rdonly"
-#~ msgstr "iraksoili"
-
-#~| msgid "not checked"
-#~ msgctxt "tablecell"
-#~ msgid "not selected"
-#~ msgstr "hautatu gabea"
-
-#~ msgid "Cell spans %(rows)d rows and %(columns)d columns"
-#~ msgstr "Gelaxkak %(rows)d errenkada eta %(columns)d zutabe hartzen ditu"
-
-#~ msgid "Goes to last live region."
-#~ msgstr "Azken eskualde aktibora joaten da."
-
-#~ msgctxt "textattr"
-#~ msgid "background color"
-#~ msgstr "atzeko planoaren kolorea"
-
-#~ msgctxt "textattr"
-#~ msgid "background full height"
-#~ msgstr "atzeko planoaren altuera osoa"
-
-#~ msgctxt "textattr"
-#~ msgid "background stipple"
-#~ msgstr "atzeko planoa puntukatua"
-
-#~| msgid "section"
-#~ msgctxt "textattr"
-#~ msgid "direction"
-#~ msgstr "norabidea"
-
-#~| msgid "table"
-#~ msgctxt "textattr"
-#~ msgid "editable"
-#~ msgstr "editagarria"
-
-#~ msgctxt "textattr"
-#~ msgid "family name"
-#~ msgstr "letra-familia"
-
-#~| msgid "Border color:"
-#~ msgctxt "textattr"
-#~ msgid "foreground color"
-#~ msgstr "aurreko planoaren kolorea"
-
-#~ msgctxt "textattr"
-#~ msgid "foreground stipple"
-#~ msgstr "aurreko planoa puntukatua"
-
-#~ msgctxt "textattr"
-#~ msgid "font effect"
-#~ msgstr "letra-efektua"
-
-#~| msgid "insert"
-#~ msgctxt "textattr"
-#~ msgid "indent"
-#~ msgstr "koska"
-
-#~| msgid "stroke"
-#~ msgctxt "textattr"
-#~ msgid "mistake"
-#~ msgstr "gaizki idatzita"
-
-#~| msgid "inaccessible"
-#~ msgctxt "textattr"
-#~ msgid "invisible"
-#~ msgstr "ikusezina"
-
-#~| msgid "Notification %s"
-#~ msgctxt "textattr"
-#~ msgid "justification"
-#~ msgstr "justifikazioa"
-
-#~| msgid "Flagged"
-#~ msgctxt "textattr"
-#~ msgid "language"
-#~ msgstr "hizkuntza"
-
-#~| msgid "left paren"
-#~ msgctxt "textattr"
-#~ msgid "left margin"
-#~ msgstr "ezkerreko marjina"
-
-#~| msgid "Line Right"
-#~ msgctxt "textattr"
-#~ msgid "line height"
-#~ msgstr "lerroaren altuera"
-
-#~| msgid "paragraph"
-#~ msgctxt "textattr"
-#~ msgid "paragraph style"
-#~ msgstr "paragrafo-estiloa"
-
-#~ msgctxt "textattr"
-#~ msgid "pixels above lines"
-#~ msgstr "lerroen gaineko pixelak"
-
-#~| msgid "Speak blank lines"
-#~ msgctxt "textattr"
-#~ msgid "pixels below lines"
-#~ msgstr "lerroen azpiko pixelak"
-
-#~ msgctxt "textattr"
-#~ msgid "pixels inside wrap"
-#~ msgstr "itzulbiratzearen barruko pixelak"
-
-#~| msgid "right paren"
-#~ msgctxt "textattr"
-#~ msgid "right margin"
-#~ msgstr "eskuineko marjina"
-
-#~| msgid "prime"
-#~ msgctxt "textattr"
-#~ msgid "rise"
-#~ msgstr "goratu"
-
-#~| msgid "cale"
-#~ msgctxt "textattr"
-#~ msgid "scale"
-#~ msgstr "eskala"
-
-#~| msgid "slider"
-#~ msgctxt "textattr"
-#~ msgid "size"
-#~ msgstr "tamaina"
-
-#~| msgid "stroke"
-#~ msgctxt "textattr"
-#~ msgid "stretch"
-#~ msgstr "tiratu"
-
-#~ msgctxt "textattr"
-#~ msgid "strike through"
-#~ msgstr "marratu"
-
-#~| msgid "tilde"
-#~ msgctxt "textattr"
-#~ msgid "style"
-#~ msgstr "estiloa"
-
-#~ msgctxt "textattr"
-#~ msgid "text decoration"
-#~ msgstr "testuaren dekorazioa"
-
-#~| msgid "C_urrent location"
-#~ msgctxt "textattr"
-#~ msgid "text rotation"
-#~ msgstr "testuaren biraketa"
-
-#~ msgctxt "textattr"
-#~ msgid "text shadow"
-#~ msgstr "testuaren itzala"
-
-#~| msgid "underline"
-#~ msgctxt "textattr"
-#~ msgid "underline"
-#~ msgstr "azpimarra"
-
-#~| msgid "a ring"
-#~ msgctxt "textattr"
-#~ msgid "variant"
-#~ msgstr "aldaera"
-
-#~| msgid "vertical bar"
-#~ msgctxt "textattr"
-#~ msgid "vertical align"
-#~ msgstr "lerrokatze-bertikala"
-
-#~| msgid "right"
-#~ msgctxt "textattr"
-#~ msgid "weight"
-#~ msgstr "pisua"
-
-#~ msgctxt "textattr"
-#~ msgid "wrap mode"
-#~ msgstr "itzulbiratze modua"
-
-#~| msgid "Exiting learn mode."
-#~ msgctxt "textattr"
-#~ msgid "writing mode"
-#~ msgstr "idazketa modua"
-
-#~| msgid "tre"
-#~ msgctxt "textattr"
-#~ msgid "true"
-#~ msgstr "egia"
-
-#~| msgid "faster."
-#~ msgctxt "textattr"
-#~ msgid "false"
-#~ msgstr "faltsua"
-
-#~| msgid "None"
-#~ msgctxt "textattr"
-#~ msgid "none"
-#~ msgstr "bat ere ez"
-
-#~| msgid "e grave"
-#~ msgctxt "textattr"
-#~ msgid "engrave"
-#~ msgstr "grabatu"
-
-#~| msgid "emb"
-#~ msgctxt "textattr"
-#~ msgid "emboss"
-#~ msgstr "bozeldu"
-
-#~| msgid "Cut Line"
-#~ msgctxt "textattr"
-#~ msgid "outline"
-#~ msgstr "eskema"
-
-#~| msgid "underline"
-#~ msgctxt "textattr"
-#~ msgid "overline"
-#~ msgstr "goimarra"
-
-#~ msgctxt "textattr"
-#~ msgid "line through"
-#~ msgstr "marratua"
-
-#~| msgid "link"
-#~ msgctxt "textattr"
-#~ msgid "blink"
-#~ msgstr "keinuka"
-
-#~| msgid "blank"
-#~ msgctxt "textattr"
-#~ msgid "black"
-#~ msgstr "beltza"
-
-#~| msgid "ring"
-#~ msgctxt "textattr"
-#~ msgid "single"
-#~ msgstr "bakuna"
-
-#~| msgid "double prime"
-#~ msgctxt "textattr"
-#~ msgid "double"
-#~ msgstr "bikoitza"
-
-#~| msgid "lower."
-#~ msgctxt "textattr"
-#~ msgid "low"
-#~ msgstr "baxua"
-
-#~| msgid "caret"
-#~ msgctxt "textattr"
-#~ msgid "char"
-#~ msgstr "karakterea"
-
-#~| msgid "Password"
-#~ msgctxt "textattr"
-#~ msgid "word"
-#~ msgstr "hitza"
-
-#~ msgctxt "textattr"
-#~ msgid "word char"
-#~ msgstr "hitz-karakterea"
-
-#~| msgid "flr"
-#~ msgctxt "textattr"
-#~ msgid "ltr"
-#~ msgstr "ezk->esk"
-
-#~| msgid "trtbl"
-#~ msgctxt "textattr"
-#~ msgid "rtl"
-#~ msgstr "esk->ezk"
-
-#~| msgid "left"
-#~ msgctxt "textattr"
-#~ msgid "left"
-#~ msgstr "ezkerrera"
-
-#~| msgid "right"
-#~ msgctxt "textattr"
-#~ msgid "right"
-#~ msgstr "eskuinera"
-
-#~| msgid "enter"
-#~ msgctxt "textattr"
-#~ msgid "center"
-#~ msgstr "zentratuta"
-
-#~| msgid "Notification %s"
-#~ msgctxt "textattr"
-#~ msgid "no justification"
-#~ msgstr "justifikaziorik gabe"
-
-#~| msgid "filler"
-#~ msgctxt "textattr"
-#~ msgid "fill"
-#~ msgstr "betegarria"
-
-#~ msgctxt "textattr"
-#~ msgid "ultra condensed"
-#~ msgstr "ultra-estutua"
-
-#~| msgid "expanded"
-#~ msgctxt "textattr"
-#~ msgid "extra condensed"
-#~ msgstr "estra-estutua"
-
-#~ msgctxt "textattr"
-#~ msgid "condensed"
-#~ msgstr "estutua"
-
-#~| msgid "semicolon"
-#~ msgctxt "textattr"
-#~ msgid "semi condensed"
-#~ msgstr "erdi-estutua"
-
-#~| msgid "ordinal"
-#~ msgctxt "textattr"
-#~ msgid "normal"
-#~ msgstr "normala"
-
-#~| msgid "expanded"
-#~ msgctxt "textattr"
-#~ msgid "semi expanded"
-#~ msgstr "erdi-hedatua"
-
-#~| msgid "expanded"
-#~ msgctxt "textattr"
-#~ msgid "expanded"
-#~ msgstr "hedatua"
-
-#~| msgid "expanded"
-#~ msgctxt "textattr"
-#~ msgid "extra expanded"
-#~ msgstr "estra-hedatua"
-
-#~| msgid "expanded"
-#~ msgctxt "textattr"
-#~ msgid "ultra expanded"
-#~ msgstr "ultra-hedatua"
-
-#~ msgctxt "textattr"
-#~ msgid "small caps"
-#~ msgstr "maiuskula txikiak"
-
-#~ msgctxt "textattr"
-#~ msgid "oblique"
-#~ msgstr "zeiharra"
-
-#~| msgid "invalid"
-#~ msgctxt "textattr"
-#~ msgid "italic"
-#~ msgstr "etzana"
-
-#~| msgid "Default"
-#~ msgctxt "textattr"
-#~ msgid "Default"
-#~ msgstr "Lehenetsia"
-
-#~| msgid "Text"
-#~ msgctxt "textattr"
-#~ msgid "Text body"
-#~ msgstr "Testuaren gorputza"
-
-#~| msgid "Heading"
-#~ msgctxt "textattr"
-#~ msgid "Heading"
-#~ msgstr "Izenburua"
-
-#~| msgid "newline"
-#~ msgctxt "textattr"
-#~ msgid "baseline"
-#~ msgstr "oinarri-lerroa"
-
-#~ msgctxt "textattr"
-#~ msgid "sub"
-#~ msgstr "azpindizea"
-
-#~| msgid "Super"
-#~ msgctxt "textattr"
-#~ msgid "super"
-#~ msgstr "goi-indizea"
-
-#~| msgid "Stop"
-#~ msgctxt "textattr"
-#~ msgid "top"
-#~ msgstr "goian"
-
-#~| msgid "text"
-#~ msgctxt "textattr"
-#~ msgid "text-top"
-#~ msgstr "testua goian"
-
-#~| msgid "middle dot"
-#~ msgctxt "textattr"
-#~ msgid "middle"
-#~ msgstr "erdian"
-
-#~| msgid "_Bottom:"
-#~ msgctxt "textattr"
-#~ msgid "bottom"
-#~ msgstr "behean"
-
-#~| msgid "Move to _bottom"
-#~ msgctxt "textattr"
-#~ msgid "text-bottom"
-#~ msgstr "testua behean"
-
-#~| msgid "insert"
-#~ msgctxt "textattr"
-#~ msgid "inherit"
-#~ msgstr "heredatua"
-
-#~| msgid "alrt"
-#~ msgctxt "textattr"
-#~ msgid "lr-tb"
-#~ msgstr "ezkesk-goibehe"
-
-#~| msgid "trtbl"
-#~ msgctxt "textattr"
-#~ msgid "rl-tb"
-#~ msgstr "eskezk-goibehe"
-
-#~| msgid "tbl"
-#~ msgctxt "textattr"
-#~ msgid "tb-rl"
-#~ msgstr "goibehe-eskezk"
-
-#~| msgid "tbl"
-#~ msgctxt "textattr"
-#~ msgid "tb-lr"
-#~ msgstr "goibehe-ezkesk"
-
-#~| msgid "Ctrl"
-#~ msgctxt "textattr"
-#~ msgid "bt-rl"
-#~ msgstr "behegoi-eskezk"
-
-#~ msgctxt "textattr"
-#~ msgid "bt-lr"
-#~ msgstr "behegoi-ezkesk"
-
-#~| msgid "flr"
-#~ msgctxt "textattr"
-#~ msgid "lr"
-#~ msgstr "ezkesk"
-
-#~| msgid "Ctrl"
-#~ msgctxt "textattr"
-#~ msgid "rl"
-#~ msgstr "eskezk"
-
-#~| msgid "tab"
-#~ msgctxt "textattr"
-#~ msgid "tb"
-#~ msgstr "goibehe"
-
-#~| msgid "slider"
-#~ msgctxt "textattr"
-#~ msgid "solid"
-#~ msgstr "lisoa"
-
-#~| msgid "spin"
-#~ msgctxt "textattr"
-#~ msgid "spelling"
-#~ msgstr "akats ortografikoa"
