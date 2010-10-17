@@ -2166,7 +2166,7 @@ def main():
     oldUserPrefsDir = os.path.join(os.environ["HOME"], ".orca")
 
     if not os.path.exists(userPrefsDir):
-        os.mkdir(userPrefsDir)
+        os.makedirs(userPrefsDir)
 
     for baseDirName, dirNames, fileNames in os.walk(oldUserPrefsDir):
 
