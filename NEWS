@@ -1,3 +1,24 @@
+2.91.1 - 18-October-2010
+
+General:
+
+  * Fix for bug #631544 - Orca crashes at GDM login screen if GDM's 
+    .local/share/orca directory does not exist
+
+  * Fix for bug #628276 - Orca: Icons in Nautilus aren't using 
+    localized role names
+
+  * Upgrade from LGPLv2 to LGPLv2.1.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca       Catalan                 Gil Forcada
+    cs       Czech                   Marek Černocký
+    de       German                  Christian Kirbach
+    et       Estonian                Ivar Smolin
+
+==========
+
 2.91.0 - 03-October-2010
 
 General:
