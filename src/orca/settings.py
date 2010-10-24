@@ -374,7 +374,6 @@ onlySpeakDisplayedText = False
 # use as well details on the default voices to use.
 #
 speechFactoryModules    = ["gnomespeechfactory",
-                           "openttsfactory",
                            "speechdispatcherfactory",
                            "espeechfactory"]
 speechServerFactory     = "speechdispatcherfactory"

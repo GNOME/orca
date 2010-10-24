@@ -42,7 +42,6 @@ orca_python_PYTHON = \
 	mag.py \
 	mouse_review.py \
 	notification_messages.py \
-	openttsfactory.py \
 	orca.py \
 	orca_console_prefs.py \
 	orca_gtkbuilder.py \

@@ -21,7 +21,6 @@ src/orca/keynames.py
 src/orca/liveregions.py
 src/orca/mag.py
 src/orca/notification_messages.py
-src/orca/openttsfactory.py
 [type: gettext/glade]src/orca/orca-advanced-magnification.ui
 src/orca/orca_console_prefs.py
 [type: gettext/glade]src/orca/orca-find.ui
