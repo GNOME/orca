@@ -879,11 +879,13 @@ class Generator:
 
     def _generateDisplayedText(self, obj, **args ):
         """Returns an array of strings for use by speech and braille that
-        represents all the text being displayed by the object. [[[WDW
-        - consider returning an empty array if this is not a text
-        object.]]]
+        represents all the text being displayed by the object.
         """
-        return [self._script.utilities.displayedText(obj)]
+        displayedText = self._script.utilities.displayedText(obj)
+        if not displayedText:
+            return []
+
+        return [displayedText]
 
     #####################################################################
     #                                                                   #
