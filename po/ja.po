@@ -4,19 +4,21 @@
 # Satoru SATOH <ss@gnome.gr.jp>, 2006.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2006-2009.
 # Jiro MATSUZAWA <matsuzawa.jr@gmail.com>, 2010.
+# Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca gnome-2-32\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-09-20 00:59+0000\n"
-"PO-Revision-Date: 2010-08-23 01:12+0900\n"
-"Last-Translator: Jiro MATSUZAWA <matsuzawa.jr@gmail.com>\n"
+"POT-Creation-Date: 2010-10-29 20:44+0000\n"
+"PO-Revision-Date: 2010-10-31 22:08+0900\n"
+"Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:210
@@ -2709,8 +2711,8 @@ msgstr "link"
 #.
 #: ../src/orca/default.py:2123 ../src/orca/default.py:2131
 #: ../src/orca/default.py:2252 ../src/orca/default.py:2260
-#: ../src/orca/default.py:2396 ../src/orca/default.py:4473
-#: ../src/orca/default.py:4483
+#: ../src/orca/default.py:2396 ../src/orca/default.py:4481
+#: ../src/orca/default.py:4491
 #: ../src/orca/scripts/apps/evolution/script.py:1140
 #: ../src/orca/scripts/apps/soffice/script.py:1267
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:429
@@ -3111,7 +3113,7 @@ msgstr "Speak cell"
 #. a document, Orca lets them know this.
 #.
 #: ../src/orca/default.py:3190 ../src/orca/default.py:3323
-#: ../src/orca/default.py:5312 ../src/orca/speech_generator.py:1127
+#: ../src/orca/default.py:5320 ../src/orca/speech_generator.py:1127
 #: ../src/orca/speech_generator.py:1156
 msgctxt "text"
 msgid "selected"
@@ -3125,7 +3127,7 @@ msgstr "selected"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/default.py:3329 ../src/orca/default.py:5318
+#: ../src/orca/default.py:3329 ../src/orca/default.py:5326
 msgctxt "text"
 msgid "unselected"
 msgstr "unselected"
@@ -3134,7 +3136,7 @@ msgstr "unselected"
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
 #.
-#: ../src/orca/default.py:3420 ../src/orca/default.py:5372
+#: ../src/orca/default.py:3420 ../src/orca/default.py:5380
 msgid "misspelled"
 msgstr "misspelled"
 
@@ -3142,14 +3144,14 @@ msgstr "misspelled"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/default.py:4321
+#: ../src/orca/default.py:4329
 #, python-format
 msgid "Progress bar %d."
 msgstr "Progress bar %d."
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/default.py:4357 ../src/orca/speech_generator.py:947
+#: ../src/orca/default.py:4365 ../src/orca/speech_generator.py:947
 msgid "bold"
 msgstr "bold"
 
@@ -3160,7 +3162,7 @@ msgstr "bold"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/default.py:4374 ../src/orca/default.py:4386
+#: ../src/orca/default.py:4382 ../src/orca/default.py:4394
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -3172,7 +3174,7 @@ msgstr[0] "%(key)s %(value)s pixel"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/default.py:4764
+#: ../src/orca/default.py:4772
 msgid "string not found"
 msgstr "string not found"
 
@@ -3181,12 +3183,12 @@ msgstr "string not found"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/default.py:4836
+#: ../src/orca/default.py:4844
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Misspelled word: %s"
 
-#: ../src/orca/default.py:4844
+#: ../src/orca/default.py:4852
 #, python-format
 msgid "Context is %s"
 msgstr "Context is %s"
@@ -3195,19 +3197,19 @@ msgstr "Context is %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5111
+#: ../src/orca/default.py:5119
 msgid "paragraph selected down from cursor position"
 msgstr "paragraph selected down from cursor position"
 
-#: ../src/orca/default.py:5112
+#: ../src/orca/default.py:5120
 msgid "paragraph unselected down from cursor position"
 msgstr "paragraph unselected down from cursor position"
 
-#: ../src/orca/default.py:5113
+#: ../src/orca/default.py:5121
 msgid "paragraph selected up from cursor position"
 msgstr "paragraph selected up from cursor position"
 
-#: ../src/orca/default.py:5114
+#: ../src/orca/default.py:5122
 msgid "paragraph unselected up from cursor position"
 msgstr "paragraph unselected up from cursor position"
 
@@ -3215,7 +3217,7 @@ msgstr "paragraph unselected up from cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5168
+#: ../src/orca/default.py:5176
 msgid "line selected to end from previous cursor position"
 msgstr "line selected to end from previous cursor position"
 
@@ -3223,7 +3225,7 @@ msgstr "line selected to end from previous cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5176
+#: ../src/orca/default.py:5184
 msgid "line selected from start to previous cursor position"
 msgstr "line selected from start to previous cursor position"
 
@@ -3231,14 +3233,14 @@ msgstr "line selected from start to previous cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5185
+#: ../src/orca/default.py:5193
 msgid "page selected from cursor position"
 msgstr "page selected from cursor position"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:5190
+#: ../src/orca/default.py:5198
 msgid "page unselected from cursor position"
 msgstr "page unselected from cursor position"
 
@@ -3246,14 +3248,14 @@ msgstr "page unselected from cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5199
+#: ../src/orca/default.py:5207
 msgid "page selected to cursor position"
 msgstr "page selected to cursor position"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:5204
+#: ../src/orca/default.py:5212
 msgid "page unselected to cursor position"
 msgstr "page unselected to cursor position"
 
@@ -3261,14 +3263,14 @@ msgstr "page unselected to cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5229
+#: ../src/orca/default.py:5237
 msgid "document selected to cursor position"
 msgstr "document selected to cursor position"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:5234
+#: ../src/orca/default.py:5242
 msgid "document unselected to cursor position"
 msgstr "document unselected to cursor position"
 
@@ -3276,21 +3278,21 @@ msgstr "document unselected to cursor position"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/default.py:5243
+#: ../src/orca/default.py:5251
 msgid "document selected from cursor position"
 msgstr "document selected from cursor position"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/default.py:5248
+#: ../src/orca/default.py:5256
 msgid "document unselected from cursor position"
 msgstr "document unselected from cursor position"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/default.py:5265
+#: ../src/orca/default.py:5273
 msgid "entire document selected"
 msgstr "entire document selected"
 
@@ -3298,7 +3300,7 @@ msgstr "entire document selected"
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/default.py:5801
+#: ../src/orca/default.py:5809
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
@@ -3901,14 +3903,14 @@ msgstr "Mouse enhancements enabled."
 #: ../src/orca/orca_gui_prefs.py:2010 ../src/orca/orca_gui_prefs.py:2013
 #: ../src/orca/orca-setup.ui.h:67
 msgid "Full Screen"
-msgstr "全画面"
+msgstr "フルスクリーン"
 
 #. Translators: the user attempted to switch to full screen
 #. magnification, but his/her system doesn't support it.
 #.
 #: ../src/orca/mag.py:1752
 msgid "Full Screen mode unavailable"
-msgstr "全画面モードは利用できません"
+msgstr "フルスクリーンモードは利用できません"
 
 #. Translators: magnification will use the top half of the screen.
 #.
@@ -4572,7 +4574,7 @@ msgstr ""
 "佐藤 暁 <ss@gnome.gr.jp>\n"
 "相花 毅 <takeshi.aihana@gmail.com>\n"
 "松澤 二郎 <matsuzawa.jr@gmail.com>\n"
-"日本GNOMEユーザ会 <http://www.gnome.gr.jp/>"
+"日本GNOMEユーザー会 <http://www.gnome.gr.jp/>"
 
 #. Translators: This text is used in the Orca About dialog. Orca is
 #. licensed under GPL2+.
