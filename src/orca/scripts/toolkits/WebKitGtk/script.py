@@ -45,6 +45,8 @@ from script_utilities import Utilities
 
 class Script(default.Script):
 
+    CARET_NAVIGATION_KEYS = ['Left', 'Right', 'Up', 'Down', 'Home', 'End']
+
     def __init__(self, app):
         """Creates a new script for WebKitGtk applications.
 
@@ -135,6 +137,24 @@ class Script(default.Script):
             return
 
         default.Script.sayCharacter(self, obj)
+
+    def skipObjectEvent(self, event):
+        """Gives us, and scripts, the ability to decide an event isn't
+        worth taking the time to process under the current circumstances.
+
+        Arguments:
+        - event: the Event
+
+        Returns True if we shouldn't bother processing this object event.
+        """
+
+        if event.type.startswith('object:state-changed:focused') \
+           and event.detail1:
+            lastKey, mods = self.utilities.lastKeyAndModifiers()
+            if lastKey in self.CARET_NAVIGATION_KEYS:
+                return True
+
+        return default.Script.skipObjectEvent(self, event)
 
     def useStructuralNavigationModel(self):
         """Returns True if we should do our own structural navigation.
