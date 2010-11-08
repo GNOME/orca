@@ -1,3 +1,27 @@
+2.91.2 - 8-November-2010
+
+General:
+
+  * Fix for bug #634248 - Orca should ignore object:state-changed:focused
+    events triggered by WebKitGtk caret navigation
+
+  * Fix for bug #626266 - Discontinue support for OpenTTS system
+
+  * Fix for bug #628842 - Orca speaks newly-focused panels in gnome-panel
+    using the default voice rather than the system voice
+
+  * Fix for bug #629586 - When Orca is in learn mode and the user switches
+    to another application, Orca stops presenting the locusOfFocus
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ast          Asturian            Xandru Armesto
+    ca@valencia  Catalan             Carles Ferrando
+    gl           Galician            Fran Diéguez
+    ja           Japanese            Takayuki KUSANO
+
+==========
+
 2.91.1 - 18-October-2010
 
 General:
