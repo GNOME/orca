@@ -613,13 +613,6 @@ class Script(default.Script):
         listeners["object:state-changed:focused"]           = \
             self.onStateFocused
 
-        # [[[TODO: HACK - WDW we need to accomodate Gecko's incorrect
-        # use of underscores instead of dashes until they fix their bug.
-        # See https://bugzilla.mozilla.org/show_bug.cgi?id=368729]]]
-        #
-        listeners["object:property-change:accessible_value"] = \
-            self.onValueChanged
-
         return listeners
 
     def __getArrowBindings(self):
