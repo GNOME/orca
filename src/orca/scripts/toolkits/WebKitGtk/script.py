@@ -138,6 +138,21 @@ class Script(default.Script):
 
         default.Script.sayCharacter(self, obj)
 
+    def sayLine(self, obj):
+        """Speaks the line of an AccessibleText object that contains the
+        caret.
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText
+               interface
+        """
+
+        default.Script.sayLine(self, obj)
+
+        rolesToSpeak = [pyatspi.ROLE_HEADING]
+        if obj.getRole() in rolesToSpeak:
+            speech.speak(self.speechGenerator.getRoleName(obj))
+
     def skipObjectEvent(self, event):
         """Gives us, and scripts, the ability to decide an event isn't
         worth taking the time to process under the current circumstances.
