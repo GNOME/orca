@@ -1,3 +1,31 @@
+2.32.1 - 15-November-2010
+
+General:
+
+  * Add a check for xdg python package to configure.in
+
+  * Fix for bug #631544 - Orca crashes at GDM login screen if GDM's
+    .local/share/orca directory does not exist
+
+  * Fix for bug #629586 - When Orca is in learn mode and the user switches
+    to another application, Orca stops presenting the locusOfFocus
+
+  * Fix for bug #628842 - Orca speaks newly-focused panels in gnome-panel
+    using the default voice rather than the system voice
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ast         Asturian                Xandru Armesto
+    bg          Bulgarian               Damyan Ivanov
+    el          Greek                   Kostas Papadimas
+    eu          Basque                  Iñaki Larrañaga Murgoitio
+    ca          Catalan                 Gil Forcada
+    ca@valencia Catalan (Valencian)     Gil Forcada
+    de          German                  Christian Kirbach
+    ja          Japanese                Takayuki KUSANO
+
+==========
+
 2.32.0 - 27-September-2010
 
 New and updated translations (THANKS EVERYONE!!!):
