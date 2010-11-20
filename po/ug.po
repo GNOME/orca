@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-11-10 01:12+0000\n"
+"POT-Creation-Date: 2010-11-13 23:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Gheyret Kenji<gheyret@yahoo.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -126,7 +126,7 @@ msgstr ""
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
-msgstr[0] ""
+msgstr[0] "(%d سۆزلەشكۈ)"
 
 #. Translators: this is a command for a button on a refreshable braille
 #. display (an external hardware device used by people who are blind).
@@ -402,7 +402,7 @@ msgstr ""
 #.
 #: ../src/orca/chat.py:460
 msgid "All cha_nnels"
-msgstr ""
+msgstr "بارلىق قاناللار(_N)"
 
 #. Translators: Orca will speak only new chat messages for the channel
 #. that currently has focus, irrespective of whether the chat
@@ -922,7 +922,7 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:340
 msgid "C CEDILLA"
-msgstr ""
+msgstr "C CEDILLA"
 
 #. Translators: this is the spoken word for the character 'È' (U+00c8)
 #.
@@ -2432,7 +2432,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:977
 msgid "Add bookmark."
-msgstr ""
+msgstr "خەتكۈش قوشىدۇ."
 
 #. Translators: this event handler saves all bookmarks for the
 #. current application to disk.
@@ -3991,7 +3991,7 @@ msgstr "ئالىي تەڭشەك"
 
 #: ../src/orca/orca-advanced-magnification.ui.h:5
 msgid "B_lue:"
-msgstr ""
+msgstr "كۆك(_l):"
 
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
@@ -4380,7 +4380,7 @@ msgstr ""
 
 #: ../src/orca/orca-find.ui.h:2 ../src/orca/orca_gui_find.py:147
 msgid "C_urrent location"
-msgstr ""
+msgstr "ھازىرقى ئورۇن(_U)"
 
 #: ../src/orca/orca-find.ui.h:3
 msgid "Close"
@@ -4771,7 +4771,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:2362
 msgid "(double click)"
-msgstr ""
+msgstr "(قوش چېكىش)"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -4779,7 +4779,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:2368
 msgid "(triple click)"
-msgstr ""
+msgstr "(ئۈچ چېكىش)"
 
 #. Translators: an external braille device has buttons on it that
 #. permit the user to create input gestures from the braille device.
@@ -5507,13 +5507,13 @@ msgstr ""
 #: ../src/orca/orca-setup.ui.h:78
 msgctxt "Magnification"
 msgid "<b>Border</b>"
-msgstr ""
+msgstr "<b>گىرۋەك</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
 #: ../src/orca/orca-setup.ui.h:80
 msgctxt "Magnification"
 msgid "<b>Color</b>"
-msgstr ""
+msgstr "<b>reng</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
 #: ../src/orca/orca-setup.ui.h:82
@@ -7487,7 +7487,7 @@ msgstr "ئوقۇ"
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:173
 #, python-format
 msgid "%s screen"
-msgstr ""
+msgstr "%s ئېكران"
 
 #. Translators: this is an indication that Orca is unable to
 #. obtain the display of the gcalctool calculator, which is
@@ -7686,7 +7686,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:257
 msgid "An error occurred. View the error log for details."
-msgstr ""
+msgstr "خاتالىق يۈز بەردى. تەپسىلاتى ئۈچۈن خاتالىق خاتىرىسىگە قاراڭ."
 
 #. Translators: This is the tutorial string associated with a
 #. specific search field in the Packagemanager application.
@@ -8375,7 +8375,7 @@ msgstr[0] "%d جەدۋەل"
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
-msgstr[0] ""
+msgstr[0] "%d جەدۋەل"
 
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
@@ -8654,7 +8654,7 @@ msgstr ""
 #: ../src/orca/speechdispatcherfactory.py:180
 #, python-format
 msgid "%s default voice"
-msgstr ""
+msgstr "%s كۆڭۈلدىكى ئۈن"
 
 #. Translators: this refers to a link to a file, where
 #. the first item is the protocol (ftp, ftps, or file)
@@ -8671,7 +8671,7 @@ msgstr "%(uri)s دېگىنى %(file)s غا ئۇلانما قىلىنغان"
 #: ../src/orca/speech_generator.py:431
 #, python-format
 msgid "%s link"
-msgstr ""
+msgstr "%s ئۇلانما"
 
 #. Translators: this is an indication that a given
 #. link points to an object that is on the same page.
@@ -8774,7 +8774,7 @@ msgstr[0] "%d بوشلۇق"
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
-msgstr[0] ""
+msgstr[0] "%d بەتكۈچ"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
@@ -8789,7 +8789,7 @@ msgstr[0] "%d پىرسەنت"
 #.
 #: ../src/orca/speech_generator.py:1378 ../src/orca/speech_generator.py:1399
 msgid "0 items"
-msgstr ""
+msgstr "0 تۈر"
 
 #. Translators: this is a count of the number of selected icons
 #. and the count of the total number of icons within an icon panel.
@@ -8882,7 +8882,7 @@ msgstr ""
 #.
 #: ../src/orca/structural_navigation.py:716
 msgid "Beginning of row."
-msgstr ""
+msgstr "قۇرنىڭ بەشى."
 
 #. Translators: this is for navigating document
 #. content by moving from table cell to table cell.
