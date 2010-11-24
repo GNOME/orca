@@ -129,7 +129,7 @@ msgstr "semnele de carte nu au putut fi salvate"
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
-msgstr[0] "(o fereastră de dialog)"
+msgstr[0] "(%d fereastră de dialog)"
 msgstr[1] "(%d ferestre de dialog)"
 msgstr[2] "(%d de ferestre de dialog)"
 
