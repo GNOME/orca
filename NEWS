@@ -1,3 +1,27 @@
+2.91.3 - 29-November-2010
+
+General:
+
+  * Work on Bug 633104 - I see three performance related problem
+    with Mozilla Thunderbird and Orca
+
+  * Fix for bug #630591 - Orca's _generateDisplayedText should return
+    an empty list when there is no text
+
+  * Fix for bug #634862 - Orca doesn't speak the heading or level when
+    using caret navigation in WebKitGtk content
+
+  * Fix for bug #634469 - Remove unneeded accessible-value change hack
+    from Gecko script.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es     Spanish       Francisco Javier Dorado Martinez
+    ro     Romanian      Lucian Adrian Grijincu, Morie Daniel Alexandru
+    ug     Uyghur        Gheyret T.Kenji
+
+==========
+
 2.91.2 - 8-November-2010
 
 General:
