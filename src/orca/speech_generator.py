@@ -1625,7 +1625,9 @@ class SpeechGenerator(generator.Generator):
         specifications) that represent the relative position of an
         object in a list.
         """
-        if settings.onlySpeakDisplayedText:
+        if settings.onlySpeakDisplayedText \
+           or not (settings.enablePositionSpeaking \
+                   or args.get('forceList', False)):
             return []
 
         result = []
@@ -1695,9 +1697,7 @@ class SpeechGenerator(generator.Generator):
                 if nextName == name:
                     position = index
 
-        if (settings.enablePositionSpeaking \
-            or args.get('forceList', False)) \
-           and position >= 0:
+        if position >= 0:
             result.append(self._script.formatting.getString(
                               mode='speech',
                               stringType='groupindex') \
