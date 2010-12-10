@@ -190,6 +190,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def _init(self):
         self._client = client = speechd.SSIPClient('Orca', component=self._id)
+        client.set_priority(speechd.Priority.MESSAGE)
         if self._id != self.DEFAULT_SERVER_ID:
             client.set_output_module(self._id)
         self._current_voice_properties = {}
