@@ -14,8 +14,88 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>WhereAmI (WRITE ME)</title>
+  <title>WhereAmI</title>
   <p>
-    Write me
+    In addition to dedicated commands for reading the title bar and the
+    status bar, Orca provides two context-sensitive Where Am I commands:
+    Basic Where Am I and Detailed Where Am I. Basic Where Am I is implemented
+    for all objects. Detailed Where Am I is implemented just for those objects
+    for which there is a significant amount of information you may wish to know,
+    but likely will not wish to know all of the time.
+  </p>
+  <p>
+    The best way to become familiar with what Where Am I will present is to
+    give the <link xref="commands_where_am_i">Where Am I commands</link> a
+    try. However, to give you a better idea of the context-sensitive nature
+    of <app>Orca</app>'s Where Am I feature, consider the following:
+  </p>
+  <p>
+    For most widgets, you will at least be told the label and/or name, the
+    type or role of the widget, and the mnemonic and/or accelerator key if
+    they happen to exist. In addition:
+  </p>
+  <list>
+    <item>
+      <p>
+        If the widget is text, and you perform a basic Where Am I, you will be
+        told the current line if no text is selected. If text is selected,
+        however, a basic Where Am I will tell you what text is selected. A
+        detailed Where Am I within the text will also include the text
+        attributes.
+      </p>
+    </item>
+    <item>
+      <p>
+        If the widget can be checked, as is the case with checkboxes and
+        radio buttons, the checked state will be included.
+      </p>
+    </item>
+    <item>
+      <p> 
+        If the widget is a list or list-like object, such as a combo box, radio
+        button group, or page tab list, the position of the current item will be
+        included.
+      </p>
+    </item>
+    <item>
+      <p>
+        If the widget is hierarchical, such as a tree, and you are on an
+        expandable node, you will be told if that node is expanded or not.
+        And if it is expanded, you will also be told how many children it
+        contains. In addition, the nesting level will also be provided.
+      </p>
+    </item>
+    <item>
+      <p>
+        If the widget is a progress bar or a slider, you will be told the
+        current percent.
+      </p>
+    </item>
+    <item>
+      <p>
+        If the widget is an icon within an icon group, a basic Where Am I
+        will include the object you are in, the item you are on, and the
+        number of items which are selected. In a detailed Where Am I, you
+        will also be told which items are selected.
+      </p>
+    </item>
+    <item>
+      <p>
+        If you are on a link, the type of link (same site, different site,
+        FTP link, etc.) will be included.
+      </p>
+    </item>
+    <item>
+      <p>
+        If you are in a table cell, the coordinates of that cell and the cell
+        headers will be included.
+      </p>
+    </item>
+  </list>
+  <p>
+    And so on. Again, the goal of <app>Orca</app>'s Where Am I is to provide
+    you with the details you are most likely interested in knowing about the
+    object you are currently in. To give Where Am I a try, see the list of
+    <link xref="commands_where_am_i">Where Am I commands</link>.
   </p>
 </page>

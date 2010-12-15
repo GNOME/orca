@@ -18,11 +18,14 @@
   </info>
   <title>Where Am I Commands</title>
   <p>
-    Orca's Where Am I commands give you context-senstive details about your
-    present location. For instance, in tables, Where Am I will give you
-    details about the table cell you are in, but in text it will present
-    the current line along with any text which happens to be selected.
+    <app>Orca</app>'s Where Am I feature gives you context-sensitive details
+    about your present location. For instance, in tables, Where Am I will give
+    you details about the table cell you are in, but in text it will present
+    the current line along with any text which happens to be selected. The full
+    list of what you can expect <app>Orca</app> to present can be found in the
+    <link xref="howto_whereami">Introduction to Where Am I</link>.
   </p>
+  <p><app>Orca</app> provides the following Where Am I commands:</p>
   <list>
     <item>
       <p>Perform basic where am I:</p>
