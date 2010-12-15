@@ -18,12 +18,9 @@
   </info>
   <title>Orca Find Commands</title>
   <p>
-    Orca's Find feature allows you to search for elements displayed on the
-    screen. It is a Flat Review feature. Thus when there is a match, flat
-    review will be activated and moved to that location; focus within the
-    application will not be modified, nor will the caret be repositioned.
-    If you need to accomplish either, please see
-    <link xref="commands_mouse">Orca'a Mouse/Pointer-Related Commands</link>.
+    <app>Orca</app>'s <link xref="howto_orca_find">Find feature</link> allows
+    you to search the <link xref="howto_flat_review">Flat Review</link> context
+    for elements located within the current window.
   </p>
   <list>
     <item>

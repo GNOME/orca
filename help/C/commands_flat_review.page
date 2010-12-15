@@ -18,9 +18,10 @@
   </info>
   <title>Flat Review Commands</title>
   <p>
-    Orca's Flat Review commands are designed for spatially reviwing
-    elements displayed on the screen. They also provide a means for
-    reading the current line, word, and character.
+    Orca's <link xref="howto_flat_review">Flat Review</link> commands are
+    designed for spatially reviwing elements displayed on the screen. They
+    also provide a means for reading the current line, word, and character
+    when navigating in the text of a document.
   </p>
   <section id="line">
     <title>Commands for Reviewing by Line</title>

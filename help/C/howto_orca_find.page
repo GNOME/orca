@@ -12,8 +12,83 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Orca Find (WRITE ME)</title>
+  <title>Orca Find</title>
   <p>
-    Write me
+    <app>Orca</app>'s Find feature is a
+    <link xref="howto_flat_review">Flat-Review</link>-based search designed to
+    help you quickly locate objects that are visible on-screen within the
+    current window.
+  </p>
+  <note style="tip">
+    <title>Activating Orca Find</title>
+      <p>
+        To open the Orca <gui>Find</gui> dialog, use the following command based
+        on your chosen <link xref="howto_keyboard_layout">keyboard layout</link>:
+      </p>
+      <list>
+        <item>
+          <p>Desktop:<keyseq><key>KP Delete</key></keyseq></p>
+        </item>
+        <item>
+          <p>Laptop:
+            <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq>
+          </p>
+        </item>
+      </list>
+      <p>
+        For a list of additional tasks you can perform, see the
+        <link xref="commands_find">Orca Find commands</link>
+      </p>
+  </note>
+  <p>
+    When you activate Orca Find, you will be placed in a dialog box where you
+    can specify the following items:
+  </p>
+  <list>
+    <item>
+      <p>The text to find</p>
+    </item>
+    <item>
+      <p>The location to start from, which can be:</p>
+      <list>
+        <item>
+          <p><gui>Current location</gui></p>
+        </item>
+        <item>
+          <p><gui>Top of window</gui></p>
+        </item>
+      </list>
+    </item>
+    <item>
+      <p><gui>Match case</gui></p>
+    </item>
+    <item>
+      <p><gui>Match entire word only</gui></p>
+    </item>
+    <item>
+      <p><gui>Search backwards</gui></p>
+    </item>
+    <item>
+      <p>
+        <gui>Wrap around</gui>, should there be no match from the starting point
+      </p>
+    </item>
+  </list>
+  <p>  
+    By default, the search will be case-insensitive and permit partial word
+    matches. And it will begin from your current location and search forward,
+    wrapping if needed.
+  </p>
+  <p>
+    Having performed a search, you can quickly search for the next or previous
+    match without having to return to the Orca Find dialog box.
+  </p>
+  <p>
+    Beause it is a <link xref="howto_flat_review">Flat Review</link> feature,
+    when there is a match, Flat Review will automatically be activated and the
+    matching item or text will become the current review item. Note that focus
+    within the application will not be modified, nor will the caret be
+    repositioned. If you need to accomplish either, please see
+    <link xref="commands_mouse">Orca's Mouse/Pointer-Related Commands</link>.
   </p>
 </page>

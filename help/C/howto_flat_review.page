@@ -12,8 +12,35 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Flat Review (WRITE ME)</title>
+  <title>Flat Review</title>
   <p>
-    Write me
+    <app>Orca</app>'s Flat Review feature allows you to spatially review the
+    contents, both text and widgets, of the active window. In this mode,
+    <app>Orca</app> treats the window as if it were a two-dimensional sheet of
+    text, eliminating any notion of widget hierarchy or other logical grouping
+    within the window.
+  </p>
+  <p>
+    The "flattened" contents, also known as the Flat Review context, can be
+    <link xref="commands_flat_review">navigated</link> by line, by word, by
+    character, and by object. In addition, you can perform a left-click or
+    right-click on the object being reviewed. Finally, you can use
+    <link xref="howto_orca_find">Orca Find</link>, a Flat-Review-based feature
+    to search the active window's contents.
+  </p>
+  <p>
+    Because the Flat Review context is a spatial representation of the active
+    window's contents, it is created when you first enter Flat Review and only
+    contains those objects which are visible. As a result, you will not be able
+    to use Flat Review to access items which are in the window but currently
+    off-screen. In addition, if the window's contents change of their own
+    accord, the Flat Review context will not automatically be updated. You can
+    cause a new context to be built by toggling Flat Review off and back on.
+  </p>
+  <p>
+    Finally, Flat Review by its nature is a mode that cannot be used at the same
+    time that <app>Orca</app> is tracking focus. Thus if you are in Flat Review
+    and then use the application's navigation commands to move the caret or to
+    give focus to another object, you will automatically leave Flat Review.
   </p>
 </page>
