@@ -1,0 +1,280 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_structural_navigation">
+  <info>
+    <link type="next" xref="commands_table" />
+    <link type="guide" xref="commands#reading_documents" />
+    <link type="seealso" xref="howto_reading_web"  />
+    <link type="seealso" xref="howto_web_forms"  />
+    <title type="sort">2. Structural Navigation</title>
+    <title type="link">Structural Navigation</title>
+    <desc>
+      commands for navigating by elements
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Structural Navigation Commands</title>
+  <p>
+    The following commands can be used to navigate by headings, links,
+    and other elements found in applications for which <app>Orca</app>
+    provides structural navigation support.
+  </p>
+  <list>
+    <item>
+      <p>
+        Enable/disable Structural Navigation keys:
+        <keyseq><key>Orca Modifier</key><key>Z</key></keyseq>
+      </p>
+    </item>
+  </list>
+  <section id="headings">
+    <title>Headings</title>
+      <list>
+        <item>
+          <p>
+            Next and previous heading:
+            <keyseq><key>H</key></keyseq> and
+            <keyseq><key>Shift</key><key>H</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous heading at level 1:
+            <keyseq><key>1</key></keyseq> and
+            <keyseq><key>Shift</key><key>1</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Next and previous heading at level 2:
+            <keyseq><key>2</key></keyseq> and
+            <keyseq><key>Shift</key><key>2</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous heading at level 3:
+            <keyseq><key>3</key></keyseq> and
+            <keyseq><key>Shift</key><key>3</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous heading at level 4:
+            <keyseq><key>4</key></keyseq> and
+            <keyseq><key>Shift</key><key>4</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous heading at level 5:
+            <keyseq><key>5</key></keyseq> and
+            <keyseq><key>Shift</key><key>5</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous heading at level 6:
+            <keyseq><key>6</key></keyseq> and
+            <keyseq><key>Shift</key><key>6</key></keyseq>
+          </p>
+        </item> 
+      </list>
+    </section>
+    <section id="forms">
+      <title>Forms</title>
+      <list>
+        <item>
+          <p>
+            Next and previous form field:
+            <keyseq><key>Orca Modifier</key><key>Tab</key></keyseq> and
+            <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous button:
+            <keyseq><key>B</key></keyseq> and
+            <keyseq><key>Shift</key><key>B</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous combo box:
+            <keyseq><key>C</key></keyseq> and
+            <keyseq><key>Shift</key><key>C</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous entry:
+            <keyseq><key>E</key></keyseq> and
+            <keyseq><key>Shift</key><key>E</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous radio button:
+            <keyseq><key>R</key></keyseq> and
+            <keyseq><key>Shift</key><key>R</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous checkbox:
+            <keyseq><key>X</key></keyseq> and
+            <keyseq><key>Shift</key><key>X</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous object (to exit field):
+            <keyseq><key>Orca Modifier</key><key>Right</key></keyseq> and
+            <keyseq><key>Orca Modifier</key><key>Left</key></keyseq>
+          </p>
+        </item> 
+      </list>
+    </section>
+    <section id="links">
+    <title>Links</title>
+      <list>
+        <item>
+          <p>
+            Next and previous unvisited link:
+            <keyseq><key>U</key></keyseq> and
+            <keyseq><key>Shift</key><key>U</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous visited link:
+            <keyseq><key>V</key></keyseq> and
+            <keyseq><key>Shift</key><key>V</key></keyseq>
+          </p>
+        </item> 
+      </list>
+    </section>
+    <section id="lists">
+      <title>Lists</title>
+      <list>
+        <item>
+          <p>
+            Next and previous list:
+            <keyseq><key>L</key></keyseq> and
+            <keyseq><key>Shift</key><key>L</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous list item:
+            <keyseq><key>I</key></keyseq> and
+            <keyseq><key>Shift</key><key>I</key></keyseq>
+          </p>
+        </item> 
+      </list>
+    </section>
+    <section id="tables">
+      <title>Tables</title>
+      <list>
+        <item>
+          <p>
+            Next and previous table:
+            <keyseq><key>T</key></keyseq> and
+            <keyseq><key>Shift</key><key>T</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Cell on left:
+            <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Cell on right:
+            <keyseq><key>Alt</key><key>Shift</key><key>Right</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Cell above:
+            <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Cell below:
+            <keyseq><key>Alt</key><key>Shift</key><key>Down</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            First cell in table:
+            <keyseq><key>Alt</key><key>Shift</key><key>Home</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Last cell in table:
+            <keyseq><key>Alt</key><key>Shift</key><key>End</key></keyseq>
+          </p>
+        </item> 
+      </list>
+    </section>
+    <section id="text_blocks">
+      <title>Text Blocks</title>
+      <list>
+        <item>
+          <p>
+            Next and previous paragraph:
+            <keyseq><key>P</key></keyseq> and
+            <keyseq><key>Shift</key><key>P</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous blockquote:
+            <keyseq><key>Q</key></keyseq> and
+            <keyseq><key>Shift</key><key>Q</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous "large object":
+            <keyseq><key>O</key></keyseq> and
+            <keyseq><key>Shift</key><key>O</key></keyseq>
+          </p>
+        </item> 
+       </list>
+    </section>
+    <section id="other">
+      <title>Other Elements</title>
+      <list>
+        <item>
+          <p>
+            Next and previous landmark:
+            <keyseq><key>M</key></keyseq> and
+            <keyseq><key>Shift</key><key>M</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous separator:
+            <keyseq><key>S</key></keyseq> and
+            <keyseq><key>Shift</key><key>S</key></keyseq>
+          </p>
+        </item> 
+        <item>
+          <p>
+            Next and previous anchor:
+            <keyseq><key>A</key></keyseq> and
+            <keyseq><key>Shift</key><key>A</key></keyseq>
+          </p>
+        </item> 
+      </list>
+    </section>
+</page>

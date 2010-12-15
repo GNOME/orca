@@ -1,0 +1,60 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_time_date_notifications">
+  <info>
+    <link type="next" xref="commands_speech_settings" />
+    <link type="guide" xref="commands#getting_started" />
+    <link type="seealso" xref="howto_notifications"  />
+    <title type="sort">4. Time, Date, and Notification</title>
+    <title type="link">Time, Date, and Notification</title>
+    <desc>
+      commands for the getting the time, date, and notification messages
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Time, Date, and Notification Commands</title>
+  <p>
+    The following commands can be used to obtain the current time and date
+    and to review previously-displayed notification messages:
+  </p>
+  <section id="time_and_date">
+    <title>Obtaining the Time and Date</title>
+    <list>
+      <item>
+        <p>
+          Present the time: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          Present the date: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>
+          (double-clicked)
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="notifications">
+    <title>Reviewing Notification Messages</title>
+    <p>
+      Orca has three unbound commands for accessing previously-displayed
+      notification messages. Please see <link xref="howto_key_bindings">Modifying
+      Keybindings</link> for information on how to bind these commands to
+      keystrokes.
+    </p>
+    <list>
+      <item>
+        <p>Present the last (most recent) notification message: (unbound)</p>
+      </item>
+      <item>
+        <p>Present the previous notification message: (unbound)</p>
+      </item>
+      <item>
+        <p>Present list of all notification messages: (unbound)</p>
+      </item>
+    </list>
+  </section>
+</page>

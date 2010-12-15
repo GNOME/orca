@@ -1,0 +1,155 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_key_bindings">
+  <info>
+    <link type="guide" xref="index#getting_started"/>
+    <link type="next" xref="howto_profiles" />
+  <title type="sort">8. Keybindings</title>
+  <desc>binding, rebinding, and unbinding commands</desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Keybindings</title>
+  <p>
+    Orca has many commands, some of which are bound to a keystroke, others
+    of which are unbound. You can bind, rebind, and unbind <app>Orca</app>'s
+    commands by following the steps below.</p>
+  <section id="binding">
+    <title>Binding an Unbound Command</title>
+    <p>To add a keystroke to an unbound command:</p>
+    <steps>
+      <item>
+        <p>
+          Get into the <link xref="preferences">Orca Preferences</link> dialog
+          by pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>Move to the <gui>Key Bindings</gui> page.</p>
+      </item>
+      <item>
+        <p>
+          Arrow to the cell which contains the command you want to assign a
+          keystroke to.
+        </p>
+      </item>
+      <item>
+        <p>
+          Arrow once to the right. This will place focus in the <gui>Key
+          Binding</gui> column. Press <key>Return</key>.
+        </p>
+      </item>
+      <item>
+        <p>Press the desired key combination.</p></item>
+      <item>
+        <p>
+          Press <key>Return</key> to confirm the new combination. The new
+          keystroke will be saved and the check box in the last column (the
+          <gui>Modified</gui> column) will indicate that the key binding
+          has been modified.
+        </p>
+      </item>
+      <item>
+        <p>Press the <gui>Apply</gui> button.</p>
+      </item>
+    </steps>
+  </section>
+  <section id="rebinding">
+    <title>Changing Existing Bindings</title>
+    <p>To change either the key binding or the alternate binding:</p>
+    <steps>
+      <item>
+        <p>
+          Get into the <link xref="preferences">Orca Preferences</link> dialog by
+          pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>Move to the <gui>Key Bindings</gui> page.</p>
+      </item>
+      <item>
+        <p>
+          Arrow to the cell which contains the binding you which to change and press
+          <key>Return</key>.
+        </p>
+      </item>
+      <item>
+          <p>Press the desired key combination.</p>
+      </item>
+      <item>
+        <p>
+          Press <key>Return</key> to confirm the new combination. The new
+          keystroke will be saved and the check box in the last column (the
+          <gui>Modified</gui> column) will indicate that the key binding has
+          been modified.
+        </p>
+      </item>
+      <item>
+        <p>Press the <gui>Apply</gui> button.</p>
+      </item>
+    </steps>
+  </section>
+  <section id="restoring">
+    <title>Restoring Original Bindings</title>
+    <p>To restore a modified key binding:</p>
+    <steps>
+      <item>
+        <p>
+          Get into the <link xref="preferences">Orca Preferences</link>
+          dialog by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
+          </keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>Move to the <gui>Key Bindings</gui> page.</p>
+      </item>
+      <item>
+        <p>Arrow to the modified column associated with the key binding.</p>
+      </item>
+      <item>
+        <p>Uncheck the checkbox by pressing <key>Space</key>.</p>
+      </item>
+      <item>
+        <p>Press the <gui>Apply</gui> button.</p>
+      </item>
+    </steps>
+  </section>
+  <section id="unbinding">
+    <title>Unbinding Bound Commands</title>
+    <p>To unbind any bound command:</p>
+    <steps>
+      <item>
+        <p>
+          Get into the <link xref="preferences">Orca Preferences</link>
+          dialog by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
+          </keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>Move to the <gui>Key Bindings</gui> page.</p>
+      </item>
+      <item>
+        <p>
+          Arrow to the cell which contains the binding you which to delete
+          and press <key>Return</key>.
+        </p>
+      </item>
+      <item>
+        <p>
+          When prompted for the new keybinding, press <key>Delete</key> or
+          <key>BackSpace</key>. You will be told that the key binding has
+          been removed.
+        </p>
+      </item>
+      <item>
+        <p>Press <key>Return</key> to confirm.</p>
+      </item>
+      <item>
+        <p>Press the <gui>Apply</gui> button.</p>
+      </item>
+    </steps>
+  </section>
+</page>

@@ -1,0 +1,57 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_table">
+  <info>
+    <link type="next" xref="commands_flat_review" />
+    <link type="guide" xref="commands#reading_documents" />
+    <link type="seealso" xref="howto_tables"  />
+    <title type="sort">3. Table Navigation</title>
+    <title type="link">Table Navigation</title>
+    <desc>
+      commands for accessing tabular information
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Table Navigation Commands</title>
+  <p>
+    Orca's support for navigation by table cell is part of its
+    <link xref="commands_structural_navigation#tables">Structural Navigation
+    commands</link>. In addition you can:
+  </p>
+  <list>
+    <item>
+      <p>
+        Set dynamic row headers to current column:
+        <keyseq><key>Orca Modifier</key><key>C</key></keyseq>
+      </p>
+    </item>
+    <item>
+      <p>
+        Set dynamic column headers to current row:
+        <keyseq><key>Orca Modifier</key><key>R</key></keyseq>
+      </p>
+    </item>
+    <item>
+      <p>
+        Clear dynamic row headers:
+        <keyseq><key>Orca Modifier</key><key>C</key></keyseq> (double-clicked)
+      </p>
+    </item>
+    <item>
+      <p>
+        Clear dynamic column headers:
+        <keyseq><key>Orca Modifier</key><key>R</key></keyseq> (double-clicked)
+      </p>
+    </item>
+    <item>
+      <p>
+        Toggle between cell and row reading in a table:
+        <keyseq><key>Orca Modifier</key><key>F11</key></keyseq>
+      </p>
+    </item>
+  </list>
+</page>

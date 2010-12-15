@@ -1,0 +1,61 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_mouse">
+  <info>
+    <link type="next" xref="commands_bookmarks" />
+    <link type="guide" xref="commands#reviewing_screen_contents" />
+    <title type="sort">3. Mouse/Pointer-Related</title>
+    <title type="link">Mouse/Pointer-Related</title>
+    <link type="seealso" xref="howto_flat_review"  />
+    <link type="seealso" xref="howto_mouse_review"  />
+    <desc>
+      commands for manipulating the pointer
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Mouse/Pointer-Related Commands</title>
+  <p>
+    The following commands can be used to manipulate the mouse pointer
+    and read the contents under it. All of the commands are "bound"
+    to keystrokes with one exception: Toggling Mouse Review Mode.
+    Please see <link xref="howto_key_bindings">Modifying Keybindings</link>
+    for information on how to bind this command to a keystroke.
+  </p>
+  <list>
+    <item>
+      <p>Left-click on current item:</p>
+      <list>
+        <item><p>Desktop:<keyseq><key>KP Divide</key></keyseq></p></item>
+        <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>7</key></keyseq></p></item>
+      </list>
+    </item>
+    <item>
+      <p>Right-click on current item:</p>
+      <list>
+        <item><p>Desktop:<keyseq><key>KP Multiply</key></keyseq></p></item>
+        <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>8</key></keyseq></p></item>
+      </list>
+    </item>
+    <item>
+      <p>Route pointer to current item:</p>
+      <list>
+        <item><p>Desktop:<keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq></p></item>
+        <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq></p></item>
+      </list>
+    </item>
+    <item>
+      <p>Move focus into or away from the current mouse over (web only):</p>
+      <list>
+        <item><p>Desktop:<keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq></p></item>
+        <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq></p></item>
+      </list>
+    </item>
+    <item>
+      <p>Enable/disable mouse review mode: (Unbound)</p>
+    </item>
+  </list>
+</page>

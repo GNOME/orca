@@ -1,0 +1,21 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_tables">
+  <info>
+    <link type="guide" xref="index#reading"/>
+    <link type="next" xref="howto_whereami" />
+    <title type="sort">A5 Tables</title>
+    <desc>
+      accessing document tables efficiently
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Tables (WRITE ME)</title>
+  <p>
+    Write me
+  </p>
+</page>

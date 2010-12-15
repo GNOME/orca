@@ -1,0 +1,99 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_braille">
+  <info>
+    <title type="sort">3. Braille</title>
+    <title type="link">Braille</title>
+    <desc>
+      configuring <app>Orca</app>'s braille display support
+    </desc>
+    <link type="guide" xref="preferences#orca" />
+    <link type="next" xref="preferences_key_echo" />
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Braille Preferences</title>
+  <section id="braillesupport">
+    <title>Enable Braille Support</title>
+      <p>
+        This check box toggles whether or not <app>Orca</app> will make
+        use of a braille display. If BrlTTY is not running, <app>Orca</app>
+        will recover gracefully and will not communicate with the braille
+        display.
+      </p>
+      <note style="tip">
+        <p>
+          If you configure BrlTTY later on, you need to restart <app>Orca</app>
+          in order to use braille.
+        </p>
+      </note>
+  </section>
+  <section id="braillemonitor">
+    <title>Enable Braille Monitor</title>
+    <p>
+      Orca's braille monitor provides an on-screen representation of what
+      takes place on the braille display. This feature is mostly for
+      demonstration purposes, but is also useful for <app>Orca</app>
+      developers who do not have access to a braille display.
+    </p>
+  </section>
+  <section id="contractedbraille">
+    <title>Enable Contracted Braille</title>
+    <p>TODO: Get rid of the wiki reference; put basic docs here.</p>
+    <p>
+      Orca supports contracted braille via the liblouis project.
+      Refer to the <app>Orca</app> Wiki, where you can find additional
+      information about setting up liblouis with <app>Orca</app>.
+    </p>
+  </section>
+  <section id="rolenames">
+    <title>Abbreviated Role Names</title>
+    <p>
+      This check box determines the manner in which role names are
+      displayed and can be used to help conserve real estate on the
+      braille display. For instance, if a slider had focus, the word
+      "slider" would be displayed if abbreviated role names is not
+      checked; if it were checked, "sldr" would be displayed instead.
+    </p>
+  </section>
+  <section id="eolindicator">
+    <title>Disable end of line symbol</title>
+    <p>
+      Checking this checkbox tells <app>Orca</app> to not present the
+      "$l" string at the end of a line of text.
+    </p>
+  </section>
+  <section id="verbosity">
+    <title>Verbosity</title>
+    <p>
+      This radio button group determines the amount of information that
+      will be brailled in certain situations. For example, if it is set
+      to verbose, keyboard shortcut and role name information is displayed.
+      This information is not displayed in brief mode.
+    </p>
+  </section>
+  <section id="selectionandhyperlink">
+    <title>Selection and Hyperlink Indicators</title>
+    <p>
+      The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui>
+      radio button groups allow you to configure <app>Orca</app>'s behavior
+      when displaying selected text and hyperlinks. By default, when you
+      encounter either, <app>Orca</app> will "underline" that text on
+      your braille display with Dots 7 and 8. If you would prefer, you
+      can change the indicator to only be Dot 7, only be Dot 8, or not
+      be present at all.
+    </p>
+    <note style="tip">
+      <title>Text Attribute Indicators</title>
+      <p>
+        You can also optionally have text attributes indicated in braille.
+        Enabling this feature and choosing which attributes are of
+        interest is done on the <link xref="preferences_text_attributes">
+        <gui>Text Attributes</gui> page</link> of the preferences dialog.
+      </p>
+    </note>
+  </section>
+</page>

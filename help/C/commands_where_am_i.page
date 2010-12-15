@@ -1,0 +1,91 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_where_am_i">
+  <info>
+    <link type="next" xref="commands_time_date_notifications" />
+    <link type="guide" xref="commands#getting_started" />
+    <link type="seealso" xref="howto_whereami"  />
+    <title type="sort">3. Where Am I</title>
+    <title type="link">Where Am I</title>
+    <desc>
+      commands to learn about your location
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Where Am I Commands</title>
+  <p>
+    Orca's Where Am I commands give you context-senstive details about your
+    present location. For instance, in tables, Where Am I will give you
+    details about the table cell you are in, but in text it will present
+    the current line along with any text which happens to be selected.
+  </p>
+  <list>
+    <item>
+      <p>Perform basic where am I:</p>
+      <list>
+        <item>
+          <p>Desktop: <key>KP Enter</key></p>
+        </item>
+        <item>
+          <p>Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq></p>
+        </item>
+      </list>
+    </item>
+    <item>
+      <p>Perform detailed where am I:</p>
+      <list>
+        <item>
+          <p>Desktop: <key>KP Enter</key> (double-clicked)</p>
+        </item>
+        <item>
+          <p>
+            Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>
+            (double-clicked)
+          </p>
+        </item>
+      </list>
+    </item>
+  </list>
+  <p>
+    In addition to the dedicated Where Am I commands, <app>Orca</app> has
+    two additional commands related to obtaining your present location:
+  </p>
+  <list>
+    <item>
+      <p>Present the title bar:</p>
+      <list>
+        <item>
+          <p>
+            Desktop:<keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>
+          </p>
+        </item>
+      </list>
+    </item>
+    <item>
+      <p>Present the status bar:</p>
+      <list>
+        <item>
+          <p>
+            Desktop:<keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>
+            (double-clicked)
+          </p>
+        </item>
+        <item>
+          <p>
+            Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>
+            (double-clicked)
+          </p>
+        </item>
+      </list>
+    </item>
+  </list>
+</page>

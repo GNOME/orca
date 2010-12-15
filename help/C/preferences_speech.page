@@ -1,0 +1,335 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_speech">
+  <info>
+    <link type="guide" xref="preferences#orca" />
+    <link type="next" xref="preferences_braille" />
+    <title type="sort">2. Speech</title>
+    <title type="link">Speech</title>
+    <desc>
+      configuring the voice and what gets spoken
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Speech Preferences</title>
+  <section id="enable_speech">
+    <info>
+      <desc>
+        Preferences dialog box option to enable and disable <app>Orca</app>'s
+        speech output.
+      </desc>
+    </info>
+    <title>Enable speech</title>
+    <p>
+      The <gui>Enable speech</gui> check box controls whether or not
+      <app>Orca</app> will make use of a speech synthesizer.
+      Magnification-only and Braille-only users will likely want to
+      uncheck this checkbox.
+    </p>
+  </section>
+  <section id="tts_options">
+    <info>
+        <desc>
+          Preferences dialog box options to configure the text-to-speech
+          settings to be used by <app>Orca</app>.
+        </desc>
+    </info>
+    <title>Text-To-Speech Options</title>
+    <list>
+      <item>
+        <p>
+          The <gui>Speech system</gui> combo box allows you to select your
+          preferred speech system from those you have installed. Examples
+          include Speech Dispatcher and GNOME Speech.
+        </p>
+      </item>
+      <item>
+        <p>
+          The <gui>Speech synthesizer</gui> combo box allows you to select
+          the speech synthesizer to be used with your chosen Speech system.
+        </p>
+      </item>
+      <item>
+        <p>
+          The <gui>Voice settings</gui> combo box makes it possible for
+          you to use different voices so that you can better distinguish
+          uppercase and linked text from other text, and on-screen text
+          from text added by <app>Orca</app>.
+        </p>
+        <note style="tip">
+          <title>Configuring Multiple Voices</title>
+          <p>
+            For each voice you wish to configure, first select the
+            voice in the <gui>Voice settings</gui> combo box. Then
+            configure the person, rate, pitch, and volume to be used
+            for that voice.
+          </p>
+        </note>
+      </item>
+      <item>
+        <p>
+          The <gui>Person</gui> combo box allows you to choose which
+          "person" or "speaker" should be used with the selected voice.
+          For instance, you might wish to have David speak by default,
+          but have hyperlinks spoken by Alice. Note that what you find
+          in the <gui>Person</gui> combo box will depend on which speech
+          synthesizers you have installed.
+        </p>
+      </item>
+      <item>
+        <p>
+          The <gui>Rate</gui>, <gui>Pitch</gui>, and <gui>Volume</gui>
+          left-right sliders allow you to further customize the sound
+          of the person you have just selected.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="punctuation_level">
+    <info>
+      <desc>
+        Preferences dialog box option to set the level of verbalized
+        punctuation.
+      </desc>
+    </info>
+    <title>Punctuation Level</title>
+    <p>
+      The <gui>Punctuation Level</gui> radio button group is used to
+      adjust the amount of punctuation spoken by the synthesizer. The
+      available levels are None, Some, Most and All.
+    </p>
+  </section>
+  <section id="verbosity">
+    <info>
+      <desc>
+        Preferences dialog box option to control the amount of information
+        which will be spoken in various situations.
+      </desc>
+    </info>
+    <title>Verbosity</title>
+    <p>
+      The <gui>Verbosity</gui> setting determines the amount of information
+      that will be spoken in various situations. For example, if it is set
+      to verbose, <app>Orca</app> will speak shortcut keys for items in
+      menus. When it is set to brief, these shortcut keys are not announced.
+    </p>
+  </section>
+  <section id="table_rows">
+    <info>
+      <desc>
+        Preferences dialog box option to configure what gets spoken when
+        navigating amongst rows in a table.
+      </desc>
+    </info>
+    <title>Table Rows</title>
+    <p>
+      The <gui>Table Rows</gui> radio button group determines what gets
+      spoken when navigating amongst rows in a table. The available
+      options are <gui>speak row</gui> and <gui>speak cell</gui>.
+    </p>
+    <p>
+      Consider the process of examinging the list of messages in your Inbox.
+      In order to have <app>Orca</app> announce the sender, subject, date,
+      and presence of attachments you would need <gui>speak row</gui>. On
+      the other hand, when navigating amongst rows in a spreadsheet, hearing
+      the full row may not be desired. In that case, <gui>speak cell</gui>
+      should instead be chosen.
+    </p>
+  </section>
+  <section id="progress_bar_updates">
+    <info>
+      <desc>
+        Preferences dialog box options to control which progress bar updates
+        get spoken.
+      </desc>
+    </info>
+    <title>Progress Bar Updates</title>
+    <p>
+      If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will
+      periodically announce the status of progress bars. How often the
+      announcement is made is determined by the value chosen in the
+      <gui>Frequency (secs)</gui> spin button.
+    </p>
+    <p>
+      The <gui>Restrict to</gui> combo box allows you to control which
+      progress bars should be spoken, assuming the speaking of progress
+      bar updates has been enabled. The choices are <gui>All</gui>,
+      <gui>Application</gui>, and <gui>Window</gui>. Choosing <gui>All</gui>
+      will result in <app>Orca</app> speaking updates for all progress bars,
+      regardless of where the progress bars are located. Choosing
+      <gui>Application</gui> will result in <app>Orca</app> speaking updates
+      from progress bars in the active application, even if they are not in
+      the active window. Choosing <gui>Window</gui> will result in
+      <app>Orca</app> only speaking updates for progress bars in the active
+      window. The default value is <gui>Application</gui>.
+    </p>
+  </section>
+  <section id="only_speak_displayed_text">
+    <info>
+      <desc>
+        Preferences dialog box option to cause <app>Orca</app> to only
+        speak actual text displayed on screen. This option is intended
+        primarily for low vision users and users with a visual learning
+        disability.
+      </desc>
+    </info>
+    <title>Only speak displayed text</title>
+    <p>
+      Checking this checkbox causes <app>Orca</app> to only speak actual
+      text displayed on screen. This option is intended primarily for low
+      vision users and users with a visual learning disability.
+    </p>
+  </section>
+  <section id="multicase_strings">
+    <info>
+      <desc>
+        Preferences dialog box option to cause <app>Orca</app> to present
+        multicase strings as if they were separate words.
+      </desc>
+    </info>
+    <title>Speak multicase strings as words</title>
+    <p>
+      In some texts, and especially when working with code, one often comes
+      across a "word" consisting of several words with alternating case, such
+      as "MultiCaseString." Speech synthesizers do not always pronounce such
+      multicase strings correctly. Checking the <gui>Speak multicase strings
+      as words</gui> checkbox will cause <app>Orca</app> to break a word like
+      "MultiCaseString" into separate words ("Multi," "Case," and "String")
+      prior to passing it along to the speech synthesizer.
+    </p>
+  </section>
+  <section id="pauses">
+    <info>
+      <desc>
+        Preferences dialog box option to cause <app>Orca</app> to add pauses
+        to the items being spoken.
+      </desc>
+    </info>
+    <title>Break speech into chunks between pauses</title>
+    <p>
+      Depending on the enabled speech settings, <app>Orca</app> may have quite
+      a bit to say about a particular object such as its name, its role, its
+      state, its mnemonic, its tutorial message, and so on. Checking the
+      <gui>Break speech into chunks between pauses</gui> checkbox will cause
+      <app>Orca</app> to insert brief pauses in between each of these pieces
+      of information.
+    </p>
+  </section>
+  <section id="say_all_by">
+    <info>
+      <desc>
+        Preferences dialog box option controlling <app>Orca</app>'s Say All
+        style. The options are by sentence and by line.
+      </desc>
+    </info>
+    <title>Say All By</title>
+    <p>
+      The <gui>Say All By</gui> combo box allows you to specify whether
+      <app>Orca</app> speaks a sentence at a time or a line at a time when
+      doing a "Say All" of a document.
+    </p>
+  </section>
+  <section id="system_voice_items">
+    <title>System Information</title>
+    <info>
+      <desc>
+          Preferences dialog box options for controlling the presentation
+          of a variety of supplemental, "system" information about the item
+          with focus.
+        </desc>  
+      </info>
+      <p>
+        The following items control the presentation of a variety of
+        supplemental, "system" information about the item with focus.
+        Because the associated text does not appear on screen, this
+        information is presented in <app>Orca</app>'s System voice.
+      </p>
+      <note style="note">
+        <title>Configuration of System Information</title>
+        <p>
+          The follow items will not be available for configuration if
+          the <gui>Only speak displayed text</gui> checkbox is checked.
+        </p>
+      </note>
+      <section id="speak_blank_lines">
+        <info>
+          <desc>
+            Preferences dialog box option for controlling whether or not
+            blank lines are announced by <app>Orca</app>.
+         </desc>
+        </info>
+        <title>Speak blank lines</title>
+        <p>
+          If the <gui>Speak blank lines</gui> checkbox is checked,
+          <app>Orca</app> will say "blank" each time you arrow to a blank
+          line. If it is unchecked, <app>Orca</app> will say nothing when
+          you move to a blank line.
+        </p>
+      </section>
+      <section id="indentation_and_justification">
+        <info>
+          <desc>
+            Preferences dialog box option for enabling/disabling the speaking
+            of indentation and justification whilst navigating within text.
+          </desc>
+        </info>
+        <title>Speak indentation and justification</title>
+        <p>
+          When working with code or editing other documents it is often
+          desirable to be aware of justification and indentation. Checking
+          the <gui>Speak indentation and justification</gui> checkbox will
+          cause <app>Orca</app> to announce this information.
+        </p>
+      </section>
+      <section id="mnemonics">
+       <info>
+        <desc>
+          Preferences dialog box option for enabling/disabling the speaking
+          of mnemonics and keyboard shortcuts associated with the focused
+          item.
+        </desc>
+      </info>
+      <title>Speak object mnemonics</title>
+      <p>
+        If the <gui>Speak object mnemonics</gui> checkbox is checked,
+        <app>Orca</app> will announce the mnemonic associated with the
+        object with focus (such as <keyseq><key>Alt</key><key>O</key>
+        </keyseq> for an <gui>OK</gui> button).
+      </p>
+    </section>
+    <section id="child_position">
+      <info>
+        <desc>
+          Preferences dialog box option for enabling/disabling the speaking
+          of the position of the current item in a menu, list, or tree.
+        </desc>
+      </info>
+      <title>Speak child position</title>
+      <p>
+        Checking the <gui>Speak child position</gui> checkbox will cause
+        <app>Orca</app> to announce the position of the focused item in
+        menus, lists, and trees (e.g. "9 of 16").
+      </p>
+    </section>
+    <section id="speak_tutorial_messages">
+      <info>
+        <desc>
+          Preferences dialog box option for controlling whether or not
+          <app>Orca</app> provides tutorial information, such as how to
+          interact with the currently-focused object.
+        </desc>
+      </info>
+      <title>Speak tutorial messages</title>
+      <p>
+        If the <gui>Speak tutorial messages</gui> checkbox is checked, as
+        you move amongst objects in an interface, <app>Orca</app> will
+        provide additional information, such as how to interact with the
+        currently-focused object.
+      </p>
+    </section>
+  </section>
+</page>

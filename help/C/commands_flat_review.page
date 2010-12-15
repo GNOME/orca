@@ -1,0 +1,180 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_flat_review">
+  <info>
+    <link type="next" xref="commands_find" />
+    <link type="guide" xref="commands#reviewing_screen_contents" />
+    <link type="seealso" xref="howto_flat_review" />
+    <title type="sort">1. Flat Review</title>
+    <title type="link">Flat Review</title>
+    <desc>
+      commands for spatially reviewing windows
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Flat Review Commands</title>
+  <p>
+    Orca's Flat Review commands are designed for spatially reviwing
+    elements displayed on the screen. They also provide a means for
+    reading the current line, word, and character.
+  </p>
+  <section id="line">
+    <title>Commands for Reviewing by Line</title>
+    <list>
+      <item>
+        <p>First line (The "home" position):</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP 7</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></keyseq></p></item>
+        </list>
+      </item>
+      <item>
+        <p>Previous line:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 7</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>U</key></keyseq></p></item>
+        </list>
+      </item>
+      <item>
+        <p>Current line:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 8</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq></p></item>
+        </list>
+      </item>
+        <item><p>Spell current line:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)</p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (double-clicked)</p></item>
+        </list>
+      </item>
+      <item><p>Phonetically spell current line:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 8</key></keyseq> (triple-clicked)</p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (triple-clicked)</p></item>
+        </list>
+      </item>
+      <item><p>Next line:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 9</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>O</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Last line (The "end" position):</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP 9</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>O</key></keyseq></p></item>
+        </list>
+      </item>
+    </list>
+  </section>
+  <section id="word">
+    <title>Commands for Reviewing by Word</title>
+    <list>
+      <item><p>Word above:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP 4</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>J</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Previous word:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 4</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>J</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Current word:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 5</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Spell current word:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 5</key></keyseq> (double-clicked)</p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (double-clicked)</p></item>
+        </list>
+      </item>
+      <item><p>Phonetically spell current word:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)</p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (triple-clicked)</p></item>
+        </list>
+      </item>
+      <item><p>Next word:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 6</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>L</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Word below:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP 6</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>L</key></keyseq></p></item>
+        </list>
+      </item>
+    </list>
+  </section>
+  <section id="character">
+    <title>Commands for Reviewing by Character</title>
+    <list>
+      <item><p>Previous character:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 1</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>M</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Current character:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 2</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Phonetically speak current character:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)</p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (double-clicked)</p></item>
+        </list>
+      </item>
+      <item><p>Speak unicode value of current character:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)</p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-clicked)</p></item>
+        </list>
+      </item>
+      <item><p>Next character:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>KP 3</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Period</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Last character on current line:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP 1</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>M</key></keyseq></p></item>
+        </list>
+      </item>
+    </list>
+  </section>
+  <section id="other">
+    <title>Additional Commands</title>
+    <list>
+      <item><p>Toggle flat review (refreshes the flat review context):</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP Subtract</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>P</key></keyseq></p></item>
+        </list>
+      </item>
+      <item><p>Review current item/widget:</p>
+        <list>
+          <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP 5</key></keyseq></p></item>
+          <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq></p></item>
+        </list>
+      </item>
+    </list>
+  </section>
+</page>

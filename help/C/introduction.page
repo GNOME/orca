@@ -1,0 +1,197 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="introduction">
+  <info>
+    <link type="guide" xref="index#getting_started" />
+    <link type="next" xref="howto_setting_up_orca" />
+    <title type="sort">1. Welcome to Orca</title>
+    <desc>
+      introducing the <app>Orca</app> screen reader
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Welcome to Orca</title>
+  <p>
+    <app>Orca</app> is a free, open source, flexible, and extensible
+    screen reader that provides access to the graphical desktop via
+    user-customizable combinations of speech, braille, and/or
+    magnification.
+  </p>
+  <p>
+    <app>Orca</app> works with applications and toolkits that support
+    the assistive technology service provider interface (AT-SPI), which
+    is the primary assistive technology infrastructure for Linux and
+    Solaris. Applications and toolkits supporting the AT-SPI include the
+    GNOME Gtk+ toolkit, the Java platform's Swing toolkit, OpenOffice,
+    Gecko, and WebKitGtk. AT-SPI support for the KDE Qt toolkit is being
+    pursued.
+  </p>
+  <section id="launching">
+    <title>Launching <app>Orca</app></title>
+    <p>To launch <app>Orca</app>:</p>
+    <list>
+      <item>
+        <p>
+          Type <cmd>orca</cmd>, along with any optional parameters, in a
+          terminal window or within the <gui>Run</gui> dialog and then press
+          <key>Return</key>.
+        </p>
+      </item>
+      <item>
+        <p>
+          Configure <app>Orca</app> to launch automatically, by enabling
+          this option in <app>Orca</app>'s <link xref="howto_text_setup">text
+          setup</link> or on the <gui>General</gui> page of <app>Orca</app>'s
+          <link xref="preferences">Preferences dialog</link>.
+        </p>
+      </item>
+      <item>
+        <p>
+          Configure <app>Orca</app> to be launched automatically as your
+          preferred screen reader by choosing this option in GNOME's
+          <gui>Assistive Technology Preferences</gui> dialog.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="quitting">
+    <title>Quitting <app>Orca</app></title>
+      <p>To quit <app>Orca</app>:</p>
+      <list>
+        <item>
+          <p>
+            Press the <gui>Quit</gui> button in the <app>Orca</app> main
+            window.
+          </p>
+        </item>
+        <item>
+          <p>
+            Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>.
+            This command works whether the <app>Orca</app> main window is
+            enabled or not.
+          </p>
+        </item>
+        <item>
+          <p>
+            Type <cmd>orca -q</cmd> or <cmd>orca --quit</cmd> in a terminal
+            window or within the <gui>Run</gui> dialog and then press
+            <key>Return</key>.
+          </p>
+        </item>
+      </list>
+    </section>
+    <section id="loadtime">
+      <title>Load-Time Options</title>
+      <p>
+        The following options can be specified when launching <app>Orca</app>:
+      </p>
+      <list>
+        <item>
+          <p><cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message</p>
+        </item>
+        <item>
+          <p>
+            <cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of
+            <app>Orca</app>
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>:
+            Set up user preferences
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences
+            (text version)
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>:
+            Use <em>dirname</em> as the alternate directory for user
+            preferences
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use
+            of option, where the <em>option</em> can be one of the following:
+          </p>
+          <list>
+            <item><p><cmd>speech</cmd></p></item>
+            <item><p><cmd>braille</cmd></p></item>
+            <item><p><cmd>braille-monitor</cmd></p></item>
+            <item><p><cmd>magnifier</cmd></p></item>
+            <item><p><cmd>main-window</cmd></p></item>
+            <item><p><cmd>splash-window</cmd></p></item>
+          </list>
+        </item>
+        <item>
+          <p>
+            <cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the
+            use of an option, where the <em>option</em> can be one of the
+            following:
+          </p>
+          <list>
+            <item><p><cmd>speech</cmd></p></item>
+            <item><p><cmd>braille</cmd></p></item>
+            <item><p><cmd>braille-monitor</cmd></p></item>
+            <item><p><cmd>magnifier</cmd></p></item>
+            <item><p><cmd>main-window</cmd></p></item>
+            <item><p><cmd>splash-window</cmd></p></item>
+          </list>
+        </item>
+        <item>
+            <p>
+              <cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>:
+              Import a profile from a given <app>Orca</app> profile file
+            </p>
+        </item>
+        <item>
+          <p>
+            <cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>-f</cmd>, <cmd>--forcequit</cmd>: Forces <app>Orca</app>
+            to be terminated immediately.
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running
+            applications
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out
+          </p>
+        </item>
+        <item>
+          <p>
+            <cmd>--debug-file=<em>filename</em></cmd>: Send debug output to
+            the specified file
+          </p>
+        </item>
+      </list>
+    </section>
+
+</page>

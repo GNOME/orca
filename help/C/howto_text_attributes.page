@@ -1,0 +1,48 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_text_attributes">
+  <info>
+    <link type="guide" xref="index#reading"/>
+    <link type="next" xref="howto_reading_web" />
+    <title type="sort">2. Obtaining Text Attribute Information</title>
+    <desc>
+      obtaining formatting details
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Text Attributes (FINISH ME)</title>
+  <section>
+    <title>Obtaining Formatting Information</title>
+    <p>
+      When you press <keyseq><key>Orca Modifier</key><key>F</key>
+      </keyseq>, <app>Orca</app> will speak known text attribute
+      information about an object. In addition, <app>Orca</app> 
+      will optionally indicate text attributes in braille by
+      "underlining" them as you navigate a document.
+    </p>
+    <p>
+      Because the number of text attributes is large, and not everyone cares
+      about every attribute, the <link xref="preferences_text_attributes">
+      Text Attributes page of the preferences dialog</link> allows you to
+      customize which text attributes <app>Orca</app> will present in speech,
+      along with the order in which they should be presented, and which ones
+      <app>Orca</app> will indicate in braille.
+    </p>
+    <p>
+      Because the <link xref="preferences_text_attributes">Text Attributes
+      page</link> is also part of the application-specific settings, you can
+      customize text attribute presentation on an as-needed basis for each
+      application you use.
+    </p>
+  </section>
+  <section>
+    <title>Identifying Misspelled Words</title>
+    <p>
+      WRITE ME
+    </p>
+  </section>
+</page>

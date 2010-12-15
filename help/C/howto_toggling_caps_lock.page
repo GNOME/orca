@@ -1,0 +1,34 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_toggling_caps_lock">
+  <info>
+    <link type="guide" xref="index#getting_started"/>
+    <link type="next" xref="howto_key_bindings" />
+    <title type="sort">7. CapsLock in Laptop Layout</title>
+    <desc>toggling it when it is the <key>Orca Modifier</key></desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>CapsLock in Laptop Layout</title>
+  <p>
+    Orca has two keyboard layouts: Desktop and Laptop. The layout you choose
+    impacts which key is used as the Orca Modifier. If you are using the Laptop
+    layout, the default Orca Modifier will be <key>CapsLock</key>. If you are
+    using <app>Orca</app>'s Laptop Layout and want to lock or unlock
+    <key>CapsLock</key>, you can do so by performing the following steps:
+  </p>
+  <steps>
+    <item>
+      <p>
+        Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</key>
+        </keyseq>, to tell <app>Orca</app> that the next command should be ignored.
+      </p>
+    </item>
+    <item>
+      <p>Press <key>CapsLock</key> to toggle its locked state.</p>
+    </item>
+  </steps>
+</page>

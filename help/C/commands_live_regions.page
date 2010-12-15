@@ -1,0 +1,58 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_live_regions">
+  <info>
+    <link type="next" xref="commands_chat" />
+    <link type="guide" xref="commands#accessing_dynamic_information" />
+    <link type="seealso" xref="howto_reading_web"  />
+    <title type="sort">1. Live Region</title>
+    <title type="link">Live Regions</title>
+    <desc>
+      commands for accessing web live regions
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0
+      </p>
+    </license>
+  </info>
+  <title>Live Region Commands</title>
+  <list>
+    <item>
+      <p>
+        Monitor live regions:
+        <keyseq><key>Orca Modifier</key><key>Shift</key><key>Backslash</key></keyseq>
+      </p>
+    </item>
+    <item>
+      <p>
+        Advance live region politeness setting: <key>Backslash</key>
+      </p>
+    </item>
+    <item>
+      <p>
+        Set default politeness level to off:
+        <keyseq><key>Shift</key><key>Backslash</key></keyseq>
+      </p>
+    </item>
+    <item>
+      <p>
+        Go to next/previous live region:
+        <keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>
+      </p>
+    </item>
+    <item>
+      <p>
+        Go to last live region which made an announcement:
+        <keyseq><key>Y</key></keyseq>
+      </p>
+    </item>
+    <item>
+      <p>
+        Review live region announcements:
+        <keyseq><key>Orca Modifier</key><key>F1</key></keyseq> through <key>F9</key>
+      </p>
+    </item>
+</list>
+</page>

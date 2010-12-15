@@ -1,0 +1,63 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_keyboard_layout">
+  <info>
+    <link type="guide" xref="index#getting_started"/>
+    <link type="next" xref="howto_toggling_caps_lock" />
+    <title type="sort">6. Keyboard Layout</title>
+    <desc>selecting the Desktop or Laptop layout</desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Keyboard Layout</title>
+  <p>
+    Orca has two keyboard layouts: Desktop and Laptop. The layout you choose
+    impacts which key is used as the Orca Modifier.
+  </p>
+  <list>
+    <item>
+      <p>
+        If you are using the Laptop layout, the default Orca Modifier will be
+       <key>CapsLock</key>
+      </p>
+    </item>
+    <item>
+      <p>
+        If you are using the Desktop layout, the Orca Modifier will be both
+        <key>Insert</key> and <key>KeyPad Insert</key>, the latter being the
+        same key as <key>KeyPad 0</key>.
+      </p>
+    </item>
+  </list>
+  <p>
+    The layout also determines the keystrokes associated with a number of
+    <app>Orca</app>'s commands, especially in the areas of Flat Review,
+    Where Am I, and Say All.
+  </p>
+  <p>
+    If you want to change your keyboard layout, you can do so by performing
+    the following steps:
+  </p>
+  <steps>
+    <item>
+      <p>
+        Get into the <link xref="preferences">Orca Preferences</link> dialog
+        by pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>.
+      </p>
+    </item>
+    <item>
+      <p>
+        Move to the <gui>Keyboard Layout</gui> group of radio buttons.
+      </p>
+    </item>
+    <item>
+      <p>Arrow to the desired layout.</p>
+    </item>
+    <item>
+      <p>Press the <gui>Apply</gui> button.</p>
+    </item>
+  </steps>
+</page>

@@ -1,0 +1,77 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_learn_modes">
+  <info>
+    <link type="guide" xref="index#getting_started" />
+    <link type="next" xref="howto_keyboard_layout" />
+    <title type="sort">5. The "Learn" Modes</title>
+    <desc>
+      discovering <app>Orca</app>'s commands
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>The "Learn" Modes</title>
+  <p>
+    Orca has two modes for learning more about <app>Orca</app>'s commands:
+    Learn Mode and List Shortcuts Mode. In Learn Mode, <app>Orca</app>
+    will announce each keystroke you pressed along with any associated
+    <app>Orca</app> command that keystroke is bound to. List Shortcuts
+    Mode provides you with a list of all the <app>Orca</app> commands
+    you can use.
+  </p>
+  <section id="learn_mode">
+    <title>Using Learn Mode</title>
+    <p>To use <app>Orca</app>'s Learn Mode:</p>
+    <steps>
+      <item>
+        <p>
+          Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key>
+          <key>H</key></keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>
+          Press any key or keystroke. <app>Orca</app> will announce the
+          keys and any associated command.
+        </p>
+      </item>
+      <item>
+        <p>Press <key>Esc</key> to exit Learn Mode.</p>
+      </item>
+    </steps>
+  </section>
+  <section id="list_shortcuts_mode">
+    <title>Using List Shortcuts Mode</title>
+    <p>To use <app>Orca</app>'s List Shortcuts Mode:</p>
+    <steps>
+      <item>
+        <p>
+          Get into List Shortcuts Mode by pressing <keyseq><key>Orca
+          Modifier</key><key>H</key></keyseq> twice quickly.
+        </p>
+      </item>
+      <item>
+        <p>
+          Press <key>1</key> if you want a list of shortcuts that apply
+         <app>Orca</app>-wide, or press <key>2</key> if you want a list
+         of shortcuts that are specifically for the application with focus.
+        </p>
+      </item>
+      <item>
+        <p>
+          Press <key>Up</key> or <key>Down</key> to examine the contents
+          of the list.
+        </p>
+      </item>
+      <item>
+        <p>
+          Press <key>Esc</key> to exit List Shortcuts Mode.
+        </p>
+      </item>
+    </steps>
+  </section>
+</page>

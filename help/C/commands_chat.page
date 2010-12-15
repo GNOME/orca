@@ -1,0 +1,52 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_chat">
+  <info>
+    <link type="next" xref="commands_debugging" />
+    <link type="guide" xref="commands#accessing_dynamic_information" />
+    <link type="seealso" xref="preferences_chat" />
+    <title type="sort">2. Chat</title>
+    <title type="link">Chat</title>
+    <desc>
+      commands for use with IM and IRC clients
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Chat Commands</title>
+  <p>
+    The following commands can be used to access information in the
+    instant messaging and internet relay chat clients supported by
+    <app>Orca</app>. You will notice that several of these commands
+    are "unbound." Please see <link xref="howto_key_bindings">Modifying
+    Keybindings</link> for information on how to bind these commands to
+    keystrokes.
+  </p>
+  <list>
+    <item>
+      <p>
+        Present previous chat room messages:
+        <keyseq><key>Orca Modifier</key><key>F1</key></keyseq> through <key>F9</key>
+      </p>
+    </item>
+    <item>
+      <p>
+        Enable/disable announcement of room name with messages: (Unbound)
+      </p>
+    </item>
+    <item>
+      <p>Enable/disable announcement of buddy typing status: (Unbound)</p>
+    </item>
+    <item>
+      <p>Enable/disable room-specific histories: (Unbound)</p>
+    </item>
+  </list>
+</page>
+
+
+
+
+

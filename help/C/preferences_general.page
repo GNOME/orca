@@ -1,0 +1,167 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_general">
+  <info>
+    <title type="sort">1. General</title>
+    <title type="link">General</title>
+    <desc>
+      configuring <app>Orca</app>'s fundamental behaviors
+    </desc>
+    <link type="guide" xref="preferences#orca" />
+    <link type="next" xref="preferences_speech" />
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>General Preferences</title>
+  <section id="keyboardlayout">
+    <info>
+      <desc>
+        Preferences dialog box option to select which <app>Orca</app> keyboard
+        layout to use, desktop or laptop.
+      </desc>
+    </info>
+    <title>Keyboard Layout</title>
+    <p>
+      The <gui>keyboard layout</gui> options allow you to specify if
+      you will be working on a desktop (i.e. with a numeric keypad)
+      or laptop keyboard. Which layout you choose will determine both
+      the Orca Modifier key as well as a number of keyboard shortcuts
+      for performing <app>Orca</app> commands.</p>
+  </section>
+  <section id="quitorca">
+    <info>
+      <desc>
+        Preferences dialog box option to quit <app>Orca</app> without
+        presenting a confirmation dialog.
+      </desc>
+    </info>
+    <title>Quit <app>Orca</app> Without Confirmation</title>
+    <p>
+      Normally, when you quit <app>Orca</app>, <app>Orca</app> will pop
+      up a confirmation dialog asking you if you want to quit. Unchecking
+      the <gui>Quit <app>Orca</app> without confirmation</gui> checkbox
+      prevents the confirmation window from appearing.
+    </p>
+  </section>
+  <section id="disablegksu">
+    <info>
+      <desc>
+        Preferences dialog box option to disable gksu keyboard grab.
+      </desc>
+    </info>
+    <title>Disable gksu Keyboard Grab</title>
+    <p>
+      When running commands from the launch menu, many distributions
+      use an application known as gksu to authorize the user to run
+      these commands; gksu is the GUI that asks you for your password.
+      When it runs, gksu enables what is known as a "keyboard grab,"
+      which is a feature to prevent keyboard actions from going to any
+      other application on the desktop, including <app>Orca</app>. The
+      result of a keyboard grab is that <app>Orca</app> will not receive
+      any keyboard events, preventing <app>Orca</app> from functioning
+      normally.
+    </p>
+    <p>
+      By checking the "Disable gksu keyboard grab" checkbox, you will
+      turn off the keyboard grab behavior, allowing <app>Orca</app> to
+      function normally with system administration applications.
+    </p>
+    <p>
+      The keyboard grab is a security attempt by gksu to prevent nefarious
+      applications from "sniffing" the keyboard and grabbing secret
+      information. Please be advised that disabling the gksu keyboard grab
+      feature can expose you to such nefarious behavior. If you do not feel
+      comfortable with this, you can always use the root account for system
+      administration purposes. To do so, you need to enable the root account
+      for login, and then logout and log back in as root whenever you want to
+      perform a system administration command.
+    </p>
+  </section>
+  <section id="presenttooltips">
+    <info>
+      <desc>
+        Preferences dialog box option to enable presentation of tooltips which
+        appear as the result of mouse hovering.
+      </desc>
+    </info>
+    <title>Present Tooltips</title>
+    <p>
+      When checked, this option will tell <app>Orca</app> to present information
+      about tooltips when they appear as the result of mouse hovering. Specific
+      actions to force tooltips to appear, such as pressing <keyseq>
+      <key>Ctrl</key><key>F1</key></keyseq> when an object has focus, will
+      always result in tooltips being presented, regardless of this setting.
+    </p>
+  </section>
+  <section id="showmainwindow">
+    <info>
+      <desc>
+        Preferences dialog box option for showing or hiding the <app>Orca</app>
+        main window.
+      </desc>
+    </info>
+    <title>Show <app>Orca</app> Main Window</title>
+    <p>
+      The <app>Orca</app> main window provides you with a graphical way to
+      display the <link xref="preferences">Orca Preferences</link> dialog,
+      access help content, bring up the About dialog, and quit <app>Orca</app>.
+      Many users do not like the <app>Orca</app> main window because it shows
+      up in the window manager's Tab order when you press <keyseq>
+      <key>Alt</key><key>Tab</key></keyseq> to switch windows. By unchecking
+      the "Show <app>Orca</app> main window" checkbox, you can tell
+      <app>Orca</app> to not show the <app>Orca</app> main window.
+    </p>
+  </section>
+  <section id="autolaunch">
+    <info>
+      <desc>
+        Preferences dialog box option to cause <app>Orca</app> to automatically
+        start when you log in.
+      </desc>
+    </info>
+    <title>Start <app>Orca</app> When You Login</title>
+    <p>
+      When checked, this option will tell the system to automatically launch
+      <app>Orca</app> when you log in.
+    </p>
+  </section>
+  <section id="objectundermouse">
+    <info>
+      <desc>
+        Preferences dialog box option to enable presentation of the object
+        under the mouse pointer.
+      </desc>
+    </info>
+    <title>Speak Object Under Mouse</title>
+    <p>
+      When checked, this option will tell <app>Orca</app> to present
+      information about the object under the mouse pointer as you move
+      it around the screen.
+    </p>
+  </section>
+  <section id="timeanddate">
+    <info>
+      <desc>
+        Preferences dialog box options for customizing the time and date
+        formats used by <app>Orca</app>.
+      </desc>
+    </info>
+    <title>Time and Date Formats</title>
+    <p>
+      The Time Format and Date Format combo boxes allow you to select the
+      format <app>Orca</app> uses when presenting the time and the date.
+    </p>
+  </section>
+  <section id="profiles">
+    <info>
+      <desc>
+        Preferences dialog box options for managing settings profiles.
+      </desc>
+    </info>
+    <title>Profiles</title>
+    <p>WRITEME</p>
+  </section>
+</page>

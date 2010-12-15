@@ -1,0 +1,21 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_reading_web">
+  <info>
+    <link type="guide" xref="index#reading"/>
+    <link type="next" xref="howto_web_forms" />
+    <title type="sort">3. Web Pages</title>
+    <desc>
+      navigating content displayed in browsers
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Web Pages (WRITE ME)</title>
+  <p>
+    Write me
+  </p>
+</page>

@@ -1,0 +1,36 @@
+<page xmlns="http://projectmallard.org/1.0/" type="guide" id="index">
+  <info>
+    <title type="link">Introduction to the <app>Orca</app> Screen Reader</title>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>
+    <media type="image" mime="image/png" src="figures/orca-logo.png">
+      <app>Orca</app>'s logo
+    </media>
+    <app>Orca</app> Screen Reader
+  </title>
+  <p>
+     If you are new to screen readers or are unfamiliar with <app>Orca</app>,
+     the guides which follow should get you started with performing common
+     tasks using <app>Orca</app>. If, on the other hand, you are already
+     familiar with how to use a screen reader and just need to know how what
+     options and tools <app>Orca</app> provides, you may prefer to read the
+     guides covering <link xref="preferences"><app>Orca</app>'s Preferences
+     dialogs</link> and <link xref="commands"><app>Orca</app>'s commands</link>.
+  </p>
+  <section id="getting_started" style="2column">
+    <title>Getting Started</title>
+  </section>
+  <section id="reading" style="2column">
+    <title>Reading Documents and Web Pages</title>
+  </section>
+  <section id="reviewing" style="2column">
+    <title>Reviewing and Interacting with Screen Contents</title>
+  </section>
+</page>

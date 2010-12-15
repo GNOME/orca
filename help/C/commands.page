@@ -1,0 +1,47 @@
+<page xmlns="http://projectmallard.org/1.0/" type="guide" id="commands">
+  <info>
+    <link type="next" xref="commands_controlling_orca" />
+    <link type="seealso" xref="index" />
+    <title type="sort">4. <app>Orca</app>'s Commands</title>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+    <desc>
+      Much of <app>Orca</app>'s functionality consists of commands which
+      enable you to navigate more efficiently and obtain information about
+      the elements displayed on the screen. The guides are designed for those
+      who are already familiar with how to use a screen reader and just need
+      to know what commands are available in <app>Orca</app>.
+    </desc>
+  </info>
+  <title><app>Orca</app>'s Commands</title>
+  <p>
+    Much of <app>Orca</app>'s functionality consists of commands which enable
+    you to navigate more efficiently and obtain information about the elements
+    displayed on the screen. The guides are designed for those who are already
+    familiar with how to use a screen reader and just need to know what commands
+    are available in <app>Orca</app>.
+  </p>
+  <section id="getting_started"  style="2column">
+    <title>Getting Started</title>
+  </section>
+  <section id="speech_braille_magnification"  style="2column">
+    <title>Speech, Braille, and Magnification</title>
+  </section>
+  <section id="reading_documents"  style="2column">
+    <title>Reading Web Pages and Other Documents</title>
+  </section>
+  <section id="reviewing_screen_contents"  style="2column">
+    <title>Reviewing and Interacting with Screen Contents</title>
+  </section>
+  <section id="accessing_dynamic_information"  style="2column">
+    <title>Accessing Dynamic Information</title>
+  </section>
+  <section id="troubleshooting">
+    <title>Troubleshooting</title>
+  </section>
+</page>

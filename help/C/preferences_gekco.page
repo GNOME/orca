@@ -1,0 +1,84 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_gecko">
+  <info>
+    <link type="guide" xref="preferences#application" />
+    <link type="next" xref="preferences_structural_navigation" />
+    <link type="seealso" xref="commands_structural_navigation" />
+    <link type="seealso" xref="howto_reading_web" />
+    <title type="sort">1. Gecko Navigation</title>
+    <title type="link">Gecko Navigation</title>
+    <desc>
+      configuring <app>Orca</app>'s caret navigation
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Gecko Navigation Preferences</title>
+  <p>
+    The following options allow you to customize how <app>Orca</app>
+    behaves in Gecko-based applications, including Firefox, Thunderbird,
+    and Yelp 2.
+  </p>
+  <list>
+    <item>
+      <p>
+        <gui>Use <app>Orca</app> Caret Navigation</gui>: This checkbox
+        toggles <app>Orca</app>'s caret navigation on and off. It is checked
+        by default. To toggle this setting on the fly without saving it, use
+        <keyseq><key>Orca Modifier</key><key>F12</key></keyseq>.
+      </p>
+    </item>
+    <item>
+      <p>
+        <gui>Grab focus on objects when navigating</gui>: If this checkbox
+        is checked, <app>Orca</app> will perform an explicit focus grab as
+        you navigate using the <app>Orca</app>-controlled caret. Doing this
+        was necessary in older versions of Firefox and Thunderbird. It is
+        unchecked by default.
+      </p>
+    </item>
+    <item>
+      <p>
+        <gui>Position cursor at start of line when navigating vertically</gui>:
+        If this checkbox is checked, <app>Orca</app> will always move the caret
+        to the beginning of the line when <app>Orca</app> is controlling the
+        caret and you press Up or Down Arrow to read the previous or next line.
+        If this checkbox is not checked, <app>Orca</app> will attempt to keep
+        the caret in the same horizontal position as you navigate Up or Down.
+        It is checked by default.
+      </p>
+    </item>
+    <item>
+      <p>
+        <gui>Speak results during find</gui>: If this checkbox is checked,
+        <app>Orca</app> will read the line which matches your current search
+        query when you are using the application's Find toolbar to perform
+        your search. It is checked by default.
+      </p>
+    </item>
+    <item>
+      <p>
+        <gui>Only speak changed lines during find</gui>: If this checkbox
+        is checked, <app>Orca</app> will not present the matching line if
+        it is the same line as the previous match. This option is designed
+        to prevent "chattiness" on a line with multiple instances of the
+        string for which you are searching. It is unchecked by default.
+      </p>
+    </item>
+    <item>
+      <p>
+        <gui>Minimum length of matched text</gui>: The number of characters
+        which much match before <app>Orca</app> announces the matching line.
+        The default value is four characters.
+      </p>
+    </item>
+  </list>
+  <p>
+    See <link xref="preferences_structural_navigation" /> for additional
+    preferences related to Structural Navigation.
+  </p>
+</page>

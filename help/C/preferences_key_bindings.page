@@ -1,0 +1,86 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_key_bindings">
+  <info>
+    <link type="guide" xref="preferences#orca"/>
+    <link type="next" xref="preferences_pronunciation" />
+    <link type="seealso" xref="howto_key_bindings" />
+    <title type="sort">6. Key Bindings</title>
+    <title type="link">Key Bindings</title>
+    <desc>
+      configuring <app>Orca</app>'s keyboard shortcuts
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Key Bindings Preferences</title>
+  <section id="orca_modifier_keys">
+    <info>
+      <desc>
+        Preferences dialog box option to select the Orca Modifier key.
+      </desc>
+    </info>
+    <title>Orca Modifier Keys</title>
+    <p>
+      The <gui>Orca Modifier Keys</gui> combo box allows you to select which
+      key or keys will serve as the Orca Modifier. The available options are:
+    </p>
+    <list>
+      <item><p>Insert, KP_Insert</p></item>
+      <item><p>KP_Insert</p></item>
+      <item><p>Insert</p></item>
+      <item><p>Caps_Lock</p></item>
+    </list>
+  </section>
+  <section id="key_bindings_table">
+    <title>The Key Bindings Table</title>
+    <p>
+      The key bindings table provides a list of <app>Orca</app> operations
+      and the keys that are bound to them.
+    </p>
+    <list>
+      <item>
+        <p>
+          The <gui>Function</gui> column is a description of the
+          <app>Orca</app> operation to be performed.
+        </p>
+      </item>
+      <item>
+        <p>
+          The <gui>Key Binding</gui> is the primary way to invoke the function
+          from the keyboard. Note that the key binding may include the word
+          "Orca". This indicates that the <key>Orca Modifier</key> key should
+          be held down along with the other keys. You can modifiy the value of
+          this column by pressing <key>Return</key>, pressing the keys for the
+          new binding, and pressing <key>Return</key> again.
+        </p>
+      </item>
+      <item>
+        <p>
+          The <gui>Alternate</gui> column allows you to specify an additional
+          keybinding for this function. You can modifiy the value of this
+          column by pressing <key>Return</key>, pressing the keys for the new
+          binding, and pressing <key>Return</key> again.
+        </p>
+      </item>
+      <item>
+        <p>
+          The <gui>Modified</gui> column serves both as an indicator to what
+          has been changed and as a way to restore the default bindings
+          associated with that function.
+        </p>
+      </item>
+    </list>
+    <p>
+      Beneath the list of <app>Orca</app> keybindings, you will find a group
+      of "unbound" commands. These are commands which we feel will be very
+      useful for some users, but not needed by most users. Rather than "use
+      up" a keystroke for such commands, we have left them unassigned by
+      default. At the end of the list are the braille bindings, for use with
+      a refreshable braille display.
+    </p>
+  </section>
+</page>

@@ -83,6 +83,7 @@ Makefile
 docs/Makefile
 docs/man/Makefile
 po/Makefile.in
+help/Makefile
 icons/Makefile
 src/Makefile
 src/orca/Makefile

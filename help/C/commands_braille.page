@@ -1,0 +1,40 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_braille">
+  <info>
+    <link type="next" xref="commands_magnifier" />
+    <link type="guide" xref="commands#speech_braille_magnification" />
+    <link type="seealso" xref="preferences_braille" />
+    <title type="sort">2. Braille</title>
+    <title type="link">Braille</title>
+    <desc>
+      commands executable on braille displays
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Braille Commands</title>
+  <p>
+    The following commands allow you to control <app>Orca</app> from your
+    refreshable braille display rather than your keyboard:
+  </p>
+  <list>
+    <item><p>Pan braille display to the left: Line Left</p></item>
+    <item><p>Pan braille display to the right: Line Right</p></item>
+    <item><p>Toggle flat review mode: Freeze</p></item>
+    <item><p>Review the word above: Line Up</p></item>
+    <item><p>Review the word below: Line Down</p></item>
+    <item><p>Review bottom left: Bottom Right</p></item>
+    <item><p>Review the home position: Top Left</p></item>
+    <item><p>Contracted braille: Six Dots</p></item>
+    <item><p>Marks the beginning of a text selection: Cut Begin</p></item>
+    <item><p>Marks the end of a text selection: Cut Line</p></item>
+    <item><p>Processes a cursor routing key: Cursor Routing</p></item>
+    <item><p>Returns to object with keyboard focus: Cursor Position</p></item>
+  </list>
+</page>
+
+

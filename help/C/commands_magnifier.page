@@ -1,0 +1,59 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_magnifier">
+  <info>
+    <link type="next" xref="commands_reading" />
+    <link type="guide" xref="commands#speech_braille_magnification" />
+    <link type="seealso" xref="preferences_magnifier" />
+    <title type="sort">3. Magnifier Settings</title>
+    <title type="link">Magnifier Settings</title>
+    <desc>
+      commands for customizing <app>Orca</app>'s zoomer
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Magnifier Settings Commands</title>
+  <p>
+    The following commands can be used to customize <app>Orca</app>'s
+    magnification support. You will notice that all of these commands
+    are "unbound." Please see <link xref="howto_key_bindings">Modifying
+    Keybindings</link> for information on how to bind these commands to
+    keystrokes.
+  </p>
+  <list>
+    <item>
+      <p>
+        Enable/disable magnification: (Unbound)
+      </p>
+    </item>
+    <item>
+      <p>
+        Increase magnification level: (Unbound)
+      </p>
+    </item>
+    <item>
+      <p>
+        Decrease magnification: (Unbound)
+      </p>
+    </item>
+    <item>
+      <p>
+        Enable/disable color enhancements: (Unbound)
+      </p>
+    </item>
+    <item>
+      <p>
+        Enable/disable mouse enhancements: (Unbound)
+      </p>
+    </item>
+    <item>
+      <p>
+        Cycle to the magnifier position: (Unbound)
+      </p>
+    </item>
+  </list>
+</page>

@@ -1,0 +1,79 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_find">
+  <info>
+    <link type="next" xref="commands_mouse" />
+    <link type="guide" xref="commands#reviewing_screen_contents" />
+    <link type="seealso" xref="howto_orca_find" />
+    <title type="sort">2. Orca Find</title>
+    <title type="link">Orca Find</title>
+    <desc>
+      commands for searching window contents
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Orca Find Commands</title>
+  <p>
+    Orca's Find feature allows you to search for elements displayed on the
+    screen. It is a Flat Review feature. Thus when there is a match, flat
+    review will be activated and moved to that location; focus within the
+    application will not be modified, nor will the caret be repositioned.
+    If you need to accomplish either, please see
+    <link xref="commands_mouse">Orca'a Mouse/Pointer-Related Commands</link>.
+  </p>
+  <list>
+    <item>
+      <p>Open the <app>Orca</app> Find dialog:</p>
+      <list>
+        <item>
+          <p>Desktop:<keyseq><key>KP Delete</key></keyseq></p>
+        </item>
+        <item>
+          <p>Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq></p>
+        </item>
+      </list>
+    </item>
+    <item>
+      <p>Move flat review to the next instance of a string:</p>
+      <list>
+        <item>
+          <p>
+            Desktop:
+            <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Laptop:
+            <keyseq><key>Orca Modifier</key><key>Right Bracket</key></keyseq>
+          </p>
+        </item>
+      </list>
+    </item>
+    <item>
+      <p>Move flat review to the previous instance of a string:</p>
+      <list>
+        <item>
+          <p>
+            Desktop:
+            <keyseq>
+              <key>Orca Modifier</key><key>Shift</key><key>KP Delete</key>
+            </keyseq>
+          </p>
+        </item>
+        <item>
+          <p>
+            Laptop:
+            <keyseq>
+              <key>Orca Modifier</key><key>Ctrl</key><key>Right Bracket</key>
+            </keyseq>
+          </p>
+        </item>
+      </list>
+    </item>
+  </list>
+</page>

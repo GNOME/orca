@@ -1,0 +1,79 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_the_orca_modifier">
+  <info>
+    <link type="guide" xref="index#getting_started"/>
+    <link type="next" xref="howto_learn_modes" />
+    <title type="sort">4. The Orca Modifier</title>
+    <desc>
+        a key that works like <key>Shift</key>, <key>Ctrl</key>,
+        and <key>Alt</key>
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>The Orca Modifier</title>
+  <p>
+    Orca has a special modifier key that works like <key>Shift</key>,
+    <key>Ctrl</key>, and <key>Alt</key>. It is designed specifically
+    for performing <app>Orca</app> commands and doing so without
+    introducing conflicts with the commands of the applications you
+    are accessing.
+  </p>
+  <p>
+    Which key the "Orca Modifier" is bound to will, by default, depend
+    on whether you are using <app>Orca</app>'s Laptop keyboard layout
+    or its Desktop keyboard layout:
+  </p>
+  <list>
+    <item>
+      <p>
+        If you are using the Laptop layout, the default Orca Modifier
+        will be <key>CapsLock</key>
+      </p>
+    </item>
+    <item>
+      <p>
+        If you are using the Desktop layout, the Orca Modifier will
+        be both <key>Insert</key> and <key>KeyPad Insert</key>, the
+        latter being the same key as <key>KeyPad 0</key>.
+      </p>
+    </item>
+  </list>
+  <section id="changing_the_modifier">
+    <title>Changing the Orca Modifier</title>
+    <p>
+      If you want to maintain your current keyboard layout but select
+      a different modifier key, you can do so by performing the following
+      steps:
+    </p>
+    <steps>
+      <item>
+        <p>
+          Get into the <link xref="preferences">Orca Preferences</link>
+          dialog by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
+          </keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>Move to the <gui>Key Bindings</gui> page.</p>
+      </item>
+      <item>
+        <p>Move to the <gui>Orca Modifier Key(s)</gui> combobox.</p>
+      </item>
+      <item>
+        <p>Arrow to the desired modifier. The available options are:</p>
+        <list>
+          <item><p>Insert, KP_Insert</p></item>
+          <item><p>KP_Insert</p></item>
+          <item><p>Insert</p></item>
+          <item><p>Caps_Lock</p></item>
+        </list>
+      </item>
+      <item><p>Press the <gui>Apply</gui> button.</p></item>
+    </steps>
+  </section>
+</page>

@@ -1,0 +1,19 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_flat_review">
+  <info>
+    <link type="guide" xref="index#reviewing"/>
+    <link type="next" xref="howto_orca_find" />
+    <title type="sort">2. Flat Review</title>
+    <desc>examining a window spatially</desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Flat Review (WRITE ME)</title>
+  <p>
+    Write me
+  </p>
+</page>

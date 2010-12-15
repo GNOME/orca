@@ -1,0 +1,220 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_reading">
+  <info>
+    <link type="next" xref="commands_structural_navigation" />
+    <link type="guide" xref="commands#reading_documents" />
+    <link type="seealso" xref="howto_reading_text"  />
+    <link type="seealso" xref="howto_text_attributes"  />
+    <link type="seealso" xref="howto_whereami"  />
+    <title type="sort">1. Reading</title>
+    <title type="link">Reading</title>
+    <desc>
+      commands for accessing document text
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Reading Commands</title>
+  <p>
+    To read the contents of any document, use the application's built-in caret
+    navigation mode. As you navigate within the text of the document, <app>Orca</app>
+    will present your new location. As a result, you are likely already familiar with
+    how to read a document using <app>Orca</app>. However, if you would like to review
+    GNOME's caret navigation commands, please see 
+    "<link href="http://library.gnome.org/users/gnome-access-guide/unstable/keynav-52.html">Caret 
+    Navigation Mode</link>" in the
+    <link href="http://library.gnome.org/users/gnome-access-guide/unstable">GNOME 
+    Desktop Accessibility Guide</link>.
+  </p>
+  <p>
+    In addition to the caret navigation commands which are part of GNOME,
+    you can use the following <app>Orca</app> commands to read a docment:
+  </p>
+  <section id="flat_review">
+    <title>Reading Your Current Location</title>
+    <p>
+      The following <app>Orca</app> <link xref="commands_flat_review">Flat
+      Review Commands</link> can be used to read your current location:
+    </p>
+    <list>
+      <item>
+        <p>Read the current line:</p>
+        <list>
+          <item>
+            <p>
+              Desktop: <keyseq><key>KP 8</key></keyseq>
+            </p>
+          </item>
+          <item>
+            <p>
+              Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq>
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>Read the current word:</p>
+        <list>
+          <item>
+            <p>
+              Desktop: <keyseq><key>KP 5</key></keyseq>
+            </p>
+          </item>
+          <item>
+            <p>
+              Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>Spell the current word:</p>
+        <list>
+          <item>
+            <p>
+              Desktop: <keyseq><key>KP 5</key></keyseq> (double-clicked)
+            </p>
+          </item>
+          <item>
+            <p>
+              Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>
+              (double-clicked)
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>Phonetically spell the current word:</p>
+        <list>
+          <item>
+            <p>
+              Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)
+            </p>
+          </item>
+          <item>
+            <p>
+              Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>
+              (triple-clicked)
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>Read the current character:</p>
+        <list>
+          <item>
+            <p>
+              Desktop: <keyseq><key>KP 2</key></keyseq>
+            </p>
+          </item>
+          <item>
+            <p>
+              Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>Phonetically speak the current character:</p>
+        <list>
+          <item>
+            <p>
+              Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)
+            </p>
+          </item>
+          <item>
+            <p>
+              Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>
+              (double-clicked)
+            </p>
+          </item>
+        </list>
+      </item>
+      <item>
+        <p>Speak the unicode value of current character:</p>
+        <list>
+          <item>
+            <p>
+              Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)
+            </p>
+          </item>
+          <item>
+            <p>
+              Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>
+              (triple-clicked)
+            </p>
+          </item>
+        </list>
+      </item>
+    </list>
+  </section>
+  <section id="say_all">
+    <title>Say All</title>
+    <p>
+      Orca's Say All command will cause <app>Orca</app> to speak the
+      entire document beginning from your current location.
+    </p>
+    <list>
+      <item>
+        <p>Desktop: <key>KP Plus</key></p>
+      </item>
+      <item>
+        <p>
+          Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq>
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="attributes_and_selection">
+    <title>Text Attributes and Selected Text</title>
+    <p>
+      Orca has a dedicated command for obtaining the attributes of the
+      text at the caret location. In addition, if you use <app>Orca</app>'s
+      Where Am I commands from within a text object in which text has been
+      selected, <app>Orca</app> will announce the selected text.
+    </p>
+    <list>
+      <item>
+        <p>
+          Present the text attributes:
+          <keyseq><key>Orca Modifier</key><key>F</key></keyseq>
+        </p>
+      </item>
+      <item>
+        <p>Perform basic where am I:</p>
+        <list>
+          <item>
+            <p>
+              Desktop: <key>KP Enter</key>
+            </p>
+          </item>
+          <item>
+            <p>
+              Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>
+            </p>
+          </item>
+        </list>
+    </item>
+    <item>
+      <p>Perform detailed where am I:</p>
+      <list>
+        <item>
+          <p>
+            Desktop: <key>KP Enter</key> (double-clicked)
+          </p>
+        </item>
+        <item>
+          <p>
+            Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>
+            (double-clicked)
+          </p>
+        </item>
+      </list>
+    </item>
+  </list>
+</section>
+</page>

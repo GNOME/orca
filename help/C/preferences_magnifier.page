@@ -1,0 +1,353 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_magnifier">
+  <info>
+    <link type="guide" xref="preferences#orca" />
+    <link type="next" xref="preferences_key_bindings" />
+    <title type="sort">5. Magnifier</title>
+    <title type="link">Magnifier</title>
+    <desc>
+      configuring magnification, colors, and pointer
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Magnifier Preferences</title>
+  <section id="enable_magnifier">
+    <title>Enable Magnifier</title>
+      <p>
+        The <gui>Enable magnifier</gui> check box enables and disables
+        <app>Orca</app>'s magnification support. When it is unchecked,
+        the other widgets on this page become unavailable.
+      </p>
+  </section>
+  <section id="zoomer">
+    <title>Zoomer</title>
+    <p>
+      The <gui>Zoomer</gui> options allow you to customize the magnifier's
+      position, size, and level.
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Scale factor</gui> can be used to set the magnification
+          level from 1.0x to 16.0x (fractional values are supported).
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Position</gui> can be used to specify the placement of the
+          magnifier on your screen. The available positions are:
+        </p>
+        <list>
+          <item><p><gui>Full Screen</gui> (default)</p></item>
+          <item><p><gui>Left Half</gui></p></item>
+          <item><p><gui>Right Half</gui></p></item>
+          <item><p><gui>Top Half</gui></p></item>
+          <item><p><gui>Bottom Half</gui></p></item>
+          <item><p><gui>Custom</gui></p></item>
+        </list>
+      </item>
+      <item>
+        <p>
+          Choosing <gui>Custom</gui> causes four spin buttons to become
+          available:
+        </p>
+        <list>
+          <item><p><gui>Top</gui></p></item>
+          <item><p><gui>Left</gui></p></item>
+          <item><p><gui>Right</gui></p></item>
+          <item><p><gui>Bottom</gui></p></item>
+        </list>
+        <p>
+          These spin buttons allow you to define the location of each edge
+          of the zoom window. Units are in pixels.
+        </p>
+      </item>
+      <item><p>TODO: Add Hide System Pointer Option</p></item>
+    </list>
+  </section>
+  <section id="tracking_and_alignment">
+      <title>Tracking and Alignment</title>
+      <p>These options control the tracking of the mouse cursor.</p>
+      <section id="mouse_pointer">
+        <title>Mouse Pointer</title>
+        <p>
+          The <gui>Mouse Pointer</gui> combo box allows you to select
+          your tracking and alignment from the following options:
+        </p>
+        <list>
+          <item>
+            <p>
+              <gui>Centered</gui>: Keeps the mouse pointer at the center
+              of the screen whenever possible. This is the default.
+            </p>
+          </item>
+          <item>
+            <p>
+              <gui>Proportional</gui>: Positions the mouse pointer in the
+              zoom window relative to its actual, unmagnified position. For
+              instance, if the mouse pointer is 25% away from the left edge
+              of the desktop, <app>Orca</app> positions the magnified mouse
+              pointer 25% from the left edge of the zoom window.
+           </p>
+         </item>
+         <item>
+            <p>
+              <gui>Push</gui>: Moves the zoomer window the least amount
+              necessary to keep the mouse pointer on the screen.
+            </p>
+        </item>
+        <item>
+          <p>
+            <gui>None</gui>: Moving the mouse pointer has no impact on
+            what the zoomer window displays.
+          </p>
+        </item>
+      </list>
+      <p>
+        The <gui>Pointer follows zoomer</gui> checkbox allows you to
+        customize what should occur if the mouse pointer is not on the
+        screen when you initially move the mouse. With this option
+        enabled, if the mouse pointer is not on the screen when you
+        initially move the mouse, it will be moved into the zoomer
+        so that you can continue to see what you were working on. If
+        your preferred mouse tracking mode is centered, the pointer
+        will be moved to the center; otherwise it will be moved to the
+        item with focus. This option is enabled by default.
+      </p>
+    </section>
+    <section id="control_and_menu_item">
+      <title>Control and menu item</title>
+      <p>These options control additional behavior of the magnifier.</p>
+      <list>
+        <item>
+          <p>
+            <gui>Centered</gui>: When navigating via keyboard, keep
+            the focused dialog box control or menu item at the center
+            of the screen whenever possible.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Push</gui>: When navigating via keyboard, move the
+            zoomer window the least amount necessary to display the
+            focused dialog box control or menu item. This is the
+            default.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>None</gui>: Using the keyboard to navigate among
+            dialog box controls and menu items will have no impact
+            on what the zoomer window displays.
+          </p>
+        </item>
+      </list>
+      <p>
+        <gui>Pointer follows focus</gui>: If this option is enabled,
+        the mouse pointer will follow you as you arrow through menu
+        items and move among controls in dialog boxes. This option
+        is disabled by default.
+      </p>
+    </section>
+    <section id="text_cursor">
+      <title>Text cursor</title>
+      <p>These options control how the text cursor behaves.</p>
+      <list>
+        <item>
+          <p>
+            <gui>Centered</gui>: As the text cursor moves, keep it at
+            the center of the screen whenever possible.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>Push</gui>: As the text cursor moves, move the zoomer
+            window the least amount necessary to display it. This is
+            the default.
+          </p>
+        </item>
+        <item>
+          <p>
+            <gui>None</gui>: Moving the text cursor will have no impact
+            on what the zoomer window displays.
+          </p>
+        </item>
+      </list>
+      <p>
+        The <gui>Edge margin</gui> is how close the caret should be
+        allowed to get to the edge of the screen before it's time to
+        "push" the zoomer window. The margin can range from 0 to 50%,
+        with 50% being the equivalent of choosing centering. The default
+        value is 0. This option is only available if "Push" is your text
+        cursor tracking mode.
+      </p>
+    </section>
+  </section>
+  <section id="color">
+    <title>Color</title>
+    <p>
+      The <gui>Color</gui> options allow you to do some rough color
+      adjustments of the magnified region.
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Invert colors</gui>: Creates a reverse or negative-image
+          effect.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Brightness</gui>: Ranges from -1 to 1 (-1 is black/no
+          brightness; 1 is white/total brightness; 0 is "normal"/unchanged).
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Contrast</gui>: Ranges from -1 to 1 (-1 is grey/no contrast;
+          1 is maximum contrast; 0 is "normal"/unchanged).
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="border">
+    <title>Border</title>
+    <p>
+      The <gui>Border</gui> options can be used to customize the border
+      which separates the magnified region from the non-magnified region.
+      As such, these options are not available when <gui>Full Screen</gui>
+      is selected.
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Enable border</gui>: This option determines if a window
+          border is visible for the magnifier.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Border size</gui>: This value determines the size of the
+          border in pixels.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="cursor">
+    <title>Cursor</title>
+    <p>
+      These controls can be used to customize the size and color of the
+      magnifier's cursor.
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Enable cursor</gui>: If this check box is enabled then a
+          cursor is visible and the size and color options become available.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Custom size</gui>: Enable this check box if you would like
+          to make the mouse pointer larger than it normally is. The cursor
+          size can be changed from the default value of 32 pixels.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Custom color</gui>: If the cursor is enabled, a custom color
+          can also be applied.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="crosshair">
+    <title>Cross-hair</title>
+    <p>
+      This set of controls can be used to customize the magnifier's optional
+      area-targeting cursor.
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Enable cross-hair</gui>: If checked, you can additionally
+          configure the clipping behavior, size and color of the cross-hair.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Enable cross-hair clip</gui>: If enabled, the cross-hair
+          will be "clipped" (removed) in the area immediately surrounding
+          the mouse pointer.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Cross-hair size</gui>: This control sets the thickness
+          of the cross-hair in pixels.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Cross-hair color</gui>: This control allows a custom color
+          to be used for the cross-hair.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="advanced">
+    <title>Advanced</title>
+    <p>
+      If you press the <gui>Advanced</gui> button located near the bottom
+      of the Magnifier page, you can further customize <app>Orca</app>'s
+      magnification support, including:
+    </p>
+    <list>
+      <item><p><gui>Smoothing</gui>: Bilinear or none.</p></item>
+      <item>
+        <p>
+          <gui>Brightness</gui>: Choosing different brightness levels
+          for red, blue, and green allows you to create the color scheme
+          that works best for you.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Contrast</gui>: While not as significant as changes to
+          brightness, choosing different contrast levels for red, blue,
+          and green helps you to create the color scheme that works best
+          for you.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Color Filtering</gui>: Allows you to pick one of the
+          colorblind filters available through libcolorblind. In order
+          to take advantage of this feature you will need to install
+          libcolorblind and then rebuild gnome-mag.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Multi-Monitor Settings - Source Display</gui>: X Window
+          System DISPLAY of what should be magnified. Written in the form
+          ":0.x" where x is the number of the screen whose contents should
+          be magnified.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Multi-Monitor Settings - Target Display</gui>: X Window
+          System DISPLAY of where to put the zoomer window. Written in
+          the form ":0.y" where y is the number of the screen where the
+          zoomer window should appear.
+        </p>
+      </item>
+    </list>
+  </section>
+</page>

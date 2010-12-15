@@ -1,0 +1,131 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" 
+      id="preferences_text_attributes">
+  <info>
+    <link type="guide" xref="preferences#orca" />
+    <link type="next" xref="preferences_gecko" />
+    <link type="seealso" xref="howto_text_attributes" />
+    <title type="sort">8. Text Attributes</title>
+    <title type="link">Text Attributes</title>
+    <desc>
+      configuring what formatting is presented
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Text Attributes Preferences</title>
+  <section id="table">
+    <title>The text attributes table</title>
+    <p>
+      The text attributes table is where you specify what attributes will
+      and will not be presented and under what conditions. Each row consists
+      of four columns:
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Attribute Name</gui>: The name of the text attribute.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Speak</gui>: Check this checkbox if you would like
+          <app>Orca</app> to speak this attribute when you press
+          <keyseq><key>Orca</key><key>F</key></keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Mark in braille</gui>: Check this checkbox if you would
+          like <app>Orca</app> to "underline" this attribute on your
+          braille display.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Present Unless</gui>: This editable field allows you to
+          specify when an enabled attribute is not of interest.
+        </p>
+        <p>
+          For example, by default the "underline" text attribute has a
+          value of "none." This causes <app>Orca</app> to inform you
+          about underlined text as long as the text is actually underlined.
+          If you always want this attribute to be spoken irrespective of
+          whether or not the text is underlined, then the attribute should
+          be checked and the <gui>Present unless</gui> value cleared.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="reset">
+    <title>Undoing changes</title>
+    <p>
+      Beneath the list of text attributes, there is a Reset button
+      (<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore
+      the values of the table to what they were when the dialog was
+      first displayed.
+    </p>
+  </section>
+  <section id="rearranging">
+    <title>Rearranging the order of presentation</title>
+    <p>
+      When you initially display the text attribute page, all your
+      checked attributes are put at the top of the list. They are given
+      in the order that they will be spoken. There are four buttons which
+      can be used to rearrange the order of presentation:
+    </p>
+    <list>
+      <item>
+        <p>
+          <gui>Move to top</gui> (<keyseq><key>Alt</key><key>T</key></keyseq>):
+          moves the selected attribute to the top of the list.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>):
+          moves the selected attribute up one row.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>):
+          moves the selected attribute down one row.
+        </p>
+      </item>
+      <item>
+        <p>
+          <gui>Move to bottom</gui> (<keyseq><key>Alt</key><key>B</key></keyseq>):
+          moves the selected attribute to the bottom of the list.
+        </p>
+      </item>
+    </list>
+  </section>
+  <section id="braille_indicator">
+    <title>Braille indicator</title>
+    <p>
+      Beneath the push buttons is the <gui>Braille Indicator</gui> group
+      of radio buttons. Here you can select the cell or cells to be used
+      to indicate text which has at least one of the specified attributes.
+      Your choices are:
+    </p>
+    <list>
+      <item>
+        <p><gui>None</gui> (the default)</p>
+      </item>
+      <item>
+        <p><gui>Dot 7</gui></p>
+      </item>
+      <item>
+        <p><gui>Dot 8</gui></p>
+      </item>
+      <item>
+        <p><gui>Dots 7 and 8</gui></p>
+      </item>
+    </list>
+  </section>
+</page>

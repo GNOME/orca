@@ -1,0 +1,19 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_mouse_review">
+  <info>
+    <link type="guide" xref="index#reviewing"/>
+    <link type="next" xref="howto_notifications" />
+    <title type="sort">4. Mouse Review</title>
+    <desc>using the pointer to examine the screen</desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Mouse Review (WRITE ME)</title>
+  <p>
+    Write me
+  </p>
+</page>
