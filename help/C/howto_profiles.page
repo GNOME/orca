@@ -3,7 +3,7 @@
     <link type="guide" xref="index#getting_started"/>
     <link type="next" xref="howto_documents" />
     <title type="sort">9. Profiles</title>
-    <desc>maintaining multiple configurations</desc>
+    <desc>Maintaining multiple configurations</desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
       <email>joanied@gnome.org</email>

@@ -3,7 +3,7 @@
     <title type="link">Key Echo</title>
     <title type="sort">4. Key Echo</title>
     <desc>
-      configuring what is spoken as you type
+      Configuring what is spoken as you type
     </desc>
     <link type="guide" xref="preferences#orca" />
     <link type="next" xref="preferences_magnifier" />

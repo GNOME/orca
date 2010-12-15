@@ -6,7 +6,7 @@
     <title type="sort">2. Speech Settings</title>
     <title type="link">Speech</title>
     <desc>
-      commands for customizing <app>Orca</app>'s output
+      Commands for customizing <app>Orca</app>'s output
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>

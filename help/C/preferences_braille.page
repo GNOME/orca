@@ -3,7 +3,7 @@
     <title type="sort">3. Braille</title>
     <title type="link">Braille</title>
     <desc>
-      configuring <app>Orca</app>'s braille display support
+      Configuring <app>Orca</app>'s braille display support
     </desc>
     <link type="guide" xref="preferences#orca" />
     <link type="next" xref="preferences_key_echo" />

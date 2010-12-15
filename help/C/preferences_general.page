@@ -3,7 +3,7 @@
     <title type="sort">1. General</title>
     <title type="link">General</title>
     <desc>
-      configuring <app>Orca</app>'s fundamental behaviors
+      Configuring <app>Orca</app>'s fundamental behaviors
     </desc>
     <link type="guide" xref="preferences#orca" />
     <link type="next" xref="preferences_speech" />

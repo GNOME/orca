@@ -3,7 +3,7 @@
     <link type="guide" xref="index#reviewing"/>
     <link type="next" xref="howto_mouse_review" />
     <title type="sort">3. Orca Find</title>
-    <desc>searching a window for objects</desc>
+    <desc>Searching a window for objects</desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
       <email>joanied@gnome.org</email>
