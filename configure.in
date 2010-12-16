@@ -5,7 +5,7 @@ m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
 AC_CONFIG_MACRO_DIR([m4])
-GNOME_DOC_INIT
+GNOME_DOC_INIT([0.17.3])
 
 AC_INIT([orca],
         [orca_version],
