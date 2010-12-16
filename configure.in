@@ -4,9 +4,6 @@ m4_define([orca_micro_version], [4pre])
 m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
-AC_CONFIG_MACRO_DIR([m4])
-GNOME_DOC_INIT([0.17.3])
-
 AC_INIT([orca],
         [orca_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=orca],
@@ -22,6 +19,9 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package])
 AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.40.0])
+
+AC_CONFIG_MACRO_DIR([m4])
+GNOME_DOC_INIT([0.17.3])
 
 dnl Needed programs
 AC_PROG_INSTALL
