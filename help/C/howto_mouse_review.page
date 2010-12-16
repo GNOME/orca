@@ -12,8 +12,39 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Mouse Review (WRITE ME)</title>
+  <title>Mouse Review</title>
   <p>
-    Write me
+    <app>Orca</app>'s Mouse Review feature causes <app>Orca</app> to present
+    the object under the mouse pointer. Unlike <app>Orca</app>'s
+    <link xref="howto_flat_review">Flat Review</link> feature, Mouse Review
+    is not limited to the active window; instead, <app>Orca</app> will attempt
+    to identify what accessible object, if any, is visually under the pointer
+    as you move the mouse. If you have moved the pointer over an accessible
+    object with information to present, <app>Orca</app> will present that object
+    and its information to you.
   </p>
+  <p>
+    Because enabling Mouse Review causes <app>Orca</app> to listen for, and then
+    process, all changes in the position of the Mouse Pointer, this feature is
+    disabled by default. To have it always enabled, check the <gui>Speak object
+    under mouse</gui> checkbox found on the
+    <link xref="preferences_general">General page of <app>Orca</app>'s
+    Preferences dialog</link>. In addition, you will find an unbound command
+    named <gui>Toggle mouse review mode</gui> on the
+    <link xref="preferences_key_bindings">Key Bindings page</link> of that same
+    dialog box. By binding this command, as described in the
+    <link xref="howto_key_bindings">Introduction to Key Bindings</link>,
+    you can enable and disable Mouse Review on an as-needed basis.
+  </p>
+  <note style="tip">
+    <title>
+      Default Settings and Keybindings Are Independent of One Another
+    </title>
+    <p>
+      Note that you can choose to have Mouse Review always enabled or not and
+      still toggle it on and off by binding and using the <gui>Toggle mouse
+      review mode</gui> command. It is not necessary to enable it in order to
+      toggle it because settings and keybindings are independent of one another.
+    </p>
+  </note>
 </page>
