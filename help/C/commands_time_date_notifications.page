@@ -41,9 +41,9 @@
     <title>Reviewing Notification Messages</title>
     <p>
       Orca has three unbound commands for accessing previously-displayed
-      notification messages. Please see <link xref="howto_key_bindings">Modifying
-      Keybindings</link> for information on how to bind these commands to
-      keystrokes.
+      <link xref="howto_notifications">notification messages</link>. Please
+      see <link xref="howto_key_bindings">Modifying Keybindings</link> for
+      information on how to bind these commands to keystrokes.
     </p>
     <list>
       <item>

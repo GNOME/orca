@@ -12,8 +12,58 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Notifications (WRITE ME)</title>
+  <title>Notifications</title>
   <p>
-    Write me
+    The GNOME Desktop includes a "notification area" which can be used by
+    applications to present information to the user. Examples of notifications
+    include incoming chat messages, the details associated with the song your
+    media player is starting to play, and warnings that your battery level is
+    getting low.
+  </p>
+  <p>
+    Because notifications are intended to present information to users without
+    interrupting what the user is doing, these messages tend to appear and
+    disappear relatively quickly. They are also not focusable. While
+    <app>Orca</app> will present these messages to you as they come in, it is
+    far too easy to interrupt <app>Orca</app>'s announcement accidentally by
+    continuing to type or to change focus. For this reason, <app>Orca</app> has
+    three commands which you can use to access previously-displayed notification
+    messages:
+  </p>
+  <list>
+    <item>
+      <p>Present the last (most recent) notification message</p>
+    </item>
+    <item>
+      <p>Present the previous notification message</p>
+    </item>
+    <item>
+      <p>Present list of all notification messages</p>
+    </item>
+  </list>
+  <p>
+    The first two commands are designed mainly for quick access to a message
+    you just received. The last command is the most powerful as it stores your
+    notification message history.
+  </p>
+  <p>
+    When you enter the list of notification messages, you will be told the size
+    of the list and prompted with the following choices:
+  </p>
+  <list>
+    <item><p>Press H for help.</p></item>
+    <item><p>Use Up, Down, Home or End to navigate in the list.</p></item>
+    <item><p>Press Escape to exit.</p></item>
+    <item><p>Press Space to repeat the last message read.</p></item>
+    <item><p>Press one digit to read a specific message.</p></item>
+  </list>
+  <p>
+    Note that the most recently-received message is at the top of the list.
+  </p>
+  <p>
+    Each of <app>Orca</app>'s notification review commands is unbound by
+    default. You can bind any or all of them to the shortcut or shortcuts
+    you choose. How to do so is described in the
+    <link xref="howto_key_bindings">Introduction to Key Bindings</link>.
   </p>
 </page>
