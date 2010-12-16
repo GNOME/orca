@@ -1,3 +1,5 @@
+include $(top_srcdir)/gnome-doc-utils.make
+
 DOC_ID = orca
 DOC_FIGURES = \
 	figures/orca-logo.png

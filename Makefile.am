@@ -1,6 +1,8 @@
 SUBDIRS = docs icons po src help
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-pydoc
+DISTCHECK_CONFIGURE_FLAGS =     \
+	--enable-pydoc          \
+	--disable-scrollkeeper
 
 DISTCLEANFILES =                \
 	gnome-doc-utils.make	\
@@ -27,6 +29,7 @@ desktop_DATA     = $(desktop_in_files:.desktop.in=.desktop)
 EXTRA_DIST =                \
 	$(desktop_in_files) \
 	$(icon_DATA)        \
+	gnome-doc-utils.make \
 	ChangeLog           \
 	MAINTAINERS
 
