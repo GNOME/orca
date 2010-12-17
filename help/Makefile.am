@@ -25,6 +25,7 @@ DOC_PAGES = \
 	howto_bookmarks.page \
 	howto_documents.page \
 	howto_flat_review.page \
+	howto_forms.page \
 	howto_key_bindings.page \
 	howto_keyboard_layout.page \
 	howto_learn_modes.page \
@@ -33,14 +34,13 @@ DOC_PAGES = \
 	howto_notifications.page \
 	howto_orca_find.page \
 	howto_profiles.page \
-	howto_reading_web.page \
 	howto_setting_up_orca.page \
+	howto_structural_navigation.page \
 	howto_tables.page \
 	howto_text_attributes.page \
 	howto_text_setup.page \
 	howto_the_orca_modifier.page \
 	howto_toggling_caps_lock.page \
-	howto_web_forms.page \
 	howto_whereami.page \
 	index.page \
 	introduction.page \

@@ -1,10 +1,10 @@
-<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_web_forms">
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_forms">
   <info>
     <link type="guide" xref="index#reading"/>
-    <link type="next" xref="howto_tables" />
-    <title type="sort">4. Form Controls</title>
+     <link type="next" xref="howto_live_regions" />
+    <title type="sort">5. Form Controls</title>
     <desc>
-      Interacting with embedded widgets
+      Accessing widgets embedded in documents
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>

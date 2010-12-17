@@ -1,10 +1,10 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_text_attributes">
   <info>
     <link type="guide" xref="index#reading"/>
-    <link type="next" xref="howto_reading_web" />
-    <title type="sort">2. Obtaining Text Attribute Information</title>
+    <link type="next" xref="howto_structural_navigation" />
+    <title type="sort">2. Text Attributes</title>
     <desc>
-      Obtaining formatting details
+      Examining text formatting
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -15,6 +15,11 @@
     </license>
   </info>
   <title>Text Attributes</title>
+  <p>
+    The term "text attributes" refers to all of the font, style, alignment,
+    and other formatting associated with a given character or series of
+    characters.
+  </p>
   <section>
     <title>Obtaining Formatting Information</title>
     <p>

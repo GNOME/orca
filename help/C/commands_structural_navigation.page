@@ -2,8 +2,7 @@
   <info>
     <link type="next" xref="commands_table" />
     <link type="guide" xref="commands#reading_documents" />
-    <link type="seealso" xref="howto_reading_web"  />
-    <link type="seealso" xref="howto_web_forms"  />
+    <link type="seealso" xref="howto_forms"  />
     <title type="sort">2. Structural Navigation</title>
     <title type="link">Structural Navigation</title>
     <desc>

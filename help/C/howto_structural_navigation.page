@@ -1,0 +1,96 @@
+<page xmlns="http://projectmallard.org/1.0/"
+      type="topic"
+      id="howto_structural_navigation">
+  <info>
+    <link type="guide" xref="index#reading"/>
+    <link type="next" xref="howto_tables" />
+    <title type="sort">3. Structural Navigation</title>
+    <desc>
+      Moving by heading and other elements
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Structural Navigation</title>
+  <p>
+    <app>Orca</app>'s Structural Navigation feature allows you to navigate
+    amongst elements in a document. The types of elements by which you can
+    navigate include:
+  </p>
+  <list>
+    <item><p>Headings and other text blocks</p></item>
+    <item><p>Form controls</p></item>
+    <item><p>Links</p></item>
+    <item><p>Lists and list items</p></item>
+    <item><p>Landmarks, separators, and anchors</p></item>
+    <item><p>Tables and table cells</p></item>
+  </list>
+  <p>
+    A full list of individual elements and their associated keybindings can
+    be found in <link xref="commands_structural_navigation">Structural
+    Navigation Commands</link>.
+  </p>
+  <section id="applications">
+      <title>Supported Applications</title>
+      <p>
+        Currently, Structural Navigation is fully implemented for web content,
+        including the help content you are reading now. <app>Orca</app>'s
+        Structural Navigation support for table cells has also been implemented
+        for <app>OpenOffice Writer</app> and <app>LibreOffice Writer</app>.
+      </p>
+      <p>
+        Implementing the remainder of the Structural Navigation objects to
+        these office suites requires changes to be made by their respective
+        developers. Implementing any Structural Navigation features within
+        <app>Evince</app> will require a similar effort on the part of its
+        developers.
+      </p>
+  </section>
+  <section id="settings">
+    <title>Available Settings</title>
+    <p>
+      In addition to the aforementioned commands, <app>Orca</app> has a number of
+      <link xref="preferences_structural_navigation">configurable options</link>
+      available specifically for applications in which there is structural
+      navigation support. To access these options:
+    </p>
+    <steps>
+      <item>
+        <p>
+          Give focus to an application for which <app>Orca</app> has
+          Structural Navigation support.
+        </p>
+      </item>
+      <item>
+        <p>
+          Get into the <link xref="preferences">Orca Preferences</link>
+          dialog box for the current application by pressing:
+          <keyseq>
+            <key>Ctrl</key><key>Orca Modifier</key><key>Space</key>
+          </keyseq>
+        </p>
+      </item>
+      <item>
+        <p>
+          Navigate to the last page of the dialog box which should be
+          named according to the name of your current application.
+        </p>
+      </item>
+      <item>
+        <p>
+         Examine and change the settings as you see fit.
+        </p>
+      </item>
+      <item>
+        <p>
+          Press the <gui>OK</gui> button.
+        </p>
+      </item>
+    </steps>
+  </section>
+</page>

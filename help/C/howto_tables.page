@@ -1,10 +1,10 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_tables">
   <info>
     <link type="guide" xref="index#reading"/>
-    <link type="next" xref="howto_live_regions" />
-    <title type="sort">5. Tables</title>
+    <link type="next" xref="howto_forms" />
+    <title type="sort">4. Tables</title>
     <desc>
-      Accessing document tables efficiently
+      Navigating and setting dynamic headers
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
