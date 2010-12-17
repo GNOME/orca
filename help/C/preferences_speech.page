@@ -132,7 +132,7 @@
       options are <gui>speak row</gui> and <gui>speak cell</gui>.
     </p>
     <p>
-      Consider the process of examinging the list of messages in your Inbox.
+      Consider the process of examining the list of messages in your Inbox.
       In order to have <app>Orca</app> announce the sender, subject, date,
       and presence of attachments you would need <gui>speak row</gui>. On
       the other hand, when navigating amongst rows in a spreadsheet, hearing

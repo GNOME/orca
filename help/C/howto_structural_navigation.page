@@ -42,14 +42,41 @@
         including the help content you are reading now. <app>Orca</app>'s
         Structural Navigation support for table cells has also been implemented
         for <app>OpenOffice Writer</app> and <app>LibreOffice Writer</app>.
-      </p>
-      <p>
         Implementing the remainder of the Structural Navigation objects to
         these office suites requires changes to be made by their respective
         developers. Implementing any Structural Navigation features within
         <app>Evince</app> will require a similar effort on the part of its
         developers.
       </p>
+      <note style="tip">
+        <title>Don't Forget To Toggle Structural Navigation On!</title>
+        <p>
+          Depending on where you are, it may be necessary for you to explicitly
+          toggle Structural Navigation on before you can use it.
+        </p>
+      </note>
+      <section id="toggling_required">
+        <title>When Toggling Structural Navigation On Is Required</title>
+        <p>
+          In web pages, explicitly toggling Structural Navigation on is
+          generally unnecessary because your interaction with the document
+          largely consists of reading its content. Thus there is no question
+          as to whether the 'H' you just pressed was meant to be a writing
+          command or a navigation command.
+        </p>
+        <p>
+          On the other hand, in editable documents such as those found in
+          <app>OpenOffice</app> and <app>LibreOffice</app>, it is far more
+          difficult for <app>Orca</app> to accurately predict what you expect
+          to have happen as a result of pressing 'H'. Therefore, before you
+          can use any Structural Navigation command in an editable document,
+          you must first toggle Structural Navigation on by pressing
+          <keyseq><key>Orca Modifier</key><key>Z</key></keyseq>.
+          When you are finished navigating and ready to resume writing, press
+          <keyseq><key>Orca Modifier</key><key>Z</key></keyseq> again to toggle
+          Structural Navigation off.
+        </p>
+      </section>
   </section>
   <section id="settings">
     <title>Available Settings</title>

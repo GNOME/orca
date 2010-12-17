@@ -14,8 +14,134 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Tables (WRITE ME)</title>
+  <title>Tables</title>
   <p>
-    Write me
+    <app>Orca</app> provides several features specifically designed to improve
+    access to tables found in web pages and other documents: configurable cell
+    versus row reading, <link xref="howto_structural_navigation">Structural
+    Navigation</link> and Dynamic Headers.
   </p>
+  <section id="cell_row">
+    <title>Cell Versus Row Reading</title>
+    <p>
+      Consider the process of examining the list of messages in your Inbox.
+      In order to have Orca announce the sender, subject, date, and presence
+      of attachments you would need <app>Orca</app> to speak the row. On the
+      other hand, when navigating amongst rows in a spreadsheet, hearing the
+      full row may not be desired if for no other reason than the sheer number
+      of cells in each row. Thus in that case, you would want <app>Orca</app>
+      to only speak the cell with focus. Similar situations occur in document
+      tables.
+    </p>
+    <p>
+      <app>Orca</app> allows you to customize whether only the cell should be
+      read, or if the full row should be. You can set this preference Orca wide
+      as well as on an application-by-application basis. How to do each is
+      described in the guide on <link xref="preferences"><app>Orca</app>'s
+      preferences dialogs</link>. The setting can be found in the <gui>Table
+      Rows</gui> radio button group on the <link xref="preferences_speech">
+      <gui>Speech</gui> page</link>.
+    </p>
+    <p>
+      In addition, there is an <app>Orca</app> command which allows you to
+      toggle this setting on the fly: <keyseq><key>Orca Modifier</key>
+      <key>F11</key></keyseq>.
+    </p>
+  </section>
+  <section id="structural_navigation">
+    <title>Structural Navigation</title>
+    <p>
+      <app>Orca</app>'s <link xref="commands_structural_navigation#tables">table
+      Structural Navigation commands</link> make it possible for you to quickly
+      locate tables, jump immediately to a table's first or last cell, and
+      move to the next cell in any direction.
+    </p>
+    <p>
+      As you navigate amongst and within tables using Structural Navigation,
+      <app>Orca</app> will announce additional details to help you understand
+      your position, such as the dimensions of the table you just entered and
+      the fact that you have reached the edge of the table in the direction you
+      are moving.
+    </p>
+    <p>
+      In addition, <app>Orca</app> provides configurable
+      <link xref="preferences_structural_navigation">presentation options</link>
+      which work in conjunction with Structural Navigation and allow you to
+      control whether or not cell coordinates are presented, multiple cell spans
+      are indicated, and cell headers are announced.
+    </p>
+    <note style="tip">
+      <title>Don't Forget To Toggle Structural Navigation On!</title>
+      <p>
+        Depending on where you are, it may be necessary for you to explicitly
+        toggle Structural Navigation on before you can use it. To learn more, read
+        <link type="seealso" xref="howto_structural_navigation#toggling_required">
+        when toggling Structural Navigation on is required.</link>
+      </p>
+    </note>
+  </section>
+  <section id="dynamic_headers">
+    <title>Dynamic Headers</title>
+    <p>
+      Many of the tables you will encounter while reading have cells which serve
+      as the header for a row or a column. Whether or not the creator of that
+      table correctly marked those cells as headers is hard to say. In many
+      cases, the text was simply formatted to be larger and/or bold. And even if
+      the table is correctly marked up, that is no guarantee that the application
+      or toolkit exposes that text as header information to assistive technologies.
+      <app>Orca</app>'s Dynamic Header support makes it possible to overcome these
+      challenges.
+    </p>
+    <p>
+      To set column headers:
+    </p>
+    <steps>
+      <item>
+        <p>
+          Move to the row which contains all of the column headers.
+        </p>
+      </item>
+      <item>
+        <p>
+          Press <keyseq><key>Orca Modifier</key><key>R</key></keyseq> to tell
+          <app>Orca</app> that the current row is the one with the headers.
+        </p>
+      </item>
+    </steps>
+    <p>
+      To set row headers:
+    </p>
+    <steps>
+      <item>
+        <p>
+          Move to the column which contains all of the row headers.
+        </p>
+      </item>
+      <item>
+        <p>
+          Press <keyseq><key>Orca Modifier</key><key>C</key></keyseq> to tell
+          <app>Orca</app> that the current column is the one with the headers.
+        </p>
+      </item>
+    </steps>
+    <p>
+      Having set either the column headers or the row headers, you should find
+      that as you navigate amongst the cells, <app>Orca</app> will present each
+      header that has changed. Or to put it another way, <app>Orca</app> will
+      not present the column header over and over again as you move up or down
+      within the current column. Likewise, it will not present the row header
+      over and over again as you move left or right within the current row.
+      However, if you change rows and there are row headers, the header
+      associated with the new row will be presented. And if you change columns
+      and there are column headers, the header associated with the new column
+      will be presented.
+    </p>
+    <p>
+      To clear headers, simply double-click the command you used to set them.
+      Thus double-clicking <keyseq><key>Orca Modifier</key><key>R</key></keyseq>
+      tells <app>Orca</app> there are no row headers. Double-clicking 
+      <keyseq><key>Orca Modifier</key><key>C</key></keyseq> tells <app>Orca</app>
+      there are no column headers.
+    </p>
+  </section>
 </page>
