@@ -1,0 +1,60 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_live_regions">
+  <info>
+    <link type="guide" xref="index#reading"/>
+    <link type="next" xref="howto_whereami" />
+    <title type="sort">6. Live Regions</title>
+    <desc>
+      Interacting with dynamic web content
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Live Regions</title>
+  <p>
+    A live region is a dynamically-updated portion of a web page, such as a
+    table of sports statistics, a list of current stock prices, a log from
+    a chat, or an alert displayed by the page you are reading. While live
+    regions appear quite frequently, fully accessible web pages with live
+    regions are encountered less often. This problem is actively being
+    addressed by a number of organizations.
+  </p>
+  <section>
+    <title>Live Region Politeness Levels</title>
+    <p>
+      Live regions have an associated "politeness" level which is set by the
+      author as a means to convey the importance of the information and to
+      suggest when users should be informed by their assistive technology of
+      updates made within that region. Live regions can be "off", "polite", or
+      "aggressive" to the point of being "rude."
+    </p>
+  </section>
+  <section>
+    <title><app>Orca</app>'s Support for Live Regions</title>
+    <p>
+      Because you might not agree with the politeness level specified by the
+      author whose page you are viewing, <app>Orca</app> provides a number of
+      <link xref="commands_live_regions">live region commands</link> which
+      allow you to modify the level of any or all of the regions on a page.
+      In addition, you can:
+    </p>
+    <list>
+      <item>
+        <p>Turn live region support on or off</p>
+      </item>
+      <item>
+        <p>Jump to the next and previous live region spatially</p>
+      </item>
+      <item>
+        <p>Jump to the last live region which presented information</p>
+      </item>
+      <item>
+        <p>Review the last nine live region messages which were presented</p>
+    </item>
+    </list>
+  </section>
+</page>

@@ -1,8 +1,8 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="howto_tables">
   <info>
     <link type="guide" xref="index#reading"/>
-    <link type="next" xref="howto_whereami" />
-    <title type="sort">A5 Tables</title>
+    <link type="next" xref="howto_live_regions" />
+    <title type="sort">5. Tables</title>
     <desc>
       Accessing document tables efficiently
     </desc>

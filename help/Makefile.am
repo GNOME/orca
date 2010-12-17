@@ -28,6 +28,7 @@ DOC_PAGES = \
 	howto_key_bindings.page \
 	howto_keyboard_layout.page \
 	howto_learn_modes.page \
+	howto_live_regions.page \
 	howto_mouse_review.page \
 	howto_notifications.page \
 	howto_orca_find.page \

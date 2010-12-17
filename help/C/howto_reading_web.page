@@ -14,8 +14,82 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Web Pages (WRITE ME)</title>
-  <p>
-    Write me
-  </p>
+  <title>Web Pages (FINISH ME)</title>
+  <section id="caret_navigation">
+    <title>Caret Navigation</title>
+    <p>
+      Write me
+    </p>
+    </section>
+      <section id="structural_navigation">
+    <title>Structural Navigation</title>
+    <p>
+      Write me
+    </p>
+    </section>
+    <section id="live_regions">
+      <title>Live Regions</title>
+      <p>
+        Live regions are parts of a web page that the web page author expects to
+        change dynamically. Examples of live regions include:
+      </p>
+      <list>
+        <item>
+          <p>tables displaying sports statistics or stock prices</p>
+        </item>
+        <item>
+          <p>logs from a browser-based chat tool</p>
+        </item>
+        <item>
+          <p>notifications or alerts that pop up on the page you are reading</p>
+        </item>
+      </list>
+      <p>
+        Many such sites exist; however, providing fully accessible web pages which
+        utilize live regions has been more of a challenge. These challenges are
+        being addressed by the W3C and the developers of Gecko and WebKitGtk.
+      </p>
+      <note style="tip">
+        <title>Live Region Politeness Levels</title>
+        <p>
+          The "politeness level" associated with a live region is not an Orca
+          concept, but rather an ARIA one. While the <link href="http://www.w3.org/TR/wai-aria/states_and_properties#aria-live">W3C</link>
+          and <link href="https://developer.mozilla.org/en/AJAX/WAI_ARIA_Live_Regions#aria-live.3dPOLITENESS_SETTING">Mozilla</link>
+          definitions differ slightly, the consensus is that live regions can be
+          completely off, polite, or aggressive to the point of being rude.
+        </p>
+        <p>
+          How polite a live region is -- or is not -- is initially determined by
+          the creator of that live region based on its nature. Because you might
+          not agree with the level specified by the author whose page you are
+          viewing, <app>Orca</app> provides commands with allow you to modify
+          the level for any or all of the live regions on any page.
+        </p>
+      </note>
+      <p>
+        In addition to being able to adjust the politeness level of live regions,
+        you can:
+      </p>
+      <list>
+        <item>
+          <p>Turn live region support on or off</p>
+        </item>
+        <item>
+          <p>Jump to the next and previous live region spatially</p>
+        </item>
+        <item>
+          <p>Jump to the last live region which presented information</p>
+        </item>
+        <item>
+          <p>Jump to the last live region which presented information</p>
+        </item>
+        <item>
+          <p>Review the last nine live region messages which were presented</p>
+        </item>
+      </list>
+      <p>
+        The keybindings for performing all of the above tasks can be found in
+        <link xref="commands_live_regions">Live Region Commands</link>.
+      </p>
+    </section>
 </page>
