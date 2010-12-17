@@ -103,7 +103,7 @@
     <note style="tip">
       <title>Enabling both key echo and character echo</title>
       <p>
-        If you like key echo and you frequenty type accented characters,
+        If you like key echo and you frequently type accented characters,
         consider enabling both. <app>Orca</app>'s character echo logic
         attempts to filter out characters which were spoken as a result
         of key echo, thus minimizing the likelihood of "double speaking"

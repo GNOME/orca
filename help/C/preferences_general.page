@@ -162,6 +162,35 @@
       </desc>
     </info>
     <title>Profiles</title>
-    <p>WRITEME</p>
+    <p>
+      The <gui>Profiles</gui> group of controls make it possible for you
+      to maintain and use multiple configurations. Here you will find the
+      following:
+    </p>
+    <list>
+      <item>
+        <p>
+          The <gui>Active Profile</gui> combo box displays the current profile
+          and allows you to select a different profile to load.
+        </p>
+      </item>
+      <item>
+        <p>
+          The <gui>Load</gui> button will cause <app>Orca</app> to load the
+          profile indicated in the <gui>Active Profile</gui> combo box.
+        </p>
+      </item>
+      <item>
+        <p>
+          The <gui>Save As</gui> button allows you to save the current set of
+          options from the preferences dialog box to a named profile.
+        </p>
+      </item>
+        <p>
+          The <gui>Start-up Profile</gui> combo box allows you to select the
+          profile which should be automatically loaded each time you launch
+          <app>Orca</app>.
+        </p>
+    </list>
   </section>
 </page>

@@ -19,7 +19,7 @@
   <title>Flat Review Commands</title>
   <p>
     Orca's <link xref="howto_flat_review">Flat Review</link> commands are
-    designed for spatially reviwing elements displayed on the screen. They
+    designed for spatially reviewing elements displayed on the screen. They
     also provide a means for reading the current line, word, and character
     when navigating in the text of a document.
   </p>
@@ -141,7 +141,7 @@
           <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (double-clicked)</p></item>
         </list>
       </item>
-      <item><p>Speak unicode value of current character:</p>
+      <item><p>Speak Unicode value of current character:</p>
         <list>
           <item><p>Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)</p></item>
           <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-clicked)</p></item>

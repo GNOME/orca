@@ -53,7 +53,7 @@
           The <gui>Key Binding</gui> is the primary way to invoke the function
           from the keyboard. Note that the key binding may include the word
           "Orca". This indicates that the <key>Orca Modifier</key> key should
-          be held down along with the other keys. You can modifiy the value of
+          be held down along with the other keys. You can modify the value of
           this column by pressing <key>Return</key>, pressing the keys for the
           new binding, and pressing <key>Return</key> again.
         </p>
@@ -61,7 +61,7 @@
       <item>
         <p>
           The <gui>Alternate</gui> column allows you to specify an additional
-          keybinding for this function. You can modifiy the value of this
+          keybinding for this function. You can modify the value of this
           column by pressing <key>Return</key>, pressing the keys for the new
           binding, and pressing <key>Return</key> again.
         </p>

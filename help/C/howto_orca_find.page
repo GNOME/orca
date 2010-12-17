@@ -84,7 +84,7 @@
     match without having to return to the Orca Find dialog box.
   </p>
   <p>
-    Beause it is a <link xref="howto_flat_review">Flat Review</link> feature,
+    Because it is a <link xref="howto_flat_review">Flat Review</link> feature,
     when there is a match, Flat Review will automatically be activated and the
     matching item or text will become the current review item. Note that focus
     within the application will not be modified, nor will the caret be

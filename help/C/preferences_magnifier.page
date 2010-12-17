@@ -67,7 +67,12 @@
           of the zoom window. Units are in pixels.
         </p>
       </item>
-      <item><p>TODO: Add Hide System Pointer Option</p></item>
+      <item>
+        <p>
+          The <gui>Hide System Pointer</gui> checkbox will hide the unmagnified
+          pointer, leaving just the magnified one visible.
+        </p>
+      </item>
     </list>
   </section>
   <section id="tracking_and_alignment">
