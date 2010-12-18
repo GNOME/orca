@@ -57,5 +57,5 @@ DOC_PAGES = \
 	preferences_structural_navigation.page \
 	preferences_text_attributes.page
 
-DOC_LINGUAS =
+DOC_LINGUAS = hu
 dist-hook: doc-dist-hook
