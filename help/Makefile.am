@@ -46,7 +46,7 @@ DOC_PAGES = \
 	introduction.page \
 	preferences_braille.page \
 	preferences_chat.page \
-	preferences_gekco.page \
+	preferences_gecko.page \
 	preferences_general.page \
 	preferences_key_bindings.page \
 	preferences_key_echo.page \
@@ -54,7 +54,7 @@ DOC_PAGES = \
 	preferences.page \
 	preferences_pronunciation.page \
 	preferences_speech.page \
-	preferences_structural_navigation.page \
+	preferences_table_navigation.page \
 	preferences_text_attributes.page
 
 DOC_LINGUAS = hu
