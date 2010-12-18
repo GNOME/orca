@@ -2,7 +2,36 @@ include $(top_srcdir)/gnome-doc-utils.make
 
 DOC_ID = orca
 DOC_FIGURES = \
-	figures/orca-logo.png
+	figures/main_window.png \
+	figures/orca_find.png \
+	figures/orca-logo.png \
+	figures/perferences_table_navigation.png \
+	figures/preferences_character_echo.png \
+	figures/preferences_chat.png \
+	figures/preferences_date_and_time.png \
+	figures/preferences_disable_gksu_keyboard_grab.png \
+	figures/preferences_gecko_find_options.png \
+	figures/preferences_gecko_page_navigation.png \
+	figures/preferences_key_bindings_table.png \
+	figures/preferences_keyboard_layout.png \
+	figures/preferences_key_echo.png \
+	figures/preferences_magnifier_advanced.png \
+	figures/preferences_Orca_modifier_keys.png \
+	figures/preferences_present_tooltips.png \
+	figures/preferences_profiles.png \
+	figures/preferences_pronunciation.png \
+	figures/preferences_quit_Orca_without_confirmation.png \
+	figures/preferences_show_Orca_main_window.png \
+	figures/preferences_speak_object_under_mouse.png \
+	figures/preferences_start_Orca_when_you_login.png \
+	figures/preferences_table_navigation.png \
+	figures/preferences_text_attributes_braille.png \
+	figures/preferences_text_attributes_rearranging.png \
+	figures/preferences_text_attributes_table.png \
+	figures/preferences_word_and_sentence_echo.png \
+	figures/profiles_conflict.png \
+	figures/profiles_load.png \
+	figures/profiles_save_as.png
 
 DOC_PAGES = \
 	commands_bookmarks.page \
