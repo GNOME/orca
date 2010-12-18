@@ -65,7 +65,7 @@
     </p>
     <p>
       In addition, <app>Orca</app> provides configurable
-      <link xref="preferences_structural_navigation">presentation options</link>
+      <link xref="preferences_table_navigation">presentation options</link>
       which work in conjunction with Structural Navigation and allow you to
       control whether or not cell coordinates are presented, multiple cell spans
       are indicated, and cell headers are announced.

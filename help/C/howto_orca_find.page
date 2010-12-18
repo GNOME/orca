@@ -41,44 +41,68 @@
       </p>
   </note>
   <p>
-    When you activate Orca Find, you will be placed in a dialog box where you
-    can specify the following items:
+    When you activate Orca Find, you will be placed in a dialog box.
+  </p>
+    <figure>
+      <title>
+        <app>Orca</app>'s Find Dialog
+      </title>
+      <media type="image" mime="image/png" src="figures/orca_find.png"/>
+    </figure>
+  <p>
+    Here you can specify the following items:
   </p>
   <list>
     <item>
       <p>The text to find</p>
     </item>
     <item>
-      <p>The location to start from, which can be:</p>
-      <list>
-        <item>
-          <p><gui>Current location</gui></p>
-        </item>
-        <item>
-          <p><gui>Top of window</gui></p>
-        </item>
-      </list>
-    </item>
-    <item>
-      <p><gui>Match case</gui></p>
-    </item>
-    <item>
-      <p><gui>Match entire word only</gui></p>
-    </item>
-    <item>
-      <p><gui>Search backwards</gui></p>
+      <p>
+        The location from which to begin the search, which can either be
+        the current location or the top of the window
+      </p>
+      <p>
+        Default value of <gui>Start from</gui>: <gui>Current location</gui>
+      </p>
     </item>
     <item>
       <p>
-        <gui>Wrap around</gui>, should there be no match from the starting point
+        Whether or not capitalization should be taken into account when seeking
+        a match
+     </p>
+      <p>
+        Default value of <gui>Match case</gui>: not checked
+      </p>
+    </item>
+    <item>
+      <p>
+        Whether or not to limit matches to those which match the entire word
+        or phrase
+     </p>
+      <p>
+        Default value of <gui>Match entire word only</gui>: not checked
+      </p>
+    </item>
+    <item>
+      <p>
+        Whether Find should look down and/or to the right for the next
+        match or up and/or to the left.
+     </p>
+      <p>
+        Default value of <gui>Search backwards</gui>: not checked
+      </p>
+    </item>
+    <item>
+      <p>
+        Whether or not Find should wrap around to the top/bottom of the window
+        if there is no match found from the starting location in the direction
+        of the search.
+     </p>
+      <p>
+        Default value of <gui>Wrap around</gui>: checked
       </p>
     </item>
   </list>
-  <p>  
-    By default, the search will be case-insensitive and permit partial word
-    matches. And it will begin from your current location and search forward,
-    wrapping if needed.
-  </p>
   <p>
     Having performed a search, you can quickly search for the next or previous
     match without having to return to the Orca Find dialog box.

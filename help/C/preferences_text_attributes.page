@@ -18,13 +18,25 @@
     </license>
   </info>
   <title>Text Attributes Preferences</title>
+  <p>
+    The term "text attributes" refers to all of the font, style, alignment,
+    and other formatting associated with a given character or series of
+    characters. <app>Orca</app>'s <gui>Text Attributes</gui> page allows you
+    to customize which text attributes <app>Orca</app> will present in speech,
+    along with the order in which they should be presented, and which ones
+    <app>Orca</app> will indicate in braille.
+  </p>
   <section id="table">
     <title>The text attributes table</title>
-    <p>
-      The text attributes table is where you specify what attributes will
-      and will not be presented and under what conditions. Each row consists
-      of four columns:
-    </p>
+    <figure>
+      <title>Options for Configuring the Presentation of Formatting</title>
+      <desc>
+        The text attributes table is where you specify what attributes will
+        and will not be presented and under what conditions. Each row consists
+        of four columns.
+      </desc>
+      <media type="image" mime="image/png" src="figures/preferences_text_attributes_table.png"/>
+    </figure>
     <list>
       <item>
         <p>
@@ -62,22 +74,26 @@
     </list>
   </section>
   <section id="reset">
-    <title>Undoing changes</title>
-    <p>
-      Beneath the list of text attributes, there is a Reset button
-      (<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore
-      the values of the table to what they were when the dialog was
-      first displayed.
+     <title>Undoing changes</title>
+     <p>
+       Beneath the list of text attributes, there is a Reset button
+       (<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore
+       the values of the table to what they were when the dialog was
+       first displayed.
     </p>
   </section>
   <section id="rearranging">
     <title>Rearranging the order of presentation</title>
-    <p>
-      When you initially display the text attribute page, all your
-      checked attributes are put at the top of the list. They are given
-      in the order that they will be spoken. There are four buttons which
-      can be used to rearrange the order of presentation:
-    </p>
+    <figure>
+      <title>Options for Controlling the Order in Which Attributes Are Presented</title>
+      <desc>
+        When you initially display the text attribute page, all of your enabled
+        attributes are placed at the top of the table in the order in which they
+        will be spoken. There are four buttons which can be used to rearrange
+        the order of presentation.
+      </desc>
+      <media type="image" mime="image/png" src="figures/preferences_text_attributes_rearranging.png"/>
+    </figure>
     <list>
       <item>
         <p>
@@ -107,24 +123,27 @@
   </section>
   <section id="braille_indicator">
     <title>Braille indicator</title>
-    <p>
-      Beneath the push buttons is the <gui>Braille Indicator</gui> group
-      of radio buttons. Here you can select the cell or cells to be used
-      to indicate text which has at least one of the specified attributes.
-      Your choices are:
-    </p>
+    <figure>
+      <title>Options for Configuring Braille "Underlining" for Formatting</title>
+      <desc>
+        Beneath the push buttons is the <gui>Braille Indicator</gui> group
+        of radio buttons. Here you can select the cell or cells to be used
+        to indicate text which has at least one of the specified attributes.
+      </desc>
+      <media type="image" mime="image/png" src="figures/preferences_text_attributes_braille.png"/>
+    </figure>
     <list>
       <item>
-        <p><gui>None</gui> (the default)</p>
+        <p><gui>None</gui>: Do not underline text attributes in braille (the default)</p>
       </item>
       <item>
-        <p><gui>Dot 7</gui></p>
+        <p><gui>Dot 7</gui>: Underline text attributes with only Dot 7</p>
       </item>
       <item>
-        <p><gui>Dot 8</gui></p>
+        <p><gui>Dot 8</gui>: Underline text attributes with only Dot 8</p>
       </item>
       <item>
-        <p><gui>Dots 7 and 8</gui></p>
+        <p><gui>Dots 7 and 8</gui>: Underline text attributes with both Dots 7 and Dots 8</p>
       </item>
     </list>
   </section>

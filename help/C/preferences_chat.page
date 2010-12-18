@@ -15,54 +15,65 @@
     </license>
   </info>
   <title>Chat Preferences</title>
+  <media type="image" mime="image/png" src="figures/preferences_chat.png"/>
   <p>
     The following options allow you to customize how <app>Orca</app>
     behaves when providing access to instant messaging and internet
     relay chat clients.
   </p>
-  <list>
-    <item>
-      <p>
-        <gui>Speak Chat Room name</gui>: If this checkbox is checked,
-        <app>Orca</app> will prefix incoming messages with the name
-        of the room or buddy they came from, unless they came from
-        the currently-focused conversation.
-      </p>
-    </item>
-    <item>
-      <p>
-        <gui>Announce when your buddies are typing</gui>: If this
-        checkbox is checked, and if <app>Orca</app> has sufficient
-        information identifying that your buddy is typing,
-        <app>Orca</app> will announce changes in typing status.
-      </p>
-    </item>
-    <item>
-      <p>
-        <gui>Provide chat room specific message histories</gui>: If
-        this checkbox is checked, <app>Orca</app>'s commands for
-        reviewing recent messages will only apply to the currently-focused 
-        conversation. Otherwise, the history will contain the most recent
-        messages regardless of which conversation they came from.
-      </p>
-    </item>
-    <item>
-      <p>
-        The <gui>Speak messages from</gui> group of radio buttons allows
-        you to control under what circumstances <app>Orca</app> will
-        present an incoming message to you. Your choices are:
-      </p>
-      <list>
-        <item>
-          <p><gui>All channels</gui></p>
-        </item>
-        <item>
-          <p><gui>A channel only if its window is active</gui></p>
-        </item>
-        <item>
-          <p><gui>All channels when any chat window is active</gui></p>
-        </item>
-      </list>
-    </item>
-  </list>
+  <section>
+    <title>Speak Chat Room name</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app> will prefix incoming messages
+      with the name of the room or buddy they came from, unless they came from
+      the currently-focused conversation.
+    </p>
+    <p>
+       Default value: not checked
+    </p>
+  </section>
+  <section>
+    <title>Announce when your buddies are typing</title>
+    <p>
+      If this checkbox is checked, and if <app>Orca</app> has sufficient
+      information identifying that your buddy is typing, <app>Orca</app> will
+     announce changes in typing status.
+    </p>
+    <p>
+       Default value: not checked
+    </p>
+  </section>
+  <section>
+    <title>Provide chat room specific message histories</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app>'s commands for reviewing
+      recent messages will only apply to the currently-focused conversation.
+      Otherwise, the history will contain the most recent messages regardless
+      of which conversation they came from.
+    </p>
+    <p>
+       Default value: not checked
+    </p>
+  </section>
+  <section>
+    <title>Speak messages from</title>
+    <p>
+      This group of radio buttons allows you to control under what circumstances
+      <app>Orca</app> will present an incoming message to you. Your choices are:
+    </p>
+    <list>
+      <item>
+        <p><gui>All channels</gui></p>
+      </item>
+      <item>
+        <p><gui>A channel only if its window is active</gui></p>
+      </item>
+      <item>
+        <p><gui>All channels when any chat window is active</gui></p>
+      </item>
+    </list>
+    <p>
+       Default value: not checked
+    </p>
+  </section>
 </page>

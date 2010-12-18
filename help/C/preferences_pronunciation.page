@@ -6,7 +6,7 @@
     <title type="sort">7. Pronunciation</title>
     <title type="link">Pronunciation</title>
     <desc>
-      defining how specific words get pronounced
+      Defining how specific words get pronounced
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -21,9 +21,19 @@
     Sometimes your speech synthesizer just doesn't say the right thing
     for a given string. You might prefer to hear "laughing out loud"
     rather than "LOL." Or there may be a name or a technical term which
-    the synthesizer mispronounces. The pronunciation page is where you
-    can add, edit, and delete <app>Orca</app>'s pronunciation dictionary
-    entries. Because the pronunciation page is also part of the
+    the synthesizer mispronounces.
+  </p>
+  <figure>
+      <title>Options for Defining How Specific Words Get Pronounced</title>
+      <desc>
+         The <gui>Pronunciation</gui> page of the <app>Orca</app> preferences
+         dialog allows you to add, edit, and delete entries in <app>Orca</app>'s
+         pronunciation dictionary.
+       </desc>
+    <media type="image" mime="image/png" src="figures/preferences_pronunciation.png"/>
+  </figure>
+  <p>
+    Because the <gui>Pronunciation</gui> page is also part of the
     application-specific settings, you can customize your entries on an
     as-needed basis for each application you use.
   </p>

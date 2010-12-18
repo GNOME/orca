@@ -81,10 +81,9 @@
   <section id="settings">
     <title>Available Settings</title>
     <p>
-      In addition to the aforementioned commands, <app>Orca</app> has a number of
-      <link xref="preferences_structural_navigation">configurable options</link>
-      available specifically for applications in which there is structural
-      navigation support. To access these options:
+      In addition to the aforementioned commands, <app>Orca</app> has a number
+      of configurable options available specifically for applications in which
+      there is structural navigation support. To access these options:
     </p>
     <steps>
       <item>

@@ -5,7 +5,7 @@
     <title type="sort">5. Magnifier</title>
     <title type="link">Magnifier</title>
     <desc>
-      Configuring magnification, colors, and pointer
+      Configuring the zoom window appearance
     </desc>
     <credit type="author">
       <name>Joanmarie Diggs</name>
@@ -310,8 +310,14 @@
     <p>
       If you press the <gui>Advanced</gui> button located near the bottom
       of the Magnifier page, you can further customize <app>Orca</app>'s
-      magnification support, including:
+      magnification support.
     </p>
+    <figure>
+      <title>
+        The <app>Orca</app> <gui>Advanced Settings</gui> Dialog for Magnification
+      </title>
+      <media type="image" mime="image/png" src="figures/preferences_magnifier_advanced.png"/>
+  </figure>    
     <list>
       <item><p><gui>Smoothing</gui>: Bilinear or none.</p></item>
       <item>

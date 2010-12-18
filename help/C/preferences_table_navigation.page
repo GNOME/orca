@@ -1,0 +1,70 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" 
+      id="preferences_table_navigation">
+  <info>
+    <link type="guide" xref="preferences#application" />
+    <link type="next" xref="preferences_chat" />
+    <link type="seealso" xref="commands_structural_navigation" />
+    <link type="seealso" xref="commands_table" />
+    <title type="sort">2. Table Navigation</title>
+    <title type="link">Table Navigation</title>
+    <desc>
+      Configuring <app>Orca</app>'s navigation within tables
+    </desc>
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Table Navigation Preferences</title>
+  <media type="image" mime="image/png" src="figures/preferences_table_navigation.png"/>
+  <p>
+    The following option allows you to customize how <app>Orca</app>
+    behaves when navigating within a table in
+    <link xref="howto_structural_navigation">Structural-Navigation</link>-enabled
+    applications.
+  </p>
+  <section>
+    <title>Speak cell coordinates</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app> will announce the coordinates
+      of each cell you navigate to.
+    </p>
+    <p>
+       Default value: checked
+    </p>
+  </section>
+  <section>
+    <title>Speak multiple cell spans</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app> will announce how many rows
+      and/or columns a cell spans when it spans more than one.
+    </p>
+    <p>
+       Default value: checked
+    </p>
+  </section>
+  <section>
+    <title>Announce cell header</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app> will announce changes in the
+      header if the headers for the current cell can be determined.
+    </p>
+    <p>
+       Default value: checked
+    </p>
+  </section>
+  <section>
+    <title>Skip blank cells</title>
+    <p>
+      If this checkbox is checked, <app>Orca</app> will skip blank cells when
+      you are using <app>Orca</app>'s table structural navigation commands to
+      access the table.
+    </p>
+    <p>
+       Default value: not checked
+    </p>
+  </section>
+</page>
