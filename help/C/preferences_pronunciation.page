@@ -23,15 +23,12 @@
     rather than "LOL." Or there may be a name or a technical term which
     the synthesizer mispronounces.
   </p>
-  <figure>
-      <title>Options for Defining How Specific Words Get Pronounced</title>
-      <desc>
-         The <gui>Pronunciation</gui> page of the <app>Orca</app> preferences
-         dialog allows you to add, edit, and delete entries in <app>Orca</app>'s
-         pronunciation dictionary.
-       </desc>
-    <media type="image" mime="image/png" src="figures/preferences_pronunciation.png"/>
-  </figure>
+  <p>
+     The <gui>Pronunciation</gui> page of the <app>Orca</app> preferences
+     dialog allows you to add, edit, and delete entries in <app>Orca</app>'s
+     pronunciation dictionary.
+  </p>
+  <media type="image" mime="image/png" src="figures/preferences_pronunciation.png"/>
   <p>
     Because the <gui>Pronunciation</gui> page is also part of the
     application-specific settings, you can customize your entries on an

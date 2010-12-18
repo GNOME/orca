@@ -28,15 +28,12 @@
   </p>
   <section id="table">
     <title>The text attributes table</title>
-    <figure>
-      <title>Options for Configuring the Presentation of Formatting</title>
-      <desc>
-        The text attributes table is where you specify what attributes will
-        and will not be presented and under what conditions. Each row consists
-        of four columns.
-      </desc>
-      <media type="image" mime="image/png" src="figures/preferences_text_attributes_table.png"/>
-    </figure>
+    <media type="image" mime="image/png" src="figures/preferences_text_attributes_table.png"/>
+    <p>
+      The text attributes table is where you specify what attributes will
+      and will not be presented and under what conditions. Each row consists
+      of four columns.
+    </p>
     <list>
       <item>
         <p>
