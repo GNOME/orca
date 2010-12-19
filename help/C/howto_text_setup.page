@@ -23,7 +23,7 @@
       <p>
         Open a <gui>Run</gui> dialog. For most distros, this can be accomplished
         by pressing <keyseq><key>Alt</key><key>F2</key></keyseq>. Alternatively,
-        you can use a terminal window.
+        you can use a terminal window or the system text console.
       </p>
     </item>
     <item>

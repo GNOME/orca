@@ -22,15 +22,9 @@
      of the accessibility features in GNOME, including keyboard navigation and
      accessible login.
   </p>
-  <p>
-     If you are new to screen readers or are unfamiliar with <app>Orca</app>,
-     the guides which follow should get you started with performing common
-     tasks using <app>Orca</app>. If, on the other hand, you are already
-     familiar with how to use a screen reader and just need to know what options
-     and tools <app>Orca</app> provides, you may prefer to read the guides
-     covering <link xref="preferences"><app>Orca</app>'s Preferences dialogs
-     </link> and <link xref="commands"><app>Orca</app>'s commands</link>.
-  </p>
+  <section id="quick_reference" style="2column">
+    <title>Quick Reference</title>
+  </section>
   <section id="getting_started" style="2column">
     <title>Getting Started</title>
   </section>

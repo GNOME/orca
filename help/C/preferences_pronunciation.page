@@ -20,8 +20,8 @@
   <p id="introduction">
     Sometimes your speech synthesizer just doesn't say the right thing
     for a given string. You might prefer to hear "laughing out loud"
-    rather than "LOL." Or there may be a name or a technical term which
-    the synthesizer mispronounces.
+    rather than "LOL," or "accessibility" rather than "a11y". Or there
+    may be a name or a technical term which the synthesizer mispronounces.
   </p>
   <p>
      The <gui>Pronunciation</gui> page of the <app>Orca</app> preferences

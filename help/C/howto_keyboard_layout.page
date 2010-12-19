@@ -14,8 +14,8 @@
   </info>
   <title>Keyboard Layout</title>
   <p>
-    Orca has two keyboard layouts: Desktop and Laptop. The layout you choose
-    impacts which key is used as the Orca Modifier.
+    Orca has two keyboard layouts: Desktop (i.e. with a numeric keypad) and
+    Laptop. The layout you choose impacts which key is used as the Orca Modifier.
   </p>
   <list>
     <item>

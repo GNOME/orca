@@ -25,10 +25,14 @@
       key or keys will serve as the Orca Modifier. The available options are:
     </p>
     <list>
-      <item><p>Insert, KP_Insert</p></item>
-      <item><p>KP_Insert</p></item>
-      <item><p>Insert</p></item>
-      <item><p>Caps_Lock</p></item>
+      <item>
+        <p>
+          <gui>KP_Insert</gui> (the same key as the <key>0</key> on the
+          numeric keypad)
+      </p></item>
+      <item><p><gui>Insert</gui></p></item>
+      <item><p><gui>Insert, KP_Insert</gui></p></item>
+      <item><p><gui>Caps_Lock</gui></p></item>
     </list>
   </section>
   <section id="key_bindings_table">

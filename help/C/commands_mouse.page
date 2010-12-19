@@ -19,12 +19,23 @@
   </info>
   <title>Mouse/Pointer-Related Commands</title>
   <p>
-    The following commands can be used to manipulate the mouse pointer
-    and read the contents under it. All of the commands are "bound"
-    to keystrokes with one exception: Toggling Mouse Review Mode.
+    <app>Orca</app> provides several commands which can be used to manipulate
+    the mouse pointer and read the contents under it. All of the commands are
+    "bound" to keystrokes with one exception: Toggling Mouse Review Mode.
     Please see <link xref="howto_key_bindings">Modifying Keybindings</link>
     for information on how to bind this command to a keystroke.
   </p>
+  <note style="tip">
+    <p>
+      In the list that follows, you will see several references to "KP". All
+      "KP" keys are located on the numeric keypad. You will also notice that
+      there are different keystrokes depending upon whether you are using a
+      desktop or a laptop -- or more accurately, whether you are using
+      <app>Orca</app>'s Desktop keyboard layout or its Laptop keyboard layout.
+      For additional information, please see the
+      <link xref="howto_keyboard_layout">Keyboard Layout</link> topic.
+    </p>
+  </note>
   <list>
     <item>
       <p>Left-click on current item:</p>

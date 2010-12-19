@@ -1,8 +1,9 @@
 <page xmlns="http://projectmallard.org/1.0/" type="guide" id="commands">
   <info>
     <link type="next" xref="commands_controlling_orca" />
-    <link type="seealso" xref="index" />
+    <link type="guide" xref="index#quick_reference" />
     <title type="sort">4. <app>Orca</app>'s Commands</title>
+    <title type="link">Commands</title>
     <credit type="author">
       <name>Joanmarie Diggs</name>
       <email>joanied@gnome.org</email>
@@ -10,22 +11,8 @@
     <license>
       <p>Creative Commons Share Alike 3.0</p>
     </license>
-    <desc>
-      Much of <app>Orca</app>'s functionality consists of commands which
-      enable you to navigate more efficiently and obtain information about
-      the elements displayed on the screen. The guides are designed for those
-      who are already familiar with how to use a screen reader and just need
-      to know what commands are available in <app>Orca</app>.
-    </desc>
   </info>
   <title><app>Orca</app>'s Commands</title>
-  <p>
-    Much of <app>Orca</app>'s functionality consists of commands which enable
-    you to navigate more efficiently and obtain information about the elements
-    displayed on the screen. The guides are designed for those who are already
-    familiar with how to use a screen reader and just need to know what commands
-    are available in <app>Orca</app>.
-  </p>
   <section id="getting_started"  style="2column">
     <title>Getting Started</title>
   </section>

@@ -25,15 +25,27 @@
     will present your new location. As a result, you are likely already familiar with
     how to read a document using <app>Orca</app>. However, if you would like to review
     GNOME's caret navigation commands, please see 
-    "<link href="http://library.gnome.org/users/gnome-access-guide/unstable/keynav-52.html">Caret 
+    "<link href="http://library.gnome.org/users/gnome-access-guide/stable/keynav-52.html">Caret 
     Navigation Mode</link>" in the
-    <link href="http://library.gnome.org/users/gnome-access-guide/unstable">GNOME 
+    <link href="http://library.gnome.org/users/gnome-access-guide/stable">GNOME 
     Desktop Accessibility Guide</link>.
   </p>
   <p>
     In addition to the caret navigation commands which are part of GNOME,
-    you can use the following <app>Orca</app> commands to read a document:
+    <app>Orca</app> provides a number of commands which you can use to read a
+    document.
   </p>
+  <note style="tip">
+    <p>
+      In the lists that follow, you will see several references to "KP". All
+      "KP" keys are located on the numeric keypad. You will also notice that
+      there are different keystrokes depending upon whether you are using a
+      desktop or a laptop -- or more accurately, whether you are using
+      <app>Orca</app>'s Desktop keyboard layout or its Laptop keyboard layout.
+      For additional information, please see the
+      <link xref="howto_keyboard_layout">Keyboard Layout</link> topic.
+    </p>
+  </note>
   <section id="flat_review">
     <title>Reading Your Current Location</title>
     <p>
