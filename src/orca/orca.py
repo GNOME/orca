@@ -1301,13 +1301,16 @@ def _showPreferencesConsole(script=None, inputEvent=None):
 
     return True
 
-def helpForOrca(script=None, inputEvent=None):
+def helpForOrca(script=None, inputEvent=None, page=""):
     """Show Orca Help window (part of the GNOME Access Guide).
 
     Returns True to indicate the input event has been consumed.
     """
+    uri = "ghelp:orca"
+    if page:
+        uri += "?%s" % page
     gtk.show_uri(gtk.gdk.screen_get_default(),
-                 "ghelp:orca",
+                 uri,
                  gtk.get_current_event_time())
     return True
 

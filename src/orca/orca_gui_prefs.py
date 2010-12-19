@@ -4215,7 +4215,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        orca.helpForOrca()
+        orca.helpForOrca(page="preferences")
 
     def restoreSettings(self):
         """Restore the settings we saved away when opening the preferences
