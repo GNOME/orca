@@ -114,5 +114,5 @@ DOC_PAGES = \
 	preferences_table_navigation.page \
 	preferences_text_attributes.page
 
-DOC_LINGUAS = hu
+DOC_LINGUAS = es hu
 dist-hook: doc-dist-hook
