@@ -15,16 +15,13 @@
     </media>
     <app>Orca</app> Screen Reader
   </title>
-  <p>
-     If you are a new user of the GNOME Desktop, you may wish to begin with the
-     <link href="http://library.gnome.org/users/gnome-access-guide/stable/">
-     GNOME Desktop Accessibility Guide</link> which will introduce you to all
-     of the accessibility features in GNOME, including keyboard navigation and
-     accessible login.
-  </p>
-  <section id="quick_reference" style="2column">
-    <title>Quick Reference</title>
-  </section>
+  <note style="important">
+    <title>Before You Begin</title>
+    <p>
+      Read the <link href="ghelp:gnome-access-guide">GNOME Desktop
+      Accessibility Guide</link>
+    </p>
+  </note>
   <section id="getting_started" style="2column">
     <title>Getting Started</title>
   </section>
@@ -33,5 +30,8 @@
   </section>
   <section id="reviewing" style="2column">
     <title>Reviewing and Interacting with Screen Contents</title>
+  </section>
+  <section id="quick_reference" style="2column">
+    <title>Quick Reference</title>
   </section>
 </page>

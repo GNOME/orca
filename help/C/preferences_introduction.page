@@ -1,0 +1,59 @@
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="preferences_introduction">
+  <info>
+    <title type="sort">0. Introduction to <app>Orca</app>'s Preferences</title>
+    <title type="link">Introduction to <app>Orca</app>'s Preferences</title>
+    <link type="guide" xref="preferences" />
+    <link type="next" xref="preferences_general" />
+    <credit type="author">
+      <name>Joanmarie Diggs</name>
+      <email>joanied@gnome.org</email>
+    </credit>
+    <license>
+      <p>Creative Commons Share Alike 3.0</p>
+    </license>
+  </info>
+  <title>Introduction to <app>Orca</app>'s Preferences</title>
+  <section>
+    <title>Orca Preferences</title>
+    <p>
+      Orca preferences allow you to customize functionality in <app>Orca</app>
+      which applies to all applications. An example of an Orca preference is
+      key echo because key echo is something that applies to all applications.
+    </p>
+    <p>
+      Note that Orca preferences can be customized on an application-by-application
+      basis. For instance you can set the default key echo to words and then
+      set the key echo for Pidgin to be none. Having done so, <app>Orca</app>
+      would always echo each word that you typed, unless you were in Pidgin.
+    </p>
+    <note style="tip">
+      <title>Keyboard Shortcuts for Getting Into the Preferences Dialogs</title>
+      <list>
+        <item>
+          <p>
+            <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>:
+            <app>Orca</app>'s Preferences
+          </p>
+        </item>
+        <item>
+          <p>
+            <keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key>
+            </keyseq>: <app>Orca</app>'s Preferences for the current
+            application
+          </p>
+        </item>
+      </list>
+    </note>
+  </section>
+  <section>
+    <title>Application-Unique Preferences</title>
+      <p>
+        In contrast to Orca preferences, there are appliation-unique preferences.
+        These preferences allow you to customize <app>Orca</app> functionality
+        that only applies in certain environments, such as on web pages or in
+        chat applications. As a result, you will only find these options
+        available in the application-specific preferences dialogs and only for
+        those applications to which these options apply.
+      </p>
+  </section>
+</page>

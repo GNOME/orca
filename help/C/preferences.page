@@ -1,6 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/" type="guide" id="preferences">
   <info>
-    <link type="next" xref="preferences_general" />
+    <link type="next" xref="preferences_introduction" />
     <link type="guide" xref="index#quick_reference" />
     <title type="link">Preferences</title>
     <credit type="author">
@@ -14,39 +14,8 @@
   <title><app>Orca</app>'s Preferences Dialogs</title>
   <section id="orca" style="2column">
     <title>Orca Preferences</title>
-    <p>
-      These preferences allow you to customize functionality in <app>Orca</app>
-      that applies to all applications. As a result, with the exception of the
-      General Preferences, you will find the following available in both the
-      <app>Orca</app> Preferences dialog and <app>Orca</app>'s
-      application-specific preferences dialogs.</p>
-    <note style="tip">
-      <title>Keyboard Shortcuts for Getting Into the Preferences Dialogs</title>
-      <list>
-        <item>
-          <p>
-            <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>:
-            <app>Orca</app>'s Preferences
-          </p>
-        </item>
-        <item>
-          <p>
-            <keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key>
-            </keyseq>: <app>Orca</app>'s Preferences for the current
-            application
-          </p>
-        </item>
-      </list>
-    </note>
   </section>
   <section id="application" style="2column">
     <title>Application-Unique Preferences</title>
-      <p>
-        These preferences allow you to customize <app>Orca</app> functionality
-        that only applies in certain environments, such as on web pages or in
-        chat applications. As a result, you will only find these options
-        available in the application-specific preferences dialogs and only for
-        those applications to which these options apply.
-      </p>
   </section>
 </page>

@@ -104,6 +104,7 @@ DOC_PAGES = \
 	preferences_chat.page \
 	preferences_gecko.page \
 	preferences_general.page \
+	preferences_introduction.page \
 	preferences_key_bindings.page \
 	preferences_key_echo.page \
 	preferences_magnifier.page \
