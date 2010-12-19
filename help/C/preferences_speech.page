@@ -114,8 +114,9 @@
     <p>
       The <gui>Verbosity</gui> setting determines the amount of information
       that will be spoken in various situations. For example, if it is set
-      to verbose, <app>Orca</app> will speak shortcut keys for items in
-      menus. When it is set to brief, these shortcut keys are not announced.
+      to verbose, and you arrow into a word that is misspelled, <app>Orca</app>
+      will announce that the word is misspelled. When the level is set to brief,
+      this announcement will not be made.
     </p>
   </section>
   <section id="table_rows">

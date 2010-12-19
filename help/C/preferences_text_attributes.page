@@ -64,8 +64,9 @@
           value of "none." This causes <app>Orca</app> to inform you
           about underlined text as long as the text is actually underlined.
           If you always want this attribute to be spoken irrespective of
-          whether or not the text is underlined, then the attribute should
-          be checked and the <gui>Present unless</gui> value cleared.
+          whether or not the text is underlined, the <gui>Present unless</gui>
+          column should be empty for underline. In addition, you should be sure
+          that the <gui>Speak</gui> column for underline is checked.
         </p>
       </item>
     </list>
