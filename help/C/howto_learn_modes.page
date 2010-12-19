@@ -23,55 +23,49 @@
     Mode provides you with a list of all the <app>Orca</app> commands
     you can use.
   </p>
-  <section id="learn_mode">
+  <steps>
     <title>Using Learn Mode</title>
-    <p>To use <app>Orca</app>'s Learn Mode:</p>
-    <steps>
-      <item>
-        <p>
-          Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key>
-          <key>H</key></keyseq>.
-        </p>
-      </item>
-      <item>
-        <p>
-          Press any key or keystroke. <app>Orca</app> will announce the
-          keys and any associated command.
-        </p>
-      </item>
-      <item>
-        <p>Press <key>Esc</key> to exit Learn Mode.</p>
-      </item>
-    </steps>
-  </section>
-  <section id="list_shortcuts_mode">
+    <item>
+      <p>
+        Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key>
+        <key>H</key></keyseq>.
+      </p>
+    </item>
+    <item>
+      <p>
+        Press any key or keystroke. <app>Orca</app> will announce the keys and
+        any associated command.
+      </p>
+    </item>
+    <item>
+      <p>Press <key>Esc</key> to exit Learn Mode.</p>
+    </item>
+  </steps>
+  <steps>
     <title>Using List Shortcuts Mode</title>
-    <p>To use <app>Orca</app>'s List Shortcuts Mode:</p>
-    <steps>
-      <item>
-        <p>
-          Get into List Shortcuts Mode by pressing <keyseq><key>Orca
-          Modifier</key><key>H</key></keyseq> twice quickly.
-        </p>
-      </item>
-      <item>
-        <p>
-          Press <key>1</key> if you want a list of shortcuts that apply
-         <app>Orca</app>-wide, or press <key>2</key> if you want a list
-         of shortcuts that are specifically for the application with focus.
-        </p>
-      </item>
-      <item>
-        <p>
-          Press <key>Up</key> or <key>Down</key> to examine the contents
-          of the list.
-        </p>
-      </item>
-      <item>
-        <p>
-          Press <key>Esc</key> to exit List Shortcuts Mode.
-        </p>
-      </item>
-    </steps>
-  </section>
+    <item>
+      <p>
+        Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key>
+        <key>H</key></keyseq> twice quickly.
+      </p>
+    </item>
+    <item>
+      <p>
+        Press <key>1</key> if you want a list of shortcuts that apply
+        <app>Orca</app>-wide, or press <key>2</key> if you want a list
+        of shortcuts that are specifically for the application with focus.
+      </p>
+    </item>
+    <item>
+      <p>
+        Press <key>Up</key> or <key>Down</key> to examine the contents of the
+        list.
+      </p>
+    </item>
+    <item>
+      <p>
+        Press <key>Esc</key> to exit List Shortcuts Mode.
+      </p>
+    </item>
+  </steps>
 </page>

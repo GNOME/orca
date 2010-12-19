@@ -21,6 +21,7 @@
     <key>CapsLock</key>, you can do so by performing the following steps:
   </p>
   <steps>
+    <title>Toggling CapsLock in Laptop Layout</title>
     <item>
       <p>
         Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</key>

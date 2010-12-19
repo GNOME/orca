@@ -15,10 +15,10 @@
   <title>Using Text Setup</title>
   <p>
     Orca has a text setup feature which allows you to perform basic configuration
-    of <app>Orca</app> even if the graphical desktop is not running. To launch
-    <app>Orca</app>'s text-only guided setup:
+    of <app>Orca</app> even if the graphical desktop is not running.
   </p>
   <steps>
+    <title>Launching <app>Orca</app>'s Text-Only Guided Setup</title>
     <item>
       <p>
         Open a <gui>Run</gui> dialog. For most distros, this can be accomplished

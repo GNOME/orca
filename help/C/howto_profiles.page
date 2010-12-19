@@ -27,129 +27,113 @@
     </desc>
     <media type="image" mime="image/png" src="figures/preferences_profiles.png"/>
   </figure>
-  <section id="save">
+  <steps>
     <title>Saving a New Profile</title>
-    <p>To save a new profile:</p>
-    <steps>
-      <item>
-        <p>
-          Get into the <link xref="preferences">Orca
-          Preferences</link> dialog box.
-        </p>
-      </item>
-      <item>
-        <p>Change whatever settings you wish.</p>
-      </item>
-      <item>
-        <p>
-          On the <gui>General</gui> page, press the <gui>Save As</gui> button.
-        </p>
-      </item>
-      <item>
-        <p>
-          Type the new profile name in the resulting <gui>Save Profile As</gui>
-          dialog box.
-        </p>
-        <p>
-          <media type="image" mime="image/png" src="figures/profiles_save_as.png"/>
-        </p>
-      </item>
-      <item>
-        <p>
-          Press the <gui>OK</gui> button in the <gui>Save Profile As</gui>
-          dialog box.
-        </p>
-      </item>
-    </steps>
-  </section>
-  <section id="load">
+    <item>
+      <p>
+        Get into the <link xref="preferences">Orca Preferences</link> dialog box.
+      </p>
+    </item>
+    <item>
+      <p>Change whatever settings you wish.</p>
+    </item>
+    <item>
+      <p>
+        On the <gui>General</gui> page, press the <gui>Save As</gui> button.
+      </p>
+    </item>
+    <item>
+      <p>
+        Type the new profile name in the resulting <gui>Save Profile As</gui>
+        dialog box.
+      </p>
+      <p>
+        <media type="image" mime="image/png" src="figures/profiles_save_as.png"/>
+      </p>
+    </item>
+    <item>
+      <p>
+        Press the <gui>OK</gui> button in the <gui>Save Profile As</gui>
+        dialog box.
+      </p>
+    </item>
+  </steps>
+  <steps>
     <title>Loading an Existing Profile</title>
-    <p>To load an existing profile:</p>
-    <steps>
-      <item>
-        <p>
-          Get into the <link xref="preferences">Orca Preferences</link> dialog
-          box.
-        </p>
-      </item>
-      <item>
-        <p>
-          On the <gui>General</gui> page, select the profile to load from
-          the <gui>Active Profile</gui> combo box.
-        </p>
-      </item>
-      <item>
-        <p>Press the <gui>Load</gui> button.</p>
-      </item>
-      <item>
-        <p>
-          You will be asked to confirm. Press the <gui>Yes</gui> button.
-        </p>
-        <p>
-          <media type="image" mime="image/png" src="figures/profiles_load.png"/>
-        </p>
-      </item>
-      <item>
-        <p>Press the <gui>OK</gui> button.</p>
-      </item>
-    </steps>
-  </section>
-  <section id="overwrite">
+    <item>
+      <p>
+        Get into the <link xref="preferences">Orca Preferences</link> dialog box.
+      </p>
+    </item>
+    <item>
+      <p>
+        On the <gui>General</gui> page, select the profile to load from the
+        <gui>Active Profile</gui> combo box.
+      </p>
+    </item>
+    <item>
+      <p>Press the <gui>Load</gui> button.</p>
+    </item>
+    <item>
+      <p>
+        You will be asked to confirm. Press the <gui>Yes</gui> button.
+      </p>
+      <p>
+        <media type="image" mime="image/png" src="figures/profiles_load.png"/>
+      </p>
+    </item>
+    <item>
+      <p>Press the <gui>OK</gui> button.</p>
+    </item>
+  </steps>
+  <steps>
     <title>Changing an Existing Profile</title>
-    <p>To make changes to an existing profile:</p>
-    <steps>
-      <item>
-        <p>
-          Follow the steps described above to load the profile you wish to
-          change.
-        </p>
-      </item>
-      <item>
-        <p>Follow the steps described above to save a new profile.</p>
-      </item>
-      <item>
-        <p>
-          When prompted for the new profile name, type the same name as current
-          profile. When you press the <gui>OK</gui> button, you will told there
-          is a name conflict.
-        </p>
-        <p>
-          <media type="image" mime="image/png" src="figures/profiles_conflict.png"/>
-        </p>
-      </item>
-      <item>
-        <p>
-          Press the <gui>Yes</gui> button to confirm you wish to overwrite the
-          existing profile with the new settings.
-        </p>
-      </item>
-    </steps>
-  </section>
-  <section id="startup">
+    <item>
+      <p>
+        Follow the steps described above to load the profile you wish to change.
+      </p>
+    </item>
+    <item>
+      <p>Follow the steps described above to save a new profile.</p>
+    </item>
+    <item>
+      <p>
+        When prompted for the new profile name, type the same name as current
+        profile. When you press the <gui>OK</gui> button, you will told there
+        is a name conflict.
+      </p>
+      <p>
+        <media type="image" mime="image/png" src="figures/profiles_conflict.png"/>
+      </p>
+    </item>
+    <item>
+      <p>
+        Press the <gui>Yes</gui> button to confirm you wish to overwrite the
+        existing profile with the new settings.
+      </p>
+    </item>
+  </steps>
+  <steps>
     <title>Changing the <gui>Start-up Profile</gui></title>
-    <p>To change the profile which is loaded when you start <app>Orca</app>:</p>
-    <steps>
-      <item>
-        <p>
-          Get into the <link xref="preferences">Orca
-          Preferences</link> dialog box.
-        </p>
-      </item>
-      <item>
-        <p>
-          On the <gui>General</gui> page, select the profile to load from the
-          <gui>Start-up Profile</gui> combo box.
-        </p>
-      </item>
-      <item>
-        <p>Press the <gui>OK</gui> button.</p>
-      </item>
-      <item>
-        <p>
-          The next time you launch <app>Orca</app>, the newly-selected profile
-          will be used.
-        </p>
-      </item>
-    </steps>
-  </section>
+    <item>
+      <p>
+        Get into the <link xref="preferences">Orca Preferences</link> dialog box.
+      </p>
+    </item>
+    <item>
+      <p>
+        On the <gui>General</gui> page, select the profile to load from the
+        <gui>Start-up Profile</gui> combo box.
+      </p>
+    </item>
+    <item>
+      <p>Press the <gui>OK</gui> button.</p>
+    </item>
+    <item>
+      <p>
+        The next time you launch <app>Orca</app>, the newly-selected profile
+        will be used.
+      </p>
+    </item>
+  </steps>
 </page>

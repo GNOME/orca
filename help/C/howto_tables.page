@@ -92,10 +92,8 @@
       <app>Orca</app>'s Dynamic Header support makes it possible to overcome these
       challenges.
     </p>
-    <p>
-      To set column headers:
-    </p>
     <steps>
+      <title>Setting Column Headers</title>
       <item>
         <p>
           Move to the row which contains all of the column headers.
@@ -108,10 +106,8 @@
         </p>
       </item>
     </steps>
-    <p>
-      To set row headers:
-    </p>
     <steps>
+      <title>Set Row Headers</title>
       <item>
         <p>
           Move to the column which contains all of the row headers.

@@ -43,37 +43,33 @@
       </p>
     </item>
   </list>
-  <section id="changing_the_modifier">
+  <p>
+    If you want to maintain your current keyboard layout but select a different
+    modifier key, you can do so by performing the following steps:
+  </p>
+  <steps>
     <title>Changing the Orca Modifier</title>
-    <p>
-      If you want to maintain your current keyboard layout but select
-      a different modifier key, you can do so by performing the following
-      steps:
-    </p>
-    <steps>
-      <item>
-        <p>
-          Get into the <link xref="preferences">Orca Preferences</link>
-          dialog by pressing <keyseq><key>Orca Modifier</key><key>Space</key>
-          </keyseq>.
-        </p>
-      </item>
-      <item>
-        <p>Move to the <gui>Key Bindings</gui> page.</p>
-      </item>
-      <item>
-        <p>Move to the <gui>Orca Modifier Key(s)</gui> combobox.</p>
-      </item>
-      <item>
-        <p>Arrow to the desired modifier. The available options are:</p>
-        <list>
-          <item><p>Insert, KP_Insert</p></item>
-          <item><p>KP_Insert</p></item>
-          <item><p>Insert</p></item>
-          <item><p>Caps_Lock</p></item>
-        </list>
-      </item>
-      <item><p>Press the <gui>Apply</gui> button.</p></item>
-    </steps>
-  </section>
+    <item>
+      <p>
+        Get into the <link xref="preferences">Orca Preferences</link> dialog by
+        pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>.
+      </p>
+    </item>
+    <item>
+      <p>Move to the <gui>Key Bindings</gui> page.</p>
+    </item>
+    <item>
+      <p>Move to the <gui>Orca Modifier Key(s)</gui> combobox.</p>
+    </item>
+    <item>
+      <p>Arrow to the desired modifier. The available options are:</p>
+      <list>
+        <item><p>Insert, KP_Insert</p></item>
+        <item><p>KP_Insert</p></item>
+        <item><p>Insert</p></item>
+        <item><p>Caps_Lock</p></item>
+      </list>
+    </item>
+    <item><p>Press the <gui>Apply</gui> button.</p></item>
+  </steps>
 </page>

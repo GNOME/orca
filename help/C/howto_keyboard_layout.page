@@ -37,11 +37,10 @@
     <app>Orca</app>'s commands, especially in the areas of Flat Review,
     Where Am I, and Say All.
   </p>
-  <p>
-    If you want to change your keyboard layout, you can do so by performing
-    the following steps:
-  </p>
   <steps>
+    <title>
+      Changing Your Keyboard Layout
+    </title>
     <item>
       <p>
         Get into the <link xref="preferences">Orca Preferences</link> dialog

@@ -34,75 +34,55 @@
     application-specific settings, you can customize your entries on an
     as-needed basis for each application you use.
   </p>
-  <section id="add">
-    <title>Add a new dictionary entry</title>
-    <p>
-      To add a new entry into <app>Orca</app>'s pronunciation dictionary:
-    </p>
-    <steps>
-      <item>
-        <p>
-          Press the New Entry button (<keyseq><key>Alt</key><key>N</key>
-          </keyseq>)
-        </p>
-      </item>
-      <item>
-        <p>
-          Type the text of the new entry and press <key>Return</key>
-          to finish editing the actual string.
-        </p>
-      </item>
-      <item>
-        <p>
-          Move to the <gui>Replacement String</gui> column and press
-          <key>Return</key> to begin editing.
-        </p>
-      </item>
-      <item>
-        <p>
-          Type the text that you would like to have spoken instead
-          and press <key>Return</key> to finish editing the replacement
-          string.
-        </p>
-      </item>
-    </steps>
-  </section>
-  <section id="edit">
-    <title>Edit an existing dictionary entry</title>
-    <p>
-      To edit an existing entry in <app>Orca</app>'s pronunciation
-      dictionary:
-    </p>
-    <steps>
-      <item>
-        <p>
-          Move to the cell you wish to edit and press <key>Return</key>
-          to begin editing.
-        </p>
-      </item>
-      <item>
-        <p>
-          Make your changes and then press <key>Return</key> to finish
-          editing.
-        </p>
-      </item>
-    </steps>
-  </section>
-  <section id="delete">
-    <title>Delete an existing dictionary entry</title>
-    <p>
-      To delete an entry from <app>Orca</app>'s pronunciation
-      dictionary:
-    </p>
-    <steps>
-      <item>
-        <p>Move to the entry you wish to delete.</p>
-      </item>
-      <item>
-        <p>
-          Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>.
-        </p>
-      </item>
-    </steps>
-  </section>
+  <steps>
+    <title>Adding a new dictionary entry</title>
+    <item>
+      <p>
+        Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)
+      </p>
+    </item>
+    <item>
+      <p>
+        Type the text of the new entry and press <key>Return</key> to finish
+        editing the actual string.
+      </p>
+    </item>
+    <item>
+      <p>
+        Move to the <gui>Replacement String</gui> column and press <key>Return
+        </key> to begin editing.
+      </p>
+    </item>
+    <item>
+      <p>
+        Type the text that you would like to have spoken instead and press <key>
+        Return</key> to finish editing the replacement string.
+      </p>
+    </item>
+  </steps>
+  <steps>
+  <title>Editing an existing dictionary entry</title>
+    <item>
+      <p>
+        Move to the cell you wish to edit and press <key>Return</key> to begin
+        editing.
+      </p>
+    </item>
+    <item>
+      <p>
+        Make your changes and then press <key>Return</key> to finish editing.
+      </p>
+    </item>
+  </steps>
+  <steps>
+    <title>Deleting an existing dictionary entry</title>
+    <item>
+      <p>Move to the entry you wish to delete.</p>
+    </item>
+    <item>
+      <p>
+        Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>.
+      </p>
+    </item>
+  </steps>
 </page>
