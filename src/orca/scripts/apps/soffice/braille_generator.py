@@ -29,7 +29,9 @@ import pyatspi
 
 import orca.braille as braille
 import orca.braille_generator as braille_generator
-import orca.settings as settings
+import orca.orca as orca
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
 
@@ -162,8 +164,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 for child in obj:
                     cellResult = self._generateRealTableCell(child, **args)
                     if cellResult and result and self._mode == 'braille':
-                        result.append(braille.Region(
-                                settings.brailleTableCellDelimiter))
+                        delimiter = _settingsManager.getSetting(
+                            'brailleTableCellDelimiter')
+                        result.append(braille.Region(delimiter))
                     result.extend(cellResult)
         return result
 
@@ -186,7 +189,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             #
             parent = obj.parent
             parentTable = parent.queryTable()
-            if settings.readTableCellRow and parentTable:
+            if _settingsManager.getSetting('readTableCellRow') and parentTable:
                 index = self._script.utilities.cellIndex(obj)
                 row = parentTable.getRowAtIndex(index)
                 column = parentTable.getColumnAtIndex(index)
@@ -216,8 +219,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                                                                      **args)
                             if cellResult and result \
                                and self._mode == 'braille':
-                                result.append(braille.Region(
-                                        settings.brailleTableCellDelimiter))
+                                delimiter = _settingsManager.getSetting(
+                                    'brailleTableCellDelimiter')
+                                result.append(braille.Region(delimiter))
                             result.extend(cellResult)
                 else:
                     result.extend(self._generateRealTableCell(obj, **args))

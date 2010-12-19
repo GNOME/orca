@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<interface>
+  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-naming-policy toplevel-contextual -->
+  <object class="GtkDialog" id="profileDialog">
+    <property name="title" translatable="yes">Save Profile As</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="has_separator">False</property>
+    <child internal-child="accessible">
+      <object class="AtkObject" id="profileDialog-atkobject">
+        <property name="AtkObject::accessible-name" translatable="yes">Orca Profile Dialog</property>
+      </object>
+    </child>
+    <signal name="destroy" handler="profileDialogDestroyed"/>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox1">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkVBox" id="vbox1">
+            <property name="visible">True</property>
+            <property name="border_width">6</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkHBox" id="hbox1">
+                <property name="visible">True</property>
+                <property name="border_width">6</property>
+                <child>
+                  <object class="GtkLabel" id="profileLabel">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">_New Profile:</property>
+                    <property name="use_markup">True</property>
+                    <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">profileEntry</property>
+                    <property name="width_chars">12</property>
+                    <child internal-child="accessible">
+                      <object class="AtkObject" id="profileLabel-atkobject">
+                        <property name="AtkObject::accessible-name" translatable="yes">New Profile:</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="profileEntry">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                    <property name="activates_default">True</property>
+                    <child internal-child="accessible">
+                      <object class="AtkObject" id="profileEntry-atkobject">
+                        <property name="AtkObject::accessible-name" translatable="yes">New Profile:</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="profileInfoLabel">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">New settings will be saved
+as a new profile.</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="padding">5</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="closeButton">
+                <property name="label">gtk-close</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="receives_default">False</property>
+                <property name="use_stock">True</property>
+                <accelerator key="c" signal="activate" modifiers="GDK_MOD1_MASK"/>
+                <child internal-child="accessible">
+                  <object class="AtkObject" id="closeButton-atkobject">
+                    <property name="AtkObject::accessible-name" translatable="yes">Close</property>
+                  </object>
+                </child>
+                <signal name="clicked" handler="closeButtonClicked"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="saveProfileButton">
+                <property name="label">gtk-ok</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="can_default">True</property>
+                <property name="has_default">True</property>
+                <property name="receives_default">False</property>
+                <property name="use_stock">True</property>
+                <child internal-child="accessible">
+                  <object class="AtkObject" id="saveProfileButton-atkobject">
+                    <property name="AtkObject::accessible-name" translatable="yes">Add Profile</property>
+                  </object>
+                </child>
+                <signal name="clicked" handler="on_saveProfileButton_clicked"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="-7">closeButton</action-widget>
+      <action-widget response="0">saveProfileButton</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkListStore" id="liststore1">
+    <columns>
+      <!-- column-name profiles -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+</interface>

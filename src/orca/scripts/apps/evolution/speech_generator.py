@@ -27,10 +27,12 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.settings as settings
+import orca.orca as orca
 import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _ # for gettext support
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Overrides _generateSpeechForTableCell so that, if this is an
@@ -85,7 +87,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # formatting string to address the headers associated with
         # toggle columns. That's really the difference here.]]]
         #
-        if settings.onlySpeakDisplayedText:
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []

@@ -173,6 +173,7 @@ userCustomizableSettings = [
     "enabledBrailledTextAttributes",
     "textAttributesBrailleIndicator",
     "enableProgressBarUpdates",
+    "profile",
     "progressBarUpdateInterval",
     "progressBarVerbosity",
     "enableContractedBraille",
@@ -199,7 +200,16 @@ userCustomizableSettings = [
     "messageVerbosityLevel",
     "presentDateFormat",
     "presentTimeFormat",
+    "activeProfile",
+    "startingProfile",
+    "firstStart"
 ]
+
+excludeKeys = ["pronunciations",
+               "keybindings",
+               "startingProfile",
+               "activeProfile",
+               "firstStart"]
 
 # The name of the module that hold the user interface for the main window
 # for Orca. This module is expected to have two methods, showMainUI and
@@ -229,6 +239,16 @@ findModule = "orca_gui_find"
 # The name of the module that holds the splash screen.
 #
 splashModule = "orca_gui_splash"
+
+# Profiles
+#
+startingProfile = ['Default', 'default']
+activeProfile = ['Default', 'default']
+profile = ['Default', 'default']
+
+# First start?
+#
+firstStart = True
 
 # A list of keys that can serve as the Orca modifier key.  The list is
 # so we can provide better cross platform support (e.g., Sun keyboard
@@ -383,6 +403,14 @@ DEFAULT_VOICE           = "default"
 UPPERCASE_VOICE         = "uppercase"
 HYPERLINK_VOICE         = "hyperlink"
 SYSTEM_VOICE            = "system"
+
+voicesKeys = {
+"DEFAULT_VOICE"     : "default",
+"UPPERCASE_VOICE"   : "uppercase",
+"HYPERLINK_VOICE"   : "hyperlink",
+"SYSTEM_VOICE"      : "system"
+}
+
 
 voices = {
     DEFAULT_VOICE   : ACSS({}),
@@ -960,23 +988,6 @@ chatAnnounceBuddyTyping = False
 #
 chatRoomHistories = False
 
-# Obtain/set information regarding whether accessibility is enabled
-# or not.
-#
-def isAccessibilityEnabled():
-    try:
-        return gconfClient.get_bool("/desktop/gnome/interface/accessibility") \
-            or gconfClient.get_bool("/desktop/gnome/interface/accessibility2")
-    except:
-        return False
-
-def setAccessibilityEnabled(enable):
-    try:
-        return gconfClient.set_bool("/desktop/gnome/interface/accessibility",
-                                    enable)
-    except:
-        return False
-
 # Obtain/set information regarding whether Orca is autostarted for this
 # user at login time.
 #
@@ -1024,7 +1035,10 @@ def setGKSUGrabDisabled(disable):
 # Allow for the customization of key bindings.
 #
 def overrideKeyBindings(script, keyBindings):
-    return keyBindings
+    import orca
+    _settingsManager = getattr(orca, '_settingsManager')
+
+    return _settingsManager.overrideKeyBindings(script, keyBindings)
 
 # Allow for user customization of pronunciations.
 #

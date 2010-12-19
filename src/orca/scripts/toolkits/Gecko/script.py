@@ -79,6 +79,8 @@ from orca.orca_i18n import _
 from orca.speech_generator import Pause
 from orca.acss import ACSS
 
+_settingsManager = getattr(orca, '_settingsManager')
+
 ########################################################################
 #                                                                      #
 # Script                                                               #
@@ -284,25 +286,27 @@ class Script(default.Script):
     def activate(self):
         """Called when this script is activated."""
         self.savedEnabledBrailledTextAttributes = \
-            settings.enabledBrailledTextAttributes
-        settings.enabledBrailledTextAttributes = \
-            self.enabledBrailledTextAttributes
+            _settingsManager.getSetting('enabledBrailledTextAttributes')
+        _settingsManager.setSetting(
+            'enabledBrailledTextAttributes', self.enabledBrailledTextAttributes)
 
         self.savedEnabledSpokenTextAttributes = \
-            settings.enabledSpokenTextAttributes
-        settings.enabledSpokenTextAttributes = \
-            self.enabledSpokenTextAttributes
+            _settingsManager.getSetting('enabledSpokenTextAttributes')
+        _settingsManager.setSetting(
+            'enabledSpokenTextAttributes', self.enabledSpokenTextAttributes)
 
-        self.savedAllTextAttributes = settings.allTextAttributes
-        settings.allTextAttributes = self.allTextAttributes
+        self.savedAllTextAttributes = \
+            _settingsManager.getSetting('allTextAttributes')
+        _settingsManager.getSetting('allTextAttributes', self.allTextAttributes)
 
     def deactivate(self):
         """Called when this script is deactivated."""
-        settings.enabledBrailledTextAttributes = \
-            self.savedEnabledBrailledTextAttributes
-        settings.enabledSpokenTextAttributes = \
-            self.savedEnabledSpokenTextAttributes
-        settings.allTextAttributes = self.savedAllTextAttributes
+        _settingsManager.setSetting('enabledBrailledTextAttributes',
+                                    self.savedEnabledBrailledTextAttributes)
+        _settingsManager.setSetting('enabledSpokenTextAttributes',
+                                    self.savedEnabledSpokenTextAttributes)
+        _settingsManager.setSetting('allTextAttributes',
+                                    self.savedAllTextAttributes)
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
@@ -635,8 +639,8 @@ class Script(default.Script):
         # load common keymap
         keyBindings.load(keymaps.commonKeymap, self.inputEventHandlers)
 
-        if orca.settings.keyboardLayout == \
-          orca.settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+        if _settingsManager.getSetting('keyboardLayout') == \
+                orca.settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             keyBindings.load(keymaps.desktopKeymap, self.inputEventHandlers)
         else:
             keyBindings.load(keymaps.laptopKeymap, self.inputEventHandlers)
@@ -780,8 +784,9 @@ class Script(default.Script):
         gtk.Widget.show(self.speakCellCoordinatesCheckButton)
         gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
-                                    settings.speakCellCoordinates)
+        gtk.ToggleButton.set_active(
+            self.speakCellCoordinatesCheckButton,
+            _settingsManager.getSetting('speakCellCoordinates'))
 
         # Translators: this is an option to tell Orca whether or not it
         # should speak the span size of a table cell (e.g., how many
@@ -792,8 +797,9 @@ class Script(default.Script):
         gtk.Widget.show(self.speakCellSpanCheckButton)
         gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.speakCellSpanCheckButton,
-                                    settings.speakCellSpan)
+        gtk.ToggleButton.set_active(
+            self.speakCellSpanCheckButton,
+            _settingsManager.getSetting('speakCellSpan'))
 
         # Translators: this is an option for whether or not to speak
         # the header of a table cell in document content.
@@ -803,8 +809,9 @@ class Script(default.Script):
         gtk.Widget.show(self.speakCellHeadersCheckButton)
         gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
-                                    settings.speakCellHeaders)
+        gtk.ToggleButton.set_active(
+            self.speakCellHeadersCheckButton,
+            _settingsManager.getSetting('speakCellHeaders'))
 
         # Translators: this is an option to allow users to skip over
         # empty/blank cells when navigating tables in document content.
@@ -814,8 +821,9 @@ class Script(default.Script):
         gtk.Widget.show(self.skipBlankCellsCheckButton)
         gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.skipBlankCellsCheckButton,
-                                    settings.skipBlankCells)
+        gtk.ToggleButton.set_active(
+            self.skipBlankCellsCheckButton,
+            _settingsManager.getSetting('skipBlankCells'))
 
         # Translators: this is the title of a panel containing options
         # for specifying how to navigate tables in document content.
@@ -960,19 +968,19 @@ class Script(default.Script):
         # 
         value = self.speakCellCoordinatesCheckButton.get_active()
         prefs.writelines("orca.settings.speakCellCoordinates = %s\n" % value)
-        settings.speakCellCoordinates = value
+        _settingsManager.setSetting('speakCellCoordinates', value)
 
         value = self.speakCellSpanCheckButton.get_active()
         prefs.writelines("orca.settings.speakCellSpan = %s\n" % value)
-        settings.speakCellSpan = value
+        _settingsManager.setSetting('speakCellSpan', value)
 
         value = self.speakCellHeadersCheckButton.get_active()
         prefs.writelines("orca.settings.speakCellHeaders = %s\n" % value)
-        settings.speakCellHeaders = value
+        _settingsManager.setSetting('speakCellHeaders', value)
 
         value = self.skipBlankCellsCheckButton.get_active()
         prefs.writelines("orca.settings.skipBlankCells = %s\n" % value)
-        settings.skipBlankCells = value
+        _settingsManager.setSetting('skipBlankCells', value)
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
@@ -1020,7 +1028,7 @@ class Script(default.Script):
         # we want to allow to control its own destiny).]]]
 
         user_bindings = None
-        user_bindings_map = settings.keyBindingsMap
+        user_bindings_map = _settingsManager.getSetting('keyBindingsMap')
         if self.__module__ in user_bindings_map:
             user_bindings = user_bindings_map[self.__module__]
         elif "default" in user_bindings_map:
@@ -1063,8 +1071,8 @@ class Script(default.Script):
 
         # Determine the correct "say all by" mode to use.
         #
-        sayAllBySentence = \
-                      (settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE)
+        sayAllStyle = _settingsManager.getSetting('sayAllStyle')
+        sayAllBySentence = sayAllStyle == settings.SAYALL_STYLE_SENTENCE
 
         [obj, characterOffset] = self.getCaretContext()
         if sayAllBySentence:
@@ -1482,8 +1490,8 @@ class Script(default.Script):
                                           pyatspi.ROLE_FRAME]:
             utterances = []
             utterances.append(rolenames.getSpeechForRoleName(event.any_data))
-            if settings.speechVerbosityLevel == \
-                    settings.VERBOSITY_LEVEL_VERBOSE:
+            verbosity = _settingsManager.getSetting('speechVerbosityLevel')
+            if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
                 utterances.extend(
                     self.speechGenerator.generateSpeech(event.any_data))
             speech.speak(utterances)
@@ -1707,8 +1715,8 @@ class Script(default.Script):
                 # or if the user forced it to appear with (Alt+)Down Arrow.
                 #
                 if self._autocompleteVisible:
-                    speakIt = (settings.speechVerbosityLevel == \
-                               settings.VERBOSITY_LEVEL_VERBOSE)
+                    level = _settingsManager.getSetting('speechVerbosityLevel')
+                    speakIt = level == settings.VERBOSITY_LEVEL_VERBOSE
                     if not speakIt \
                        and isinstance(orca_state.lastInputEvent, 
                                       input_event.KeyboardEvent):
@@ -1817,7 +1825,7 @@ class Script(default.Script):
                         self.speakContents(\
                             self.getLineContentsAtOffset(obj,
                                                          characterOffset))
-                    elif settings.enableSpeech:
+                    elif _settingsManager.getSetting('enableSpeech'):
                         self.sayAll(None)
 
             return
@@ -2885,7 +2893,7 @@ class Script(default.Script):
         # regions.  We will handle everything else as a live region.  We
         # will do the cheap tests first
         if self._loadingDocumentContent \
-              or not  settings.inferLiveRegions:
+           or not _settingsManager.getSetting('inferLiveRegions'):
             return False
 
         # Ideally, we would like to do a inDocumentContent() call to filter out
@@ -2921,7 +2929,8 @@ class Script(default.Script):
                        and not 'tooltip' in attrList:
                         return False
                     # Only present tooltips when user wants them presented
-                    elif 'tooltip' in attrList and not settings.presentToolTips:
+                    elif 'tooltip' in attrList \
+                         and not _settingsManager.getSetting('presentToolTips'):
                         return False
             else:
                 # Some alerts have been seen without the :system postfix.
@@ -3668,7 +3677,7 @@ class Script(default.Script):
         and unvisited links on the page containing obj.
         """
 
-        if settings.useCollection:
+        if _settingsManager.getSetting('useCollection'):
             try:
                 summary = self._collectionPageSummary()
             except:
@@ -5339,7 +5348,7 @@ class Script(default.Script):
                 clumped.append([element, acss])
 
         if (len(clumped) == 1) and (clumped[0][0] == "\n"):
-            if settings.speakBlankLines:
+            if _settingsManager.getSetting('speakBlankLines'):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #
@@ -6156,7 +6165,7 @@ class Script(default.Script):
 
     def advanceLivePoliteness(self, inputEvent):
         """Advances live region politeness level."""
-        if settings.inferLiveRegions:
+        if _settingsManager.getSetting('inferLiveRegions'):
             self.liveMngr.advancePoliteness(orca_state.locusOfFocus)
         else:
             # Translators: this announces to the user that live region
@@ -6165,14 +6174,14 @@ class Script(default.Script):
             self.presentMessage(_("Live region support is off"))
 
     def monitorLiveRegions(self, inputEvent):
-        if not settings.inferLiveRegions:
-            settings.inferLiveRegions = True
+        if not _settingsManager.getSetting('inferLiveRegions'):
+            _settingsManager.setSetting('inferLiveRegions', True)
             # Translators: this announces to the user that live region
             # are being monitored.
             #
             self.presentMessage(_("Live regions monitoring on"))
         else:
-            settings.inferLiveRegions = False
+            _settingsManager.setSetting('inferLiveRegions', False)
             # Translators: this announces to the user that live region
             # are not being monitored.
             #
@@ -6180,7 +6189,7 @@ class Script(default.Script):
             self.presentMessage(_("Live regions monitoring off"))
 
     def setLivePolitenessOff(self, inputEvent):
-        if settings.inferLiveRegions:
+        if _settingsManager.getSetting('inferLiveRegions'):
             self.liveMngr.setLivePolitenessOff()
         else:
             # Translators: this announces to the user that live region
@@ -6189,7 +6198,7 @@ class Script(default.Script):
             self.presentMessage(_("Live region support is off"))
 
     def reviewLiveAnnouncement(self, inputEvent):
-        if settings.inferLiveRegions:
+        if _settingsManager.getSetting('inferLiveRegions'):
             self.liveMngr.reviewLiveAnnouncement( \
                                     int(inputEvent.event_string[1:]))
         else:

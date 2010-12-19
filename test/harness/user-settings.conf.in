@@ -45,7 +45,7 @@ general:
   enablePrintableKeys: true
   enableProgressBarUpdates: true
   enableSpeech: true
-  enableSpeechIndentation: true
+  enableSpeechIndentation: false
   enableTutorialMessages: false
   enabledBrailledTextAttributes: size:; family-name:; weight:400; indent:0; underline:none;
     strikethrough:false; justification:left; style:normal; text-spelling:none;

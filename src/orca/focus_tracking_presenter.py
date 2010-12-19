@@ -339,6 +339,9 @@ class FocusTrackingPresenter(presentation_manager.PresentationManager):
         - newScript: the new script to be made active.
         """
 
+        if orca_state.activeScript == newScript:
+            return
+
         try:
             # If old ("factory") settings don't exist yet, save
             # a set, else restore the old application settings.

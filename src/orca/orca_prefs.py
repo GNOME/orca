@@ -149,9 +149,9 @@ class OrcaPrefs:
         set prior to this call).
         """
 
-        alreadyEnabled = settings.isAccessibilityEnabled()
+        alreadyEnabled = _settingsManager.isAccessibilityEnabled()
         if not alreadyEnabled:
-            settings.setAccessibilityEnabled(True)
+            _settingsManager.setAccessibilityEnabled(True)
 
         return not alreadyEnabled
 

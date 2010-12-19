@@ -41,11 +41,13 @@ import pyatspi
 import debug
 import eventsynthesizer
 import settings
+import orca
 import orca_state
 
 from orca_i18n import _  # for gettext support
 
 _magnifierAvailable = False
+_settingsManager = getattr(orca, '_settingsManager')
 
 try:
     import bonobo
@@ -243,8 +245,9 @@ def __setROICursorPush(x, y, width, height, edgeMargin = 0):
     # The edge margin should not exceed 50%. (50% is a centered alignment).
     #
     edgeMargin = min(edgeMargin, 50)/100.00
-    edgeMarginX = edgeMargin * _sourceDisplayBounds.x2/settings.magZoomFactor
-    edgeMarginY = edgeMargin * _sourceDisplayBounds.y2/settings.magZoomFactor
+    magZoomFactor = _settingsManager.getSetting('magZoomFactor')
+    edgeMarginX = edgeMargin * _sourceDisplayBounds.x2/magZoomFactor
+    edgeMarginY = edgeMargin * _sourceDisplayBounds.y2/magZoomFactor
 
     # Determine if the accessible is partially to the left, right,
     # above, or below the current region of interest (ROI).
@@ -446,14 +449,16 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     # Define where the magnifier will live.
     #
     try:
-        _magnifier.TargetDisplay = settings.magTargetDisplay
+        _magnifier.TargetDisplay = \
+            _settingsManager.getSetting('magTargetDisplay')
     except:
         pass
 
     # Define what will be magnified.
     #
     try:
-        _magnifier.SourceDisplay = settings.magSourceDisplay
+        _magnifier.SourceDisplay = \
+            _settingsManager.getSetting('magSourceDisplay')
     except:
         pass
 
@@ -469,7 +474,8 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     # Depends upon new functionality in gnome-mag, so just catch the 
     # exception if this functionality isn't there.
     #
-    hideCursor = restore.get('magHideCursor', settings.magHideCursor)
+    hideCursor = restore.get('magHideCursor',
+                             _settingsManager.getSetting('magHideCursor'))
     if hideCursor \
        and _fullScreenCapable \
        and _magnifier.SourceDisplay == _magnifier.TargetDisplay \
@@ -514,10 +520,10 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
         prefRight = sdb.x2
         prefBottom = sdb.y2
     else:
-        prefLeft   = left or settings.magZoomerLeft
-        prefTop    = top or settings.magZoomerTop
-        prefRight  = right or settings.magZoomerRight
-        prefBottom = bottom or settings.magZoomerBottom
+        prefLeft   = left or _settingsManager.getSetting('magZoomerLeft')
+        prefTop    = top or _settingsManager.getSetting('magZoomerTop')
+        prefRight  = right or _settingsManager.getSetting('magZoomerRight')
+        prefBottom = bottom or _settingsManager.getSetting('magZoomerBottom')
     orca_state.zoomerType = position
     updateTarget = True
 
@@ -592,24 +598,30 @@ def __setupMagnifier(position, left=None, top=None, right=None, bottom=None,
 
     bonobo.pbclient_set_string(_magnifierPBag, "cursor-set", "default")
 
-    enableCursor = restore.get('enableMagCursor', settings.enableMagCursor)
-    explicitSize = restore.get('enableMagCursorExplicitSize',
-                               settings.enableMagCursorExplicitSize)
-    size = restore.get('magCursorSize', settings.magCursorSize)
+    enableCursor = restore.get(
+        'enableMagCursor', _settingsManager.getSetting('enableMagCursor'))
+    explicitSize = restore.get(
+        'enableMagCursorExplicitSize',
+        _settingsManager.getSetting('enableMagCursorExplicitSize'))
+    size = restore.get(
+        'magCursorSize', _settingsManager.getSetting('magCursorSize'))
     setMagnifierCursor(enableCursor, explicitSize, size, False)
 
-    value = restore.get('magCursorColor', settings.magCursorColor)
+    value = restore.get(
+        'magCursorColor', _settingsManager.getSetting('magCursorColor'))
     setMagnifierObjectColor("cursor-color", value, False)
 
-    value = restore.get('magCrossHairColor', settings.magCrossHairColor)
+    value = restore.get(
+        'magCrossHairColor', _settingsManager.getSetting('magCrossHairColor'))
     setMagnifierObjectColor("crosswire-color", value, False)
 
-    enableCrossHair = restore.get('enableMagCrossHair',
-                                  settings.enableMagCrossHair)
+    enableCrossHair = restore.get(
+        'enableMagCrossHair', _settingsManager.getSetting('enableMagCrossHair'))
     setMagnifierCrossHair(enableCrossHair, False)
 
-    value = restore.get('enableMagCrossHairClip',
-                        settings.enableMagCrossHairClip)
+    value = restore.get(
+        'enableMagCrossHairClip', 
+        _settingsManager.getSetting('enableMagCrossHairClip'))
     setMagnifierCrossHairClip(value, False)
 
     orca_state.mouseEnhancementsEnabled = enableCursor or enableCrossHair
@@ -637,8 +649,10 @@ def __setupZoomer(restore=None):
 
     debug.println(debug.LEVEL_ALL,
                   "Magnifier target bounds preferences: (%d, %d), (%d, %d)" \
-                  % (settings.magZoomerLeft, settings.magZoomerTop, \
-                     settings.magZoomerRight, settings.magZoomerBottom))
+                  % (_settingsManager.getSetting('magZoomerLeft'),
+                     _settingsManager.getSetting('magZoomerTop'),
+                     _settingsManager.getSetting('magZoomerRight'),
+                     _settingsManager.getSetting('magZoomerBottom')))
 
     debug.println(debug.LEVEL_ALL,
                   "Magnifier target bounds actual: (%d, %d), (%d, %d)" \
@@ -699,14 +713,15 @@ def __setupZoomer(restore=None):
 
     # Now, let's see what the ROI looks like.
     #
+    zoomFactor = _settingsManager.getSetting('magZoomFactor')
     debug.println(debug.LEVEL_ALL,
-                  "Magnifier source width: %d (viewport can show %d)" \
+                 "Magnifier source width: %d (viewport can show %d)" \
                   % (_sourceDisplayBounds.x2 - _sourceDisplayBounds.x1,
-                   viewportWidth / settings.magZoomFactor))
+                  viewportWidth / zoomFactor))
     debug.println(debug.LEVEL_ALL,
                   "Magnifier source height: %d (viewport can show %d)" \
                   % (_sourceDisplayBounds.y2 - _sourceDisplayBounds.y1,
-                   viewportHeight / settings.magZoomFactor))
+                   viewportHeight / zoomFactor))
 
     # Adjust the ROI in the event the source window is too small for the
     # target window.  This usually happens when someone expects COMPOSITE
@@ -714,9 +729,9 @@ def __setupZoomer(restore=None):
     # big grey magnifier on their screen.
     #
     _roiWidth  = min(_sourceDisplayBounds.x2 - _sourceDisplayBounds.x1,
-                     viewportWidth / settings.magZoomFactor)
+                     viewportWidth / zoomFactor)
     _roiHeight = min(_sourceDisplayBounds.y2 - _sourceDisplayBounds.y1,
-                     viewportHeight / settings.magZoomFactor)
+                     viewportHeight / zoomFactor)
 
     debug.println(debug.LEVEL_ALL,
                   "Magnifier zoomer ROI size desired: width=%d, height=%d)" \
@@ -730,58 +745,65 @@ def __setupZoomer(restore=None):
     # individual property changes (e.g. brightness, contrast) upon load.
     #
     _zoomer = _magnifier.createZoomRegion(
-        settings.magZoomFactor, settings.magZoomFactor,
+        zoomFactor, zoomFactor,
         GNOME.Magnifier.RectBounds(0, 0, _roiWidth, _roiHeight),
         GNOME.Magnifier.RectBounds(0, 0, 1, 1))
 
     _zoomerPBag = _zoomer.getProperties()
     bonobo.pbclient_set_boolean(_zoomerPBag, "is-managed", True)
 
-    value = restore.get('magZoomFactor', settings.magZoomFactor)
+    value = restore.get('magZoomFactor', zoomFactor)
     setZoomerMagFactor(value, value, False)
 
-    value = restore.get('enableMagZoomerColorInversion',
-                        settings.enableMagZoomerColorInversion)
+    value = restore.get(
+        'enableMagZoomerColorInversion',
+        _settingsManager.getSetting('enableMagZoomerColorInversion'))
     setZoomerColorInversion(value, False)
 
-    brightness = restore.get('magBrightnessLevel', settings.magBrightnessLevel)
+    brightness = restore.get(
+        'magBrightnessLevel', _settingsManager.getSetting('magBrightnessLevel'))
     r = brightness + \
         restore.get('magBrightnessLevelRed',
-                    settings.magBrightnessLevelRed)
+                    _settingsManager.getSetting('magBrightnessLevelRed'))
     g = brightness + \
         restore.get('magBrightnessLevelGreen',
-                    settings.magBrightnessLevelGreen)
+                    _settingsManager.getSetting('magBrightnessLevelGreen'))
     b = brightness + \
         restore.get('magBrightnessLevelBlue',
-                    settings.magBrightnessLevelBlue)
+                    _settingsManager.getSetting('magBrightnessLevelBlue'))
     setZoomerBrightness(r, g, b, False)
 
-    contrast = restore.get('magContrastLevel', settings.magContrastLevel)
+    contrast = restore.get(
+        'magContrastLevel', _settingsManager.getSetting('magContrastLevel'))
     r = contrast + \
         restore.get('magContrastLevelRed',
-                    settings.magContrastLevelRed)
+                    _settingsManager.getSetting('magContrastLevelRed'))
     g = contrast + \
         restore.get('magContrastLevelGreen',
-                    settings.magContrastLevelGreen)
+                    _settingsManager.getSetting('magContrastLevelGreen'))
     b = contrast + \
         restore.get('magContrastLevelBlue',
-                    settings.magContrastLevelBlue)
+                    _settingsManager.getSetting('magContrastLevelBlue'))
     setZoomerContrast(r, g, b, False)
 
     value = restore.get('magColorFilteringMode',
-                        settings.magColorFilteringMode)
+                        _settingsManager.getSetting('magColorFilteringMode'))
     setZoomerColorFilter(value, False)
 
-    value = restore.get('magZoomerType', settings.magZoomerType)
+    value = restore.get(
+        'magZoomerType', _settingsManager.getSetting('magZoomerType'))
     if value == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
         size = 0
     else:
-        size = restore.get('magZoomerBorderSize', settings.magZoomerBorderSize)
-    color = restore.get('magZoomerBorderColor', settings.magZoomerBorderColor)
+        size = restore.get('magZoomerBorderSize',
+                           _settingsManager.getSetting('magZoomerBorderSize'))
+    color = restore.get('magZoomerBorderColor',
+                        _settingsManager.getSetting('magZoomerBorderColor'))
     setZoomerObjectSize("border-size", size, False)
     setZoomerObjectColor("border-color", color, False)
 
-    value = restore.get('magSmoothingMode', settings.magSmoothingMode)
+    value = restore.get('magSmoothingMode',
+                        _settingsManager.getSetting('magSmoothingMode'))
     setZoomerSmoothingType(value, False)
 
     # Now it's safe to display the viewport.
@@ -850,15 +872,17 @@ def applySettings():
     global _pointerFollowsZoomer
     global _pointerFollowsFocus
 
-    __setupMagnifier(settings.magZoomerType)
+    __setupMagnifier(_settingsManager.getSetting('magZoomerType'))
     __setupZoomer()
   
-    _mouseTracking = settings.magMouseTrackingMode
-    _controlTracking = settings.magControlTrackingMode
-    _textTracking = settings.magTextTrackingMode
-    _edgeMargin = settings.magEdgeMargin
-    _pointerFollowsZoomer = settings.magPointerFollowsZoomer
-    _pointerFollowsFocus = settings.magPointerFollowsFocus
+    _mouseTracking = _settingsManager.getSetting('magMouseTrackingMode')
+    _controlTracking = _settingsManager.getSetting('magControlTrackingMode')
+    _textTracking = _settingsManager.getSetting('magTextTrackingMode')
+    _edgeMargin = _settingsManager.getSetting('magEdgeMargin')
+    _pointerFollowsZoomer = \
+        _settingsManager.getSetting('magPointerFollowsZoomer')
+    _pointerFollowsFocus = \
+        _settingsManager.getSetting('magPointerFollowsFocus')
 
     #print "MAGNIFIER PROPERTIES:", _magnifier
     #__dumpPropertyBag(_magnifier)
@@ -1057,7 +1081,7 @@ def setMagnifierCursor(enabled, customEnabled, size, updateScreen=True):
     try:
         mag = _zoomerPBag.getValue("mag-factor-x").value()
     except:
-        mag = settings.magZoomFactor
+        mag = _settingsManager.getSetting('magZoomFactor')
 
     if enabled:
         scale = 1.0 * mag
@@ -1086,7 +1110,7 @@ def setMagnifierCrossHair(enabled, updateScreen=True):
 
     size = 0
     if enabled:
-        size = settings.magCrossHairSize
+        size = _settingsManager.getSetting('magCrossHairSize')
 
     bonobo.pbclient_set_long(_magnifierPBag, "crosswire-size", size)
 
@@ -1505,15 +1529,16 @@ def finishLiveUpdating():
     global _pointerFollowsZoomer
 
     _liveUpdatingMagnifier = False
-    _mouseTracking = settings.magMouseTrackingMode
-    _controlTracking = settings.magControlTrackingMode
-    _textTracking = settings.magTextTrackingMode
-    _edgeMargin = settings.magEdgeMargin
-    _pointerFollowsFocus = settings.magPointerFollowsFocus
-    _pointerFollowsZoomer = settings.magPointerFollowsZoomer
+    _mouseTracking = _settingsManager.getSetting('magMouseTrackingMode')
+    _controlTracking = _settingsManager.getSetting('magControlTrackingMode')
+    _textTracking = _settingsManager.getSetting('magTextTrackingMode')
+    _edgeMargin = _settingsManager.getSetting('magEdgeMargin')
+    _pointerFollowsFocus = _settingsManager.getSetting('magPointerFollowsFocus')
+    _pointerFollowsZoomer = \
+        _settingsManager.getSetting('magPointerFollowsZoomer')
 
-    if settings.enableMagnifier:
-        setupMagnifier(settings.magZoomerType)
+    if _settingsManager.getSetting('enableMagnifier'):
+        setupMagnifier(_settingsManager.getSetting('magZoomerType'))
         init()
     else:
         shutdown()
@@ -1593,24 +1618,28 @@ def toggleMouseEnhancements(script=None, inputEvent=None):
         # to see *something* change. We don't know what, so enable both
         # the cursor and the cross-hairs.
         #
-        cursorEnable = settings.enableMagCursor
-        crossHairEnable = settings.enableMagCrossHair
+        cursorEnable = _settingsManager.getSetting('enableMagCursor')
+        crossHairEnable = _settingsManager.getSetting('enableMagCrossHair')
         if not (cursorEnable or crossHairEnable):
             cursorEnable = True
             crossHairEnable = True
 
-        setMagnifierCursor(cursorEnable,
-                           settings.enableMagCursorExplicitSize,
-                           settings.magCursorSize,
-                           False)
-        setMagnifierObjectColor("cursor-color",
-                                settings.magCursorColor,
-                                False)
-        setMagnifierObjectColor("crosswire-color",
-                                settings.magCrossHairColor,
-                                False)
-        setMagnifierCrossHairClip(settings.enableMagCrossHairClip,
-                                  False)
+        setMagnifierCursor(
+            cursorEnable,
+            _settingsManager.getSetting('enableMagCursorExplicitSize'),
+            _settingsManager.getSetting('magCursorSize'),
+            False)
+        setMagnifierObjectColor(
+            "cursor-color",
+            _settingsManager.getSetting('magCursorColor'),
+            False)
+        setMagnifierObjectColor(
+            "crosswire-color",
+            _settingsManager.getSetting('magCrossHairColor'),
+            False)
+        setMagnifierCrossHairClip(
+            _settingsManager.getSetting('enableMagCrossHairClip'),
+            False)
         setMagnifierCrossHair(crossHairEnable)
         # Translators: "mouse enhancements" are changes users can
         # make to the appearance of the mouse pointer to make it
@@ -1715,7 +1744,7 @@ def cycleZoomerType(script=None, inputEvent=None):
     toRestore = {}
 
     [levelX, levelY] = _zoomer.getMagFactor()
-    if levelX != settings.magZoomFactor:
+    if levelX != _settingsManager.getSetting('magZoomFactor'):
         toRestore['magZoomFactor'] = levelX
 
     if not orca_state.colorEnhancementsEnabled:
@@ -1736,7 +1765,7 @@ def cycleZoomerType(script=None, inputEvent=None):
     if not orca_state.mouseEnhancementsEnabled:
         setMagnifierCrossHair(False)
         setMagnifierObjectColor("cursor-color",
-                                settings.magCursorColor,
+                                _settingsManager.getSetting('magCursorColor'),
                                 False)
         setMagnifierCursor(False, False, 0)
 

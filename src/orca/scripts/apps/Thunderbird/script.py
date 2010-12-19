@@ -32,7 +32,6 @@ import orca.orca as orca
 import orca.debug as debug
 import orca.default as default
 import orca.orca_state as orca_state
-import orca.settings as settings
 import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
 
@@ -42,6 +41,8 @@ from formatting import Formatting
 from speech_generator import SpeechGenerator
 from script_utilities import Utilities
 import script_settings
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 ########################################################################
 #                                                                      #
@@ -616,7 +617,7 @@ class Script(Gecko.Script):
         self.setCaretPosition(obj, offset)
         if not script_settings.sayAllOnLoad:
             self.presentLine(obj, offset)
-        elif settings.enableSpeech:
+        elif _settingsManager.getSetting('enableSpeech'):
             self.sayAll(None)
         self._messageLoaded = False
 

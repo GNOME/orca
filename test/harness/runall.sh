@@ -96,8 +96,8 @@ then
     echo generating coverage map...
     coverageDir=../coverage/`date +%Y-%m-%d_%H:%M:%S`
     mkdir -p $coverageDir
-    cp $harnessDir/user-settings.py.in user-settings.py
-    #echo $harnessDir/user-settings.py.in
+    cp $harnessDir/user-settings.conf.in user-settings.conf
+    #echo $harnessDir/user-settings.conf.in
     trace2html.py -o $coverageDir -w orca -r $harnessDir/runorca.py &
     trace_pid=$!
     sleep 10
@@ -108,7 +108,7 @@ then
     runOrcaOnce=1
     export HARNESS_ASSERT=0
     echo generating profile information...
-    cp $harnessDir/user-settings.py.in user-settings.py
+    cp $harnessDir/user-settings.conf.in user-settings.conf
     python $harnessDir/runprofiler.py&
     profiler_pid=$!
     sleep 10
@@ -232,16 +232,14 @@ done
 if [ "$coverageMode" -eq 1 ]
 then
     python $harnessDir/quit.py
-    rm user-settings.py
-    rm -f user-settings.pyc
+    rm user-settings.conf
     echo ...finished generating coverage map.
 fi
 
 if [ "$profileMode" -eq 1 ]
 then
     python $harnessDir/quit.py
-    rm -f user-settings.py
-    rm -f user-settings.pyc
+    rm -f user-settings.conf
     mkdir -p ../profile
     profileFilePrefix=../profile/`date +%Y-%m-%d_%H:%M:%S`
     python -c "import pstats; pstats.Stats('orcaprof').sort_stats('cumulative').print_stats()" > $profileFilePrefix.txt

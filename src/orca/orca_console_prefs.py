@@ -32,6 +32,7 @@ import acss
 import settings
 import speech
 import speechserver
+import orca
 import orca_prefs
 import time
 
@@ -48,6 +49,8 @@ from orca_i18n import _  # for gettext support
 workingFactories   = []
 speechServerChoice = None
 speechVoiceChoice  = None
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 # Translators: this is a regular expression that is intended to match
 # a positive 'yes' response from a user at the command line.  The expression
@@ -318,8 +321,8 @@ def setupSpeech(prefsDict):
     }
 
     prefsDict["enableSpeech"] = True
-    prefsDict["speechServerFactory"] = factory
-    prefsDict["speechServerInfo"] = speechServerChoice
+    prefsDict["speechServerFactory"] = factory.__name__
+    prefsDict["speechServerInfo"] = speechServerChoice.getInfo()
     prefsDict["voices"] = voices
 
     stop = True
@@ -582,7 +585,8 @@ def showPreferencesUI(commandLineSettings):
             stop = False
             sayAndPrint(_("Please enter y or n."))
 
-    logoutNeeded = orca_prefs.writePreferences(prefsDict)
+    prefsDict['firstStart'] = False
+    logoutNeeded = _settingsManager.saveSettings(prefsDict, {}, {})
     if logoutNeeded:
         sayAndPrint(_("Accessibility support for GNOME has just been enabled."),
                     logoutNeeded,

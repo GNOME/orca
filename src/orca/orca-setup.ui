@@ -261,22 +261,27 @@
       <column type="gchararray"/>
     </columns>
   </object>
+  <object class="GtkListStore" id="model9">
+    <columns>
+      <!-- column-name label -->
+      <column type="gchararray"/>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkDialog" id="orcaSetupWindow">
     <property name="title" translatable="yes">Orca Preferences</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <signal name="destroy" handler="windowDestroyed"/>
     <signal name="close" handler="windowClosed"/>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">3</property>
         <child>
           <object class="GtkVBox" id="mainvbox">
             <property name="visible">True</property>
             <property name="border_width">6</property>
-            <property name="orientation">vertical</property>
             <property name="spacing">12</property>
             <child>
               <object class="GtkNotebook" id="notebook">
@@ -286,7 +291,6 @@
                   <object class="GtkVBox" id="generalVBox">
                     <property name="visible">True</property>
                     <property name="border_width">12</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkFrame" id="frame9">
                         <property name="visible">True</property>
@@ -300,7 +304,6 @@
                               <object class="GtkVBox" id="vbox22">
                                 <property name="visible">True</property>
                                 <property name="border_width">3</property>
-                                <property name="orientation">vertical</property>
                                 <child>
                                   <object class="GtkRadioButton" id="generalDesktopButton">
                                     <property name="label" translatable="yes">_Desktop</property>
@@ -537,6 +540,155 @@
                         <property name="position">7</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkFrame" id="profilesFrame">
+                        <property name="visible">True</property>
+                        <property name="label_xalign">0</property>
+                        <property name="shadow_type">none</property>
+                        <child>
+                          <object class="GtkAlignment" id="alignment5">
+                            <property name="visible">True</property>
+                            <property name="left_padding">6</property>
+                            <child>
+                              <object class="GtkVBox" id="profilesVbox1">
+                                <property name="visible">True</property>
+                                <child>
+                                  <object class="GtkAspectFrame" id="aspectframe2">
+                                    <property name="visible">True</property>
+                                    <property name="label_xalign">0</property>
+                                    <property name="shadow_type">none</property>
+                                    <property name="xalign">0</property>
+                                    <child>
+                                      <object class="GtkTable" id="profilesTable1">
+                                        <property name="visible">True</property>
+                                        <property name="n_rows">2</property>
+                                        <property name="n_columns">4</property>
+                                        <property name="column_spacing">6</property>
+                                        <property name="row_spacing">2</property>
+                                        <child>
+                                          <object class="GtkLabel" id="profilesLabel1">
+                                            <property name="width_request">150</property>
+                                            <property name="visible">True</property>
+                                            <property name="xalign">0</property>
+                                            <property name="xpad">12</property>
+                                            <property name="label" translatable="yes">Active Profile:</property>
+                                            <property name="ellipsize">start</property>
+                                            <accessibility>
+                                              <relation type="label-for" target="availableProfilesComboBox1"/>
+                                            </accessibility>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkComboBox" id="availableProfilesComboBox1">
+                                            <property name="width_request">200</property>
+                                            <property name="visible">True</property>
+                                            <property name="model">model9</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="cellrenderertext5"/>
+                                              <attributes>
+                                                <attribute name="text">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="right_attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="loadProfileButton">
+                                            <property name="label" translatable="yes" comments="This button will load the selected settings profile in the application.">_Load</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">True</property>
+                                            <property name="use_underline">True</property>
+                                            <signal name="clicked" handler="loadProfileButtonClicked"/>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">2</property>
+                                            <property name="right_attach">3</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="saveProfileButton">
+                                            <property name="label">gtk-save-as</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">True</property>
+                                            <property name="use_stock">True</property>
+                                            <signal name="clicked" handler="showProfileGUI"/>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">3</property>
+                                            <property name="right_attach">4</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="startupProfileLabel1">
+                                            <property name="visible">True</property>
+                                            <property name="xalign">0</property>
+                                            <property name="xpad">12</property>
+                                            <property name="label" translatable="yes">Start-up Profile:</property>
+                                            <property name="ellipsize">end</property>
+                                            <accessibility>
+                                              <relation type="label-for" target="availableProfilesComboBox2"/>
+                                            </accessibility>
+                                          </object>
+                                          <packing>
+                                            <property name="top_attach">1</property>
+                                            <property name="bottom_attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkComboBox" id="availableProfilesComboBox2">
+                                            <property name="visible">True</property>
+                                            <property name="model">model9</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="cellrenderertext6"/>
+                                              <attributes>
+                                                <attribute name="text">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="right_attach">2</property>
+                                            <property name="top_attach">1</property>
+                                            <property name="bottom_attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="padding">6</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child type="label">
+                          <object class="GtkLabel" id="form2">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">&lt;b&gt;Profiles&lt;/b&gt;</property>
+                            <property name="use_markup">True</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="position">8</property>
+                      </packing>
+                    </child>
                   </object>
                 </child>
                 <child type="tab">
@@ -552,7 +704,6 @@
                   <object class="GtkVBox" id="vbox20">
                     <property name="visible">True</property>
                     <property name="border_width">12</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkCheckButton" id="speechSupportCheckButton">
                         <property name="label" translatable="yes">_Enable speech</property>
@@ -574,7 +725,6 @@
                       <object class="GtkVBox" id="speechVbox">
                         <property name="visible">True</property>
                         <property name="border_width">12</property>
-                        <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkTable" id="speechTable">
@@ -974,7 +1124,6 @@
                                               <object class="GtkVBox" id="vbox17">
                                                 <property name="visible">True</property>
                                                 <property name="border_width">3</property>
-                                                <property name="orientation">vertical</property>
                                                 <child>
                                                   <object class="GtkRadioButton" id="speechBriefButton">
                                                     <property name="label" translatable="yes">Brie_f</property>
@@ -1044,7 +1193,6 @@
                                               <object class="GtkVBox" id="vbox21">
                                                 <property name="visible">True</property>
                                                 <property name="border_width">3</property>
-                                                <property name="orientation">vertical</property>
                                                 <child>
                                                   <object class="GtkRadioButton" id="cellSpeechButton">
                                                     <property name="label" translatable="yes" comments="Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.">Speak _cell</property>
@@ -1142,7 +1290,6 @@
                                                 <child>
                                                   <object class="GtkVBox" id="progressBarVBox">
                                                     <property name="visible">True</property>
-                                                    <property name="orientation">vertical</property>
                                                     <child>
                                                       <object class="GtkHBox" id="speakUpdateIntervalHBox">
                                                         <property name="visible">True</property>
@@ -1492,7 +1639,6 @@
                   <object class="GtkVBox" id="brailleVbox">
                     <property name="visible">True</property>
                     <property name="border_width">12</property>
-                    <property name="orientation">vertical</property>
                     <property name="spacing">12</property>
                     <child>
                       <object class="GtkTable" id="table2">
@@ -1503,7 +1649,6 @@
                         <child>
                           <object class="GtkVBox" id="vbox23">
                             <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkCheckButton" id="enableBrailleCheckButton">
                                 <property name="label" translatable="yes">Enable Braille _support</property>
@@ -1647,7 +1792,6 @@
                                   <object class="GtkVBox" id="vbox18">
                                     <property name="visible">True</property>
                                     <property name="border_width">3</property>
-                                    <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkRadioButton" id="brailleBriefButton">
                                         <property name="label" translatable="yes">Brie_f</property>
@@ -1712,7 +1856,6 @@
                                   <object class="GtkVBox" id="vbox28">
                                     <property name="visible">True</property>
                                     <property name="border_width">3</property>
-                                    <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkRadioButton" id="brailleSelectionNoneButton">
                                         <property name="label" translatable="yes">_None</property>
@@ -1810,7 +1953,6 @@
                                 <child>
                                   <object class="GtkVBox" id="vbox35">
                                     <property name="visible">True</property>
-                                    <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkRadioButton" id="brailleLinkNoneButton">
                                         <property name="label" translatable="yes">_None</property>
@@ -1925,7 +2067,6 @@
                   <object class="GtkVBox" id="keyechoVbox">
                     <property name="visible">True</property>
                     <property name="border_width">12</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkCheckButton" id="keyEchoCheckButton">
                         <property name="label" translatable="yes">Enable _key echo</property>
@@ -2175,7 +2316,6 @@
                   <object class="GtkVBox" id="vbox19">
                     <property name="visible">True</property>
                     <property name="border_width">12</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkCheckButton" id="magnifierSupportCheckButton">
                         <property name="label" translatable="yes">Enable _magnifier</property>
@@ -2599,7 +2739,6 @@
                                     <child>
                                       <object class="GtkVBox" id="vbox33">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <child>
                                           <object class="GtkAlignment" id="alignment83">
                                             <property name="visible">True</property>
@@ -2805,7 +2944,6 @@
                                     <child>
                                       <object class="GtkVBox" id="vbox32">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <child>
                                           <object class="GtkAlignment" id="alignment81">
                                             <property name="visible">True</property>
@@ -3156,7 +3294,6 @@
                                     <child>
                                       <object class="GtkVBox" id="vbox31">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <child>
                                           <object class="GtkAlignment" id="alignment78">
                                             <property name="visible">True</property>
@@ -3621,7 +3758,6 @@
                   <object class="GtkVBox" id="keyBindingsVBox">
                     <property name="visible">True</property>
                     <property name="border_width">12</property>
-                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkHBox" id="hbox36">
@@ -3651,7 +3787,7 @@
                             <child>
                               <object class="GtkCellRendererText" id="orcaModifierRenderer"/>
                               <attributes>
-                              <attribute name="text">0</attribute>
+                                <attribute name="text">0</attribute>
                               </attributes>
                             </child>
                           </object>
@@ -3706,7 +3842,6 @@
                 <child>
                   <object class="GtkVBox" id="vbox29">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkFrame" id="pronunciationFrame">
                         <property name="visible">True</property>
@@ -3820,7 +3955,6 @@
                             <child>
                               <object class="GtkVBox" id="vbox24">
                                 <property name="visible">True</property>
-                                <property name="orientation">vertical</property>
                                 <child>
                                   <object class="GtkScrolledWindow" id="scrolledwindow2">
                                     <property name="visible">True</property>
@@ -3914,7 +4048,6 @@
                     <child>
                       <object class="GtkVBox" id="vbox26">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <property name="homogeneous">True</property>
                         <child>
                           <object class="GtkFrame" id="adjustAttributesFrame">
@@ -3930,7 +4063,6 @@
                                   <object class="GtkVBox" id="vbox25">
                                     <property name="visible">True</property>
                                     <property name="border_width">5</property>
-                                    <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkButton" id="textMoveToTopButton">
                                         <property name="label" translatable="yes" comments="Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.">Move to _top</property>
@@ -4028,7 +4160,6 @@ attributes&lt;/b&gt;</property>
                                   <object class="GtkVBox" id="vbox27">
                                     <property name="visible">True</property>
                                     <property name="border_width">3</property>
-                                    <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkRadioButton" id="textBrailleNoneButton">
                                         <property name="label" translatable="yes">_None</property>

@@ -29,11 +29,14 @@ import pyatspi
 
 import input_event
 import keybindings
+import orca
 import orca_state
 import settings
 import speech
 
 from orca_i18n import _
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 #############################################################################
 #                                                                           #
@@ -412,8 +415,9 @@ class Chat:
         self.speakNameCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.speakNameCheckButton)
         gtk.Box.pack_start(vbox, self.speakNameCheckButton, False, False, 0)
-        gtk.ToggleButton.set_active(self.speakNameCheckButton,
-                                    settings.chatSpeakRoomName)
+        gtk.ToggleButton.set_active(
+            self.speakNameCheckButton,
+            _settingsManager.getSetting('chatSpeakRoomName'))
 
         # Translators: If this checkbox is checked, then Orca will tell
         # you when one of your buddies is typing a message.
@@ -422,8 +426,9 @@ class Chat:
         self.buddyTypingCheckButton = gtk.CheckButton(label)
         gtk.Widget.show(self.buddyTypingCheckButton)
         gtk.Box.pack_start(vbox, self.buddyTypingCheckButton, False, False, 0)
-        gtk.ToggleButton.set_active(self.buddyTypingCheckButton,
-                                    settings.chatAnnounceBuddyTyping)
+        gtk.ToggleButton.set_active(
+                self.buddyTypingCheckButton,
+                _settingsManager.getSetting('chatAnnounceBuddyTyping'))
 
         # Translators: If this checkbox is checked, then Orca will provide
         # the user with chat room specific message histories rather than just
@@ -435,8 +440,9 @@ class Chat:
         gtk.Widget.show(self.chatRoomHistoriesCheckButton)
         gtk.Box.pack_start(vbox, self.chatRoomHistoriesCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.chatRoomHistoriesCheckButton,
-                                    settings.chatRoomHistories)
+        gtk.ToggleButton.set_active(
+            self.chatRoomHistoriesCheckButton,
+            _settingsManager.getSetting('chatRoomHistories'))
 
         # "Speak Messages" frame.
         #
@@ -453,6 +459,8 @@ class Chat:
         gtk.Widget.show(messagesVBox)
         gtk.Container.add(messagesAlignment, messagesVBox)
 
+        verbosity = _settingsManager.getSetting('chatMessageVerbosity')
+
         # Translators: Orca will speak all new chat messages as they appear
         # irrespective of whether the chat application currently has focus.
         # This is the default behaviour.
@@ -461,36 +469,37 @@ class Chat:
         gtk.Widget.show(self.allMessagesRadioButton)
         gtk.Box.pack_start(messagesVBox, self.allMessagesRadioButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.allMessagesRadioButton,
-            (settings.chatMessageVerbosity == settings.CHAT_SPEAK_ALL))
+        gtk.ToggleButton.set_active(
+            self.allMessagesRadioButton,
+            verbosity == settings.CHAT_SPEAK_ALL)
 
         # Translators: Orca will speak only new chat messages for the channel
         # that currently has focus, irrespective of whether the chat
         # application has focus.
         #
-        self.focusedChannelRadioButton = gtk.RadioButton( \
-                             self.allMessagesRadioButton, \
-                             _("A channel only if its _window is active"))
+        self.focusedChannelRadioButton = gtk.RadioButton(
+            self.allMessagesRadioButton,
+            _("A channel only if its _window is active"))
         gtk.Widget.show(self.focusedChannelRadioButton)
         gtk.Box.pack_start(messagesVBox, self.focusedChannelRadioButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.focusedChannelRadioButton,
-            (settings.chatMessageVerbosity == \
-                 settings.CHAT_SPEAK_FOCUSED_CHANNEL))
+        gtk.ToggleButton.set_active(
+            self.focusedChannelRadioButton,
+            verbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL)
 
         # Translators: Orca will speak new chat messages for all channels
         # only when the chat application has focus.
         #
-        self.allChannelsRadioButton = gtk.RadioButton( \
-                        self.allMessagesRadioButton,
-                       _("All channels when an_y %s window is active") \
-                       % self._script.app.name)
+        self.allChannelsRadioButton = gtk.RadioButton(
+            self.allMessagesRadioButton,
+            _("All channels when an_y %s window is active") \
+              % self._script.app.name)
         gtk.Widget.show(self.allChannelsRadioButton)
         gtk.Box.pack_start(messagesVBox, self.allChannelsRadioButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.allChannelsRadioButton,
-            (settings.chatMessageVerbosity == \
-                 settings.CHAT_SPEAK_ALL_IF_FOCUSED))
+        gtk.ToggleButton.set_active(
+            self.allChannelsRadioButton,
+            verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED)
 
         # Translators: this is the title of a panel holding options for
         # how messages in this application's chat rooms should be spoken.
@@ -512,35 +521,37 @@ class Chat:
         """
 
         prefix = "orca.settings"
-        settings.chatSpeakRoomName = \
-                self.speakNameCheckButton.get_active()
+
+        value = self.speakNameCheckButton.get_active()
+        _settingsManager.setSetting('chatSpeakRoomName', value)
         prefs.writelines("\n")
-        prefs.writelines("%s.chatSpeakRoomName = %s\n" % \
-                         (prefix, settings.chatSpeakRoomName))
+        prefs.writelines("%s.chatSpeakRoomName = %s\n" % (prefix, value))
 
-        settings.chatAnnounceBuddyTyping = \
-                self.buddyTypingCheckButton.get_active()
-        prefs.writelines("%s.chatAnnounceBuddyTyping = %s\n" % \
-                         (prefix, settings.chatAnnounceBuddyTyping))
+        value = self.buddyTypingCheckButton.get_active()
+        _settingsManager.setSetting('chatAnnounceBuddyTyping', value)
+        prefs.writelines("%s.chatAnnounceBuddyTyping = %s\n" % (prefix, value))
 
-        settings.chatRoomHistories = \
-                self.chatRoomHistoriesCheckButton.get_active()
-        prefs.writelines("%s.chatRoomHistories = %s\n" % \
-                         (prefix, settings.chatRoomHistories))
+        value = self.chatRoomHistoriesCheckButton.get_active()
+        _settingsManager.setSetting('chatRoomHistories', value)
+        prefs.writelines("%s.chatRoomHistories = %s\n" % (prefix, value))
 
+        value = None
+        option = None
         if self.allMessagesRadioButton.get_active():
-            settings.chatMessageVerbosity = settings.CHAT_SPEAK_ALL
+            value = settings.CHAT_SPEAK_ALL
             option = ("%s.CHAT_SPEAK_ALL" % prefix)
         elif self.allChannelsRadioButton.get_active():
-            settings.chatMessageVerbosity = \
-                    settings.CHAT_SPEAK_ALL_IF_FOCUSED
+            value = settings.CHAT_SPEAK_ALL_IF_FOCUSED
             option = ("%s.CHAT_SPEAK_ALL_IF_FOCUSED" % prefix)
         elif self.focusedChannelRadioButton.get_active():
-            settings.chatMessageVerbosity = \
-                settings.CHAT_SPEAK_FOCUSED_CHANNEL
+            value = settings.CHAT_SPEAK_FOCUSED_CHANNEL
             option = ("%s.CHAT_SPEAK_FOCUSED_CHANNEL" % prefix)
-        prefs.writelines("\n")
-        prefs.writelines("%s.chatMessageVerbosity = %s\n" % (prefix, option))
+
+        if value and option:
+            _settingsManager.setSetting('chatMessageVerbosity', value)
+            prefs.writelines("\n")
+            prefs.writelines("%s.chatMessageVerbosity = %s\n" % \
+                            (prefix, option))
 
     ########################################################################
     #                                                                      #
@@ -558,8 +569,9 @@ class Chat:
         """
 
         line = _("speak chat room name.")
-        settings.chatSpeakRoomName = not settings.chatSpeakRoomName
-        if not settings.chatSpeakRoomName:
+        speakRoomName = _settingsManager.getSetting('chatSpeakRoomName')
+        _settingsManager.setSetting('chatSpeakRoomName', not speakRoomName)
+        if speakRoomName:
             line = _("Do not speak chat room name.")
         self._script.presentMessage(line)
 
@@ -574,8 +586,10 @@ class Chat:
         """
 
         line = _("announce when your buddies are typing.")
-        settings.chatAnnounceBuddyTyping = not settings.chatAnnounceBuddyTyping
-        if not settings.chatAnnounceBuddyTyping:
+        announceTyping = _settingsManager.getSetting('chatAnnounceBuddyTyping')
+        _settingsManager.setSetting(
+            'chatAnnounceBuddyTyping', not announceTyping)
+        if announceTyping:
             line = _("Do not announce when your buddies are typing.")
         self._script.presentMessage(line)
 
@@ -590,8 +604,9 @@ class Chat:
         """
 
         line = _("Provide chat room specific message histories.")
-        settings.chatRoomHistories = not settings.chatRoomHistories
-        if not settings.chatRoomHistories:
+        roomHistories = _settingsManager.getSetting('chatRoomHistories')
+        _settingsManager.setSetting('chatRoomHistories', not roomHistories)
+        if roomHistories:
             line = _("Do not provide chat room specific message histories.")
         self._script.presentMessage(line)
 
@@ -617,7 +632,7 @@ class Chat:
         messageNumber = self.messageListLength - (index + 1)
         message, chatRoomName = None, None
 
-        if settings.chatRoomHistories:
+        if _settingsManager.getSetting('chatRoomHistories'):
             conversation = self.getConversation(orca_state.locusOfFocus)
             if conversation:
                 message = conversation.getNthMessage(messageNumber)
@@ -651,7 +666,7 @@ class Chat:
             return
 
         text = ""
-        if settings.chatSpeakRoomName and chatRoomName:
+        if _settingsManager.getSetting('chatSpeakRoomName') and chatRoomName:
             text = _("Message from chat room %s") % chatRoomName
         text = self._script.utilities.appendString(text, message)
 
@@ -757,7 +772,7 @@ class Chat:
         Returns True if we spoke the change; False otherwise
         """
 
-        if settings.chatAnnounceBuddyTyping:
+        if _settingsManager.getSetting('chatAnnounceBuddyTyping'):
             conversation = self.getConversation(event.source)
             if conversation and (status != conversation.getTypingStatus()):
                 speech.speak(status)

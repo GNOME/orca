@@ -31,12 +31,14 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.orca as orca
 import orca.rolenames as rolenames
-import orca.settings as settings
 import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _
 from orca.orca_i18n import ngettext # for ngettext support
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 ########################################################################
 #                                                                      #
@@ -286,7 +288,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateNumberOfChildren(self, obj, **args):
-        if settings.onlySpeakDisplayedText:
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -420,7 +422,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # Finally add the role if it's not among the roles we don't
             # wish to speak.
             #
-            if not settings.onlySpeakDisplayedText:
+            if not _settingsManager.getSetting('onlySpeakDisplayedText'):
                 acss = self.voice(speech_generator.SYSTEM)
                 if not (role in dontSpeakRoles) and len(newResult):
                     roleInfo = rolenames.getSpeechForRoleName(parent)

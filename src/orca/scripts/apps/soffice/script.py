@@ -58,6 +58,8 @@ from structural_navigation import StructuralNavigation
 from script_utilities import Utilities
 import script_settings
 
+_settingsManager = getattr(orca, '_settingsManager')
+
 class Script(default.Script):
 
     def __init__(self, app):
@@ -119,48 +121,42 @@ class Script(default.Script):
 
     def activate(self):
         """Called when this script is activated."""
-        self.savedreadTableCellRow = settings.readTableCellRow
-        settings.readTableCellRow = False
+        self.savedreadTableCellRow = \
+            _settingsManager.getSetting('readTableCellRow')
+        _settingsManager.setSetting('readTableCellRow', False)
 
         self.savedEnabledBrailledTextAttributes = \
-            settings.enabledBrailledTextAttributes
+            _settingsManager.getSetting('enabledBrailledTextAttributes')
 
         self.savedEnabledSpokenTextAttributes = \
-            settings.enabledSpokenTextAttributes
+            _settingsManager.getSetting('enabledSpokenTextAttributes')
 
         # Account for the differences in how OOo expresses indent, 
         # strikethrough, and margins.
         #
-        settings.allTextAttributes = \
-            settings.allTextAttributes.replace(
-            "margin:;",
-            "margin:0mm;")
+        attributes = _settingsManager.getSetting('allTextAttributes')
+        attributes.replace("margin:;", "margin:0mm;")
+        _settingsManager.setSetting('allTextAttributes', attributes)
 
-        settings.enabledBrailledTextAttributes = \
-            settings.enabledBrailledTextAttributes.replace(
-            "strikethrough:false;",
-            "strikethrough:none;")
-        settings.enabledSpokenTextAttributes = \
-            settings.enabledSpokenTextAttributes.replace(
-            "strikethrough:false;",
-            "strikethrough:none;")
+        attributes = \
+            _settingsManager.getSetting('enabledBrailledTextAttributes')
+        attributes.replace("strikethrough:false;", "strikethrough:none;")
+        attributes.replace("indent:0;", "indent:0mm;")
+        _settingsManager.setSetting('enabledBrailledTextAttributes', attributes)
 
-        settings.enabledBrailledTextAttributes = \
-            settings.enabledBrailledTextAttributes.replace(
-            "indent:0;",
-            "indent:0mm;")
-        settings.enabledSpokenTextAttributes = \
-            settings.enabledSpokenTextAttributes.replace(
-            "indent:0;",
-            "indent:0mm;")
+        attributes = _settingsManager.getSetting('enabledSpokenTextAttributes')
+        attributes.replace("strikethrough:false;", "strikethrough:none;")
+        attributes.replace("indent:0;", "indent:0mm;")
+        _settingsManager.setSetting('enabledSpokenTextAttributes', attributes)
 
     def deactivate(self):
         """Called when this script is deactivated."""
-        settings.readTableCellRow = self.savedreadTableCellRow
-        settings.enabledBrailledTextAttributes = \
-            self.savedEnabledBrailledTextAttributes
-        settings.enabledSpokenTextAttributes = \
-            self.savedEnabledSpokenTextAttributes
+        _settingsManager.setSetting('readTableCellRow',
+                                    self.savedreadTableCellRow)
+        _settingsManager.setSetting('enabledBrailledTextAttributes',
+                                    self.savedEnabledBrailledTextAttributes)
+        _settingsManager.setSetting('enabledSpokenTextAttributes',
+                                    self.savedEnabledSpokenTextAttributes)
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
@@ -346,8 +342,9 @@ class Script(default.Script):
         gtk.Widget.show(self.speakCellCoordinatesCheckButton)
         gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.speakCellCoordinatesCheckButton,
-                                    settings.speakCellCoordinates)
+        gtk.ToggleButton.set_active(
+            self.speakCellCoordinatesCheckButton,
+            _settingsManager.getSetting('speakCellCoordinates'))
 
         # Translators: this is an option to tell Orca whether or not it
         # should speak the span size of a table cell (e.g., how many
@@ -358,8 +355,9 @@ class Script(default.Script):
         gtk.Widget.show(self.speakCellSpanCheckButton)
         gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.speakCellSpanCheckButton,
-                                    settings.speakCellSpan)
+        gtk.ToggleButton.set_active(
+            self.speakCellSpanCheckButton,
+            _settingsManager.getSetting('speakCellSpan'))
 
         # Translators: this is an option for whether or not to speak
         # the header of a table cell in document content.
@@ -369,8 +367,9 @@ class Script(default.Script):
         gtk.Widget.show(self.speakCellHeadersCheckButton)
         gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.speakCellHeadersCheckButton,
-                                    settings.speakCellHeaders)
+        gtk.ToggleButton.set_active(
+            self.speakCellHeadersCheckButton,
+            _settingsManager.getSetting('speakCellHeaders'))
 
         # Translators: this is an option to allow users to skip over
         # empty/blank cells when navigating tables in document content.
@@ -380,8 +379,9 @@ class Script(default.Script):
         gtk.Widget.show(self.skipBlankCellsCheckButton)
         gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
                            False, False, 0)
-        gtk.ToggleButton.set_active(self.skipBlankCellsCheckButton,
-                                    settings.skipBlankCells)
+        gtk.ToggleButton.set_active(
+                self.skipBlankCellsCheckButton,
+                _settingsManager.getSetting('skipBlankCells'))
 
         # Translators: this is the title of a panel containing options
         # for specifying how to navigate tables in document content.
@@ -405,27 +405,25 @@ class Script(default.Script):
         prefix = "orca.scripts.apps.soffice.script_settings"
 
         script_settings.speakSpreadsheetCoordinates = \
-                 self.speakSpreadsheetCoordinatesCheckButton.get_active()
+            self.speakSpreadsheetCoordinatesCheckButton.get_active()
         prefs.writelines("%s.speakSpreadsheetCoordinates = %s\n" % \
-                         (prefix, script_settings.speakSpreadsheetCoordinates))
+                        (prefix, script_settings.speakSpreadsheetCoordinates))
 
-        settings.speakCellCoordinates = \
-                 self.speakCellCoordinatesCheckButton.get_active()
-        prefs.writelines("orca.settings.speakCellCoordinates = %s\n" % \
-                         settings.speakCellCoordinates)
+        value = self.speakCellCoordinatesCheckButton.get_active()
+        _settingsManager.setSetting('speakCellCoordinates', value)            
+        prefs.writelines("orca.settings.speakCellCoordinates = %s\n" % value)
 
-        settings.speakCellSpan = self.speakCellSpanCheckButton.get_active()
-        prefs.writelines("orca.settings.speakCellSpan = %s\n" % \
-                         settings.speakCellSpan)
+        value = self.speakCellSpanCheckButton.get_active()
+        _settingsManager.setSetting('speakCellSpan', value)
+        prefs.writelines("orca.settings.speakCellSpan = %s\n" % value)
 
-        settings.speakCellHeaders = \
-                self.speakCellHeadersCheckButton.get_active()
-        prefs.writelines("orca.settings.speakCellHeaders = %s\n" % \
-                         settings.speakCellHeaders)
+        value = self.speakCellHeadersCheckButton.get_active()
+        _settingsManager.setSetting('speakCellHeaders', value)
+        prefs.writelines("orca.settings.speakCellHeaders = %s\n" % value)
 
-        settings.skipBlankCells = self.skipBlankCellsCheckButton.get_active()
-        prefs.writelines("orca.settings.skipBlankCells = %s\n" % \
-                         settings.skipBlankCells)
+        value = self.skipBlankCellsCheckButton.get_active()
+        _settingsManager.setSetting('skipBlankCells', value)
+        prefs.writelines("orca.settings.skipBlankCells = %s\n" % value)
 
     def getAppState(self):
         """Returns an object that can be passed to setAppState.  This
@@ -762,7 +760,7 @@ class Script(default.Script):
         self.updateBraille(cell)
         speech.speak(self.speechGenerator.generateSpeech(cell))
 
-        if not settings.readTableCellRow:
+        if not _settingsManager.getSetting('readTableCellRow'):
             self.speakCellName(cell.name)
 
         try:
@@ -810,7 +808,7 @@ class Script(default.Script):
                     debug.println(self.debugLevel,
                         "StarOffice.speakInputLine: contents: %s" % inputLine)
                     self.displayBrailleMessage(inputLine, \
-                      flashTime=settings.brailleFlashTime)
+                      flashTime=_settingsManager.getSetting('brailleFlashTime'))
                     speech.speak(inputLine)
             except NotImplementedError:
                 pass
@@ -1131,7 +1129,7 @@ class Script(default.Script):
         - endOffset: the end offset for this word
         """
 
-        voices = settings.voices
+        voices = _settingsManager.getSetting('voices')
 
         for i in range(startOffset, endOffset):
             if self.utilities.linkIndex(obj, i) >= 0:
@@ -2135,7 +2133,7 @@ class Script(default.Script):
                           pyatspi.ROLE_ROOT_PANE,
                           pyatspi.ROLE_FRAME,
                           pyatspi.ROLE_APPLICATION]
-            if settings.enableEchoByWord and \
+            if _settingsManager.getSetting('enableEchoByWord') and \
                (self.utilities.hasMatchingHierarchy(event.source, rolesList) or
                 self.utilities.hasMatchingHierarchy(event.source, rolesList1)):
                 keyString, mods = self.utilities.lastKeyAndModifiers()
@@ -2234,7 +2232,7 @@ class Script(default.Script):
         # If this is a blank line, announce it if the user requested
         # that blank lines be spoken.
         if line[1] == 0 and line[2] == 0:
-            return settings.speakBlankLines
+            return _settingsManager.getSetting('speakBlankLines')
 
     def onTextInserted(self, event):
         """Called whenever text is inserted into an object.  Overridden here

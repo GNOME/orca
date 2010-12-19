@@ -36,6 +36,8 @@ import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.speech as speech
 
+_settingsManager = getattr(orca, '_settingsManager')
+
 ########################################################################
 #                                                                      #
 # The GnomeTerminal script class.                                      #
@@ -251,9 +253,9 @@ class Script(default.Script):
             # We might need to echo this if it is a single character.
             #
             speakThis = speakThis \
-                or ((settings.enableEchoByCharacter \
-                     or (settings.enableKeyEcho \
-                         and settings.enablePrintableKeys)) \
+                or ((_settingsManager.getSetting('enableEchoByCharacter') \
+                     or (_settingsManager.getSetting('enableKeyEcho') \
+                     and _settingsManager.getSetting('enablePrintableKeys'))) \
                     and text \
                     and event.source.getRole() \
                         != pyatspi.ROLE_PASSWORD_TEXT \
@@ -265,7 +267,7 @@ class Script(default.Script):
             else:
                 speech.speak(text)
 
-        if settings.enableEchoByWord \
+        if _settingsManager.getSetting('enableEchoByWord') \
            and self.utilities.isWordDelimiter(text.decode("UTF-8")[-1:]):
             if matchFound:
                 self.echoPreviousWord(event.source)

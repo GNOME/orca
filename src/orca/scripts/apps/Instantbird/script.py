@@ -32,11 +32,12 @@ import orca.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.Gecko as Gecko
-import orca.settings as settings
 import orca.speech as speech
 
 from chat import Chat
 from script_utilities import Utilities
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 ########################################################################
 #                                                                      #
@@ -207,8 +208,8 @@ class Script(Gecko.Script):
             room2 = self.chat.getChatRoomName(event.source)
             if room1 != room2:
                 speech.speak(room2)
-                self.displayBrailleMessage(
-                    room2, flashTime=settings.brailleFlashTime)
+                flashTime = _settingsManager.getSetting('brailleFlashTime')
+                self.displayBrailleMessage(room2, flashTime)
                 orca.setLocusOfFocus(event, event.source)
                 return
 

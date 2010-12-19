@@ -56,6 +56,7 @@ AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find python module: dbus)])
 AM_CHECK_PYMOD(pyatspi,,,[AC_MSG_ERROR(Could not find python module: pyatspi)])
 AM_CHECK_PYMOD(cairo,,,[AC_MSG_ERROR(Could not find python module: cairo)])
 AM_CHECK_PYMOD(pango,,,[AC_MSG_ERROR(Could not find python module: pango)])
+AM_CHECK_PYMOD(yaml,,,[AC_MSG_ERROR(Could not find python module: yaml)])
 AM_CHECK_PYMOD(xdg,,,[AC_MSG_ERROR(Could not find python module: xdg)])
 AM_CHECK_PYMOD(wnck,,[wnck_available="yes"],[wnck_available="no"])
 AM_CHECK_PYORBIT_MOD(GNOME_Speech,[gnome_speech_available="yes"],[gnome_speech_available="no"])
@@ -133,6 +134,7 @@ src/orca/scripts/toolkits/Gecko/Makefile
 src/orca/scripts/toolkits/J2SE-access-bridge/Makefile
 src/orca/scripts/toolkits/CALLY/Makefile
 src/orca/scripts/toolkits/WebKitGtk/Makefile
+src/orca/backends/Makefile
 src/orca/orca
 src/orca/orca_i18n.py
 src/orca/orca_platform.py

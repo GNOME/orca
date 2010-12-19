@@ -61,18 +61,19 @@ EOF
 # Set up our local user settings file for the output format we want.
 #
 # If a <testfilename>.settings file exists, should use that instead of
-# the default user-settings.py.in.
+# the default user-settings.conf.in.
 #
-# (Orca will look in our local directory first for user-settings.py
-# before looking in ~/.orca)
+# (Orca will look in our local directory first for user-settings.conf
+# before looking in the usual location)
 #
 SETTINGS_FILE=`dirname $1`/$debugFile.settings
 if [ ! -f $SETTINGS_FILE ]
 then
-    SETTINGS_FILE=`dirname $0`/user-settings.py.in
+    SETTINGS_FILE=`dirname $0`/user-settings.conf.in
 fi
+cp $SETTINGS_FILE user-settings.conf
 #echo "Using settings file:" $SETTINGS_FILE
-cp $SETTINGS_FILE user-settings.py
+
 
 # Allow us to pass parameters to the command line of the application.
 #

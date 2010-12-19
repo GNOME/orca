@@ -1,7 +1,6 @@
 orca-customizations.py
 orca-customizations.pyc
-user-settings.py
-user-settings.pyc
+user-settings.conf
 utils.pyc
 *.debug
 *.speech

@@ -1,1 +1,3 @@
 src/louis/constants.py
+src/orca/backends/gconf_backend.py
+src/orca/settings_manager.py

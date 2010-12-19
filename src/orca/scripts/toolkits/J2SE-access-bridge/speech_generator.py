@@ -27,10 +27,12 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.settings as settings
+import orca.orca as orca
 import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import ngettext
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 ########################################################################
 #                                                                      #
@@ -84,7 +86,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         specifications) that represents the number of children the
         object has."""
 
-        if settings.onlySpeakDisplayedText:
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -110,7 +112,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         object in a list.
         """
 
-        if settings.onlySpeakDisplayedText:
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
         listObj = None
@@ -142,7 +144,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if nextName == name:
                 position = index
 
-        if (settings.enablePositionSpeaking or args.get('forceList', False)) \
+        if (_settingsManager.getSetting('enablePositionSpeaking') \
+            or args.get('forceList', False)) \
            and position >= 0:
             result.append(self._script.formatting.getString(
                               mode='speech', stringType='groupindex') \

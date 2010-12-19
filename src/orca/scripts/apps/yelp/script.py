@@ -29,13 +29,14 @@ import gtk
 import pyatspi
 
 import orca.orca as orca
-import orca.settings as settings
 import orca.speech as speech
 
 import orca.scripts.toolkits.Gecko as Gecko
 
 import script_settings
 from script_utilities import Utilities
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 class Script(Gecko.Script):
 
@@ -209,7 +210,7 @@ class Script(Gecko.Script):
                 elif not Gecko.script_settings.sayAllOnLoad:
                     self.speakContents(\
                         self.getLineContentsAtOffset(obj, characterOffset))
-                elif settings.enableSpeech:
+                elif _settingsManager.getSetting('enableSpeech'):
                     self.sayAll(None)
 
             return

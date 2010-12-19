@@ -102,7 +102,7 @@ else
     orcaCommand="orca"
 fi
 
-cp user-settings.py.in user-settings.py
+cp user-settings.conf.in user-settings.conf
 $orcaCommand&
 sleep 5
 
@@ -313,7 +313,7 @@ done
 
 sleep 5
 python quit.py
-rm -f user-settings.py user-settings.pyc
+rm -f user-settings.conf
 
 if [ "$coverageMode" -eq 1 ]
 then

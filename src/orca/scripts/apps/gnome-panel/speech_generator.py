@@ -27,8 +27,10 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.settings as settings
+import orca.orca as orca
 import orca.speech_generator as speech_generator
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
 
@@ -48,7 +50,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         acss = self.voice(speech_generator.DEFAULT)
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_FRAME:
-            if settings.onlySpeakDisplayedText:
+            if _settingsManager.getSetting('onlySpeakDisplayedText'):
                 return []
             else:
                 acss = self.voice(speech_generator.SYSTEM)

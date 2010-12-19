@@ -90,8 +90,7 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         # in gail or gtk+ (see bug #554002).  Instead, we'll just hide it.
         #
         # self.get_widget("notebook").remove_page(0)
-        generalTab = self.get_widget("notebook").get_children()[0]
-        generalTab.hide()
+        self.get_widget("generalVBox").hide()
 
         self.get_widget("speechSystemsLabel").set_sensitive(False)
         self.get_widget("speechSystems").set_sensitive(False)

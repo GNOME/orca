@@ -63,19 +63,23 @@ class ACSS(dict):
         """Create and initialize ACSS structure."""
         dict.__init__(self)
         props = props or {}
-        for k in props:
-            if k in ACSS.settings:
-                # Do a 'deep copy' of the family.  Otherwise,
-                # the new ACSS shares the actual data with the
-                # props passed in.  This can cause unexpected
-                # side effects.
-                #
-                if k == ACSS.FAMILY:
-                    self[k] = {}
-                    for j in props[k].keys():
-                        self[k][j] = props[k][j]
-                else:
-                    self[k] = props[k]
+        if props:
+            for k in props:
+                if k in ACSS.settings:
+                    # Do a 'deep copy' of the family.  Otherwise,
+                    # the new ACSS shares the actual data with the
+                    # props passed in.  This can cause unexpected
+                    # side effects.
+                    #
+                    if k == ACSS.FAMILY:
+                        self[k] = {}
+                        for j in props[k].keys():
+                            self[k][j] = props[k][j]
+                    else:
+                        self[k] = props[k]
+        else:
+            self['established'] = False
+
 
     def __setitem__ (self, key, value):
         """Update name when we change values."""

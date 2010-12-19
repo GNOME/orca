@@ -48,6 +48,7 @@ orca_python_PYTHON = \
 	orca_gui_find.py \
 	orca_gui_main.py \
 	orca_gui_prefs.py \
+	orca_gui_profile.py \
 	orca_gui_splash.py \
 	orca_i18n.py \
 	orca_prefs.py \
@@ -64,6 +65,7 @@ orca_python_PYTHON = \
 	script.py \
 	script_utilities.py \
 	settings.py \
+	settings_manager.py \
 	sound.py \
 	speech.py \
 	speechdispatcherfactory.py \
@@ -76,7 +78,9 @@ orca_python_PYTHON = \
 
 orca_pythondir=$(pyexecdir)/orca
 
-SUBDIRS = scripts
+SUBDIRS = \
+        scripts \
+        backends
 
 ui_DATA = \
 	orca-advanced-magnification.ui \
@@ -85,6 +89,7 @@ ui_DATA = \
 	orca-preferences-warning.ui \
 	orca-quit.ui \
 	orca-setup.ui \
+	orca-profile.ui \
 	orca-splash.ui
 
 gfx_DATA = \

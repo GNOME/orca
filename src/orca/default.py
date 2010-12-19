@@ -33,6 +33,9 @@ __license__   = "LGPL"
 import locale
 import time
 
+import orca
+_settingsManager = getattr(orca, '_settingsManager')
+
 import pyatspi
 import braille
 import debug
@@ -46,8 +49,6 @@ try:
 except:
     import mag
 import outline
-import orca
-import orca_prefs
 import orca_state
 import phonnames
 import script
@@ -1194,7 +1195,8 @@ class Script(script.Script):
 
         keyBindings = script.Script.getKeyBindings(self)
 
-        if settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
+        layout = _settingsManager.getSetting('keyboardLayout')
+        if layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             for keyBinding in self.__getDesktopBindings().keyBindings:
                 keyBindings.add(keyBinding)
         else:
@@ -1204,7 +1206,7 @@ class Script(script.Script):
         import common_keyboardmap
         keyBindings.load(common_keyboardmap.keymap, self.inputEventHandlers)
 
-        if settings.debugMemoryUsage:
+        if _settingsManager.getSetting('debugMemoryUsage'):
             keyBindings.add(
                 keybindings.KeyBinding(
                     "",
@@ -1563,7 +1565,7 @@ class Script(script.Script):
         Returns True to indicate the input event has been consumed.
         """
 
-        if settings.learnModeEnabled:
+        if _settingsManager.getSetting('learnModeEnabled'):
             return True
 
         self.speakMessage(
@@ -1588,7 +1590,7 @@ class Script(script.Script):
         # display.
         #
         self.displayBrailleMessage(_("Learn mode.  Press escape to exit."))
-        settings.learnModeEnabled = True
+        _settingsManager.setSetting('learnModeEnabled', True)
         return True
 
     def enterListShortcutsMode(self, inputEvent):
@@ -1600,8 +1602,8 @@ class Script(script.Script):
 
         Returns True to indicate the input event has been consumed.
         """
-        settings.learnModeEnabled = False
-        if settings.listShortcutsModeEnabled:
+        _settingsManager.setSetting('learnModeEnabled', False)
+        if _settingsManager.getSetting('listShortcutsModeEnabled'):
             return True
 
         # Translators: Orca has a 'List Shortcuts' mode by which a user can
@@ -1626,7 +1628,7 @@ class Script(script.Script):
         message = mode + " " + message
         self.speakMessage(message)
         self.displayBrailleMessage(message, -1, -1)
-        settings.listShortcutsModeEnabled = True
+        _settingsManager.setSetting('listShortcutsModeEnabled', True)
         return True
 
     def findNext(self, inputEvent):
@@ -1998,7 +2000,7 @@ class Script(script.Script):
             # Get a dictionary of text attributes that the user cares about.
             #
             [userAttrList, userAttrDict] = self.utilities.stringToKeysAndDict(
-                settings.enabledSpokenTextAttributes)
+                _settingsManager.getSetting('enabledSpokenTextAttributes'))
 
             # Create a dictionary of just the items we are interested in.
             # Always include size and family-name. For the others, if the
@@ -2572,9 +2574,9 @@ class Script(script.Script):
     def toggleFlatReviewMode(self, inputEvent=None):
         """Toggles between flat review mode and focus tracking mode."""
 
+        verbosity = _settingsManager.getSetting('speechVerbosityLevel')
         if self.flatReviewContext:
-            if inputEvent and (settings.speechVerbosityLevel != \
-                                   settings.VERBOSITY_LEVEL_BRIEF):
+            if inputEvent and verbosity != settings.VERBOSITY_LEVEL_BRIEF:
                 # Translators: the 'flat review' feature of Orca
                 # allows the blind user to explore the text in a
                 # window in a 2D fashion.  That is, Orca treats all
@@ -2590,8 +2592,7 @@ class Script(script.Script):
             self.flatReviewContext = None
             self.updateBraille(orca_state.locusOfFocus)
         else:
-            if inputEvent and (settings.speechVerbosityLevel != \
-                                   settings.VERBOSITY_LEVEL_BRIEF):
+            if inputEvent and verbosity != settings.VERBOSITY_LEVEL_BRIEF:
                 # Translators: the 'flat review' feature of Orca
                 # allows the blind user to explore the text in a
                 # window in a 2D fashion.  That is, Orca treats all
@@ -2614,8 +2615,9 @@ class Script(script.Script):
     def toggleSpeakingIndentationJustification(self, inputEvent=None):
         """Toggles the speaking of indentation and justification."""
 
-        settings.enableSpeechIndentation = not settings.enableSpeechIndentation 
-        if settings.enableSpeechIndentation :
+        value = _settingsManager.getSetting('enableSpeechIndentation')
+        _settingsManager.setSetting('enableSpeechIndentation', not value)
+        if _settingsManager.getSetting('enableSpeechIndentation'):
             # Translators: This is a detailed message indicating that
             # indentation and justification will be spoken.
             #
@@ -2643,7 +2645,7 @@ class Script(script.Script):
     def cycleSpeakingPunctuationLevel(self, inputEvent=None):
         """ Cycle through the punctuation levels for speech. """
 
-        currentLevel = settings.verbalizePunctuationStyle 
+        currentLevel = _settingsManager.getSetting('verbalizePunctuationStyle')
         if currentLevel == settings.PUNCTUATION_STYLE_NONE:
             newLevel = settings.PUNCTUATION_STYLE_SOME
             # Translators: This detailed message will be presented as the
@@ -2702,16 +2704,16 @@ class Script(script.Script):
             #
             brief = C_("spoken punctuation", "None")
 
-        settings.verbalizePunctuationStyle = newLevel
+        _settingsManager.setSetting('verbalizePunctuationStyle', newLevel)
         self.presentMessage(full, brief)
         speech.updatePunctuationLevel()
         return True
 
     def cycleKeyEcho(self, inputEvent=None):
         (newKey, newWord, newSentence) = (False, False, False)
-        key = settings.enableKeyEcho
-        word = settings.enableEchoByWord
-        sentence = settings.enableEchoBySentence
+        key = _settingsManager.getSetting('enableKeyEcho')
+        word = _settingsManager.getSetting('enableEchoByWord')
+        sentence = _settingsManager.getSetting('enableEchoBySentence')
 
         # check if we are in the none case.
         if (key, word, sentence) == (False, False, False):
@@ -2911,9 +2913,9 @@ class Script(script.Script):
             #
             brief = C_("key echo", "None")
 
-        settings.enableKeyEcho = newKey
-        settings.enableEchoByWord = newWord
-        settings.enableEchoBySentence = newSentence
+        _settingsManager.setSetting('enableKeyEcho', newKey)
+        _settingsManager.setSetting('enableEchoByWord', newWord)
+        _settingsManager.setSetting('enableEchoBySentence', newSentence)
         self.presentMessage(full, brief)
         return True
 
@@ -2922,8 +2924,9 @@ class Script(script.Script):
         """Toggles an indicator for whether we should just read the current
         table cell or read the whole row."""
 
-        settings.readTableCellRow = not settings.readTableCellRow
-        if settings.readTableCellRow:
+        speakRow = _settingsManager.getSetting('readTableCellRow')
+        _settingsManager.setSetting('readTableCellRow', not speakRow)
+        if not speakRow:
             # Translators: when users are navigating a table, they
             # sometimes want the entire row of a table read, or
             # they just want the current cell to be presented to them.
@@ -3279,7 +3282,7 @@ class Script(script.Script):
                 return
 
         if event.type.startswith("object:state-changed:selected") \
-           and not settings.onlySpeakDisplayedText \
+           and not _settingsManager.getSetting('onlySpeakDisplayedText') \
            and orca_state.locusOfFocus:
             # If this selection state change is for the object which
             # currently has the locus of focus, and the last keyboard
@@ -3387,7 +3390,8 @@ class Script(script.Script):
         - event: the Event
         """
 
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE \
+        verbosity = _settingsManager.getSetting('speechVerbosityLevel')
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE \
            and self.utilities.isSameObject(
                 event.source, orca_state.locusOfFocus):
             try:
@@ -3561,7 +3565,8 @@ class Script(script.Script):
             elif wasCommand or wasAutoComplete:
                 speakThis = True
             elif event.source.getRole() == pyatspi.ROLE_PASSWORD_TEXT \
-                 and settings.enableKeyEcho and settings.enablePrintableKeys:
+                 and _settingsManager.getSetting('enableKeyEcho') \
+                 and _settingsManager.getSetting('enablePrintableKeys'):
                 # Echoing "star" is preferable to echoing the descriptive
                 # name of the bullet that has appeared (e.g. "black circle")
                 #
@@ -3575,7 +3580,7 @@ class Script(script.Script):
         # We might need to echo this if it is a single character.
         #
         speakThis = speakThis \
-                    or (settings.enableEchoByCharacter \
+                    or (_settingsManager.getSetting('enableEchoByCharacter') \
                         and string \
                         and event.source.getRole() \
                             != pyatspi.ROLE_PASSWORD_TEXT \
@@ -3602,11 +3607,11 @@ class Script(script.Script):
         [previousChar, startOffset, endOffset] = \
             text.getTextAtOffset(previousOffset, pyatspi.TEXT_BOUNDARY_CHAR)
 
-        if settings.enableEchoBySentence \
+        if _settingsManager.getSetting('enableEchoBySentence') \
            and self.utilities.isSentenceDelimiter(currentChar, previousChar):
             self.echoPreviousSentence(event.source)
 
-        elif settings.enableEchoByWord \
+        elif _settingsManager.getSetting('enableEchoByWord') \
              and self.utilities.isWordDelimiter(currentChar):
             self.echoPreviousWord(event.source)
 
@@ -3796,10 +3801,10 @@ class Script(script.Script):
         notification_messages.listNotificationMessagesModeEnabled = False
 
         # disable learn mode
-        settings.learnModeEnabled = False
+        _settingsManager.setSetting('learnModeEnabled', False)
 
         # disable list shortcuts mode
-        settings.listShortcutsModeEnabled = False
+        _settingsManager.setSetting('listShortcutsModeEnabled', False)
         orca_state.listOfShortcuts = []
         orca_state.typeOfShortcuts = ""
 
@@ -4253,11 +4258,12 @@ class Script(script.Script):
         - obj:  the Accessible progress bar object.
         """
 
-        if settings.enableProgressBarUpdates:
+        if _settingsManager.getSetting('enableProgressBarUpdates'):
             makeAnnouncment = False
-            if settings.progressBarVerbosity == settings.PROGRESS_BAR_ALL:
+            verbosity = _settingsManager.getSetting('progressBarVerbosity')
+            if verbosity == settings.PROGRESS_BAR_ALL:
                 makeAnnouncement = True
-            elif settings.progressBarVerbosity == settings.PROGRESS_BAR_WINDOW:
+            elif verbosity == settings.PROGRESS_BAR_WINDOW:
                 makeAnnouncement = self.utilities.isSameObject(
                     self.utilities.topLevelObject(obj),
                     self.utilities.activeWindow())
@@ -4305,7 +4311,7 @@ class Script(script.Script):
                     (value.maximumValue - value.minimumValue)) * 100.0)
 
                 if (currentTime - lastProgressBarTime) > \
-                       settings.progressBarUpdateInterval \
+                      _settingsManager.getSetting('progressBarUpdateInterval') \
                    or percentValue == 100:
                     if lastProgressBarValue != percentValue:
                         utterances = []
@@ -4461,12 +4467,13 @@ class Script(script.Script):
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
+        speakBlankLines = _settingsManager.getSetting('speakBlankLines')
         debug.println(debug.LEVEL_FINEST, \
             "sayCharacter: char=<%s>, startOffset=%d, " % \
             (character, startOffset))
         debug.println(debug.LEVEL_FINEST, \
             "caretOffset=%d, endOffset=%d, speakBlankLines=%s" % \
-            (offset, endOffset, settings.speakBlankLines))
+            (offset, endOffset, speakBlankLines))
 
         if character == "\n":
             line = text.getTextAtOffset(max(0, offset),
@@ -4474,7 +4481,7 @@ class Script(script.Script):
             if not line[0] or line[0] == "\n":
                 # This is a blank line. Announce it if the user requested
                 # that blank lines be spoken.
-                if settings.speakBlankLines:
+                if speakBlankLines:
                     # Translators: "blank" is a short word to mean the
                     # user has navigated to an empty line.
                     #
@@ -4484,7 +4491,7 @@ class Script(script.Script):
         if character in ["\n", "\r\n"]:
             # This is a blank line. Announce it if the user requested
             # that blank lines be spoken.
-            if settings.speakBlankLines:
+            if speakBlankLines:
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #
@@ -4511,7 +4518,7 @@ class Script(script.Script):
             (line, len(line), startOffset))
         debug.println(debug.LEVEL_FINEST, \
             "caret=%d, speakBlankLines=%s" % \
-            (caretOffset, settings.speakBlankLines))
+            (caretOffset, _settingsManager.getSetting('speakBlankLines')))
 
         if len(line) and line != "\n":
             if line.decode("UTF-8").isupper():
@@ -4877,9 +4884,10 @@ class Script(script.Script):
 
         # Determine the correct "say all by" mode to use.
         #
-        if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
+        sayAllStyle = _settingsManager.getSetting('sayAllStyle')
+        if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
-        elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
+        elif sayAllStyle == settings.SAYALL_STYLE_LINE:
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
         else:
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
@@ -5063,7 +5071,10 @@ class Script(script.Script):
         """Save a copy of all the existing application specific settings
         (as specified by the settings.userCustomizableSettings dictionary)."""
 
-        return orca_prefs.readPreferences()
+        generalSettings = \
+            _settingsManager.getGeneralSettings(_settingsManager.profile)
+        generalSettings.update(_settingsManager.customizedSettings)
+        return generalSettings
 
     def restoreOldAppSettings(self, prefsDict):
         """Restore a copy of all the previous saved application settings.
@@ -5132,7 +5143,7 @@ class Script(script.Script):
         - endOffset: text end offset.
         """
 
-        if settings.onlySpeakDisplayedText:
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return
 
         try:
@@ -5311,7 +5322,7 @@ class Script(script.Script):
         except:
             debug.printException(debug.LEVEL_FINEST)
 
-        if not settings.onlySpeakDisplayedText:
+        if not _settingsManager.getSetting('onlySpeakDisplayedText'):
             voice = self.voices.get(settings.SYSTEM_VOICE)
             if self.utilities.isTextSelected(obj, startOffset, endOffset):
                 # Translators: when the user selects (highlights) text in
@@ -5355,7 +5366,8 @@ class Script(script.Script):
           attributes.
         """
 
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE:
+        verbosity = _settingsManager.getSetting('speechVerbosityLevel')
+        if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
             try:
                 text = obj.queryText()
             except:
@@ -5413,8 +5425,9 @@ class Script(script.Script):
         if briefMessage is None:
             briefMessage = fullMessage
 
-        if settings.enableSpeech:
-            if settings.messageVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
+        if _settingsManager.getSetting('enableSpeech'):
+            if _settingsManager.getSetting('messageVerbosityLevel') \
+                    == settings.VERBOSITY_LEVEL_BRIEF:
                 message = briefMessage
             else:
                 message = fullMessage
@@ -5422,9 +5435,11 @@ class Script(script.Script):
                 voice = voice or self.voices.get(settings.SYSTEM_VOICE)
                 speech.speak(message, voice)
 
-        if (settings.enableBraille or settings.enableBrailleMonitor) \
-           and settings.enableFlashMessages:
-            if settings.flashVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
+        if (_settingsManager.getSetting('enableBraille') \
+             or _settingsManager.getSetting('enableBrailleMonitor')) \
+           and _settingsManager.getSetting('enableFlashMessages'):
+            if _settingsManager.getSetting('flashVerbosityLevel') \
+                    == settings.VERBOSITY_LEVEL_BRIEF:
                 message = briefMessage
             else:
                 message = fullMessage
@@ -5437,10 +5452,10 @@ class Script(script.Script):
                 message = filter(lambda i: isinstance(i, str), message)
                 message = " ".join(message)
 
-            if settings.flashIsPersistent:
+            if _settingsManager.getSetting('flashIsPersistent'):
                 duration = -1
             else:
-                duration = settings.brailleFlashTime
+                duration = _settingsManager.getSetting('brailleFlashTime')
 
             braille.displayMessage(message, flashTime=duration)
 
@@ -5774,7 +5789,7 @@ class Script(script.Script):
           prior to speaking the new text.
         """
 
-        if settings.enableSpeech:
+        if _settingsManager.getSetting('enableSpeech'):
             voice = voice or self.voices.get(settings.SYSTEM_VOICE)
             speech.speak(string, voice, interrupt) 
 
@@ -5811,13 +5826,15 @@ class Script(script.Script):
 
     def presentTime(self, inputEvent):
         """ Presents the current time. """
-        message = time.strftime(settings.presentTimeFormat, time.localtime())
+        timeFormat = _settingsManager.getSetting('presentTimeFormat')
+        message = time.strftime(timeFormat, time.localtime())
         self.presentMessage(message)
         return True
 
     def presentDate(self, inputEvent):
         """ Presents the current date. """
-        message = time.strftime(settings.presentDateFormat, time.localtime())
+        dateFormat = _settingsManager.getSetting('presentDateFormat')
+        message = time.strftime(dateFormat, time.localtime())
         self.presentMessage(message)
         return True
 

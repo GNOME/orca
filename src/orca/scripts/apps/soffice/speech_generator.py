@@ -27,13 +27,14 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.orca as orca
 import orca.speech_generator as speech_generator
-import orca.settings as settings
 
 from orca.orca_i18n import ngettext # for ngettext support
 from orca.orca_i18n import _ # for gettext support
 
 import script_settings
+_settingsManager = getattr(orca, '_settingsManager')
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
 
@@ -178,7 +179,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if that description is different from that of the name and
         label.
         """
-        if settings.onlySpeakDisplayedText:
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -378,7 +379,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         Returns an indication of how many characters are greater than the size
         of the spread sheet cell, or None if the message fits.
         """
-        if settings.onlySpeakDisplayedText:
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
 
         result = []
@@ -488,7 +489,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateTableCellRow(self, obj, **args):
         """Get the speech for a table cell row or a single table cell
-        if settings.readTableCellRow is False. If this isn't inside a
+        if _settingsManager.getSetting('readTableCellRow') is False. If this isn't inside a
         spread sheet, just return the utterances returned by the default
         table cell speech handler.
 
@@ -499,7 +500,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """
         result = []
         if self._script.isSpreadSheetCell(obj):
-            if settings.readTableCellRow:
+            if _settingsManager.getSetting('readTableCellRow'):
                 parent = obj.parent
                 parentTable = parent.queryTable()
                 index = self._script.utilities.cellIndex(obj)
@@ -535,7 +536,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(
                 speech_generator.SpeechGenerator._generateTableCellRow(
                     self, obj, **args))
-            if not len(result) and settings.speakBlankLines:
+            if not len(result) \
+               and _settingsManager.getSetting('speakBlankLines'):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #

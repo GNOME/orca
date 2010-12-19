@@ -29,11 +29,14 @@ import pyatspi
 
 import braille
 import generator
+import orca
 import orca_state
 import rolenames
 import settings
 
 from orca_i18n import ngettext  # for ngettext support
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 class Space:
     """A dummy class to indicate we want to insert a space into an
@@ -119,8 +122,8 @@ class BrailleGenerator(generator.Generator):
         """
         result = []
         role = args.get('role', obj.getRole())
-        if (role in settings.brailleForceRoles)\
-           or ((settings.brailleVerbosityLevel \
+        if (role in _settingsManager.getSetting('brailleForceRoles'))\
+           or ((_settingsManager.getSetting('brailleVerbosityLevel') \
                 == settings.VERBOSITY_LEVEL_VERBOSE)\
                and not args.get('readingRow', False)\
                and (role != pyatspi.ROLE_UNKNOWN)):
@@ -181,7 +184,7 @@ class BrailleGenerator(generator.Generator):
         previous object with focus.
         """
         result = []
-        if not settings.enableBrailleContext:
+        if not _settingsManager.getSetting('enableBrailleContext'):
             return result
         args['includeContext'] = False
 
@@ -293,7 +296,7 @@ class BrailleGenerator(generator.Generator):
         # are on the very first line.  Otherwise, we show only the
         # line.
         #
-        include = settings.enableBrailleContext
+        include = _settingsManager.getSetting('enableBrailleContext')
         if not include:
             return include
         try:
@@ -322,7 +325,7 @@ class BrailleGenerator(generator.Generator):
 
     def _generateEol(self, obj, **args):
         result = []
-        if not settings.disableBrailleEOL:
+        if not _settingsManager.getSetting('disableBrailleEOL'):
             if not args.get('mode', None):
                 args['mode'] = self._mode
             args['stringType'] = 'eol'

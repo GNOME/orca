@@ -44,6 +44,8 @@ from formatting import Formatting
 from speech_generator import SpeechGenerator
 from script_utilities import Utilities
 
+_settingsManager = getattr(orca, '_settingsManager')
+
 ########################################################################
 #                                                                      #
 # The Evolution script class.                                          #
@@ -332,7 +334,7 @@ class Script(default.Script):
         self.rolesList = [pyatspi.ROLE_TEXT, \
                           pyatspi.ROLE_PANEL, \
                           pyatspi.ROLE_TABLE_CELL]
-        if settings.readTableCellRow \
+        if _settingsManager.getSetting('readTableCellRow') \
             and (self.utilities.hasMatchingHierarchy(
                     event.source, self.rolesList)):
             debug.println(self.debugLevel,
@@ -385,8 +387,9 @@ class Script(default.Script):
 
         self.rolesList = [pyatspi.ROLE_TABLE_CELL, \
                           pyatspi.ROLE_TREE_TABLE]
-        if settings.readTableCellRow and self.utilities.hasMatchingHierarchy(
-                event.source, self.rolesList):
+        if _settingsManager.getSetting('readTableCellRow') \
+                and self.utilities.hasMatchingHierarchy(event.source,
+                                                        self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - mail view: " \
                           + "message header list.")
@@ -397,7 +400,7 @@ class Script(default.Script):
             # for the duration of this code section, then resetting it to
             # True at the end.
             #
-            settings.readTableCellRow = False
+            _settingsManager.setSetting('readTableCellRow', False)
 
             parent = event.source.parent
             parentTable = parent.queryTable()
@@ -412,7 +415,7 @@ class Script(default.Script):
             if self.lastMessageRow == row:
                 default.Script.locusOfFocusChanged(self, event,
                                            oldLocusOfFocus, newLocusOfFocus)
-                settings.readTableCellRow = True
+                _settingsManager.setSetting('readTableCellRow', True)
                 return
 
             # This is an indication of whether we should speak all the table
@@ -432,8 +435,10 @@ class Script(default.Script):
                         self.lastMessageColumn == column) or \
                        justDeleted
 
-            savedBrailleVerbosityLevel = settings.brailleVerbosityLevel
-            savedSpeechVerbosityLevel = settings.speechVerbosityLevel
+            savedBrailleVerbosityLevel = \
+                _settingsManager.getSetting('brailleVerbosityLevel')
+            savedSpeechVerbosityLevel = \
+                _settingsManager.getSetting('speechVerbosityLevel')
 
             brailleRegions = []
             cellWithFocus = None
@@ -525,10 +530,12 @@ class Script(default.Script):
                         #
                         if (verbose or (checkbox and column == i)) \
                            and not useAlternativeName:
-                            settings.brailleVerbosityLevel = \
-                                settings.VERBOSITY_LEVEL_BRIEF
-                            settings.speechVerbosityLevel = \
-                                settings.VERBOSITY_LEVEL_BRIEF
+                            _settingsManager.setSetting(
+                                'brailleVerbosityLevel',
+                                settings.VERBOSITY_LEVEL_BRIEF)
+                            _settingsManager.setSetting(
+                                'speechVerbosityLevel',
+                                settings.VERBOSITY_LEVEL_BRIEF)
 
                             utterances = speechGen.generateSpeech(
                                 header,
@@ -552,13 +559,14 @@ class Script(default.Script):
                         # then speak/braille "attachment".
                         #
                         if verbose:
-                            settings.brailleVerbosityLevel = \
-                                settings.VERBOSITY_LEVEL_VERBOSE
+                            level = settings.VERBOSITY_LEVEL_VERBOSE
                         else:
-                            settings.brailleVerbosityLevel = \
-                                settings.VERBOSITY_LEVEL_BRIEF
-                        settings.speechVerbosityLevel = \
-                            savedSpeechVerbosityLevel
+                            level = settings.VERBOSITY_LEVEL_BRIEF
+                        _settingsManager.setSetting(
+                            'brailleVerbosityLevel', level)
+                        _settingsManager.setSetting(
+                            'speechVerbosityLevel',
+                            savedSpeechVerbosityLevel)
                         utterances = speechGen.generateSpeech(
                             cell,
                             includeContext=False,
@@ -619,11 +627,13 @@ class Script(default.Script):
             if brailleRegions != []:
                 self.displayBrailleRegions([brailleRegions, cellWithFocus])
 
-            settings.brailleVerbosityLevel = savedBrailleVerbosityLevel
-            settings.speechVerbosityLevel = savedSpeechVerbosityLevel
+            _settingsManager.setSetting(
+                'brailleVerbosityLevel', savedBrailleVerbosityLevel)
+            _settingsManager.setSetting(
+                'speechVerbosityLevel', savedSpeechVerbosityLevel)
             self.lastMessageColumn = column
             self.lastMessageRow = row
-            settings.readTableCellRow = True
+            _settingsManager.setSetting('readTableCellRow', True)
             return
 
         # 4) Calendar view: day view: tabbing to day with appts.
@@ -1187,10 +1197,12 @@ class Script(default.Script):
         speechGen = self.speechGenerator
 
         savedSpeechVerbosityLevel = settings.speechVerbosityLevel
-        settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
+        _settingsManager.setSetting(
+            'speechVerbosityLevel', settings.VERBOSITY_LEVEL_BRIEF)
         utterances = speechGen.generateSpeech(tab)
         speech.speak(utterances)
-        settings.speechVerbosityLevel = savedSpeechVerbosityLevel
+        _settingsManager.setSetting(
+            'speechVerbosityLevel', savedSpeechVerbosityLevel)
 
         self.displayBrailleRegions(brailleGen.generateBraille(tab))
 
@@ -1232,12 +1244,14 @@ class Script(default.Script):
 
         # Determine the correct "say all by" mode to use.
         #
-        if settings.sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
+        sayAllStyle = _settingsManager.getSetting('sayAllStyle')
+        if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             mode = pyatspi.TEXT_BOUNDARY_SENTENCE_END
-        elif settings.sayAllStyle == settings.SAYALL_STYLE_LINE:
+        elif sayAllStyle == settings.SAYALL_STYLE_LINE:
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
         else:
             mode = pyatspi.TEXT_BOUNDARY_LINE_START
+        voices = _settingsManager.getSetting('voices')
 
         while not done:
             panel = htmlPanel.getChildAtIndex(i)
@@ -1261,9 +1275,9 @@ class Script(default.Script):
                        len(mystr) == 0 or mystr[len(mystr)-1] in '.?!':
                         string = self.utilities.adjustForRepeats(string)
                         if string.decode("UTF-8").isupper():
-                            voice = settings.voices[settings.UPPERCASE_VOICE]
+                            voice = voices[settings.UPPERCASE_VOICE]
                         else:
-                            voice = settings.voices[settings.DEFAULT_VOICE]
+                            voice = voices[settings.DEFAULT_VOICE]
 
                         if not textObjs:
                             textObjs.append(textObj)
@@ -1290,9 +1304,9 @@ class Script(default.Script):
         if len(string) != 0:
             string = self.utilities.adjustForRepeats(string)
             if string.decode("UTF-8").isupper():
-                voice = settings.voices[settings.UPPERCASE_VOICE]
+                voice = voices[settings.UPPERCASE_VOICE]
             else:
-                voice = settings.voices[settings.DEFAULT_VOICE]
+                voice = voices[settings.DEFAULT_VOICE]
 
             yield [speechserver.SayAllContext(textObjs, string,
                                               startOffset, endOffset),
