@@ -18,39 +18,57 @@
   <title>Braille Preferences</title>
   <section id="braillesupport">
     <title>Enable Braille Support</title>
+    <media type="image" mime="image/png" src="figures/preferences_enable_braille_support.png"/>
+    <p>
+      This check box toggles whether or not <app>Orca</app> will make
+      use of a braille display. If BrlTTY is not running, <app>Orca</app>
+      will recover gracefully and will not communicate with the braille
+      display.
+    </p>
+    <p>
+      Default value: not checked
+    </p>
+    <note style="tip">
       <p>
-        This check box toggles whether or not <app>Orca</app> will make
-        use of a braille display. If BrlTTY is not running, <app>Orca</app>
-        will recover gracefully and will not communicate with the braille
-        display.
+        If you configure BrlTTY later on, you need to restart <app>Orca</app>
+        in order to use braille.
       </p>
-      <note style="tip">
-        <p>
-          If you configure BrlTTY later on, you need to restart <app>Orca</app>
-          in order to use braille.
-        </p>
-      </note>
+    </note>
   </section>
   <section id="braillemonitor">
     <title>Enable Braille Monitor</title>
+    <media type="image" mime="image/png" src="figures/preferences_enable_braille_monitor.png"/>
     <p>
       Orca's braille monitor provides an on-screen representation of what
       takes place on the braille display. This feature is mostly for
       demonstration purposes, but is also useful for <app>Orca</app>
       developers who do not have access to a braille display.
     </p>
+    <p>
+      Default value: not checked
+    </p>
   </section>
   <section id="contractedbraille">
     <title>Enable Contracted Braille</title>
-    <p>TODO: Get rid of the wiki reference; put basic docs here.</p>
+    <media type="image" mime="image/png" src="figures/preferences_braille_contracted.png"/>
     <p>
-      Orca supports contracted braille via the liblouis project.
-      Refer to the <app>Orca</app> Wiki, where you can find additional
-      information about setting up liblouis with <app>Orca</app>.
+      Orca supports contracted braille via the liblouis project. Because many
+      distros include liblouis, you will likely automatically have access to
+      contracted braille support in <app>Orca</app>.
+    </p>
+    <p>
+      To enable contracted braille on a system where liblouis has been installed,
+      be sure that the <gui>Enable Contraced Braille</gui> checkbox is checked.
+      Then choose your desired translation table from the <gui>Contraction
+      Table</gui> combo box.
+    </p>
+    <p>
+      Default value: not checked
     </p>
   </section>
   <section id="rolenames">
     <title>Abbreviated Role Names</title>
+    <media type="image" mime="image/png" src="figures/preferences_abbreviated_role_names.png"/>
     <p>
       This check box determines the manner in which role names are
       displayed and can be used to help conserve real estate on the
@@ -58,25 +76,37 @@
       "slider" would be displayed if abbreviated role names is not
       checked; if it were checked, "sldr" would be displayed instead.
     </p>
+    <p>
+      Default value: not checked
+    </p>
   </section>
   <section id="eolindicator">
     <title>Disable end of line symbol</title>
+    <media type="image" mime="image/png" src="figures/preferences_disable_eol_symbol.png"/>
     <p>
       Checking this checkbox tells <app>Orca</app> to not present the
       "$l" string at the end of a line of text.
     </p>
+    <p>
+      Default value: not checked
+    </p>
   </section>
   <section id="verbosity">
     <title>Verbosity</title>
+    <media type="image" mime="image/png" src="figures/preferences_braille_verbosity.png"/>
     <p>
       This radio button group determines the amount of information that
       will be brailled in certain situations. For example, if it is set
       to verbose, keyboard shortcut and role name information is displayed.
       This information is not displayed in brief mode.
     </p>
+    <p>
+      Default value: <gui>Verbose</gui>
+    </p>
   </section>
   <section id="selectionandhyperlink">
     <title>Selection and Hyperlink Indicators</title>
+    <media type="image" mime="image/png" src="figures/preferences_braille_indicators.png"/>
     <p>
       The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui>
       radio button groups allow you to configure <app>Orca</app>'s behavior
@@ -85,6 +115,9 @@
       your braille display with Dots 7 and 8. If you would prefer, you
       can change the indicator to only be Dot 7, only be Dot 8, or not
       be present at all.
+    </p>
+    <p>
+      Default value: <gui>Dots 7 and 8</gui>
     </p>
     <note style="tip">
       <title>Text Attribute Indicators</title>

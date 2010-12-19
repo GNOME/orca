@@ -18,65 +18,68 @@
   <title>Magnifier Preferences</title>
   <section id="enable_magnifier">
     <title>Enable Magnifier</title>
-      <p>
-        The <gui>Enable magnifier</gui> check box enables and disables
-        <app>Orca</app>'s magnification support. When it is unchecked,
-        the other widgets on this page become unavailable.
-      </p>
+    <media type="image" mime="image/png" src="figures/preferences_enable_magnifier.png"/>
+    <p>
+      The <gui>Enable magnifier</gui> check box enables and disables
+      <app>Orca</app>'s magnification support. When it is unchecked,
+      the other widgets on this page become unavailable.
+    </p>
+    <p>
+      Default value: not checked
+    </p>
   </section>
   <section id="zoomer">
     <title>Zoomer</title>
+    <media type="image" mime="image/png" src="figures/preferences_zoomer.png"/>
     <p>
       The <gui>Zoomer</gui> options allow you to customize the magnifier's
-      position, size, and level.
+      level, position, and size, as well as to hide the system pointer.
     </p>
-    <list>
-      <item>
-        <p>
-          <gui>Scale factor</gui> can be used to set the magnification
-          level from 1.0x to 16.0x (fractional values are supported).
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Position</gui> can be used to specify the placement of the
-          magnifier on your screen. The available positions are:
-        </p>
-        <list>
-          <item><p><gui>Full Screen</gui> (default)</p></item>
-          <item><p><gui>Left Half</gui></p></item>
-          <item><p><gui>Right Half</gui></p></item>
-          <item><p><gui>Top Half</gui></p></item>
-          <item><p><gui>Bottom Half</gui></p></item>
-          <item><p><gui>Custom</gui></p></item>
-        </list>
-      </item>
-      <item>
-        <p>
-          Choosing <gui>Custom</gui> causes four spin buttons to become
-          available:
-        </p>
-        <list>
-          <item><p><gui>Top</gui></p></item>
-          <item><p><gui>Left</gui></p></item>
-          <item><p><gui>Right</gui></p></item>
-          <item><p><gui>Bottom</gui></p></item>
-        </list>
-        <p>
-          These spin buttons allow you to define the location of each edge
-          of the zoom window. Units are in pixels.
-        </p>
-      </item>
-      <item>
-        <p>
-          The <gui>Hide System Pointer</gui> checkbox will hide the unmagnified
-          pointer, leaving just the magnified one visible.
-        </p>
-      </item>
-    </list>
+    <section>
+      <title>Scale factor</title>
+      <p>
+        <gui>Scale factor</gui> can be used to set the magnification
+        level from 1.0x to 16.0x (fractional values are supported).
+      </p>
+    </section>
+    <section>
+      <title>Position</title>
+      <p>
+        <gui>Position</gui> can be used to specify the placement of the
+        magnifier on your screen. The available positions are: <gui>Full
+        Screen</gui>, <gui>Left Half</gui>, <gui>Right Half</gui>, <gui>Top
+        Half</gui>, <gui>Bottom Half</gui>, and <gui>Custom</gui>.
+      </p>
+      <p>
+        Default value: <gui>Full Screen</gui>
+      </p>
+    </section>
+    <section>
+      <title>Specifying the Bounds of a "Custom" Zoomer</title>
+      <p>
+        Choosing a <gui>Position</gui> of <gui>Custom</gui> causes four spin
+        buttons to become available: <gui>Top</gui>, <gui>Left</gui>, <gui>Right
+        </gui>, and <gui>Bottom</gui>.
+      </p>
+      <p>
+        These spin buttons allow you to define the location of each edge of the
+        zoom window. Units are in pixels.
+      </p>
+    </section>
+    <section>
+      <title>Hide system pointer</title>
+      <p>
+        The <gui>Hide system pointer</gui> checkbox will hide the unmagnified
+        pointer, leaving just the magnified one visible.
+      </p>
+      <p>
+        Default value: unchecked
+      </p>
+    </section>
   </section>
   <section id="tracking_and_alignment">
       <title>Tracking and Alignment</title>
+      <media type="image" mime="image/png" src="figures/preferences_tracking_and_alignment.png"/>
       <p>These options control the tracking of the mouse cursor.</p>
       <section id="mouse_pointer">
         <title>Mouse Pointer</title>
@@ -88,7 +91,7 @@
           <item>
             <p>
               <gui>Centered</gui>: Keeps the mouse pointer at the center
-              of the screen whenever possible. This is the default.
+              of the screen whenever possible.
             </p>
           </item>
           <item>
@@ -114,6 +117,12 @@
         </item>
       </list>
       <p>
+        Default value: <gui>Centered</gui>
+      </p>
+    </section>
+    <section>
+      <title>Pointer follows zoomer</title>
+      <p>
         The <gui>Pointer follows zoomer</gui> checkbox allows you to
         customize what should occur if the mouse pointer is not on the
         screen when you initially move the mouse. With this option
@@ -122,7 +131,10 @@
         so that you can continue to see what you were working on. If
         your preferred mouse tracking mode is centered, the pointer
         will be moved to the center; otherwise it will be moved to the
-        item with focus. This option is enabled by default.
+        item with focus.
+      </p>
+      <p>
+        Default value: checked
       </p>
     </section>
     <section id="control_and_menu_item">
@@ -140,8 +152,7 @@
           <p>
             <gui>Push</gui>: When navigating via keyboard, move the
             zoomer window the least amount necessary to display the
-            focused dialog box control or menu item. This is the
-            default.
+            focused dialog box control or menu item.
           </p>
         </item>
         <item>
@@ -153,10 +164,18 @@
         </item>
       </list>
       <p>
+        Default value: <gui>Push</gui>
+      </p>
+    </section>
+    <section>
+      <title>Pointer follows focus</title>
+      <p>
         <gui>Pointer follows focus</gui>: If this option is enabled,
         the mouse pointer will follow you as you arrow through menu
-        items and move among controls in dialog boxes. This option
-        is disabled by default.
+        items and move among controls in dialog boxes. 
+      </p>
+      <p>
+        Default value: not checked
       </p>
     </section>
     <section id="text_cursor">
@@ -172,8 +191,7 @@
         <item>
           <p>
             <gui>Push</gui>: As the text cursor moves, move the zoomer
-            window the least amount necessary to display it. This is
-            the default.
+            window the least amount necessary to display it.
           </p>
         </item>
         <item>
@@ -184,43 +202,67 @@
         </item>
       </list>
       <p>
-        The <gui>Edge margin</gui> is how close the caret should be
-        allowed to get to the edge of the screen before it's time to
-        "push" the zoomer window. The margin can range from 0 to 50%,
-        with 50% being the equivalent of choosing centering. The default
-        value is 0. This option is only available if "Push" is your text
-        cursor tracking mode.
+        Default value: <gui>Push</gui>
+      </p>
+    </section>
+    <section>
+      <title>Edge margin</title>
+      <p>
+        The <gui>Edge margin</gui> is how close the caret should be allowed to
+        get to the edge of the screen before it's time to "push" the zoomer
+        window. The margin can range from 0 to 50%, with 50% being the
+        equivalent of choosing centering.
+      </p>
+      <note style="tip">
+        <p>
+          This option is only available if "Push" is your text cursor tracking
+          mode.
+        </p>
+      </note>
+      <p>
+        Default value: 0
       </p>
     </section>
   </section>
   <section id="color">
     <title>Color</title>
+    <media type="image" mime="image/png" src="figures/preferences_color.png"/>
     <p>
       The <gui>Color</gui> options allow you to do some rough color
       adjustments of the magnified region.
     </p>
-    <list>
-      <item>
-        <p>
-          <gui>Invert colors</gui>: Creates a reverse or negative-image
-          effect.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Brightness</gui>: Ranges from -1 to 1 (-1 is black/no
-          brightness; 1 is white/total brightness; 0 is "normal"/unchanged).
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Contrast</gui>: Ranges from -1 to 1 (-1 is grey/no contrast;
-          1 is maximum contrast; 0 is "normal"/unchanged).
-        </p>
-      </item>
-    </list>
+    <section>
+      <title>Invert colors</title>
+      <p>
+        <gui>Invert colors</gui>: Creates a reverse or negative-image effect.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section>
+      <title>Brightness</title>
+      <p>
+        <gui>Brightness</gui>: Ranges from -1 to 1 (-1 is black/no
+        brightness; 1 is white/total brightness; 0 is "normal"/unchanged).
+      </p>
+      <p>
+        Default value: 0.00
+      </p>
+    </section>
+    <section>
+      <title>Contrast</title>
+      <p>
+        <gui>Contrast</gui>: Ranges from -1 to 1 (-1 is grey/no contrast;
+        1 is maximum contrast; 0 is "normal"/unchanged).
+      </p>
+      <p>
+        Default value: 0.00
+      </p>
+    </section>
   </section>
   <section id="border">
+    <media type="image" mime="image/png" src="figures/preferences_border.png"/>
     <title>Border</title>
     <p>
       The <gui>Border</gui> options can be used to customize the border
@@ -228,96 +270,136 @@
       As such, these options are not available when <gui>Full Screen</gui>
       is selected.
     </p>
-    <list>
-      <item>
-        <p>
-          <gui>Enable border</gui>: This option determines if a window
-          border is visible for the magnifier.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Border size</gui>: This value determines the size of the
-          border in pixels.
-        </p>
-      </item>
-    </list>
+    <section>
+      <title>Enable border</title>
+      <p>
+        <gui>Enable border</gui>: This option determines if a window
+        border is visible for the magnifier.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section>
+      <title>Border size</title>
+      <p>
+        This value determines the size of the border in pixels.
+      </p>
+      <p>
+        Default value: 1
+      </p>
+    </section>
+    <section>
+      <title>Border color</title>      
+      <p>
+        This value determines the color of the border.
+      </p>
+      <p>
+        Default value: black
+      </p>
+    </section>
   </section>
   <section id="cursor">
     <title>Cursor</title>
+    <media type="image" mime="image/png" src="figures/preferences_cursor.png"/>
     <p>
       These controls can be used to customize the size and color of the
       magnifier's cursor.
     </p>
-    <list>
-      <item>
-        <p>
-          <gui>Enable cursor</gui>: If this check box is enabled then a
-          cursor is visible and the size and color options become available.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Custom size</gui>: Enable this check box if you would like
-          to make the mouse pointer larger than it normally is. The cursor
-          size can be changed from the default value of 32 pixels.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Custom color</gui>: If the cursor is enabled, a custom color
-          can also be applied.
-        </p>
-      </item>
-    </list>
+    <section>
+      <title>Enable cursor</title>
+      <p>
+        If this checkbox is checked then a cursor is visible and the size and
+        color options become available.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section>
+      <title>Custom size</title>
+      <p>
+        Check this checkbox if you would like to make the mouse pointer larger
+        than it normally is.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section>
+      <title>Cursor size</title>
+      <p>
+        This value determines the size of the border in pixels.
+      </p>
+      <p>
+        Default value: 32
+      </p>
+    </section>
+    <section>
+      <title>Cursor color</title>      
+      <p>
+        This value determines the color of the cursor.
+      </p>
+      <p>
+        Default value: black
+      </p>
+    </section>
   </section>
   <section id="crosshair">
     <title>Cross-hair</title>
+    <media type="image" mime="image/png" src="figures/preferences_cross-hair.png"/>
     <p>
       This set of controls can be used to customize the magnifier's optional
       area-targeting cursor.
     </p>
-    <list>
-      <item>
-        <p>
-          <gui>Enable cross-hair</gui>: If checked, you can additionally
-          configure the clipping behavior, size and color of the cross-hair.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Enable cross-hair clip</gui>: If enabled, the cross-hair
-          will be "clipped" (removed) in the area immediately surrounding
-          the mouse pointer.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Cross-hair size</gui>: This control sets the thickness
-          of the cross-hair in pixels.
-        </p>
-      </item>
-      <item>
-        <p>
-          <gui>Cross-hair color</gui>: This control allows a custom color
-          to be used for the cross-hair.
-        </p>
-      </item>
-    </list>
+    <section>
+      <title>Enable cross-hair</title>
+      <p>
+        If this checkbox is checked then the cross-hair is visible and the size
+        and color options become available.
+      </p>
+      <p>
+        Default value: checked
+      </p>
+    </section>
+    <section>
+      <title>Enable cross-hair clip</title>
+      <p>
+        If checked, the cross-hair will be "clipped" (removed) in the area
+        immediately surrounding the mouse pointer.
+      </p>
+      <p>
+        Default value: not checked
+      </p>
+    </section>
+    <section>
+      <title>Cross-hair size</title>
+      <p>
+        This control sets the thickness of the cross-hair in pixels.
+      </p>
+      <p>
+        Default value: 16
+      </p>
+    </section>
+    <section>
+      <title>Cross-hair color</title>      
+      <p>
+        This value determines the color of the cross-hair.
+      </p>
+      <p>
+        Default value: black
+      </p>
+    </section>
   </section>
   <section id="advanced">
     <title>Advanced</title>
+    <media type="image" mime="image/png" src="figures/preferences_advanced_button.png"/>
     <p>
       If you press the <gui>Advanced</gui> button located near the bottom
       of the Magnifier page, you can further customize <app>Orca</app>'s
       magnification support.
     </p>
-    <figure>
-      <title>
-        The <app>Orca</app> <gui>Advanced Settings</gui> Dialog for Magnification
-      </title>
-      <media type="image" mime="image/png" src="figures/preferences_magnifier_advanced.png"/>
-  </figure>    
+    <media type="image" mime="image/png" src="figures/preferences_magnifier_advanced.png"/>
     <list>
       <item><p><gui>Smoothing</gui>: Bilinear or none.</p></item>
       <item>
