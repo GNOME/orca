@@ -4547,6 +4547,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
             self.prefsDict['profile'] = profile
             self.prefsDict['activeProfile'] = profile
+            self.saveBasicSettings()
             self.writeUserPreferences()
 
         availableProfiles = [p[1] for p in self.__getAvailableProfiles()]
