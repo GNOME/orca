@@ -33,15 +33,9 @@ import debug
 import gtk
 import locale
 
-import find
 import orca_gtkbuilder
 import orca_state
 import orca_platform
-
-from orca_i18n import _  # for gettext support
-
-from settings_manager import SettingsManager
-
 
 OS = None
 newProfile = None
@@ -62,6 +56,7 @@ class OrcaProfileGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # Initialize variables to None to keep pylint happy.
         #
         self.searchString = None
+        self.profileString = None
 
     def init(self):
         # Initialize the dialog box controls.
@@ -96,7 +91,7 @@ class OrcaProfileGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         profileDialog.run()
 
-    def closeButtonClicked(self, widget):
+    def cancelButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the cancelButton
            GtkButton widget. The user has clicked the Cancel button.
            Hide the dialog.
@@ -129,7 +124,7 @@ class OrcaProfileGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def onProfileEntryChanged(self, widget, data=None):
         """Signal handler for the "changed" signal for the ProfileEntry
            GtkEntry widget."""
-        
+
         if self.get_widget("profileEntry").get_text() != '':
             self.get_widget('availableProfilesCombo').set_sensitive(False)
         else:

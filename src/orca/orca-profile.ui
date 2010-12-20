@@ -25,16 +25,11 @@
                 <child>
                   <object class="GtkLabel" id="profileLabel">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">_New Profile:</property>
+                    <property name="label" translatable="yes">_Profile Name:</property>
                     <property name="use_markup">True</property>
                     <property name="use_underline">True</property>
                     <property name="mnemonic_widget">profileEntry</property>
                     <property name="width_chars">12</property>
-                    <child internal-child="accessible">
-                      <object class="AtkObject" id="profileLabel-atkobject">
-                        <property name="AtkObject::accessible-name" translatable="yes">New Profile:</property>
-                      </object>
-                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -48,11 +43,6 @@
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x25CF;</property>
                     <property name="activates_default">True</property>
-                    <child internal-child="accessible">
-                      <object class="AtkObject" id="profileEntry-atkobject">
-                        <property name="AtkObject::accessible-name" translatable="yes">New Profile:</property>
-                      </object>
-                    </child>
                   </object>
                   <packing>
                     <property name="position">1</property>
@@ -84,20 +74,15 @@ as a new profile.</property>
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="closeButton">
-                <property name="label">gtk-close</property>
+              <object class="GtkButton" id="cancelButton">
+                <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
                 <accelerator key="c" signal="activate" modifiers="GDK_MOD1_MASK"/>
-                <child internal-child="accessible">
-                  <object class="AtkObject" id="closeButton-atkobject">
-                    <property name="AtkObject::accessible-name" translatable="yes">Close</property>
-                  </object>
-                </child>
-                <signal name="clicked" handler="closeButtonClicked"/>
+                <signal name="clicked" handler="cancelButtonClicked"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -107,18 +92,13 @@ as a new profile.</property>
             </child>
             <child>
               <object class="GtkButton" id="saveProfileButton">
-                <property name="label">gtk-ok</property>
+                <property name="label">gtk-save</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-                <child internal-child="accessible">
-                  <object class="AtkObject" id="saveProfileButton-atkobject">
-                    <property name="AtkObject::accessible-name" translatable="yes">Add Profile</property>
-                  </object>
-                </child>
                 <signal name="clicked" handler="on_saveProfileButton_clicked"/>
               </object>
               <packing>
@@ -137,7 +117,7 @@ as a new profile.</property>
       </object>
     </child>
     <action-widgets>
-      <action-widget response="-7">closeButton</action-widget>
+      <action-widget response="-7">cancelButton</action-widget>
       <action-widget response="0">saveProfileButton</action-widget>
     </action-widgets>
   </object>
