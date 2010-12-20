@@ -11,10 +11,11 @@ msgstr ""
 "Project-Id-Version: orca HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-09-07 17:32+0000\n"
+"POT-Creation-Date: 2010-12-19 09:33+0000\n"
 "PO-Revision-Date: 2010-10-06 18:31+0300\n"
 "Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
+"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -141,7 +142,6 @@ msgstr ""
 #. When pressing the button, it instructs the braille display to freeze.
 #.
 #, fuzzy
-#| msgid "Tree"
 msgid "Freeze"
 msgstr "Puu"
 
@@ -184,7 +184,6 @@ msgstr ""
 #. interested in a particular character on the display.
 #.
 #, fuzzy
-#| msgid "Cursor size:"
 msgid "Cursor Routing"
 msgstr "Kursori suurus:"
 
@@ -206,7 +205,6 @@ msgstr ""
 #. text is erroneously called a "cut" operation.
 #.
 #, fuzzy
-#| msgid "Custom siz_e"
 msgid "Cut Line"
 msgstr "Kohandatud _suurus"
 
@@ -1267,196 +1265,168 @@ msgstr ""
 #. Translators: this is the spoken word for the character '⁰' (U+2070)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript 0"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁴' (U+2074)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript 4"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁵' (U+2075)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript 5"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁶' (U+2076)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript 6"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁷' (U+2077)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript 7"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁸' (U+2078)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript 8"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁹' (U+2079)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript 9"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁺' (U+207a)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript plus"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁻' (U+207b)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript minus"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁼' (U+207c)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript equals"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁽' (U+207d)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript left paren"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript right paren"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "superscript n"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₀' (U+2080)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 0"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 1"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 2"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
 #, fuzzy
-#| msgid "superscript 3"
 msgid "subscript 3"
 msgstr "kuubis"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 4"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 5"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 6"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 7"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 8"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 9"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript plus"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript minus"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
 #, fuzzy
-#| msgid "superscript 2"
 msgid "subscript equals"
 msgstr "ruudus"
 
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
 #, fuzzy
-#| msgid "left paren"
 msgid "subscript left paren"
 msgstr "vasak sulg"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #, fuzzy
-#| msgid "right paren"
 msgid "subscript right paren"
 msgstr "parem sulg"
 
@@ -2325,7 +2295,6 @@ msgstr ""
 #. Orca cannot identify/find the current location.
 #.
 #, fuzzy
-#| msgid "No files found."
 msgctxt "location"
 msgid "Not found"
 msgstr "Ühtki faili ei leitud."
@@ -2404,7 +2373,6 @@ msgstr ""
 #. indentation and justification information.
 #.
 #, fuzzy
-#| msgid "Enable bor_der"
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "Äär_is on lubatud"
@@ -2420,7 +2388,6 @@ msgstr ""
 #. indentation and justification information.
 #.
 #, fuzzy
-#| msgid "Table"
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "Tabel"
@@ -2491,7 +2458,6 @@ msgstr ""
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #, fuzzy
-#| msgid "None"
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Puudub"
@@ -2559,7 +2525,6 @@ msgstr ""
 #. cycling amongst the various echo options.
 #.
 #, fuzzy
-#| msgid "Password"
 msgctxt "key echo"
 msgid "word"
 msgstr "Parool"
@@ -2595,7 +2560,6 @@ msgstr "_Klahvi kaja on lubatud"
 #. cycling amongst the various echo options.
 #.
 #, fuzzy
-#| msgid "selected"
 msgctxt "key echo"
 msgid "sentence"
 msgstr "valitud"
@@ -2696,7 +2660,6 @@ msgstr ""
 #. cycling amongst the various echo options.
 #.
 #, fuzzy
-#| msgid "None"
 msgctxt "key echo"
 msgid "None"
 msgstr "Puudub"
@@ -2726,7 +2689,6 @@ msgstr ""
 #. a document, Orca lets them know this.
 #.
 #, fuzzy
-#| msgid "selected"
 msgctxt "text"
 msgid "selected"
 msgstr "valitud"
@@ -2740,7 +2702,6 @@ msgstr "valitud"
 #. them know this.
 #.
 #, fuzzy
-#| msgid "selected"
 msgctxt "text"
 msgid "unselected"
 msgstr "valitud"
@@ -2750,7 +2711,6 @@ msgstr "valitud"
 #. word is not spelled correctly.
 #.
 #, fuzzy
-#| msgid "Misspelled word:"
 msgid "misspelled"
 msgstr "Probleemne sõna:"
 
@@ -2964,7 +2924,6 @@ msgstr "vajutamata"
 #. selected or not.
 #.
 #, fuzzy
-#| msgid "selected"
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "valitud"
@@ -2976,7 +2935,6 @@ msgstr "valitud"
 #. meant to be spoken to the user.
 #.
 #, fuzzy
-#| msgid "not selected"
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "valimata"
@@ -2996,7 +2954,6 @@ msgstr "püstine"
 #. a percentage.
 #.
 #, fuzzy, python-format
-#| msgid "%d percent."
 msgid "%d percent."
 msgid_plural "%d percent."
 msgstr[0] "%d protsenti."
@@ -3319,7 +3276,6 @@ msgstr ""
 #. non-spacing diacritical key for the acute glyph
 #.
 #, fuzzy
-#| msgid "space"
 msgid "acute"
 msgstr "tühik"
 
@@ -3333,7 +3289,6 @@ msgstr ""
 #. non-spacing diacritical key for the diaeresis glyph
 #.
 #, fuzzy
-#| msgid "degrees"
 msgid "diaeresis"
 msgstr "kraadi"
 
@@ -3480,7 +3435,6 @@ msgstr ""
 #. when the top of a list of notifications is reached.
 #.
 #, fuzzy
-#| msgid "_Top:"
 msgctxt "notification"
 msgid "Top"
 msgstr "_Üleval:"
@@ -3489,7 +3443,6 @@ msgstr "_Üleval:"
 #. when the bottom of a list of notifications is reached.
 #.
 #, fuzzy
-#| msgid "_Bottom:"
 msgctxt "notification"
 msgid "Bottom"
 msgstr "_All:"
@@ -3506,8 +3459,6 @@ msgstr ""
 #. Translators: This message inform to the user the number of
 #. messages in the list.
 #, fuzzy, python-format
-#| msgid "%d space"
-#| msgid_plural "%d spaces"
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
 msgstr[0] "%d tühik"
@@ -3526,34 +3477,6 @@ msgid ""
 "Press Escape to exit.\n"
 "Press Space to repeat the last message read.\n"
 "Press one digit to read a specific message.\n"
-msgstr ""
-
-#. Translators: "Default Synthesizer" will appear in the list of available
-#. speech engines as a special item.  It refers to the default engine
-#. configured within the speech subsystem.  Apart from this item, the user
-#. will have a chance to select a particular speech engine by its real
-#. name, such as Festival, IBMTTS, etc.
-#.
-msgid "Default Synthesizer"
-msgstr "Vaikimisi süntesaator"
-
-#. Translators: this is the name of a speech synthesis system
-#. called "Open TTS".
-#.
-msgid "Open TTS"
-msgstr ""
-
-#. Translators: This string will appear in the list of
-#. available voices for the current speech engine.  %s will be
-#. replaced by the name of the current speech engine, such as
-#. "Festival default voice" or "IBMTTS default voice".  It
-#. refers to the default voice configured for given speech
-#. engine within the speech subsystem.  Apart from this item,
-#. the list will contain the names of all available "real"
-#. voices provided by the speech engine.
-#.
-#, python-format
-msgid "%s default voice"
 msgstr ""
 
 msgid "<b>Brightness</b>"
@@ -3954,17 +3877,17 @@ msgstr ""
 #.
 msgid ""
 "Orca is free software; you can redistribute it and/or\n"
-"modify it under the terms of the GNU Library General\n"
+"modify it under the terms of the GNU Lesser General\n"
 "Public License as published by the Free Software Foundation;\n"
-"either version 2 of the License, or (at your option) any\n"
+"either version 2.1 of the License, or (at your option) any\n"
 "later version.\n"
 "\n"
 "Orca is distributed in the hope that it will be useful, but\n"
 "WITHOUT ANY WARRANTY; without even the implied warranty of\n"
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See\n"
-"the GNU Library General Public License for more details.\n"
+"the GNU Lesser General Public License for more details.\n"
 "\n"
-"You should have received a copy of the GNU Library General\n"
+"You should have received a copy of the GNU Lesser General\n"
 "Public License along with Orca; if not, write to the\n"
 "Free Software Foundation, Inc., Franklin Street, Fifth Floor,\n"
 "Boston MA  02110-1301 USA."
@@ -4036,7 +3959,6 @@ msgstr ""
 #. messages.
 #.
 #, fuzzy
-#| msgid "Default"
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Vaikimisi"
@@ -4045,7 +3967,6 @@ msgstr "Vaikimisi"
 #. presenting one or more characters which is in uppercase.
 #.
 #, fuzzy
-#| msgid "percent"
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "protsent"
@@ -4055,7 +3976,6 @@ msgstr "protsent"
 #. hyperlink.
 #.
 #, fuzzy
-#| msgid "Hyperlink"
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Hüperviit"
@@ -4070,7 +3990,6 @@ msgstr "Hüperviit"
 #. selected. And so on.
 #.
 #, fuzzy
-#| msgid "term"
 msgctxt "VoiceType"
 msgid "System"
 msgstr "term"
@@ -4185,7 +4104,6 @@ msgstr "lahter"
 #. in the current window).
 #.
 #, fuzzy
-#| msgid "Application"
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Rakendus"
@@ -4196,7 +4114,6 @@ msgstr "Rakendus"
 #. bar is in the active window.
 #.
 #, fuzzy
-#| msgid "Window"
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Aken"
@@ -4206,7 +4123,6 @@ msgstr "Aken"
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
 #, fuzzy
-#| msgid "Enable _navigation keys"
 msgid "Enable non-spacing _diacritical keys"
 msgstr "_Navigatsiooniklahvid on lubatud"
 
@@ -4382,7 +4298,6 @@ msgstr "Õppimisrežiimist väljumine."
 #. braille upon exiting this mode.
 #.
 #, fuzzy
-#| msgid "Exiting learn mode."
 msgid "Exiting list shortcuts mode."
 msgstr "Õppimisrežiimist väljumine."
 
@@ -4615,7 +4530,6 @@ msgstr ""
 #. replace any existing Orca process(es) that might be running.
 #.
 #, fuzzy
-#| msgid "Replacement String"
 msgid "Replace a currently running Orca"
 msgstr "Asendusstring"
 
@@ -4851,42 +4765,36 @@ msgstr "Klahvi kaja"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
 #, fuzzy
-#| msgid "<b>Border Settings</b>"
 msgctxt "Magnification"
 msgid "<b>Border</b>"
 msgstr "<b>Äärise sätted</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
 #, fuzzy
-#| msgid "<b>Contrast</b>"
 msgctxt "Magnification"
 msgid "<b>Color</b>"
 msgstr "<b>Kontrast</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
 #, fuzzy
-#| msgid "<b>Cross-hair Settings</b>"
 msgctxt "Magnification"
 msgid "<b>Cross-hair</b>"
 msgstr "<b>Sihiku sätted</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
 #, fuzzy
-#| msgid "<b>Cursor Settings</b>"
 msgctxt "Magnification"
 msgid "<b>Cursor</b>"
 msgstr "<b>Kursorisätted</b>"
 
 #. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
 #, fuzzy
-#| msgid "<b>Zoomer Settings</b>"
 msgctxt "Magnification"
 msgid "<b>Zoomer</b>"
 msgstr "<b>Suurendusala sätted</b>"
 
 #. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
 #, fuzzy
-#| msgid "Advanced _Settings..."
 msgctxt "Magnification"
 msgid "Advanced..."
 msgstr "Laiendatud _sätted..."
@@ -4942,7 +4850,6 @@ msgstr ""
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
 #, fuzzy
-#| msgid "Enable bor_der"
 msgctxt "ProgressBarUpdates"
 msgid "Enable_d"
 msgstr "Äär_is on lubatud"
@@ -5010,7 +4917,6 @@ msgid "Start Orca when you lo_gin"
 msgstr "Orca käivitatakse sisselo_gimisel"
 
 #, fuzzy
-#| msgid "term"
 msgid "System"
 msgstr "term"
 
@@ -5404,7 +5310,6 @@ msgstr ""
 #. unabbreviated word as long as it is relatively short.
 #.
 #, fuzzy
-#| msgid "dialog"
 msgctxt "shortbraille"
 msgid "dial"
 msgstr "dialoog"
@@ -5534,8 +5439,6 @@ msgstr "kirjatüübivalija"
 #. unabbreviated word as long as it is relatively short.
 #.
 #, fuzzy
-#| msgid "%d form"
-#| msgid_plural "%d forms"
 msgctxt "shortbraille"
 msgid "form"
 msgstr "%d vorm"
@@ -6360,7 +6263,6 @@ msgstr[1] ""
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
 #, fuzzy, python-format
-#| msgid "superscript 2"
 msgid " superscript %s"
 msgstr "ruudus"
 
@@ -6370,7 +6272,6 @@ msgstr "ruudus"
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
 #, fuzzy, python-format
-#| msgid "superscript 2"
 msgid " subscript %s"
 msgstr "ruudus"
 
@@ -6418,7 +6319,6 @@ msgstr ""
 #. on in a table.
 #.
 #, fuzzy, python-format
-#| msgid "Row %d, column %d."
 msgid "row %(row)d, column %(column)d"
 msgstr "Rida %d, veerg %d."
 
@@ -6940,7 +6840,6 @@ msgstr[1] ""
 #. a cell in a table.
 #.
 #, fuzzy, python-format
-#| msgid "Row %d, column %d."
 msgid "Row %(row)d, column %(column)d."
 msgstr "Rida %d, veerg %d."
 
@@ -7328,7 +7227,6 @@ msgstr[1] "%d külastamata viita"
 #. page.
 #.
 #, python-format
-#| msgid "%d percent of document read"
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
 msgstr[0] ""
@@ -7528,10 +7426,32 @@ msgstr ""
 msgid "%H hours and %M minutes."
 msgstr ""
 
+#. Translators: "Default Synthesizer" will appear in the list of available
+#. speech engines as a special item.  It refers to the default engine
+#. configured within the speech subsystem.  Apart from this item, the user
+#. will have a chance to select a particular speech engine by its real
+#. name, such as Festival, IBMTTS, etc.
+#.
+msgid "Default Synthesizer"
+msgstr "Vaikimisi süntesaator"
+
 #. Translators: this is the name of a speech synthesis system
 #. called "Speech Dispatcher".
 #.
 msgid "Speech Dispatcher"
+msgstr ""
+
+#. Translators: This string will appear in the list of
+#. available voices for the current speech engine.  %s will be
+#. replaced by the name of the current speech engine, such as
+#. "Festival default voice" or "IBMTTS default voice".  It
+#. refers to the default voice configured for given speech
+#. engine within the speech subsystem.  Apart from this item,
+#. the list will contain the names of all available "real"
+#. voices provided by the speech engine.
+#.
+#, python-format
+msgid "%s default voice"
 msgstr ""
 
 #. Translators: this refers to a link to a file, where
@@ -7597,7 +7517,6 @@ msgstr ""
 #. selected or not.
 #.
 #, fuzzy
-#| msgid "not selected"
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "valimata"
@@ -7624,8 +7543,6 @@ msgstr ""
 #. he/she is in the last cell of a table in a document.
 #.
 #, fuzzy
-#| msgid "%d table"
-#| msgid_plural "%d tables"
 msgid "End of table"
 msgstr "%d tabel"
 
@@ -7650,7 +7567,6 @@ msgstr[1] "%d tabulaatorit"
 #. Translators: this is the percentage value of a progress bar.
 #.
 #, fuzzy, python-format
-#| msgid "%d percent."
 msgid "%d percent"
 msgid_plural "%d percent"
 msgstr[0] "%d protsenti."
@@ -7796,8 +7712,6 @@ msgstr[1] ""
 #. Translators: this represents the number of columns in a table.
 #.
 #, fuzzy, python-format
-#| msgid "%d column"
-#| msgid_plural "%d columns"
 msgid " %d column"
 msgid_plural " %d columns"
 msgstr[0] "%d veerg"
@@ -7808,8 +7722,6 @@ msgstr[1] "%d veergu"
 #. or "spans" more than a single row and/or column.
 #.
 #, fuzzy, python-format
-#| msgid "%d column"
-#| msgid_plural "%d columns"
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
 msgstr[0] "%d veerg"
@@ -7845,7 +7757,6 @@ msgstr "Rohkem ankruid ei ole."
 #. found.
 #.
 #, fuzzy
-#| msgid "No files found."
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Ühtki faili ei leitud."
@@ -8182,7 +8093,6 @@ msgstr "raadionupp"
 #. found.
 #.
 #, fuzzy
-#| msgid "No more paragraphs."
 msgid "No more separators."
 msgstr "Rohkem lõike ei ole."
 
@@ -8308,7 +8218,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "section"
 msgctxt "textattr"
 msgid "direction"
 msgstr "paragrahv"
@@ -8319,7 +8228,6 @@ msgstr "paragrahv"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "table"
 msgctxt "textattr"
 msgid "editable"
 msgstr "tabel"
@@ -8338,7 +8246,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "Border color:"
 msgctxt "textattr"
 msgid "foreground color"
 msgstr "Äärise värvus:"
@@ -8359,7 +8266,6 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "not selected"
 msgctxt "textattr"
 msgid "font effect"
 msgstr "valimata"
@@ -8397,7 +8303,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "section"
 msgctxt "textattr"
 msgid "justification"
 msgstr "paragrahv"
@@ -8416,7 +8321,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "left paren"
 msgctxt "textattr"
 msgid "left margin"
 msgstr "vasak sulg"
@@ -8439,7 +8343,6 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "textattr|paragraph style"
 msgctxt "textattr"
 msgid "paragraph style"
 msgstr "lõigu laad"
@@ -8477,7 +8380,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "right paren"
 msgctxt "textattr"
 msgid "right margin"
 msgstr "parem sulg"
@@ -8498,7 +8400,6 @@ msgstr "Loetelu"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "calendar"
 msgctxt "textattr"
 msgid "scale"
 msgstr "kalender"
@@ -8508,7 +8409,6 @@ msgstr "kalender"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "slider"
 msgctxt "textattr"
 msgid "size"
 msgstr "liugur"
@@ -8541,7 +8441,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "tilde"
 msgctxt "textattr"
 msgid "style"
 msgstr "tilde"
@@ -8581,7 +8480,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "underline"
 msgctxt "textattr"
 msgid "underline"
 msgstr "alakriips"
@@ -8601,7 +8499,6 @@ msgstr ""
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #, fuzzy
-#| msgid "vertical bar"
 msgctxt "textattr"
 msgid "vertical align"
 msgstr "püstkriips"
@@ -8633,7 +8530,6 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "Exiting learn mode."
 msgctxt "textattr"
 msgid "writing mode"
 msgstr "Õppimisrežiimist väljumine."
@@ -8662,7 +8558,6 @@ msgstr "puu"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "faster."
 msgctxt "textattr"
 msgid "false"
 msgstr "kiirem."
@@ -8675,7 +8570,6 @@ msgstr "kiirem."
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "None"
 msgctxt "textattr"
 msgid "none"
 msgstr "Puudub"
@@ -8704,7 +8598,6 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "underline"
 msgctxt "textattr"
 msgid "outline"
 msgstr "alakriips"
@@ -8715,7 +8608,6 @@ msgstr "alakriips"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "underline"
 msgctxt "textattr"
 msgid "overline"
 msgstr "alakriips"
@@ -8735,7 +8627,6 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "link"
 msgctxt "textattr"
 msgid "blink"
 msgstr "viit"
@@ -8746,7 +8637,6 @@ msgstr "viit"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "blank"
 msgctxt "textattr"
 msgid "black"
 msgstr "tühi"
@@ -8775,7 +8665,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "lower."
 msgctxt "textattr"
 msgid "low"
 msgstr "madalam."
@@ -8786,7 +8675,6 @@ msgstr "madalam."
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "caret"
 msgctxt "textattr"
 msgid "char"
 msgstr "katus"
@@ -8797,7 +8685,6 @@ msgstr "katus"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "Password"
 msgctxt "textattr"
 msgid "word"
 msgstr "Parool"
@@ -8895,7 +8782,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "extra condensed"
 msgstr "laiendatud"
@@ -8906,7 +8792,6 @@ msgstr "laiendatud"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "seconds"
 msgctxt "textattr"
 msgid "condensed"
 msgstr "sekundi järel"
@@ -8917,7 +8802,6 @@ msgstr "sekundi järel"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "seconds"
 msgctxt "textattr"
 msgid "semi condensed"
 msgstr "sekundi järel"
@@ -8928,7 +8812,6 @@ msgstr "sekundi järel"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "General"
 msgctxt "textattr"
 msgid "normal"
 msgstr "Üldine"
@@ -8939,7 +8822,6 @@ msgstr "Üldine"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "semi expanded"
 msgstr "laiendatud"
@@ -8950,7 +8832,6 @@ msgstr "laiendatud"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "expanded"
 msgstr "laiendatud"
@@ -8971,7 +8852,6 @@ msgstr "laiendatud"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "expanded"
 msgctxt "textattr"
 msgid "ultra expanded"
 msgstr "laiendatud"
@@ -9000,7 +8880,6 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #, fuzzy
-#| msgid "invalid"
 msgctxt "textattr"
 msgid "italic"
 msgstr "vigane"
@@ -9011,7 +8890,6 @@ msgstr "vigane"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "Default"
 msgctxt "textattr"
 msgid "Default"
 msgstr "Vaikimisi"
@@ -9022,7 +8900,6 @@ msgstr "Vaikimisi"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "Text"
 msgctxt "textattr"
 msgid "Text body"
 msgstr "Tekst"
@@ -9033,7 +8910,6 @@ msgstr "Tekst"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "Heading"
 msgctxt "textattr"
 msgid "Heading"
 msgstr "Päis"
@@ -9045,7 +8921,6 @@ msgstr "Päis"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #, fuzzy
-#| msgid "newline"
 msgctxt "textattr"
 msgid "baseline"
 msgstr "reavahetus"
@@ -9075,7 +8950,6 @@ msgstr "vasak sulg"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #, fuzzy
-#| msgid "_Laptop"
 msgctxt "textattr"
 msgid "top"
 msgstr "_Sülearvuti"
@@ -9086,7 +8960,6 @@ msgstr "_Sülearvuti"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #, fuzzy
-#| msgid "text"
 msgctxt "textattr"
 msgid "text-top"
 msgstr "tekst"
@@ -9097,7 +8970,6 @@ msgstr "tekst"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #, fuzzy
-#| msgid "middle dot"
 msgctxt "textattr"
 msgid "middle"
 msgstr "keskpunkt"
@@ -9108,7 +8980,6 @@ msgstr "keskpunkt"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
 #, fuzzy
-#| msgid "_Bottom:"
 msgctxt "textattr"
 msgid "bottom"
 msgstr "_All:"
@@ -9158,7 +9029,6 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #, fuzzy
-#| msgid "table"
 msgctxt "textattr"
 msgid "tb-rl"
 msgstr "tabel"
@@ -9169,7 +9039,6 @@ msgstr "tabel"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #, fuzzy
-#| msgid "table"
 msgctxt "textattr"
 msgid "tb-lr"
 msgstr "tabel"
@@ -9217,7 +9086,6 @@ msgstr ""
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
 #, fuzzy
-#| msgid "tab"
 msgctxt "textattr"
 msgid "tb"
 msgstr "tabulaator"
@@ -9226,7 +9094,6 @@ msgstr "tabulaator"
 #. text attributes: "strikethrough." It refers to the line style.
 #.
 #, fuzzy
-#| msgid "slider"
 msgctxt "textattr"
 msgid "solid"
 msgstr "liugur"
@@ -9237,7 +9104,6 @@ msgstr "liugur"
 #. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #.
 #, fuzzy
-#| msgid "Check Spelling"
 msgctxt "textattr"
 msgid "spelling"
 msgstr "Õigekirjakontroll"
@@ -9264,7 +9130,6 @@ msgstr ""
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
 #, fuzzy
-#| msgid "To exit learn mode, press the escape key."
 msgid "To get to the system menus press the alt+f1 key."
 msgstr "Õppimisrežiimist väljumiseks vajuta escape klahvi."
 
