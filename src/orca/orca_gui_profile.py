@@ -57,16 +57,18 @@ class OrcaProfileGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         self.searchString = None
         self.profileString = None
+        self.prefsDialog = None
 
     def init(self):
         # Initialize the dialog box controls.
         self.profileString = ""
 
-    def showGUI(self):
+    def showGUI(self, prefsDialog):
         """Show the Orca profile dialog. This assumes that the GUI has
         already been created.
         """
 
+        self.prefsDialog = prefsDialog
         profileDialog = self.get_widget("profileDialog")
 
         # Set the current time on the Find GUI dialog so that it'll
@@ -89,7 +91,12 @@ class OrcaProfileGUI(orca_gtkbuilder.GtkBuilderWrapper):
         except:
             pass
 
-        profileDialog.run()
+        # It is not safe to use run() in Orca because if the dialog loses
+        # focus, Orca stops presenting things to the user because run()
+        # blocks in a recursive main loop until the dialog emits the
+        # "response" signal or is destroyed.
+        #
+        profileDialog.show()
 
     def cancelButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the cancelButton
@@ -119,6 +126,8 @@ class OrcaProfileGUI(orca_gtkbuilder.GtkBuilderWrapper):
             newProfile = self.get_widget("profileEntry").get_text()
             self.get_widget("profileDialog").destroy()
 
+        if self.prefsDialog:
+            self.prefsDialog.saveProfile(newProfile)
 
     # From now, this method can't have sense ...
     def onProfileEntryChanged(self, widget, data=None):
@@ -152,7 +161,7 @@ class OrcaProfileGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         return _settingsManager.availableProfiles()
 
-def showProfileUI():
+def showProfileUI(prefsDialog=None):
     global OS
     global newProfile
 
@@ -167,10 +176,8 @@ def showProfileUI():
         OS = OrcaProfileGUI(uiFile, "profileDialog")
         OS.init()
 
-    OS.showGUI()
+    OS.showGUI(prefsDialog)
 
-    return newProfile
- 
 
 def main():
     locale.setlocale(locale.LC_ALL, '')

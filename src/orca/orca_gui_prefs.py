@@ -4528,7 +4528,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def showProfileGUI(self, widget):
         """Show profile Dialog to add a new one"""
 
-        profileToSaveLabel = orca_gui_profile.showProfileUI()
+        orca_gui_profile.showProfileUI(self)
+
+    def saveProfile(self, profileToSaveLabel):
+        """Creates a new profile based on the name profileToSaveLabel and
+        updates the Preferences dialog combo boxes accordingly."""
+
         if not profileToSaveLabel:
             return
         profileToSave = profileToSaveLabel.replace(' ','_').lower()
