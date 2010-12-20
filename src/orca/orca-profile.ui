@@ -9,11 +9,6 @@
     <property name="type_hint">dialog</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="has_separator">False</property>
-    <child internal-child="accessible">
-      <object class="AtkObject" id="profileDialog-atkobject">
-        <property name="AtkObject::accessible-name" translatable="yes">Orca Profile Dialog</property>
-      </object>
-    </child>
     <signal name="destroy" handler="profileDialogDestroyed"/>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
