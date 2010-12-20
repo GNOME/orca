@@ -2367,7 +2367,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             ts = orca_state.lastInputEventTimestamp
             if ts == 0:
                 ts = gtk.get_current_event_time()
-            orcaSetupWindow.window.set_user_time(ts)
+            if ts > 0:
+                orcaSetupWindow.window.set_user_time(ts)
         except AttributeError:
             debug.printException(debug.LEVEL_FINEST)
 
