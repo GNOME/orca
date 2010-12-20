@@ -2530,7 +2530,7 @@ msgstr "A következő nagyítópozícióra lép."
 #.
 #: ../src/orca/default.py:1067
 msgid "Toggle mouse review mode."
-msgstr "Be- vagy kikapcsolja az egér áttekintés módot."
+msgstr "Be- vagy kikapcsolja az áttekintés egérrel módot."
 
 #. Translators: Orca can present the current time to the
 #. user when the user presses
