@@ -1,3 +1,59 @@
+2.91.4 - 21-December-2010
+
+  "The Settings Manager and Profile Release: Now With More Ducks" 
+
+General:
+
+  * Fix for bug #637667 - Speech Settings in a profile are not always
+    loaded.
+
+  * Fix for bug #637653 - In a new setup, the Orca Preferences window
+    no longer gets focus.
+
+  * Fix for bug #637661 - We should be careful when using run() in Orca
+    dialogs because we can become unresponsive.
+
+  * Fix for bug #637670 - Speech is getting broken up into separate
+    utterances when it should not be.
+
+  * Fix for bug #637662 - The label serving as static text in the
+    Save Profile As dialog should be removed.
+
+  * Fix for bug #637665 - The 'Active Profile' label in the Preferences
+    dialog should have a shortcut.
+
+  * Fix for bug #637654 - Several changes need to be made to the
+    Save Profile As widgets.
+
+  * Fix for bug #637637 - The Save Profile As dialog should not be
+    setting accessible names for non-visible children.
+
+  * Fix for bug #570650 - Profiles and new settings manager.
+
+  * Fix for bug #637551 - Pressing help in the Orca Preferences dialog
+    should put you in the Preferences help.
+
+  * Work on bug #631123 - Orca documentation needs to be updated, converted
+    to Mallard, augmented, and moved to the Orca module.
+
+  * Fix for bug #637115 - Orca needs to have Miramar added to the list of
+    names for thunderbird scripts.
+
+  * Fix for bug #637422 - bookmarkCurrentWhereAmI() is not presenting roles
+    correctly.
+
+  * Fix for bug #636824 - Orca is at the mercy of speech-dispatcher's default
+    priority
+
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es     Spanish       Jorge González
+    hu     Hungarian     Attila Hammer
+    et     Estonian      Ivar Smolin
+
+==========
+
 2.91.3 - 29-November-2010
 
 General:

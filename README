@@ -1,4 +1,4 @@
-Orca v2.91.4pre
+Orca v2.91.4
 
 Introduction
 ========================================================================
@@ -37,6 +37,9 @@ to be installed:
 * Python           - Python platform
 * pyorbit          - Python bindings for ORBit2
 * pygtk            - GTK+ Python bindings
+* pygobject        - Python bindings for the GObject library
+* pyyaml           - YAML parser and emitter for Python
+* pyxdg            - Python library to access freedesktop.org standards
 * gnome-python     - Python bindings for various GNOME libraries
 * gnome-speech-1.0 - Python bindings for gnome-speech (optional)
 * gnome-mag-1.0    - Python bindings for gnome-mag (optional) 
