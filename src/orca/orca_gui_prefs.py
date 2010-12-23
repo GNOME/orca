@@ -4492,7 +4492,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.restoreSettings()
         mag.finishLiveUpdating()
-        self._cleanupSpeechServers()
 
     def windowDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the orcaSetupWindow
