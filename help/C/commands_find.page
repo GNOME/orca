@@ -27,7 +27,7 @@
       <p>Open the <app>Orca</app> Find dialog:</p>
       <list>
         <item>
-          <p>Desktop:<keyseq><key>KP Delete</key></keyseq></p>
+          <p>Desktop: <keyseq><key>KP Delete</key></keyseq></p>
         </item>
         <item>
           <p>Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq></p>

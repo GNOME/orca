@@ -63,7 +63,7 @@
       <list>
         <item>
           <p>
-            Desktop:<keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>
+            Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>
           </p>
         </item>
         <item>
@@ -78,7 +78,7 @@
       <list>
         <item>
           <p>
-            Desktop:<keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>
+            Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>
             (double-clicked)
           </p>
         </item>

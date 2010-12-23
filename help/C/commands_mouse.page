@@ -40,28 +40,28 @@
     <item>
       <p>Left-click on current item:</p>
       <list>
-        <item><p>Desktop:<keyseq><key>KP Divide</key></keyseq></p></item>
+        <item><p>Desktop: <keyseq><key>KP Divide</key></keyseq></p></item>
         <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>7</key></keyseq></p></item>
       </list>
     </item>
     <item>
       <p>Right-click on current item:</p>
       <list>
-        <item><p>Desktop:<keyseq><key>KP Multiply</key></keyseq></p></item>
+        <item><p>Desktop: <keyseq><key>KP Multiply</key></keyseq></p></item>
         <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>8</key></keyseq></p></item>
       </list>
     </item>
     <item>
       <p>Route pointer to current item:</p>
       <list>
-        <item><p>Desktop:<keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq></p></item>
+        <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq></p></item>
         <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq></p></item>
       </list>
     </item>
     <item>
       <p>Move focus into or away from the current mouse over (web only):</p>
       <list>
-        <item><p>Desktop:<keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq></p></item>
+        <item><p>Desktop: <keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq></p></item>
         <item><p>Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq></p></item>
       </list>
     </item>
