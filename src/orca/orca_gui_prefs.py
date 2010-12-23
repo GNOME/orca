@@ -4623,6 +4623,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if _settingsManager.getSetting('showMainWindow'):
             self.window.present()
 
+        orca.loadUserSettings(isProfileLoad=True)
+
         self._initGUIState()
 
         self._initSpeechState()
