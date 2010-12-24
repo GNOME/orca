@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
 "POT-Creation-Date: 2010-10-10 20:54+0000\n"
-"PO-Revision-Date: 2010-12-19 11:55+0100\n"
+"PO-Revision-Date: 2010-12-21 19:20+0100\n"
 "Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -8017,7 +8017,7 @@ msgstr "Izgovori _širino več celic"
 #: ../src/orca/scripts/apps/soffice/script.py:367
 #: ../src/orca/scripts/toolkits/Gecko/script.py:808
 msgid "Announce cell _header"
-msgstr "Napoved _glave celice"
+msgstr "Oznani _glavo celice"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in document content.
@@ -8384,7 +8384,7 @@ msgstr "Premakne dejanje na oziroma stran od trenutnega pojavnega predmeta mišk
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:692
 msgid "Use _Orca Caret Navigation"
-msgstr "Uporabi _Orkino kazalno premikanje"
+msgstr "Uporabi _Orkino krmarjenje kazalke"
 
 #. Translators: Orca provides keystrokes to navigate HTML content
 #. in a structural manner: go to previous/next header, list item,
