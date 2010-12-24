@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: accessibility_guide HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-21 00:17+0000\n"
-"PO-Revision-Date: 2010-12-21 08:22+0100\n"
-"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
+"POT-Creation-Date: 2010-12-23 14:25+0000\n"
+"PO-Revision-Date: 2010-12-24 01:26+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -334,8 +334,7 @@ msgstr ""
 "cellák) jelenítsék meg. A következő lehetőségek közül választhat:"
 
 #: C/preferences_text_attributes.page:135(p)
-msgid ""
-"<gui>None</gui>: Do not underline text attributes in braille (the default)"
+msgid "<gui>None</gui>: Do not underline text attributes in braille (the default)"
 msgstr ""
 "<gui>Nincs</gui>: A szöveges attribútumok nem lesznek aláhúzva a braille "
 "kijelzőn. Ez az alapértelmezett beállítás."
@@ -418,7 +417,7 @@ msgstr "Ez a jelölőnégyzet alapértelmezetten be van jelölve."
 
 #: C/preferences_table_navigation.page:40(title)
 msgid "Speak multiple cell spans"
-msgstr "Cella _kiterjedésének felolvasása"
+msgstr "Cella kiterjedésének felolvasása"
 
 #: C/preferences_table_navigation.page:41(p)
 msgid ""
@@ -1077,8 +1076,7 @@ msgid "Adding a new dictionary entry"
 msgstr "Új szó hozzáadása a kivételszótárhoz"
 
 #: C/preferences_pronunciation.page:40(p)
-msgid ""
-"Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
+msgid "Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
 msgstr ""
 "A Kiejtés lapon aktiválja az <gui>Új bejegyzés</gui> gombot, vagy nyomja le "
 "az <keyseq><key>Alt</key><key>B</key></keyseq> billentyűkombinációt."
@@ -1258,8 +1256,7 @@ msgstr "Nagyító"
 
 #: C/preferences_magnifier.page:7(desc)
 msgid "Configuring the zoom window appearance"
-msgstr ""
-"Itt beállíthatja, hogy a nagyító ablaka hogyan jelenjen meg a képernyőn."
+msgstr "Itt beállíthatja, hogy a nagyító ablaka hogyan jelenjen meg a képernyőn."
 
 #: C/preferences_magnifier.page:18(title)
 msgid "Magnifier Preferences"
@@ -1540,8 +1537,7 @@ msgstr ""
 "beállítással. Az alapértelmezett érték 0%."
 
 #: C/preferences_magnifier.page:217(p)
-msgid ""
-"This option is only available if \"Push\" is your text cursor tracking mode."
+msgid "This option is only available if \"Push\" is your text cursor tracking mode."
 msgstr ""
 
 #: C/preferences_magnifier.page:222(p)
@@ -1657,8 +1653,7 @@ msgstr "kurzor beállításai"
 msgid ""
 "These controls can be used to customize the size and color of the "
 "magnifier's cursor."
-msgstr ""
-"Ezekkel a beállításokkal meghatározható a nagyító kurzorának színe és mérete."
+msgstr "Ezekkel a beállításokkal meghatározható a nagyító kurzorának színe és mérete."
 
 #: C/preferences_magnifier.page:310(title)
 msgid "Enable cursor"
@@ -1998,8 +1993,7 @@ msgstr ""
 "ki tud mondani, melyeknek nincsenek dedikált billentyűi a billentyűzeten."
 
 #: C/preferences_key_echo.page:124(p)
-msgid ""
-"Key echo causes <app>Orca</app> to announce what you just <em> pressed</em>."
+msgid "Key echo causes <app>Orca</app> to announce what you just <em> pressed</em>."
 msgstr ""
 
 #: C/preferences_key_echo.page:130(p)
@@ -2093,10 +2087,8 @@ msgstr ""
 "használni. Az elérhető lehetőségek:"
 
 #: C/preferences_key_bindings.page:29(p)
-msgid ""
-"<gui>KP_Insert</gui> (the same key as the <key>0</key> on the numeric keypad)"
-msgstr ""
-"<gui>KP_Insert</gui>: Egyenértékű a numerikus billentyűzet 0 billentyűjével."
+msgid "<gui>KP_Insert</gui> (the same key as the <key>0</key> on the numeric keypad)"
+msgstr "<gui>KP_Insert</gui>: Egyenértékű a numerikus billentyűzet 0 billentyűjével."
 
 # Megjegyzés: szándékosan hagytam angolul, mivel ezek a beállítások nem fordíthatók.
 #: C/preferences_key_bindings.page:33(gui)
@@ -2292,10 +2284,8 @@ msgstr ""
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:128(None)
-msgid ""
-"@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
-msgstr ""
-"@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
+msgid "@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
+msgstr "@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2784,10 +2774,8 @@ msgstr "Az alapértelmezett érték: 4"
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_chat.page:18(None)
-msgid ""
-"@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
-msgstr ""
-"@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
+msgid "@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
+msgstr "@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
 
 #: C/preferences_chat.page:4(title)
 msgid "3. Chat"
@@ -3199,8 +3187,7 @@ msgid "<cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-?</cmd>, <cmd>--help</cmd>: megjeleníti a súgó képernyőt."
 
 #: C/introduction.page:97(p)
-msgid ""
-"<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
+msgid "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Megjeleníti az <app>Orka</app> "
 "verziószámát."
@@ -3221,8 +3208,7 @@ msgstr ""
 
 #: C/introduction.page:115(p)
 msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
-msgstr ""
-"<cmd>-n</cmd>, <cmd>--no-setup</cmd>: A felhasználói beállítások kihagyása"
+msgstr "<cmd>-n</cmd>, <cmd>--no-setup</cmd>: A felhasználói beállítások kihagyása"
 
 #: C/introduction.page:120(p)
 msgid ""
@@ -3289,10 +3275,8 @@ msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgstr "<cmd>--replace</cmd>: Lecseréli a jelenleg futó Orka folyamatot"
 
 #: C/introduction.page:178(p)
-msgid ""
-"<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
-msgstr ""
-"<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Az ismert futó alkalmazások kiírása"
+msgid "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
+msgstr "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Az ismert futó alkalmazások kiírása"
 
 #: C/introduction.page:184(p)
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
@@ -3481,8 +3465,7 @@ msgstr ""
 
 #: C/howto_toggling_caps_lock.page:24(title)
 msgid "Toggling CapsLock in Laptop Layout"
-msgstr ""
-"A nagybetűzár állapotának változtatása az Orka laptopkiosztás használatakor"
+msgstr "A nagybetűzár állapotának változtatása az Orka laptopkiosztás használatakor"
 
 #: C/howto_toggling_caps_lock.page:26(p)
 msgid ""
@@ -3500,8 +3483,7 @@ msgid "4. The Orca Modifier"
 msgstr "4. Az Orka módosítóbillentyű"
 
 #: C/howto_the_orca_modifier.page:6(desc)
-msgid ""
-"A key that works like <key>Shift</key>, <key>Ctrl</key>, and <key>Alt</key>"
+msgid "A key that works like <key>Shift</key>, <key>Ctrl</key>, and <key>Alt</key>"
 msgstr ""
 "Ez a módosítóbillentyű úgy működik, mint például a <key>Shift</key>, "
 "<key>CTRL</key> és <key>Alt</key> billentyűk."
@@ -4014,8 +3996,7 @@ msgstr "Oszlopfejlécek beállítása"
 
 #: C/howto_tables.page:98(p)
 msgid "Move to the row which contains all of the column headers."
-msgstr ""
-"Lépjen a táblázat azon sorára, mely az összes oszlopfejlécet tartalmazza."
+msgstr "Lépjen a táblázat azon sorára, mely az összes oszlopfejlécet tartalmazza."
 
 #: C/howto_tables.page:103(p)
 msgid ""
@@ -4135,8 +4116,7 @@ msgstr ""
 
 #: C/howto_structural_navigation.page:59(title)
 msgid "When Toggling Structural Navigation On Is Required"
-msgstr ""
-"Amikor mindenképpen szükséges a strukturált Orka navigáció bekapcsolása"
+msgstr "Amikor mindenképpen szükséges a strukturált Orka navigáció bekapcsolása"
 
 #: C/howto_structural_navigation.page:60(p)
 msgid ""
@@ -4280,18 +4260,14 @@ msgstr ""
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/howto_profiles.page:51(None)
-msgid ""
-"@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
-msgstr ""
-"@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
+msgid "@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
+msgstr "@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/howto_profiles.page:82(None)
-msgid ""
-"@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
-msgstr ""
-"@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
+msgid "@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
+msgstr "@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -4333,8 +4309,7 @@ msgstr ""
 
 #: C/howto_profiles.page:33(p) C/howto_profiles.page:64(p)
 #: C/howto_profiles.page:119(p)
-msgid ""
-"Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box."
+msgid "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box."
 msgstr ""
 
 #: C/howto_profiles.page:38(p)
@@ -4352,8 +4327,7 @@ msgid ""
 msgstr ""
 
 #: C/howto_profiles.page:55(p)
-msgid ""
-"Press the <gui>OK</gui> button in the <gui>Save Profile As</gui> dialog box."
+msgid "Press the <gui>OK</gui> button in the <gui>Save Profile As</gui> dialog box."
 msgstr ""
 
 #: C/howto_profiles.page:62(title)
@@ -4379,8 +4353,7 @@ msgid "Changing an Existing Profile"
 msgstr ""
 
 #: C/howto_profiles.page:92(p)
-msgid ""
-"Follow the steps described above to load the profile you wish to change."
+msgid "Follow the steps described above to load the profile you wish to change."
 msgstr ""
 
 #: C/howto_profiles.page:97(p)
@@ -4452,13 +4425,14 @@ msgid ""
 msgstr ""
 
 #: C/howto_orca_find.page:30(p) C/commands_find.page:30(p)
-msgid "Desktop:<keyseq><key>KP Delete</key></keyseq>"
-msgstr ""
+msgid "Desktop: <keyseq><key>KP Delete</key></keyseq>"
+msgstr "Asztali kiosztás: <keyseq><key>Numpad Del</key></keyseq>"
 
 #: C/howto_orca_find.page:33(p) C/commands_find.page:33(p)
-msgid ""
-"Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq>"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq>"
 msgstr ""
+"Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Nyitó szögletes</key></"
+"keyseq>"
 
 #: C/howto_orca_find.page:38(p)
 msgid ""
@@ -4795,8 +4769,7 @@ msgstr ""
 
 #: C/howto_learn_modes.page:41(p)
 msgid "Press <key>Esc</key> to exit Learn Mode."
-msgstr ""
-"A tanuló módból való kilépéshez nyomja meg az <key>Esc</key> billentyűt."
+msgstr "A tanuló módból való kilépéshez nyomja meg az <key>Esc</key> billentyűt."
 
 #: C/howto_learn_modes.page:45(title)
 msgid "Using List Shortcuts Mode"
@@ -4822,8 +4795,7 @@ msgstr ""
 "megtekinteni, nyomja le a <key>2-es</key> számot."
 
 #: C/howto_learn_modes.page:60(p)
-msgid ""
-"Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
+msgid "Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
 msgstr ""
 
 #: C/howto_learn_modes.page:66(p)
@@ -5141,26 +5113,27 @@ msgstr "Végrehajtja a hol vagyok műveletet:"
 
 #: C/commands_where_am_i.page:34(p) C/commands_reading.page:203(p)
 msgid "Desktop: <key>KP Enter</key>"
-msgstr ""
+msgstr "Asztali kiosztás: <key>Numpad Enter</key>"
 
 #: C/commands_where_am_i.page:37(p) C/commands_reading.page:208(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Enter</key></keyseq>"
 
 #: C/commands_where_am_i.page:42(p) C/commands_reading.page:215(p)
 msgid "Perform detailed where am I:"
-msgstr ""
-"Végrehajtja a hol vagyok műveletet, de részletesebb információt kapunk:"
+msgstr "Végrehajtja a hol vagyok műveletet, de részletesebb információt kapunk:"
 
 #: C/commands_where_am_i.page:45(p) C/commands_reading.page:218(p)
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
-msgstr ""
+msgstr "Asztali kiosztás: <key>Numpad Enter</key> (kétszer gyorsan megnyomva)"
 
 #: C/commands_where_am_i.page:48(p) C/commands_reading.page:223(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
 msgstr ""
+"Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Enter</key></keyseq> "
+"(kétszer gyorsan megnyomva)"
 
 #: C/commands_where_am_i.page:56(p)
 msgid ""
@@ -5173,12 +5146,14 @@ msgid "Present the title bar:"
 msgstr "Kimondja a címsort:"
 
 #: C/commands_where_am_i.page:65(p)
-msgid "Desktop:<keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
 msgstr ""
+"Asztali kiosztás: <keyseq><key>Orka módosító</key><key>Numpad Enter</key></"
+"keyseq>"
 
 #: C/commands_where_am_i.page:70(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Per</key></keyseq>"
 
 #: C/commands_where_am_i.page:77(p)
 msgid "Present the status bar:"
@@ -5186,15 +5161,19 @@ msgstr "Kimondja az állapotsort:"
 
 #: C/commands_where_am_i.page:80(p)
 msgid ""
-"Desktop:<keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq> (double-"
-"clicked)"
+"Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq> "
+"(double-clicked)"
 msgstr ""
+"Asztali kiosztás: <keyseq><key>Orka módosító</key><key>Numpad Enter</key></"
+"keyseq> (Kétszer gyorsan megnyomva)"
 
 #: C/commands_where_am_i.page:86(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq> (double-"
 "clicked)"
 msgstr ""
+"Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Per</key></keyseq> "
+"(kétszer gyorsan megnyomva)"
 
 #: C/commands_time_date_notifications.page:6(title)
 msgid "4. Time, Date, and Notification"
@@ -5226,8 +5205,7 @@ msgstr "Dátum és idő lekérdezése"
 
 #: C/commands_time_date_notifications.page:28(p)
 msgid "Present the time: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>"
-msgstr ""
-"Az idő lekérdezése: <keyseq><key>Orka módosító></key><key>T</key></keyseq>"
+msgstr "Az idő lekérdezése: <keyseq><key>Orka módosító></key><key>T</key></keyseq>"
 
 #: C/commands_time_date_notifications.page:33(p)
 msgid ""
@@ -5518,8 +5496,7 @@ msgstr ""
 "<keyseq><key>Shift</key><key>T</key></keyseq>"
 
 #: C/commands_structural_navigation.page:190(p)
-msgid ""
-"Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>"
+msgid "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>"
 msgstr ""
 "Ugrás egy cellát balra: <keyseq><key>Alt</key><key>Shift</key><key>Balra "
 "nyíl</key></keyseq>"
@@ -5533,15 +5510,13 @@ msgstr ""
 "nyíl</key></keyseq>"
 
 #: C/commands_structural_navigation.page:202(p)
-msgid ""
-"Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
+msgid "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgstr ""
 "Ugrás egy cellát felfelé: <keyseq><key>Alt</key><key>Shift</key><key>Felfelé "
 "nyíl</key></keyseq>"
 
 #: C/commands_structural_navigation.page:208(p)
-msgid ""
-"Cell below: <keyseq><key>Alt</key><key>Shift</key><key>Down</key></keyseq>"
+msgid "Cell below: <keyseq><key>Alt</key><key>Shift</key><key>Down</key></keyseq>"
 msgstr ""
 "Ugrás egy cellát lefelé: <keyseq><key>Alt</key><key>Shift</key><key>Lefelé "
 "nyíl</key></keyseq>"
@@ -5639,8 +5614,7 @@ msgid ""
 msgstr ""
 
 #: C/commands_speech_settings.page:29(p)
-msgid ""
-"Enable/disable speech: <keyseq><key>Orca Modifier</key><key>S</key></keyseq>"
+msgid "Enable/disable speech: <keyseq><key>Orca Modifier</key><key>S</key></keyseq>"
 msgstr ""
 
 #: C/commands_speech_settings.page:40(p)
@@ -5785,13 +5759,11 @@ msgstr ""
 
 #: C/commands_reading.page:103(p)
 msgid "Phonetically spell the current word:"
-msgstr ""
-"Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll:"
+msgstr "Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll:"
 
 #: C/commands_reading.page:106(p) C/commands_flat_review.page:105(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)"
-msgstr ""
-"Asztali kiosztás: <keyseq><key>Numpad 5</key></keyseq> (triple-clicked)"
+msgstr "Asztali kiosztás: <keyseq><key>Numpad 5</key></keyseq> (triple-clicked)"
 
 #: C/commands_reading.page:111(p) C/commands_flat_review.page:106(p)
 msgid ""
@@ -5807,11 +5779,11 @@ msgstr "Az aktuális karakter felolvasása:"
 
 #: C/commands_reading.page:122(p) C/commands_flat_review.page:134(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq>"
-msgstr ""
+msgstr "Asztali kiosztás: <keyseq><key>Numpad 2</key></keyseq>"
 
 #: C/commands_reading.page:127(p) C/commands_flat_review.page:135(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Vessző</key></keyseq>"
 
 # Megjegyzés: változtattam a fordításon, így szebbnek tűnik, mivel ezután jönnek csak a billentyűparancsok.
 #: C/commands_reading.page:134(p)
@@ -5841,12 +5813,16 @@ msgstr ""
 #: C/commands_reading.page:153(p) C/commands_flat_review.page:146(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)"
 msgstr ""
+"Asztali kiosztás: <keyseq><key>Numpad 2</key></keyseq> (háromszor gyorsan "
+"megnyomva)"
 
 #: C/commands_reading.page:158(p) C/commands_flat_review.page:147(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
+"Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Vessző</key></keyseq> "
+"(háromszor gyorsan megnyomva)"
 
 #: C/commands_reading.page:168(title)
 msgid "Say All"
@@ -5955,49 +5931,48 @@ msgid "Left-click on current item:"
 msgstr "Bal kattintást végez azon az elemen, ahol az egyszerű áttekintés áll:"
 
 #: C/commands_mouse.page:43(p)
-msgid "Desktop:<keyseq><key>KP Divide</key></keyseq>"
-msgstr ""
+msgid "Desktop: <keyseq><key>KP Divide</key></keyseq>"
+msgstr "Asztali kiosztás: <keyseq><key>Numpad per</key></keyseq>"
 
 #: C/commands_mouse.page:44(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>7</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>7</key></keyseq>"
 
 #: C/commands_mouse.page:48(p)
 msgid "Right-click on current item:"
 msgstr "Jobb kattintást végez azon az elemen, ahol az egyszerű áttekintés áll:"
 
 #: C/commands_mouse.page:50(p)
-msgid "Desktop:<keyseq><key>KP Multiply</key></keyseq>"
-msgstr ""
+msgid "Desktop: <keyseq><key>KP Multiply</key></keyseq>"
+msgstr "Asztali kiosztás: <keyseq><key>Numpad csillag</key></keyseq>"
 
 #: C/commands_mouse.page:51(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>8</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>8</key></keyseq>"
 
 #: C/commands_mouse.page:55(p)
 msgid "Route pointer to current item:"
 msgstr "A mutató átirányítása az aktuális elemhez:"
 
 #: C/commands_mouse.page:57(p)
-msgid "Desktop:<keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
-msgstr ""
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
+msgstr "Asztali kiosztás: <keyseq><key>Orka módosító</key><key>Numpad per</key></keyseq>"
 
 #: C/commands_mouse.page:58(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>9</key></keyseq>"
 
 #: C/commands_mouse.page:62(p)
 msgid "Move focus into or away from the current mouse over (web only):"
-msgstr ""
-"A fókuszt az egérmutatónál felbukkanó objektumra, vagy arról elmozgatja:"
+msgstr "A fókuszt az egérmutatónál felbukkanó objektumra, vagy arról elmozgatja:"
 
 #: C/commands_mouse.page:64(p)
-msgid "Desktop:<keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq>"
-msgstr ""
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq>"
+msgstr "Asztali kiosztás: <keyseq><key>Orka módosító</key><key>Numpad csillag</key></keyseq>"
 
 #: C/commands_mouse.page:65(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>0</key></keyseq>"
 
 #: C/commands_mouse.page:69(p)
 msgid "Enable/disable mouse review mode: (Unbound)"
@@ -6145,8 +6120,7 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_flat_review.page:33(p)
-msgid ""
-"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></keyseq>"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></keyseq>"
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Ctrl</key><key>U</"
 "key></keyseq>"
@@ -6176,39 +6150,46 @@ msgstr "Lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll:"
 #: C/commands_flat_review.page:52(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)"
 msgstr ""
+"Asztali kiosztás: <keyseq><key>Numpad 8</key></keyseq> (kétszer gyorsan "
+"megnyomva)"
 
 #: C/commands_flat_review.page:53(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (double-"
 "clicked)"
 msgstr ""
+"Laptop kiosztás: <keyseq><key>Orka módosító</key><key>I</key></keyseq> "
+"(kétszer gyorsan megnyomva)"
 
 #: C/commands_flat_review.page:56(p)
 msgid "Phonetically spell current line:"
-msgstr ""
-"Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll:"
+msgstr "Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll:"
 
 #: C/commands_flat_review.page:58(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (triple-clicked)"
 msgstr ""
+"Asztali kiosztás: <keyseq><key>Numpad 8</key></keyseq> (háromszor gyorsan "
+"lenyomva)"
 
 #: C/commands_flat_review.page:59(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
+"Laptop kiosztás: <keyseq><key>Orka módosító</key><key>I</key></keyseq> "
+"(Háromszor gyorsan megnyomva)"
 
 #: C/commands_flat_review.page:62(p)
 msgid "Next line:"
-msgstr ""
+msgstr "Ugrás a következő sorra:"
 
 #: C/commands_flat_review.page:64(p)
 msgid "Desktop: <keyseq><key>KP 9</key></keyseq>"
-msgstr ""
+msgstr "Asztali kiosztás: <keyseq><key>Numpad 9</key></keyseq>"
 
 #: C/commands_flat_review.page:65(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>O</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>O</key></keyseq>"
 
 #: C/commands_flat_review.page:68(p)
 msgid "Last line (The \"end\" position):"
@@ -6221,8 +6202,7 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_flat_review.page:71(p)
-msgid ""
-"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>O</key></keyseq>"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>O</key></keyseq>"
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Ctrl</key><key>O</"
 "key></keyseq>"
@@ -6237,11 +6217,12 @@ msgstr "Az egyszerű áttekintést a jelenlegi szó fölötti szóra mozgatja:"
 
 #: C/commands_flat_review.page:81(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 4</key></keyseq>"
-msgstr "Desktop: <keyseq><key>Orka módosító</key><key>Numpad 4</key></keyseq>"
+msgstr ""
+"Asztali kiosztás: <keyseq><key>Orka módosító</key><key>Numpad 4</key></"
+"keyseq>"
 
 #: C/commands_flat_review.page:82(p)
-msgid ""
-"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>J</key></keyseq>"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>J</key></keyseq>"
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Ctrl</key><key>J</"
 "key></keyseq>"
@@ -6252,7 +6233,7 @@ msgstr "Ugrás az előző szóra:"
 
 #: C/commands_flat_review.page:87(p)
 msgid "Desktop: <keyseq><key>KP 4</key></keyseq>"
-msgstr ""
+msgstr "Asztali kiosztás: <keyseq><key>Numpad 4</key></keyseq>"
 
 #: C/commands_flat_review.page:88(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>J</key></keyseq>"
@@ -6280,11 +6261,11 @@ msgstr "Ugrás a következő szóra:"
 
 #: C/commands_flat_review.page:111(p)
 msgid "Desktop: <keyseq><key>KP 6</key></keyseq>"
-msgstr ""
+msgstr "Asztali kiosztás: <keyseq><key>Numpad 6</key></keyseq>"
 
 #: C/commands_flat_review.page:112(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>L</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>L</key></keyseq>"
 
 #: C/commands_flat_review.page:115(p)
 msgid "Word below:"
@@ -6297,8 +6278,7 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_flat_review.page:118(p)
-msgid ""
-"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>L</key></keyseq>"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>L</key></keyseq>"
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Ctrl</key><key>L</"
 "key></keyseq>"
@@ -6314,11 +6294,11 @@ msgstr "Az egyszerű áttekintést az előző karakterre mozgatja:"
 
 #: C/commands_flat_review.page:128(p)
 msgid "Desktop: <keyseq><key>KP 1</key></keyseq>"
-msgstr ""
+msgstr "Asztali kiosztás: <keyseq><key>Numpad 1</key></keyseq>"
 
 #: C/commands_flat_review.page:129(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>M</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>M</key></keyseq>"
 
 # Megjegyzés, Itt is maradjon a hosszú fordítás, mivel ez a funkció is az egyszerű áttekintésre vonatkozik.
 #: C/commands_flat_review.page:132(p)
@@ -6327,8 +6307,7 @@ msgstr "Kimondja azt a karaktert, ahol az egyszerű áttekintés áll:"
 
 #: C/commands_flat_review.page:138(p)
 msgid "Phonetically speak current character:"
-msgstr ""
-"Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll:"
+msgstr "Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll:"
 
 #: C/commands_flat_review.page:144(p)
 msgid "Speak Unicode value of current character:"
@@ -6343,11 +6322,11 @@ msgstr "Az egyszerű áttekintést a következő karakterre mozgatja:"
 
 #: C/commands_flat_review.page:152(p)
 msgid "Desktop: <keyseq><key>KP 3</key></keyseq>"
-msgstr ""
+msgstr "Asztali kiosztás: <keyseq><key>Numpad 3</key></keyseq>"
 
 #: C/commands_flat_review.page:153(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Period</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Pont</key></keyseq>"
 
 #: C/commands_flat_review.page:156(p)
 msgid "Last character on current line:"
@@ -6360,28 +6339,28 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_flat_review.page:159(p)
-msgid ""
-"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>M</key></keyseq>"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>M</key></keyseq>"
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Ctrl</key><key>M</"
 "key></keyseq>"
 
 #: C/commands_flat_review.page:165(title)
 msgid "Additional Commands"
-msgstr ""
+msgstr "Egyéb parancsok"
 
 #: C/commands_flat_review.page:167(p)
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr ""
+msgstr "Belép az egyszerű áttekintés módba, majd kilép belőle:"
 
 #: C/commands_flat_review.page:169(p)
-msgid ""
-"Desktop: <keyseq><key>Orca Modifier</key><key>KP Subtract</key></keyseq>"
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Subtract</key></keyseq>"
 msgstr ""
+"Asztali kiosztás: <keyseq><key>Orka módosító</key><key>Numpad minusz</key></"
+"keyseq>"
 
 #: C/commands_flat_review.page:170(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>P</key></keyseq>"
-msgstr ""
+msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>P</key></keyseq>"
 
 #: C/commands_flat_review.page:173(p)
 msgid "Review current item/widget:"
@@ -6394,8 +6373,7 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_flat_review.page:176(p)
-msgid ""
-"Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq>"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq>"
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Ctrl</key><key>K</"
 "key></keyseq>"
@@ -6430,11 +6408,14 @@ msgstr "A karakterlánc következő előfordulásának keresése:"
 #: C/commands_find.page:41(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
 msgstr ""
+"Asztali kiosztás: <keyseq><key>Orka módosító</key><key>Numerikus Del</key></"
+"keyseq>"
 
 #: C/commands_find.page:47(p)
-msgid ""
-"Laptop: <keyseq><key>Orca Modifier</key><key>Right Bracket</key></keyseq>"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Right Bracket</key></keyseq>"
 msgstr ""
+"Laptop kiosztás: <keyseq><key>Orka módosító</key><key>záró szögletes</key></"
+"keyseq>"
 
 #: C/commands_find.page:55(p)
 msgid "Move flat review to the previous instance of a string:"
@@ -6550,8 +6531,7 @@ msgid ""
 msgstr ""
 
 #: C/commands_controlling_orca.page:40(p)
-msgid ""
-"Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
+msgid "Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
 msgstr ""
 
 #: C/commands_controlling_orca.page:46(p)
@@ -6679,13 +6659,11 @@ msgstr "Kijelöli a kijelölés végét: Kijelölés vége"
 
 #: C/commands_braille.page:35(p)
 msgid "Processes a cursor routing key: Cursor Routing"
-msgstr ""
-"Feldolgozza a kurzorirányító billentyűhöz társított eseményt: Kurzor irány"
+msgstr "Feldolgozza a kurzorirányító billentyűhöz társított eseményt: Kurzor irány"
 
 #: C/commands_braille.page:36(p)
 msgid "Returns to object with keyboard focus: Cursor Position"
-msgstr ""
-"Visszaadja a billentyűzetfókusszal rendelkező objektumot: kurzorpozíció"
+msgstr "Visszaadja a billentyűzetfókusszal rendelkező objektumot: kurzorpozíció"
 
 #: C/commands_bookmarks.page:6(title)
 msgid "4. Bookmarks"
@@ -6740,3 +6718,4 @@ msgstr ""
 #: C/index.page:0(None)
 msgid "translator-credits"
 msgstr "Hammer Attila <hammera at pickup dot hu>"
+
