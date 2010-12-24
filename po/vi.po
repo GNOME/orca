@@ -2,14 +2,15 @@
 # Copyright © 2010 GNOME i18n Project for Vietnamese.
 # Nguyễn Thái Ngọc Duy <pclouds@gmail.com>, 2007.
 # Clytie Siddall <clytie@riverland.net.au>, 2007-2010.
+# Truong Anh Tuan <tuanta@iwayvietnam.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca TRUNK\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
-"POT-Creation-Date: 2010-12-20 15:08+0000\n"
-"PO-Revision-Date: 2010-03-22 21:17+0930\n"
-"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"POT-Creation-Date: 2010-12-24 10:58+0000\n"
+"PO-Revision-Date: 2010-12-24 19:53+0700\n"
+"Last-Translator: Truong Anh Tuan <tuanta@iwayvietnam.com>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +20,7 @@ msgstr ""
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:209
 #: ../src/orca/keybindings.py:157 ../src/orca/orca_gui_main.py:141
-#: ../src/orca/orca_gui_prefs.py:2553 ../src/orca/orca_gui_prefs.py:2658
+#: ../src/orca/orca_gui_prefs.py:2554 ../src/orca/orca_gui_prefs.py:2659
 #: ../src/orca/orca-splash.ui.h:1
 msgid "Orca"
 msgstr "Orca"
@@ -32,8 +33,8 @@ msgstr "Bộ Đọc và Phóng To Màn Hình Orca"
 msgid ""
 "Present on-screen information as speech or braille, or magnify the screen"
 msgstr ""
-"Đưa ra thông tin trên màn hình như là tiếng nói hay chữ nổi Braille, hoặc "
-"phóng to màn hình"
+"Đọc thông tin trên màn hình thành tiếng hoặc chữ nổi Braille, hoặc phóng to "
+"màn hình"
 
 #: ../orca.desktop.in.h:4
 msgid "Screen Reader and Magnifier"
@@ -47,7 +48,7 @@ msgstr "Tùy thích Orca cho %s"
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:214 ../src/orca/orca_gui_prefs.py:2664
+#: ../src/orca/app_gui_prefs.py:214 ../src/orca/orca_gui_prefs.py:2665
 msgid "Unbound"
 msgstr "Chưa kết hợp"
 
@@ -411,10 +412,9 @@ msgid "A channel only if its _window is active"
 msgstr "Chỉ kênh có cửa _sổ hoạt động"
 
 #: ../src/orca/chat.py:495
-#, fuzzy, python-format
-#| msgid "All channels when an_y Pidgin window is active"
+#, python-format
 msgid "All channels when an_y %s window is active"
-msgstr "Mọi kênh khi có một cửa sổ _Pidgin hoạt động"
+msgstr "Mọi kênh khi có một cửa sổ %s hoạt động"
 
 #. Translators: this is the title of a panel holding options for
 #. how messages in this application's chat rooms should be spoken.
@@ -1509,226 +1509,170 @@ msgstr "mũi tên phải"
 #. Translators: this is the spoken word for the character '⁰' (U+2070)
 #.
 #: ../src/orca/chnames.py:733
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript 0"
-msgstr "chữ a cao"
+msgstr "số 0 cao"
 
 #. Translators: this is the spoken word for the character '⁴' (U+2074)
 #.
 #: ../src/orca/chnames.py:737
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript 4"
-msgstr "chữ a cao"
+msgstr "số 4 cao"
 
 #. Translators: this is the spoken word for the character '⁵' (U+2075)
 #.
 #: ../src/orca/chnames.py:741
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript 5"
-msgstr "chữ a cao"
+msgstr "số 5 cao"
 
 #. Translators: this is the spoken word for the character '⁶' (U+2076)
 #.
 #: ../src/orca/chnames.py:745
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript 6"
-msgstr "chữ a cao"
+msgstr "số 6 cao"
 
 #. Translators: this is the spoken word for the character '⁷' (U+2077)
 #.
 #: ../src/orca/chnames.py:749
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript 7"
-msgstr "chữ a cao"
+msgstr "số 7 cao"
 
 #. Translators: this is the spoken word for the character '⁸' (U+2078)
 #.
 #: ../src/orca/chnames.py:753
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript 8"
-msgstr "chữ a cao"
+msgstr "số 8 cao"
 
 #. Translators: this is the spoken word for the character '⁹' (U+2079)
 #.
 #: ../src/orca/chnames.py:757
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript 9"
-msgstr "chữ a cao"
+msgstr "số 9 cao"
 
 #. Translators: this is the spoken word for the character '⁺' (U+207a)
 #.
 #: ../src/orca/chnames.py:761
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript plus"
-msgstr "chữ a cao"
+msgstr "dấu cộng cao"
 
 #. Translators: this is the spoken word for the character '⁻' (U+207b)
 #.
 #: ../src/orca/chnames.py:765
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript minus"
-msgstr "chữ a cao"
+msgstr "dấu trừ cao"
 
 #. Translators: this is the spoken word for the character '⁼' (U+207c)
 #.
 #: ../src/orca/chnames.py:769
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript equals"
-msgstr "chữ a cao"
+msgstr "dấu bằng cao"
 
 #. Translators: this is the spoken word for the character '⁽' (U+207d)
 #.
 #: ../src/orca/chnames.py:773
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript left paren"
-msgstr "chữ a cao"
+msgstr "mở ngoặc đơn cao"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
 #: ../src/orca/chnames.py:777
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript right paren"
-msgstr "chữ a cao"
+msgstr "đóng ngoặc đơn cao"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
 #: ../src/orca/chnames.py:781
-#, fuzzy
-#| msgid "superscript a"
 msgid "superscript n"
-msgstr "chữ a cao"
+msgstr "chữ n cao"
 
 #. Translators: this is the spoken word for the character '₀' (U+2080)
 #.
 #: ../src/orca/chnames.py:785
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript 0"
-msgstr "chữ a cao"
+msgstr "số 0 thấp"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
 #: ../src/orca/chnames.py:789
-#, fuzzy
-#| msgid "superscript 1"
 msgid "subscript 1"
-msgstr "số 1 cao"
+msgstr "số 1 thấp"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
 #: ../src/orca/chnames.py:793
-#, fuzzy
-#| msgid "superscript 2"
 msgid "subscript 2"
-msgstr "số hai cao"
+msgstr "số 2 thấp"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
 #: ../src/orca/chnames.py:797
-#, fuzzy
-#| msgid "superscript 3"
 msgid "subscript 3"
-msgstr "số ba cao"
+msgstr "số 3 thấp"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
 #: ../src/orca/chnames.py:801
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript 4"
-msgstr "chữ a cao"
+msgstr "số 4 thấp"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
 #: ../src/orca/chnames.py:805
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript 5"
-msgstr "chữ a cao"
+msgstr "số 5 thấp"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
 #: ../src/orca/chnames.py:809
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript 6"
-msgstr "chữ a cao"
+msgstr "số 6 thấp"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
 #: ../src/orca/chnames.py:813
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript 7"
-msgstr "chữ a cao"
+msgstr "số 7 thấp"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
 #: ../src/orca/chnames.py:817
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript 8"
-msgstr "chữ a cao"
+msgstr "số 8 thấp"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
 #: ../src/orca/chnames.py:821
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript 9"
-msgstr "chữ a cao"
+msgstr "số 9 thấp"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
 #: ../src/orca/chnames.py:825
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript plus"
-msgstr "chữ a cao"
+msgstr "dấu cộng thấp"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
 #: ../src/orca/chnames.py:829
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript minus"
-msgstr "chữ a cao"
+msgstr "dấu trừ thấp"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
 #: ../src/orca/chnames.py:833
-#, fuzzy
-#| msgid "superscript a"
 msgid "subscript equals"
-msgstr "chữ a cao"
+msgstr "dấu bằng thấp"
 
 #. Translators: this is the spoken word for the character '₍' (U+208d)
 #.
 #: ../src/orca/chnames.py:837
-#, fuzzy
-#| msgid "left paren"
 msgid "subscript left paren"
-msgstr "dấu ngoặc đơn trái"
+msgstr "mở ngoặc đơn thấp"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #: ../src/orca/chnames.py:841
-#, fuzzy
-#| msgid "right paren"
 msgid "subscript right paren"
-msgstr "dấu ngoặc đơn phải"
+msgstr "đóng ngoặc đơn thấp"
 
 #. Translators: this is the spoken word for the character '➢' (U+27a2)
 #. This symbol is included here because it can be used as a bullet in an
@@ -2324,10 +2268,8 @@ msgstr "Vào chế độ học. Hãy bấm phím Escape để thoát khỏi ch�
 #. and exit the "List Shortcuts Mode" by pressing Escape.
 #.
 #: ../src/orca/default.py:794
-#, fuzzy
-#| msgid "Enters learn mode.  Press escape to exit learn mode."
 msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
-msgstr "Vào chế độ học. Hãy bấm phím Escape để thoát khỏi chế độ học."
+msgstr "Vào chế độ liệt kê phím tắt. Nhấn Escape để thoát khỏi chế độ này."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
@@ -2390,20 +2332,16 @@ msgstr "Bật/tắt câm giọng nói."
 #. the speaking of indentation and justification.
 #.
 #: ../src/orca/default.py:870
-#, fuzzy
-#| msgid "Speak _indentation and justification"
 msgid "Toggles the speaking of indentation and justification."
-msgstr "Cũng nó_i sự thụt lề và canh đều"
+msgstr "Đổi đọc thụt lề và canh đều."
 
 #. Translators: Orca allows users to cycle through
 #. punctuation levels.
 #. None, some, most, or all, punctuation will be spoken.
 #.
 #: ../src/orca/default.py:879
-#, fuzzy
-#| msgid "Cycles to the next magnifier position."
 msgid "Cycles to the next speaking of punctuation level."
-msgstr "Đến vị trí kế tiếp khi phóng to."
+msgstr "Chuyển giữa các mức tần suất đọc dấu chấm."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2419,10 +2357,8 @@ msgstr "Đến vị trí kế tiếp khi phóng to."
 #. user to quickly choose which type of echo is being used.
 #.
 #: ../src/orca/default.py:897
-#, fuzzy
-#| msgid "Cycles to the next magnifier position."
 msgid "Cycles to the next key echo level."
-msgstr "Đến vị trí kế tiếp khi phóng to."
+msgstr "Chuyển giữa các mức âm phím."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -2585,7 +2521,7 @@ msgstr "Bật/tắt chế độ xem lại con chuột."
 #.
 #: ../src/orca/default.py:1077
 msgid "Present current time."
-msgstr ""
+msgstr "Đọc giờ hiện tại."
 
 #. Translators: Orca can present the current date to the
 #. user when the user presses
@@ -2593,7 +2529,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:1086
 msgid "Present current date."
-msgstr ""
+msgstr "Đọc ngày hiện tại."
 
 #. Translators: Orca normally intercepts all keyboard
 #. commands and only passes them along to the current
@@ -2653,7 +2589,7 @@ msgstr "Chế độ học. Hãy bấm phim Escape để thoát."
 #.
 #: ../src/orca/default.py:1614
 msgid "List shortcuts mode."
-msgstr ""
+msgstr "Chế độ danh sách phím tắt."
 
 #. Translators: Orca has a 'List Shortcuts' mode by which a user can
 #. navigate through a list of the bound commands in Orca. Pressing 1
@@ -2668,6 +2604,8 @@ msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
 msgstr ""
+"Nhấn 1 cho phím tắt Orca ngầm định. Nhấn 2 cho phím tắt Orca cho ứng dụng "
+"hiện tại. Nhấn escape để thoát."
 
 #. Translators: Orca has a command that allows the user to
 #. move the mouse pointer to the current object. This is a
@@ -2695,11 +2633,9 @@ msgstr "Không tìm thấy vị trí hiện thời."
 #. Orca cannot identify/find the current location.
 #.
 #: ../src/orca/default.py:1917 ../src/orca/default.py:2080
-#, fuzzy
-#| msgid "No focus"
 msgctxt "location"
 msgid "Not found"
-msgstr "Không có tiêu điểm"
+msgstr "Không tìm thấy"
 
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
@@ -2788,41 +2724,33 @@ msgstr "Đang vào chế độ xem lại phẳng."
 #. indentation and justification will be spoken.
 #.
 #: ../src/orca/default.py:2624
-#, fuzzy
-#| msgid "Speak _indentation and justification"
 msgid "Speaking of indentation and justification enabled."
-msgstr "Cũng nó_i sự thụt lề và canh đều"
+msgstr "Bật đọc thụt lề và canh đều."
 
 #. Translators: This is a brief message that will be presented
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
 #: ../src/orca/default.py:2629
-#, fuzzy
-#| msgid "Enable_d"
 msgctxt "indentation and justification"
 msgid "Enabled"
-msgstr "_Bật"
+msgstr "Bật"
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will not be spoken.
 #.
 #: ../src/orca/default.py:2634
-#, fuzzy
-#| msgid "Speak _indentation and justification"
 msgid "Speaking of indentation and justification disabled."
-msgstr "Cũng nó_i sự thụt lề và canh đều"
+msgstr "Tắt đọc thụt lề và canh đều."
 
 #. Translators: This is a brief message that will be presented
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
 #: ../src/orca/default.py:2639
-#, fuzzy
-#| msgid "Dial"
 msgctxt "indentation and justification"
 msgid "Disabled"
-msgstr "Quay số"
+msgstr "Tắt"
 
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
@@ -2831,7 +2759,7 @@ msgstr "Quay số"
 #.
 #: ../src/orca/default.py:2656
 msgid "Punctuation level set to some."
-msgstr ""
+msgstr "Đọc một vài dấu chấm."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different levels of spoken punctuation.
@@ -2839,11 +2767,9 @@ msgstr ""
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2662
-#, fuzzy
-#| msgid "So_me"
 msgctxt "spoken punctuation"
 msgid "Some"
-msgstr "Một _số"
+msgstr "Một vài"
 
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
@@ -2852,7 +2778,7 @@ msgstr "Một _số"
 #.
 #: ../src/orca/default.py:2670
 msgid "Punctuation level set to most."
-msgstr ""
+msgstr "Đọc phần lớn dấu chấm."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different levels of spoken punctuation.
@@ -2860,11 +2786,9 @@ msgstr ""
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2676
-#, fuzzy
-#| msgid "M_ost"
 msgctxt "spoken punctuation"
 msgid "Most"
-msgstr "Phần _lớn"
+msgstr "Phần lớn"
 
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
@@ -2872,10 +2796,8 @@ msgstr "Phần _lớn"
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2684
-#, fuzzy
-#| msgid "<b>Punctuation Level</b>"
 msgid "Punctuation level set to all."
-msgstr "<b>Cấp chấm câu</b>"
+msgstr "Đọc tất cả dấu chấm."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different levels of spoken punctuation.
@@ -2883,8 +2805,6 @@ msgstr "<b>Cấp chấm câu</b>"
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2690
-#, fuzzy
-#| msgid "All"
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Tất cả"
@@ -2896,7 +2816,7 @@ msgstr "Tất cả"
 #.
 #: ../src/orca/default.py:2699
 msgid "Punctuation level set to none."
-msgstr ""
+msgstr "Không đọc dấu chấm."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different levels of spoken punctuation.
@@ -2904,8 +2824,6 @@ msgstr ""
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/default.py:2705
-#, fuzzy
-#| msgid "None"
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Không có"
@@ -2924,7 +2842,7 @@ msgstr "Không có"
 #.
 #: ../src/orca/default.py:2734
 msgid "Key echo set to key."
-msgstr ""
+msgstr "Âm phím đặt thành phím."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2943,7 +2861,7 @@ msgstr ""
 #: ../src/orca/default.py:2749
 msgctxt "key echo"
 msgid "key"
-msgstr ""
+msgstr "phím"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2958,10 +2876,8 @@ msgstr ""
 #. levels quickly via a command.
 #.
 #: ../src/orca/default.py:2767
-#, fuzzy
-#| msgid "Goes to next word."
 msgid "Key echo set to word."
-msgstr "Đi tới từ kế tiếp."
+msgstr "Âm phím đặt thành từ."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -2978,9 +2894,6 @@ msgstr "Đi tới từ kế tiếp."
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2782
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "word"
 msgctxt "key echo"
 msgid "word"
 msgstr "từ"
@@ -2998,10 +2911,8 @@ msgstr "từ"
 #. levels quickly via a command.
 #.
 #: ../src/orca/default.py:2800
-#, fuzzy
-#| msgid "Enable echo by _sentence"
 msgid "Key echo set to sentence."
-msgstr "Bật phản hồi theo câ_u"
+msgstr "Âm phím đặt thành câu."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -3018,11 +2929,9 @@ msgstr "Bật phản hồi theo câ_u"
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2815
-#, fuzzy
-#| msgid "Sentence"
 msgctxt "key echo"
 msgid "sentence"
-msgstr "Câu"
+msgstr "câu"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -3038,7 +2947,7 @@ msgstr "Câu"
 #.
 #: ../src/orca/default.py:2833
 msgid "Key echo set to key and word."
-msgstr ""
+msgstr "Âm phím đặt thành phím và từ."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -3057,7 +2966,7 @@ msgstr ""
 #: ../src/orca/default.py:2848
 msgctxt "key echo"
 msgid "key and word"
-msgstr ""
+msgstr "phím và từ"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -3073,7 +2982,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:2866
 msgid "Key echo set to word and sentence."
-msgstr ""
+msgstr "Âm phím đặt thành từ và câu."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -3092,7 +3001,7 @@ msgstr ""
 #: ../src/orca/default.py:2881
 msgctxt "key echo"
 msgid "word and sentence"
-msgstr ""
+msgstr "từ và câu"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -3108,7 +3017,7 @@ msgstr ""
 #.
 #: ../src/orca/default.py:2899
 msgid "Key echo set to None."
-msgstr ""
+msgstr "Âm phím đặt thành rỗng."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -3125,8 +3034,6 @@ msgstr ""
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/default.py:2914
-#, fuzzy
-#| msgid "None"
 msgctxt "key echo"
 msgid "None"
 msgstr "Không có"
@@ -3456,8 +3363,7 @@ msgstr "thẳng đứng"
 #. a percentage.
 #.
 #: ../src/orca/flat_review.py:447
-#, fuzzy, python-format
-#| msgid "%d percent."
+#, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
 msgstr[0] "%d phần trăm."
@@ -3997,53 +3903,45 @@ msgstr "Tự chọn"
 #. to the user when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:82
-#, fuzzy
-#| msgid "Increases the magnification level."
 msgid "Present last notification message."
-msgstr "Phóng to."
+msgstr "Đọc thông báo cuối."
 
 #. Translators: Orca can present the previous notification message
 #. to the user when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:90
 msgid "Present previous notification message."
-msgstr ""
+msgstr "Đọc thông báo trước."
 
 #. Translators: Orca can enable the notification messages
 #. list mode when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:98
 msgid "Present notification messages list"
-msgstr ""
+msgstr "Đọc danh sách thông báo"
 
 #. Translators: This is a brief message presented to the user
 #. the list of notifications is empty.
 #.
 #: ../src/orca/notification_messages.py:128
-#, fuzzy
-#| msgid "Notification %s"
 msgid "No notification messages"
-msgstr "Thông báo %s"
+msgstr "Không có thông báo"
 
 #. Translators: This is a brief message presented to the user when
 #. when the top of a list of notifications is reached.
 #.
 #: ../src/orca/notification_messages.py:159
-#, fuzzy
-#| msgid "_Top:"
 msgctxt "notification"
 msgid "Top"
-msgstr "_Trên:"
+msgstr "Trên:"
 
 #. Translators: This is a brief message presented to the user when
 #. when the bottom of a list of notifications is reached.
 #.
 #: ../src/orca/notification_messages.py:166
-#, fuzzy
-#| msgid "_Bottom:"
 msgctxt "notification"
 msgid "Bottom"
-msgstr "_Dưới:"
+msgstr "Dưới:"
 
 #. Translators: Orca has a "List notification messages Mode" that allows
 #. the user to list the latest notification messages received.
@@ -4053,22 +3951,20 @@ msgstr "_Dưới:"
 #.
 #: ../src/orca/notification_messages.py:189
 msgid "Exiting list notification messages mode."
-msgstr ""
+msgstr "Đang thoát khỏi chế độ danh sách thông báo."
 
 #. Translators: This message inform to the user the number of
 #. messages in the list.
 #: ../src/orca/notification_messages.py:243
-#, fuzzy, python-format
-#| msgid "%d space"
-#| msgid_plural "%d spaces"
+#, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
-msgstr[0] "%d dấu cách"
+msgstr[0] "%d thông báo.\n"
 
 #. Translators: This is a help message.
 #: ../src/orca/notification_messages.py:245
 msgid "Press h for help.\n"
-msgstr ""
+msgstr "Nhấn h để trợ giúp.\n"
 
 #. Translators: The following string instructs the user how to navigate
 #. amongst the list of commands presented in list notification
@@ -4081,6 +3977,10 @@ msgid ""
 "Press Space to repeat the last message read.\n"
 "Press one digit to read a specific message.\n"
 msgstr ""
+"Sử dụng phím Lên, Xuống, Đầu, Cuối để chuyển trong danh sách.\n"
+"Nhấn Escape để thoát.\n"
+"Nhấn Space để lặp lại thông báo cuối cùng.\n"
+"Nhấn phím số để đọc một thông báo cụ thể.\n"
 
 #: ../src/orca/orca-advanced-magnification.ui.h:1
 msgid "<b>Brightness</b>"
@@ -4106,8 +4006,8 @@ msgstr "_Xanh:"
 #. on the screen.
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:6
-#: ../src/orca/orca_gui_prefs.py:4750 ../src/orca/orca_gui_prefs.py:4761
-#: ../src/orca/orca_gui_prefs.py:4763 ../src/orca/orca_gui_prefs.py:4784
+#: ../src/orca/orca_gui_prefs.py:4758 ../src/orca/orca_gui_prefs.py:4769
+#: ../src/orca/orca_gui_prefs.py:4771 ../src/orca/orca_gui_prefs.py:4792
 msgid "Bilinear"
 msgstr "Tuyến kép"
 
@@ -4117,8 +4017,8 @@ msgstr "Tuyến kép"
 #. (75, 100, 125) would become (75, 100, 0).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:7
-#: ../src/orca/orca_gui_prefs.py:5006 ../src/orca/orca_gui_prefs.py:5033
-#: ../src/orca/orca_gui_prefs.py:5104
+#: ../src/orca/orca_gui_prefs.py:5014 ../src/orca/orca_gui_prefs.py:5041
+#: ../src/orca/orca_gui_prefs.py:5112
 msgid "Desaturate blue"
 msgstr "Màu xanh tối thiểu"
 
@@ -4128,7 +4028,7 @@ msgstr "Màu xanh tối thiểu"
 #. (75, 100, 125) would become (75, 0, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:8
-#: ../src/orca/orca_gui_prefs.py:4998 ../src/orca/orca_gui_prefs.py:5096
+#: ../src/orca/orca_gui_prefs.py:5006 ../src/orca/orca_gui_prefs.py:5104
 msgid "Desaturate green"
 msgstr "Màu lục tối thiểu"
 
@@ -4138,8 +4038,8 @@ msgstr "Màu lục tối thiểu"
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:9
-#: ../src/orca/orca_gui_prefs.py:4990 ../src/orca/orca_gui_prefs.py:5032
-#: ../src/orca/orca_gui_prefs.py:5088
+#: ../src/orca/orca_gui_prefs.py:4998 ../src/orca/orca_gui_prefs.py:5040
+#: ../src/orca/orca_gui_prefs.py:5096
 msgid "Desaturate red"
 msgstr "Màu đỏ tối thiểu"
 
@@ -4153,8 +4053,8 @@ msgstr "_Lục:"
 #. (100, 125, 75).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:11
-#: ../src/orca/orca_gui_prefs.py:5022 ../src/orca/orca_gui_prefs.py:5035
-#: ../src/orca/orca_gui_prefs.py:5120
+#: ../src/orca/orca_gui_prefs.py:5030 ../src/orca/orca_gui_prefs.py:5043
+#: ../src/orca/orca_gui_prefs.py:5128
 msgid "Negative hue shift"
 msgstr "Dời sắc màu về âm"
 
@@ -4168,10 +4068,10 @@ msgstr "Dời sắc màu về âm"
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:12
 #: ../src/orca/orca_gui_prefs.py:112 ../src/orca/orca_gui_prefs.py:2112
-#: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca_gui_prefs.py:4756
-#: ../src/orca/orca_gui_prefs.py:4763 ../src/orca/orca_gui_prefs.py:4786
-#: ../src/orca/orca_gui_prefs.py:4958 ../src/orca/orca_gui_prefs.py:5025
-#: ../src/orca/orca_gui_prefs.py:5028 ../src/orca/orca_gui_prefs.py:5056
+#: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca_gui_prefs.py:4764
+#: ../src/orca/orca_gui_prefs.py:4771 ../src/orca/orca_gui_prefs.py:4794
+#: ../src/orca/orca_gui_prefs.py:4966 ../src/orca/orca_gui_prefs.py:5033
+#: ../src/orca/orca_gui_prefs.py:5036 ../src/orca/orca_gui_prefs.py:5064
 #: ../src/orca/orca-setup.ui.h:101
 msgid "None"
 msgstr "Không có"
@@ -4182,8 +4082,8 @@ msgstr "Không có"
 #. (125, 75, 100).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:13
-#: ../src/orca/orca_gui_prefs.py:5014 ../src/orca/orca_gui_prefs.py:5034
-#: ../src/orca/orca_gui_prefs.py:5112
+#: ../src/orca/orca_gui_prefs.py:5022 ../src/orca/orca_gui_prefs.py:5042
+#: ../src/orca/orca_gui_prefs.py:5120
 msgid "Positive hue shift"
 msgstr "Dời sắc màu về dương"
 
@@ -4201,8 +4101,8 @@ msgstr "Hiển thị n_guồn:"
 #. (75, 100, 125) would become (75, 100, 255).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:16
-#: ../src/orca/orca_gui_prefs.py:4982 ../src/orca/orca_gui_prefs.py:5031
-#: ../src/orca/orca_gui_prefs.py:5080
+#: ../src/orca/orca_gui_prefs.py:4990 ../src/orca/orca_gui_prefs.py:5039
+#: ../src/orca/orca_gui_prefs.py:5088
 msgid "Saturate blue"
 msgstr "Màu xanh tối đa"
 
@@ -4212,8 +4112,8 @@ msgstr "Màu xanh tối đa"
 #. (75, 100, 125) would become (75, 255, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:17
-#: ../src/orca/orca_gui_prefs.py:4974 ../src/orca/orca_gui_prefs.py:5030
-#: ../src/orca/orca_gui_prefs.py:5072
+#: ../src/orca/orca_gui_prefs.py:4982 ../src/orca/orca_gui_prefs.py:5038
+#: ../src/orca/orca_gui_prefs.py:5080
 msgid "Saturate green"
 msgstr "Màu lục tối đa"
 
@@ -4223,8 +4123,8 @@ msgstr "Màu lục tối đa"
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:18
-#: ../src/orca/orca_gui_prefs.py:4966 ../src/orca/orca_gui_prefs.py:5029
-#: ../src/orca/orca_gui_prefs.py:5064
+#: ../src/orca/orca_gui_prefs.py:4974 ../src/orca/orca_gui_prefs.py:5037
+#: ../src/orca/orca_gui_prefs.py:5072
 msgid "Saturate red"
 msgstr "Màu đỏ tối đa"
 
@@ -4590,29 +4490,14 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_main.py:111
 msgid "translator-credits"
-msgstr "Clytie Siddall (clytie@riverland.net.au)"
+msgstr ""
+"Clytie Siddall (clytie@riverland.net.au)\n"
+"Trương Anh Tuấn"
 
 #. Translators: This text is used in the Orca About dialog. Orca is
 #. licensed under GPL2+.
 #.
 #: ../src/orca/orca_gui_main.py:116
-#, fuzzy
-#| msgid ""
-#| "Orca is free software; you can redistribute it and/or\n"
-#| "modify it under the terms of the GNU Library General\n"
-#| "Public License as published by the Free Software Foundation;\n"
-#| "either version 2 of the License, or (at your option) any\n"
-#| "later version.\n"
-#| "\n"
-#| "Orca is distributed in the hope that it will be useful, but\n"
-#| "WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-#| "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See\n"
-#| "the GNU Library General Public License for more details.\n"
-#| "\n"
-#| "You should have received a copy of the GNU Library General\n"
-#| "Public License along with Orca; if not, write to the\n"
-#| "Free Software Foundation, Inc., Franklin Street, Fifth Floor,\n"
-#| "Boston MA  02110-1301 USA."
 msgid ""
 "Orca is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU Lesser General\n"
@@ -4630,19 +4515,20 @@ msgid ""
 "Free Software Foundation, Inc., Franklin Street, Fifth Floor,\n"
 "Boston MA  02110-1301 USA."
 msgstr ""
-"Chương trình này là phần mềm tự do; bạn có thể phát hành lại nó\n"
-"và/hoặc sửa đổi nó với điều kiện của Giấy Phép Công Cộng Thư Viện GNU\n"
-"như được xuất bản bởi Tổ Chức Phần Mềm Tự Do; hoặc phiên bản 2\n"
-"của Giấy Phép này, hoặc (tùy chọn) bất kỳ phiên bản sau nào.\n"
+"Orca là phần mềm tự do; bạn có thể phân phối lại và/hoặc\n"
+"sửa đổi dưới các điều khoản của Giấy Phép GNU Lesser General\n"
+"Public License được công bố bởi Tổ Chức Phần Mềm Tự Do;\n"
+"hoặc phiên bản 2.1 của Giấy Phép này, hoặc (tùy chọn) bất kỳ\n"
+"phiên bản sau nào.\n"
 "\n"
-"Chương trình này được phát hành vì mong muốn nó có ích,\n"
-"nhưng KHÔNG CÓ BẢO HÀNH GÌ CẢ, THẬM CHÍ KHÔNG CÓ\n"
+"Orca được phân phối với mong muốn nó sẽ có ích, nhưng\n"
+"KHÔNG CÓ BẢO HÀNH GÌ CẢ, THẬM CHÍ KHÔNG CÓ\n"
 "BẢO ĐẢM ĐƯỢC NGỤ Ý KHẢ NĂNG BÁN HAY KHẢ NĂNG\n"
 "LÀM ĐƯỢC VIỆC DỨT KHOÁT.\n"
-"Xem Giấy Phép Công Cộng Thư Viện GNU để biết thêm chi tiết.\n"
+"Xem Giấy Phép GNU Lesser General Public License để biết thêm chi tiết.\n"
 "\n"
-"Bạn đã nhận một bản sao của Giấy Phép Công Cộng Thư Viện GNU\n"
-"cùng với chương trình này; nếu không, hãy viết thư\n"
+"Bạn đã nhận một bản sao của Giấy Phép GNU Lesser General\n"
+"Public License cùng với chương trình này; nếu không, hãy viết thư\n"
 "cho Tổ Chức Phần Mềm Tự Do :\n"
 "Free Software Foundation, Inc.,\n"
 "51 Franklin Street, Fifth Floor,\n"
@@ -4755,11 +4641,9 @@ msgstr "Siêu liên kết"
 #. selected. And so on.
 #.
 #: ../src/orca/orca_gui_prefs.py:810
-#, fuzzy
-#| msgid "term"
 msgctxt "VoiceType"
 msgid "System"
-msgstr "tbcuối"
+msgstr "Hệ thống"
 
 #. Attribute Name column (NAME).
 #.
@@ -4809,7 +4693,7 @@ msgstr "Đánh dấu bằng chữ nổi"
 #.
 #: ../src/orca/orca_gui_prefs.py:1317
 msgid "Present Unless"
-msgstr "Có phải trừ khi"
+msgstr "Đọc trừ khi"
 
 #. Pronunciation Dictionary actual string (word) column (ACTUAL).
 #.
@@ -4850,7 +4734,7 @@ msgstr "Chia ra từng đ_oạn tiếng nói giữa hai lần tạm dừng"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:1662 ../src/orca/orca_gui_prefs.py:3153
+#: ../src/orca/orca_gui_prefs.py:1662 ../src/orca/orca_gui_prefs.py:3154
 #: ../src/orca/orca-setup.ui.h:77
 msgid "Line"
 msgstr "Dòng"
@@ -4859,7 +4743,7 @@ msgstr "Dòng"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:1662 ../src/orca/orca_gui_prefs.py:3159
+#: ../src/orca/orca_gui_prefs.py:1662 ../src/orca/orca_gui_prefs.py:3160
 #: ../src/orca/orca-setup.ui.h:127
 msgid "Sentence"
 msgstr "Câu"
@@ -4870,7 +4754,7 @@ msgstr "Câu"
 #. and window they happen to be in.
 #.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca_gui_prefs.py:1761 ../src/orca/orca_gui_prefs.py:3118
+#: ../src/orca/orca_gui_prefs.py:1761 ../src/orca/orca_gui_prefs.py:3119
 #: ../src/orca/orca-setup.ui.h:112
 msgctxt "ProgressBar"
 msgid "All"
@@ -4892,7 +4776,7 @@ msgstr "Ứng dụng"
 #. Orca will present progress bar updates as long as the progress
 #. bar is in the active window.
 #.
-#: ../src/orca/orca_gui_prefs.py:1774 ../src/orca/orca_gui_prefs.py:3126
+#: ../src/orca/orca_gui_prefs.py:1774 ../src/orca/orca_gui_prefs.py:3127
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Cửa sổ"
@@ -4920,7 +4804,7 @@ msgstr "Bật phản hồi theo _ký tự"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2491
+#: ../src/orca/orca_gui_prefs.py:2492
 msgid "(double click)"
 msgstr "(nhấn đúp)"
 
@@ -4928,7 +4812,7 @@ msgstr "(nhấn đúp)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2497
+#: ../src/orca/orca_gui_prefs.py:2498
 msgid "(triple click)"
 msgstr "(nhấn ba lần)"
 
@@ -4937,7 +4821,7 @@ msgstr "(nhấn ba lần)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2601 ../src/orca/orca_gui_prefs.py:2696
+#: ../src/orca/orca_gui_prefs.py:2602 ../src/orca/orca_gui_prefs.py:2697
 msgid "Braille Bindings"
 msgstr "Tổ hợp chữ nổi"
 
@@ -4946,8 +4830,8 @@ msgstr "Tổ hợp chữ nổi"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2952 ../src/orca/orca_gui_prefs.py:2993
-#: ../src/orca/orca_gui_prefs.py:3033 ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca_gui_prefs.py:2953 ../src/orca/orca_gui_prefs.py:2994
+#: ../src/orca/orca_gui_prefs.py:3034 ../src/orca/orca-setup.ui.h:44
 msgid "Dot _7"
 msgstr "Chấm _7"
 
@@ -4955,8 +4839,8 @@ msgstr "Chấm _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2959 ../src/orca/orca_gui_prefs.py:3000
-#: ../src/orca/orca_gui_prefs.py:3040 ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca_gui_prefs.py:2960 ../src/orca/orca_gui_prefs.py:3001
+#: ../src/orca/orca_gui_prefs.py:3041 ../src/orca/orca-setup.ui.h:45
 msgid "Dot _8"
 msgstr "Chấm _8"
 
@@ -4964,15 +4848,15 @@ msgstr "Chấm _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2966 ../src/orca/orca_gui_prefs.py:3007
-#: ../src/orca/orca_gui_prefs.py:3047 ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca_gui_prefs.py:2967 ../src/orca/orca_gui_prefs.py:3008
+#: ../src/orca/orca_gui_prefs.py:3048 ../src/orca/orca-setup.ui.h:46
 msgid "Dots 7 an_d 8"
 msgstr "Chấm 7 _và 8"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:3070 ../src/orca/orca-setup.ui.h:170
+#: ../src/orca/orca_gui_prefs.py:3071 ../src/orca/orca-setup.ui.h:170
 msgid "_None"
 msgstr "Khô_ng có"
 
@@ -4981,7 +4865,7 @@ msgstr "Khô_ng có"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:3078 ../src/orca/orca-setup.ui.h:129
+#: ../src/orca/orca_gui_prefs.py:3079 ../src/orca/orca-setup.ui.h:129
 msgid "So_me"
 msgstr "Một _số"
 
@@ -4989,7 +4873,7 @@ msgstr "Một _số"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:3085 ../src/orca/orca-setup.ui.h:78
+#: ../src/orca/orca_gui_prefs.py:3086 ../src/orca/orca-setup.ui.h:78
 msgid "M_ost"
 msgstr "Phần _lớn"
 
@@ -4997,7 +4881,7 @@ msgstr "Phần _lớn"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:3245 ../src/orca/orca_gui_prefs.py:3349
+#: ../src/orca/orca_gui_prefs.py:3246 ../src/orca/orca_gui_prefs.py:3350
 #: ../src/orca/orca-setup.ui.h:28
 msgid "Brie_f"
 msgstr "_Ngắn"
@@ -5007,7 +4891,7 @@ msgstr "_Ngắn"
 #. they just want the current cell to be presented to them.
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/orca_gui_prefs.py:3269 ../src/orca/orca-setup.ui.h:132
+#: ../src/orca/orca_gui_prefs.py:3270 ../src/orca/orca-setup.ui.h:132
 msgid "Speak _cell"
 msgstr "Nó_i ô"
 
@@ -5015,11 +4899,11 @@ msgstr "Nó_i ô"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:4007
+#: ../src/orca/orca_gui_prefs.py:4008
 msgid "enter new key"
 msgstr "nhập phím mới"
 
-#: ../src/orca/orca_gui_prefs.py:4037
+#: ../src/orca/orca_gui_prefs.py:4038
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "Tổ hợp phím bị xoá. Nhấn phím Enter để xác nhận."
 
@@ -5027,7 +4911,7 @@ msgstr "Tổ hợp phím bị xoá. Nhấn phím Enter để xác nhận."
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:4062
+#: ../src/orca/orca_gui_prefs.py:4063
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "Bạn đã nhập một phím đã đóng kết với %s"
@@ -5036,7 +4920,7 @@ msgstr "Bạn đã nhập một phím đã đóng kết với %s"
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:4068
+#: ../src/orca/orca_gui_prefs.py:4069
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Đã bắt phím: %s. Nhấn enter để xác nhận."
@@ -5045,7 +4929,7 @@ msgstr "Đã bắt phím: %s. Nhấn enter để xác nhận."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:4107
+#: ../src/orca/orca_gui_prefs.py:4108
 #, python-format
 msgid "The new key is: %s"
 msgstr "Phím mới là: %s"
@@ -5054,39 +4938,39 @@ msgstr "Phím mới là: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:4115
+#: ../src/orca/orca_gui_prefs.py:4116
 msgid "The keybinding has been removed."
 msgstr "Tổ hợp phím đã bị xoá."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:4168 ../src/orca/orca-setup.ui.h:162
+#: ../src/orca/orca_gui_prefs.py:4169 ../src/orca/orca-setup.ui.h:162
 msgid "_Desktop"
 msgstr "_Máy để bàn"
 
 #. We're here because given profile name exists, so we have
 #. to give that info to the user and give him the chance
 #. to continue, or not saving the profile
-#: ../src/orca/orca_gui_prefs.py:4557
+#: ../src/orca/orca_gui_prefs.py:4563
 #, python-format
 msgid ""
 "Profile <b>%s</b> already exists.\n"
 "Continue updating the existing profile with these new changes?"
 msgstr ""
+"Hồ sơ <b>%s</b> đã tồn tại.\n"
+"Tiếp tục cập nhật các thay đổi này và thoát khỏi hồ sơ?"
 
-#: ../src/orca/orca_gui_prefs.py:4566
-#, fuzzy
-#| msgid "<b>Braille Indicator</b>"
+#: ../src/orca/orca_gui_prefs.py:4572
 msgid "<b>User Profile Conflict!</b>"
-msgstr "<b>Cái chỉ chữ nổi</b>"
+msgstr "<b>Xung đột Hồ sơ Người dùng!</b>"
 
-#: ../src/orca/orca_gui_prefs.py:4568
+#: ../src/orca/orca_gui_prefs.py:4574
 msgid "Save Profile As Conflict"
-msgstr ""
+msgstr "Lưu hồ sơ như một xung đột"
 
 #. First of all, we give a chance of cancel profile change
-#: ../src/orca/orca_gui_prefs.py:4585
+#: ../src/orca/orca_gui_prefs.py:4591
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just make changes in your preferences, it will\n"
@@ -5094,18 +4978,22 @@ msgid ""
 "\n"
 "Continue loading profile discarding previous changes?"
 msgstr ""
+"Hồ sơ hiện hành như đã bị bạn thay đổi. Nếu bạn\n"
+"chỉ thay đổi tùy chọn, nó sẽ bị hủy khi mở hồ sơ.\n"
+"\n"
+"Tiếp tục mở hồ sơ và bỏ qua các thay đổi trước đó?"
 
-#: ../src/orca/orca_gui_prefs.py:4595
+#: ../src/orca/orca_gui_prefs.py:4601
 msgid "<b>Load user profile info</b>"
-msgstr ""
+msgstr "<b>Nạp thông tin hồ sơ người dùng</b>"
 
-#: ../src/orca/orca_gui_prefs.py:4597
+#: ../src/orca/orca_gui_prefs.py:4603
 msgid "Load User Profile"
-msgstr ""
+msgstr "Mở Hồ sơ Người dùng"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:5357
+#: ../src/orca/orca_gui_prefs.py:5365
 msgid "Starting Orca Preferences."
 msgstr "Đang khởi chạy Tùy thích Orca."
 
@@ -5120,7 +5008,7 @@ msgstr "Bộ Đọc và Phóng To Màn Hình Orca"
 #.
 #: ../src/orca/orca.py:290
 msgid "The following arguments are not valid: "
-msgstr ""
+msgstr "Các tham số sau không hợp lệ:"
 
 #. Translators: This message is displayed when the user
 #. tries to enable or disable a feature via an argument,
@@ -5131,7 +5019,7 @@ msgstr ""
 #.
 #: ../src/orca/orca.py:345
 msgid "The following items can be enabled or disabled:"
-msgstr ""
+msgstr "Các mục sau có thể được bật hoặc tắt:"
 
 #: ../src/orca/orca.py:360
 msgid "Usage: orca [OPTION...]"
@@ -5227,7 +5115,7 @@ msgstr "Ngăn cản dùng tùy chọn"
 #.
 #: ../src/orca/orca.py:456
 msgid "Import a profile from a given orca profile file"
-msgstr ""
+msgstr "Nhập một hồ sơ từ một tệp hồ sơ orca"
 
 #. Translators: this is the Orca command line option that will quit Orca.
 #. The user would run the Orca shell script again from a terminal window.
@@ -5246,7 +5134,7 @@ msgstr "Thoát Orca (nếu dùng văn lệnh trình bao)"
 #.
 #: ../src/orca/orca.py:473
 msgid "Forces orca to be terminated immediately."
-msgstr ""
+msgstr "Buộc orca thoát ngay lập tức."
 
 #. Translators: this is the Orca command line option to tell Orca to
 #. replace any existing Orca process(es) that might be running.
@@ -5301,10 +5189,8 @@ msgstr "Đang thoát khỏi chế độ học."
 #. braille upon exiting this mode.
 #.
 #: ../src/orca/orca.py:851
-#, fuzzy
-#| msgid "Exiting learn mode."
 msgid "Exiting list shortcuts mode."
-msgstr "Đang thoát khỏi chế độ học."
+msgstr "Đang thoát khỏi chế độ liệt kê phím tắt."
 
 #. Translators: this represents the state of a check box
 #.
@@ -5356,7 +5242,7 @@ msgstr "Thiết lập người dùng Orca đã được tải lại."
 #.
 #: ../src/orca/orca.py:1782
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
-msgstr ""
+msgstr "Nhấn Lên và Xuống để chuyển trong danh sách. Nhấn Escape để thoát."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. In this messsage, we present the
@@ -5366,7 +5252,7 @@ msgstr ""
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
-msgstr[0] ""
+msgstr[0] "Tìm thấy %d phím tắt Orca ngầm định."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. In this message, we present the
@@ -5376,7 +5262,7 @@ msgstr[0] ""
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
-msgstr[0] ""
+msgstr[0] "Tìm thấy %(count)d phím tắt Orca cho %(application)s."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. This is the message we present
@@ -5386,7 +5272,7 @@ msgstr[0] ""
 #: ../src/orca/orca.py:1836
 #, python-format
 msgid "No Orca shortcuts for %s found."
-msgstr ""
+msgstr "Không tìm thấy phím tắt Orca nào cho %s."
 
 #. Translators: when the user is attempting to locate a
 #. particular object and the top of a page or list is
@@ -5436,27 +5322,23 @@ msgstr "Cuộn đến đỉnh."
 
 #: ../src/orca/orca.py:1946
 msgid "keypad "
-msgstr ""
+msgstr "bàn phím số"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
 #: ../src/orca/orca.py:1953
-#, fuzzy
-#| msgid "(double click)"
 msgid "double click"
-msgstr "(nhấn đúp)"
+msgstr "nhấn đúp"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
 #: ../src/orca/orca.py:1959
-#, fuzzy
-#| msgid "(triple click)"
 msgid "triple click"
-msgstr "(nhấn ba lần)"
+msgstr "nhấn ba lần"
 
 #. Translators: This message is what is presented to the user
 #. when he/she attempts to import a settings profile, but the
@@ -5464,14 +5346,14 @@ msgstr "(nhấn ba lần)"
 #.
 #: ../src/orca/orca.py:2284
 msgid "Unable to import profile."
-msgstr ""
+msgstr "Không thể nhập hồ sơ."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
 #: ../src/orca/orca.py:2290
 msgid "Profile import success."
-msgstr ""
+msgstr "Nhập hồ sơ thành công."
 
 #. Translators: This message is what is presented to the user
 #. when he/she attempts to import a settings profile but the
@@ -5480,7 +5362,7 @@ msgstr ""
 #: ../src/orca/orca.py:2296
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
-msgstr ""
+msgstr "Lỗi nhập vì một khóa không nhận diện được: %s"
 
 #: ../src/orca/orca.py:2365
 msgid "Welcome to Orca."
@@ -5502,11 +5384,11 @@ msgstr ""
 
 #: ../src/orca/orca-profile.ui.h:1
 msgid "Save Profile As"
-msgstr ""
+msgstr "Lưu hồ sơ thành"
 
 #: ../src/orca/orca-profile.ui.h:2
 msgid "_Profile Name:"
-msgstr ""
+msgstr "Tên _hồ sơ:"
 
 #: ../src/orca/orca-quit.ui.h:1
 msgid ""
@@ -5546,10 +5428,8 @@ msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Bố trí bàn phím</b>"
 
 #: ../src/orca/orca-setup.ui.h:8
-#, fuzzy
-#| msgid "<b>Brightness</b>"
 msgid "<b>Profiles</b>"
-msgstr "<b>Độ sáng</b>"
+msgstr "<b>Hồ sơ</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:10
@@ -5562,7 +5442,7 @@ msgstr "<b>Từ điển Phát âm</b>"
 
 #: ../src/orca/orca-setup.ui.h:12
 msgid "<b>Punctuation Level</b>"
-msgstr "<b>Cấp chấm câu</b>"
+msgstr "<b>Tần suất đọc dấu chấm</b>"
 
 #: ../src/orca/orca-setup.ui.h:13
 msgid "<b>Selection Indicator</b>"
@@ -5588,7 +5468,7 @@ msgstr "<b>Độ chi tiết</b>"
 
 #: ../src/orca/orca-setup.ui.h:20
 msgid "Active _Profile:"
-msgstr ""
+msgstr "_Hồ sơ hiện hành:"
 
 #. Translators: long braille for the rolename of a application.
 #.
@@ -5643,7 +5523,7 @@ msgstr "Cỡ _riêng"
 #. Translators: Orca can present the current date to the user, here they can choose how the date should be presented to them.
 #: ../src/orca/orca-setup.ui.h:40
 msgid "Dat_e format:"
-msgstr ""
+msgstr "Định dạng _ngày tháng:"
 
 #: ../src/orca/orca-setup.ui.h:41
 msgid "Default"
@@ -5752,51 +5632,39 @@ msgstr "Phản hồi phím"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the border which separates the magnified and non-magnified views of the screen contents (i.e. when a split screen is being used). The options include whether or not there should be a border, the size of the border, and the color of the border.
 #: ../src/orca/orca-setup.ui.h:80
-#, fuzzy
-#| msgid "<b>Border</b>"
 msgctxt "Magnification"
 msgid "<b>Border</b>"
 msgstr "<b>Viền</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the colors displayed for magnification users, namely brightness, contrast, and whether or not all colors should be inverted.
 #: ../src/orca/orca-setup.ui.h:82
-#, fuzzy
-#| msgid "<b>Color</b>"
 msgctxt "Magnification"
 msgid "<b>Color</b>"
 msgstr "<b>Màu</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the customization of the mouse pointer by adding a plus/cross-hair around it to make it easier to see. Options include whether or not cross-hairs should be enabled, as well as what their color and size should be.
 #: ../src/orca/orca-setup.ui.h:84
-#, fuzzy
-#| msgid "<b>Cross-hair</b>"
 msgctxt "Magnification"
 msgid "<b>Cross-hair</b>"
 msgstr "<b>Chữ thập mảnh</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to a group of settings related to the cursor displayed for magnification users. Users can opt to enable an enlarged cursor, and customize its size and color.
 #: ../src/orca/orca-setup.ui.h:86
-#, fuzzy
-#| msgid "<b>Cursor</b>"
 msgctxt "Magnification"
 msgid "<b>Cursor</b>"
 msgstr "<b>Con trỏ</b>"
 
 #. Translators: This is a label in the Preferences dialog. It applies to a number of settings related to magnification. The Zoomer is what holds/displays the magnified version of the screen contents.
 #: ../src/orca/orca-setup.ui.h:88
-#, fuzzy
-#| msgid "<b>Zoomer</b>"
 msgctxt "Magnification"
 msgid "<b>Zoomer</b>"
 msgstr "<b>Thu Phóng</b>"
 
 #. This is a button on the Magnifier notebook page of the Preferences dialog. Pressing this button results in a dialog in which the user can fine tune more advanced settings.
 #: ../src/orca/orca-setup.ui.h:90
-#, fuzzy
-#| msgid "Advanced..."
 msgctxt "Magnification"
 msgid "Advanced..."
-msgstr "Cấp cao..."
+msgstr "Nâng cao..."
 
 #: ../src/orca/orca-setup.ui.h:91
 msgid "Magnifier"
@@ -5829,7 +5697,7 @@ msgstr "Chuyển lên _trên"
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: ../src/orca/orca-setup.ui.h:103
 msgid "Only speak displayed text"
-msgstr ""
+msgstr "Chỉ đọc văn bản đang xem"
 
 #: ../src/orca/orca-setup.ui.h:104
 msgid "Orca Preferences"
@@ -5855,16 +5723,12 @@ msgstr "Con trỏ theo kính lúp"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
 #: ../src/orca/orca-setup.ui.h:114
-#, fuzzy
-#| msgid "Frequency (secs):"
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "Tần số (giây):"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
 #: ../src/orca/orca-setup.ui.h:116
-#, fuzzy
-#| msgid "Enable_d"
 msgctxt "ProgressBarUpdates"
 msgid "Enable_d"
 msgstr "_Bật"
@@ -5951,16 +5815,12 @@ msgid "Start Orca when you lo_gin"
 msgstr "Khởi chạy Orca vào lúc đăn_g nhập"
 
 #: ../src/orca/orca-setup.ui.h:148
-#, fuzzy
-#| msgid "Start from:"
 msgid "Start-up Profile:"
-msgstr "Bắt đầu từ:"
+msgstr "Hồ sơ khởi nạp:"
 
 #: ../src/orca/orca-setup.ui.h:149
-#, fuzzy
-#| msgid "term"
 msgid "System"
-msgstr "tbcuối"
+msgstr "Hệ thống"
 
 #: ../src/orca/orca-setup.ui.h:150
 msgid "Te_xt cursor:"
@@ -6027,7 +5887,7 @@ msgstr "T_rái:"
 #. This button will load the selected settings profile in the application.
 #: ../src/orca/orca-setup.ui.h:168
 msgid "_Load"
-msgstr ""
+msgstr "_Nạp"
 
 #: ../src/orca/orca-setup.ui.h:169
 msgid "_New entry"
@@ -6043,7 +5903,7 @@ msgstr "_Vị trí:"
 
 #: ../src/orca/orca-setup.ui.h:173
 msgid "_Present tooltips"
-msgstr "_Hiện gợi ý công cụ"
+msgstr "Đọc _gợi ý"
 
 #: ../src/orca/orca-setup.ui.h:174
 msgid "_Rate:"
@@ -6064,7 +5924,7 @@ msgstr "_Nói tất cả"
 #. Translators: Orca can present the current time to the user, here they can choose how the time should be presented to them.
 #: ../src/orca/orca-setup.ui.h:179
 msgid "_Time format:"
-msgstr ""
+msgstr "Định dạng _Thời gian:"
 
 #: ../src/orca/orca-setup.ui.h:180
 msgid "_Top:"
@@ -7562,10 +7422,9 @@ msgstr[0] "%(count)d %(repeatChar)s ký tự"
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
 #: ../src/orca/script_utilities.py:2523
-#, fuzzy, python-format
-#| msgid "superscript a"
+#, python-format
 msgid " superscript %s"
-msgstr "chữ a cao"
+msgstr "chữ %s cao"
 
 #. Translators: This string is part of the presentation of an
 #. item that includes one or several consequtive subscripted
@@ -7573,10 +7432,9 @@ msgstr "chữ a cao"
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
 #: ../src/orca/script_utilities.py:2533
-#, fuzzy, python-format
-#| msgid "superscript a"
+#, python-format
 msgid " subscript %s"
-msgstr "chữ a cao"
+msgstr "chữ %s cao"
 
 #. Translators: short braille for the
 #. rolename of a document.
@@ -7604,9 +7462,7 @@ msgstr "tài liệu"
 #: ../src/orca/scripts/apps/acroread/script.py:276
 #: ../src/orca/scripts/apps/soffice/script.py:731
 #: ../src/orca/structural_navigation.py:1338
-#, fuzzy, python-format
-#| msgid "Table with %d row"
-#| msgid_plural "Table with %d rows"
+#, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
 msgstr[0] "Bảng %d hàng"
@@ -7689,7 +7545,7 @@ msgstr "sự kiện lịch"
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:170
 msgid "Toggle whether we present new mail if we are not the active script."
-msgstr "Bật tắt hiển thị thư mới khi không phải là script đang hoạt động."
+msgstr "Bật tắt thông báo thư mới khi không phải chương trình đang hoạt động."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -7697,7 +7553,7 @@ msgstr "Bật tắt hiển thị thư mới khi không phải là script đang h
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:232
 msgid "present new mail if this script is not active."
-msgstr "hiển thị thư mới nếu script không hoạt động."
+msgstr "thông báo thư mới nếu chương trình không hoạt động."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -7705,7 +7561,7 @@ msgstr "hiển thị thư mới nếu script không hoạt động."
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:239
 msgid "do not present new mail if this script is not active."
-msgstr "không hiển thị thư mới nếu script không hoạt động."
+msgstr "không thông báo thư mới nếu chương trình không hoạt động."
 
 #. Translators: this is the name of the
 #. status column header in the message
@@ -7933,10 +7789,8 @@ msgstr "Thông báo %s"
 #. Translators: This denotes a notification to the user of some sort.
 #.
 #: ../src/orca/scripts/apps/notify-osd/script.py:85
-#, fuzzy
-#| msgid "Notification %s"
 msgid "Notification"
-msgstr "Thông báo %s"
+msgstr "Thông báo"
 
 #. Translators: The Package Manager application notifies the
 #. user of minor errors by displaying an icon in the status
@@ -7998,10 +7852,8 @@ msgstr "Hiển thị tùy chọn thêm"
 #. (i.e., the place where enter formulas)
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:230
-#, fuzzy
-#| msgid "Speaks the contents of the input line."
 msgid "Presents the contents of the input line."
-msgstr "Nói đoạn nằm trên dòng nhập."
+msgstr "Đọc nội dung trên dòng nhập."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
@@ -8172,26 +8024,23 @@ msgstr "Chuyển sang ô"
 #. presentation.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1695
-#, fuzzy, python-format
-#| msgid "on %(index)d of %(total)d"
+#, python-format
 msgid "slide %(position)d of %(count)d"
-msgstr "trên %(index)d của %(total)d"
+msgstr "slide %(position)d trên %(count)d"
 
 #. Translators: This message is to inform the user that
 #. the last row of a table in a document was just deleted.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1878
 msgid "Last row deleted."
-msgstr ""
+msgstr "Dòng cuối đã bị xóa."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just deleted.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1882
-#, fuzzy
-#| msgid "delete"
 msgid "Row deleted."
-msgstr "xoá"
+msgstr "Hàng đã xoá."
 
 #. Translators: This message is to inform the user that a
 #. new table row was inserted at the end of the existing
@@ -8199,19 +8048,15 @@ msgstr "xoá"
 #. from within the last cell of the table.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1889
-#, fuzzy
-#| msgid "Goes to the end of the line."
 msgid "Row inserted at the end of the table."
-msgstr "Đi tới cuối của dòng."
+msgstr "Hàng đã chèn vào cuối bảng."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just inserted.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1893
-#, fuzzy
-#| msgid "insert"
 msgid "Row inserted."
-msgstr "chèn"
+msgstr "Hàng đã chèn."
 
 #. Translators: this is the title of the window that
 #. you get when using StarOffice Presentation Wizard. The
@@ -8698,8 +8543,7 @@ msgstr[0] "%d liên kết chưa thăm"
 #. page.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:520
-#, fuzzy, python-format
-#| msgid "%d percent of document read"
+#, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
 msgstr[0] "%d phần trăm tài liệu đã đọc"
@@ -8912,7 +8756,7 @@ msgstr "CẤP %d"
 #.
 #: ../src/orca/settings.py:1538
 msgid "%H hours, %M minutes and %S seconds."
-msgstr ""
+msgstr "%H giờ, %M phút và %S giây."
 
 #. Translators: Orca has a feature to speak the time
 #. when the user presses a shortcut key.
@@ -8921,7 +8765,7 @@ msgstr ""
 #.
 #: ../src/orca/settings.py:1545
 msgid "%H hours and %M minutes."
-msgstr ""
+msgstr "%H giờ và %M phút."
 
 #. Translators: "Default Synthesizer" will appear in the list of available
 #. speech engines as a special item.  It refers to the default engine
@@ -9077,8 +8921,7 @@ msgstr[0] "%d tab"
 #. Translators: this is the percentage value of a progress bar.
 #.
 #: ../src/orca/speech_generator.py:1284
-#, fuzzy, python-format
-#| msgid "%d percent"
+#, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
 msgstr[0] "%d phần trăm"
@@ -9228,18 +9071,15 @@ msgstr "Không đều"
 #.
 #: ../src/orca/structural_navigation.py:1498
 #: ../src/orca/structural_navigation.py:1520
-#, fuzzy, python-format
-#| msgid "Cell spans %d rows"
+#, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
-msgstr[0] "Ô theo %d hàng"
+msgstr[0] "Ô nối %d hàng"
 
 #. Translators: this represents the number of columns in a table.
 #.
 #: ../src/orca/structural_navigation.py:1504
-#, fuzzy, python-format
-#| msgid "%d column"
-#| msgid_plural "%d columns"
+#, python-format
 msgid " %d column"
 msgid_plural " %d columns"
 msgstr[0] "%d cột"
@@ -9249,11 +9089,10 @@ msgstr[0] "%d cột"
 #. or "spans" more than a single row and/or column.
 #.
 #: ../src/orca/structural_navigation.py:1512
-#, fuzzy, python-format
-#| msgid "Cell spans %d columns"
+#, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
-msgstr[0] "Ô theo %d cột"
+msgstr[0] "Ô nối %d cột"
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
@@ -9307,11 +9146,9 @@ msgstr "Không còn neo nào nữa."
 #: ../src/orca/structural_navigation.py:3525
 #: ../src/orca/structural_navigation.py:3725
 #: ../src/orca/structural_navigation.py:3814
-#, fuzzy
-#| msgid "No focus"
 msgctxt "structural navigation"
 msgid "Not found"
-msgstr "Không có tiêu điểm"
+msgstr "Không tìm thấy"
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
@@ -9617,10 +9454,8 @@ msgstr "Đi tới vùng động kế tiếp."
 #. which made an announcement.
 #.
 #: ../src/orca/structural_navigation.py:3114
-#, fuzzy
-#| msgid "Review live region announcement."
 msgid "Goes to the last live region which made an announcement."
-msgstr "Xem lại thông báo vùng động."
+msgstr "Tới vùng động cuối mà đã có thông báo."
 
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'live region' is a location in a web page
@@ -10883,14 +10718,3 @@ msgstr ""
 
 #~ msgid "Orca Modifier Keys"
 #~ msgstr "Phím bổ trợ Orca"
-
-#~| msgid "table with %d rows and %d columns."
-#~ msgid "table with %(rows)d rows and %(columns)d columns."
-#~ msgstr "bảng có %(rows)d hàng và %(columns)d cột."
-
-#~| msgid "Cell spans %d rows and %d columns"
-#~ msgid "Cell spans %(rows)d rows and %(columns)d columns"
-#~ msgstr "Ô theo %(rows)d hàng và %(columns)d cột"
-
-#~ msgid "Goes to last live region."
-#~ msgstr "Đi tới vùng động cuối cùng."
