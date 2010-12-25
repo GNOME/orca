@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "POT-Creation-Date: 2010-12-21 14:29+0000\n"
-"PO-Revision-Date: 2010-12-24 15:49+0100\n"
-"Last-Translator: Andrej Žnidaršič <andrej.znidarsic@gmail.com>\n"
+"PO-Revision-Date: 2010-12-25 21:10+0100\n"
+"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -2112,7 +2112,7 @@ msgstr "Kazalniki izbire in hipepovezav"
 
 #: C/preferences_braille.page:110(p)
 msgid "The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui> radio button groups allow you to configure <app>Orca</app>'s behavior when displaying selected text and hyperlinks. By default, when you encounter either, <app>Orca</app> will \"underline\" that text on your braille display with Dots 7 and 8. If you would prefer, you can change the indicator to only be Dot 7, only be Dot 8, or not be present at all."
-msgstr "Skupini izbirnih gumbov <gui>Kazalnik izbire</gui> in <gui>Kazalnik hiperpovezav</gui> vam omogočata nastavljanje <app>Orkinega</app> obnašanja pri prikazovanju izbranega besedila in hiperpovezav.  Privzeto bo <app>Orka</app> izbiro in hiperpovezave \ na vašem Braillovem zaslonu \"podčrtala\" s Pikama 7 in 8. Kazalnik lahko spremenite tako, da bo le Pika 7, Pika 8 ali sploh ne bo predstavljen."
+msgstr "Skupini izbirnih gumbov <gui>Kazalnik izbire</gui> in <gui>Kazalnik hiperpovezav</gui> vam omogočata nastavljanje <app>Orkinega</app> obnašanja pri prikazovanju izbranega besedila in hiperpovezav.  Privzeto bo <app>Orka</app> izbiro in hiperpovezave na vašem Braillovem zaslonu \"podčrtala\" s Pikama 7 in 8. Kazalnik lahko spremenite tako, da bo le Pika 7, Pika 8 ali sploh ne bo predstavljen."
 
 #: C/preferences_braille.page:119(p)
 msgid "Default value: <gui>Dots 7 and 8</gui>"
