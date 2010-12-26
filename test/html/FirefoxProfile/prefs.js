@@ -30,7 +30,7 @@ user_pref("browser.tabs.warnOnClose", false);
 user_pref("browser.tabs.warnOnOpen", false);
 user_pref("browser.warnOnQuit", false);
 user_pref("dom.disable_window_status_change", false);
-user_pref("extensions.lastAppVersion", "3.6.2pre");
+user_pref("extensions.lastAppVersion", "4.0b7");
 user_pref("extensions.update.notifyUser", false);
 user_pref("extensions.update.enabled", false);
 user_pref("intl.charsetmenu.browser.cache", "UTF-8, ISO-8859-1");

@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
-# Copyright 2010 Joanmarie Diggs, Mesar Hameed.
+# Copyright 2010 Orca Team.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -38,7 +38,7 @@ http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs, Mesar Hameed."
+__copyright__ = "Copyright (c) 2010 Orca Team."
 __license__   = "LGPL"
 
 import atk
@@ -5294,12 +5294,13 @@ class Script(default.Script):
             if not len(string) \
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj):
-                utterance = self.speechGenerator.generateSpeech(obj)
+                utterances.append(self.speechGenerator.generateSpeech(obj))
             else:
-                utterance = [string]
+                utterances.append([string, self.getACSS(obj, string)])
                 if speakRole and not role in doNotSpeakRoles:
-                    utterance.extend(\
-                        self.speechGenerator.getRoleName(obj))
+                    utterance = self.speechGenerator.getRoleName(obj)
+                    if utterance:
+                        utterances.append(utterance)
   
             # If the object is a heading, or is contained within a heading,
             # speak that role information at the end of the object.
@@ -5316,12 +5317,10 @@ class Script(default.Script):
                         [pyatspi.ROLE_DOCUMENT_FRAME])
 
                 if heading:
-                    utterance.extend(\
-                        self.speechGenerator.getRoleName(heading))
+                    utterance = self.speechGenerator.getRoleName(heading)
+                    if utterance:
+                        utterances.append(utterance)
 
-            for item in utterance:
-                utterances.append([item, self.getACSS(obj, item)])
-  
             prevObj = obj
 
         return utterances

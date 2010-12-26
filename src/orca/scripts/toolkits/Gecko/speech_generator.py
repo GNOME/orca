@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
+# Copyright 2010 Orca Team.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -26,7 +27,7 @@ http://developer.mozilla.org/en/docs/Accessibility/ATSPI_Support
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2010 Orca Team."
 __license__   = "LGPL"
 
 import pyatspi
@@ -208,7 +209,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being spoken."""
         result = []
-        acss = self.voice(speech_generator.DEFAULT)
+        acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
 
