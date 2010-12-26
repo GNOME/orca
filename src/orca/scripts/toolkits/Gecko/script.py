@@ -5351,7 +5351,7 @@ class Script(default.Script):
                 # Translators: "blank" is a short word to mean the
                 # user has navigated to an empty line.
                 #
-                return [[_("blank"), clumped[0][1]]]
+                return [[_("blank"), self.voices[settings.SYSTEM_VOICE]]]
 
         if len(clumped) and isinstance(clumped[-1][0], basestring):
             clumped[-1][0] = clumped[-1][0].rstrip(" ")
