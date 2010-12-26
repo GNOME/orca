@@ -3,19 +3,51 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010.
+# Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2010-12-18 00:54+0000\n"
-"PO-Revision-Date: 2010-12-19 12:01+0100\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"POT-Creation-Date: 2010-12-24 13:31+0000\n"
+"PO-Revision-Date: 2010-12-26 20:50+0100\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_text_attributes.page:31(None)
+msgid ""
+"@@image: 'figures/preferences_text_attributes_table.png'; "
+"md5=067627aeb9adfd314523903f408bb977"
+msgstr ""
+"@@image: 'figures/preferences_text_attributes_table.png'; "
+"md5=067627aeb9adfd314523903f408bb977"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_text_attributes.page:93(None)
+msgid ""
+"@@image: 'figures/preferences_text_attributes_rearranging.png'; "
+"md5=0834c9af2a15c3d08be77f3a963ad245"
+msgstr ""
+"@@image: 'figures/preferences_text_attributes_rearranging.png'; "
+"md5=0834c9af2a15c3d08be77f3a963ad245"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_text_attributes.page:131(None)
+msgid ""
+"@@image: 'figures/preferences_text_attributes_braille.png'; "
+"md5=3482a961cc9d30db5537ccb998bb7c71"
+msgstr ""
+"@@image: 'figures/preferences_text_attributes_braille.png'; "
+"md5=3482a961cc9d30db5537ccb998bb7c71"
 
 #: C/preferences_text_attributes.page:7(title)
 msgid "8. Text Attributes"
@@ -31,15 +63,16 @@ msgid "Configuring what formatting is presented"
 msgstr "Configurar qué formateo se presenta"
 
 #: C/preferences_text_attributes.page:13(name)
-#: C/preferences_structural_navigation.page:14(name)
+#: C/preferences_table_navigation.page:14(name)
 #: C/preferences_speech.page:11(name)
-#: C/preferences_pronunciation.page:12(name) C/preferences.page:6(name)
+#: C/preferences_pronunciation.page:12(name) C/preferences.page:7(name)
 #: C/preferences_magnifier.page:11(name) C/preferences_key_echo.page:11(name)
 #: C/preferences_key_bindings.page:12(name)
-#: C/preferences_general.page:11(name) C/preferences_gekco.page:13(name)
-#: C/preferences_chat.page:10(name) C/preferences_braille.page:11(name)
-#: C/introduction.page:10(name) C/index.page:5(name)
-#: C/howto_whereami.page:10(name) C/howto_toggling_caps_lock.page:8(name)
+#: C/preferences_introduction.page:8(name) C/preferences_general.page:11(name)
+#: C/preferences_gecko.page:12(name) C/preferences_chat.page:10(name)
+#: C/preferences_braille.page:11(name) C/introduction.page:10(name)
+#: C/index.page:5(name) C/howto_whereami.page:10(name)
+#: C/howto_toggling_caps_lock.page:8(name)
 #: C/howto_the_orca_modifier.page:11(name) C/howto_text_setup.page:8(name)
 #: C/howto_text_attributes.page:10(name) C/howto_tables.page:10(name)
 #: C/howto_structural_navigation.page:12(name)
@@ -54,7 +87,7 @@ msgstr "Configurar qué formateo se presenta"
 #: C/commands_table.page:12(name)
 #: C/commands_structural_navigation.page:12(name)
 #: C/commands_speech_settings.page:12(name) C/commands_reading.page:14(name)
-#: C/commands.page:7(name) C/commands_mouse.page:13(name)
+#: C/commands.page:8(name) C/commands_mouse.page:13(name)
 #: C/commands_magnifier.page:12(name) C/commands_live_regions.page:12(name)
 #: C/commands_flat_review.page:12(name) C/commands_find.page:12(name)
 #: C/commands_debugging.page:10(name)
@@ -64,13 +97,14 @@ msgid "Joanmarie Diggs"
 msgstr "Joanmarie Diggs"
 
 #: C/preferences_text_attributes.page:14(email)
-#: C/preferences_structural_navigation.page:15(email)
+#: C/preferences_table_navigation.page:15(email)
 #: C/preferences_speech.page:12(email)
-#: C/preferences_pronunciation.page:13(email) C/preferences.page:7(email)
+#: C/preferences_pronunciation.page:13(email) C/preferences.page:8(email)
 #: C/preferences_magnifier.page:12(email)
 #: C/preferences_key_echo.page:12(email)
 #: C/preferences_key_bindings.page:13(email)
-#: C/preferences_general.page:12(email) C/preferences_gekco.page:14(email)
+#: C/preferences_introduction.page:9(email)
+#: C/preferences_general.page:12(email) C/preferences_gecko.page:13(email)
 #: C/preferences_chat.page:11(email) C/preferences_braille.page:12(email)
 #: C/introduction.page:11(email) C/index.page:6(email)
 #: C/howto_whereami.page:11(email) C/howto_toggling_caps_lock.page:9(email)
@@ -88,7 +122,7 @@ msgstr "Joanmarie Diggs"
 #: C/commands_table.page:13(email)
 #: C/commands_structural_navigation.page:13(email)
 #: C/commands_speech_settings.page:13(email) C/commands_reading.page:15(email)
-#: C/commands.page:8(email) C/commands_mouse.page:14(email)
+#: C/commands.page:9(email) C/commands_mouse.page:14(email)
 #: C/commands_magnifier.page:13(email) C/commands_live_regions.page:13(email)
 #: C/commands_flat_review.page:13(email) C/commands_find.page:13(email)
 #: C/commands_debugging.page:11(email)
@@ -98,11 +132,11 @@ msgid "joanied@gnome.org"
 msgstr "joanied@gnome.org"
 
 #: C/preferences_text_attributes.page:17(p)
-#: C/preferences_structural_navigation.page:18(p)
-#: C/preferences_speech.page:15(p) C/preferences_pronunciation.page:16(p)
-#: C/preferences.page:10(p) C/preferences_magnifier.page:15(p)
-#: C/preferences_key_echo.page:15(p) C/preferences_key_bindings.page:16(p)
-#: C/preferences_general.page:15(p) C/preferences_gekco.page:17(p)
+#: C/preferences_table_navigation.page:18(p) C/preferences_speech.page:15(p)
+#: C/preferences_pronunciation.page:16(p) C/preferences.page:11(p)
+#: C/preferences_magnifier.page:15(p) C/preferences_key_echo.page:15(p)
+#: C/preferences_key_bindings.page:16(p) C/preferences_introduction.page:12(p)
+#: C/preferences_general.page:15(p) C/preferences_gecko.page:16(p)
 #: C/preferences_chat.page:14(p) C/preferences_braille.page:15(p)
 #: C/introduction.page:14(p) C/index.page:9(p) C/howto_whereami.page:14(p)
 #: C/howto_toggling_caps_lock.page:12(p) C/howto_the_orca_modifier.page:15(p)
@@ -118,7 +152,7 @@ msgstr "joanied@gnome.org"
 #: C/commands_time_date_notifications.page:16(p) C/commands_table.page:16(p)
 #: C/commands_structural_navigation.page:16(p)
 #: C/commands_speech_settings.page:16(p) C/commands_reading.page:18(p)
-#: C/commands.page:11(p) C/commands_mouse.page:17(p)
+#: C/commands.page:12(p) C/commands_mouse.page:17(p)
 #: C/commands_magnifier.page:16(p) C/commands_live_regions.page:16(p)
 #: C/commands_flat_review.page:16(p) C/commands_find.page:16(p)
 #: C/commands_debugging.page:14(p) C/commands_controlling_orca.page:15(p)
@@ -129,183 +163,422 @@ msgstr "Creative Commons Compartir Igual 3.0"
 
 #: C/preferences_text_attributes.page:20(title)
 msgid "Text Attributes Preferences"
+msgstr "Preferencias de los atributos de texto"
+
+#: C/preferences_text_attributes.page:21(p)
+msgid ""
+"The term \"text attributes\" refers to all of the font, style, alignment, "
+"and other formatting associated with a given character or series of "
+"characters. <app>Orca</app>'s <gui>Text Attributes</gui> page allows you to "
+"customize which text attributes <app>Orca</app> will present in speech, "
+"along with the order in which they should be presented, and which ones "
+"<app>Orca</app> will indicate in braille."
 msgstr ""
 
-#: C/preferences_text_attributes.page:22(title)
+#: C/preferences_text_attributes.page:30(title)
 msgid "The text attributes table"
-msgstr ""
+msgstr "La tabla de atributos de texto"
 
-#: C/preferences_text_attributes.page:23(p)
+#: C/preferences_text_attributes.page:32(p)
 msgid ""
 "The text attributes table is where you specify what attributes will and will "
 "not be presented and under what conditions. Each row consists of four "
-"columns:"
+"columns."
 msgstr ""
+"La tabla de atributos de texto es donde especifica qué atributos se "
+"presentarán o no y bajo que condiciones. Cada fila consiste en cuatro "
+"columnas."
 
-#: C/preferences_text_attributes.page:30(p)
+#: C/preferences_text_attributes.page:39(p)
 msgid "<gui>Attribute Name</gui>: The name of the text attribute."
-msgstr ""
+msgstr "<gui>Nombre de atributo</gui>: el nombre del atributo de texto."
 
-#: C/preferences_text_attributes.page:35(p)
+#: C/preferences_text_attributes.page:44(p)
 msgid ""
 "<gui>Speak</gui>: Check this checkbox if you would like <app>Orca</app> to "
 "speak this attribute when you press <keyseq><key>Orca</key><key>F</key></"
 "keyseq>."
 msgstr ""
+"<gui>Hablar</gui>: marque esta casilla quiere que <app>Orca</app> hable este "
+"atributo cuando pulse <keyseq><key>Orca</key><key>F</key></keyseq>."
 
-#: C/preferences_text_attributes.page:42(p)
+#: C/preferences_text_attributes.page:51(p)
 msgid ""
 "<gui>Mark in braille</gui>: Check this checkbox if you would like <app>Orca</"
 "app> to \"underline\" this attribute on your braille display."
 msgstr ""
+"<gui>Marcar en braille</gui>: marque esta casilla si le gustaría que "
+"<app>Orca</app> subrayase este atributo en su línea braille."
 
-#: C/preferences_text_attributes.page:49(p)
+#: C/preferences_text_attributes.page:58(p)
 msgid ""
 "<gui>Present Unless</gui>: This editable field allows you to specify when an "
 "enabled attribute is not of interest."
 msgstr ""
+"<gui>Presentar a menos que</gui>: éste campo editable le permite especificar "
+"cuándo un atributo activo no es de interés."
 
-#: C/preferences_text_attributes.page:53(p)
+#: C/preferences_text_attributes.page:62(p)
 msgid ""
 "For example, by default the \"underline\" text attribute has a value of "
 "\"none.\" This causes <app>Orca</app> to inform you about underlined text as "
 "long as the text is actually underlined. If you always want this attribute "
-"to be spoken irrespective of whether or not the text is underlined, then the "
-"attribute should be checked and the <gui>Present unless</gui> value cleared."
+"to be spoken irrespective of whether or not the text is underlined, the "
+"<gui>Present unless</gui> column should be empty for underline. In addition, "
+"you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
+"Por ejemplo, el atributo «subrayado» por defecto tiene un valor de «none.» "
+"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
+"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
+"hable siempre independientemente de que el texto esté subrayado o no, "
+"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
+"menos que</gui> en blanco."
 
-#: C/preferences_text_attributes.page:65(title)
+#: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
-msgstr ""
+msgstr "Deshaciendo cambios"
 
-#: C/preferences_text_attributes.page:66(p)
+#: C/preferences_text_attributes.page:76(p)
 msgid ""
 "Beneath the list of text attributes, there is a Reset button "
 "(<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the values "
 "of the table to what they were when the dialog was first displayed."
 msgstr ""
+"Bajo la lista de atributos de texto, hay un botón "
+"«Restablecer» (<keyseq><key>Alt</key><key>R</key></keyseq>) que restaurará "
+"los valores de la tabla a los que eran cuando el diálogo se mostró por "
+"primera vez."
 
-#: C/preferences_text_attributes.page:74(title)
+#: C/preferences_text_attributes.page:84(title)
 msgid "Rearranging the order of presentation"
+msgstr "Reorganizando el orden de presentación"
+
+#: C/preferences_text_attributes.page:86(title)
+msgid "Options for Controlling the Order in Which Attributes Are Presented"
 msgstr ""
 
-#: C/preferences_text_attributes.page:75(p)
+#: C/preferences_text_attributes.page:87(desc)
 msgid ""
-"When you initially display the text attribute page, all your checked "
-"attributes are put at the top of the list. They are given in the order that "
-"they will be spoken. There are four buttons which can be used to rearrange "
-"the order of presentation:"
+"When you initially display the text attribute page, all of your enabled "
+"attributes are placed at the top of the table in the order in which they "
+"will be spoken. There are four buttons which can be used to rearrange the "
+"order of presentation."
 msgstr ""
+"Cuando muestra la página de atributos de texto inicialmente, todos sus "
+"atributos marcados se ponen al principio de la lista.Se dan en el orden en "
+"que se hablarán. Hay cuatro botones que pueden usarse para reorganizar el "
+"orden de presentación."
 
-#: C/preferences_text_attributes.page:83(p)
+#: C/preferences_text_attributes.page:97(p)
 msgid ""
 "<gui>Move to top</gui> (<keyseq><key>Alt</key><key>T</key></keyseq>): moves "
 "the selected attribute to the top of the list."
 msgstr ""
+"<gui>Mover al principio</gui> (<keyseq><key>Alt</key><key>P</key></keyseq>): "
+"mueve el atributo seleccionado al principio de la lista."
 
-#: C/preferences_text_attributes.page:89(p)
+#: C/preferences_text_attributes.page:103(p)
 msgid ""
 "<gui>Move up one</gui> (<keyseq><key>Alt</key><key>U</key></keyseq>): moves "
 "the selected attribute up one row."
 msgstr ""
+"<gui>Mover uno arriba</gui> (<keyseq><key>Alt</key><key>R</key></keyseq>): "
+"mueve el atributo seleccionado una fila arriba."
 
-#: C/preferences_text_attributes.page:95(p)
+#: C/preferences_text_attributes.page:109(p)
 msgid ""
 "<gui>Move down one</gui> (<keyseq><key>Alt</key><key>D</key></keyseq>): "
 "moves the selected attribute down one row."
 msgstr ""
+"<gui>Mover uno abajo</gui> (<keyseq><key>Alt</key><key>A</key></keyseq>): "
+"mueve el atributo seleccionado una fila abajo."
 
-#: C/preferences_text_attributes.page:101(p)
+#: C/preferences_text_attributes.page:115(p)
 msgid ""
 "<gui>Move to bottom</gui> (<keyseq><key>Alt</key><key>B</key></keyseq>): "
 "moves the selected attribute to the bottom of the list."
 msgstr ""
+"<gui>Mover al final</gui> (<keyseq><key>Alt</key><key>F</key></keyseq>): "
+"mueve el atributo seleccionado al final de la lista."
 
-#: C/preferences_text_attributes.page:109(title)
+#: C/preferences_text_attributes.page:123(title)
 msgid "Braille indicator"
+msgstr "Indicador braille"
+
+#: C/preferences_text_attributes.page:125(title)
+msgid "Options for Configuring Braille \"Underlining\" for Formatting"
 msgstr ""
 
-#: C/preferences_text_attributes.page:110(p)
+#: C/preferences_text_attributes.page:126(desc)
+#, fuzzy
+#| msgid ""
+#| "Beneath the push buttons is the <gui>Braille Indicator</gui> group of "
+#| "radio buttons. Here you can select the cell or cells to be used to "
+#| "indicate text which has at least one of the specified attributes. Your "
+#| "choices are:"
 msgid ""
 "Beneath the push buttons is the <gui>Braille Indicator</gui> group of radio "
 "buttons. Here you can select the cell or cells to be used to indicate text "
-"which has at least one of the specified attributes. Your choices are:"
+"which has at least one of the specified attributes."
 msgstr ""
+"Bajo a los botones está el grupo de botones de radio <gui>Indicador Braille</"
+"gui>. Aquí puede seleccionar la celda o celdas que se usarán para indicar el "
+"texto que al menos tenga uno de los atributos especificados. Sus opciones "
+"son:"
 
-#: C/preferences_text_attributes.page:118(p)
-msgid "<gui>None</gui> (the default)"
-msgstr ""
-
-#: C/preferences_text_attributes.page:121(gui)
-msgid "Dot 7"
-msgstr "Punto 7"
-
-#: C/preferences_text_attributes.page:124(gui)
-msgid "Dot 8"
-msgstr "Punto 8"
-
-#: C/preferences_text_attributes.page:127(gui)
-msgid "Dots 7 and 8"
-msgstr "Puntos 7 y 8"
-
-#: C/preferences_structural_navigation.page:8(title)
-#: C/commands_structural_navigation.page:6(title)
-msgid "2. Structural Navigation"
-msgstr ""
-
-#: C/preferences_structural_navigation.page:9(title)
-#: C/howto_tables.page:52(title) C/howto_structural_navigation.page:19(title)
-#: C/commands_structural_navigation.page:7(title)
-msgid "Structural Navigation"
-msgstr ""
-
-#: C/preferences_structural_navigation.page:10(desc)
-msgid "Configuring <app>Orca</app>'s navigation by element"
-msgstr ""
-
-#: C/preferences_structural_navigation.page:21(title)
-msgid "Structural Navigation Preferences"
-msgstr ""
-
-#: C/preferences_structural_navigation.page:22(p)
+#: C/preferences_text_attributes.page:135(p)
 msgid ""
-"The following option allows you to customize how <app>Orca</app> behaves in "
-"Structural-Navigation-enabled applications."
+"<gui>None</gui>: Do not underline text attributes in braille (the default)"
 msgstr ""
 
-#: C/preferences_structural_navigation.page:28(p)
-msgid ""
-"<gui>Use <app>Orca</app> Structural Navigation</gui>: This checkbox toggles "
-"structural navigation on and off. To toggle this setting on the fly without "
-"saving it, use <keyseq><key>Orca Modifier</key><key>Z</key></keyseq>."
+#: C/preferences_text_attributes.page:138(p)
+msgid "<gui>Dot 7</gui>: Underline text attributes with only Dot 7"
 msgstr ""
 
-#: C/preferences_structural_navigation.page:36(p)
-msgid ""
-"<gui>Speak cell coordinates</gui>: If this checkbox is checked, <app>Orca</"
-"app> will announce the coordinates of each cell you navigate to."
+#: C/preferences_text_attributes.page:141(p)
+msgid "<gui>Dot 8</gui>: Underline text attributes with only Dot 8"
 msgstr ""
 
-#: C/preferences_structural_navigation.page:43(p)
+#: C/preferences_text_attributes.page:144(p)
 msgid ""
-"<gui>Speak multiple cell spans</gui>: If this checkbox is checked, "
-"<app>Orca</app> will announce how many rows and/or columns a cell spans when "
-"it spans more than one."
+"<gui>Dots 7 and 8</gui>: Underline text attributes with both Dots 7 and Dots "
+"8"
 msgstr ""
 
-#: C/preferences_structural_navigation.page:50(p)
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_table_navigation.page:22(None)
 msgid ""
-"<gui>Announce cell header</gui>: If this checkbox is checked, <app>Orca</"
-"app> will announce changes in the header if the headers for the current cell "
-"can be determined."
+"@@image: 'figures/preferences_table_navigation.png'; "
+"md5=a97b98bd9e3499e06844d56156419a7d"
+msgstr ""
+"@@image: 'figures/preferences_table_navigation.png'; "
+"md5=a97b98bd9e3499e06844d56156419a7d"
+
+#: C/preferences_table_navigation.page:8(title)
+#, fuzzy
+#| msgid "Table Navigation"
+msgid "2. Table Navigation"
+msgstr "Navegación por tablas"
+
+#: C/preferences_table_navigation.page:9(title) C/commands_table.page:7(title)
+msgid "Table Navigation"
+msgstr "Navegación por tablas"
+
+#: C/preferences_table_navigation.page:10(desc)
+msgid "Configuring <app>Orca</app>'s navigation within tables"
 msgstr ""
 
-#: C/preferences_structural_navigation.page:57(p)
+#: C/preferences_table_navigation.page:21(title)
+#, fuzzy
+#| msgid "Table Navigation"
+msgid "Table Navigation Preferences"
+msgstr "Navegación por tablas"
+
+#: C/preferences_table_navigation.page:23(p)
 msgid ""
-"<gui>Skip blank cells</gui>: If this checkbox is checked, <app>Orca</app> "
-"will skip blank cells when you are using <app>Orca</app>'s table structural "
-"navigation commands to access the table."
+"The following option allows you to customize how <app>Orca</app> behaves "
+"when navigating within a table in <link xref=\"howto_structural_navigation"
+"\">Structural-Navigation</link>-enabled applications."
 msgstr ""
+
+#: C/preferences_table_navigation.page:30(title)
+#, fuzzy
+#| msgid "Speak blank lines"
+msgid "Speak cell coordinates"
+msgstr "Indicar líneas en blanco"
+
+#: C/preferences_table_navigation.page:31(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will announce the coordinates "
+"of each cell you navigate to."
+msgstr ""
+
+#: C/preferences_table_navigation.page:35(p)
+#: C/preferences_table_navigation.page:45(p)
+#: C/preferences_table_navigation.page:55(p) C/preferences_speech.page:174(p)
+#: C/preferences_magnifier.page:136(p) C/preferences_magnifier.page:315(p)
+#: C/preferences_magnifier.page:361(p) C/preferences_key_echo.page:29(p)
+#: C/preferences_key_echo.page:39(p) C/preferences_key_echo.page:49(p)
+#: C/preferences_key_echo.page:59(p) C/preferences_key_echo.page:69(p)
+#: C/preferences_key_echo.page:81(p) C/preferences_general.page:142(p)
+#: C/preferences_gecko.page:36(p) C/preferences_gecko.page:55(p)
+#: C/preferences_gecko.page:106(p)
+msgid "Default value: checked"
+msgstr ""
+
+#: C/preferences_table_navigation.page:40(title)
+#, fuzzy
+#| msgid "Speak tutorial messages"
+msgid "Speak multiple cell spans"
+msgstr "Leer mensajes de aprendizaje"
+
+#: C/preferences_table_navigation.page:41(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will announce how many rows and/"
+"or columns a cell spans when it spans more than one."
+msgstr ""
+
+#: C/preferences_table_navigation.page:50(title)
+msgid "Announce cell header"
+msgstr ""
+
+#: C/preferences_table_navigation.page:51(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will announce changes in the "
+"header if the headers for the current cell can be determined."
+msgstr ""
+
+#: C/preferences_table_navigation.page:60(title)
+#, fuzzy
+#| msgid "Speak blank lines"
+msgid "Skip blank cells"
+msgstr "Indicar líneas en blanco"
+
+#: C/preferences_table_navigation.page:61(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will skip blank cells when you "
+"are using <app>Orca</app>'s table structural navigation commands to access "
+"the table."
+msgstr ""
+
+#: C/preferences_table_navigation.page:66(p)
+#: C/preferences_magnifier.page:27(p) C/preferences_magnifier.page:177(p)
+#: C/preferences_magnifier.page:239(p) C/preferences_magnifier.page:279(p)
+#: C/preferences_magnifier.page:325(p) C/preferences_magnifier.page:371(p)
+#: C/preferences_key_echo.page:94(p) C/preferences_key_echo.page:104(p)
+#: C/preferences_key_echo.page:140(p) C/preferences_key_echo.page:163(p)
+#: C/preferences_general.page:53(p) C/preferences_general.page:91(p)
+#: C/preferences_general.page:111(p) C/preferences_general.page:159(p)
+#: C/preferences_general.page:178(p) C/preferences_gecko.page:74(p)
+#: C/preferences_gecko.page:87(p) C/preferences_gecko.page:118(p)
+#: C/preferences_chat.page:31(p) C/preferences_chat.page:42(p)
+#: C/preferences_chat.page:54(p) C/preferences_chat.page:75(p)
+#: C/preferences_braille.page:28(p) C/preferences_braille.page:47(p)
+#: C/preferences_braille.page:65(p) C/preferences_braille.page:79(p)
+#: C/preferences_braille.page:90(p)
+msgid "Default value: not checked"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:21(None)
+msgid ""
+"@@image: 'figures/preferences_enable_speech.png'; "
+"md5=66fff525659d9e3db4130f58f962f82e"
+msgstr ""
+"@@image: 'figures/preferences_enable_speech.png'; "
+"md5=66fff525659d9e3db4130f58f962f82e"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:31(None)
+msgid ""
+"@@image: 'figures/preferences_tts_options.png'; "
+"md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
+msgstr ""
+"@@image: 'figures/preferences_tts_options.png'; "
+"md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:76(None)
+msgid ""
+"@@image: 'figures/preferences_rate_pitch_volume.png'; "
+"md5=98d310294cb4c7b945ecf81fda0df1f7"
+msgstr ""
+"@@image: 'figures/preferences_rate_pitch_volume.png'; "
+"md5=98d310294cb4c7b945ecf81fda0df1f7"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:85(None)
+msgid ""
+"@@image: 'figures/preferences_punctuation_level.png'; "
+"md5=2578236bb97ab0109675417fcdb8dd4b"
+msgstr ""
+"@@image: 'figures/preferences_punctuation_level.png'; "
+"md5=2578236bb97ab0109675417fcdb8dd4b"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:133(None)
+msgid ""
+"@@image: 'figures/preferences_speech_verbosity.png'; "
+"md5=d689e49513907f75e54b3635b7419247"
+msgstr ""
+"@@image: 'figures/preferences_speech_verbosity.png'; "
+"md5=d689e49513907f75e54b3635b7419247"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:147(None)
+msgid ""
+"@@image: 'figures/preferences_table_rows.png'; "
+"md5=736ba1cf57c3cdc79de019160f3636ab"
+msgstr ""
+"@@image: 'figures/preferences_table_rows.png'; "
+"md5=736ba1cf57c3cdc79de019160f3636ab"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:167(None)
+msgid ""
+"@@image: 'figures/preferences_progress_bar_updates.png'; "
+"md5=65ae433495a3efd95cd5259f10865c98"
+msgstr ""
+"@@image: 'figures/preferences_progress_bar_updates.png'; "
+"md5=65ae433495a3efd95cd5259f10865c98"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:216(None)
+msgid ""
+"@@image: 'figures/preferences_only_speak_displayed_text.png'; "
+"md5=4636b63366ca45dd7f2679821e8e0099"
+msgstr ""
+"@@image: 'figures/preferences_only_speak_displayed_text.png'; "
+"md5=4636b63366ca45dd7f2679821e8e0099"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:225(None)
+msgid ""
+"@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
+"md5=ac2c1da480acd938209d7f29b5ce12f1"
+msgstr ""
+"@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
+"md5=ac2c1da480acd938209d7f29b5ce12f1"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:237(None)
+msgid ""
+"@@image: 'figures/preferences_break_speech_into_chunks.png'; "
+"md5=c2193d97d780a2a9349dcff4a64a3135"
+msgstr ""
+"@@image: 'figures/preferences_break_speech_into_chunks.png'; "
+"md5=c2193d97d780a2a9349dcff4a64a3135"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:249(None)
+msgid ""
+"@@image: 'figures/preferences_say_all_by.png'; "
+"md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
+msgstr ""
+"@@image: 'figures/preferences_say_all_by.png'; "
+"md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_speech.page:259(None)
+msgid ""
+"@@image: 'figures/preferences_system_voice_options.png'; "
+"md5=15083bf706ad1b905332746300f206a9"
+msgstr ""
+"@@image: 'figures/preferences_system_voice_options.png'; "
+"md5=15083bf706ad1b905332746300f206a9"
 
 #: C/preferences_speech.page:5(title)
 msgid "2. Speech"
@@ -323,132 +596,179 @@ msgstr ""
 msgid "Speech Preferences"
 msgstr "Configuración de la voz"
 
-#: C/preferences_speech.page:21(desc)
-msgid ""
-"Preferences dialog box option to enable and disable <app>Orca</app>'s speech "
-"output."
-msgstr ""
-
-#: C/preferences_speech.page:26(title)
+#: C/preferences_speech.page:20(title)
 msgid "Enable speech"
 msgstr "Activar voz"
 
-#: C/preferences_speech.page:27(p)
+#: C/preferences_speech.page:22(p)
 msgid ""
 "The <gui>Enable speech</gui> check box controls whether or not <app>Orca</"
 "app> will make use of a speech synthesizer. Magnification-only and Braille-"
 "only users will likely want to uncheck this checkbox."
 msgstr ""
 
-#: C/preferences_speech.page:36(desc)
-msgid ""
-"Preferences dialog box options to configure the text-to-speech settings to "
-"be used by <app>Orca</app>."
-msgstr ""
-
-#: C/preferences_speech.page:41(title)
+#: C/preferences_speech.page:30(title)
 msgid "Text-To-Speech Options"
 msgstr ""
 
-#: C/preferences_speech.page:44(p)
+#: C/preferences_speech.page:33(title)
+#, fuzzy
+#| msgid "Speech"
+msgid "Speech system"
+msgstr "Voz"
+
+#: C/preferences_speech.page:34(p)
 msgid ""
-"The <gui>Speech system</gui> combo box allows you to select your preferred "
-"speech system from those you have installed. Examples include Speech "
-"Dispatcher and GNOME Speech."
+"This combo box allows you to select your preferred speech system from those "
+"you have installed. Examples include Speech Dispatcher and GNOME Speech."
 msgstr ""
 
-#: C/preferences_speech.page:51(p)
-msgid ""
-"The <gui>Speech synthesizer</gui> combo box allows you to select the speech "
-"synthesizer to be used with your chosen Speech system."
+#: C/preferences_speech.page:41(title)
+msgid "Speech synthesizer"
 msgstr ""
 
-#: C/preferences_speech.page:57(p)
+#: C/preferences_speech.page:42(p)
 msgid ""
-"The <gui>Voice settings</gui> combo box makes it possible for you to use "
-"different voices so that you can better distinguish uppercase and linked "
-"text from other text, and on-screen text from text added by <app>Orca</app>."
+"This combo box allows you to select the speech synthesizer to be used with "
+"your chosen Speech system."
 msgstr ""
 
-#: C/preferences_speech.page:64(title)
+#: C/preferences_speech.page:48(title)
+msgid "Voice settings"
+msgstr ""
+
+#: C/preferences_speech.page:49(p)
+msgid ""
+"This combo box makes it possible for you to use different voices so that you "
+"can better distinguish uppercase and linked text from other text, and on-"
+"screen text from text added by <app>Orca</app>."
+msgstr ""
+
+#: C/preferences_speech.page:55(title)
 msgid "Configuring Multiple Voices"
 msgstr ""
 
-#: C/preferences_speech.page:65(p)
+#: C/preferences_speech.page:56(p)
 msgid ""
 "For each voice you wish to configure, first select the voice in the "
 "<gui>Voice settings</gui> combo box. Then configure the person, rate, pitch, "
 "and volume to be used for that voice."
 msgstr ""
 
-#: C/preferences_speech.page:74(p)
-msgid ""
-"The <gui>Person</gui> combo box allows you to choose which \"person\" or "
-"\"speaker\" should be used with the selected voice. For instance, you might "
-"wish to have David speak by default, but have hyperlinks spoken by Alice. "
-"Note that what you find in the <gui>Person</gui> combo box will depend on "
-"which speech synthesizers you have installed."
+#: C/preferences_speech.page:65(title)
+msgid "Person"
 msgstr ""
 
-#: C/preferences_speech.page:84(p)
+#: C/preferences_speech.page:66(p)
 msgid ""
-"The <gui>Rate</gui>, <gui>Pitch</gui>, and <gui>Volume</gui> left-right "
-"sliders allow you to further customize the sound of the person you have just "
-"selected."
+"This combo box allows you to choose which \"person\" or \"speaker\" should "
+"be used with the selected voice. For instance, you might wish to have David "
+"speak by default, but have hyperlinks spoken by Alice. Note that what you "
+"find in the <gui>Person</gui> combo box will depend on which speech "
+"synthesizers you have installed."
 msgstr ""
 
-#: C/preferences_speech.page:94(desc)
-msgid ""
-"Preferences dialog box option to set the level of verbalized punctuation."
+#: C/preferences_speech.page:75(title)
+msgid "Rate, Pitch, and Volume"
 msgstr ""
 
-#: C/preferences_speech.page:99(title)
+#: C/preferences_speech.page:77(p)
+msgid ""
+"These three left-right sliders allow you to further customize the sound of "
+"the person you have just selected."
+msgstr ""
+
+#: C/preferences_speech.page:84(title)
 msgid "Punctuation Level"
 msgstr "Nivel de puntuación"
 
-#: C/preferences_speech.page:100(p)
+#: C/preferences_speech.page:86(p)
 msgid ""
 "The <gui>Punctuation Level</gui> radio button group is used to adjust the "
 "amount of punctuation spoken by the synthesizer. The available levels are "
-"None, Some, Most and All."
+"<gui>None</gui>, <gui>Some</gui>, <gui>Most</gui>, and <gui>All</gui>."
 msgstr ""
 
-#: C/preferences_speech.page:108(desc)
+#: C/preferences_speech.page:93(title)
+msgid "None"
+msgstr ""
+
+#: C/preferences_speech.page:94(p)
 msgid ""
-"Preferences dialog box option to control the amount of information which "
-"will be spoken in various situations."
+"Choosing a punctuation level of <gui>None</gui> would, as you expect, cause "
+"no punctuation to be spoken. Note, however, that special symbols such as "
+"subscripted and superscripted numbers, unicode fractions, and bullets are "
+"still spoken at this level, even though some might consider these types of "
+"symbols punctuation."
 msgstr ""
 
-#: C/preferences_speech.page:113(title) C/preferences_braille.page:70(title)
+#: C/preferences_speech.page:103(title)
+msgid "Some"
+msgstr ""
+
+#: C/preferences_speech.page:104(p)
+msgid ""
+"Choosing a punctuation level of <gui>Some</gui> causes all of the previously-"
+"mentioned symbols to be spoken. In addition, <app>Orca</app> will speak "
+"known mathematical symbols, currency symbols, and \"^\", \"@\", \"/\", "
+"\"&amp;\", \"#\"."
+msgstr ""
+
+#: C/preferences_speech.page:112(title)
+msgid "Most"
+msgstr ""
+
+#: C/preferences_speech.page:113(p)
+msgid ""
+"Choosing a punctuation level of <gui>Most</gui> causes all of the previous-"
+"mentioned symbols to be spoken. In addition, <app>Orca</app> will speak all "
+"other known punctuation symbols <em>other than</em> \"!\", \"'\", \",\", \"."
+"\", \"?\"."
+msgstr ""
+
+#: C/preferences_speech.page:121(title)
+msgid "All"
+msgstr ""
+
+#: C/preferences_speech.page:122(p)
+msgid ""
+"Choosing a punctuation level of <gui>All</gui>, as expected, causes "
+"<app>Orca</app> to speak all known punctuation symbols."
+msgstr ""
+
+#: C/preferences_speech.page:127(p)
+msgid "Default value: <gui>Most</gui>"
+msgstr ""
+
+#: C/preferences_speech.page:132(title) C/preferences_braille.page:95(title)
 msgid "Verbosity"
 msgstr "Cantidad de información"
 
-#: C/preferences_speech.page:114(p)
+#: C/preferences_speech.page:134(p)
 msgid ""
 "The <gui>Verbosity</gui> setting determines the amount of information that "
 "will be spoken in various situations. For example, if it is set to verbose, "
-"<app>Orca</app> will speak shortcut keys for items in menus. When it is set "
-"to brief, these shortcut keys are not announced."
+"and you arrow into a word that is misspelled, <app>Orca</app> will announce "
+"that the word is misspelled. When the level is set to brief, this "
+"announcement will not be made."
 msgstr ""
 
-#: C/preferences_speech.page:123(desc)
-msgid ""
-"Preferences dialog box option to configure what gets spoken when navigating "
-"amongst rows in a table."
+#: C/preferences_speech.page:141(p) C/preferences_braille.page:103(p)
+msgid "Default value: <gui>Verbose</gui>"
 msgstr ""
 
-#: C/preferences_speech.page:128(title)
+#: C/preferences_speech.page:146(title)
 msgid "Table Rows"
 msgstr ""
 
-#: C/preferences_speech.page:129(p)
+#: C/preferences_speech.page:148(p)
 msgid ""
 "The <gui>Table Rows</gui> radio button group determines what gets spoken "
 "when navigating amongst rows in a table. The available options are "
 "<gui>speak row</gui> and <gui>speak cell</gui>."
 msgstr ""
 
-#: C/preferences_speech.page:134(p)
+#: C/preferences_speech.page:153(p)
 msgid ""
 "Consider the process of examining the list of messages in your Inbox. In "
 "order to have <app>Orca</app> announce the sender, subject, date, and "
@@ -458,67 +778,89 @@ msgid ""
 "chosen."
 msgstr ""
 
-#: C/preferences_speech.page:145(desc)
-msgid ""
-"Preferences dialog box options to control which progress bar updates get "
-"spoken."
+#: C/preferences_speech.page:161(p)
+msgid "Default value: <gui>Speak row</gui>"
 msgstr ""
 
-#: C/preferences_speech.page:150(title)
+#: C/preferences_speech.page:166(title)
 msgid "Progress Bar Updates"
 msgstr ""
 
-#: C/preferences_speech.page:151(p)
+#: C/preferences_speech.page:169(title)
+#, fuzzy
+#| msgid "Tables"
+msgid "Enabled"
+msgstr "Tablas"
+
+#: C/preferences_speech.page:170(p)
 msgid ""
 "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
-"periodically announce the status of progress bars. How often the "
-"announcement is made is determined by the value chosen in the <gui>Frequency "
-"(secs)</gui> spin button."
+"periodically present the status of progress bars."
 msgstr ""
 
-#: C/preferences_speech.page:157(p)
+#: C/preferences_speech.page:179(title)
+msgid "Frequency (secs)"
+msgstr ""
+
+#: C/preferences_speech.page:180(p)
+msgid "This spin button determines how often the announcement is made."
+msgstr ""
+
+#: C/preferences_speech.page:183(p)
+msgid "Default value: 10"
+msgstr ""
+
+#: C/preferences_speech.page:188(title)
+msgid "Restrict to"
+msgstr ""
+
+#: C/preferences_speech.page:189(p)
 msgid ""
-"The <gui>Restrict to</gui> combo box allows you to control which progress "
-"bars should be spoken, assuming the speaking of progress bar updates has "
-"been enabled. The choices are <gui>All</gui>, <gui>Application</gui>, and "
-"<gui>Window</gui>. Choosing <gui>All</gui> will result in <app>Orca</app> "
-"speaking updates for all progress bars, regardless of where the progress "
-"bars are located. Choosing <gui>Application</gui> will result in <app>Orca</"
-"app> speaking updates from progress bars in the active application, even if "
-"they are not in the active window. Choosing <gui>Window</gui> will result in "
-"<app>Orca</app> only speaking updates for progress bars in the active "
-"window. The default value is <gui>Application</gui>."
+"This combo box allows you to control which progress bars should be "
+"presented, assuming the presentation of progress bar updates has been "
+"enabled. The choices are <gui>All</gui>, <gui>Application</gui>, and "
+"<gui>Window</gui>."
 msgstr ""
 
-#: C/preferences_speech.page:173(desc)
+#: C/preferences_speech.page:195(p)
 msgid ""
-"Preferences dialog box option to cause <app>Orca</app> to only speak actual "
-"text displayed on screen. This option is intended primarily for low vision "
-"users and users with a visual learning disability."
+"Choosing <gui>All</gui> will result in <app>Orca</app> presenting updates "
+"for all progress bars, regardless of where the progress bars are located."
 msgstr ""
 
-#: C/preferences_speech.page:180(title)
+#: C/preferences_speech.page:200(p)
+msgid ""
+"Choosing <gui>Application</gui> will result in <app>Orca</app> presenting "
+"updates from progress bars in the active application, even if they are not "
+"in the active window."
+msgstr ""
+
+#: C/preferences_speech.page:205(p)
+msgid ""
+"Choosing <gui>Window</gui> will result in <app>Orca</app> only presenting "
+"updates for progress bars in the active window."
+msgstr ""
+
+#: C/preferences_speech.page:209(p)
+msgid "Default value: <gui>Application</gui>"
+msgstr ""
+
+#: C/preferences_speech.page:215(title)
 msgid "Only speak displayed text"
 msgstr "Hablar solamente el texto mostrado"
 
-#: C/preferences_speech.page:181(p)
+#: C/preferences_speech.page:217(p)
 msgid ""
 "Checking this checkbox causes <app>Orca</app> to only speak actual text "
 "displayed on screen. This option is intended primarily for low vision users "
 "and users with a visual learning disability."
 msgstr ""
 
-#: C/preferences_speech.page:189(desc)
-msgid ""
-"Preferences dialog box option to cause <app>Orca</app> to present multicase "
-"strings as if they were separate words."
-msgstr ""
-
-#: C/preferences_speech.page:194(title)
+#: C/preferences_speech.page:224(title)
 msgid "Speak multicase strings as words"
 msgstr "Hablar cadenas con mayúsculas y minúsculas como palabras"
 
-#: C/preferences_speech.page:195(p)
+#: C/preferences_speech.page:226(p)
 msgid ""
 "In some texts, and especially when working with code, one often comes across "
 "a \"word\" consisting of several words with alternating case, such as "
@@ -529,17 +871,11 @@ msgid ""
 "\") prior to passing it along to the speech synthesizer."
 msgstr ""
 
-#: C/preferences_speech.page:207(desc)
-msgid ""
-"Preferences dialog box option to cause <app>Orca</app> to add pauses to the "
-"items being spoken."
-msgstr ""
-
-#: C/preferences_speech.page:212(title)
+#: C/preferences_speech.page:238(title)
 msgid "Break speech into chunks between pauses"
 msgstr "Partir la voz en trozos entre pausas"
 
-#: C/preferences_speech.page:213(p)
+#: C/preferences_speech.page:239(p)
 msgid ""
 "Depending on the enabled speech settings, <app>Orca</app> may have quite a "
 "bit to say about a particular object such as its name, its role, its state, "
@@ -548,34 +884,22 @@ msgid ""
 "to insert brief pauses in between each of these pieces of information."
 msgstr ""
 
-#: C/preferences_speech.page:224(desc)
-msgid ""
-"Preferences dialog box option controlling <app>Orca</app>'s Say All style. "
-"The options are by sentence and by line."
-msgstr ""
-
-#: C/preferences_speech.page:229(title)
+#: C/preferences_speech.page:250(title)
 msgid "Say All By"
 msgstr "Decir todo por"
 
-#: C/preferences_speech.page:230(p)
+#: C/preferences_speech.page:251(p)
 msgid ""
 "The <gui>Say All By</gui> combo box allows you to specify whether <app>Orca</"
 "app> speaks a sentence at a time or a line at a time when doing a \"Say All"
 "\" of a document."
 msgstr ""
 
-#: C/preferences_speech.page:237(title)
+#: C/preferences_speech.page:258(title)
 msgid "System Information"
 msgstr "Información del sistema"
 
-#: C/preferences_speech.page:239(desc)
-msgid ""
-"Preferences dialog box options for controlling the presentation of a variety "
-"of supplemental, \"system\" information about the item with focus."
-msgstr ""
-
-#: C/preferences_speech.page:245(p)
+#: C/preferences_speech.page:260(p)
 msgid ""
 "The following items control the presentation of a variety of supplemental, "
 "\"system\" information about the item with focus. Because the associated "
@@ -583,44 +907,32 @@ msgid ""
 "app>'s System voice."
 msgstr ""
 
-#: C/preferences_speech.page:252(title)
+#: C/preferences_speech.page:267(title)
 msgid "Configuration of System Information"
 msgstr ""
 
-#: C/preferences_speech.page:253(p)
+#: C/preferences_speech.page:268(p)
 msgid ""
 "The follow items will not be available for configuration if the <gui>Only "
 "speak displayed text</gui> checkbox is checked."
 msgstr ""
 
-#: C/preferences_speech.page:260(desc)
-msgid ""
-"Preferences dialog box option for controlling whether or not blank lines are "
-"announced by <app>Orca</app>."
-msgstr ""
-
-#: C/preferences_speech.page:265(title)
+#: C/preferences_speech.page:274(title)
 msgid "Speak blank lines"
 msgstr "Indicar líneas en blanco"
 
-#: C/preferences_speech.page:266(p)
+#: C/preferences_speech.page:275(p)
 msgid ""
 "If the <gui>Speak blank lines</gui> checkbox is checked, <app>Orca</app> "
 "will say \"blank\" each time you arrow to a blank line. If it is unchecked, "
 "<app>Orca</app> will say nothing when you move to a blank line."
 msgstr ""
 
-#: C/preferences_speech.page:275(desc)
-msgid ""
-"Preferences dialog box option for enabling/disabling the speaking of "
-"indentation and justification whilst navigating within text."
-msgstr ""
-
-#: C/preferences_speech.page:280(title)
+#: C/preferences_speech.page:283(title)
 msgid "Speak indentation and justification"
 msgstr ""
 
-#: C/preferences_speech.page:281(p)
+#: C/preferences_speech.page:284(p)
 msgid ""
 "When working with code or editing other documents it is often desirable to "
 "be aware of justification and indentation. Checking the <gui>Speak "
@@ -628,57 +940,48 @@ msgid ""
 "announce this information."
 msgstr ""
 
-#: C/preferences_speech.page:290(desc)
-msgid ""
-"Preferences dialog box option for enabling/disabling the speaking of "
-"mnemonics and keyboard shortcuts associated with the focused item."
-msgstr ""
-
-#: C/preferences_speech.page:296(title)
+#: C/preferences_speech.page:292(title)
 msgid "Speak object mnemonics"
 msgstr "Leer las teclas de acceso del objeto"
 
-#: C/preferences_speech.page:297(p)
+#: C/preferences_speech.page:293(p)
 msgid ""
 "If the <gui>Speak object mnemonics</gui> checkbox is checked, <app>Orca</"
 "app> will announce the mnemonic associated with the object with focus (such "
 "as <keyseq><key>Alt</key><key>O</key></keyseq> for an <gui>OK</gui> button)."
 msgstr ""
 
-#: C/preferences_speech.page:306(desc)
-msgid ""
-"Preferences dialog box option for enabling/disabling the speaking of the "
-"position of the current item in a menu, list, or tree."
-msgstr ""
-
-#: C/preferences_speech.page:311(title)
+#: C/preferences_speech.page:301(title)
 msgid "Speak child position"
 msgstr "Indicar la posición del hijo"
 
-#: C/preferences_speech.page:312(p)
+#: C/preferences_speech.page:302(p)
 msgid ""
 "Checking the <gui>Speak child position</gui> checkbox will cause <app>Orca</"
 "app> to announce the position of the focused item in menus, lists, and trees "
 "(e.g. \"9 of 16\")."
 msgstr ""
 
-#: C/preferences_speech.page:320(desc)
-msgid ""
-"Preferences dialog box option for controlling whether or not <app>Orca</app> "
-"provides tutorial information, such as how to interact with the currently-"
-"focused object."
-msgstr ""
-
-#: C/preferences_speech.page:326(title)
+#: C/preferences_speech.page:309(title)
 msgid "Speak tutorial messages"
 msgstr "Leer mensajes de aprendizaje"
 
-#: C/preferences_speech.page:327(p)
+#: C/preferences_speech.page:310(p)
 msgid ""
 "If the <gui>Speak tutorial messages</gui> checkbox is checked, as you move "
 "amongst objects in an interface, <app>Orca</app> will provide additional "
 "information, such as how to interact with the currently-focused object."
 msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_pronunciation.page:31(None)
+msgid ""
+"@@image: 'figures/preferences_pronunciation.png'; "
+"md5=a4fa07be0148dfa9ddc12d7c40f4c864"
+msgstr ""
+"@@image: 'figures/preferences_pronunciation.png'; "
+"md5=a4fa07be0148dfa9ddc12d7c40f4c864"
 
 #: C/preferences_pronunciation.page:6(title)
 msgid "7. Pronunciation"
@@ -689,7 +992,7 @@ msgid "Pronunciation"
 msgstr "Pronunciación"
 
 #: C/preferences_pronunciation.page:8(desc)
-msgid "defining how specific words get pronounced"
+msgid "Defining how specific words get pronounced"
 msgstr ""
 
 #: C/preferences_pronunciation.page:19(title)
@@ -700,134 +1003,190 @@ msgstr ""
 msgid ""
 "Sometimes your speech synthesizer just doesn't say the right thing for a "
 "given string. You might prefer to hear \"laughing out loud\" rather than "
-"\"LOL.\" Or there may be a name or a technical term which the synthesizer "
-"mispronounces. The pronunciation page is where you can add, edit, and delete "
-"<app>Orca</app>'s pronunciation dictionary entries. Because the "
-"pronunciation page is also part of the application-specific settings, you "
-"can customize your entries on an as-needed basis for each application you "
-"use."
+"\"LOL,\" or \"accessibility\" rather than \"a11y\". Or there may be a name "
+"or a technical term which the synthesizer mispronounces."
 msgstr ""
 
-#: C/preferences_pronunciation.page:31(title)
-msgid "Add a new dictionary entry"
-msgstr "Añadir una entrada nueva de diccionario"
+#: C/preferences_pronunciation.page:26(p)
+msgid ""
+"The <gui>Pronunciation</gui> page of the <app>Orca</app> preferences dialog "
+"allows you to add, edit, and delete entries in <app>Orca</app>'s "
+"pronunciation dictionary."
+msgstr ""
 
 #: C/preferences_pronunciation.page:32(p)
-msgid "To add a new entry into <app>Orca</app>'s pronunciation dictionary:"
+msgid ""
+"Because the <gui>Pronunciation</gui> page is also part of the application-"
+"specific settings, you can customize your entries on an as-needed basis for "
+"each application you use."
 msgstr ""
 
-#: C/preferences_pronunciation.page:37(p)
+#: C/preferences_pronunciation.page:38(title)
+#, fuzzy
+#| msgid "Add a new dictionary entry"
+msgid "Adding a new dictionary entry"
+msgstr "Añadir una entrada nueva de diccionario"
+
+#: C/preferences_pronunciation.page:40(p)
 msgid ""
 "Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
 msgstr ""
 
-#: C/preferences_pronunciation.page:43(p)
+#: C/preferences_pronunciation.page:45(p)
 msgid ""
 "Type the text of the new entry and press <key>Return</key> to finish editing "
 "the actual string."
 msgstr ""
 
-#: C/preferences_pronunciation.page:49(p)
+#: C/preferences_pronunciation.page:51(p)
 msgid ""
-"Move to the <gui>Replacement String</gui> column and press <key>Return</key> "
-"to begin editing."
+"Move to the <gui>Replacement String</gui> column and press <key>Return </"
+"key> to begin editing."
 msgstr ""
 
-#: C/preferences_pronunciation.page:55(p)
+#: C/preferences_pronunciation.page:57(p)
 msgid ""
-"Type the text that you would like to have spoken instead and press "
-"<key>Return</key> to finish editing the replacement string."
+"Type the text that you would like to have spoken instead and press <key> "
+"Return</key> to finish editing the replacement string."
 msgstr ""
 
 #: C/preferences_pronunciation.page:64(title)
-msgid "Edit an existing dictionary entry"
+#, fuzzy
+#| msgid "Edit an existing dictionary entry"
+msgid "Editing an existing dictionary entry"
 msgstr "Editar una entrada existente del diccionario"
 
-#: C/preferences_pronunciation.page:65(p)
-msgid ""
-"To edit an existing entry in <app>Orca</app>'s pronunciation dictionary:"
-msgstr ""
-
-#: C/preferences_pronunciation.page:71(p)
+#: C/preferences_pronunciation.page:66(p)
 msgid ""
 "Move to the cell you wish to edit and press <key>Return</key> to begin "
 "editing."
 msgstr ""
 
-#: C/preferences_pronunciation.page:77(p)
+#: C/preferences_pronunciation.page:72(p)
 msgid "Make your changes and then press <key>Return</key> to finish editing."
 msgstr ""
 
-#: C/preferences_pronunciation.page:85(title)
-msgid "Delete an existing dictionary entry"
+#: C/preferences_pronunciation.page:78(title)
+#, fuzzy
+#| msgid "Delete an existing dictionary entry"
+msgid "Deleting an existing dictionary entry"
 msgstr "Borrar una entrada de diccionario existente"
 
-#: C/preferences_pronunciation.page:86(p)
-msgid "To delete an entry from <app>Orca</app>'s pronunciation dictionary:"
-msgstr ""
-
-#: C/preferences_pronunciation.page:92(p)
+#: C/preferences_pronunciation.page:80(p)
 msgid "Move to the entry you wish to delete."
 msgstr "Moverse hasta la entrada que quiere borrar."
 
-#: C/preferences_pronunciation.page:95(p)
+#: C/preferences_pronunciation.page:83(p)
 msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
 msgstr ""
 
-#: C/preferences.page:12(desc) C/preferences.page:21(p)
-msgid ""
-"<app>Orca</app>'s preferences dialogs allow you to customize the behavior "
-"and features of <app>Orca</app>, including speech, braille, magnification, "
-"and keyboard layout. These customizations can be set globally or be limited "
-"to a particular application. These guides will familiarize you with all of "
-"the customizations which you can make."
-msgstr ""
+#: C/preferences.page:5(title)
+#, fuzzy
+#| msgid "Orca Preferences"
+msgid "Preferences"
+msgstr "Preferencias de Orca"
 
-#: C/preferences.page:20(title)
+#: C/preferences.page:14(title)
 msgid "<app>Orca</app>'s Preferences Dialogs"
 msgstr ""
 
-#: C/preferences.page:29(title)
-msgid "Keyboard Shortcuts for Getting Into the Preferences Dialogs"
-msgstr ""
-
-#: C/preferences.page:32(p)
-msgid ""
-"<keyseq><key>Orca Modifier</key><key>Space</key></keyseq>: <app>Orca</app>'s "
-"Preferences"
-msgstr ""
-
-#: C/preferences.page:38(p)
-msgid ""
-"<keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key></keyseq>: "
-"<app>Orca</app>'s Preferences for the current application"
-msgstr ""
-
-#: C/preferences.page:47(title)
+#: C/preferences.page:16(title) C/preferences_introduction.page:17(title)
 msgid "Orca Preferences"
 msgstr "Preferencias de Orca"
 
-#: C/preferences.page:48(p)
-msgid ""
-"These preferences allow you to customize functionality in <app>Orca</app> "
-"that applies to all applications. As a result, with the exception of the "
-"General Preferences, you will find the following available in both the "
-"<app>Orca</app> Preferences dialog and <app>Orca</app>'s application-"
-"specific preferences dialogs."
-msgstr ""
-
-#: C/preferences.page:56(title)
+#: C/preferences.page:19(title) C/preferences_introduction.page:49(title)
 msgid "Application-Unique Preferences"
 msgstr ""
 
-#: C/preferences.page:57(p)
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:21(None)
 msgid ""
-"These preferences allow you to customize <app>Orca</app> functionality that "
-"only applies in certain environments, such as on web pages or in chat "
-"applications. As a result, you will only find these options available in the "
-"application-specific preferences dialogs and only for those applications to "
-"which these options apply."
+"@@image: 'figures/preferences_enable_magnifier.png'; "
+"md5=0129d09c51c20afe13efe370fa91a0b1"
 msgstr ""
+"@@image: 'figures/preferences_enable_magnifier.png'; "
+"md5=0129d09c51c20afe13efe370fa91a0b1"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:33(None)
+msgid ""
+"@@image: 'figures/preferences_zoomer.png'; "
+"md5=895ba22ba94f4552fd85e99306b1b566"
+msgstr ""
+"@@image: 'figures/preferences_zoomer.png'; "
+"md5=895ba22ba94f4552fd85e99306b1b566"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:82(None)
+msgid ""
+"@@image: 'figures/preferences_tracking_and_alignment.png'; "
+"md5=90444cfdc60633e80f62f56d6ca4ff9f"
+msgstr ""
+"@@image: 'figures/preferences_tracking_and_alignment.png'; "
+"md5=90444cfdc60633e80f62f56d6ca4ff9f"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:229(None)
+msgid ""
+"@@image: 'figures/preferences_color.png'; "
+"md5=516f342d24c34d2b338066e8c0e6289d"
+msgstr ""
+"@@image: 'figures/preferences_color.png'; "
+"md5=516f342d24c34d2b338066e8c0e6289d"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:265(None)
+msgid ""
+"@@image: 'figures/preferences_border.png'; "
+"md5=cd909a43c0e6a30e9634070c69d98ecc"
+msgstr ""
+"@@image: 'figures/preferences_border.png'; "
+"md5=cd909a43c0e6a30e9634070c69d98ecc"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:304(None)
+msgid ""
+"@@image: 'figures/preferences_cursor.png'; "
+"md5=24ac906c5652d48ea6613baf1c3ee355"
+msgstr ""
+"@@image: 'figures/preferences_cursor.png'; "
+"md5=24ac906c5652d48ea6613baf1c3ee355"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:350(None)
+msgid ""
+"@@image: 'figures/preferences_cross-hair.png'; "
+"md5=8e14c03b420b1505e3fcd9707965004d"
+msgstr ""
+"@@image: 'figures/preferences_cross-hair.png'; "
+"md5=8e14c03b420b1505e3fcd9707965004d"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:396(None)
+msgid ""
+"@@image: 'figures/preferences_advanced_button.png'; "
+"md5=7992710657c23612df3d0713d8bfaea7"
+msgstr ""
+"@@image: 'figures/preferences_advanced_button.png'; "
+"md5=7992710657c23612df3d0713d8bfaea7"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_magnifier.page:402(None)
+msgid ""
+"@@image: 'figures/preferences_magnifier_advanced.png'; "
+"md5=95167358edeb3371a05a717eb1e1ea6f"
+msgstr ""
+"@@image: 'figures/preferences_magnifier_advanced.png'; "
+"md5=95167358edeb3371a05a717eb1e1ea6f"
 
 #: C/preferences_magnifier.page:5(title)
 msgid "5. Magnifier"
@@ -838,7 +1197,7 @@ msgid "Magnifier"
 msgstr "Magnificador"
 
 #: C/preferences_magnifier.page:7(desc)
-msgid "Configuring magnification, colors, and pointer"
+msgid "Configuring the zoom window appearance"
 msgstr ""
 
 #: C/preferences_magnifier.page:18(title)
@@ -849,117 +1208,107 @@ msgstr "Preferencias del magnificador"
 msgid "Enable Magnifier"
 msgstr "Activar el magnificador"
 
-#: C/preferences_magnifier.page:21(p)
+#: C/preferences_magnifier.page:22(p)
 msgid ""
 "The <gui>Enable magnifier</gui> check box enables and disables <app>Orca</"
 "app>'s magnification support. When it is unchecked, the other widgets on "
 "this page become unavailable."
 msgstr ""
 
-#: C/preferences_magnifier.page:28(title)
+#: C/preferences_magnifier.page:32(title)
 msgid "Zoomer"
 msgstr ""
 
-#: C/preferences_magnifier.page:29(p)
+#: C/preferences_magnifier.page:34(p)
 msgid ""
-"The <gui>Zoomer</gui> options allow you to customize the magnifier's "
-"position, size, and level."
+"The <gui>Zoomer</gui> options allow you to customize the magnifier's level, "
+"position, and size, as well as to hide the system pointer."
 msgstr ""
 
-#: C/preferences_magnifier.page:35(p)
+#: C/preferences_magnifier.page:39(title)
+msgid "Scale factor"
+msgstr ""
+
+#: C/preferences_magnifier.page:40(p)
 msgid ""
 "<gui>Scale factor</gui> can be used to set the magnification level from 1.0x "
 "to 16.0x (fractional values are supported)."
 msgstr ""
 
-#: C/preferences_magnifier.page:41(p)
+#: C/preferences_magnifier.page:46(title)
+#, fuzzy
+#| msgid "Pronunciation"
+msgid "Position"
+msgstr "Pronunciación"
+
+#: C/preferences_magnifier.page:47(p)
 msgid ""
 "<gui>Position</gui> can be used to specify the placement of the magnifier on "
-"your screen. The available positions are:"
+"your screen. The available positions are: <gui>Full Screen</gui>, <gui>Left "
+"Half</gui>, <gui>Right Half</gui>, <gui>Top Half</gui>, <gui>Bottom Half</"
+"gui>, and <gui>Custom</gui>."
 msgstr ""
 
-#: C/preferences_magnifier.page:46(p)
-msgid "<gui>Full Screen</gui> (default)"
+#: C/preferences_magnifier.page:53(p)
+msgid "Default value: <gui>Full Screen</gui>"
 msgstr ""
 
-#: C/preferences_magnifier.page:47(gui)
-msgid "Left Half"
-msgstr "Mitad izquierda"
+#: C/preferences_magnifier.page:58(title)
+msgid "Specifying the Bounds of a \"Custom\" Zoomer"
+msgstr ""
 
-#: C/preferences_magnifier.page:48(gui)
-msgid "Right Half"
-msgstr "Mitad derecha"
-
-#: C/preferences_magnifier.page:49(gui)
-msgid "Top Half"
-msgstr "Mitad superior"
-
-#: C/preferences_magnifier.page:50(gui)
-msgid "Bottom Half"
-msgstr "Mitad inferior"
-
-#: C/preferences_magnifier.page:51(gui)
-msgid "Custom"
-msgstr "Personalizada"
-
-#: C/preferences_magnifier.page:55(p)
+#: C/preferences_magnifier.page:59(p)
 msgid ""
-"Choosing <gui>Custom</gui> causes four spin buttons to become available:"
+"Choosing a <gui>Position</gui> of <gui>Custom</gui> causes four spin buttons "
+"to become available: <gui>Top</gui>, <gui>Left</gui>, <gui>Right </gui>, and "
+"<gui>Bottom</gui>."
 msgstr ""
 
-#: C/preferences_magnifier.page:60(gui)
-msgid "Top"
-msgstr "Principio"
-
-#: C/preferences_magnifier.page:61(gui)
-msgid "Left"
-msgstr "Izquierda"
-
-#: C/preferences_magnifier.page:62(gui)
-msgid "Right"
-msgstr "Derecha"
-
-#: C/preferences_magnifier.page:63(gui)
-msgid "Bottom"
-msgstr "Final"
-
-#: C/preferences_magnifier.page:65(p)
+#: C/preferences_magnifier.page:64(p)
 msgid ""
 "These spin buttons allow you to define the location of each edge of the zoom "
 "window. Units are in pixels."
 msgstr ""
 
+#: C/preferences_magnifier.page:70(title)
+msgid "Hide system pointer"
+msgstr ""
+
 #: C/preferences_magnifier.page:71(p)
 msgid ""
-"The <gui>Hide System Pointer</gui> checkbox will hide the unmagnified "
+"The <gui>Hide system pointer</gui> checkbox will hide the unmagnified "
 "pointer, leaving just the magnified one visible."
 msgstr ""
 
-#: C/preferences_magnifier.page:79(title)
+#: C/preferences_magnifier.page:75(p)
+msgid "Default value: unchecked"
+msgstr ""
+
+#: C/preferences_magnifier.page:81(title)
 msgid "Tracking and Alignment"
 msgstr ""
 
-#: C/preferences_magnifier.page:80(p)
+#: C/preferences_magnifier.page:83(p)
 msgid "These options control the tracking of the mouse cursor."
 msgstr "Estas opciones controlan el seguimiento del cursor del ratón."
 
-#: C/preferences_magnifier.page:82(title)
+#: C/preferences_magnifier.page:85(title)
 msgid "Mouse Pointer"
 msgstr "Puntero del ratón"
 
-#: C/preferences_magnifier.page:83(p)
+#: C/preferences_magnifier.page:86(p)
 msgid ""
 "The <gui>Mouse Pointer</gui> combo box allows you to select your tracking "
 "and alignment from the following options:"
 msgstr ""
 
-#: C/preferences_magnifier.page:89(p)
+#: C/preferences_magnifier.page:92(p)
 msgid ""
 "<gui>Centered</gui>: Keeps the mouse pointer at the center of the screen "
-"whenever possible. This is the default."
+"whenever possible."
 msgstr ""
 
-#: C/preferences_magnifier.page:95(p)
+#: C/preferences_magnifier.page:98(p)
 msgid ""
 "<gui>Proportional</gui>: Positions the mouse pointer in the zoom window "
 "relative to its actual, unmagnified position. For instance, if the mouse "
@@ -968,19 +1317,27 @@ msgid ""
 "window."
 msgstr ""
 
-#: C/preferences_magnifier.page:104(p)
+#: C/preferences_magnifier.page:107(p)
 msgid ""
 "<gui>Push</gui>: Moves the zoomer window the least amount necessary to keep "
 "the mouse pointer on the screen."
 msgstr ""
 
-#: C/preferences_magnifier.page:110(p)
+#: C/preferences_magnifier.page:113(p)
 msgid ""
 "<gui>None</gui>: Moving the mouse pointer has no impact on what the zoomer "
 "window displays."
 msgstr ""
 
-#: C/preferences_magnifier.page:116(p)
+#: C/preferences_magnifier.page:119(p)
+msgid "Default value: <gui>Centered</gui>"
+msgstr ""
+
+#: C/preferences_magnifier.page:124(title)
+msgid "Pointer follows zoomer"
+msgstr ""
+
+#: C/preferences_magnifier.page:125(p)
 msgid ""
 "The <gui>Pointer follows zoomer</gui> checkbox allows you to customize what "
 "should occur if the mouse pointer is not on the screen when you initially "
@@ -988,133 +1345,197 @@ msgid ""
 "screen when you initially move the mouse, it will be moved into the zoomer "
 "so that you can continue to see what you were working on. If your preferred "
 "mouse tracking mode is centered, the pointer will be moved to the center; "
-"otherwise it will be moved to the item with focus. This option is enabled by "
-"default."
+"otherwise it will be moved to the item with focus."
 msgstr ""
 
-#: C/preferences_magnifier.page:129(title)
+#: C/preferences_magnifier.page:141(title)
 msgid "Control and menu item"
 msgstr "Elemento de control y de menú"
 
-#: C/preferences_magnifier.page:130(p)
+#: C/preferences_magnifier.page:142(p)
 msgid "These options control additional behavior of the magnifier."
 msgstr "Estas opciones controlan el comportamiento adicional del magnificador."
 
-#: C/preferences_magnifier.page:133(p)
+#: C/preferences_magnifier.page:145(p)
 msgid ""
 "<gui>Centered</gui>: When navigating via keyboard, keep the focused dialog "
 "box control or menu item at the center of the screen whenever possible."
 msgstr ""
 
-#: C/preferences_magnifier.page:140(p)
+#: C/preferences_magnifier.page:152(p)
 msgid ""
 "<gui>Push</gui>: When navigating via keyboard, move the zoomer window the "
 "least amount necessary to display the focused dialog box control or menu "
-"item. This is the default."
+"item."
 msgstr ""
 
-#: C/preferences_magnifier.page:148(p)
+#: C/preferences_magnifier.page:159(p)
 msgid ""
 "<gui>None</gui>: Using the keyboard to navigate among dialog box controls "
 "and menu items will have no impact on what the zoomer window displays."
 msgstr ""
 
-#: C/preferences_magnifier.page:155(p)
+#: C/preferences_magnifier.page:166(p) C/preferences_magnifier.page:204(p)
+msgid "Default value: <gui>Push</gui>"
+msgstr ""
+
+#: C/preferences_magnifier.page:171(title)
+msgid "Pointer follows focus"
+msgstr ""
+
+#: C/preferences_magnifier.page:172(p)
 msgid ""
 "<gui>Pointer follows focus</gui>: If this option is enabled, the mouse "
 "pointer will follow you as you arrow through menu items and move among "
-"controls in dialog boxes. This option is disabled by default."
+"controls in dialog boxes."
 msgstr ""
 
-#: C/preferences_magnifier.page:163(title)
+#: C/preferences_magnifier.page:182(title)
 msgid "Text cursor"
 msgstr "Cursor de texto"
 
-#: C/preferences_magnifier.page:164(p)
+#: C/preferences_magnifier.page:183(p)
 msgid "These options control how the text cursor behaves."
 msgstr "Estas opciones controlan cómo se comporta el cursor de texto."
 
-#: C/preferences_magnifier.page:167(p)
+#: C/preferences_magnifier.page:186(p)
 msgid ""
 "<gui>Centered</gui>: As the text cursor moves, keep it at the center of the "
 "screen whenever possible."
 msgstr ""
 
-#: C/preferences_magnifier.page:173(p)
+#: C/preferences_magnifier.page:192(p)
 msgid ""
 "<gui>Push</gui>: As the text cursor moves, move the zoomer window the least "
-"amount necessary to display it. This is the default."
+"amount necessary to display it."
 msgstr ""
 
-#: C/preferences_magnifier.page:180(p)
+#: C/preferences_magnifier.page:198(p)
 msgid ""
 "<gui>None</gui>: Moving the text cursor will have no impact on what the "
 "zoomer window displays."
 msgstr ""
 
-#: C/preferences_magnifier.page:186(p)
+#: C/preferences_magnifier.page:209(title)
+msgid "Edge margin"
+msgstr ""
+
+#: C/preferences_magnifier.page:210(p)
 msgid ""
 "The <gui>Edge margin</gui> is how close the caret should be allowed to get "
 "to the edge of the screen before it's time to \"push\" the zoomer window. "
 "The margin can range from 0 to 50%, with 50% being the equivalent of "
-"choosing centering. The default value is 0. This option is only available if "
-"\"Push\" is your text cursor tracking mode."
+"choosing centering."
 msgstr ""
 
-#: C/preferences_magnifier.page:197(title)
+#: C/preferences_magnifier.page:217(p)
+msgid ""
+"This option is only available if \"Push\" is your text cursor tracking mode."
+msgstr ""
+
+#: C/preferences_magnifier.page:222(p)
+msgid "Default value: 0"
+msgstr ""
+
+#: C/preferences_magnifier.page:228(title)
 msgid "Color"
 msgstr "Color"
 
-#: C/preferences_magnifier.page:198(p)
+#: C/preferences_magnifier.page:230(p)
 msgid ""
 "The <gui>Color</gui> options allow you to do some rough color adjustments of "
 "the magnified region."
 msgstr ""
 
-#: C/preferences_magnifier.page:204(p)
+#: C/preferences_magnifier.page:235(title)
+msgid "Invert colors"
+msgstr ""
+
+#: C/preferences_magnifier.page:236(p)
 msgid "<gui>Invert colors</gui>: Creates a reverse or negative-image effect."
 msgstr ""
 
-#: C/preferences_magnifier.page:210(p)
+#: C/preferences_magnifier.page:244(title)
+msgid "Brightness"
+msgstr ""
+
+#: C/preferences_magnifier.page:245(p)
 msgid ""
 "<gui>Brightness</gui>: Ranges from -1 to 1 (-1 is black/no brightness; 1 is "
 "white/total brightness; 0 is \"normal\"/unchanged)."
 msgstr ""
 
-#: C/preferences_magnifier.page:216(p)
+#: C/preferences_magnifier.page:249(p) C/preferences_magnifier.page:259(p)
+msgid "Default value: 0.00"
+msgstr ""
+
+#: C/preferences_magnifier.page:254(title)
+msgid "Contrast"
+msgstr ""
+
+#: C/preferences_magnifier.page:255(p)
 msgid ""
 "<gui>Contrast</gui>: Ranges from -1 to 1 (-1 is grey/no contrast; 1 is "
 "maximum contrast; 0 is \"normal\"/unchanged)."
 msgstr ""
 
-#: C/preferences_magnifier.page:224(title)
+#: C/preferences_magnifier.page:266(title)
 msgid "Border"
 msgstr "Borde"
 
-#: C/preferences_magnifier.page:225(p)
+#: C/preferences_magnifier.page:267(p)
 msgid ""
 "The <gui>Border</gui> options can be used to customize the border which "
 "separates the magnified region from the non-magnified region. As such, these "
 "options are not available when <gui>Full Screen</gui> is selected."
 msgstr ""
 
-#: C/preferences_magnifier.page:233(p)
+#: C/preferences_magnifier.page:274(title)
+#, fuzzy
+#| msgid "Enable Magnifier"
+msgid "Enable border"
+msgstr "Activar el magnificador"
+
+#: C/preferences_magnifier.page:275(p)
 msgid ""
 "<gui>Enable border</gui>: This option determines if a window border is "
 "visible for the magnifier."
 msgstr ""
 
-#: C/preferences_magnifier.page:239(p)
-msgid ""
-"<gui>Border size</gui>: This value determines the size of the border in "
-"pixels."
+#: C/preferences_magnifier.page:284(title)
+#, fuzzy
+#| msgid "Border"
+msgid "Border size"
+msgstr "Borde"
+
+#: C/preferences_magnifier.page:285(p) C/preferences_magnifier.page:331(p)
+msgid "This value determines the size of the border in pixels."
 msgstr ""
 
-#: C/preferences_magnifier.page:247(title)
+#: C/preferences_magnifier.page:288(p)
+msgid "Default value: 1"
+msgstr ""
+
+#: C/preferences_magnifier.page:293(title)
+#, fuzzy
+#| msgid "Border"
+msgid "Border color"
+msgstr "Borde"
+
+#: C/preferences_magnifier.page:294(p)
+msgid "This value determines the color of the border."
+msgstr ""
+
+#: C/preferences_magnifier.page:297(p) C/preferences_magnifier.page:343(p)
+#: C/preferences_magnifier.page:389(p)
+msgid "Default value: black"
+msgstr ""
+
+#: C/preferences_magnifier.page:303(title)
 msgid "Cursor"
 msgstr "Cursor"
 
-#: C/preferences_magnifier.page:248(p)
+#: C/preferences_magnifier.page:305(p)
 msgid ""
 "These controls can be used to customize the size and color of the "
 "magnifier's cursor."
@@ -1122,30 +1543,55 @@ msgstr ""
 "Estos controles pueden usarse para personalizar el tamaño y el color del "
 "cursor del magnificador."
 
-#: C/preferences_magnifier.page:254(p)
+#: C/preferences_magnifier.page:310(title)
+#, fuzzy
+#| msgid "Text cursor"
+msgid "Enable cursor"
+msgstr "Cursor de texto"
+
+#: C/preferences_magnifier.page:311(p)
 msgid ""
-"<gui>Enable cursor</gui>: If this check box is enabled then a cursor is "
-"visible and the size and color options become available."
+"If this checkbox is checked then a cursor is visible and the size and color "
+"options become available."
 msgstr ""
 
-#: C/preferences_magnifier.page:260(p)
+#: C/preferences_magnifier.page:320(title)
+#, fuzzy
+#| msgid "Custom"
+msgid "Custom size"
+msgstr "Personalizada"
+
+#: C/preferences_magnifier.page:321(p)
 msgid ""
-"<gui>Custom size</gui>: Enable this check box if you would like to make the "
-"mouse pointer larger than it normally is. The cursor size can be changed "
-"from the default value of 32 pixels."
+"Check this checkbox if you would like to make the mouse pointer larger than "
+"it normally is."
 msgstr ""
 
-#: C/preferences_magnifier.page:267(p)
-msgid ""
-"<gui>Custom color</gui>: If the cursor is enabled, a custom color can also "
-"be applied."
+#: C/preferences_magnifier.page:330(title)
+#, fuzzy
+#| msgid "Cursor"
+msgid "Cursor size"
+msgstr "Cursor"
+
+#: C/preferences_magnifier.page:334(p)
+msgid "Default value: 32"
 msgstr ""
 
-#: C/preferences_magnifier.page:275(title)
+#: C/preferences_magnifier.page:339(title)
+#, fuzzy
+#| msgid "Cursor"
+msgid "Cursor color"
+msgstr "Cursor"
+
+#: C/preferences_magnifier.page:340(p)
+msgid "This value determines the color of the cursor."
+msgstr ""
+
+#: C/preferences_magnifier.page:349(title)
 msgid "Cross-hair"
 msgstr ""
 
-#: C/preferences_magnifier.page:276(p)
+#: C/preferences_magnifier.page:351(p)
 msgid ""
 "This set of controls can be used to customize the magnifier's optional area-"
 "targeting cursor."
@@ -1153,78 +1599,126 @@ msgstr ""
 "Es posible usar este conjunto de controles para personalizar el cursor "
 "captador de área opcional del magnificador."
 
-#: C/preferences_magnifier.page:282(p)
+#: C/preferences_magnifier.page:356(title)
+#, fuzzy
+#| msgid "Enable Magnifier"
+msgid "Enable cross-hair"
+msgstr "Activar el magnificador"
+
+#: C/preferences_magnifier.page:357(p)
 msgid ""
-"<gui>Enable cross-hair</gui>: If checked, you can additionally configure the "
-"clipping behavior, size and color of the cross-hair."
+"If this checkbox is checked then the cross-hair is visible and the size and "
+"color options become available."
 msgstr ""
 
-#: C/preferences_magnifier.page:288(p)
-msgid ""
-"<gui>Enable cross-hair clip</gui>: If enabled, the cross-hair will be "
-"\"clipped\" (removed) in the area immediately surrounding the mouse pointer."
+#: C/preferences_magnifier.page:366(title)
+msgid "Enable cross-hair clip"
 msgstr ""
 
-#: C/preferences_magnifier.page:295(p)
+#: C/preferences_magnifier.page:367(p)
 msgid ""
-"<gui>Cross-hair size</gui>: This control sets the thickness of the cross-"
-"hair in pixels."
+"If checked, the cross-hair will be \"clipped\" (removed) in the area "
+"immediately surrounding the mouse pointer."
 msgstr ""
 
-#: C/preferences_magnifier.page:301(p)
-msgid ""
-"<gui>Cross-hair color</gui>: This control allows a custom color to be used "
-"for the cross-hair."
+#: C/preferences_magnifier.page:376(title)
+msgid "Cross-hair size"
 msgstr ""
 
-#: C/preferences_magnifier.page:309(title)
+#: C/preferences_magnifier.page:377(p)
+msgid "This control sets the thickness of the cross-hair in pixels."
+msgstr ""
+
+#: C/preferences_magnifier.page:380(p)
+msgid "Default value: 16"
+msgstr ""
+
+#: C/preferences_magnifier.page:385(title)
+msgid "Cross-hair color"
+msgstr ""
+
+#: C/preferences_magnifier.page:386(p)
+msgid "This value determines the color of the cross-hair."
+msgstr ""
+
+#: C/preferences_magnifier.page:395(title)
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: C/preferences_magnifier.page:310(p)
+#: C/preferences_magnifier.page:397(p)
 msgid ""
 "If you press the <gui>Advanced</gui> button located near the bottom of the "
 "Magnifier page, you can further customize <app>Orca</app>'s magnification "
-"support, including:"
+"support."
 msgstr ""
 
-#: C/preferences_magnifier.page:316(p)
+#: C/preferences_magnifier.page:404(p)
 msgid "<gui>Smoothing</gui>: Bilinear or none."
 msgstr ""
 
-#: C/preferences_magnifier.page:318(p)
+#: C/preferences_magnifier.page:406(p)
 msgid ""
 "<gui>Brightness</gui>: Choosing different brightness levels for red, blue, "
 "and green allows you to create the color scheme that works best for you."
 msgstr ""
 
-#: C/preferences_magnifier.page:325(p)
+#: C/preferences_magnifier.page:413(p)
 msgid ""
 "<gui>Contrast</gui>: While not as significant as changes to brightness, "
 "choosing different contrast levels for red, blue, and green helps you to "
 "create the color scheme that works best for you."
 msgstr ""
 
-#: C/preferences_magnifier.page:333(p)
+#: C/preferences_magnifier.page:421(p)
 msgid ""
 "<gui>Color Filtering</gui>: Allows you to pick one of the colorblind filters "
 "available through libcolorblind. In order to take advantage of this feature "
 "you will need to install libcolorblind and then rebuild gnome-mag."
 msgstr ""
 
-#: C/preferences_magnifier.page:341(p)
+#: C/preferences_magnifier.page:429(p)
 msgid ""
 "<gui>Multi-Monitor Settings - Source Display</gui>: X Window System DISPLAY "
 "of what should be magnified. Written in the form \":0.x\" where x is the "
 "number of the screen whose contents should be magnified."
 msgstr ""
 
-#: C/preferences_magnifier.page:349(p)
+#: C/preferences_magnifier.page:437(p)
 msgid ""
 "<gui>Multi-Monitor Settings - Target Display</gui>: X Window System DISPLAY "
 "of where to put the zoomer window. Written in the form \":0.y\" where y is "
 "the number of the screen where the zoomer window should appear."
 msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_echo.page:21(None)
+msgid ""
+"@@image: 'figures/preferences_key_echo.png'; "
+"md5=8a24d33dfd2f274ce4da3e756e866d65"
+msgstr ""
+"@@image: 'figures/preferences_key_echo.png'; "
+"md5=8a24d33dfd2f274ce4da3e756e866d65"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_echo.page:111(None)
+msgid ""
+"@@image: 'figures/preferences_character_echo.png'; "
+"md5=ae0f0f530ed8a742d08df4d388561847"
+msgstr ""
+"@@image: 'figures/preferences_character_echo.png'; "
+"md5=ae0f0f530ed8a742d08df4d388561847"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_echo.page:156(None)
+msgid ""
+"@@image: 'figures/preferences_word_and_sentence_echo.png'; "
+"md5=d31bd26801793b290e740fcabe7ba86d"
+msgstr ""
+"@@image: 'figures/preferences_word_and_sentence_echo.png'; "
+"md5=d31bd26801793b290e740fcabe7ba86d"
 
 #: C/preferences_key_echo.page:3(title)
 msgid "Key Echo"
@@ -1246,72 +1740,72 @@ msgstr ""
 msgid "Enable key echo"
 msgstr ""
 
-#: C/preferences_key_echo.page:21(p)
+#: C/preferences_key_echo.page:22(p)
 msgid ""
 "Orca's key echo setting controls what happens each time you press a key. To "
 "enable key echo, check the \"Enable key echo\" checkbox. Doing so causes "
 "additional checkboxes to become available through which you can choose "
-"exactly which keys should and should not be echoed to best suit your needs:"
+"exactly which keys should and should not be echoed to best suit your needs."
 msgstr ""
 
-#: C/preferences_key_echo.page:30(p)
+#: C/preferences_key_echo.page:33(title)
 msgid "Enable alphanumeric and punctuation keys"
 msgstr ""
 
-#: C/preferences_key_echo.page:31(p) C/howto_text_setup.page:89(p)
+#: C/preferences_key_echo.page:34(p) C/howto_text_setup.page:89(p)
 msgid ""
 "This option controls whether or not keys like <key>a</key>, <key>b</key>, "
 "<key>c</key>, <key>;</key>, <key>?</key>, and so on should be spoken when "
 "pressed."
 msgstr ""
 
-#: C/preferences_key_echo.page:38(p)
+#: C/preferences_key_echo.page:44(title)
 msgid "Enable modifier keys"
 msgstr ""
 
-#: C/preferences_key_echo.page:39(p) C/howto_text_setup.page:97(p)
+#: C/preferences_key_echo.page:45(p) C/howto_text_setup.page:97(p)
 msgid ""
 "This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
 "<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
 msgstr ""
 
-#: C/preferences_key_echo.page:46(p)
+#: C/preferences_key_echo.page:54(title)
 msgid "Enable locking keys"
 msgstr ""
 
-#: C/preferences_key_echo.page:47(p) C/howto_text_setup.page:104(p)
+#: C/preferences_key_echo.page:55(p) C/howto_text_setup.page:104(p)
 msgid ""
 "This option controls whether or not <key>Caps Lock</key>, <key>Scroll Lock</"
 "key>, and <key>Num Lock</key> should be spoken when pressed."
 msgstr ""
 
-#: C/preferences_key_echo.page:54(p)
+#: C/preferences_key_echo.page:64(title)
 msgid "Enable function keys"
 msgstr ""
 
-#: C/preferences_key_echo.page:55(p) C/howto_text_setup.page:111(p)
+#: C/preferences_key_echo.page:65(p) C/howto_text_setup.page:111(p)
 msgid ""
 "This option controls whether or not <key>F1</key> through <key>F12</key> "
 "should be spoken when pressed."
 msgstr ""
 
-#: C/preferences_key_echo.page:61(p)
+#: C/preferences_key_echo.page:74(title)
 msgid "Enable action keys"
 msgstr ""
 
-#: C/preferences_key_echo.page:62(p) C/howto_text_setup.page:118(p)
+#: C/preferences_key_echo.page:75(p)
 msgid ""
-"This option controls whether or not <key>BackSpace</key>, <key>Delete</key>, "
-"<key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
-"<key>Page Down</key>, <key>Home</key>, and <key>End</key> should be spoken "
-"when pressed."
+"This option controls whether or not <key>BackSpace</key>, <key>Delete </"
+"key>, <key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</"
+"key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
+"spoken when pressed."
 msgstr ""
 
-#: C/preferences_key_echo.page:71(p)
+#: C/preferences_key_echo.page:86(title)
 msgid "Enable navigation keys"
 msgstr ""
 
-#: C/preferences_key_echo.page:72(p)
+#: C/preferences_key_echo.page:87(p)
 msgid ""
 "This option controls whether or not <key>Left</key>, <key>Right</key>, "
 "<key>Up</key>, and <key>Down</key> should be spoken when pressed. This "
@@ -1319,36 +1813,54 @@ msgid ""
 "is being held down, for instance when flat review is being used."
 msgstr ""
 
-#: C/preferences_key_echo.page:82(p)
+#: C/preferences_key_echo.page:99(title)
 msgid "Enable non-spacing diacritical keys"
 msgstr ""
 
-#: C/preferences_key_echo.page:83(p)
+#: C/preferences_key_echo.page:100(p)
 msgid ""
 "This option controls whether or not \"dead keys\" used to generate accented "
 "letters should be spoken when pressed."
 msgstr ""
 
-#: C/preferences_key_echo.page:91(title)
+#: C/preferences_key_echo.page:110(title)
 msgid "Enable echo by character"
 msgstr ""
 
-#: C/preferences_key_echo.page:92(p)
-msgid ""
-"Enabling this option causes Orca to echo the character you just typed. While "
-"echo by character seems quite similar to the key echo of alphanumeric and "
-"punctuation keys, there are important differences, especially with respect "
-"to accented letters and other symbols for which there is no dedicated key. "
-"Key echo causes <app>Orca</app> to announce what you just pressed; character "
-"echo causes it to announce what was inserted. Thus to have accented "
-"characters spoken as you type them, you should enable this option."
+#: C/preferences_key_echo.page:112(p)
+msgid "Enabling this option causes Orca to echo the character you just typed."
 msgstr ""
 
-#: C/preferences_key_echo.page:104(title)
+#: C/preferences_key_echo.page:116(p)
+msgid ""
+"While echo by character seems quite similar to the key echo of alphanumeric "
+"and punctuation keys, there are important differences, especially with "
+"respect to accented letters and other symbols for which there is no "
+"dedicated key:"
+msgstr ""
+
+#: C/preferences_key_echo.page:124(p)
+msgid ""
+"Key echo causes <app>Orca</app> to announce what you just <em> pressed</em>."
+msgstr ""
+
+#: C/preferences_key_echo.page:130(p)
+msgid ""
+"Character echo causes <app>Orca</app> to announce what was just "
+"<em>inserted</em>."
+msgstr ""
+
+#: C/preferences_key_echo.page:136(p)
+msgid ""
+"Thus to have accented characters spoken as you type them, you should enable "
+"character echo."
+msgstr ""
+
+#: C/preferences_key_echo.page:144(title)
 msgid "Enabling both key echo and character echo"
 msgstr ""
 
-#: C/preferences_key_echo.page:105(p)
+#: C/preferences_key_echo.page:145(p)
 msgid ""
 "If you like key echo and you frequently type accented characters, consider "
 "enabling both. <app>Orca</app>'s character echo logic attempts to filter out "
@@ -1356,17 +1868,37 @@ msgid ""
 "likelihood of \"double speaking\" as you type."
 msgstr ""
 
-#: C/preferences_key_echo.page:115(title)
+#: C/preferences_key_echo.page:155(title)
 msgid "Enable echo by word and Enable echo by sentence"
 msgstr ""
 
-#: C/preferences_key_echo.page:116(p)
+#: C/preferences_key_echo.page:157(p)
 msgid ""
 "Checking the <gui>Enable echo by word</gui> checkbox causes <app>Orca</app> "
 "to echo the word you just typed. Similarly, checking the <gui>Enable echo by "
 "sentence</gui> checkbox causes <app>Orca</app> to echo the sentence you just "
 "typed."
 msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_bindings.page:22(None)
+msgid ""
+"@@image: 'figures/preferences_Orca_modifier_keys.png'; "
+"md5=e7f8a86f1476d63486769af2fdf34a9a"
+msgstr ""
+"@@image: 'figures/preferences_Orca_modifier_keys.png'; "
+"md5=e7f8a86f1476d63486769af2fdf34a9a"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_key_bindings.page:40(None)
+msgid ""
+"@@image: 'figures/preferences_key_bindings_table.png'; "
+"md5=87f1b17b497b7c34c9d88cacb2c3046c"
+msgstr ""
+"@@image: 'figures/preferences_key_bindings_table.png'; "
+"md5=87f1b17b497b7c34c9d88cacb2c3046c"
 
 #: C/preferences_key_bindings.page:6(title)
 msgid "6. Key Bindings"
@@ -1384,33 +1916,33 @@ msgstr ""
 msgid "Key Bindings Preferences"
 msgstr ""
 
-#: C/preferences_key_bindings.page:22(desc)
-msgid "Preferences dialog box option to select the Orca Modifier key."
-msgstr ""
-
-#: C/preferences_key_bindings.page:26(title)
+#: C/preferences_key_bindings.page:21(title)
 msgid "Orca Modifier Keys"
 msgstr "Teclas modificadoras de Orca"
 
-#: C/preferences_key_bindings.page:27(p)
+#: C/preferences_key_bindings.page:23(p)
 msgid ""
 "The <gui>Orca Modifier Keys</gui> combo box allows you to select which key "
 "or keys will serve as the Orca Modifier. The available options are:"
 msgstr ""
 
-#: C/preferences_key_bindings.page:32(p) C/howto_the_orca_modifier.page:70(p)
-msgid "Insert, KP_Insert"
+#: C/preferences_key_bindings.page:29(p)
+msgid ""
+"<gui>KP_Insert</gui> (the same key as the <key>0</key> on the numeric keypad)"
 msgstr ""
 
-#: C/preferences_key_bindings.page:33(p) C/howto_the_orca_modifier.page:71(p)
-msgid "KP_Insert"
-msgstr "TN Ins"
-
-#: C/preferences_key_bindings.page:34(p) C/howto_the_orca_modifier.page:72(p)
+#: C/preferences_key_bindings.page:33(gui)
+#: C/howto_the_orca_modifier.page:69(p)
 msgid "Insert"
 msgstr "Insertar"
 
-#: C/preferences_key_bindings.page:35(p) C/howto_the_orca_modifier.page:73(p)
+#: C/preferences_key_bindings.page:34(gui)
+#: C/howto_the_orca_modifier.page:67(p)
+msgid "Insert, KP_Insert"
+msgstr ""
+
+#: C/preferences_key_bindings.page:35(gui)
+#: C/howto_the_orca_modifier.page:70(p)
 msgid "Caps_Lock"
 msgstr "Bloqueo_mayúscula"
 
@@ -1418,19 +1950,19 @@ msgstr "Bloqueo_mayúscula"
 msgid "The Key Bindings Table"
 msgstr ""
 
-#: C/preferences_key_bindings.page:40(p)
+#: C/preferences_key_bindings.page:41(p)
 msgid ""
 "The key bindings table provides a list of <app>Orca</app> operations and the "
 "keys that are bound to them."
 msgstr ""
 
-#: C/preferences_key_bindings.page:46(p)
+#: C/preferences_key_bindings.page:47(p)
 msgid ""
 "The <gui>Function</gui> column is a description of the <app>Orca</app> "
 "operation to be performed."
 msgstr ""
 
-#: C/preferences_key_bindings.page:52(p)
+#: C/preferences_key_bindings.page:53(p)
 msgid ""
 "The <gui>Key Binding</gui> is the primary way to invoke the function from "
 "the keyboard. Note that the key binding may include the word \"Orca\". This "
@@ -1440,7 +1972,7 @@ msgid ""
 "<key>Return</key> again."
 msgstr ""
 
-#: C/preferences_key_bindings.page:62(p)
+#: C/preferences_key_bindings.page:63(p)
 msgid ""
 "The <gui>Alternate</gui> column allows you to specify an additional "
 "keybinding for this function. You can modify the value of this column by "
@@ -1448,14 +1980,14 @@ msgid ""
 "pressing <key>Return</key> again."
 msgstr ""
 
-#: C/preferences_key_bindings.page:70(p)
+#: C/preferences_key_bindings.page:71(p)
 msgid ""
 "The <gui>Modified</gui> column serves both as an indicator to what has been "
 "changed and as a way to restore the default bindings associated with that "
 "function."
 msgstr ""
 
-#: C/preferences_key_bindings.page:77(p)
+#: C/preferences_key_bindings.page:78(p)
 msgid ""
 "Beneath the list of <app>Orca</app> keybindings, you will find a group of "
 "\"unbound\" commands. These are commands which we feel will be very useful "
@@ -1464,6 +1996,154 @@ msgid ""
 "end of the list are the braille bindings, for use with a refreshable braille "
 "display."
 msgstr ""
+
+#: C/preferences_introduction.page:3(title)
+msgid "0. Introduction to <app>Orca</app>'s Preferences"
+msgstr ""
+
+#: C/preferences_introduction.page:4(title)
+#: C/preferences_introduction.page:15(title)
+msgid "Introduction to <app>Orca</app>'s Preferences"
+msgstr ""
+
+#: C/preferences_introduction.page:18(p)
+msgid ""
+"Orca preferences allow you to customize functionality in <app>Orca</app> "
+"which applies to all applications. An example of an Orca preference is key "
+"echo because key echo is something that applies to all applications."
+msgstr ""
+
+#: C/preferences_introduction.page:23(p)
+msgid ""
+"Note that Orca preferences can be customized on an application-by-"
+"application basis. For instance you can set the default key echo to words "
+"and then set the key echo for Pidgin to be none. Having done so, <app>Orca</"
+"app> would always echo each word that you typed, unless you were in Pidgin."
+msgstr ""
+
+#: C/preferences_introduction.page:30(title)
+msgid "Keyboard Shortcuts for Getting Into the Preferences Dialogs"
+msgstr ""
+
+#: C/preferences_introduction.page:33(p)
+msgid ""
+"<keyseq><key>Orca Modifier</key><key>Space</key></keyseq>: <app>Orca</app>'s "
+"Preferences"
+msgstr ""
+
+#: C/preferences_introduction.page:39(p)
+msgid ""
+"<keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key></keyseq>: "
+"<app>Orca</app>'s Preferences for the current application"
+msgstr ""
+
+#: C/preferences_introduction.page:50(p)
+msgid ""
+"In contrast to Orca preferences, there are appliation-unique preferences. "
+"These preferences allow you to customize <app>Orca</app> functionality that "
+"only applies in certain environments, such as on web pages or in chat "
+"applications. As a result, you will only find these options available in the "
+"application-specific preferences dialogs and only for those applications to "
+"which these options apply."
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:27(None)
+msgid ""
+"@@image: 'figures/preferences_keyboard_layout.png'; "
+"md5=87362e2a6c4530f1a7928a84eb2a4fb2"
+msgstr ""
+"@@image: 'figures/preferences_keyboard_layout.png'; "
+"md5=87362e2a6c4530f1a7928a84eb2a4fb2"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:46(None)
+msgid ""
+"@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
+"md5=b79e1083ad179abaa45fafaf5d80cdd7"
+msgstr ""
+"@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
+"md5=b79e1083ad179abaa45fafaf5d80cdd7"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:64(None)
+msgid ""
+"@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; "
+"md5=25eb0099c32ea81aca97096abca57b77"
+msgstr ""
+"@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; "
+"md5=25eb0099c32ea81aca97096abca57b77"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:103(None)
+msgid ""
+"@@image: 'figures/preferences_present_tooltips.png'; "
+"md5=a6e33e8bb91b375f1432bcd41d271f5f"
+msgstr ""
+"@@image: 'figures/preferences_present_tooltips.png'; "
+"md5=a6e33e8bb91b375f1432bcd41d271f5f"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:123(None)
+msgid ""
+"@@image: 'figures/preferences_show_Orca_main_window.png'; "
+"md5=f9dcacd77f6dbe80f5c70575212a8717"
+msgstr ""
+"@@image: 'figures/preferences_show_Orca_main_window.png'; "
+"md5=f9dcacd77f6dbe80f5c70575212a8717"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:128(None)
+msgid ""
+"@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
+msgstr ""
+"@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:154(None)
+msgid ""
+"@@image: 'figures/preferences_start_Orca_when_you_login.png'; "
+"md5=3c23f673e1056fbd5d4d102ae3395c6f"
+msgstr ""
+"@@image: 'figures/preferences_start_Orca_when_you_login.png'; "
+"md5=3c23f673e1056fbd5d4d102ae3395c6f"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:171(None)
+msgid ""
+"@@image: 'figures/preferences_speak_object_under_mouse.png'; "
+"md5=e1a7682e7ee6427a47a7900f45b37387"
+msgstr ""
+"@@image: 'figures/preferences_speak_object_under_mouse.png'; "
+"md5=e1a7682e7ee6427a47a7900f45b37387"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:190(None)
+msgid ""
+"@@image: 'figures/preferences_date_and_time.png'; "
+"md5=931f4814b0e41379a06eeae11cd88c1b"
+msgstr ""
+"@@image: 'figures/preferences_date_and_time.png'; "
+"md5=931f4814b0e41379a06eeae11cd88c1b"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_general.page:207(None) C/howto_profiles.page:28(None)
+msgid ""
+"@@image: 'figures/preferences_profiles.png'; "
+"md5=9c4666e94c98347f5f4efc24c74c9458"
+msgstr ""
+"@@image: 'figures/preferences_profiles.png'; "
+"md5=9c4666e94c98347f5f4efc24c74c9458"
 
 #: C/preferences_general.page:3(title)
 msgid "1. General"
@@ -1491,41 +2171,46 @@ msgstr ""
 msgid "Keyboard Layout"
 msgstr "Distribución del teclado"
 
-#: C/preferences_general.page:27(p)
+#: C/preferences_general.page:28(p)
 msgid ""
-"The <gui>keyboard layout</gui> options allow you to specify if you will be "
-"working on a desktop (i.e. with a numeric keypad) or laptop keyboard. Which "
-"layout you choose will determine both the Orca Modifier key as well as a "
-"number of keyboard shortcuts for performing <app>Orca</app> commands."
+"The <gui>keyboard layout</gui> radio button group allows you to specify if "
+"you will be working on a desktop (i.e. with a numeric keypad) or laptop "
+"keyboard. Which layout you choose will determine both the <key>Orca "
+"Modifier</key> as well as a number of keyboard shortcuts for performing "
+"<app>Orca</app> commands."
 msgstr ""
 
-#: C/preferences_general.page:36(desc)
+#: C/preferences_general.page:34(p)
+msgid "Default value: <gui>Desktop</gui>"
+msgstr ""
+
+#: C/preferences_general.page:40(desc)
 msgid ""
 "Preferences dialog box option to quit <app>Orca</app> without presenting a "
 "confirmation dialog."
 msgstr ""
 
-#: C/preferences_general.page:41(title)
-msgid "Quit <app>Orca</app> Without Confirmation"
+#: C/preferences_general.page:45(title)
+msgid "Quit Orca Without Confirmation"
 msgstr ""
 
-#: C/preferences_general.page:42(p)
+#: C/preferences_general.page:47(p)
 msgid ""
-"Normally, when you quit <app>Orca</app>, <app>Orca</app> will pop up a "
-"confirmation dialog asking you if you want to quit. Unchecking the <gui>Quit "
-"<app>Orca</app> without confirmation</gui> checkbox prevents the "
+"Normally, when you quit <app>Orca</app>, a confirmation dialog will appear "
+"asking you if you do indeed wish to quit <app>Orca</app>. Unchecking the "
+"<gui>Quit Orca without confirmation</gui> checkbox prevents this "
 "confirmation window from appearing."
 msgstr ""
 
-#: C/preferences_general.page:51(desc)
+#: C/preferences_general.page:59(desc)
 msgid "Preferences dialog box option to disable gksu keyboard grab."
 msgstr ""
 
-#: C/preferences_general.page:55(title)
+#: C/preferences_general.page:63(title)
 msgid "Disable gksu Keyboard Grab"
 msgstr ""
 
-#: C/preferences_general.page:56(p)
+#: C/preferences_general.page:65(p)
 msgid ""
 "When running commands from the launch menu, many distributions use an "
 "application known as gksu to authorize the user to run these commands; gksu "
@@ -1537,14 +2222,14 @@ msgid ""
 "normally."
 msgstr ""
 
-#: C/preferences_general.page:67(p)
+#: C/preferences_general.page:76(p)
 msgid ""
-"By checking the \"Disable gksu keyboard grab\" checkbox, you will turn off "
-"the keyboard grab behavior, allowing <app>Orca</app> to function normally "
-"with system administration applications."
+"By checking the <gui>Disable gksu keyboard grab</gui> checkbox, you will "
+"turn off the keyboard grab behavior, allowing <app>Orca</app> to function "
+"normally with system administration applications."
 msgstr ""
 
-#: C/preferences_general.page:72(p)
+#: C/preferences_general.page:81(p)
 msgid ""
 "The keyboard grab is a security attempt by gksu to prevent nefarious "
 "applications from \"sniffing\" the keyboard and grabbing secret information. "
@@ -1556,17 +2241,17 @@ msgid ""
 "command."
 msgstr ""
 
-#: C/preferences_general.page:85(desc)
+#: C/preferences_general.page:97(desc)
 msgid ""
 "Preferences dialog box option to enable presentation of tooltips which "
 "appear as the result of mouse hovering."
 msgstr ""
 
-#: C/preferences_general.page:90(title)
+#: C/preferences_general.page:102(title)
 msgid "Present Tooltips"
 msgstr ""
 
-#: C/preferences_general.page:91(p)
+#: C/preferences_general.page:104(p)
 msgid ""
 "When checked, this option will tell <app>Orca</app> to present information "
 "about tooltips when they appear as the result of mouse hovering. Specific "
@@ -1575,191 +2260,302 @@ msgid ""
 "tooltips being presented, regardless of this setting."
 msgstr ""
 
-#: C/preferences_general.page:101(desc)
+#: C/preferences_general.page:117(desc)
 msgid ""
 "Preferences dialog box option for showing or hiding the <app>Orca</app> main "
 "window."
 msgstr ""
 
-#: C/preferences_general.page:106(title)
-msgid "Show <app>Orca</app> Main Window"
+#: C/preferences_general.page:122(title)
+msgid "Show Orca Main Window"
 msgstr ""
 
-#: C/preferences_general.page:107(p)
+#: C/preferences_general.page:125(title)
+msgid "The Orca Main Window"
+msgstr ""
+
+#: C/preferences_general.page:129(desc)
 msgid ""
-"The <app>Orca</app> main window provides you with a graphical way to display "
+"<app>Orca</app>'s main window provides you with a graphical way to display "
 "the <link xref=\"preferences\">Orca Preferences</link> dialog, access help "
-"content, bring up the About dialog, and quit <app>Orca</app>. Many users do "
-"not like the <app>Orca</app> main window because it shows up in the window "
-"manager's Tab order when you press <keyseq><key>Alt</key><key>Tab</key></"
-"keyseq> to switch windows. By unchecking the \"Show <app>Orca</app> main "
-"window\" checkbox, you can tell <app>Orca</app> to not show the <app>Orca</"
-"app> main window."
+"content, bring up the About dialog, and quit <app>Orca</app>."
 msgstr ""
 
-#: C/preferences_general.page:120(desc)
+#: C/preferences_general.page:135(p)
+msgid ""
+"Many users do not like the <app>Orca</app> main window because it shows up "
+"in the window manager's Tab order when you press <keyseq><key>Alt</"
+"key><key>Tab</key></keyseq> to switch windows. By unchecking the <gui>Show "
+"<app>Orca</app> main window</gui> checkbox, you can tell <app>Orca</app> to "
+"not show <app>Orca</app>'s main window."
+msgstr ""
+
+#: C/preferences_general.page:148(desc)
 msgid ""
 "Preferences dialog box option to cause <app>Orca</app> to automatically "
 "start when you log in."
 msgstr ""
 
-#: C/preferences_general.page:125(title)
-msgid "Start <app>Orca</app> When You Login"
+#: C/preferences_general.page:153(title)
+msgid "Start Orca When You Login"
 msgstr ""
 
-#: C/preferences_general.page:126(p)
+#: C/preferences_general.page:155(p)
 msgid ""
 "When checked, this option will tell the system to automatically launch "
 "<app>Orca</app> when you log in."
 msgstr ""
 
-#: C/preferences_general.page:133(desc)
+#: C/preferences_general.page:165(desc)
 msgid ""
 "Preferences dialog box option to enable presentation of the object under the "
 "mouse pointer."
 msgstr ""
 
-#: C/preferences_general.page:138(title)
+#: C/preferences_general.page:170(title)
 msgid "Speak Object Under Mouse"
 msgstr ""
 
-#: C/preferences_general.page:139(p)
+#: C/preferences_general.page:172(p)
 msgid ""
 "When checked, this option will tell <app>Orca</app> to present information "
-"about the object under the mouse pointer as you move it around the screen."
+"about the object under the mouse pointer as you move it around the screen "
+"using <app>Orca</app>'s <link xref=\"howto_mouse_review\">Mouse Review</"
+"link> feature."
 msgstr ""
 
-#: C/preferences_general.page:147(desc)
+#: C/preferences_general.page:184(desc)
 msgid ""
 "Preferences dialog box options for customizing the time and date formats "
 "used by <app>Orca</app>."
 msgstr ""
 
-#: C/preferences_general.page:152(title)
-msgid "Time and Date Formats"
+#: C/preferences_general.page:189(title)
+msgid "Time Format and Date Format"
 msgstr ""
 
-#: C/preferences_general.page:153(p)
+#: C/preferences_general.page:191(p)
 msgid ""
-"The Time Format and Date Format combo boxes allow you to select the format "
-"<app>Orca</app> uses when presenting the time and the date."
+"The <gui>Time Format</gui> and <gui>Date Format</gui> combo boxes allow you "
+"to specify how <app>Orca</app> will speak and braille the time and the date."
 msgstr ""
 
-#: C/preferences_general.page:160(desc)
+#: C/preferences_general.page:196(p)
+msgid "Default value: use the system locale's format for each"
+msgstr ""
+
+#: C/preferences_general.page:202(desc)
 msgid "Preferences dialog box options for managing settings profiles."
 msgstr ""
 
-#: C/preferences_general.page:164(title) C/howto_profiles.page:15(title)
+#: C/preferences_general.page:206(title) C/howto_profiles.page:15(title)
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: C/preferences_general.page:165(p)
+#: C/preferences_general.page:208(p)
 msgid ""
-"The <gui>Profiles</gui> group of controls make it possible for you to "
-"maintain and use multiple configurations. Here you will find the following:"
+"The <gui>Profiles</gui> group of controls, which appear at the bottom of the "
+"<gui>General</gui> page, make it possible for you to maintain and use "
+"multiple configurations."
 msgstr ""
 
-#: C/preferences_general.page:172(p)
+#: C/preferences_general.page:215(p)
 msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
 msgstr ""
 
-#: C/preferences_general.page:178(p)
+#: C/preferences_general.page:221(p)
 msgid ""
 "The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
 "indicated in the <gui>Active Profile</gui> combo box."
 msgstr ""
 
-#: C/preferences_general.page:184(p)
+#: C/preferences_general.page:227(p)
 msgid ""
 "The <gui>Save As</gui> button allows you to save the current set of options "
 "from the preferences dialog box to a named profile."
 msgstr ""
 
-#: C/preferences_general.page:189(p)
+#: C/preferences_general.page:232(p)
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
 msgstr ""
 
-#: C/preferences_gekco.page:7(title)
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_gecko.page:22(None)
+msgid ""
+"@@image: 'figures/preferences_gecko_page_navigation.png'; "
+"md5=882c3f79d6d26636c42b9e6351a3cbbe"
+msgstr ""
+"@@image: 'figures/preferences_gecko_page_navigation.png'; "
+"md5=882c3f79d6d26636c42b9e6351a3cbbe"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_gecko.page:94(None)
+msgid ""
+"@@image: 'figures/preferences_gecko_find_options.png'; "
+"md5=641af19881288848ba7f8fdc6d4db02e"
+msgstr ""
+"@@image: 'figures/preferences_gecko_find_options.png'; "
+"md5=641af19881288848ba7f8fdc6d4db02e"
+
+#: C/preferences_gecko.page:5(title)
 msgid "1. Gecko Navigation"
 msgstr ""
 
-#: C/preferences_gekco.page:8(title)
+#: C/preferences_gecko.page:6(title)
 msgid "Gecko Navigation"
 msgstr ""
 
-#: C/preferences_gekco.page:9(desc)
-msgid "Configuring <app>Orca</app>'s caret navigation"
+#: C/preferences_gecko.page:7(desc)
+msgid ""
+"Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
+"<app>Thunderbird</app>"
 msgstr ""
 
-#: C/preferences_gekco.page:20(title)
+#: C/preferences_gecko.page:19(title)
 msgid "Gecko Navigation Preferences"
 msgstr ""
 
-#: C/preferences_gekco.page:21(p)
+#: C/preferences_gecko.page:21(title)
+#, fuzzy
+#| msgid "Table Navigation"
+msgid "Page Navigation"
+msgstr "Navegación por tablas"
+
+#: C/preferences_gecko.page:23(p)
 msgid ""
-"The following options allow you to customize how <app>Orca</app> behaves in "
-"Gecko-based applications, including Firefox, Thunderbird, and Yelp 2."
+"The <gui>Page Navigation</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents, and allow you to interact with, text "
+"and other content."
 msgstr ""
 
-#: C/preferences_gekco.page:28(p)
+#: C/preferences_gecko.page:29(title)
+#, fuzzy
+#| msgid "Table Navigation"
+msgid "Use Orca Caret Navigation"
+msgstr "Navegación por tablas"
+
+#: C/preferences_gecko.page:30(p)
 msgid ""
-"<gui>Use <app>Orca</app> Caret Navigation</gui>: This checkbox toggles "
-"<app>Orca</app>'s caret navigation on and off. It is checked by default. To "
-"toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
+"is on, <app>Orca</app> takes control of the caret as you arrow around within "
+"a page; when it is off, Gecko's native caret navigation is active."
+msgstr ""
+
+#: C/preferences_gecko.page:40(title) C/preferences_gecko.page:59(title)
+msgid "This setting can be toggled on the fly"
+msgstr ""
+
+#: C/preferences_gecko.page:41(p)
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>F12</key></keyseq>."
 msgstr ""
 
-#: C/preferences_gekco.page:36(p)
-msgid ""
-"<gui>Grab focus on objects when navigating</gui>: If this checkbox is "
-"checked, <app>Orca</app> will perform an explicit focus grab as you navigate "
-"using the <app>Orca</app>-controlled caret. Doing this was necessary in "
-"older versions of Firefox and Thunderbird. It is unchecked by default."
+#: C/preferences_gecko.page:48(title)
+msgid "Use Orca Structural Navigation"
 msgstr ""
 
-#: C/preferences_gekco.page:45(p)
+#: C/preferences_gecko.page:49(p)
 msgid ""
-"<gui>Position cursor at start of line when navigating vertically</gui>: If "
-"this checkbox is checked, <app>Orca</app> will always move the caret to the "
-"beginning of the line when <app>Orca</app> is controlling the caret and you "
-"press Up or Down Arrow to read the previous or next line. If this checkbox "
-"is not checked, <app>Orca</app> will attempt to keep the caret in the same "
-"horizontal position as you navigate Up or Down. It is checked by default."
+"This checkbox toggles <app>Orca</app>'s <link xref="
+"\"howto_structural_navigation\">Structural Navigation</link> on and off. "
+"Structural Navigation allows you to navigate by elements such as headings, "
+"links, and form fields."
 msgstr ""
 
-#: C/preferences_gekco.page:56(p)
+#: C/preferences_gecko.page:60(p)
 msgid ""
-"<gui>Speak results during find</gui>: If this checkbox is checked, "
-"<app>Orca</app> will read the line which matches your current search query "
-"when you are using the application's Find toolbar to perform your search. It "
-"is checked by default."
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>Z</key></keyseq>."
 msgstr ""
 
-#: C/preferences_gekco.page:64(p)
-msgid ""
-"<gui>Only speak changed lines during find</gui>: If this checkbox is "
-"checked, <app>Orca</app> will not present the matching line if it is the "
-"same line as the previous match. This option is designed to prevent "
-"\"chattiness\" on a line with multiple instances of the string for which you "
-"are searching. It is unchecked by default."
+#: C/preferences_gecko.page:67(title)
+msgid "Grab focus on objects when navigating"
 msgstr ""
 
-#: C/preferences_gekco.page:73(p)
+#: C/preferences_gecko.page:68(p)
 msgid ""
-"<gui>Minimum length of matched text</gui>: The number of characters which "
-"much match before <app>Orca</app> announces the matching line. The default "
-"value is four characters."
+"If this checkbox is checked, <app>Orca</app> will perform an explicit focus "
+"grab as you navigate using the <app>Orca</app>-controlled caret. Doing this "
+"was necessary in older versions of <app>Firefox</app> and <app>Thunderbird</"
+"app>."
 msgstr ""
 
-#: C/preferences_gekco.page:80(p)
-msgid ""
-"See <link xref=\"preferences_structural_navigation\"/> for additional "
-"preferences related to Structural Navigation."
+#: C/preferences_gecko.page:79(title)
+msgid "Position cursor at start of line when navigating vertically"
 msgstr ""
+
+#: C/preferences_gecko.page:80(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will always move the caret to "
+"the beginning of the line when <app>Orca</app> is controlling the caret and "
+"you press Up or Down Arrow to read the previous or next line. If this "
+"checkbox is not checked, <app>Orca</app> will attempt to keep the caret in "
+"the same horizontal position as you navigate Up or Down."
+msgstr ""
+
+#: C/preferences_gecko.page:93(title)
+msgid "Find Options"
+msgstr ""
+
+#: C/preferences_gecko.page:95(p)
+msgid ""
+"The <gui>Find Options</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents the results of a search conducted "
+"using the application's built-in search functionality."
+msgstr ""
+
+#: C/preferences_gecko.page:101(title)
+msgid "Speak results during find"
+msgstr ""
+
+#: C/preferences_gecko.page:102(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will read the line which "
+"matches your current search query."
+msgstr ""
+
+#: C/preferences_gecko.page:111(title)
+msgid "Only speak changed lines during find"
+msgstr ""
+
+#: C/preferences_gecko.page:112(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will not present the matching "
+"line if it is the same line as the previous match. This option is designed "
+"to prevent \"chattiness\" on a line with multiple instances of the string "
+"for which you are searching."
+msgstr ""
+
+#: C/preferences_gecko.page:123(title)
+msgid "Minimum length of matched text"
+msgstr ""
+
+#: C/preferences_gecko.page:124(p)
+msgid ""
+"This editable spin button is where you can specify the number of characters "
+"which much match before <app>Orca</app> announces the matching line. This "
+"option is also designed to prevent \"chattiness\" as there are many matches "
+"when you first begin typing string for which you are searching."
+msgstr ""
+
+#: C/preferences_gecko.page:131(p)
+msgid "Default value: 4"
+msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_chat.page:18(None)
+msgid ""
+"@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
+msgstr ""
+"@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
 
 #: C/preferences_chat.page:4(title)
 msgid "3. Chat"
@@ -1777,53 +2573,139 @@ msgstr ""
 msgid "Chat Preferences"
 msgstr ""
 
-#: C/preferences_chat.page:18(p)
+#: C/preferences_chat.page:19(p)
 msgid ""
 "The following options allow you to customize how <app>Orca</app> behaves "
 "when providing access to instant messaging and internet relay chat clients."
 msgstr ""
 
-#: C/preferences_chat.page:25(p)
-msgid ""
-"<gui>Speak Chat Room name</gui>: If this checkbox is checked, <app>Orca</"
-"app> will prefix incoming messages with the name of the room or buddy they "
-"came from, unless they came from the currently-focused conversation."
+#: C/preferences_chat.page:25(title)
+msgid "Speak Chat Room name"
 msgstr ""
 
-#: C/preferences_chat.page:33(p)
+#: C/preferences_chat.page:26(p)
 msgid ""
-"<gui>Announce when your buddies are typing</gui>: If this checkbox is "
-"checked, and if <app>Orca</app> has sufficient information identifying that "
-"your buddy is typing, <app>Orca</app> will announce changes in typing status."
+"If this checkbox is checked, <app>Orca</app> will prefix incoming messages "
+"with the name of the room or buddy they came from, unless they came from the "
+"currently-focused conversation."
 msgstr ""
 
-#: C/preferences_chat.page:41(p)
-msgid ""
-"<gui>Provide chat room specific message histories</gui>: If this checkbox is "
-"checked, <app>Orca</app>'s commands for reviewing recent messages will only "
-"apply to the currently-focused conversation. Otherwise, the history will "
-"contain the most recent messages regardless of which conversation they came "
-"from."
+#: C/preferences_chat.page:36(title)
+msgid "Announce when your buddies are typing"
 msgstr ""
 
-#: C/preferences_chat.page:50(p)
+#: C/preferences_chat.page:37(p)
 msgid ""
-"The <gui>Speak messages from</gui> group of radio buttons allows you to "
-"control under what circumstances <app>Orca</app> will present an incoming "
-"message to you. Your choices are:"
+"If this checkbox is checked, and if <app>Orca</app> has sufficient "
+"information identifying that your buddy is typing, <app>Orca</app> will "
+"announce changes in typing status."
 msgstr ""
 
-#: C/preferences_chat.page:57(gui)
+#: C/preferences_chat.page:47(title)
+msgid "Provide chat room specific message histories"
+msgstr ""
+
+#: C/preferences_chat.page:48(p)
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s commands for reviewing recent "
+"messages will only apply to the currently-focused conversation. Otherwise, "
+"the history will contain the most recent messages regardless of which "
+"conversation they came from."
+msgstr ""
+
+#: C/preferences_chat.page:59(title)
+#, fuzzy
+#| msgid "Speak tutorial messages"
+msgid "Speak messages from"
+msgstr "Leer mensajes de aprendizaje"
+
+#: C/preferences_chat.page:60(p)
+msgid ""
+"This group of radio buttons allows you to control under what circumstances "
+"<app>Orca</app> will present an incoming message to you. Your choices are:"
+msgstr ""
+
+#: C/preferences_chat.page:66(gui)
 msgid "All channels"
 msgstr ""
 
-#: C/preferences_chat.page:60(gui)
+#: C/preferences_chat.page:69(gui)
 msgid "A channel only if its window is active"
 msgstr ""
 
-#: C/preferences_chat.page:63(gui)
+#: C/preferences_chat.page:72(gui)
 msgid "All channels when any chat window is active"
 msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:21(None)
+msgid ""
+"@@image: 'figures/preferences_enable_braille_support.png'; "
+"md5=f08627f0177c20df349ab87fde697f1f"
+msgstr ""
+"@@image: 'figures/preferences_enable_braille_support.png'; "
+"md5=f08627f0177c20df349ab87fde697f1f"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:40(None)
+msgid ""
+"@@image: 'figures/preferences_enable_braille_monitor.png'; "
+"md5=2dead5fbf717ce30339e2248e4f61aed"
+msgstr ""
+"@@image: 'figures/preferences_enable_braille_monitor.png'; "
+"md5=2dead5fbf717ce30339e2248e4f61aed"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:53(None)
+msgid ""
+"@@image: 'figures/preferences_braille_contracted.png'; "
+"md5=81d80b6854847656862fe4ea167d29f8"
+msgstr ""
+"@@image: 'figures/preferences_braille_contracted.png'; "
+"md5=81d80b6854847656862fe4ea167d29f8"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:71(None)
+msgid ""
+"@@image: 'figures/preferences_abbreviated_role_names.png'; "
+"md5=f26a6ef63ff0d1b40514830de7788c8b"
+msgstr ""
+"@@image: 'figures/preferences_abbreviated_role_names.png'; "
+"md5=f26a6ef63ff0d1b40514830de7788c8b"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:85(None)
+msgid ""
+"@@image: 'figures/preferences_disable_eol_symbol.png'; "
+"md5=c43c2b7dff5efd265a40a260c2bc0d73"
+msgstr ""
+"@@image: 'figures/preferences_disable_eol_symbol.png'; "
+"md5=c43c2b7dff5efd265a40a260c2bc0d73"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:96(None)
+msgid ""
+"@@image: 'figures/preferences_braille_verbosity.png'; "
+"md5=18969c222b3e1ea91cc75d47bb0fe48d"
+msgstr ""
+"@@image: 'figures/preferences_braille_verbosity.png'; "
+"md5=18969c222b3e1ea91cc75d47bb0fe48d"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/preferences_braille.page:109(None)
+msgid ""
+"@@image: 'figures/preferences_braille_indicators.png'; "
+"md5=719cd227dee9df85de633c4e2417301b"
+msgstr ""
+"@@image: 'figures/preferences_braille_indicators.png'; "
+"md5=719cd227dee9df85de633c4e2417301b"
 
 #: C/preferences_braille.page:3(title)
 msgid "3. Braille"
@@ -1845,24 +2727,24 @@ msgstr "Preferencias Braille"
 msgid "Enable Braille Support"
 msgstr "Activar el soporte de Braille"
 
-#: C/preferences_braille.page:21(p)
+#: C/preferences_braille.page:22(p)
 msgid ""
 "This check box toggles whether or not <app>Orca</app> will make use of a "
 "braille display. If BrlTTY is not running, <app>Orca</app> will recover "
 "gracefully and will not communicate with the braille display."
 msgstr ""
 
-#: C/preferences_braille.page:28(p)
+#: C/preferences_braille.page:32(p)
 msgid ""
 "If you configure BrlTTY later on, you need to restart <app>Orca</app> in "
 "order to use braille."
 msgstr ""
 
-#: C/preferences_braille.page:35(title) C/howto_text_setup.page:169(p)
+#: C/preferences_braille.page:39(title) C/howto_text_setup.page:169(p)
 msgid "Enable Braille Monitor"
 msgstr "Activar el monitor de Braille"
 
-#: C/preferences_braille.page:36(p)
+#: C/preferences_braille.page:41(p)
 msgid ""
 "Orca's braille monitor provides an on-screen representation of what takes "
 "place on the braille display. This feature is mostly for demonstration "
@@ -1870,26 +2752,30 @@ msgid ""
 "access to a braille display."
 msgstr ""
 
-#: C/preferences_braille.page:44(title)
+#: C/preferences_braille.page:52(title)
 msgid "Enable Contracted Braille"
 msgstr ""
 
-#: C/preferences_braille.page:45(p)
-msgid "TODO: Get rid of the wiki reference; put basic docs here."
-msgstr ""
-
-#: C/preferences_braille.page:46(p)
+#: C/preferences_braille.page:54(p)
 msgid ""
-"Orca supports contracted braille via the liblouis project. Refer to the "
-"<app>Orca</app> Wiki, where you can find additional information about "
-"setting up liblouis with <app>Orca</app>."
+"Orca supports contracted braille via the liblouis project. Because many "
+"distros include liblouis, you will likely automatically have access to "
+"contracted braille support in <app>Orca</app>."
 msgstr ""
 
-#: C/preferences_braille.page:53(title)
+#: C/preferences_braille.page:59(p)
+msgid ""
+"To enable contracted braille on a system where liblouis has been installed, "
+"be sure that the <gui>Enable Contraced Braille</gui> checkbox is checked. "
+"Then choose your desired translation table from the <gui>Contraction Table</"
+"gui> combo box."
+msgstr ""
+
+#: C/preferences_braille.page:70(title)
 msgid "Abbreviated Role Names"
 msgstr "Nombres de roles abreviados"
 
-#: C/preferences_braille.page:54(p)
+#: C/preferences_braille.page:72(p)
 msgid ""
 "This check box determines the manner in which role names are displayed and "
 "can be used to help conserve real estate on the braille display. For "
@@ -1898,17 +2784,17 @@ msgid ""
 "displayed instead."
 msgstr ""
 
-#: C/preferences_braille.page:63(title)
+#: C/preferences_braille.page:84(title)
 msgid "Disable end of line symbol"
 msgstr "Desactivar símbolo de fin de línea"
 
-#: C/preferences_braille.page:64(p)
+#: C/preferences_braille.page:86(p)
 msgid ""
 "Checking this checkbox tells <app>Orca</app> to not present the \"$l\" "
 "string at the end of a line of text."
 msgstr ""
 
-#: C/preferences_braille.page:71(p)
+#: C/preferences_braille.page:97(p)
 msgid ""
 "This radio button group determines the amount of information that will be "
 "brailled in certain situations. For example, if it is set to verbose, "
@@ -1916,11 +2802,11 @@ msgid ""
 "is not displayed in brief mode."
 msgstr ""
 
-#: C/preferences_braille.page:79(title)
+#: C/preferences_braille.page:108(title)
 msgid "Selection and Hyperlink Indicators"
 msgstr ""
 
-#: C/preferences_braille.page:80(p)
+#: C/preferences_braille.page:110(p)
 msgid ""
 "The <gui>Selection Indicator</gui> and <gui>Hyperlink Indicator</gui> radio "
 "button groups allow you to configure <app>Orca</app>'s behavior when "
@@ -1930,11 +2816,15 @@ msgid ""
 "be Dot 7, only be Dot 8, or not be present at all."
 msgstr ""
 
-#: C/preferences_braille.page:90(title)
+#: C/preferences_braille.page:119(p)
+msgid "Default value: <gui>Dots 7 and 8</gui>"
+msgstr ""
+
+#: C/preferences_braille.page:123(title)
 msgid "Text Attribute Indicators"
 msgstr ""
 
-#: C/preferences_braille.page:91(p)
+#: C/preferences_braille.page:124(p)
 msgid ""
 "You can also optionally have text attributes indicated in braille. Enabling "
 "this feature and choosing which attributes are of interest is done on the "
@@ -2138,7 +3028,7 @@ msgstr ""
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/index.page:13(None)
 msgid "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
-msgstr ""
+msgstr "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 
 #: C/index.page:3(title)
 msgid "Introduction to the <app>Orca</app> Screen Reader"
@@ -2150,37 +3040,33 @@ msgid ""
 "\"><app>Orca</app>'s logo </media><app>Orca</app> Screen Reader"
 msgstr ""
 
-#: C/index.page:18(p)
-msgid ""
-"If you are a new user of the GNOME Desktop, you may wish to begin with the "
-"<link href=\"http://library.gnome.org/users/gnome-access-guide/stable/\"> "
-"GNOME Desktop Accessibility Guide</link> which will introduce you to all of "
-"the accessibility features in GNOME, including keyboard navigation and "
-"accessible login."
+#: C/index.page:19(title)
+msgid "Before You Begin"
 msgstr ""
 
-#: C/index.page:25(p)
+#: C/index.page:20(p)
 msgid ""
-"If you are new to screen readers or are unfamiliar with <app>Orca</app>, the "
-"guides which follow should get you started with performing common tasks "
-"using <app>Orca</app>. If, on the other hand, you are already familiar with "
-"how to use a screen reader and just need to know what options and tools "
-"<app>Orca</app> provides, you may prefer to read the guides covering <link "
-"xref=\"preferences\"><app>Orca</app>'s Preferences dialogs </link> and <link "
-"xref=\"commands\"><app>Orca</app>'s commands</link>."
+"Read the <link href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility "
+"Guide</link>"
 msgstr ""
 
-#: C/index.page:35(title) C/commands.page:30(title)
+#: C/index.page:26(title) C/commands.page:17(title)
 msgid "Getting Started"
 msgstr "Inicio"
 
-#: C/index.page:38(title)
+#: C/index.page:29(title)
 msgid "Reading Documents and Web Pages"
 msgstr ""
 
-#: C/index.page:41(title) C/commands.page:39(title)
+#: C/index.page:32(title) C/commands.page:26(title)
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr ""
+
+#: C/index.page:35(title)
+#, fuzzy
+#| msgid "Orca Preferences"
+msgid "Quick Reference"
+msgstr "Preferencias de Orca"
 
 #: C/howto_whereami.page:5(title)
 msgid "1. WhereAmI"
@@ -2303,14 +3189,18 @@ msgid ""
 "<key>CapsLock</key>, you can do so by performing the following steps:"
 msgstr ""
 
-#: C/howto_toggling_caps_lock.page:25(p)
+#: C/howto_toggling_caps_lock.page:24(title)
+msgid "Toggling CapsLock in Laptop Layout"
+msgstr ""
+
+#: C/howto_toggling_caps_lock.page:26(p)
 msgid ""
 "Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</"
 "key></keyseq>, to tell <app>Orca</app> that the next command should be "
 "ignored."
 msgstr ""
 
-#: C/howto_toggling_caps_lock.page:31(p)
+#: C/howto_toggling_caps_lock.page:32(p)
 msgid "Press <key>CapsLock</key> to toggle its locked state."
 msgstr ""
 
@@ -2357,41 +3247,45 @@ msgid ""
 "key as <key>KeyPad 0</key>."
 msgstr ""
 
-#: C/howto_the_orca_modifier.page:47(title)
-msgid "Changing the Orca Modifier"
-msgstr ""
-
-#: C/howto_the_orca_modifier.page:48(p)
+#: C/howto_the_orca_modifier.page:46(p)
 msgid ""
 "If you want to maintain your current keyboard layout but select a different "
 "modifier key, you can do so by performing the following steps:"
 msgstr ""
 
-#: C/howto_the_orca_modifier.page:55(p) C/howto_keyboard_layout.page:46(p)
-#: C/howto_key_bindings.page:25(p) C/howto_key_bindings.page:65(p)
-#: C/howto_key_bindings.page:100(p) C/howto_key_bindings.page:125(p)
+#: C/howto_the_orca_modifier.page:51(title)
+msgid "Changing the Orca Modifier"
+msgstr ""
+
+#: C/howto_the_orca_modifier.page:53(p) C/howto_keyboard_layout.page:45(p)
+#: C/howto_key_bindings.page:23(p) C/howto_key_bindings.page:60(p)
+#: C/howto_key_bindings.page:92(p) C/howto_key_bindings.page:114(p)
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgstr ""
 
-#: C/howto_the_orca_modifier.page:62(p) C/howto_key_bindings.page:31(p)
-#: C/howto_key_bindings.page:71(p) C/howto_key_bindings.page:107(p)
-#: C/howto_key_bindings.page:132(p)
+#: C/howto_the_orca_modifier.page:59(p) C/howto_key_bindings.page:29(p)
+#: C/howto_key_bindings.page:66(p) C/howto_key_bindings.page:99(p)
+#: C/howto_key_bindings.page:121(p)
 msgid "Move to the <gui>Key Bindings</gui> page."
 msgstr ""
 
-#: C/howto_the_orca_modifier.page:65(p)
+#: C/howto_the_orca_modifier.page:62(p)
 msgid "Move to the <gui>Orca Modifier Key(s)</gui> combobox."
 msgstr ""
 
-#: C/howto_the_orca_modifier.page:68(p)
+#: C/howto_the_orca_modifier.page:65(p)
 msgid "Arrow to the desired modifier. The available options are:"
 msgstr ""
 
-#: C/howto_the_orca_modifier.page:76(p) C/howto_keyboard_layout.page:60(p)
-#: C/howto_key_bindings.page:56(p) C/howto_key_bindings.page:91(p)
-#: C/howto_key_bindings.page:116(p) C/howto_key_bindings.page:151(p)
+#: C/howto_the_orca_modifier.page:68(p)
+msgid "KP_Insert"
+msgstr "TN Ins"
+
+#: C/howto_the_orca_modifier.page:73(p) C/howto_keyboard_layout.page:59(p)
+#: C/howto_key_bindings.page:54(p) C/howto_key_bindings.page:86(p)
+#: C/howto_key_bindings.page:108(p) C/howto_key_bindings.page:140(p)
 msgid "Press the <gui>Apply</gui> button."
 msgstr ""
 
@@ -2409,14 +3303,18 @@ msgstr ""
 msgid ""
 "Orca has a text setup feature which allows you to perform basic "
 "configuration of <app>Orca</app> even if the graphical desktop is not "
-"running. To launch <app>Orca</app>'s text-only guided setup:"
+"running."
+msgstr ""
+
+#: C/howto_text_setup.page:21(title)
+msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
 msgstr ""
 
 #: C/howto_text_setup.page:23(p)
 msgid ""
 "Open a <gui>Run</gui> dialog. For most distros, this can be accomplished by "
 "pressing <keyseq><key>Alt</key><key>F2</key></keyseq>. Alternatively, you "
-"can use a terminal window."
+"can use a terminal window or the system text console."
 msgstr ""
 
 #: C/howto_text_setup.page:30(p)
@@ -2515,11 +3413,19 @@ msgstr ""
 msgid "action keys"
 msgstr ""
 
+#: C/howto_text_setup.page:118(p)
+msgid ""
+"This option controls whether or not <key>BackSpace</key>, <key>Delete</key>, "
+"<key>Return</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
+"<key>Page Down</key>, <key>Home</key>, and <key>End</key> should be spoken "
+"when pressed."
+msgstr ""
+
 #: C/howto_text_setup.page:129(p)
 msgid "Select desired keyboard layout."
 msgstr "Seleccione la distribución de teclado deseada."
 
-#: C/howto_text_setup.page:130(p) C/howto_keyboard_layout.page:16(p)
+#: C/howto_text_setup.page:130(p)
 msgid ""
 "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
 "impacts which key is used as the Orca Modifier."
@@ -2709,6 +3615,11 @@ msgid ""
 "keyseq>."
 msgstr ""
 
+#: C/howto_tables.page:52(title) C/howto_structural_navigation.page:19(title)
+#: C/commands_structural_navigation.page:7(title)
+msgid "Structural Navigation"
+msgstr ""
+
 #: C/howto_tables.page:53(p)
 msgid ""
 "<app>Orca</app>'s <link xref=\"commands_structural_navigation#tables\">table "
@@ -2728,10 +3639,10 @@ msgstr ""
 #: C/howto_tables.page:66(p)
 msgid ""
 "In addition, <app>Orca</app> provides configurable <link xref="
-"\"preferences_structural_navigation\">presentation options</link> which work "
-"in conjunction with Structural Navigation and allow you to control whether "
-"or not cell coordinates are presented, multiple cell spans are indicated, "
-"and cell headers are announced."
+"\"preferences_table_navigation\">presentation options</link> which work in "
+"conjunction with Structural Navigation and allow you to control whether or "
+"not cell coordinates are presented, multiple cell spans are indicated, and "
+"cell headers are announced."
 msgstr ""
 
 #: C/howto_tables.page:74(title) C/howto_structural_navigation.page:52(title)
@@ -2762,35 +3673,35 @@ msgid ""
 "challenges."
 msgstr ""
 
-#: C/howto_tables.page:95(p)
-msgid "To set column headers:"
+#: C/howto_tables.page:96(title)
+msgid "Setting Column Headers"
 msgstr ""
 
-#: C/howto_tables.page:100(p)
+#: C/howto_tables.page:98(p)
 msgid "Move to the row which contains all of the column headers."
 msgstr ""
 
-#: C/howto_tables.page:105(p)
+#: C/howto_tables.page:103(p)
 msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>R</key></keyseq> to tell "
 "<app>Orca</app> that the current row is the one with the headers."
 msgstr ""
 
-#: C/howto_tables.page:111(p)
-msgid "To set row headers:"
+#: C/howto_tables.page:110(title)
+msgid "Set Row Headers"
 msgstr ""
 
-#: C/howto_tables.page:116(p)
+#: C/howto_tables.page:112(p)
 msgid "Move to the column which contains all of the row headers."
 msgstr ""
 
-#: C/howto_tables.page:121(p)
+#: C/howto_tables.page:117(p)
 msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>C</key></keyseq> to tell "
 "<app>Orca</app> that the current column is the one with the headers."
 msgstr ""
 
-#: C/howto_tables.page:127(p)
+#: C/howto_tables.page:123(p)
 msgid ""
 "Having set either the column headers or the row headers, you should find "
 "that as you navigate amongst the cells, <app>Orca</app> will present each "
@@ -2803,7 +3714,7 @@ msgid ""
 "headers, the header associated with the new column will be presented."
 msgstr ""
 
-#: C/howto_tables.page:139(p)
+#: C/howto_tables.page:135(p)
 msgid ""
 "To clear headers, simply double-click the command you used to set them. Thus "
 "double-clicking <keyseq><key>Orca Modifier</key><key>R</key></keyseq> tells "
@@ -2913,9 +3824,12 @@ msgstr ""
 #: C/howto_structural_navigation.page:83(p)
 msgid ""
 "In addition to the aforementioned commands, <app>Orca</app> has a number of "
-"<link xref=\"preferences_structural_navigation\">configurable options</link> "
-"available specifically for applications in which there is structural "
-"navigation support. To access these options:"
+"configurable options available specifically for applications in which there "
+"is structural navigation support."
+msgstr ""
+
+#: C/howto_structural_navigation.page:89(title)
+msgid "Configuring Structural Navigation"
 msgstr ""
 
 #: C/howto_structural_navigation.page:91(p)
@@ -2941,8 +3855,8 @@ msgstr ""
 msgid "Examine and change the settings as you see fit."
 msgstr ""
 
-#: C/howto_structural_navigation.page:117(p) C/howto_profiles.page:77(p)
-#: C/howto_profiles.page:126(p)
+#: C/howto_structural_navigation.page:117(p) C/howto_profiles.page:86(p)
+#: C/howto_profiles.page:130(p)
 msgid "Press the <gui>OK</gui> button."
 msgstr ""
 
@@ -3021,6 +3935,32 @@ msgid ""
 "keyseq> from within any accessible application."
 msgstr ""
 
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/howto_profiles.page:51(None)
+msgid ""
+"@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
+msgstr ""
+"@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/howto_profiles.page:82(None)
+msgid ""
+"@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
+msgstr ""
+"@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/howto_profiles.page:106(None)
+msgid ""
+"@@image: 'figures/profiles_conflict.png'; "
+"md5=0da0839b41fce88a4c177e5fb52b3e6b"
+msgstr ""
+"@@image: 'figures/profiles_conflict.png'; "
+"md5=0da0839b41fce88a4c177e5fb52b3e6b"
+
 #: C/howto_profiles.page:5(title)
 msgid "9. Profiles"
 msgstr ""
@@ -3036,109 +3976,109 @@ msgid ""
 msgstr ""
 
 #: C/howto_profiles.page:21(title)
+msgid "Maintaining Multiple Configurations"
+msgstr ""
+
+#: C/howto_profiles.page:24(desc)
+msgid ""
+"These options appear at the bottom of the <gui>General</gui> page of the "
+"<app>Orca</app> preferences dialog."
+msgstr ""
+
+#: C/howto_profiles.page:31(title)
 msgid "Saving a New Profile"
 msgstr ""
 
-#: C/howto_profiles.page:22(p)
-msgid "To save a new profile:"
-msgstr ""
-
-#: C/howto_profiles.page:25(p) C/howto_profiles.page:57(p)
-#: C/howto_profiles.page:114(p)
+#: C/howto_profiles.page:33(p) C/howto_profiles.page:64(p)
+#: C/howto_profiles.page:119(p)
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box."
 msgstr ""
 
-#: C/howto_profiles.page:31(p)
+#: C/howto_profiles.page:38(p)
 msgid "Change whatever settings you wish."
 msgstr ""
 
-#: C/howto_profiles.page:34(p)
+#: C/howto_profiles.page:41(p)
 msgid "On the <gui>General</gui> page, press the <gui>Save As</gui> button."
 msgstr ""
 
-#: C/howto_profiles.page:39(p)
+#: C/howto_profiles.page:46(p)
 msgid ""
-"In the resulting <gui>Save Profile As</gui> dialog box, type the new profile "
-"name."
+"Type the new profile name in the resulting <gui>Save Profile As</gui> dialog "
+"box."
 msgstr ""
 
-#: C/howto_profiles.page:45(p)
+#: C/howto_profiles.page:55(p)
 msgid ""
 "Press the <gui>OK</gui> button in the <gui>Save Profile As</gui> dialog box."
 msgstr ""
 
-#: C/howto_profiles.page:53(title)
+#: C/howto_profiles.page:62(title)
 msgid "Loading an Existing Profile"
 msgstr ""
 
-#: C/howto_profiles.page:54(p)
-msgid "To load an existing profile:"
-msgstr ""
-
-#: C/howto_profiles.page:63(p)
+#: C/howto_profiles.page:69(p)
 msgid ""
 "On the <gui>General</gui> page, select the profile to load from the "
 "<gui>Active Profile</gui> combo box."
 msgstr ""
 
-#: C/howto_profiles.page:69(p)
+#: C/howto_profiles.page:75(p)
 msgid "Press the <gui>Load</gui> button."
 msgstr ""
 
-#: C/howto_profiles.page:72(p)
+#: C/howto_profiles.page:78(p)
 msgid "You will be asked to confirm. Press the <gui>Yes</gui> button."
 msgstr ""
 
-#: C/howto_profiles.page:82(title)
+#: C/howto_profiles.page:90(title)
 msgid "Changing an Existing Profile"
 msgstr ""
 
-#: C/howto_profiles.page:83(p)
-msgid "To make changes to an existing profile:"
-msgstr ""
-
-#: C/howto_profiles.page:86(p)
+#: C/howto_profiles.page:92(p)
 msgid ""
 "Follow the steps described above to load the profile you wish to change."
 msgstr ""
 
-#: C/howto_profiles.page:92(p)
+#: C/howto_profiles.page:97(p)
 msgid "Follow the steps described above to save a new profile."
 msgstr ""
 
-#: C/howto_profiles.page:95(p)
+#: C/howto_profiles.page:100(p)
 msgid ""
 "When prompted for the new profile name, type the same name as current "
-"profile. When you press the <gui>OK</gui> button, you will told there is a "
-"name conflict."
+"profile. When you press the <gui>OK</gui> button, you will be told there is "
+"a name conflict."
 msgstr ""
 
-#: C/howto_profiles.page:102(p)
+#: C/howto_profiles.page:110(p)
 msgid ""
 "Press the <gui>Yes</gui> button to confirm you wish to overwrite the "
 "existing profile with the new settings."
 msgstr ""
 
-#: C/howto_profiles.page:110(title)
+#: C/howto_profiles.page:117(title)
 msgid "Changing the <gui>Start-up Profile</gui>"
 msgstr ""
 
-#: C/howto_profiles.page:111(p)
-msgid "To change the profile which is loaded when you start <app>Orca</app>:"
-msgstr ""
-
-#: C/howto_profiles.page:120(p)
+#: C/howto_profiles.page:124(p)
 msgid ""
 "On the <gui>General</gui> page, select the profile to load from the "
 "<gui>Start-up Profile</gui> combo box."
 msgstr ""
 
-#: C/howto_profiles.page:129(p)
+#: C/howto_profiles.page:133(p)
 msgid ""
 "The next time you launch <app>Orca</app>, the newly-selected profile will be "
 "used."
 msgstr ""
+
+#. When image changes, this message will be marked fuzzy or untranslated for you.
+#. It doesn't matter what you translate it to: it's not used at all.
+#: C/howto_orca_find.page:50(None)
+msgid "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
+msgstr "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
 
 #: C/howto_orca_find.page:5(title)
 msgid "3. Orca Find"
@@ -3170,7 +4110,7 @@ msgid ""
 msgstr ""
 
 #: C/howto_orca_find.page:30(p) C/commands_find.page:30(p)
-msgid "Desktop:<keyseq><key>KP Delete</key></keyseq>"
+msgid "Desktop: <keyseq><key>KP Delete</key></keyseq>"
 msgstr ""
 
 #: C/howto_orca_find.page:33(p) C/commands_find.page:33(p)
@@ -3185,58 +4125,79 @@ msgid ""
 msgstr ""
 
 #: C/howto_orca_find.page:43(p)
-msgid ""
-"When you activate Orca Find, you will be placed in a dialog box where you "
-"can specify the following items:"
+msgid "When you activate Orca Find, you will be placed in a dialog box."
 msgstr ""
 
-#: C/howto_orca_find.page:49(p)
-msgid "The text to find"
+#: C/howto_orca_find.page:47(title)
+msgid "<app>Orca</app>'s Find Dialog"
 msgstr ""
 
 #: C/howto_orca_find.page:52(p)
-msgid "The location to start from, which can be:"
+msgid "Here you can specify the following items:"
 msgstr ""
 
-#: C/howto_orca_find.page:55(gui)
-msgid "Current location"
+#: C/howto_orca_find.page:57(p)
+msgid "The text to find"
 msgstr ""
 
-#: C/howto_orca_find.page:58(gui)
-msgid "Top of window"
-msgstr "Parte superior de la ventana"
-
-#: C/howto_orca_find.page:63(gui)
-msgid "Match case"
-msgstr "Coincidir con capitalización"
-
-#: C/howto_orca_find.page:66(gui)
-msgid "Match entire word only"
-msgstr ""
-
-#: C/howto_orca_find.page:69(gui)
-msgid "Search backwards"
-msgstr ""
-
-#: C/howto_orca_find.page:72(p)
+#: C/howto_orca_find.page:60(p)
 msgid ""
-"<gui>Wrap around</gui>, should there be no match from the starting point"
+"The location from which to begin the search, which can either be the current "
+"location or the top of the window"
 msgstr ""
 
-#: C/howto_orca_find.page:77(p)
+#: C/howto_orca_find.page:64(p)
+msgid "Default value of <gui>Start from</gui>: <gui>Current location</gui>"
+msgstr ""
+
+#: C/howto_orca_find.page:69(p)
 msgid ""
-"By default, the search will be case-insensitive and permit partial word "
-"matches. And it will begin from your current location and search forward, "
-"wrapping if needed."
+"Whether or not capitalization should be taken into account when seeking a "
+"match"
+msgstr ""
+
+#: C/howto_orca_find.page:73(p)
+msgid "Default value of <gui>Match case</gui>: not checked"
+msgstr ""
+
+#: C/howto_orca_find.page:78(p)
+msgid ""
+"Whether or not to limit matches to those which match the entire word or "
+"phrase"
 msgstr ""
 
 #: C/howto_orca_find.page:82(p)
+msgid "Default value of <gui>Match entire word only</gui>: not checked"
+msgstr ""
+
+#: C/howto_orca_find.page:87(p)
+msgid ""
+"Whether Find should look down and/or to the right for the next match or up "
+"and/or to the left."
+msgstr ""
+
+#: C/howto_orca_find.page:91(p)
+msgid "Default value of <gui>Search backwards</gui>: not checked"
+msgstr ""
+
+#: C/howto_orca_find.page:96(p)
+msgid ""
+"Whether or not Find should wrap around to the top/bottom of the window if "
+"there is no match found from the starting location in the direction of the "
+"search."
+msgstr ""
+
+#: C/howto_orca_find.page:101(p)
+msgid "Default value of <gui>Wrap around</gui>: checked"
+msgstr ""
+
+#: C/howto_orca_find.page:106(p)
 msgid ""
 "Having performed a search, you can quickly search for the next or previous "
 "match without having to return to the Orca Find dialog box."
 msgstr ""
 
-#: C/howto_orca_find.page:86(p)
+#: C/howto_orca_find.page:110(p)
 msgid ""
 "Because it is a <link xref=\"howto_flat_review\">Flat Review</link> feature, "
 "when there is a match, Flat Review will automatically be activated and the "
@@ -3474,53 +4435,45 @@ msgstr ""
 msgid "Using Learn Mode"
 msgstr ""
 
-#: C/howto_learn_modes.page:28(p)
-msgid "To use <app>Orca</app>'s Learn Mode:"
-msgstr ""
-
-#: C/howto_learn_modes.page:31(p)
+#: C/howto_learn_modes.page:29(p)
 msgid ""
 "Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key><key>H</"
 "key></keyseq>."
 msgstr ""
 
-#: C/howto_learn_modes.page:37(p)
+#: C/howto_learn_modes.page:35(p)
 msgid ""
 "Press any key or keystroke. <app>Orca</app> will announce the keys and any "
 "associated command."
 msgstr ""
 
-#: C/howto_learn_modes.page:43(p)
+#: C/howto_learn_modes.page:41(p)
 msgid "Press <key>Esc</key> to exit Learn Mode."
 msgstr ""
 
-#: C/howto_learn_modes.page:48(title)
+#: C/howto_learn_modes.page:45(title)
 msgid "Using List Shortcuts Mode"
 msgstr ""
 
-#: C/howto_learn_modes.page:49(p)
-msgid "To use <app>Orca</app>'s List Shortcuts Mode:"
-msgstr ""
-
-#: C/howto_learn_modes.page:52(p)
+#: C/howto_learn_modes.page:47(p)
 msgid ""
 "Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</"
 "key><key>H</key></keyseq> twice quickly."
 msgstr ""
 
-#: C/howto_learn_modes.page:58(p)
+#: C/howto_learn_modes.page:53(p)
 msgid ""
 "Press <key>1</key> if you want a list of shortcuts that apply <app>Orca</"
 "app>-wide, or press <key>2</key> if you want a list of shortcuts that are "
 "specifically for the application with focus."
 msgstr ""
 
-#: C/howto_learn_modes.page:65(p)
+#: C/howto_learn_modes.page:60(p)
 msgid ""
 "Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
 msgstr ""
 
-#: C/howto_learn_modes.page:71(p)
+#: C/howto_learn_modes.page:66(p)
 msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
 msgstr ""
 
@@ -3532,17 +4485,23 @@ msgstr ""
 msgid "Selecting the Desktop or Laptop layout"
 msgstr ""
 
-#: C/howto_keyboard_layout.page:40(p)
+#: C/howto_keyboard_layout.page:16(p)
 msgid ""
-"If you want to change your keyboard layout, you can do so by performing the "
-"following steps:"
+"Orca has two keyboard layouts: Desktop (i.e. with a numeric keypad) and "
+"Laptop. The layout you choose impacts which key is used as the Orca Modifier."
 msgstr ""
 
-#: C/howto_keyboard_layout.page:52(p)
+#: C/howto_keyboard_layout.page:41(title)
+#, fuzzy
+#| msgid "Keyboard Layout"
+msgid "Changing Your Keyboard Layout"
+msgstr "Distribución del teclado"
+
+#: C/howto_keyboard_layout.page:51(p)
 msgid "Move to the <gui>Keyboard Layout</gui> group of radio buttons."
 msgstr ""
 
-#: C/howto_keyboard_layout.page:57(p)
+#: C/howto_keyboard_layout.page:56(p)
 msgid "Arrow to the desired layout."
 msgstr ""
 
@@ -3569,84 +4528,68 @@ msgstr ""
 msgid "Binding an Unbound Command"
 msgstr ""
 
-#: C/howto_key_bindings.page:22(p)
-msgid "To add a keystroke to an unbound command:"
-msgstr ""
-
-#: C/howto_key_bindings.page:34(p)
+#: C/howto_key_bindings.page:32(p)
 msgid ""
 "Arrow to the cell which contains the command you want to assign a keystroke "
 "to."
 msgstr ""
 
-#: C/howto_key_bindings.page:40(p)
+#: C/howto_key_bindings.page:38(p)
 msgid ""
 "Arrow once to the right. This will place focus in the <gui>Key Binding</gui> "
 "column. Press <key>Return</key>."
 msgstr ""
 
-#: C/howto_key_bindings.page:46(p) C/howto_key_bindings.page:80(p)
+#: C/howto_key_bindings.page:44(p) C/howto_key_bindings.page:75(p)
 msgid "Press the desired key combination."
 msgstr ""
 
-#: C/howto_key_bindings.page:48(p) C/howto_key_bindings.page:83(p)
+#: C/howto_key_bindings.page:46(p) C/howto_key_bindings.page:78(p)
 msgid ""
 "Press <key>Return</key> to confirm the new combination. The new keystroke "
 "will be saved and the check box in the last column (the <gui>Modified</gui> "
 "column) will indicate that the key binding has been modified."
 msgstr ""
 
-#: C/howto_key_bindings.page:61(title)
+#: C/howto_key_bindings.page:58(title)
 msgid "Changing Existing Bindings"
 msgstr ""
 
-#: C/howto_key_bindings.page:62(p)
-msgid "To change either the key binding or the alternate binding:"
-msgstr ""
-
-#: C/howto_key_bindings.page:74(p)
+#: C/howto_key_bindings.page:69(p)
 msgid ""
 "Arrow to the cell which contains the binding you which to change and press "
 "<key>Return</key>."
 msgstr ""
 
-#: C/howto_key_bindings.page:96(title)
+#: C/howto_key_bindings.page:90(title)
 msgid "Restoring Original Bindings"
 msgstr ""
 
-#: C/howto_key_bindings.page:97(p)
-msgid "To restore a modified key binding:"
-msgstr ""
-
-#: C/howto_key_bindings.page:110(p)
+#: C/howto_key_bindings.page:102(p)
 msgid "Arrow to the modified column associated with the key binding."
 msgstr ""
 
-#: C/howto_key_bindings.page:113(p)
+#: C/howto_key_bindings.page:105(p)
 msgid "Uncheck the checkbox by pressing <key>Space</key>."
 msgstr ""
 
-#: C/howto_key_bindings.page:121(title)
+#: C/howto_key_bindings.page:112(title)
 msgid "Unbinding Bound Commands"
 msgstr ""
 
-#: C/howto_key_bindings.page:122(p)
-msgid "To unbind any bound command:"
-msgstr ""
-
-#: C/howto_key_bindings.page:135(p)
+#: C/howto_key_bindings.page:124(p)
 msgid ""
 "Arrow to the cell which contains the binding you which to delete and press "
 "<key>Return</key>."
 msgstr ""
 
-#: C/howto_key_bindings.page:141(p)
+#: C/howto_key_bindings.page:130(p)
 msgid ""
 "When prompted for the new keybinding, press <key>Delete</key> or "
 "<key>BackSpace</key>. You will be told that the key binding has been removed."
 msgstr ""
 
-#: C/howto_key_bindings.page:148(p)
+#: C/howto_key_bindings.page:137(p)
 msgid "Press <key>Return</key> to confirm."
 msgstr ""
 
@@ -3819,27 +4762,27 @@ msgstr ""
 msgid "<app>Orca</app> provides the following Where Am I commands:"
 msgstr ""
 
-#: C/commands_where_am_i.page:31(p) C/commands_reading.page:188(p)
+#: C/commands_where_am_i.page:31(p) C/commands_reading.page:200(p)
 msgid "Perform basic where am I:"
 msgstr ""
 
-#: C/commands_where_am_i.page:34(p) C/commands_reading.page:191(p)
+#: C/commands_where_am_i.page:34(p) C/commands_reading.page:203(p)
 msgid "Desktop: <key>KP Enter</key>"
 msgstr ""
 
-#: C/commands_where_am_i.page:37(p) C/commands_reading.page:196(p)
+#: C/commands_where_am_i.page:37(p) C/commands_reading.page:208(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
 msgstr ""
 
-#: C/commands_where_am_i.page:42(p) C/commands_reading.page:203(p)
+#: C/commands_where_am_i.page:42(p) C/commands_reading.page:215(p)
 msgid "Perform detailed where am I:"
 msgstr ""
 
-#: C/commands_where_am_i.page:45(p) C/commands_reading.page:206(p)
+#: C/commands_where_am_i.page:45(p) C/commands_reading.page:218(p)
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
 msgstr ""
 
-#: C/commands_where_am_i.page:48(p) C/commands_reading.page:211(p)
+#: C/commands_where_am_i.page:48(p) C/commands_reading.page:223(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
@@ -3856,7 +4799,7 @@ msgid "Present the title bar:"
 msgstr ""
 
 #: C/commands_where_am_i.page:65(p)
-msgid "Desktop:<keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
 msgstr ""
 
 #: C/commands_where_am_i.page:70(p)
@@ -3869,8 +4812,8 @@ msgstr ""
 
 #: C/commands_where_am_i.page:80(p)
 msgid ""
-"Desktop:<keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq> (double-"
-"clicked)"
+"Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq> "
+"(double-clicked)"
 msgstr ""
 
 #: C/commands_where_am_i.page:86(p)
@@ -3943,10 +4886,6 @@ msgstr ""
 msgid "3. Table Navigation"
 msgstr ""
 
-#: C/commands_table.page:7(title)
-msgid "Table Navigation"
-msgstr "Navegación por tablas"
-
 #: C/commands_table.page:8(desc)
 msgid "Commands for accessing tabular information"
 msgstr ""
@@ -3990,6 +4929,10 @@ msgstr ""
 msgid ""
 "Toggle between cell and row reading in a table: <keyseq><key>Orca Modifier</"
 "key><key>F11</key></keyseq>"
+msgstr ""
+
+#: C/commands_structural_navigation.page:6(title)
+msgid "2. Structural Navigation"
 msgstr ""
 
 #: C/commands_structural_navigation.page:8(desc)
@@ -4294,143 +5237,155 @@ msgid ""
 "app> will present your new location. As a result, you are likely already "
 "familiar with how to read a document using <app>Orca</app>. However, if you "
 "would like to review GNOME's caret navigation commands, please see \"<link "
-"href=\"http://library.gnome.org/users/gnome-access-guide/unstable/keynav-52."
+"href=\"http://library.gnome.org/users/gnome-access-guide/stable/keynav-52."
 "html\">Caret Navigation Mode</link>\" in the <link href=\"http://library."
-"gnome.org/users/gnome-access-guide/unstable\">GNOME Desktop Accessibility "
+"gnome.org/users/gnome-access-guide/stable\">GNOME Desktop Accessibility "
 "Guide</link>."
 msgstr ""
 
 #: C/commands_reading.page:33(p)
 msgid ""
-"In addition to the caret navigation commands which are part of GNOME, you "
-"can use the following <app>Orca</app> commands to read a document:"
-msgstr ""
-
-#: C/commands_reading.page:38(title)
-msgid "Reading Your Current Location"
+"In addition to the caret navigation commands which are part of GNOME, "
+"<app>Orca</app> provides a number of commands which you can use to read a "
+"document."
 msgstr ""
 
 #: C/commands_reading.page:39(p)
+msgid ""
+"In the lists that follow, you will see several references to \"KP\". All \"KP"
+"\" keys are located on the numeric keypad. You will also notice that there "
+"are different keystrokes depending upon whether you are using a desktop or a "
+"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
+"Desktop keyboard layout or its Laptop keyboard layout. For additional "
+"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
+"Layout</link> topic."
+msgstr ""
+
+#: C/commands_reading.page:50(title)
+msgid "Reading Your Current Location"
+msgstr ""
+
+#: C/commands_reading.page:51(p)
 msgid ""
 "The following <app>Orca</app><link xref=\"commands_flat_review\">Flat Review "
 "Commands</link> can be used to read your current location:"
 msgstr ""
 
-#: C/commands_reading.page:45(p)
+#: C/commands_reading.page:57(p)
 msgid "Read the current line:"
 msgstr ""
 
-#: C/commands_reading.page:48(p) C/commands_flat_review.page:46(p)
+#: C/commands_reading.page:60(p) C/commands_flat_review.page:46(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq>"
 msgstr ""
 
-#: C/commands_reading.page:53(p) C/commands_flat_review.page:47(p)
+#: C/commands_reading.page:65(p) C/commands_flat_review.page:47(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq>"
 msgstr ""
 
-#: C/commands_reading.page:60(p)
+#: C/commands_reading.page:72(p)
 msgid "Read the current word:"
 msgstr ""
 
-#: C/commands_reading.page:63(p) C/commands_flat_review.page:93(p)
+#: C/commands_reading.page:75(p) C/commands_flat_review.page:93(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq>"
 msgstr ""
 
-#: C/commands_reading.page:68(p) C/commands_flat_review.page:94(p)
+#: C/commands_reading.page:80(p) C/commands_flat_review.page:94(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>"
 msgstr ""
 
-#: C/commands_reading.page:75(p)
+#: C/commands_reading.page:87(p)
 msgid "Spell the current word:"
 msgstr ""
 
-#: C/commands_reading.page:78(p) C/commands_flat_review.page:99(p)
+#: C/commands_reading.page:90(p) C/commands_flat_review.page:99(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (double-clicked)"
 msgstr ""
 
-#: C/commands_reading.page:83(p) C/commands_flat_review.page:100(p)
+#: C/commands_reading.page:95(p) C/commands_flat_review.page:100(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (double-"
 "clicked)"
 msgstr ""
 
-#: C/commands_reading.page:91(p)
+#: C/commands_reading.page:103(p)
 msgid "Phonetically spell the current word:"
 msgstr ""
 
-#: C/commands_reading.page:94(p) C/commands_flat_review.page:105(p)
+#: C/commands_reading.page:106(p) C/commands_flat_review.page:105(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)"
 msgstr ""
 
-#: C/commands_reading.page:99(p) C/commands_flat_review.page:106(p)
+#: C/commands_reading.page:111(p) C/commands_flat_review.page:106(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
 
-#: C/commands_reading.page:107(p)
+#: C/commands_reading.page:119(p)
 msgid "Read the current character:"
 msgstr ""
 
-#: C/commands_reading.page:110(p) C/commands_flat_review.page:134(p)
+#: C/commands_reading.page:122(p) C/commands_flat_review.page:134(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq>"
 msgstr ""
 
-#: C/commands_reading.page:115(p) C/commands_flat_review.page:135(p)
+#: C/commands_reading.page:127(p) C/commands_flat_review.page:135(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>"
 msgstr ""
 
-#: C/commands_reading.page:122(p)
+#: C/commands_reading.page:134(p)
 msgid "Phonetically speak the current character:"
 msgstr ""
 
-#: C/commands_reading.page:125(p) C/commands_flat_review.page:140(p)
+#: C/commands_reading.page:137(p) C/commands_flat_review.page:140(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)"
 msgstr ""
 
-#: C/commands_reading.page:130(p) C/commands_flat_review.page:141(p)
+#: C/commands_reading.page:142(p) C/commands_flat_review.page:141(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (double-"
 "clicked)"
 msgstr ""
 
-#: C/commands_reading.page:138(p)
+#: C/commands_reading.page:150(p)
 msgid "Speak the unicode value of current character:"
 msgstr ""
 
-#: C/commands_reading.page:141(p) C/commands_flat_review.page:146(p)
+#: C/commands_reading.page:153(p) C/commands_flat_review.page:146(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)"
 msgstr ""
 
-#: C/commands_reading.page:146(p) C/commands_flat_review.page:147(p)
+#: C/commands_reading.page:158(p) C/commands_flat_review.page:147(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
 
-#: C/commands_reading.page:156(title)
+#: C/commands_reading.page:168(title)
 msgid "Say All"
 msgstr ""
 
-#: C/commands_reading.page:157(p)
+#: C/commands_reading.page:169(p)
 msgid ""
 "Orca's Say All command will cause <app>Orca</app> to speak the entire "
 "document beginning from your current location."
 msgstr ""
 
-#: C/commands_reading.page:163(p)
+#: C/commands_reading.page:175(p)
 msgid "Desktop: <key>KP Plus</key>"
 msgstr ""
 
-#: C/commands_reading.page:166(p)
+#: C/commands_reading.page:178(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq>"
 msgstr ""
 
-#: C/commands_reading.page:173(title)
+#: C/commands_reading.page:185(title)
 msgid "Text Attributes and Selected Text"
 msgstr ""
 
-#: C/commands_reading.page:174(p)
+#: C/commands_reading.page:186(p)
 msgid ""
 "Orca has a dedicated command for obtaining the attributes of the text at the "
 "caret location. In addition, if you use <app>Orca</app>'s Where Am I "
@@ -4438,7 +5393,7 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 
-#: C/commands_reading.page:182(p)
+#: C/commands_reading.page:194(p)
 msgid ""
 "Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
 "keyseq>"
@@ -4448,32 +5403,29 @@ msgstr ""
 msgid "4. <app>Orca</app>'s Commands"
 msgstr ""
 
-#: C/commands.page:13(desc) C/commands.page:22(p)
-msgid ""
-"Much of <app>Orca</app>'s functionality consists of commands which enable "
-"you to navigate more efficiently and obtain information about the elements "
-"displayed on the screen. The guides are designed for those who are already "
-"familiar with how to use a screen reader and just need to know what commands "
-"are available in <app>Orca</app>."
-msgstr ""
+#: C/commands.page:6(title)
+#, fuzzy
+#| msgid "Chat Commands"
+msgid "Commands"
+msgstr "Comandos de Chat"
 
-#: C/commands.page:21(title)
+#: C/commands.page:15(title)
 msgid "<app>Orca</app>'s Commands"
 msgstr ""
 
-#: C/commands.page:33(title)
+#: C/commands.page:20(title)
 msgid "Speech, Braille, and Magnification"
 msgstr ""
 
-#: C/commands.page:36(title)
+#: C/commands.page:23(title)
 msgid "Reading Web Pages and Other Documents"
 msgstr ""
 
-#: C/commands.page:42(title)
+#: C/commands.page:29(title)
 msgid "Accessing Dynamic Information"
 msgstr ""
 
-#: C/commands.page:45(title)
+#: C/commands.page:32(title)
 msgid "Troubleshooting"
 msgstr "Resolución de problemas"
 
@@ -4495,62 +5447,74 @@ msgstr ""
 
 #: C/commands_mouse.page:21(p)
 msgid ""
-"The following commands can be used to manipulate the mouse pointer and read "
-"the contents under it. All of the commands are \"bound\" to keystrokes with "
-"one exception: Toggling Mouse Review Mode. Please see <link xref="
-"\"howto_key_bindings\">Modifying Keybindings</link> for information on how "
-"to bind this command to a keystroke."
+"<app>Orca</app> provides several commands which can be used to manipulate "
+"the mouse pointer and read the contents under it. All of the commands are "
+"\"bound\" to keystrokes with one exception: Toggling Mouse Review Mode. "
+"Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
+"for information on how to bind this command to a keystroke."
 msgstr ""
 
-#: C/commands_mouse.page:30(p)
+#: C/commands_mouse.page:29(p)
+msgid ""
+"In the list that follows, you will see several references to \"KP\". All \"KP"
+"\" keys are located on the numeric keypad. You will also notice that there "
+"are different keystrokes depending upon whether you are using a desktop or a "
+"laptop -- or more accurately, whether you are using <app>Orca</app>'s "
+"Desktop keyboard layout or its Laptop keyboard layout. For additional "
+"information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
+"Layout</link> topic."
+msgstr ""
+
+#: C/commands_mouse.page:41(p)
 msgid "Left-click on current item:"
 msgstr ""
 
-#: C/commands_mouse.page:32(p)
-msgid "Desktop:<keyseq><key>KP Divide</key></keyseq>"
-msgstr ""
-
-#: C/commands_mouse.page:33(p)
-msgid "Laptop: <keyseq><key>Orca Modifier</key><key>7</key></keyseq>"
-msgstr ""
-
-#: C/commands_mouse.page:37(p)
-msgid "Right-click on current item:"
-msgstr ""
-
-#: C/commands_mouse.page:39(p)
-msgid "Desktop:<keyseq><key>KP Multiply</key></keyseq>"
-msgstr ""
-
-#: C/commands_mouse.page:40(p)
-msgid "Laptop: <keyseq><key>Orca Modifier</key><key>8</key></keyseq>"
+#: C/commands_mouse.page:43(p)
+msgid "Desktop: <keyseq><key>KP Divide</key></keyseq>"
 msgstr ""
 
 #: C/commands_mouse.page:44(p)
-msgid "Route pointer to current item:"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>7</key></keyseq>"
 msgstr ""
 
-#: C/commands_mouse.page:46(p)
-msgid "Desktop:<keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
+#: C/commands_mouse.page:48(p)
+msgid "Right-click on current item:"
 msgstr ""
 
-#: C/commands_mouse.page:47(p)
-msgid "Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq>"
+#: C/commands_mouse.page:50(p)
+msgid "Desktop: <keyseq><key>KP Multiply</key></keyseq>"
 msgstr ""
 
 #: C/commands_mouse.page:51(p)
-msgid "Move focus into or away from the current mouse over (web only):"
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>8</key></keyseq>"
 msgstr ""
 
-#: C/commands_mouse.page:53(p)
-msgid "Desktop:<keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq>"
+#: C/commands_mouse.page:55(p)
+msgid "Route pointer to current item:"
 msgstr ""
 
-#: C/commands_mouse.page:54(p)
-msgid "Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq>"
+#: C/commands_mouse.page:57(p)
+msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
 msgstr ""
 
 #: C/commands_mouse.page:58(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:62(p)
+msgid "Move focus into or away from the current mouse over (web only):"
+msgstr ""
+
+#: C/commands_mouse.page:64(p)
+msgid ""
+"Desktop: <keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:65(p)
+msgid "Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq>"
+msgstr ""
+
+#: C/commands_mouse.page:69(p)
 msgid "Enable/disable mouse review mode: (Unbound)"
 msgstr ""
 
@@ -5229,3 +6193,45 @@ msgstr ""
 #: C/index.page:0(None)
 msgid "translator-credits"
 msgstr "Jorge González <jorgegonz@svn.gnome.org>, 2010"
+
+#~ msgid "<gui>None</gui> (the default)"
+#~ msgstr "<gui>Ninguna</gui> (Predeterminado) "
+
+#~ msgid "Dot 7"
+#~ msgstr "Punto 7"
+
+#~ msgid "Dot 8"
+#~ msgstr "Punto 8"
+
+#~ msgid "Dots 7 and 8"
+#~ msgstr "Puntos 7 y 8"
+
+#~ msgid "Left Half"
+#~ msgstr "Mitad izquierda"
+
+#~ msgid "Right Half"
+#~ msgstr "Mitad derecha"
+
+#~ msgid "Top Half"
+#~ msgstr "Mitad superior"
+
+#~ msgid "Bottom Half"
+#~ msgstr "Mitad inferior"
+
+#~ msgid "Top"
+#~ msgstr "Principio"
+
+#~ msgid "Left"
+#~ msgstr "Izquierda"
+
+#~ msgid "Right"
+#~ msgstr "Derecha"
+
+#~ msgid "Bottom"
+#~ msgstr "Final"
+
+#~ msgid "Top of window"
+#~ msgstr "Parte superior de la ventana"
+
+#~ msgid "Match case"
+#~ msgstr "Coincidir con capitalización"
