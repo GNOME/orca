@@ -5294,7 +5294,13 @@ class Script(default.Script):
             if not len(string) \
                or self.utilities.isEntry(obj) \
                or self.utilities.isPasswordText(obj):
-                utterances.append(self.speechGenerator.generateSpeech(obj))
+                rv = self.speechGenerator.generateSpeech(obj)
+                # Crazy crap to make clump and friends happy until we can
+                # kill them. (They don't deal well with what the speech
+                # generator provides.)
+                for item in rv:
+                    if isinstance(item, basestring):
+                        utterances.append([item, self.getACSS(obj, item)])
             else:
                 utterances.append([string, self.getACSS(obj, string)])
                 if speakRole and not role in doNotSpeakRoles:
