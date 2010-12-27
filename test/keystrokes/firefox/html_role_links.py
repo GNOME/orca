@@ -37,8 +37,6 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file", 
     ["BRAILLE LINE:  'Here are some of our local test files:'",
      "     VISIBLE:  'Here are some of our local test ', cursor=1",
-     "BRAILLE LINE:  'Here are some of our local test files:'",
-     "     VISIBLE:  'Here are some of our local test ', cursor=1",
      "SPEECH OUTPUT: 'Here are some of our local test files:'"]))
 
 ########################################################################
@@ -48,8 +46,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to anchors.html link", 
-    ["BRAILLE LINE:  '• anchors.html'",
-     "     VISIBLE:  '• anchors.html', cursor=3",
+    ["BRAILLE LINE:  '•anchors.html'",
+     "     VISIBLE:  '•anchors.html', cursor=2",
      "SPEECH OUTPUT: 'anchors.html link'"]))
 
 ########################################################################
@@ -59,8 +57,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to blockquotes.html link", 
-    ["BRAILLE LINE:  '• blockquotes.html'",
-     "     VISIBLE:  '• blockquotes.html', cursor=3",
+    ["BRAILLE LINE:  '•blockquotes.html'",
+     "     VISIBLE:  '•blockquotes.html', cursor=2",
      "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
@@ -70,8 +68,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to bugzilla_top.html link", 
-    ["BRAILLE LINE:  '• bugzilla_top.html'",
-     "     VISIBLE:  '• bugzilla_top.html', cursor=3",
+    ["BRAILLE LINE:  '•bugzilla_top.html'",
+     "     VISIBLE:  '•bugzilla_top.html', cursor=2",
      "SPEECH OUTPUT: 'bugzilla_top.html link'"]))
 
 ########################################################################
@@ -81,8 +79,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab to blockquotes.html link", 
-    ["BRAILLE LINE:  '• blockquotes.html'",
-     "     VISIBLE:  '• blockquotes.html', cursor=3",
+    ["BRAILLE LINE:  '•blockquotes.html'",
+     "     VISIBLE:  '•blockquotes.html', cursor=2",
      "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
@@ -94,8 +92,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '• blockquotes.html'",
-     "     VISIBLE:  '• blockquotes.html', cursor=3",
+    ["BRAILLE LINE:  '•blockquotes.html'",
+     "     VISIBLE:  '•blockquotes.html', cursor=2",
      "SPEECH OUTPUT: 'file link to blockquotes.html same site 1188 bytes'"]))
 
 ########################################################################

@@ -49,6 +49,8 @@ sequence.append(utils.AssertPresentationAction(
     "Left Arrow to collapse fruits", 
     ["BRAILLE LINE:  'Fruits Fruits collapsed ListItem'",
      "     VISIBLE:  'Fruits Fruits collapsed ListItem', cursor=1",
+     "BRAILLE LINE:  'Fruits Fruits collapsed ListItem'",
+     "     VISIBLE:  'Fruits Fruits collapsed ListItem', cursor=1",
      "SPEECH OUTPUT: 'collapsed'"]))
 
 ########################################################################

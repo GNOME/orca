@@ -61,6 +61,8 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
      "BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
+     "BRAILLE LINE:  ''",
+     "     VISIBLE:  '', cursor=0",
      "SPEECH OUTPUT: 'close link'",
      "SPEECH OUTPUT: 'This popup is created as a div in the HTML content, rather than being created in the DOM at the time of use. The display style is changed from \"none\" to \"block\" to hide and show it. close'"]))
 
@@ -71,7 +73,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Up Arrow", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
+    ["BRAILLE LINE:  'close'",
+     "     VISIBLE:  'close', cursor=1",
      "BRAILLE LINE:  '\"none\" to \"block\" to hide and show it.'",
      "     VISIBLE:  '\"none\" to \"block\" to hide and sh', cursor=1",
      "SPEECH OUTPUT: '\"none\" to \"block\" to hide and show it. alert'"]))
@@ -80,8 +83,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Up Arrow", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
-     "BRAILLE LINE:  'the time of use. The display style is changed from'",
+    ["BRAILLE LINE:  'the time of use. The display style is changed from'",
      "     VISIBLE:  'the time of use. The display sty', cursor=1",
      "SPEECH OUTPUT: 'the time of use. The display style is changed from alert'"]))
 
@@ -89,8 +91,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "3. Up Arrow", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
-     "BRAILLE LINE:  'content, rather than being created in the DOM at'",
+    ["BRAILLE LINE:  'content, rather than being created in the DOM at'",
      "     VISIBLE:  'content, rather than being creat', cursor=1",
      "SPEECH OUTPUT: 'content, rather than being created in the DOM at alert'"]))
 
@@ -98,8 +99,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "4. Up Arrow", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
-     "BRAILLE LINE:  'This popup is created as a div in the HTML'",
+    ["BRAILLE LINE:  'This popup is created as a div in the HTML'",
      "     VISIBLE:  'This popup is created as a div i', cursor=1",
      "SPEECH OUTPUT: 'This popup is created as a div in the HTML alert'"]))
 
@@ -110,8 +110,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "1. Down Arrow", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
-     "BRAILLE LINE:  'content, rather than being created in the DOM at'",
+    ["BRAILLE LINE:  'content, rather than being created in the DOM at'",
      "     VISIBLE:  'content, rather than being creat', cursor=1",
      "SPEECH OUTPUT: 'content, rather than being created in the DOM at alert'"]))
 
@@ -119,8 +118,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Down Arrow", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
-     "BRAILLE LINE:  'the time of use. The display style is changed from'",
+    ["BRAILLE LINE:  'the time of use. The display style is changed from'",
      "     VISIBLE:  'the time of use. The display sty', cursor=1",
      "SPEECH OUTPUT: 'the time of use. The display style is changed from alert'"]))
 
@@ -128,8 +126,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Down Arrow", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
-     "BRAILLE LINE:  '\"none\" to \"block\" to hide and show it.'",
+    ["BRAILLE LINE:  '\"none\" to \"block\" to hide and show it.'",
      "     VISIBLE:  '\"none\" to \"block\" to hide and sh', cursor=1",
      "SPEECH OUTPUT: '\"none\" to \"block\" to hide and show it. alert'"]))
 
@@ -137,8 +134,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Down Arrow", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
-     "BRAILLE LINE:  'close'",
+    ["BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
      "SPEECH OUTPUT: 'close link'"]))
 

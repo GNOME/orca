@@ -33,8 +33,6 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Below is a table, with some sample table data'",
      "     VISIBLE:  'Below is a table, with some samp', cursor=1",
-     "BRAILLE LINE:  'Below is a table, with some sample table data'",
-     "     VISIBLE:  'Below is a table, with some samp', cursor=1",
      "SPEECH OUTPUT: 'Below is a table, with some sample table data'"]))
 
 ########################################################################

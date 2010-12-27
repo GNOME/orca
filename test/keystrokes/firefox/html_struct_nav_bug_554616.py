@@ -48,10 +48,12 @@ sequence.append(utils.AssertPresentationAction(
     "2. t",
     ["BRAILLE LINE:  'Wrapping to top.'",
      "     VISIBLE:  'Wrapping to top.', cursor=0",
+     "BRAILLE LINE:  'table with 4 rows 3 columns'",
+     "     VISIBLE:  'table with 4 rows 3 columns', cursor=0",
      "BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
-     "SPEECH OUTPUT: 'Table with 4 rows 3 columns'",
+     "SPEECH OUTPUT: 'table with 4 rows 3 columns'",
      "SPEECH OUTPUT: 'Snapshot version column header'"]))
 
 ########################################################################
@@ -65,6 +67,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008 in', cursor=1",
      "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
      "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008 in', cursor=1",
+     "BRAILLE LINE:  'Row 2, column 1.'",
+     "     VISIBLE:  'Row 2, column 1.', cursor=0",
      "SPEECH OUTPUT: 'r2477'",
      "SPEECH OUTPUT: 'Row 2, column 1.'"]))
 
@@ -73,9 +77,13 @@ sequence.append(KeyComboAction("<Alt><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Alt Shift Right",
     ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
+     "     VISIBLE:  'r2477 Wed Nov 5 16:39:00 2008 in', cursor=1",
+     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
      "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
      "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
      "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
+     "BRAILLE LINE:  'Row 2, column 2.'",
+     "     VISIBLE:  'Row 2, column 2.', cursor=0",
      "SPEECH OUTPUT: 'Date (UTC)'",
      "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008'",
      "SPEECH OUTPUT: 'Row 2, column 2.'"]))
@@ -85,9 +93,13 @@ sequence.append(KeyComboAction("<Alt><Shift>Right"))
 sequence.append(utils.AssertPresentationAction(
     "5. Alt Shift Right",
     ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
+     "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
+     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
      "     VISIBLE:  'installer (10190 KB)portable arc', cursor=1",
      "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
      "     VISIBLE:  'installer (10190 KB)portable arc', cursor=1",
+     "BRAILLE LINE:  'Row 2, column 3.'",
+     "     VISIBLE:  'Row 2, column 3.', cursor=0",
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer link  (10190 KB)",
      " portable archive link  (9154 KB)'",
@@ -97,10 +109,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Alt Shift Down",
-    ["BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
+    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
+     "     VISIBLE:  'installer (10190 KB)portable arc', cursor=1",
+     "BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
      "BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
      "     VISIBLE:  'installer (10193 KB)', cursor=1",
+     "BRAILLE LINE:  'Row 3, column 3.'",
+     "     VISIBLE:  'Row 3, column 3.', cursor=0",
      "SPEECH OUTPUT: 'installer link  (10193 KB)",
      " portable archive link  (9149 KB)'",
      "SPEECH OUTPUT: 'Row 3, column 3.'"]))
@@ -110,9 +126,13 @@ sequence.append(KeyComboAction("<Alt><Shift>Left"))
 sequence.append(utils.AssertPresentationAction(
     "7. Alt Shift Left",
     ["BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
+     "     VISIBLE:  'installer (10193 KB)', cursor=1",
+     "BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
      "     VISIBLE:  'Tue Nov 4 16:39:02 2008 installe', cursor=1",
      "BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
      "     VISIBLE:  'Tue Nov 4 16:39:02 2008 installe', cursor=1",
+     "BRAILLE LINE:  'Row 3, column 2.'",
+     "     VISIBLE:  'Row 3, column 2.', cursor=0",
      "SPEECH OUTPUT: 'Date (UTC)'",
      "SPEECH OUTPUT: 'Tue Nov 4 16:39:02 2008'",
      "SPEECH OUTPUT: 'Row 3, column 2.'"]))
@@ -121,10 +141,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Up"))
 sequence.append(utils.AssertPresentationAction(
     "8. Alt Shift Up",
-    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
+    ["BRAILLE LINE:  'r2468 Tue Nov 4 16:39:02 2008 installer (10193 KB)'",
+     "     VISIBLE:  'Tue Nov 4 16:39:02 2008 installe', cursor=1",
+     "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
      "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
      "BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
      "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
+     "BRAILLE LINE:  'Row 2, column 2.'",
+     "     VISIBLE:  'Row 2, column 2.', cursor=0",
      "SPEECH OUTPUT: 'Wed Nov 5 16:39:00 2008'",
      "SPEECH OUTPUT: 'Row 2, column 2.'"]))
 
@@ -132,10 +156,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>End"))
 sequence.append(utils.AssertPresentationAction(
     "9. Alt Shift End",
-    ["BRAILLE LINE:  'r2464 Mon Nov 3 16:39:48 2008 installer (10186 KB)'",
+    ["BRAILLE LINE:  'r2477 Wed Nov 5 16:39:00 2008 installer (10190 KB)portable archive (9154 KB)'",
+     "     VISIBLE:  'Wed Nov 5 16:39:00 2008 installe', cursor=1",
+     "BRAILLE LINE:  'r2464 Mon Nov 3 16:39:48 2008 installer (10186 KB)'",
      "     VISIBLE:  'installer (10186 KB)', cursor=1",
      "BRAILLE LINE:  'r2464 Mon Nov 3 16:39:48 2008 installer (10186 KB)'",
      "     VISIBLE:  'installer (10186 KB)', cursor=1",
+     "BRAILLE LINE:  'Row 4, column 3.'",
+     "     VISIBLE:  'Row 4, column 3.', cursor=0",
      "SPEECH OUTPUT: 'Download'",
      "SPEECH OUTPUT: 'installer link  (10186 KB)",
      " portable archive link  (9146 KB)'",
@@ -145,10 +173,14 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt><Shift>Home"))
 sequence.append(utils.AssertPresentationAction(
     "10. Alt Shift Home",
-    ["BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
+    ["BRAILLE LINE:  'r2464 Mon Nov 3 16:39:48 2008 installer (10186 KB)'",
+     "     VISIBLE:  'installer (10186 KB)', cursor=1",
+     "BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
      "BRAILLE LINE:  'Snapshot version Date (UTC) Download'",
      "     VISIBLE:  'Snapshot version Date (UTC) Down', cursor=1",
+     "BRAILLE LINE:  'Row 1, column 1.'",
+     "     VISIBLE:  'Row 1, column 1.', cursor=0",
      "SPEECH OUTPUT: 'Snapshot version column header'",
      "SPEECH OUTPUT: 'Row 1, column 1.'"]))
 

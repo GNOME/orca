@@ -34,9 +34,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  '• Not in a paragraph'",
-     "     VISIBLE:  '• Not in a paragraph', cursor=1",
-     "SPEECH OUTPUT: '• Not in a paragraph'"]))
+    ["BRAILLE LINE:  '•Not in a paragraph'",
+     "     VISIBLE:  '•Not in a paragraph', cursor=1",
+     "SPEECH OUTPUT: '•Not in a paragraph'"]))
 
 ########################################################################
 # Press Down Arrow to move through the lists doing a where am I for each
@@ -68,9 +68,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "3. Basic Where Am I",
-    ["BRAILLE LINE:  '1. A nested list item, not in a paragraph'",
-     "     VISIBLE:  '1. A nested list item, not in a ', cursor=1",
-     "SPEECH OUTPUT: 'list item 1. A nested list item, not in a paragraph 1 of 3 Nesting level 1'"]))
+    ["BRAILLE LINE:  '1.A nested list item, not in a paragraph'",
+     "     VISIBLE:  '1.A nested list item, not in a p', cursor=1",
+     "SPEECH OUTPUT: 'list item 1.A nested list item, not in a paragraph 1 of 3 Nesting level 1'"]))
 
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())

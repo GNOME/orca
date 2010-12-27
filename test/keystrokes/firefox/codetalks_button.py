@@ -40,7 +40,7 @@ sequence.append(utils.AssertPresentationAction(
     "Tab to Tracking number text entry", 
     ["BRAILLE LINE:  'Tracking number Tracking number  $l'",
      "     VISIBLE:  'Tracking number  $l', cursor=17",
-     "SPEECH OUTPUT: 'Order tracking panel Tracking number text '"]))
+     "SPEECH OUTPUT: 'Order tracking panel Tracking number text'"]))
 
 ########################################################################
 # Tab to the "Check Now" push button

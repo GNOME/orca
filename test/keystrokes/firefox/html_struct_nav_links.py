@@ -48,8 +48,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
 sequence.append(utils.AssertPresentationAction(
     "u to anchors.html link", 
-    ["BRAILLE LINE:  '• anchors.html'",
-     "     VISIBLE:  '• anchors.html', cursor=3",
+    ["BRAILLE LINE:  '•anchors.html'",
+     "     VISIBLE:  '•anchors.html', cursor=2",
      "SPEECH OUTPUT: 'anchors.html link'"]))
 
 ########################################################################
@@ -59,8 +59,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("u"))
 sequence.append(utils.AssertPresentationAction(
     "u to blockquotes.html link", 
-    ["BRAILLE LINE:  '• blockquotes.html'",
-     "     VISIBLE:  '• blockquotes.html', cursor=3",
+    ["BRAILLE LINE:  '•blockquotes.html'",
+     "     VISIBLE:  '•blockquotes.html', cursor=2",
      "SPEECH OUTPUT: 'blockquotes.html link'"]))
 
 ########################################################################
@@ -70,8 +70,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
 sequence.append(utils.AssertPresentationAction(
     "shift + u to anchors.html link", 
-    ["BRAILLE LINE:  '• anchors.html'",
-     "     VISIBLE:  '• anchors.html', cursor=3",
+    ["BRAILLE LINE:  '•anchors.html'",
+     "     VISIBLE:  '•anchors.html', cursor=2",
      "SPEECH OUTPUT: 'anchors.html link'"]))
 
 ########################################################################
@@ -86,8 +86,8 @@ sequence.append(utils.AssertPresentationAction(
     "shift + u wrapping to bottom",
     ["BRAILLE LINE:  'Wrapping to bottom.'",
      "     VISIBLE:  'Wrapping to bottom.', cursor=0",
-     "BRAILLE LINE:  '• textattributes.html'",
-     "     VISIBLE:  '• textattributes.html', cursor=3",
+     "BRAILLE LINE:  '•textattributes.html'",
+     "     VISIBLE:  '•textattributes.html', cursor=2",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'textattributes.html link'"])) 
 
@@ -98,8 +98,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>u"))
 sequence.append(utils.AssertPresentationAction(
     "shift + u to tables.html",
-    ["BRAILLE LINE:  '• tables.html'",
-     "     VISIBLE:  '• tables.html', cursor=3",
+    ["BRAILLE LINE:  '•tables.html'",
+     "     VISIBLE:  '•tables.html', cursor=2",
      "SPEECH OUTPUT: 'tables.html link'"])) 
 
 ########################################################################
@@ -185,8 +185,8 @@ sequence.append(utils.AssertPresentationAction(
     "shift + v to tables.html link",
     ["BRAILLE LINE:  'Wrapping to bottom.'",
      "     VISIBLE:  'Wrapping to bottom.', cursor=0",
-     "BRAILLE LINE:  '• tables.html'",
-     "     VISIBLE:  '• tables.html', cursor=3",
+     "BRAILLE LINE:  '•tables.html'",
+     "     VISIBLE:  '•tables.html', cursor=2",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
      "SPEECH OUTPUT: 'tables.html link'"]))
 

@@ -19,7 +19,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction(utils.DojoURLPrefix + "layout/test_TabContainer.html"))
+sequence.append(TypeAction(utils.DojoNightlyURLPrefix + "layout/test_TabContainer.html"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 sequence.append(WaitForFocus("TabContainer Demo", acc_role=pyatspi.ROLE_DOCUMENT_FRAME))

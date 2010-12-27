@@ -45,7 +45,7 @@ sequence.append(utils.AssertPresentationAction(
 # This assertion isn't even necessary as we actually care about what
 # comes after we press Return.
 #
-for i in range(24):
+for i in range(25):
     sequence.append(KeyComboAction("Tab", 1000))
 
 # Just a little extra wait to let some events get through.

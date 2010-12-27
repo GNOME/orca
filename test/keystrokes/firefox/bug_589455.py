@@ -33,8 +33,6 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'Here is a result:'",
      "     VISIBLE:  'Here is a result:', cursor=1",
-     "BRAILLE LINE:  'Here is a result:'",
-     "     VISIBLE:  'Here is a result:', cursor=1",
      "SPEECH OUTPUT: 'Here is a result:'"]))
 
 ########################################################################
@@ -44,8 +42,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("3"))
 sequence.append(utils.AssertPresentationAction(
     "Press 3 to move to the heading at level 3",
-    ["BRAILLE LINE:  '1. Anchors2.html h3'",
-     "     VISIBLE:  '1. Anchors2.html h3', cursor=4",
+    ["BRAILLE LINE:  '1.Anchors2.html h3'",
+     "     VISIBLE:  '1.Anchors2.html h3', cursor=3",
      "SPEECH OUTPUT: 'Anchors2.html link heading level 3'"]))
 
 ########################################################################

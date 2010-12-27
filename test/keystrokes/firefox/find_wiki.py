@@ -48,10 +48,10 @@ sequence.append(KeyComboAction("<Control>F"))
 sequence.append(utils.AssertPresentationAction(
     "Get into the Find Toolbar", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar Find: \$l'",
-     "     VISIBLE:  'Find: $l', cursor=1",
+     "     VISIBLE:  'Find:  $l', cursor=7",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar Find: \$l'",
-     "     VISIBLE:  'Find: $l', cursor=1",
-     "SPEECH OUTPUT: 'Find: text '"]))
+     "     VISIBLE:  'Find:  $l', cursor=7",
+     "SPEECH OUTPUT: 'Find: text'"]))
 
 # We won't use an assert here because different builds of Firefox give
 # different results.

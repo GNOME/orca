@@ -73,12 +73,8 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "4. Line Down",
     ["BUG? - Now we are treating what used to be several lines as one line/the image name. Why? Seems to be a Firefox 4.0 thing.",
-     "BRAILLE LINE:  'The Orca logo Image'",
-     "     VISIBLE:  'The Orca logo Image', cursor=1",
      "BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: 'The Orca logo link image ",
-                     " link image'",
      "SPEECH OUTPUT: 'The Orca logo Can an Orca really hold a white cane? (And why aren't we speaking this text? link image'"]))
 
 #sequence.append(utils.StartRecordingAction())
@@ -308,23 +304,23 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Can an Orca really hold', cursor=1",
      "SPEECH OUTPUT: 'Can an Orca really hold'"]))
 
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "12. Line Up",
-    ["BRAILLE LINE:  ''",
-     "     VISIBLE:  '', cursor=0",
-     "SPEECH OUTPUT: '",
-     " link image'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "13. Line Up",
-    ["BRAILLE LINE:  'The Orca logo Image'",
-     "     VISIBLE:  'The Orca logo Image', cursor=1",
-     "SPEECH OUTPUT: 'The Orca logo link image ",
-     " link image'"]))
+#sequence.append(utils.StartRecordingAction())
+#sequence.append(KeyComboAction("Up"))
+#sequence.append(utils.AssertPresentationAction(
+#    "12. Line Up",
+#    ["BRAILLE LINE:  ''",
+#     "     VISIBLE:  '', cursor=0",
+#     "SPEECH OUTPUT: '",
+#     " link image'"]))
+#
+#sequence.append(utils.StartRecordingAction())
+#sequence.append(KeyComboAction("Up"))
+#sequence.append(utils.AssertPresentationAction(
+#    "13. Line Up",
+#    ["BRAILLE LINE:  'The Orca logo Image'",
+#     "     VISIBLE:  'The Orca logo Image', cursor=1",
+#     "SPEECH OUTPUT: 'The Orca logo link image ",
+#     " link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

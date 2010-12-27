@@ -39,8 +39,6 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file", 
     ["BRAILLE LINE:  'On weaponry:'",
      "     VISIBLE:  'On weaponry:', cursor=1",
-     "BRAILLE LINE:  'On weaponry:'",
-     "     VISIBLE:  'On weaponry:', cursor=1",
      "SPEECH OUTPUT: 'On weaponry:'"]))
 
 ########################################################################
