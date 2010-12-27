@@ -1895,6 +1895,6 @@ class SpeechGenerator(generator.Generator):
         voices = _settingsManager.getSetting('voices')
         rv = voices.get(voicename)
         if rv and rv.get('established') == False:
-            rv = rv.pop('established')
+            rv.pop('established')
 
         return [rv]
