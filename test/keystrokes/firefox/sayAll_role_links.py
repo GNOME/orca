@@ -35,8 +35,6 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file", 
     ["BRAILLE LINE:  'Here are some of our local test files:'",
      "     VISIBLE:  'Here are some of our local test ', cursor=1",
-     "BRAILLE LINE:  'Here are some of our local test files:'",
-     "     VISIBLE:  'Here are some of our local test ', cursor=1",
      "SPEECH OUTPUT: 'Here are some of our local test files:'"]))
 
 ########################################################################

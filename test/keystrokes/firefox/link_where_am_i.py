@@ -37,7 +37,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Where Am I on Product summary link", 
-    ["BRAILLE LINE:  '3. Product summary (designed for maintainers)'",
+    ["BRAILLE LINE:  '3.Product summary (designed for maintainers)'",
      "     VISIBLE:  'Product summary (designed for ma', cursor=1",
      "SPEECH OUTPUT: 'http link Product summary different site'"]))
 

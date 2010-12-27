@@ -37,8 +37,6 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file",
     ["BRAILLE LINE:  'This is a normal paragraph.'",
      "     VISIBLE:  'This is a normal paragraph.', cursor=1",
-     "BRAILLE LINE:  'This is a normal paragraph.'",
-     "     VISIBLE:  'This is a normal paragraph.', cursor=1",
      "SPEECH OUTPUT: 'This is a normal paragraph.'"]))
 
 ########################################################################
