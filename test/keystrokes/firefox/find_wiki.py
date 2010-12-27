@@ -47,9 +47,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F"))
 sequence.append(utils.AssertPresentationAction(
     "Get into the Find Toolbar", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar Find: \$l'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Find:  \$l'",
      "     VISIBLE:  'Find:  $l', cursor=7",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ToolBar Find: \$l'",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Orca - GNOME Live! - " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Find:  \$l'",
      "     VISIBLE:  'Find:  $l', cursor=7",
      "SPEECH OUTPUT: 'Find: text'"]))
 

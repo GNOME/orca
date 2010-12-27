@@ -77,10 +77,22 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
-    "5. line Down",
-    ["BRAILLE LINE:  'Two \"useless\" images in a paragraph that is inside of a link: foo Image foo Image'",
+    "5a. line Down",
+    ["BRAILLE LINE:  'Two \"useless\" images in a paragraph that is inside of a link: foo'",
      "     VISIBLE:  'Two \"useless\" images in a paragr', cursor=1",
-     "SPEECH OUTPUT: 'Two \"useless\" images in a paragraph that is inside of a link: foo link image"]))
+     "SPEECH OUTPUT: 'Two \"useless\" images in a paragraph that is inside of a link: foo link"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Down"))
+sequence.append(utils.AssertPresentationAction(
+    "5b. line Down",
+    ["BUG? - Why are we repeating ourselves here?",
+     "BRAILLE LINE:  'foo Image'",
+     "     VISIBLE:  'foo Image', cursor=1",
+     "BRAILLE LINE:  'foo Image'",
+     "     VISIBLE:  'foo Image', cursor=1",
+     "SPEECH OUTPUT: 'foo link image'",
+     "SPEECH OUTPUT: 'foo link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -88,15 +100,13 @@ sequence.append(utils.AssertPresentationAction(
     "6. line Down",
     ["BRAILLE LINE:  'One \"useless\" image and one \"useful\" image in a link: Orca logo Image foo Image'",
      "     VISIBLE:  'One \"useless\" image and one \"use', cursor=1",
-     "SPEECH OUTPUT: 'One \"useless\" image and one \"useful\" image in a link: Orca logo link image"]))
+     "SPEECH OUTPUT: 'One \"useless\" image and one \"useful\" image in a link: Orca logo link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. line Down",
-    ["BRAILLE LINE:  'Two \"useless\" images along with some text in a link: foo Image silly link foo Image'",
-     "     VISIBLE:  'Two \"useless\" images along with ', cursor=1",
-     "SPEECH OUTPUT: 'Two \"useless\" images along with some text in a link: silly link link image'"]))
+    ["BUG? - Why are we silent here?"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -112,6 +122,9 @@ sequence.append(utils.AssertPresentationAction(
     "9. line Down",
     ["BRAILLE LINE:  'foo Image'",
      "     VISIBLE:  'foo Image', cursor=1",
+     "BRAILLE LINE:  'foo Image'",
+     "     VISIBLE:  'foo Image', cursor=1",
+     "SPEECH OUTPUT: 'foo link image'",
      "SPEECH OUTPUT: 'foo link image'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -134,9 +147,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "12. line Down",
-    ["BRAILLE LINE:  'silly link foo Image'",
-     "     VISIBLE:  'silly link foo Image', cursor=1",
-     "SPEECH OUTPUT: 'silly link'"]))
+    ["BUG? - Why are we silent here?"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -152,16 +163,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
-    "0. Shift+Tab",
-    ["BUG? - We're missing a space between the two parts of the link in the speech output",
-     "BRAILLE LINE:  'Two \"useless\" images in a paragraph that is inside of a link along with text that is not in the paragraph: Before the paragraph'",
-     "     VISIBLE:  'Before the paragraph', cursor=1",
-     "SPEECH OUTPUT: 'Before the paragraphAfter the paragraph link'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "1. Shift+Tab",
+    "0a. Shift+Tab",
     ["BRAILLE LINE:  'foo Image'",
      "     VISIBLE:  'foo Image', cursor=1",
      "SPEECH OUTPUT: 'silly link link image'"]))
@@ -169,10 +171,34 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
+    "0b. Shift+Tab",
+    ["BRAILLE LINE:  'Two \"useless\" images and some additional text in a paragraph that is inside of a link along with text that is not in the paragraph: Before the paragraph'",
+     "     VISIBLE:  'Before the paragraph', cursor=1",
+     "SPEECH OUTPUT: 'Before the paragraph link'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "0c. Shift+Tab",
+    ["BRAILLE LINE:  'After the paragraph'",
+     "     VISIBLE:  'After the paragraph', cursor=1",
+     "SPEECH OUTPUT: 'After the paragraph link'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "1. Shift+Tab",
+    ["BRAILLE LINE:  'foo Image'",
+     "     VISIBLE:  'foo Image', cursor=1",
+     "SPEECH OUTPUT: 'foo link image'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Shift>Tab"))
+sequence.append(utils.AssertPresentationAction(
     "2. Shift+Tab",
-    ["BRAILLE LINE:  'Orca logo Image'",
-     "     VISIBLE:  'Orca logo Image', cursor=1",
-     "SPEECH OUTPUT: 'Orca logo link image'"]))
+    ["BRAILLE LINE:  'Two \"useless\" images in a paragraph that is inside of a link along with text that is not in the paragraph: Before the paragraph'",
+     "     VISIBLE:  'Before the paragraph', cursor=1",
+     "SPEECH OUTPUT: 'Before the paragraph link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
@@ -180,15 +206,15 @@ sequence.append(utils.AssertPresentationAction(
     "3. Shift+Tab",
     ["BRAILLE LINE:  'foo Image'",
      "     VISIBLE:  'foo Image', cursor=1",
-     "SPEECH OUTPUT: 'foo link'"]))
+     "SPEECH OUTPUT: 'silly link link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "4. Shift+Tab",
-    ["BRAILLE LINE:  'foo Image'",
-     "     VISIBLE:  'foo Image', cursor=1",
-     "SPEECH OUTPUT: 'foo link image'"]))
+    ["BRAILLE LINE:  'Orca logo Image'",
+     "     VISIBLE:  'Orca logo Image', cursor=1",
+     "SPEECH OUTPUT: 'Orca logo link image'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
@@ -202,33 +228,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "6. Shift+Tab",
-    ["BRAILLE LINE:  'Orca logo Image'",
-     "     VISIBLE:  'Orca logo Image', cursor=1",
-     "SPEECH OUTPUT: 'Orca logo link image'"]))
+    ["BRAILLE LINE:  'foo'",
+     "     VISIBLE:  'foo', cursor=1",
+     "SPEECH OUTPUT: 'foo link'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab"))
 sequence.append(utils.AssertPresentationAction(
     "7. Shift+Tab",
-    ["BRAILLE LINE:  'Orca logo showing a whale holding a white cane Image'",
-     "     VISIBLE:  'Orca logo showing a whale holdin', cursor=1",
-     "SPEECH OUTPUT: 'Orca logo showing a whale holding a white cane link image'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "8. Shift+Tab",
-    ["BRAILLE LINE:  'Orca logo Image'",
-     "     VISIBLE:  'Orca logo Image', cursor=1",
-     "SPEECH OUTPUT: 'Orca logo link image'"]))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Shift>Tab"))
-sequence.append(utils.AssertPresentationAction(
-    "9. Shift+Tab",
-    ["BRAILLE LINE:  'Orca logo Image'",
-     "     VISIBLE:  'Orca logo Image', cursor=1",
-     "SPEECH OUTPUT: 'Orca logo link image'"]))
+    ["BRAILLE LINE:  'foo Image'",
+     "     VISIBLE:  'foo Image', cursor=1",
+     "SPEECH OUTPUT: 'foo link image'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus

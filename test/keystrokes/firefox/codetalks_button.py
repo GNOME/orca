@@ -91,7 +91,7 @@ sequence.append(WaitForFocus("Check Now", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Dismiss dialog", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application ARIA Button - " + utils.firefoxFrameNames + " Frame'",
-     "     VISIBLE:  'ARIA Button - " + utils.firefoxFrameNames + " Frame', cursor=1",
+     "     VISIBLE:  'ARIA Button - " + utils.firefoxFrameNames + "(.*| Frame)', cursor=1",
      "BRAILLE LINE:  'Check Now Button $l'",
      "     VISIBLE:  'Check Now Button $l', cursor=1",
      "SPEECH OUTPUT: 'ARIA Button - " + utils.firefoxFrameNames + " frame'",

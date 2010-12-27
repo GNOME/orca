@@ -37,6 +37,8 @@ sequence.append(utils.AssertPresentationAction(
     "Top of file", 
     ["BRAILLE LINE:  'Welcome to a List of Lists h1'",
      "     VISIBLE:  'Welcome to a List of Lists h1', cursor=1",
+     "BRAILLE LINE:  'Welcome to a List of Lists h1'",
+     "     VISIBLE:  'Welcome to a List of Lists h1', cursor=1",
      "SPEECH OUTPUT: 'Welcome to a List of Lists heading level 1'"]))
 
 ########################################################################
@@ -47,7 +49,7 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to first list",
     ["BRAILLE LINE:  'List with 4 items'",
-     "     VISIBLE:  'List with 4 items', cursor=1",
+     "     VISIBLE:  'List with 4 items', cursor=0",
      "BRAILLE LINE:  '1.remember what the heck we are doing each day'",
      "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
      "SPEECH OUTPUT: 'List with 4 items'",
@@ -61,9 +63,9 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to second list", 
     ["BRAILLE LINE:  'List with 6 items'",
-     "     VISIBLE:  'List with 6 items', cursor=1",
-     "BRAILLE LINE:  'VI. And use roman numerals,'",
-     "     VISIBLE:  'VI. And use roman numerals,', cursor=1",
+     "     VISIBLE:  'List with 6 items', cursor=0",
+     "BRAILLE LINE:  'VI.And use roman numerals,'",
+     "     VISIBLE:  'VI.And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items'",
      "SPEECH OUTPUT: 'VI.And use roman numerals,'"]))
 
@@ -75,7 +77,7 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to third list",
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  '•listing item'",
      "     VISIBLE:  '•listing item', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -89,9 +91,9 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to third list's first sub list",
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 1'",
-     "     VISIBLE:  'Nesting level 1', cursor=1",
+     "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦first sublevel'",
      "     VISIBLE:  '◦first sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -107,9 +109,9 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to third list's first sub list's first list", 
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 2'",
-     "     VISIBLE:  'Nesting level 2', cursor=1",
+     "     VISIBLE:  'Nesting level 2', cursor=0",
      "BRAILLE LINE:  '▪look for the bullet on'",
      "     VISIBLE:  '▪look for the bullet on', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -125,9 +127,9 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to third list's inner-most list", 
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 3'",
-     "     VISIBLE:  'Nesting level 3', cursor=1",
+     "     VISIBLE:  'Nesting level 3', cursor=0",
      "BRAILLE LINE:  '▪each sublevel'",
      "     VISIBLE:  '▪each sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -143,9 +145,9 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to next sub list in the third list",
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 2'",
-     "     VISIBLE:  'Nesting level 2', cursor=1",
+     "     VISIBLE:  'Nesting level 2', cursor=0",
      "BRAILLE LINE:  '◦if your TYPE is circle'",
      "     VISIBLE:  '◦if your TYPE is circle', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -160,9 +162,9 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to next sub list in the third list",
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 1'",
-     "     VISIBLE:  'Nesting level 1', cursor=1",
+     "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦was a composer who was not square'",
      "     VISIBLE:  '◦was a composer who was not squa', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -177,7 +179,7 @@ sequence.append(KeyComboAction("l"))
 sequence.append(utils.AssertPresentationAction(
     "l to last sub list in the third list",
     ["BRAILLE LINE:  'List with 3 items'",
-     "     VISIBLE:  'List with 3 items', cursor=1",
+     "     VISIBLE:  'List with 3 items', cursor=0",
      "BRAILLE LINE:  '◦feeling listless'",
      "     VISIBLE:  '◦feeling listless', cursor=1",
      "SPEECH OUTPUT: 'List with 3 items'",
@@ -193,7 +195,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Wrapping to top.'",
      "     VISIBLE:  'Wrapping to top.', cursor=0",
      "BRAILLE LINE:  'List with 4 items'",
-     "     VISIBLE:  'List with 4 items', cursor=1",
+     "     VISIBLE:  'List with 4 items', cursor=0",
      "BRAILLE LINE:  '1.remember what the heck we are doing each day'",
      "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to top.'",
@@ -211,7 +213,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'Wrapping to bottom.'",
      "     VISIBLE:  'Wrapping to bottom.', cursor=0",
      "BRAILLE LINE:  'List with 3 items'",
-     "     VISIBLE:  'List with 3 items', cursor=1",
+     "     VISIBLE:  'List with 3 items', cursor=0",
      "BRAILLE LINE:  '◦feeling listless'",
      "     VISIBLE:  '◦feeling listless', cursor=1",
      "SPEECH OUTPUT: 'Wrapping to bottom.'",
@@ -227,9 +229,9 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 1'",
-     "     VISIBLE:  'Nesting level 1', cursor=1",
+     "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦was a composer who was not square'",
      "     VISIBLE:  '◦was a composer who was not squa', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -241,9 +243,9 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 2'",
-     "     VISIBLE:  'Nesting level 2', cursor=1",
+     "     VISIBLE:  'Nesting level 2', cursor=0",
      "BRAILLE LINE:  '◦if your TYPE is circle'",
      "     VISIBLE:  '◦if your TYPE is circle', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -255,9 +257,9 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 3'",
-     "     VISIBLE:  'Nesting level 3', cursor=1",
+     "     VISIBLE:  'Nesting level 3', cursor=0",
      "BRAILLE LINE:  '▪each sublevel'",
      "     VISIBLE:  '▪each sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -269,9 +271,9 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 2'",
-     "     VISIBLE:  'Nesting level 2', cursor=1",
+     "     VISIBLE:  'Nesting level 2', cursor=0",
      "BRAILLE LINE:  '▪look for the bullet on'",
      "     VISIBLE:  '▪look for the bullet on', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -283,9 +285,9 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  'Nesting level 1'",
-     "     VISIBLE:  'Nesting level 1', cursor=1",
+     "     VISIBLE:  'Nesting level 1', cursor=0",
      "BRAILLE LINE:  '◦first sublevel'",
      "     VISIBLE:  '◦first sublevel', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -297,7 +299,7 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  'List with 2 items'",
-     "     VISIBLE:  'List with 2 items', cursor=1",
+     "     VISIBLE:  'List with 2 items', cursor=0",
      "BRAILLE LINE:  '•listing item'",
      "     VISIBLE:  '•listing item', cursor=1",
      "SPEECH OUTPUT: 'List with 2 items'",
@@ -308,9 +310,9 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  'List with 6 items'",
-     "     VISIBLE:  'List with 6 items', cursor=1",
-     "BRAILLE LINE:  'VI. And use roman numerals,'",
-     "     VISIBLE:  'VI. And use roman numerals,', cursor=1",
+     "     VISIBLE:  'List with 6 items', cursor=0",
+     "BRAILLE LINE:  'VI.And use roman numerals,'",
+     "     VISIBLE:  'VI.And use roman numerals,', cursor=1",
      "SPEECH OUTPUT: 'List with 6 items'",
      "SPEECH OUTPUT: 'VI.And use roman numerals,'"]))
 
@@ -319,7 +321,7 @@ sequence.append(KeyComboAction("<Shift>l"))
 sequence.append(utils.AssertPresentationAction(
     "shift + l", 
     ["BRAILLE LINE:  'List with 4 items'",
-     "     VISIBLE:  'List with 4 items', cursor=1",
+     "     VISIBLE:  'List with 4 items', cursor=0",
      "BRAILLE LINE:  '1.remember what the heck we are doing each day'",
      "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
      "SPEECH OUTPUT: 'List with 4 items'",

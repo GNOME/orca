@@ -58,8 +58,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(" "))
 sequence.append(utils.AssertPresentationAction(
     "Press button", 
-    ["KNOWN ISSUE - A focus event went missing: https://bugzilla.mozilla.org/show_bug.cgi?id=579964",
-     "BRAILLE LINE:  'close'",
+    ["BRAILLE LINE:  'close'",
      "     VISIBLE:  'close', cursor=1",
      "BRAILLE LINE:  ''",
      "     VISIBLE:  '', cursor=0",

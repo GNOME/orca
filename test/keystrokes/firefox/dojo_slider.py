@@ -133,7 +133,7 @@ sequence.append(utils.AssertPresentationAction(
     "7 move first slider", 
     ["BRAILLE LINE:  '10.66815144766147 Slider'",
      "     VISIBLE:  '10.66815144766147 Slider', cursor=1",
-     "SPEECH OUTPUT: '10.66815144766147''"]))
+     "SPEECH OUTPUT: '10.66815144766147'"]))
                                   
 sequence.append(utils.StartRecordingAction())                    
 sequence.append(KeyComboAction("Left"))
@@ -172,7 +172,7 @@ sequence.append(utils.AssertPresentationAction(
     "10 move first slider", 
     ["BRAILLE LINE:  '10 Slider'",
      "     VISIBLE:  '10 Slider', cursor=1",
-     "SPEECH OUTPUT: 'slider 10'"]))
+     "SPEECH OUTPUT: '10'"]))
 
 ########################################################################
 # Tab to the next entry between the sliders. 

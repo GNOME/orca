@@ -179,7 +179,7 @@ sequence.append(utils.AssertPresentationAction(
     "i in third list", 
     ["BRAILLE LINE:  '◦feeling listless'",
      "     VISIBLE:  '◦feeling listless', cursor=1",
-     "SPEECH OUTPUT: '◦feeling listless''"]))
+     "SPEECH OUTPUT: '◦feeling listless"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("i"))
@@ -224,7 +224,7 @@ sequence.append(KeyComboAction("<Shift>i"))
 sequence.append(utils.AssertPresentationAction(
     "shift + i in first list", 
     ["BRAILLE LINE:  '1.remember what the heck we are doing each day'",
-     "     VISIBLE:  '1.remember what the heck we are d', cursor=1",
+     "     VISIBLE:  '1.remember what the heck we are ', cursor=1",
      "SPEECH OUTPUT: '1.remember what the heck we are doing each day'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -252,7 +252,7 @@ sequence.append(utils.AssertPresentationAction(
     "shift + i in third list", 
     ["BRAILLE LINE:  '◦feeling listless'",
      "     VISIBLE:  '◦feeling listless', cursor=1",
-     "SPEECH OUTPUT: '◦feeling listless''"]))
+     "SPEECH OUTPUT: '◦feeling listless'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
