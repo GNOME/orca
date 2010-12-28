@@ -1,36 +1,143 @@
-# -*- coding: utf-8 -*-
-
-# Default settings for all tests.  These can be overridden by
-# defining a *.params file for a test.  See 
-# http://live.gnome.org/Orca/RegressionTesting for more info.
-
-import re
-
-import orca.debug
-import orca.settings
-
-# This file should be identical to ../../harness/user-settings.py except
-# for the following two lines of executable code:
-#
-orca.settings.sayAllStyle = orca.settings.SAYALL_STYLE_SENTENCE
-orca.settings.enableTutorialMessages = True
-
-orca.settings.enableEchoByWord = False
-orca.settings.enableKeyEcho = False
-orca.settings.enablePrintableKeys = False
-orca.settings.enableModifierKeys = False
-orca.settings.enableLockingKeys = False
-orca.settings.enableFunctionKeys = False
-orca.settings.enableActionKeys = False
-
-orca.settings.enableBraille = False
-orca.settings.enableBrailleMonitor = False
-
-import orca.orca_state
-try:
-    reload(orca.orca_state.orcaCustomizations)
-except AttributeError:
-    try:
-        orca.orca_state.orcaCustomizations = __import__("orca-customizations")
-    except ImportError:
-        pass
+general:
+  activeProfile: [Default, default]
+  brailleAlignmentStyle: 0
+  brailleContractionTable: ''
+  brailleEOLIndicator: ' $l'
+  brailleFlashTime: 5000
+  brailleLinkIndicator: 192
+  brailleRequiredStateString: required
+  brailleRolenameStyle: 1
+  brailleSelectorIndicator: 192
+  brailleVerbosityLevel: 1
+  chatAnnounceBuddyTyping: false
+  chatMessageVerbosity: 0
+  chatRoomHistories: false
+  chatSpeakRoomName: false
+  disableBrailleEOL: false
+  enableActionKeys: true
+  enableBraille: false
+  enableBrailleContext: true
+  enableBrailleGrouping: false
+  enableBrailleMonitor: true
+  enableContractedBraille: false
+  enableDiacriticalKeys: false
+  enableEchoByCharacter: false
+  enableEchoBySentence: false
+  enableEchoByWord: false
+  enableFlashMessages: true
+  enableFunctionKeys: true
+  enableKeyEcho: true
+  enableLockingKeys: true
+  enableMagCrossHair: true
+  enableMagCrossHairClip: false
+  enableMagCursor: true
+  enableMagCursorExplicitSize: false
+  enableMagLiveUpdating: true
+  enableMagZoomerBorder: false
+  enableMagZoomerColorInversion: false
+  enableMagnifier: false
+  enableMnemonicSpeaking: false
+  enableModifierKeys: true
+  enableMouseReview: false
+  enableNavigationKeys: false
+  enablePauseBreaks: true
+  enablePositionSpeaking: false
+  enablePrintableKeys: true
+  enableProgressBarUpdates: true
+  enableSpeech: true
+  enableSpeechIndentation: false
+  enableTutorialMessages: true
+  enabledBrailledTextAttributes: size:; family-name:; weight:400; indent:0; underline:none;
+    strikethrough:false; justification:left; style:normal; text-spelling:none;
+  enabledSpokenTextAttributes: size:; family-name:; weight:400; indent:0; underline:none;
+    strikethrough:false; justification:left; style:normal; paragraph-style:; text-spelling:none;
+  firstStart: false
+  flashIsPersistent: false
+  flashVerbosityLevel: 1
+  keyboardLayout: 1
+  largeObjectTextLength: 75
+  magBrightnessLevel: 0
+  magBrightnessLevelBlue: 0
+  magBrightnessLevelGreen: 0
+  magBrightnessLevelRed: 0
+  magColorFilteringMode: 0
+  magContrastLevel: 0
+  magContrastLevelBlue: 0
+  magContrastLevelGreen: 0
+  magContrastLevelRed: 0
+  magControlTrackingMode: 2
+  magCrossHairColor: '#000000'
+  magCrossHairSize: 16
+  magCursorColor: '#000000'
+  magCursorSize: 32
+  magEdgeMargin: 0
+  magHideCursor: false
+  magMouseTrackingMode: 0
+  magPointerFollowsFocus: false
+  magPointerFollowsZoomer: true
+  magSmoothingMode: 0
+  magSourceDisplay: ''
+  magTargetDisplay: ''
+  magTextTrackingMode: 2
+  magZoomFactor: 4.0
+  magZoomerBorderColor: '#000000'
+  magZoomerBorderSize: 1
+  magZoomerBottom: 1920
+  magZoomerLeft: 1200
+  magZoomerRight: 2400
+  magZoomerTop: 0
+  magZoomerType: 0
+  messageVerbosityLevel: 1
+  mouseDwellDelay: 0
+  onlySpeakDisplayedText: false
+  orcaModifierKeys: [Insert, KP_Insert]
+  presentDateFormat: '%x'
+  presentRequiredState: false
+  presentTimeFormat: '%X'
+  presentToolTips: false
+  profile: [Default, default]
+  progressBarUpdateInterval: 10
+  progressBarVerbosity: 1
+  quitOrcaNoConfirmation: false
+  readTableCellRow: true
+  sayAllStyle: 1
+  showMainWindow: true
+  skipBlankCells: false
+  speakBlankLines: true
+  speakCellCoordinates: true
+  speakCellHeaders: true
+  speakCellSpan: true
+  speakMultiCaseStringsAsWords: false
+  speechRequiredStateString: required
+  speechServerFactory: speechdispatcherfactory
+  speechServerInfo: null
+  speechVerbosityLevel: 1
+  startingProfile: [Default, default]
+  textAttributesBrailleIndicator: 0
+  verbalizePunctuationStyle: 1
+  voices:
+    default: !!python/object/new:orca.acss.ACSS
+      dictitems: {established: false}
+    hyperlink: !!python/object/new:orca.acss.ACSS
+      dictitems: {established: false}
+    system: !!python/object/new:orca.acss.ACSS
+      dictitems: {established: false}
+    uppercase: !!python/object/new:orca.acss.ACSS
+      dictitems: {average-pitch: 5.5999999999999996}
+  wrappedStructuralNavigation: true
+keybindings: {}
+profiles:
+  default:
+    profile: [Default, default]
+    enableEchoByWord: false
+    enableKeyEcho: false
+    enableBraille: false
+    enableBrailleMonitor: true
+    enableEchoByWord: False
+    enableKeyEcho: False
+    enablePrintableKeys: False
+    enableModifierKeys: False
+    enableLockingKeys: False
+    enableFunctionKeys: False
+    enableActionKeys: False
+pronunciations: {}
