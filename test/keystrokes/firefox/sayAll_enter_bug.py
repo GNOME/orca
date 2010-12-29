@@ -36,9 +36,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Home"))
 sequence.append(utils.AssertPresentationAction(
     "Top of file",
-    ["BRAILLE LINE:  'Home Image Bugzilla'",
-     "     VISIBLE:  'Home Image Bugzilla', cursor=1",
-     "SPEECH OUTPUT: 'Home link image Bugzilla'"]))
+    ["BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
+     "     VISIBLE:  'Home Image Bugzilla New bug · Br', cursor=1",
+     "SPEECH OUTPUT: 'Home link image Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 ########################################################################
 # SayAll to the End.
@@ -77,8 +77,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'text'",
      "SPEECH OUTPUT: 'Description:'",
      "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: ' ",
-     "'",
+     "SPEECH OUTPUT: 'blank'",
      "SPEECH OUTPUT: ' '",
      "SPEECH OUTPUT: 'Optional Fields'",
      "SPEECH OUTPUT: 'Cc:'",
@@ -90,7 +89,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'text'",
      "SPEECH OUTPUT: 'Blocks:'",
      "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'Commit button'",
+     "SPEECH OUTPUT: '   Commit button'",
      "SPEECH OUTPUT: '      Remember values as bookmarkable template button'",
      "SPEECH OUTPUT: '",
      "We've made a guess at your operating system. Please check it and, if we got it wrong, email bugmaster@gnome.org.'",

@@ -71,7 +71,7 @@ sequence.append(KeyComboAction("Escape"))
 sequence.append(utils.AssertPresentationAction(
     "Escape to dismiss the dialog.",
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application MouseOvers - " + utils.firefoxFrameNames + " Frame'",
-     "     VISIBLE:  'MouseOvers - " + utils.firefoxFrameNames + " Fra', cursor=1",
+     "     VISIBLE:  'MouseOvers - " + utils.firefoxFrameNames + "(| Fra| Frame)', cursor=1",
      "BRAILLE LINE:  'Orca Logo Image'",
      "     VISIBLE:  'Orca Logo Image', cursor=1",
      "SPEECH OUTPUT: 'MouseOvers - " + utils.firefoxFrameNames + " frame'",

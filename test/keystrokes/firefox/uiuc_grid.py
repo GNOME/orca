@@ -19,7 +19,7 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
-sequence.append(TypeAction("http://test.cita.uiuc.edu/aria/grid/view_inline.php?title=Grid%20Example%201:%20E-mail%20List%20with%20Row%20and%20Column%20Navigation&ginc=includes/grid1_inline.inc&gcss=css/grid1.css&gjs=../js/globals.js,../js/widgets_inline.js,js/grid1.js"))
+sequence.append(TypeAction("http://test.cita.illinois.edu/aria/grid/grid2.php"))
 sequence.append(KeyComboAction("Return"))
 sequence.append(WaitForDocLoad())
 
@@ -28,6 +28,10 @@ sequence.append(PauseAction(5000))
 ########################################################################
 # Tab to grid
 #
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab"))
+
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(PauseAction(2000))

@@ -29,7 +29,7 @@ sequence.append(WaitForFocus("Blockquote Regression Test",
 sequence.append(PauseAction(3000))
 
 ########################################################################
-# Read the current word with KP_5.
+# Read the current word with KP_5 and the next word with KP_6.
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5", 1000))
@@ -38,6 +38,14 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'On weaponry: $l'",
      "     VISIBLE:  'On weaponry: $l', cursor=1",
      "SPEECH OUTPUT: 'On'"]))
+
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("KP_6", 1000))
+sequence.append(utils.AssertPresentationAction(
+    "flat review current word", 
+    ["BRAILLE LINE:  'On weaponry: $l'",
+     "     VISIBLE:  'On weaponry: $l', cursor=4",
+     "SPEECH OUTPUT: 'weaponry:'"]))
 
 ########################################################################
 # Spell the current word with KP_5 2x.
@@ -48,10 +56,10 @@ sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "spell current word", 
     ["BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=12",
+     "     VISIBLE:  'On weaponry: $l', cursor=4",
      "BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=12",
-     "SPEECH OUTPUT: 'Weaponry:'",
+     "     VISIBLE:  'On weaponry: $l', cursor=4",
+     "SPEECH OUTPUT: 'weaponry:'",
      "SPEECH OUTPUT: 'w'",
      "SPEECH OUTPUT: 'e'",
      "SPEECH OUTPUT: 'a'",
@@ -72,12 +80,12 @@ sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "spell current word phonetically", 
     ["BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=12",
+     "     VISIBLE:  'On weaponry: $l', cursor=4",
      "BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=12",
+     "     VISIBLE:  'On weaponry: $l', cursor=4",
      "BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=12",
-     "SPEECH OUTPUT: 'Weaponry:'",
+     "     VISIBLE:  'On weaponry: $l', cursor=4",
+     "SPEECH OUTPUT: 'weaponry:'",
      "SPEECH OUTPUT: 'w'",
      "SPEECH OUTPUT: 'e'",
      "SPEECH OUTPUT: 'a'",
@@ -86,13 +94,16 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'n'",
      "SPEECH OUTPUT: 'r'",
      "SPEECH OUTPUT: 'y'",
+     "SPEECH OUTPUT: ':'",
      "SPEECH OUTPUT: 'whiskey'",
      "SPEECH OUTPUT: 'echo'",
      "SPEECH OUTPUT: 'alpha'",
      "SPEECH OUTPUT: 'papa'",
      "SPEECH OUTPUT: 'oscar'",
      "SPEECH OUTPUT: 'november'",
-     "SPEECH OUTPUT: 'yankee'"]))
+     "SPEECH OUTPUT: 'romeo'",
+     "SPEECH OUTPUT: 'yankee'",
+     "SPEECH OUTPUT: ':'"]))
 
 ########################################################################
 # Read forward word by word with KP_6.

@@ -35,10 +35,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8", 1000))
 sequence.append(utils.AssertPresentationAction(
     "flat review current line", 
-    ["BRAILLE LINE:  'On weaponry:'",
-     "     VISIBLE:  'On weaponry:', cursor=1",
-     "BRAILLE LINE:  'On weaponry: $l'",
-     "     VISIBLE:  'On weaponry: $l', cursor=12",
+    ["BRAILLE LINE:  'On weaponry: $l'",
+     "     VISIBLE:  'On weaponry: $l', cursor=1",
      "SPEECH OUTPUT: 'On weaponry:'"]))
 
 ########################################################################
@@ -80,9 +78,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'Pope, and nice red uniforms - Oh damn!  $l'",
+    ["BUG? - Why are we presenting the text twice?",
+     "BRAILLE LINE:  'Pope, and nice red uniforms - Oh damn! Pope, and nice red uniforms - Oh damn!  $l'",
      "     VISIBLE:  'Pope, and nice red uniforms - Oh', cursor=1",
-     "SPEECH OUTPUT: 'Pope, and nice red uniforms - Oh damn! '"]))
+     "SPEECH OUTPUT: 'Pope, and nice red uniforms - Oh damn! Pope, and nice red uniforms - Oh damn! '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
@@ -104,9 +103,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
 sequence.append(utils.AssertPresentationAction(
     "flat review next line", 
-    ["BRAILLE LINE:  'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance.  $l'",
+    ["BUG? - Why are we presenting the text twice?",
+     "BRAILLE LINE:  'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance.  $l'",
      "     VISIBLE:  'be free. Three last chances. You', cursor=1",
-     "SPEECH OUTPUT: 'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. '"]))
+     "SPEECH OUTPUT: 'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_9"))
@@ -139,9 +139,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance.  $l'",
+    ["BUG? - Why are we presenting the text twice?",
+     "BRAILLE LINE:  'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance.  $l'",
      "     VISIBLE:  'be free. Three last chances. You', cursor=1",
-     "SPEECH OUTPUT: 'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. '"]))
+     "SPEECH OUTPUT: 'be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. be free. Three last chances. You have three last chances, the nature of which I have divulged in my previous utterance. '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
@@ -163,9 +164,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))
 sequence.append(utils.AssertPresentationAction(
     "flat review previous line", 
-    ["BRAILLE LINE:  'Pope, and nice red uniforms - Oh damn!  $l'",
+    ["BUG? - Why are we presenting the text twice?",
+     "BRAILLE LINE:  'Pope, and nice red uniforms - Oh damn! Pope, and nice red uniforms - Oh damn!  $l'",
      "     VISIBLE:  'Pope, and nice red uniforms - Oh', cursor=1",
-     "SPEECH OUTPUT: 'Pope, and nice red uniforms - Oh damn! '"]))
+     "SPEECH OUTPUT: 'Pope, and nice red uniforms - Oh damn! Pope, and nice red uniforms - Oh damn! '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_7"))

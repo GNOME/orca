@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python
 
 """Test of Dojo spinner presentation using Firefox.
@@ -16,11 +17,6 @@ sequence.append(WaitForWindowActivate(utils.firefoxFrameNames, None))
 
 ########################################################################
 # Load the dojo spinner demo.
-#
-# NOTE: After 5 Aug 2009, the test sets the required state to False by
-# Default. The state can be toggled by pressing a button, which is NOT
-# in the Tab order. :-( Therefore, for now, use the most recent archive
-# which has required set to True.
 #
 sequence.append(KeyComboAction("<Control>l"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
@@ -44,9 +40,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab to the first spinner",
-    ["BRAILLE LINE:  'Spinbox #1: 900 $l required'",
-     "     VISIBLE:  'Spinbox #1: 900 $l required', cursor=16",
-     "SPEECH OUTPUT: 'Spinbox #1: 900 selected spin button required'"]))
+    ["BRAILLE LINE:  '▲ ▼ Spinbox #1:  $l not fired yet! $lSet value to 400 Button Set value to null Button Set required to false Button'",
+     "     VISIBLE:  'Spinbox #1:  $l not fired yet! $', cursor=13",
+     "SPEECH OUTPUT: 'Spinbox #1: 900 selected spin button'"]))
 
 ########################################################################
 # Use down arrow to decrement spinner value.  
@@ -55,11 +51,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner decrement 1", 
-    ["BRAILLE LINE:  'Spinbox #1: 900 $l required'",
-     "     VISIBLE:  'Spinbox #1: 900 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 899 $l required'",
-     "     VISIBLE:  'Spinbox #1: 899 $l required', cursor=16",
-     "SPEECH OUTPUT: '899'"]))
+    ["BUG? - Why aren't we speaking or displaying the new value??",
+     "BRAILLE LINE:  '▲ ▼ Spinbox #1:  $l not fired yet! $lSet value to 400 Button Set value to null Button Set required to false Button'",
+     "     VISIBLE:  'Spinbox #1:  $l not fired yet! $', cursor=13",
+     "BRAILLE LINE:  '▲ ▼ Spinbox #1:  $l not fired yet! $lSet value to 400 Button Set value to null Button Set required to false Button'",
+     "     VISIBLE:  'Spinbox #1:  $l not fired yet! $', cursor=13",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Use down arrow to decrement spinner value.  
@@ -68,50 +65,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner decrement 2", 
-    ["BRAILLE LINE:  'Spinbox #1: 899 $l required'",
-     "     VISIBLE:  'Spinbox #1: 899 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 898 $l required'",
-     "     VISIBLE:  'Spinbox #1: 898 $l required', cursor=16",
-     "SPEECH OUTPUT: '898'"]))
-
-########################################################################
-# Use down arrow to decrement spinner value.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner decrement 3", 
-    ["BRAILLE LINE:  'Spinbox #1: 898 $l required'",
-     "     VISIBLE:  'Spinbox #1: 898 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 897 $l required'",
-     "     VISIBLE:  'Spinbox #1: 897 $l required', cursor=16",
-     "SPEECH OUTPUT: '897'"]))
-
-########################################################################
-# Use down arrow to decrement spinner value. 
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner decrement 4", 
-    ["BRAILLE LINE:  'Spinbox #1: 897 $l required'",
-     "     VISIBLE:  'Spinbox #1: 897 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 896 $l required'",
-     "     VISIBLE:  'Spinbox #1: 896 $l required', cursor=16",
-     "SPEECH OUTPUT: '896'"]))
-
-########################################################################
-# Use down arrow to decrement spinner value.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Down"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner decrement 5", 
-    ["BRAILLE LINE:  'Spinbox #1: 896 $l required'",
-     "     VISIBLE:  'Spinbox #1: 896 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 895 $l required'",
-     "     VISIBLE:  'Spinbox #1: 895 $l required', cursor=16",
-     "SPEECH OUTPUT: '895'"]))
+    ["BUG? - Why aren't we speaking or displaying the new value??",
+     "BRAILLE LINE:  '▲ ▼ Spinbox #1:  $l not fired yet! $lSet value to 400 Button Set value to null Button Set required to false Button'",
+     "     VISIBLE:  'Spinbox #1:  $l not fired yet! $', cursor=13",
+     "BRAILLE LINE:  '▲ ▼ Spinbox #1:  $l not fired yet! $lSet value to 400 Button Set value to null Button Set required to false Button'",
+     "     VISIBLE:  'Spinbox #1:  $l not fired yet! $', cursor=13",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Use up arrow to increment spinner value. 
@@ -120,89 +79,12 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "first spinner increment 1", 
-    ["BRAILLE LINE:  'Spinbox #1: 895 $l required'",
-     "     VISIBLE:  'Spinbox #1: 895 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 896 $l required'",
-     "     VISIBLE:  'Spinbox #1: 896 $l required', cursor=16",
-     "SPEECH OUTPUT: '896'"]))
-
-########################################################################
-# Use up arrow to increment spinner value.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner increment 2", 
-    ["BRAILLE LINE:  'Spinbox #1: 896 $l required'",
-     "     VISIBLE:  'Spinbox #1: 896 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 897 $l required'",
-     "     VISIBLE:  'Spinbox #1: 897 $l required', cursor=16",
-     "SPEECH OUTPUT: '897'"]))
-
-########################################################################
-# Use up arrow to increment spinner value.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner increment 3", 
-    ["BRAILLE LINE:  'Spinbox #1: 897 $l required'",
-     "     VISIBLE:  'Spinbox #1: 897 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 898 $l required'",
-     "     VISIBLE:  'Spinbox #1: 898 $l required', cursor=16",
-     "SPEECH OUTPUT: '898'"]))
-
-########################################################################
-# Use up arrow to increment spinner value.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner increment 4", 
-    ["BRAILLE LINE:  'Spinbox #1: 898 $l required'",
-     "     VISIBLE:  'Spinbox #1: 898 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 899 $l required'",
-     "     VISIBLE:  'Spinbox #1: 899 $l required', cursor=16",
-     "SPEECH OUTPUT: '899'"]))
-
-########################################################################
-# Use up arrow to increment spinner value.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner increment 5", 
-    ["BRAILLE LINE:  'Spinbox #1: 899 $l required'",
-     "     VISIBLE:  'Spinbox #1: 899 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 900 $l required'",
-     "     VISIBLE:  'Spinbox #1: 900 $l required', cursor=16",
-     "SPEECH OUTPUT: '900'"]))
-
-########################################################################
-# Use up arrow to increment spinner value.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner increment 6", 
-    ["BRAILLE LINE:  'Spinbox #1: 900 $l required'",
-     "     VISIBLE:  'Spinbox #1: 900 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 901 $l required'",
-     "     VISIBLE:  'Spinbox #1: 901 $l required', cursor=16",
-     "SPEECH OUTPUT: '901'"]))
-
-########################################################################
-# Use up arrow to increment spinner value.  
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Up"))
-sequence.append(utils.AssertPresentationAction(
-    "first spinner increment 7", 
-    ["BRAILLE LINE:  'Spinbox #1: 901 $l required'",
-     "     VISIBLE:  'Spinbox #1: 901 $l required', cursor=16",
-     "BRAILLE LINE:  'Spinbox #1: 902 $l required'",
-     "     VISIBLE:  'Spinbox #1: 902 $l required', cursor=16",
-     "SPEECH OUTPUT: '902'"]))
+    ["BUG? - Why aren't we speaking or displaying the new value??",
+     "BRAILLE LINE:  '▲ ▼ Spinbox #1:  $l not fired yet! $lSet value to 400 Button Set value to null Button Set required to false Button'",
+     "     VISIBLE:  'Spinbox #1:  $l not fired yet! $', cursor=13",
+     "BRAILLE LINE:  '▲ ▼ Spinbox #1:  $l not fired yet! $lSet value to 400 Button Set value to null Button Set required to false Button'",
+     "     VISIBLE:  'Spinbox #1:  $l not fired yet! $', cursor=13",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  
@@ -212,9 +94,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "basic whereAmI", 
-    ["BRAILLE LINE:  'Spinbox #1: 902 $l required'",
-     "     VISIBLE:  'Spinbox #1: 902 $l required', cursor=16",
-     "SPEECH OUTPUT: 'Spinbox #1: spin button 902 required'"]))
+    ["BUG? - Why aren't we displaying the current value??",
+     "BRAILLE LINE:  '▲ ▼ Spinbox #1:  $l not fired yet! $lSet value to 400 Button Set value to null Button Set required to false Button'",
+     "     VISIBLE:  'Spinbox #1:  $l not fired yet! $', cursor=13",
+     "SPEECH OUTPUT: 'Spinbox #1: spin button 899'"]))
 
 ########################################################################
 # Close the demo

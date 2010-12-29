@@ -77,10 +77,10 @@ sequence.append(PauseAction(2000))
 sequence.append(KeyComboAction("Right"))
 sequence.append(utils.AssertPresentationAction(
     "Move to basic grey", 
-    ["BRAILLE LINE:  'Themes          >'",
-     "     VISIBLE:  'Themes          >', cursor=(0|1)",
-     "BRAILLE LINE:  'Themes          > Basic Grey'",
-     "     VISIBLE:  'Themes          > Basic Grey', cursor=19",
+    ["BRAILLE LINE:  'Basic Grey'",
+     "     VISIBLE:  'Basic Grey', cursor=(0|1)",
+     "BRAILLE LINE:  'Basic Grey'",
+     "     VISIBLE:  'Basic Grey', cursor=1",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Basic Grey'"]))
 
@@ -153,11 +153,10 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Move to one", 
-    ["KNOWN ISSUE - Depending on timing, we sometimes just display one rather than More",
-     "BRAILLE LINE:  'More                >'",
-     "     VISIBLE:  'More                >', cursor=(0|1)",
-     "BRAILLE LINE:  'More                > one'",
-     "     VISIBLE:  'More                > one', cursor=23",
+    ["BRAILLE LINE:  '(one|More                >)'",
+     "     VISIBLE:  '(one|More                >)', cursor=(0|1)",
+     "BRAILLE LINE:  '(one|More                > one)'",
+     "     VISIBLE:  '(one|More                > one)', cursor=(0|1|23)",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'one'"]))
 

@@ -42,13 +42,13 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Press Tab once to get to the Severity link. 
 #
-#sequence.append(utils.StartRecordingAction())
-#sequence.append(KeyComboAction("Tab"))
-#sequence.append(utils.AssertPresentationAction(
-#    "Tab to Severity combo box", 
-#    ["BRAILLE LINE:  'Severity: Severity normal Combo'",
-#     "     VISIBLE:  'Severity: Severity normal Combo', cursor=1",
-#     "SPEECH OUTPUT: 'Severity link'"]))
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("Tab"))
+sequence.append(utils.AssertPresentationAction(
+    "Tab to Severity combo box", 
+    ["BRAILLE LINE:  'Severity: Severity normal Combo'",
+     "     VISIBLE:  'Severity: Severity normal Combo', cursor=1",
+     "SPEECH OUTPUT: 'Severity link'"]))
 
 ########################################################################
 # Press Tab once to get to the Severity combo box.  This combo box

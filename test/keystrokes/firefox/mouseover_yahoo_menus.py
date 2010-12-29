@@ -47,7 +47,9 @@ sequence.append(KeyComboAction("KP_Divide"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Route the pointer to Communications",
-    ["BUG? - This should also be brailled.",
+    ["BUG? - This should also be brailled. Also, while accurate, we're too chatty here.",
+     "SPEECH OUTPUT: 'New item has been added PIM link'",
+     "SPEECH OUTPUT: 'New item has been added section'",
      "SPEECH OUTPUT: 'New item has been added section'"]))
 
 ########################################################################
@@ -77,7 +79,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
-    "1. Tab to menu item",
+    "2. Tab to menu item",
     ["BRAILLE LINE:  'Avatars'",
      "     VISIBLE:  'Avatars', cursor=1",
      "SPEECH OUTPUT: 'Avatars link'"]))
