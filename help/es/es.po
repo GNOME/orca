@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2010-12-24 13:31+0000\n"
-"PO-Revision-Date: 2010-12-26 20:50+0100\n"
+"POT-Creation-Date: 2010-12-27 06:31+0000\n"
+"PO-Revision-Date: 2010-12-27 18:47+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -174,6 +174,12 @@ msgid ""
 "along with the order in which they should be presented, and which ones "
 "<app>Orca</app> will indicate in braille."
 msgstr ""
+"El término «atributos de texto» hace referencia a la fuente, estilo, "
+"alineación y otro formato asociado a un carácter o serie de caracteres "
+"dados. La página <gui>Atributos de texto</gui> de <app>Orca</app> le permite "
+"personalizar qué atributos de texto presentará <app>Orca</app> por voz, "
+"junto al orden en que se deben presentar, y cuáles de ellos indicará "
+"<app>Orca</app> en braille."
 
 #: C/preferences_text_attributes.page:30(title)
 msgid "The text attributes table"
@@ -185,8 +191,8 @@ msgid ""
 "not be presented and under what conditions. Each row consists of four "
 "columns."
 msgstr ""
-"La tabla de atributos de texto es donde especifica qué atributos se "
-"presentarán o no y bajo que condiciones. Cada fila consiste en cuatro "
+"La tabla de atributos de texto es donde se especifica qué atributos se "
+"presentarán y cuáles no y bajo qué condiciones. Cada fila consiste en cuatro "
 "columnas."
 
 #: C/preferences_text_attributes.page:39(p)
@@ -199,16 +205,16 @@ msgid ""
 "speak this attribute when you press <keyseq><key>Orca</key><key>F</key></"
 "keyseq>."
 msgstr ""
-"<gui>Hablar</gui>: marque esta casilla quiere que <app>Orca</app> hable este "
-"atributo cuando pulse <keyseq><key>Orca</key><key>F</key></keyseq>."
+"<gui>Hablar</gui>: marque esta casilla si quiere que <app>Orca</app> hable "
+"este atributo cuando pulse <keyseq><key>Orca</key><key>F</key></keyseq>."
 
 #: C/preferences_text_attributes.page:51(p)
 msgid ""
 "<gui>Mark in braille</gui>: Check this checkbox if you would like <app>Orca</"
 "app> to \"underline\" this attribute on your braille display."
 msgstr ""
-"<gui>Marcar en braille</gui>: marque esta casilla si le gustaría que "
-"<app>Orca</app> subrayase este atributo en su línea braille."
+"<gui>Marcar en braille</gui>: marque esta casilla si quiere que <app>Orca</"
+"app> subraye este atributo en su línea braille."
 
 #: C/preferences_text_attributes.page:58(p)
 msgid ""
@@ -255,7 +261,7 @@ msgstr "Reorganizando el orden de presentación"
 
 #: C/preferences_text_attributes.page:86(title)
 msgid "Options for Controlling the Order in Which Attributes Are Presented"
-msgstr ""
+msgstr "Opciones para controlar el orden en que se presentan los atributos"
 
 #: C/preferences_text_attributes.page:87(desc)
 msgid ""
@@ -265,8 +271,8 @@ msgid ""
 "order of presentation."
 msgstr ""
 "Cuando muestra la página de atributos de texto inicialmente, todos sus "
-"atributos marcados se ponen al principio de la lista.Se dan en el orden en "
-"que se hablarán. Hay cuatro botones que pueden usarse para reorganizar el "
+"atributos marcados se ponen al principio de la lista. Se dan en el orden en "
+"que se hablarán. Hay cuatro botones que se pueden usar para reorganizar el "
 "orden de presentación."
 
 #: C/preferences_text_attributes.page:97(p)
@@ -307,43 +313,42 @@ msgstr "Indicador braille"
 
 #: C/preferences_text_attributes.page:125(title)
 msgid "Options for Configuring Braille \"Underlining\" for Formatting"
-msgstr ""
+msgstr "Opciones para configurar el «subrayado» braille para el formato"
 
 #: C/preferences_text_attributes.page:126(desc)
-#, fuzzy
-#| msgid ""
-#| "Beneath the push buttons is the <gui>Braille Indicator</gui> group of "
-#| "radio buttons. Here you can select the cell or cells to be used to "
-#| "indicate text which has at least one of the specified attributes. Your "
-#| "choices are:"
 msgid ""
 "Beneath the push buttons is the <gui>Braille Indicator</gui> group of radio "
 "buttons. Here you can select the cell or cells to be used to indicate text "
 "which has at least one of the specified attributes."
 msgstr ""
-"Bajo a los botones está el grupo de botones de radio <gui>Indicador Braille</"
-"gui>. Aquí puede seleccionar la celda o celdas que se usarán para indicar el "
-"texto que al menos tenga uno de los atributos especificados. Sus opciones "
-"son:"
+"Debajo de los botones está el grupo de botones de radio <gui>Indicador "
+"Braille</gui>. Aquí puede seleccionar la celda o celdas que se usarán para "
+"indicar el texto tenga que al menos uno de los atributos especificados."
 
 #: C/preferences_text_attributes.page:135(p)
 msgid ""
 "<gui>None</gui>: Do not underline text attributes in braille (the default)"
 msgstr ""
+"<gui>Ninguno</gui>: no subrayar los atributos de texto en braille "
+"(predeterminado)"
 
 #: C/preferences_text_attributes.page:138(p)
 msgid "<gui>Dot 7</gui>: Underline text attributes with only Dot 7"
 msgstr ""
+"<gui>Punto 7</gui>: subrayar los atributos de texto solamente con el punto 7"
 
 #: C/preferences_text_attributes.page:141(p)
 msgid "<gui>Dot 8</gui>: Underline text attributes with only Dot 8"
 msgstr ""
+"<gui>Punto 8</gui>: subrayar los atributos de texto solamente con el punto 8"
 
 #: C/preferences_text_attributes.page:144(p)
 msgid ""
 "<gui>Dots 7 and 8</gui>: Underline text attributes with both Dots 7 and Dots "
 "8"
 msgstr ""
+"<gui>Puntos 7 y 8</gui>: subrayar los atributos de texto con ambos puntos 7 "
+"y puntos 8"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -356,10 +361,8 @@ msgstr ""
 "md5=a97b98bd9e3499e06844d56156419a7d"
 
 #: C/preferences_table_navigation.page:8(title)
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "2. Table Navigation"
-msgstr "Navegación por tablas"
+msgstr "2. Navegación por tablas"
 
 #: C/preferences_table_navigation.page:9(title) C/commands_table.page:7(title)
 msgid "Table Navigation"
@@ -367,13 +370,11 @@ msgstr "Navegación por tablas"
 
 #: C/preferences_table_navigation.page:10(desc)
 msgid "Configuring <app>Orca</app>'s navigation within tables"
-msgstr ""
+msgstr "Configurar la navegación de <app>Orca</app> dentro de las tablas"
 
 #: C/preferences_table_navigation.page:21(title)
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Table Navigation Preferences"
-msgstr "Navegación por tablas"
+msgstr "Preferencias de la navegación por tablas"
 
 #: C/preferences_table_navigation.page:23(p)
 msgid ""
@@ -381,18 +382,21 @@ msgid ""
 "when navigating within a table in <link xref=\"howto_structural_navigation"
 "\">Structural-Navigation</link>-enabled applications."
 msgstr ""
+"La siguiente opción le permite personalizar cómo se comporta <app>Orca</app> "
+"cuando navega dentro de una tabla en aplicaciones habilitadas para <link "
+"xref=\"howto_structural_navigation\">navegación-estructural</link>."
 
 #: C/preferences_table_navigation.page:30(title)
-#, fuzzy
-#| msgid "Speak blank lines"
 msgid "Speak cell coordinates"
-msgstr "Indicar líneas en blanco"
+msgstr "Leer las coordenadas de una celda"
 
 #: C/preferences_table_navigation.page:31(p)
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will announce the coordinates "
 "of each cell you navigate to."
 msgstr ""
+"Si esta casilla está marcada, <app>Orca</app> anunciará las coordenadas de "
+"cada celda a la que navegue."
 
 #: C/preferences_table_navigation.page:35(p)
 #: C/preferences_table_navigation.page:45(p)
@@ -405,19 +409,19 @@ msgstr ""
 #: C/preferences_gecko.page:36(p) C/preferences_gecko.page:55(p)
 #: C/preferences_gecko.page:106(p)
 msgid "Default value: checked"
-msgstr ""
+msgstr "Valor predeterminado: marcado"
 
 #: C/preferences_table_navigation.page:40(title)
-#, fuzzy
-#| msgid "Speak tutorial messages"
 msgid "Speak multiple cell spans"
-msgstr "Leer mensajes de aprendizaje"
+msgstr "Leer celdas dentro de otra celda"
 
 #: C/preferences_table_navigation.page:41(p)
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will announce how many rows and/"
 "or columns a cell spans when it spans more than one."
 msgstr ""
+"Si esta casilla está marcada, <app>Orca</app> anunciará cuántas filas y/o "
+"columnas abarca una celda cuando ésta abarque más de una."
 
 #: C/preferences_table_navigation.page:50(title)
 msgid "Announce cell header"
@@ -430,10 +434,8 @@ msgid ""
 msgstr ""
 
 #: C/preferences_table_navigation.page:60(title)
-#, fuzzy
-#| msgid "Speak blank lines"
 msgid "Skip blank cells"
-msgstr "Indicar líneas en blanco"
+msgstr "Saltar celdas en blanco"
 
 #: C/preferences_table_navigation.page:61(p)
 msgid ""
@@ -612,10 +614,8 @@ msgid "Text-To-Speech Options"
 msgstr ""
 
 #: C/preferences_speech.page:33(title)
-#, fuzzy
-#| msgid "Speech"
 msgid "Speech system"
-msgstr "Voz"
+msgstr "Sistema de voz"
 
 #: C/preferences_speech.page:34(p)
 msgid ""
@@ -787,10 +787,8 @@ msgid "Progress Bar Updates"
 msgstr ""
 
 #: C/preferences_speech.page:169(title)
-#, fuzzy
-#| msgid "Tables"
 msgid "Enabled"
-msgstr "Tablas"
+msgstr "Activado"
 
 #: C/preferences_speech.page:170(p)
 msgid ""
@@ -1022,8 +1020,6 @@ msgid ""
 msgstr ""
 
 #: C/preferences_pronunciation.page:38(title)
-#, fuzzy
-#| msgid "Add a new dictionary entry"
 msgid "Adding a new dictionary entry"
 msgstr "Añadir una entrada nueva de diccionario"
 
@@ -1051,8 +1047,6 @@ msgid ""
 msgstr ""
 
 #: C/preferences_pronunciation.page:64(title)
-#, fuzzy
-#| msgid "Edit an existing dictionary entry"
 msgid "Editing an existing dictionary entry"
 msgstr "Editar una entrada existente del diccionario"
 
@@ -1067,8 +1061,6 @@ msgid "Make your changes and then press <key>Return</key> to finish editing."
 msgstr ""
 
 #: C/preferences_pronunciation.page:78(title)
-#, fuzzy
-#| msgid "Delete an existing dictionary entry"
 msgid "Deleting an existing dictionary entry"
 msgstr "Borrar una entrada de diccionario existente"
 
@@ -1081,10 +1073,8 @@ msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
 msgstr ""
 
 #: C/preferences.page:5(title)
-#, fuzzy
-#| msgid "Orca Preferences"
 msgid "Preferences"
-msgstr "Preferencias de Orca"
+msgstr "Preferencias"
 
 #: C/preferences.page:14(title)
 msgid "<app>Orca</app>'s Preferences Dialogs"
@@ -1236,10 +1226,8 @@ msgid ""
 msgstr ""
 
 #: C/preferences_magnifier.page:46(title)
-#, fuzzy
-#| msgid "Pronunciation"
 msgid "Position"
-msgstr "Pronunciación"
+msgstr "Posición"
 
 #: C/preferences_magnifier.page:47(p)
 msgid ""
@@ -1491,10 +1479,8 @@ msgid ""
 msgstr ""
 
 #: C/preferences_magnifier.page:274(title)
-#, fuzzy
-#| msgid "Enable Magnifier"
 msgid "Enable border"
-msgstr "Activar el magnificador"
+msgstr "Activar borde"
 
 #: C/preferences_magnifier.page:275(p)
 msgid ""
@@ -1503,10 +1489,8 @@ msgid ""
 msgstr ""
 
 #: C/preferences_magnifier.page:284(title)
-#, fuzzy
-#| msgid "Border"
 msgid "Border size"
-msgstr "Borde"
+msgstr "Tamaño del borde"
 
 #: C/preferences_magnifier.page:285(p) C/preferences_magnifier.page:331(p)
 msgid "This value determines the size of the border in pixels."
@@ -1517,10 +1501,8 @@ msgid "Default value: 1"
 msgstr ""
 
 #: C/preferences_magnifier.page:293(title)
-#, fuzzy
-#| msgid "Border"
 msgid "Border color"
-msgstr "Borde"
+msgstr "Color del borde"
 
 #: C/preferences_magnifier.page:294(p)
 msgid "This value determines the color of the border."
@@ -1544,10 +1526,8 @@ msgstr ""
 "cursor del magnificador."
 
 #: C/preferences_magnifier.page:310(title)
-#, fuzzy
-#| msgid "Text cursor"
 msgid "Enable cursor"
-msgstr "Cursor de texto"
+msgstr "Activar cursor"
 
 #: C/preferences_magnifier.page:311(p)
 msgid ""
@@ -1556,10 +1536,8 @@ msgid ""
 msgstr ""
 
 #: C/preferences_magnifier.page:320(title)
-#, fuzzy
-#| msgid "Custom"
 msgid "Custom size"
-msgstr "Personalizada"
+msgstr "Tamaño personalizado"
 
 #: C/preferences_magnifier.page:321(p)
 msgid ""
@@ -1568,20 +1546,16 @@ msgid ""
 msgstr ""
 
 #: C/preferences_magnifier.page:330(title)
-#, fuzzy
-#| msgid "Cursor"
 msgid "Cursor size"
-msgstr "Cursor"
+msgstr "Tamaño del cursor"
 
 #: C/preferences_magnifier.page:334(p)
 msgid "Default value: 32"
 msgstr ""
 
 #: C/preferences_magnifier.page:339(title)
-#, fuzzy
-#| msgid "Cursor"
 msgid "Cursor color"
-msgstr "Cursor"
+msgstr "Color del cursor"
 
 #: C/preferences_magnifier.page:340(p)
 msgid "This value determines the color of the cursor."
@@ -1600,10 +1574,8 @@ msgstr ""
 "captador de área opcional del magnificador."
 
 #: C/preferences_magnifier.page:356(title)
-#, fuzzy
-#| msgid "Enable Magnifier"
 msgid "Enable cross-hair"
-msgstr "Activar el magnificador"
+msgstr "Activar la cruz"
 
 #: C/preferences_magnifier.page:357(p)
 msgid ""
@@ -2422,10 +2394,8 @@ msgid "Gecko Navigation Preferences"
 msgstr ""
 
 #: C/preferences_gecko.page:21(title)
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Page Navigation"
-msgstr "Navegación por tablas"
+msgstr "Navegación por páginas"
 
 #: C/preferences_gecko.page:23(p)
 msgid ""
@@ -2435,10 +2405,8 @@ msgid ""
 msgstr ""
 
 #: C/preferences_gecko.page:29(title)
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Use Orca Caret Navigation"
-msgstr "Navegación por tablas"
+msgstr "Usar la navegación de cursor de Orca"
 
 #: C/preferences_gecko.page:30(p)
 msgid ""
@@ -2614,10 +2582,8 @@ msgid ""
 msgstr ""
 
 #: C/preferences_chat.page:59(title)
-#, fuzzy
-#| msgid "Speak tutorial messages"
 msgid "Speak messages from"
-msgstr "Leer mensajes de aprendizaje"
+msgstr "Leer los mensajes de"
 
 #: C/preferences_chat.page:60(p)
 msgid ""
@@ -3063,10 +3029,8 @@ msgid "Reviewing and Interacting with Screen Contents"
 msgstr ""
 
 #: C/index.page:35(title)
-#, fuzzy
-#| msgid "Orca Preferences"
 msgid "Quick Reference"
-msgstr "Preferencias de Orca"
+msgstr "Referencia rápida"
 
 #: C/howto_whereami.page:5(title)
 msgid "1. WhereAmI"
@@ -4492,10 +4456,8 @@ msgid ""
 msgstr ""
 
 #: C/howto_keyboard_layout.page:41(title)
-#, fuzzy
-#| msgid "Keyboard Layout"
 msgid "Changing Your Keyboard Layout"
-msgstr "Distribución del teclado"
+msgstr "Cambiar la distribución de su teclado"
 
 #: C/howto_keyboard_layout.page:51(p)
 msgid "Move to the <gui>Keyboard Layout</gui> group of radio buttons."
@@ -5404,14 +5366,12 @@ msgid "4. <app>Orca</app>'s Commands"
 msgstr ""
 
 #: C/commands.page:6(title)
-#, fuzzy
-#| msgid "Chat Commands"
 msgid "Commands"
-msgstr "Comandos de Chat"
+msgstr "Comandos"
 
 #: C/commands.page:15(title)
 msgid "<app>Orca</app>'s Commands"
-msgstr ""
+msgstr "Comandos de <app>Orca</app>"
 
 #: C/commands.page:20(title)
 msgid "Speech, Braille, and Magnification"
