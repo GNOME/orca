@@ -149,9 +149,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        debug.printObjectEvent(self.debugLevel,
-                               event,
-                               debug.getAccessibleDetails(event.source))
+        details = debug.getAccessibleDetails(self.debugLevel, event.source)
+        debug.printObjectEvent(self.debugLevel, event, details)
 
         if event.source.getRole() == pyatspi.ROLE_FRAME:
 

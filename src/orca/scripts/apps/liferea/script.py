@@ -86,9 +86,8 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(self.debugLevel,
-                               event,
-                               debug.getAccessibleDetails(event.source))
+        details = debug.getAccessibleDetails(self.debugLevel, event.source)
+        debug.printObjectEvent(self.debugLevel, event, details)
 
         # [[[TODO - JD: what follows here should be replaced with methods
         # in this script's speech and braille generators. That will require

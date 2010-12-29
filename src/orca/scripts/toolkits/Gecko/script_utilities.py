@@ -273,9 +273,10 @@ class Utilities(script_utilities.Utilities):
         state = obj.getState()
         readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
                    and not state.contains(pyatspi.STATE_EDITABLE)
+        details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
         debug.println(debug.LEVEL_ALL,
                       "Gecko - isReadOnlyTextArea=%s for %s" \
-                      % (readOnly, debug.getAccessibleDetails(obj)))
+                      % (readOnly, details))
 
         return readOnly
 

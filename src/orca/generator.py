@@ -219,12 +219,13 @@ class Generator:
             else:
                 firstTimeCalled = False
 
+            details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
             debug.println(
                 debug.LEVEL_ALL,
                 "\n\n\ngenerate %s for %s %s (args=%s) using '%s'" \
                 % (self._mode,
                    args['formatType'], 
-                   debug.getAccessibleDetails(obj),
+                   details,
                    repr(args),
                    format))
 

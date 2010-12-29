@@ -800,9 +800,10 @@ class Utilities:
         state = obj.getState()
         readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
                    and not state.contains(pyatspi.STATE_EDITABLE)
+        details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
         debug.println(debug.LEVEL_ALL,
                       "isReadOnlyTextArea=%s for %s" \
-                      % (readOnly, debug.getAccessibleDetails(obj)))
+                      % (readOnly, details))
 
         return readOnly
 
@@ -2181,7 +2182,8 @@ class Utilities:
 
         indent = ""
         for ancestor in ancestorList:
-            line = indent + "+- " + debug.getAccessibleDetails(ancestor)
+            line = indent + "+- " + \
+                debug.getAccessibleDetails(debug.LEVEL_OFF, ancestor)
             debug.println(debug.LEVEL_OFF, line)
             print line
             indent += "  "
@@ -2194,11 +2196,13 @@ class Utilities:
         debug.println(debug.LEVEL_OFF, line)
         print line
         for app in apps:
-            line = debug.getAccessibleDetails(app, "  App: ", False)
+            line = debug.getAccessibleDetails(
+                debug.LEVEL_OFF, app, "  App: ", False)
             debug.println(debug.LEVEL_OFF, line)
             print line
             for child in app:
-                line = debug.getAccessibleDetails(child, "    Window: ", False)
+                line = debug.getAccessibleDetails(
+                    debug.LEVEL_OFF, child, "    Window: ", False)
                 debug.println(debug.LEVEL_OFF, line)
                 print line
                 if child.parent != app:
@@ -2223,9 +2227,11 @@ class Utilities:
             return
 
         if root == ooi:
-            line = indent + "(*) " + debug.getAccessibleDetails(root)
+            line = indent + "(*) " + debug.getAccessibleDetails(
+                debug.LEVEL_OFF, root)
         else:
-            line = indent + "+- " + debug.getAccessibleDetails(root)
+            line = indent + "+- " + debug.getAccessibleDetails(
+                debug.LEVEL_OFF, root)
 
         debug.println(debug.LEVEL_OFF, line)
         print line

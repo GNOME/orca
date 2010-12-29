@@ -277,9 +277,8 @@ class Script(default.Script):
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
 
-        debug.printObjectEvent(self.debugLevel,
-                               event,
-                               debug.getAccessibleDetails(event.source))
+        details = debug.getAccessibleDetails(self.debugLevel, event.source)
+        debug.printObjectEvent(self.debugLevel, event, details)
 
         # We always automatically go back to focus tracking mode when
         # the focus changes.

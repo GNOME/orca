@@ -337,9 +337,8 @@ class Script(default.Script):
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
 
-        debug.printObjectEvent(self.debugLevel,
-                               event,
-                               debug.getAccessibleDetails(event.source))
+        details = debug.getAccessibleDetails(self.debugLevel, event.source)
+        debug.printObjectEvent(self.debugLevel, event, details)
 
         # self.printAncestry(event.source)
 
@@ -437,9 +436,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        debug.printObjectEvent(self.debugLevel,
-                               event,
-                               debug.getAccessibleDetails(event.source))
+        details = debug.getAccessibleDetails(self.debugLevel, event.source)
+        debug.printObjectEvent(self.debugLevel, event, details)
 
         # self.printAncestry(event.source)
 
@@ -537,9 +535,8 @@ class Script(default.Script):
         - event: the Event
         """
 
-        debug.printObjectEvent(self.debugLevel,
-                               event,
-                               debug.getAccessibleDetails(event.source))
+        details = debug.getAccessibleDetails(self.debugLevel, event.source)
+        debug.printObjectEvent(self.debugLevel, event, details)
 
         # self.printAncestry(event.source)
 

@@ -201,9 +201,10 @@ def printDetails(level, indent, accessible, includeApp=True):
     """
 
     if level >= debugLevel and accessible:
-        println(level, getAccessibleDetails(accessible, indent, includeApp))
+        println(level,
+                getAccessibleDetails(level, accessible, indent, includeApp))
 
-def getAccessibleDetails(acc, indent="", includeApp=True):
+def getAccessibleDetails(level, acc, indent="", includeApp=True):
     """Returns a string, suitable for printing, that describes the
     given accessible.
 
@@ -212,6 +213,9 @@ def getAccessibleDetails(acc, indent="", includeApp=True):
     - includeApp: If True, include information about the app
                   for this accessible.
     """
+
+    if level < debugLevel:
+        return ""
 
     if includeApp:
         app = acc.getApplication()
@@ -223,15 +227,24 @@ def getAccessibleDetails(acc, indent="", includeApp=True):
         string = indent
 
     # create the States string
-    stateSet = acc.getState()
-    states = stateSet.getStates()
+    try:
+        stateSet = acc.getState()
+    except:
+        string += "(exception getting state set)"
+    try:
+        states = stateSet.getStates()
+    except:
+        string += "(exception getting states)"
     state_strings = []
     for state in states:
         state_strings.append(pyatspi.stateToString(state))
     state_string = ' '.join(state_strings)
 
     # create the relations string
-    relations = acc.getRelationSet()
+    try:
+        relations = acc.getRelationSet()
+    except:
+        string += "(exception getting relation set)"
     if relations:
         relation_strings = []
         for relation in relations:
@@ -245,7 +258,7 @@ def getAccessibleDetails(acc, indent="", includeApp=True):
         string += "name='%s' role='%s' state='%s' relations='%s'" \
                   % (acc.name or 'None', acc.getRoleName(),
                      state_string, rel_string)
-    except DataError:
+    except:
         string += "(exception fetching data)"
 
     return string
