@@ -20,22 +20,22 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>v"))
 sequence.append(utils.AssertPresentationAction(
     "View menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar View Menu'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar View Menu'",
      "     VISIBLE:  'View Menu', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Toolbars Menu'",
-     "     VISIBLE:  'Toolbars Menu', cursor=1",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar Tab Groups\(Control E\)'",
+     "     VISIBLE:  'Tab Groups(Control E)', cursor=1",
      "SPEECH OUTPUT: 'View menu'",
-     "SPEECH OUTPUT: 'Toolbars menu'"]))
+     "SPEECH OUTPUT: 'Tab Groups Control E'"]))
 
 ########################################################################
-# When focus is on Toolbars, Up Arrow to the "Full Screen" check menu
-# item. The following should be presented in speech and braille:
+# Up Arrow to the "Full Screen" check menu item. The following should be
+# presented in speech and braille:
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow in View menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar < > Full Screen CheckItem\(F11\)'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar < > Full Screen CheckItem\(F11\)'",
      "     VISIBLE:  '< > Full Screen CheckItem(F11)', cursor=1",
      "SPEECH OUTPUT: 'Full Screen check item not checked F11'"]))
 
@@ -47,7 +47,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar < > Full Screen CheckItem\(F11\)'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar < > Full Screen CheckItem\(F11\)'",
      "     VISIBLE:  '< > Full Screen CheckItem(F11)', cursor=1",
      "SPEECH OUTPUT: 'tool bar View menu Full Screen check item not checked F11 10 of 10.'",
      "SPEECH OUTPUT: 'F'"]))

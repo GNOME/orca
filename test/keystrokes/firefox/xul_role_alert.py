@@ -24,6 +24,7 @@ sequence.append(TypeAction("javascript:alert('I am an alert')"))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(2000))
 sequence.append(utils.AssertPresentationAction(
     "Press Return to make the alert appear",
     ["BRAILLE LINE:  'about:blank HtmlPane'",

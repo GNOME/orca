@@ -26,12 +26,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
 sequence.append(utils.AssertPresentationAction(
     "File menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar File Menu'",
-     "     VISIBLE:  'File Menu', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar New Window\(Control N\)'",
-     "     VISIBLE:  'New Window(Control N)', cursor=1",
-     "SPEECH OUTPUT: 'File menu'",
-     "SPEECH OUTPUT: 'New Window Control N'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar New Tab\(Control T\)'",
+     "     VISIBLE:  'New Tab(Control T)', cursor=1",
+     "SPEECH OUTPUT: 'File menu New Tab Control T'"]))
 
 ########################################################################
 # Now, continue on down the menu.
@@ -40,15 +37,15 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in File menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar New Tab\(Control T\)'",
-     "     VISIBLE:  'New Tab\(Control T\)', cursor=1",
-     "SPEECH OUTPUT: 'New Tab Control T'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar New Window\(Control N\)'",
+     "     VISIBLE:  'New Window\(Control N\)', cursor=1",
+     "SPEECH OUTPUT: 'New Window Control N'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in File menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Open Location...\(Control L\)'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar Open Location...\(Control L\)'",
      "     VISIBLE:  'Open Location...(Control L)', cursor=1",
      "SPEECH OUTPUT: 'Open Location… Control L'"]))
 
@@ -56,7 +53,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in File menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Open File...\(Control O\)'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar Open File...\(Control O\)'",
      "     VISIBLE:  'Open File...(Control O)', cursor=1",
      "SPEECH OUTPUT: 'Open File… Control O'"]))
 
@@ -68,9 +65,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Open File...\(Control O\)'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar Open File...\(Control O\)'",
      "     VISIBLE:  'Open File...(Control O)', cursor=1",
-     "SPEECH OUTPUT: 'tool bar File menu Open File… Control O 4 of [0-9]+'"]))
+     "SPEECH OUTPUT: 'tool bar File menu Open File… Control O 4 of [0-9]+.'",
+     "SPEECH OUTPUT: 'O'"]))
 
 ########################################################################
 # Dismiss the menu by pressing Escape and wait for the location bar

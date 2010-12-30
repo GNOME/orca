@@ -33,8 +33,8 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Title Bar", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog General Page'",
-     "     VISIBLE:  'General Page', cursor=1",
+    ["BRAILLE LINE:  'Print'",
+     "     VISIBLE:  'Print', cursor=0",
      "SPEECH OUTPUT: 'Print'"]))
 
 ########################################################################
@@ -55,12 +55,19 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Default button", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
-     "     VISIBLE:  ' Print to File  ', cursor=1",
+    ["BRAILLE LINE:  'Print'",
+     "     VISIBLE:  'Print', cursor=0",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page ScrollPane Table'",
+     "     VISIBLE:  'Table', cursor=1",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page ScrollPane Table'",
+     "     VISIBLE:  'Table', cursor=1",
+     "BRAILLE LINE:  'Default button is Print'",
+     "     VISIBLE:  'Default button is Print', cursor=0",
      "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Print Dialog TabList General Page ScrollPane Table  Print to File  '",
      "     VISIBLE:  ' Print to File  ', cursor=1",
      "SPEECH OUTPUT: 'Print'",
-     "SPEECH OUTPUT: 'Default button is Print'"]))
+     "SPEECH OUTPUT: 'Default button is Print'",
+     "SPEECH OUTPUT: 'image Print to File'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

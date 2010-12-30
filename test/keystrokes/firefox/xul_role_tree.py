@@ -23,12 +23,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>b"))
 sequence.append(utils.AssertPresentationAction(
     "Bookmarks menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Bookmarks Menu'",
-     "     VISIBLE:  'Bookmarks Menu', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Bookmark This Page\(Control D\)'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar Bookmark This Page\(Control D\)'",
      "     VISIBLE:  'Bookmark This Page(Control D)', cursor=1",
-     "SPEECH OUTPUT: 'Bookmarks menu'",
-     "SPEECH OUTPUT: 'Bookmark This Page Control D'"]))
+     "SPEECH OUTPUT: 'Bookmarks menu Bookmark This Page Control D'"]))
 
 # Firefox 3.5 introduces a shortcut (Control Shift O) that was not present
 # in earlier versions.
@@ -38,9 +35,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow in Bookmarks menu",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ToolBar Application MenuBar Organize Bookmarks...(\(Control Shift O\)|)'",
-     "     VISIBLE:  'Organize Bookmarks...(\(Control Sh|)', cursor=1",
-     "SPEECH OUTPUT: 'Organize Bookmarks…( Control Shift O|)'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxFrameNames + " Frame ScrollPane ToolBar Application MenuBar Show All Bookmarks...(\(Control Shift O\)|)'",
+     "     VISIBLE:  'Show All Bookmarks...(\(Control Sh|)', cursor=1",
+     "SPEECH OUTPUT: 'Show All Bookmarks…( Control Shift O|)'"]))
 sequence.append(KeyComboAction("Return"))
 sequence.append(PauseAction(3000))
 
@@ -51,8 +48,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Shift>Tab", 1000))
 sequence.append(utils.AssertPresentationAction(
     "Shift Tab for tree",
-    ["BUG? - We are no longer speaking the Level",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks expanded ListItem TREE LEVEL 1'",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree All Bookmarks expanded ListItem TREE LEVEL 1'",
      "     VISIBLE:  'All Bookmarks expanded ListItem ', cursor=1",
      "SPEECH OUTPUT: 'All Bookmarks expanded'"]))
 
@@ -85,7 +81,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu collapsed ListItem TREE LEVEL 2'",
      "     VISIBLE:  'Bookmarks Menu collapsed ListIte', cursor=1",
-     "SPEECH OUTPUT: 'list item Bookmarks Menu 2 of 3 collapsed tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Bookmarks Menu 5 of 6 collapsed tree level 2'"]))
 
 ########################################################################
 # Press Right Arrow to expand this item.
@@ -108,7 +104,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Bookmarks Menu expanded ListItem TREE LEVEL 2'",
      "     VISIBLE:  'Bookmarks Menu expanded ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item Bookmarks Menu 2 of 3 expanded tree level 2'"]))
+     "SPEECH OUTPUT: 'list item Bookmarks Menu 5 of 10 expanded tree level 2'"]))
 
 ########################################################################
 # Press Down Arrow to give focus to the next item, Recently Bookmarked.
@@ -131,7 +127,7 @@ sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
     ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame Tree Recently Bookmarked ListItem TREE LEVEL 3'",
      "     VISIBLE:  'Recently Bookmarked ListItem TRE', cursor=1",
-     "SPEECH OUTPUT: 'list item Recently Bookmarked 1 of 4 tree level 3'"]))
+     "SPEECH OUTPUT: 'list item Recently Bookmarked 6 of 10 tree level 3'"]))
 
 ########################################################################
 # Press Up Arrow to work back to the Bookmarks Toolbar list item.
@@ -181,9 +177,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.AssertPresentationAction(
     "Tab back to tree table",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Name ColumnHeader Bookmarks Toolbar   TREE LEVEL 1'",
-     "     VISIBLE:  'Bookmarks Toolbar   TREE LEVEL 1', cursor=1",
-     "SPEECH OUTPUT: 'Name column header Bookmarks Toolbar not selected'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application Library Frame ScrollPane TreeTable Tags ColumnHeader Bookmarks Toolbar ListItem TREE LEVEL 1'",
+     "     VISIBLE:  'Bookmarks Toolbar ListItem TREE ', cursor=1",
+     "SPEECH OUTPUT: 'Bookmarks Toolbar'"]))
 
 ########################################################################
 # Now that the Places Manager is back to its pre-explored state,

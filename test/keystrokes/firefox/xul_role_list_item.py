@@ -41,9 +41,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left Arrow in list",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List Main ListItem'",
-     "     VISIBLE:  'Main ListItem', cursor=1",
-     "SPEECH OUTPUT: 'Main'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List General ListItem'",
+     "     VISIBLE:  'General ListItem', cursor=1",
+     "SPEECH OUTPUT: 'General'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter. 
@@ -53,9 +53,9 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List Main ListItem'",
-     "     VISIBLE:  'Main ListItem', cursor=1",
-     "SPEECH OUTPUT: 'list item Main 1 of 7'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + utils.firefoxAppNames + " Preferences Frame List General ListItem'",
+     "     VISIBLE:  'General ListItem', cursor=1",
+     "SPEECH OUTPUT: 'list item General 1 of 8'"]))
 
 ########################################################################
 # Dismiss the dialog by pressing Escape and wait for the location bar

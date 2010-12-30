@@ -63,42 +63,52 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BUG? - Braille is not updating correctly - it's off by one character. This is true for the next four assertions as well.",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a test \$l'",
-     "     VISIBLE:  'this is a test $l', cursor=15",
-     "SPEECH OUTPUT: 't'"]))
+    ["BUG? - For some reason we're not speaking the BackSpaced Character. At all.",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a tes \$l'",
+     "     VISIBLE:  'Name: this is a tes $l', cursor=20",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a tes \$l'",
+     "     VISIBLE:  'Name: this is a tes $l', cursor=20",
+     "SPEECH OUTPUT: ''"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a tes \$l'",
-     "     VISIBLE:  'this is a tes $l', cursor=14",
-     "SPEECH OUTPUT: 's'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a te \$l'",
+     "     VISIBLE:  'Name: this is a te $l', cursor=19",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a te \$l'",
+     "     VISIBLE:  'Name: this is a te $l', cursor=19",
+     "SPEECH OUTPUT: ''"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a te \$l'",
-     "     VISIBLE:  'this is a te $l', cursor=13",
-     "SPEECH OUTPUT: 'e'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a t \$l'",
+     "     VISIBLE:  'Name: this is a t $l', cursor=18",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a t \$l'",
+     "     VISIBLE:  'Name: this is a t $l', cursor=18",
+     "SPEECH OUTPUT: ''"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a t \$l'",
-     "     VISIBLE:  'this is a t $l', cursor=12",
-     "SPEECH OUTPUT: 't'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a  \$l'",
+     "     VISIBLE:  'Name: this is a  $l', cursor=17",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a  \$l'",
+     "     VISIBLE:  'Name: this is a  $l', cursor=17",
+     "SPEECH OUTPUT: ''"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a  \$l'",
-     "     VISIBLE:  'this is a  $l', cursor=11",
-     "SPEECH OUTPUT: 'space'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a \$l'",
+     "     VISIBLE:  'Name: this is a $l', cursor=16",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is a \$l'",
+     "     VISIBLE:  'Name: this is a $l', cursor=16",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Control Backspace 3 times thus removing "this is a" word by word from
@@ -108,26 +118,31 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
-    ["BUG? - Braille is not updating correctly - it's off by one word. This is true for the next two assertions as well.",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is a \$l'",
-     "     VISIBLE:  'this is a $l', cursor=9",
-     "SPEECH OUTPUT: 'a'"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is  \$l'",
+     "     VISIBLE:  'Name: this is  $l', cursor=15",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this is  \$l'",
+     "     VISIBLE:  'Name: this is  $l', cursor=15",
+     "SPEECH OUTPUT: ''"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this is  \$l'",
-     "     VISIBLE:  'this is  $l', cursor=6",
-     "SPEECH OUTPUT: 'is '"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this  \$l'",
+     "     VISIBLE:  'Name: this  $l', cursor=12",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this  \$l'",
+     "     VISIBLE:  'Name: this  $l', cursor=12",
+     "SPEECH OUTPUT: ''"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>BackSpace"))
 sequence.append(utils.AssertPresentationAction(
     "Control Backspace",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this  \$l'",
-     "     VISIBLE:  'this  $l', cursor=1",
-     "SPEECH OUTPUT: 'this '"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name:  \$l'",
+     "     VISIBLE:  'Name:  $l', cursor=7",
+     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name:  \$l'",
+     "     VISIBLE:  'Name:  $l', cursor=7",
+     "SPEECH OUTPUT: ''"]))
 
 ########################################################################
 # Due to a bug, we'll stop getting caret-moved events if we don't move
@@ -145,32 +160,32 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
-     "     VISIBLE:  'so is this $l', cursor=10",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: so is this \$l'",
+     "     VISIBLE:  'Name: so is this $l', cursor=16",
      "SPEECH OUTPUT: 's'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
-     "     VISIBLE:  'so is this $l', cursor=9",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: so is this \$l'",
+     "     VISIBLE:  'Name: so is this $l', cursor=15",
      "SPEECH OUTPUT: 'i'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
-     "     VISIBLE:  'so is this $l', cursor=8",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: so is this \$l'",
+     "     VISIBLE:  'Name: so is this $l', cursor=14",
      "SPEECH OUTPUT: 'h'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
 sequence.append(utils.AssertPresentationAction(
     "Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
-     "     VISIBLE:  'so is this $l', cursor=7",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: so is this \$l'",
+     "     VISIBLE:  'Name: so is this $l', cursor=13",
      "SPEECH OUTPUT: 't'"]))
 
 ########################################################################
@@ -181,16 +196,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "Control Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
-     "     VISIBLE:  'so is this $l', cursor=4",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: so is this \$l'",
+     "     VISIBLE:  'Name: so is this $l', cursor=10",
      "SPEECH OUTPUT: 'is '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
 sequence.append(utils.AssertPresentationAction(
     "Control Left",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
-     "     VISIBLE:  'so is this $l', cursor=1",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: so is this \$l'",
+     "     VISIBLE:  'Name: so is this $l', cursor=7",
      "SPEECH OUTPUT: 'so '"]))
 
 ########################################################################
@@ -200,17 +215,16 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Delete"))
 sequence.append(utils.AssertPresentationAction(
     "Control Delete",
-    ["BUG? - We are speaking the new caret location -- we land on a space -- rather than the word that was just deleted. This is true for the next assertion as well.",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog so is this \$l'",
-     "     VISIBLE:  'so is this $l', cursor=3",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name:  is this \$l'",
+     "     VISIBLE:  'Name:  is this $l', cursor=7",
      "SPEECH OUTPUT: 'space'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Delete"))
 sequence.append(utils.AssertPresentationAction(
     "Control Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  is this \$l'",
-     "     VISIBLE:  ' is this $l', cursor=4",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name:  this \$l'",
+     "     VISIBLE:  'Name:  this $l', cursor=7",
      "SPEECH OUTPUT: 'space'"]))
 
 ########################################################################
@@ -220,33 +234,32 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BUG? - Braille is not updating correctly - it's off by one character. This is true for the next three assertions as well.",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  this \$l'",
-     "     VISIBLE:  ' this $l', cursor=2",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: this \$l'",
+     "     VISIBLE:  'Name: this $l', cursor=7",
      "SPEECH OUTPUT: 't'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog this \$l'",
-     "     VISIBLE:  'this $l', cursor=2",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: his \$l'",
+     "     VISIBLE:  'Name: his $l', cursor=7",
      "SPEECH OUTPUT: 'h'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog his \$l'",
-     "     VISIBLE:  'his $l', cursor=2",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: is \$l'",
+     "     VISIBLE:  'Name: is $l', cursor=7",
      "SPEECH OUTPUT: 'i'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Delete", 500))
 sequence.append(utils.AssertPresentationAction(
     "Delete",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog is \$l'",
-     "     VISIBLE:  'is $l', cursor=2",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Name: s \$l'",
+     "     VISIBLE:  'Name: s $l', cursor=7",
      "SPEECH OUTPUT: 's'"]))
 
 ########################################################################
@@ -256,9 +269,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>d"))
 sequence.append(utils.AssertPresentationAction(
     "Alt+D to Description",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  \$l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'Description: text '"]))
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Description:  \$l'",
+     "     VISIBLE:  'Description:  $l', cursor=14",
+     "SPEECH OUTPUT: 'Description: text'"]))
 
 ########################################################################
 # Type "Here is the first line."  Press Return.  
@@ -268,10 +281,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
 sequence.append(utils.AssertPresentationAction(
     "Return for new line'",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  \$l'",
-     "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog  \$l'",
-     "     VISIBLE:  ' $l', cursor=1"]))
+    ["BRAILLE LINE:  'Description:  $l'",
+     "     VISIBLE:  'Description:  $l', cursor=14",
+     "BRAILLE LINE:  'Description:  $l'",
+     "     VISIBLE:  'Description:  $l', cursor=14"]))
 
 ########################################################################
 # Type "Here is the second line."
@@ -285,8 +298,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Up Arrow",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Here is the first line. \$l'",
-     "     VISIBLE:  'Here is the first line. $l', cursor=24",
+    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Description: Here is the first line. \$l'",
+     "     VISIBLE:  'iption: Here is the first line. ', cursor=32",
      "SPEECH OUTPUT: 'Here is the first line.'"]))
 
 ########################################################################
@@ -296,8 +309,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Down Arrow",
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Here is the second line. \$l'",
-     "     VISIBLE:  'Here is the second line. $l', cursor=25",
+    ["BRAILLE LINE:  'Description: Here is the second line. \$l'",
+     "     VISIBLE:  'ption: Here is the second line. ', cursor=32",
      "SPEECH OUTPUT: 'Here is the second line.'"]))
 
 ########################################################################
@@ -308,8 +321,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Basic Where Am I", 
-    ["BRAILLE LINE:  '" + utils.firefoxAppNames + " Application " + dialogName + " Dialog Here is the second line. \$l'",
-     "     VISIBLE:  'Here is the second line. $l', cursor=25",
+    ["BRAILLE LINE:  'Description: Here is the second line. \$l'",
+     "     VISIBLE:  'ption: Here is the second line. ', cursor=32",
      "SPEECH OUTPUT: 'text Here is the second line.",
      "'"]))
 
