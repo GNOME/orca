@@ -40,8 +40,18 @@ WAIT_TIME=10
 # if there is a *.params file for the test or not.
 #
 currentDir=`pwd`
+
 cp `dirname $0`/orca-customizations.py.in orca-customizations.py
-cat >> orca-customizations.py <<EOF
+
+# If a <testfilename>.customizations file exists, add those settings to
+# what is specified in the default orca-customizations-py.in.
+#
+CUSTOMIZATIONS_FILE=`dirname $1`/$debugFile.customizations
+if [ -f $CUSTOMIZATIONS_FILE ]
+then
+    cat $CUSTOMIZATIONS_FILE >> orca-customizations.py
+fi
+cat >> orca-customizations.py << EOF
 
 orca.settings.userPrefsDir = '$currentDir'
 
@@ -73,7 +83,6 @@ then
 fi
 cp $SETTINGS_FILE user-settings.conf
 #echo "Using settings file:" $SETTINGS_FILE
-
 
 # Allow us to pass parameters to the command line of the application.
 #

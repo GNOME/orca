@@ -54,17 +54,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  '1. This is a short list item.'",
-     "     VISIBLE:  '1. This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: '1. This is a short list item.'"]))
+    ["BRAILLE LINE:  '1.This is a short list item.'",
+     "     VISIBLE:  '1.This is a short list item.', cursor=1",
+     "SPEECH OUTPUT: '1.This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '2. This is a list item that span', cursor=1",
-     "SPEECH OUTPUT: '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
+    ["BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '2.This is a list item that spans', cursor=1",
+     "SPEECH OUTPUT: '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -86,17 +86,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Down",
-    ["BRAILLE LINE:  '• This is a short list item.'",
-     "     VISIBLE:  '• This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: '• This is a short list item.'"]))
+    ["BRAILLE LINE:  '•This is a short list item.'",
+     "     VISIBLE:  '•This is a short list item.', cursor=1",
+     "SPEECH OUTPUT: '•This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "7. Line Down",
-    ["BRAILLE LINE:  '• This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '• This is a list item that spans', cursor=1",
-     "SPEECH OUTPUT: '• This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
+    ["BRAILLE LINE:  '•This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '•This is a list item that spans ', cursor=1",
+     "SPEECH OUTPUT: '•This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -113,17 +113,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "1. Line Up",
-    ["BRAILLE LINE:  '• This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '• This is a list item that spans', cursor=1",
-     "SPEECH OUTPUT: '• This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
+    ["BRAILLE LINE:  '•This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '•This is a list item that spans ', cursor=1",
+     "SPEECH OUTPUT: '•This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Up",
-    ["BRAILLE LINE:  '• This is a short list item.'",
-     "     VISIBLE:  '• This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: '• This is a short list item.'"]))
+    ["BRAILLE LINE:  '•This is a short list item.'",
+     "     VISIBLE:  '•This is a short list item.', cursor=1",
+     "SPEECH OUTPUT: '•This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -145,17 +145,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "5. Line Up",
-    ["BRAILLE LINE:  '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '2. This is a list item that span', cursor=1",
-     "SPEECH OUTPUT: '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
+    ["BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '2.This is a list item that spans', cursor=1",
+     "SPEECH OUTPUT: '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "6. Line Up",
-    ["BRAILLE LINE:  '1. This is a short list item.'",
-     "     VISIBLE:  '1. This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: '1. This is a short list item.'"]))
+    ["BRAILLE LINE:  '1.This is a short list item.'",
+     "     VISIBLE:  '1.This is a short list item.', cursor=1",
+     "SPEECH OUTPUT: '1.This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))

@@ -54,17 +54,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "2. Line Down",
-    ["BRAILLE LINE:  '1. This is a short list item.'",
-     "     VISIBLE:  '1. This is a short list item.', cursor=1",
-     "SPEECH OUTPUT: '1. This is a short list item.'"]))
+    ["BRAILLE LINE:  '1.This is a short list item.'",
+     "     VISIBLE:  '1.This is a short list item.', cursor=1",
+     "SPEECH OUTPUT: '1.This is a short list item.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "3. Line Down",
-    ["BRAILLE LINE:  '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '2. This is a list item that span', cursor=1",
-     "SPEECH OUTPUT: '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
+    ["BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '2.This is a list item that spans', cursor=1",
+     "SPEECH OUTPUT: '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'"]))
 
 ########################################################################
 # Control + Right Arrow to move several words into the line.
@@ -73,32 +73,32 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "1. Next Word",
-    ["BRAILLE LINE:  '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '2. This is a list item that span', cursor=8",
-     "SPEECH OUTPUT: '. This'"]))
+    ["BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '2.This is a list item that spans', cursor=7",
+     "SPEECH OUTPUT: '.This'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "2. Next Word",
-    ["BRAILLE LINE:  '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '2. This is a list item that span', cursor=11",
+    ["BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '2.This is a list item that spans', cursor=10",
      "SPEECH OUTPUT: ' is'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "3. Next Word",
-    ["BRAILLE LINE:  '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '2. This is a list item that span', cursor=13",
+    ["BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '2.This is a list item that spans', cursor=12",
      "SPEECH OUTPUT: ' a'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
 sequence.append(utils.AssertPresentationAction(
     "4. Next Word",
-    ["BRAILLE LINE:  '2. This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
-     "     VISIBLE:  '2. This is a list item that span', cursor=18",
+    ["BRAILLE LINE:  '2.This is a list item that spans multiple lines. If Orca can successfully read to the end of this list item, it will have read several lines of text within this'",
+     "     VISIBLE:  '2.This is a list item that spans', cursor=17",
      "SPEECH OUTPUT: ' list'"]))
 
 ########################################################################
