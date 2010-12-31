@@ -45,6 +45,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Home Image Bugzilla New bug · Br', cursor=1",
      "BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
      "     VISIBLE:  'Home Image Bugzilla New bug · Br', cursor=1",
+     "SPEECH OUTPUT: 'Home link image Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'",
      "SPEECH OUTPUT: 'Home link image'"]))
 
 ########################################################################
@@ -89,10 +90,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field",
-    ["KNOWN ISSUE - Something is making this test stall here."]))
-#    ["BRAILLE LINE:  'Classification: Admin List'",
-#     "     VISIBLE:  'Classification: Admin List', cursor=17",
-#     "SPEECH OUTPUT: 'Classification: Admin multi-select List with 8 items'"]))
+    ["BRAILLE LINE:  'Classification: Admin List'",
+     "     VISIBLE:  'Classification: Admin List', cursor=17",
+     "SPEECH OUTPUT: 'Classification: Admin multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -100,10 +100,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["KNOWN ISSUE - Something is making this test stall here."]))
-#    ["BRAILLE LINE:  'Product: accerciser List'",
-#     "     VISIBLE:  'Product: accerciser List', cursor=10",
-#     "SPEECH OUTPUT: 'Product: accerciser multi-select List with 379 items'"]))
+    ["BRAILLE LINE:  'Product: accerciser List'",
+     "     VISIBLE:  'Product: accerciser List', cursor=10",
+     "SPEECH OUTPUT: 'Product: accerciser multi-select List with 379 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -202,9 +201,9 @@ sequence.append(KeyComboAction("Tab"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Next form field", 
-    ["BRAILLE LINE:  'Status: UNCONFIRMED List'",
-     "     VISIBLE:  'Status: UNCONFIRMED List', cursor=9",
-     "SPEECH OUTPUT: 'Status: UNCONFIRMED multi-select List with 8 items'"]))
+    ["BRAILLE LINE:  'Status: UNCONFIRMED NEW ASSIGNED REOPENED NEEDINFO List'",
+     "     VISIBLE:  'Status: UNCONFIRMED NEW ASSIGNED', cursor=9",
+     "SPEECH OUTPUT: 'Status: UNCONFIRMED NEW ASSIGNED REOPENED NEEDINFO multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))

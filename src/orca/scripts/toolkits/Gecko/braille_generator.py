@@ -32,7 +32,6 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.braille_generator as braille_generator
-import orca.orca_state as orca_state
 
 from orca.orca_i18n import _ # for gettext support
 
@@ -221,18 +220,17 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateFocusedItem(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_LIST:
-            item = None
-            selection = obj.querySelection()
-            for i in xrange(obj.childCount):
-                if selection.isChildSelected(i):
-                    item = obj[i]
-                    break
-            item = item or obj[0]
-            if item and (item != orca_state.locusOfFocus):
-                name = self._generateName(item, **args)
-                if name and name != self._generateLabel(obj, **args):
-                    result.extend(name)
+        if role != pyatspi.ROLE_LIST:
+            return result
+
+        s = obj.querySelection()
+        items = [s.getSelectedChild(i) for i in xrange(s.nSelectedChildren)]
+        if not items:
+            items.append(obj[0])
+        items = map(self._generateName, items)
+        for item in items:
+            result.extend(item)
+
         return result
 
     def generateBraille(self, obj, **args):

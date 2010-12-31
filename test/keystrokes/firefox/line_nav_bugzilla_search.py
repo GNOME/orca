@@ -43,7 +43,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Home Image Bugzilla New bug · Br', cursor=1",
      "BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
      "     VISIBLE:  'Home Image Bugzilla New bug · Br', cursor=1",
-     "SPEECH OUTPUT: 'Home link Image Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'",
+     "SPEECH OUTPUT: 'Home link image Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'",
      "SPEECH OUTPUT: 'Home link image'"]))
 
 ########################################################################
@@ -101,19 +101,17 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["KNOWN ISSUE - Something is making this test stall here."]))
-#    ["BRAILLE LINE:  'accerciser List'",
-#     "     VISIBLE:  'accerciser List', cursor=1",
-#     "SPEECH OUTPUT: 'accerciser multi-select List with 379 items'"]))
+    ["BRAILLE LINE:  'accerciser List'",
+     "     VISIBLE:  'accerciser List', cursor=1",
+     "SPEECH OUTPUT: 'accerciser multi-select List with 379 items'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["KNOWN ISSUE - Something is making this test stall here."]))
-#    ["BRAILLE LINE:  'Component:'",
-#     "     VISIBLE:  'Component:', cursor=1",
-#     "SPEECH OUTPUT: 'Component link :'"]))
+    ["BRAILLE LINE:  'Component:'",
+     "     VISIBLE:  'Component:', cursor=1",
+     "SPEECH OUTPUT: 'Component link : column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -129,7 +127,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Version:'",
      "     VISIBLE:  'Version:', cursor=1",
-     "SPEECH OUTPUT: 'Version:'"]))
+     "SPEECH OUTPUT: 'Version: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -145,7 +143,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Target Milestone:'",
      "     VISIBLE:  'Target Milestone:', cursor=1",
-     "SPEECH OUTPUT: 'Target Milestone:'"]))
+     "SPEECH OUTPUT: 'Target Milestone: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -161,7 +159,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'A Comment: contains the string Combo $l'",
      "     VISIBLE:  'A Comment: contains the string C', cursor=1",
-     "SPEECH OUTPUT: 'A Comment: contains the string combo box text'"]))
+     "SPEECH OUTPUT: 'A Comment: row header contains the string combo box text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -169,7 +167,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo $l'",
      "     VISIBLE:  'Whiteboard: contains all of the ', cursor=1",
-     "SPEECH OUTPUT: 'Whiteboard: contains all of the words/strings combo box text'"]))
+     "SPEECH OUTPUT: 'Whiteboard: row header contains all of the words/strings combo box text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -177,7 +175,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Keywords: contains all of the keywords Combo $l'",
      "     VISIBLE:  'Keywords: contains all of the ke', cursor=1",
-     "SPEECH OUTPUT: 'Keywords link : contains all of the keywords combo box text'"]))
+     "SPEECH OUTPUT: 'Keywords link : row header contains all of the keywords combo box text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -193,15 +191,15 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Status:'",
      "     VISIBLE:  'Status:', cursor=1",
-     "SPEECH OUTPUT: 'Status:'"]))
+     "SPEECH OUTPUT: 'Status: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'UNCONFIRMED List'",
-     "     VISIBLE:  'UNCONFIRMED List', cursor=1",
-     "SPEECH OUTPUT: 'UNCONFIRMED' voice=uppercase",
+    ["BRAILLE LINE:  'UNCONFIRMED NEW ASSIGNED REOPENED NEEDINFO List'",
+     "     VISIBLE:  'UNCONFIRMED NEW ASSIGNED REOPENE', cursor=1",
+     "SPEECH OUTPUT: 'UNCONFIRMED NEW ASSIGNED REOPENED NEEDINFO' voice=uppercase",
      "SPEECH OUTPUT: 'multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -210,7 +208,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Resolution:'",
      "     VISIBLE:  'Resolution:', cursor=1",
-     "SPEECH OUTPUT: 'Resolution:'"]))
+     "SPEECH OUTPUT: 'Resolution: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -227,7 +225,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Severity:'",
      "     VISIBLE:  'Severity:', cursor=1",
-     "SPEECH OUTPUT: 'Severity:'"]))
+     "SPEECH OUTPUT: 'Severity: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -243,7 +241,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'Priority:'",
      "     VISIBLE:  'Priority:', cursor=1",
-     "SPEECH OUTPUT: 'Priority:'"]))
+     "SPEECH OUTPUT: 'Priority: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -259,7 +257,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'OS:'",
      "     VISIBLE:  'OS:', cursor=1",
-     "SPEECH OUTPUT: 'OS:'"]))
+     "SPEECH OUTPUT: 'OS: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -441,17 +439,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'Only bugs changed between:'",
-     "     VISIBLE:  'Only bugs changed between:', cursor=1",
-     "SPEECH OUTPUT: 'Only bugs changed between:'"]))
+    ["BRAILLE LINE:  '•Only bugs changed between:'",
+     "     VISIBLE:  '•Only bugs changed between:', cursor=1",
+     "SPEECH OUTPUT: '•Only bugs changed between:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  ' $l and Now $l'",
+    ["BUG? - As with label guess, we're not guessing this label correctly",
+     "BRAILLE LINE:  ' $l and Now $l'",
      "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "SPEECH OUTPUT: 'Only bugs changed between: text  and text Now  ",
+     "SPEECH OUTPUT: 'Email and Numbering text  and text Now ",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -466,9 +465,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'where one or more of the following changed:'",
-     "     VISIBLE:  'where one or more of the followi', cursor=1",
-     "SPEECH OUTPUT: 'where one or more of the following changed:'"]))
+    ["BRAILLE LINE:  '•where one or more of the following changed:'",
+     "     VISIBLE:  '•where one or more of the follow', cursor=1",
+     "SPEECH OUTPUT: '•where one or more of the following changed:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -482,9 +481,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "Line Down",
-    ["BRAILLE LINE:  'and the new value was:'",
-     "     VISIBLE:  'and the new value was:', cursor=1",
-     "SPEECH OUTPUT: 'and the new value was:'"]))
+    ["BRAILLE LINE:  '•and the new value was:'",
+     "     VISIBLE:  '•and the new value was:', cursor=1",
+     "SPEECH OUTPUT: '•and the new value was:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -492,7 +491,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'and the new value was: text'"]))
+     "SPEECH OUTPUT: 'Email and Numbering text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -500,7 +499,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'GNOME version:'",
      "     VISIBLE:  'GNOME version:', cursor=1",
-     "SPEECH OUTPUT: 'GNOME version:'"]))
+     "SPEECH OUTPUT: 'GNOME version: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -516,7 +515,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Down",
     ["BRAILLE LINE:  'GNOME target:'",
      "     VISIBLE:  'GNOME target:', cursor=1",
-     "SPEECH OUTPUT: 'GNOME target:'"]))
+     "SPEECH OUTPUT: 'GNOME target: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -695,7 +694,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'GNOME target:'",
      "     VISIBLE:  'GNOME target:', cursor=1",
-     "SPEECH OUTPUT: 'GNOME target:'"]))
+     "SPEECH OUTPUT: 'GNOME target: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -711,7 +710,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'GNOME version:'",
      "     VISIBLE:  'GNOME version:', cursor=1",
-     "SPEECH OUTPUT: 'GNOME version:'"]))
+     "SPEECH OUTPUT: 'GNOME version: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -719,15 +718,15 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "SPEECH OUTPUT: 'and the new value was: text'",]))
+     "SPEECH OUTPUT: 'Email and Numbering text'",]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'and the new value was:'",
-     "     VISIBLE:  'and the new value was:', cursor=1",
-     "SPEECH OUTPUT: 'and the new value was:'"]))
+    ["BRAILLE LINE:  '•and the new value was:'",
+     "     VISIBLE:  '•and the new value was:', cursor=1",
+     "SPEECH OUTPUT: '•and the new value was:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -741,9 +740,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'where one or more of the following changed:'",
-     "     VISIBLE:  'where one or more of the followi', cursor=1",
-     "SPEECH OUTPUT: 'where one or more of the following changed:'"]))
+    ["BRAILLE LINE:  '•where one or more of the following changed:'",
+     "     VISIBLE:  '•where one or more of the follow', cursor=1",
+     "SPEECH OUTPUT: '•where one or more of the following changed:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -757,18 +756,19 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  ' $l and Now $l'",
+    ["BUG? - As with label guess, we're not guessing this label correctly",
+     "BRAILLE LINE:  ' $l and Now $l'",
      "     VISIBLE:  ' $l and Now $l', cursor=1",
-     "SPEECH OUTPUT: 'Only bugs changed between: text  and text Now ",
+     "SPEECH OUTPUT: 'Email and Numbering text  and text Now ",
      "'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Only bugs changed between:'",
-     "     VISIBLE:  'Only bugs changed between:', cursor=1",
-     "SPEECH OUTPUT: 'Only bugs changed between:'"]))
+    ["BRAILLE LINE:  '•Only bugs changed between:'",
+     "     VISIBLE:  '•Only bugs changed between:', cursor=1",
+     "SPEECH OUTPUT: '•Only bugs changed between:'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -952,7 +952,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'OS:'",
      "     VISIBLE:  'OS:', cursor=1",
-     "SPEECH OUTPUT: 'OS:'"]))
+     "SPEECH OUTPUT: 'OS: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -968,7 +968,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Priority:'",
      "     VISIBLE:  'Priority:', cursor=1",
-     "SPEECH OUTPUT: 'Priority:'"]))
+     "SPEECH OUTPUT: 'Priority: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -984,7 +984,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Severity:'",
      "     VISIBLE:  'Severity:', cursor=1",
-     "SPEECH OUTPUT: 'Severity:'"]))
+     "SPEECH OUTPUT: 'Severity: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1001,15 +1001,15 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Resolution:'",
      "     VISIBLE:  'Resolution:', cursor=1",
-     "SPEECH OUTPUT: 'Resolution:'"]))
+     "SPEECH OUTPUT: 'Resolution: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'UNCONFIRMED List'",
-     "     VISIBLE:  'UNCONFIRMED List', cursor=1",
-     "SPEECH OUTPUT: 'UNCONFIRMED' voice=uppercase",
+    ["BRAILLE LINE:  'UNCONFIRMED NEW ASSIGNED REOPENED NEEDINFO List'",
+     "     VISIBLE:  'UNCONFIRMED NEW ASSIGNED REOPENE', cursor=1",
+     "SPEECH OUTPUT: 'UNCONFIRMED NEW ASSIGNED REOPENED NEEDINFO' voice=uppercase",
      "SPEECH OUTPUT: 'multi-select List with 8 items'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1018,7 +1018,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Status:'",
      "     VISIBLE:  'Status:', cursor=1",
-     "SPEECH OUTPUT: 'Status:'"]))
+     "SPEECH OUTPUT: 'Status: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1034,7 +1034,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Keywords: contains all of the keywords Combo $l'",
      "     VISIBLE:  'Keywords: contains all of the ke', cursor=1",
-     "SPEECH OUTPUT: 'Keywords link : contains all of the keywords combo box text'"]))
+     "SPEECH OUTPUT: 'Keywords link : row header contains all of the keywords combo box text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1042,7 +1042,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Whiteboard: contains all of the words/strings Combo $l'",
      "     VISIBLE:  'Whiteboard: contains all of the ', cursor=1",
-     "SPEECH OUTPUT: 'Whiteboard: contains all of the words/strings combo box text'"]))
+     "SPEECH OUTPUT: 'Whiteboard: row header contains all of the words/strings combo box text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1050,7 +1050,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'A Comment: contains the string Combo $l'",
      "     VISIBLE:  'A Comment: contains the string C', cursor=1",
-     "SPEECH OUTPUT: 'A Comment: contains the string combo box text'"]))
+     "SPEECH OUTPUT: 'A Comment: row header contains the string combo box text'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1066,7 +1066,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Target Milestone:'",
      "     VISIBLE:  'Target Milestone:', cursor=1",
-     "SPEECH OUTPUT: 'Target Milestone:'"]))
+     "SPEECH OUTPUT: 'Target Milestone: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1082,7 +1082,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Version:'",
      "     VISIBLE:  'Version:', cursor=1",
-     "SPEECH OUTPUT: 'Version:'"]))
+     "SPEECH OUTPUT: 'Version: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1098,7 +1098,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Component:'",
      "     VISIBLE:  'Component:', cursor=1",
-     "SPEECH OUTPUT: 'Component link :'"]))
+     "SPEECH OUTPUT: 'Component link : column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1114,7 +1114,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Product:'",
      "     VISIBLE:  'Product:', cursor=1",
-     "SPEECH OUTPUT: 'Product:'"]))
+     "SPEECH OUTPUT: 'Product: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1130,7 +1130,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Classification:'",
      "     VISIBLE:  'Classification:', cursor=1",
-     "SPEECH OUTPUT: 'Classification:'"]))
+     "SPEECH OUTPUT: 'Classification: column header'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1138,7 +1138,7 @@ sequence.append(utils.AssertPresentationAction(
     "Line Up",
     ["BRAILLE LINE:  'Summary: contains all of the words/strings Combo $l Search Button'",
      "     VISIBLE:  'Summary: contains all of the wor', cursor=1",
-     "SPEECH OUTPUT: 'Summary: contains all of the words/strings combo box text Search button'"]))
+     "SPEECH OUTPUT: 'Summary: row header contains all of the words/strings combo box text Search button'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
@@ -1160,13 +1160,9 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Up"))
 sequence.append(utils.AssertPresentationAction(
     "Line Up",
-    ["BRAILLE LINE:  'Home Image Bugzilla'",
-     "     VISIBLE:  'Home Image Bugzilla', cursor=1",
-     "BRAILLE LINE:  'Home Image Bugzilla New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
-     "     VISIBLE:  'Home Image Bugzilla New bug', cursor=1",
-     "SPEECH OUTPUT: 'Home link Image Bugzilla New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'",
-     "SPEECH OUTPUT: 'Home link image Bugzilla'"
-     "SPEECH OUTPUT: Home link image'"]))
+    ["BRAILLE LINE:  'New bug · Browse · Search · Reports · Account · Admin · Help Logged In joanmarie.diggs@gmail.com | Log Out'",
+     "     VISIBLE:  'New bug · Browse · Search · Repo', cursor=1",
+     "SPEECH OUTPUT: 'New bug link  · Browse link  · Search link  · Reports link  · Account link  · Admin link  · Help link Logged In joanmarie.diggs@gmail.com | Log Out link'"]))
 
 ########################################################################
 # Move to the location bar by pressing Control+L.  When it has focus
