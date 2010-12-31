@@ -1,16 +1,17 @@
 #!/bin/bash
-#
-# See http://live.gnome.org/Orca/RegressionTesting for more info.
-#
-# runone.sh takes the following parameters:
-#
-#    keystroke_file.py [application_name] [0|1]
-#
-# where:
-#
-#    application_name is the name of the application to run
-#    0 = start and stop orca inside this shell script
-#    1 = assume orca is already running
+
+useage() 
+{
+	echo './runone.sh keystroke_file.py [application_name] [0|1]'
+echo 'application_name is the name of the application to run'
+echo '0 = start and stop orca inside this shell script'
+echo '1 = assume orca is already running'
+echo " " # for a blank line
+	echo 'See http://live.gnome.org/Orca/RegressionTesting for more info.'
+
+exit 1
+}
+
 #
 # Set up our accessibility environment for those apps that
 # don't do it on their own.
@@ -27,6 +28,11 @@ export PATH=$harnessDir/bin:$PATH
 # Switch off i18n transformation.
 export LANG=C
 export LC_ALL=C
+
+if [ "$1" = "-h" -o "$1" = "-?" -o "$1" = "--help" -o $# -eq 0 ]
+then
+	useage
+fi
 
 #echo runone.sh: $*
 
