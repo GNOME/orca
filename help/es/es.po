@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2010-12-27 06:31+0000\n"
-"PO-Revision-Date: 2010-12-27 18:47+0100\n"
+"POT-Creation-Date: 2010-12-30 14:50+0000\n"
+"PO-Revision-Date: 2010-12-31 11:55+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -425,13 +425,15 @@ msgstr ""
 
 #: C/preferences_table_navigation.page:50(title)
 msgid "Announce cell header"
-msgstr ""
+msgstr "Anunciar la cabecera de una celda"
 
 #: C/preferences_table_navigation.page:51(p)
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will announce changes in the "
 "header if the headers for the current cell can be determined."
 msgstr ""
+"Si esta casilla está marcada, <app>Orca</app> anunciará los cambios en la "
+"cabecera si se pueden determinar las cabeceras para la celda actual."
 
 #: C/preferences_table_navigation.page:60(title)
 msgid "Skip blank cells"
@@ -443,6 +445,9 @@ msgid ""
 "are using <app>Orca</app>'s table structural navigation commands to access "
 "the table."
 msgstr ""
+"Si esta casilla está marcada, <app>Orca</app> se saltará las celdas en "
+"blanco cuando utilice los comandos de navegación estructural por tablas de "
+"<app>Orca</app> para acceder a la tabla."
 
 #: C/preferences_table_navigation.page:66(p)
 #: C/preferences_magnifier.page:27(p) C/preferences_magnifier.page:177(p)
@@ -460,7 +465,7 @@ msgstr ""
 #: C/preferences_braille.page:65(p) C/preferences_braille.page:79(p)
 #: C/preferences_braille.page:90(p)
 msgid "Default value: not checked"
-msgstr ""
+msgstr "Valor predeterminado: no marcado"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -584,7 +589,7 @@ msgstr ""
 
 #: C/preferences_speech.page:5(title)
 msgid "2. Speech"
-msgstr ""
+msgstr "2. Voz"
 
 #: C/preferences_speech.page:6(title) C/commands_speech_settings.page:7(title)
 msgid "Speech"
@@ -592,11 +597,11 @@ msgstr "Voz"
 
 #: C/preferences_speech.page:7(desc)
 msgid "Configuring the voice and what gets spoken"
-msgstr ""
+msgstr "Configurar la voz y lo que se habla"
 
 #: C/preferences_speech.page:18(title)
 msgid "Speech Preferences"
-msgstr "Configuración de la voz"
+msgstr "Preferencias de voz"
 
 #: C/preferences_speech.page:20(title)
 msgid "Enable speech"
@@ -608,10 +613,13 @@ msgid ""
 "app> will make use of a speech synthesizer. Magnification-only and Braille-"
 "only users will likely want to uncheck this checkbox."
 msgstr ""
+"La casilla <gui>Activar voz</gui> controla si <app>Orca</app> hará uso o no "
+"de un sintetizador de voz. Los usuarios que solamente usen magnificador y "
+"solamente braille probablemente desmarquen esta casilla."
 
 #: C/preferences_speech.page:30(title)
 msgid "Text-To-Speech Options"
-msgstr ""
+msgstr "Opciones de texto a voz"
 
 #: C/preferences_speech.page:33(title)
 msgid "Speech system"
@@ -622,20 +630,25 @@ msgid ""
 "This combo box allows you to select your preferred speech system from those "
 "you have installed. Examples include Speech Dispatcher and GNOME Speech."
 msgstr ""
+"Este cuadro combinado le permite seleccionar su sistema de voz preferido de "
+"entre los que tenga instalados. Como por ejemplo Speech Dispatcher y GNOME "
+"Speech."
 
 #: C/preferences_speech.page:41(title)
 msgid "Speech synthesizer"
-msgstr ""
+msgstr "Sintetizador de voz"
 
 #: C/preferences_speech.page:42(p)
 msgid ""
 "This combo box allows you to select the speech synthesizer to be used with "
 "your chosen Speech system."
 msgstr ""
+"Este cuadro combinado le permite seleccionar el sintetizador de voz que usar "
+"con el sistema de voz elegido."
 
 #: C/preferences_speech.page:48(title)
 msgid "Voice settings"
-msgstr ""
+msgstr "Ajustes de voz"
 
 #: C/preferences_speech.page:49(p)
 msgid ""
@@ -643,10 +656,13 @@ msgid ""
 "can better distinguish uppercase and linked text from other text, and on-"
 "screen text from text added by <app>Orca</app>."
 msgstr ""
+"Este cuadro combinado hace posible que use voces diferentes para distinguir "
+"mejor el texto en mayúscula y el texto enlazado de otro texto, y el texto en "
+"que aparece en pantalla de otro texto que <app>Orca</app> añada."
 
 #: C/preferences_speech.page:55(title)
 msgid "Configuring Multiple Voices"
-msgstr ""
+msgstr "Configurar múltiples voces"
 
 #: C/preferences_speech.page:56(p)
 msgid ""
@@ -654,10 +670,13 @@ msgid ""
 "<gui>Voice settings</gui> combo box. Then configure the person, rate, pitch, "
 "and volume to be used for that voice."
 msgstr ""
+"Para cada voz que desee configurar, primero seleccione la voz en el cuadro "
+"combinado <gui>Ajustes de voz</gui>. Luego configure la persona, la "
+"velocidad, el tono y el volumen que se usarán con esa voz."
 
 #: C/preferences_speech.page:65(title)
 msgid "Person"
-msgstr ""
+msgstr "Persona"
 
 #: C/preferences_speech.page:66(p)
 msgid ""
@@ -667,20 +686,27 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
+"Este cuadro combinado le permite elegir qué persona o hablante se debería "
+"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
+"hablar de manera predeterminada, pero tener a Alicia para hablar los "
+"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
+"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
 
 #: C/preferences_speech.page:75(title)
 msgid "Rate, Pitch, and Volume"
-msgstr ""
+msgstr "Velocidad, tono y volumen"
 
 #: C/preferences_speech.page:77(p)
 msgid ""
 "These three left-right sliders allow you to further customize the sound of "
 "the person you have just selected."
 msgstr ""
+"Estos tres deslizadores izquierda-derecha le permiten personalizar aún más "
+"el sonido de la persona que acaba de seleccionar."
 
 #: C/preferences_speech.page:84(title)
 msgid "Punctuation Level"
-msgstr "Nivel de puntuación"
+msgstr "Nivel de puntuación"
 
 #: C/preferences_speech.page:86(p)
 msgid ""
@@ -688,10 +714,14 @@ msgid ""
 "amount of punctuation spoken by the synthesizer. The available levels are "
 "<gui>None</gui>, <gui>Some</gui>, <gui>Most</gui>, and <gui>All</gui>."
 msgstr ""
+"El grupo de botones de radio <gui>Nivel de puntuación</gui> se usa para "
+"ajustar la cantidad de puntuación que se habla por el sintetizador. Los "
+"niveles disponibles son <gui>Ninguna</gui>, <gui>Alguna</gui>, <gui>La "
+"mayoría</gui> y <gui>Toda</gui>."
 
 #: C/preferences_speech.page:93(title)
 msgid "None"
-msgstr ""
+msgstr "Ninguna"
 
 #: C/preferences_speech.page:94(p)
 msgid ""
@@ -701,10 +731,15 @@ msgid ""
 "still spoken at this level, even though some might consider these types of "
 "symbols punctuation."
 msgstr ""
+"Seleccionar un nivel de puntuación <gui>Ninguna</gui> hará, como imagina, "
+"que no se hable ninguna puntuación. Sin embargo, note que los símbolos "
+"especiales tales como números superíndice y subíndice, fracciones unicode y "
+"viñetas todavía se hablarán en este nivel, a pesar de que algunos podrían "
+"considerar estos símbolos como signos de puntuación."
 
 #: C/preferences_speech.page:103(title)
 msgid "Some"
-msgstr ""
+msgstr "Alguna"
 
 #: C/preferences_speech.page:104(p)
 msgid ""
@@ -713,10 +748,14 @@ msgid ""
 "known mathematical symbols, currency symbols, and \"^\", \"@\", \"/\", "
 "\"&amp;\", \"#\"."
 msgstr ""
+"Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
+"los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
+"«/», «&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
-msgstr ""
+msgstr "La mayoría"
 
 #: C/preferences_speech.page:113(p)
 msgid ""
@@ -725,20 +764,26 @@ msgid ""
 "other known punctuation symbols <em>other than</em> \"!\", \"'\", \",\", \"."
 "\", \"?\"."
 msgstr ""
+"Seleccionar el nivel de puntuación <gui>La mayoría</gui> hace que se hablen "
+"todos los símbolos mencionados anteriormente. Por otra parte <app>Orca</app> "
+"hablará todos los otros símbolos de puntuación conocidos <em>que no sean</"
+"em> «!», «'», «,», «.», «?»."
 
 #: C/preferences_speech.page:121(title)
 msgid "All"
-msgstr ""
+msgstr "Toda"
 
 #: C/preferences_speech.page:122(p)
 msgid ""
 "Choosing a punctuation level of <gui>All</gui>, as expected, causes "
 "<app>Orca</app> to speak all known punctuation symbols."
 msgstr ""
+"Seleccionar un nivel de puntuación <gui>Toda</gui> hace, como ya imagina, "
+"que <app>Orca</app> hable todos los símbolos de puntuación conocidos."
 
 #: C/preferences_speech.page:127(p)
 msgid "Default value: <gui>Most</gui>"
-msgstr ""
+msgstr "Valor predeterminado: <gui>La mayoría</gui>"
 
 #: C/preferences_speech.page:132(title) C/preferences_braille.page:95(title)
 msgid "Verbosity"
