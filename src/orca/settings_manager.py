@@ -120,6 +120,10 @@ class SettingsManager(object):
             self.profile = self.general.get('startingProfile')[1]
         self.setProfile(self.profile)
 
+        # For handling the currently-"classic" application settings
+        self._settingsPackages = ["app-settings"]
+        self._knownAppSettings = {}
+
     def _loadBackend(self):
         """Load specific backend for manage user settings"""
 
@@ -471,6 +475,59 @@ class SettingsManager(object):
 
         self.saveSettings(general, pronunciations, keybindings)
         return True
+
+    def loadAppSettings(self, script):
+        """Load the users application specific settings for an app.
+        Note that currently the settings manager does not manage
+        application settings in Orca; instead the old/"classic" files
+        are used. This is scheduled to change.
+
+        Arguments:
+        - script: the current active script.
+        """
+
+        import orca
+        _scriptManager = getattr(orca, '_scriptManager')
+
+        app = script.app
+        moduleName = _scriptManager.getModuleName(app)
+        if not moduleName:
+            return
+
+        module = None
+        for package in self._settingsPackages:
+            name = '.'.join((package, moduleName))
+            debug.println(debug.LEVEL_FINEST, "Looking for %s.py" % name)
+            try:
+                module = __import__(name, globals(), locals(), [''])
+            except ImportError:
+                debug.println(
+                    debug.LEVEL_FINEST, "Could not import %s.py" % name)
+                continue
+            try:
+                reload(module)
+            except:
+                debug.println(debug.LEVEL_FINEST, "Could not load %s.py" % name)
+                module = None
+            else:
+                debug.println(debug.LEVEL_FINEST, "Loaded %s.py" % name)
+                break
+
+        if not module:
+            return
+
+        self._knownAppSettings[name] = module
+
+        keybindings = getattr(module, 'overrideAppKeyBindings', None)
+        if keybindings:
+            script.overrideAppKeyBindings = keybindings
+            script.keyBindings = keybindings(script, script.keyBindings)
+
+        pronunciations = getattr(module, 'overridePronunciations', None)
+        if pronunciations:
+            script.overridePronunciations = pronunciations
+            script.app_pronunciation_dict = \
+                pronunciations(script, script.app_pronunciation_dict)
 
 def getVoiceKey(voice):
     voicesKeys = getattr(settings, 'voicesKeys')

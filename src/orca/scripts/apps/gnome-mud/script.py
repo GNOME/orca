@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.orca_state as orca_state

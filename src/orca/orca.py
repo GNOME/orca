@@ -512,6 +512,12 @@ if _settingsManager is None:
     print "Could not load the settings manager. Exiting."
     sys.exit(1)
 
+from event_manager import EventManager
+_eventManager = EventManager()
+
+from script_manager import ScriptManager
+_scriptManager = ScriptManager()
+
 try:
     # If we don't have an active desktop, we will get a RuntimeError.
     import mouse_review
@@ -542,8 +548,8 @@ from input_event import KeyboardEvent
 from input_event import MouseButtonEvent
 from input_event import keyEventToString
 
+import gc
 if settings.debugMemoryUsage:
-    import gc
     gc.set_debug(gc.DEBUG_UNCOLLECTABLE
                  | gc.DEBUG_COLLECTABLE
                  | gc.DEBUG_INSTANCES
@@ -571,88 +577,19 @@ _restoreOrcaKeys = False
 
 ########################################################################
 #                                                                      #
-# METHODS FOR HANDLING PRESENTATION MANAGERS                           #
-#                                                                      #
-# A presentation manager is what reacts to AT-SPI object events as     #
-# well as user input events (keyboard and Braille) to present info     #
-# to the user.                                                         #
-#                                                                      #
-########################################################################
-
-# The known presentation managers (set up in start())
-#
-_PRESENTATION_MANAGERS = None
-
-# The current presentation manager, which is an index into the
-# _PRESENTATION_MANAGERS list.
-#
-_currentPresentationManager = -1
-
-def _switchToPresentationManager(index):
-    """Switches to the given presentation manager.
-
-    Arguments:
-    - index: an index into _PRESENTATION_MANAGERS
-    """
-
-    global _currentPresentationManager
-
-    if _currentPresentationManager >= 0:
-        _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
-
-    _currentPresentationManager = index
-
-    # Wrap the presenter index around.
-    #
-    if _currentPresentationManager >= len(_PRESENTATION_MANAGERS):
-        _currentPresentationManager = 0
-    elif _currentPresentationManager < 0:
-        _currentPresentationManager = len(_PRESENTATION_MANAGERS) - 1
-
-    _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
-
-def _switchToNextPresentationManager(script=None, inputEvent=None):
-    """Switches to the next presentation manager.
-
-    Arguments:
-    - inputEvent: the InputEvent instance that caused this to be called.
-
-    Returns True indicating the event should be consumed.
-    """
-
-    _switchToPresentationManager(_currentPresentationManager + 1)
-    return True
-
-def getScriptForApp(app):
-    """Get the script for the given application object from the current
-    presentation manager.
-
-    Arguments:
-    - app: An application accessible.
-
-    Returns a Script instance.
-    """
-
-    script = None
-    if _currentPresentationManager >= 0:
-        script = \
-            _PRESENTATION_MANAGERS[_currentPresentationManager].getScript(app)
-    return script
-
-########################################################################
-#                                                                      #
 # METHODS TO HANDLE APPLICATION LIST AND FOCUSED OBJECTS               #
 #                                                                      #
 ########################################################################
 
-def setLocusOfFocus(event, obj, notifyPresentationManager=True, force=False):
+def setLocusOfFocus(event, obj, notifyScript=True, force=False):
     """Sets the locus of focus (i.e., the object with visual focus) and
-    notifies the current presentation manager of the change.
+    notifies the script of the change should the script wish to present
+    the change to the user.
 
     Arguments:
     - event: if not None, the Event that caused this to happen
     - obj: the Accessible with the new locus of focus.
-    - notifyPresentationManager: if True, propagate this event
+    - notifyScript: if True, propagate this event
     - force: if True, don't worry if this is the same object as the
       current locusOfFocus
     """
@@ -710,29 +647,9 @@ def setLocusOfFocus(event, obj, notifyPresentationManager=True, force=False):
             debug.println(debug.LEVEL_FINE,
                           "                event=None")
 
-    if notifyPresentationManager and _currentPresentationManager >= 0:
-        _PRESENTATION_MANAGERS[_currentPresentationManager].\
-            locusOfFocusChanged(event,
-                                oldLocusOfFocus,
-                                orca_state.locusOfFocus)
-
-def visualAppearanceChanged(event, obj):
-    """Called (typically by scripts) when the visual appearance of an object
-    changes and notifies the current presentation manager of the change.  This
-    method should not be called for objects whose visual appearance changes
-    solely because of focus -- setLocusOfFocus is used for that.  Instead, it
-    is intended mostly for objects whose notional 'value' has changed, such as
-    a checkbox changing state, a progress bar advancing, a slider moving, text
-    inserted, caret moved, etc.
-
-    Arguments:
-    - event: if not None, the Event that caused this to happen
-    - obj: the Accessible whose visual appearance changed.
-    """
-
-    if _currentPresentationManager >= 0:
-        _PRESENTATION_MANAGERS[_currentPresentationManager].\
-            visualAppearanceChanged(event, obj)
+    if notifyScript and orca_state.activeScript:
+        orca_state.activeScript.locusOfFocusChanged(
+            event, oldLocusOfFocus, orca_state.locusOfFocus)
 
 def _onChildrenChanged(e):
     """Tracks children-changed events on the desktop to determine when
@@ -855,11 +772,6 @@ def exitListShortcutsMode(self, inputEvent=None):
 ########################################################################
 #                                                                      #
 # METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
-#                                                                      #
-# All keyboard events are funnelled through here first.  Orca itself   #
-# might have global keybindings (e.g., to switch between presenters),  #
-# but it will typically pass the event onto the currently active       #
-# active presentation manager.                                         #
 #                                                                      #
 ########################################################################
 
@@ -1231,9 +1143,9 @@ def _processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
     attributes, such as the lastInputEvent.  Also calls keyEcho as well
     as any local keybindings before passing the event on to the active
-    presentation manager.  This method is called synchronously from the
-    AT-SPI registry and should be performant.  In addition, it
-    must return True if it has consumed the event (and False if not).
+    script.  This method is called synchronously from the AT-SPI registry
+    and should be performant.  In addition, it must return True if it has
+    consumed the event (and False if not).
 
     Arguments:
     - event: an AT-SPI DeviceEvent
@@ -1369,9 +1281,8 @@ def _processKeyboardEvent(event):
             if (not consumed):
                 consumed = _keyBindings.consumeKeyboardEvent( \
                   None, keyboardEvent)
-            if (not consumed) and (_currentPresentationManager >= 0):
-                consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                           processKeyboardEvent(keyboardEvent)
+            if (not consumed):
+                consumed = _eventManager.processKeyboardEvent(keyboardEvent)
             if (not consumed) and settings.learnModeEnabled:
                 if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
                     clickCount = orca_state.activeScript.getClickCount()
@@ -1437,8 +1348,7 @@ def _processBrailleEvent(event):
     orca_state.lastInputEvent = event
 
     try:
-        consumed = _PRESENTATION_MANAGERS[_currentPresentationManager].\
-                   processBrailleEvent(event)
+        consumed = _eventManager.processBrailleEvent(event)
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
@@ -1559,8 +1469,8 @@ def loadUserSettings(script=None, inputEvent=None, isProfileLoad=False):
     braille.shutdown()
     mag.shutdown()
 
-    if _currentPresentationManager >= 0:
-        _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
+    _eventManager.deactivate()
+    _scriptManager.deactivate()
 
     reloaded = False
     if _userSettings:
@@ -1650,8 +1560,8 @@ def loadUserSettings(script=None, inputEvent=None, isProfileLoad=False):
     _storeXmodmap(_orcaModifiers)
     _createOrcaXmodmap()
 
-    if _currentPresentationManager >= 0:
-        _PRESENTATION_MANAGERS[_currentPresentationManager].activate()
+    _scriptManager.activate()
+    _eventManager.activate()
 
     showMainWindowGUI()
 
@@ -1916,15 +1826,13 @@ def getListOfShortcuts(typeOfShortcuts):
     Returns a list of shortcuts; depending on the value of argument.
     """
 
-    import default
-
     numShortcuts = len(orca_state.listOfShortcuts)
     shortcuts = []
     shortcut = ""
     clickCount = ""
     brlKeyName = ""     
     brlHandler = None
-    defScript = default.Script(None)
+    defScript = _scriptManager.getDefaultScript()
     defKeyBindings = defScript.getKeyBindings()
     defBrlBindings = defScript.getBrailleBindings()
     kbindings = keybindings.KeyBindings()
@@ -2092,8 +2000,6 @@ def start(registry):
     """Starts Orca.
     """
 
-    global _PRESENTATION_MANAGERS
-
     if not _initialized:
         init(registry)
 
@@ -2102,13 +2008,6 @@ def start(registry):
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
-
-    if not _PRESENTATION_MANAGERS:
-        import focus_tracking_presenter
-        _PRESENTATION_MANAGERS = \
-            [focus_tracking_presenter.FocusTrackingPresenter()]
-
-    _switchToPresentationManager(0) # focus_tracking_presenter
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
@@ -2166,8 +2065,8 @@ def shutdown(script=None, inputEvent=None):
     pyatspi.Registry.deregisterEventListener(_onMouseButton,
                                              "mouse:button")
 
-    if _currentPresentationManager >= 0:
-        _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
+    _eventManager.deactivate()
+    _scriptManager.deactivate()
 
     # Shutdown all the other support.
     #
@@ -2250,6 +2149,17 @@ def multipleOrcas():
     pid = os.getpid()
     ppid = os.getppid()
     return len(filter(lambda p: p not in [pid, ppid], orcas)) > 0
+
+def cleanupGarbage():
+    """Cleans up garbage on the heap."""
+    gc.collect()
+    for obj in gc.garbage:
+        try:
+            if isinstance(obj, pyatspi.Accessibility.Accessible):
+                gc.garbage.remove(obj)
+                obj.__del__()
+        except:
+            pass
 
 def main():
     """The main entry point for Orca.  The exit codes for Orca will

@@ -1,4 +1,4 @@
-import orca.default as default
+import orca.scripts.default as default
 import orca.orca_state as orca_state
 
 from script_utilities import Utilities

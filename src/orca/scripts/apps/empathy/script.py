@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.chat as chat
-import orca.default as default
+import orca.scripts.default as default
 
 from script_utilities import Utilities
 

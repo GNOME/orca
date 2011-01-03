@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 import orca.input_event as input_event
 import orca.orca as orca
 import orca.rolenames as rolenames
@@ -437,19 +437,17 @@ class Script(default.Script):
                 newText = self.getTextLineAtCaret(newLocusOfFocus)
                 if newText == self.preFindLine:
                     orca.setLocusOfFocus(
-                        event, oldLocusOfFocus, notifyPresentationManager=False)
+                        event, oldLocusOfFocus, notifyScript=False)
                     return
             if newLocusOfFocus.getRole() == pyatspi.ROLE_DRAWING_AREA:
-                orca.setLocusOfFocus(
-                    event, oldLocusOfFocus, notifyPresentationManager=False)
+                orca.setLocusOfFocus(event, oldLocusOfFocus, notifyScript=False)
                 return
 
             utterances = \
                  self.speechGenerator.generateSpeech(newLocusOfFocus)
             speech.speak(utterances)
             self.displayBrailleForObject(newLocusOfFocus)
-            orca.setLocusOfFocus(
-                event, newLocusOfFocus, notifyPresentationManager=False)
+            orca.setLocusOfFocus(event, newLocusOfFocus, notifyScript=False)
             return
 
         # Eliminate unnecessary chattiness in the Search panel.
@@ -464,8 +462,7 @@ class Script(default.Script):
         #
         if newLocusOfFocus.getRole() in [self.ROLE_DOCUMENT,
                                          pyatspi.ROLE_DRAWING_AREA]:
-            orca.setLocusOfFocus(
-                event, newLocusOfFocus, notifyPresentationManager=False)
+            orca.setLocusOfFocus(event, newLocusOfFocus, notifyScript=False)
             return
 
         elif newLocusOfFocus.getRole() == self.ROLE_LINK:
@@ -481,8 +478,7 @@ class Script(default.Script):
                     self.utilities.adjustForRepeats(utterance))
             speech.speak(adjustedUtterances)
             self.displayBrailleForObject(newLocusOfFocus)
-            orca.setLocusOfFocus(
-                event, newLocusOfFocus, notifyPresentationManager=False)
+            orca.setLocusOfFocus(event, newLocusOfFocus, notifyScript=False)
             return
 
         default.Script.locusOfFocusChanged(self, event,
@@ -549,7 +545,7 @@ class Script(default.Script):
             # selected when you arrow to them.  You have to press Space
             # to select the current radio button.  Watch for this.
             #
-            orca.visualAppearanceChanged(event, event.source)
+            self.visualAppearanceChanged(event, event.source)
             return
 
         elif event.type.startswith("object:state-changed:focused") \
@@ -561,8 +557,7 @@ class Script(default.Script):
                      self.speechGenerator.generateSpeech(event.source)
                 speech.speak(utterances)
                 self.displayBrailleForObject(event.source)
-                orca.setLocusOfFocus(
-                    event, event.source, notifyPresentationManager=False)
+                orca.setLocusOfFocus(event, event.source, notifyScript=False)
                 return
 
             elif event.source.getRole() == pyatspi.ROLE_TEXT:

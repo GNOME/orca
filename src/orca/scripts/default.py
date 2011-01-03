@@ -33,35 +33,35 @@ __license__   = "LGPL"
 import locale
 import time
 
-import orca
+import orca.orca as orca
 _settingsManager = getattr(orca, '_settingsManager')
 
 import pyatspi
-import braille
-import debug
-import eventsynthesizer
-import find
-import flat_review
-import input_event
-import keybindings
+import orca.braille as braille
+import orca.debug as debug
+import orca.eventsynthesizer as eventsynthesizer
+import orca.find as find
+import orca.flat_review as flat_review
+import orca.input_event as input_event
+import orca.keybindings as keybindings
 try:
-    import gsmag as mag
+    import orca.gsmag as mag
 except:
-    import mag
-import outline
-import orca_state
-import phonnames
-import script
-import settings
-import speech
-import speechserver
-import mouse_review
-import text_attribute_names
-import notification_messages
+    import orca.mag as mag
+import orca.outline as outline
+import orca.orca_state as orca_state
+import orca.phonnames as phonnames
+import orca.script as script
+import orca.settings as settings
+import orca.speech as speech
+import orca.speechserver as speechserver
+import orca.mouse_review as mouse_review
+import orca.text_attribute_names as text_attribute_names
+import orca.notification_messages as notification_messages
 
-from orca_i18n import _         # for gettext support
-from orca_i18n import ngettext  # for ngettext support
-from orca_i18n import C_        # to provide qualified translatable strings
+from orca.orca_i18n import _         # for gettext support
+from orca.orca_i18n import ngettext  # for ngettext support
+from orca.orca_i18n import C_        # to provide qualified translatable strings
 
 ########################################################################
 #                                                                      #
@@ -785,11 +785,11 @@ class Script(script.Script):
                 Script.enterListShortcutsMode,
                 # Translators: Orca has a "List Shortcuts Mode" that will allow
                 # the user to list a group of keyboard shortcuts. The Orca
-                # default shortcuts can be listed by pressing 1, and Orca 
+                # default shortcuts can be listed by pressing 1, and Orca
                 # shortcuts for the application under focus can be listed by
                 # pressing 2. User can press Up/ Down to navigate and hear
                 # the list, changeover to another list by pressing 1/2,
-                # and exit the "List Shortcuts Mode" by pressing Escape. 
+                # and exit the "List Shortcuts Mode" by pressing Escape.
                 #
                 _("Enters list shortcuts mode.  Press escape to exit " \
                   "list shortcuts mode."),False)
@@ -1071,7 +1071,7 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.presentTime,
                 # Translators: Orca can present the current time to the
-                # user when the user presses 
+                # user when the user presses
                 # a shortcut key.
                 #
                 _("Present current time."))
@@ -1080,7 +1080,7 @@ class Script(script.Script):
             input_event.InputEventHandler(
                 Script.presentDate,
                 # Translators: Orca can present the current date to the
-                # user when the user presses 
+                # user when the user presses
                 # a shortcut key.
                 #
                 _("Present current date."))
@@ -1172,7 +1172,7 @@ class Script(script.Script):
         numeric keypad for focus tracking and flat review.
         """
 
-        import desktop_keyboardmap
+        import orca.desktop_keyboardmap as desktop_keyboardmap
         keyBindings = keybindings.KeyBindings()
         keyBindings.load(desktop_keyboardmap.keymap, self.inputEventHandlers)
         return keyBindings
@@ -1182,7 +1182,7 @@ class Script(script.Script):
         the main keyboard keys for focus tracking and flat review.
         """
 
-        import laptop_keyboardmap
+        import orca.laptop_keyboardmap as laptop_keyboardmap
         keyBindings = keybindings.KeyBindings()
         keyBindings.load(laptop_keyboardmap.keymap, self.inputEventHandlers)
         return keyBindings
@@ -1203,7 +1203,7 @@ class Script(script.Script):
             for keyBinding in self.__getLaptopBindings().keyBindings:
                 keyBindings.add(keyBinding)
 
-        import common_keyboardmap
+        import orca.common_keyboardmap as common_keyboardmap
         keyBindings.load(common_keyboardmap.keymap, self.inputEventHandlers)
 
         if _settingsManager.getSetting('debugMemoryUsage'):
@@ -1495,6 +1495,11 @@ class Script(script.Script):
                          obj, alreadyFocused=True)
         utterances.extend(self.tutorialGenerator.getTutorial(obj, True))
         speech.speak(utterances)
+
+    def activate(self):
+        """Called when this script is activated."""
+
+        braille.setupKeyRanges(self.brailleBindings.keys())
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
@@ -2688,7 +2693,7 @@ class Script(script.Script):
             # will be spoken, Most will be spoken, or Some will be spoken.
             #
             brief = C_("spoken punctuation", "All")
-        else: 
+        else:
             # the all case, so cycle to none.
             newLevel = settings.PUNCTUATION_STYLE_NONE
             # Translators: This detailed message will be presented as the
@@ -3221,7 +3226,7 @@ class Script(script.Script):
             return
 
         self.pointOfReference['oldName'] = event.source.name
-        orca.visualAppearanceChanged(event, event.source)
+        self.visualAppearanceChanged(event, event.source)
 
     def onSelectionChanged(self, event):
         """Called when an object's selection changes.
@@ -3249,7 +3254,7 @@ class Script(script.Script):
             return
 
         if event.source.getRole() == pyatspi.ROLE_COMBO_BOX:
-            orca.visualAppearanceChanged(event, event.source)
+            self.visualAppearanceChanged(event, event.source)
 
         # We treat selected children as the locus of focus. When the
         # selection changed we want to update the locus of focus. If
@@ -3378,7 +3383,7 @@ class Script(script.Script):
                     found = True
                     break
             if found:
-                orca.visualAppearanceChanged(event, event.source)
+                self.visualAppearanceChanged(event, event.source)
 
     def onTextAttributesChanged(self, event):
         """Called when an object's text attributes change. Right now this
@@ -3724,7 +3729,7 @@ class Script(script.Script):
            and (value.currentValue == self.pointOfReference["oldValue"]):
             return
 
-        orca.visualAppearanceChanged(event, event.source)
+        self.visualAppearanceChanged(event, event.source)
         if event.source.getState().contains(pyatspi.STATE_FOCUSED):
             self.pointOfReference["oldValue"] = value.currentValue
 
@@ -4003,8 +4008,7 @@ class Script(script.Script):
             text.setCaretOffset(context.currentOffset)
         elif progressType == speechserver.SayAllContext.COMPLETED:
             #print "COMPLETED", context.utterance, context.currentOffset
-            orca.setLocusOfFocus(
-                None, context.obj, notifyPresentationManager=False)
+            orca.setLocusOfFocus(None, context.obj, notifyScript=False)
             text.setCaretOffset(context.currentOffset)
 
         # If there is a selection, clear it. See bug #489504 for more details.
@@ -5067,26 +5071,6 @@ class Script(script.Script):
             phoneticString = phonnames.getPhoneticName(character)
             speech.speak(phoneticString, voice)
 
-    def saveOldAppSettings(self):
-        """Save a copy of all the existing application specific settings
-        (as specified by the settings.userCustomizableSettings dictionary)."""
-
-        generalSettings = \
-            _settingsManager.getGeneralSettings(_settingsManager.profile)
-        generalSettings.update(_settingsManager.customizedSettings)
-        return generalSettings
-
-    def restoreOldAppSettings(self, prefsDict):
-        """Restore a copy of all the previous saved application settings.
-
-        Arguments:
-        - prefsDict: the dictionary containing the old application settings.
-        """
-
-        for key in settings.userCustomizableSettings:
-            if key in prefsDict:
-                setattr(settings, key, prefsDict[key])
-
     def _saveSpokenTextRange(self, startOffset, endOffset):
         """Save away the start and end offset of the range of text that
         was spoken. It will be used by speakTextSelectionState, to try
@@ -5791,7 +5775,7 @@ class Script(script.Script):
 
         if _settingsManager.getSetting('enableSpeech'):
             voice = voice or self.voices.get(settings.SYSTEM_VOICE)
-            speech.speak(string, voice, interrupt) 
+            speech.speak(string, voice, interrupt)
 
     @staticmethod
     def presentItemsInSpeech(items):
@@ -5813,7 +5797,7 @@ class Script(script.Script):
         """ Speaks some information about an unicode character.
         At the Momment it just anounces the character unicode number but
         this information may be changed in the future
-        
+
         Arguments:
         - character: the character to speak information of
         """

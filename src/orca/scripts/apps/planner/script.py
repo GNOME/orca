@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.default as default
+import orca.scripts.default as default
 
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator

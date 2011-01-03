@@ -139,8 +139,7 @@ class Script(Gecko.Script):
             # presentation managers if this event is not for an empty anchor.
             #
             notify = self.utilities.isSameObject(event.source, obj)
-            orca.setLocusOfFocus(
-                event, obj, notifyPresentationManager=notify)
+            orca.setLocusOfFocus(event, obj, notifyScript=notify)
             self.setCaretPosition(obj, characterOffset)
 
         return Gecko.Script.onCaretMoved(self, event)
@@ -180,8 +179,7 @@ class Script(Gecko.Script):
             # We need to set the locusOfFocus to the document frame in
             # order to reliably get the caret context.
             #
-            orca.setLocusOfFocus(
-                event, event.source, notifyPresentationManager=False)
+            orca.setLocusOfFocus(event, event.source, notifyScript=False)
             [obj, characterOffset] = self.getCaretContext()
 
             # Often the first object is an anchor with no text. Try to

@@ -44,6 +44,8 @@ import speech
 import braille
 import settings
 
+_scriptManager = getattr(orca, '_scriptManager')
+
 class BoundingBox:
     """A bounding box, currently it is used to test if a given point is
     inside the bounds of the box.
@@ -293,13 +295,14 @@ class MouseReviewer:
 
         Returns _ItemContext of the component under the mouse.
         """
+
         # Inspect accessible under mouse
         desktop = pyatspi.Registry.getDesktop(0)
         top_window = [None, -1]
         for app in desktop:
             if not app:
                 continue
-            script = orca.getScriptForApp(app)
+            script = _scriptManager.getScript(app)
             if not script:
                 continue
             for frame in app:

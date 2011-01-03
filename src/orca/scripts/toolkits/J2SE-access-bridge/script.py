@@ -27,7 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.default as default
+import orca.scripts.default as default
 import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -169,14 +169,14 @@ class Script(default.Script):
         # and keep focus on the combobox.
         #
         if event.source.getRole() == pyatspi.ROLE_COMBO_BOX:
-            orca.visualAppearanceChanged(event, event.source)
+            self.visualAppearanceChanged(event, event.source)
             return
 
         if event.source.getRole() == pyatspi.ROLE_LIST:
             combobox = self.utilities.ancestorWithRole(
                 event.source, [pyatspi.ROLE_COMBO_BOX], [pyatspi.ROLE_PANEL])
             if combobox:
-                orca.visualAppearanceChanged(event, combobox)
+                self.visualAppearanceChanged(event, combobox)
                 return
 
         default.Script.onActiveDescendantChanged(self, event)
@@ -249,7 +249,7 @@ class Script(default.Script):
         #
         if (event.source.getRole() == pyatspi.ROLE_LABEL) and \
             event.type.startswith("object:state-changed:expanded"):
-            orca.visualAppearanceChanged(event, event.source)
+            self.visualAppearanceChanged(event, event.source)
             return
 
         # This is a workaround for a java-access-bridge bug (Bug 355011)

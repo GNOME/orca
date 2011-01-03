@@ -28,7 +28,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.default as default
+import orca.scripts.default as default
 import orca.speech as speech
 
 from orca.orca_i18n import _

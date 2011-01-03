@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.default as default
+import orca.scripts.default as default
 
 class Script(default.Script):
     """A script to do nothing.  This is for self-voicing apps."""
@@ -33,7 +33,7 @@ class Script(default.Script):
     def __init__(self, app):
         """Creates a script for the given application, if necessary.
         This method should not be called by anyone except the
-        focus_tracking_presenter.
+        script manager.
 
         Arguments:
         - app: the Python Accessible application to create a script for

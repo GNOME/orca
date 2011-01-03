@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -98,8 +98,7 @@ class Script(default.Script):
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
             obj.queryText().setCaretOffset(context.currentOffset)
-            orca.setLocusOfFocus(
-                None, obj, notifyPresentationManager=False)
+            orca.setLocusOfFocus(None, obj, notifyScript=False)
 
     def textLines(self, obj):
         """Creates a generator that can be used to iterate over each line

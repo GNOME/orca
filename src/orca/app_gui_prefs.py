@@ -33,19 +33,20 @@ import sys
 import app_prefs
 import braille
 import debug
-import default
-import focus_tracking_presenter
 import input_event
 import keybindings
+import orca
 import orca_gtkbuilder
 import orca_gui_prefs
 import orca_prefs
 import orca_state
 import orca_platform
-import settings
 import speech
 
 from orca_i18n import _  # for gettext support
+
+_scriptManager = getattr(orca, '_scriptManager')
+_settingsManager = getattr(orca, '_settingsManager')
 
 applicationName = None
 appScript = None
@@ -140,12 +141,11 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
     def writeUserPreferences(self):
         """Write out the user's application-specific Orca preferences.
         """
-        moduleName = settings.getScriptModuleName(self.app)
+        moduleName = _scriptManager.getModuleName(self.app)
         app_prefs.writePreferences(self.prefsDict, moduleName,
                                    self.appScript, self.keyBindingsModel,
                                    self.pronunciationModel)
-        ftp = focus_tracking_presenter.FocusTrackingPresenter()
-        ftp.loadAppSettings(self.appScript)
+        _settingsManager.loadAppSettings(self.appScript)
 
     def _getAppNameForAttribute(self, attributeName):
         """Converts the given Atk attribute name into the application's
@@ -209,7 +209,7 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
 
         # Get the key bindings for the default script.
         #
-        defScript = default.Script(None)
+        defScript = _scriptManager.getDefaultScript()
         self.defKeyBindings = defScript.getKeyBindings()
 
         iterApp = self._createNode(applicationName)

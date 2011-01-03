@@ -30,7 +30,7 @@ import pyatspi
 
 import orca.orca as orca
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.scripts.toolkits.Gecko as Gecko
@@ -214,8 +214,7 @@ class Script(Gecko.Script):
                 event.source.getState().contains(pyatspi.STATE_EDITABLE)
 
         if updatePosition:
-            orca.setLocusOfFocus(
-                event, event.source, notifyPresentationManager=False)
+            orca.setLocusOfFocus(event, event.source, notifyScript=False)
             self.setCaretContext(event.source, event.detail1)
 
             # The Gecko script, should it be about to pass along this

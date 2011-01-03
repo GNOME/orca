@@ -22,13 +22,12 @@ orca_python_PYTHON = \
 	dbusserver.py \
 	debug.py \
 	dectalk.py \
-	default.py \
 	desktop_keyboardmap.py \
 	espeechfactory.py \
+	event_manager.py \
 	eventsynthesizer.py \
 	find.py \
 	flat_review.py \
-	focus_tracking_presenter.py \
 	formatting.py \
 	generator.py \
 	gnomespeechfactory.py \
@@ -58,11 +57,11 @@ orca_python_PYTHON = \
 	outloud.py \
 	phonnames.py \
 	orca_platform.py \
-	presentation_manager.py \
 	pronunciation_dict.py \
 	punctuation_settings.py \
 	rolenames.py \
 	script.py \
+	script_manager.py \
 	script_utilities.py \
 	settings.py \
 	settings_manager.py \

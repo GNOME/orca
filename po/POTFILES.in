@@ -8,11 +8,10 @@ src/orca/braille_generator.py
 src/orca/braille.py
 src/orca/chat.py
 src/orca/chnames.py
-src/orca/default.py
 src/orca/espeechfactory.py
+src/orca/event_manager.py
 src/orca/find.py
 src/orca/flat_review.py
-src/orca/focus_tracking_presenter.py
 src/orca/generator.py
 src/orca/gnomespeechfactory.py
 src/orca/gsmag.py
@@ -61,6 +60,7 @@ src/orca/scripts/apps/soffice/speech_generator.py
 src/orca/scripts/apps/soffice/structural_navigation.py
 src/orca/scripts/apps/Thunderbird/script.py
 src/orca/scripts/apps/Thunderbird/speech_generator.py
+src/orca/scripts/default.py
 src/orca/scripts/toolkits/Gecko/bookmarks.py
 src/orca/scripts/toolkits/Gecko/braille_generator.py
 src/orca/scripts/toolkits/Gecko/script.py

@@ -20,7 +20,7 @@
 """Custom script for liferea."""
 
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.eventsynthesizer as eventsynthesizer

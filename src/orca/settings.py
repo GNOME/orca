@@ -28,7 +28,6 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import os
-import re
 
 screenWidth = 640
 screenHeight = 480
@@ -79,7 +78,6 @@ except:
 
 import pyatspi
 
-import debug
 from acss import ACSS
 from orca_i18n import _           # for gettext support
 from orca_i18n import C_          # to provide qualified translatable strings
@@ -1045,194 +1043,6 @@ def overrideKeyBindings(script, keyBindings):
 def overridePronunciations(script, pronunciations):
     return pronunciations
 
-# Which packages to search, and the order in which to search,
-# for application settings.  These packages are expected to be on
-# the PYTHONPATH and/or subpackages of the "orca" package.
-# REMEMBER: to make something a package, the directory has to
-# have a __init__.py file in it.
-#
-settingsPackages          = ["app-settings"]
-
-# Which packages to search, and the order in which to search,
-# for custom scripts.  These packages are expected to be on
-# the PYTHONPATH and/or subpackages of the "orca" package.
-# REMEMBER: to make something a package, the directory has to
-# have a __init__.py file in it.
-#
-scriptPackages          = ["orca-scripts", "scripts",
-                           "scripts.apps", "scripts.toolkits"]
-
-# A list that helps us map application names to script module
-# names.  The key is the name of an application, and the value is
-# the name of a script module.  There are some default values here,
-# but one may call the setScriptMapping method of this module to
-# extend or override any mappings.
-#
-_scriptMappings = []
-
-def setScriptMapping(regExpression, moduleName):
-    """Tells this module what script module to look for a given
-    application name.  The mappings are stored as a list and each
-    new mapping is added to the beginning of the list, meaning it
-    takes precedence over all other mappings.
-
-    Arguments:
-    - regExpression: a regular expression used to match against an
-                     application name
-    - moduleName:    the name of the Python module containing the script
-                     class definition for the application
-    """
-
-    _scriptMappings.insert(0, [regExpression, moduleName])
-
-def getScriptModuleName(app):
-    """Returns the module name of the script to use for a given
-    application.  Any script mapping set via the setScriptMapping
-    method is searched first, with the ultimate fallback being the
-    name of the application itself.
-
-    Arguments:
-    - app: the application to find a script module name for
-    """
-
-    if not app.name:
-        return None
-
-    for mapping in _scriptMappings:
-        regExpression = mapping[0]
-        moduleName = mapping[1]
-        if regExpression.match(app.name):
-            debug.println(
-                debug.LEVEL_FINEST,
-                "Script mapping for %s is %s" % (app.name, moduleName))
-            return moduleName
-
-    return app.name
-
-# Translators: the regular expression here represents a string to
-# match in the localized application name as seen by at-poke.  For
-# most cases, the application name is the name of the binary used to
-# start the application, but this is an unreliable assumption.  The
-# only reliable way to do the translation is by running the
-# application and then viewing its name in the main window of at-poke.
-# I wish the AT-SPI spec'd this out as machine readable (unlocalized)
-# names, but it's what we're stuck with (unfortunately).
-#
-setScriptMapping(re.compile(_('[\S\s]*StarOffice[\s\S]*')), "soffice")
-
-# Translators: see the regular expression note above.  This is for
-# OpenOffice and StarOffice.
-#
-setScriptMapping(re.compile(_('soffice.bin')), "soffice")
-
-# Translators: see the regular expression note above.  This is for
-# OpenOffice and StarOffice.
-#
-setScriptMapping(re.compile(_('soffice')), "soffice")
-
-# Translators: see the regular expression note above.  This is for the
-# Evolution mail application.
-#
-setScriptMapping(re.compile(_('[Ee]volution')), "evolution")
-
-# Translators: see the regular expression note above.  This is for a
-# version of Mozilla Firefox, which chooses to create strange names
-# for itself at the drop of a hat.
-#
-setScriptMapping(re.compile(_('Deer Park')), "Mozilla")
-
-# Translators: see the regular expression note above.  This is for a
-# version of Mozilla Firefox, which chooses to create strange names
-# for itself at the drop of a hat.
-#
-setScriptMapping(re.compile(_('Bon Echo')), "Mozilla")
-
-# Translators: see the regular expression note above.  This is for a
-# version of Mozilla Firefox, which chooses to create strange names
-# for itself at the drop of a hat.
-#
-setScriptMapping(re.compile(_('Minefield')), "Mozilla")
-
-# Translators: see the regular expression note above.  This is for a
-# version of Mozilla Firefox, which chooses to create strange names
-# for itself at the drop of a hat. [[[TODO - JD: Not marked for
-# translation due to string freeze. I'm not convinced it needs to
-# be translated either.]]]
-#
-#setScriptMapping(re.compile(_('Shiretoko')), "Mozilla")
-setScriptMapping(re.compile('Shiretoko'), "Mozilla")
-
-setScriptMapping(re.compile('Namoroka'), "Mozilla")
-
-# This is a temporary fix for the schema/FF 3.0 not being accessible
-# issue. (See GNOME bugs #535827 and #555466.)
-#
-setScriptMapping(re.compile('[Ff]irefox'), "Mozilla")
-
-# Translators: see the regular expression note above.  This is for a
-# version of Thunderbird, which chooses to now call itself by a different
-# name.
-#
-#setScriptMapping(re.compile(_('Shredder')), "Thunderbird")
-#
-# Don't localize this. It seems to be messing us up. See bug 584103.
-#
-setScriptMapping(re.compile('Shredder'), "Thunderbird")
-
-# Translators: see the regular expression note above.  This is for
-# the Thunderbird e-mail application.
-#
-setScriptMapping(re.compile(_('Mail/News')), "Thunderbird")
-
-# This is for a 3.1 version of Thunderbird, which chooses to now call itself
-# by a different name, Lanikai.
-setScriptMapping(re.compile('Lanikai'), "Thunderbird")
-
-# This is for a 3.3 version of Thunderbird, which chooses to now call itself
-# by a different name, Miramar.
-setScriptMapping(re.compile('Miramar'), "Thunderbird")
-
-# Translators: see the regular expression note above.  This is for
-# gnome_segv2, which calls itself bug-buddy in at-poke.
-#
-setScriptMapping(re.compile(_('bug-buddy')), "gnome_segv2")
-
-# Translators: see the regular expression note above.  This is for
-# the underlying terminal support in gnome-terminal.
-#
-setScriptMapping(re.compile(_('vte')), "gnome-terminal")
-
-# Translators: see the regular expression note above.  This is for
-# supporting gaim, which has recently be renamed to pidgin.
-#
-setScriptMapping(re.compile(_('gaim')), "pidgin")
-setScriptMapping(re.compile('Pidgin'), "pidgin")
-
-# Translators: see the regular expression note above.  This is for
-# supporting yelp, which sometimes identifies itself as gnome-help.
-# [[[TODO - JD: Not marked for translation due to string freeze,
-# plus gnome-help doesn't translate its app name as far as we can
-# determine.  So, translating this string really seems like extra
-# busy work for our translators.]]]
-#
-#setScriptMapping(re.compile(_('gnome-help')), "yelp")
-setScriptMapping(re.compile('gnome-help'), "yelp")
-
-# Gnome-calculator is symbolically linked to gcalctool so we associate it here.
-setScriptMapping(re.compile('gnome-calculator'), "gcalctool")
-
-# This is for development builds of Banshee
-setScriptMapping(re.compile('Nereid'), "Banshee")
-
-# Strip off the extra 'py' that the Device Driver Utility includes
-# as part of its accessible name.
-#
-setScriptMapping(re.compile('ddu.py'), "ddu")
-
-# Strip off the extra 'py' that Gajim includes as part of its name.
-#
-setScriptMapping(re.compile('gajim.py'), "gajim")
-
 # Show deprecated messeges in debug output.
 # Set this to True to help find potential pyatspi porting problems
 #
@@ -1242,11 +1052,6 @@ deprecatedMessages = False
 # maximize on caching.
 #
 focusHistoryLength = 5
-
-# Listen to all AT-SPI events, regardless to if we are using them or not.
-# This is useful for development and debugging.
-#
-listenAllEvents = False
 
 # This is a list of events that Orca should immidiately drop and never look at.
 #

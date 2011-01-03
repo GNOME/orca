@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 import orca.input_event as input_event
 import orca.rolenames as rolenames
 import orca.braille as braille
@@ -1333,7 +1333,7 @@ class Script(default.Script):
             #print "COMPLETED", context.utterance, context.currentOffset
             obj = context.obj[len(context.obj)-1]
             obj.queryText().setCaretOffset(context.currentOffset)
-            orca.setLocusOfFocus(None, obj, notifyPresentationManager=False)
+            orca.setLocusOfFocus(None, obj, notifyScript=False)
 
         # If there is a selection, clear it. See bug #489504 for more details.
         # This is not straight forward with Evolution. all the text is in

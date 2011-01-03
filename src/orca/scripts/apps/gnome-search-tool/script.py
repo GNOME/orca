@@ -26,7 +26,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 
 from orca.orca_i18n import _        # for gettext support
 from orca.orca_i18n import ngettext # for gettext support

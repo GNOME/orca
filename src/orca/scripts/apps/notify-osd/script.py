@@ -25,7 +25,7 @@ __date__      = ""
 __copyright__ = "Copyright (c) 2009 Eitan Isaacson"
 __license__   = "LGPL"
 
-import orca.default as default
+import orca.scripts.default as default
 import orca.settings as settings
 import orca.speech as speech
 import orca.notification_messages as notification_messages

@@ -50,7 +50,7 @@ import urlparse
 
 import orca.braille as braille
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 import orca.eventsynthesizer as eventsynthesizer
 import orca.input_event as input_event
 import orca.keybindings as keybindings
@@ -299,6 +299,8 @@ class Script(default.Script):
             _settingsManager.getSetting('allTextAttributes')
         _settingsManager.setSetting('allTextAttributes', self.allTextAttributes)
 
+        default.Script.activate(self)
+
     def deactivate(self):
         """Called when this script is deactivated."""
         _settingsManager.setSetting('enabledBrailledTextAttributes',
@@ -307,6 +309,8 @@ class Script(default.Script):
                                     self.savedEnabledSpokenTextAttributes)
         _settingsManager.setSetting('allTextAttributes',
                                     self.savedAllTextAttributes)
+
+        default.Script.deactivate(self)
 
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
@@ -1260,7 +1264,7 @@ class Script(default.Script):
             locusOfFocusState = pyatspi.StateSet()
             locusOfFocusState = locusOfFocusState.raw()
 
-        notifyPresentationManagers = False
+        notify = False
 
         # Find out if the caret really moved. Firefox 3.1 gives us caret-moved
         # events when certain focusable objects first get focus. If we haven't
@@ -1317,7 +1321,7 @@ class Script(default.Script):
                         if uriInfo and not uriInfo[5]:
                             return
                         else:
-                            notifyPresentationManagers = True
+                            notify = True
                 elif eventSourceRole == pyatspi.ROLE_SECTION:
                     # Google Calendar's Day grid seems to issue these quite
                     # a bit. If we don't ignore them, we'll loop.
@@ -1359,11 +1363,8 @@ class Script(default.Script):
             else:
                 [obj, characterOffset] = [event.source, event.detail1]
             self.setCaretContext(obj, characterOffset)
-            orca.setLocusOfFocus(
-                event,
-                obj,
-                notifyPresentationManager=notifyPresentationManagers)
-            if notifyPresentationManagers:
+            orca.setLocusOfFocus(event, obj, notifyScript=notify)
+            if notify:
                 # No point in double-brailling the locusOfFocus.
                 #
                 return
@@ -1619,8 +1620,7 @@ class Script(default.Script):
             if not self.utilities.isSameObject(event.source, obj):
                 if not self.utilities.isSameObject(
                         obj, orca_state.locusOfFocus):
-                    orca.setLocusOfFocus(
-                        event, obj, notifyPresentationManager=False)
+                    orca.setLocusOfFocus(event, obj, notifyScript=False)
                     # If an alert got focus, let's do the best we can to 
                     # try to automatically speak its contents while also
                     # making sure the locus of focus and caret context
@@ -1697,7 +1697,7 @@ class Script(default.Script):
            and not self.isAriaWidget(event.source) \
            and not isinstance(orca_state.lastInputEvent,
                               input_event.MouseButtonEvent):
-            orca.visualAppearanceChanged(event, event.source)
+            self.visualAppearanceChanged(event, event.source)
             return
 
         # If an autocomplete appears beneath an entry, we don't want
@@ -1918,8 +1918,7 @@ class Script(default.Script):
 
         if (obj.getRole() == pyatspi.ROLE_CHECK_BOX) \
             and obj.getState().contains(pyatspi.STATE_FOCUSED):
-            orca.setLocusOfFocus(
-                event, obj, notifyPresentationManager=False)
+            orca.setLocusOfFocus(event, obj, notifyScript=False)
 
         default.Script.visualAppearanceChanged(self, event, obj)
 
@@ -5441,8 +5440,7 @@ class Script(default.Script):
         # Reset focus if need be.
         #
         if obj != orca_state.locusOfFocus:
-            orca.setLocusOfFocus(
-                None, obj, notifyPresentationManager=False)
+            orca.setLocusOfFocus(None, obj, notifyScript=False)
 
             # We'd like the object to have focus if it can take focus.
             # Otherwise, we bubble up until we find a parent that can

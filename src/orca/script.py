@@ -25,7 +25,7 @@ InputEventHandler.  The listeners field is a dictionary where the keys
 are AT-SPI event names and the values are function pointers.
 
 Instances of scripts are intended to be created solely by the
-focus_tracking_presenter.
+script manager.
 
 This Script class is not intended to be instantiated directly.
 Instead, it is expected that subclasses of the Script class will be
@@ -47,6 +47,7 @@ import flat_review
 import formatting
 import keybindings
 import orca_state
+import script_manager
 import script_utilities
 import settings
 import speech_generator
@@ -62,7 +63,7 @@ class Script:
     def __init__(self, app):
         """Creates a script for the given application, if necessary.
         This method should not be called by anyone except the
-        focus_tracking_presenter.
+        script manager.
 
         Arguments:
         - app: the Python Accessible application to create a script for
@@ -333,7 +334,7 @@ class Script:
 
         scriptSettings = settings
         if orca_state.activeScript != self:
-            name = settings.getScriptModuleName(self.app)
+            name = script_manager.getModuleName(self.app)
             if name:
                 for package in settings.settingsPackages:
                     name = package + "." + name
@@ -360,11 +361,6 @@ class Script:
         script.  The interest in events is specified via the
         'listeners' field that was defined during the construction of
         this script.
-
-        In general, the primary purpose of handling object events is to
-        keep track of changes to the locus of focus and notify the
-        orca module of these changes via orca.setLocusOfFocus and
-        orca.visualAppearanceChanged.
 
         Note that this script may be passed events it doesn't care
         about, so it needs to react accordingly.
@@ -642,10 +638,6 @@ class Script:
 
         The primary purpose of this method is to present the changed
         information to the user.
-
-        NOTE: scripts should not call this method directly.  Instead,
-        a script should call orca.visualAppearanceChanged, which will
-        eventually result in this method being called.
 
         Arguments:
         - event: if not None, the Event that caused this to happen

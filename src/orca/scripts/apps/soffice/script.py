@@ -41,7 +41,7 @@ import gtk
 import pyatspi
 
 import orca.debug as debug
-import orca.default as default
+import orca.scripts.default as default
 import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -149,6 +149,8 @@ class Script(default.Script):
         attributes.replace("indent:0;", "indent:0mm;")
         _settingsManager.setSetting('enabledSpokenTextAttributes', attributes)
 
+        default.Script.activate(self)
+
     def deactivate(self):
         """Called when this script is deactivated."""
         _settingsManager.setSetting('readTableCellRow',
@@ -157,6 +159,8 @@ class Script(default.Script):
                                     self.savedEnabledBrailledTextAttributes)
         _settingsManager.setSetting('enabledSpokenTextAttributes',
                                     self.savedEnabledSpokenTextAttributes)
+
+        default.Script.activate(self)
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script.
@@ -1817,7 +1821,7 @@ class Script(default.Script):
             if presentEvent:
                 speech.stop()
             orca.setLocusOfFocus(
-                event, event.any_data, notifyPresentationManager=presentEvent)
+                event, event.any_data, notifyScript=presentEvent)
 
             # We'll tuck away the activeDescendant information for future
             # reference since the AT-SPI gives us little help in finding
@@ -1976,8 +1980,7 @@ class Script(default.Script):
                          pyatspi.ROLE_ROOT_PANE,
                          pyatspi.ROLE_FRAME]
             if self.utilities.hasMatchingHierarchy(event.source, rolesList):
-                orca.setLocusOfFocus(
-                    event, event.source, notifyPresentationManager=False)
+                orca.setLocusOfFocus(event, event.source, notifyScript=False)
                 if event.source != self.currentParagraph:
                     self.updateBraille(event.source)
                 return
@@ -1990,7 +1993,7 @@ class Script(default.Script):
             elif event.source.parent and \
                 event.source.parent.getRole() == pyatspi.ROLE_COMBO_BOX:
                 orca.setLocusOfFocus(
-                    None, event.source.parent, notifyPresentationManager=False)
+                    None, event.source.parent, notifyScript=False)
                 return
 
         # If we are in the sbase Table Wizard, try to reduce the numerous

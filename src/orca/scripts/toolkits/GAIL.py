@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import orca.default
+import orca.scripts.default as default
 
-class Script(orca.default.Script):
+class Script(default.Script):
     pass

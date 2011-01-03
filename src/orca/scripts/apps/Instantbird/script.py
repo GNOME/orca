@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.bookmarks as bookmarks
-import orca.default as default
+import orca.scripts.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.Gecko as Gecko

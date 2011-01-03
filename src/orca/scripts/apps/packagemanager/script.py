@@ -30,7 +30,7 @@ __license__   = "LGPL"
 import gtk
 import pyatspi
 
-import orca.default as default
+import orca.scripts.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings

@@ -44,7 +44,6 @@ import orca_gtkbuilder
 import orca_state
 import orca_platform
 import settings
-import default    # for the default keyBindings
 import input_event
 import keybindings
 import pronunciation_dict
@@ -56,7 +55,7 @@ import text_attribute_names
 import orca_gui_profile
 
 _settingsManager = getattr(orca, '_settingsManager')
-
+_scriptManager = getattr(orca, '_scriptManager')
 
 try:
     import louis
@@ -1032,7 +1031,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         model = view.get_model()
         view.set_model(None)
-        defScript = default.Script(None)
+        defScript = _scriptManager.getDefaultScript()
 
         [attrList, attrDict] = \
            defScript.utilities.stringToKeysAndDict(setAttributes)
@@ -1073,7 +1072,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model = view.get_model()
         view.set_model(None)
 
-        defScript = default.Script(None)
+        defScript = _scriptManager.getDefaultScript()
         [attrList, attrDict] = \
             defScript.utilities.stringToKeysAndDict(setAttributes)
         [allAttrList, allAttrDict] = defScript.utilities.stringToKeysAndDict(
@@ -1233,7 +1232,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # Initially setup the list store model based on the values of all
         # the known text attributes.
         #
-        defScript = default.Script(None)
+        defScript = _scriptManager.getDefaultScript()
         [allAttrList, allAttrDict] = defScript.utilities.stringToKeysAndDict(
             _settingsManager.getSetting('allTextAttributes'))
         for i in range(0, len(allAttrList)):
@@ -2434,7 +2433,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - interrupt: if True, interrupt any speech currently being spoken
         """
 
-        defScript = default.Script(None)
+        defScript = _scriptManager.getDefaultScript()
         defScript.speakMessage(text, interrupt=interrupt)
         try:
             defScript.displayBrailleMessage(text, flashTime=-1)
@@ -2620,7 +2619,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         try:
-            defScript = default.Script(None)
+            defScript = _scriptManager.getDefaultScript()
             defScript.setupInputEventHandlers()
             keyBinds = keybindings.KeyBindings()
             keyBinds = settings.overrideKeyBindings(defScript, keyBinds)
@@ -2665,7 +2664,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         iterUnbound = self._getIterOf("Unbound") \
                       or self._createNode(_("Unbound"))
 
-        defScript = default.Script(None)
+        defScript = _scriptManager.getDefaultScript()
 
         # If we are in the app-specific preferences, we already have
         # populated our tree with bindings.  Otherwise, we need to
@@ -5364,7 +5363,7 @@ def showPreferencesUI():
         # Translators: Orca Preferences is the configuration GUI for Orca.
         #
         line = _("Starting Orca Preferences.")
-        defScript = default.Script(None)
+        defScript = _scriptManager.getDefaultScript()
         defScript.speakMessage(line)
         try:
             defScript.displayBrailleMessage(line, flashTime=-1)

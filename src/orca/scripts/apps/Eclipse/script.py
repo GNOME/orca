@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Informal Informatica LTDA."
 __license__   = "LGPL"
 
-import orca.default as default
+import orca.scripts.default as default
 import pyatspi
 from script_utilities import Utilities
 
