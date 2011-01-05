@@ -138,15 +138,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
-
-        if prefsDict is None:
-            generalSettings  = _settingsManager.getGeneralSettings()
-            activeProfile = generalSettings.get('startingProfile')
-        else:
-            activeProfile = prefsDict['activeProfile']
-
-        generalSettings = _settingsManager.getGeneralSettings(activeProfile[1])
-        self.prefsDict = generalSettings
+        self.prefsDict = self._getGeneralSettings(prefsDict)
         self.enableLiveUpdating = \
             _settingsManager.getSetting('enableMagLiveUpdating')
 
@@ -192,6 +184,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.profilesCombo = None
         self.profilesComboModel = None
         self.startingProfileCombo = None
+
+    def _getGeneralSettings(self, prefsDict):
+        if prefsDict is None:
+            generalSettings  = _settingsManager.getGeneralSettings()
+            activeProfile = generalSettings.get('startingProfile')
+        else:
+            activeProfile = prefsDict['activeProfile']
+
+        return _settingsManager.getGeneralSettings(activeProfile[1])
 
     def init(self):
         """Initialize the Orca configuration GUI. Read the users current

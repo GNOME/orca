@@ -72,6 +72,13 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         self.appKeyBindings = None
         self.defKeyBindings = None
 
+    def _getGeneralSettings(self, prefsDict):
+        if prefsDict is None:
+            return orca_gui_prefs.OrcaSetupGUI.\
+                _getGeneralSettings(self, prefsDict)
+
+        return prefsDict
+
     def initAppGUIState(self, thisAppScript):
         """Before we show the GUI to the user we want to remove the
         General tab and gray out the Speech systems and servers 
@@ -315,8 +322,6 @@ def showPreferencesUI():
     # The name of the application that currently has focus.
     #
     applicationName = orca_state.activeScript.app.name
-
-    removeGeneralPane = False
     if not orca_state.appOS and not orca_state.orcaOS:
         # Translators: Orca Preferences in this case, is a configuration GUI
         # for allowing users to set application specific settings from within
@@ -338,16 +343,18 @@ def showPreferencesUI():
                          orca_platform.package,
                          "ui",
                          "orca-advanced-magnification.ui")
+
+        orca_state.appOS = \
+            OrcaSetupGUI(orca_state.prefsUIFile, "orcaSetupWindow", prefsDict)
+        orca_state.appOS.initAppGUIState(appScript)
+
         orca_state.advancedMag = \
-          orca_gui_prefs.OrcaAdvancedMagGUI(orca_state.advancedMagUIFile,
+            orca_gui_prefs.OrcaAdvancedMagGUI(orca_state.advancedMagUIFile,
                                    "orcaMagAdvancedDialog", prefsDict)
         orca_state.advancedMag.init()
         orca_state.advancedMagDialog = \
                            orca_state.advancedMag.getAdvancedMagDialog()
 
-        orca_state.appOS = OrcaSetupGUI(orca_state.prefsUIFile,
-                                        "orcaSetupWindow", prefsDict)
-        removeGeneralPane = True
         orca_state.appOS.init()
     else:
         if not orca_state.orcaWD:
@@ -365,8 +372,6 @@ def showPreferencesUI():
             warningDialog.show()
         return
 
-    if removeGeneralPane:
-        orca_state.appOS.initAppGUIState(appScript)
     orca_state.appOS.showGUI()
 
 def main():
