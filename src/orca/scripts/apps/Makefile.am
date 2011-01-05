@@ -10,6 +10,7 @@ SUBDIRS = \
 	gajim \
 	gcalctool \
 	gdmlogin \
+	gdm-simple-greeter \
 	gedit \
 	gnome_segv2 \
 	gnome-keyring-ask \
