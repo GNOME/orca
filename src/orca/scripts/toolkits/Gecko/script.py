@@ -297,7 +297,7 @@ class Script(default.Script):
 
         self.savedAllTextAttributes = \
             _settingsManager.getSetting('allTextAttributes')
-        _settingsManager.getSetting('allTextAttributes', self.allTextAttributes)
+        _settingsManager.setSetting('allTextAttributes', self.allTextAttributes)
 
     def deactivate(self):
         """Called when this script is deactivated."""
