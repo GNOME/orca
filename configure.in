@@ -130,6 +130,8 @@ src/orca/scripts/apps/rhythmbox/Makefile
 src/orca/scripts/apps/soffice/Makefile
 src/orca/scripts/apps/Thunderbird/Makefile
 src/orca/scripts/apps/yelp/Makefile
+src/orca/scripts/apps/yelp/yelp_v2/Makefile
+src/orca/scripts/apps/yelp/yelp_v3/Makefile
 src/orca/scripts/toolkits/Makefile
 src/orca/scripts/toolkits/Gecko/Makefile
 src/orca/scripts/toolkits/J2SE-access-bridge/Makefile

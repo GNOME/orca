@@ -133,7 +133,10 @@ class ScriptManager:
 
             debug.println(debug.LEVEL_FINE, "Found %s.py" % moduleName)
             try:
-                script = module.Script(app)
+                if hasattr(module, 'getScript'):
+                    script = module.getScript(app)
+                else:
+                    script = module.Script(app)
                 debug.println(debug.LEVEL_FINE, "Loaded %s.py" % moduleName)
                 break
             except:
