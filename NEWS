@@ -1,3 +1,53 @@
+2.91.5 - 10-January-2011
+
+General:
+
+  * Finished bug #631123 - Orca documentation needs to be updated,
+    converted to Mallard, augmented, and moved to the Orca module
+
+  * Fix for bug #636841 - Orca does not speak user which gets selected
+    when the user first presses down cursor in gdm login screen
+
+  * Fix for bug #638623 - The application preferences dialogs are not
+    always correctly populated
+
+  * Fix for bug 638285 - debug.getAccessibleDetails() is called by the
+    generator and scripts regardless of the debug level
+
+  * Fix for bug #638318 - Different "None" strings for gender correct
+    translation
+
+  * Fix for bug #637667 - Profiles are not always loaded correctly
+
+  * Fix for bug 637865 - Orca stops speaking if Escape is pressed after
+    changing synthesizers
+
+Gecko:
+
+  * Fix for bug #638063 - SayAll fails with certain pages in Firefox
+
+  * Fix for bug #638053 - Orca says "blank" in Gecko using the default
+    voice when it should use the system voice
+
+  * Fix for bug #638048 - Orca is breaking up utterances in Gecko when
+    it should not be
+
+  * Fix for bug #628837 - System Voice does not work correctly for Gecko
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs      Czech                Marek Cernocky
+    es      Spanish              Francisco Javier Dorado
+    gl      Galician             Fran Diéguez
+    hu      Hungarian            Attila Hammer
+    sl      Slovenian            Andrej Žnidaršič
+    sv      Swedish              Daniel Nylander
+    ug      Uyghur               Gheyret T.Kenji
+    vi      Vietnamese           Truong Anh Tuan and Nguyễn Thái Ngọc Duy
+    zh_CN   Chinese (Simplified) Aron Xu
+
+==========
+
 2.91.4 - 21-December-2010
 
   "The Settings Manager and Profile Release: Now With More Ducks" 
