@@ -14,11 +14,51 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Documents (WRITE ME)</title>
+  <title>Documents</title>
   <p>
-    Write me
+    To read the contents of any document, use the application's built-in caret
+    navigation mode. As you navigate within the text of the document, <app>Orca</app>
+    will present your new location. As a result, you are likely already familiar with
+    how to read a document using <app>Orca</app>. For instance:
+  </p>
+  <list>
+    <item>
+      <p>
+        Use <key>Left</key> and <key>Right</key> to move and read by character.
+      </p>
+    </item>
+    <item>
+      <p>
+        Use <keyseq><key>Ctrl</key><key>Left</key></keyseq> and
+        <keyseq><key>Ctrl</key><key>Right</key></keyseq> to move and read by word.
+      </p>
+    </item>
+    <item>
+      <p>
+        Use <key>Up</key> and <key>Down</key> to move and read by line.
+      </p>
+    </item>
+    <item>
+      <p>
+        Use <key>Shift</key> in combination with the above commands to select and
+        unselect text.
+      </p>
+    </item>
+  </list>
+  <p>
+    For a complete listing of GNOME's caret navigation commands, see the
+    <link href="ghelp:gnome-access-guide">GNOME Desktop Accessibility Guide</link>.
   </p>
   <p>
-    This document will include SayAll
+    In addition to reading a document by caret navigation, you may find it helpful
+    to read, spell, and obtain the Unicode value for the current text. You can do
+    these things through <app>Orca</app>'s <link xref="howto_flat_review">Flat
+    Review feature</link>.
+  </p>
+  <p>
+    Finally, in order to have <app>Orca</app> speak the entire document from your
+    present location, use the SayAll command. It, along with a more complete
+    listing of <app>Orca</app>'s commands for accessing document text, can
+    be found in the <link xref="commands_reading">Reading Commands</link> guide.
   </p>
 </page>

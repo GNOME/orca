@@ -2,7 +2,7 @@
   <info>
     <link type="next" xref="commands_structural_navigation" />
     <link type="guide" xref="commands#reading_documents" />
-    <link type="seealso" xref="howto_reading_text"  />
+    <link type="seealso" xref="howto_documents"  />
     <link type="seealso" xref="howto_text_attributes"  />
     <link type="seealso" xref="howto_whereami"  />
     <title type="sort">1. Reading</title>
@@ -19,17 +19,6 @@
     </license>
   </info>
   <title>Reading Commands</title>
-  <p>
-    To read the contents of any document, use the application's built-in caret
-    navigation mode. As you navigate within the text of the document, <app>Orca</app>
-    will present your new location. As a result, you are likely already familiar with
-    how to read a document using <app>Orca</app>. However, if you would like to review
-    GNOME's caret navigation commands, please see 
-    "<link href="http://library.gnome.org/users/gnome-access-guide/stable/keynav-52.html">Caret 
-    Navigation Mode</link>" in the
-    <link href="http://library.gnome.org/users/gnome-access-guide/stable">GNOME 
-    Desktop Accessibility Guide</link>.
-  </p>
   <p>
     In addition to the caret navigation commands which are part of GNOME,
     <app>Orca</app> provides a number of commands which you can use to read a
