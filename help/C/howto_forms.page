@@ -2,7 +2,7 @@
   <info>
     <link type="guide" xref="index#reading"/>
      <link type="next" xref="howto_live_regions" />
-    <title type="sort">5. Form Controls</title>
+    <title type="sort">5. Filling out forms</title>
     <desc>
       Accessing widgets embedded in documents
     </desc>
@@ -14,9 +14,81 @@
       <p>Creative Commons Share Alike 3.0</p>
     </license>
   </info>
-  <title>Form Controls (WRITE ME)</title>
+  <title>Filling out forms</title>
   <p>
-    Write me
+    When interacting with web pages and other documents using <app>Orca</app>,
+    you are interacting with the document itself; not a buffered copy of that
+    document. Thus there is no special mode to get into or out of when you
+    wish to fill out a form. Instead, simply navigate to each field whose
+    contents you wish to change, and interact with the widget as if it were in
+    a dialog box.
   </p>
+  <section>
+    <title>Navigating Amongst Form Fields</title>
+    <p>
+      To navigate amongst form fields, you have several options:
+    </p>
+    <list>
+      <item>
+        <p>
+           Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>,
+           to navigate amongst focusable objects, regardless of type.
+        </p>
+      </item>
+      <item>
+        <p>
+          Use <app>Orca</app>'s <link xref="commands_structural_navigation#forms">
+          structural navigation commands for forms</link>.
+        </p>
+      </item>
+      <item>
+        <p>
+          Depending on the form, you may also be able to use <app>Orca</app>'s
+          caret navigation commands, in other words, the arrow keys when
+          <app>Orca</app> is controlling the caret.
+        </p>
+      </item>
+   </list>
+  </section>
+  <section>
+    <title>Exiting Form Fields</title>
+    <p>
+      Because there is no special mode in <app>Orca</app> for interacting with
+      forms, the most frequently-asked question is how to exit a focused form
+      field. For this, too, you have several options:
+    </p>
+    <list>
+      <item>
+        <p>
+          Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq>
+          if you wish to leave the currenty-focused form field and move to the
+          next/previous focusable object, regardless of what that object happens
+          to be.
+        </p>
+      </item>
+      <item>
+        <p>
+          Use <app>Orca</app>'s <link xref="commands_structural_navigation#forms">
+          structural navigation</link> to move to the next/previous form field:
+          <keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq>
+          <key>Orca Modifier</key><key>Shift</key><key>Tab</key></keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>
+          Use <app>Orca</app>'s commands for moving to the next/previous object
+          or chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key>
+          </keyseq>/<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>.
+        </p>
+      </item>
+      <item>
+        <p>
+          If you are not in a list or combo box, you can use caret navigation
+          commands to arrow out of the form field, as long as <app>Orca</app>
+          is controlling the caret.
+        </p>
+      </item>
+    </list>
+  </section>
 </page>
 
