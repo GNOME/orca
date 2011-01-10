@@ -3069,7 +3069,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             # Translators: If this setting is chosen, no punctuation
             # symbols will be spoken as a user reads a document.
             #
-            if widget.get_label() == _("_None"):
+            if widget.get_label() == C_("punctuation level", "_None"):
                 self.prefsDict["verbalizePunctuationStyle"] = \
                     settings.PUNCTUATION_STYLE_NONE
             # Translators: If this setting is chosen, common punctuation

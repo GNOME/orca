@@ -1025,7 +1025,7 @@
                                                 <property name="n_columns">2</property>
                                                 <child>
                                                   <object class="GtkRadioButton" id="noneButton">
-                                                    <property name="label" translatable="yes">_None</property>
+                                                    <property name="label" translatable="yes" context="punctuation level" comments="Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.">_None</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="receives_default">False</property>
@@ -1860,7 +1860,7 @@
                                     <property name="border_width">3</property>
                                     <child>
                                       <object class="GtkRadioButton" id="brailleSelectionNoneButton">
-                                        <property name="label" translatable="yes">_None</property>
+                                        <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.">_None</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
@@ -1957,7 +1957,7 @@
                                     <property name="visible">True</property>
                                     <child>
                                       <object class="GtkRadioButton" id="brailleLinkNoneButton">
-                                        <property name="label" translatable="yes">_None</property>
+                                        <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.">_None</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
@@ -4164,7 +4164,7 @@ attributes&lt;/b&gt;</property>
                                     <property name="border_width">3</property>
                                     <child>
                                       <object class="GtkRadioButton" id="textBrailleNoneButton">
-                                        <property name="label" translatable="yes">_None</property>
+                                        <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.">_None</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
