@@ -135,9 +135,9 @@
     <p>
       To clear headers, simply double-click the command you used to set them.
       Thus double-clicking <keyseq><key>Orca Modifier</key><key>R</key></keyseq>
-      tells <app>Orca</app> there are no row headers. Double-clicking 
+      tells <app>Orca</app> there are no column headers. Double-clicking 
       <keyseq><key>Orca Modifier</key><key>C</key></keyseq> tells <app>Orca</app>
-      there are no column headers.
+      there are no row headers.
     </p>
   </section>
 </page>

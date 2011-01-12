@@ -48,7 +48,7 @@
   <section>
     <title>Application-Unique Preferences</title>
       <p>
-        In contrast to Orca preferences, there are appliation-unique preferences.
+        In contrast to Orca preferences, there are application-unique preferences.
         These preferences allow you to customize <app>Orca</app> functionality
         that only applies in certain environments, such as on web pages or in
         chat applications. As a result, you will only find these options
