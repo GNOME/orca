@@ -131,6 +131,10 @@ _textAttributeTable["indent"] = C_("textattr", "indent")
 # https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #
 _textAttributeTable["invalid"] = C_("textattr", "mistake")
+# Translators: this attribute specifies there is something "wrong" with
+# the text, such as it being a misspelled word. See:
+# https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#
 
 # Translators: this attribute specifies whether the text is invisible.
 # It will be a "true" or "false" value.
@@ -734,6 +738,11 @@ _textAttributeTable["solid"] = C_("textattr", "solid")
 # https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #
 _textAttributeTable["spelling"] = C_("textattr", "spelling")
+
+# Translators: This is the text-spelling attribute. See:
+# http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#
+_textAttributeTable["text-spelling"] = C_("textattr", "spelling")
 
 def getTextAttributeKey(localizedTextAttr):
     """Given a localized text attribute, return the original text 
