@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-07 00:50+0100\n"
-"PO-Revision-Date: 2011-01-07 00:55+0100\n"
+"POT-Creation-Date: 2011-01-14 16:40+0100\n"
+"PO-Revision-Date: 2011-01-14 16:40+0100\n"
 "Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
 "Language-Team: Galician <gnome-gl-list@gnome.org>\n"
 "Language: gl\n"
@@ -4878,7 +4878,9 @@ msgstr "Puntos 7 _e 8"
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:3072 ../src/orca/orca-setup.ui.h:170
+#. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
+#: ../src/orca/orca_gui_prefs.py:3072 ../src/orca/orca-setup.ui.h:185
+msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Ningún"
 
@@ -5919,48 +5921,54 @@ msgstr "_Cargar"
 msgid "_New entry"
 msgstr "_Nova entrada"
 
-#: ../src/orca/orca-setup.ui.h:171
+#: ../src/orca/orca-setup.ui.h:170
 msgid "_Person:"
 msgstr "_Persoa:"
 
-#: ../src/orca/orca-setup.ui.h:172
+#: ../src/orca/orca-setup.ui.h:171
 msgid "_Position:"
 msgstr "_Posición:"
 
-#: ../src/orca/orca-setup.ui.h:173
+#: ../src/orca/orca-setup.ui.h:172
 msgid "_Present tooltips"
 msgstr "_Mostrar indicacións"
 
-#: ../src/orca/orca-setup.ui.h:174
+#: ../src/orca/orca-setup.ui.h:173
 msgid "_Rate:"
 msgstr "_Velocidade:"
 
-#: ../src/orca/orca-setup.ui.h:175
+#: ../src/orca/orca-setup.ui.h:174
 msgid "_Reset"
 msgstr "_Restabelecer"
 
-#: ../src/orca/orca-setup.ui.h:176
+#: ../src/orca/orca-setup.ui.h:175
 msgid "_Right:"
 msgstr "De_reita:"
 
-#: ../src/orca/orca-setup.ui.h:177
+#: ../src/orca/orca-setup.ui.h:176
 msgid "_Speak all"
 msgstr "Ler _todo"
 
 #. Translators: Orca can present the current time to the user, here they can choose how the time should be presented to them.
-#: ../src/orca/orca-setup.ui.h:179
+#: ../src/orca/orca-setup.ui.h:178
 msgid "_Time format:"
 msgstr "Formato da _hora:"
 
-#: ../src/orca/orca-setup.ui.h:180
+#: ../src/orca/orca-setup.ui.h:179
 msgid "_Top:"
 msgstr "_Superior:"
 
-#: ../src/orca/orca-setup.ui.h:181
+#: ../src/orca/orca-setup.ui.h:180
 msgid "_Voice settings:"
 msgstr "_Configuracións da voz:"
 
+#. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
 #: ../src/orca/orca-setup.ui.h:182
+msgctxt "braille dots"
+msgid "_None"
+msgstr "_Ningún"
+
+#: ../src/orca/orca-setup.ui.h:183
 msgid "pixels"
 msgstr "píxeles"
 
