@@ -2526,10 +2526,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                + kb.keysymstring \
                                + clickCount
                     model.set(iterChild,
-                              MOD_MASK2, kb.modifier_mask,
-                              MOD_USED2, kb.modifiers,
+                              MOD_MASK2, str(kb.modifier_mask),
+                              MOD_USED2, str(kb.modifiers),
                               KEY2, kb.keysymstring,
-                              CLICK_COUNT2, kb.click_count,
+                              CLICK_COUNT2, str(kb.click_count),
                               OLDTEXT2, text,
                               TEXT2, text)
                 iterChild = model.iter_next(iterChild)
@@ -2566,10 +2566,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             model.set (myiter,
                        HANDLER,      handl,
                        DESCRIP,      kb.handler.description,
-                       MOD_MASK1,    kb.modifier_mask,
-                       MOD_USED1,    kb.modifiers,
+                       MOD_MASK1,    str(kb.modifier_mask),
+                       MOD_USED1,    str(kb.modifiers),
                        KEY1,         kb.keysymstring,
-                       CLICK_COUNT1, kb.click_count,
+                       CLICK_COUNT1, str(kb.click_count),
                        OLDTEXT1,     text,
                        TEXT1,        text,
                        MODIF,        modif,
@@ -2607,7 +2607,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             model.set (myiter,
                        HANDLER,  handl,
                        DESCRIP,  inputEvHand.description,
-                       KEY1,     com,
+                       KEY1,     str(com),
                        TEXT1,    braille.command_name[com],
                        MODIF,    modif,
                        EDITABLE, False)
@@ -4094,11 +4094,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             clickCount = 1
 
         treeModel.set(myiter,
-                      modMask, settings.defaultModifierMask,
-                      modUsed, mods,
+                      modMask, str(settings.defaultModifierMask),
+                      modUsed, str(mods),
                       key, string,
                       text, new_text,
-                      click_count, clickCount,
+                      click_count, str(clickCount),
                       MODIF, modified)
         speech.stop()
         if new_text:
