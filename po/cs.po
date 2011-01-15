@@ -1,30 +1,32 @@
 # Czech translation of orca.
 # Copyright (C) 2004, 2008, 2009, 2010 the author(s) of orca.
 # This file is distributed under the same license as the orca package.
+#
 # Miloslav Trmac <mitr@volny.cz>, 2004.
 # Jakub Friedl <jfriedl@suse.cz>, 2007.
 # Martin Sukany <sukany@braillnet.cz>, 2008.
 # Lucas Lommer <llommer@svn.gnome.org>, 2008, 2009, 2010.
 # Petr Kovar <pknbe@volny.cz>, 2008.
-# Marek Černocký <marek@manet.cz>, 2010.
+# Marek Černocký <marek@manet.cz>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-29 23:37+0100\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&component=i18n\n"
+"POT-Creation-Date: 2011-01-14 21:10+0000\n"
 "PO-Revision-Date: 2010-12-27 12:13+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:209
+#: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
 #: ../src/orca/keybindings.py:157 ../src/orca/orca_gui_main.py:141
-#: ../src/orca/orca_gui_prefs.py:2554 ../src/orca/orca_gui_prefs.py:2659
+#: ../src/orca/orca_gui_prefs.py:2555 ../src/orca/orca_gui_prefs.py:2660
 #: ../src/orca/orca-splash.ui.h:1
 msgid "Orca"
 msgstr "Orca"
@@ -44,7 +46,7 @@ msgstr ""
 msgid "Screen Reader and Magnifier"
 msgstr "Čtení obrazovky a lupa"
 
-#: ../src/orca/app_gui_prefs.py:128
+#: ../src/orca/app_gui_prefs.py:135
 #, python-format
 msgid "Orca Preferences for %s"
 msgstr "Předvolby Orca pro %s"
@@ -52,11 +54,11 @@ msgstr "Předvolby Orca pro %s"
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:214 ../src/orca/orca_gui_prefs.py:2665
+#: ../src/orca/app_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:2666
 msgid "Unbound"
 msgstr "Nepoužito"
 
-#: ../src/orca/app_gui_prefs.py:308
+#: ../src/orca/app_gui_prefs.py:315
 msgid "No application has focus."
 msgstr "Žádná aplikace není aktivní."
 
@@ -64,7 +66,7 @@ msgstr "Žádná aplikace není aktivní."
 #. for allowing users to set application specific settings from within
 #. Orca for the application that currently has focus.
 #.
-#: ../src/orca/app_gui_prefs.py:325
+#: ../src/orca/app_gui_prefs.py:330
 #, python-format
 msgid "Starting Orca Preferences for %s."
 msgstr "Spouští se předvolby Orca pro %s."
@@ -3860,8 +3862,8 @@ msgstr "Zvětšování myši zapnuto."
 #. Translators: this is an algorithm for magnifying pixels
 #. on the screen.
 #.
-#: ../src/orca/mag.py:1776 ../src/orca/orca_gui_prefs.py:2035
-#: ../src/orca/orca_gui_prefs.py:2061 ../src/orca/orca_gui_prefs.py:2064
+#: ../src/orca/mag.py:1776 ../src/orca/orca_gui_prefs.py:2036
+#: ../src/orca/orca_gui_prefs.py:2062 ../src/orca/orca_gui_prefs.py:2065
 #: ../src/orca/orca-setup.ui.h:69
 msgid "Full Screen"
 msgstr "Celá obrazovka"
@@ -3875,37 +3877,37 @@ msgstr "Režim celé obrazovky není dostupný."
 
 #. Translators: magnification will use the top half of the screen.
 #.
-#: ../src/orca/mag.py:1785 ../src/orca/orca_gui_prefs.py:2039
-#: ../src/orca/orca_gui_prefs.py:2065 ../src/orca/orca-setup.ui.h:152
+#: ../src/orca/mag.py:1785 ../src/orca/orca_gui_prefs.py:2040
+#: ../src/orca/orca_gui_prefs.py:2066 ../src/orca/orca-setup.ui.h:152
 msgid "Top Half"
 msgstr "Horní polovina"
 
 #. Translators: magnification will use the bottom half of the screen.
 #.
-#: ../src/orca/mag.py:1789 ../src/orca/orca_gui_prefs.py:2043
-#: ../src/orca/orca_gui_prefs.py:2066 ../src/orca/orca-setup.ui.h:24
+#: ../src/orca/mag.py:1789 ../src/orca/orca_gui_prefs.py:2044
+#: ../src/orca/orca_gui_prefs.py:2067 ../src/orca/orca-setup.ui.h:24
 msgid "Bottom Half"
 msgstr "Dolní polovina"
 
 #. Translators: magnification will use the left half of the screen.
 #.
-#: ../src/orca/mag.py:1793 ../src/orca/orca_gui_prefs.py:2047
-#: ../src/orca/orca_gui_prefs.py:2067 ../src/orca/orca-setup.ui.h:76
+#: ../src/orca/mag.py:1793 ../src/orca/orca_gui_prefs.py:2048
+#: ../src/orca/orca_gui_prefs.py:2068 ../src/orca/orca-setup.ui.h:76
 msgid "Left Half"
 msgstr "Levá polovina"
 
 #. Translators: magnification will use the right half of the screen.
 #.
-#: ../src/orca/mag.py:1797 ../src/orca/orca_gui_prefs.py:2051
-#: ../src/orca/orca_gui_prefs.py:2068 ../src/orca/orca-setup.ui.h:123
+#: ../src/orca/mag.py:1797 ../src/orca/orca_gui_prefs.py:2052
+#: ../src/orca/orca_gui_prefs.py:2069 ../src/orca/orca-setup.ui.h:123
 msgid "Right Half"
 msgstr "Pravá polovina"
 
 #. Translators: the user has selected a custom area of the screen
 #. to use for magnification.
 #.
-#: ../src/orca/mag.py:1802 ../src/orca/orca_gui_prefs.py:2056
-#: ../src/orca/orca_gui_prefs.py:2069 ../src/orca/orca-setup.ui.h:37
+#: ../src/orca/mag.py:1802 ../src/orca/orca_gui_prefs.py:2057
+#: ../src/orca/orca_gui_prefs.py:2070 ../src/orca/orca-setup.ui.h:37
 msgid "Custom"
 msgstr "Vlastní"
 
@@ -4018,8 +4020,8 @@ msgstr "_Modrá:"
 #. on the screen.
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:6
-#: ../src/orca/orca_gui_prefs.py:4758 ../src/orca/orca_gui_prefs.py:4769
-#: ../src/orca/orca_gui_prefs.py:4771 ../src/orca/orca_gui_prefs.py:4792
+#: ../src/orca/orca_gui_prefs.py:4759 ../src/orca/orca_gui_prefs.py:4770
+#: ../src/orca/orca_gui_prefs.py:4772 ../src/orca/orca_gui_prefs.py:4793
 msgid "Bilinear"
 msgstr "Lineárně"
 
@@ -4029,8 +4031,8 @@ msgstr "Lineárně"
 #. (75, 100, 125) would become (75, 100, 0).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:7
-#: ../src/orca/orca_gui_prefs.py:5014 ../src/orca/orca_gui_prefs.py:5041
-#: ../src/orca/orca_gui_prefs.py:5112
+#: ../src/orca/orca_gui_prefs.py:5015 ../src/orca/orca_gui_prefs.py:5042
+#: ../src/orca/orca_gui_prefs.py:5113
 msgid "Desaturate blue"
 msgstr "Zesvětlit modrou"
 
@@ -4040,7 +4042,7 @@ msgstr "Zesvětlit modrou"
 #. (75, 100, 125) would become (75, 0, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:8
-#: ../src/orca/orca_gui_prefs.py:5006 ../src/orca/orca_gui_prefs.py:5104
+#: ../src/orca/orca_gui_prefs.py:5007 ../src/orca/orca_gui_prefs.py:5105
 msgid "Desaturate green"
 msgstr "Zesvětlit zelenou"
 
@@ -4050,8 +4052,8 @@ msgstr "Zesvětlit zelenou"
 #. (75, 100, 125) would be become (0, 100, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:9
-#: ../src/orca/orca_gui_prefs.py:4998 ../src/orca/orca_gui_prefs.py:5040
-#: ../src/orca/orca_gui_prefs.py:5096
+#: ../src/orca/orca_gui_prefs.py:4999 ../src/orca/orca_gui_prefs.py:5041
+#: ../src/orca/orca_gui_prefs.py:5097
 msgid "Desaturate red"
 msgstr "Zesvětlit červenou"
 
@@ -4065,8 +4067,8 @@ msgstr "Zele_ná:"
 #. (100, 125, 75).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:11
-#: ../src/orca/orca_gui_prefs.py:5030 ../src/orca/orca_gui_prefs.py:5043
-#: ../src/orca/orca_gui_prefs.py:5128
+#: ../src/orca/orca_gui_prefs.py:5031 ../src/orca/orca_gui_prefs.py:5044
+#: ../src/orca/orca_gui_prefs.py:5129
 msgid "Negative hue shift"
 msgstr "Zhoršení barevného odstínu"
 
@@ -4079,11 +4081,11 @@ msgstr "Zhoršení barevného odstínu"
 #. track the mouse.
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:12
-#: ../src/orca/orca_gui_prefs.py:112 ../src/orca/orca_gui_prefs.py:2112
-#: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca_gui_prefs.py:4764
-#: ../src/orca/orca_gui_prefs.py:4771 ../src/orca/orca_gui_prefs.py:4794
-#: ../src/orca/orca_gui_prefs.py:4966 ../src/orca/orca_gui_prefs.py:5033
-#: ../src/orca/orca_gui_prefs.py:5036 ../src/orca/orca_gui_prefs.py:5064
+#: ../src/orca/orca_gui_prefs.py:112 ../src/orca/orca_gui_prefs.py:2113
+#: ../src/orca/orca_gui_prefs.py:2133 ../src/orca/orca_gui_prefs.py:4765
+#: ../src/orca/orca_gui_prefs.py:4772 ../src/orca/orca_gui_prefs.py:4795
+#: ../src/orca/orca_gui_prefs.py:4967 ../src/orca/orca_gui_prefs.py:5034
+#: ../src/orca/orca_gui_prefs.py:5037 ../src/orca/orca_gui_prefs.py:5065
 #: ../src/orca/orca-setup.ui.h:101
 msgid "None"
 msgstr "Žádný"
@@ -4094,8 +4096,8 @@ msgstr "Žádný"
 #. (125, 75, 100).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:13
-#: ../src/orca/orca_gui_prefs.py:5022 ../src/orca/orca_gui_prefs.py:5042
-#: ../src/orca/orca_gui_prefs.py:5120
+#: ../src/orca/orca_gui_prefs.py:5023 ../src/orca/orca_gui_prefs.py:5043
+#: ../src/orca/orca_gui_prefs.py:5121
 msgid "Positive hue shift"
 msgstr "Zlepšení barevného odstínu"
 
@@ -4113,8 +4115,8 @@ msgstr "_Zdrojový zobrazovač:"
 #. (75, 100, 125) would become (75, 100, 255).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:16
-#: ../src/orca/orca_gui_prefs.py:4990 ../src/orca/orca_gui_prefs.py:5039
-#: ../src/orca/orca_gui_prefs.py:5088
+#: ../src/orca/orca_gui_prefs.py:4991 ../src/orca/orca_gui_prefs.py:5040
+#: ../src/orca/orca_gui_prefs.py:5089
 msgid "Saturate blue"
 msgstr "Nasytit modrou"
 
@@ -4124,8 +4126,8 @@ msgstr "Nasytit modrou"
 #. (75, 100, 125) would become (75, 255, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:17
-#: ../src/orca/orca_gui_prefs.py:4982 ../src/orca/orca_gui_prefs.py:5038
-#: ../src/orca/orca_gui_prefs.py:5080
+#: ../src/orca/orca_gui_prefs.py:4983 ../src/orca/orca_gui_prefs.py:5039
+#: ../src/orca/orca_gui_prefs.py:5081
 msgid "Saturate green"
 msgstr "Nasytit zelenou"
 
@@ -4135,8 +4137,8 @@ msgstr "Nasytit zelenou"
 #. (75, 100, 125) would be become (255, 100, 125).
 #.
 #: ../src/orca/orca-advanced-magnification.ui.h:18
-#: ../src/orca/orca_gui_prefs.py:4974 ../src/orca/orca_gui_prefs.py:5037
-#: ../src/orca/orca_gui_prefs.py:5072
+#: ../src/orca/orca_gui_prefs.py:4975 ../src/orca/orca_gui_prefs.py:5038
+#: ../src/orca/orca_gui_prefs.py:5073
 msgid "Saturate red"
 msgstr "Nasytit červenou"
 
@@ -4375,11 +4377,11 @@ msgstr "Povolit braillský zobrazovač? Zadejte A nebo N: "
 msgid "Automatically start orca when you log in?  Enter y or n: "
 msgstr "Automaticky spustit nástroj Orca při přihlášení? Napište A nebo N:"
 
-#: ../src/orca/orca_console_prefs.py:591 ../src/orca/orca_gui_prefs.py:522
+#: ../src/orca/orca_console_prefs.py:591 ../src/orca/orca_gui_prefs.py:523
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "Zpřístupnění grafického prostředí GNOME bylo právě spuštěno."
 
-#: ../src/orca/orca_console_prefs.py:597 ../src/orca/orca_gui_prefs.py:524
+#: ../src/orca/orca_console_prefs.py:597 ../src/orca/orca_gui_prefs.py:525
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
 "Musíte se odhlásit a následně znovu přihlásit, aby změny vstoupily v "
@@ -4551,8 +4553,8 @@ msgstr ""
 #. magnifier.  Centered means that Orca attempts to keep
 #. the object of interest in the center of the magnified window.
 #.
-#: ../src/orca/orca_gui_prefs.py:106 ../src/orca/orca_gui_prefs.py:2112
-#: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca-setup.ui.h:30
+#: ../src/orca/orca_gui_prefs.py:106 ../src/orca/orca_gui_prefs.py:2113
+#: ../src/orca/orca_gui_prefs.py:2133 ../src/orca/orca-setup.ui.h:30
 msgid "Centered"
 msgstr "Vždycky na střed"
 
@@ -4564,7 +4566,7 @@ msgstr "Vždycky na střed"
 #. the desktop, Orca positions the mouse 25% from the left edge
 #. of the magnified region.
 #.
-#: ../src/orca/orca_gui_prefs.py:122 ../src/orca/orca_gui_prefs.py:2112
+#: ../src/orca/orca_gui_prefs.py:122 ../src/orca/orca_gui_prefs.py:2113
 #: ../src/orca/orca-setup.ui.h:118
 msgid "Proportional"
 msgstr "Přímo úměrné"
@@ -4574,8 +4576,8 @@ msgstr "Přímo úměrné"
 #. magnifier.  Push means that Orca will move the magnified
 #. region just enough to display the object of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:129 ../src/orca/orca_gui_prefs.py:2112
-#: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca-setup.ui.h:119
+#: ../src/orca/orca_gui_prefs.py:129 ../src/orca/orca_gui_prefs.py:2113
+#: ../src/orca/orca_gui_prefs.py:2133 ../src/orca/orca-setup.ui.h:119
 msgid "Push"
 msgstr "Po posunutí"
 
@@ -4586,7 +4588,7 @@ msgstr "Po posunutí"
 #. what action Orca will take when the user invokes an Orca-specific
 #. keyboard command.
 #.
-#: ../src/orca/orca_gui_prefs.py:273
+#: ../src/orca/orca_gui_prefs.py:274
 msgid "Function"
 msgstr "Funkce"
 
@@ -4594,7 +4596,7 @@ msgstr "Funkce"
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.
 #.
-#: ../src/orca/orca_gui_prefs.py:351
+#: ../src/orca/orca_gui_prefs.py:352
 msgid "Key Binding"
 msgstr "Klávesová zkratka"
 
@@ -4605,7 +4607,7 @@ msgstr "Klávesová zkratka"
 #. addition to the key bindings in the "Key Bindings"
 #. column.
 #.
-#: ../src/orca/orca_gui_prefs.py:430
+#: ../src/orca/orca_gui_prefs.py:431
 msgid "Alternate"
 msgstr "Alternativní"
 
@@ -4613,7 +4615,7 @@ msgstr "Alternativní"
 #. cells represent whether a key binding has been modified
 #. from the default key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:450
+#: ../src/orca/orca_gui_prefs.py:451
 msgid "Modified"
 msgstr "Změněný"
 
@@ -4621,7 +4623,7 @@ msgstr "Změněný"
 #. by Orca when presenting the content of the screen and other
 #. messages.
 #.
-#: ../src/orca/orca_gui_prefs.py:791
+#: ../src/orca/orca_gui_prefs.py:792
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Výchozí"
@@ -4629,7 +4631,7 @@ msgstr "Výchozí"
 #. Translators: This refers to the voice used by Orca when
 #. presenting one or more characters which is in uppercase.
 #.
-#: ../src/orca/orca_gui_prefs.py:795
+#: ../src/orca/orca_gui_prefs.py:796
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Velká písmena"
@@ -4638,7 +4640,7 @@ msgstr "Velká písmena"
 #. presenting one or more characters which is part of a
 #. hyperlink.
 #.
-#: ../src/orca/orca_gui_prefs.py:800
+#: ../src/orca/orca_gui_prefs.py:801
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Odkaz"
@@ -4652,7 +4654,7 @@ msgstr "Odkaz"
 #. user Tabs into a list of six items and the third item is
 #. selected. And so on.
 #.
-#: ../src/orca/orca_gui_prefs.py:810
+#: ../src/orca/orca_gui_prefs.py:811
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Systém"
@@ -4662,7 +4664,7 @@ msgstr "Systém"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1258
+#: ../src/orca/orca_gui_prefs.py:1259
 msgid "Attribute Name"
 msgstr "Název atributu"
 
@@ -4673,7 +4675,7 @@ msgstr "Název atributu"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1273
+#: ../src/orca/orca_gui_prefs.py:1274
 msgid "Speak"
 msgstr "Říci"
 
@@ -4684,7 +4686,7 @@ msgstr "Říci"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1291
+#: ../src/orca/orca_gui_prefs.py:1292
 msgid "Mark in braille"
 msgstr "Označit na braillu"
 
@@ -4703,7 +4705,7 @@ msgstr "Označit na braillu"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1317
+#: ../src/orca/orca_gui_prefs.py:1318
 msgid "Present Unless"
 msgstr "Prezentovat kromě"
 
@@ -4714,7 +4716,7 @@ msgstr "Prezentovat kromě"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1440
+#: ../src/orca/orca_gui_prefs.py:1441
 msgid "Actual String"
 msgstr "Skutečný řetězec"
 
@@ -4725,7 +4727,7 @@ msgstr "Skutečný řetězec"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1457
+#: ../src/orca/orca_gui_prefs.py:1458
 msgid "Replacement String"
 msgstr "Nahradit řetězcem"
 
@@ -4738,7 +4740,7 @@ msgstr "Nahradit řetězcem"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1650 ../src/orca/orca-setup.ui.h:27
+#: ../src/orca/orca_gui_prefs.py:1651 ../src/orca/orca-setup.ui.h:27
 msgid "Break speech into ch_unks between pauses"
 msgstr "Rozdělovat projev na části podle pa_uz"
 
@@ -4746,7 +4748,7 @@ msgstr "Rozdělovat projev na části podle pa_uz"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:1662 ../src/orca/orca_gui_prefs.py:3154
+#: ../src/orca/orca_gui_prefs.py:1663 ../src/orca/orca_gui_prefs.py:3155
 #: ../src/orca/orca-setup.ui.h:77
 msgid "Line"
 msgstr "Řádcích"
@@ -4755,7 +4757,7 @@ msgstr "Řádcích"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:1662 ../src/orca/orca_gui_prefs.py:3160
+#: ../src/orca/orca_gui_prefs.py:1663 ../src/orca/orca_gui_prefs.py:3161
 #: ../src/orca/orca-setup.ui.h:127
 msgid "Sentence"
 msgstr "Větách"
@@ -4766,7 +4768,7 @@ msgstr "Větách"
 #. and window they happen to be in.
 #.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca_gui_prefs.py:1761 ../src/orca/orca_gui_prefs.py:3119
+#: ../src/orca/orca_gui_prefs.py:1762 ../src/orca/orca_gui_prefs.py:3120
 #: ../src/orca/orca-setup.ui.h:112
 msgctxt "ProgressBar"
 msgid "All"
@@ -4778,7 +4780,7 @@ msgstr "Všechny"
 #. progress bar is in the active application (but not necessarily
 #. in the current window).
 #.
-#: ../src/orca/orca_gui_prefs.py:1768
+#: ../src/orca/orca_gui_prefs.py:1769
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Aplikace"
@@ -4788,7 +4790,7 @@ msgstr "Aplikace"
 #. Orca will present progress bar updates as long as the progress
 #. bar is in the active window.
 #.
-#: ../src/orca/orca_gui_prefs.py:1774 ../src/orca/orca_gui_prefs.py:3127
+#: ../src/orca/orca_gui_prefs.py:1775 ../src/orca/orca_gui_prefs.py:3128
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Okno"
@@ -4797,7 +4799,7 @@ msgstr "Okno"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1882 ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/orca_gui_prefs.py:1883 ../src/orca/orca-setup.ui.h:68
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Oznamovat znaky _diakritiky"
 
@@ -4808,7 +4810,7 @@ msgstr "Oznamovat znaky _diakritiky"
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1890 ../src/orca/orca-setup.ui.h:65
+#: ../src/orca/orca_gui_prefs.py:1891 ../src/orca/orca-setup.ui.h:65
 msgid "Enable echo by cha_racter"
 msgstr "Číst po _znacích"
 
@@ -4816,7 +4818,7 @@ msgstr "Číst po _znacích"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2492
+#: ../src/orca/orca_gui_prefs.py:2493
 msgid "(double click)"
 msgstr "(dvakrát stisknout)"
 
@@ -4824,7 +4826,7 @@ msgstr "(dvakrát stisknout)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2498
+#: ../src/orca/orca_gui_prefs.py:2499
 msgid "(triple click)"
 msgstr "(třikrát stisknout)"
 
@@ -4833,7 +4835,7 @@ msgstr "(třikrát stisknout)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2602 ../src/orca/orca_gui_prefs.py:2697
+#: ../src/orca/orca_gui_prefs.py:2603 ../src/orca/orca_gui_prefs.py:2698
 msgid "Braille Bindings"
 msgstr "Braillské klávesové zkratky"
 
@@ -4842,8 +4844,8 @@ msgstr "Braillské klávesové zkratky"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2953 ../src/orca/orca_gui_prefs.py:2994
-#: ../src/orca/orca_gui_prefs.py:3034 ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca_gui_prefs.py:2954 ../src/orca/orca_gui_prefs.py:2995
+#: ../src/orca/orca_gui_prefs.py:3035 ../src/orca/orca-setup.ui.h:44
 msgid "Dot _7"
 msgstr "Bod _7"
 
@@ -4851,8 +4853,8 @@ msgstr "Bod _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2960 ../src/orca/orca_gui_prefs.py:3001
-#: ../src/orca/orca_gui_prefs.py:3041 ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca_gui_prefs.py:2961 ../src/orca/orca_gui_prefs.py:3002
+#: ../src/orca/orca_gui_prefs.py:3042 ../src/orca/orca-setup.ui.h:45
 msgid "Dot _8"
 msgstr "Bod _8"
 
@@ -4860,24 +4862,26 @@ msgstr "Bod _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2967 ../src/orca/orca_gui_prefs.py:3008
-#: ../src/orca/orca_gui_prefs.py:3048 ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca_gui_prefs.py:2968 ../src/orca/orca_gui_prefs.py:3009
+#: ../src/orca/orca_gui_prefs.py:3049 ../src/orca/orca-setup.ui.h:46
 msgid "Dots 7 an_d 8"
 msgstr "_Body 7 a 8"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
-#: ../src/orca/orca_gui_prefs.py:3071 ../src/orca/orca-setup.ui.h:170
+#. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
+#: ../src/orca/orca_gui_prefs.py:3072 ../src/orca/orca-setup.ui.h:185
+msgctxt "punctuation level"
 msgid "_None"
-msgstr "Žá_dná"
+msgstr "Žád_ná"
 
 #. Translators: If this setting is chosen, common punctuation
 #. symbols (like comma, period, question mark) will not be
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:3079 ../src/orca/orca-setup.ui.h:129
+#: ../src/orca/orca_gui_prefs.py:3080 ../src/orca/orca-setup.ui.h:129
 msgid "So_me"
 msgstr "Ně_která"
 
@@ -4885,7 +4889,7 @@ msgstr "Ně_která"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:3086 ../src/orca/orca-setup.ui.h:78
+#: ../src/orca/orca_gui_prefs.py:3087 ../src/orca/orca-setup.ui.h:78
 msgid "M_ost"
 msgstr "_Většina"
 
@@ -4893,7 +4897,7 @@ msgstr "_Většina"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:3246 ../src/orca/orca_gui_prefs.py:3350
+#: ../src/orca/orca_gui_prefs.py:3247 ../src/orca/orca_gui_prefs.py:3351
 #: ../src/orca/orca-setup.ui.h:28
 msgid "Brie_f"
 msgstr "_Stručný"
@@ -4903,7 +4907,7 @@ msgstr "_Stručný"
 #. they just want the current cell to be presented to them.
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/orca_gui_prefs.py:3270 ../src/orca/orca-setup.ui.h:132
+#: ../src/orca/orca_gui_prefs.py:3271 ../src/orca/orca-setup.ui.h:132
 msgid "Speak _cell"
 msgstr "Číst _buňku"
 
@@ -4911,11 +4915,11 @@ msgstr "Číst _buňku"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:4008
+#: ../src/orca/orca_gui_prefs.py:4009
 msgid "enter new key"
 msgstr "zadejte novou klávesovou zkratku"
 
-#: ../src/orca/orca_gui_prefs.py:4038
+#: ../src/orca/orca_gui_prefs.py:4039
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "Klávesová zkratka vymazána. Stiskněte Enter pro potvrzení."
 
@@ -4923,7 +4927,7 @@ msgstr "Klávesová zkratka vymazána. Stiskněte Enter pro potvrzení."
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:4063
+#: ../src/orca/orca_gui_prefs.py:4064
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "Zadaná klávesová zkratka je již přiřazena k %s"
@@ -4932,7 +4936,7 @@ msgstr "Zadaná klávesová zkratka je již přiřazena k %s"
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:4069
+#: ../src/orca/orca_gui_prefs.py:4070
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Klávesová zkratka %s zaznamenána. Pro potvrzení stiskněte Enter."
@@ -4941,7 +4945,7 @@ msgstr "Klávesová zkratka %s zaznamenána. Pro potvrzení stiskněte Enter."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:4108
+#: ../src/orca/orca_gui_prefs.py:4109
 #, python-format
 msgid "The new key is: %s"
 msgstr "Nová klávesové zkratka je %s."
@@ -4950,21 +4954,21 @@ msgstr "Nová klávesové zkratka je %s."
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:4116
+#: ../src/orca/orca_gui_prefs.py:4117
 msgid "The keybinding has been removed."
 msgstr "Klávesová zkratka byla odebrána."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:4169 ../src/orca/orca-setup.ui.h:162
+#: ../src/orca/orca_gui_prefs.py:4170 ../src/orca/orca-setup.ui.h:162
 msgid "_Desktop"
 msgstr "_Stolní počítač"
 
 #. We're here because given profile name exists, so we have
 #. to give that info to the user and give him the chance
 #. to continue, or not saving the profile
-#: ../src/orca/orca_gui_prefs.py:4563
+#: ../src/orca/orca_gui_prefs.py:4564
 #, python-format
 msgid ""
 "Profile <b>%s</b> already exists.\n"
@@ -4973,16 +4977,16 @@ msgstr ""
 "Profil <b>%s</b> již existuje.\n"
 "Pokračovat v aktualizaci stávajícího profilu s těmito novými změnami?"
 
-#: ../src/orca/orca_gui_prefs.py:4572
+#: ../src/orca/orca_gui_prefs.py:4573
 msgid "<b>User Profile Conflict!</b>"
 msgstr "<b>Konflikt uživatelského profilu!</b>"
 
-#: ../src/orca/orca_gui_prefs.py:4574
+#: ../src/orca/orca_gui_prefs.py:4575
 msgid "Save Profile As Conflict"
 msgstr "Konflikt ukládání profilu jako"
 
 #. First of all, we give a chance of cancel profile change
-#: ../src/orca/orca_gui_prefs.py:4591
+#: ../src/orca/orca_gui_prefs.py:4592
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just make changes in your preferences, it will\n"
@@ -4996,17 +5000,17 @@ msgstr ""
 "\n"
 "Pokračovat v načítání profilu a zahození předchozích změn?"
 
-#: ../src/orca/orca_gui_prefs.py:4601
+#: ../src/orca/orca_gui_prefs.py:4602
 msgid "<b>Load user profile info</b>"
 msgstr "<b>Informace o načítaném uživatelském profilu</b>"
 
-#: ../src/orca/orca_gui_prefs.py:4603
+#: ../src/orca/orca_gui_prefs.py:4604
 msgid "Load User Profile"
 msgstr "Načtení uživatelského profilu"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:5365
+#: ../src/orca/orca_gui_prefs.py:5366
 msgid "Starting Orca Preferences."
 msgstr "Spouští se nastavení Orca."
 
@@ -5913,48 +5917,54 @@ msgstr "_Načíst"
 msgid "_New entry"
 msgstr "Nová po_ložka"
 
-#: ../src/orca/orca-setup.ui.h:171
+#: ../src/orca/orca-setup.ui.h:170
 msgid "_Person:"
 msgstr "Oso_ba:"
 
-#: ../src/orca/orca-setup.ui.h:172
+#: ../src/orca/orca-setup.ui.h:171
 msgid "_Position:"
 msgstr "_Pozice:"
 
-#: ../src/orca/orca-setup.ui.h:173
+#: ../src/orca/orca-setup.ui.h:172
 msgid "_Present tooltips"
 msgstr "Prezentovat _bublinovou nápovědu"
 
-#: ../src/orca/orca-setup.ui.h:174
+#: ../src/orca/orca-setup.ui.h:173
 msgid "_Rate:"
 msgstr "_Tempo:"
 
-#: ../src/orca/orca-setup.ui.h:175
+#: ../src/orca/orca-setup.ui.h:174
 msgid "_Reset"
 msgstr "O_bnovit"
 
-#: ../src/orca/orca-setup.ui.h:176
+#: ../src/orca/orca-setup.ui.h:175
 msgid "_Right:"
 msgstr "Vp_ravo:"
 
-#: ../src/orca/orca-setup.ui.h:177
+#: ../src/orca/orca-setup.ui.h:176
 msgid "_Speak all"
 msgstr "Čí_st vše"
 
 #. Translators: Orca can present the current time to the user, here they can choose how the time should be presented to them.
-#: ../src/orca/orca-setup.ui.h:179
+#: ../src/orca/orca-setup.ui.h:178
 msgid "_Time format:"
 msgstr "Formá_t času:"
 
-#: ../src/orca/orca-setup.ui.h:180
+#: ../src/orca/orca-setup.ui.h:179
 msgid "_Top:"
 msgstr "Vr_chol:"
 
-#: ../src/orca/orca-setup.ui.h:181
+#: ../src/orca/orca-setup.ui.h:180
 msgid "_Voice settings:"
 msgstr "Nastavení h_lasu:"
 
+#. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
 #: ../src/orca/orca-setup.ui.h:182
+msgctxt "braille dots"
+msgid "_None"
+msgstr "Žád_ný"
+
+#: ../src/orca/orca-setup.ui.h:183
 msgid "pixels"
 msgstr "pixelů"
 
@@ -8163,7 +8173,7 @@ msgstr "Otevřená záložka"
 #. Please see http://en.wikipedia.org/wiki/Imagemap for more
 #. information and examples.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:150
+#: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:149
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:138
 msgid "image map link"
 msgstr "odkaz v obrázkové mapě"
@@ -8534,7 +8544,7 @@ msgstr[2] "Seznam má %d položek"
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:491
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:490
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -8545,7 +8555,7 @@ msgstr[2] "%d nadpisů"
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:496
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:495
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -8556,7 +8566,7 @@ msgstr[2] "%d formulářů"
 #. Translators: Announces the number of non-layout tables in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:501
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:500
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -8567,7 +8577,7 @@ msgstr[2] "%d tabulek"
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:507
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:506
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -8578,7 +8588,7 @@ msgstr[2] "%d navštívených odkazů"
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:513
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:512
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -8591,7 +8601,7 @@ msgstr[2] "%d nenavštívených odkazů"
 #. current position divided by the total number of objects on the
 #. page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:521
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:520
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -9813,12 +9823,16 @@ msgctxt "textattr"
 msgid "mistake"
 msgstr "omyl"
 
+#. Translators: this attribute specifies there is something "wrong" with
+#. the text, such as it being a misspelled word. See:
+#. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
+#.
 #. Translators: this attribute specifies whether the text is invisible.
 #. It will be a "true" or "false" value.
 #. See
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:140
+#: ../src/orca/text_attribute_names.py:144
 msgctxt "textattr"
 msgid "invisible"
 msgstr "neviditelný"
@@ -9828,7 +9842,7 @@ msgstr "neviditelný"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:147
+#: ../src/orca/text_attribute_names.py:151
 msgctxt "textattr"
 msgid "justification"
 msgstr "zarovnání"
@@ -9838,7 +9852,7 @@ msgstr "zarovnání"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:154
+#: ../src/orca/text_attribute_names.py:158
 msgctxt "textattr"
 msgid "language"
 msgstr "jazyk"
@@ -9847,7 +9861,7 @@ msgstr "jazyk"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:160
+#: ../src/orca/text_attribute_names.py:164
 msgctxt "textattr"
 msgid "left margin"
 msgstr "levý okraj"
@@ -9857,7 +9871,7 @@ msgstr "levý okraj"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-line-height
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:167
+#: ../src/orca/text_attribute_names.py:171
 msgctxt "textattr"
 msgid "line height"
 msgstr "výška řádky"
@@ -9870,7 +9884,7 @@ msgstr "výška řádky"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:177
+#: ../src/orca/text_attribute_names.py:181
 msgctxt "textattr"
 msgid "paragraph style"
 msgstr "styl odstavce"
@@ -9880,7 +9894,7 @@ msgstr "styl odstavce"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:184
+#: ../src/orca/text_attribute_names.py:188
 msgctxt "textattr"
 msgid "pixels above lines"
 msgstr "pixelů nad řádkou"
@@ -9890,7 +9904,7 @@ msgstr "pixelů nad řádkou"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:191
+#: ../src/orca/text_attribute_names.py:195
 msgctxt "textattr"
 msgid "pixels below lines"
 msgstr "pixelů pod řádkou"
@@ -9901,7 +9915,7 @@ msgstr "pixelů pod řádkou"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:199
+#: ../src/orca/text_attribute_names.py:203
 msgctxt "textattr"
 msgid "pixels inside wrap"
 msgstr "pixelů uvnitř zalomení"
@@ -9910,7 +9924,7 @@ msgstr "pixelů uvnitř zalomení"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:205
+#: ../src/orca/text_attribute_names.py:209
 msgctxt "textattr"
 msgid "right margin"
 msgstr "pravý okraj"
@@ -9920,7 +9934,7 @@ msgstr "pravý okraj"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:212
+#: ../src/orca/text_attribute_names.py:216
 msgctxt "textattr"
 msgid "rise"
 msgstr "zdvih"
@@ -9930,7 +9944,7 @@ msgstr "zdvih"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:219
+#: ../src/orca/text_attribute_names.py:223
 msgctxt "textattr"
 msgid "scale"
 msgstr "zvětšení"
@@ -9939,7 +9953,7 @@ msgstr "zvětšení"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:225
+#: ../src/orca/text_attribute_names.py:229
 msgctxt "textattr"
 msgid "size"
 msgstr "velikost"
@@ -9951,7 +9965,7 @@ msgstr "velikost"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:234
+#: ../src/orca/text_attribute_names.py:238
 msgctxt "textattr"
 msgid "stretch"
 msgstr "šířka"
@@ -9962,7 +9976,7 @@ msgstr "šířka"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:242
+#: ../src/orca/text_attribute_names.py:246
 msgctxt "textattr"
 msgid "strike through"
 msgstr "přeškrtnutí"
@@ -9972,7 +9986,7 @@ msgstr "přeškrtnutí"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:249
+#: ../src/orca/text_attribute_names.py:253
 msgctxt "textattr"
 msgid "style"
 msgstr "styl"
@@ -9982,7 +9996,7 @@ msgstr "styl"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-decoration
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:256
+#: ../src/orca/text_attribute_names.py:260
 msgctxt "textattr"
 msgid "text decoration"
 msgstr "dekorace textu"
@@ -9994,7 +10008,7 @@ msgstr "dekorace textu"
 #. http://www.w3.org/TR/2003/CR-css3-text-20030514/#glyph-orientation-horizontal
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:265
+#: ../src/orca/text_attribute_names.py:269
 msgctxt "textattr"
 msgid "text rotation"
 msgstr "otočení textu"
@@ -10004,7 +10018,7 @@ msgstr "otočení textu"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/text.html#propdef-text-shadow
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:272
+#: ../src/orca/text_attribute_names.py:276
 msgctxt "textattr"
 msgid "text shadow"
 msgstr "stínování textu"
@@ -10014,7 +10028,7 @@ msgstr "stínování textu"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:279
+#: ../src/orca/text_attribute_names.py:283
 msgctxt "textattr"
 msgid "underline"
 msgstr "podtržení"
@@ -10024,7 +10038,7 @@ msgstr "podtržení"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:286
+#: ../src/orca/text_attribute_names.py:290
 msgctxt "textattr"
 msgid "variant"
 msgstr "varianta"
@@ -10034,7 +10048,7 @@ msgstr "varianta"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:293
+#: ../src/orca/text_attribute_names.py:297
 msgctxt "textattr"
 msgid "vertical align"
 msgstr "zarovnání na výšku"
@@ -10044,7 +10058,7 @@ msgstr "zarovnání na výšku"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/fonts.html#propdef-font-weight
 #.
-#: ../src/orca/text_attribute_names.py:300
+#: ../src/orca/text_attribute_names.py:304
 msgctxt "textattr"
 msgid "weight"
 msgstr "tloušťka"
@@ -10054,7 +10068,7 @@ msgstr "tloušťka"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:307
+#: ../src/orca/text_attribute_names.py:311
 msgctxt "textattr"
 msgid "wrap mode"
 msgstr "režim zalamování"
@@ -10066,7 +10080,7 @@ msgstr "režim zalamování"
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:316
+#: ../src/orca/text_attribute_names.py:320
 msgctxt "textattr"
 msgid "writing mode"
 msgstr "režim zápisu"
@@ -10083,7 +10097,7 @@ msgstr "režim zápisu"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:332
+#: ../src/orca/text_attribute_names.py:336
 msgctxt "textattr"
 msgid "true"
 msgstr "pravda"
@@ -10094,7 +10108,7 @@ msgstr "pravda"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:340
+#: ../src/orca/text_attribute_names.py:344
 msgctxt "textattr"
 msgid "false"
 msgstr "nepravda"
@@ -10106,7 +10120,7 @@ msgstr "nepravda"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:349
+#: ../src/orca/text_attribute_names.py:353
 msgctxt "textattr"
 msgid "none"
 msgstr "žádný"
@@ -10116,7 +10130,7 @@ msgstr "žádný"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:356
+#: ../src/orca/text_attribute_names.py:360
 msgctxt "textattr"
 msgid "engrave"
 msgstr "rytina"
@@ -10126,7 +10140,7 @@ msgstr "rytina"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:363
+#: ../src/orca/text_attribute_names.py:367
 msgctxt "textattr"
 msgid "emboss"
 msgstr "reliéf"
@@ -10136,7 +10150,7 @@ msgstr "reliéf"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:370
+#: ../src/orca/text_attribute_names.py:374
 msgctxt "textattr"
 msgid "outline"
 msgstr "obrys"
@@ -10146,7 +10160,7 @@ msgstr "obrys"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:377
+#: ../src/orca/text_attribute_names.py:381
 msgctxt "textattr"
 msgid "overline"
 msgstr "čára nad"
@@ -10156,7 +10170,7 @@ msgstr "čára nad"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:384
+#: ../src/orca/text_attribute_names.py:388
 msgctxt "textattr"
 msgid "line through"
 msgstr "přeškrtnuté"
@@ -10166,7 +10180,7 @@ msgstr "přeškrtnuté"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:391
+#: ../src/orca/text_attribute_names.py:395
 msgctxt "textattr"
 msgid "blink"
 msgstr "blikající"
@@ -10176,7 +10190,7 @@ msgstr "blikající"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:398
+#: ../src/orca/text_attribute_names.py:402
 msgctxt "textattr"
 msgid "black"
 msgstr "černé"
@@ -10186,7 +10200,7 @@ msgstr "černé"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:405
+#: ../src/orca/text_attribute_names.py:409
 msgctxt "textattr"
 msgid "single"
 msgstr "jednoduché"
@@ -10196,7 +10210,7 @@ msgstr "jednoduché"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:412
+#: ../src/orca/text_attribute_names.py:416
 msgctxt "textattr"
 msgid "double"
 msgstr "dvojité"
@@ -10206,7 +10220,7 @@ msgstr "dvojité"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:419
+#: ../src/orca/text_attribute_names.py:423
 msgctxt "textattr"
 msgid "low"
 msgstr "pod"
@@ -10216,7 +10230,7 @@ msgstr "pod"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:426
+#: ../src/orca/text_attribute_names.py:430
 msgctxt "textattr"
 msgid "char"
 msgstr "znak"
@@ -10226,7 +10240,7 @@ msgstr "znak"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:433
+#: ../src/orca/text_attribute_names.py:437
 msgctxt "textattr"
 msgid "word"
 msgstr "slovo"
@@ -10239,7 +10253,7 @@ msgstr "slovo"
 #. http://library.gnome.org/devel/atk/1.27/AtkText.html#AtkTextAttribute
 #. http://library.gnome.org/devel/gtk/stable/GtkTextTag.html#GtkWrapMode
 #.
-#: ../src/orca/text_attribute_names.py:443
+#: ../src/orca/text_attribute_names.py:447
 msgctxt "textattr"
 msgid "word char"
 msgstr "znak slova"
@@ -10249,7 +10263,7 @@ msgstr "znak slova"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:450
+#: ../src/orca/text_attribute_names.py:454
 msgctxt "textattr"
 msgid "ltr"
 msgstr "zleva doprava"
@@ -10259,7 +10273,7 @@ msgstr "zleva doprava"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:457
+#: ../src/orca/text_attribute_names.py:461
 msgctxt "textattr"
 msgid "rtl"
 msgstr "zprava doleva"
@@ -10269,7 +10283,7 @@ msgstr "zprava doleva"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:464
+#: ../src/orca/text_attribute_names.py:468
 msgctxt "textattr"
 msgid "left"
 msgstr "vlevo"
@@ -10279,7 +10293,7 @@ msgstr "vlevo"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:471
+#: ../src/orca/text_attribute_names.py:475
 msgctxt "textattr"
 msgid "right"
 msgstr "vpravo"
@@ -10289,7 +10303,7 @@ msgstr "vpravo"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:478
+#: ../src/orca/text_attribute_names.py:482
 msgctxt "textattr"
 msgid "center"
 msgstr "vycentrovat"
@@ -10298,7 +10312,7 @@ msgstr "vycentrovat"
 #. text attributes: "justification". In Gecko, when no justification has
 #. be explicitly set, they report a justification of "start".
 #.
-#: ../src/orca/text_attribute_names.py:484
+#: ../src/orca/text_attribute_names.py:488
 msgctxt "textattr"
 msgid "no justification"
 msgstr "bez zarovnání"
@@ -10308,7 +10322,7 @@ msgstr "bez zarovnání"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:491
+#: ../src/orca/text_attribute_names.py:495
 msgctxt "textattr"
 msgid "fill"
 msgstr "blok"
@@ -10318,7 +10332,7 @@ msgstr "blok"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:498
+#: ../src/orca/text_attribute_names.py:502
 msgctxt "textattr"
 msgid "ultra condensed"
 msgstr "velmi zhuštěné"
@@ -10328,7 +10342,7 @@ msgstr "velmi zhuštěné"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:505
+#: ../src/orca/text_attribute_names.py:509
 msgctxt "textattr"
 msgid "extra condensed"
 msgstr "zhuštěnější"
@@ -10338,7 +10352,7 @@ msgstr "zhuštěnější"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:512
+#: ../src/orca/text_attribute_names.py:516
 msgctxt "textattr"
 msgid "condensed"
 msgstr "zhuštěné"
@@ -10348,7 +10362,7 @@ msgstr "zhuštěné"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:519
+#: ../src/orca/text_attribute_names.py:523
 msgctxt "textattr"
 msgid "semi condensed"
 msgstr "částečné zhuštěné"
@@ -10358,7 +10372,7 @@ msgstr "částečné zhuštěné"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:526
+#: ../src/orca/text_attribute_names.py:530
 msgctxt "textattr"
 msgid "normal"
 msgstr "normální"
@@ -10368,7 +10382,7 @@ msgstr "normální"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:533
+#: ../src/orca/text_attribute_names.py:537
 msgctxt "textattr"
 msgid "semi expanded"
 msgstr "částečné roztažené"
@@ -10378,7 +10392,7 @@ msgstr "částečné roztažené"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:540
+#: ../src/orca/text_attribute_names.py:544
 msgctxt "textattr"
 msgid "expanded"
 msgstr "roztažené"
@@ -10388,7 +10402,7 @@ msgstr "roztažené"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:547
+#: ../src/orca/text_attribute_names.py:551
 msgctxt "textattr"
 msgid "extra expanded"
 msgstr "roztaženější"
@@ -10398,7 +10412,7 @@ msgstr "roztaženější"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:554
+#: ../src/orca/text_attribute_names.py:558
 msgctxt "textattr"
 msgid "ultra expanded"
 msgstr "velmi roztažené"
@@ -10408,7 +10422,7 @@ msgstr "velmi roztažené"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:561
+#: ../src/orca/text_attribute_names.py:565
 msgctxt "textattr"
 msgid "small caps"
 msgstr "kapitálky"
@@ -10418,7 +10432,7 @@ msgstr "kapitálky"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:568
+#: ../src/orca/text_attribute_names.py:572
 msgctxt "textattr"
 msgid "oblique"
 msgstr "zkosené"
@@ -10428,7 +10442,7 @@ msgstr "zkosené"
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
-#: ../src/orca/text_attribute_names.py:575
+#: ../src/orca/text_attribute_names.py:579
 msgctxt "textattr"
 msgid "italic"
 msgstr "kurzíva"
@@ -10438,7 +10452,7 @@ msgstr "kurzíva"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:582
+#: ../src/orca/text_attribute_names.py:586
 msgctxt "textattr"
 msgid "Default"
 msgstr "Výchozí"
@@ -10448,7 +10462,7 @@ msgstr "Výchozí"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:589
+#: ../src/orca/text_attribute_names.py:593
 msgctxt "textattr"
 msgid "Text body"
 msgstr "Vlastní text"
@@ -10458,7 +10472,7 @@ msgstr "Vlastní text"
 #. See:
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:596
+#: ../src/orca/text_attribute_names.py:600
 msgctxt "textattr"
 msgid "Heading"
 msgstr "Nadpis"
@@ -10469,7 +10483,7 @@ msgstr "Nadpis"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
-#: ../src/orca/text_attribute_names.py:604
+#: ../src/orca/text_attribute_names.py:608
 msgctxt "textattr"
 msgid "baseline"
 msgstr "účaří"
@@ -10479,7 +10493,7 @@ msgstr "účaří"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:611
+#: ../src/orca/text_attribute_names.py:615
 msgctxt "textattr"
 msgid "sub"
 msgstr "dolní index"
@@ -10489,7 +10503,7 @@ msgstr "dolní index"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:618
+#: ../src/orca/text_attribute_names.py:622
 msgctxt "textattr"
 msgid "super"
 msgstr "horní index"
@@ -10499,7 +10513,7 @@ msgstr "horní index"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:625
+#: ../src/orca/text_attribute_names.py:629
 msgctxt "textattr"
 msgid "top"
 msgstr "nahoru"
@@ -10509,7 +10523,7 @@ msgstr "nahoru"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:632
+#: ../src/orca/text_attribute_names.py:636
 msgctxt "textattr"
 msgid "text-top"
 msgstr "horní dotažnice"
@@ -10519,7 +10533,7 @@ msgstr "horní dotažnice"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:639
+#: ../src/orca/text_attribute_names.py:643
 msgctxt "textattr"
 msgid "middle"
 msgstr "na střed"
@@ -10529,7 +10543,7 @@ msgstr "na střed"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:646
+#: ../src/orca/text_attribute_names.py:650
 msgctxt "textattr"
 msgid "bottom"
 msgstr "dolů"
@@ -10539,7 +10553,7 @@ msgstr "dolů"
 #. See:
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #.
-#: ../src/orca/text_attribute_names.py:653
+#: ../src/orca/text_attribute_names.py:657
 msgctxt "textattr"
 msgid "text-bottom"
 msgstr "dolní dotažnice"
@@ -10550,7 +10564,7 @@ msgstr "dolní dotažnice"
 #. http://www.w3.org/TR/1998/REC-CSS2-19980512/visudet.html#propdef-vertical-align
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:661
+#: ../src/orca/text_attribute_names.py:665
 msgctxt "textattr"
 msgid "inherit"
 msgstr "zděděné"
@@ -10560,7 +10574,7 @@ msgstr "zděděné"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:668
+#: ../src/orca/text_attribute_names.py:672
 msgctxt "textattr"
 msgid "lr-tb"
 msgstr "lp-hd"
@@ -10570,7 +10584,7 @@ msgstr "lp-hd"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:675
+#: ../src/orca/text_attribute_names.py:679
 msgctxt "textattr"
 msgid "rl-tb"
 msgstr "pl-hd"
@@ -10580,7 +10594,7 @@ msgstr "pl-hd"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:682
+#: ../src/orca/text_attribute_names.py:686
 msgctxt "textattr"
 msgid "tb-rl"
 msgstr "hd-pl"
@@ -10590,7 +10604,7 @@ msgstr "hd-pl"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:689
+#: ../src/orca/text_attribute_names.py:693
 msgctxt "textattr"
 msgid "tb-lr"
 msgstr "hd-lp"
@@ -10600,7 +10614,7 @@ msgstr "hd-lp"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:696
+#: ../src/orca/text_attribute_names.py:700
 msgctxt "textattr"
 msgid "bt-rl"
 msgstr "dh-pl"
@@ -10610,7 +10624,7 @@ msgstr "dh-pl"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:703
+#: ../src/orca/text_attribute_names.py:707
 msgctxt "textattr"
 msgid "bt-lr"
 msgstr "dh-lp"
@@ -10620,7 +10634,7 @@ msgstr "dh-lp"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:710
+#: ../src/orca/text_attribute_names.py:714
 msgctxt "textattr"
 msgid "lr"
 msgstr "lp"
@@ -10630,7 +10644,7 @@ msgstr "lp"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:717
+#: ../src/orca/text_attribute_names.py:721
 msgctxt "textattr"
 msgid "rl"
 msgstr "pl"
@@ -10640,7 +10654,7 @@ msgstr "pl"
 #. See:
 #. http://www.w3.org/TR/2001/WD-css3-text-20010517/#PrimaryTextAdvanceDirection
 #.
-#: ../src/orca/text_attribute_names.py:724
+#: ../src/orca/text_attribute_names.py:728
 msgctxt "textattr"
 msgid "tb"
 msgstr "hd"
@@ -10648,7 +10662,7 @@ msgstr "hd"
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "strikethrough." It refers to the line style.
 #.
-#: ../src/orca/text_attribute_names.py:729
+#: ../src/orca/text_attribute_names.py:733
 msgctxt "textattr"
 msgid "solid"
 msgstr "plné"
@@ -10658,7 +10672,11 @@ msgstr "plné"
 #. spelled correctly. See:
 #. https://developer.mozilla.org/en/Accessibility/AT-APIs/Gecko/TextAttrs
 #.
-#: ../src/orca/text_attribute_names.py:736
+#. Translators: This is the text-spelling attribute. See:
+#. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
+#.
+#: ../src/orca/text_attribute_names.py:740
+#: ../src/orca/text_attribute_names.py:745
 msgctxt "textattr"
 msgid "spelling"
 msgstr "kontrola pravopisu"
