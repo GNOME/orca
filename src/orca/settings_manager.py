@@ -234,7 +234,7 @@ class SettingsManager(object):
             msg += "succeeded."
             fileHnd.close()
             success = True
-        debug.println(debug.LEVEL_SEVERE, msg)
+        debug.println(debug.LEVEL_ALL, msg)
         return success
 
     def setSetting(self, settingName, settingValue):
