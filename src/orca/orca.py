@@ -1562,8 +1562,6 @@ def loadUserSettings(script=None, inputEvent=None, isProfileLoad=False):
     if _currentPresentationManager >= 0:
         _PRESENTATION_MANAGERS[_currentPresentationManager].deactivate()
 
-    time.sleep(1)
-
     reloaded = False
     if _userSettings:
         _profile = _settingsManager.getSetting('activeProfile')[1]
