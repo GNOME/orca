@@ -4263,7 +4263,7 @@ class Script(script.Script):
         """
 
         if _settingsManager.getSetting('enableProgressBarUpdates'):
-            makeAnnouncment = False
+            makeAnnouncement = False
             verbosity = _settingsManager.getSetting('progressBarVerbosity')
             if verbosity == settings.PROGRESS_BAR_ALL:
                 makeAnnouncement = True
