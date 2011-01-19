@@ -1,5 +1,5 @@
 """Custom script for gdm-simple-greeter"""
-import orca.default as default
+import orca.scripts.default as default
 
 class Script(default.Script):
     def __init__(self, app):
