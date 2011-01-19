@@ -127,12 +127,8 @@
       </p>
     </item>
     <item>
-      <p>Press the <gui>OK</gui> button.</p>
-    </item>
-    <item>
-      <p>
-        The next time you launch <app>Orca</app>, the newly-selected profile
-        will be used.
+      <p>Press the <gui>OK</gui> button. The next time you launch <app>Orca</app>,
+         the newly-selected profile will be used.
       </p>
     </item>
   </steps>

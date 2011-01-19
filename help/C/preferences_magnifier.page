@@ -329,7 +329,7 @@
     <section>
       <title>Cursor size</title>
       <p>
-        This value determines the size of the border in pixels.
+        This value determines the size of the cursor in pixels.
       </p>
       <p>
         Default value: 32

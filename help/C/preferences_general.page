@@ -229,11 +229,13 @@
           options from the preferences dialog box to a named profile.
         </p>
       </item>
+      <item>
         <p>
           The <gui>Start-up Profile</gui> combo box allows you to select the
           profile which should be automatically loaded each time you launch
           <app>Orca</app>.
         </p>
+      </item>
     </list>
   </section>
 </page>
