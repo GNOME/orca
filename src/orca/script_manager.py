@@ -108,8 +108,14 @@ class ScriptManager:
 
         name = ''
         if obj:
-            attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
-            name = attrs.get('toolkit', '')
+            try:
+                attributes = obj.getAttributes()
+            except LookupError:
+                debug.println(debug.LEVEL_SEVERE,
+                              "_toolkitForObject: %s no longer exists" % obj)
+            else:
+                attrs = dict([attr.split(':', 1) for attr in attributes])
+                name = attrs.get('toolkit', '')
 
         return name
 
@@ -244,9 +250,10 @@ class ScriptManager:
             debug.printException(debug.LEVEL_FINEST)
             return
 
-        appList = filter(lambda a: a not in desktop, self.scripts.keys())
+        appList = self.scripts.keys()
+        appList = filter(lambda a: a!= None and a not in desktop, appList)
         for app in appList:
-            script = self.scripts.get(app)
+            script = self.scripts.pop(app)
             _eventManager.deregisterListeners(script)
             del app
             del script

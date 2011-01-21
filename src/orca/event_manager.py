@@ -303,13 +303,10 @@ class EventManager:
         - eventType: the event type.
         """
 
-        try:
-            self._listenerCounts[eventType] -= 1
-        except KeyError:
-            debug.println(debug.LEVEL_SEVERE,
-                          "KeyError deregistering %s listener" % eventType)
+        if not eventType in self._listenerCounts:
             return
 
+        self._listenerCounts[eventType] -= 1
         if self._listenerCounts[eventType] == 0:
             self.registry.deregisterEventListener(self._enqueue, eventType)
             del self._listenerCounts[eventType]
@@ -453,7 +450,6 @@ class EventManager:
         try:
             state = event.source.getState()
         except LookupError:
-            debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_WARNING,
                           "LookupError while processing event: %s" % eType)
             if eType.startswith("window:deactivate"):

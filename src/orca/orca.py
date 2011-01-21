@@ -602,8 +602,13 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
     if event and event.source and \
        event.host_application and orca_state.activeScript:
         currentApp = orca_state.activeScript.app
-        if currentApp != event.host_application and \
-           currentApp != event.source.getApplication():
+        try:
+            appList = [event.host_application, event.source.getApplication()]
+        except LookupError:
+            appList = []
+            debug.printlin(debug.LEVEL_SEVERE,
+                           "orca.setLocusOfFocus() application LookupError")
+        if not currentApp in appList:
             return
 
     oldLocusOfFocus = orca_state.locusOfFocus
@@ -965,9 +970,18 @@ def keyEcho(event):
     # If this keyboard event was for an object like a password text
     # field, then don't echo it.
     #
-    if orca_state.locusOfFocus \
-        and (orca_state.locusOfFocus.getRole() == pyatspi.ROLE_PASSWORD_TEXT):
+    try:
+        role = orca_state.locusOfFocus.getRole()
+    except LookupError:
+        debug.println(debug.LEVEL_SEVERE,
+                      "orca.keyEcho() - locusOfFocus no longer exists")
+        setLocusOfFocus(None, None, False)
         return False
+    except:
+        pass
+    else:
+        if role == pyatspi.ROLE_PASSWORD_TEXT:
+            return False
 
     event_string = event.event_string
     debug.println(debug.LEVEL_FINEST,

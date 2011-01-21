@@ -2817,12 +2817,21 @@ class Script(default.Script):
            indicates that we want Firefox to handle key commands.
         """
 
-        # If the current object isn't even showing, we don't want to hand
-        # this off to Firefox's native caret navigation because who knows
-        # where we'll wind up....
-        #
-        if obj and not obj.getState().contains(pyatspi.STATE_SHOWING):
+        try:
+            state = obj.getState()
+        except LookupError:
+            debug.println(debug.LEVEL_SEVERE,
+                          "isNavigableAria() - obj no longer exists")
             return True
+        except:
+            pass
+        else:
+            # If the current object isn't even showing, we don't want to hand
+            # this off to Firefox's native caret navigation because who knows
+            # where we'll wind up....
+            #
+            if state.contains(pyatspi.STATE_SHOWING):
+                return True
 
         # Sometimes the child of an ARIA widget claims focus. It may lack
         # the attributes we're looking for. Therefore, if obj is not an
