@@ -2726,6 +2726,9 @@ class Utilities:
         debug.println(debug.LEVEL_FINEST, "script_utilities.getKeyBinding: " \
                       + repr([mnemonic, fullShortcut, accelerator]))
 
+        if not self._script.generatorCache.has_key(self.KEY_BINDING):
+            self._script.generatorCache[self.KEY_BINDING] = {}
+
         self._script.generatorCache[self.KEY_BINDING][obj] = \
             [mnemonic, fullShortcut, accelerator]
         return self._script.generatorCache[self.KEY_BINDING][obj]
