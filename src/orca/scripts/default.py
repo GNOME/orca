@@ -4426,12 +4426,14 @@ class Script(script.Script):
         # the description is not set, present the text that is
         # spoken when the object receives keyboard focus.
         #
+        speechResult = brailleResult = None
         text = ""
         if obj.description:
             speechResult = brailleResult = obj.description
         else:
             speechResult = self.whereAmI.getWhereAmI(obj, True)
-            brailleResult = speechResult[0]
+            if speechResult:
+                brailleResult = speechResult[0]
         debug.println(debug.LEVEL_FINEST,
                       "presentToolTip: text='%s'" % speechResult)
         if speechResult:

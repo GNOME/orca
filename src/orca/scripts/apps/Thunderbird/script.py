@@ -338,6 +338,7 @@ class Script(Gecko.Script):
         # Handle a newly-opened message.
         #
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME \
+           and orca_state.locusOfFocus \
            and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_FRAME:
             if self._messageLoaded:
                 consume = True
