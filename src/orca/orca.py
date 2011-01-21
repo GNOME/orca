@@ -1483,7 +1483,6 @@ def loadUserSettings(script=None, inputEvent=None, isProfileLoad=False):
     braille.shutdown()
     mag.shutdown()
 
-    _eventManager.deactivate()
     _scriptManager.deactivate()
 
     reloaded = False
