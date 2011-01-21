@@ -549,3 +549,35 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                            generateSpeech(self, obj, **args))
             del args['useDefaultFormatting']
         return result
+
+    def getAttribute(self, obj, attributeName):
+        attributes = obj.getAttributes()
+        for attribute in attributes:
+            if attribute.startswith(attributeName):
+                return attribute.split(":")[1]
+
+    def _generatePositionInList(self, obj, **args):
+        position = self.getAttribute(obj, "posinset")
+        total = self.getAttribute(obj, "setsize")
+        if position and total and not obj.getRole() in \
+                [pyatspi.ROLE_MENU_ITEM,
+                 pyatspi.ROLE_TEAROFF_MENU_ITEM,
+                 pyatspi.ROLE_CHECK_MENU_ITEM,
+                 pyatspi.ROLE_RADIO_MENU_ITEM,
+                 pyatspi.ROLE_MENU]:
+            position = int(position)
+            total = int(total)
+            result = []
+            if (_settingsManager.getSetting('enablePositionSpeaking') \
+                or args.get('forceList', False)) \
+                and position >= 0:
+                result.append(self._script.formatting.getString(
+                    mode='speech',
+                    stringType='groupindex') \
+                    % {"index" : position,
+                    "total" : total})
+                result.extend(self.voice(speech_generator.SYSTEM))
+            return result
+        else:
+            return speech_generator.SpeechGenerator._generatePositionInList(
+                self, obj, **args)
