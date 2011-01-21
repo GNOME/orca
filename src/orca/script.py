@@ -47,7 +47,6 @@ import flat_review
 import formatting
 import keybindings
 import orca_state
-import script_manager
 import script_utilities
 import settings
 import speech_generator
@@ -332,11 +331,15 @@ class Script:
         whether or not the script is active.
         """
 
+        import orca
+        _scriptManager = getattr(orca, '_scriptManager')
+        _settingsManager = getattr(orca, '_settingsManager')
+
         scriptSettings = settings
         if orca_state.activeScript != self:
-            name = script_manager.getModuleName(self.app)
+            name = _scriptManager.getModuleName(self.app)
             if name:
-                for package in settings.settingsPackages:
+                for package in _settingsManager.settingsPackages:
                     name = package + "." + name
                     try:
                         module = __import__(name, globals(), locals(), [''])

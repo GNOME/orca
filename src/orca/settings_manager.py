@@ -121,7 +121,7 @@ class SettingsManager(object):
         self.setProfile(self.profile)
 
         # For handling the currently-"classic" application settings
-        self._settingsPackages = ["app-settings"]
+        self.settingsPackages = ["app-settings"]
         self._knownAppSettings = {}
 
     def _loadBackend(self):
@@ -495,7 +495,7 @@ class SettingsManager(object):
             return
 
         module = None
-        for package in self._settingsPackages:
+        for package in self.settingsPackages:
             name = '.'.join((package, moduleName))
             debug.println(debug.LEVEL_FINEST, "Looking for %s.py" % name)
             try:
