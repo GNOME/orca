@@ -303,7 +303,13 @@ class EventManager:
         - eventType: the event type.
         """
 
-        self._listenerCounts[eventType] -= 1
+        try:
+            self._listenerCounts[eventType] -= 1
+        except KeyError:
+            debug.println(debug.LEVEL_SEVERE,
+                          "KeyError deregistering %s listener" % eventType)
+            return
+
         if self._listenerCounts[eventType] == 0:
             self.registry.deregisterEventListener(self._enqueue, eventType)
             del self._listenerCounts[eventType]

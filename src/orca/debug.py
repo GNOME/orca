@@ -235,6 +235,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         states = stateSet.getStates()
     except:
         string += "(exception getting states)"
+        states = []
     state_strings = []
     for state in states:
         state_strings.append(pyatspi.stateToString(state))
@@ -245,6 +246,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
         relations = acc.getRelationSet()
     except:
         string += "(exception getting relation set)"
+        relations = None
     if relations:
         relation_strings = []
         for relation in relations:

@@ -98,7 +98,8 @@ class Script(default.Script):
         if newLocusOfFocus and \
            newLocusOfFocus.getRole() == pyatspi.ROLE_TERMINAL:
             pageTab = event.source.parent.parent.parent
-            if oldLocusOfFocus.getRole() == pyatspi.ROLE_TERMINAL and \
+            if oldLocusOfFocus \
+               and oldLocusOfFocus.getRole() == pyatspi.ROLE_TERMINAL and \
                pageTab.getRole() == pyatspi.ROLE_PAGE_TAB and \
                pageTab.getState().contains(pyatspi.STATE_SENSITIVE):
                 self.updateBraille(newLocusOfFocus)
