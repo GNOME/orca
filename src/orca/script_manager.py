@@ -202,6 +202,11 @@ class ScriptManager:
                     self.scripts[objToolkit] = script
                     _eventManager.registerListeners(script)
             if script:
+                # Only defer to the toolkit script for this object if the
+                # app script is based on a different toolkit.
+                appScript = self.scripts.get(app, self.getDefaultScript())
+                if issubclass(appScript.__class__, script.__class__):
+                    script = appScript
                 return script
 
         if not app:
