@@ -606,7 +606,7 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
             appList = [event.host_application, event.source.getApplication()]
         except LookupError:
             appList = []
-            debug.printlin(debug.LEVEL_SEVERE,
+            debug.println(debug.LEVEL_SEVERE,
                            "orca.setLocusOfFocus() application LookupError")
         if not currentApp in appList:
             return
