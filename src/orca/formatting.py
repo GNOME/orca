@@ -406,6 +406,11 @@ formatting = {
                                 asString(label),\
                                 asString(eol))]'
             },
+        pyatspi.ROLE_LINK: {
+            'unfocused': '[Link(obj, asString(currentLineText)\
+                                     or asString(displayedText)\
+                                     or asString(name))]',
+        },
         #pyatspi.ROLE_LIST: 'default'
         pyatspi.ROLE_LIST_ITEM: {
             'focused':   '[Component(obj,\
