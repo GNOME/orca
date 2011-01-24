@@ -1105,7 +1105,12 @@ class Utilities:
         node = obj
         done = False
         while not done:
-            relations = node.getRelationSet()
+            try:
+                relations = node.getRelationSet()
+            except LookupError:
+                debug.println(debug.LEVEL_SEVERE,
+                              "nodeLevel() - LookupError getting RelationSet")
+                return -1
             node = None
             for relation in relations:
                 if relation.getRelationType() \
