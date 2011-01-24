@@ -936,7 +936,7 @@ asyncMode               = True
 # This was originally added for the Java toolkit (see bug #531869), but
 # we put this here to allow more toolkits to be more easily added.
 #
-synchronousToolkits     = []
+synchronousToolkits     = ['VCL']
 
 # If True, we output debug information for the event queue.  We
 # use this in addition to log level to prevent debug logic from
