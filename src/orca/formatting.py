@@ -392,6 +392,9 @@ formatting = {
             'unfocused': '[Component(obj,\
                                      asString(((label + displayedText) or name) + value + roleName + alertAndDialogCount))]'
             },
+        pyatspi.ROLE_HEADING: {
+            'unfocused': BRAILLE_TEXT
+            },
         #pyatspi.ROLE_HTML_CONTAINER: 'default'
         pyatspi.ROLE_ICON: {
             'unfocused': '[Component(obj,\
