@@ -72,3 +72,15 @@ class Utilities(script_utilities.Utilities):
 
         attrs = dict([attr.split(':', 1) for attr in obj.getAttributes()])
         return attrs.get('toolkit', '') == 'WebKitGtk'
+
+    def isReadOnlyTextArea(self, obj):
+        """Returns True if obj is a text entry area that is read only."""
+
+        if not obj.getRole() == pyatspi.ROLE_ENTRY:
+            return False
+
+        state = obj.getState()
+        readOnly = state.contains(pyatspi.STATE_FOCUSABLE) \
+                   and not state.contains(pyatspi.STATE_EDITABLE)
+
+        return readOnly
