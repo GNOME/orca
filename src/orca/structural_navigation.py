@@ -1244,28 +1244,12 @@ class StructuralNavigation:
         interest is contained.
         """
 
-        # This is script-specific and will need to be defined in the
-        # script's custom StructuralNavigation class. But if this
-        # method does nothing, pylint complains.  So... We might as
-        # well take a guess for a generic version to make pylint
-        # happy. :-) In some initial experimentation with OOo, this
-        # method seemed to reliably return the child of the document
-        # view, so it might not be too far off.  It's also being
-        # overridden by Gecko, so one should feel free to modify this
-        # one.
-        #
-        obj = self.getCurrentObject()
-        lastTextObj = obj
-        while obj and obj.getRole() != pyatspi.ROLE_FRAME:
-            try:
-                obj.queryText()
-            except:
-                pass
-            else:
-                lastTextObj = obj
-            obj = obj.parent
+        docRoles = [pyatspi.ROLE_DOCUMENT_FRAME]
+        stopRoles = [pyatspi.ROLE_FRAME, pyatspi.ROLE_SCROLL_PANE]
+        document = self._script.utilities.ancestorWithRole(
+            orca_state.locusOfFocus, docRoles, stopRoles)
 
-        return lastTextObj
+        return document
 
     def _isInDocument(self, obj):
         """Returns True if the accessible object obj is inside of
