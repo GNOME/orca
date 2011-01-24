@@ -46,7 +46,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def _generateRoleName(self, obj, **args):
         result = []
-        acss = self.voice(speech_generator.DEFAULT)
+        acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
         force = args.get('force', False)
 
