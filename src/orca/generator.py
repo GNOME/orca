@@ -222,7 +222,7 @@ class Generator:
             details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
             debug.println(
                 debug.LEVEL_ALL,
-                "\n\n\ngenerate %s for %s %s (args=%s) using '%s'" \
+                "\ngenerate %s for %s %s (args=%s) using '%s'" \
                 % (self._mode,
                    args['formatType'], 
                    details,
@@ -256,7 +256,6 @@ class Generator:
         debug.println(debug.LEVEL_ALL, "generate %s results:" % self._mode)
         for element in result:
             debug.println(debug.LEVEL_ALL, "  " + str(element))
-        debug.println(debug.LEVEL_ALL, "\n\n\n")
 
         return result
 
