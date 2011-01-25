@@ -1795,7 +1795,7 @@ class StructuralNavigation:
         if obj.getRole() == pyatspi.ROLE_LINK:
             voice = voices[settings.HYPERLINK_VOICE]
         else:
-            voice = None
+            voice = voices[settings.DEFAULT_VOICE]
 
         utterances = self._script.speechGenerator.generateSpeech(obj)
         speech.speak(utterances, voice)
