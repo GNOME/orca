@@ -65,3 +65,22 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 self, obj, **args))
 
         return result
+
+    def _generateAncestors(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the text of the ancestors for
+        the object.  This is typically used to present the context for
+        an object (e.g., the names of the window, the panels, etc.,
+        that the object is contained in).  If the 'priorObj' attribute
+        of the args dictionary is set, only the differences in
+        ancestry between the 'priorObj' and the current obj will be
+        computed.  The 'priorObj' is typically set by Orca to be the
+        previous object with focus.
+        """
+
+        role = args.get('role', obj.getRole())
+        if role == pyatspi.ROLE_LINK:
+            return []
+
+        return braille_generator.BrailleGenerator._generateAncestors(
+            self, obj, **args)

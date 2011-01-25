@@ -106,8 +106,33 @@ class Script(default.Script):
         - event: the Event
         """
 
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+        if lastKey in ['Tab', 'ISO_Left_Tab']:
+            return
+
         orca.setLocusOfFocus(event, event.source, False)
         default.Script.onCaretMoved(self, event)
+
+    def onFocus(self, event):
+        """Called whenever an object gets focus.
+
+        Arguments:
+        - event: the Event
+        """
+
+        obj = event.source
+        role = obj.getRole()
+        if role == pyatspi.ROLE_LIST_ITEM and obj.childCount:
+            return
+
+        textRoles = [pyatspi.ROLE_HEADING,
+                     pyatspi.ROLE_PANEL,
+                     pyatspi.ROLE_PARAGRAPH,
+                     pyatspi.ROLE_SECTION]
+        if role in textRoles:
+            return
+
+        default.Script.onFocus(self, event)
 
     def onTextSelectionChanged(self, event):
         """Called when an object's text selection changes.
@@ -165,6 +190,9 @@ class Script(default.Script):
 
         if event.type.startswith('object:state-changed:focused') \
            and event.detail1:
+            if event.source.getRole() == pyatspi.ROLE_LINK:
+                return False
+
             lastKey, mods = self.utilities.lastKeyAndModifiers()
             if lastKey in self.CARET_NAVIGATION_KEYS:
                 return True
