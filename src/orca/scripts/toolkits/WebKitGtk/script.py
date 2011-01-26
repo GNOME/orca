@@ -110,7 +110,9 @@ class Script(default.Script):
         if lastKey in ['Tab', 'ISO_Left_Tab']:
             return
 
-        orca.setLocusOfFocus(event, event.source, False)
+        if self.utilities.isWebKitGtk(orca_state.locusOfFocus):
+            orca.setLocusOfFocus(event, event.source, False)
+
         default.Script.onCaretMoved(self, event)
 
     def onFocus(self, event):
