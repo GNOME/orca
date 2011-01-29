@@ -272,6 +272,7 @@ class EventManager:
         except Queue.Empty:
             debug.println(debug.LEVEL_SEVERE,
                           "event_manager._dequeue: the event queue is empty!")
+            self._gidleId = 0
             rerun = False # destroy and don't call again
         except:
             debug.printException(debug.LEVEL_SEVERE)
