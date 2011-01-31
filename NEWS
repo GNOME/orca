@@ -1,3 +1,107 @@
+2.91.6 - 31-January-2011
+
+General:
+
+  * Fix for bug #641033 - Sanity check needed before sending language
+    to speech dispatcher
+
+  * Fix for bug #640894 - always clear _gidleId when finished calling
+    _dequeue
+
+  * Fix for bug #640218 - Handle pyatspi LookupError exceptions better
+
+  * Fix for bug #640342 - Only defer to the toolkit script for an object
+    if the app script is associated with a different toolkit
+
+  * Fix for bug #639876 - sometimes I cannot hear the name of the window
+    when I press alt+tab
+
+  * Fix for bug #640194 - Post-event-manager-refactor sanity checks
+    needed
+
+  * Fix for bug #640135 - Generator Cache can get cleared in the midst
+    of getting the mnemonic, shortcut, and accelerator
+
+  * Fix for bug #640072 - Orca crashes receiving a message from Pidgin
+
+  * Fix for bug #640132 - Orca sometimes becomes non-responsive after
+    an app is quit
+
+  * Fix for bug #639992 - gdm-simple-greeter script did not have its
+    import modified in recent refactor
+
+  * Fix for bug 639974 - Orca crashes announcing progress bar updates
+    while pressing alt + tab
+    
+  * Fix for bug #639668 - [Refactor] Eliminate the presentation manager
+    and focus tracking presenter; create an event manager and script
+    manager
+    
+  * Fix for bug #639669 - [Refactor] Remove script mapping from
+    settings.py and clean up that code
+
+  * Fix for bug #639670 - [Refactor] Move default.py into the scripts
+    module
+    
+  * Fix for bug #639671 - [Refactor] Remove event recount and
+    COMM_FAILURE handling
+    
+  * Fix for bug #639673 - Orca should support the creation and use of
+    version-specific scripts for applications
+
+  * Work on bug #638970 - Loading a new profile takes longer than ideal
+
+  * Fix for bug #639418, not marked for translation the text-spelling
+    attribute name
+
+  * Fix for bug #638672 - Can't open the preferences dialog
+
+WebKitGtk/Yelp 3:
+
+  * Fix for bug #640609 - Structural navigation should not kick in when
+    the user is performing a search of WebKitGtk content
+
+  * Fix for bug #640591 - The 'system' voice is incorrectly used after
+    structural navigation wraps in WebKitGtk content
+
+  * Fix for bug 640500 - Orca presents too much info for some links;
+    not enough info for others in WebKitGtk
+
+  * Fix for bug #640383 - Orca is not indicating caret position or
+    selection for Headings in WebKitGtk
+    
+  * Fix for bug #640451 - Focused WebKitGtk links are not underlined
+    in braille
+
+  * Fix for bug #640383 - Orca is not indicating caret position or
+    selection for Headings in WebKitGtk
+
+  * Fix for bug #640381 - Orca is using the default voice for WebKitGtk
+    roles when it should use the system voice
+
+  * Fix for bug #640379 - Orca says 'read only' for paragraphs in
+    WebKitGtk content
+
+  * Fix for bug #640377 - Structural navigation sometimes fails to work
+    with WebKitGtk content
+
+  * Fix for bug #607854 - Yelp+WebKit not working well
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                Marek Cernocky
+    el            Greek                Marios Zindilis
+    es            Spanish              Francisco Javier Dorado
+    gl            Galician             Fran Diéguez
+    hu            Hungarian            Attila Hammer
+    sl            Slovenian            Matej Urbančič
+    sv            Swedish              Daniel Nylander
+    uk            Ukrainian            Maxim V. Dziumanenko
+    zh_HK         Chinese (Hong Kong)  Chao-Hsiung Liao, Wei-Lun Chao
+    zh_TW         Chinese (Taiwan)     Chao-Hsiung Liao, Wei-Lun Chao
+
+==========
+
 2.91.5 - 10-January-2011
 
 General:
