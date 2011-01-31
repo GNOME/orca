@@ -236,7 +236,7 @@ class SpeechServer(speechserver.SpeechServer):
         if familyLocale:
             lang = familyLocale.split('_')[0]
             if lang and len(lang) == 2:
-                self._send_command(self._client.set_language, lang)
+                self._send_command(self._client.set_language, str(lang))
         try:
             # This command is not available with older SD versions.
             set_synthesis_voice = self._client.set_synthesis_voice
