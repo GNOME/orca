@@ -1,5 +1,5 @@
 from orca import settings_manager
-from yaml import load, dump
+from json import load, dump
 from pprint import pprint
 
 def exerciseBackendAPI(backendName, profile):
@@ -90,8 +90,8 @@ def getSettingsFromFile(dictName):
 
 # main
 profile = 'default'
-print 'profile: default backendName: yaml\n'
-exerciseBackendAPI('yaml', 'default')
+print 'profile: default backendName: json\n'
+exerciseBackendAPI('json', 'default')
 #print 'profile: default backendName: gconf\n'
 #exerciseBackendAPI('gconf', 'default')
 #exerciseBackendAPI('default', 'gsettings', s)
