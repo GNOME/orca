@@ -1,7 +1,8 @@
 # Orca
 #
-# Copyright 2010 Consorcio Fernando de los Rios.
+# Copyright 2010-2011 Consorcio Fernando de los Rios.
 # Author: Juanje Ojeda Croissier <jojeda@emergya.es>
+# Author: Javier Hernández Antúnez <jhernandez@emergya.es>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -18,22 +19,22 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""YAML backend for Orca settings"""
+"""JSON backend for Orca settings"""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
+__copyright__ = "Copyright (c) 2010-2011 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
-from yaml import load, dump
+from json import load, dump
 import os
 from orca import settings
 
 class Backend:
 
     def __init__(self):
-        """ Initialize the YAML Backend.
+        """ Initialize the JSON Backend.
         """ 
         self.general = {}
         self.pronunciations = {}
@@ -61,7 +62,7 @@ class Backend:
         self.keybindings = keybindings
 
         settingsFile = open(self.settingsFile, 'w')
-        dump(prefs, settingsFile)
+        dump(prefs, settingsFile, indent=4)
         settingsFile.close()
 
     def saveProfileSettings(self, profile, general,
@@ -79,7 +80,7 @@ class Backend:
             prefs['profiles'][profile] = general
             settingsFile.seek(0)
             settingsFile.truncate()
-            dump(prefs, settingsFile)
+            dump(prefs, settingsFile, indent=4)
 
     def _getSettings(self):
         """ Load from config file all settings """
@@ -139,7 +140,7 @@ class Backend:
             prefs['general'][key] = value
             settingsFile.seek(0)
             settingsFile.truncate()
-            dump(prefs, settingsFile)
+            dump(prefs, settingsFile, indent=4)
 
     def setFirstStart(self, value=False):
         """Set firstStart. This user-configurable settting is primarily
