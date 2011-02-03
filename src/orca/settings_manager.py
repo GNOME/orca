@@ -30,7 +30,7 @@ __license__   = "LGPL"
 
 import os
 import imp
-from yaml import load
+from json import load
 
 import debug
 from keybindings import KeyBinding
@@ -52,13 +52,13 @@ class SettingsManager(object):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __init__(self, backend='yaml'):
+    def __init__(self, backend='json'):
         """Initialize a SettingsManager Object.
         If backend isn't defined then uses default backend, in this
         case gconf-backend.
         backend parameter can use the follow values:
         backend='gconf'
-        backend='yaml'
+        backend='json'
         """
 
         self.backendModule = None
