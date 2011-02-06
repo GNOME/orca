@@ -2,7 +2,7 @@
 #
 # Copyright 2010-2011 Consorcio Fernando de los Rios.
 # Author: Juanje Ojeda Croissier <jojeda@emergya.es>
-# Author: Javier Hernández Antúnez <jhernandez@emergya.es>
+# Author: Javier Hernandez Antunez <jhernandez@emergya.es>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -85,7 +85,10 @@ class Backend:
     def _getSettings(self):
         """ Load from config file all settings """
         settingsFile = open(self.settingsFile)
-        prefs = load(settingsFile)
+        try:
+            prefs = load(settingsFile)
+        except ValueError:
+            return
         self.general = prefs['general'].copy()
         self.pronunciations = prefs['pronunciations']
         self.keybindings = prefs['keybindings']
