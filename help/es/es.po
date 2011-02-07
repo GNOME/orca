@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-01-18 15:00+0000\n"
-"PO-Revision-Date: 2011-01-19 10:32+0100\n"
+"POT-Creation-Date: 2011-02-01 00:14+0000\n"
+"PO-Revision-Date: 2011-02-07 09:58+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -460,10 +460,9 @@ msgstr ""
 #: C/preferences_general.page:178(p) C/preferences_gecko.page:74(p)
 #: C/preferences_gecko.page:87(p) C/preferences_gecko.page:118(p)
 #: C/preferences_chat.page:31(p) C/preferences_chat.page:42(p)
-#: C/preferences_chat.page:54(p) C/preferences_chat.page:75(p)
-#: C/preferences_braille.page:28(p) C/preferences_braille.page:47(p)
-#: C/preferences_braille.page:65(p) C/preferences_braille.page:79(p)
-#: C/preferences_braille.page:90(p)
+#: C/preferences_chat.page:54(p) C/preferences_braille.page:28(p)
+#: C/preferences_braille.page:47(p) C/preferences_braille.page:65(p)
+#: C/preferences_braille.page:79(p) C/preferences_braille.page:90(p)
 msgid "Default value: not checked"
 msgstr "Valor predeterminado: no marcado"
 
@@ -996,16 +995,22 @@ msgid ""
 "text does not appear on screen, this information is presented in <app>Orca</"
 "app>'s System voice."
 msgstr ""
+"Los siguientes elementos controlan la presentación de una variedad de "
+"información suplementaria acerca del elemento con el foco. Debido a que el "
+"texto asociado no aparece en pantalla, esta información se presenta con la "
+"voz de sistema de <app>Orca</app>."
 
 #: C/preferences_speech.page:267(title)
 msgid "Configuration of System Information"
-msgstr ""
+msgstr "Configuración de información del sistema"
 
 #: C/preferences_speech.page:268(p)
 msgid ""
 "The follow items will not be available for configuration if the <gui>Only "
 "speak displayed text</gui> checkbox is checked."
 msgstr ""
+"Los siguientes elementos no estarán disponibles para configurar si la "
+"casilla <gui>Hablar solamente el texto mostrado.</gui> está marcada."
 
 #: C/preferences_speech.page:274(title)
 msgid "Speak blank lines"
@@ -1017,10 +1022,14 @@ msgid ""
 "will say \"blank\" each time you arrow to a blank line. If it is unchecked, "
 "<app>Orca</app> will say nothing when you move to a blank line."
 msgstr ""
+"Si la casilla <gui>Indicar líneas en blanco</gui>está marcada, <app>Orca</"
+"app> dirá «en blanco» cada vez que llegue con flechas de cursor a una línea "
+"en blanco. Si no está marcada, <app>Orca</app> no dirá nada cuando se mueva "
+"a una línea en blanco."
 
 #: C/preferences_speech.page:283(title)
 msgid "Speak indentation and justification"
-msgstr ""
+msgstr "Indicar sangrado y justificación"
 
 #: C/preferences_speech.page:284(p)
 msgid ""
@@ -1029,6 +1038,10 @@ msgid ""
 "indentation and justification</gui> checkbox will cause <app>Orca</app> to "
 "announce this information."
 msgstr ""
+"Cuando se trabaja con código o se editan otros documentos a menudo es "
+"deseable estar al tanto de la justificación y el sangrado. Al marcar la "
+"casilla <gui>Indicar sangrado y justificación</gui> hará que <app>Orca</app> "
+"anuncie esta información."
 
 #: C/preferences_speech.page:292(title)
 msgid "Speak object mnemonics"
@@ -1040,6 +1053,10 @@ msgid ""
 "app> will announce the mnemonic associated with the object with focus (such "
 "as <keyseq><key>Alt</key><key>O</key></keyseq> for an <gui>OK</gui> button)."
 msgstr ""
+"Si se marca la casilla <gui>Leer las teclas de acceso del objeto</gui>, "
+"<app>Orca</app> anunciará las teclas de acceso asociadas al objeto con el "
+"foco (tal como <keyseq><key>Alt</key><key>A</key></keyseq> para el botón "
+"<gui>Aceptar</gui>)."
 
 #: C/preferences_speech.page:301(title)
 msgid "Speak child position"
@@ -1051,6 +1068,9 @@ msgid ""
 "app> to announce the position of the focused item in menus, lists, and trees "
 "(e.g. \"9 of 16\")."
 msgstr ""
+"Al marcar la casilla <gui>Indicar la posición del hijo</gui> hará que "
+"<app>Orca</app> anuncie la posición del elemento con el foco en menús, "
+"listas y árboles (Ej. «9 de 16»)."
 
 #: C/preferences_speech.page:309(title)
 msgid "Speak tutorial messages"
@@ -1062,6 +1082,9 @@ msgid ""
 "amongst objects in an interface, <app>Orca</app> will provide additional "
 "information, such as how to interact with the currently-focused object."
 msgstr ""
+"Si la casilla <gui>Leer mensajes de aprendizaje</gui> está marcada, "
+"<app>Orca</app> proporcionará información adicional, como la forma de "
+"interactuar con el objeto que actualmente tiene el foco."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1075,7 +1098,7 @@ msgstr ""
 
 #: C/preferences_pronunciation.page:6(title)
 msgid "7. Pronunciation"
-msgstr ""
+msgstr "7. Pronunciación"
 
 #: C/preferences_pronunciation.page:7(title)
 msgid "Pronunciation"
@@ -1083,11 +1106,11 @@ msgstr "Pronunciación"
 
 #: C/preferences_pronunciation.page:8(desc)
 msgid "Defining how specific words get pronounced"
-msgstr ""
+msgstr "Definir cómo se pronuncian palabras específicas"
 
 #: C/preferences_pronunciation.page:19(title)
 msgid "Pronunciation Preferences"
-msgstr ""
+msgstr "Preferencias de pronunciación"
 
 #: C/preferences_pronunciation.page:20(p)
 msgid ""
@@ -1096,6 +1119,10 @@ msgid ""
 "\"LOL,\" or \"accessibility\" rather than \"a11y\". Or there may be a name "
 "or a technical term which the synthesizer mispronounces."
 msgstr ""
+"A veces su sintetizador de voz simplemente no dice lo correcto para una "
+"cadena dada. Puede que prefiera escuchar «Riendo en voz alta» en lugar de "
+"«LOL,» o «Accesibilidad» en lugar de «a11y». O puede que haya un término "
+"técnico o un nombre que el sintetizador no pronuncie correctamente."
 
 #: C/preferences_pronunciation.page:26(p)
 msgid ""
@@ -1103,6 +1130,9 @@ msgid ""
 "allows you to add, edit, and delete entries in <app>Orca</app>'s "
 "pronunciation dictionary."
 msgstr ""
+"La página <gui>Pronunciación</gui> del diálogo de preferencias de <app>Orca</"
+"app> le permite añadir, editar y eliminar entradas en el diccionario de "
+"pronunciación de <app>Orca</app>."
 
 #: C/preferences_pronunciation.page:32(p)
 msgid ""
@@ -1110,6 +1140,9 @@ msgid ""
 "specific settings, you can customize your entries on an as-needed basis for "
 "each application you use."
 msgstr ""
+"Gracias a que la página <gui>Pronunciación</gui> es parte de la "
+"configuración específica de la aplicación, podrá personalizar sus entradas "
+"según las necesidades para cada aplicación que utilice."
 
 #: C/preferences_pronunciation.page:38(title)
 msgid "Adding a new dictionary entry"
@@ -1119,24 +1152,31 @@ msgstr "Añadir una entrada nueva de diccionario"
 msgid ""
 "Press the New Entry button (<keyseq><key>Alt</key><key>N</key></keyseq>)"
 msgstr ""
+"Pulse el botón «Entrada nueva» (<keyseq><key>Alt</key><key>N</key></keyseq>)"
 
 #: C/preferences_pronunciation.page:45(p)
 msgid ""
 "Type the text of the new entry and press <key>Return</key> to finish editing "
 "the actual string."
 msgstr ""
+"Escriba el texto de la nueva entrada y pulse <key>Intro</key> para terminar "
+"de editar la cadena actual."
 
 #: C/preferences_pronunciation.page:51(p)
 msgid ""
 "Move to the <gui>Replacement String</gui> column and press <key>Return </"
 "key> to begin editing."
 msgstr ""
+"Desplácese a la columna <gui>Cadena de reemplazo</gui> y pulse <key>Intro</"
+"key> para comenzar a editar."
 
 #: C/preferences_pronunciation.page:57(p)
 msgid ""
 "Type the text that you would like to have spoken instead and press <key> "
 "Return</key> to finish editing the replacement string."
 msgstr ""
+"Escriba el texto que quiere que se hable en su lugar y pulse <key>Intro</"
+"key> para terminar de editar la cadena de reemplazo."
 
 #: C/preferences_pronunciation.page:64(title)
 msgid "Editing an existing dictionary entry"
@@ -1147,22 +1187,26 @@ msgid ""
 "Move to the cell you wish to edit and press <key>Return</key> to begin "
 "editing."
 msgstr ""
+"Desplácese a la celda que quiera editar y pulse <key>Intro</key> para "
+"comenzar a editar."
 
 #: C/preferences_pronunciation.page:72(p)
 msgid "Make your changes and then press <key>Return</key> to finish editing."
 msgstr ""
+"Realice sus cambios y luego pulse <key>Intro</key> para terminar de editar."
 
 #: C/preferences_pronunciation.page:78(title)
 msgid "Deleting an existing dictionary entry"
-msgstr "Borrar una entrada de diccionario existente"
+msgstr "Eliminar una entrada de diccionario existente"
 
 #: C/preferences_pronunciation.page:80(p)
 msgid "Move to the entry you wish to delete."
-msgstr "Moverse hasta la entrada que quiere borrar."
+msgstr "Desplácese hasta la entrada que quiere eliminar."
 
 #: C/preferences_pronunciation.page:83(p)
 msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
 msgstr ""
+"Pulse el botón «Eliminar» o <keyseq><key>Alt</key><key>B</key></keyseq>."
 
 #: C/preferences.page:5(title)
 msgid "Preferences"
@@ -1170,7 +1214,7 @@ msgstr "Preferencias"
 
 #: C/preferences.page:14(title)
 msgid "<app>Orca</app>'s Preferences Dialogs"
-msgstr ""
+msgstr "Diálogos de preferencias de <app>Orca</app>"
 
 #: C/preferences.page:16(title) C/preferences_introduction.page:17(title)
 msgid "Orca Preferences"
@@ -1178,7 +1222,7 @@ msgstr "Preferencias de Orca"
 
 #: C/preferences.page:19(title) C/preferences_introduction.page:49(title)
 msgid "Application-Unique Preferences"
-msgstr ""
+msgstr "Preferencias únicas de la aplicación"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1272,7 +1316,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:5(title)
 msgid "5. Magnifier"
-msgstr ""
+msgstr "5. Magnificador"
 
 #: C/preferences_magnifier.page:6(title)
 msgid "Magnifier"
@@ -1280,7 +1324,7 @@ msgstr "Magnificador"
 
 #: C/preferences_magnifier.page:7(desc)
 msgid "Configuring the zoom window appearance"
-msgstr ""
+msgstr "Configurar la apariencia de la ventana de ampliación"
 
 #: C/preferences_magnifier.page:18(title)
 msgid "Magnifier Preferences"
@@ -1288,7 +1332,7 @@ msgstr "Preferencias del magnificador"
 
 #: C/preferences_magnifier.page:20(title)
 msgid "Enable Magnifier"
-msgstr "Activar el magnificador"
+msgstr "Activar magnificador"
 
 #: C/preferences_magnifier.page:22(p)
 msgid ""
@@ -1296,26 +1340,33 @@ msgid ""
 "app>'s magnification support. When it is unchecked, the other widgets on "
 "this page become unavailable."
 msgstr ""
+"La casilla <gui>Activar magnificador</gui> activa y desactiva el soporte "
+"para el magnificador de <app>Orca</app>. Cuando no está marcada los demás "
+"componentes de está página no estarán disponibles."
 
 #: C/preferences_magnifier.page:32(title)
 msgid "Zoomer"
-msgstr ""
+msgstr "Ampliador"
 
 #: C/preferences_magnifier.page:34(p)
 msgid ""
 "The <gui>Zoomer</gui> options allow you to customize the magnifier's level, "
 "position, and size, as well as to hide the system pointer."
 msgstr ""
+"Las opciones del <gui>Ampliador</gui> le permiten personalizar el nivel, "
+"posición y tamaño del magnificador, así como ocultar el puntero del sistema."
 
 #: C/preferences_magnifier.page:39(title)
 msgid "Scale factor"
-msgstr ""
+msgstr "Factor de escala"
 
 #: C/preferences_magnifier.page:40(p)
 msgid ""
 "<gui>Scale factor</gui> can be used to set the magnification level from 1.0x "
 "to 16.0x (fractional values are supported)."
 msgstr ""
+"<gui>Factor de escala</gui> puede usarse para establecer el nivel de "
+"magnificación desde 1.0x hasta 16.0x (se soportan valores fraccionarios)."
 
 #: C/preferences_magnifier.page:46(title)
 msgid "Position"
@@ -1328,14 +1379,19 @@ msgid ""
 "Half</gui>, <gui>Right Half</gui>, <gui>Top Half</gui>, <gui>Bottom Half</"
 "gui>, and <gui>Custom</gui>."
 msgstr ""
+"<gui>Posición</gui> puede usarse para especificar la colocación del "
+"magnificador en la pantalla. Las posiciones disponibles son: <gui>Pantalla "
+"completa</gui>, <gui>Mitad izquierda</gui>, <gui>Mitad derecha</gui>, "
+"<gui>Mitad superior</gui>, <gui>Mitad inferior</gui> y <gui>Personalizada</"
+"gui>."
 
 #: C/preferences_magnifier.page:53(p)
 msgid "Default value: <gui>Full Screen</gui>"
-msgstr ""
+msgstr "Valor predeterminado: <gui>Pantalla completa</gui>"
 
 #: C/preferences_magnifier.page:58(title)
 msgid "Specifying the Bounds of a \"Custom\" Zoomer"
-msgstr ""
+msgstr "Especificar los límites de un ampliador personalizado"
 
 #: C/preferences_magnifier.page:59(p)
 msgid ""
@@ -1343,30 +1399,37 @@ msgid ""
 "to become available: <gui>Top</gui>, <gui>Left</gui>, <gui>Right </gui>, and "
 "<gui>Bottom</gui>."
 msgstr ""
+"Al seleccionar una <gui>Posición</gui> <gui>Personalizada</gui> hace que "
+"estén disponibles cuatro botones contadores: <gui>Arriba</gui>, "
+"<gui>Izquierda</gui>, <gui>Derecha</gui> y <gui>Abajo</gui>."
 
 #: C/preferences_magnifier.page:64(p)
 msgid ""
 "These spin buttons allow you to define the location of each edge of the zoom "
 "window. Units are in pixels."
 msgstr ""
+"Estos botones contadores le permiten definir la ubicación de cada borde de "
+"la ventana de ampliación. Las unidades se indican en píxeles."
 
 #: C/preferences_magnifier.page:70(title)
 msgid "Hide system pointer"
-msgstr ""
+msgstr "Ocultar el puntero del sistema"
 
 #: C/preferences_magnifier.page:71(p)
 msgid ""
 "The <gui>Hide system pointer</gui> checkbox will hide the unmagnified "
 "pointer, leaving just the magnified one visible."
 msgstr ""
+"La casilla <gui>Ocultar el puntero del sistema</gui> ocultará el puntero no "
+"magnificado, dejando visible solamente el puntero magnificado."
 
 #: C/preferences_magnifier.page:75(p)
 msgid "Default value: unchecked"
-msgstr ""
+msgstr "Valor predeterminado: no marcado"
 
 #: C/preferences_magnifier.page:81(title)
 msgid "Tracking and Alignment"
-msgstr ""
+msgstr "Seguimiento y alineación"
 
 #: C/preferences_magnifier.page:83(p)
 msgid "These options control the tracking of the mouse cursor."
@@ -1381,12 +1444,16 @@ msgid ""
 "The <gui>Mouse Pointer</gui> combo box allows you to select your tracking "
 "and alignment from the following options:"
 msgstr ""
+"El cuadro combinado <gui>Puntero del ratón</gui> le permite seleccionar el "
+"seguimiento y alineación desde las siguientes opciones:"
 
 #: C/preferences_magnifier.page:92(p)
 msgid ""
 "<gui>Centered</gui>: Keeps the mouse pointer at the center of the screen "
 "whenever possible."
 msgstr ""
+"<gui>Centrado</gui>: mantiene el puntero del ratón en el centro de la "
+"pantalla siempre y cuando sea posible."
 
 #: C/preferences_magnifier.page:98(p)
 msgid ""
@@ -1396,26 +1463,35 @@ msgid ""
 "positions the magnified mouse pointer 25% from the left edge of the zoom "
 "window."
 msgstr ""
+"<gui>Proporcional</gui>: posiciona el puntero del ratón en la ventana del "
+"ampliador en relación a su posición no magnificada. Por ejemplo, si el "
+"puntero del ratón está 25% de distancia del borde izquierdo del escritorio, "
+"<app>Orca</app> posiciona el puntero del ratón magnificado 25% de distancia "
+"del margen izquierdo de la ventana del ampliador."
 
 #: C/preferences_magnifier.page:107(p)
 msgid ""
 "<gui>Push</gui>: Moves the zoomer window the least amount necessary to keep "
 "the mouse pointer on the screen."
 msgstr ""
+"<gui>Empujar</gui>: mueve la ventana del ampliador lo mínimo necesario para "
+"mantener el puntero del ratón en la pantalla."
 
 #: C/preferences_magnifier.page:113(p)
 msgid ""
 "<gui>None</gui>: Moving the mouse pointer has no impact on what the zoomer "
 "window displays."
 msgstr ""
+"<gui>Ninguno</gui>: mover el puntero del ratón no tiene impacto sobre lo que "
+"se muestra en la ventana del ampliador."
 
 #: C/preferences_magnifier.page:119(p)
 msgid "Default value: <gui>Centered</gui>"
-msgstr ""
+msgstr "Valor predeterminado: <gui>Centrado</gui>"
 
 #: C/preferences_magnifier.page:124(title)
 msgid "Pointer follows zoomer"
-msgstr ""
+msgstr "El puntero sigue al ampliador"
 
 #: C/preferences_magnifier.page:125(p)
 msgid ""
@@ -1427,10 +1503,17 @@ msgid ""
 "mouse tracking mode is centered, the pointer will be moved to the center; "
 "otherwise it will be moved to the item with focus."
 msgstr ""
+"La casilla <gui>El puntero sigue al ampliador</gui> le permite personalizar "
+"lo que sucede cuando inicialmente mueve el ratón y el puntero del mismo no "
+"está en la pantalla. Con esta opción activada, si el puntero del ratón no "
+"está en la pantalla cuando inicialmente mueva el ratón, este se moverá "
+"dentro del ampliador para que pueda continuar viendo en lo qué estaba "
+"trabajando. Si su modo de seguimiento del ratón es centrado, el puntero se "
+"moverá al centro, de otra manera se moverá al elemento con el foco."
 
 #: C/preferences_magnifier.page:141(title)
 msgid "Control and menu item"
-msgstr "Elemento de control y de menú"
+msgstr "Control y elemento de menú"
 
 #: C/preferences_magnifier.page:142(p)
 msgid "These options control additional behavior of the magnifier."
@@ -1441,6 +1524,9 @@ msgid ""
 "<gui>Centered</gui>: When navigating via keyboard, keep the focused dialog "
 "box control or menu item at the center of the screen whenever possible."
 msgstr ""
+"<gui>Centrado</gui>: cuando se navega usando el teclado, mantiene el control "
+"del cuadro de diálogo o elemento de menú con el foco al centro de la "
+"pantalla siempre y cuando sea posible."
 
 #: C/preferences_magnifier.page:152(p)
 msgid ""
@@ -1448,16 +1534,22 @@ msgid ""
 "least amount necessary to display the focused dialog box control or menu "
 "item."
 msgstr ""
+"<gui>Empujar</gui>: cuando navega usando el teclado, mueve la ventana del "
+"ampliador lo mínimo necesario para mostrar el control del cuadro de diálogo "
+"o elemento de menú con el foco."
 
 #: C/preferences_magnifier.page:159(p)
 msgid ""
 "<gui>None</gui>: Using the keyboard to navigate among dialog box controls "
 "and menu items will have no impact on what the zoomer window displays."
 msgstr ""
+"<gui>Ninguno</gui>: usar el teclado para navegar entre los controles del "
+"cuadro de diálogo y elementos de menú no tendrá ningún impacto en lo que "
+"muestra la ventana del ampliador."
 
 #: C/preferences_magnifier.page:166(p) C/preferences_magnifier.page:204(p)
 msgid "Default value: <gui>Push</gui>"
-msgstr ""
+msgstr "Valor predeterminado: <gui>Empujar</gui>"
 
 #: C/preferences_magnifier.page:171(title)
 msgid "Pointer follows focus"
@@ -1584,7 +1676,7 @@ msgstr ""
 msgid "Border size"
 msgstr "Tamaño del borde"
 
-#: C/preferences_magnifier.page:285(p) C/preferences_magnifier.page:331(p)
+#: C/preferences_magnifier.page:285(p)
 msgid "This value determines the size of the border in pixels."
 msgstr ""
 
@@ -1640,6 +1732,10 @@ msgstr ""
 #: C/preferences_magnifier.page:330(title)
 msgid "Cursor size"
 msgstr "Tamaño del cursor"
+
+#: C/preferences_magnifier.page:331(p)
+msgid "This value determines the size of the cursor in pixels."
+msgstr ""
 
 #: C/preferences_magnifier.page:334(p)
 msgid "Default value: 32"
@@ -2441,7 +2537,7 @@ msgid ""
 "from the preferences dialog box to a named profile."
 msgstr ""
 
-#: C/preferences_general.page:232(p)
+#: C/preferences_general.page:233(p)
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
@@ -2694,6 +2790,12 @@ msgstr ""
 #: C/preferences_chat.page:72(gui)
 msgid "All channels when any chat window is active"
 msgstr ""
+
+#: C/preferences_chat.page:75(p)
+#, fuzzy
+#| msgid "Default value: checked"
+msgid "Default value: all channels"
+msgstr "Valor predeterminado: marcado"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -3912,7 +4014,6 @@ msgid "Examine and change the settings as you see fit."
 msgstr ""
 
 #: C/howto_structural_navigation.page:117(p) C/howto_profiles.page:86(p)
-#: C/howto_profiles.page:130(p)
 msgid "Press the <gui>OK</gui> button."
 msgstr ""
 
@@ -4124,10 +4225,10 @@ msgid ""
 "<gui>Start-up Profile</gui> combo box."
 msgstr ""
 
-#: C/howto_profiles.page:133(p)
+#: C/howto_profiles.page:130(p)
 msgid ""
-"The next time you launch <app>Orca</app>, the newly-selected profile will be "
-"used."
+"Press the <gui>OK</gui> button. The next time you launch <app>Orca</app>, "
+"the newly-selected profile will be used."
 msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
