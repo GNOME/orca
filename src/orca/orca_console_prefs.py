@@ -586,6 +586,13 @@ def showPreferencesUI(commandLineSettings):
             sayAndPrint(_("Please enter y or n."))
 
     prefsDict['firstStart'] = False
+
+    # Sanity check for bug #642285
+    #
+    if not prefsDict.has_key('profile'):
+        prefsDict['profile'] = settings.profile
+
+
     logoutNeeded = _settingsManager.saveSettings(prefsDict, {}, {})
     if logoutNeeded:
         sayAndPrint(_("Accessibility support for GNOME has just been enabled."),
