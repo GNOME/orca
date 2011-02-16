@@ -81,8 +81,8 @@ orca_pythondir=$(pyexecdir)/orca
 SUBDIRS = \
         scripts \
         backends \
-	pluglib \
-	baseplugins
+		pluglib \
+		baseplugins
 
 ui_DATA = \
 	orca-advanced-magnification.ui \
