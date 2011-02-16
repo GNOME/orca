@@ -2228,15 +2228,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # Orca Plugin System
         #
-        self.plugins_tree = self.builder.get_object("plugins_tv")
-        self.plugins_store = self.builder.get_object("plugins_store")
-        self.plugabout_btn = self.builder.get_object("plugabout_btn")
-        self.plugconf_btn = self.builder.get_object("plugconf_btn")
-        self.plugabout_dialog = self.builder.get_object("plugabout_dialog")
+        self.plugins_tree = self.get_widget("plugins_tv")
+        self.plugins_store = self.get_widget("plugins_store")
+        self.plugabout_btn = self.get_widget("plugabout_btn")
+        self.plugconf_btn = self.get_widget("plugconf_btn")
+        self.plugabout_dialog = self.get_widget("plugabout_dialog")
+
+	print "Plugins detected: " + str(plugmanager.get_plugins())
+
         self._initPluginsTreeView()
 
     def _initPluginsTreeView(self):
-        print "Plugins detected: " + str(plugmanager.get_plugins())
 
         for plugin_id, plugin in plugmanager.get_plugins():
             if plugin.name != None:

@@ -25,6 +25,7 @@ import imp
 import inspect
 import abc
 
+import pluglib
 from interfaces import *
 
 class ModulePluginManager(IPluginManager):
@@ -38,8 +39,6 @@ class ModulePluginManager(IPluginManager):
         
         #{'plugin_name': {'class': plugin_class, 'object': plugin_object}
         self.plugins = {}
-        print "Initializing module plugin manager"
-        print "Path received in module plugin manager: " + str(plugin_paths)
 
     def inspect_plugin_module(self, module_name, path):
         plugins = {}
@@ -47,9 +46,10 @@ class ModulePluginManager(IPluginManager):
         modfile, name, desc = imp.find_module(module_name, [path])
         try:
             module = imp.load_module(module_name, modfile, name, desc)
+
             plugins.update([(name, {'class': klass, 'object': None}) 
                 for (name, klass) in inspect.getmembers(module, inspect.isclass)
-                if issubclass(klass, IPlugin) and name != "IPlugin"])
+                if issubclass(klass, pluglib.interfaces.IPlugin) and name != "IPlugin"])
         except Exception, e:
             raise PluginManagerError, 'Cannot load module %s: %s' % \
                 (name, e)
@@ -63,11 +63,9 @@ class ModulePluginManager(IPluginManager):
         new_plugins = {}
         for path in self.plugin_paths:
             if not path in sys.path:
-                print "Path detected: " + str(path)
                 sys.path.insert(0, path)
             for module in [os.path.basename(os.path.splitext(x)[0])
                     for x in glob.glob(os.path.join(path, '[!_]*.py'))]:
-                print "Module detected: " + str(module)
                 new_plugins.update(self.inspect_plugin_module(module, path))
                 
         new_plugins.update(self.plugins)
@@ -127,9 +125,4 @@ class ModulePluginManager(IPluginManager):
 
 # Register implementation
 IPluginManager.register(ModulePluginManager)
-
-if __name__ == '__main__':
-        print 'Subclass:', issubclass(ModulePluginManager, IPluginManager)
-        print 'Instance:', isinstance(ModulePluginManager(), IPluginManager)
-
 
