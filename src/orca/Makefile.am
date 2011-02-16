@@ -57,6 +57,7 @@ orca_python_PYTHON = \
 	outloud.py \
 	phonnames.py \
 	orca_platform.py \
+	plugin_manager.py \
 	pronunciation_dict.py \
 	punctuation_settings.py \
 	rolenames.py \
@@ -79,7 +80,9 @@ orca_pythondir=$(pyexecdir)/orca
 
 SUBDIRS = \
         scripts \
-        backends
+        backends \
+	pluglib \
+	baseplugins
 
 ui_DATA = \
 	orca-advanced-magnification.ui \

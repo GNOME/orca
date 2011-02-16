@@ -51,6 +51,8 @@ import braille
 import speech
 import speechserver
 import text_attribute_names
+from plugin_manager import plugmanager
+import pluglib
 
 import orca_gui_profile
 
@@ -2223,6 +2225,76 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.startingProfileCombo = self.get_widget('availableProfilesComboBox2')
         self.profilesComboModel = self.get_widget('model9')
         self.__initProfileCombo()
+
+        # Orca Plugin System
+        #
+        self.plugins_tree = self.builder.get_object("plugins_tv")
+        self.plugins_store = self.builder.get_object("plugins_store")
+        self.plugabout_btn = self.builder.get_object("plugabout_btn")
+        self.plugconf_btn = self.builder.get_object("plugconf_btn")
+        self.plugabout_dialog = self.builder.get_object("plugabout_dialog")
+        self._initPluginsTreeView()
+
+    def _initPluginsTreeView(self):
+        print "Plugins detected: " + str(plugmanager.get_plugins())
+
+        for plugin_id, plugin in plugmanager.get_plugins():
+            if plugin.name != None:
+                self.plugins_store.append([plugmanager.is_plugin_enabled(plugin_id), None, plugin.name, plugin_id])
+
+    def on_plugabout_btn_clicked(self, button):
+        selection = self.plugins_tree.get_selection()
+        model, selected = selection.get_selected()
+
+        if selected:
+            plugin = plugmanager.get_plugin_class(model[selected][3])
+
+            if plugin:
+                plugin_status = plugmanager.get_plugin_status(plugin.name)
+
+                if not plugin_status:
+                    print plugin.name + " is disabled"
+                else:
+                    print plugin.name + " is enabled"
+
+                self.plugabout_dialog.set_name(plugin.name)
+                self.plugabout_dialog.set_version(plugin.version)
+                self.plugabout_dialog.set_authors(plugin.authors)
+                self.plugabout_dialog.set_website(plugin.website)
+                self.plugabout_dialog.set_comments(plugin.description)
+
+                response = self.plugabout_dialog.run()
+                if response in (gtk.RESPONSE_DELETE_EVENT, gtk.RESPONSE_CANCEL):
+                    self.plugabout_dialog.hide()
+
+    def on_plugins_tv_cursor_changed(self, treeview):
+        selection = self.plugins_tree.get_selection()
+        model, selected = selection.get_selected()
+
+        if selected:
+            plugin = plugmanager.get_plugin_class(model[selected][3])
+            self.plugconf_btn.set_sensitive(pluglib.verify_conf_dialog(plugin))
+
+    def on_plugconf_btn_clicked(self, button):
+        selection = self.plugins_tree.get_selection()
+        model, selected = selection.get_selected()
+
+        if selected:
+            plugin = plugmanager.get_plugin_class(model[selected][3])
+            if pluglib.verify_conf_dialog(plugin):
+                plugin.configure_dialog(self.parent)
+
+    def on_active_cell_toggled(self, checkbox, path):
+        active = not checkbox.get_active()
+        plugin_name = self.plugins_store[path][3]
+
+        if active:
+            plugmanager.enable_plugin(plugin_name)
+        else:
+            plugmanager.disable_plugin(plugin_name)
+
+        self.plugins_store[path][0] = active
+
 
     def __initProfileCombo(self):
         """Adding available profiles and setting active as the active one"""

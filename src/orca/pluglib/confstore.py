@@ -83,28 +83,4 @@ class GConfStore(IConfigurable):
                 casts[type(value)](self.__client, self.__app_key + '/' + name, 
                     value)
 
-import os
-import cPickle
 
-class PickleStore(IConfigurable):
-                
-    defaults = {}
-
-    def __init__(self, path):
-        self.__path = path
-        self.options = {}
-        self.options.update(self.defaults)
-        
-    def load(self):
-        if os.path.exists(self.__path):
-            filep = open(self.__path, 'r')
-            self.options = cPickle.load(filep)
-            filep.close()
-    
-    def save(self):
-        if not os.path.exists(os.path.dirname(self.__path)):
-            os.makedirs(os.path.dirname(self.__path))
-            
-        filep = open(self.__path, 'w')
-        cPickle.dump(self.options, filep)
-        filep.close()

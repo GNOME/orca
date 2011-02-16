@@ -63,6 +63,8 @@ import orca_platform
 import settings
 from orca_i18n import _
 from orca_i18n import ngettext
+import pluglib
+from plugin_manager import plugmanager
 
 class Options:
     """Class to handle getting run-time options."""
@@ -108,6 +110,8 @@ class Options:
         self._getSetup()
         self._getDebug()
         self._getHelp()
+
+        plugmanager.scan_plugins()
 
     def validate(self):
         """Parses the list of options in arglist and removes those which are

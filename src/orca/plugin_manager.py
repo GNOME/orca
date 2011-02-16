@@ -6,7 +6,7 @@ from pluglib.manager import ModulePluginManager
 from pluglib.confstore import GConfStore
 from pluglib.interfaces import PluginManagerError
 
-PLUGINS_DIR = ['baseplugins']
+PLUGINS_DIR = ['/usr/local/lib/python2.7/dist-packages/orca/baseplugins']
 GCONF_DIR = '/apps/popoter/applet/plugins'
 
 class SignalManager(gobject.GObject):
@@ -82,3 +82,4 @@ class TestPluginManager(ModulePluginManager, GConfStore):
 
 plugmanager = TestPluginManager()
 
+print "plugmanager detecting..." + str(plugmanager.get_plugins())
