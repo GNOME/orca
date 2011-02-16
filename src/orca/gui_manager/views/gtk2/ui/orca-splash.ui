@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--*- mode: xml -*-->
+<interface>
+  <object class="GtkWindow" id="splashWindow">
+    <property name="title" translatable="yes">Orca</property>
+    <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="type_hint">splashscreen</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <property name="decorated">False</property>
+    <property name="deletable">False</property>
+    <accessibility>
+    </accessibility>
+    <child>
+      <object class="GtkVBox" id="splash_vbox">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <accessibility>
+        </accessibility>
+      </object>
+    </child>
+  </object>
+</interface>
