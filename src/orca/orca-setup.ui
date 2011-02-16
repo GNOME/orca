@@ -571,9 +571,9 @@
                                             <property name="visible">True</property>
                                             <property name="xalign">0</property>
                                             <property name="xpad">12</property>
+                                            <property name="label" translatable="yes">Active _Profile:</property>
                                             <property name="use_underline">True</property>
                                             <property name="mnemonic_widget">availableProfilesComboBox1</property>
-                                            <property name="label" translatable="yes">Active _Profile:</property>
                                             <property name="ellipsize">start</property>
                                             <accessibility>
                                               <relation type="label-for" target="availableProfilesComboBox1"/>
@@ -2821,8 +2821,8 @@
                                                             <property name="climb_rate">1</property>
                                                             <property name="numeric">True</property>
                                                             <accessibility>
-                                                            <relation type="labelled-by" target="magCrossHairSizeLabel"/>
                                                             <relation type="labelled-by" target="magCrossHairSizeUnitsLabel"/>
+                                                            <relation type="labelled-by" target="magCrossHairSizeLabel"/>
                                                             </accessibility>
                                                             <signal name="value_changed" handler="magCrossHairSizeValueChanged"/>
                                                           </object>
@@ -3025,8 +3025,8 @@
                                                             <property name="climb_rate">1</property>
                                                             <property name="numeric">True</property>
                                                             <accessibility>
-                                                            <relation type="labelled-by" target="magCursorSizeLabel"/>
                                                             <relation type="labelled-by" target="magCursorSizeUnitsLabel"/>
+                                                            <relation type="labelled-by" target="magCursorSizeLabel"/>
                                                             </accessibility>
                                                             <signal name="value_changed" handler="magCursorSizeValueChanged"/>
                                                           </object>
@@ -3604,8 +3604,8 @@
                                                     <property name="climb_rate">1</property>
                                                     <property name="numeric">True</property>
                                                     <accessibility>
-                                                      <relation type="labelled-by" target="magEdgeMarginUnitsLabel"/>
                                                       <relation type="labelled-by" target="magEdgeMarginLabel"/>
+                                                      <relation type="labelled-by" target="magEdgeMarginUnitsLabel"/>
                                                     </accessibility>
                                                     <signal name="value_changed" handler="magEdgeMarginValueChanged"/>
                                                   </object>
@@ -4265,6 +4265,151 @@ attributes&lt;/b&gt;</property>
                   </object>
                   <packing>
                     <property name="position">7</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkAlignment" id="plugins_tab1">
+                    <property name="visible">True</property>
+                    <property name="no_show_all">True</property>
+                    <property name="top_padding">12</property>
+                    <property name="bottom_padding">8</property>
+                    <property name="left_padding">4</property>
+                    <property name="right_padding">4</property>
+                    <child>
+                      <object class="GtkVBox" id="vbox11">
+                        <property name="visible">True</property>
+                        <child>
+                          <object class="GtkFrame" id="frame2">
+                            <property name="visible">True</property>
+                            <property name="label_xalign">0</property>
+                            <property name="shadow_type">none</property>
+                            <child>
+                              <object class="GtkAlignment" id="alignment6">
+                                <property name="visible">True</property>
+                                <property name="left_padding">12</property>
+                                <child>
+                                  <object class="GtkScrolledWindow" id="scrolledwindow4">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="hscrollbar_policy">never</property>
+                                    <property name="shadow_type">in</property>
+                                    <child>
+                                      <object class="GtkTreeView" id="plugins_tv">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="model">liststore1</property>
+                                        <property name="headers_visible">False</property>
+                                        <property name="headers_clickable">False</property>
+                                        <property name="search_column">3</property>
+                                        <property name="enable_tree_lines">True</property>
+                                        <child>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn1">
+                                            <property name="title">column</property>
+                                            <child>
+                                              <object class="GtkCellRendererToggle" id="active_cell"/>
+                                              <attributes>
+                                                <attribute name="active">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn2">
+                                            <property name="title">column</property>
+                                            <child>
+                                              <object class="GtkCellRendererPixbuf" id="icon_cell"/>
+                                              <attributes>
+                                                <attribute name="pixbuf">1</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn3">
+                                            <property name="title">column</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="plugin_cell"/>
+                                              <attributes>
+                                                <attribute name="text">2</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child type="label">
+                              <object class="GtkLabel" id="label14">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">&lt;b&gt;Installed plugins&lt;/b&gt;</property>
+                                <property name="use_markup">True</property>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkHBox" id="hbox5">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkButton" id="plugabout_btn">
+                                <property name="label" translatable="yes">About plugin</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="padding">5</property>
+                                <property name="pack_type">end</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="plugconf_btn">
+                                <property name="label" translatable="yes">Configure plugin</property>
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="padding">5</property>
+                                <property name="pack_type">end</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="padding">11</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">8</property>
+                  </packing>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="pluginsLabel">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Plugins</property>
+                  </object>
+                  <packing>
+                    <property name="position">8</property>
                     <property name="tab_fill">False</property>
                   </packing>
                 </child>
