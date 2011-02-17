@@ -2240,9 +2240,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def _initPluginsTreeView(self):
 
+        print "Plugins detected: " + str(plugmanager.get_plugins())
         for plugin_id, plugin in plugmanager.get_plugins():
             if plugin.name != None:
                 self.plugins_store.append([plugmanager.is_plugin_enabled(plugin_id), None, plugin.name, plugin_id])
+
+        print self.plugins_store
 
     def on_plugabout_btn_clicked(self, button):
         selection = self.plugins_tree.get_selection()

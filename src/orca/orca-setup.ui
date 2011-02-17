@@ -269,6 +269,18 @@
       <column type="gchararray"/>
     </columns>
   </object>
+  <object class="GtkListStore" id="plugins_store">
+    <columns>
+      <!-- column-name active -->
+      <column type="gboolean"/>
+      <!-- column-name icon -->
+      <column type="GdkPixbuf"/>
+      <!-- column-name plugin -->
+      <column type="gchararray"/>
+      <!-- column-name plugin_id -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkDialog" id="orcaSetupWindow">
     <property name="title" translatable="yes">Orca Preferences</property>
     <property name="type_hint">normal</property>
@@ -4298,16 +4310,19 @@ attributes&lt;/b&gt;</property>
                                       <object class="GtkTreeView" id="plugins_tv">
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
-                                        <property name="model">liststore1</property>
+                                        <property name="model">plugins_store</property>
                                         <property name="headers_visible">False</property>
                                         <property name="headers_clickable">False</property>
                                         <property name="search_column">3</property>
                                         <property name="enable_tree_lines">True</property>
+                                        <signal name="cursor_changed" handler="on_plugins_tv_cursor_changed"/>
                                         <child>
                                           <object class="GtkTreeViewColumn" id="treeviewcolumn1">
                                             <property name="title">column</property>
                                             <child>
-                                              <object class="GtkCellRendererToggle" id="active_cell"/>
+                                              <object class="GtkCellRendererToggle" id="active_cell">
+                                                <signal name="toggled" handler="on_active_cell_toggled"/>
+                                              </object>
                                               <attributes>
                                                 <attribute name="active">0</attribute>
                                               </attributes>
@@ -4363,6 +4378,7 @@ attributes&lt;/b&gt;</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <signal name="clicked" handler="on_plugabout_btn_clicked"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -4379,6 +4395,7 @@ attributes&lt;/b&gt;</property>
                                 <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <signal name="clicked" handler="on_plugconf_btn_clicked"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -4507,5 +4524,42 @@ attributes&lt;/b&gt;</property>
       <action-widget response="-6">cancelButton</action-widget>
       <action-widget response="-5">okButton</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkAdjustment" id="adjustment16">
+    <property name="lower">5</property>
+    <property name="upper">121</property>
+    <property name="step_increment">1</property>
+  </object>
+  <object class="GtkTextBuffer" id="autocomplete_tags"/>
+  <object class="GtkAboutDialog" id="plugabout_dialog">
+    <property name="border_width">5</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="type_hint">normal</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <property name="transient_for">orcaSetupWindow</property>
+    <property name="has_separator">False</property>
+    <property name="program_name">Glade</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox3">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area3">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </object>
 </interface>
