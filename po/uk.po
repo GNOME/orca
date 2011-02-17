@@ -6570,7 +6570,7 @@ msgstr "Перейти до комірки"
 #: ../src/orca/scripts/apps/soffice/script.py:1695
 #, python-format
 msgid "slide %(position)d of %(count)d"
-msgstr "слайд %(index)d з %(total)d"
+msgstr "слайд %(position)d of %(count)d"
 
 #. Translators: This message is to inform the user that
 #. the last row of a table in a document was just deleted.
