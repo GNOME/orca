@@ -24,6 +24,11 @@ update-icon-cache:
 desktopdir 	 = $(datadir)/applications
 desktop_in_files = orca.desktop.in
 desktop_DATA     = $(desktop_in_files:.desktop.in=.desktop)
+
+autostartdir	 = $(sysconfdir)/xdg/autostart
+autostart_in_files = orca-autostart.desktop.in
+autostart_DATA   = $(autostart_in_files:.desktop.in=.desktop)
+
 @INTLTOOL_DESKTOP_RULE@
 
 EXTRA_DIST =                \
