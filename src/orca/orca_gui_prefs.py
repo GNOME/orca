@@ -2234,8 +2234,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.plugconf_btn = self.get_widget("plugconf_btn")
         self.plugabout_dialog = self.get_widget("plugabout_dialog")
 
-	print "Plugins detected: " + str(plugmanager.get_plugins())
-
         self._initPluginsTreeView()
 
     def _initPluginsTreeView(self):
