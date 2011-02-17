@@ -463,7 +463,7 @@ def setupSpeech(prefsDict):
     # layouts for how they might control Orca.
     #
     sayAndPrint(_("Select desired keyboard layout."),
-                False,
+                True,
                 False,
                 speechServerChoice,
                 speechVoiceChoice)
@@ -579,13 +579,13 @@ def showPreferencesUI(commandLineSettings):
                              speechServerChoice,
                              speechVoiceChoice)
         try:
-            settings.setOrcaAutostart(checkYes(answer))
+            autostart = checkYes(answer)
             break
         except:
             stop = False
             sayAndPrint(_("Please enter y or n."))
 
-    prefsDict['firstStart'] = False
+    _settingsManager.setFirstStart(False)
 
     # Sanity check for bug #642285
     #
@@ -624,6 +624,7 @@ def showPreferencesUI(commandLineSettings):
                                     speechServerChoice,
                                     speechVoiceChoice)
                         time.sleep(2)
+                        settings.setOrcaAutostart(autostart)
 
                         import gobject
                         gobject.threads_init()
@@ -643,6 +644,8 @@ def showPreferencesUI(commandLineSettings):
                          True,
                          speechServerChoice,
                          speechVoiceChoice)
+
+    settings.setOrcaAutostart(autostart)
 
     for [factory, servers] in workingFactories:
         factory.SpeechServer.shutdownActiveServers()
