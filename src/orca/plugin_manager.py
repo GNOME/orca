@@ -83,4 +83,3 @@ class TestPluginManager(ModulePluginManager, GConfStore):
 
 plugmanager = TestPluginManager()
 
-print "plugmanager detecting..." + str(plugmanager.get_plugins())

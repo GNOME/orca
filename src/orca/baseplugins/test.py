@@ -5,13 +5,11 @@ from pluglib.interfaces import *
 
 class gConfPlugin(GConfStore):
     defaults = {
-        'hola':     1,
-        'adios':    2,
-        'estres':   'hola'
+            'enable':   True,
     }
 
     def __init__(self):
-        super(gConfPlugin, self).__init__('/apps/popoter/plugins/test')
+        super(gConfPlugin, self).__init__('/apps/orca/plugins/test')
         self.save()
         print 'Hello World (plugin started)!'
 
@@ -24,6 +22,9 @@ class testPlugin(IPlugin):
     icon = 'gtk-missing-image'
 
     def __init__(self):
-        gc_plug = gConfPlugin()
+        self.gc_plug = gConfPlugin()
+
+    def disable(self):
+        self.gc_plug.disable('enable')
 
 IPlugin.register(testPlugin)

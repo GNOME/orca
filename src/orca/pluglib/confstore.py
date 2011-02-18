@@ -22,7 +22,7 @@ import types
 
 from interfaces import IConfigurable, PluginError
 
-__all__ = ['GConfStore', 'PickleStore']
+__all__ = ['GConfStore']
 
 class GConfKeysDict(dict):
     VALID_KEY_TYPES = (bool, str, int, float, list, tuple)
@@ -83,4 +83,5 @@ class GConfStore(IConfigurable):
                 casts[type(value)](self.__client, self.__app_key + '/' + name, 
                     value)
 
-
+    def disable(self, param):
+        self.__client.set_bool(self.__app_key + '/' + param, False)
