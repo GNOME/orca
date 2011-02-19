@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-02-01 00:14+0000\n"
-"PO-Revision-Date: 2011-02-07 09:58+0100\n"
+"POT-Creation-Date: 2011-02-07 18:49+0000\n"
+"PO-Revision-Date: 2011-02-19 12:29+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -749,8 +749,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
-"«&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
+"«/», «&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -1590,7 +1590,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:209(title)
 msgid "Edge margin"
-msgstr ""
+msgstr "Margen del borde"
 
 #: C/preferences_magnifier.page:210(p)
 msgid ""
@@ -1607,7 +1607,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:222(p)
 msgid "Default value: 0"
-msgstr ""
+msgstr "Valor predeterminado: 0"
 
 #: C/preferences_magnifier.page:228(title)
 msgid "Color"
@@ -1621,7 +1621,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:235(title)
 msgid "Invert colors"
-msgstr ""
+msgstr "Invertir colores"
 
 #: C/preferences_magnifier.page:236(p)
 msgid "<gui>Invert colors</gui>: Creates a reverse or negative-image effect."
@@ -1629,7 +1629,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:244(title)
 msgid "Brightness"
-msgstr ""
+msgstr "Brillo"
 
 #: C/preferences_magnifier.page:245(p)
 msgid ""
@@ -1639,11 +1639,11 @@ msgstr ""
 
 #: C/preferences_magnifier.page:249(p) C/preferences_magnifier.page:259(p)
 msgid "Default value: 0.00"
-msgstr ""
+msgstr "Valor predeterminado: 0.00"
 
 #: C/preferences_magnifier.page:254(title)
 msgid "Contrast"
-msgstr ""
+msgstr "Contraste"
 
 #: C/preferences_magnifier.page:255(p)
 msgid ""
@@ -1678,11 +1678,11 @@ msgstr "Tamaño del borde"
 
 #: C/preferences_magnifier.page:285(p)
 msgid "This value determines the size of the border in pixels."
-msgstr ""
+msgstr "Este valor determina el tamaño del borde en píxeles."
 
 #: C/preferences_magnifier.page:288(p)
 msgid "Default value: 1"
-msgstr ""
+msgstr "Valor predeterminado: 1"
 
 #: C/preferences_magnifier.page:293(title)
 msgid "Border color"
@@ -1690,12 +1690,12 @@ msgstr "Color del borde"
 
 #: C/preferences_magnifier.page:294(p)
 msgid "This value determines the color of the border."
-msgstr ""
+msgstr "Este valor determina el color del borde."
 
 #: C/preferences_magnifier.page:297(p) C/preferences_magnifier.page:343(p)
 #: C/preferences_magnifier.page:389(p)
 msgid "Default value: black"
-msgstr ""
+msgstr "Valor predeterminado: negro"
 
 #: C/preferences_magnifier.page:303(title)
 msgid "Cursor"
@@ -1735,11 +1735,11 @@ msgstr "Tamaño del cursor"
 
 #: C/preferences_magnifier.page:331(p)
 msgid "This value determines the size of the cursor in pixels."
-msgstr ""
+msgstr "Este valor determina el tamaño del cursor en píxeles."
 
 #: C/preferences_magnifier.page:334(p)
 msgid "Default value: 32"
-msgstr ""
+msgstr "Valor predeterminado: 32"
 
 #: C/preferences_magnifier.page:339(title)
 msgid "Cursor color"
@@ -1747,11 +1747,11 @@ msgstr "Color del cursor"
 
 #: C/preferences_magnifier.page:340(p)
 msgid "This value determines the color of the cursor."
-msgstr ""
+msgstr "Este valor determina el color del cursor."
 
 #: C/preferences_magnifier.page:349(title)
 msgid "Cross-hair"
-msgstr ""
+msgstr "Cruz"
 
 #: C/preferences_magnifier.page:351(p)
 msgid ""
@@ -1773,7 +1773,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:366(title)
 msgid "Enable cross-hair clip"
-msgstr ""
+msgstr "Activar recorte de la cruz"
 
 #: C/preferences_magnifier.page:367(p)
 msgid ""
@@ -1783,7 +1783,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:376(title)
 msgid "Cross-hair size"
-msgstr ""
+msgstr "Tamaño de la cruz"
 
 #: C/preferences_magnifier.page:377(p)
 msgid "This control sets the thickness of the cross-hair in pixels."
@@ -1791,15 +1791,15 @@ msgstr ""
 
 #: C/preferences_magnifier.page:380(p)
 msgid "Default value: 16"
-msgstr ""
+msgstr "Valor predeterminado: 16"
 
 #: C/preferences_magnifier.page:385(title)
 msgid "Cross-hair color"
-msgstr ""
+msgstr "Color de la cruz"
 
 #: C/preferences_magnifier.page:386(p)
 msgid "This value determines the color of the cross-hair."
-msgstr ""
+msgstr "Este valor determina el color de la cruz."
 
 #: C/preferences_magnifier.page:395(title)
 msgid "Advanced"
@@ -1910,7 +1910,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:33(title)
 msgid "Enable alphanumeric and punctuation keys"
-msgstr ""
+msgstr "Activar teclas alfanuméricas y de puntuación"
 
 #: C/preferences_key_echo.page:34(p) C/howto_text_setup.page:89(p)
 msgid ""
@@ -1921,7 +1921,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:44(title)
 msgid "Enable modifier keys"
-msgstr ""
+msgstr "Activar teclas modificadoras"
 
 #: C/preferences_key_echo.page:45(p) C/howto_text_setup.page:97(p)
 msgid ""
@@ -1941,7 +1941,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:64(title)
 msgid "Enable function keys"
-msgstr ""
+msgstr "Activar teclas de función"
 
 #: C/preferences_key_echo.page:65(p) C/howto_text_setup.page:111(p)
 msgid ""
@@ -1951,7 +1951,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:74(title)
 msgid "Enable action keys"
-msgstr ""
+msgstr "Activar teclas de acción"
 
 #: C/preferences_key_echo.page:75(p)
 msgid ""
@@ -1963,7 +1963,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:86(title)
 msgid "Enable navigation keys"
-msgstr ""
+msgstr "Activar teclas de navegación"
 
 #: C/preferences_key_echo.page:87(p)
 msgid ""
@@ -2062,7 +2062,7 @@ msgstr ""
 
 #: C/preferences_key_bindings.page:6(title)
 msgid "6. Key Bindings"
-msgstr ""
+msgstr "6. Asociaciones de teclas"
 
 #: C/preferences_key_bindings.page:7(title)
 msgid "Key Bindings"
@@ -2074,7 +2074,7 @@ msgstr ""
 
 #: C/preferences_key_bindings.page:19(title)
 msgid "Key Bindings Preferences"
-msgstr ""
+msgstr "Preferencias de las asociaciones de teclas"
 
 #: C/preferences_key_bindings.page:21(title)
 msgid "Orca Modifier Keys"
@@ -2108,7 +2108,7 @@ msgstr "Bloqueo_mayúscula"
 
 #: C/preferences_key_bindings.page:39(title)
 msgid "The Key Bindings Table"
-msgstr ""
+msgstr "La tabla de atajos de teclado"
 
 #: C/preferences_key_bindings.page:41(p)
 msgid ""
@@ -2164,7 +2164,7 @@ msgstr ""
 #: C/preferences_introduction.page:4(title)
 #: C/preferences_introduction.page:15(title)
 msgid "Introduction to <app>Orca</app>'s Preferences"
-msgstr ""
+msgstr "Introducción a las preferencias de <app>Orca</app>"
 
 #: C/preferences_introduction.page:18(p)
 msgid ""
@@ -2307,7 +2307,7 @@ msgstr ""
 
 #: C/preferences_general.page:3(title)
 msgid "1. General"
-msgstr ""
+msgstr "1. General"
 
 #: C/preferences_general.page:4(title)
 msgid "General"
@@ -2342,7 +2342,7 @@ msgstr ""
 
 #: C/preferences_general.page:34(p)
 msgid "Default value: <gui>Desktop</gui>"
-msgstr ""
+msgstr "Valor predeterminado: <gui>Escritorio</gui>"
 
 #: C/preferences_general.page:40(desc)
 msgid ""
@@ -2352,7 +2352,7 @@ msgstr ""
 
 #: C/preferences_general.page:45(title)
 msgid "Quit Orca Without Confirmation"
-msgstr ""
+msgstr "Salir de Orca sin confirmación"
 
 #: C/preferences_general.page:47(p)
 msgid ""
@@ -2409,7 +2409,7 @@ msgstr ""
 
 #: C/preferences_general.page:102(title)
 msgid "Present Tooltips"
-msgstr ""
+msgstr "Mostrar consejos"
 
 #: C/preferences_general.page:104(p)
 msgid ""
@@ -2428,11 +2428,11 @@ msgstr ""
 
 #: C/preferences_general.page:122(title)
 msgid "Show Orca Main Window"
-msgstr ""
+msgstr "Mostrar la ventana principal de Orca"
 
 #: C/preferences_general.page:125(title)
 msgid "The Orca Main Window"
-msgstr ""
+msgstr "La ventana principal de Orca"
 
 #: C/preferences_general.page:129(desc)
 msgid ""
@@ -2458,7 +2458,7 @@ msgstr ""
 
 #: C/preferences_general.page:153(title)
 msgid "Start Orca When You Login"
-msgstr ""
+msgstr "Ejecutar Orca al iniciar sesión"
 
 #: C/preferences_general.page:155(p)
 msgid ""
@@ -2492,7 +2492,7 @@ msgstr ""
 
 #: C/preferences_general.page:189(title)
 msgid "Time Format and Date Format"
-msgstr ""
+msgstr "Formato de fecha y hora"
 
 #: C/preferences_general.page:191(p)
 msgid ""
@@ -2615,7 +2615,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:48(title)
 msgid "Use Orca Structural Navigation"
-msgstr ""
+msgstr "Usar la navegación estructural de Orca"
 
 #: C/preferences_gecko.page:49(p)
 msgid ""
@@ -2658,7 +2658,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:93(title)
 msgid "Find Options"
-msgstr ""
+msgstr "Opciones de búsqueda"
 
 #: C/preferences_gecko.page:95(p)
 msgid ""
@@ -2669,7 +2669,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:101(title)
 msgid "Speak results during find"
-msgstr ""
+msgstr "Hablar resultados durante la búsqueda"
 
 #: C/preferences_gecko.page:102(p)
 msgid ""
@@ -2691,7 +2691,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:123(title)
 msgid "Minimum length of matched text"
-msgstr ""
+msgstr "Longitud mínima del texto coincidente"
 
 #: C/preferences_gecko.page:124(p)
 msgid ""
@@ -2703,7 +2703,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:131(p)
 msgid "Default value: 4"
-msgstr ""
+msgstr "Valor predeterminado: 4"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2715,7 +2715,7 @@ msgstr ""
 
 #: C/preferences_chat.page:4(title)
 msgid "3. Chat"
-msgstr ""
+msgstr "3. Chat"
 
 #: C/preferences_chat.page:5(title) C/commands_chat.page:7(title)
 msgid "Chat"
@@ -2727,7 +2727,7 @@ msgstr ""
 
 #: C/preferences_chat.page:17(title)
 msgid "Chat Preferences"
-msgstr ""
+msgstr "Preferencias del chat"
 
 #: C/preferences_chat.page:19(p)
 msgid ""
@@ -2781,7 +2781,7 @@ msgstr ""
 
 #: C/preferences_chat.page:66(gui)
 msgid "All channels"
-msgstr ""
+msgstr "Todos los canales"
 
 #: C/preferences_chat.page:69(gui)
 msgid "A channel only if its window is active"
@@ -2792,10 +2792,9 @@ msgid "All channels when any chat window is active"
 msgstr ""
 
 #: C/preferences_chat.page:75(p)
-#, fuzzy
 #| msgid "Default value: checked"
 msgid "Default value: all channels"
-msgstr "Valor predeterminado: marcado"
+msgstr "Valor predeterminado: todos los canales"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2869,7 +2868,7 @@ msgstr ""
 
 #: C/preferences_braille.page:3(title)
 msgid "3. Braille"
-msgstr ""
+msgstr "3. Braille"
 
 #: C/preferences_braille.page:4(title) C/commands_braille.page:7(title)
 msgid "Braille"
@@ -2994,7 +2993,7 @@ msgstr ""
 
 #: C/introduction.page:5(title)
 msgid "1. Welcome to Orca"
-msgstr ""
+msgstr "1. Bienvenido a Orca"
 
 #: C/introduction.page:6(desc)
 msgid "Introducing the <app>Orca</app> screen reader"
@@ -3002,7 +3001,7 @@ msgstr ""
 
 #: C/introduction.page:17(title)
 msgid "Welcome to Orca"
-msgstr ""
+msgstr "Bienvenido a Orca"
 
 #: C/introduction.page:18(p)
 msgid ""
@@ -3023,11 +3022,11 @@ msgstr ""
 
 #: C/introduction.page:34(title)
 msgid "Launching <app>Orca</app>"
-msgstr ""
+msgstr "Lanzando <app>Orca</app>"
 
 #: C/introduction.page:35(p)
 msgid "To launch <app>Orca</app>:"
-msgstr ""
+msgstr "Para lanzar <app>Orca</app>:"
 
 #: C/introduction.page:38(p)
 msgid ""
@@ -3052,11 +3051,11 @@ msgstr ""
 
 #: C/introduction.page:62(title)
 msgid "Quitting <app>Orca</app>"
-msgstr ""
+msgstr "Salir de <app>Orca</app>"
 
 #: C/introduction.page:63(p)
 msgid "To quit <app>Orca</app>:"
-msgstr ""
+msgstr "Para salir de <app>Orca</app>:"
 
 #: C/introduction.page:66(p)
 msgid "Press the <gui>Quit</gui> button in the <app>Orca</app> main window."
@@ -3084,24 +3083,29 @@ msgstr ""
 
 #: C/introduction.page:94(p)
 msgid "<cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message"
-msgstr ""
+msgstr "<cmd>-?</cmd>, <cmd>--help</cmd>: mostrar el mensaje de ayuda"
 
 #: C/introduction.page:97(p)
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
+"<cmd>-v</cmd>, <cmd>--version</cmd>: mostrar la versión de <app>Orca</app>"
 
 #: C/introduction.page:103(p)
 msgid ""
 "<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: Set up user "
 "preferences"
 msgstr ""
+"<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: configurar las "
+"preferencias de usuario"
 
 #: C/introduction.page:109(p)
 msgid ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
 "version)"
 msgstr ""
+"<cmd>-t</cmd>, <cmd>--text-setup</cmd>: configurar las preferencias de "
+"usuario (versión texto)"
 
 #: C/introduction.page:115(p)
 msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
@@ -3148,31 +3152,40 @@ msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
 msgstr ""
+"<cmd>-d</cmd>, <cmd>--disable=<em>opción</em></cmd>: evitar el uso de una "
+"opción, donde la <em>opción</em> puede ser una de las siguientes:"
 
 #: C/introduction.page:156(p)
 msgid ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
 "from a given <app>Orca</app> profile file"
 msgstr ""
+"<cmd>-i</cmd>, <cmd>--import-file=<em>nombre de archivo</em></cmd>: importar "
+"un archivo desde un perfil de <app>Orca</app> dado"
 
 #: C/introduction.page:162(p)
 msgid "<cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>"
-msgstr ""
+msgstr "<cmd>-q</cmd>, <cmd>--quit</cmd>: salir de <app>Orca</app>"
 
 #: C/introduction.page:167(p)
 msgid ""
 "<cmd>-f</cmd>, <cmd>--forcequit</cmd>: Forces <app>Orca</app> to be "
 "terminated immediately."
 msgstr ""
+"<cmd>-f</cmd>, <cmd>--forcequit</cmd>: forzar a <app>Orca</app> a terminar "
+"inmediatamente."
 
 #: C/introduction.page:173(p)
 msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgstr ""
+"<cmd>--replace</cmd>: reemplazar una instancia <app>Orca</app> en ejecución"
 
 #: C/introduction.page:178(p)
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
+"<cmd>-l</cmd>, <cmd>--list-apps</cmd>: imprimir las aplicaciones conocidas "
+"en ejecución"
 
 #: C/introduction.page:184(p)
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
@@ -3202,7 +3215,7 @@ msgstr ""
 
 #: C/index.page:19(title)
 msgid "Before You Begin"
-msgstr ""
+msgstr "Antes de comenzar"
 
 #: C/index.page:20(p)
 msgid ""
@@ -3480,6 +3493,8 @@ msgid ""
 "Type <cmd>orca --text-setup</cmd> or <cmd>orca -t</cmd> and press "
 "<key>Return</key>."
 msgstr ""
+"Escriba <cmd>orca --text-setup</cmd> o <cmd>orca -t</cmd> y pulse "
+"<key>Intro</key>."
 
 #: C/howto_text_setup.page:36(p)
 msgid "You will be asked a few questions:"
@@ -3557,7 +3572,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:96(p)
 msgid "modifier keys"
-msgstr ""
+msgstr "teclas modificadoras"
 
 #: C/howto_text_setup.page:103(p)
 msgid "locking keys"
@@ -3565,11 +3580,11 @@ msgstr ""
 
 #: C/howto_text_setup.page:110(p)
 msgid "function keys"
-msgstr ""
+msgstr "teclas de función"
 
 #: C/howto_text_setup.page:117(p)
 msgid "action keys"
-msgstr ""
+msgstr "teclas de acción"
 
 #: C/howto_text_setup.page:118(p)
 msgid ""
@@ -3645,7 +3660,7 @@ msgstr ""
 
 #: C/howto_text_attributes.page:5(title)
 msgid "2. Text Attributes"
-msgstr ""
+msgstr "2. Atributos de texto"
 
 #: C/howto_text_attributes.page:6(desc)
 msgid "Examining text formatting"
@@ -3721,7 +3736,7 @@ msgstr ""
 
 #: C/howto_tables.page:5(title)
 msgid "4. Tables"
-msgstr ""
+msgstr "4. Tablas"
 
 #: C/howto_tables.page:6(desc)
 msgid "Navigating and setting dynamic headers"
@@ -3776,7 +3791,7 @@ msgstr ""
 #: C/howto_tables.page:52(title) C/howto_structural_navigation.page:19(title)
 #: C/commands_structural_navigation.page:7(title)
 msgid "Structural Navigation"
-msgstr ""
+msgstr "Navegación estructural"
 
 #: C/howto_tables.page:53(p)
 msgid ""
@@ -3817,7 +3832,7 @@ msgstr ""
 
 #: C/howto_tables.page:84(title)
 msgid "Dynamic Headers"
-msgstr ""
+msgstr "Cabeceras dinámicas"
 
 #: C/howto_tables.page:85(p)
 msgid ""
@@ -3883,7 +3898,7 @@ msgstr ""
 
 #: C/howto_structural_navigation.page:7(title)
 msgid "3. Structural Navigation"
-msgstr ""
+msgstr "3. Navegación estructural"
 
 #: C/howto_structural_navigation.page:8(desc)
 msgid "Moving by heading and other elements"
@@ -3911,7 +3926,7 @@ msgstr "Enlaces"
 
 #: C/howto_structural_navigation.page:29(p)
 msgid "Lists and list items"
-msgstr ""
+msgstr "Listas y elementos de listas"
 
 #: C/howto_structural_navigation.page:30(p)
 msgid "Landmarks, separators, and anchors"
@@ -3930,7 +3945,7 @@ msgstr ""
 
 #: C/howto_structural_navigation.page:39(title)
 msgid "Supported Applications"
-msgstr ""
+msgstr "Aplicaciones soportadas"
 
 #: C/howto_structural_navigation.page:40(p)
 msgid ""
@@ -4015,11 +4030,11 @@ msgstr ""
 
 #: C/howto_structural_navigation.page:117(p) C/howto_profiles.page:86(p)
 msgid "Press the <gui>OK</gui> button."
-msgstr ""
+msgstr "Pulse el botón <gui>Aceptar</gui>."
 
 #: C/howto_setting_up_orca.page:6(title)
 msgid "3. Orca Configuration"
-msgstr ""
+msgstr "3. Configuración de Orca"
 
 #: C/howto_setting_up_orca.page:7(title)
 msgid "Configuration"
@@ -4031,7 +4046,7 @@ msgstr ""
 
 #: C/howto_setting_up_orca.page:19(title)
 msgid "Orca Configuration"
-msgstr ""
+msgstr "Configuración de Orca"
 
 #: C/howto_setting_up_orca.page:21(title)
 msgid "Initial Setup"
@@ -4120,11 +4135,11 @@ msgstr ""
 
 #: C/howto_profiles.page:5(title)
 msgid "9. Profiles"
-msgstr ""
+msgstr "9. Perfiles"
 
 #: C/howto_profiles.page:6(desc)
 msgid "Maintaining multiple configurations"
-msgstr ""
+msgstr "Mantener varias configuraciones"
 
 #: C/howto_profiles.page:16(p)
 msgid ""
@@ -4134,7 +4149,7 @@ msgstr ""
 
 #: C/howto_profiles.page:21(title)
 msgid "Maintaining Multiple Configurations"
-msgstr ""
+msgstr "Mantener varias configuraciones"
 
 #: C/howto_profiles.page:24(desc)
 msgid ""
@@ -4144,7 +4159,7 @@ msgstr ""
 
 #: C/howto_profiles.page:31(title)
 msgid "Saving a New Profile"
-msgstr ""
+msgstr "Guardar un perfil nuevo"
 
 #: C/howto_profiles.page:33(p) C/howto_profiles.page:64(p)
 #: C/howto_profiles.page:119(p)
@@ -4159,6 +4174,7 @@ msgstr ""
 #: C/howto_profiles.page:41(p)
 msgid "On the <gui>General</gui> page, press the <gui>Save As</gui> button."
 msgstr ""
+"En la página <gui>General</gui> pulse el botón <gui>Guardar como</gui>."
 
 #: C/howto_profiles.page:46(p)
 msgid ""
@@ -4170,10 +4186,12 @@ msgstr ""
 msgid ""
 "Press the <gui>OK</gui> button in the <gui>Save Profile As</gui> dialog box."
 msgstr ""
+"Pulse el botón <gui>Aceptar</gui> en el cuadro de diálogo <gui>Guardar "
+"perfil como</gui>."
 
 #: C/howto_profiles.page:62(title)
 msgid "Loading an Existing Profile"
-msgstr ""
+msgstr "Cargar un perfil existente"
 
 #: C/howto_profiles.page:69(p)
 msgid ""
@@ -4183,7 +4201,7 @@ msgstr ""
 
 #: C/howto_profiles.page:75(p)
 msgid "Press the <gui>Load</gui> button."
-msgstr ""
+msgstr "Pulse el botón <gui>Cargar</gui>."
 
 #: C/howto_profiles.page:78(p)
 msgid "You will be asked to confirm. Press the <gui>Yes</gui> button."
@@ -4191,7 +4209,7 @@ msgstr ""
 
 #: C/howto_profiles.page:90(title)
 msgid "Changing an Existing Profile"
-msgstr ""
+msgstr "Cambiar un perfil existente"
 
 #: C/howto_profiles.page:92(p)
 msgid ""
@@ -4295,7 +4313,7 @@ msgstr ""
 
 #: C/howto_orca_find.page:57(p)
 msgid "The text to find"
-msgstr ""
+msgstr "El texto que buscar"
 
 #: C/howto_orca_find.page:60(p)
 msgid ""
@@ -4366,7 +4384,7 @@ msgstr ""
 
 #: C/howto_notifications.page:5(title)
 msgid "5. Notifications"
-msgstr ""
+msgstr "5. Notificaciones"
 
 #: C/howto_notifications.page:6(desc)
 msgid "Reading previously-received messages"
@@ -4431,7 +4449,7 @@ msgstr ""
 
 #: C/howto_notifications.page:56(p)
 msgid "Press Escape to exit."
-msgstr ""
+msgstr "Pulse escape para salir."
 
 #: C/howto_notifications.page:57(p)
 msgid "Press Space to repeat the last message read."
@@ -4636,7 +4654,7 @@ msgstr ""
 
 #: C/howto_keyboard_layout.page:5(title)
 msgid "6. Keyboard Layout"
-msgstr ""
+msgstr "6. Distribución del teclado"
 
 #: C/howto_keyboard_layout.page:6(desc)
 msgid "Selecting the Desktop or Laptop layout"
@@ -4662,7 +4680,7 @@ msgstr ""
 
 #: C/howto_key_bindings.page:5(title)
 msgid "8. Keybindings"
-msgstr ""
+msgstr "8. Asociaciones de teclas"
 
 #: C/howto_key_bindings.page:6(desc)
 msgid "Binding, rebinding, and unbinding commands"
@@ -4746,11 +4764,11 @@ msgstr ""
 
 #: C/howto_key_bindings.page:137(p)
 msgid "Press <key>Return</key> to confirm."
-msgstr ""
+msgstr "Pulse <key>Intro</key> para confirmar."
 
 #: C/howto_forms.page:5(title)
 msgid "5. Filling out forms"
-msgstr ""
+msgstr "5. Rellenar formularios"
 
 #: C/howto_forms.page:6(desc)
 msgid "Accessing widgets embedded in documents"
@@ -4758,7 +4776,7 @@ msgstr ""
 
 #: C/howto_forms.page:17(title)
 msgid "Filling out forms"
-msgstr ""
+msgstr "Rellenar formularios"
 
 #: C/howto_forms.page:18(p)
 msgid ""
@@ -4889,15 +4907,15 @@ msgstr ""
 
 #: C/howto_documents.page:5(title)
 msgid "1. Documents"
-msgstr ""
+msgstr "1. Documentos"
 
 #: C/howto_documents.page:6(desc)
 msgid "Reading content"
-msgstr ""
+msgstr "Leer contenido"
 
 #: C/howto_documents.page:17(title)
 msgid "Documents"
-msgstr ""
+msgstr "Documentos"
 
 #: C/howto_documents.page:18(p)
 msgid ""
@@ -4952,7 +4970,7 @@ msgstr ""
 
 #: C/howto_bookmarks.page:4(title)
 msgid "6. Bookmarks"
-msgstr ""
+msgstr "6. Marcadores"
 
 #: C/howto_bookmarks.page:5(desc)
 msgid "Storing and retrieving objects"
@@ -5071,7 +5089,7 @@ msgstr ""
 
 #: C/commands_where_am_i.page:62(p)
 msgid "Present the title bar:"
-msgstr ""
+msgstr "Presentar la barra de título:"
 
 #: C/commands_where_am_i.page:65(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
@@ -5099,11 +5117,11 @@ msgstr ""
 
 #: C/commands_time_date_notifications.page:6(title)
 msgid "4. Time, Date, and Notification"
-msgstr ""
+msgstr "4. Fecha, hora y notificación"
 
 #: C/commands_time_date_notifications.page:7(title)
 msgid "Time, Date, and Notification"
-msgstr ""
+msgstr "Fecha, hora y notificación"
 
 #: C/commands_time_date_notifications.page:8(desc)
 msgid "Commands for the getting the time, date, and notification messages"
@@ -5111,7 +5129,7 @@ msgstr ""
 
 #: C/commands_time_date_notifications.page:19(title)
 msgid "Time, Date, and Notification Commands"
-msgstr ""
+msgstr "Comandos de fecha, hora y notificación"
 
 #: C/commands_time_date_notifications.page:20(p)
 msgid ""
@@ -5121,7 +5139,7 @@ msgstr ""
 
 #: C/commands_time_date_notifications.page:25(title)
 msgid "Obtaining the Time and Date"
-msgstr ""
+msgstr "Obtener la fecha y la hora"
 
 #: C/commands_time_date_notifications.page:28(p)
 msgid "Present the time: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>"
@@ -5135,7 +5153,7 @@ msgstr ""
 
 #: C/commands_time_date_notifications.page:41(title)
 msgid "Reviewing Notification Messages"
-msgstr ""
+msgstr "Revisar mensajes de notificación"
 
 #: C/commands_time_date_notifications.page:42(p)
 msgid ""
@@ -5208,15 +5226,15 @@ msgstr ""
 
 #: C/commands_structural_navigation.page:6(title)
 msgid "2. Structural Navigation"
-msgstr ""
+msgstr "2. Navegación estructural"
 
 #: C/commands_structural_navigation.page:8(desc)
 msgid "Commands for navigating by elements"
-msgstr ""
+msgstr "Comandos para navegar entre elementos"
 
 #: C/commands_structural_navigation.page:19(title)
 msgid "Structural Navigation Commands"
-msgstr ""
+msgstr "Comandos de navegación estructural"
 
 #: C/commands_structural_navigation.page:20(p)
 msgid ""
@@ -5339,7 +5357,7 @@ msgstr ""
 
 #: C/commands_structural_navigation.page:161(title)
 msgid "Lists"
-msgstr ""
+msgstr "Listas"
 
 #: C/commands_structural_navigation.page:164(p)
 msgid ""
@@ -5394,7 +5412,7 @@ msgstr ""
 
 #: C/commands_structural_navigation.page:228(title)
 msgid "Text Blocks"
-msgstr ""
+msgstr "Bloques de texto"
 
 #: C/commands_structural_navigation.page:231(p)
 msgid ""
@@ -5416,7 +5434,7 @@ msgstr ""
 
 #: C/commands_structural_navigation.page:254(title)
 msgid "Other Elements"
-msgstr ""
+msgstr "Otros elementos"
 
 #: C/commands_structural_navigation.page:257(p)
 msgid ""
@@ -5535,7 +5553,7 @@ msgstr ""
 
 #: C/commands_reading.page:46(p)
 msgid "Read the current line:"
-msgstr ""
+msgstr "Leer la línea actual:"
 
 #: C/commands_reading.page:49(p) C/commands_flat_review.page:46(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq>"
@@ -5547,7 +5565,7 @@ msgstr ""
 
 #: C/commands_reading.page:61(p)
 msgid "Read the current word:"
-msgstr ""
+msgstr "Leer la palabra actual:"
 
 #: C/commands_reading.page:64(p) C/commands_flat_review.page:93(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq>"
@@ -5559,7 +5577,7 @@ msgstr ""
 
 #: C/commands_reading.page:76(p)
 msgid "Spell the current word:"
-msgstr ""
+msgstr "Deletrear la palabra actual:"
 
 #: C/commands_reading.page:79(p) C/commands_flat_review.page:99(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (double-clicked)"
@@ -5573,7 +5591,7 @@ msgstr ""
 
 #: C/commands_reading.page:92(p)
 msgid "Phonetically spell the current word:"
-msgstr ""
+msgstr "Deletrear fonéticamente la palabra actual:"
 
 #: C/commands_reading.page:95(p) C/commands_flat_review.page:105(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)"
@@ -5587,7 +5605,7 @@ msgstr ""
 
 #: C/commands_reading.page:108(p)
 msgid "Read the current character:"
-msgstr ""
+msgstr "Leer el carácter actual:"
 
 #: C/commands_reading.page:111(p) C/commands_flat_review.page:134(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq>"
@@ -5599,7 +5617,7 @@ msgstr ""
 
 #: C/commands_reading.page:123(p)
 msgid "Phonetically speak the current character:"
-msgstr ""
+msgstr "Leer fonéticamente el carácter actual:"
 
 #: C/commands_reading.page:126(p) C/commands_flat_review.page:140(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)"
@@ -5663,7 +5681,7 @@ msgstr ""
 
 #: C/commands.page:5(title)
 msgid "4. <app>Orca</app>'s Commands"
-msgstr ""
+msgstr "4. Comandos de <app>Orca</app>"
 
 #: C/commands.page:6(title)
 msgid "Commands"
@@ -5699,7 +5717,7 @@ msgstr ""
 
 #: C/commands_mouse.page:9(desc)
 msgid "Commands for manipulating the pointer"
-msgstr ""
+msgstr "Comandos para manipular el puntero"
 
 #: C/commands_mouse.page:20(title)
 msgid "Mouse/Pointer-Related Commands"
@@ -5912,7 +5930,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:37(p)
 msgid "Previous line:"
-msgstr ""
+msgstr "Línea anterior:"
 
 #: C/commands_flat_review.page:39(p)
 msgid "Desktop: <keyseq><key>KP 7</key></keyseq>"
@@ -5924,7 +5942,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:44(p)
 msgid "Current line:"
-msgstr ""
+msgstr "Línea actual:"
 
 #: C/commands_flat_review.page:50(p)
 msgid "Spell current line:"
@@ -5956,7 +5974,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:62(p)
 msgid "Next line:"
-msgstr ""
+msgstr "Línea siguiente:"
 
 #: C/commands_flat_review.page:64(p)
 msgid "Desktop: <keyseq><key>KP 9</key></keyseq>"
@@ -5998,7 +6016,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:85(p)
 msgid "Previous word:"
-msgstr ""
+msgstr "Palabra anterior:"
 
 #: C/commands_flat_review.page:87(p)
 msgid "Desktop: <keyseq><key>KP 4</key></keyseq>"
@@ -6010,7 +6028,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:91(p)
 msgid "Current word:"
-msgstr ""
+msgstr "Palabra actual:"
 
 #: C/commands_flat_review.page:97(p)
 msgid "Spell current word:"
@@ -6022,7 +6040,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:109(p)
 msgid "Next word:"
-msgstr ""
+msgstr "Siguiente palabra:"
 
 #: C/commands_flat_review.page:111(p)
 msgid "Desktop: <keyseq><key>KP 6</key></keyseq>"
@@ -6051,7 +6069,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:126(p)
 msgid "Previous character:"
-msgstr ""
+msgstr "Carácter anterior:"
 
 #: C/commands_flat_review.page:128(p)
 msgid "Desktop: <keyseq><key>KP 1</key></keyseq>"
@@ -6063,11 +6081,11 @@ msgstr ""
 
 #: C/commands_flat_review.page:132(p)
 msgid "Current character:"
-msgstr ""
+msgstr "Carácter actual:"
 
 #: C/commands_flat_review.page:138(p)
 msgid "Phonetically speak current character:"
-msgstr ""
+msgstr "Leer fonéticamente el carácter actual:"
 
 #: C/commands_flat_review.page:144(p)
 msgid "Speak Unicode value of current character:"
@@ -6075,7 +6093,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:150(p)
 msgid "Next character:"
-msgstr ""
+msgstr "Siguiente carácter:"
 
 #: C/commands_flat_review.page:152(p)
 msgid "Desktop: <keyseq><key>KP 3</key></keyseq>"
@@ -6100,7 +6118,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:165(title)
 msgid "Additional Commands"
-msgstr ""
+msgstr "Comandos adicionales"
 
 #: C/commands_flat_review.page:167(p)
 msgid "Toggle flat review (refreshes the flat review context):"
@@ -6297,7 +6315,7 @@ msgstr ""
 
 #: C/commands_chat.page:6(title)
 msgid "2. Chat"
-msgstr ""
+msgstr "2. Chat"
 
 #: C/commands_chat.page:8(desc)
 msgid "Commands for use with IM and IRC clients"
@@ -6452,7 +6470,9 @@ msgstr ""
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: C/index.page:0(None)
 msgid "translator-credits"
-msgstr "Jorge González <jorgegonz@svn.gnome.org>, 2010"
+msgstr ""
+"Daniel Mustieles <daniel.mustieles@gmail.com>, 2011\n"
+"Jorge González <jorgegonz@svn.gnome.org>, 2010"
 
 #~ msgid "<gui>None</gui> (the default)"
 #~ msgstr "<gui>Ninguna</gui> (Predeterminado) "
