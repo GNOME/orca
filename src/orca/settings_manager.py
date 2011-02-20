@@ -317,6 +317,13 @@ class SettingsManager(object):
         except:
             return False
 
+    def getPluginState(self, plugin_name):
+        try:
+            return gconfClient.get_bool(
+                "/apps/orca/plugins/"+str(plugin_name)+"/enable")
+        except:
+            return False
+
     def setStartingProfile(self, profile=None):
         if profile is None:
             profile = settings.profile

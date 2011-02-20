@@ -27,6 +27,7 @@ __license__   = "LGPL"
 import debug
 import orca
 import orca_state
+from chat import Chat
 
 from scripts import apps, toolkits
 
@@ -126,6 +127,8 @@ class ScriptManager:
         if not (app and name):
             return None
 
+	    appScript = self.scripts.get(app, self.getDefaultScript())
+
         script = None
         for package in self._scriptPackages:
             moduleName = '.'.join((package, name))
@@ -150,6 +153,20 @@ class ScriptManager:
                 debug.println(
                     debug.LEVEL_SEVERE, "Could not load %s.py" % moduleName)
 
+            try:
+   	            isChat = script.getChat()
+            except:
+                debug.println(
+                    debug.LEVEL_FINE, "This not a chat plugin")
+            else:
+                print "isChat: " + str(isChat)
+                print "plugin state: " + str(_settingsManager.getPluginState('chat'))
+                if isChat and not _settingsManager.getPluginState('chat'):
+            	    script = None
+                    return None
+
+    	print script
+
         return script
 
     def _createScript(self, app, obj=None):
@@ -157,11 +174,13 @@ class ScriptManager:
 
         objToolkit = self._toolkitForObject(obj)
         script = self._newNamedScript(app, objToolkit)
+
         if script:
             return script
 
         moduleName = self.getModuleName(app)
         script = self._newNamedScript(app, moduleName)
+
         if script:
             return script
 
@@ -211,6 +230,7 @@ class ScriptManager:
                 # Only defer to the toolkit script for this object if the
                 # app script is based on a different toolkit.
                 appScript = self.scripts.get(app, self.getDefaultScript())
+		
                 if issubclass(appScript.__class__, script.__class__):
                     script = appScript
                 return script
