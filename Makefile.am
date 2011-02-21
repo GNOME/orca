@@ -6,6 +6,7 @@ DISTCHECK_CONFIGURE_FLAGS =     \
 
 DISTCLEANFILES =                \
 	gnome-doc-utils.make	\
+	orca-autostart.desktop  \
 	orca.desktop
 
 gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
@@ -32,6 +33,7 @@ autostart_DATA   = $(autostart_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 EXTRA_DIST =                \
+	$(autostart_in_files) \
 	$(desktop_in_files) \
 	$(icon_DATA)        \
 	gnome-doc-utils.make \

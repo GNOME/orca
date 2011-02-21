@@ -2,6 +2,7 @@
 # Please keep this file sorted alphabetically.
 [encoding: UTF-8]
 orca.desktop.in
+orca-autostart.desktop.in
 src/orca/app_gui_prefs.py
 src/orca/bookmarks.py
 src/orca/braille_generator.py

@@ -1,3 +1,35 @@
+2.91.90 - 21-February-2011
+
+General:
+
+  * Fix for bug #642212 - Delay setting autostart until console UI is
+    finished
+
+  * Fix for bug #642592 - Autostart orca if the screen-reader is enabled
+
+  * Fix for bug #642285 - Cannot launch Orca after performing a text
+    setup
+
+  * Fix for bug #641017 - Use json instead of yaml parser
+
+OpenOffice/LibreOffice:
+
+  * Fix for bug #640372 - OOo seems far less likely to crash frequently
+    if we process its events synchronously
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es        Spanish              Francisco Javier Dorado
+                                   Jorge González
+                                   Daniel Mustieles
+    fr        French               Claude Paroz
+    gl        Galician             Fran Diéguez
+    hu        Hungarian            Attila Hammer
+    nb        Norwegian bokmål     Kjartan Maraas
+    uk        Ukrainian            Daniel Korostil 
+
+==========
+
 2.91.6 - 31-January-2011
 
 General:

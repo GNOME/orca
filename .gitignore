@@ -26,6 +26,7 @@ ltmain.sh
 missing
 mkinstalldirs
 omf.make
+orca-autostart.desktop
 orca.desktop
 orca.spec
 py-compile
