@@ -204,6 +204,9 @@ def magnifyAccessible(event, obj, extents=None):
     - event: the Event that caused this to be called
     - obj: the accessible
     """
+    if not _initialized:
+        return
+
     haveSomethingToMagnify = False
 
     if extents:
