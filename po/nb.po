@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca 2.91.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-08 22:24+0100\n"
-"PO-Revision-Date: 2011-02-08 22:28+0100\n"
+"POT-Creation-Date: 2011-02-23 23:12+0100\n"
+"PO-Revision-Date: 2011-02-23 23:12+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: \n"
@@ -2697,7 +2697,7 @@ msgstr "Slå på ekko per ord?  Skriv inn j eller n: "
 #: ../src/orca/orca_console_prefs.py:424 ../src/orca/orca_console_prefs.py:441
 #: ../src/orca/orca_console_prefs.py:459 ../src/orca/orca_console_prefs.py:549
 #: ../src/orca/orca_console_prefs.py:568 ../src/orca/orca_console_prefs.py:586
-#: ../src/orca/orca_console_prefs.py:632
+#: ../src/orca/orca_console_prefs.py:640
 msgid "Please enter y or n."
 msgstr "Skriv inn j eller n."
 
@@ -2794,24 +2794,24 @@ msgstr "Slå på brailleskjerm?  Skriv inn j eller n: "
 msgid "Automatically start orca when you log in?  Enter y or n: "
 msgstr "Start orca automatisk når du logger inn? Skriv j eller n: "
 
-#: ../src/orca/orca_console_prefs.py:591 ../src/orca/orca_gui_prefs.py:522
+#: ../src/orca/orca_console_prefs.py:598 ../src/orca/orca_gui_prefs.py:522
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "Tilgjengelighetsstøtte for GNOME har akkurat blitt slått på."
 
-#: ../src/orca/orca_console_prefs.py:597 ../src/orca/orca_gui_prefs.py:524
+#: ../src/orca/orca_console_prefs.py:604 ../src/orca/orca_gui_prefs.py:524
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
 "Du er nødt til å logge ut og logge inn igjen for at endringen skal ha effekt."
 
-#: ../src/orca/orca_console_prefs.py:607
+#: ../src/orca/orca_console_prefs.py:614
 msgid "Do you want to logout now?  Enter y or n: "
 msgstr "Vil du logge ut nå? Skriv j eller n: "
 
-#: ../src/orca/orca_console_prefs.py:614
+#: ../src/orca/orca_console_prefs.py:621
 msgid "Setup complete. Logging out now."
 msgstr "Oppsett fullført. Logger ut nå."
 
-#: ../src/orca/orca_console_prefs.py:634
+#: ../src/orca/orca_console_prefs.py:642
 msgid "Setup complete.  Press Return to continue."
 msgstr "Oppsettet er ferdig.  Trykk linjeskift for å fortsette."
 
@@ -3423,7 +3423,7 @@ msgstr "Følgende oppføringer kan slås av eller på:"
 
 #: ../src/orca/orca.py:360
 msgid "Usage: orca [OPTION...]"
-msgstr "Bruk: orca [FLAGG...]"
+msgstr "Bruk: orca [FLAGG …]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
@@ -4076,7 +4076,7 @@ msgstr "<b>Zoom</b>"
 #: ../src/orca/orca-setup.ui.h:90
 msgctxt "Magnification"
 msgid "Advanced..."
-msgstr "Avansert..."
+msgstr "Avansert …"
 
 #: ../src/orca/orca-setup.ui.h:91
 msgid "Magnifier"
