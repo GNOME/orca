@@ -170,16 +170,22 @@ class ScriptManager:
 
         if not script:
             script = self.getDefaultScript(app)
+            debug.println(debug.LEVEL_FINE, "Default script created")
 
         return script
 
     def getDefaultScript(self, app=None):
-        if not self._defaultScript:
-            import scripts.default as default
-            self._defaultScript = default.Script(app)
-            _eventManager.registerListeners(self._defaultScript)
+        if not app and self._defaultScript:
+            return self._defaultScript
 
-        return self._defaultScript
+        import scripts.default as default
+        script = default.Script(app)
+        _eventManager.registerListeners(script)
+
+        if not app:
+            self._defaultScript = script
+
+        return script
 
     def getScript(self, app, obj=None):
         """Get a script for an app (and make it if necessary).  This is used
