@@ -32,12 +32,22 @@ autostart_DATA   = $(autostart_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
 
+MOSTLYCLEANFILES =
+@INTLTOOL_XML_RULE@
+@INTLTOOL_SCHEMAS_RULE@
+
+gsettings_SCHEMAS = org.gnome.Orca.gschema.xml
+
+@GSETTINGS_RULES@
+GLIB_COMPILE_SCHEMAS=/usr/bin/glib-compile-schemas --allow-any-name
+
 EXTRA_DIST =                \
 	$(autostart_in_files) \
 	$(desktop_in_files) \
 	$(icon_DATA)        \
 	gnome-doc-utils.make \
 	ChangeLog           \
+	org.gnome.Orca.gschema.xml \
 	MAINTAINERS
 
 dist-hook:
