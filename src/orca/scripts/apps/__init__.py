@@ -33,4 +33,5 @@ __all__ = ['acroread',
            'rhythmbox',
            'soffice',
            'Thunderbird',
+           'xfwm4',
            'yelp']

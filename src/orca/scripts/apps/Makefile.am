@@ -35,6 +35,7 @@ SUBDIRS = \
 	rhythmbox \
 	soffice \
 	Thunderbird \
+	xfwm4 \
 	yelp
 
 orca_pathdir=$(pyexecdir)
