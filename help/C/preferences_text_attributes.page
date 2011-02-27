@@ -61,7 +61,7 @@
         </p>
         <p>
           For example, by default the "underline" text attribute has a
-          value of "none." This causes <app>Orca</app> to inform you
+          value of "none". This causes <app>Orca</app> to inform you
           about underlined text as long as the text is actually underlined.
           If you always want this attribute to be spoken irrespective of
           whether or not the text is underlined, the <gui>Present unless</gui>
