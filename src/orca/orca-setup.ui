@@ -277,6 +277,10 @@
       <column type="GdkPixbuf"/>
       <!-- column-name plugin -->
       <column type="gchararray"/>
+      <!-- column-name plugin_type -->
+      <column type="gchararray"/>
+      <!-- column-name registered -->
+      <column type="gboolean"/>
       <!-- column-name plugin_id -->
       <column type="gchararray"/>
     </columns>
@@ -2833,8 +2837,8 @@
                                                             <property name="climb_rate">1</property>
                                                             <property name="numeric">True</property>
                                                             <accessibility>
-                                                            <relation type="labelled-by" target="magCrossHairSizeUnitsLabel"/>
                                                             <relation type="labelled-by" target="magCrossHairSizeLabel"/>
+                                                            <relation type="labelled-by" target="magCrossHairSizeUnitsLabel"/>
                                                             </accessibility>
                                                             <signal name="value_changed" handler="magCrossHairSizeValueChanged"/>
                                                           </object>
@@ -3037,8 +3041,8 @@
                                                             <property name="climb_rate">1</property>
                                                             <property name="numeric">True</property>
                                                             <accessibility>
-                                                            <relation type="labelled-by" target="magCursorSizeUnitsLabel"/>
                                                             <relation type="labelled-by" target="magCursorSizeLabel"/>
+                                                            <relation type="labelled-by" target="magCursorSizeUnitsLabel"/>
                                                             </accessibility>
                                                             <signal name="value_changed" handler="magCursorSizeValueChanged"/>
                                                           </object>
@@ -3616,8 +3620,8 @@
                                                     <property name="climb_rate">1</property>
                                                     <property name="numeric">True</property>
                                                     <accessibility>
-                                                      <relation type="labelled-by" target="magEdgeMarginLabel"/>
                                                       <relation type="labelled-by" target="magEdgeMarginUnitsLabel"/>
+                                                      <relation type="labelled-by" target="magEdgeMarginLabel"/>
                                                     </accessibility>
                                                     <signal name="value_changed" handler="magEdgeMarginValueChanged"/>
                                                   </object>
@@ -4289,7 +4293,7 @@ attributes&lt;/b&gt;</property>
                     <property name="left_padding">4</property>
                     <property name="right_padding">4</property>
                     <child>
-                      <object class="GtkVBox" id="vbox11">
+                      <object class="GtkVBox" id="vbox10">
                         <property name="visible">True</property>
                         <child>
                           <object class="GtkFrame" id="frame2">
@@ -4311,14 +4315,13 @@ attributes&lt;/b&gt;</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="model">plugins_store</property>
-                                        <property name="headers_visible">False</property>
                                         <property name="headers_clickable">False</property>
-                                        <property name="search_column">3</property>
+                                        <property name="search_column">5</property>
                                         <property name="enable_tree_lines">True</property>
                                         <signal name="cursor_changed" handler="on_plugins_tv_cursor_changed"/>
                                         <child>
-                                          <object class="GtkTreeViewColumn" id="treeviewcolumn1">
-                                            <property name="title">column</property>
+                                          <object class="GtkTreeViewColumn" id="Activo">
+                                            <property name="title">Activo</property>
                                             <child>
                                               <object class="GtkCellRendererToggle" id="active_cell">
                                                 <signal name="toggled" handler="on_active_cell_toggled"/>
@@ -4330,8 +4333,8 @@ attributes&lt;/b&gt;</property>
                                           </object>
                                         </child>
                                         <child>
-                                          <object class="GtkTreeViewColumn" id="treeviewcolumn2">
-                                            <property name="title">column</property>
+                                          <object class="GtkTreeViewColumn" id="Icono">
+                                            <property name="title">Icono</property>
                                             <child>
                                               <object class="GtkCellRendererPixbuf" id="icon_cell"/>
                                               <attributes>
@@ -4341,12 +4344,23 @@ attributes&lt;/b&gt;</property>
                                           </object>
                                         </child>
                                         <child>
-                                          <object class="GtkTreeViewColumn" id="treeviewcolumn3">
-                                            <property name="title">column</property>
+                                          <object class="GtkTreeViewColumn" id="Nombre">
+                                            <property name="title">Nombre</property>
                                             <child>
                                               <object class="GtkCellRendererText" id="plugin_cell"/>
                                               <attributes>
                                                 <attribute name="text">2</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn" id="Tipo">
+                                            <property name="title">Tipo</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="plugin_type"/>
+                                              <attributes>
+                                                <attribute name="text">3</attribute>
                                               </attributes>
                                             </child>
                                           </object>

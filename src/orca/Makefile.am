@@ -71,6 +71,7 @@ orca_python_PYTHON = \
 	speechdispatcherfactory.py \
 	speech_generator.py \
 	speechserver.py \
+	store_config.py \
 	structural_navigation.py \
 	text_attribute_names.py \
 	tutorialgenerator.py \

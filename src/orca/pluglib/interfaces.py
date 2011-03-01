@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Copyright (C) 2010, J. Félix Ontañón <felixonta@gmail.com>
+# Copyright (C) 2011, J. Ignacio Álvarez <neonigma@gmail.com>
 
 # This file is part of Pluglib.
 
@@ -159,6 +160,46 @@ class IConfigureDialog(IConfigurable):
     @abc.abstractmethod
     def configure_dialog(parent):
         """Display preferences dialog"""
+
+class ICommand(object):
+    """Allows to operate with commands"""
+
+    __metaclass__ = abc.ABCMeta
+
+    def command_name_getter(self):
+        """ You must implement this method in your class """
+
+    def command_name_setter(self, new_commands):
+         """ You must implement this method in your class """
+
+    # Set of managed plugins
+    command_name = abc.abstractproperty(command_name_getter, command_name_setter)
+
+    ############## METHODS #################
+
+    @abc.abstractmethod
+    def get_command(command_name):
+        """Return a command in this environment"""
+
+class IPresenter(object):
+    """Allows to operate with presenters"""
+    
+    __metaclass__ = abc.ABCMeta
+  
+    def presenters_getter(self):
+        """ You must implement this method in your class """
+
+    def presenters_setter(self, new_presenters):
+         """ You must implement this method in your class """
+
+    # Set of managed plugins
+    presenters = abc.abstractproperty(presenters_getter, presenters_setter)
+
+    ############## METHODS #################
+
+    @abc.abstractmethod
+    def get_presenters():
+        """Return all commands in this environment"""
 
 class IDependenciesChecker(object):
     """Allows to check for dependencies before run"""

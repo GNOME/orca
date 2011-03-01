@@ -43,6 +43,10 @@ class Backend:
         self.settingsFile = os.path.join(settings.userPrefsDir,
                                          "user-settings.conf")
 
+        self.plugins_conf = self.getPlugins() \
+            if self.getPlugins() is not None \
+            else {}
+
     def saveDefaultSettings(self, general, pronunciations, keybindings):
         """ Save default settings for all the properties from
             orca.settings. """
@@ -60,6 +64,7 @@ class Backend:
         self.profiles = defaultProfiles
         self.pronunciations = pronunciations
         self.keybindings = keybindings
+        self.plugins_conf = self.getPlugins()
 
         settingsFile = open(self.settingsFile, 'w')
         dump(prefs, settingsFile, indent=4)
@@ -162,3 +167,50 @@ class Backend:
             profiles.append(profileDict.get('profile'))
 
         return profiles
+
+    def addPlugin(self, plugin_data):
+        # receives a dict in the following way
+        # 'chat': { 'name': 'Chat plugin',
+        #           'active': True,
+        #           'registered': False
+        #           'type': 'Commander'
+        #           'path': /bar/foo }
+        try:
+            if self.plugins_conf == {}:
+                self.plugins_conf.update({'plugins': plugin_data})
+            else:
+                self.plugins_conf['plugins'].update(plugin_data)
+        except LookupError, e:
+            print "Error adding dictionary. Key "+str(e)+" exists"
+
+        self.saveConf(self.plugins_conf)
+
+    def getPlugins(self):
+        settingsFile = open(self.settingsFile)
+        try:
+            plugs = load(settingsFile)
+            if plugs.has_key('plugins'):
+                if not plugs['plugins']:
+                    return {}
+                else:
+                    return plugs.copy()
+            else:
+                return None
+        except ValueError:
+            return
+
+    def saveConf(self, plugins_to_save):
+        self.plugins_conf = plugins_to_save
+
+        with open(self.settingsFile, 'r+') as settingsFile:
+            prefs = load(settingsFile)
+            prefs.update(plugins_to_save)
+            settingsFile.seek(0)
+            settingsFile.truncate()
+            dump(prefs, settingsFile, indent=4)
+
+    def updatePlugin(self, plugin_to_update):
+        self.addPlugin(plugin_to_update)
+
+    def getPluginByName(self, plugin_name):
+        return self.plugins_conf['plugins'][plugin_name]

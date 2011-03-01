@@ -317,13 +317,6 @@ class SettingsManager(object):
         except:
             return False
 
-    def getPluginState(self, plugin_name):
-        try:
-            return gconfClient.get_bool(
-                "/apps/orca/plugins/"+str(plugin_name)+"/enable")
-        except:
-            return False
-
     def setStartingProfile(self, profile=None):
         if profile is None:
             profile = settings.profile
@@ -535,6 +528,23 @@ class SettingsManager(object):
             script.overridePronunciations = pronunciations
             script.app_pronunciation_dict = \
                 pronunciations(script, script.app_pronunciation_dict)
+
+    def loadPlugins(self):
+        return self._backend.getPlugins()
+
+    def addPlugin(self, plugin_data):
+        self._backend.addPlugin(plugin_data)
+        return self._backend.getPlugins()
+
+    def saveConf(self, plugins_to_save):
+        self._backend.saveConf(plugins_to_save)
+
+    def updatePlugin(self, plugin_to_update):
+        self._backend.updatePlugin(plugin_to_update)
+        return self._backend.getPlugins()
+
+    def getPluginByName(self, plugin_name):
+        return self._backend.getPluginByName(plugin_name)
 
 def getVoiceKey(voice):
     voicesKeys = getattr(settings, 'voicesKeys')

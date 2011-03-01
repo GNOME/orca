@@ -2238,12 +2238,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def _initPluginsTreeView(self):
 
-        print "Plugins detected: " + str(plugmanager.get_plugins())
-        for plugin_id, plugin in plugmanager.get_plugins():
-            if plugin.name != None:
-                self.plugins_store.append([plugmanager.is_plugin_enabled(plugin_id), None, plugin.name, plugin_id])
-
-        print self.plugins_store
+        for plugin_id, plugin, plugin_type, registered, plugin_name in plugmanager.get_plugins():
+            if plugin_name != None:
+                self.plugins_store.append([plugmanager.is_plugin_enabled(plugin_id),
+                                           None, plugin_name, plugin_type,
+                                           registered, plugin_id])
 
     def on_plugabout_btn_clicked(self, button):
         selection = self.plugins_tree.get_selection()
@@ -2275,7 +2274,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model, selected = selection.get_selected()
 
         if selected:
-            plugin = plugmanager.get_plugin_class(model[selected][3])
+            plugin = plugmanager.get_plugin_class(model[selected][5])
             self.plugconf_btn.set_sensitive(pluglib.verify_conf_dialog(plugin))
 
     def on_plugconf_btn_clicked(self, button):
@@ -2283,13 +2282,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model, selected = selection.get_selected()
 
         if selected:
-            plugin = plugmanager.get_plugin_class(model[selected][3])
+            plugin = plugmanager.get_plugin_class(model[selected][5])
             if pluglib.verify_conf_dialog(plugin):
                 plugin.configure_dialog(self.parent)
 
     def on_active_cell_toggled(self, checkbox, path):
         active = not checkbox.get_active()
-        plugin_name = self.plugins_store[path][3]
+        plugin_name = self.plugins_store[path][5]
 
         if active:
             plugmanager.enable_plugin(plugin_name)
