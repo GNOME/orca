@@ -28,7 +28,7 @@ import abc
 import store_config 
 import settings_manager
 
-from interfaces import *
+from pluglib.interfaces import *
 
 class ModulePluginManager(IPluginManager):
     """A plugin manager that handles with python modules"""
@@ -39,8 +39,6 @@ class ModulePluginManager(IPluginManager):
         if not type(self.plugin_paths) is list:
             self.plugin_paths = [self.plugin_paths]
 
-        self.plugin_paths=['baseplugins']
-        
         #{'plugin_name': {'class': plugin_class, 'object': plugin_object,
         # 'type': plugin_type, 'registered':, if_registered}
         self.plugins = {}
@@ -99,7 +97,7 @@ class ModulePluginManager(IPluginManager):
         return plugins
 
     def scan_more_plugins(self):
-        print "Scanning new plugins"
+        print "Scanning plugins..."
         # CHECK BASEPLUGINS FOR MORE PLUGINS
         new_plugins = {}
         for path in self.plugin_paths:
@@ -113,23 +111,12 @@ class ModulePluginManager(IPluginManager):
         self.plugins = new_plugins
 
     def load_class_in_plugin(self, dict_plugins, module_name, path):
-        print "module_name: " + str(module_name)
-        print "path: " + str(path)
         modfile, name, desc = imp.find_module(module_name, path)
-        
-        print "modfile: " + str(modfile)
-        print "name: " + str(name)
-        print "desc: " + str(desc)
         
         # the idea is not repeat this load unnecessarily
         module = imp.load_module(module_name, modfile, name, desc)
         
-        print "module: " + str(module)
-
         for (the_name, klass) in inspect.getmembers(module, inspect.isclass):
-            print "the_name: " + str(the_name)
-            print "klass: " + str(klass)
-            print "subclase compar: " + str(issubclass(klass, IPlugin))
             if issubclass(klass, IPlugin) and the_name != "IPlugin":
                 klass_update = {'class': klass}
                 object_update = {'object': None}
@@ -141,8 +128,6 @@ class ModulePluginManager(IPluginManager):
                 type_update = {'type': 'Command'}
                 dict_plugins.update(type_update) 
 
-        print "el dict: " + str(dict_plugins)
-
     def scan_plugins(self):
         self.scan_more_plugins()
         
@@ -151,12 +136,10 @@ class ModulePluginManager(IPluginManager):
             self.plugins = self.plugins_conf.copy()
 
             load_plugins = self.plugins['plugins'];
-            print "load_plugins: " + str(load_plugins)
     
             for module_name, data in load_plugins.iteritems():
                 if load_plugins[module_name]['active'] == True:
                     try:
-                        print "Loading class in: " + str(load_plugins[module_name])
                         self.load_class_in_plugin(load_plugins[module_name], 
                                 module_name, [load_plugins[module_name]['path']])
                         print "Starting existent module: " + str(module_name)
@@ -181,7 +164,6 @@ class ModulePluginManager(IPluginManager):
                     [self.plugins[plugin_name]['path']])
 
             plugin_class = self.plugins[plugin_name]['class']
-            print "plugin class: " + str(plugin_class)
 
             if issubclass(plugin_class, IDependenciesChecker) \
                     and not plugin_class.check_dependencies():
@@ -210,7 +192,6 @@ class ModulePluginManager(IPluginManager):
         del (plugin_name)
 
     def get_plugins(self):
-        print self.plugins
         return [(plugin_name, plugin['class'], 
                  plugin['type'], plugin['registered'], plugin['name']) 
             for (plugin_name, plugin) in self.plugins.items()]
