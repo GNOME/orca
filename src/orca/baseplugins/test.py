@@ -18,23 +18,27 @@
 # You should have received a copy of the GNU General Public License
 # along with Pluglib.  If not, see <http://www.gnu.org/licenses/>.
 
+import time
 from pluglib.interfaces import *
 import input_event as input_event
 
 from settings_manager import SettingsManager
-_settingsManager = SettingsManager()
-if _settingsManager is None:
-    print "Could not load the settings manager. Exiting."
-    sys.exit(1)
 
 from orca_i18n import _         # for gettext support
 from orca_i18n import ngettext  # for ngettext support
 from orca_i18n import C_        # to provide qualified translatable strings
 
-#import notification_messages as notification_messages
+import notification_messages as notification_messages
+print notification_messages
 
 class callPresenter(IPresenter):
     inputEventHandlers = {}
+
+    _settingsManager = SettingsManager()
+    if _settingsManager is None:
+        print "Could not load the settings manager. Exiting."
+        sys.exit(1)
+
     def __init__(self):
 
         print "Init call presenter..."
@@ -55,19 +59,21 @@ class callPresenter(IPresenter):
                 # a shortcut key.
                 #
                 _("Present current date."))
+        
+        self.inputEventHandlers.update(notification_messages.inputEventHandlers)
 
     def presentTime(self, inputEvent):
         """ Presents the current time. """
         timeFormat = self._settingsManager.getSetting('presentTimeFormat')
         message = time.strftime(timeFormat, time.localtime())
-        super.presentMessage(message)
+        super(callPresenter, self).presentMessage(message)
         return True
 
     def presentDate(self, inputEvent):
         """ Presents the current date. """
         dateFormat = self._settingsManager.getSetting('presentDateFormat')
         message = time.strftime(dateFormat, time.localtime())
-        super.presentMessage(message)
+        super(callPresenter, self).presentMessage(message)
         return True
 
 class testPlugin(IPlugin, IPresenter):

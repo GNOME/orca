@@ -30,8 +30,20 @@ import orca_state
 
 from scripts import apps, toolkits
 
-_settingsManager = getattr(orca, '_settingsManager')
-_eventManager = getattr(orca, '_eventManager')
+if hasattr(orca, '_settingsManager'):
+    _settingsManager = getattr(orca, '_settingsManager')
+else:
+    from settings_manager import SettingsManager
+    _settingsManager = SettingsManager()
+    if _settingsManager is None:
+        print "Could not load the settings manager. Exiting."
+        sys.exit(1)
+
+if hasattr(orca, '_eventManager'):
+    _eventManager = getattr(orca, '_eventManager')
+else:
+    from event_manager import EventManager
+    _eventManager = EventManager()
 
 class ScriptManager:
 

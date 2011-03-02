@@ -59,7 +59,12 @@ class EventManager:
         """Called when this presentation manager is activated."""
 
         global _scriptManager
-        _scriptManager = getattr(orca, '_scriptManager')
+
+        if hasattr(orca, '_scriptManager'):
+            _scriptManager = getattr(orca, '_scriptManager')
+        else:
+            from script_manager import ScriptManager
+            _scriptManager = ScriptManager()
 
         # Tell BrlTTY which commands we care about.
         #
@@ -199,6 +204,7 @@ class EventManager:
                 toolkitName = None
             if toolkitName in settings.synchronousToolkits:
                 asyncMode = False
+
             script = _scriptManager.getScript(app, e.source)
             script.eventCache[e.type] = (e, time.time())
 

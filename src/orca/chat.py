@@ -36,7 +36,14 @@ import speech
 
 from orca_i18n import _
 
-_settingsManager = getattr(orca, '_settingsManager')
+if hasattr(orca, '_settingsManager'):
+    _settingsManager = getattr(orca, '_settingsManager')
+else:
+    from settings_manager import SettingsManager
+    _settingsManager = SettingsManager()
+    if _settingsManager is None:
+        print "Could not load the settings manager. Exiting."
+        sys.exit(1)
 
 #############################################################################
 #                                                                           #

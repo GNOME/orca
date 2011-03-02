@@ -56,8 +56,20 @@ import pluglib
 
 import orca_gui_profile
 
-_settingsManager = getattr(orca, '_settingsManager')
-_scriptManager = getattr(orca, '_scriptManager')
+if hasattr(orca, '_settingsManager'):
+    _settingsManager = getattr(orca, '_settingsManager')
+else:
+    from settings_manager import SettingsManager
+    _settingsManager = SettingsManager()
+    if _settingsManager is None:
+        print "Could not load the settings manager. Exiting."
+        sys.exit(1)
+
+if hasattr(orca, '_scriptManager'):
+    _scriptManager = getattr(orca, '_scriptManager')
+else:
+    from script_manager import ScriptManager
+    _scriptManager = ScriptManager()
 
 try:
     import louis

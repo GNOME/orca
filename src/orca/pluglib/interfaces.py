@@ -181,12 +181,41 @@ class ICommand(object):
     def get_command(command_name):
         """Return a command in this environment"""
 
-class IPresenter(object):
-    """Allows to operate with presentation plugins"""
+import locale
+import time
 
-    __metaclass__ = abc.ABCMeta
+from settings_manager import SettingsManager
+_settingsManager = SettingsManager()
+if _settingsManager is None:
+    print "Could not load the settings manager. Exiting."
+    sys.exit(1)
 
-    ############## METHODS #################
+import pyatspi
+import braille as braille
+import debug as debug
+import eventsynthesizer as eventsynthesizer
+import find as find
+import flat_review as flat_review
+import input_event as input_event
+import keybindings as keybindings
+try:
+    import gsmag as mag
+except:
+    import mag as mag
+import outline as outline
+import orca_state as orca_state
+import phonnames as phonnames
+import script as script
+import settings as settings
+import speech as speech
+import speech_generator as speech_generator
+import speechserver as speechserver
+import mouse_review as mouse_review
+import text_attribute_names as text_attribute_names
+import notification_messages as notification_messages
+import orca_gui_prefs as orca_gui_prefs
+
+class Messaging(script.Script):
 
     def presentMessage(self, fullMessage, briefMessage=None, voice=None):
         """Convenience method to speak a message and 'flash' it in braille.
@@ -245,6 +274,15 @@ class IPresenter(object):
                 duration = _settingsManager.getSetting('brailleFlashTime')
 
             braille.displayMessage(message, flashTime=duration)
+
+class IPresenter(object):
+    """Allows to operate with presentation plugins"""
+
+    ############## METHODS #################
+
+    def presentMessage(self, fullMessage, briefMessage=None, voice=None):
+        print "Calling Messaging with fullMessage: " + str(fullMessage) 
+        msg = Messaging(fullMessage, briefMessage, voice)
 
 class IDependenciesChecker(object):
     """Allows to check for dependencies before run"""

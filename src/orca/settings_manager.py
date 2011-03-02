@@ -487,7 +487,11 @@ class SettingsManager(object):
         """
 
         import orca
-        _scriptManager = getattr(orca, '_scriptManager')
+        if hasattr(orca, '_scriptManager'):
+            _scriptManager = getattr(orca, '_scriptManager')
+        else:
+            from script_manager import ScriptManager
+            _scriptManager = ScriptManager()
 
         app = script.app
         moduleName = _scriptManager.getModuleName(app)
