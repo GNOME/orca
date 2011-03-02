@@ -142,6 +142,13 @@ class ModulePluginManager(IPluginManager):
                     try:
                         self.load_class_in_plugin(load_plugins[module_name], 
                                 module_name, [load_plugins[module_name]['path']])
+
+                        plugin_class = load_plugins[module_name]['class']
+                        plugin_object = plugin_class()
+                        if isinstance(plugin_object, IConfigurable):
+                	        plugin_object.load()
+                        
+                        load_plugins[module_name]['object'] = plugin_object
                         print "Starting existent module: " + str(module_name)
                     except Exception, e:
                         raise PluginManagerError, 'Cannot load module %s: %s' % \
@@ -151,8 +158,6 @@ class ModulePluginManager(IPluginManager):
                     load_plugins[module_name].update({'object': None})
  
             self.plugins = load_plugins
-            
-
 
     def enable_plugin(self, plugin_name):
         enabling_plugins = self.store_conf.getPluginByName(plugin_name)
