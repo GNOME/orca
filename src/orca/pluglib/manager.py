@@ -203,7 +203,8 @@ class ModulePluginManager(IPluginManager):
             raise PluginManagerError, 'No plugin named %s' % plugin_name
 
     def is_plugin_enabled(self, plugin_name):
-        return self.plugins[plugin_name]['active']
+        check_plugin = self.store_conf.getPluginByName(plugin_name)
+        return check_plugin['active']
 
     _plugin_paths = None
 
