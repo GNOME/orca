@@ -1761,7 +1761,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkCheckButton" id="disableBrailleEOLCheckButton">
+                              <object class="GtkCheckButton" id="disableBrailleEndOfLineCheckButton">
                                 <property name="label" translatable="yes">Disable _end of line symbol</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>

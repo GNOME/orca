@@ -325,7 +325,7 @@ class BrailleGenerator(generator.Generator):
 
     def _generateEol(self, obj, **args):
         result = []
-        if not _settingsManager.getSetting('disableBrailleEOL'):
+        if not _settingsManager.getSetting('disableBrailleEndOfLine'):
             if not args.get('mode', None):
                 args['mode'] = self._mode
             args['stringType'] = 'eol'

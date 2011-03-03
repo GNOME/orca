@@ -548,7 +548,7 @@ def getVoiceKey(voice):
     return ""
 
 def getValueForKey(prefsDict, key):
-    need2repr = ['brailleEOLIndicator', 'brailleContractionTable',
+    need2repr = ['brailleEndOfLineIndicator', 'brailleContractionTable',
                  'brailleRequiredStateString', 'enabledBrailledTextAttributes',
                  'enabledSpokenTextAttributes', 'magZoomerBorderColor',
                  'magCursorColor', 'magCrossHairColor', 'magTargetDisplay',

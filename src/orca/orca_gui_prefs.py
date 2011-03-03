@@ -1788,8 +1788,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                             settings.BRAILLE_ROLENAME_STYLE_SHORT
         self.get_widget("abbrevRolenames").set_active(state)
 
-        self.get_widget("disableBrailleEOLCheckButton").set_active(
-            prefs["disableBrailleEOL"])
+        self.get_widget("disableBrailleEndOfLineCheckButton").set_active(
+            prefs["disableBrailleEndOfLine"])
 
         if louis is None:
             self.get_widget( \

@@ -112,8 +112,8 @@ userCustomizableSettings = [
     "enableBraille",
     "enableBrailleContext",
     "enableBrailleGrouping",
-    "disableBrailleEOL",
-    "brailleEOLIndicator",
+    "disableBrailleEndOfLine",
+    "brailleEndOfLineIndicator",
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
     "brailleSelectorIndicator",
@@ -1261,8 +1261,8 @@ speechGroupIndexString = _("%(index)d of %(total)d")
 
 # string to indicate end of printed line for braille displays:
 #
-disableBrailleEOL = False
-brailleEOLIndicator = " $l"
+disableBrailleEndOfLine = False
+brailleEndOfLineIndicator = " $l"
 
 # Translators: Certain objects (such as form controls on web pages)
 # can have STATE_REQUIRED set on them to inform the user that this

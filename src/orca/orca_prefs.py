@@ -809,7 +809,7 @@ class OrcaPrefs:
                 value = self._getProgressBarVerbosityString(prefsDict[key])
             elif key == "brailleContractionTable":
                 value = "'%s'" % prefsDict[key]
-            elif key == "brailleEOLIndicator":
+            elif key == "brailleEndOfLineIndicator":
                 value = "'%s'" % prefsDict[key]
             elif key == "brailleRequiredStateString":
                 value = "'%s'" % prefsDict[key]

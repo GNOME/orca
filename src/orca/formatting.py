@@ -65,7 +65,7 @@ formatting = {
             'groupindex'   : settings.speechGroupIndexString,
         },
         'braille' : {
-            'eol'          : settings.brailleEOLIndicator,
+            'eol'          : settings.brailleEndOfLineIndicator,
             'required'     : settings.brailleRequiredStateString,
             'readonly'     : settings.brailleReadOnlyString,
             'insensitive'  : settings.brailleInsensitiveString,
