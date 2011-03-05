@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-02-07 18:49+0000\n"
-"PO-Revision-Date: 2011-02-19 12:29+0100\n"
+"POT-Creation-Date: 2011-02-27 13:50+0000\n"
+"PO-Revision-Date: 2011-03-03 09:42+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -225,20 +225,29 @@ msgstr ""
 "cuándo un atributo activo no es de interés."
 
 #: C/preferences_text_attributes.page:62(p)
+#| msgid ""
+#| "For example, by default the \"underline\" text attribute has a value of "
+#| "\"none.\" This causes <app>Orca</app> to inform you about underlined text "
+#| "as long as the text is actually underlined. If you always want this "
+#| "attribute to be spoken irrespective of whether or not the text is "
+#| "underlined, the <gui>Present unless</gui> column should be empty for "
+#| "underline. In addition, you should be sure that the <gui>Speak</gui> "
+#| "column for underline is checked."
 msgid ""
 "For example, by default the \"underline\" text attribute has a value of "
-"\"none.\" This causes <app>Orca</app> to inform you about underlined text as "
+"\"none\". This causes <app>Orca</app> to inform you about underlined text as "
 "long as the text is actually underlined. If you always want this attribute "
 "to be spoken irrespective of whether or not the text is underlined, the "
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» por defecto tiene un valor de «none.» "
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
 "Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
 "y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
 "hable siempre independientemente de que el texto esté subrayado o no, "
 "entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
-"menos que</gui> en blanco."
+"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
+"<gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -749,8 +758,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
-"«/», «&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
+"«&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -1553,7 +1562,7 @@ msgstr "Valor predeterminado: <gui>Empujar</gui>"
 
 #: C/preferences_magnifier.page:171(title)
 msgid "Pointer follows focus"
-msgstr ""
+msgstr "El puntero sigue al foco"
 
 #: C/preferences_magnifier.page:172(p)
 msgid ""
@@ -1561,6 +1570,10 @@ msgid ""
 "pointer will follow you as you arrow through menu items and move among "
 "controls in dialog boxes."
 msgstr ""
+"<gui>El puntero sigue al foco</gui>: si está opción está activada, el "
+"puntero del ratón le seguirá tal como según se mueva con la flechas de "
+"cursor a través de los elementos de menú y entre los controles de cuadros de "
+"diálogo."
 
 #: C/preferences_magnifier.page:182(title)
 msgid "Text cursor"
@@ -1575,18 +1588,24 @@ msgid ""
 "<gui>Centered</gui>: As the text cursor moves, keep it at the center of the "
 "screen whenever possible."
 msgstr ""
+"<gui>Centrado</gui>: a medida que se mueve el cursor de texto mantener este "
+"en el centro de la pantalla siempre y cuando sea posible."
 
 #: C/preferences_magnifier.page:192(p)
 msgid ""
 "<gui>Push</gui>: As the text cursor moves, move the zoomer window the least "
 "amount necessary to display it."
 msgstr ""
+"<gui>Empujar</gui>: a medida que se mueve el cursor de texto, mover la "
+"ventana del ampliador lo mínimo necesario para mostrarlo."
 
 #: C/preferences_magnifier.page:198(p)
 msgid ""
 "<gui>None</gui>: Moving the text cursor will have no impact on what the "
 "zoomer window displays."
 msgstr ""
+"<gui>Ninguno</gui>: al mover el cursor de texto no tendrá ningún impacto en "
+"lo que se muestra en la ventana del ampliador."
 
 #: C/preferences_magnifier.page:209(title)
 msgid "Edge margin"
@@ -1599,11 +1618,17 @@ msgid ""
 "The margin can range from 0 to 50%, with 50% being the equivalent of "
 "choosing centering."
 msgstr ""
+"El <gui>Margen del borde</gui> representa cuán cerca del borde de la "
+"pantalla se permite que el cursor esté, antes «empujar» la ventana del "
+"ampliador. El margen puede variar entre 0 y 50%, siendo 50% el equivalente a "
+"seleccionar «centrado»."
 
 #: C/preferences_magnifier.page:217(p)
 msgid ""
 "This option is only available if \"Push\" is your text cursor tracking mode."
 msgstr ""
+"Esta opción solamente está disponible si su modo de seguimiento del cursor "
+"es «Empujar»."
 
 #: C/preferences_magnifier.page:222(p)
 msgid "Default value: 0"
@@ -1618,6 +1643,8 @@ msgid ""
 "The <gui>Color</gui> options allow you to do some rough color adjustments of "
 "the magnified region."
 msgstr ""
+"Las opciones <gui>Color</gui> le permiten realizar algunos ajustes en bruto "
+"del color de la región magnificada."
 
 #: C/preferences_magnifier.page:235(title)
 msgid "Invert colors"
@@ -1626,6 +1653,7 @@ msgstr "Invertir colores"
 #: C/preferences_magnifier.page:236(p)
 msgid "<gui>Invert colors</gui>: Creates a reverse or negative-image effect."
 msgstr ""
+"<gui>Invertir colores</gui>: crea un efecto negativo o inverso de la imagen."
 
 #: C/preferences_magnifier.page:244(title)
 msgid "Brightness"
@@ -1636,6 +1664,8 @@ msgid ""
 "<gui>Brightness</gui>: Ranges from -1 to 1 (-1 is black/no brightness; 1 is "
 "white/total brightness; 0 is \"normal\"/unchanged)."
 msgstr ""
+"<gui>Brillo</gui>: varía entre -1 y 1 (-1 es negro/sin brillo; 1 es blanco/"
+"brillo total; 0 es «normal»/sin cambio)."
 
 #: C/preferences_magnifier.page:249(p) C/preferences_magnifier.page:259(p)
 msgid "Default value: 0.00"
@@ -1650,6 +1680,8 @@ msgid ""
 "<gui>Contrast</gui>: Ranges from -1 to 1 (-1 is grey/no contrast; 1 is "
 "maximum contrast; 0 is \"normal\"/unchanged)."
 msgstr ""
+"<gui>Contraste</gui>: varía entre -1 y 1 (-1 es gris/sin contraste; 1 es "
+"máximo contraste; 0 es «normal»/sin cambio)."
 
 #: C/preferences_magnifier.page:266(title)
 msgid "Border"
@@ -1661,6 +1693,10 @@ msgid ""
 "separates the magnified region from the non-magnified region. As such, these "
 "options are not available when <gui>Full Screen</gui> is selected."
 msgstr ""
+"Las opciones de <gui>Borde</gui> pueden usarse para personalizar el borde "
+"que separa la región magnificada de la no magnificada. Como tales, estas "
+"opciones no estarán disponibles cuando se selecciona <gui>Pantalla completa</"
+"gui>."
 
 #: C/preferences_magnifier.page:274(title)
 msgid "Enable border"
@@ -1671,6 +1707,8 @@ msgid ""
 "<gui>Enable border</gui>: This option determines if a window border is "
 "visible for the magnifier."
 msgstr ""
+"<gui>Activar borde</gui>: esta opción determina si el borde de las ventanas "
+"es visible por el magnificador."
 
 #: C/preferences_magnifier.page:284(title)
 msgid "Border size"
@@ -1678,7 +1716,7 @@ msgstr "Tamaño del borde"
 
 #: C/preferences_magnifier.page:285(p)
 msgid "This value determines the size of the border in pixels."
-msgstr "Este valor determina el tamaño del borde en píxeles."
+msgstr "Este valor determina el tamaño del borde en píxeles."
 
 #: C/preferences_magnifier.page:288(p)
 msgid "Default value: 1"
@@ -1718,6 +1756,8 @@ msgid ""
 "If this checkbox is checked then a cursor is visible and the size and color "
 "options become available."
 msgstr ""
+"Si esta casilla está marcada se visualiza un cursor y las opciones de tamaño "
+"y color están disponibles."
 
 #: C/preferences_magnifier.page:320(title)
 msgid "Custom size"
@@ -1728,6 +1768,8 @@ msgid ""
 "Check this checkbox if you would like to make the mouse pointer larger than "
 "it normally is."
 msgstr ""
+"Marque esta casilla si quiere aumentar el tamaño del puntero del ratón por "
+"encima de lo normal."
 
 #: C/preferences_magnifier.page:330(title)
 msgid "Cursor size"
@@ -1758,8 +1800,8 @@ msgid ""
 "This set of controls can be used to customize the magnifier's optional area-"
 "targeting cursor."
 msgstr ""
-"Es posible usar este conjunto de controles para personalizar el cursor "
-"captador de área opcional del magnificador."
+"Es posible usar este conjunto de controles para personalizar el área "
+"opcional del magnificador encargada del cursor."
 
 #: C/preferences_magnifier.page:356(title)
 msgid "Enable cross-hair"
@@ -1770,6 +1812,8 @@ msgid ""
 "If this checkbox is checked then the cross-hair is visible and the size and "
 "color options become available."
 msgstr ""
+"Si marca esta casilla se visualiza la cruz y las opciones de tamaño y color "
+"están disponibles."
 
 #: C/preferences_magnifier.page:366(title)
 msgid "Enable cross-hair clip"
@@ -1780,6 +1824,8 @@ msgid ""
 "If checked, the cross-hair will be \"clipped\" (removed) in the area "
 "immediately surrounding the mouse pointer."
 msgstr ""
+"Si está marcada, la cruz se recorta (elimina) en el área inmediata en torno "
+"al puntero del ratón."
 
 #: C/preferences_magnifier.page:376(title)
 msgid "Cross-hair size"
@@ -1787,7 +1833,7 @@ msgstr "Tamaño de la cruz"
 
 #: C/preferences_magnifier.page:377(p)
 msgid "This control sets the thickness of the cross-hair in pixels."
-msgstr ""
+msgstr "Este control establece el grosor de la cruz en píxeles."
 
 #: C/preferences_magnifier.page:380(p)
 msgid "Default value: 16"
@@ -1811,16 +1857,22 @@ msgid ""
 "Magnifier page, you can further customize <app>Orca</app>'s magnification "
 "support."
 msgstr ""
+"Si pulsa el botón <gui>Avanzado</gui> en la parte inferior de la página del "
+"magnificador, puede personalizar aún más el soporte de magnificación de "
+"<app>Orca</app>."
 
 #: C/preferences_magnifier.page:404(p)
 msgid "<gui>Smoothing</gui>: Bilinear or none."
-msgstr ""
+msgstr "<gui>Suavizado</gui>: bilineal o ninguno."
 
 #: C/preferences_magnifier.page:406(p)
 msgid ""
 "<gui>Brightness</gui>: Choosing different brightness levels for red, blue, "
 "and green allows you to create the color scheme that works best for you."
 msgstr ""
+"<gui>brillo</gui>: al seleccionar diferentes niveles de brillo para rojo, "
+"azul y verde le permite crear el esquema de color que más se adecúe a sus "
+"necesidades."
 
 #: C/preferences_magnifier.page:413(p)
 msgid ""
@@ -1828,6 +1880,9 @@ msgid ""
 "choosing different contrast levels for red, blue, and green helps you to "
 "create the color scheme that works best for you."
 msgstr ""
+"<gui>Contraste</gui>: aunque no son tan importantes como los cambios en el "
+"brillo, seleccionar diferentes niveles de contraste para rojo, azul y verde "
+"le ayuda a crear el esquema de color que más se adecúe a sus necesidades."
 
 #: C/preferences_magnifier.page:421(p)
 msgid ""
@@ -1835,6 +1890,9 @@ msgid ""
 "available through libcolorblind. In order to take advantage of this feature "
 "you will need to install libcolorblind and then rebuild gnome-mag."
 msgstr ""
+"<gui>Filtro del color</gui>: le permite usar uno de los filtros de "
+"colorblind disponibles a través de libcolorblind. Para beneficiarse de esta "
+"característica deberá instalar libcolorblind y volver a construir gnome-mag."
 
 #: C/preferences_magnifier.page:429(p)
 msgid ""
@@ -1842,6 +1900,9 @@ msgid ""
 "of what should be magnified. Written in the form \":0.x\" where x is the "
 "number of the screen whose contents should be magnified."
 msgstr ""
+"<gui>Ajustes multi-monitor - Pantalla origen</gui>: la pantalla del sistema "
+"X Window que se debe magnificar. En la forma de «:0.x» donde x es el número "
+"de pantalla cuyo contenido se desea magnificar."
 
 #: C/preferences_magnifier.page:437(p)
 msgid ""
@@ -1849,6 +1910,10 @@ msgid ""
 "of where to put the zoomer window. Written in the form \":0.y\" where y is "
 "the number of the screen where the zoomer window should appear."
 msgstr ""
+"<gui>Configuración multi-monitor - Pantalla destino</gui>: pantalla del "
+"sistema de X Window donde se desea poner la ventana del ampliador. En la "
+"forma de «:0.y» donde y es el número de pantalla donde debería aparecer la "
+"pantalla del ampliador."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2792,7 +2857,6 @@ msgid "All channels when any chat window is active"
 msgstr ""
 
 #: C/preferences_chat.page:75(p)
-#| msgid "Default value: checked"
 msgid "Default value: all channels"
 msgstr "Valor predeterminado: todos los canales"
 
@@ -3992,7 +4056,7 @@ msgstr ""
 
 #: C/howto_structural_navigation.page:82(title)
 msgid "Available Settings"
-msgstr ""
+msgstr "Configuración disponible"
 
 #: C/howto_structural_navigation.page:83(p)
 msgid ""
@@ -4309,7 +4373,7 @@ msgstr ""
 
 #: C/howto_orca_find.page:52(p)
 msgid "Here you can specify the following items:"
-msgstr ""
+msgstr "Aquí puede especificar los siguientes elementos:"
 
 #: C/howto_orca_find.page:57(p)
 msgid "The text to find"
@@ -5946,7 +6010,7 @@ msgstr "Línea actual:"
 
 #: C/commands_flat_review.page:50(p)
 msgid "Spell current line:"
-msgstr ""
+msgstr "Hablar la línea actual:"
 
 #: C/commands_flat_review.page:52(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)"
