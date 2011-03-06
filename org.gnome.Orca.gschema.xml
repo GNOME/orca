@@ -1,22 +1,22 @@
 <schemalist>
 <!-- Base Schema for gnome Orca. This schema is not relocatable-->
 <schema id="org.gnome.Orca" gettext-domain="Orca" path="/apps/gnome/Orca/">
-  <key name="activeProfile" type="as">
+  <key name="active-profile" type="as">
       <default>["Default", "default"]</default>
       <summary>Active profile</summary>
       <description>Current active profile.</description>
   </key>
-  <key name="startingProfile" type="as">
+  <key name="starting-profile" type="as">
       <default>["Default", "default"]</default>
       <summary>Starting profile</summary>
       <description>Current active profile that will be used at start.</description>
   </key>
-  <key name="availableProfiles" type="as">                                         
+  <key name="available-profiles" type="as">                                         
       <default>["default"]</default>
       <summary>Available Orca profiles</summary>
       <description>Current available Orca profiles.</description>
   </key>
-  <key name="firstStart" type="b">
+  <key name="first-start" type="b">
       <default>true</default>
       <summary>First Start Key</summary>
       <description>Indicates if it is the first time that orca runs.</description>
@@ -26,575 +26,575 @@
 
 <schema id="org.gnome.Orca.Settings" gettext-domain="Orca">
   <!-- Magnifier related settings -->
-  <key name="magEdgeMargin" type="i">
+  <key name="mag-edge-margin" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magEdgeMargin key</summary>
-    <description>TODO: Add a description for magEdgeMargin key.</description>
+    <summary>TODO: Add a summary for mag-edge-margin key</summary>
+    <description>TODO: Add a description for mag-edge-margin key.</description>
   </key>
-  <key name="magPointerFollowsFocus" type="b">
+  <key name="mag-pointer-follows-focus" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for magPointerFollowsFocus key</summary>
-    <description>TODO: Add a description for magPointerFollowsFocus key.</description>
+    <summary>TODO: Add a summary for mag-pointer-follows-focus key</summary>
+    <description>TODO: Add a description for mag-pointer-follows-focus key.</description>
   </key>
-  <key name="magTextTrackingMode" type="i">
+  <key name="mag-text-tracking-mode" type="i">
     <default>2</default>
-    <summary>TODO: Add a summary for magTextTrackingMode key</summary>
-    <description>TODO: Add a description for magTextTrackingMode key.</description>
+    <summary>TODO: Add a summary for mag-text-tracking-mode key</summary>
+    <description>TODO: Add a description for mag-text-tracking-mode key.</description>
   </key>
-  <key name="magPointerFollowsZoomer" type="b">
+  <key name="mag-pointer-follows-zoomer" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for magPointerFollowsZoomer key</summary>
-    <description>TODO: Add a description for magPointerFollowsZoomer key.</description>
+    <summary>TODO: Add a summary for mag-pointer-follows-zoomer key</summary>
+    <description>TODO: Add a description for mag-pointer-follows-zoomer key.</description>
   </key>
-  <key name="magCursorColor" type="s">
+  <key name="mag-cursor-color" type="s">
     <default>"#000000"</default>
-    <summary>TODO: Add a summary for magCursorColor key</summary>
-    <description>TODO: Add a description for magCursorColor key.</description>
+    <summary>TODO: Add a summary for mag-cursor-color key</summary>
+    <description>TODO: Add a description for mag-cursor-color key.</description>
   </key>
-  <key name="magZoomerType" type="i">
+  <key name="mag-zoomer-type" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magZoomerType key</summary>
-    <description>TODO: Add a description for magZoomerType key.</description>
+    <summary>TODO: Add a summary for mag-zoomer-type key</summary>
+    <description>TODO: Add a description for mag-zoomer-type key.</description>
   </key>
-  <key name="enableMagZoomerColorInversion" type="b">
+  <key name="enable-mag-zoom-color-inversion" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableMagZoomerColorInversion key</summary>
-    <description>TODO: Add a description for enableMagZoomerColorInversion key.</description>
+    <summary>TODO: Add a summary for enable-mag-zoomer-color-inversion key</summary>
+    <description>TODO: Add a description for enable-mag-zoomer-color-inversion key.</description>
   </key>
-  <key name="magCursorSize" type="i">
+  <key name="mag-cursor-size" type="i">
     <default>32</default>
-    <summary>TODO: Add a summary for magCursorSize key</summary>
-    <description>TODO: Add a description for magCursorSize key.</description>
+    <summary>TODO: Add a summary for mag-cursor-size key</summary>
+    <description>TODO: Add a description for mag-cursor-size key.</description>
   </key>
-  <key name="magSmoothingMode" type="i">
+  <key name="mag-smoothing-mode" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magSmoothingMode key</summary>
-    <description>TODO: Add a description for magSmoothingMode key.</description>
+    <summary>TODO: Add a summary for mag-smoothing-mode key</summary>
+    <description>TODO: Add a description for mag-smoothing-mode key.</description>
   </key>
-  <key name="enableMagCrossHair" type="b">
+  <key name="enable-mag-cross-hair" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableMagCrossHair key</summary>
-    <description>TODO: Add a description for enableMagCrossHair key.</description>
+    <summary>TODO: Add a summary for enable-mag-cross-hair key</summary>
+    <description>TODO: Add a description for enable-mag-cross-hair key.</description>
   </key>
-  <key name="magZoomerLeft" type="i">
+  <key name="mag-zoomer-left" type="i">
     <default>512</default>
-    <summary>TODO: Add a summary for magZoomerLeft key</summary>
-    <description>TODO: Add a description for magZoomerLeft key.</description>
+    <summary>TODO: Add a summary for mag-zoomer-left key</summary>
+    <description>TODO: Add a description for mag-zoomer-left key.</description>
   </key>
-  <key name="magZoomerRight" type="i">
+  <key name="mag-zoomer-right" type="i">
     <default>1024</default>
-    <summary>TODO: Add a summary for magZoomerRight key</summary>
-    <description>TODO: Add a description for magZoomerRight key.</description>
+    <summary>TODO: Add a summary for mag-zoomer-right key</summary>
+    <description>TODO: Add a description for mag-zoomer-right key.</description>
   </key>
-  <key name="magCrossHairColor" type="s">
+  <key name="mag-cross-hair-color" type="s">
     <default>"#000000"</default>
-    <summary>TODO: Add a summary for magCrossHairColor key</summary>
-    <description>TODO: Add a description for magCrossHairColor key.</description>
+    <summary>TODO: Add a summary for mag-cross-hair-color key</summary>
+    <description>TODO: Add a description for mag-cross-hair-color key.</description>
   </key>
-  <key name="magTargetDisplay" type="s">
+  <key name="mag-target-display" type="s">
     <default>""</default>
-    <summary>TODO: Add a summary for magTargetDisplay key</summary>
-    <description>TODO: Add a description for magTargetDisplay key.</description>
+    <summary>TODO: Add a summary for mag-target-display key</summary>
+    <description>TODO: Add a description for mag-target-display key.</description>
   </key>
-  <key name="magContrastLevel" type="i">
+  <key name="mag-contrast-level" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magContrastLevel key</summary>
-    <description>TODO: Add a description for magContrastLevel key.</description>
+    <summary>TODO: Add a summary for mag-contrast-level key</summary>
+    <description>TODO: Add a description for mag-contrast-level key.</description>
   </key>
-  <key name="magBrightnessLevelGreen" type="i">
+  <key name="mag-brightness-level-green" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magBrightnessLevelGreen key</summary>
-    <description>TODO: Add a description for magBrightnessLevelGreen key.</description>
+    <summary>TODO: Add a summary for mag-brightness-level-green key</summary>
+    <description>TODO: Add a description for mag-brightness-level-green key.</description>
   </key>
-  <key name="magMouseTrackingMode" type="i">
+  <key name="mag-mouse-tracking-mode" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magMouseTrackingMode key</summary>
-    <description>TODO: Add a description for magMouseTrackingMode key.</description>
+    <summary>TODO: Add a summary for mag-mouse-tracking-mode key</summary>
+    <description>TODO: Add a description for mag-mouse-tracking-mode key.</description>
   </key>
-  <key name="magZoomerTop" type="i">
+  <key name="mag-zoomer-top" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magZoomerTop key</summary>
-    <description>TODO: Add a description for magZoomerTop key.</description>
+    <summary>TODO: Add a summary for mag-zoomer-top key</summary>
+    <description>TODO: Add a description for mag-zoomer-top key.</description>
   </key>
-  <key name="magSourceDisplay" type="s">
+  <key name="mag-source-display" type="s">
     <default>""</default>
-    <summary>TODO: Add a summary for magSourceDisplay key</summary>
-    <description>TODO: Add a description for magSourceDisplay key.</description>
+    <summary>TODO: Add a summary for mag-source-display key</summary>
+    <description>TODO: Add a description for mag-source-display key.</description>
   </key>
-   <key name="magZoomerBorderSize" type="i">
+   <key name="mag-zoomer-border-size" type="i">
      <default>1</default>
-     <summary>TODO: Add a summary for magZoomerBorderSize key</summary>
-     <description>TODO: Add a description for magZoomerBorderSize key.</description>
+     <summary>TODO: Add a summary for mag-zoomer-border-size key</summary>
+     <description>TODO: Add a description for mag-zoomer-border-size key.</description>
    </key>
-  <key name="magContrastLevelGreen" type="i">
+  <key name="mag-contrast-level-green" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magContrastLevelGreen key</summary>
-    <description>TODO: Add a description for magContrastLevelGreen key.</description>
+    <summary>TODO: Add a summary for mag-contrast-level-green key</summary>
+    <description>TODO: Add a description for mag-contrast-level-green key.</description>
   </key>
-  <key name="magHideCursor" type="b">
+  <key name="mag-hide-cursor" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for magHideCursor key</summary>
-    <description>TODO: Add a description for magHideCursor key.</description>
+    <summary>TODO: Add a summary for mag-hide-cursor key</summary>
+    <description>TODO: Add a description for mag-hide-cursor key.</description>
   </key>
-  <key name="magZoomerBorderColor" type="s">
+  <key name="mag-zoomer-border-color" type="s">
     <default>"#000000"</default>
-    <summary>TODO: Add a summary for magZoomerBorderColor key</summary>
-    <description>TODO: Add a description for magZoomerBorderColor key.</description>
+    <summary>TODO: Add a summary for mag-zoomer-border-color key</summary>
+    <description>TODO: Add a description for mag-zoomer-border-color key.</description>
   </key>
-  <key name="magBrightnessLevelRed" type="i">
+  <key name="mag-brightness-level-red" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magBrightnessLevelRed key</summary>
-    <description>TODO: Add a description for magBrightnessLevelRed key.</description>
+    <summary>TODO: Add a summary for mag-brightness-level-red key</summary>
+    <description>TODO: Add a description for mag-brightness-level-red key.</description>
   </key>
-  <key name="magZoomFactor" type="d">
+  <key name="mag-zoom-factor" type="d">
     <default>4.0</default>
-    <summary>TODO: Add a summary for magZoomFactor key</summary>
-    <description>TODO: Add a description for magZoomFactor key.</description>
+    <summary>TODO: Add a summary for mag-zoom-factor key</summary>
+    <description>TODO: Add a description for mag-zoom-factor key.</description>
   </key>
-  <key name="magCrossHairSize" type="i">
+  <key name="mag-cross-hair-size" type="i">
     <default>16</default>
-    <summary>TODO: Add a summary for magCrossHairSize key</summary>
-    <description>TODO: Add a description for magCrossHairSize key.</description>
+    <summary>TODO: Add a summary for mag-cross-hair-size key</summary>
+    <description>TODO: Add a description for mag-cross-hair-size key.</description>
   </key>
-  <key name="magBrightnessLevelBlue" type="i">
+  <key name="mag-brightness-level-blue" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magBrightnessLevelBlue key</summary>
-    <description>TODO: Add a description for magBrightnessLevelBlue key.</description>
+    <summary>TODO: Add a summary for mag-brightness-level-blue key</summary>
+    <description>TODO: Add a description for mag-brightness-level-blue key.</description>
   </key>
-  <key name="enableMagZoomerBorder" type="b">
+  <key name="enable-mag-zoomer-border" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableMagZoomerBorder key</summary>
-    <description>TODO: Add a description for enableMagZoomerBorder key.</description>
+    <summary>TODO: Add a summary for enable-mag-zoomer-border key</summary>
+    <description>TODO: Add a description for enable-mag-zoomer-border key.</description>
   </key>
-  <key name="magControlTrackingMode" type="i">
+  <key name="mag-control-tracking-mode" type="i">
     <default>2</default>
-    <summary>TODO: Add a summary for magControlTrackingMode key</summary>
-    <description>TODO: Add a description for magControlTrackingMode key.</description>
+    <summary>TODO: Add a summary for mag-control-tracking-mode key</summary>
+    <description>TODO: Add a description for mag-control-tracking-mode key.</description>
   </key>
-  <key name="magZoomerBottom" type="i">
+  <key name="mag-zoomer-bottom" type="i">
     <default>768</default>
-    <summary>TODO: Add a summary for magZoomerBottom key</summary>
-    <description>TODO: Add a description for magZoomerBottom key.</description>
+    <summary>TODO: Add a summary for mag-zoomer-bottom key</summary>
+    <description>TODO: Add a description for mag-zoomer-bottom key.</description>
   </key>
-  <key name="magContrastLevelBlue" type="i">
+  <key name="mag-contrast-level-blue" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magContrastLevelBlue key</summary>
-    <description>TODO: Add a description for magContrastLevelBlue key.</description>
+    <summary>TODO: Add a summary for mag-contrast-level-blue key</summary>
+    <description>TODO: Add a description for mag-contrast-level-blue key.</description>
   </key>
-  <key name="magContrastLevelRed" type="i">
+  <key name="mag-contrast-level-red" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magContrastLevelRed key</summary>
-    <description>TODO: Add a description for magContrastLevelRed key.</description>
+    <summary>TODO: Add a summary for mag-contrast-level-red key</summary>
+    <description>TODO: Add a description for mag-contrast-level-red key.</description>
   </key>
-  <key name="magColorFilteringMode" type="i">
+  <key name="mag-color-filtering-mode" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magColorFilteringMode key</summary>
-    <description>TODO: Add a description for magColorFilteringMode key.</description>
+    <summary>TODO: Add a summary for mag-color-filtering-mode key</summary>
+    <description>TODO: Add a description for mag-color-filtering-mode key.</description>
   </key>
-  <key name="magBrightnessLevel" type="i">
+  <key name="mag-brightness-level" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for magBrightnessLevel key</summary>
-    <description>TODO: Add a description for magBrightnessLevel key.</description>
+    <summary>TODO: Add a summary for mag-brightness-level key</summary>
+    <description>TODO: Add a description for mag-brightness-level key.</description>
   </key>
-  <key name="enableMagCrossHairClip" type="b">
+  <key name="enable-mag-cross-hair-clip" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableMagCrossHairClip key</summary>
-    <description>TODO: Add a description for enableMagCrossHairClip key.</description>
+    <summary>TODO: Add a summary for enable-mag-cross-hair-clip key</summary>
+    <description>TODO: Add a description for enable-mag-cross-hair-clip key.</description>
   </key>
-  <key name="enableMagCursor" type="b">
+  <key name="enable-mag-cursor" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableMagCursor key</summary>
-    <description>TODO: Add a description for enableMagCursor key.</description>
+    <summary>TODO: Add a summary for enable-mag-cursor key</summary>
+    <description>TODO: Add a description for enable-mag-cursor key.</description>
   </key>
-  <key name="enableMagCursorExplicitSize" type="b">
+  <key name="enable-mag-cursor-explicit-size" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableMagCursorExplicitSize key</summary>
-    <description>TODO: Add a description for enableMagCursorExplicitSize key.</description>
+    <summary>TODO: Add a summary for enable-mag-cursor-explicit-size key</summary>
+    <description>TODO: Add a description for enable-mag-cursor-explicit-size key.</description>
   </key>
-  <key name="enableMagLiveUpdating" type="b">
+  <key name="enable-mag-live-updating" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableMagLiveUpdating key</summary>
-    <description>TODO: Add a description for enableMagLiveUpdating key.</description>
+    <summary>TODO: Add a summary for enable-mag-live-updating key</summary>
+    <description>TODO: Add a description for enable-mag-live-updating key.</description>
   </key>
-  <key name="enableMagnifier" type="b">
+  <key name="enable-magnifier" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableMagnifier key</summary>
-    <description>TODO: Add a description for enableMagnifier key.</description>
+    <summary>TODO: Add a summary for enable-magnifier key</summary>
+    <description>TODO: Add a description for enable-magnifier key.</description>
   </key>
   <!-- Braille related settings -->
-  <key name="enableContractedBraille" type="b">
+  <key name="enable-contracted-braille" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableContractedBraille key</summary>
-    <description>TODO: Add a description for enableContractedBraille key.</description>
+    <summary>TODO: Add a summary for enable-contracted-braille key</summary>
+    <description>TODO: Add a description for enable-contracted-braille key.</description>
   </key>
-  <key name="enableBraille" type="b">
+  <key name="enable-braille" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableBraille key</summary>
-    <description>TODO: Add a description for enableBraille key.</description>
+    <summary>TODO: Add a summary for enable-braille key</summary>
+    <description>TODO: Add a description for enable-braille key.</description>
   </key>
-  <key name="enableBrailleGrouping" type="b">
+  <key name="enable-braille-grouping" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableBrailleGrouping key</summary>
-    <description>TODO: Add a description for enableBrailleGrouping key.</description>
+    <summary>TODO: Add a summary for enable-braille-grouping key</summary>
+    <description>TODO: Add a description for enable-braille-grouping key.</description>
   </key>
-  <key name="enabledBrailledTextAttributes" type="s">
-    <default>"size:; familyName:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal; textSpelling:none;"</default>
-    <summary>TODO: Add a summary for enabledBrailledTextAttributes key</summary>
-    <description>TODO: Add a description for enabledBrailledTextAttributes key.</description>
+  <key name="enabled-brailled-text-attributes" type="s">
+    <default>"size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal; text-spelling:none;"</default>
+    <summary>TODO: Add a summary for enabled-brailled-text-attributes key</summary>
+    <description>TODO: Add a description for enabled-brailled-text-attributes key.</description>
   </key>
-  <key name="textAttributesBrailleIndicator" type="i">
+  <key name="text-attributes-braille-indicator" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for textAttributesBrailleIndicator key</summary>
-    <description>TODO: Add a description for textAttributesBrailleIndicator key.</description>
+    <summary>TODO: Add a summary for text-attributes-braille-indicator key</summary>
+    <description>TODO: Add a description for text-attributes-braille-indicator key.</description>
   </key>
-  <key name="brailleRolenameStyle" type="i">
+  <key name="braille-rolename-style" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for brailleRolenameStyle key</summary>
-    <description>TODO: Add a description for brailleRolenameStyle key.</description>
+    <summary>TODO: Add a summary for braille-rolename-style key</summary>
+    <description>TODO: Add a description for braille-rolename-style key.</description>
   </key>
-  <key name="enableBrailleMonitor" type="b">
+  <key name="enable-braille-monitor" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableBrailleMonitor key</summary>
-    <description>TODO: Add a description for enableBrailleMonitor key.</description>
+    <summary>TODO: Add a summary for enable-braille-monitor key</summary>
+    <description>TODO: Add a description for enable-braille-monitor key.</description>
   </key>
-  <key name="enableBrailleContext" type="b">
+  <key name="enable-braille-context" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableBrailleContext key</summary>
-    <description>TODO: Add a description for enableBrailleContext key.</description>
+    <summary>TODO: Add a summary for enable-braille-context key</summary>
+    <description>TODO: Add a description for enable-braille-context key.</description>
   </key>
-  <key name="disableBrailleEOL" type="b">
+  <key name="disable-braille-end-of-line" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for disableBrailleEOL key</summary>
-    <description>TODO: Add a description for disableBrailleEOL key.</description>
+    <summary>TODO: Add a summary for disable-braille-end-of-line key</summary>
+    <description>TODO: Add a description for disable-braille-end-of-line key.</description>
   </key>
-  <key name="brailleFlashTime" type="i">
+  <key name="braille-flash-time" type="i">
     <default>5000</default>
-    <summary>TODO: Add a summary for brailleFlashTime key</summary>
-    <description>TODO: Add a description for brailleFlashTime key.</description>
+    <summary>TODO: Add a summary for braille-flash-time key</summary>
+    <description>TODO: Add a description for braille-flash-time key.</description>
   </key>
-  <key name="brailleSelectorIndicator" type="i">
+  <key name="braille-selector-indicator" type="i">
     <default>192</default>
-    <summary>TODO: Add a summary for brailleSelectorIndicator key</summary>
-    <description>TODO: Add a description for brailleSelectorIndicator key.</description>
+    <summary>TODO: Add a summary for braille-selector-indicator key</summary>
+    <description>TODO: Add a description for braille-selector-indicator key.</description>
   </key>
-  <key name="brailleLinkIndicator" type="i">
+  <key name="braille-link-indicator" type="i">
     <default>192</default>
-    <summary>TODO: Add a summary for brailleLinkIndicator key</summary>
-    <description>TODO: Add a description for brailleLinkIndicator key.</description>
+    <summary>TODO: Add a summary for braille-link-indicator key</summary>
+    <description>TODO: Add a description for braille-link-indicator key.</description>
   </key>
-  <key name="brailleVerbosityLevel" type="i">
+  <key name="braille-verbosity-level" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for brailleVerbosityLevel key</summary>
-    <description>TODO: Add a description for brailleVerbosityLevel key.</description>
+    <summary>TODO: Add a summary for braille-verbosity-level key</summary>
+    <description>TODO: Add a description for braille-verbosity-level key.</description>
   </key>
-  <key name="brailleEOLIndicator" type="s">
+  <key name="braille-end-of-line-indicator" type="s">
     <default>" $l"</default>
-    <summary>TODO: Add a summary for brailleEOLIndicator key</summary>
-    <description>TODO: Add a description for brailleEOLIndicator key.</description>
+    <summary>TODO: Add a summary for braille-end-of-line-indicator key</summary>
+    <description>TODO: Add a description for braille-end-of-line-indicator key.</description>
   </key>
-  <key name="brailleRequiredStateString" type="s">
+  <key name="braille-required-state-string" type="s">
     <default>"requerido"</default>
-    <summary>TODO: Add a summary for brailleRequiredStateString key</summary>
-    <description>TODO: Add a description for brailleRequiredStateString key.</description>
+    <summary>TODO: Add a summary for braille-required-state-string key</summary>
+    <description>TODO: Add a description for braille-required-state-string key.</description>
   </key>
-  <key name="brailleContractionTable" type="s">
+  <key name="braille-contraction-table" type="s">
     <default>""</default>
-    <summary>TODO: Add a summary for brailleContractionTable key</summary>
-    <description>TODO: Add a description for brailleContractionTable key.</description>
+    <summary>TODO: Add a summary for braille-contraction-table key</summary>
+    <description>TODO: Add a description for braille-contraction-table key.</description>
   </key>
-  <key name="brailleAlignmentStyle" type="i">
+  <key name="braille-alignment-style" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for brailleAlignmentStyle key</summary>
-    <description>TODO: Add a description for brailleAlignmentStyle key.</description>
+    <summary>TODO: Add a summary for braille-alignment-style key</summary>
+    <description>TODO: Add a description for braille-alignment-style key.</description>
   </key>
   <!-- Keys related settings -->
-  <key name="enableDiacriticalKeys" type="b">                                         
+  <key name="enable-diacritical-keys" type="b">                                         
     <default>false</default>
-    <summary>TODO: Add a summary for enableDiacriticalKeys key</summary>
-    <description>TODO: Add a description for enableDiacriticalKeys key.</description>
+    <summary>TODO: Add a summary for enable-diacritical-keys key</summary>
+    <description>TODO: Add a description for enable-diacritical-keys key.</description>
   </key>
-  <key name="enableNavigationKeys" type="b">
+  <key name="enable-navigation-keys" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableNavigationKeys key</summary>
-    <description>TODO: Add a description for enableNavigationKeys key.</description>
+    <summary>TODO: Add a summary for enable-navigation-keys key</summary>
+    <description>TODO: Add a description for enable-navigation-keys key.</description>
   </key>
-  <key name="enableLockingKeys" type="b">
+  <key name="enable-locking-keys" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableLockingKeys key</summary>
-    <description>TODO: Add a description for enableLockingKeys key.</description>
+    <summary>TODO: Add a summary for enable-locking-keys key</summary>
+    <description>TODO: Add a description for enable-locking-keys key.</description>
   </key>
-  <key name="enableFunctionKeys" type="b">
+  <key name="enable-function-keys" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableFunctionKeys key</summary>
-    <description>TODO: Add a description for enableFunctionKeys key.</description>
+    <summary>TODO: Add a summary for enable-function-keys key</summary>
+    <description>TODO: Add a description for enable-function-keys key.</description>
   </key>
-  <key name="enablePrintableKeys" type="b">
+  <key name="enable-printable-keys" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enablePrintableKeys key</summary>
-    <description>TODO: Add a description for enablePrintableKeys key.</description>
+    <summary>TODO: Add a summary for enable-printable-keys key</summary>
+    <description>TODO: Add a description for enable-printable-keys key.</description>
   </key>
-  <key name="orcaModifierKeys" type="as">
-    <default>['Insert', 'KPInsert']</default>
-    <summary>TODO: Add a summary for orcaModifierKeys key</summary>
-    <description>TODO: Add a description for orcaModifierKeys key.</description>
+  <key name="orca-modifier-keys" type="as">
+    <default>['Insert', 'Kp-insert']</default>
+    <summary>TODO: Add a summary for orca-modifier-keys key</summary>
+    <description>TODO: Add a description for orca-modifier-keys key.</description>
   </key>
-  <key name="enableModifierKeys" type="b">
+  <key name="enable-modifier-keys" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableModifierKeys key</summary>
-    <description>TODO: Add a description for enableModifierKeys key.</description>
+    <summary>TODO: Add a summary for enable-modifier-keys key</summary>
+    <description>TODO: Add a description for enable-modifier-keys key.</description>
   </key>
-  <key name="enableActionKeys" type="b">
+  <key name="enable-action-keys" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableActionKeys key</summary>
-    <description>TODO: Add a description for enableActionKeys key.</description>
+    <summary>TODO: Add a summary for enable-action-keys key</summary>
+    <description>TODO: Add a description for enable-action-keys key.</description>
   </key>
-  <key name="enableKeyEcho" type="b">
+  <key name="enable-key-echo" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableKeyEcho key</summary>
-    <description>TODO: Add a description for enableKeyEcho key.</description>
+    <summary>TODO: Add a summary for enable-key-echo key</summary>
+    <description>TODO: Add a description for enable-key-echo key.</description>
   </key>
   <!-- TODO: Group all these another settings-->
-  <key name="speakCellSpan" type="b">
+  <key name="speak-cell-span" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for speakCellSpan key</summary>
-    <description>TODO: Add a description for speakCellSpan key.</description>
+    <summary>TODO: Add a summary for speak-cell-span key</summary>
+    <description>TODO: Add a description for speak-cell-span key.</description>
   </key>
-  <key name="progressBarUpdateInterval" type="i">
+  <key name="progress-bar-update-interval" type="i">
     <default>10</default>
-    <summary>TODO: Add a summary for progressBarUpdateInterval key</summary>
-    <description>TODO: Add a description for progressBarUpdateInterval key.</description>
+    <summary>TODO: Add a summary for progress-bar-update-interval key</summary>
+    <description>TODO: Add a description for progress-bar-update-interval key.</description>
   </key>
-  <key name="speakCellCoordinates" type="b">
+  <key name="speak-cell-coordinates" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for speakCellCoordinates key</summary>
-    <description>TODO: Add a description for speakCellCoordinates key.</description>
+    <summary>TODO: Add a summary for speak-cell-coordinates key</summary>
+    <description>TODO: Add a description for speak-cell-coordinates key.</description>
   </key>
-  <key name="enablePauseBreaks" type="b">
+  <key name="enable-pause-breaks" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enablePauseBreaks key</summary>
-    <description>TODO: Add a description for enablePauseBreaks key.</description>
+    <summary>TODO: Add a summary for enable-pause-breaks key</summary>
+    <description>TODO: Add a description for enable-pause-breaks key.</description>
   </key>
-  <key name="speakBlankLines" type="b">
+  <key name="speak-blank-lines" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for speakBlankLines key</summary>
-    <description>TODO: Add a description for speakBlankLines key.</description>
+    <summary>TODO: Add a summary for speak-blank-lines key</summary>
+    <description>TODO: Add a description for speak-blank-lines key.</description>
   </key>
-  <key name="keyboardLayout" type="i">
+  <key name="keyboard-layout" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for keyboardLayout key</summary>
-    <description>TODO: Add a description for keyboardLayout key.</description>
+    <summary>TODO: Add a summary for keyboard-layout key</summary>
+    <description>TODO: Add a description for keyboard-layout key.</description>
   </key>
-  <key name="verbalizePunctuationStyle" type="i">
+  <key name="verbalize-punctuation-style" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for verbalizePunctuationStyle key</summary>
-    <description>TODO: Add a description for verbalizePunctuationStyle key.</description>
+    <summary>TODO: Add a summary for verbalize-punctuation-style key</summary>
+    <description>TODO: Add a description for verbalize-punctuation-style key.</description>
   </key>
-  <key name="progressBarVerbosity" type="i">
+  <key name="progress-bar-verbosity" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for progressBarVerbosity key</summary>
-    <description>TODO: Add a description for progressBarVerbosity key.</description>
+    <summary>TODO: Add a summary for progress-bar-verbosity key</summary>
+    <description>TODO: Add a description for progress-bar-verbosity key.</description>
   </key>
-  <key name="enableSpeech" type="b">
+  <key name="enable-speech" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableSpeech key</summary>
-    <description>TODO: Add a description for enableSpeech key.</description>
+    <summary>TODO: Add a summary for enable-speech key</summary>
+    <description>TODO: Add a description for enable-speech key.</description>
   </key>
-  <key name="enableMnemonicSpeaking" type="b">
+  <key name="enable-mnemonic-speaking" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableMnemonicSpeaking key</summary>
-    <description>TODO: Add a description for enableMnemonicSpeaking key.</description>
+    <summary>TODO: Add a summary for enable-mnemonic-speaking key</summary>
+    <description>TODO: Add a description for enable-mnemonic-speaking key.</description>
   </key>
-  <key name="readTableCellRow" type="b">
+  <key name="read-table-cell-row" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for readTableCellRow key</summary>
-    <description>TODO: Add a description for readTableCellRow key.</description>
+    <summary>TODO: Add a summary for read-table-cell-row key</summary>
+    <description>TODO: Add a description for read-table-cell-row key.</description>
   </key>
-  <key name="speakMultiCaseStringsAsWords" type="b">
+  <key name="speak-multi-case-strings-as-words" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for speakMultiCaseStringsAsWords key</summary>
-    <description>TODO: Add a description for speakMultiCaseStringsAsWords key.</description>
+    <summary>TODO: Add a summary for speak-multi-case-strings-as-words key</summary>
+    <description>TODO: Add a description for speak-multi-case-strings-as-words key.</description>
   </key>
-  <key name="messageVerbosityLevel" type="i">
+  <key name="message-verbosity-level" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for messageVerbosityLevel key</summary>
-    <description>TODO: Add a description for messageVerbosityLevel key.</description>
+    <summary>TODO: Add a summary for message-verbosity-level key</summary>
+    <description>TODO: Add a description for message-verbosity-level key.</description>
   </key>
-  <key name="enableSpeechIndentation" type="b">
+  <key name="enable-speech-indentation" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableSpeechIndentation key</summary>
-    <description>TODO: Add a description for enableSpeechIndentation key.</description>
+    <summary>TODO: Add a summary for enable-speech-indentation key</summary>
+    <description>TODO: Add a description for enable-speech-indentation key.</description>
   </key>
-  <key name="mouseDwellDelay" type="i">
+  <key name="mouse-dwell-delay" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for mouseDwellDelay key</summary>
-    <description>TODO: Add a description for mouseDwellDelay key.</description>
+    <summary>TODO: Add a summary for mouse-dwell-delay key</summary>
+    <description>TODO: Add a description for mouse-dwell-delay key.</description>
   </key>
-  <key name="chatSpeakRoomName" type="b">
+  <key name="chat-speak-room-name" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for chatSpeakRoomName key</summary>
-    <description>TODO: Add a description for chatSpeakRoomName key.</description>
+    <summary>TODO: Add a summary for chat-speak-room-name key</summary>
+    <description>TODO: Add a description for chat-speak-room-name key.</description>
   </key>
-  <key name="speechServerFactory" type="s">
+  <key name="speech-server-factory" type="s">
     <default>"speechdispatcherfactory"</default>
-    <summary>TODO: Add a summary for speechServerFactory key</summary>
-    <description>TODO: Add a description for speechServerFactory key.</description>
+    <summary>TODO: Add a summary for speech-server-factory key</summary>
+    <description>TODO: Add a description for speech-server-factory key.</description>
   </key>
-  <key name="speechServerInfo" type="s">
+  <key name="speech-server-info" type="s">
     <default>""</default>
-    <summary>TODO: Add a summary for speechServerFactory key</summary>
-    <description>TODO: Add a description for speechServerFactory key.</description>
+    <summary>TODO: Add a summary for speech-server-factory key</summary>
+    <description>TODO: Add a description for speech-server-factory key.</description>
   </key>
-  <key name="enableEchoByCharacter" type="b">
+  <key name="enable-echo-by-character" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableEchoByCharacter key</summary>
-    <description>TODO: Add a description for enableEchoByCharacter key.</description>
+    <summary>TODO: Add a summary for enable-echo-by-character key</summary>
+    <description>TODO: Add a description for enable-echo-by-character key.</description>
   </key>
-  <key name="flashVerbosityLevel" type="i">
+  <key name="flash-verbosity-level" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for flashVerbosityLevel key</summary>
-    <description>TODO: Add a description for flashVerbosityLevel key.</description>
+    <summary>TODO: Add a summary for flash-verbosity-level key</summary>
+    <description>TODO: Add a description for flash-verbosity-level key.</description>
   </key>
-  <key name="enableFlashMessages" type="b">
+  <key name="enable-flash-messages" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableFlashMessages key</summary>
-    <description>TODO: Add a description for enableFlashMessages key.</description>
+    <summary>TODO: Add a summary for enable-flash-messages key</summary>
+    <description>TODO: Add a description for enable-flash-messages key.</description>
   </key>
-  <key name="presentToolTips" type="b">
+  <key name="present-tool-tips" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for presentToolTips key</summary>
-    <description>TODO: Add a description for presentToolTips key.</description>
+    <summary>TODO: Add a summary for present-tool-tips key</summary>
+    <description>TODO: Add a description for present-tool-tips key.</description>
   </key>
-  <key name="flashIsPersistent" type="b">
+  <key name="flash-is-persistent" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for flashIsPersistent key</summary>
-    <description>TODO: Add a description for flashIsPersistent key.</description>
+    <summary>TODO: Add a summary for flash-is-persistent key</summary>
+    <description>TODO: Add a description for flash-is-persistent key.</description>
   </key>
-  <key name="largeObjectTextLength" type="i">
+  <key name="large-object-text-length" type="i">
     <default>75</default>
-    <summary>TODO: Add a summary for largeObjectTextLength key</summary>
-    <description>TODO: Add a description for largeObjectTextLength key.</description>
+    <summary>TODO: Add a summary for large-object-text-length key</summary>
+    <description>TODO: Add a description for large-object-text-length key.</description>
   </key>
-  <key name="enableEchoBySentence" type="b">
+  <key name="enable-echo-by-sentence" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableEchoBySentence key</summary>
-    <description>TODO: Add a description for enableEchoBySentence key.</description>
+    <summary>TODO: Add a summary for enable-echo-by-sentence key</summary>
+    <description>TODO: Add a description for enable-echo-by-sentence key.</description>
   </key>
-  <key name="enabledSpokenTextAttributes" type="s">
-    <default>"size:; familyName:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal; paragraphStyle:; textSpelling:none;"</default>
-    <summary>TODO: Add a summary for enabledSpokenTextAttributes key</summary>
-    <description>TODO: Add a description for enabledSpokenTextAttributes key.</description>
+  <key name="enabled-spoken-text-attributes" type="s">
+    <default>"size:; family-name:; weight:400; indent:0; underline:none; strikethrough:false; justification:left; style:normal; paragraph-style:; text-spelling:none;"</default>
+    <summary>TODO: Add a summary for enabled-spoken-text-attributes key</summary>
+    <description>TODO: Add a description for enabled-spoken-text-attributes key.</description>
   </key>
-  <key name="chatMessageVerbosity" type="i">
+  <key name="chat-message-verbosity" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for chatMessageVerbosity key</summary>
-    <description>TODO: Add a description for chatMessageVerbosity key.</description>
+    <summary>TODO: Add a summary for chat-message-verbosity key</summary>
+    <description>TODO: Add a description for chat-message-verbosity key.</description>
   </key>
-  <key name="presentTimeFormat" type="s">
+  <key name="present-time-format" type="s">
     <default>"%X"</default>
-    <summary>TODO: Add a summary for presentTimeFormat key</summary>
-    <description>TODO: Add a description for presentTimeFormat key.</description>
+    <summary>TODO: Add a summary for present-time-format key</summary>
+    <description>TODO: Add a description for present-time-format key.</description>
   </key>
-  <key name="presentRequiredState" type="b">
+  <key name="present-required-state" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for presentRequiredState key</summary>
-    <description>TODO: Add a description for presentRequiredState key.</description>
+    <summary>TODO: Add a summary for present-required-state key</summary>
+    <description>TODO: Add a description for present-required-state key.</description>
   </key>
-  <key name="speakCellHeaders" type="b">
+  <key name="speak-cell-headers" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for speakCellHeaders key</summary>
-    <description>TODO: Add a description for speakCellHeaders key.</description>
+    <summary>TODO: Add a summary for speak-cell-headers key</summary>
+    <description>TODO: Add a description for speak-cell-headers key.</description>
   </key>
-  <key name="speechVerbosityLevel" type="i">
+  <key name="speech-verbosity-level" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for speechVerbosityLevel key</summary>
-    <description>TODO: Add a description for speechVerbosityLevel key.</description>
+    <summary>TODO: Add a summary for speech-verbosity-level key</summary>
+    <description>TODO: Add a description for speech-verbosity-level key.</description>
   </key>
-  <key name="speechRequiredStateString" type="s">
+  <key name="speech-required-state-string" type="s">
     <default>"requerido"</default>
-    <summary>TODO: Add a summary for speechRequiredStateString key</summary>
-    <description>TODO: Add a description for speechRequiredStateString key.</description>
+    <summary>TODO: Add a summary for speech-required-state-string key</summary>
+    <description>TODO: Add a description for speech-required-state-string key.</description>
   </key>
-  <key name="chatAnnounceBuddyTyping" type="b">
+  <key name="chat-announce-buddy-typing" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for chatAnnounceBuddyTyping key</summary>
-    <description>TODO: Add a description for chatAnnounceBuddyTyping key.</description>
+    <summary>TODO: Add a summary for chat-announce-buddy-typing key</summary>
+    <description>TODO: Add a description for chat-announce-buddy-typing key.</description>
   </key>
-  <key name="quitOrcaNoConfirmation" type="b">
+  <key name="quit-orca-no-confirmation" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for quitOrcaNoConfirmation key</summary>
-    <description>TODO: Add a description for quitOrcaNoConfirmation key.</description>
+    <summary>TODO: Add a summary for quit-orca-no-confirmation key</summary>
+    <description>TODO: Add a description for quit-orca-no-confirmation key.</description>
   </key>
-  <key name="enableProgressBarUpdates" type="b">
+  <key name="enable-progress-bar-updates" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for enableProgressBarUpdates key</summary>
-    <description>TODO: Add a description for enableProgressBarUpdates key.</description>
+    <summary>TODO: Add a summary for enable-progress-bar-updates key</summary>
+    <description>TODO: Add a description for enable-progress-bar-updates key.</description>
   </key>
-  <key name="enableEchoByWord" type="b">
+  <key name="enable-echo-by-word" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableEchoByWord key</summary>
-    <description>TODO: Add a description for enableEchoByWord key.</description>
+    <summary>TODO: Add a summary for enable-echo-by-word key</summary>
+    <description>TODO: Add a description for enable-echo-by-word key.</description>
   </key>
-  <key name="enablePositionSpeaking" type="b">
+  <key name="enable-position-speaking" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enablePositionSpeaking key</summary>
-    <description>TODO: Add a description for enablePositionSpeaking key.</description>
+    <summary>TODO: Add a summary for enable-position-speaking key</summary>
+    <description>TODO: Add a description for enable-position-speaking key.</description>
   </key>
-  <key name="onlySpeakDisplayedText" type="b">
+  <key name="only-speak-displayed-text" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for onlySpeakDisplayedText key</summary>
-    <description>TODO: Add a description for onlySpeakDisplayedText key.</description>
+    <summary>TODO: Add a summary for only-speak-displayed-text key</summary>
+    <description>TODO: Add a description for only-speak-displayed-text key.</description>
   </key>
-  <key name="wrappedStructuralNavigation" type="b">
+  <key name="wrapped-structural-navigation" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for wrappedStructuralNavigation key</summary>
-    <description>TODO: Add a description for wrappedStructuralNavigation key.</description>
+    <summary>TODO: Add a summary for wrapped-structural-navigation key</summary>
+    <description>TODO: Add a description for wrapped-structural-navigation key.</description>
   </key>
-  <key name="skipBlankCells" type="b">
+  <key name="skip-blank-cells" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for skipBlankCells key</summary>
-    <description>TODO: Add a description for skipBlankCells key.</description>
+    <summary>TODO: Add a summary for skip-blank-cells key</summary>
+    <description>TODO: Add a description for skip-blank-cells key.</description>
   </key>
-  <key name="chatRoomHistories" type="b">
+  <key name="chat-room-histories" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for chatRoomHistories key</summary>
-    <description>TODO: Add a description for chatRoomHistories key.</description>
+    <summary>TODO: Add a summary for chat-room-histories key</summary>
+    <description>TODO: Add a description for chat-room-histories key.</description>
   </key>
-  <key name="showMainWindow" type="b">
+  <key name="show-main-window" type="b">
     <default>true</default>
-    <summary>TODO: Add a summary for showMainWindow key</summary>
-    <description>TODO: Add a description for showMainWindow key.</description>
+    <summary>TODO: Add a summary for show-main-window key</summary>
+    <description>TODO: Add a description for show-main-window key.</description>
   </key>
-  <key name="sayAllStyle" type="i">
+  <key name="say-all-style" type="i">
     <default>1</default>
-    <summary>TODO: Add a summary for sayAllStyle key</summary>
-    <description>TODO: Add a description for sayAllStyle key.</description>
+    <summary>TODO: Add a summary for say-all-style key</summary>
+    <description>TODO: Add a description for say-all-style key.</description>
   </key>
-  <key name="enableTutorialMessages" type="b">
+  <key name="enable-tutorial-messages" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableTutorialMessages key</summary>
-    <description>TODO: Add a description for enableTutorialMessages key.</description>
+    <summary>TODO: Add a summary for enable-tutorial-messages key</summary>
+    <description>TODO: Add a description for enable-tutorial-messages key.</description>
   </key>
-  <key name="enableMouseReview" type="b">
+  <key name="enable-mouse-review" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enableMouseReview key</summary>
-    <description>TODO: Add a description for enableMouseReview key.</description>
+    <summary>TODO: Add a summary for enable-mouse-review key</summary>
+    <description>TODO: Add a description for enable-mouse-review key.</description>
   </key>
-  <key name="presentDateFormat" type="s">
+  <key name="present-date-format" type="s">
     <default>"%x"</default>
-    <summary>TODO: Add a summary for presentDateFormat key</summary>
-    <description>TODO: Add a description for presentDateFormat key.</description>
+    <summary>TODO: Add a summary for present-date-format key</summary>
+    <description>TODO: Add a description for present-date-format key.</description>
   </key>
   <key name="profile" type="as">
     <default>['Default', 'default']</default>
     <summary>TODO: Add a summary for profile key</summary>
     <description>TODO: Add a description for profile key.</description>
   </key>
-  <key name="availablePronunciations" type="as">
+  <key name="available-pronunciations" type="as">
     <default>[]</default>
     <summary>Available Pronunciations</summary>
     <description>This list contains all available pronunciations for this settings' owner</description>
   </key>
-  <key name="availableKeybindings" type="as">
+  <key name="available-keybindings" type="as">
     <default>[]</default>
     <summary>Available Keybindings</summary>
     <description>This list contains all available keybindings for this settings' owner</description>
@@ -656,12 +656,12 @@
   </key>
 </schema>
 <schema id="org.gnome.Orca.Settings.Keybindings" gettext-domain="Orca">
-  <key name="modifierMask" type="s">
+  <key name="modifier-mask" type="s">
     <default>""</default>
     <summary>TODO: Add a summary for profile key</summary>
     <description>TODO: Add a description for profile key.</description>
   </key>
-  <key name="defaultModifierMask" type="s">
+  <key name="default-modifier-mask" type="s">
     <default>""</default>
     <summary>TODO: Add a summary for profile key</summary>
     <description>TODO: Add a description for profile key.</description>
@@ -676,22 +676,22 @@
     <summary>TODO: Add a summary for profile key</summary>
     <description>TODO: Add a description for profile key.</description>
   </key>
-  <key name="modifierMaskAlt" type="s">
+  <key name="modifier-mask-alt" type="s">
     <default>""</default>
     <summary>TODO: Add a summary for profile key</summary>
     <description>TODO: Add a description for profile key.</description>
   </key>
-  <key name="defaultModifierMaskAlt" type="s">
+  <key name="default-modifier-mask-alt" type="s">
     <default>""</default>
     <summary>TODO: Add a summary for profile key</summary>
     <description>TODO: Add a description for profile key.</description>
   </key>
-  <key name="handlerAlt" type="s">
+  <key name="handler-alt" type="s">
     <default>""</default>
     <summary>TODO: Add a summary for profile key</summary>
     <description>TODO: Add a description for profile key.</description>
   </key>
-  <key name="clickAlt" type="s">
+  <key name="click-alt" type="s">
     <default>""</default>
     <summary>TODO: Add a summary for profile key</summary>
     <description>TODO: Add a description for profile key.</description>
