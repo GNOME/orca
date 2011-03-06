@@ -27,6 +27,7 @@ __copyright__ = "Copyright (c) 2011 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
 import os
+import re
 from orca import settings
 
 from gi.repository.Gio import Settings as GSettings
@@ -68,30 +69,27 @@ class Backend:
                  'pronunciations': pronunciations,
                  'keybindings': keybindings}
 
-        
-
         self.general = general
         self.profiles = defaultProfiles
         self.pronunciations = pronunciations
         self.keybindings = keybindings
 
-        base_dict = {}
+        baseDict = {}
         for key in ['activeProfile', 'startingProfile', \
                     'availableProfiles', 'firstStart']:
             if general.has_key(key): 
                 value = general.pop(key)
-                base_dict[key] = value
+                baseDict[key] = value
 
-        voices_dict = general['voices']
+        voicesDict = general['voices']
 
-        self._set_schema_to_path(BASE_SCHEMA, None, base_dict)
-        self._set_schema_to_path(SETTINGS_SCHEMA, BASE_PATH, general)
-        self._set_voices(BASE_PATH, voices_dict)
+        self._setSchemaToPath(BASE_SCHEMA, None, baseDict)
+        self._setSchemaToPath(SETTINGS_SCHEMA, BASE_PATH, general)
+        self._setVoices(BASE_PATH, voicesDict)
 
-
-        self._set_profiles_dict(defaultProfiles)
-        self._set_pronunciations_dict(BASE_PATH, pronunciations)
-        self._set_keybindings_dict(BASE_PATH, keybindings)
+        self._setProfilesDict(defaultProfiles)
+        self._setPronunciationsDict(BASE_PATH, pronunciations)
+        self._setKeybindingsDict(BASE_PATH, keybindings)
 
 
     def saveProfileSettings(self, profile, general,
@@ -104,28 +102,28 @@ class Backend:
         general['pronunciations'] = pronunciations
         general['keybindings'] = keybindings
 
-        profiles = self._get_profiles_dict()
+        profiles = self._getProfilesDict()
         profiles[profile] = general
 
-        self._set_profiles_dict(profiles)
+        self._setProfilesDict(profiles)
 
     def _getSettings(self):
         """ Load from GSettings all settings """
-        settings_dict = self._get_dict_path(BASE_SCHEMA)
-        settings_dict.update(self._get_dict_path(SETTINGS_SCHEMA, BASE_PATH))
-        #settings_dict['voices'] = self._get_dict_path(VOICES_SCHEMA, BASE_PATH)
+        settingsDict = self._getSchemaFromPath(BASE_SCHEMA)
+        settingsDict.update(self._getSchemaFromPath(SETTINGS_SCHEMA, BASE_PATH))
+        #settingsDict['voices'] = self._getSchemaFromPath(VOICES_SCHEMA, BASE_PATH)
 
         for key in ['availableProfiles', 'availableKeybindings', 'availablePronunciations']:
-            settings_dict.pop(key)
+            settingsDict.pop(key)
 
-        self.general = settings_dict.copy()
+        self.general = settingsDict.copy()
         
 
-        self.pronunciations = self._get_pronunciations_dict(BASE_PATH)
-        self.keybindings = self._get_keybindings_dict(BASE_PATH)
+        self.pronunciations = self._getPronunciationsDict(BASE_PATH)
+        self.keybindings = self._getKeybindingsDict(BASE_PATH)
 
-        profiles_dict = self._get_profiles_dict()
-        self.profiles = profiles_dict.copy()
+        profilesDict = self._getProfilesDict()
+        self.profiles = profilesDict.copy()
 
     def getGeneral(self, profile='default'):
         """ Get general settings from default settings and
@@ -172,19 +170,20 @@ class Backend:
     def _setProfileKey(self, key, value):
         self.general[key] = value
 
-        self.__set_key_value(BASE_SCHEMA, BASE_PATH, key, value)
+        self.__setKeyValue(BASE_SCHEMA, BASE_PATH, \
+                           self.__camelToDash(key), value)
 
     def setFirstStart(self, value=False):
         """Set firstStart. This user-configurable settting is primarily
         intended to serve as an indication as to whether or not initial
         configuration is needed."""
         self.general['firstStart'] = value
-        self.__set_key_value(BASE_SCHEMA, None, 'firstStart', value)
+        self.__setKeyValue(BASE_SCHEMA, None, 'first-start', value)
 
     def availableProfiles(self):
         """ List available profiles. """
 
-        profileDict = self._get_profiles_dict()
+        profileDict = self._getProfilesDict()
         profiles = []
 
         for profileName in profileDict.keys(): 
@@ -192,10 +191,9 @@ class Backend:
 
         return profiles
 
-# GSettings-related methods
-
-
-    def _get_dict_path(self, schema, path=None):
+    # GSettings-related methods
+    #
+    def _getSchemaFromPath(self, schema, path=None):
         """ Get a dictionary object from a given schema.
         This method returns a dictionary from a given schema and from an
         optionally path. We assume that we only call this method
@@ -206,21 +204,22 @@ class Backend:
         g_settings = GSettings(schema=schema, path=path)
 
         for key in g_settings.list_keys():
-            value = self.__get_key_value(schema, path, key)
-            out_dict[key] = value
+            value = self.__getKeyValue(schema, path, key)
+            out_dict[self.__dashToCamel(key)] = value
 
         return out_dict
 
-    def _set_schema_to_path(self, schema, path=None, dict_in=None):
+    def _setSchemaToPath(self, schema, path=None, dict_in=None):
         g_settings = GSettings(schema=schema, path=path)
 
         for key in g_settings.list_keys():
             if key not in dict_in.keys(): continue
-            self.__set_key_value(schema, path, \
-                    key, dict_in[key])
+            self.__setKeyValue(schema, path, \
+                    self.__camelToDash(key), \
+                    dict_in[key])
 
 
-    def __get_key_value(self, schema, path, key):
+    def __getKeyValue(self, schema, path, key):
         """ Get a key value from a given"""
 
         g_settings = GSettings(schema = schema, \
@@ -236,15 +235,14 @@ class Backend:
 
         g_value = g_settings.get_value(key)
         value_type = g_value.get_type_string()
-
         value = g_value_get[value_type](key)
+
         return value
 
-    def __set_key_value(self, schema, path, key, value):
+    def __setKeyValue(self, schema, path, key, value):
         """ Get a key value from a given"""
 
-        g_settings = GSettings(schema = schema, \
-                                  path = path)
+        g_settings = GSettings(schema = schema, path = path)
 
         if isinstance(value, dict) or isinstance(value, type(None)): return
 
@@ -259,94 +257,94 @@ class Backend:
 
         g_value_set[type(value)](key, value)
 
-    def _get_profiles_dict(self):
+    def _getProfilesDict(self):
         g_settings = GSettings(schema=BASE_SCHEMA)
 
         out_dict = {}
 
-        for profile in g_settings.get_strv('availableProfiles'):
+        for profile in g_settings.get_strv('available-profiles'):
             path = '%s%s/' % (PROFILES_PATH, profile)
 
-            value = self._get_dict_path(SETTINGS_SCHEMA, path)
+            value = self._getSchemaFromPath(SETTINGS_SCHEMA, path)
             for key in ['availableKeybindings', 'availablePronunciations']:
                 value.pop(key)
             out_dict[profile] = value
 
-            value = self._get_voices(path)
+            value = self._getVoices(path)
             out_dict[profile]['voices'] = value
 
-            value = self._get_pronunciations_dict(path)
+            value = self._getPronunciationsDict(path)
             out_dict[profile]['pronunciations'] = value
 
-            value = self._get_keybindings_dict(path)
+            value = self._getKeybindingsDict(path)
             out_dict[profile]['keybindings'] = value
 
         return out_dict
 
-    def _set_profiles_dict(self, dict_in):
+    def _setProfilesDict(self, dict_in):
         g_settings = GSettings(schema=BASE_SCHEMA)
 
         for profile in dict_in.keys():
-            availableProfiles = g_settings.get_strv('availableProfiles')
+            availableProfiles = g_settings.get_strv('available-profiles')
             if not profile in availableProfiles:
                 availableProfiles.append(profile)
-                g_settings.set_strv('availableProfiles', availableProfiles)
+                g_settings.set_strv('available-profiles', availableProfiles)
 
             path = '%s%s/' % (PROFILES_PATH, profile)
 
-            self._set_schema_to_path(SETTINGS_SCHEMA, path, dict_in[profile])
+            self._setSchemaToPath(SETTINGS_SCHEMA, path, dict_in[profile])
 
             if dict_in[profile].has_key('voices'):
-                self._set_voices(path, dict_in[profile]['voices'])
+                self._setVoices(path, dict_in[profile]['voices'])
 
-            self._set_pronunciations_dict(path, dict_in[profile]['pronunciations'])
+            self._setPronunciationsDict(path, dict_in[profile]['pronunciations'])
 
-            self._set_keybindings_dict(path, dict_in[profile]['keybindings'])
+            self._setKeybindingsDict(path, dict_in[profile]['keybindings'])
 
 
-    def _get_voices(self, path=None):
+    def _getVoices(self, path=None):
         out_dict = {}
 
         for voice in ['default', 'hyperlink', 'system', 'uppercase']:
             voice_path = '%sVoices/%s/' % (path, voice)
-            value = self._get_dict_path(VOICES_SCHEMA, voice_path)
+            value = self._getSchemaFromPath(VOICES_SCHEMA, voice_path)
             out_dict[voice] = value
 
             family_path = '%sfamily/' % voice_path
-            family = self._get_dict_path(FAMILY_SCHEMA, family_path)
+            family = self._getSchemaFromPath(FAMILY_SCHEMA, family_path)
             out_dict[voice]['family'] = family
 
         return out_dict
 
-    def _set_voices(self, path, dict_in):
+    def _setVoices(self, path, dict_in):
         root_path = path
 
-        voices_dict = self._get_voices(path)
+        voices_dict = self._getVoices(path)
         voices_dict.update(dict_in)
 
         for voice in ['default', 'hyperlink', 'system', 'uppercase']:
             path = '%sVoices/%s/' % (root_path, voice)
-            self._set_schema_to_path(VOICES_SCHEMA, path, dict_in[voice])
+            self._setSchemaToPath(VOICES_SCHEMA, path, dict_in[voice])
 
             if 'family' in dict_in[voice]:
                 path = '%sfamily/' % path
-                self._set_schema_to_path(FAMILY_SCHEMA, path, dict_in[voice]['family'])
+                self._setSchemaToPath(FAMILY_SCHEMA, path, dict_in[voice]['family'])
 
-    def _get_pronunciations_dict(self, path):
+    def _getPronunciationsDict(self, path):
         g_settings = GSettings(schema=SETTINGS_SCHEMA, path=path)
         schema = PRONUNCIATIONS_SCHEMA
         root_path = path
 
         out_dict = {}
 
-        for pronunciation in g_settings.get_strv('availablePronunciations'):
+        for pronunciation in g_settings.get_strv('available-pronunciations'):
             path = '%sPronunciations/%s/' % (root_path, pronunciation)
-            value = self._get_dict_path(schema, path)
+            value = self._getSchemaFromPath(schema, path)
             out_dict[pronunciation] = [value['word'], value['pronunciation']]
 
         return out_dict
 
-    def _set_pronunciations_dict(self, path, dict_in):
+    def _setPronunciationsDict(self, path, dict_in):
         g_settings = GSettings(schema=SETTINGS_SCHEMA, path=path)
         schema = PRONUNCIATIONS_SCHEMA
         root_path = path
@@ -355,21 +353,21 @@ class Backend:
             path = '%sPronunciations/%s/' % (root_path, pronunciation)
             pron_dict = {'word': dict_in[pronunciation][0],
                     'pronunciation': dict_in[pronunciation][1]}
-            self._set_schema_to_path(schema, path, pron_dict)
+            self._setSchemaToPath(schema, path, pron_dict)
 
         pronunciations = dict_in.keys()
-        g_settings.set_strv('availablePronunciations', pronunciations)
+        g_settings.set_strv('available-pronunciations', pronunciations)
 
-    def _get_keybindings_dict(self, path=None):
+    def _getKeybindingsDict(self, path=None):
         g_settings = GSettings(schema=SETTINGS_SCHEMA, path=path)
         schema = KEYBINDINGS_SCHEMA
         root_path = path
 
         out_dict = {}
 
-        for keybinding in g_settings.get_strv('availableKeybindings'):
+        for keybinding in g_settings.get_strv('available-keybindings'):
             path = '%sKeybindings/%s/' % (root_path, keybinding)
-            value = self._get_dict_path(schema, path)
+            value = self._getSchemaFromPath(schema, path)
             out_dict[keybinding] = [(value['modifierMask'], \
                                     value['defaultModifierMask'], \
                                     value['handler'], \
@@ -381,7 +379,7 @@ class Backend:
 
         return out_dict
 
-    def _set_keybindings_dict(self, path, dict_in):
+    def _setKeybindingsDict(self, path, dict_in):
         g_settings = GSettings(schema=SETTINGS_SCHEMA, path=path)
 
         schema = KEYBINDINGS_SCHEMA
@@ -389,7 +387,9 @@ class Backend:
         keybindings = []
 
         for keybinding in dict_in.keys():
-            if dict_in[keybinding][0] == '' and dict_in[keybinding][1] == '': continue
+            # go to the next iteration if is empty
+            if dict_in[keybinding][0] == '' and \
+               dict_in[keybinding][1] == '': continue
             path = '%sKeybindings/%s/' % (root_path, keybinding)
             keybs_dict = {'modifierMask' : dict_in[keybinding][0][0], \
                           'defaultModifierMask': dict_in[keybinding][0][1], \
@@ -400,9 +400,38 @@ class Backend:
                           'handlerAlt': dict_in[keybinding][1][2], \
                           'clickAlt': dict_in[keybinding][1][3]}
 
-            self._set_schema_to_path(schema, path, keybs_dict)
+            self._setSchemaToPath(schema, path, keybs_dict)
             keybindings.append(keybinding)
-            
-        g_settings.set_strv('availableKeybindings', keybindings)
 
+        g_settings.set_strv('available-keybindings', keybindings)
+
+
+    # Key names conversion methods
+    # At this moment, Orca's code style is camelCase, but GSettings
+    # force us to store them in a dasherized way, so we are converting
+    # key our settings names on the fly.
+    #
+    # We're using this methods only in direct calls to load or store related
+    # code.
+    #
+    def __camelToDash(self, stringAsCamelCase):
+        if stringAsCamelCase is None:
+            return None
+ 
+        pattern = re.compile('([A-Z][A-Z][a-z])|([a-z][A-Z])')
+        return pattern.sub( \
+            lambda m: m.group()[:1].lower() + "-" + m.group()[1:].lower(), \
+            stringAsCamelCase)
+
+    def __dashToCamel(self, stringAsDasherized):
+        if stringAsDasherized is None:
+            return None
+
+        myList = stringAsDasherized.split('-')
+        outString = myList.pop(0)
+
+        for word in myList:
+            outString += word.capitalize()
+
+        return outString
 
