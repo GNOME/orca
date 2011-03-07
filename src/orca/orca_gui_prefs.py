@@ -4623,7 +4623,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if _settingsManager.getSetting('showMainWindow'):
             self.window.present()
 
-        orca.loadUserSettings(isProfileLoad=True)
+        orca.loadUserSettings(skipReloadMessage=True)
 
         self._initGUIState()
 

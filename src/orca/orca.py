@@ -1460,7 +1460,7 @@ def _restoreXmodmap(keyList=[]):
 
     os.system("echo '%s' | xmodmap - > /dev/null 2>&1" % "\n".join(toRestore))
 
-def loadUserSettings(script=None, inputEvent=None, isProfileLoad=False):
+def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
 
@@ -1517,7 +1517,7 @@ def loadUserSettings(script=None, inputEvent=None, isProfileLoad=False):
     if settings.enableSpeech:
         try:
             speech.init()
-            if reloaded and not isProfileLoad:
+            if reloaded and not skipReloadMessage:
                 # Translators: there is a keystroke to reload the user
                 # preferences.  This is a spoken prompt to let the user
                 # know when the preferences has been reloaded.
@@ -2311,6 +2311,9 @@ def main():
             showPreferencesGUI()
         else:
             _showPreferencesConsole()
+        _settingsManager.setFirstStart()
+    elif options.bypassSetup:
+        loadUserSettings(skipReloadMessage=True)
         _settingsManager.setFirstStart()
 
     try:
