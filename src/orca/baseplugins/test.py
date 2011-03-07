@@ -27,19 +27,26 @@ __copyright__ = "Copyright (c) 2011 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
 import time
-from pluglib.interfaces import *
-import input_event as input_event
+from orca.interfaces import *
+import orca.input_event as input_event
 
-from settings_manager import SettingsManager
+from orca.settings_manager import SettingsManager
 
-from orca_i18n import _         # for gettext support
-from orca_i18n import ngettext  # for ngettext support
-from orca_i18n import C_        # to provide qualified translatable strings
+from orca.orca_i18n import _         # for gettext support
+from orca.orca_i18n import ngettext  # for ngettext support
+from orca.orca_i18n import C_        # to provide qualified translatable strings
 
-import notification_messages as notification_messages
+import orca.notification_messages as notification_messages
 
-from event_manager import EventManager
+from orca.plug_event_manager import PluginEventManager, PluginEvent, plug_event_manager as pem
+
+from orca.event_manager import EventManager
 _eventManager = EventManager()
+
+import pdb
+pdb.set_trace()
+import orca.scripts.default
+#print Script
 
 _settingsManager = SettingsManager()
 if _settingsManager is None:
@@ -52,11 +59,19 @@ class testPlugin(IPlugin, IPresenter):
     description = 'A testing plugin for code tests' 
     version = '0.1pre'
     authors = ['J. Ignacio Alvarez <neonigma@gmail.com>']
-    website = 'http://fontanon.org'
+    website = 'http://www.emergya.es'
     icon = 'gtk-missing-image'
 
     def __init__(self):
         print 'Hello World (plugin started)!'
+
+    def registerEvent(self, name, function=None, data=None):
+        event = PluginEvent(name)
+        pem.add_event(event)
+        pem.connect(name, function, data)
+
+    def presentTimeEvent(self):
+        print "present time event"
 
     def getPresentTimeHandler(self, function):
         return input_event.InputEventHandler(

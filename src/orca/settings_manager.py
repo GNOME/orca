@@ -595,3 +595,7 @@ def getRealValues(prefs):
     #for key in prefs.keys():
     #    prefs[key] = getValueForKey(prefs, key)
     return prefs
+
+from plugin_manager import plugmanager
+plugmanager.scan_plugins()
+

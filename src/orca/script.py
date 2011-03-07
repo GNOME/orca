@@ -68,6 +68,7 @@ class Script:
         Arguments:
         - app: the Python Accessible application to create a script for
         """
+
         self.app = app
 
         if app:

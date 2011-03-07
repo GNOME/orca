@@ -37,7 +37,7 @@ import abc
 import store_config 
 import settings_manager
 
-from pluglib.interfaces import *
+from interfaces import *
 
 class ModulePluginManager(IPluginManager):
     """A plugin manager that handles with python modules"""
@@ -214,7 +214,7 @@ class ModulePluginManager(IPluginManager):
         if self.plugins.has_key(plugin_name):
             return self.plugins[plugin_name]['object']
         else:
-            raise PluginManagerError, 'No plugin named %s' % plugin_name
+            return None
 
     def is_plugin_loaded(self, plugin_name):
         if self.plugins.has_key(plugin_name):

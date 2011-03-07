@@ -33,6 +33,8 @@ __license__   = "LGPL"
 import locale
 import time
 
+print "INTENTOOOOOO"
+
 import orca.orca as orca
 _settingsManager = getattr(orca, '_settingsManager')
 
@@ -91,6 +93,7 @@ class Script(script.Script):
         """
         script.Script.__init__(self, app)
 
+        self.app = app
         self.flatReviewContext  = None
         self.windowActivateTime = None
         self.lastReviewCurrentEvent = None
@@ -144,12 +147,6 @@ class Script(script.Script):
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
-
-        from plugin_manager import plugmanager
-        plugmanager.scan_plugins()
-        plugmanager.get_plugins()
-
-        from plug_event_manager import EventManager, Event, plug_event_manager as pem
 
         self.inputEventHandlers["routePointerToItemHandler"] = \
             input_event.InputEventHandler(
@@ -1073,11 +1070,22 @@ class Script(script.Script):
                 #
                 _("Toggle mouse review mode."))
 
-        testPluginObj = plugmanager.get_plugin_object_by_name("test")
+        from plugin_manager import plugmanager
 
-        if testPluginObj:
-            self.inputEventHandlers["presentTimeHandler"] = testPluginObj.getPresentTimeHandler(Script.presentTime)
-            self.inputEventHandlers["presentDateHandler"] = testPluginObj.getPresentDateHandler(Script.presentDate)
+        plugmanager.scan_plugins()
+        plugmanager.get_plugins()
+
+        plugin_active = plugmanager.is_plugin_enabled("test")
+
+        if plugin_active is True:
+            testPluginObj = plugmanager.get_plugin_object_by_name("test")
+    
+            if testPluginObj:
+                self.inputEventHandlers["presentTimeHandler"] = testPluginObj.getPresentTimeHandler(Script.presentTime)
+                self.inputEventHandlers["presentDateHandler"] = testPluginObj.getPresentDateHandler(Script.presentDate)
+
+                # my checks
+                testPluginObj.registerEvent("event1", self.presentTime)
 
 #        self.inputEventHandlers["presentTimeHandler"] = \
 #            input_event.InputEventHandler(
@@ -1110,6 +1118,9 @@ class Script(script.Script):
                 _("Passes the next command on to the current application."))
 
         self.inputEventHandlers.update(notification_messages.inputEventHandlers)
+
+    def sayHello():
+        print "Hello from default!"
 
     def getInputEventHandlerKey(self, inputEventHandler):
         """Returns the name of the key that contains an inputEventHadler

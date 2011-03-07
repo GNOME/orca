@@ -19,7 +19,7 @@
 
 import sys
 
-class Event:
+class PluginEvent:
     def __init__(self, name):
         self.name = name
         self.listeners = {}
@@ -50,9 +50,12 @@ class Event:
                 else:
                     function(data)
 
-class EventManager:
+class PluginEventManager:
     def __init__(self):
         self.events = {}
+
+    def list_events(self):
+        return self.events
 
     def add_event(self, Event):
         self.events[Event.name] = Event
@@ -61,6 +64,7 @@ class EventManager:
         self.events.pop(Event.name)
 
     def connect(self, event, function, data=None):
+        print "and the function is: " + str(function)
         self.events[event].add(function, data)
 
     def disconnect(self, event, function):
@@ -76,4 +80,4 @@ class EventManager:
             print "ERROR: Event "+str(event)+" not in queue"
             return
 
-event_manager = EventManager()
+plug_event_manager = PluginEventManager()

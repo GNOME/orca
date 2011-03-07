@@ -21,9 +21,8 @@
 import os
 import gobject
 
-import pluglib
-from pluglib.manager import ModulePluginManager
-from pluglib.interfaces import PluginManagerError
+from manager import ModulePluginManager
+from interfaces import PluginManagerError
 
 import store_config
 
