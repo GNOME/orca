@@ -48,4 +48,7 @@ class TestPluginManager(ModulePluginManager):
         else:
             raise PluginManagerError, 'No plugin named %s' % plugin_name
 
+    def get_plugin_object_by_name(self, plugin_name):
+        return super(TestPluginManager, self).get_plugin_object_by_name(plugin_name)
+
 plugmanager = TestPluginManager()

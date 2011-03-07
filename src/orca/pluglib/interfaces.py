@@ -1,22 +1,31 @@
-# -*- coding: utf-8 -*-
-
-# Copyright (C) 2010, J. Félix Ontañón <felixonta@gmail.com>
-# Copyright (C) 2011, J. Ignacio Álvarez <neonigma@gmail.com>
-
-# This file is part of Pluglib.
-
-# Pluglib is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-
-# Pluglib is distributed in the hope that it will be useful,
+# Orca                                                                              
+#
+# Copyright 2011 Consorcio Fernando de los Rios.
+# Author: J. Ignacio Alvarez <jialvarez@emergya.es>
+# Author: J. Felix Ontanon <fontanon@emergya.es>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Lesser General Public
+# License as published by the Free Software Foundation; either
+# version 2.1 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
+# Boston MA  02110-1301 USA.
 
-# You should have received a copy of the GNU General Public License
-# along with Pluglib.  If not, see <http://www.gnu.org/licenses/>.
+"""Definition of interfaces must be implemented in plugins."""
+
+__id__        = "$Id$"
+__version__   = "$Revision$"
+__date__      = "$Date$"
+__copyright__ = "Copyright (c) 2011 Consorcio Fernando de los Rios."
+__license__   = "LGPL"
 
 import exceptions
 import abc
@@ -181,39 +190,7 @@ class ICommand(object):
     def get_command(command_name):
         """Return a command in this environment"""
 
-import locale
-import time
-
-from settings_manager import SettingsManager
-_settingsManager = SettingsManager()
-if _settingsManager is None:
-    print "Could not load the settings manager. Exiting."
-    sys.exit(1)
-
-import pyatspi
-import braille as braille
-import debug as debug
-import eventsynthesizer as eventsynthesizer
-import find as find
-import flat_review as flat_review
-import input_event as input_event
-import keybindings as keybindings
-try:
-    import gsmag as mag
-except:
-    import mag as mag
-import outline as outline
-import orca_state as orca_state
-import phonnames as phonnames
-import script as script
-import settings as settings
-import speech as speech
-import speech_generator as speech_generator
-import speechserver as speechserver
-import mouse_review as mouse_review
-import text_attribute_names as text_attribute_names
-import notification_messages as notification_messages
-import orca_gui_prefs as orca_gui_prefs
+import script
 
 class Messaging(script.Script):
 
@@ -278,11 +255,13 @@ class Messaging(script.Script):
 class IPresenter(object):
     """Allows to operate with presentation plugins"""
 
+    __metaclass__ = abc.ABCMeta
+
     ############## METHODS #################
 
     def presentMessage(self, fullMessage, briefMessage=None, voice=None):
         print "Calling Messaging with fullMessage: " + str(fullMessage) 
-        msg = Messaging(fullMessage, briefMessage, voice)
+#        msg = Messaging(fullMessage, briefMessage, voice)
 
 class IDependenciesChecker(object):
     """Allows to check for dependencies before run"""

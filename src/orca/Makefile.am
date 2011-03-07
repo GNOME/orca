@@ -57,6 +57,7 @@ orca_python_PYTHON = \
 	outloud.py \
 	phonnames.py \
 	orca_platform.py \
+	plug_event_manager.py \
 	plugin_manager.py \
 	pronunciation_dict.py \
 	punctuation_settings.py \

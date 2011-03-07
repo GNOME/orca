@@ -145,6 +145,12 @@ class Script(script.Script):
         """Defines InputEventHandler fields for this script that can be
         called by the key and braille bindings."""
 
+        from plugin_manager import plugmanager
+        plugmanager.scan_plugins()
+        plugmanager.get_plugins()
+
+        from plug_event_manager import EventManager, Event, plug_event_manager as pem
+
         self.inputEventHandlers["routePointerToItemHandler"] = \
             input_event.InputEventHandler(
                 Script.routePointerToItem,
@@ -1066,6 +1072,12 @@ class Script(script.Script):
                 # be spoken. This toggles the feature.
                 #
                 _("Toggle mouse review mode."))
+
+        testPluginObj = plugmanager.get_plugin_object_by_name("test")
+
+        if testPluginObj:
+            self.inputEventHandlers["presentTimeHandler"] = testPluginObj.getPresentTimeHandler(Script.presentTime)
+            self.inputEventHandlers["presentDateHandler"] = testPluginObj.getPresentDateHandler(Script.presentDate)
 
 #        self.inputEventHandlers["presentTimeHandler"] = \
 #            input_event.InputEventHandler(
@@ -5810,19 +5822,19 @@ class Script(script.Script):
         speech.speak(_("Unicode %s") % \
                          self.utilities.unicodeValueString(character))
 
-#    def presentTime(self, inputEvent):
-#        """ Presents the current time. """
-#        timeFormat = _settingsManager.getSetting('presentTimeFormat')
-#        message = time.strftime(timeFormat, time.localtime())
-#        self.presentMessage(message)
-#        return True
-#
-#    def presentDate(self, inputEvent):
-#        """ Presents the current date. """
-#        dateFormat = _settingsManager.getSetting('presentDateFormat')
-#        message = time.strftime(dateFormat, time.localtime())
-#        self.presentMessage(message)
-#        return True
+    def presentTime(self, inputEvent):
+        """ Presents the current time. """
+        timeFormat = _settingsManager.getSetting('presentTimeFormat')
+        message = time.strftime(timeFormat, time.localtime())
+        self.presentMessage(message)
+        return True
+
+    def presentDate(self, inputEvent):
+        """ Presents the current date. """
+        dateFormat = _settingsManager.getSetting('presentDateFormat')
+        message = time.strftime(dateFormat, time.localtime())
+        self.presentMessage(message)
+        return True
 
 # Dictionary that defines the state changes we care about for various
 # objects.  The key represents the role and the value represents a list
