@@ -40,6 +40,7 @@ log = logging.getLogger("speech")
 
 import debug
 
+from acss import ACSS
 from orca_i18n import _           # for gettext support
 
 class VoiceFamily(dict):
@@ -194,9 +195,9 @@ class SpeechServer(object):
         """
         if eventType == orca.KeyEventType.PRINTABLE and \
                event_string.decode("UTF-8").isupper():
-            voice = settings.voices[settings.UPPERCASE_VOICE]
+            voice = ACSS(settings.voices[settings.UPPERCASE_VOICE])
         else:
-            voice = settings.voices[settings.DEFAULT_VOICE]
+            voice = ACSS(settings.voices[settings.DEFAULT_VOICE])
 
         # Check to see if there are localized words to be spoken for
         # this key event.
