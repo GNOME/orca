@@ -47,15 +47,7 @@ import orca_state
 from orca_i18n import _  # for gettext support
 
 _magnifierAvailable = False
-
-if hasattr(orca, '_settingsManager'):
-    _settingsManager = getattr(orca, '_settingsManager')
-else:
-    from settings_manager import SettingsManager
-    _settingsManager = SettingsManager()
-    if _settingsManager is None:
-        print "Could not load the settings manager. Exiting."
-        sys.exit(1)
+_settingsManager = getattr(orca, '_settingsManager')
 
 try:
     import bonobo

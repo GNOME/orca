@@ -55,7 +55,6 @@ import where_am_I
 import bookmarks
 import tutorialgenerator
 
-
 class Script:
     """The specific focus tracking scripts for applications.
     """
@@ -68,7 +67,6 @@ class Script:
         Arguments:
         - app: the Python Accessible application to create a script for
         """
-
         self.app = app
 
         if app:
@@ -332,23 +330,10 @@ class Script:
         """Returns the settings associated with this script, regardless of
         whether or not the script is active.
         """
-        
+
         import orca
-        if hasattr(orca, '_scriptManager'):
-            _scriptManager = getattr(orca, '_scriptManager')
-        else:
-            from script_manager import ScriptManager
-            _scriptManager = ScriptManager()
-
-        if hasattr(orca, '_settingsManager'):
-            _settingsManager = getattr(orca, '_settingsManager')
-        else:
-            from settings_manager import SettingsManager
-            _settingsManager = SettingsManager()
-            if _settingsManager is None:
-                print "Could not load the settings manager. Exiting."
-                sys.exit(1)
-
+        _scriptManager = getattr(orca, '_scriptManager')
+        _settingsManager = getattr(orca, '_settingsManager')
 
         scriptSettings = settings
         if orca_state.activeScript != self:

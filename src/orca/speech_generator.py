@@ -80,14 +80,7 @@ voiceType = {
     VALUE       : settings.SYSTEM_VOICE, # Users may prefer DEFAULT_VOICE here
 }
 
-if hasattr(orca, '_settingsManager'):
-    _settingsManager = getattr(orca, '_settingsManager')
-else:
-    from settings_manager import SettingsManager
-    _settingsManager = SettingsManager()
-    if _settingsManager is None:
-        print "Could not load the settings manager. Exiting."
-        sys.exit(1)
+_settingsManager = getattr(orca, '_settingsManager')
 
 class SpeechGenerator(generator.Generator):
     """Takes accessible objects and produces a string to speak for

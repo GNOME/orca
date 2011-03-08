@@ -1034,15 +1034,7 @@ def setGKSUGrabDisabled(disable):
 #
 def overrideKeyBindings(script, keyBindings):
     import orca
-
-    if hasattr(orca, '_settingsManager'):                                       
-        _settingsManager = getattr(orca, '_settingsManager')                    
-    else:                                                                       
-        from settings_manager import SettingsManager                            
-        _settingsManager = SettingsManager()                                    
-        if _settingsManager is None:                                            
-            print "Could not load the settings manager. Exiting."               
-            sys.exit(1)                                                         
+    _settingsManager = getattr(orca, '_settingsManager')
 
     return _settingsManager.overrideKeyBindings(script, keyBindings)
 

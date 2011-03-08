@@ -50,14 +50,7 @@ workingFactories   = []
 speechServerChoice = None
 speechVoiceChoice  = None
 
-if hasattr(orca, '_settingsManager'):
-    _settingsManager = getattr(orca, '_settingsManager')
-else:
-    from settings_manager import SettingsManager
-    _settingsManager = SettingsManager()
-    if _settingsManager is None:
-        print "Could not load the settings manager. Exiting."
-        sys.exit(1)
+_settingsManager = getattr(orca, '_settingsManager')
 
 # Translators: this is a regular expression that is intended to match
 # a positive 'yes' response from a user at the command line.  The expression

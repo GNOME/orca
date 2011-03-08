@@ -487,11 +487,7 @@ class SettingsManager(object):
         """
 
         import orca
-        if hasattr(orca, '_scriptManager'):
-            _scriptManager = getattr(orca, '_scriptManager')
-        else:
-            from script_manager import ScriptManager
-            _scriptManager = ScriptManager()
+        _scriptManager = getattr(orca, '_scriptManager')
 
         app = script.app
         moduleName = _scriptManager.getModuleName(app)
@@ -595,7 +591,4 @@ def getRealValues(prefs):
     #for key in prefs.keys():
     #    prefs[key] = getValueForKey(prefs, key)
     return prefs
-
-from plugin_manager import plugmanager
-plugmanager.scan_plugins()
 

@@ -44,11 +44,7 @@ import speech
 import braille
 import settings
 
-if hasattr(orca, '_scriptManager'):
-    _scriptManager = getattr(orca, '_scriptManager')
-else:
-    from script_manager import ScriptManager
-    _scriptManager = ScriptManager()
+_scriptManager = getattr(orca, '_scriptManager')
 
 class BoundingBox:
     """A bounding box, currently it is used to test if a given point is

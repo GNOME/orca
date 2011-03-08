@@ -1,31 +1,22 @@
-# Orca                                                                              
-#
-# Copyright 2011 Consorcio Fernando de los Rios.
-# Author: J. Ignacio Alvarez <jialvarez@emergya.es>
-# Author: J. Felix Ontanon <fontanon@emergya.es>
-#
-# This library is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.
-#
-# This library is distributed in the hope that it will be useful,
+# -*- coding: utf-8 -*-
+
+# Copyright (C) 2010, J. Félix Ontañón <felixonta@gmail.com>
+# Copyright (C) 2011, J. Ignacio Álvarez <neonigma@gmail.com>
+
+# This file is part of Pluglib.
+
+# Pluglib is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# Pluglib is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the
-# Free Software Foundation, Inc., Franklin Street, Fifth Floor,
-# Boston MA  02110-1301 USA.
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-"""Definition of interfaces must be implemented in plugins."""
-
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2011 Consorcio Fernando de los Rios."
-__license__   = "LGPL"
+# You should have received a copy of the GNU General Public License
+# along with Pluglib.  If not, see <http://www.gnu.org/licenses/>.
 
 import exceptions
 import abc
@@ -190,67 +181,6 @@ class ICommand(object):
     def get_command(command_name):
         """Return a command in this environment"""
 
-#
-#class Messaging(script.Script):
-#
-#    def presentMessage(self, fullMessage, briefMessage=None, voice=None):
-#        """Convenience method to speak a message and 'flash' it in braille.
-#
-#        Arguments:
-#        - fullMessage: This can be a string or a list. This will be presented
-#          as the message for users whose flash or message verbosity level is
-#          verbose.
-#        - briefMessage: This can be a string or a list. This will be presented
-#          as the message for users whose flash or message verbosity level is
-#          brief. Note that providing no briefMessage will result in the full
-#          message being used for either. Callers wishing to present nothing as
-#          the briefMessage should set briefMessage to an empty string.
-#        - voice: The voice to use when speaking this message. By default, the
-#          "system" voice will be used.
-#        """
-#
-#        print "Called presentMessage..."
-#
-#        if not fullMessage:
-#            return
-#
-#        if briefMessage is None:
-#            briefMessage = fullMessage
-#
-#        if _settingsManager.getSetting('enableSpeech'):
-#            if _settingsManager.getSetting('messageVerbosityLevel') \
-#                    == settings.VERBOSITY_LEVEL_BRIEF:
-#                message = briefMessage
-#            else:
-#                message = fullMessage
-#            if message:
-#                voice = voice or self.voices.get(settings.SYSTEM_VOICE)
-#                speech.speak(message, voice)
-#
-#        if (_settingsManager.getSetting('enableBraille') \
-#             or _settingsManager.getSetting('enableBrailleMonitor')) \
-#           and _settingsManager.getSetting('enableFlashMessages'):
-#            if _settingsManager.getSetting('flashVerbosityLevel') \
-#                    == settings.VERBOSITY_LEVEL_BRIEF:
-#                message = briefMessage
-#            else:
-#                message = fullMessage
-#            if not message:
-#                return
-#
-#            if isinstance(message[0], list):
-#                message = message[0]
-#            if isinstance(message, list):
-#                message = filter(lambda i: isinstance(i, str), message)
-#                message = " ".join(message)
-#
-#            if _settingsManager.getSetting('flashIsPersistent'):
-#                duration = -1
-#            else:
-#                duration = _settingsManager.getSetting('brailleFlashTime')
-#
-#            braille.displayMessage(message, flashTime=duration)
-
 class IPresenter(object):
     """Allows to operate with presentation plugins"""
 
@@ -259,8 +189,62 @@ class IPresenter(object):
     ############## METHODS #################
 
     def presentMessage(self, fullMessage, briefMessage=None, voice=None):
-        print "Calling Messaging with fullMessage: " + str(fullMessage) 
-#        msg = Messaging(fullMessage, briefMessage, voice)
+        """Convenience method to speak a message and 'flash' it in braille.
+
+        Arguments:
+        - fullMessage: This can be a string or a list. This will be presented
+          as the message for users whose flash or message verbosity level is
+          verbose.
+        - briefMessage: This can be a string or a list. This will be presented
+          as the message for users whose flash or message verbosity level is
+          brief. Note that providing no briefMessage will result in the full
+          message being used for either. Callers wishing to present nothing as
+          the briefMessage should set briefMessage to an empty string.
+        - voice: The voice to use when speaking this message. By default, the
+          "system" voice will be used.
+        """
+
+        print "Called presentMessage..."
+
+        if not fullMessage:
+            return
+
+        if briefMessage is None:
+            briefMessage = fullMessage
+
+        if _settingsManager.getSetting('enableSpeech'):
+            if _settingsManager.getSetting('messageVerbosityLevel') \
+                    == settings.VERBOSITY_LEVEL_BRIEF:
+                message = briefMessage
+            else:
+                message = fullMessage
+            if message:
+                voice = voice or self.voices.get(settings.SYSTEM_VOICE)
+                speech.speak(message, voice)
+
+        if (_settingsManager.getSetting('enableBraille') \
+             or _settingsManager.getSetting('enableBrailleMonitor')) \
+           and _settingsManager.getSetting('enableFlashMessages'):
+            if _settingsManager.getSetting('flashVerbosityLevel') \
+                    == settings.VERBOSITY_LEVEL_BRIEF:
+                message = briefMessage
+            else:
+                message = fullMessage
+            if not message:
+                return
+
+            if isinstance(message[0], list):
+                message = message[0]
+            if isinstance(message, list):
+                message = filter(lambda i: isinstance(i, str), message)
+                message = " ".join(message)
+
+            if _settingsManager.getSetting('flashIsPersistent'):
+                duration = -1
+            else:
+                duration = _settingsManager.getSetting('brailleFlashTime')
+
+            braille.displayMessage(message, flashTime=duration)
 
 class IDependenciesChecker(object):
     """Allows to check for dependencies before run"""

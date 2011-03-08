@@ -45,20 +45,8 @@ import speech
 
 from orca_i18n import _  # for gettext support
 
-if hasattr(orca, '_scriptManager'):
-    _scriptManager = getattr(orca, '_scriptManager')
-else:
-    from script_manager import ScriptManager
-    _scriptManager = ScriptManager()
-
-if hasattr(orca, '_settingsManager'):
-    _settingsManager = getattr(orca, '_settingsManager')
-else:
-    from settings_manager import SettingsManager
-    _settingsManager = SettingsManager()
-    if _settingsManager is None:
-        print "Could not load the settings manager. Exiting."
-        sys.exit(1)
+_scriptManager = getattr(orca, '_scriptManager')
+_settingsManager = getattr(orca, '_settingsManager')
 
 applicationName = None
 appScript = None
