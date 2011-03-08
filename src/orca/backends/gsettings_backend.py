@@ -91,7 +91,6 @@ class Backend:
         self._setPronunciationsDict(BASE_PATH, pronunciations)
         self._setKeybindingsDict(BASE_PATH, keybindings)
 
-
     def saveProfileSettings(self, profile, general,
                                   pronunciations, keybindings):
         """ Save minimal subset defined in the profile against current 
@@ -117,7 +116,6 @@ class Backend:
             settingsDict.pop(key)
 
         self.general = settingsDict.copy()
-        
 
         self.pronunciations = self._getPronunciationsDict(BASE_PATH)
         self.keybindings = self._getKeybindingsDict(BASE_PATH)
@@ -213,10 +211,10 @@ class Backend:
         g_settings = GSettings(schema=schema, path=path)
 
         for key in g_settings.list_keys():
-            if key not in dict_in.keys(): continue
+            if self.__dashToCamel(key) not in dict_in.keys(): continue
             self.__setKeyValue(schema, path, \
-                    self.__camelToDash(key), \
-                    dict_in[key])
+                    key, \
+                    dict_in[self.__dashToCamel(key)])
 
 
     def __getKeyValue(self, schema, path, key):
