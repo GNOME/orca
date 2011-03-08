@@ -1,95 +1,85 @@
-# Orca                                                                              
-#
-# Copyright 2011 Consorcio Fernando de los Rios.
-# Author: J. Ignacio Alvarez <jialvarez@emergya.es>                                 
-#
-# This library is free software; you can redistribute it and/or                     
-# modify it under the terms of the GNU Lesser General Public
-# License as published by the Free Software Foundation; either
-# version 2.1 of the License, or (at your option) any later version.                
-#
-# This library is distributed in the hope that it will be useful,                   
+# - coding: utf-8 -
+
+# Copyright (C) 2010, J. Félix Ontañón <felixonta@gmail.com>
+# Copyright (C) 2011, J. Ignacio Álvarez <neonigma@gmail.com>
+
+# This file is part of Pluglib.
+
+# Pluglib is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# Pluglib is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU                 
-# Lesser General Public License for more details.                                   
-#
-# You should have received a copy of the GNU Lesser General Public                  
-# License along with this library; if not, write to the
-# Free Software Foundation, Inc., Franklin Street, Fifth Floor,                     
-# Boston MA  02110-1301 USA.                                                        
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 
-"""Test script example."""
+# You should have received a copy of the GNU General Public License
+# along with Pluglib.  If not, see <http://www.gnu.org/licenses/>.
 
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2011 Consorcio Fernando de los Rios."
-__license__   = "LGPL"
-
-import time
-from orca.interfaces import *
+from orca.pluglib.interfaces import *
 import orca.input_event as input_event
-
-from orca.settings_manager import SettingsManager
 
 from orca.orca_i18n import _         # for gettext support
 from orca.orca_i18n import ngettext  # for ngettext support
 from orca.orca_i18n import C_        # to provide qualified translatable strings
 
-import orca.notification_messages as notification_messages
+from orca.scripts.default import Script
 
-from orca.plug_event_manager import PluginEventManager, PluginEvent, plug_event_manager as pem
+# test if I call any Orca code
+defaultObj = Script(None)
+print defaultObj.getListeners()
 
-from orca.event_manager import EventManager
-_eventManager = EventManager()
-
-import pdb
-pdb.set_trace()
-import orca.scripts.default
-#print Script
-
-_settingsManager = SettingsManager()
-if _settingsManager is None:
-    print "Could not load the settings manager. Exiting."
-    sys.exit(1)
-
-
-class testPlugin(IPlugin, IPresenter):
-    name = 'Test Plugin'
-    description = 'A testing plugin for code tests' 
-    version = '0.1pre'
-    authors = ['J. Ignacio Alvarez <neonigma@gmail.com>']
-    website = 'http://www.emergya.es'
-    icon = 'gtk-missing-image'
-
+class callPresenter(IPresenter):
+    inputEventHandlers = {}
     def __init__(self):
-        print 'Hello World (plugin started)!'
 
-    def registerEvent(self, name, function=None, data=None):
-        event = PluginEvent(name)
-        pem.add_event(event)
-        pem.connect(name, function, data)
-
-    def presentTimeEvent(self):
-        print "present time event"
-
-    def getPresentTimeHandler(self, function):
-        return input_event.InputEventHandler(
-                function,
+        print "Init call presenter..."
+        self.inputEventHandlers["presentTimeHandler"] = \
+            input_event.InputEventHandler(
+                callPresenter.presentTime,
                 # Translators: Orca can present the current time to the
                 # user when the user presses
                 # a shortcut key.
                 #
                 _("Present current time."))
 
-    def getPresentDateHandler(self, function):
-        return input_event.InputEventHandler(
-                function,
+        self.inputEventHandlers["presentDateHandler"] = \
+            input_event.InputEventHandler(
+                callPresenter.presentDate,
                 # Translators: Orca can present the current date to the
                 # user when the user presses
                 # a shortcut key.
                 #
                 _("Present current date."))
 
-IPlugin.register(testPlugin)
+    def presentTime(self, inputEvent):
+        """ Presents the current time. """
+        timeFormat = self._settingsManager.getSetting('presentTimeFormat')
+        message = time.strftime(timeFormat, time.localtime())
+        super.presentMessage(message)
+        return True
 
+    def presentDate(self, inputEvent):
+        """ Presents the current date. """
+        dateFormat = self._settingsManager.getSetting('presentDateFormat')
+        message = time.strftime(dateFormat, time.localtime())
+        super.presentMessage(message)
+        return True
+
+class testPlugin(IPlugin, IPresenter):
+    name = 'Test Plugin'
+    description = 'A testing plugin for code tests' 
+    version = '0.1pre'
+    authors = ['J. Félix Ontañón <felixonta@gmail.com>', 'J. Ignacio Álvarez <neonigma@gmail.com>']
+    website = 'http://fontanon.org'
+    icon = 'gtk-missing-image'
+
+    def __init__(self):
+        print 'Hello World (plugin started)!'
+        cp = callPresenter()
+
+
+
+IPlugin.register(testPlugin)
