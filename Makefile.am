@@ -39,7 +39,6 @@ MOSTLYCLEANFILES =
 gsettings_SCHEMAS = org.gnome.Orca.gschema.xml
 
 @GSETTINGS_RULES@
-GLIB_COMPILE_SCHEMAS=/usr/bin/glib-compile-schemas --allow-any-name
 
 EXTRA_DIST =                \
 	$(autostart_in_files) \
