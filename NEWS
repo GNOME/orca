@@ -1,3 +1,36 @@
+2.91.91 - 07-March-2011
+
+General:
+
+  * Fix for bug #643195 - Orca hangs after a traceback
+
+  * Fix for bug #637780 - Cannot permenantly update settings for the gdm
+    user login session
+
+  * Fix for bug #643378 - Orca does not present the XFCE window switcher
+
+  * Fix for bug #643306 - Orca is not correctly failing back on the
+    default script for unknown toolkit
+
+  * Fix for bug #643067 - Have GS magnifyAccessible check that
+    magnification is enabled
+
+Gecko:
+
+  * Fix for bug #634642 - Orca can be very slow to find a position in a
+    Gecko list
+
+New and updated translations (THANKS EVERYONE!!!):
+
+
+    ca        Catalan                  Gil Forcada
+    es        Spanish                  Francisco Javier Dorado
+    nb        Norwegian bokmål         Kjartan Maraas
+    ug        Uyghur                   Abduxukur Abdurixit
+    zh_CN     Chinese (Simplified)     Wei Li
+
+==========
+
 2.91.90 - 21-February-2011
 
 General:
