@@ -439,8 +439,8 @@
     <summary>TODO: Add a summary for speech-server-factory key</summary>
     <description>TODO: Add a description for speech-server-factory key.</description>
   </key>
-  <key name="speech-server-info" type="s">
-    <default>""</default>
+  <key name="speech-server-info" type="as">
+    <default>['', '']</default>
     <summary>TODO: Add a summary for speech-server-factory key</summary>
     <description>TODO: Add a description for speech-server-factory key.</description>
   </key>
