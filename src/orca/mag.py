@@ -756,8 +756,8 @@ def __setupZoomer(restore=None):
     setZoomerMagFactor(value, value, False)
 
     value = restore.get(
-        'enableMagZoomerColorInversion',
-        _settingsManager.getSetting('enableMagZoomerColorInversion'))
+        'enableMagColorInversion',
+        _settingsManager.getSetting('enableMagColorInversion'))
     setZoomerColorInversion(value, False)
 
     brightness = restore.get(
@@ -1559,7 +1559,7 @@ def toggleColorEnhancements(script=None, inputEvent=None):
     #
     [levelX, levelY] = _zoomer.getMagFactor()
     
-    normal = {'enableMagZoomerColorInversion': False,
+    normal = {'enableMagColorInversion': False,
               'magBrightnessLevelRed': 0,
               'magBrightnessLevelGreen': 0,
               'magBrightnessLevelBlue': 0,
@@ -1749,7 +1749,7 @@ def cycleZoomerType(script=None, inputEvent=None):
 
     if not orca_state.colorEnhancementsEnabled:
         toRestore.update(\
-            {'enableMagZoomerColorInversion': False,
+            {'enableMagColorInversion': False,
              'magBrightnessLevelRed': 0,
              'magBrightnessLevelGreen': 0,
              'magBrightnessLevelBlue': 0,

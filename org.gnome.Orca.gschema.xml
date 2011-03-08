@@ -58,8 +58,8 @@
   </key>
   <key name="enable-mag-zoom-color-inversion" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for enable-mag-zoomer-color-inversion key</summary>
-    <description>TODO: Add a description for enable-mag-zoomer-color-inversion key.</description>
+    <summary>TODO: Add a summary for enable-mag-color-inversion key</summary>
+    <description>TODO: Add a description for enable-mag-color-inversion key.</description>
   </key>
   <key name="mag-cursor-size" type="i">
     <default>32</default>
@@ -242,10 +242,10 @@
     <summary>TODO: Add a summary for enabled-brailled-text-attributes key</summary>
     <description>TODO: Add a description for enabled-brailled-text-attributes key.</description>
   </key>
-  <key name="text-attributes-braille-indicator" type="i">
+  <key name="braille-indicator-attrib" type="i">
     <default>0</default>
-    <summary>TODO: Add a summary for text-attributes-braille-indicator key</summary>
-    <description>TODO: Add a description for text-attributes-braille-indicator key.</description>
+    <summary>TODO: Add a summary for braille-indicator-attrib key</summary>
+    <description>TODO: Add a description for braille-indicator-attrib key.</description>
   </key>
   <key name="braille-rolename-style" type="i">
     <default>1</default>
@@ -409,10 +409,10 @@
     <summary>TODO: Add a summary for read-table-cell-row key</summary>
     <description>TODO: Add a description for read-table-cell-row key.</description>
   </key>
-  <key name="speak-multi-case-strings-as-words" type="b">
+  <key name="speech-split-multi-case" type="b">
     <default>false</default>
-    <summary>TODO: Add a summary for speak-multi-case-strings-as-words key</summary>
-    <description>TODO: Add a description for speak-multi-case-strings-as-words key.</description>
+    <summary>TODO: Add a summary for speech-split-multi-case key</summary>
+    <description>TODO: Add a description for speech-split-multi-case key.</description>
   </key>
   <key name="message-verbosity-level" type="i">
     <default>1</default>

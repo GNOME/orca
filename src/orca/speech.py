@@ -163,11 +163,11 @@ def sayAll(utteranceIterator, progressCallback):
 def _speak(text, acss, interrupt):
     """Speaks the individual string using the given ACSS."""
 
-    if settings.speakMultiCaseStringsAsWords:
+    if settings.speechSplitMultiCase:
         text = _processMultiCaseString(text)
     if orca_state.activeScript and orca_state.usePronunciationDictionary:
         text = orca_state.activeScript.utilities.adjustForPronunciation(text)
-    if settings.speakMultiCaseStringsAsWords:
+    if settings.speechSplitMultiCase:
         text = _processMultiCaseString(text)
 
     logLine = "SPEECH OUTPUT: '" + text + "'"

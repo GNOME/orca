@@ -732,7 +732,7 @@ class Text(Region):
         lineEndOffset = self.lineOffset + stringLength
         regionMask = [settings.TEXT_ATTR_BRAILLE_NONE]*stringLength
 
-        attrIndicator = settings.textAttributesBrailleIndicator
+        attrIndicator = settings.brailleIndicatorAttrib
         selIndicator = settings.brailleSelectorIndicator
         linkIndicator = settings.brailleLinkIndicator
         script = orca_state.activeScript
