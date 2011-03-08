@@ -57,8 +57,10 @@ import orca_gui_profile
 _settingsManager = getattr(orca, '_settingsManager')
 _scriptManager = getattr(orca, '_scriptManager')
 
-# temp here - 3E
-from pluglib.manager import plugmanager
+# needed to fill the graphical treeview
+from pluglib.plugin_manager import plugmanager
+
+# temporary here?? START ACTIVE PLUGINS!
 plugmanager.scan_plugins()
 
 try:

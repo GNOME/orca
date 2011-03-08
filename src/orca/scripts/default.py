@@ -1067,23 +1067,23 @@ class Script(script.Script):
                 #
                 _("Toggle mouse review mode."))
 
-        self.inputEventHandlers["presentTimeHandler"] = \
-            input_event.InputEventHandler(
-                Script.presentTime,
-                # Translators: Orca can present the current time to the
-                # user when the user presses
-                # a shortcut key.
-                #
-                _("Present current time."))
-
-        self.inputEventHandlers["presentDateHandler"] = \
-            input_event.InputEventHandler(
-                Script.presentDate,
-                # Translators: Orca can present the current date to the
-                # user when the user presses
-                # a shortcut key.
-                #
-                _("Present current date."))
+#        self.inputEventHandlers["presentTimeHandler"] = \
+#            input_event.InputEventHandler(
+#                Script.presentTime,
+#                # Translators: Orca can present the current time to the
+#                # user when the user presses
+#                # a shortcut key.
+#                #
+#                _("Present current time."))
+#
+#        self.inputEventHandlers["presentDateHandler"] = \
+#            input_event.InputEventHandler(
+#                Script.presentDate,
+#                # Translators: Orca can present the current date to the
+#                # user when the user presses
+#                # a shortcut key.
+#                #
+#                _("Present current date."))
 
         self.inputEventHandlers["bypassNextCommandHandler"] = \
             input_event.InputEventHandler(

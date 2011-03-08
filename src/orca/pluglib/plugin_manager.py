@@ -29,14 +29,19 @@ import orca.store_config as store_config
 
 from orca.pluglib.interfaces import *
 
+dirname, filename = os.path.split(os.path.abspath(__file__))
+PLUGINS_DIR = [os.path.join(dirname, '..', 'baseplugins')]
+
 class ModulePluginManager(IPluginManager):
     """A plugin manager that handles with python modules"""
 
-    def __init__(self, plugin_paths=['baseplugins']):
+    def __init__(self, plugin_paths=[]):
 
         self.plugin_paths = plugin_paths
         if not type(self.plugin_paths) is list:
             self.plugin_paths = [self.plugin_paths]
+        
+        print self.plugin_paths
 
         #{'plugin_name': {'class': plugin_class, 'object': plugin_object,
         # 'type': plugin_type, 'registered':, if_registered}
@@ -63,7 +68,8 @@ class ModulePluginManager(IPluginManager):
                     active = self.plugins_conf[module_name]['active'] \
                             if self.plugins_conf and module_name in self.plugins_conf \
                             else False
-    
+
+                    # REGISTERED NOT USED... IS ALL DONE WITH ACTIVE FIELD! (OR NOT?)
                     registered = self.plugins_conf[module_name]['registered'] \
                                 if self.plugins_conf and module_name in self.plugins_conf \
                                 else True
@@ -82,9 +88,6 @@ class ModulePluginManager(IPluginManager):
                 # ADD PLUGIN!
                 # pass name, module_name and registered or not
                 self.store_conf.addPlugin(name, registered, module_name, path)
-
-                # update plugins container
-                #self.plugins_conf = self.store_conf.getPlugins()
     
             except Exception, e:
                 raise PluginManagerError, 'Cannot load module %s: %s' % \
@@ -97,7 +100,10 @@ class ModulePluginManager(IPluginManager):
 
     def scan_more_plugins(self):
         print "Scanning plugins..."
-        # CHECK BASEPLUGINS FOR MORE PLUGINS
+        # CHECK BASEPLUGINS FOR PLUGINS
+        # In inspect_plugin_module we compare with the plugins list
+        # in the appropiate backend form and if a plugin is active,
+        # we will load it
         new_plugins = {}
         for path in self.plugin_paths:
             if not path in sys.path:
@@ -128,21 +134,25 @@ class ModulePluginManager(IPluginManager):
                 dict_plugins.update(type_update) 
 
     def scan_plugins(self):
+        # Compare 
         self.scan_more_plugins()
         
         # LOAD FROM STORE_CONF
         if self.plugins_conf:
+            # take the plugins list in the backend
             self.plugins = self.plugins_conf.copy()
-
             load_plugins = self.plugins['plugins'];
     
             for module_name, data in load_plugins.iteritems():
                 if load_plugins[module_name]['active'] == True:
                     try:
+                        # if active, add the class into the plugin list
                         self.load_class_in_plugin(load_plugins[module_name], 
                                 module_name, [load_plugins[module_name]['path']])
 
                         plugin_class = load_plugins[module_name]['class']
+
+                        # we have the class now, we can get an object
                         plugin_object = plugin_class()
                         if isinstance(plugin_object, IConfigurable):
                 	        plugin_object.load()
@@ -153,34 +163,44 @@ class ModulePluginManager(IPluginManager):
                         raise PluginManagerError, 'Cannot load module %s: %s' % \
                             (module_name, e)
                 else:
+                    # plugin not active, bring into plugin list 
+                    # maintained in memory but not get the class
                     load_plugins[module_name].update({'class': None})
                     load_plugins[module_name].update({'object': None})
  
             self.plugins = load_plugins
 
     def enable_plugin(self, plugin_name):
+        # first, make the plugin active in appropiated backend
         enabling_plugins = self.store_conf.getPluginByName(plugin_name)
         enabling_plugins['active'] = True
         self.store_conf.updatePlugin({plugin_name: enabling_plugins})
 
         if self.plugins:
+            # load the class in the plugin list maintained in memory
             self.load_class_in_plugin(self.plugins[plugin_name], plugin_name, 
                     [self.plugins[plugin_name]['path']])
 
             plugin_class = self.plugins[plugin_name]['class']
 
+            # this code is not checked actually 
             if issubclass(plugin_class, IDependenciesChecker) \
                     and not plugin_class.check_dependencies():
                 raise PluginManagerError, 'Cannot satisfy dependencies for %s: %s' % \
                     (plugin_name, plugin_class.check_err)
 
+            # instantiate an object, we have the class now
             plugin_object = plugin_class()
+
+            # this code is not checked actually, but I know
+            # what to do with it
             if isinstance(plugin_object, IConfigurable):
     	        plugin_object.load()
             
             self.plugins[plugin_name]['object'] = plugin_object
 
     def disable_plugin(self, plugin_name):
+        # make the plugin inactive in the appropiated backend
         disabling_plugins = self.store_conf.getPluginByName(plugin_name)
         disabling_plugins['active'] = False
         self.store_conf.updatePlugin({plugin_name: disabling_plugins})
@@ -193,6 +213,8 @@ class ModulePluginManager(IPluginManager):
 
         print "Unloaded module " + str(plugin_name)
         
+        # this *only* delete the name from sys.modules,
+        # not the module itself. See http://bit.ly/gbjPnB 
         del (plugin_name)
 
     def get_plugins(self):
@@ -200,15 +222,25 @@ class ModulePluginManager(IPluginManager):
                  plugin['type'], plugin['registered'], plugin['name']) 
             for (plugin_name, plugin) in self.plugins.items()]
 
+    def is_plugin_enabled(self, plugin_name):
+        check_plugin = self.store_conf.getPluginByName(plugin_name)
+        return check_plugin['active']
+
+    def get_plugin_class(self, plugin_name):
+        if self.plugins.has_key(plugin_name):
+            return self.plugins[plugin_name]['class']
+        else:
+            raise PluginManagerError, 'No plugin named %s' % plugin_name
+
     def is_plugin_loaded(self, plugin_name):
         if self.plugins.has_key(plugin_name):
             return self.plugins[plugin_name]['object'] is not None
         else:
             raise PluginManagerError, 'No plugin named %s' % plugin_name
 
-    def is_plugin_enabled(self, plugin_name):
-        check_plugin = self.store_conf.getPluginByName(plugin_name)
-        return check_plugin['active']
+
+
+    # ATTRIBS REQUIRES TO ACCOMPLISH THE ABSTRACTION CONCEPT
 
     _plugin_paths = None
 
@@ -233,4 +265,4 @@ class ModulePluginManager(IPluginManager):
 # Register implementation
 IPluginManager.register(ModulePluginManager)
 
-plugmanager = ModulePluginManager()
+plugmanager = ModulePluginManager(PLUGINS_DIR)

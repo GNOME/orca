@@ -20,6 +20,7 @@
 
 import exceptions
 import abc
+import orca.scripts.default as default
 
 class IPlugin(object):
     """Every plugin must implement this interface"""
@@ -164,87 +165,17 @@ class IConfigureDialog(IConfigurable):
 class ICommand(object):
     """Allows to operate with commands plugins"""
 
-    __metaclass__ = abc.ABCMeta
+    # What things need to be come here?
 
-    def command_name_getter(self):
-        """ You must implement this method in your class """
 
-    def command_name_setter(self, new_commands):
-         """ You must implement this method in your class """
-
-    # Set of managed plugins
-    command_name = abc.abstractproperty(command_name_getter, command_name_setter)
-
-    ############## METHODS #################
-
-    @abc.abstractmethod
-    def get_command(command_name):
-        """Return a command in this environment"""
-
-class IPresenter(object):
+class IPresenter(default.Script):
     """Allows to operate with presentation plugins"""
 
-    __metaclass__ = abc.ABCMeta
+    inputEventHandlers = {}
 
     ############## METHODS #################
 
-    def presentMessage(self, fullMessage, briefMessage=None, voice=None):
-        """Convenience method to speak a message and 'flash' it in braille.
-
-        Arguments:
-        - fullMessage: This can be a string or a list. This will be presented
-          as the message for users whose flash or message verbosity level is
-          verbose.
-        - briefMessage: This can be a string or a list. This will be presented
-          as the message for users whose flash or message verbosity level is
-          brief. Note that providing no briefMessage will result in the full
-          message being used for either. Callers wishing to present nothing as
-          the briefMessage should set briefMessage to an empty string.
-        - voice: The voice to use when speaking this message. By default, the
-          "system" voice will be used.
-        """
-
-        print "Called presentMessage..."
-
-        if not fullMessage:
-            return
-
-        if briefMessage is None:
-            briefMessage = fullMessage
-
-        if _settingsManager.getSetting('enableSpeech'):
-            if _settingsManager.getSetting('messageVerbosityLevel') \
-                    == settings.VERBOSITY_LEVEL_BRIEF:
-                message = briefMessage
-            else:
-                message = fullMessage
-            if message:
-                voice = voice or self.voices.get(settings.SYSTEM_VOICE)
-                speech.speak(message, voice)
-
-        if (_settingsManager.getSetting('enableBraille') \
-             or _settingsManager.getSetting('enableBrailleMonitor')) \
-           and _settingsManager.getSetting('enableFlashMessages'):
-            if _settingsManager.getSetting('flashVerbosityLevel') \
-                    == settings.VERBOSITY_LEVEL_BRIEF:
-                message = briefMessage
-            else:
-                message = fullMessage
-            if not message:
-                return
-
-            if isinstance(message[0], list):
-                message = message[0]
-            if isinstance(message, list):
-                message = filter(lambda i: isinstance(i, str), message)
-                message = " ".join(message)
-
-            if _settingsManager.getSetting('flashIsPersistent'):
-                duration = -1
-            else:
-                duration = _settingsManager.getSetting('brailleFlashTime')
-
-            braille.displayMessage(message, flashTime=duration)
+    # What things need to be come here?
 
 class IDependenciesChecker(object):
     """Allows to check for dependencies before run"""
