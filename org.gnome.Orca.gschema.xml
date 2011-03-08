@@ -56,7 +56,7 @@
     <summary>TODO: Add a summary for mag-zoomer-type key</summary>
     <description>TODO: Add a description for mag-zoomer-type key.</description>
   </key>
-  <key name="enable-mag-zoom-color-inversion" type="b">
+  <key name="enable-mag-color-inversion" type="b">
     <default>false</default>
     <summary>TODO: Add a summary for enable-mag-color-inversion key</summary>
     <description>TODO: Add a description for enable-mag-color-inversion key.</description>
