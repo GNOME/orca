@@ -25,10 +25,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Igalia, S.L."
 __license__   = "LGPL"
 
+import orca.orca as orca
 import orca.scripts.default as default
 import orca.debug as debug
 import gtk.gdk as gdk
-
 
 # Set with non printable unicode categories. Full table:
 # http://www.fileformat.info/info/unicode/category/index.htm
@@ -178,4 +178,28 @@ class Script(default.Script):
 
         return default.Script.checkKeyboardEventData(self, keyboardEvent)
 
+    # NOTE: right now this is being redefined just for GNOME Shell, so
+    # the proper place would be a GNOME Shell script. Anyway, as right
+    # now GNOME Shell is the only Clutter application we care, for the
+    # moment this is a proper place
 
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        # We override the behaviour for the selection
+        if event.type.startswith("object:state-changed:selected"):
+            # For the moment we announce any selection change
+
+            if event.source is not None:
+                debug.println(debug.LEVEL_FINE,
+                              "[cally] new locus_of_focus: %s" \
+                                  % event.source.name)
+
+                orca.setLocusOfFocus (event, event.source)
+
+        else: #in any other case, we use the default behaviour
+            default.Script.onStateChanged(self, event)
