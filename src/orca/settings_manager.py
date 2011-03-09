@@ -52,12 +52,12 @@ class SettingsManager(object):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __init__(self, backend='json'):
+    def __init__(self, backend='gsettings'):
         """Initialize a SettingsManager Object.
         If backend isn't defined then uses default backend, in this
-        case gconf-backend.
+        case gsettings-backend.
         backend parameter can use the follow values:
-        backend='gconf'
+        backend='gsettings'
         backend='json'
         """
 
