@@ -141,7 +141,7 @@ class ModulePluginManager(IPluginManager):
         if self.plugins_conf:
             # take the plugins list in the backend
             self.plugins = self.plugins_conf.copy()
-            load_plugins = self.plugins['plugins'];
+            load_plugins = self.plugins['plugins']
     
             for module_name, data in load_plugins.iteritems():
                 if load_plugins[module_name]['active'] == True:
@@ -200,22 +200,28 @@ class ModulePluginManager(IPluginManager):
             self.plugins[plugin_name]['object'] = plugin_object
 
     def disable_plugin(self, plugin_name):
-        # make the plugin inactive in the appropiated backend
-        disabling_plugins = self.store_conf.getPluginByName(plugin_name)
-        disabling_plugins['active'] = False
-        self.store_conf.updatePlugin({plugin_name: disabling_plugins})
-
         if self.is_plugin_enabled(plugin_name):
             plugin_object = self.plugins[plugin_name]['object']
+    
             if isinstance(plugin_object, IConfigurable):
-	        plugin_object.save()
+    	        plugin_object.save()
+
+            if isinstance(plugin_object, ICommand):
+                plugin_object.removePluginKeybinding()
+ 
             self.plugins[plugin_name]['object'] = None
 
-        print "Unloaded module " + str(plugin_name)
-        
-        # this *only* delete the name from sys.modules,
-        # not the module itself. See http://bit.ly/gbjPnB 
-        del (plugin_name)
+            # make the plugin inactive in the appropiated backend
+            disabling_plugins = self.store_conf.getPluginByName(plugin_name)
+            disabling_plugins['active'] = False
+            self.store_conf.updatePlugin({plugin_name: disabling_plugins})
+    
+            print "Unloaded module " + str(plugin_name)
+            
+            # this *only* delete the name from sys.modules,
+            # not the module itself. See http://bit.ly/gbjPnB 
+            del (plugin_name)
+
 
     def get_plugins(self):
         return [(plugin_name, plugin['class'], 

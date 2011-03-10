@@ -20,7 +20,6 @@
 
 import exceptions
 import abc
-import orca.scripts.default as default
 
 class IPlugin(object):
     """Every plugin must implement this interface"""
@@ -164,18 +163,28 @@ class IConfigureDialog(IConfigurable):
 
 class ICommand(object):
     """Allows to operate with commands plugins"""
-
-    # What things need to be come here?
-
-
-class IPresenter(default.Script):
-    """Allows to operate with presentation plugins"""
-
-    inputEventHandlers = {}
+    __metaclass__ = abc.ABCMeta
 
     ############## METHODS #################
 
-    # What things need to be come here?
+    def removeKeybinding(self, kbHandler):
+        import orca.keybindings
+
+        kbInstance = orca.keybindings.KeyBindings()
+        kbInstance.removeByHandler(kbHandler)
+
+
+class IPresenter(object):
+    """Allows to operate with presentation plugins"""
+    __metaclass__ = abc.ABCMeta
+
+    ############## METHODS #################
+
+    def presentMessage(self, message, app):
+        import orca.scripts.default as default
+
+        defaultHandler = default.Script(app)
+        defaultHandler.presentMessage(message)
 
 class IDependenciesChecker(object):
     """Allows to check for dependencies before run"""
