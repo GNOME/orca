@@ -58,6 +58,7 @@ _settingsManager = getattr(orca, '_settingsManager')
 _scriptManager = getattr(orca, '_scriptManager')
 
 # needed to fill the graphical treeview
+import pluglib
 from pluglib.plugin_manager import plugmanager
 
 # temporary here?? START ACTIVE PLUGINS!
