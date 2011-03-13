@@ -2,16 +2,16 @@
 # Spanish translation for orca.
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
-# Jorge González <jorgegonz@svn.gnome.org>, 2010.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
+# Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-02-27 13:50+0000\n"
-"PO-Revision-Date: 2011-03-03 09:42+0100\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2011-03-05 10:22+0000\n"
+"PO-Revision-Date: 2011-03-13 14:41+0100\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -225,14 +225,6 @@ msgstr ""
 "cuándo un atributo activo no es de interés."
 
 #: C/preferences_text_attributes.page:62(p)
-#| msgid ""
-#| "For example, by default the \"underline\" text attribute has a value of "
-#| "\"none.\" This causes <app>Orca</app> to inform you about underlined text "
-#| "as long as the text is actually underlined. If you always want this "
-#| "attribute to be spoken irrespective of whether or not the text is "
-#| "underlined, the <gui>Present unless</gui> column should be empty for "
-#| "underline. In addition, you should be sure that the <gui>Speak</gui> "
-#| "column for underline is checked."
 msgid ""
 "For example, by default the \"underline\" text attribute has a value of "
 "\"none\". This causes <app>Orca</app> to inform you about underlined text as "
@@ -241,13 +233,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
-"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
-"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
-"hable siempre independientemente de que el texto esté subrayado o no, "
-"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
-"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
-"<gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
+"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
+"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
+"atributo se hable siempre independientemente de que el texto esté subrayado "
+"o no, entonces el atributo debería estar marcado y el valor de "
+"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
+"que la columna <gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -758,8 +750,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
-"«&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
+"«/», «&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -1951,11 +1943,11 @@ msgstr "Eco de teclas"
 
 #: C/preferences_key_echo.page:4(title)
 msgid "4. Key Echo"
-msgstr ""
+msgstr "4. Eco de teclas"
 
 #: C/preferences_key_echo.page:5(desc)
 msgid "Configuring what is spoken as you type"
-msgstr ""
+msgstr "Configurar lo que se habla al escribir"
 
 #: C/preferences_key_echo.page:18(title)
 msgid "Key Echo Preferences"
