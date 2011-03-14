@@ -41,8 +41,6 @@ class ModulePluginManager(IPluginManager):
         if not type(self.plugin_paths) is list:
             self.plugin_paths = [self.plugin_paths]
         
-        print self.plugin_paths
-
         #{'plugin_name': {'class': plugin_class, 'object': plugin_object,
         # 'type': plugin_type, 'registered':, if_registered}
         self.plugins = {}

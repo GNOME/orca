@@ -61,9 +61,6 @@ _scriptManager = getattr(orca, '_scriptManager')
 import pluglib
 from pluglib.plugin_manager import plugmanager
 
-# temporary here?? START ACTIVE PLUGINS!
-plugmanager.scan_plugins()
-
 try:
     import louis
 except ImportError:

@@ -167,12 +167,10 @@ class ICommand(object):
 
     ############## METHODS #################
 
-    def removeKeybinding(self, kbHandler):
-        import orca.keybindings
+    def removeKeybinding(self, name):
+        import orca.settings as settings
 
-        kbInstance = orca.keybindings.KeyBindings()
-        kbInstance.removeByHandler(kbHandler)
-
+        settings.keyBindingsMap[name] = None
 
 class IPresenter(object):
     """Allows to operate with presentation plugins"""

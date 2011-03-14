@@ -519,7 +519,6 @@ _eventManager = EventManager()
 from script_manager import ScriptManager
 _scriptManager = ScriptManager()
 
-
 try:
     # If we don't have an active desktop, we will get a RuntimeError.
     import mouse_review
@@ -2318,6 +2317,12 @@ def main():
         loadUserSettings(skipReloadMessage=True)
         _settingsManager.setFirstStart()
 
+    # needed to load plugins (first time)
+    import pluglib
+    from pluglib.plugin_manager import plugmanager
+    
+    plugmanager.scan_plugins()
+
     try:
         start(pyatspi.Registry) # waits until we stop the registry
     except:
@@ -2325,4 +2330,5 @@ def main():
     return 0
 
 if __name__ == "__main__":
+
     sys.exit(main())

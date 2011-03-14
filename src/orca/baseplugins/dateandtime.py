@@ -31,7 +31,7 @@ _settingsManager = getattr(orca_module, '_settingsManager')
  
 import time
 
-class testPlugin(IPlugin, IPresenter, ICommand):
+class dtPlugin(IPlugin, IPresenter, ICommand):
     name = 'Date and Time'
     description = 'Present the date and time to the user' 
     version = '0.9'
@@ -88,6 +88,6 @@ class testPlugin(IPlugin, IPresenter, ICommand):
         return True
 
     def removePluginKeybinding(self):
-        self.removeKeybinding(self.presentTimeHandler)
+        self.removeKeybinding("default")
 
-IPlugin.register(testPlugin)
+IPlugin.register(dtPlugin)
