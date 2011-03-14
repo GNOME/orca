@@ -510,7 +510,7 @@
     <description>TODO: Add a description for speech-verbosity-level key.</description>
   </key>
   <key name="speech-required-state-string" type="s">
-    <default>"requerido"</default>
+    <default>"required"</default>
     <summary>TODO: Add a summary for speech-required-state-string key</summary>
     <description>TODO: Add a description for speech-required-state-string key.</description>
   </key>

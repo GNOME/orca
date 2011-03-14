@@ -8614,7 +8614,7 @@ msgstr[1] "leído %d por ciento del documento"
 #. present.
 #.
 #: ../src/orca/settings.py:1196 ../src/orca/settings.py:1273
-#: ../org.gnome.Orca.gschema.xml.in:296
+#: ../org.gnome.Orca.gschema.xml.in:296 ../org.gnome.Orca.gschema.xml.in:513
 msgid "required"
 msgstr "requerido"
 
