@@ -293,7 +293,7 @@
     <description>TODO: Add a description for braille-end-of-line-indicator key.</description>
   </key>
   <key name="braille-required-state-string" type="s">
-    <default>"requerido"</default>
+    <default>"required"</default>
     <summary>TODO: Add a summary for braille-required-state-string key</summary>
     <description>TODO: Add a description for braille-required-state-string key.</description>
   </key>
