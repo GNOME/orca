@@ -3,22 +3,22 @@
 # This file is distributed under the same license as the orca package.
 #
 # Tino Meinen <a.t.meinen@chello.nl> 2006.
+# Vincent van Adrighem <adrighem@gnome.org>, 2006.
+# Wouter Bolsterlee <wbolster@gnome.org>, 2006, 2008–2009, 2011.
+# Redmar <Redmar@ubuntu-nl.org>, 2011.
+# Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2011.
 #
 # Speak      - Spreken/Lezen/Oplezen
 #
-# Vincent van Adrighem <adrighem@gnome.org>, 2006.
-# Wouter Bolsterlee <uws+gnome@xs4all.nl>, 2006, 2008–2009.
-# Redmar <Redmar@ubuntu-nl.org>, 2011
-# Hannie Dumoleyn <hannie@ubuntu-nl.org>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-03-13 15:34+0000\n"
-"PO-Revision-Date: 2011-03-15 08:41+0100\n"
-"Last-Translator: Hannie Dumoleyn <hannie@ubuntu-nl.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-03-15 22:05+0100\n"
+"PO-Revision-Date: 2011-03-15 22:05+0100\n"
+"Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -382,8 +382,7 @@ msgstr "Schakelen of we aankondigen wanneer onze vrienden aan het typen zijn."
 
 #: ../src/orca/chat.py:348
 msgid "Toggle whether we provide chat room specific message histories."
-msgstr ""
-"Activeer of we gespreksruimte-specifieke berichtengeschiedenis aanbieden."
+msgstr "Activeer of we berichtengeschiedenis per chatruimte aanbieden."
 
 #: ../src/orca/chat.py:356
 msgid "Speak and braille a previous chat room message."
@@ -410,7 +409,7 @@ msgstr "Melden wanneer uw _vrienden aan het typen zijn"
 #.
 #: ../src/orca/chat.py:438
 msgid "Provide chat room specific _message histories"
-msgstr "Gespreksruimte-specifieke _berichtengeschiedenis inschakelen"
+msgstr "_Berichtengeschiedenis per chatruimte inschakelen"
 
 #. Translators: Orca will speak all new chat messages as they appear
 #. irrespective of whether the chat application currently has focus.
@@ -454,11 +453,11 @@ msgstr "Niet melden wanneer uw vrienden aan het typen zijn."
 
 #: ../src/orca/chat.py:606
 msgid "Provide chat room specific message histories."
-msgstr "Gespreksruimte-specifieke gespreksgeschiedenis inschakelen."
+msgstr "Gespreksgeschiedenis per chatruimte inschakelen."
 
 #: ../src/orca/chat.py:610
 msgid "Do not provide chat room specific message histories."
-msgstr "Gespreksruimte-specifieke gespreksgeschiedenis niet inschakelen."
+msgstr "Gespreksgeschiedenis per chatruimte niet inschakelen."
 
 #: ../src/orca/chat.py:670
 #, python-format
@@ -622,7 +621,7 @@ msgstr "vraag"
 #.
 #: ../src/orca/chnames.py:135
 msgid "at"
-msgstr "apestaart"
+msgstr "apenstaart"
 
 # teken [
 # vierkante/rechte haak
@@ -750,7 +749,7 @@ msgstr "verticaal streepje"
 #.
 #: ../src/orca/chnames.py:208 ../src/orca/rolenames.py:840
 msgid "section"
-msgstr "paragraafsymbool"
+msgstr "paragraaf"
 
 #. Translators: this is the spoken word for the character '¨' (U+00a8)
 #.
@@ -921,7 +920,7 @@ msgstr "A ACCENT AIGU"
 #.
 #: ../src/orca/chnames.py:320
 msgid "A CIRCUMFLEX"
-msgstr "A ACCENT CIRCONFLEX"
+msgstr "A ACCENT CIRCUMFLEX"
 
 #. Translators: this is the spoken word for the character 'Ã' (U+00c3)
 #.
@@ -1607,13 +1606,13 @@ msgstr "superscript is-teken"
 #.
 #: ../src/orca/chnames.py:773
 msgid "superscript left paren"
-msgstr "superscript haakje-openen"
+msgstr "superscript haakje openen"
 
 #. Translators: this is the spoken word for the character '⁾' (U+207e)
 #.
 #: ../src/orca/chnames.py:777
 msgid "superscript right paren"
-msgstr "superscript haakje-sluiten"
+msgstr "superscript haakje sluiten"
 
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
@@ -1703,13 +1702,13 @@ msgstr "subscript is-teken"
 #.
 #: ../src/orca/chnames.py:837
 msgid "subscript left paren"
-msgstr "subscript haakje-openen"
+msgstr "subscript haakje openen"
 
 #. Translators: this is the spoken word for the character '₎' (U+208e)
 #.
 #: ../src/orca/chnames.py:841
 msgid "subscript right paren"
-msgstr "subscript haakje-sluiten"
+msgstr "subscript haakje sluiten"
 
 #. Translators: this is the spoken word for the character '➢' (U+27a2)
 #. This symbol is included here because it can be used as a bullet in an
@@ -1787,7 +1786,7 @@ msgstr "niet aangevinkt"
 #.
 #: ../src/orca/flat_review.py:370 ../src/orca/settings.py:1224
 msgid "pressed"
-msgstr "aangeklikt"
+msgstr "ingeschakeld"
 
 #. Translators: the state of a toggle button.
 #.
@@ -1796,7 +1795,7 @@ msgstr "aangeklikt"
 #.
 #: ../src/orca/flat_review.py:374 ../src/orca/settings.py:1224
 msgid "not pressed"
-msgstr "niet aangeklikt"
+msgstr "niet ingeschakeld"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
@@ -2376,7 +2375,7 @@ msgstr "Aangepast"
 #.
 #: ../src/orca/notification_messages.py:82
 msgid "Present last notification message."
-msgstr "Laatste kennisgevingsbericht tonen."
+msgstr "Laatste notificatiebericht tonen."
 
 #. Translators: Orca can present the previous notification message
 #. to the user when the user presses a shortcut key.
@@ -2466,7 +2465,7 @@ msgstr "<b>Contrast</b>"
 
 #: ../src/orca/orca-advanced-magnification.ui.h:3
 msgid "<b>Multi-monitor Settings</b>"
-msgstr "<b>Multi-monitor-instellingen</b>"
+msgstr "<b>Instellingen voor meerdere monitoren</b>"
 
 #: ../src/orca/orca-advanced-magnification.ui.h:4
 msgid "Advanced Settings"
@@ -2861,7 +2860,7 @@ msgstr "Wilt u zich nu afmelden? Geef j of n: "
 
 #: ../src/orca/orca_console_prefs.py:621
 msgid "Setup complete. Logging out now."
-msgstr "Configuretie gereed. U wordt nu afgemeld."
+msgstr "Configuratie gereed. U wordt nu afgemeld."
 
 #: ../src/orca/orca_console_prefs.py:642
 msgid "Setup complete.  Press Return to continue."
@@ -2905,7 +2904,7 @@ msgstr "Orca zoekvenster"
 
 #: ../src/orca/orca-find.ui.h:7
 msgid "Search _backwards"
-msgstr "_Achterwaards zoeken"
+msgstr "_Achteruit zoeken"
 
 #: ../src/orca/orca-find.ui.h:8
 msgid "Search for:"
@@ -2974,11 +2973,15 @@ msgstr ""
 #: ../src/orca/orca_gui_main.py:111
 msgid "translator-credits"
 msgstr ""
+"Tino Meinen\n"
+"Vincent van Adrighem\n"
+"Wouter Bolsterlee\n"
+"Hannie Dumoleyn\n"
+"\n"
 "Launchpad Contributions:\n"
 "  A. Vugts https://launchpad.net/~mail-axelv\n"
 "  Redmar https://launchpad.net/~redmar\n"
 "  UndiFineD https://launchpad.net/~k.dejong\n"
-"  Wouter Bolsterlee (uws) https://launchpad.net/~uws\n"
 "  rob https://launchpad.net/~rvdb"
 
 #. Translators: This text is used in the Orca About dialog. Orca is
@@ -3002,7 +3005,7 @@ msgid ""
 "Free Software Foundation, Inc., Franklin Street, Fifth Floor,\n"
 "Boston MA  02110-1301 USA."
 msgstr ""
-"Orca is gratis software; u kunt het herdistribueren  en/of\n"
+"Orca is gratis software; u kunt het herdistribueren en/of\n"
 "aanpassen onder de voorwaarden van de GNU Library General\n"
 "Public Licentie uitgebracht door de Free Software Foundation;\n"
 "versie 2 van de licentie of (naar keuze) een\n"
@@ -3039,7 +3042,7 @@ msgstr "Gecentreerd"
 #: ../src/orca/orca_gui_prefs.py:121 ../src/orca/orca_gui_prefs.py:2112
 #: ../src/orca/orca-setup.ui.h:118
 msgid "Proportional"
-msgstr "Porportioneel"
+msgstr "Proportioneel"
 
 #. Translators: this is an algorithm for tracking an object
 #. of interest (mouse pointer, caret, or widget) with the
@@ -3097,7 +3100,7 @@ msgstr "Aangepast"
 #: ../src/orca/orca_gui_prefs.py:791
 msgctxt "VoiceType"
 msgid "Default"
-msgstr "Standaardstem"
+msgstr "Standaard"
 
 #. Translators: This refers to the voice used by Orca when
 #. presenting one or more characters which is in uppercase.
@@ -3272,7 +3275,7 @@ msgstr "Venster"
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
 #: ../src/orca/orca_gui_prefs.py:1882 ../src/orca/orca-setup.ui.h:68
 msgid "Enable non-spacing _diacritical keys"
-msgstr "Activeer non-spacing diakritische toetsen"
+msgstr "Activeer non-spatiërende diakritische toetsen"
 
 #. TODO - JD: I did the above because GtkBuilder translator notes
 #. (which we have for the above string) are not getting sucked in
@@ -3308,7 +3311,7 @@ msgstr "(driemaal klikken)"
 #.
 #: ../src/orca/orca_gui_prefs.py:2602 ../src/orca/orca_gui_prefs.py:2697
 msgid "Braille Bindings"
-msgstr "Braille-bindingen"
+msgstr "Braille-koppelingen"
 
 #. Translators: A single braille cell on a refreshable
 #. braille display consists of 8 dots.  If the user
@@ -3392,7 +3395,7 @@ msgstr "Nieuwe sneltoets ingeven"
 
 #: ../src/orca/orca_gui_prefs.py:4038
 msgid "Key binding deleted. Press enter to confirm."
-msgstr "Toetsbinding gewist. Druk op Enter om te bevestigen."
+msgstr "Toetskoppeling gewist. Druk op Enter om te bevestigen."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that the key combination (e.g., Ctrl+Alt+f) they just
@@ -3451,11 +3454,11 @@ msgstr ""
 
 #: ../src/orca/orca_gui_prefs.py:4572
 msgid "<b>User Profile Conflict!</b>"
-msgstr "<b>Gebruikersprofielconflict!</b>"
+msgstr "<b>Conflict in gebruikersprofiel!</b>"
 
 #: ../src/orca/orca_gui_prefs.py:4574
 msgid "Save Profile As Conflict"
-msgstr "Profiel opslaan als-conflict"
+msgstr "Profiel opslaan als conflict"
 
 #. First of all, we give a chance of cancel profile change
 #: ../src/orca/orca_gui_prefs.py:4591
@@ -3475,11 +3478,11 @@ msgstr ""
 
 #: ../src/orca/orca_gui_prefs.py:4601
 msgid "<b>Load user profile info</b>"
-msgstr "<b>Gebruikersprofielinformatie laden</b>"
+msgstr "<b>Informatie over gebruikersprofiel laden</b>"
 
 #: ../src/orca/orca_gui_prefs.py:4603
 msgid "Load User Profile"
-msgstr "Gebruikersprofielinformatie laden"
+msgstr "Informatie over gebruikersprofiel laden"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
@@ -3557,7 +3560,7 @@ msgstr "Stuur debuginformatie naar het gespecificeerde bestand"
 #.
 #: ../src/orca/orca.py:399
 msgid "Set up user preferences"
-msgstr "Gebruikersinstellingen"
+msgstr "Gebruikersvoorkeuren"
 
 #. Translators: this is the description of the command line option
 #. '-t, --text-setup' that will initially display a list of questions
@@ -3567,7 +3570,7 @@ msgstr "Gebruikersinstellingen"
 #.
 #: ../src/orca/orca.py:408
 msgid "Set up user preferences (text version)"
-msgstr "Gebruikersinstellingen (tekstversie)"
+msgstr "Gebruikersvoorkeuren (tekstversie)"
 
 #. Translators: this is the description of the command line option
 #. '-n, --no-setup' that means that Orca will startup without setting
@@ -3591,7 +3594,7 @@ msgstr "Alternatieve map gebruiken voor gebruikersvoorkeuren"
 #.
 #: ../src/orca/orca.py:436
 msgid "Force use of option"
-msgstr "Optiegebruik forceren"
+msgstr "Gebruik van optie forceren"
 
 #. Translators: if the user supplies an option via the '-d, --disable'
 #. command line option, it will be automatically disabled as Orca is
@@ -3599,7 +3602,7 @@ msgstr "Optiegebruik forceren"
 #.
 #: ../src/orca/orca.py:450
 msgid "Prevent use of option"
-msgstr "Optiegebruik voorkomen"
+msgstr "Gebruik van optie voorkomen"
 
 #. Translators: this is the Orca command line option to import to Orca
 #. a user profile from a given file
@@ -3615,7 +3618,7 @@ msgstr "Een profiel importeren uit een opgegeven orca-profielbestand"
 #.
 #: ../src/orca/orca.py:464
 msgid "Quits Orca (if shell script used)"
-msgstr "Orca afsluiten (bij shellscriptgebruik)"
+msgstr "Orca afsluiten (bij gebruik van shellscript)"
 
 #. Translators: this is the Orca command line option that will force
 #. the termination of Orca.
@@ -3644,7 +3647,7 @@ msgid ""
 "the -n or --no-setup option is used."
 msgstr ""
 "Indien Orca niet eerder door de gebruiker ingesteld is, zal\n"
-"Orca automatisch de gebruikersinstellingen tonen, tenzij de\n"
+"Orca automatisch de gebruikersvoorkeuren tonen, tenzij de\n"
 "optie -n of --no-setup gebruikt wordt."
 
 #: ../src/orca/orca.py:497
@@ -3724,7 +3727,7 @@ msgstr "Oplezen uitgezet."
 #.
 #: ../src/orca/orca.py:1525
 msgid "Orca user settings reloaded."
-msgstr "Orca gebruikersinstellingen zijn opnieuw geladen."
+msgstr "Orca gebruikersvoorkeuren zijn opnieuw geladen."
 
 #. Translators: The following string instructs the user how to navigate
 #. amongst the list of commands presented in 'list shortcuts' mode as
@@ -3733,8 +3736,8 @@ msgstr "Orca gebruikersinstellingen zijn opnieuw geladen."
 #: ../src/orca/orca.py:1703
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
-"Gebruik de pijltjes naar boven en beneden on door de lijst te navigeren. "
-"Druk op esc om af te sluiten."
+"Gebruik de pijltjestoetsen naar boven en beneden on door de lijst te "
+"navigeren. Druk op Escape om af te sluiten."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. In this messsage, we present the
@@ -4533,7 +4536,7 @@ msgstr "ongeldig"
 #.
 #: ../src/orca/rolenames.py:178
 msgid "acc"
-msgstr "vsnl"
+msgstr "snel"
 
 #. Translators: long braille for an accelerator (what you see in a menu).
 #. We typically make these 'camel' case.
@@ -4682,7 +4685,7 @@ msgstr "sel"
 #.
 #: ../src/orca/rolenames.py:279
 msgid "CheckBox"
-msgstr "SelectieVakje"
+msgstr "Selectievakje"
 
 #. Translators: spoken words for the rolename of a checkbox.
 #.
@@ -4772,7 +4775,7 @@ msgstr "dat"
 #.
 #: ../src/orca/rolenames.py:339
 msgid "DateEditor"
-msgstr "DatumEditor"
+msgstr "Datumeditor"
 
 #. Translators: spoken words for the rolename of a date editor.
 #.
@@ -4792,7 +4795,7 @@ msgstr "pic"
 #.
 #: ../src/orca/rolenames.py:351
 msgid "DesktopIcon"
-msgstr "BureaubladPictogram"
+msgstr "Bureaubladpictogram"
 
 #. Translators: spoken words for the rolename of a desktop icon.
 #.
@@ -4909,7 +4912,7 @@ msgstr "teken"
 #.
 #: ../src/orca/rolenames.py:426
 msgid "DrawingArea"
-msgstr "TekenGebied"
+msgstr "Tekengebied"
 
 #. Translators: spoken words for the rolename of a drawing area.
 #.
@@ -4927,7 +4930,7 @@ msgstr "bkzr"
 #.
 #: ../src/orca/rolenames.py:438
 msgid "FileChooser"
-msgstr "BestandsKiezer"
+msgstr "Bestandskiezer"
 
 # bestandenkiezer/bestandsverkenner
 #. Translators: spoken words for the rolename of a file chooser.
@@ -4964,7 +4967,7 @@ msgstr "lt"
 #.
 #: ../src/orca/rolenames.py:462
 msgid "FontChooser"
-msgstr "LettertypeKiezer"
+msgstr "Lettertypekiezer"
 
 #. Translators: spoken words for the rolename of a font chooser.
 #.
@@ -5498,7 +5501,7 @@ msgstr "scpn"
 #.
 #: ../src/orca/rolenames.py:825
 msgid "ScrollPane"
-msgstr "SchuifPaneel"
+msgstr "Schuifpaneel"
 
 #. Translators: spoken words for the rolename of a scroll pane.
 #.
@@ -5564,13 +5567,13 @@ msgstr "gedpn"
 #.
 #: ../src/orca/rolenames.py:873
 msgid "SplitPane"
-msgstr "GedeeldPaneel"
+msgstr "Splitspaneel"
 
 #. Translators: spoken words for the rolename of a split pane.
 #.
 #: ../src/orca/rolenames.py:876
 msgid "split pane"
-msgstr "gedeeld paneel"
+msgstr "gesplitst paneel"
 
 #. Translators: short braille for the rolename of a spin button.
 #.
@@ -5582,7 +5585,7 @@ msgstr "drav"
 #.
 #: ../src/orca/rolenames.py:885
 msgid "SpinButton"
-msgstr "DraaiVakje"
+msgstr "Draaivakje"
 
 #. Translators: spoken words for the rolename of a spin button.
 #.
@@ -5594,7 +5597,7 @@ msgstr "draaivakje"
 #.
 #: ../src/orca/rolenames.py:894
 msgid "statbr"
-msgstr "stsblk"
+msgstr "statblk"
 
 #. Translators: long braille for the rolename of a statusbar.
 #.
@@ -5931,7 +5934,7 @@ msgstr "bwblk"
 #.
 #: ../src/orca/rolenames.py:1151
 msgid "EditBar"
-msgstr "BewerkingsBalk"
+msgstr "Bewerkingsbalk"
 
 #. Translators: spoken words for the rolename of an editbar.
 #.
@@ -5949,13 +5952,13 @@ msgstr "inb"
 #.
 #: ../src/orca/rolenames.py:1163
 msgid "EmbeddedComponent"
-msgstr "IngebeddeComponent"
+msgstr "IngebedComponent"
 
 #. Translators: spoken words for the rolename of an embedded component.
 #.
 #: ../src/orca/rolenames.py:1166
 msgid "embedded component"
-msgstr "ingebedde component"
+msgstr "ingebed component"
 
 #. Translators: Orca will tell you how many characters
 #. are repeated on a line of text.  For example: "22
@@ -6083,7 +6086,7 @@ msgstr "agwg"
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:116
 msgid "CalendarView"
-msgstr "AgendaWeergave"
+msgstr "Agendaweergave"
 
 #. Translators: spoken words for the rolename of a calendar view.
 #.
@@ -6101,7 +6104,7 @@ msgstr "agnot"
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:130
 msgid "CalendarEvent"
-msgstr "AgendaNotitie"
+msgstr "Agendanotitie"
 
 #. Translators: spoken words for the rolename of a calendar event.
 #.
@@ -6435,7 +6438,7 @@ msgstr "Klaar met laden."
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:257
 msgid "An error occurred. View the error log for details."
-msgstr "Er is een fout opgetreden. Bekijk het foutenlogbestand voor details."
+msgstr "Er is een fout opgetreden. Bekijk het foutenlogboek voor details."
 
 #. Translators: This is the tutorial string associated with a
 #. specific search field in the Packagemanager application.
@@ -10667,7 +10670,7 @@ msgstr "Druk op spatie om te schakelen."
 #: ../src/orca/tutorialgenerator.py:185
 msgid "Press space to expand, and use up and down to select an item."
 msgstr ""
-"Druk op spatie om uit te breiden en gebruik pijl-omhoog en -omlaag om een "
+"Druk op spatie om uit te breiden en gebruik pijl omhoog en omlaag om een "
 "item te selecteren."
 
 #. Translators: If this application has more than one unfocused alert or
@@ -10741,7 +10744,7 @@ msgstr ""
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
 #: ../src/orca/tutorialgenerator.py:654
 msgid "Use arrow keys to change."
-msgstr "Gebruik de pijl-toetsen om te veranderen."
+msgstr "Gebruik de pijltjestoetsen om te veranderen."
 
 #. Translators: this is a tip for the user, how to navigate menues.
 #: ../src/orca/tutorialgenerator.py:679
