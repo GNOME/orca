@@ -1,5 +1,6 @@
 <page xmlns="http://projectmallard.org/1.0/" type="guide" id="index">
   <info>
+    <title type="text">Orca Screen Reader</title>
     <title type="link">Introduction to the <app>Orca</app> Screen Reader</title>
     <credit type="author">
       <name>Joanmarie Diggs</name>
