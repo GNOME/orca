@@ -1,23 +1,23 @@
 # Orca Romanian translation
 # This file is distributed under the same license as the orca package.
-# Lucian Adrian Grijincu <lucian.grijincu@gmail.com>, 2009, 2010.
+# Lucian Adrian Grijincu <lucian.grijincu@gmail.com>, 2009, 2010, 2011.
 # Morie Daniel Alexandru <andu.qq@gmail.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-orca\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&component=i18n\n"
+"Report-Msgid-Bugs-To: "
+"http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
 "POT-Creation-Date: 2011-01-17 20:54+0000\n"
-"PO-Revision-Date: 2010-11-24 15:00+0300\n"
-"Last-Translator: Morie Daniel Alexandru <andu.qq@gmail.com>\n"
-"Language-Team: Romanian\n"
+"PO-Revision-Date: 2011-03-17 13:24+0200\n"
+"Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
+"Language-Team: Romanian Gnome Team <gnomero-list@lists.sourceforge.net>\n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ro\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);;\n"
-"X-Generator: Virtaal 0.5.2\n"
+"X-Generator: Virtaal 0.6.1\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
 #: ../src/orca/keybindings.py:157 ../src/orca/orca_gui_main.py:141
@@ -3286,7 +3286,6 @@ msgstr "Punctele 7 ș_i 8"
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
 #: ../src/orca/orca_gui_prefs.py:3071 ../src/orca/orca-setup.ui.h:185
-#, fuzzy
 #| msgid "_None"
 msgctxt "punctuation level"
 msgid "_None"
@@ -3390,16 +3389,17 @@ msgid ""
 "Profile <b>%s</b> already exists.\n"
 "Continue updating the existing profile with these new changes?"
 msgstr ""
+"Profilul <b>%s</b> există deja.\n"
+"Continuați actualizarea profilului existent cu aceste noi modificări?"
 
 #: ../src/orca/orca_gui_prefs.py:4572
-#, fuzzy
 #| msgid "<b>Braille Indicator</b>"
 msgid "<b>User Profile Conflict!</b>"
-msgstr "<b>Indicator Braille</b>"
+msgstr "<b>Conflict de profil de utilizator!</b>"
 
 #: ../src/orca/orca_gui_prefs.py:4574
 msgid "Save Profile As Conflict"
-msgstr ""
+msgstr "Salvează profilul ca conflict"
 
 #. First of all, we give a chance of cancel profile change
 #: ../src/orca/orca_gui_prefs.py:4591
@@ -3410,14 +3410,19 @@ msgid ""
 "\n"
 "Continue loading profile discarding previous changes?"
 msgstr ""
+"Sunteți pe cale de a schimba profilul activ. Dacă ați\n"
+"modificat preferințele, modificările vor fi pierdute\n"
+"la încărcarea profilului.\n"
+"\n"
+"Continuați încărcarea profilului pierzând modificările?"
 
 #: ../src/orca/orca_gui_prefs.py:4601
 msgid "<b>Load user profile info</b>"
-msgstr ""
+msgstr "<b>Încarcă informațiile profilului utilizatorului</b>"
 
 #: ../src/orca/orca_gui_prefs.py:4603
 msgid "Load User Profile"
-msgstr ""
+msgstr "Încarcă profilul utilizatorului"
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
@@ -3543,7 +3548,7 @@ msgstr "Împiedică utilizarea opțiunii"
 #.
 #: ../src/orca/orca.py:456
 msgid "Import a profile from a given orca profile file"
-msgstr ""
+msgstr "Importă un profil dintr-un fișier de profil orca dat"
 
 #. Translators: this is the Orca command line option that will quit Orca.
 #. The user would run the Orca shell script again from a terminal window.
@@ -3799,14 +3804,14 @@ msgstr "triplu clic"
 #.
 #: ../src/orca/orca.py:2192
 msgid "Unable to import profile."
-msgstr ""
+msgstr "Nu s-a putut importa profilul."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
 #: ../src/orca/orca.py:2198
 msgid "Profile import success."
-msgstr ""
+msgstr "Profil importat cu succes."
 
 #. Translators: This message is what is presented to the user
 #. when he/she attempts to import a settings profile but the
@@ -3815,7 +3820,7 @@ msgstr ""
 #: ../src/orca/orca.py:2204
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
-msgstr ""
+msgstr "Importul nu a reușit din cauza unei chei nerecunoscute: %s"
 
 #: ../src/orca/orca.py:2273
 msgid "Welcome to Orca."
@@ -3837,11 +3842,11 @@ msgstr ""
 
 #: ../src/orca/orca-profile.ui.h:1
 msgid "Save Profile As"
-msgstr ""
+msgstr "Salvează profilul ca"
 
 #: ../src/orca/orca-profile.ui.h:2
 msgid "_Profile Name:"
-msgstr ""
+msgstr "Nume _profil:"
 
 #: ../src/orca/orca-quit.ui.h:1
 msgid ""
@@ -3881,10 +3886,9 @@ msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Aranjament de tastatură</b>"
 
 #: ../src/orca/orca-setup.ui.h:8
-#, fuzzy
 #| msgid "<b>Brightness</b>"
 msgid "<b>Profiles</b>"
-msgstr "<b>Luminozitate</b>"
+msgstr "<b>Profiluri</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:10
@@ -3923,7 +3927,7 @@ msgstr "<b>Detaliere</b>"
 
 #: ../src/orca/orca-setup.ui.h:20
 msgid "Active _Profile:"
-msgstr ""
+msgstr "_Profiluri active:"
 
 #. Translators: long braille for the rolename of a application.
 #.
@@ -4270,10 +4274,9 @@ msgid "Start Orca when you lo_gin"
 msgstr "Pornește Orc_a la autentificare"
 
 #: ../src/orca/orca-setup.ui.h:148
-#, fuzzy
 #| msgid "Start from:"
 msgid "Start-up Profile:"
-msgstr "Începând de la:"
+msgstr "Profil de pornire:"
 
 #: ../src/orca/orca-setup.ui.h:149
 msgid "System"
@@ -4344,7 +4347,7 @@ msgstr "_Stânga:"
 #. This button will load the selected settings profile in the application.
 #: ../src/orca/orca-setup.ui.h:168
 msgid "_Load"
-msgstr ""
+msgstr "Î_ncarcă"
 
 #: ../src/orca/orca-setup.ui.h:169
 msgid "_New entry"
@@ -4393,7 +4396,6 @@ msgstr "Preferințe de _voce:"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
 #: ../src/orca/orca-setup.ui.h:182
-#, fuzzy
 #| msgid "_None"
 msgctxt "braille dots"
 msgid "_None"
