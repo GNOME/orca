@@ -21,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
 "POT-Creation-Date: 2011-01-17 20:54+0000\n"
-"PO-Revision-Date: 2011-03-12 00:23+0100\n"
+"PO-Revision-Date: 2011-03-17 15:22+0100\n"
 "Last-Translator: Luca Ferretti <lferrett@gnome.org>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -7231,7 +7231,7 @@ msgstr "Riporta informazioni sullo script corrente."
 #: ../src/orca/scripts/default.py:682
 #: ../src/orca/scripts/toolkits/Gecko/script.py:567
 msgid "Pans the braille display to the left."
-msgstr "Scorre il monitor braille verso sinistra."
+msgstr "Scorre il display braille verso sinistra."
 
 #. Translators: a refreshable braille display is an
 #. external hardware device that presents braille
@@ -7245,7 +7245,7 @@ msgstr "Scorre il monitor braille verso sinistra."
 #: ../src/orca/scripts/default.py:697
 #: ../src/orca/scripts/toolkits/Gecko/script.py:582
 msgid "Pans the braille display to the right."
-msgstr "Scorre il monitor braille verso destra."
+msgstr "Scorre il display braille verso destra."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
