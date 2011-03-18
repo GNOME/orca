@@ -30,6 +30,8 @@ import dbus.service
 
 import debug
 import settings
+import orca
+_settingsManager = getattr(orca, '_settingsManager')
 
 # Handlers for logging speech and braille output.
 #
@@ -140,6 +142,27 @@ class Server(dbus.service.Object):
                 debug.printException(debug.LEVEL_OFF)
             stringIO = StringIO.StringIO()
         return result
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='s', out_signature='v')
+    def getSetting(self, settingName):
+        return str(_settingsManager.getSetting(settingName))
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='s', out_signature='s')
+    def getPreferences(self, profile='default'):
+        return str(_settingsManager.getPreferences(profile))
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='', out_signature='b')
+    def isFirstStart(self):
+        return _settingsManager.isFirstStart()
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='s', out_signature='s')
+    def getGeneralSettings(self, profile='default'):
+        return str(_settingsManager.getGeneralSettings(profile))
+
 
 def init():
     """Sets up the Orca DBus service.  This will only take effect once
