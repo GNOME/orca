@@ -134,6 +134,8 @@ class Script(Gecko.Script):
         # Write the Thunderbird specific settings.
         #
         prefix = "orca.scripts.apps.Thunderbird.script_settings"
+        prefs.writelines("import %s\n\n" % prefix)
+
         value = self.sayAllOnLoadCheckButton.get_active()
         prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
         script_settings.sayAllOnLoad = value

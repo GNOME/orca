@@ -96,6 +96,7 @@ class Script(Gecko.Script):
         # Write the Yelp specific settings.
         #
         prefix = "orca.scripts.apps.yelp.yelp_v2.script_settings"
+        prefs.writelines("import %s\n\n" % prefix)
 
         value = self.grabFocusOnAncestorCheckButton.get_active()
         prefs.writelines("%s.grabFocusOnAncestor = %s\n" % (prefix, value))
