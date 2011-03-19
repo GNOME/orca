@@ -526,6 +526,8 @@ class SettingsManager(object):
         - script: the current active script.
         """
 
+        self._loadProfileSettings()
+
         import orca
         _scriptManager = getattr(orca, '_scriptManager')
 
@@ -557,6 +559,7 @@ class SettingsManager(object):
             return
 
         self._knownAppSettings[name] = module
+        reload(self._knownAppSettings[name])
 
         keybindings = getattr(module, 'overrideAppKeyBindings', None)
         if keybindings:
