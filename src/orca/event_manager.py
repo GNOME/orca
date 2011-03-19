@@ -432,10 +432,18 @@ class EventManager:
         eType = event.type
 
         if eType.startswith("object:children-changed:remove"):
-            if event.source == self.registry.getDesktop(0):
-                _scriptManager.reclaimScripts()
-                if settings.debugMemoryUsage:
-                    orca.cleanupGarbage()
+            try:
+                if event.source == self.registry.getDesktop(0):
+                    _scriptManager.reclaimScripts()
+                    if settings.debugMemoryUsage:
+                        orca.cleanupGarbage()
+                    return
+            except LookupError:
+                # If we got this error here, we'll get it again when we
+                # attempt to get the state, catch it, and clean up.
+                pass
+            except:
+                debug.printException(debug.LEVEL_WARNING)
                 return
 
         # Clean up any flat review context so that Orca does not get
