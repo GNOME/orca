@@ -928,6 +928,7 @@ class Script(default.Script):
 
         prefs.writelines("\n")
         prefix = "orca.scripts.toolkits.Gecko.script_settings"
+        prefs.writelines("import %s\n\n" % prefix)
 
         value = self.controlCaretNavigationCheckButton.get_active()
         prefs.writelines("%s.controlCaretNavigation = %s\n" % (prefix, value))

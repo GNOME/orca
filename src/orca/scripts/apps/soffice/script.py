@@ -407,6 +407,7 @@ class Script(default.Script):
 
         prefs.writelines("\n")
         prefix = "orca.scripts.apps.soffice.script_settings"
+        prefs.writelines("import %s\n\n" % prefix)
 
         script_settings.speakSpreadsheetCoordinates = \
             self.speakSpreadsheetCoordinatesCheckButton.get_active()
