@@ -77,6 +77,7 @@ class ScriptManager:
 
         self._defaultScript  = None
         self.setActiveScript(None, "deactivate")
+        self.scripts = {}
 
     def getModuleName(self, app):
         """Returns the module name of the script to use for application app."""
