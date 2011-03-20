@@ -614,11 +614,11 @@ magPointerFollowsZoomer        = True
 
 # Magnification source display
 #
-magSourceDisplay                 = ''
+magSourceDisplay                 = ':0.0'
 
 # Magnification target display
 #
-magTargetDisplay                 = ''
+magTargetDisplay                 = ':0.0'
 
 # if True, enable character echo.
 # Note that it is allowable for both enableEchoByCharacter and enableKeyEcho
