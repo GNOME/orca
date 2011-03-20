@@ -31,6 +31,7 @@ import orca.scripts.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
+from orca.orca_i18n import _
 
 from structural_navigation import StructuralNavigation
 from braille_generator import BrailleGenerator
@@ -55,6 +56,23 @@ class Script(default.Script):
         """
 
         default.Script.__init__(self, app)
+        self._loadingDocumentContent = False
+
+    def getListeners(self):
+        """Sets up the AT-SPI event listeners for this script."""
+
+        listeners = default.Script.getListeners(self)
+
+        listeners["document:reload"]                        = \
+            self.onDocumentReload
+        listeners["document:load-complete"]                 = \
+            self.onDocumentLoadComplete
+        listeners["document:load-stopped"]                  = \
+            self.onDocumentLoadStopped
+        listeners["object:state-changed:busy"]              = \
+            self.onStateChanged
+
+        return listeners
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -115,6 +133,24 @@ class Script(default.Script):
 
         default.Script.onCaretMoved(self, event)
 
+    def onDocumentReload(self, event):
+        """Called when the reload button is hit for a web page."""
+
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            self._loadingDocumentContent = True
+
+    def onDocumentLoadComplete(self, event):
+        """Called when a web page load is completed."""
+
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            self._loadingDocumentContent = False
+
+    def onDocumentLoadStopped(self, event):
+        """Called when a web page load is interrupted."""
+
+        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
+            self._loadingDocumentContent = False
+
     def onFocus(self, event):
         """Called whenever an object gets focus.
 
@@ -135,6 +171,37 @@ class Script(default.Script):
             return
 
         default.Script.onFocus(self, event)
+
+    def onStateChanged(self, event):
+        """Called whenever an object's state changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        if not event.type.startswith("object:state-changed:busy"):
+            default.Script.onStateChanged(self, event)
+            return
+
+        if not event.source \
+           or event.source.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
+            return
+
+        if event.detail1:
+            # Translators: this is in reference to loading a web page
+            # or some other content.
+            #
+            self.presentMessage(_("Loading.  Please wait."))
+        elif event.source.name:
+            # Translators: this is in reference to loading a web page
+            # or some other content.
+            #
+            self.presentMessage(_("Finished loading %s.") % event.source.name)
+        else:
+            # Translators: this is in reference to loading a web page
+            # or some other content.
+            #
+            self.presentMessage(_("Finished loading."))
 
     def onTextSelectionChanged(self, event):
         """Called when an object's text selection changes.
