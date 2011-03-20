@@ -178,6 +178,20 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         prefs.writelines("except ImportError:\n")
         prefs.writelines("    pass\n")
 
+    @staticmethod
+    def valueChanged(oldValue, newValue):
+        """Work around for the fact that some settings are lists/dictionaries
+        stored as strings in which the original list/dictionary contents might
+        be strings or might be unicode."""
+
+        if oldValue == newValue:
+            return False
+
+        try:
+            return eval(oldValue) != eval(newValue)
+        except:
+            return True
+
     def writePreferences(self):
         """Creates the directory and files to hold application specific
         user preferences.  Write out any preferences that are different
@@ -204,7 +218,7 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         for key in settings.userCustomizableSettings:
             value = self._getValueForKey(self.prefsDict, key)
             oldValue = self._getValueForKey(oldPrefsDict, key)
-            if oldValue != value:
+            if self.valueChanged(oldValue, value):
                 prefs.writelines("orca.settings.%s = %s\n" % (key, value))
 
         if self.keyBindingsTreeModel:

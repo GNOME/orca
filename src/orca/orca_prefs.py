@@ -166,7 +166,7 @@ class OrcaPrefs:
         """
 
         if not display:
-            return "''"
+            return "':0.0'"
         else:
             return "'%s'" % display
 
@@ -212,8 +212,17 @@ class OrcaPrefs:
 
         voicesStr = "{\n"
         for voice in voices:
+            # Hack to deal with the fact that we're creating a string from
+            # a setting in which dictionary keys may be in unicode. This
+            # later causes equality checks to fail. Such nonsense should
+            # go away when app settings are also fully managed by the
+            # settings manager.
+            voiceDict = voices[voice]
+            newDict = {}
+            for key, value in voiceDict.items():
+                newDict[str(key)] = value
             voicesStr += "'%s' : orca.acss.ACSS(" % voice
-            voicesStr += pprint.pformat(voices[voice]) + "),\n"
+            voicesStr += pprint.pformat(newDict) + "),\n"
         voicesStr += "}"
 
         return voicesStr
