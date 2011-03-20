@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-03-05 10:22+0000\n"
-"PO-Revision-Date: 2011-03-13 14:41+0100\n"
+"POT-Creation-Date: 2011-03-17 20:24+0000\n"
+"PO-Revision-Date: 2011-03-20 12:27+0100\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "Configurar qué formateo se presenta"
 #: C/preferences_introduction.page:8(name) C/preferences_general.page:11(name)
 #: C/preferences_gecko.page:12(name) C/preferences_chat.page:10(name)
 #: C/preferences_braille.page:11(name) C/introduction.page:10(name)
-#: C/index.page:5(name) C/howto_whereami.page:10(name)
+#: C/index.page:6(name) C/howto_whereami.page:10(name)
 #: C/howto_toggling_caps_lock.page:8(name)
 #: C/howto_the_orca_modifier.page:11(name) C/howto_text_setup.page:8(name)
 #: C/howto_text_attributes.page:10(name) C/howto_tables.page:10(name)
@@ -106,7 +106,7 @@ msgstr "Joanmarie Diggs"
 #: C/preferences_introduction.page:9(email)
 #: C/preferences_general.page:12(email) C/preferences_gecko.page:13(email)
 #: C/preferences_chat.page:11(email) C/preferences_braille.page:12(email)
-#: C/introduction.page:11(email) C/index.page:6(email)
+#: C/introduction.page:11(email) C/index.page:7(email)
 #: C/howto_whereami.page:11(email) C/howto_toggling_caps_lock.page:9(email)
 #: C/howto_the_orca_modifier.page:12(email) C/howto_text_setup.page:9(email)
 #: C/howto_text_attributes.page:11(email) C/howto_tables.page:11(email)
@@ -138,7 +138,7 @@ msgstr "joanied@gnome.org"
 #: C/preferences_key_bindings.page:16(p) C/preferences_introduction.page:12(p)
 #: C/preferences_general.page:15(p) C/preferences_gecko.page:16(p)
 #: C/preferences_chat.page:14(p) C/preferences_braille.page:15(p)
-#: C/introduction.page:14(p) C/index.page:9(p) C/howto_whereami.page:14(p)
+#: C/introduction.page:14(p) C/index.page:10(p) C/howto_whereami.page:14(p)
 #: C/howto_toggling_caps_lock.page:12(p) C/howto_the_orca_modifier.page:15(p)
 #: C/howto_text_setup.page:12(p) C/howto_text_attributes.page:14(p)
 #: C/howto_tables.page:14(p) C/howto_structural_navigation.page:16(p)
@@ -3255,43 +3255,47 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: C/index.page:13(None)
+#: C/index.page:14(None)
 msgid "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 msgstr "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 
 #: C/index.page:3(title)
+msgid "Orca Screen Reader"
+msgstr ""
+
+#: C/index.page:4(title)
 msgid "Introduction to the <app>Orca</app> Screen Reader"
 msgstr ""
 
-#: C/index.page:12(title)
+#: C/index.page:13(title)
 msgid ""
 "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
 "\"><app>Orca</app>'s logo </media><app>Orca</app> Screen Reader"
 msgstr ""
 
-#: C/index.page:19(title)
+#: C/index.page:20(title)
 msgid "Before You Begin"
 msgstr "Antes de comenzar"
 
-#: C/index.page:20(p)
+#: C/index.page:21(p)
 msgid ""
 "Read the <link href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility "
 "Guide</link>"
 msgstr ""
 
-#: C/index.page:26(title) C/commands.page:17(title)
+#: C/index.page:27(title) C/commands.page:17(title)
 msgid "Getting Started"
 msgstr "Inicio"
 
-#: C/index.page:29(title)
+#: C/index.page:30(title)
 msgid "Reading Documents and Web Pages"
 msgstr ""
 
-#: C/index.page:32(title) C/commands.page:26(title)
+#: C/index.page:33(title) C/commands.page:26(title)
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr ""
 
-#: C/index.page:35(title)
+#: C/index.page:36(title)
 msgid "Quick Reference"
 msgstr "Referencia rápida"
 
@@ -5719,7 +5723,7 @@ msgstr ""
 
 #: C/commands_reading.page:174(title)
 msgid "Text Attributes and Selected Text"
-msgstr ""
+msgstr "Atributos del texto y texto seleccionado"
 
 #: C/commands_reading.page:175(p)
 msgid ""
@@ -5728,12 +5732,18 @@ msgid ""
 "commands from within a text object in which text has been selected, "
 "<app>Orca</app> will announce the selected text."
 msgstr ""
+"Orca ha dedicado un comando para obtener los atributos del texto en la "
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
+"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
+"<app>Orca</app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(p)
 msgid ""
 "Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
 "keyseq>"
 msgstr ""
+"Presentar los atributos del texto: <keyseq><key>Modificador de Orca</"
+"key><key>F</key></keyseq>"
 
 #: C/commands.page:5(title)
 msgid "4. <app>Orca</app>'s Commands"
@@ -5749,15 +5759,15 @@ msgstr "Comandos de <app>Orca</app>"
 
 #: C/commands.page:20(title)
 msgid "Speech, Braille, and Magnification"
-msgstr ""
+msgstr "Voz, Braille y magnificación"
 
 #: C/commands.page:23(title)
 msgid "Reading Web Pages and Other Documents"
-msgstr ""
+msgstr "Leer páginas web y otros documentos"
 
 #: C/commands.page:29(title)
 msgid "Accessing Dynamic Information"
-msgstr ""
+msgstr "Acceder dinámicamente a la información "
 
 #: C/commands.page:32(title)
 msgid "Troubleshooting"
@@ -5765,11 +5775,11 @@ msgstr "Resolución de problemas"
 
 #: C/commands_mouse.page:5(title)
 msgid "3. Mouse/Pointer-Related"
-msgstr ""
+msgstr "3. Relacionado con el ratón/puntero"
 
 #: C/commands_mouse.page:6(title)
 msgid "Mouse/Pointer-Related"
-msgstr ""
+msgstr "relacionado con ratón/puntero"
 
 #: C/commands_mouse.page:9(desc)
 msgid "Commands for manipulating the pointer"
@@ -5777,7 +5787,7 @@ msgstr "Comandos para manipular el puntero"
 
 #: C/commands_mouse.page:20(title)
 msgid "Mouse/Pointer-Related Commands"
-msgstr ""
+msgstr "Comandos relacionados con el ratón/puntero"
 
 #: C/commands_mouse.page:21(p)
 msgid ""
@@ -5801,7 +5811,7 @@ msgstr ""
 
 #: C/commands_mouse.page:41(p)
 msgid "Left-click on current item:"
-msgstr ""
+msgstr "Pulsar con el botón izquierdo en el elemento actual:"
 
 #: C/commands_mouse.page:43(p)
 msgid "Desktop: <keyseq><key>KP Divide</key></keyseq>"
@@ -5813,7 +5823,7 @@ msgstr ""
 
 #: C/commands_mouse.page:48(p)
 msgid "Right-click on current item:"
-msgstr ""
+msgstr "Pulsar con el botón derecho en el elemento actual:"
 
 #: C/commands_mouse.page:50(p)
 msgid "Desktop: <keyseq><key>KP Multiply</key></keyseq>"
@@ -5825,7 +5835,7 @@ msgstr ""
 
 #: C/commands_mouse.page:55(p)
 msgid "Route pointer to current item:"
-msgstr ""
+msgstr "Posicionar el puntero en el elemento actual:"
 
 #: C/commands_mouse.page:57(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
@@ -6491,24 +6501,32 @@ msgid ""
 "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</"
 "key><key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 msgstr ""
+"Guardar un marcador en el espacio numerado: <keyseq><key>Modificador de "
+"Orca</key><key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 
 #: C/commands_bookmarks.page:28(p)
 msgid ""
 "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Alt</key><key>B</key></keyseq>"
 msgstr ""
+"Guardar los marcadores definidos para la aplicación o página: "
+"<keyseq><key>Modificador de Orca</key><key>Alt</key><key>B</key></keyseq>"
 
 #: C/commands_bookmarks.page:34(p)
 msgid ""
 "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key><key>1</"
 "key></keyseq>-<key>6</key>"
 msgstr ""
+"Ir a un marcador específico, numerado: <keyseq><key>Modificador de Orca</"
+"key><key>1</key></keyseq>-<key>6</key>"
 
 #: C/commands_bookmarks.page:40(p)
 msgid ""
 "Go to the previous bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Shift</key><key>B</key></keyseq>"
 msgstr ""
+"Ir al anterior marcador para la aplicación o página: "
+"<keyseq><key>Modificador de Orca</key><key>Mayús</key><key>B</key></keyseq>"
 
 #: C/commands_bookmarks.page:47(p)
 msgid ""
