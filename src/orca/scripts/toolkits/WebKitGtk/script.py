@@ -170,6 +170,12 @@ class Script(default.Script):
         if role in textRoles:
             return
 
+        if role == pyatspi.ROLE_LINK and obj.childCount:
+            try:
+                text = obj.queryText()
+            except NotImplementedError:
+                orca.setLocusOfFocus(event, obj[0])
+
         default.Script.onFocus(self, event)
 
     def onStateChanged(self, event):
