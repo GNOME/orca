@@ -34,7 +34,7 @@ class Script(WebKitGtk.Script):
     def __init__(self, app):
         """Creates a new script for the given application."""
 
-        WebKitGtk.Script.__init__(self, app)
+        WebKitGtk.Script.__init__(self, app, isBrowser=True)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types

@@ -49,7 +49,7 @@ class Script(default.Script):
 
     CARET_NAVIGATION_KEYS = ['Left', 'Right', 'Up', 'Down', 'Home', 'End']
 
-    def __init__(self, app):
+    def __init__(self, app, isBrowser=False):
         """Creates a new script for WebKitGtk applications.
 
         Arguments:
@@ -58,6 +58,7 @@ class Script(default.Script):
 
         default.Script.__init__(self, app)
         self._loadingDocumentContent = False
+        self._isBrowser = isBrowser
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script."""
@@ -145,6 +146,9 @@ class Script(default.Script):
 
         if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
             self._loadingDocumentContent = False
+            if self._isBrowser:
+                obj, offset = self.setCaretAtStart(event.source)
+                orca.setLocusOfFocus(event, obj, False)
 
     def onDocumentLoadStopped(self, event):
         """Called when a web page load is interrupted."""
@@ -191,7 +195,8 @@ class Script(default.Script):
             return
 
         if not event.source \
-           or event.source.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
+           or event.source.getRole() != pyatspi.ROLE_DOCUMENT_FRAME \
+           or not self._isBrowser:
             return
 
         if event.detail1:
