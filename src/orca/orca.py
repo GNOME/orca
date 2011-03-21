@@ -1585,10 +1585,10 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     _storeXmodmap(_orcaModifiers)
     _createOrcaXmodmap()
 
+    showMainWindowGUI()
+
     _scriptManager.activate()
     _eventManager.activate()
-
-    showMainWindowGUI()
 
     # Only start the D-Bus server if we're in an environment where there 
     # is a D-Bus session bus already running.  This helps prevent nastiness
