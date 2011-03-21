@@ -130,6 +130,13 @@ class Script(default.Script):
         if lastKey in ['Tab', 'ISO_Left_Tab']:
             return
 
+        if lastKey == 'Down' \
+           and orca_state.locusOfFocus == event.source.parent \
+           and event.source.getIndexInParent() == 0 \
+           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_LINK:
+            self.updateBraille(event.source)
+            return
+
         if self.utilities.isWebKitGtk(orca_state.locusOfFocus):
             orca.setLocusOfFocus(event, event.source, False)
 
