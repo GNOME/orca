@@ -156,13 +156,13 @@ class ScriptManager:
     def _createScript(self, app, obj=None):
         """For the given application, create a new script instance."""
 
-        objToolkit = self._toolkitForObject(obj)
-        script = self._newNamedScript(app, objToolkit)
+        moduleName = self.getModuleName(app)
+        script = self._newNamedScript(app, moduleName)
         if script:
             return script
 
-        moduleName = self.getModuleName(app)
-        script = self._newNamedScript(app, moduleName)
+        objToolkit = self._toolkitForObject(obj)
+        script = self._newNamedScript(app, objToolkit)
         if script:
             return script
 
