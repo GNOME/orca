@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.orca as orca
 import orca.structural_navigation as structural_navigation
 
 ########################################################################
@@ -60,3 +61,20 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
             obj = obj[0]
 
         return [obj, 0]
+
+    def _setCaretPosition(self, obj, characterOffset):
+        """Sets the caret at the specified offset within obj.
+
+        Arguments:
+        - obj: the accessible object in which the caret should be
+          positioned.
+        - characterOffset: the offset at which to position the caret.
+        """
+
+        if characterOffset == 0:
+            child, offset = self._script.setCaretAtStart(obj)
+            orca.setLocusOfFocus(None, child, False)
+            return
+
+        structural_navigation.StructuralNavigation._setCaretPosition(
+            self, obj, characterOffset)

@@ -26,6 +26,7 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
 import pyatspi
+import pyatspi.utils as utils
 
 import orca.scripts.default as default
 import orca.orca as orca
@@ -299,3 +300,34 @@ class Script(default.Script):
                 return False
 
         return True
+
+    def setCaretAtStart(self, obj):
+        """Attempts to set the caret at the specified offset in obj. Because
+        this is not always possible, this method will attempt to locate the
+        first place inside of obj in which the caret can be positioned.
+
+        Arguments:
+        - obj: the accessible object in which the caret should be placed.
+
+        Returns the object and offset in which we were able to set the caret.
+        Otherwise, None if we could not find a text object, and -1 if we were
+        not able to set the caret.
+        """
+
+        def implementsText(obj):
+            return 'Text' in utils.listInterfaces(obj)
+
+        child = obj
+        if not implementsText(obj):
+            child = utils.findDescendant(obj, implementsText)
+            if not child:
+                return None, -1
+
+        index = -1
+        text = child.queryText()
+        for i in xrange(text.characterCount):
+            if text.setCaretOffset(i):
+                index = i
+                break
+
+        return child, index
