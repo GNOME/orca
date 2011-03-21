@@ -29,7 +29,10 @@ import pyatspi
 import pyatspi.utils as utils
 
 import orca.scripts.default as default
+import orca.input_event as input_event
 import orca.orca as orca
+import orca.settings as settings
+import orca.speechserver as speechserver
 import orca.orca_state as orca_state
 import orca.speech as speech
 from orca.orca_i18n import _
@@ -38,6 +41,8 @@ from structural_navigation import StructuralNavigation
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
 from script_utilities import Utilities
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 ########################################################################
 #                                                                      #
@@ -83,6 +88,19 @@ class Script(default.Script):
         default.Script.setupInputEventHandlers(self)
         self.inputEventHandlers.update(
             self.structuralNavigation.inputEventHandlers)
+
+        self.inputEventHandlers["sayAllHandler"] = \
+            input_event.InputEventHandler(
+                Script.sayAll,
+                # Translators: the Orca "SayAll" command allows the
+                # user to press a key and have the entire document in
+                # a window be automatically spoken to the user.  If
+                # the user presses any key during a SayAll operation,
+                # the speech will be interrupted and the cursor will
+                # be positioned at the point where the speech was
+                # interrupted.
+                #
+                _("Speaks entire document."))
 
     def getKeyBindings(self):
         """Defines the key bindings for this script. Setup the default
@@ -343,3 +361,102 @@ class Script(default.Script):
                 break
 
         return child, index
+
+    def sayAll(self, inputEvent):
+        """Speaks the contents of the document beginning with the present
+        location.  Overridden in this script because the sayAll could have
+        been started on an object without text (such as an image).
+        """
+
+        if not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
+            return default.Script.sayAll(self, inputEvent)
+
+        speech.sayAll(self.textLines(orca_state.locusOfFocus),
+                      self.__sayAllProgressCallback)
+
+        return True
+
+    def getTextSegments(self, obj, boundary, offset=0):
+        segments = []
+        text = obj.queryText()
+        length = text.characterCount
+        string, start, end = text.getTextAtOffset(offset, boundary)
+        while string and offset < length:
+            string = self.utilities.adjustForRepeats(string)
+            voice = self.speechGenerator.getVoiceForString(obj, string)
+            string = self.utilities.adjustForLinks(obj, string, start)
+            segments.append([string, start, end, voice])
+            offset = end
+            string, start, end = text.getTextAtOffset(offset, boundary)
+
+        return segments
+
+    def textLines(self, obj):
+        """Creates a generator that can be used to iterate over each line
+        of a text object, starting at the caret offset.
+
+        Arguments:
+        - obj: an Accessible that has a text specialization
+
+        Returns an iterator that produces elements of the form:
+        [SayAllContext, acss], where SayAllContext has the text to be
+        spoken and acss is an ACSS instance for speaking the text.
+        """
+
+        document = utils.findAncestor(
+            obj, lambda x: x.getRole() == pyatspi.ROLE_DOCUMENT_FRAME)
+        allTextObjs = utils.findAllDescendants(
+            document, lambda x: 'Text' in utils.listInterfaces(x))
+        allTextObjs = allTextObjs[allTextObjs.index(obj):len(allTextObjs)]
+        textObjs = filter(lambda x: x.parent not in allTextObjs, allTextObjs)
+        if not textObjs:
+            return
+
+        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        sayAllStyle = _settingsManager.getSetting('sayAllStyle')
+        if sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
+            boundary = pyatspi.TEXT_BOUNDARY_SENTENCE_START
+
+        offset = textObjs[0].queryText().caretOffset
+        for textObj in textObjs:
+            textSegments = self.getTextSegments(textObj, boundary, offset)
+            roleInfo = self.speechGenerator.getRoleName(textObj)
+            if roleInfo:
+                roleName, voice = roleInfo
+                textSegments.append([roleName, 0, -1, voice])
+
+            for (string, start, end, voice) in textSegments:
+                yield [speechserver.SayAllContext(textObj, string, start, end),
+                       voice]
+
+            offset = 0
+
+    def __sayAllProgressCallback(self, context, progressType):
+        if progressType == speechserver.SayAllContext.PROGRESS:
+            return
+
+        obj = context.obj
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+
+        offset = context.currentOffset
+        text = obj.queryText()
+
+        if progressType == speechserver.SayAllContext.INTERRUPTED:
+            text.setCaretOffset(offset)
+            return
+
+        # SayAllContext.COMPLETED doesn't necessarily mean done with SayAll;
+        # just done with the current object. If we're still in SayAll, we do
+        # not want to set the caret (and hence set focus) in a link we just
+        # passed by.
+        try:
+            hypertext = obj.queryHypertext()
+        except NotImplementedError:
+            pass
+        else:
+            linkCount = hypertext.getNLinks()
+            links = [hypertext.getLink(x) for x in range(linkCount)]
+            if filter(lambda l: l.startIndex <= offset <= l.endIndex, links):
+                return
+
+        text.setCaretOffset(offset)
