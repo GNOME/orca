@@ -1,8 +1,8 @@
 # Orca
 #
-# Copyright (C) 2010 Joanmarie Diggs
+# Copyright (C) 2010-2011 The Orca Team
 #
-# Author: Joanmarie Diggs <joanied@gnome.org>
+# Author: Joanmarie Diggs <joanmarie.diggs@gmail.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs"
+__copyright__ = "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
 
 import pyatspi
@@ -37,6 +37,7 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 from orca.orca_i18n import _
 
+import script_settings
 from structural_navigation import StructuralNavigation
 from braille_generator import BrailleGenerator
 from speech_generator import SpeechGenerator
@@ -64,6 +65,8 @@ class Script(default.Script):
         default.Script.__init__(self, app)
         self._loadingDocumentContent = False
         self._isBrowser = isBrowser
+
+        self.sayAllOnLoadCheckButton = None
 
     def getListeners(self):
         """Sets up the AT-SPI event listeners for this script."""
@@ -115,6 +118,46 @@ class Script(default.Script):
             keyBindings.add(keyBinding)
 
         return keyBindings
+
+    def getAppPreferencesGUI(self):
+        """Return a GtkVBox contain the application unique configuration
+        GUI items for the current application.
+        """
+
+        import gtk
+
+        vbox = gtk.VBox(False, 0)
+        vbox.set_border_width(12)
+        vbox.show()
+
+        # Translators: when the user loads a new page in WebKit, they
+        # can optionally tell Orca to automatically start reading a
+        # page from beginning to end.
+        #
+        label = \
+            _("Automatically start speaking a page when it is first _loaded")
+        self.sayAllOnLoadCheckButton = gtk.CheckButton(label)
+        self.sayAllOnLoadCheckButton.show()
+        vbox.pack_start(self.sayAllOnLoadCheckButton, False, False, 0)
+        self.sayAllOnLoadCheckButton.set_active(script_settings.sayAllOnLoad)
+
+        return vbox
+
+    def setAppPreferences(self, prefs):
+        """Write out the application specific preferences lines and set the
+        new values.
+
+        Arguments:
+        - prefs: file handle for application preferences.
+        """
+
+        prefs.writelines("\n")
+        prefix = "orca.scripts.toolkits.WebKitGtk.script_settings"
+        prefs.writelines("import %s\n\n" % prefix)
+
+        value = self.sayAllOnLoadCheckButton.get_active()
+        prefs.writelines("%s.sayAllOnLoad = %s\n" % (prefix, value))
+        script_settings.sayAllOnLoad = value
 
     def getBrailleGenerator(self):
         """Returns the braille generator for this script."""
@@ -169,11 +212,23 @@ class Script(default.Script):
     def onDocumentLoadComplete(self, event):
         """Called when a web page load is completed."""
 
-        if event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
-            self._loadingDocumentContent = False
-            if self._isBrowser:
-                obj, offset = self.setCaretAtStart(event.source)
-                orca.setLocusOfFocus(event, obj, False)
+        if event.source.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
+            return
+
+        self._loadingDocumentContent = False
+        if not self._isBrowser:
+            return
+
+        # TODO: We need to see what happens in Epiphany on pages where focus
+        # is grabbed rather than set the caret at the start. But for simple
+        # content in both Yelp and Epiphany this is alright for now.
+        obj, offset = self.setCaretAtStart(event.source)
+        orca.setLocusOfFocus(event, obj, False)
+
+        self.updateBraille(obj)
+        if script_settings.sayAllOnLoad \
+           and _settingsManager.getSetting('enableSpeech'):
+            self.sayAll(None)
 
     def onDocumentLoadStopped(self, event):
         """Called when a web page load is interrupted."""
