@@ -167,7 +167,7 @@ class Server(dbus.service.Object):
     @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
                          in_signature='s', out_signature='a{sv}')
     def getKeybindings(self, profile='default'):
-        return _settingsManager.getPronunciations(profile)
+        return _settingsManager.getKeybindings(profile)
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
                          in_signature='s', out_signature='v')
