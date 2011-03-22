@@ -30,6 +30,7 @@ import dbus.service
 
 import debug
 import settings
+
 import orca
 _settingsManager = getattr(orca, '_settingsManager')
 
@@ -144,25 +145,61 @@ class Server(dbus.service.Object):
         return result
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='', out_signature='aas')
+    def availableProfiles(self):
+        return _settingsManager._backend.availableProfiles()
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='s', out_signature='a{sv}a{sv}a{sv}')
+    def getPreferences(self, profile):
+        return _settingsManager.getPreferences(profile)
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='s', out_signature='a{sv}')
+    def getGeneralSettings(self, profile='default'):
+        return _settingsManager.getGeneralSettings(profile)
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='s', out_signature='a{sv}')
+    def getPronunciations(self, profile='default'):
+        return _settingsManager.getPronunciations(profile)
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
+                         in_signature='s', out_signature='a{sv}')
+    def getKeybindings(self, profile='default'):
+        return _settingsManager.getPronunciations(profile)
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
                          in_signature='s', out_signature='v')
     def getSetting(self, settingName):
-        return str(_settingsManager.getSetting(settingName))
+        return _settingsManager.getSetting(settingName)
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
-                         in_signature='s', out_signature='s')
-    def getPreferences(self, profile='default'):
-        return str(_settingsManager.getPreferences(profile))
+                         in_signature='sv', out_signature='')
+    def setSetting(self, settingName, settingValue):
+        _settingsManager.setSetting(settingName, settingValue)
+
+        settingValueToUpdate = {dbus.Boolean:   bool,
+                                dbus.Int32:     int,
+                                dbus.String:    str,
+                                dbus.Double:    float}
+
+        _settingsManager.updateSetting(settingName, 
+                settingValueToUpdate[type(settingValue)](settingValue))
+
+        _settingsManager.saveSettings(_settingsManager.general, 
+                                      _settingsManager.pronunciations, 
+                                      _settingsManager.keybindings)
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
-                         in_signature='', out_signature='b')
-    def isFirstStart(self):
-        return _settingsManager.isFirstStart()
+                         in_signature='s', out_signature='')
+    def setProfile(self, profile):
+        _settingsManager.setProfile(profile)
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Settings',
-                         in_signature='s', out_signature='s')
-    def getGeneralSettings(self, profile='default'):
-        return str(_settingsManager.getGeneralSettings(profile))
-
+                         in_signature='', out_signature='')
+    def quitOrca(self):
+        orca.quitOrca()
 
 def init():
     """Sets up the Orca DBus service.  This will only take effect once

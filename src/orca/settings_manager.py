@@ -391,6 +391,9 @@ class SettingsManager(object):
         self.profileKeybindings = self.defaultKeybindings.copy()
         self.profileKeybindings.update(keybindings)
 
+    def updateSetting(self, settingName, settingValue):
+        self.general.update({settingName:settingValue})
+
     def saveSettings(self, general, pronunciations, keybindings):
         """Let the active backend to store the default settings and
         the profiles' ones."""
