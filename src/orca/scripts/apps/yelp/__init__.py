@@ -46,9 +46,7 @@ def getScript(app):
     if toolkit == 'WebKitGtk':
         unloadYelpScript('v2')
         from yelp_v3 import script
-        print sys.modules
         return script.Script(app)
     else:
         from yelp_v2 import script
-        print sys.modules
         return script.Script(app)
