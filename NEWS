@@ -1,3 +1,80 @@
+2.91.92 - 21-March-2011
+
+General:
+
+  * Provide 'text' title type in the help content so that
+    the logo alt text doesn't wind up being displayed where
+    it should not be.
+
+  * Fix for bug #Bug 645241 - Attempting to manually run
+    certain app-settings files results in a traceback
+
+  * Fix for bug #645256 - Unhandled LookupError when
+    an application is quit
+
+  * Fix for bug #643304 - Specific apps settings are applied
+    globally
+
+  * Fix for bug #645278 - Orca is writing out application
+    prefences it should not
+
+  * Fix for bug #643969 - When switching from desktop to
+    laptop mode, new keybindings don't take effect
+    until restart
+
+  * Fix for bug #645364 - Need to check for "mapped" scripts
+    before object toolkit scripts when creating a new script
+
+  * Fix for bug #645362 - Orca is ignoring --disable main-window
+
+  * Fix for the problem with script loading of version 2
+    and 3 of Yelp.
+
+Gecko/Yelp 2:
+
+  * Fix for bug #645117 - Traceback when using Orca with
+    Gecko-based Yelp
+
+WebKitGtk/Yelp 3:
+
+  * Fix for bug #645286 - Orca should announce when WebKitGtk
+    content has started or finished loading
+
+  * Fix for bug #645290 - Orca does not present links in
+    Yelp 3 when those links are made up of multiple objects
+
+  * Fix for bug #645359 - Orca is not able to set the caret
+    position within a WebKitGtk list item when using
+    structural navigation
+
+  * Fix for bug #645366 - Orca needs to work around the initial
+    lack of caret in a newly-loaded WebKitGtk page
+
+  * Fix for bug #645465 Say All needs to be implemented for
+    WebKitGtk-based apps
+
+  * Fix for bug #645474 - Orca should provide the option of
+    performing a Say All when WebKitGtk content is loaded
+
+Clutter/Cally:
+
+  * By default, any selection change on CALLY means a change
+    on locusOfFocus
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    en_GB     British English          Bruce Cowan
+    es        Spanish                  Jorge González
+    de        German                   Mario Blättermann
+    it        Italian                  Luca Ferretti
+    pl        Polish                   Piotr Drąg
+    po        Dutch                    Hannie Dumoleyn
+                                       Wouter Bolsterlee
+    ro        Romanian                 Lucian Adrian Grijincu
+    ru        Russian                  Anatol Kamynin
+
+==========
+
 2.91.91 - 07-March-2011
 
 General:
