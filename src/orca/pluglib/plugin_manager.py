@@ -33,9 +33,9 @@ import glob
 import imp
 import inspect
 import abc
-import orca.store_config as store_config
 
-from orca.pluglib.interfaces import *
+from orca.pluglib.interfaces import IPluginManager, IPlugin, ICommand, \
+    IConfigurable, IDependenciesChecker, PluginManagerError, IPresenter
 
 dirname, filename = os.path.split(os.path.abspath(__file__))
 PLUGINS_DIR = [os.path.join(dirname, '..', 'baseplugins')]
@@ -43,7 +43,7 @@ PLUGINS_DIR = [os.path.join(dirname, '..', 'baseplugins')]
 class ModulePluginManager(IPluginManager):
     """A plugin manager that handles with python modules"""
 
-    def __init__(self, plugin_paths=[]):
+    def __init__(self, plugin_paths=PLUGINS_DIR):
 
         self.plugin_paths = plugin_paths
         if not type(self.plugin_paths) is list:
@@ -53,8 +53,10 @@ class ModulePluginManager(IPluginManager):
         # 'type': plugin_type, 'registered':, if_registered}
         self.plugins = {}
 
-        self.store_conf = store_config.StoreConfig()
-        self.plugins_conf = self.store_conf.getPlugins()
+# nacho's
+#        self.store_conf = store_config.StoreConfig()
+#        self.plugins_conf = self.store_conf.getPlugins()
+        self.plugins_conf = {}
 
     def inspect_plugin_module(self, module_name, path):
         plugins = {}
@@ -77,23 +79,33 @@ class ModulePluginManager(IPluginManager):
 
                     # REGISTERED NOT USED... IS ALL DONE WITH ACTIVE FIELD! (OR NOT?)
                     registered = self.plugins_conf[module_name]['registered'] \
-                                if self.plugins_conf and module_name in self.plugins_conf \
+                                if self.plugins_conf and \
+                                module_name in self.plugins_conf \
                                 else True
-    
-                    plugins.update([(module_name, {'class': klass, 'object': None, 'name': name, 
-                                            'active': active, 'type': None, 'registered': registered,
-                                            'path': path}) 
-        
-                        for (name, klass) in inspect.getmembers(module, inspect.isclass)
-                        if issubclass(klass, IPlugin) and name != "IPlugin"])
-    
-                    print "Importing new module: " + str(module_name)
+         
+                    for (name, klass) in inspect.getmembers(module, \
+                                    inspect.isclass):
+                        if issubclass(klass, IPlugin) and name != "IPlugin":
+                            plugDict = {'class':klass, \
+			                   'object': None, \
+                                           'name': name, 'active': active, \
+                                           'type': None, \
+                                           'registered': registered, \
+                                           'path': path}
+
+		            plugins.update({module_name : plugDict})
+                            self.setPluginTypes(plugDict, module)
+
+                    print "Loading '%s' plugin: done!" % str(module_name)
+                    
                 except LookupError, e:
-                    raise PluginManagerError, 'Update dictionary fails in %s: %s' % (name, e)
+                    raise PluginManagerError, \
+                            'Update dictionary fails in %s: %s' % (name, e)
     
                 # ADD PLUGIN!
                 # pass name, module_name and registered or not
-                self.store_conf.addPlugin(name, registered, module_name, path)
+# nacho's
+#                self.store_conf.addPlugin(name, registered, module_name, path)
     
             except Exception, e:
                 raise PluginManagerError, 'Cannot load module %s: %s' % \
@@ -104,7 +116,7 @@ class ModulePluginManager(IPluginManager):
 
         return plugins
 
-    def scan_more_plugins(self):
+    def scanPluginsDir(self):
         print "Scanning plugins..."
         # CHECK BASEPLUGINS FOR PLUGINS
         # In inspect_plugin_module we compare with the plugins list
@@ -135,13 +147,24 @@ class ModulePluginManager(IPluginManager):
                 dict_plugins.update(type_update)               
                 dict_plugins.update(klass_update)
                 dict_plugins.update(object_update)
-            if issubclass(klass, ICommand) and the_name != "ICommand":
-                type_update = {'type': 'Command'}
-                dict_plugins.update(type_update) 
+# nacho's
+#            if issubclass(klass, ICommand) and the_name != "ICommand":
+#                type_update = {'type': 'Command'}
+#                dict_plugins.update(type_update) 
+
+    def setPluginTypes(self, plugin, module):
+        print module
+        types = []
+        for (the_name, klass) in inspect.getmembers(module, inspect.isclass):
+            if issubclass(plugin['class'], ICommand) and the_name != "ICommand":
+                if 'Command' not in types: types.append('Command') 
+            if issubclass(plugin['class'], IPresenter) and the_name != "IPresenter":
+                if 'Presenter' not in types: types.append('Presenter')
+        plugin.update({'type' : types})
 
     def scan_plugins(self):
-        # Compare 
-        self.scan_more_plugins()
+        # Compare
+        self.scanPluginsDir()
         
         # LOAD FROM STORE_CONF
         if self.plugins_conf:
@@ -177,15 +200,17 @@ class ModulePluginManager(IPluginManager):
             self.plugins = load_plugins
 
     def enable_plugin(self, plugin_name):
-        # first, make the plugin active in appropiated backend
-        enabling_plugins = self.store_conf.getPluginByName(plugin_name)
-        enabling_plugins['active'] = True
-        self.store_conf.updatePlugin({plugin_name: enabling_plugins})
+
+# nacho's
+#        # first, make the plugin active in appropiated backend
+#        enabling_plugins = self.store_conf.getPluginByName(plugin_name)
+#        enabling_plugins['active'] = True
+#        self.store_conf.updatePlugin({plugin_name: enabling_plugins})
 
         if self.plugins:
+            print self.plugins
             # load the class in the plugin list maintained in memory
-            self.load_class_in_plugin(self.plugins[plugin_name], plugin_name, 
-                    [self.plugins[plugin_name]['path']])
+            self.load_class_in_plugin(self.plugins[plugin_name], plugin_name, PLUGINS_DIR)
 
             plugin_class = self.plugins[plugin_name]['class']
 
@@ -197,6 +222,7 @@ class ModulePluginManager(IPluginManager):
 
             # instantiate an object, we have the class now
             plugin_object = plugin_class()
+            plugin_object.enable()
 
             # this code is not checked actually, but I know
             # what to do with it
@@ -206,27 +232,32 @@ class ModulePluginManager(IPluginManager):
             self.plugins[plugin_name]['object'] = plugin_object
 
     def disable_plugin(self, plugin_name):
-        if self.is_plugin_enabled(plugin_name):
-            plugin_object = self.plugins[plugin_name]['object']
-    
-            if isinstance(plugin_object, IConfigurable):
-    	        plugin_object.save()
+# nacho's
+#        if self.is_plugin_enabled(plugin_name):
+        plugin_object = self.plugins[plugin_name]['object']
 
-            if isinstance(plugin_object, ICommand):
-                plugin_object.removePluginKeybinding()
- 
-            self.plugins[plugin_name]['object'] = None
+# nacho's
+#        if isinstance(plugin_object, IConfigurable):
+#            plugin_object.save()
+#
+#        if isinstance(plugin_object, ICommand):
+#            plugin_object.removePluginKeybinding()
 
-            # make the plugin inactive in the appropiated backend
-            disabling_plugins = self.store_conf.getPluginByName(plugin_name)
-            disabling_plugins['active'] = False
-            self.store_conf.updatePlugin({plugin_name: disabling_plugins})
+        plugin_object.disable()
+        self.plugins[plugin_name]['object'] = None
+
+# nacho's
+#            # make the plugin inactive in the appropiated backend
+#            disabling_plugins = self.store_conf.getPluginByName(plugin_name)
+#            disabling_plugins['active'] = False
+#            self.store_conf.updatePlugin({plugin_name: disabling_plugins})
     
-            print "Unloaded module " + str(plugin_name)
+        
+        print "Unloaded module " + str(plugin_name)
             
-            # this *only* delete the name from sys.modules,
-            # not the module itself. See http://bit.ly/gbjPnB 
-            del (plugin_name)
+        # this *only* delete the name from sys.modules,
+        # not the module itself. See http://bit.ly/gbjPnB 
+        del (plugin_name)
 
 
     def get_plugins(self):
@@ -250,8 +281,6 @@ class ModulePluginManager(IPluginManager):
         else:
             raise PluginManagerError, 'No plugin named %s' % plugin_name
 
-
-
     # ATTRIBS REQUIRES TO ACCOMPLISH THE ABSTRACTION CONCEPT
 
     _plugin_paths = None
@@ -273,6 +302,45 @@ class ModulePluginManager(IPluginManager):
         self._plugins = new_plugins
 
     plugins = property(plugins_getter, plugins_setter)
+
+
+    # Configuration purposes
+
+#    def addPluginConf(self, name, registered, module_name, path):
+#        # receives a dict in the following way
+#        # 'chat': { 'name': 'Chat plugin',
+#        #           'active': True,
+#        #           'registered': False
+#        #           'type': 'Commander'
+#        #           'path': /bar/foo }
+#
+#        plugin_data = {module_name: {'name': name, 'active': False, 
+#                       'type': None, 'registered': registered,
+#                       'path': path}}
+#
+#        self.sm.addPlugin(plugin_data)
+#
+#        print "Adding plugin: " + str(plugin_data)
+#    
+#    def getPluginByName(self, plugin_name):
+#        return self.sm.getPluginByName(plugin_name)
+#
+    def getPlugins(self):
+        self.scanPluginsDir()
+        plugins = self.plugins
+        for plug in self.plugins:
+            if 'class' in plugins[plug]: plugins[plug].pop('class')
+            if 'object' in plugins[plug]: plugins[plug].pop('object')
+            if 'path' in plugins[plug]: plugins[plug].pop('path')
+            if 'registered' in plugins[plug]: plugins[plug].pop('registered')
+
+        return plugins
+#
+#    def updatePlugin(self, plugin_to_update):
+#        self.plugins_conf = self.sm.updatePlugin(plugin_to_update)
+#
+#    def saveConf(self, plugins_to_save):
+#        self.sm.saveConf(plugins_to_save)
 
 # Register implementation
 IPluginManager.register(ModulePluginManager)
