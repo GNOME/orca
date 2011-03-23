@@ -503,6 +503,17 @@ options = Options()
 if options.userPrefsDir:
     settings.userPrefsDir = options.userPrefsDir
 
+
+# From here, we're going to instantiate a Plugin Manager object
+# for interacting with plugins. The sense of this is to maintain
+# one instance and all orca modules can interact with, as same as
+# we're dealing with Settings Manager.
+# The main reason for be the first, is that settings manager needs
+# a Plugin Manager instance.
+#
+from pluglib.plugin_manager import ModulePluginManager 
+_pluginManager = ModulePluginManager()
+
 # This needs to occur prior to our importing anything which might in turn
 # import anything which might expect to be able to use the Settings Manager
 # You have been warned.
@@ -2317,11 +2328,12 @@ def main():
         loadUserSettings(skipReloadMessage=True)
         _settingsManager.setFirstStart()
 
-    # needed to load plugins (first time)
-    import pluglib
-    from pluglib.plugin_manager import plugmanager
-    
-    plugmanager.scan_plugins()
+# nacho's
+#    # needed to load plugins (first time)
+#    import pluglib
+#    from pluglib.plugin_manager import plugmanager
+#    
+#    plugmanager.scan_plugins()
 
     try:
         start(pyatspi.Registry) # waits until we stop the registry
