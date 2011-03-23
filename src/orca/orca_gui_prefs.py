@@ -2248,7 +2248,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.plugins_store.clear()
         self.currentPluginsStatus = plugins = \
-            _settingsManager.getPlugins(self.prefsDict.get('activeProfile')[0])
+            _settingsManager.getPlugins(self.prefsDict.get('activeProfile')[1])
         for plug in plugins:
             type_str = ''
             for type in plugins[plug]['type']:
