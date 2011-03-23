@@ -26,7 +26,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
-from orca.pluglib.interfaces import *
+from orca.pluglib.interfaces import IPluginManager, IPlugin, ICommand, \
+    IPresenter, IConfigurable, IDependenciesChecker, PluginManagerError
 
 from orca.orca_i18n import _         # for gettext support
 from orca.orca_i18n import ngettext  # for ngettext support
@@ -34,8 +35,6 @@ from orca.orca_i18n import C_        # to provide qualified translatable strings
 
 import orca.input_event
 import orca.keybindings
-import orca.orca as orca_module
-_settingsManager = getattr(orca_module, '_settingsManager')
  
 import time
 
@@ -48,6 +47,14 @@ class dtPlugin(IPlugin, IPresenter, ICommand):
     icon = 'gtk-missing-image'
 
     def __init__(self):
+        global _settingsManager
+
+        import orca.orca as orca_module
+        _settingsManager = getattr(orca_module, '_settingsManager')
+
+    def enable(self):
+        global _settingsManager
+
         print 'Date and time plugin started'
 
         self.myKeyBindings = orca.keybindings.KeyBindings()
@@ -82,6 +89,9 @@ class dtPlugin(IPlugin, IPresenter, ICommand):
             self.presentDateHandler))
 
         orca.settings.keyBindingsMap["default"] = self.myKeyBindings
+
+    def disable(self):
+        self.removePluginKeybinding()
 
     def presentTime(self, script, inputEvent=None):
         timeFormat = _settingsManager.getSetting('presentTimeFormat')

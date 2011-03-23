@@ -26,18 +26,16 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
-from orca.pluglib.interfaces import *
+from orca.pluglib.interfaces import IPluginManager, IPlugin, ICommand, \
+    IPresenter, IConfigurable, IDependenciesChecker, PluginManagerError
 
 from orca.orca_i18n import _         # for gettext support
 from orca.orca_i18n import ngettext  # for ngettext support
 from orca.orca_i18n import C_        # to provide qualified translatable strings
 
 import orca.settings as settings
+# este peta, quizas hay que meterlo en el enable
 import orca.orca_state as orca_state
-
-import orca.orca as orca_module
-_settingsManager = getattr(orca_module, '_settingsManager')
- 
 
 class speechPlugin(IPlugin, IPresenter):
     name = 'Speech Plugin'
@@ -49,6 +47,12 @@ class speechPlugin(IPlugin, IPresenter):
 
     def __init__(self):
         print 'Date and time plugin started'
+
+    def enable(self):
+        print 'Date and time plugin started'
+
+        import orca.orca as orca_module
+        _settingsManager = getattr(orca_module, '_settingsManager')
 
         """Toggle the silencing of speech.
     
@@ -68,5 +72,8 @@ class speechPlugin(IPlugin, IPresenter):
             #
             orca_state.activeScript.presentMessage(_("Speech disabled."))
             settings.silenceSpeech = True
+
+    def disable(self):
+        print 'disable dummy method!'
 
 IPlugin.register(speechPlugin)
