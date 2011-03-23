@@ -42,6 +42,10 @@ try:
 except:
     gconfClient = None
 
+#from pluglib import plugin_manager
+import orca
+_pluginManager = getattr(orca, '_pluginManager')
+
 class SettingsManager(object):
     """Settings backend manager. This class manages orca user's settings
     using different backends"""
@@ -75,6 +79,7 @@ class SettingsManager(object):
         self.defaultGeneralValues = {}
         self.defaultPronunciations = {}
         self.defaultKeybindings = {}
+        self.defaultPlugins = {}
 
         # Dictionaries that store the key:value pairs which values are
         # different from the current profile and the default ones
@@ -82,6 +87,7 @@ class SettingsManager(object):
         self.profileGeneral = {}
         self.profilePronunciations = {}
         self.profileKeybindings = {}
+        self.profilePlugins = {}
 
         # Dictionaries that store the current settings.
         # They are result to overwrite the default values with
@@ -89,6 +95,7 @@ class SettingsManager(object):
         self.general = {}
         self.pronunciations = {}
         self.keybindings = {}
+        self.plugins = {}
 
         if not self._loadBackend():
             raise Exception('SettingsManager::_loadBackend fails.')
@@ -101,12 +108,14 @@ class SettingsManager(object):
         self._setDefaultGeneral()
         self._setDefaultPronunciations()
         self._setDefaultKeybindings()
+        self._setDefaultPlugins()
         self.defaultGeneralValues = getRealValues(self.defaultGeneral)
         self.general = self.defaultGeneralValues.copy()
         if not self.isFirstStart():
             self.general.update(self._backend.getGeneral())
         self.pronunciations = self.defaultPronunciations.copy()
         self.keybindings = self.defaultKeybindings.copy()
+        self.plugins = self.defaultPlugins.copy()
 
         # If this is the first time we launch Orca, there is no user settings
         # yet, so we need to create the user config directories and store the
@@ -175,10 +184,10 @@ class SettingsManager(object):
         if not os.path.exists(userCustomFile):
             os.close(os.open(userCustomFile, os.O_CREAT, 0700))
 
-
         self._backend.saveDefaultSettings(self.defaultGeneral,
                                           self.defaultPronunciations,
-                                          self.defaultKeybindings)
+                                          self.defaultKeybindings,
+                                          _pluginManager.getPlugins())
 
     def _setDefaultPronunciations(self):
         """Get the pronunciations by default from orca.settings"""
@@ -187,6 +196,10 @@ class SettingsManager(object):
     def _setDefaultKeybindings(self):
         """Get the keybindings by default from orca.settings"""
         self.defaultKeybindings = {}
+
+    def _setDefaultPlugins(self):
+        """Get the plugins by default from pluglib"""
+        self.defaultPlugins = _pluginManager.getPlugins()
 
     def _setDefaultGeneral(self):
         """Get the general settings by default from orca.settings"""
@@ -268,6 +281,13 @@ class SettingsManager(object):
             profile = self.profile
         self.keybindings = self._backend.getKeybindings(profile)
 
+    def _getPlugins(self, profile=None):
+        """Get from the active backend the plugins settings for
+        the current profile"""
+        if profile is None:
+            profile = self.profile
+        self.plugins = self._backend.getPlugins(profile)
+
     def _loadProfileSettings(self, profile=None):
         """Get from the active backend all the settings for the current
         profile and store them in the object's attributes.
@@ -278,6 +298,7 @@ class SettingsManager(object):
         self.profileGeneral = self.getGeneralSettings(profile) or {}
         self.profilePronunciations = self.getPronunciations(profile) or {}
         self.profileKeybindings = self.getKeybindings(profile) or {}
+        self.profilePlugins = self.getPlugins(profile) or self.getPlugins()
 
     def _mergeSettings(self):
         """Update the changed values on the profile settings
@@ -286,6 +307,7 @@ class SettingsManager(object):
         self.general.update(profileGeneral)
         self.pronunciations.update(self.profilePronunciations)
         self.keybindings.update(self.profileKeybindings)
+        self.plugins.update(self.profilePlugins)
 
     def _enableAccessibility(self):
         """Enables the GNOME accessibility flag.  Users need to log out and
@@ -335,7 +357,8 @@ class SettingsManager(object):
         general = self.getGeneralSettings(profile)
         pronunciations = self.getPronunciations(profile)
         keybindings = self.getKeybindings(profile)
-        return (general, pronunciations, keybindings)
+        plugins = self.getPlugins(profile)
+        return (general, pronunciations, keybindings, plugins)
 
     def _setSettingsRuntime(self, settingsDict):
         for key, value in settingsDict.items():
@@ -364,6 +387,12 @@ class SettingsManager(object):
         with the profiles' ones"""
         return self._backend.getKeybindings(profile)
 
+    def getPlugins(self, profile='default'):
+        """Return the current plugins settings.
+        Those settings comes from updating the default settings
+        with the profiles' ones"""
+        return self._backend.getPlugins(profile)
+
     def _setProfileGeneral(self, general):
         """Set the changed general settings from the defaults' ones
         as the profile's."""
@@ -391,7 +420,15 @@ class SettingsManager(object):
         self.profileKeybindings = self.defaultKeybindings.copy()
         self.profileKeybindings.update(keybindings)
 
-    def saveSettings(self, general, pronunciations, keybindings):
+    def _setProfilePlugins(self, plugins):
+        """Set the changed plugin settings from the defaults' ones
+        as the profile's."""
+        self.profilePlugins = self.defaultPlugins.copy()
+        print 'pluginsDict = ', plugins
+        print 'profilePluginsDict = ', self.profilePlugins
+        self.profilePlugins.update(plugins)
+
+    def saveSettings(self, general, pronunciations, keybindings, plugins):
         """Let the active backend to store the default settings and
         the profiles' ones."""
         # Assign current profile
@@ -407,11 +444,14 @@ class SettingsManager(object):
         self._setProfileGeneral(general)
         self._setProfilePronunciations(pronunciations)
         self._setProfileKeybindings(keybindings)
+        self._setProfilePlugins(plugins)
 
         self._backend.saveProfileSettings(self.profile,
                                           self.profileGeneral,
                                           self.profilePronunciations,
-                                          self.profileKeybindings)
+                                          self.profileKeybindings, 
+                                          self.profilePlugins)
+
         return self._enableAccessibility()
 
     def _adjustBindingTupleValues(self, bindingTuple):
@@ -456,7 +496,6 @@ class SettingsManager(object):
 
         return self._backend.availableProfiles()
 
-
     def importProfile(self, fileName):
         """Import profile from a given filename"""
 
@@ -472,8 +511,9 @@ class SettingsManager(object):
 
         pronunciations = prefs.get('pronunciations', {})
         keybindings = prefs.get('keybindings', {})
+        plugins = prefs.get('plugins', {})
 
-        self.saveSettings(general, pronunciations, keybindings)
+        self.saveSettings(general, pronunciations, keybindings, plugins)
         return True
 
     def loadAppSettings(self, script):
@@ -529,22 +569,22 @@ class SettingsManager(object):
             script.app_pronunciation_dict = \
                 pronunciations(script, script.app_pronunciation_dict)
 
-    def loadPlugins(self):
-        return self._backend.getPlugins()
-
-    def addPlugin(self, plugin_data):
-        self._backend.addPlugin(plugin_data)
-        return self._backend.getPlugins()
-
-    def saveConf(self, plugins_to_save):
-        self._backend.saveConf(plugins_to_save)
-
-    def updatePlugin(self, plugin_to_update):
-        self._backend.updatePlugin(plugin_to_update)
-        return self._backend.getPlugins()
-
-    def getPluginByName(self, plugin_name):
-        return self._backend.getPluginByName(plugin_name)
+#    def loadPlugins(self):
+#        return self._backend.getPlugins()
+#
+#    def addPlugin(self, plugin_data):
+#        self._backend.addPlugin(plugin_data)
+#        return self._backend.getPlugins()
+#
+#    def saveConf(self, plugins_to_save):
+#        self._backend.saveConf(plugins_to_save)
+#
+#    def updatePlugin(self, plugin_to_update):
+#        self._backend.updatePlugin(plugin_to_update)
+#        return self._backend.getPlugins()
+#
+#    def getPluginByName(self, plugin_name):
+#        return self._backend.getPluginByName(plugin_name)
 
 def getVoiceKey(voice):
     voicesKeys = getattr(settings, 'voicesKeys')
