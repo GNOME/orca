@@ -56,10 +56,11 @@ import orca_gui_profile
 
 _settingsManager = getattr(orca, '_settingsManager')
 _scriptManager = getattr(orca, '_scriptManager')
+_pluginManager = getattr(orca, '_pluginManager')
 
 # needed to fill the graphical treeview
-import pluglib
-from pluglib.plugin_manager import plugmanager
+#import pluglib
+#from pluglib.plugin_manager import plugmanager
 
 try:
     import louis
@@ -521,7 +522,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         keyBindingsDict = self.getKeyBindingsModelDict(self.keyBindingsModel)
         if _settingsManager.saveSettings(self.prefsDict,
                                          pronunciationDict,
-                                         keyBindingsDict):
+                                         keyBindingsDict,
+                                         # jhernandez TODO nacho's
+                                         # this dict is provisional
+                                         #
+                                         self.currentPluginsStatus):
+
             self._presentMessage(
                 _("Accessibility support for GNOME has just been enabled."))
             self._presentMessage(
@@ -2240,11 +2246,27 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def _initPluginsTreeView(self):
 
-        for plugin_id, plugin, plugin_type, registered, plugin_name in plugmanager.get_plugins():
-            if plugin_name != None:
-                self.plugins_store.append([plugmanager.is_plugin_enabled(plugin_id),
-                                           None, plugin_name, plugin_type,
-                                           registered, plugin_id])
+        self.plugins_store.clear()
+        self.currentPluginsStatus = plugins = \
+            _settingsManager.getPlugins(self.prefsDict.get('activeProfile')[0])
+        for plug in plugins:
+            type_str = ''
+            for type in plugins[plug]['type']:
+                if len(type_str) > 0:
+                    type_str += ', '
+                type_str += type
+            self.plugins_store.append([plugins[plug]['active'], \
+                                       plugins[plug]['name'], \
+                                       type_str, None, plug])
+
+# nacho's
+#        for plugin_id, plugin, plugin_type, registered, \
+#                plugin_name in plugins:
+#            if plugin_name != None:
+#                self.plugins_store.append([ \
+#                        plugmanager.is_plugin_enabled(plugin_id), \
+#                        None, plugin_name, plugin_type, \
+#                        registered, plugin_id])
 
     def on_plugabout_btn_clicked(self, button):
         selection = self.plugins_tree.get_selection()
@@ -2275,9 +2297,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         selection = self.plugins_tree.get_selection()
         model, selected = selection.get_selected()
 
-        if selected:
-            plugin = plugmanager.get_plugin_class(model[selected][5])
-            self.plugconf_btn.set_sensitive(pluglib.verify_conf_dialog(plugin))
+# nacho's
+#        if selected:
+#            plugin = plugmanager.get_plugin_class(model[selected][5])
+#            self.plugconf_btn.set_sensitive(pluglib.verify_conf_dialog(plugin))
 
     def on_plugconf_btn_clicked(self, button):
         selection = self.plugins_tree.get_selection()
@@ -2290,14 +2313,20 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def on_active_cell_toggled(self, checkbox, path):
         active = not checkbox.get_active()
-        plugin_name = self.plugins_store[path][5]
-
-        if active:
-            plugmanager.enable_plugin(plugin_name)
-        else:
-            plugmanager.disable_plugin(plugin_name)
-
+        plugin_name = self.plugins_store[path][4]
+        self.currentPluginsStatus[plugin_name]['active'] = active
         self.plugins_store[path][0] = active
+        if active == True:
+            _pluginManager.enable_plugin(plugin_name)
+        else:
+            _pluginManager.disable_plugin(plugin_name)
+
+# nacho's
+#        if active:
+#            self.currentPluginsStatus[plugin_name]
+#        else:
+#            self.currentPluginsStatus[plugin_name]
+#        self.plugins_store[path][0] = checkbox.get_active()
 
 
     def __initProfileCombo(self):
@@ -4708,6 +4737,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._populateKeyBindings()
 
         self.__initProfileCombo()
+
+        self._initPluginsTreeView()
 
 
 class OrcaAdvancedMagGUI(OrcaSetupGUI):

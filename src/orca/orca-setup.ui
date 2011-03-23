@@ -3,14 +3,14 @@
   <!-- interface-requires gtk+ 2.12 -->
   <!-- interface-naming-policy toplevel-contextual -->
   <object class="GtkAdjustment" id="adjustment1">
-    <property name="value">5</property>
     <property name="upper">10</property>
+    <property name="value">5</property>
     <property name="step_increment">0.10000000149</property>
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="adjustment10">
-    <property name="value">1</property>
     <property name="upper">20</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -27,16 +27,16 @@
     <property name="page_increment">0.25</property>
   </object>
   <object class="GtkAdjustment" id="adjustment13">
-    <property name="value">1</property>
     <property name="lower">24</property>
     <property name="upper">256</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment14">
-    <property name="value">1</property>
     <property name="lower">1</property>
     <property name="upper">256</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -46,55 +46,55 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment2">
-    <property name="value">50</property>
     <property name="upper">100</property>
+    <property name="value">50</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment3">
-    <property name="value">10</property>
     <property name="upper">10</property>
+    <property name="value">10</property>
     <property name="step_increment">0.10000000149</property>
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="adjustment4">
-    <property name="value">10</property>
     <property name="upper">9999</property>
+    <property name="value">10</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment5">
-    <property name="value">1</property>
     <property name="lower">1</property>
     <property name="upper">16</property>
+    <property name="value">1</property>
     <property name="step_increment">0.25</property>
     <property name="page_increment">1</property>
   </object>
   <object class="GtkAdjustment" id="adjustment6">
-    <property name="value">1</property>
     <property name="lower">1</property>
     <property name="upper">9999</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment7">
-    <property name="value">1</property>
     <property name="lower">1</property>
     <property name="upper">9999</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment8">
-    <property name="value">1</property>
     <property name="lower">1</property>
     <property name="upper">9999</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment9">
-    <property name="value">1</property>
     <property name="lower">1</property>
     <property name="upper">9999</property>
+    <property name="value">1</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -273,8 +273,6 @@
     <columns>
       <!-- column-name active -->
       <column type="gboolean"/>
-      <!-- column-name icon -->
-      <column type="GdkPixbuf"/>
       <!-- column-name plugin -->
       <column type="gchararray"/>
       <!-- column-name plugin_type -->
@@ -2837,8 +2835,8 @@
                                                             <property name="climb_rate">1</property>
                                                             <property name="numeric">True</property>
                                                             <accessibility>
-                                                            <relation type="labelled-by" target="magCrossHairSizeLabel"/>
                                                             <relation type="labelled-by" target="magCrossHairSizeUnitsLabel"/>
+                                                            <relation type="labelled-by" target="magCrossHairSizeLabel"/>
                                                             </accessibility>
                                                             <signal name="value_changed" handler="magCrossHairSizeValueChanged"/>
                                                           </object>
@@ -3041,8 +3039,8 @@
                                                             <property name="climb_rate">1</property>
                                                             <property name="numeric">True</property>
                                                             <accessibility>
-                                                            <relation type="labelled-by" target="magCursorSizeLabel"/>
                                                             <relation type="labelled-by" target="magCursorSizeUnitsLabel"/>
+                                                            <relation type="labelled-by" target="magCursorSizeLabel"/>
                                                             </accessibility>
                                                             <signal name="value_changed" handler="magCursorSizeValueChanged"/>
                                                           </object>
@@ -3620,8 +3618,8 @@
                                                     <property name="climb_rate">1</property>
                                                     <property name="numeric">True</property>
                                                     <accessibility>
-                                                      <relation type="labelled-by" target="magEdgeMarginUnitsLabel"/>
                                                       <relation type="labelled-by" target="magEdgeMarginLabel"/>
+                                                      <relation type="labelled-by" target="magEdgeMarginUnitsLabel"/>
                                                     </accessibility>
                                                     <signal name="value_changed" handler="magEdgeMarginValueChanged"/>
                                                   </object>
@@ -4333,23 +4331,12 @@ attributes&lt;/b&gt;</property>
                                           </object>
                                         </child>
                                         <child>
-                                          <object class="GtkTreeViewColumn" id="Icono">
-                                            <property name="title">Icono</property>
-                                            <child>
-                                              <object class="GtkCellRendererPixbuf" id="icon_cell"/>
-                                              <attributes>
-                                                <attribute name="pixbuf">1</attribute>
-                                              </attributes>
-                                            </child>
-                                          </object>
-                                        </child>
-                                        <child>
                                           <object class="GtkTreeViewColumn" id="Nombre">
                                             <property name="title">Nombre</property>
                                             <child>
                                               <object class="GtkCellRendererText" id="plugin_cell"/>
                                               <attributes>
-                                                <attribute name="text">2</attribute>
+                                                <attribute name="text">1</attribute>
                                               </attributes>
                                             </child>
                                           </object>
@@ -4360,7 +4347,7 @@ attributes&lt;/b&gt;</property>
                                             <child>
                                               <object class="GtkCellRendererText" id="plugin_type"/>
                                               <attributes>
-                                                <attribute name="text">3</attribute>
+                                                <attribute name="text">2</attribute>
                                               </attributes>
                                             </child>
                                           </object>
@@ -4553,7 +4540,6 @@ attributes&lt;/b&gt;</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
     <property name="transient_for">orcaSetupWindow</property>
-    <property name="has_separator">False</property>
     <property name="program_name">Glade</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
