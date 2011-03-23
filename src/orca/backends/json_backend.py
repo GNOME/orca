@@ -40,38 +40,42 @@ class Backend:
         self.pronunciations = {}
         self.keybindings = {}
         self.profiles = {}
+        self.plugins = {}
         self.settingsFile = os.path.join(settings.userPrefsDir,
                                          "user-settings.conf")
 
-        self.plugins_conf = self.getPlugins() \
-            if self.getPlugins() is not None \
-            else {}
+# nacho's
+#        self.plugins_conf = self.getPlugins() \
+#            if self.getPlugins() is not None \
+#            else {}
 
-    def saveDefaultSettings(self, general, pronunciations, keybindings):
+    def saveDefaultSettings(self, general, pronunciations, keybindings, plugins):
         """ Save default settings for all the properties from
             orca.settings. """
         defaultProfiles = {'default': { 'profile':  settings.profile,
                                                     'pronunciations': {},
-                                                    'keybindings': {}
+                                                    'keybindings': {},
+                                                    'plugins': plugins
                                       }
                           }
         prefs = {'general': general,
                  'profiles': defaultProfiles,
                  'pronunciations': pronunciations,
-                 'keybindings': keybindings}
+                 'keybindings': keybindings, 
+                 'plugins': plugins}
 
         self.general = general
         self.profiles = defaultProfiles
         self.pronunciations = pronunciations
         self.keybindings = keybindings
-        self.plugins_conf = self.getPlugins()
+        self.plugins = plugins
 
         settingsFile = open(self.settingsFile, 'w')
         dump(prefs, settingsFile, indent=4)
         settingsFile.close()
 
-    def saveProfileSettings(self, profile, general,
-                                  pronunciations, keybindings):
+    def saveProfileSettings(self, profile, general, pronunciations, \
+                            keybindings, plugins):
         """ Save minimal subset defined in the profile against current 
             defaults. """
         if profile is None:
@@ -79,6 +83,7 @@ class Backend:
 
         general['pronunciations'] = pronunciations
         general['keybindings'] = keybindings
+        general['plugins'] = plugins
 
         with open(self.settingsFile, 'r+') as settingsFile:
             prefs = load(settingsFile)
@@ -97,6 +102,7 @@ class Backend:
         self.general = prefs['general'].copy()
         self.pronunciations = prefs['pronunciations']
         self.keybindings = prefs['keybindings']
+        self.plugins = prefs['plugins']
         self.profiles = prefs['profiles'].copy()
 
     def getGeneral(self, profile='default'):
@@ -130,6 +136,16 @@ class Backend:
         if profileSettings.has_key('keybindings'):
             keybindings = profileSettings['keybindings']
         return keybindings
+
+    def getPlugins(self, profile='default'):
+        """ Get plugins settings from default settings and
+            override with profile values. """
+        self._getSettings()
+        plugins = self.plugins.copy()
+        profileSettings = self.profiles[profile].copy()
+        if profileSettings.has_key('plugins'):
+            plugins = profileSettings['plugins']
+        return plugins
 
     def isFirstStart(self):
         """ Check if we're in first start. """
@@ -168,49 +184,50 @@ class Backend:
 
         return profiles
 
-    def addPlugin(self, plugin_data):
-        # receives a dict in the following way
-        # 'chat': { 'name': 'Chat plugin',
-        #           'active': True,
-        #           'registered': False
-        #           'type': 'Commander'
-        #           'path': /bar/foo }
-        try:
-            if self.plugins_conf == {}:
-                self.plugins_conf.update({'plugins': plugin_data})
-            else:
-                self.plugins_conf['plugins'].update(plugin_data)
-        except LookupError, e:
-            print "Error adding dictionary. Key "+str(e)+" exists"
-
-        self.saveConf(self.plugins_conf)
-
-    def getPlugins(self):
-        settingsFile = open(self.settingsFile)
-        try:
-            plugs = load(settingsFile)
-            if plugs.has_key('plugins'):
-                if not plugs['plugins']:
-                    return {}
-                else:
-                    return plugs.copy()
-            else:
-                return None
-        except ValueError:
-            return
-
-    def saveConf(self, plugins_to_save):
-        self.plugins_conf = plugins_to_save
-
-        with open(self.settingsFile, 'r+') as settingsFile:
-            prefs = load(settingsFile)
-            prefs.update(plugins_to_save)
-            settingsFile.seek(0)
-            settingsFile.truncate()
-            dump(prefs, settingsFile, indent=4)
-
-    def updatePlugin(self, plugin_to_update):
-        self.addPlugin(plugin_to_update)
-
-    def getPluginByName(self, plugin_name):
-        return self.plugins_conf['plugins'][plugin_name]
+# nacho's
+#    def addPlugin(self, plugin_data):
+#        # receives a dict in the following way
+#        # 'chat': { 'name': 'Chat plugin',
+#        #           'active': True,
+#        #           'registered': False
+#        #           'type': 'Commander'
+#        #           'path': /bar/foo }
+#        try:
+#            if self.plugins_conf == {}:
+#                self.plugins_conf.update({'plugins': plugin_data})
+#            else:
+#                self.plugins_conf['plugins'].update(plugin_data)
+#        except LookupError, e:
+#            print "Error adding dictionary. Key "+str(e)+" exists"
+#
+#        self.saveConf(self.plugins_conf)
+#
+#    def getPlugins(self):
+#        settingsFile = open(self.settingsFile)
+#        try:
+#            plugs = load(settingsFile)
+#            if plugs.has_key('plugins'):
+#                if not plugs['plugins']:
+#                    return {}
+#                else:
+#                    return plugs.copy()
+#            else:
+#                return None
+#        except ValueError:
+#            return
+#
+#    def saveConf(self, plugins_to_save):
+#        self.plugins_conf = plugins_to_save
+#
+#        with open(self.settingsFile, 'r+') as settingsFile:
+#            prefs = load(settingsFile)
+#            prefs.update(plugins_to_save)
+#            settingsFile.seek(0)
+#            settingsFile.truncate()
+#            dump(prefs, settingsFile, indent=4)
+#
+#    def updatePlugin(self, plugin_to_update):
+#        self.addPlugin(plugin_to_update)
+#
+#    def getPluginByName(self, plugin_name):
+#        return self.plugins_conf['plugins'][plugin_name]
