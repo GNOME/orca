@@ -187,6 +187,10 @@ class Server(dbus.service.Object):
         _settingsManager.updateSetting(settingName, 
                 settingValueToUpdate[type(settingValue)](settingValue))
 
+        self.saveSettings()
+
+    @dbus.service.method(dbus_interface='org.gnome.Orca.Settings')
+    def saveSettings(self):
         _settingsManager.saveSettings(_settingsManager.general, 
                                       _settingsManager.pronunciations, 
                                       _settingsManager.keybindings)
