@@ -199,7 +199,7 @@ class ModulePluginManager(IPluginManager):
  
             self.plugins = load_plugins
 
-    def enable_plugin(self, plugin_name):
+    def enablePlugin(self, plugin_name):
 
 # nacho's
 #        # first, make the plugin active in appropiated backend
@@ -224,14 +224,15 @@ class ModulePluginManager(IPluginManager):
             plugin_object = plugin_class()
             plugin_object.enable()
 
+            # nacho's
             # this code is not checked actually, but I know
             # what to do with it
-            if isinstance(plugin_object, IConfigurable):
-    	        plugin_object.load()
+            #if isinstance(plugin_object, IConfigurable):
+    	    #    plugin_object.load()
             
             self.plugins[plugin_name]['object'] = plugin_object
 
-    def disable_plugin(self, plugin_name):
+    def disablePlugin(self, plugin_name):
 # nacho's
 #        if self.is_plugin_enabled(plugin_name):
         plugin_object = self.plugins[plugin_name]['object']
@@ -322,9 +323,16 @@ class ModulePluginManager(IPluginManager):
 #
 #        print "Adding plugin: " + str(plugin_data)
 #    
-#    def getPluginByName(self, plugin_name):
-#        return self.sm.getPluginByName(plugin_name)
-#
+
+    def isEnabled(self, plugin_name):
+        if self.getPluginObject(plugin_name) == None:
+            return False
+        else:
+            return True
+
+    def getPluginObject(self, plugin_name):
+        return self.plugins[plugin_name]['object']
+
     def getPlugins(self):
         self.scanPluginsDir()
         plugins = self.plugins
