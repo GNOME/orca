@@ -2317,9 +2317,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.currentPluginsStatus[plugin_name]['active'] = active
         self.plugins_store[path][0] = active
         if active == True:
-            _pluginManager.enable_plugin(plugin_name)
+            _pluginManager.enablePlugin(plugin_name)
         else:
-            _pluginManager.disable_plugin(plugin_name)
+            _pluginManager.disablePlugin(plugin_name)
 
 # nacho's
 #        if active:
