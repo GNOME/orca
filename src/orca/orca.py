@@ -552,7 +552,14 @@ import httpserver
 import keynames
 import keybindings
 import orca_state
-import speech
+
+# JH: We're going to store the speech plugin
+# in a global variable called speech, so this
+# import isn't needed at this moment.
+#
+#import speech
+global speech
+
 import notification_messages
 
 from input_event import BrailleEvent
@@ -1472,6 +1479,10 @@ def _restoreXmodmap(keyList=[]):
 
     os.system("echo '%s' | xmodmap - > /dev/null 2>&1" % "\n".join(toRestore))
 
+def activeStartingPlugins(plugins):
+    for plug in plugins:
+        _pluginManager.enablePlugin(plug)
+
 def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
@@ -1480,6 +1491,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """
 
     global _userSettings
+    global speech
 
     # Shutdown the output drivers and give them a chance to die.
 
@@ -1526,7 +1538,16 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     for key in _commandLineSettings:
         setattr(settings, key, _commandLineSettings[key])
 
-    if settings.enableSpeech:
+    # Here, we're getting plugins for settingsManager
+    plugins = _settingsManager.getPlugins()
+    # What plugins will be enabled?
+    activePlugins = [plug for plug in plugins if plugins[plug]['active']]
+
+    # Enable starting plugins
+    activeStartingPlugins(activePlugins)
+
+    if settings.enableSpeech and 'speech' in activePlugins:
+        speech = _pluginManager.getPluginObject('speech')
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
