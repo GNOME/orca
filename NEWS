@@ -1,3 +1,24 @@
+2.91.93 - 25-March-2011
+
+GNOME 3.0:
+
+  * Use gsettings -- and not gconf -- to determine if accessibility is
+    enabled (Thanks Frederic!)
+
+  * Fix for bug #640134 - Catch pyatspi2's RuntimeErrors
+
+General:
+
+  * Fix for the problem of punctuation settings not getting properly
+    loaded or unloaded when the application script changes
+
+  * Fix for the problem of voice settings not getting properly loaded
+    or unloaded when the application script changes
+
+  * Voice settings need to be ACSSs; not dicts
+
+==========
+
 2.91.92 - 21-March-2011
 
 General:

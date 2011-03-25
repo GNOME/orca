@@ -1,4 +1,4 @@
-Orca v3.0.0pre
+Orca v2.91.93
 
 Introduction
 ========================================================================
@@ -19,10 +19,6 @@ See also http://live.gnome.org/Orca for detailed English and Spanish
 information on Orca, including how to run Orca, how to communicate
 with the Orca user community, and where to log bugs and feature
 requests.
-
-The Orca manual can be found in the GNOME Desktop Accessibility Guide: 
-http://library.gnome.org/users/gnome-access-guide/
-
 
 Build Requirements
 ========================================================================
