@@ -438,7 +438,7 @@ class EventManager:
                     if settings.debugMemoryUsage:
                         orca.cleanupGarbage()
                     return
-            except LookupError:
+            except (LookupError, RuntimeError):
                 # If we got this error here, we'll get it again when we
                 # attempt to get the state, catch it, and clean up.
                 pass
@@ -458,9 +458,9 @@ class EventManager:
 
         try:
             state = event.source.getState()
-        except LookupError:
+        except (LookupError, RuntimeError):
             debug.println(debug.LEVEL_WARNING,
-                          "LookupError while processing event: %s" % eType)
+                          "Error while processing event: %s" % eType)
             if eType.startswith("window:deactivate"):
                 orca.setLocusOfFocus(event, None)
                 orca_state.activeWindow = None

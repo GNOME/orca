@@ -111,7 +111,7 @@ class ScriptManager:
         if obj:
             try:
                 attributes = obj.getAttributes()
-            except LookupError:
+            except (LookupError, RuntimeError):
                 debug.println(debug.LEVEL_SEVERE,
                               "_toolkitForObject: %s no longer exists" % obj)
             else:
