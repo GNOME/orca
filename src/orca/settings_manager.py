@@ -487,6 +487,7 @@ class SettingsManager(object):
         """
 
         self._loadProfileSettings()
+        script.voices = self.getSetting('voices')
 
         import orca
         _scriptManager = getattr(orca, '_scriptManager')
@@ -520,6 +521,10 @@ class SettingsManager(object):
 
         self._knownAppSettings[name] = module
         reload(self._knownAppSettings[name])
+
+        appVoices = self.getSetting('voices')
+        for voiceType, voiceDef in appVoices.items():
+            script.voices[voiceType].update(voiceDef)
 
         keybindings = getattr(module, 'overrideAppKeyBindings', None)
         if keybindings:
