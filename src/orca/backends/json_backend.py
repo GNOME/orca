@@ -29,7 +29,7 @@ __license__   = "LGPL"
 
 from json import load, dump
 import os
-from orca import settings
+from orca import settings, acss
 
 class Backend:
 
@@ -112,6 +112,9 @@ class Backend:
         generalSettings = self.general.copy()
         profileSettings = self.profiles[profile].copy()
         for key, value in profileSettings.items():
+            if key == 'voices':
+                for voiceType, voiceDef in value.items():
+                    value[voiceType] = acss.ACSS(voiceDef)
             if key not in settings.excludeKeys:
                 generalSettings[key] = value
         generalSettings['activeProfile'] = profileSettings['profile']
