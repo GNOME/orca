@@ -1107,9 +1107,9 @@ class Utilities:
         while not done:
             try:
                 relations = node.getRelationSet()
-            except LookupError:
+            except (LookupError, RuntimeError):
                 debug.println(debug.LEVEL_SEVERE,
-                              "nodeLevel() - LookupError getting RelationSet")
+                              "nodeLevel() - Error getting RelationSet")
                 return -1
             node = None
             for relation in relations:

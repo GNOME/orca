@@ -2820,7 +2820,7 @@ class Script(default.Script):
 
         try:
             state = obj.getState()
-        except LookupError:
+        except (LookupError, RuntimeError):
             debug.println(debug.LEVEL_SEVERE,
                           "isNavigableAria() - obj no longer exists")
             return True

@@ -625,10 +625,10 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         currentApp = orca_state.activeScript.app
         try:
             appList = [event.host_application, event.source.getApplication()]
-        except LookupError:
+        except (LookupError, RuntimeError):
             appList = []
             debug.println(debug.LEVEL_SEVERE,
-                           "orca.setLocusOfFocus() application LookupError")
+                           "orca.setLocusOfFocus() application Error")
         if not currentApp in appList:
             return
 
@@ -993,7 +993,7 @@ def keyEcho(event):
     #
     try:
         role = orca_state.locusOfFocus.getRole()
-    except LookupError:
+    except (LookupError, RuntimeError):
         debug.println(debug.LEVEL_SEVERE,
                       "orca.keyEcho() - locusOfFocus no longer exists")
         setLocusOfFocus(None, None, False)
