@@ -1500,6 +1500,7 @@ class Script(script.Script):
         """Called when this script is activated."""
 
         braille.setupKeyRanges(self.brailleBindings.keys())
+        speech.updatePunctuationLevel()
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.
