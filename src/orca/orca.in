@@ -131,8 +131,8 @@ runOrca()
 # all set and we don't need to muck around.
 #
 if [ "x$LOGNAME" != "xgdm" ] ; then
-    ACCESSIBILITY_ENABLED=`gconftool-2 \
-        --get /desktop/gnome/interface/accessibility`
+    ACCESSIBILITY_ENABLED=`gsettings \
+        get org.gnome.desktop.interface toolkit-accessibility`
     if [ "x$ACCESSIBILITY_ENABLED" != "xtrue" ] ; then
         # Because we will be running Orca in text-setup mode, we want to
         # make sure it is run in a terminal window.  If we're already in
