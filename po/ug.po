@@ -5,11 +5,12 @@
 # Sahran <sahran.ug@gmail.com>, 2010.
 # Zeper <zeper@msn.com>, 2010.
 # Muhemmed Erdem <misran_erdem@hotmail.com>, 2011
-#
+# 
 msgid ""
-msgstr "Project-Id-Version: orca\n"
+msgstr ""
+"Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&component=i18n\n"
-"POT-Creation-Date: 2011-01-17 20:54+0000\n"
+"POT-Creation-Date: 2011-03-04 15:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Muhemmed Erdem <misran_erdem@hotmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
@@ -294,27 +295,27 @@ msgstr "شىۋىتچە 1-دەرىجە"
 
 #: ../src/orca/braille.py:274
 msgid "Arabic Grade 1"
-msgstr "ئەرەبچە  1-دەرىجە "
+msgstr "ئەرەبچە  1-دەرىجە"
 
 #: ../src/orca/braille.py:275
 msgid "Welsh Grade 1"
-msgstr "ۋەلشچە  1-دەرىجە "
+msgstr "ۋەلشچە  1-دەرىجە"
 
 #: ../src/orca/braille.py:276
 msgid "Welsh Grade 2"
-msgstr "ۋەلشچە  2-دەرىجە "
+msgstr "ۋەلشچە  2-دەرىجە"
 
 #: ../src/orca/braille.py:277
 msgid "German Grade 0"
-msgstr "گېرمانچە  0-دەرىجە "
+msgstr "گېرمانچە  0-دەرىجە"
 
 #: ../src/orca/braille.py:278
 msgid "German Grade 1"
-msgstr " گېرمانچە 1-دەرىجە "
+msgstr "گېرمانچە 1-دەرىجە"
 
 #: ../src/orca/braille.py:279
 msgid "German Grade 2"
-msgstr "گېرمانچە  2-دەرىجە "
+msgstr "گېرمانچە  2-دەرىجە"
 
 #: ../src/orca/braille.py:280
 msgid "U.K. English Grade 2"
@@ -330,7 +331,7 @@ msgstr "ئامېرىكا ئىنگلىزچىسى 1-دەرىجە"
 
 #: ../src/orca/braille.py:283
 msgid "U.S. English Grade 2"
-msgstr " ئامېرىكا ئىنگلىزچىسى 2-دەرىجە"
+msgstr "ئامېرىكا ئىنگلىزچىسى 2-دەرىجە"
 
 #: ../src/orca/braille.py:284
 msgid "Canada French Grade 1"
@@ -350,7 +351,7 @@ msgstr "ھىندىچە بىرىنچى دەرىجە"
 
 #: ../src/orca/braille.py:288
 msgid "Italian Grade 1"
-msgstr " ئىتالىيانچە 1-دەرىجە"
+msgstr "ئىتالىيانچە 1-دەرىجە"
 
 #: ../src/orca/braille.py:289
 msgid "Belgium Dutch Grade 1"
@@ -359,7 +360,7 @@ msgstr "بېلگىيە گېرمانچىسى 1-دەرىجە"
 #: ../src/orca/chat.py:337
 msgid ""
 "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr "چايخانا ئۇچۇرى بىلەن  چايخانا ئاتىنى قوشامدۇ يوق. "
+msgstr "چايخانا ئۇچۇرى بىلەن  چايخانا ئاتىنى قوشامدۇ يوق."
 
 #: ../src/orca/chat.py:343
 msgid "Toggle whether we announce when our buddies are typing."
@@ -452,7 +453,7 @@ msgstr "چايخانا %s دىن كەلگەن ئۇچۇر"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2715 ../src/orca/script_utilities.py:2722
+#: ../src/orca/script_utilities.py:2720 ../src/orca/script_utilities.py:2727
 msgid "space"
 msgstr "بوشلۇق"
 
@@ -1275,7 +1276,7 @@ msgstr "سىزىقچە"
 msgid "left single quote"
 msgstr "سول تاق پەش"
 
-#. Translators: this is the spoken word for the right single quote: 
+#. Translators: this is the spoken word for the right single quote: ’
 #. (U+2019)
 #.
 #: ../src/orca/chnames.py:582
@@ -1803,9 +1804,9 @@ msgstr[0] "%d پىرسەنت."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:440
-#: ../src/orca/generator.py:697 ../src/orca/generator.py:739
-#: ../src/orca/generator.py:785
+#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:439
+#: ../src/orca/generator.py:696 ../src/orca/generator.py:738
+#: ../src/orca/generator.py:784
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:643
@@ -1826,7 +1827,7 @@ msgstr "GNOME تاۋۇش مۇلازىمەتلىرى"
 #: ../src/orca/gnomespeechfactory.py:831 ../src/orca/gnomespeechfactory.py:832
 #: ../src/orca/speechdispatcherfactory.py:287
 msgid " dot dot dot"
-msgstr " چېكىت چېكىت چېكىت "
+msgstr " چېكىت چېكىت چېكىت"
 
 #. Translators: this is to be sent to a speech synthesis
 #. engine to prefix a negative number (e.g., "-56" turns
@@ -1879,7 +1880,7 @@ msgstr "ئاستىراق."
 #. magnifier.  In addition to screen magnification, the user's
 #. preferred colors and mouse customizations are loaded.
 #.
-#: ../src/orca/gsmag.py:783 ../src/orca/mag.py:1714
+#: ../src/orca/gsmag.py:786 ../src/orca/mag.py:1714
 msgid "Magnifier enabled."
 msgstr "چوڭايتىش-كىچىكلىتىش چەكلەنمىگەن."
 
@@ -1887,7 +1888,7 @@ msgstr "چوڭايتىش-كىچىكلىتىش چەكلەنمىگەن."
 #. magnifier, restoring the screen contents to their normal colors
 #. and sizes.
 #.
-#: ../src/orca/gsmag.py:790 ../src/orca/mag.py:1721
+#: ../src/orca/gsmag.py:793 ../src/orca/mag.py:1721
 msgid "Magnifier disabled."
 msgstr "چوڭايتىش-كىچىكلىتىش چەكلەنگەن."
 
@@ -2688,7 +2689,7 @@ msgstr "ئەكس سادانى سۆز قوزغاتسۇنمۇ؟  y ياكى n كى
 #: ../src/orca/orca_console_prefs.py:424 ../src/orca/orca_console_prefs.py:441
 #: ../src/orca/orca_console_prefs.py:459 ../src/orca/orca_console_prefs.py:549
 #: ../src/orca/orca_console_prefs.py:568 ../src/orca/orca_console_prefs.py:586
-#: ../src/orca/orca_console_prefs.py:632
+#: ../src/orca/orca_console_prefs.py:640
 msgid "Please enter y or n."
 msgstr "y ياكى n كىرگۈزۈڭ."
 
@@ -2785,23 +2786,23 @@ msgstr "ئەمالار يېزىقى كۆزەتكۈچنى قوزغاتسۇنمۇ�
 msgid "Automatically start orca when you log in?  Enter y or n: "
 msgstr "سىز كىرىۋاتقاندا orca نى ئاپتوماتىك قوزغاتسۇنمۇ؟  ياكى n كىرگۈزۈڭ: "
 
-#: ../src/orca/orca_console_prefs.py:591 ../src/orca/orca_gui_prefs.py:522
+#: ../src/orca/orca_console_prefs.py:598 ../src/orca/orca_gui_prefs.py:522
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "GNOME ئۈچۈن قوشۇمچە ئىقتىدار دەستىكى ئېچىۋېتىلدى."
 
-#: ../src/orca/orca_console_prefs.py:597 ../src/orca/orca_gui_prefs.py:524
+#: ../src/orca/orca_console_prefs.py:604 ../src/orca/orca_gui_prefs.py:524
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "ئۆزگىرىشلەرنى كۈچكە ئىگە قىلىش ئۈچۈن چېكىنىپ چىقىپ قايتا كىرىشىڭىز كېرەك."
 
-#: ../src/orca/orca_console_prefs.py:607
+#: ../src/orca/orca_console_prefs.py:614
 msgid "Do you want to logout now?  Enter y or n: "
 msgstr "ھازىرلا تىزىمدىن چىقامسىز؟ y(ھەئە) or n(ياق) نى بېسىڭ: "
 
-#: ../src/orca/orca_console_prefs.py:614
+#: ../src/orca/orca_console_prefs.py:621
 msgid "Setup complete. Logging out now."
-msgstr "ئورنىتىش تاماملاندى. ھازىرلا چېكىنىپ چىق. "
+msgstr "ئورنىتىش تاماملاندى. ھازىرلا چېكىنىپ چىق."
 
-#: ../src/orca/orca_console_prefs.py:634
+#: ../src/orca/orca_console_prefs.py:642
 msgid "Setup complete.  Press Return to continue."
 msgstr "ئورنىتىش تاماملاندى. Return نى بېسىپ داۋاملاشتۇرۇڭ."
 
@@ -2867,7 +2868,7 @@ msgstr "ئىزدە(_S):"
 
 #: ../src/orca/orca-find.ui.h:13
 msgid "_Top of window"
-msgstr " كۆزنەك چوققىسى(_T):"
+msgstr "كۆزنەك چوققىسى(_T):"
 
 #: ../src/orca/orca-find.ui.h:14
 msgid "_Wrap around"
@@ -2968,7 +2969,7 @@ msgstr "ئوڭ تاناسىپ"
 #: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:2112
 #: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca-setup.ui.h:119
 msgid "Push"
-msgstr "باس"
+msgstr "قويۇش"
 
 #. DESCRIP
 #.
@@ -3006,7 +3007,7 @@ msgstr "زاپاس"
 #.
 #: ../src/orca/orca_gui_prefs.py:450
 msgid "Modified"
-msgstr "ئۆزگەرتكەن"
+msgstr "ئۆزگەرتىلدى"
 
 #. Translators: This refers to the default/typical voice used
 #. by Orca when presenting the content of the screen and other
@@ -3254,14 +3255,13 @@ msgstr "چېكىت_8"
 #: ../src/orca/orca_gui_prefs.py:2967 ../src/orca/orca_gui_prefs.py:3008
 #: ../src/orca/orca_gui_prefs.py:3048 ../src/orca/orca-setup.ui.h:46
 msgid "Dots 7 an_d 8"
-msgstr " چېكىت 7 ۋە 8 (_D)"
+msgstr "چېكىت 7 ۋە 8 (_D)"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
 #: ../src/orca/orca_gui_prefs.py:3071 ../src/orca/orca-setup.ui.h:185
-#| msgid "_None"
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "يوق(_N)"
@@ -3311,7 +3311,7 @@ msgstr "يېڭى ئاچقۇچ كىرگۈزۈڭ"
 
 #: ../src/orca/orca_gui_prefs.py:4038
 msgid "Key binding deleted. Press enter to confirm."
-msgstr "ئاچقۇچ بېغى ئۆچۈرۈلدى. enter كۇنۇپكىسىنى بېسىپ جەزملەڭ. "
+msgstr "ئاچقۇچ بېغى ئۆچۈرۈلدى. enter كۇنۇپكىسىنى بېسىپ جەزملەڭ."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that the key combination (e.g., Ctrl+Alt+f) they just
@@ -3329,7 +3329,7 @@ msgstr "كىرگۈزگەن كۇنۇپكا ئاللىبۇرۇن %s گە باغل�
 #: ../src/orca/orca_gui_prefs.py:4069
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
-msgstr " كۇنۇپكا تۇتۇلدى:%s. جەزملەش ئۈچۈن enter نى بېسىڭ."
+msgstr "كۇنۇپكا تۇتۇلدى:%s. جەزملەش ئۈچۈن enter نى بېسىڭ."
 
 #. Translators: this is a spoken prompt confirming the key
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
@@ -3402,7 +3402,7 @@ msgstr "Orca مايىللىقى قوزغىلىۋاتىدۇ."
 
 #: ../src/orca/orca-mainwin.ui.h:1
 msgid "Orca Screen Reader / Magnifier"
-msgstr "Orca ئېكران ئوقۇغۇچ/چوڭايتقۇچ "
+msgstr "Orca ئېكران ئوقۇغۇچ/چوڭايتقۇچ"
 
 #. Translators: This message is displayed when the user tries
 #. to start Orca and includes an invalid option as an argument.
@@ -3562,7 +3562,7 @@ msgstr "كەمتۈكلەرنى orca-list@gnome.org غا مەلۇم قىلىڭ."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:670 ../src/orca/orca.py:2059
+#: ../src/orca/orca.py:675 ../src/orca/orca.py:2072
 msgid "Goodbye."
 msgstr "خەير-خوش"
 
@@ -3575,7 +3575,7 @@ msgstr "خەير-خوش"
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:744
+#: ../src/orca/orca.py:749
 msgid "Exiting learn mode."
 msgstr "ئۆگىنىش ھالىتىنى ئاخىرلاشتۇرۇۋاتىدۇ."
 
@@ -3587,7 +3587,7 @@ msgstr "ئۆگىنىش ھالىتىنى ئاخىرلاشتۇرۇۋاتىدۇ."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/orca.py:768
+#: ../src/orca/orca.py:773
 msgid "Exiting list shortcuts mode."
 msgstr "تېزلەتمىلەرنى تىزىش ھالىتىنى ئاخىرلاشتۇرۇۋاتىدۇ."
 
@@ -3596,7 +3596,7 @@ msgstr "تېزلەتمىلەرنى تىزىش ھالىتىنى ئاخىرلاش�
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1015
+#: ../src/orca/orca.py:1029
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
 #: ../src/orca/speech.py:287 ../src/orca/speechserver.py:218
 msgid "off"
@@ -3607,7 +3607,7 @@ msgstr "چەكلە"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1019
+#: ../src/orca/orca.py:1033
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
 #: ../src/orca/speech.py:282 ../src/orca/speechserver.py:213
 msgid "on"
@@ -3616,14 +3616,14 @@ msgstr "قوزغات"
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:1377
+#: ../src/orca/orca.py:1391
 msgid "Speech enabled."
 msgstr "تاۋۇش ئىقتىدارى ئوچۇق."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:1382
+#: ../src/orca/orca.py:1396
 msgid "Speech disabled."
 msgstr "تاۋۇش ئىقتىدارى تاقاق."
 
@@ -3631,7 +3631,7 @@ msgstr "تاۋۇش ئىقتىدارى تاقاق."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1512
+#: ../src/orca/orca.py:1525
 msgid "Orca user settings reloaded."
 msgstr "Orca ئىشلەتكۈچى تەڭشەكلىرى قايتا ئوقۇلدى."
 
@@ -3639,7 +3639,7 @@ msgstr "Orca ئىشلەتكۈچى تەڭشەكلىرى قايتا ئوقۇلدى
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:1690
+#: ../src/orca/orca.py:1703
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr "يۇقىرىغا ۋە تۆۋەنگە ئىسترېلكىسىنى ئىشلىتىپ تىزىشنى  يېتەكلەڭ. Escape نى بېسىپ چېكىنىڭ."
 
@@ -3647,7 +3647,7 @@ msgstr "يۇقىرىغا ۋە تۆۋەنگە ئىسترېلكىسىنى ئىشل
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:1704
+#: ../src/orca/orca.py:1717
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3657,7 +3657,7 @@ msgstr[0] "%d دانە Orca كۆڭۈلدىكى تېزلەتمىسى تېپىلد
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:1726
+#: ../src/orca/orca.py:1739
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3668,7 +3668,7 @@ msgstr[0] "%(count)d Orca تېزلەتمىسى (%(application)s نىڭ ) تېپ�
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1744
+#: ../src/orca/orca.py:1757
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "«%s» نىڭ Orca تېزلەتمىسى تېپىلمىدى."
@@ -3691,7 +3691,7 @@ msgstr "«%s» نىڭ Orca تېزلەتمىسى تېپىلمىدى."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1762 ../src/orca/scripts/toolkits/Gecko/script.py:6083
+#: ../src/orca/orca.py:1775 ../src/orca/scripts/toolkits/Gecko/script.py:6092
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "ئاستىغا سىيرىلىۋاتىدۇ."
@@ -3714,7 +3714,7 @@ msgstr "ئاستىغا سىيرىلىۋاتىدۇ."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1783 ../src/orca/scripts/toolkits/Gecko/script.py:6151
+#: ../src/orca/orca.py:1796 ../src/orca/scripts/toolkits/Gecko/script.py:6160
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "چوققىغا سىيرىلىۋاتىدۇ."
@@ -3727,13 +3727,13 @@ msgstr "چوققىغا سىيرىلىۋاتىدۇ."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1802 ../src/orca/scripts/default.py:1629
+#: ../src/orca/orca.py:1815 ../src/orca/scripts/default.py:1629
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
 msgstr "Orca نىڭ كۆڭۈلدىكى تېزلەتمىسى ئۈچۈن 1 نى بېسىڭ. Orca نىڭ ھازىرقى پروگراممىسى ئۈچۈن 2 نى بېسىڭ. چېكىنىش ئۈچۈن escap نى بېسىڭ."
 
-#: ../src/orca/orca.py:1852
+#: ../src/orca/orca.py:1865
 msgid "keypad "
 msgstr "كۇنۇپكا تاختىسى "
 
@@ -3741,7 +3741,7 @@ msgstr "كۇنۇپكا تاختىسى "
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1859
+#: ../src/orca/orca.py:1872
 msgid "double click"
 msgstr "قوش چەك"
 
@@ -3749,7 +3749,7 @@ msgstr "قوش چەك"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1865
+#: ../src/orca/orca.py:1878
 msgid "triple click"
 msgstr "ئۇچ چېكىش"
 
@@ -3757,14 +3757,14 @@ msgstr "ئۇچ چېكىش"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2192
+#: ../src/orca/orca.py:2205
 msgid "Unable to import profile."
 msgstr "سەپلىمە ھۆججەتنى ئىمپورت قىلالمايدۇ."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2198
+#: ../src/orca/orca.py:2211
 msgid "Profile import success."
 msgstr "سەپلىمە ھۆججەتلىرىنى مۇۋەپپەقىيەتلىك ئىمپورت قىلدى."
 
@@ -3772,12 +3772,12 @@ msgstr "سەپلىمە ھۆججەتلىرىنى مۇۋەپپەقىيەتلىك �
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2204
+#: ../src/orca/orca.py:2217
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "پەرقلەندۈرگىلى بولمايدىغان كۇنۇپكا سەۋەبىدىن ئىمپورت قىلىش مەغلۇپ بولدى:%s"
 
-#: ../src/orca/orca.py:2273
+#: ../src/orca/orca.py:2286
 msgid "Welcome to Orca."
 msgstr "Orca گە خۇش كەلدىڭىز."
 
@@ -3982,7 +3982,7 @@ msgstr "ئېنىقلىغۇچى كۇنۇپكىلىرىنى قوزغات(_M)"
 
 #: ../src/orca/orca-setup.ui.h:56
 msgid "Enable _navigation keys"
-msgstr "يول باشلاش كۇنۇپكىلىرىنى قوزغات(_N) "
+msgstr "يول باشلاش كۇنۇپكىلىرىنى قوزغات(_N)"
 
 #: ../src/orca/orca-setup.ui.h:57
 msgid "Enable ac_tion keys"
@@ -4346,7 +4346,6 @@ msgstr "ئاۋاز تەڭشەكلىرى(_V)"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
 #: ../src/orca/orca-setup.ui.h:182
-#| msgid "_None"
 msgctxt "braille dots"
 msgid "_None"
 msgstr "يوق(_N)"
@@ -4418,13 +4417,13 @@ msgstr "acc"
 #.
 #: ../src/orca/rolenames.py:182
 msgid "Accelerator"
-msgstr " تېزلەتكۈچ"
+msgstr "تېزلەتكۈچ"
 
 #. Translators: spoken words for an accelerator (what you see in a menu).
 #.
 #: ../src/orca/rolenames.py:185
 msgid "accelerator"
-msgstr " تېزلەتكۈچ"
+msgstr "تېزلەتكۈچ"
 
 #. Translators: short braille for the rolename of an alert dialog.
 #. NOTE for all the short braille words: they we strive to keep them
@@ -5030,7 +5029,7 @@ msgstr "ئۇلانما"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2415
+#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2420
 #: ../src/orca/scripts/apps/soffice/script.py:1149
 #: ../src/orca/scripts/default.py:2031 ../src/orca/speech_generator.py:972
 msgid "link"
@@ -5718,7 +5717,7 @@ msgstr "hdr"
 #.
 #: ../src/orca/rolenames.py:1091
 msgid "Header"
-msgstr "ماۋزۇ"
+msgstr "بەت قېشى"
 
 #. Translators: spoken words for the rolename of a header.
 #.
@@ -5833,7 +5832,7 @@ msgstr "سىڭدۈرمە دېتال"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2339
+#: ../src/orca/script_utilities.py:2344
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -5844,7 +5843,7 @@ msgstr[0] "%(count)d %(repeatChar)s ھەرپ"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2529
+#: ../src/orca/script_utilities.py:2534
 #, python-format
 msgid " superscript %s"
 msgstr " يۇقىرىقى %s"
@@ -5854,7 +5853,7 @@ msgstr " يۇقىرىقى %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2539
+#: ../src/orca/script_utilities.py:2544
 #, python-format
 msgid " subscript %s"
 msgstr " تۆۋەنكى %s"
@@ -5899,7 +5898,7 @@ msgstr "پۈتكۈل پۈتۈكنى ئوقۇت."
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:276
 #: ../src/orca/scripts/apps/soffice/script.py:735
-#: ../src/orca/structural_navigation.py:1338
+#: ../src/orca/structural_navigation.py:1322
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -5909,7 +5908,7 @@ msgstr[0] "%d قۇرلۇق جەدۋەل"
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:281
 #: ../src/orca/scripts/apps/soffice/script.py:740
-#: ../src/orca/structural_navigation.py:1343
+#: ../src/orca/structural_navigation.py:1327
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -6009,7 +6008,7 @@ msgstr "بۇ قول يازمىنى ئاكتىپلىمىغاندا يېڭى ئې�
 #: ../src/orca/scripts/apps/evolution/script.py:510
 #: ../src/orca/scripts/apps/evolution/script.py:581
 msgid "Status"
-msgstr "ھالىتى"
+msgstr "ھالەت"
 
 #. Translators: this is the name of the
 #. flagged column header in the message
@@ -6077,12 +6076,12 @@ msgstr "مۇندەرىجىلەر توپچىسى"
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/default.py:2130 ../src/orca/scripts/default.py:2138
 #: ../src/orca/scripts/default.py:2259 ../src/orca/scripts/default.py:2267
-#: ../src/orca/scripts/default.py:2403 ../src/orca/scripts/default.py:4492
-#: ../src/orca/scripts/default.py:4502
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5359
+#: ../src/orca/scripts/default.py:2403 ../src/orca/scripts/default.py:4494
+#: ../src/orca/scripts/default.py:4504
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5368
 #: ../src/orca/settings.py:1188 ../src/orca/speech_generator.py:683
 #: ../src/orca/speech_generator.py:1036
-#: ../src/orca/structural_navigation.py:3618
+#: ../src/orca/structural_navigation.py:3602
 msgid "blank"
 msgstr "بوشلۇق"
 
@@ -6107,7 +6106,7 @@ msgstr "%s ئېكران"
 #.
 #: ../src/orca/scripts/apps/gcalctool/script.py:86
 msgid "Unable to get calculator display"
-msgstr "ھېسابلىغۇچنى كۆرسىتىشكە ئېرىشەلمىدى "
+msgstr "ھېسابلىغۇچنى كۆرسىتىشكە ئېرىشەلمىدى"
 
 #. Translators: these are labels from the gedit spell checking
 #. dialog and must be the same strings gedit uses.  We hate
@@ -6156,7 +6155,7 @@ msgstr "Tab ۋە Return كۇنۇپكىسىنى بېسىپ ئاخىرلاشتۇر
 #: ../src/orca/scripts/apps/gedit/script.py:469
 #: ../src/orca/scripts/apps/Thunderbird/script.py:173
 #: ../src/orca/scripts/apps/Thunderbird/script.py:321
-#: ../src/orca/scripts/apps/Thunderbird/script.py:552
+#: ../src/orca/scripts/apps/Thunderbird/script.py:553
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "ئىملا تەكشۈر"
@@ -6307,7 +6306,7 @@ msgstr "خاتالىق يۈز بەردى. تەپسىلاتى ئۈچۈن خاتا
 #.
 #: ../src/orca/scripts/apps/packagemanager/tutorialgenerator.py:60
 msgid "Use Ctrl+L to move focus to the results."
-msgstr " Ctrl+L كۇنۇپكىسىنى ئىشلىتىپ فوكۇسنى نەتىجىلەرگە يۆتكەڭ."
+msgstr "Ctrl+L كۇنۇپكىسىنى ئىشلىتىپ فوكۇسنى نەتىجىلەرگە يۆتكەڭ."
 
 #: ../src/orca/scripts/apps/pidgin/script.py:155
 #, python-format
@@ -6470,7 +6469,7 @@ msgstr "تۆۋەنگە سىيرىش توپچىسىنىڭ كۆپ قېتىم بې�
 
 #: ../src/orca/scripts/apps/soffice/script.py:1399
 msgid "License Agreement Accept button now has focus."
-msgstr "ئىجازەت كېلىشىمىنى قوبۇل  قىلىش توپچىسى ھازىر  ئۇدۇللاندى. "
+msgstr "ئىجازەت كېلىشىمىنى قوبۇل  قىلىش توپچىسى ھازىر  ئۇدۇللاندى."
 
 #. Translators: this is the name of the field in the StarOffice
 #. setup dialog that is asking for the first name of the user.
@@ -6497,7 +6496,7 @@ msgstr "كاتەككە يۆتكە"
 #: ../src/orca/scripts/apps/soffice/script.py:1695
 #, python-format
 msgid "slide %(position)d of %(count)d"
-msgstr " %(count)d  دىكى  %(position)d - تال"
+msgstr "%(count)d  دىكى  %(position)d - تال"
 
 #. Translators: This message is to inform the user that
 #. the last row of a table in a document was just deleted.
@@ -6570,15 +6569,15 @@ msgstr[0] "%d دانە ھەرپ بەك ئۇزۇن"
 #. a cell in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:123
-#: ../src/orca/structural_navigation.py:3625
+#: ../src/orca/structural_navigation.py:3609
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "قۇر %(row)d, ئىستون %(column)d"
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:590
-#: ../src/orca/scripts/apps/Thunderbird/script.py:607
+#: ../src/orca/scripts/apps/Thunderbird/script.py:591
+#: ../src/orca/scripts/apps/Thunderbird/script.py:608
 #, python-format
 msgid "%s panel"
 msgstr "%s تاختاي"
@@ -6627,7 +6626,7 @@ msgstr "ھازىرقى تەكشى كۆرۈش تۈرىدە ئوڭ توپچىنى 
 #.
 #: ../src/orca/scripts/default.py:209
 msgid "Performs the basic where am I operation."
-msgstr " نەدە مەشغۇلات قىلىشىمنى ئاددىي ئورۇندايدۇ."
+msgstr "نەدە مەشغۇلات قىلىشىمنى ئاددىي ئورۇندايدۇ."
 
 #. Translators: the "Where am I" feature of Orca allows
 #. a user to press a key and then have information
@@ -6638,7 +6637,7 @@ msgstr " نەدە مەشغۇلات قىلىشىمنى ئاددىي ئورۇند�
 #.
 #: ../src/orca/scripts/default.py:221
 msgid "Performs the detailed where am I operation."
-msgstr " نەدە مەشغۇلات قىلىشىمنى تەپسىلىي ئورۇندايدۇ."
+msgstr "نەدە مەشغۇلات قىلىشىمنى تەپسىلىي ئورۇندايدۇ."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -7885,7 +7884,7 @@ msgstr "كاتەكنى سۆزلەت"
 #. a document, Orca lets them know this.
 #.
 #: ../src/orca/scripts/default.py:3198 ../src/orca/scripts/default.py:3331
-#: ../src/orca/scripts/default.py:5315 ../src/orca/speech_generator.py:1132
+#: ../src/orca/scripts/default.py:5317 ../src/orca/speech_generator.py:1132
 #: ../src/orca/speech_generator.py:1161
 msgctxt "text"
 msgid "selected"
@@ -7899,7 +7898,7 @@ msgstr "تاللانغان"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/scripts/default.py:3337 ../src/orca/scripts/default.py:5321
+#: ../src/orca/scripts/default.py:3337 ../src/orca/scripts/default.py:5323
 msgctxt "text"
 msgid "unselected"
 msgstr "تاللانمىغان"
@@ -7908,9 +7907,9 @@ msgstr "تاللانمىغان"
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
 #.
-#: ../src/orca/scripts/default.py:3429 ../src/orca/scripts/default.py:5376
+#: ../src/orca/scripts/default.py:3429 ../src/orca/scripts/default.py:5378
 msgid "misspelled"
-msgstr "ئىملاسى خاتا "
+msgstr "ئىملاسى خاتا"
 
 #. Translators: this is an index value
 #. so that we can tell which progress bar
@@ -7946,7 +7945,7 @@ msgstr[0] "%(key)s %(value)s پىكسېل"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/scripts/default.py:4783
+#: ../src/orca/scripts/default.py:4785
 msgid "string not found"
 msgstr "تېكىست تېپىلمىدى"
 
@@ -7955,12 +7954,12 @@ msgstr "تېكىست تېپىلمىدى"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/scripts/default.py:4855
+#: ../src/orca/scripts/default.py:4857
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "ئىملاسى خاتا سوز: %s"
 
-#: ../src/orca/scripts/default.py:4863
+#: ../src/orca/scripts/default.py:4865
 #, python-format
 msgid "Context is %s"
 msgstr "كونتېكىست %s"
@@ -7969,19 +7968,19 @@ msgstr "كونتېكىست %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5114
+#: ../src/orca/scripts/default.py:5116
 msgid "paragraph selected down from cursor position"
 msgstr "نۇربەلگىسى ئورنىدىن ئاستىغا تاللانغان پاراگراف"
 
-#: ../src/orca/scripts/default.py:5115
+#: ../src/orca/scripts/default.py:5117
 msgid "paragraph unselected down from cursor position"
 msgstr "نۇربەلگىسى ئورنىدىن ئاستىغا تاللانمىغان پاراگراف"
 
-#: ../src/orca/scripts/default.py:5116
+#: ../src/orca/scripts/default.py:5118
 msgid "paragraph selected up from cursor position"
 msgstr "نۇربەلگىسى ئورنىدىن يۇقىرىغا تاللانغان پاراگراف"
 
-#: ../src/orca/scripts/default.py:5117
+#: ../src/orca/scripts/default.py:5119
 msgid "paragraph unselected up from cursor position"
 msgstr "نۇربەلگىسى ئورنىدىن يۇقىرىغا تاللانمىغان پاراگراف"
 
@@ -7989,30 +7988,30 @@ msgstr "نۇربەلگىسى ئورنىدىن يۇقىرىغا تاللانمى�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5171
+#: ../src/orca/scripts/default.py:5173
 msgid "line selected to end from previous cursor position"
-msgstr "نۇربەلگىسى تۇرغان ئورۇندىن  ئاخىرىغىچە تاللانغان قۇر  "
+msgstr "نۇربەلگىسى تۇرغان ئورۇندىن  ئاخىرىغىچە تاللانغان قۇر"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5179
+#: ../src/orca/scripts/default.py:5181
 msgid "line selected from start to previous cursor position"
-msgstr "بېشىدىن نۇربەلگىسى تۇرغان ئورۇنغىچە  تاللانغان قۇر  "
+msgstr "بېشىدىن نۇربەلگىسى تۇرغان ئورۇنغىچە  تاللانغان قۇر"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5188
+#: ../src/orca/scripts/default.py:5190
 msgid "page selected from cursor position"
 msgstr "نۇربەلگىسى تۇرغان ئورۇندىن باشلاپ تاللانغان بەت"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5193
+#: ../src/orca/scripts/default.py:5195
 msgid "page unselected from cursor position"
 msgstr "نۇربەلگىسى تۇرغان ئورۇندىن باشلاپ تاللانمىغان بەت"
 
@@ -8020,14 +8019,14 @@ msgstr "نۇربەلگىسى تۇرغان ئورۇندىن باشلاپ تالل
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5202
+#: ../src/orca/scripts/default.py:5204
 msgid "page selected to cursor position"
 msgstr "نۇربەلگىسى تۇرغان ئورۇنغىچە تاللانغان بەت"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5207
+#: ../src/orca/scripts/default.py:5209
 msgid "page unselected to cursor position"
 msgstr "نۇربەلگىسى تۇرغان ئورۇنغىچە تاللانمىغان بەت"
 
@@ -8035,14 +8034,14 @@ msgstr "نۇربەلگىسى تۇرغان ئورۇنغىچە تاللانمىغ�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5232
+#: ../src/orca/scripts/default.py:5234
 msgid "document selected to cursor position"
 msgstr "نۇربەلگە ئورنىغىچە تاللانغان پۈتۈك"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5237
+#: ../src/orca/scripts/default.py:5239
 msgid "document unselected to cursor position"
 msgstr "نۇربەلگە ئورنىغىچە تاللانمىغان پۈتۈك"
 
@@ -8050,21 +8049,21 @@ msgstr "نۇربەلگە ئورنىغىچە تاللانمىغان پۈتۈك"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5246
+#: ../src/orca/scripts/default.py:5248
 msgid "document selected from cursor position"
 msgstr "نۇربەلگىسى تۇرغان  ئورۇندىن باشلاپ تاللانغان پۈتۈك"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5251
+#: ../src/orca/scripts/default.py:5253
 msgid "document unselected from cursor position"
 msgstr "نۇربەلگىسى تۇرغان  ئورۇندىن باشلاپ تاللانمىغان پۈتۈك"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/scripts/default.py:5268
+#: ../src/orca/scripts/default.py:5270
 msgid "entire document selected"
 msgstr "پۈتكۈل پۈتۈك تاللاندى"
 
@@ -8072,7 +8071,7 @@ msgstr "پۈتكۈل پۈتۈك تاللاندى"
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/scripts/default.py:5808
+#: ../src/orca/scripts/default.py:5810
 #, python-format
 msgid "Unicode %s"
 msgstr "يۇنىكود %s"
@@ -8235,7 +8234,7 @@ msgstr "Gecko يەرلىك ۋە Orca نۇر نۇقتىسى ئارىسىدىكى 
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:596
 msgid "Moves focus into and away from the current mouse over."
-msgstr "فوكۇسنى ھازىرقى چاشقىنەكنىڭ ئاستىغا يۆتكەيدۇ ۋە قايتۇرىدۇ. "
+msgstr "فوكۇسنى ھازىرقى چاشقىنەكنىڭ ئاستىغا يۆتكەيدۇ ۋە قايتۇرىدۇ."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -8383,22 +8382,22 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5526
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5535
 msgid "Mouse over object not found."
 msgstr "چاشقىنەك ئاستىدىكى ئوبيېكت تېپىلمىدى."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6010
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6019
 msgid "open"
 msgstr "ئاچ"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6177
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6201
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6211
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6186
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6210
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6220
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "تۇرىدىغان رايون دەستىكى يېپىق"
@@ -8406,11 +8405,11 @@ msgstr "تۇرىدىغان رايون دەستىكى يېپىق"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6185
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6194
 msgid "Live regions monitoring on"
 msgstr "تۇرىدىغان رايونلارنى كۆزىتىش ئوچۇق"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6192
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6201
 msgid "Live regions monitoring off"
 msgstr "تۇرىدىغان رايونلارنى كۆزىتىش يېپىق"
 
@@ -8421,7 +8420,7 @@ msgstr "تۇرىدىغان رايونلارنى كۆزىتىش يېپىق"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6227
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6236
 msgid "Gecko is controlling the caret."
 msgstr "Gecko نۇر نۇقتىسىنى تىزگىنلەۋاتىدۇ."
 
@@ -8432,7 +8431,7 @@ msgstr "Gecko نۇر نۇقتىسىنى تىزگىنلەۋاتىدۇ."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6239
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6248
 msgid "Orca is controlling the caret."
 msgstr "Orca نۇر بەلگىسىنى تىزگىنلەۋاتىدۇ."
 
@@ -8450,7 +8449,7 @@ msgstr "%(role)s level %(level)d"
 #. Translators: this represents a list in HTML.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:301
-#: ../src/orca/structural_navigation.py:2956
+#: ../src/orca/structural_navigation.py:2940
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -8543,7 +8542,7 @@ msgstr "كۈل رەڭ قىلىندى"
 #.
 #: ../src/orca/settings.py:1230 ../src/orca/settings.py:1296
 msgid "collapsed"
-msgstr "قاتلانغان "
+msgstr "قاتلانغان"
 
 #: ../src/orca/settings.py:1230 ../src/orca/settings.py:1296
 msgid "expanded"
@@ -8575,7 +8574,7 @@ msgstr "شاخسىمان دەرىجە %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1248 ../src/orca/structural_navigation.py:2971
+#: ../src/orca/settings.py:1248 ../src/orca/structural_navigation.py:2955
 #, python-format
 msgid "Nesting level %d"
 msgstr "گىرەلەشمە دەرىجە %d"
@@ -8587,7 +8586,7 @@ msgstr "گىرەلەشمە دەرىجە %d"
 #: ../src/orca/settings.py:1254
 #, python-format
 msgid "on %(index)d of %(total)d"
-msgstr " %(index)d دىكى %(total)d"
+msgstr "%(index)d دىكى %(total)d"
 
 #. Translators: this refers to the position of an item in a list
 #. or group of objects, such as menu items in a menu, radio buttons
@@ -8939,7 +8938,7 @@ msgstr "ئىستون ئاخىرى."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1331
+#: ../src/orca/structural_navigation.py:1315
 msgid "Non-uniform"
 msgstr "تەكشىسىز"
 
@@ -8947,8 +8946,8 @@ msgstr "تەكشىسىز"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1498
-#: ../src/orca/structural_navigation.py:1520
+#: ../src/orca/structural_navigation.py:1482
+#: ../src/orca/structural_navigation.py:1504
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -8956,7 +8955,7 @@ msgstr[0] "كاتەك %d قۇرنى ئىگىلىدى"
 
 #. Translators: this represents the number of columns in a table.
 #.
-#: ../src/orca/structural_navigation.py:1504
+#: ../src/orca/structural_navigation.py:1488
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -8966,7 +8965,7 @@ msgstr[0] " %d ئىستون"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1512
+#: ../src/orca/structural_navigation.py:1496
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -8975,14 +8974,14 @@ msgstr[0] "كاتەك %d ئىستوننى ئىگىلىدى"
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1874
+#: ../src/orca/structural_navigation.py:1858
 msgid "Goes to previous anchor."
 msgstr "ئالدىنقى لەڭگەرگە يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1879
+#: ../src/orca/structural_navigation.py:1863
 msgid "Goes to next anchor."
 msgstr "كېيىنكى لەڭگەرگە يۆتكىلىدۇ."
 
@@ -8991,7 +8990,7 @@ msgstr "كېيىنكى لەڭگەرگە يۆتكىلىدۇ."
 #. that one can jump to.) This is a detailed message which
 #. will be presented to the user if no more anchors can be found.
 #.
-#: ../src/orca/structural_navigation.py:1936
+#: ../src/orca/structural_navigation.py:1920
 msgid "No more anchors."
 msgstr "باشقا لەڭگەر يوق."
 
@@ -9004,26 +9003,26 @@ msgstr "باشقا لەڭگەر يوق."
 #. user if the desired structural navigation object could not be
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:1946
-#: ../src/orca/structural_navigation.py:2040
-#: ../src/orca/structural_navigation.py:2130
-#: ../src/orca/structural_navigation.py:2220
-#: ../src/orca/structural_navigation.py:2325
-#: ../src/orca/structural_navigation.py:2415
-#: ../src/orca/structural_navigation.py:2517
-#: ../src/orca/structural_navigation.py:2624
-#: ../src/orca/structural_navigation.py:2746
-#: ../src/orca/structural_navigation.py:2764
-#: ../src/orca/structural_navigation.py:2874
-#: ../src/orca/structural_navigation.py:2992
-#: ../src/orca/structural_navigation.py:3088
-#: ../src/orca/structural_navigation.py:3173
-#: ../src/orca/structural_navigation.py:3264
-#: ../src/orca/structural_navigation.py:3354
-#: ../src/orca/structural_navigation.py:3435
-#: ../src/orca/structural_navigation.py:3525
-#: ../src/orca/structural_navigation.py:3725
-#: ../src/orca/structural_navigation.py:3814
+#: ../src/orca/structural_navigation.py:1930
+#: ../src/orca/structural_navigation.py:2024
+#: ../src/orca/structural_navigation.py:2114
+#: ../src/orca/structural_navigation.py:2204
+#: ../src/orca/structural_navigation.py:2309
+#: ../src/orca/structural_navigation.py:2399
+#: ../src/orca/structural_navigation.py:2501
+#: ../src/orca/structural_navigation.py:2608
+#: ../src/orca/structural_navigation.py:2730
+#: ../src/orca/structural_navigation.py:2748
+#: ../src/orca/structural_navigation.py:2858
+#: ../src/orca/structural_navigation.py:2976
+#: ../src/orca/structural_navigation.py:3072
+#: ../src/orca/structural_navigation.py:3157
+#: ../src/orca/structural_navigation.py:3248
+#: ../src/orca/structural_navigation.py:3338
+#: ../src/orca/structural_navigation.py:3419
+#: ../src/orca/structural_navigation.py:3509
+#: ../src/orca/structural_navigation.py:3709
+#: ../src/orca/structural_navigation.py:3798
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "تېپىلمىدى"
@@ -9031,14 +9030,14 @@ msgstr "تېپىلمىدى"
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1964
+#: ../src/orca/structural_navigation.py:1948
 msgid "Goes to previous blockquote."
 msgstr "ئالدىنقى بۆلەك-نەقىلگە يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1969
+#: ../src/orca/structural_navigation.py:1953
 msgid "Goes to next blockquote."
 msgstr "كېيىنكى بۆلەك-نەقىلگە يۆتكىلىدۇ."
 
@@ -9047,21 +9046,21 @@ msgstr "كېيىنكى بۆلەك-نەقىلگە يۆتكىلىدۇ."
 #. message which will be presented to the user if no more
 #. blockquotes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2030
+#: ../src/orca/structural_navigation.py:2014
 msgid "No more blockquotes."
 msgstr "باشقا بۆلەك-نەقىل يوق."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2058
+#: ../src/orca/structural_navigation.py:2042
 msgid "Goes to previous button."
 msgstr "ئالدىنقى  توپچىغا يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2063
+#: ../src/orca/structural_navigation.py:2047
 msgid "Goes to next button."
 msgstr "كېيىنكى توپچىغا يۆتكىلىدۇ."
 
@@ -9070,21 +9069,21 @@ msgstr "كېيىنكى توپچىغا يۆتكىلىدۇ."
 #. a detailed message which will be presented to the user if
 #. no more push buttons can be found.
 #.
-#: ../src/orca/structural_navigation.py:2120
+#: ../src/orca/structural_navigation.py:2104
 msgid "No more buttons."
 msgstr "باشقا توپچا يوق."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2148
+#: ../src/orca/structural_navigation.py:2132
 msgid "Goes to previous check box."
 msgstr "ئالدىنقى تاللاش رامكىسىغا يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2153
+#: ../src/orca/structural_navigation.py:2137
 msgid "Goes to next check box."
 msgstr "كېيىنكى تاللاش رامكىسىغا يۆتكىلىدۇ."
 
@@ -9093,7 +9092,7 @@ msgstr "كېيىنكى تاللاش رامكىسىغا يۆتكىلىدۇ."
 #. detailed message which will be presented to the user if
 #. no more checkboxes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2210
+#: ../src/orca/structural_navigation.py:2194
 msgid "No more check boxes."
 msgstr "باشقا  تاللاش رامكىسى يوق."
 
@@ -9101,7 +9100,7 @@ msgstr "باشقا  تاللاش رامكىسى يوق."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2239
+#: ../src/orca/structural_navigation.py:2223
 msgid "Goes to previous large object."
 msgstr "ئالدىنقى چوڭ نەڭگە يۆتكىلىدۇ."
 
@@ -9109,7 +9108,7 @@ msgstr "ئالدىنقى چوڭ نەڭگە يۆتكىلىدۇ."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2245
+#: ../src/orca/structural_navigation.py:2229
 msgid "Goes to next large object."
 msgstr "كېيىنكى چوڭ نەڭگە يۆتكىلىدۇ."
 
@@ -9120,21 +9119,21 @@ msgstr "كېيىنكى چوڭ نەڭگە يۆتكىلىدۇ."
 #. will be presented to the user if no more large objects
 #. can be found.
 #.
-#: ../src/orca/structural_navigation.py:2315
+#: ../src/orca/structural_navigation.py:2299
 msgid "No more large objects."
 msgstr "باشقا  چوڭ ئوبيېكت يوق."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2343
+#: ../src/orca/structural_navigation.py:2327
 msgid "Goes to previous combo box."
 msgstr "ئالدىنقى تاللاش-تىزىمىغا يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2348
+#: ../src/orca/structural_navigation.py:2332
 msgid "Goes to next combo box."
 msgstr "كېيىنكى تاللاش-تىزىمىغا يۆتكىلىدۇ."
 
@@ -9143,21 +9142,21 @@ msgstr "كېيىنكى تاللاش-تىزىمىغا يۆتكىلىدۇ."
 #. detailed message which will be presented to the user if
 #. no more checkboxes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2405
+#: ../src/orca/structural_navigation.py:2389
 msgid "No more combo boxes."
 msgstr "باشقا تاللاش-تىزىمى يوق."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2433
+#: ../src/orca/structural_navigation.py:2417
 msgid "Goes to previous entry."
 msgstr "ئالدىنقى كىرگۈگە يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among text entries
 #. in a form.
 #.
-#: ../src/orca/structural_navigation.py:2438
+#: ../src/orca/structural_navigation.py:2422
 msgid "Goes to next entry."
 msgstr "كېيىنكى كىرگۈگە يۆتكىلىدۇ."
 
@@ -9166,21 +9165,21 @@ msgstr "كېيىنكى كىرگۈگە يۆتكىلىدۇ."
 #. a detailed message which will be presented to the user if
 #. no more text entries can be found.
 #.
-#: ../src/orca/structural_navigation.py:2507
+#: ../src/orca/structural_navigation.py:2491
 msgid "No more entries."
 msgstr "باشقا كىرگۈ يوق."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2535
+#: ../src/orca/structural_navigation.py:2519
 msgid "Goes to previous form field."
 msgstr "ئالدىنقى فورما دائىرىسىگە يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2542
+#: ../src/orca/structural_navigation.py:2526
 msgid "Goes to next form field."
 msgstr "كېيىنكى فورما دائىرىسىگە يۆتكىلىدۇ."
 
@@ -9189,28 +9188,28 @@ msgstr "كېيىنكى فورما دائىرىسىگە يۆتكىلىدۇ."
 #. message which will be presented to the user if no more form
 #. field can be found.
 #.
-#: ../src/orca/structural_navigation.py:2614
+#: ../src/orca/structural_navigation.py:2598
 msgid "No more form fields."
 msgstr "باشقا فورما دائىرىسى يوق."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2642
+#: ../src/orca/structural_navigation.py:2626
 msgid "Goes to previous heading."
 msgstr "ئالدىنقى ماۋزۇغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g., <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2647
+#: ../src/orca/structural_navigation.py:2631
 msgid "Goes to next heading."
 msgstr "كېيىنكى ماۋزۇغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2657
+#: ../src/orca/structural_navigation.py:2641
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "%d دەرىجىدىكى ئالدىنقى ماۋزۇغا  يۆتكىلىدۇ."
@@ -9218,7 +9217,7 @@ msgstr "%d دەرىجىدىكى ئالدىنقى ماۋزۇغا  يۆتكىلى�
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2664
+#: ../src/orca/structural_navigation.py:2648
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "%d دەرىجىدىكى كېيىنكى ماۋزۇغا  يۆتكىلىدۇ."
@@ -9228,16 +9227,16 @@ msgstr "%d دەرىجىدىكى كېيىنكى ماۋزۇغا  يۆتكىلىد�
 #. detailed message which Orca will present if there are no more
 #. headings found.
 #.
-#: ../src/orca/structural_navigation.py:2736
+#: ../src/orca/structural_navigation.py:2720
 msgid "No more headings."
-msgstr " باشقا ماۋزۇ يوق."
+msgstr "باشقا ماۋزۇ يوق."
 
 #. Translators: this is for navigating HTML content by moving from
 #. heading to heading at a particular level (i.e. only <h1> or only
 #. <h2>, etc.) This string is the detailed message which Orca will
 #. present if there are no more headings found at the desired level.
 #.
-#: ../src/orca/structural_navigation.py:2754
+#: ../src/orca/structural_navigation.py:2738
 #, python-format
 msgid "No more headings at level %d."
 msgstr "%d دەرىجىدىكى باشقا ماۋزۇ يوق."
@@ -9247,7 +9246,7 @@ msgstr "%d دەرىجىدىكى باشقا ماۋزۇ يوق."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2784
+#: ../src/orca/structural_navigation.py:2768
 msgid "Goes to previous landmark."
 msgstr "ئالدىنقى مۇساپە بەلگىسىگە  يۆتكىلىدۇ."
 
@@ -9256,7 +9255,7 @@ msgstr "ئالدىنقى مۇساپە بەلگىسىگە  يۆتكىلىدۇ."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2791
+#: ../src/orca/structural_navigation.py:2775
 msgid "Goes to next landmark."
 msgstr "كېيىنكى مۇساپە بەلگىسىگە  يۆتكىلىدۇ."
 
@@ -9266,21 +9265,21 @@ msgstr "كېيىنكى مۇساپە بەلگىسىگە  يۆتكىلىدۇ."
 #. of webpage like banners, main context, search etc.  This
 #. is an indication that one was not found.
 #.
-#: ../src/orca/structural_navigation.py:2864
+#: ../src/orca/structural_navigation.py:2848
 msgid "No landmark found."
 msgstr "مۇساپە بەلگىسى تېپىلمىدى."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2892
+#: ../src/orca/structural_navigation.py:2876
 msgid "Goes to previous list."
 msgstr "ئالدىنقى تىزىمغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2897
+#: ../src/orca/structural_navigation.py:2881
 msgid "Goes to next list."
 msgstr "كېيىنكى تىزىمغا  يۆتكىلىدۇ."
 
@@ -9289,21 +9288,21 @@ msgstr "كېيىنكى تىزىمغا  يۆتكىلىدۇ."
 #. string is the detailed message which Orca will present if there
 #. are no more lists found.
 #.
-#: ../src/orca/structural_navigation.py:2982
+#: ../src/orca/structural_navigation.py:2966
 msgid "No more lists."
 msgstr "باشقا تىزىم يوق."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:3010
+#: ../src/orca/structural_navigation.py:2994
 msgid "Goes to previous list item."
 msgstr "ئالدىنقى تىزىم تۈرىگە يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:3015
+#: ../src/orca/structural_navigation.py:2999
 msgid "Goes to next list item."
 msgstr "كېيىنكى تىزىم تۈرىگە يۆتكىلىدۇ."
 
@@ -9312,26 +9311,26 @@ msgstr "كېيىنكى تىزىم تۈرىگە يۆتكىلىدۇ."
 #. numbered list item.  This string is the detailed message
 #. which Orca will present if there are no more list items found.
 #.
-#: ../src/orca/structural_navigation.py:3078
+#: ../src/orca/structural_navigation.py:3062
 msgid "No more list items."
 msgstr "باشقا تىزىم تۇرى يوق."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:3105
+#: ../src/orca/structural_navigation.py:3089
 msgid "Goes to previous live region."
 msgstr "ئالدىنقى تۇرىدىغان رايونغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:3109
+#: ../src/orca/structural_navigation.py:3093
 msgid "Goes to next live region."
 msgstr "كېيىنكى تۇرىدىغان رايونغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating to the last live region
 #. which made an announcement.
 #.
-#: ../src/orca/structural_navigation.py:3114
+#: ../src/orca/structural_navigation.py:3098
 msgid "Goes to the last live region which made an announcement."
 msgstr "ئاخىرقى ئېلان قىلىنغان تۇرىدىغان رايونغا  يۆتكىلىدۇ."
 
@@ -9339,19 +9338,19 @@ msgstr "ئاخىرقى ئېلان قىلىنغان تۇرىدىغان رايون
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/structural_navigation.py:3163
+#: ../src/orca/structural_navigation.py:3147
 msgid "No more live regions."
 msgstr "باشقا تۇرىدىغان رايون يوق."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3190
+#: ../src/orca/structural_navigation.py:3174
 msgid "Goes to previous paragraph."
 msgstr "ئالدىنقى پاراگرافقا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3194
+#: ../src/orca/structural_navigation.py:3178
 msgid "Goes to next paragraph."
 msgstr "كېيىنكى  پاراگرافقا  يۆتكىلىدۇ."
 
@@ -9359,21 +9358,21 @@ msgstr "كېيىنكى  پاراگرافقا  يۆتكىلىدۇ."
 #. from paragraph to paragraph. This string is the detailed message
 #. which Orca will present if there are no more paragraphs found.
 #.
-#: ../src/orca/structural_navigation.py:3254
+#: ../src/orca/structural_navigation.py:3238
 msgid "No more paragraphs."
 msgstr "باشقا پاراگراف يوق."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3282
+#: ../src/orca/structural_navigation.py:3266
 msgid "Goes to previous radio button."
 msgstr "ئالدىنقى تاللاش توپچىسىغا يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3287
+#: ../src/orca/structural_navigation.py:3271
 msgid "Goes to next radio button."
 msgstr "كېيىنكى تاللاش توپچىسىغا يۆتكىلىدۇ."
 
@@ -9382,21 +9381,21 @@ msgstr "كېيىنكى تاللاش توپچىسىغا يۆتكىلىدۇ."
 #. detailed message which Orca will present if there are no more
 #. radio buttons found.
 #.
-#: ../src/orca/structural_navigation.py:3344
+#: ../src/orca/structural_navigation.py:3328
 msgid "No more radio buttons."
 msgstr "باشقا تاللاش توپچىسى يوق."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
-#: ../src/orca/structural_navigation.py:3372
+#: ../src/orca/structural_navigation.py:3356
 msgid "Goes to previous separator."
 msgstr "ئالدىنقى ئايرىش بەلگىسىگە  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
-#: ../src/orca/structural_navigation.py:3377
+#: ../src/orca/structural_navigation.py:3361
 msgid "Goes to next separator."
 msgstr "كېيىنكى ئايرىش بەلگىسىگە  يۆتكىلىدۇ."
 
@@ -9405,19 +9404,19 @@ msgstr "كېيىنكى ئايرىش بەلگىسىگە  يۆتكىلىدۇ."
 #. message which Orca will present if there are no more separators
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3425
+#: ../src/orca/structural_navigation.py:3409
 msgid "No more separators."
 msgstr "باشقا ئايرىش بەلگىسى يوق."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3452
+#: ../src/orca/structural_navigation.py:3436
 msgid "Goes to previous table."
 msgstr "ئالدىنقى جەدۋەلگە  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3456
+#: ../src/orca/structural_navigation.py:3440
 msgid "Goes to next table."
 msgstr "كېيىنكى جەدۋەلگە  يۆتكىلىدۇ."
 
@@ -9425,89 +9424,89 @@ msgstr "كېيىنكى جەدۋەلگە  يۆتكىلىدۇ."
 #. from table to table.  This string is the detailed message which
 #. Orca will present if there are no more tables found.
 #.
-#: ../src/orca/structural_navigation.py:3515
+#: ../src/orca/structural_navigation.py:3499
 msgid "No more tables."
 msgstr "باشقا جەدۋەل يوق."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3542
+#: ../src/orca/structural_navigation.py:3526
 msgid "Goes left one cell."
 msgstr "بىر كاتەك سولغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3546
+#: ../src/orca/structural_navigation.py:3530
 msgid "Goes right one cell."
 msgstr "بىر كاتەك ئوڭغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3550
+#: ../src/orca/structural_navigation.py:3534
 msgid "Goes up one cell."
 msgstr "بىر كاتەك ئۈستىگە  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3554
+#: ../src/orca/structural_navigation.py:3538
 msgid "Goes down one cell."
 msgstr "بىر كاتەك ئاستىغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3558
+#: ../src/orca/structural_navigation.py:3542
 msgid "Goes to the first cell in a table."
 msgstr "جەدۋەلدىكى دەسلەپكى كاتەككە  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3562
+#: ../src/orca/structural_navigation.py:3546
 msgid "Goes to the last cell in a table."
 msgstr "جەدۋەلدىكى ئاخىرقى كاتەككە  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3647
+#: ../src/orca/structural_navigation.py:3631
 msgid "Goes to previous unvisited link."
-msgstr " زىيارەت قىلىنمىغان ئالدىنقى ئۇلانمىغا  يۆتكىلىدۇ."
+msgstr "زىيارەت قىلىنمىغان ئالدىنقى ئۇلانمىغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3652
+#: ../src/orca/structural_navigation.py:3636
 msgid "Goes to next unvisited link."
-msgstr " زىيارەت قىلىنمىغان كېيىنكى ئۇلانمىغا  يۆتكىلىدۇ."
+msgstr "زىيارەت قىلىنمىغان كېيىنكى ئۇلانمىغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating document content by moving
 #. from unvisited link to unvisited link. This string is the
 #. detailed message which Orca will present if there are no more
 #. unvisited links found.
 #.
-#: ../src/orca/structural_navigation.py:3715
+#: ../src/orca/structural_navigation.py:3699
 msgid "No more unvisited links."
 msgstr "باشقا زىيارەت قىلىنمىغان ئۇلانما يوق."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3743
+#: ../src/orca/structural_navigation.py:3727
 msgid "Goes to previous visited link."
-msgstr " زىيارەت قىلىنغان ئالدىنقى ئۇلانمىغا  يۆتكىلىدۇ."
+msgstr "زىيارەت قىلىنغان ئالدىنقى ئۇلانمىغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3748
+#: ../src/orca/structural_navigation.py:3732
 msgid "Goes to next visited link."
-msgstr " زىيارەت قىلىنغان كېيىنكى ئۇلانمىغا  يۆتكىلىدۇ."
+msgstr "زىيارەت قىلىنغان كېيىنكى ئۇلانمىغا  يۆتكىلىدۇ."
 
 #. Translators: this is for navigating document content by moving
 #. from visited link to visited link. This string is the detailed
 #. message which Orca will present if there are no more visited
 #. links found.
 #.
-#: ../src/orca/structural_navigation.py:3804
+#: ../src/orca/structural_navigation.py:3788
 msgid "No more visited links."
 msgstr "باشقا زىيارەت قىلىنغان ئۇلانما يوق."
 
@@ -10483,19 +10482,19 @@ msgstr "ھەجىلەش"
 #. Translators: this is a tip for the user on how to toggle a checkbox.
 #: ../src/orca/tutorialgenerator.py:158
 msgid "Press space to toggle."
-msgstr "بوشلۇقنى بېسىپ ئالماشتۇرۇڭ. "
+msgstr "بوشلۇقنى بېسىپ ئالماشتۇرۇڭ."
 
 #. Translators: this is a tip for the user on how to interact
 #. with a combobox.
 #: ../src/orca/tutorialgenerator.py:185
 msgid "Press space to expand, and use up and down to select an item."
-msgstr "كېڭەيتىش ئۈچۈن بوشلۇقنى بېسىڭ، ۋە بىر تۈر تاللاش ئۈچۈن يۇقىرىغا ۋە ئاستىغا كۇنۇپكىسىنى قوللىنىڭ. "
+msgstr "كېڭەيتىش ئۈچۈن بوشلۇقنى بېسىڭ، ۋە بىر تۈر تاللاش ئۈچۈن يۇقىرىغا ۋە ئاستىغا كۇنۇپكىسىنى قوللىنىڭ."
 
 #. Translators: If this application has more than one unfocused alert or
 #. dialog window, inform user of how to refocus these.
 #: ../src/orca/tutorialgenerator.py:216
 msgid "Press alt+f6 to give focus to child windows."
-msgstr "فوكۇسنى  بالا كۆزنەكلەرگە بەرمەك ئۈچۈن alt+f6 كۇنۇپكىلىرىنى بېسىڭ. "
+msgstr "فوكۇسنى  بالا كۆزنەكلەرگە بەرمەك ئۈچۈن alt+f6 كۇنۇپكىلىرىنى بېسىڭ."
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
@@ -10541,7 +10540,7 @@ msgstr "تېكىست ئىچىگە ياز"
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:413
 msgid "Use left and right to view other tabs."
-msgstr " باشقا بەتكۈچلەرنى كۆرۈش ئۈچۈن سول ۋە ئوڭ كۇنۇپكىسىنى قوللىنىڭ."
+msgstr "باشقا بەتكۈچلەرنى كۆرۈش ئۈچۈن سول ۋە ئوڭ كۇنۇپكىسىنى قوللىنىڭ."
 
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:438
