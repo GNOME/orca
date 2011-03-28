@@ -35,6 +35,7 @@ import time
 
 import orca.orca as orca
 _settingsManager = getattr(orca, '_settingsManager')
+_pluginManager = getattr(orca, '_pluginManager') 
 
 import pyatspi
 import orca.braille as braille
@@ -53,8 +54,13 @@ import orca.orca_state as orca_state
 import orca.phonnames as phonnames
 import orca.script as script
 import orca.settings as settings
-import orca.speech as speech
+
+#import orca.speech as speech
+#import orca.speechserver as speechserver
+speech = _pluginManager.getPluginObject('speech')
+if speech == None: import orca.dummyspeech as speech
 import orca.speechserver as speechserver
+
 import orca.mouse_review as mouse_review
 import orca.text_attribute_names as text_attribute_names
 import orca.notification_messages as notification_messages

@@ -559,6 +559,7 @@ import orca_state
 #
 #import speech
 global speech
+speech = None
 
 import notification_messages
 
@@ -1503,7 +1504,14 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         dbusserver.shutdown()
 
     httpserver.shutdown()
-    speech.shutdown()
+    # JH / TODO: Must do something smarter
+    # Hard code for speech plugin
+    #
+    try:
+        speech.shutdown()
+    except:
+        print 'Passing speech'
+        pass
     braille.shutdown()
     mag.shutdown()
 
@@ -1546,8 +1554,11 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     # Enable starting plugins
     activeStartingPlugins(activePlugins)
 
+    #print 'el if =', (settings.enableSpeech and 'speech' in activePlugins)
+
     if settings.enableSpeech and 'speech' in activePlugins:
         speech = _pluginManager.getPluginObject('speech')
+        if speech == None: import dummyspeech as speech
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
@@ -1564,6 +1575,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.println(debug.LEVEL_SEVERE,
                           "Could not initialize connection to speech.")
     else:
+        if speech == None: import dummyspeech as speech
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
 

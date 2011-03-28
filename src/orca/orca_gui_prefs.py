@@ -48,15 +48,19 @@ import input_event
 import keybindings
 import pronunciation_dict
 import braille
-import speech
-import speechserver
+#import speechserver
 import text_attribute_names
+
 
 import orca_gui_profile
 
 _settingsManager = getattr(orca, '_settingsManager')
 _scriptManager = getattr(orca, '_scriptManager')
 _pluginManager = getattr(orca, '_pluginManager')
+
+speech = _pluginManager.getPluginObject('speech')
+if speech == None: import dummyspeech as speech
+import speechserver
 
 # needed to fill the graphical treeview
 #import pluglib
@@ -985,6 +989,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Initialize the various speech components.
         """
 
+        print 'in orca_gui_prefs::_initSpeechState(self)'
+
         voices = self.prefsDict["voices"]
         self.defaultVoice   = acss.ACSS(voices.get(settings.DEFAULT_VOICE))
         self.uppercaseVoice = acss.ACSS(voices.get(settings.UPPERCASE_VOICE))
@@ -1001,6 +1007,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # Where * = speechSystems, speechServers, speechFamilies
         #
         factories = speech.getSpeechServerFactories()
+
         if len(factories) == 0:
             self.workingFactories = []
             self.speechSystemsChoice = None
@@ -2321,6 +2328,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             _pluginManager.disablePlugin(plugin_name)
 
+        if plugin_name == 'speech':
+            self.__updateSpeechTab(active)
+
+
 # nacho's
 #        if active:
 #            self.currentPluginsStatus[plugin_name]
@@ -2328,6 +2339,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 #            self.currentPluginsStatus[plugin_name]
 #        self.plugins_store[path][0] = checkbox.get_active()
 
+    def __updateSpeechTab(self, active):
+        notebook = self.get_widget('notebook')
+        speechTab = notebook.get_nth_page(1)
+        if active == True:
+            speechTab.show()
+        else:
+            speechTab.hide()
+            speech.shutdown()
 
     def __initProfileCombo(self):
         """Adding available profiles and setting active as the active one"""

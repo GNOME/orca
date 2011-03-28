@@ -92,6 +92,8 @@ class speechPlugin(IPlugin, IPresenter):
         from orca.acss import ACSS
         from orca.orca_i18n import _           # for gettext support
 
+        settings.enableSpeech = True
+
         self.init()
 
     def getSpeechServerFactories(self):
@@ -104,6 +106,11 @@ class speechPlugin(IPlugin, IPresenter):
     
         moduleNames = settings.speechFactoryModules
         for moduleName in moduleNames:
+            # JH: Review this if necessary
+            # with this replacement, we're showing voices combolists
+            # values succesfully
+            #
+            moduleName = 'orca.%s' % moduleName
             try:
                 module =  __import__(moduleName,
                                      globals(),
@@ -157,6 +164,11 @@ class speechPlugin(IPlugin, IPresenter):
             raise Exception("No speech server for factory: %s" % moduleName)
     
     def init(self):
+        global _speechserver
+        global settings
+
+        print _speechserver
+
         if _speechserver:
             return
         
@@ -164,7 +176,7 @@ class speechPlugin(IPlugin, IPresenter):
             moduleName = settings.speechServerFactory
             self._initSpeechServer(moduleName,
                               settings.speechServerInfo)
-            print moduleName
+            print 'ModuleName = ', moduleName
         except:
             moduleNames = settings.speechFactoryModules
             for moduleName in moduleNames:
@@ -233,6 +245,8 @@ class speechPlugin(IPlugin, IPresenter):
         """Speaks the given content.  The content can be either a simple
         string or an array of arrays of objects returned by a speech
         generator."""
+
+        print "someone has called me to speak %s" % content
     
         if settings.silenceSpeech:
             return
@@ -368,9 +382,7 @@ class speechPlugin(IPlugin, IPresenter):
     def stop(self):
         if _speechserver:
             _speechserver.stop()
-    
-    
-    
+
     def updatePunctuationLevel(self, script=None, inputEvent=None):
         """ Punctuation level changed, inform this speechServer. """
     
@@ -382,7 +394,7 @@ class speechPlugin(IPlugin, IPresenter):
             log.info(logLine)
     
         return True
-    
+
     def increaseSpeechRate(self, script=None, inputEvent=None):
         if _speechserver:
             _speechserver.increaseSpeechRate()
@@ -392,7 +404,7 @@ class speechPlugin(IPlugin, IPresenter):
             log.info(logLine)
     
         return True
-    
+
     def decreaseSpeechRate(self, script=None, inputEvent=None):
         if _speechserver:
             _speechserver.decreaseSpeechRate()
@@ -402,7 +414,7 @@ class speechPlugin(IPlugin, IPresenter):
             log.info(logLine)
     
         return True
-    
+
     def increaseSpeechPitch(self, script=None, inputEvent=None):
         if _speechserver:
             _speechserver.increaseSpeechPitch()
@@ -471,5 +483,9 @@ class speechPlugin(IPlugin, IPresenter):
         string = multiCaseReg2.sub('\\1 \\2', string)
         string = multiCaseReg3.sub('\\1 \\2', string)    
         return string
+
+    def disable(self):
+        settings.enableSpeech = False
+        self.shutdown()
 
 IPlugin.register(speechPlugin)

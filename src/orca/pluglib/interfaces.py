@@ -126,11 +126,11 @@ class IPluginManager(object):
         """Scan plugin paths looking for plugins"""
 
     @abc.abstractmethod
-    def enable_plugin(plugin):
+    def enablePlugin(plugin):
         """Perform the process of plugin activation"""
 
     @abc.abstractmethod
-    def disable_plugin(plugin):
+    def disablePlugin(plugin):
         """Perform the process of plugin deactivation"""
 
     @abc.abstractmethod    

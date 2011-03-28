@@ -208,7 +208,7 @@ class ModulePluginManager(IPluginManager):
 #        self.store_conf.updatePlugin({plugin_name: enabling_plugins})
 
         if self.plugins:
-            print self.plugins
+            #print self.plugins
             # load the class in the plugin list maintained in memory
             self.load_class_in_plugin(self.plugins[plugin_name], plugin_name, PLUGINS_DIR)
 
@@ -331,7 +331,10 @@ class ModulePluginManager(IPluginManager):
             return True
 
     def getPluginObject(self, plugin_name):
-        return self.plugins[plugin_name]['object']
+        if not 'object' in self.plugins[plugin_name]:
+            return None
+        else:
+            return self.plugins[plugin_name]['object']
 
     def getPlugins(self):
         self.scanPluginsDir()
