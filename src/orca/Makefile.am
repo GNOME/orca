@@ -23,6 +23,7 @@ orca_python_PYTHON = \
 	debug.py \
 	dectalk.py \
 	desktop_keyboardmap.py \
+	dummyspeech.py \
 	espeechfactory.py \
 	event_manager.py \
 	eventsynthesizer.py \
