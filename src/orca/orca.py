@@ -540,12 +540,20 @@ if settings.useDBus:
     import dbus.mainloop.glib
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
     import dbusserver
-    try:
-        import gsmag as mag
-    except:
-        import mag
-else:
-    import mag
+
+# NA: We're going to store the mag plugin
+# in a global variable called mag, so this
+# import isn't needed at this moment.
+#
+
+#try:
+#        import gsmag as mag
+#    except:
+#        import mag
+#else:
+#    import mag
+global mag
+mag = None
 
 import braille
 import httpserver
@@ -1512,8 +1520,17 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     except:
         print 'Passing speech'
         pass
+
     braille.shutdown()
-    mag.shutdown()
+
+    # NA / TODO: Must do something smarter
+    # Hard code for speech plugin
+    #
+    try:
+        mag.shutdown()
+    except:
+        print 'Passing mag'
+        pass
 
     _scriptManager.deactivate()
 
@@ -1587,7 +1604,14 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.println(debug.LEVEL_WARNING,
                           "Could not initialize connection to braille.")
 
-    if settings.enableMagnifier:
+    if settings.enableMagnifier and 'mag' in activePlugins:
+        mag = _pluginManager.getPluginObject('mag')
+    elif settings.enableMagnifier and 'gsmag' in activePlugins:
+        mag = _pluginManager.getPluginObject('gsmag')
+
+    print activePlugins
+
+    if settings.enableMagnifier and ('mag' in activePlugins or 'gsmag' in activePlugins):
         try:
             mag.init()
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -2126,6 +2150,11 @@ def shutdown(script=None, inputEvent=None):
     _eventManager.deactivate()
     _scriptManager.deactivate()
 
+    # Here, we're getting plugins for settingsManager
+    plugins = _settingsManager.getPlugins()
+    # What plugins will be enabled?
+    activePlugins = [plug for plug in plugins if plugins[plug]['active']]
+
     # Shutdown all the other support.
     #
     if settings.enableSpeech:
@@ -2133,6 +2162,15 @@ def shutdown(script=None, inputEvent=None):
     if settings.enableBraille:
         braille.shutdown()
     if settings.enableMagnifier or settings.enableMagLiveUpdating:
+        if  'mag' in activePlugins:
+            mag = _pluginManager.getPluginObject('mag')
+        elif 'gsmag' in activePlugins:
+            mag = _pluginManager.getPluginObject('gsmag')
+        else:
+            mag = _pluginManager.getPluginObject('mag')
+
+        print mag
+
         mag.shutdown()
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):

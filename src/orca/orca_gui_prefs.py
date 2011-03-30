@@ -2257,6 +2257,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._initPluginsTreeView()
 
         self.__updateSpeechTab(self.currentPluginsStatus['speech']['active'])
+        #self.__updateMagTab(self.currentPluginsStatus['mag']['active'])
+        #self.__updateGsmagTab(self.currentPluginsStatus['gsmag']['active'])
 
     def _initPluginsTreeView(self):
 
@@ -2330,22 +2332,68 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         plugin_name = self.plugins_store[path][4]
         self.currentPluginsStatus[plugin_name]['active'] = active
         self.plugins_store[path][0] = active
-        if active == True:
+
+        # NA: hardcode!!! change this by the correct value
+        # obtained by the name 'magPlugin' and 'gsmagPlugin'!
+        orca_magnifier = self.plugins_store[3][0]
+        gs_magnifier = self.plugins_store[2][0]
+
+        mag_exception = False
+
+        if plugin_name == 'gsmag':
+            if not self.__checkGsmag(active) or orca_magnifier:
+                self.plugins_store[path][0] = False
+                active = False
+                mag_exception = True
+
+        if plugin_name == 'mag':
+            if gs_magnifier:
+                self.plugins_store[path][0] = False
+                active = False
+                mag_exception = True
+
+        if active:
             _pluginManager.enablePlugin(plugin_name)
         else:
-            _pluginManager.disablePlugin(plugin_name)
+            if (plugin_name == 'gsmag' or plugin_name == 'mag') and not mag_exception:
+                _pluginManager.disablePlugin(plugin_name)
+            elif plugin_name != 'gsmag' and plugin_name != 'mag':
+                _pluginManager.disablePlugin(plugin_name)
 
         if plugin_name == 'speech':
             self.__updateSpeechTab(active)
             self.__reloadSpeechModule(active)
             self.applyButtonClicked(self.get_widget('notebook'))
-
+        elif plugin_name == 'gsmag' and not mag_exception:
+            self.__updateMagTab(active)
+            self.__reloadGsmagModule(active)
+            self.applyButtonClicked(self.get_widget('notebook'))
+        elif plugin_name == 'mag' and not mag_exception:
+            self.__updateMagTab(active)
+            self.__reloadMagModule(active)
+            self.applyButtonClicked(self.get_widget('notebook'))
 # nacho's
 #        if active:
 #            self.currentPluginsStatus[plugin_name]
 #        else:
 #            self.currentPluginsStatus[plugin_name]
 #        self.plugins_store[path][0] = checkbox.get_active()
+
+    # NA: this is a hardcode feature,
+    # maybe we must to do this as IDependenciesChecker
+    def __checkGsmag(self, active):
+        if active == True:
+            try:
+                import dbus
+                _bus = dbus.SessionBus()
+                _proxy_obj = _bus.get_object("org.gnome.Magnifier",
+                                             "/org/gnome/Magnifier")
+                _magnifier = dbus.Interface(_proxy_obj, "org.gnome.Magnifier")
+                return True
+            except dbus.exceptions.DBusException:
+                return False
+
+        return True
 
     def __updateSpeechTab(self, active):
         notebook = self.get_widget('notebook')
@@ -2363,6 +2411,20 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 #        del(speech)
 #        speech = _pluginManager.getPluginObject('speech')
 #        if speech == None: import dummyspeech as speech
+
+    # We really need this method?
+    def __reloadMagModule(self, active):
+        mag.isActive = active
+
+    # We really need this method?
+    def __reloadGsmagModule(self, active):
+        gsmag.isActive = active
+
+    def __updateMagTab(self, active):
+        notebook = self.get_widget('notebook')
+        gsmagTab = notebook.get_nth_page(4)
+
+        self.get_widget("magnifierSupportCheckButton").set_active(active)
 
     def __initProfileCombo(self):
         """Adding available profiles and setting active as the active one"""
