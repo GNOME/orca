@@ -173,29 +173,30 @@ class ModulePluginManager(IPluginManager):
             load_plugins = self.plugins['plugins']
     
             for module_name, data in load_plugins.iteritems():
-                if load_plugins[module_name]['active'] == True:
-                    try:
-                        # if active, add the class into the plugin list
-                        self.load_class_in_plugin(load_plugins[module_name], 
-                                module_name, [load_plugins[module_name]['path']])
+# This comments make plugins allways enabled
+#                if load_plugins[module_name]['active'] == True:
+                try:
+                    # if active, add the class into the plugin list
+                    self.load_class_in_plugin(load_plugins[module_name], 
+                            module_name, [load_plugins[module_name]['path']])
 
-                        plugin_class = load_plugins[module_name]['class']
+                    plugin_class = load_plugins[module_name]['class']
 
-                        # we have the class now, we can get an object
-                        plugin_object = plugin_class()
-                        if isinstance(plugin_object, IConfigurable):
-                	        plugin_object.load()
-                        
-                        load_plugins[module_name]['object'] = plugin_object
-                        print "Starting existent module: " + str(module_name)
-                    except Exception, e:
-                        raise PluginManagerError, 'Cannot load module %s: %s' % \
-                            (module_name, e)
-                else:
-                    # plugin not active, bring into plugin list 
-                    # maintained in memory but not get the class
-                    load_plugins[module_name].update({'class': None})
-                    load_plugins[module_name].update({'object': None})
+                    # we have the class now, we can get an object
+                    plugin_object = plugin_class()
+                    if isinstance(plugin_object, IConfigurable):
+            	        plugin_object.load()
+                    
+                    load_plugins[module_name]['object'] = plugin_object
+                    print "Starting existent module: " + str(module_name)
+                except Exception, e:
+                    raise PluginManagerError, 'Cannot load module %s: %s' % \
+                        (module_name, e)
+#                else:
+#                    # plugin not active, bring into plugin list 
+#                    # maintained in memory but not get the class
+#                    load_plugins[module_name].update({'class': None})
+#                    load_plugins[module_name].update({'object': None})
  
             self.plugins = load_plugins
 
@@ -245,7 +246,7 @@ class ModulePluginManager(IPluginManager):
 #            plugin_object.removePluginKeybinding()
 
         plugin_object.disable()
-        self.plugins[plugin_name]['object'] = None
+        #self.plugins[plugin_name]['object'] = None
 
 # nacho's
 #            # make the plugin inactive in the appropiated backend
@@ -258,7 +259,7 @@ class ModulePluginManager(IPluginManager):
             
         # this *only* delete the name from sys.modules,
         # not the module itself. See http://bit.ly/gbjPnB 
-        del (plugin_name)
+        #del (plugin_name)
 
 
     def get_plugins(self):
@@ -325,16 +326,13 @@ class ModulePluginManager(IPluginManager):
 #    
 
     def isEnabled(self, plugin_name):
-        if self.getPluginObject(plugin_name) == None:
-            return False
-        else:
-            return True
+        return self.plugins[plugin_name]['active']
 
     def getPluginObject(self, plugin_name):
         if not 'object' in self.plugins[plugin_name]:
-            return None
-        else:
-            return self.plugins[plugin_name]['object']
+            self.enablePlugin(plugin_name)
+        #else:
+        return self.plugins[plugin_name]['object']
 
     def getPlugins(self):
         self.scanPluginsDir()

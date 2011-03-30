@@ -58,6 +58,7 @@ _settingsManager = getattr(orca, '_settingsManager')
 _scriptManager = getattr(orca, '_scriptManager')
 _pluginManager = getattr(orca, '_pluginManager')
 
+global speech
 speech = _pluginManager.getPluginObject('speech')
 if speech == None: import dummyspeech as speech
 import speechserver
@@ -837,6 +838,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         box item.
         """
 
+        global speech
+
         if len(self.speechServersChoices) == 0:
             return
 
@@ -988,6 +991,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def _initSpeechState(self):
         """Initialize the various speech components.
         """
+
+        global speech
 
         print 'in orca_gui_prefs::_initSpeechState(self)'
 
@@ -2251,6 +2256,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self._initPluginsTreeView()
 
+        self.__updateSpeechTab(self.currentPluginsStatus['speech']['active'])
+
     def _initPluginsTreeView(self):
 
         self.plugins_store.clear()
@@ -2330,7 +2337,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if plugin_name == 'speech':
             self.__updateSpeechTab(active)
-
+            self.__reloadSpeechModule()
+            self.applyButtonClicked(self.get_widget('notebook'))
 
 # nacho's
 #        if active:
@@ -2347,6 +2355,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         else:
             speechTab.hide()
             speech.shutdown()
+
+    # We really need this method?
+    def __reloadSpeechModule(self):
+        global speech
+        del(speech)
+        speech = _pluginManager.getPluginObject('speech')
+        if speech == None: import dummyspeech as speech
 
     def __initProfileCombo(self):
         """Adding available profiles and setting active as the active one"""
@@ -4201,6 +4216,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """The user changed the key for a Keybinding: update the model of
         the treeview.
         """
+
+        global speech
 
         orca_state.capturingKeys = False
         myiter = treeModel.get_iter_from_string(path)

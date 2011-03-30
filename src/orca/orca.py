@@ -1558,7 +1558,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     if settings.enableSpeech and 'speech' in activePlugins:
         speech = _pluginManager.getPluginObject('speech')
-        if speech == None: import dummyspeech as speech
+#        if speech == None: import dummyspeech as speech
         try:
             speech.init()
             if reloaded and not skipReloadMessage:

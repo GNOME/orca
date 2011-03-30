@@ -246,10 +246,10 @@ class speechPlugin(IPlugin, IPresenter):
         string or an array of arrays of objects returned by a speech
         generator."""
 
-        print "someone has called me to speak %s" % content
-    
-        if settings.silenceSpeech:
+        if settings.silenceSpeech or not settings.enableSpeech:
             return
+
+        print "someone has called me to speak %s" % content
 
         validTypes = (basestring, list, sound.Sound, speech_generator.Pause,
                       speech_generator.LineBreak, ACSS)

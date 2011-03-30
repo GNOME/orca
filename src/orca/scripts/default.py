@@ -57,6 +57,8 @@ import orca.settings as settings
 
 #import orca.speech as speech
 #import orca.speechserver as speechserver
+
+global speech
 speech = _pluginManager.getPluginObject('speech')
 if speech == None: import orca.dummyspeech as speech
 import orca.speechserver as speechserver

@@ -18,7 +18,7 @@ def _speak(text, acss, interrupt):
     print '_speak'
 
 def speak(content, acss=None, interrupt=True):
-    print 'speak'
+    print 'speak from %s' % orca_state.activeScript
 
 def speakKeyEvent(event_string, eventType):
     print 'speakKeyEvent'
@@ -33,7 +33,7 @@ def getInfo():
     print 'getInfo'
 
 def stop():
-    print 'stop'
+    print 'stop from %s' % orca_state.activeScript
 
 def updatePunctuationLevel(script=None, inputEvent=None):
     print 'updatePunctuationLevel'
