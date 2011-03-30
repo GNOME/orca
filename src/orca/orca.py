@@ -1554,10 +1554,10 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     # Enable starting plugins
     activeStartingPlugins(activePlugins)
 
-    #print 'el if =', (settings.enableSpeech and 'speech' in activePlugins)
+    speech = _pluginManager.getPluginObject('speech')
 
     if settings.enableSpeech and 'speech' in activePlugins:
-        speech = _pluginManager.getPluginObject('speech')
+        #speech = _pluginManager.getPluginObject('speech')
 #        if speech == None: import dummyspeech as speech
         try:
             speech.init()
@@ -1575,7 +1575,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.println(debug.LEVEL_SEVERE,
                           "Could not initialize connection to speech.")
     else:
-        if speech == None: import dummyspeech as speech
+        #if speech == None: import dummyspeech as speech
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
 

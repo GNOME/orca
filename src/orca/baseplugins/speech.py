@@ -75,7 +75,9 @@ class speechPlugin(IPlugin, IPresenter):
         global ACSS
         global _
         global log
+        global _settingsManager
 
+        import orca.orca as orca
         import orca.settings as settings
         import orca.orca_state as orca_state
         import logging
@@ -92,8 +94,15 @@ class speechPlugin(IPlugin, IPresenter):
         from orca.acss import ACSS
         from orca.orca_i18n import _           # for gettext support
 
-        settings.enableSpeech = True
+        _settingsManager = getattr(orca, '_settingsManager')
 
+        plugins = _settingsManager.getPlugins(_settingsManager.getSetting('activeProfile')[1])
+        print 'estoy en el enable del speech y plugins = ', plugins
+
+        self.isActive = plugins['speech']['active']
+
+        settings.enableSpeech = True
+        self.shutdown()
         self.init()
 
     def getSpeechServerFactories(self):
@@ -246,7 +255,9 @@ class speechPlugin(IPlugin, IPresenter):
         string or an array of arrays of objects returned by a speech
         generator."""
 
-        if settings.silenceSpeech or not settings.enableSpeech:
+        #print "ACTIVO = ", self.isActive
+        if settings.silenceSpeech or not settings.enableSpeech or not \
+                self.isActive:
             return
 
         print "someone has called me to speak %s" % content
@@ -486,6 +497,7 @@ class speechPlugin(IPlugin, IPresenter):
 
     def disable(self):
         settings.enableSpeech = False
+        self.isActive = False
         self.shutdown()
 
 IPlugin.register(speechPlugin)

@@ -123,13 +123,14 @@ class ModulePluginManager(IPluginManager):
         # in the appropiate backend form and if a plugin is active,
         # we will load it
         new_plugins = {}
+
         for path in self.plugin_paths:
             if not path in sys.path:
                 sys.path.insert(0, path)
             for module in [os.path.basename(os.path.splitext(x)[0])
                     for x in glob.glob(os.path.join(path, '[!_]*.py'))]:
                 new_plugins.update(self.inspect_plugin_module(module, path))
-                
+
         new_plugins.update(self.plugins)
         self.plugins = new_plugins
 
@@ -138,13 +139,13 @@ class ModulePluginManager(IPluginManager):
         
         # the idea is not repeat this load unnecessarily
         module = imp.load_module(module_name, modfile, name, desc)
-        
+
         for (the_name, klass) in inspect.getmembers(module, inspect.isclass):
             if issubclass(klass, IPlugin) and the_name != "IPlugin":
                 klass_update = {'class': klass}
                 object_update = {'object': None}
                 type_update = {'type': 'Generic'}
-                dict_plugins.update(type_update)               
+                dict_plugins.update(type_update)
                 dict_plugins.update(klass_update)
                 dict_plugins.update(object_update)
 # nacho's
@@ -153,7 +154,6 @@ class ModulePluginManager(IPluginManager):
 #                dict_plugins.update(type_update) 
 
     def setPluginTypes(self, plugin, module):
-        print module
         types = []
         for (the_name, klass) in inspect.getmembers(module, inspect.isclass):
             if issubclass(plugin['class'], ICommand) and the_name != "ICommand":
@@ -254,7 +254,6 @@ class ModulePluginManager(IPluginManager):
 #            disabling_plugins['active'] = False
 #            self.store_conf.updatePlugin({plugin_name: disabling_plugins})
     
-        
         print "Unloaded module " + str(plugin_name)
             
         # this *only* delete the name from sys.modules,
@@ -305,7 +304,6 @@ class ModulePluginManager(IPluginManager):
 
     plugins = property(plugins_getter, plugins_setter)
 
-
     # Configuration purposes
 
 #    def addPluginConf(self, name, registered, module_name, path):
@@ -329,6 +327,7 @@ class ModulePluginManager(IPluginManager):
         return self.plugins[plugin_name]['active']
 
     def getPluginObject(self, plugin_name):
+        #print "getPluginObject :: '%s'" % plugin_name
         if not 'object' in self.plugins[plugin_name]:
             self.enablePlugin(plugin_name)
         #else:

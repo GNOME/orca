@@ -60,7 +60,7 @@ _pluginManager = getattr(orca, '_pluginManager')
 
 global speech
 speech = _pluginManager.getPluginObject('speech')
-if speech == None: import dummyspeech as speech
+#if speech == None: import dummyspeech as speech
 import speechserver
 
 # needed to fill the graphical treeview
@@ -2337,7 +2337,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if plugin_name == 'speech':
             self.__updateSpeechTab(active)
-            self.__reloadSpeechModule()
+            self.__reloadSpeechModule(active)
             self.applyButtonClicked(self.get_widget('notebook'))
 
 # nacho's
@@ -2354,14 +2354,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             speechTab.show()
         else:
             speechTab.hide()
-            speech.shutdown()
+            #speech.shutdown()
 
     # We really need this method?
-    def __reloadSpeechModule(self):
-        global speech
-        del(speech)
-        speech = _pluginManager.getPluginObject('speech')
-        if speech == None: import dummyspeech as speech
+    def __reloadSpeechModule(self, active):
+        speech.isActive = active
+#        global speech
+#        del(speech)
+#        speech = _pluginManager.getPluginObject('speech')
+#        if speech == None: import dummyspeech as speech
 
     def __initProfileCombo(self):
         """Adding available profiles and setting active as the active one"""

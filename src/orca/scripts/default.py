@@ -60,7 +60,7 @@ import orca.settings as settings
 
 global speech
 speech = _pluginManager.getPluginObject('speech')
-if speech == None: import orca.dummyspeech as speech
+#if speech == None: import orca.dummyspeech as speech
 import orca.speechserver as speechserver
 
 import orca.mouse_review as mouse_review
