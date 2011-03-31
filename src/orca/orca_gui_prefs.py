@@ -35,10 +35,10 @@ import locale
 import time
 
 import acss
-try:
-    import gsmag as mag
-except:
-    import mag
+#try:
+#    import gsmag as mag
+#except:
+#    import mag
 import orca
 import orca_gtkbuilder
 import orca_state
@@ -51,12 +51,21 @@ import braille
 #import speechserver
 import text_attribute_names
 
-
 import orca_gui_profile
 
 _settingsManager = getattr(orca, '_settingsManager')
 _scriptManager = getattr(orca, '_scriptManager')
 _pluginManager = getattr(orca, '_pluginManager')
+
+# Here, we're getting plugins for settingsManager
+plugins = _settingsManager.getPlugins()
+# What plugins will be enabled?
+activePlugins = [plug for plug in plugins if plugins[plug]['active']]
+
+if 'gsmag' in activePlugins:
+    mag = _pluginManager.getPluginObject('gsmag')
+else:
+    mag = _pluginManager.getPluginObject('mag')
 
 global speech
 speech = _pluginManager.getPluginObject('speech')
@@ -2366,11 +2375,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.applyButtonClicked(self.get_widget('notebook'))
         elif plugin_name == 'gsmag' and not mag_exception:
             self.__updateMagTab(active)
-            self.__reloadGsmagModule(active)
             self.applyButtonClicked(self.get_widget('notebook'))
         elif plugin_name == 'mag' and not mag_exception:
             self.__updateMagTab(active)
-            self.__reloadMagModule(active)
             self.applyButtonClicked(self.get_widget('notebook'))
 # nacho's
 #        if active:
@@ -2411,14 +2418,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 #        del(speech)
 #        speech = _pluginManager.getPluginObject('speech')
 #        if speech == None: import dummyspeech as speech
-
-    # We really need this method?
-    def __reloadMagModule(self, active):
-        mag.isActive = active
-
-    # We really need this method?
-    def __reloadGsmagModule(self, active):
-        gsmag.isActive = active
 
     def __updateMagTab(self, active):
         notebook = self.get_widget('notebook')

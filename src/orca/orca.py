@@ -541,19 +541,12 @@ if settings.useDBus:
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
     import dbusserver
 
-# NA: We're going to store the mag plugin
-# in a global variable called mag, so this
-# import isn't needed at this moment.
-#
-
 #try:
 #        import gsmag as mag
 #    except:
 #        import mag
 #else:
 #    import mag
-global mag
-mag = None
 
 import braille
 import httpserver
@@ -1604,12 +1597,10 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.println(debug.LEVEL_WARNING,
                           "Could not initialize connection to braille.")
 
-    if settings.enableMagnifier and 'mag' in activePlugins:
-        mag = _pluginManager.getPluginObject('mag')
-    elif settings.enableMagnifier and 'gsmag' in activePlugins:
+    if 'gsmag' in activePlugins:
         mag = _pluginManager.getPluginObject('gsmag')
-
-    print activePlugins
+    else:
+        mag = _pluginManager.getPluginObject('mag')
 
     if settings.enableMagnifier and ('mag' in activePlugins or 'gsmag' in activePlugins):
         try:
