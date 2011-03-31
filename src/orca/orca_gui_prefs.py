@@ -2325,8 +2325,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # NA: hardcode!!! change this by the correct value
         # obtained by the name 'magPlugin' and 'gsmagPlugin'!
-        orca_magnifier = self.plugins_store[3][0]
-        gs_magnifier = self.plugins_store[2][0]
+        orca_magnifier = self.plugins_store[2][0]
+        gs_magnifier = self.plugins_store[3][0]
 
         mag_exception = False
 
