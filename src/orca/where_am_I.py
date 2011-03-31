@@ -27,7 +27,10 @@ __license__   = "LGPL"
 
 import pyatspi
 import debug
-import speech
+import orca
+
+_pluginManager = getattr(orca, '_pluginManager')
+speech = _pluginManager.getPluginObject('speech')
 
 # [[[TODO: WDW - need to handle the old _speakText functionality that changes
 # settings.verbalizePunctuationStyle = settings.PUNCTUATION_STYLE_SOME
