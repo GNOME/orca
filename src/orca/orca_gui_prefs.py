@@ -47,7 +47,7 @@ import settings
 import input_event
 import keybindings
 import pronunciation_dict
-import braille
+#import braille
 #import speechserver
 import text_attribute_names
 
@@ -67,14 +67,11 @@ if 'gsmag' in activePlugins:
 else:
     mag = _pluginManager.getPluginObject('mag')
 
+braille = _pluginManager.getPluginObject('braille')
+
 global speech
 speech = _pluginManager.getPluginObject('speech')
-#if speech == None: import dummyspeech as speech
 import speechserver
-
-# needed to fill the graphical treeview
-#import pluglib
-#from pluglib.plugin_manager import plugmanager
 
 try:
     import louis
@@ -2266,8 +2263,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._initPluginsTreeView()
 
         self.__updateSpeechTab(self.currentPluginsStatus['speech']['active'])
-        #self.__updateMagTab(self.currentPluginsStatus['mag']['active'])
-        #self.__updateGsmagTab(self.currentPluginsStatus['gsmag']['active'])
 
     def _initPluginsTreeView(self):
 
@@ -2283,15 +2278,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.plugins_store.append([plugins[plug]['active'], \
                                        plugins[plug]['name'], \
                                        type_str, None, plug])
-
-# nacho's
-#        for plugin_id, plugin, plugin_type, registered, \
-#                plugin_name in plugins:
-#            if plugin_name != None:
-#                self.plugins_store.append([ \
-#                        plugmanager.is_plugin_enabled(plugin_id), \
-#                        None, plugin_name, plugin_type, \
-#                        registered, plugin_id])
 
     def on_plugabout_btn_clicked(self, button):
         selection = self.plugins_tree.get_selection()
@@ -2321,11 +2307,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
     def on_plugins_tv_cursor_changed(self, treeview):
         selection = self.plugins_tree.get_selection()
         model, selected = selection.get_selected()
-
-# nacho's
-#        if selected:
-#            plugin = plugmanager.get_plugin_class(model[selected][5])
-#            self.plugconf_btn.set_sensitive(pluglib.verify_conf_dialog(plugin))
 
     def on_plugconf_btn_clicked(self, button):
         selection = self.plugins_tree.get_selection()
@@ -2379,12 +2360,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         elif plugin_name == 'mag' and not mag_exception:
             self.__updateMagTab(active)
             self.applyButtonClicked(self.get_widget('notebook'))
-# nacho's
-#        if active:
-#            self.currentPluginsStatus[plugin_name]
-#        else:
-#            self.currentPluginsStatus[plugin_name]
-#        self.plugins_store[path][0] = checkbox.get_active()
+        elif plugin_name == 'braille':
+            self.__updateBrailleTab(active)
+            self.applyButtonClicked(self.get_widget('notebook'))
 
     # NA: this is a hardcode feature,
     # maybe we must to do this as IDependenciesChecker
@@ -2418,6 +2396,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 #        del(speech)
 #        speech = _pluginManager.getPluginObject('speech')
 #        if speech == None: import dummyspeech as speech
+
+    def __updateBrailleTab(self, active):
+        notebook = self.get_widget('notebook')
+        brailleTab = notebook.get_nth_page(2)
+        if active == True:
+            brailleTab.show()
+        else:
+            brailleTab.hide()
+        
+        self.get_widget("enableBrailleCheckButton").set_active(active)
+        self.get_widget("enableBrailleMonitorCheckButton").set_active(active)
 
     def __updateMagTab(self, active):
         notebook = self.get_widget('notebook')

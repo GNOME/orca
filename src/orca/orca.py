@@ -548,7 +548,7 @@ if settings.useDBus:
 #else:
 #    import mag
 
-import braille
+#import braille
 import httpserver
 import keynames
 import keybindings
@@ -1221,6 +1221,7 @@ def _processKeyboardEvent(event):
     debug.printInputEvent(debug.LEVEL_FINE, string)
 
     if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
+        braille = _pluginManager.getPluginObject('braille')
         braille.killFlash()
 
     # See if this is one of our special Orca modifier keys.
@@ -1329,6 +1330,7 @@ def _processKeyboardEvent(event):
                         # Check to see if there are localized words to be
                         # spoken for this key event.
                         #
+                        braille = _pluginManager.getPluginObject('braille')
                         braille.displayMessage(keyboardEvent.event_string)
                         event_string = keyboardEvent.event_string
                         event_string = keynames.getKeyName(event_string)
@@ -1514,10 +1516,17 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         print 'Passing speech'
         pass
 
-    braille.shutdown()
+    # NA / TODO: Must do something smarter
+    # Hard code for braille plugin
+    #
+    try:
+        braille.shutdown()
+    except:
+        print 'Passing braille'
+        pass
 
     # NA / TODO: Must do something smarter
-    # Hard code for speech plugin
+    # Hard code for mag plugin
     #
     try:
         mag.shutdown()
@@ -1588,6 +1597,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         #if speech == None: import dummyspeech as speech
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
+
+    braille = _pluginManager.getPluginObject('braille')
 
     if settings.enableBraille:
         try:
@@ -2151,16 +2162,13 @@ def shutdown(script=None, inputEvent=None):
     if settings.enableSpeech:
         speech.shutdown()
     if settings.enableBraille:
+        braille = _pluginManager.getPluginObject('braille')
         braille.shutdown()
     if settings.enableMagnifier or settings.enableMagLiveUpdating:
-        if  'mag' in activePlugins:
-            mag = _pluginManager.getPluginObject('mag')
-        elif 'gsmag' in activePlugins:
+        if 'gsmag' in activePlugins:
             mag = _pluginManager.getPluginObject('gsmag')
         else:
             mag = _pluginManager.getPluginObject('mag')
-
-        print mag
 
         mag.shutdown()
 
@@ -2360,6 +2368,7 @@ def main():
         message = _("Welcome to Orca.")
         if not _settingsManager.getSetting('onlySpeakDisplayedText'):
             speech.speak(message, settings.voices.get(settings.SYSTEM_VOICE))
+        braille = _pluginManager.getPluginObject('braille')
         braille.displayMessage(message)
     except:
         debug.printException(debug.LEVEL_SEVERE)
@@ -2389,13 +2398,6 @@ def main():
     elif options.bypassSetup:
         loadUserSettings(skipReloadMessage=True)
         _settingsManager.setFirstStart()
-
-# nacho's
-#    # needed to load plugins (first time)
-#    import pluglib
-#    from pluglib.plugin_manager import plugmanager
-#    
-#    plugmanager.scan_plugins()
 
     try:
         start(pyatspi.Registry) # waits until we stop the registry
