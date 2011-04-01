@@ -112,8 +112,8 @@ userCustomizableSettings = [
     "enableBraille",
     "enableBrailleContext",
     "enableBrailleGrouping",
-    "disableBrailleEOL",
-    "brailleEOLIndicator",
+    "disableBrailleEndOfLine",
+    "brailleEndOfLineIndicator",
     "brailleVerbosityLevel",
     "brailleRolenameStyle",
     "brailleSelectorIndicator",
@@ -140,7 +140,7 @@ userCustomizableSettings = [
     "enableMagZoomerBorder",
     "magZoomerBorderSize",
     "magZoomerBorderColor",
-    "enableMagZoomerColorInversion",
+    "enableMagColorInversion",
     "magBrightnessLevel",
     "magBrightnessLevelRed",
     "magBrightnessLevelBlue",
@@ -166,10 +166,10 @@ userCustomizableSettings = [
     "sayAllStyle",
     "keyboardLayout",
     "speakBlankLines",
-    "speakMultiCaseStringsAsWords",
+    "speechSplitMultiCase",
     "enabledSpokenTextAttributes",
     "enabledBrailledTextAttributes",
-    "textAttributesBrailleIndicator",
+    "brailleIndicatorAttrib",
     "enableProgressBarUpdates",
     "profile",
     "progressBarUpdateInterval",
@@ -534,7 +534,7 @@ magZoomerBorderColor             = '#000000'
 
 # If True, invert the magnification zoomer colors.
 #
-enableMagZoomerColorInversion    = False
+enableMagColorInversion    = False
 
 # The brightness levels.  The range is from -1 to 1, with 0
 # being "normal"/no change.
@@ -732,7 +732,7 @@ speakBlankLines         = True
 
 # if True, process multi case strings as words.
 #
-speakMultiCaseStringsAsWords = False
+speechSplitMultiCase = False
 
 # If True, reads all the table cells in the current row rather than just
 # the current one.
@@ -804,7 +804,7 @@ enabledBrailledTextAttributes = \
     "strikethrough:false; justification:left; style:normal; " \
     "text-spelling:none;"
 
-# Text Attributes Braille Indicator (see textAttributesBrailleIndicator).
+# Text Attributes Braille Indicator (see brailleIndicatorAttrib).
 # The values represent the character to be used in the attrOr
 # field of brlAPI's writeStruct.
 #
@@ -812,7 +812,7 @@ TEXT_ATTR_BRAILLE_NONE = 0x00 # 00000000
 TEXT_ATTR_BRAILLE_7    = 0x40 # 01000000
 TEXT_ATTR_BRAILLE_8    = 0x80 # 10000000
 TEXT_ATTR_BRAILLE_BOTH = 0xc0 # 11000000
-textAttributesBrailleIndicator = TEXT_ATTR_BRAILLE_NONE
+brailleIndicatorAttrib = TEXT_ATTR_BRAILLE_NONE
 
 # The limit to enable a repeat character count to be spoken.
 # If set to 0, then there will be no repeat character count.
@@ -1261,8 +1261,8 @@ speechGroupIndexString = _("%(index)d of %(total)d")
 
 # string to indicate end of printed line for braille displays:
 #
-disableBrailleEOL = False
-brailleEOLIndicator = " $l"
+disableBrailleEndOfLine = False
+brailleEndOfLineIndicator = " $l"
 
 # Translators: Certain objects (such as form controls on web pages)
 # can have STATE_REQUIRED set on them to inform the user that this

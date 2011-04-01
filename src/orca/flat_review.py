@@ -575,7 +575,7 @@ class Line:
 
                 brailleOffset += len(region.string.decode("UTF-8"))
 
-            if not settings.disableBrailleEOL:
+            if not settings.disableBrailleEndOfLine:
                 if len(self.brailleRegions):
                     pad = braille.Region(" ")
                     pad.brailleOffset = brailleOffset

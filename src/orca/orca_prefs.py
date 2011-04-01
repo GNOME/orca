@@ -802,14 +802,14 @@ class OrcaPrefs:
                 value = self._getSpokenTextAttributesString(prefsDict[key])
             elif key == "enabledBrailledTextAttributes":
                 value = self._getBrailledTextAttributesString(prefsDict[key])
-            elif key == "textAttributesBrailleIndicator":
+            elif key == "brailleIndicatorAttrib":
                 value = self._getTextAttributesBrailleIndicatorString( \
                                                               prefsDict[key])
             elif key == "progressBarVerbosity":
                 value = self._getProgressBarVerbosityString(prefsDict[key])
             elif key == "brailleContractionTable":
                 value = "'%s'" % prefsDict[key]
-            elif key == "brailleEOLIndicator":
+            elif key == "brailleEndOfLineIndicator":
                 value = "'%s'" % prefsDict[key]
             elif key == "brailleRequiredStateString":
                 value = "'%s'" % prefsDict[key]

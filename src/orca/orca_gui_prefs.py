@@ -1631,8 +1631,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.get_widget("speakBlankLinesCheckButton").set_active(\
             prefs["speakBlankLines"])
-        self.get_widget("speakMultiCaseStringsAsWordsCheckButton").set_active(\
-            prefs["speakMultiCaseStringsAsWords"])
+        self.get_widget("speechSplitMultiCaseCheckButton").set_active(\
+            prefs["speechSplitMultiCase"])
         self.get_widget("enableTutorialMessagesCheckButton").set_active(\
             prefs["enableTutorialMessages"])
 
@@ -1788,8 +1788,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                             settings.BRAILLE_ROLENAME_STYLE_SHORT
         self.get_widget("abbrevRolenames").set_active(state)
 
-        self.get_widget("disableBrailleEOLCheckButton").set_active(
-            prefs["disableBrailleEOL"])
+        self.get_widget("disableBrailleEndOfLineCheckButton").set_active(
+            prefs["disableBrailleEndOfLine"])
 
         if louis is None:
             self.get_widget( \
@@ -2090,7 +2090,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # Get the 'Invert Colors' preference and set the checkbox accordingly.
         #
-        value = prefs["enableMagZoomerColorInversion"]
+        value = prefs["enableMagColorInversion"]
         self.get_widget("magInvertColorsCheckBox").set_active(value)
 
         # Get the mouse tracking preference and set the active value for
@@ -2176,7 +2176,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         self._createTextAttributesTreeView()
 
-        brailleIndicator = prefs["textAttributesBrailleIndicator"]
+        brailleIndicator = prefs["brailleIndicatorAttrib"]
         if brailleIndicator == settings.TEXT_ATTR_BRAILLE_7:
             self.get_widget("textBraille7Button").set_active(True)
         elif brailleIndicator == settings.TEXT_ATTR_BRAILLE_8:
@@ -3019,7 +3019,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
            toggled the text attributes braille indicator value. If this signal
            was generated as the result of a radio button getting selected
            (as opposed to a radio button losing the selection), set the
-           'textAttributesBrailleIndicator' preference to the new value.
+           'brailleIndicatorAttrib' preference to the new value.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -3032,24 +3032,24 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             # corner will be used to 'underline' text of interest.
             #
             if widget.get_label() == _("Dot _7"):
-                self.prefsDict["textAttributesBrailleIndicator"] = \
+                self.prefsDict["brailleIndicatorAttrib"] = \
                     settings.TEXT_ATTR_BRAILLE_7
             # Translators: If the user chooses this setting, the
             # dot in the bottom right corner of the braille cell
             # will be used to 'underline' text of interest.
             #
             elif widget.get_label() == _("Dot _8"):
-                self.prefsDict["textAttributesBrailleIndicator"] = \
+                self.prefsDict["brailleIndicatorAttrib"] = \
                     settings.TEXT_ATTR_BRAILLE_8
             # Translators: If the user chooses this setting, the
             # two dots at the bottom of the braille cell will be
             # used to 'underline' text of interest.
             #
             elif widget.get_label() == _("Dots 7 an_d 8"):
-                self.prefsDict["textAttributesBrailleIndicator"] = \
+                self.prefsDict["brailleIndicatorAttrib"] = \
                     settings.TEXT_ATTR_BRAILLE_BOTH
             else:
-                self.prefsDict["textAttributesBrailleIndicator"] = \
+                self.prefsDict["brailleIndicatorAttrib"] = \
                     settings.TEXT_ATTR_BRAILLE_NONE
 
     def punctuationLevelChanged(self, widget):
@@ -3980,7 +3980,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Signal handler for the "toggled" signal for the
            magCrossHairOnOffCheckButton GtkCheckButton widget.
            The user has [un]checked the magnification 'Invert Colors'
-           checkbox. Set the 'enableMagZoomerColorInversion' preference
+           checkbox. Set the 'enableMagColorInversion' preference
            to the new value.
 
         Arguments:
@@ -3990,7 +3990,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         value = widget.get_active()
         if self.enableLiveUpdating and widget.is_focus():
             mag.setZoomerColorInversion(value)
-        self.prefsDict["enableMagZoomerColorInversion"] = value
+        self.prefsDict["enableMagColorInversion"] = value
 
     def keyModifiedToggle(self, cell, path, model, col):
         """When the user changes a checkbox field (boolean field)"""

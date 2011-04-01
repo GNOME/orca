@@ -639,9 +639,9 @@ class Text(Region):
 
         Region.__init__(self, string, cursorOffset, True)
 
-        if not self.contracted and not settings.disableBrailleEOL:
+        if not self.contracted and not settings.disableBrailleEndOfLine:
             self.string += self.eol
-        elif settings.disableBrailleEOL:
+        elif settings.disableBrailleEndOfLine:
             # Ensure there is a place to click on at the end of a line
             # so the user can route the caret to the end of the line.
             #
@@ -732,7 +732,7 @@ class Text(Region):
         lineEndOffset = self.lineOffset + stringLength
         regionMask = [settings.TEXT_ATTR_BRAILLE_NONE]*stringLength
 
-        attrIndicator = settings.textAttributesBrailleIndicator
+        attrIndicator = settings.brailleIndicatorAttrib
         selIndicator = settings.brailleSelectorIndicator
         linkIndicator = settings.brailleLinkIndicator
         script = orca_state.activeScript

@@ -30,7 +30,16 @@ autostartdir	 = $(sysconfdir)/xdg/autostart
 autostart_in_files = orca-autostart.desktop.in
 autostart_DATA   = $(autostart_in_files:.desktop.in=.desktop)
 
+gschema_in_files = org.gnome.Orca.gschema.xml.in
+gsettings_SCHEMAS= $(gschema_in_files:.xml.in=.xml)
+
 @INTLTOOL_DESKTOP_RULE@
+
+MOSTLYCLEANFILES =
+@INTLTOOL_XML_RULE@
+@INTLTOOL_SCHEMAS_RULE@
+
+@GSETTINGS_RULES@
 
 EXTRA_DIST =                \
 	$(autostart_in_files) \
@@ -38,6 +47,7 @@ EXTRA_DIST =                \
 	$(icon_DATA)        \
 	gnome-doc-utils.make \
 	ChangeLog           \
+	$(gschema_in_files) \
 	MAINTAINERS
 
 dist-hook:

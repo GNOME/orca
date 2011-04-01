@@ -52,12 +52,12 @@ class SettingsManager(object):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __init__(self, backend='json'):
+    def __init__(self, backend='gsettings'):
         """Initialize a SettingsManager Object.
         If backend isn't defined then uses default backend, in this
-        case gconf-backend.
+        case gsettings-backend.
         backend parameter can use the follow values:
-        backend='gconf'
+        backend='gsettings'
         backend='json'
         """
 
@@ -391,6 +391,9 @@ class SettingsManager(object):
         self.profileKeybindings = self.defaultKeybindings.copy()
         self.profileKeybindings.update(keybindings)
 
+    def updateSetting(self, settingName, settingValue):
+        self.general.update({settingName:settingValue})
+
     def saveSettings(self, general, pronunciations, keybindings):
         """Let the active backend to store the default settings and
         the profiles' ones."""
@@ -545,7 +548,7 @@ def getVoiceKey(voice):
     return ""
 
 def getValueForKey(prefsDict, key):
-    need2repr = ['brailleEOLIndicator', 'brailleContractionTable',
+    need2repr = ['brailleEndOfLineIndicator', 'brailleContractionTable',
                  'brailleRequiredStateString', 'enabledBrailledTextAttributes',
                  'enabledSpokenTextAttributes', 'magZoomerBorderColor',
                  'magCursorColor', 'magCrossHairColor', 'magTargetDisplay',

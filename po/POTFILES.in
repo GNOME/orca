@@ -3,6 +3,7 @@
 [encoding: UTF-8]
 orca.desktop.in
 orca-autostart.desktop.in
+org.gnome.Orca.gschema.xml.in
 src/orca/app_gui_prefs.py
 src/orca/bookmarks.py
 src/orca/braille_generator.py
