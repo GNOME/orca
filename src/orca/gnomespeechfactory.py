@@ -443,7 +443,7 @@ class SpeechServer(speechserver.SpeechServer):
     def __getSpeaker(self, acss=None):
 
         voices = settings.voices
-        defaultACSS = voices[settings.DEFAULT_VOICE]
+        defaultACSS = ACSS(voices[settings.DEFAULT_VOICE])
 
         if not acss:
             acss = defaultACSS
