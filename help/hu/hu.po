@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: accessibility_guide HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-02 09:29+0000\n"
-"PO-Revision-Date: 2011-01-05 22:00+0100\n"
+"POT-Creation-Date: 2011-01-19 21:59+0000\n"
+"PO-Revision-Date: 2011-03-01 13:50+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
@@ -172,7 +172,7 @@ msgid ""
 "customize which text attributes <app>Orca</app> will present in speech, "
 "along with the order in which they should be presented, and which ones "
 "<app>Orca</app> will indicate in braille."
-msgstr ""
+msgstr "A „szövegattribútumok” kifejezés egy karakter vagy karaktersorozat betűkészletét, stílusát, igazítását, és más formázásait jelenti. Az <app>Orka</app> grafikus beállító párbeszédpanelének <gui>Szövegattribútumok</gui> lapján testreszabhatja, hogy milyen szövegattribútumok kerüljenek kimondásra, milyen sorrendben történjen a kimondás, valamint milyen attribútumokat jelenítsen meg az <app>Orka</app> a braille-kijelzőn."
 
 #: C/preferences_text_attributes.page:30(title)
 msgid "The text attributes table"
@@ -186,11 +186,11 @@ msgid ""
 msgstr ""
 "A szövegattribútumok táblázatban megadhatja, hogy milyen attribútumok "
 "kerüljenek kimondásra vagy megjelenítésre a braille kijelzőn. A "
-"szövegattribútumok táblázat minden sora négy oszlopot tartalmaz:"
+"szövegattribútumok táblázat minden sora négy oszlopot tartalmaz."
 
 #: C/preferences_text_attributes.page:39(p)
 msgid "<gui>Attribute Name</gui>: The name of the text attribute."
-msgstr "<gui>Attribútum név</gui>: A szöveges attribútum nevét."
+msgstr "<gui>Attribútumnév</gui>: A szöveges attribútum neve."
 
 #: C/preferences_text_attributes.page:44(p)
 msgid ""
@@ -246,7 +246,8 @@ msgstr ""
 "keyseq> billentyűparancsot és a kérdéses szöveg nincs aláhúzva, akkor az "
 "attribútum nem kerül kimondásra. Ha azt szeretné, hogy ez az attribútum "
 "kimondásra kerüljön függetlenül attól, hogy a kérdéses szöveg alá van-e "
-"húzva, jelölje be a jelölőnégyzetet."
+"húzva, jelölje be a <gui>Felolvasás</gui> jelölőnégyzetet, és törölje a "
+"„Nincs” szöveget a <gui>Megjelenítés, ha nem</gui> oszlopból."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -321,7 +322,7 @@ msgstr "Braille-kiválasztás jelző"
 
 #: C/preferences_text_attributes.page:125(title)
 msgid "Options for Configuring Braille \"Underlining\" for Formatting"
-msgstr "A braille „aláhúzás” beállítása a formázás megjelenítéséhez"
+msgstr "A braille „aláhúzás” beállításai a formázás megjelenítéséhez"
 
 #: C/preferences_text_attributes.page:126(desc)
 msgid ""
@@ -383,7 +384,7 @@ msgstr "Az <app>Orka</app> táblázatnavigációval kapcsolatos beállításai"
 
 #: C/preferences_table_navigation.page:21(title)
 msgid "Table Navigation Preferences"
-msgstr "Táblázatnavigáció beállításai"
+msgstr "A táblázatnavigáció beállításai"
 
 #: C/preferences_table_navigation.page:23(p)
 msgid ""
@@ -419,7 +420,7 @@ msgstr ""
 #: C/preferences_gecko.page:36(p) C/preferences_gecko.page:55(p)
 #: C/preferences_gecko.page:106(p)
 msgid "Default value: checked"
-msgstr "Ez a jelölőnégyzet alapértelmezetten be van jelölve."
+msgstr "Alapértelmezés: bejelölve"
 
 #: C/preferences_table_navigation.page:40(title)
 msgid "Speak multiple cell spans"
@@ -472,10 +473,9 @@ msgstr ""
 #: C/preferences_general.page:178(p) C/preferences_gecko.page:74(p)
 #: C/preferences_gecko.page:87(p) C/preferences_gecko.page:118(p)
 #: C/preferences_chat.page:31(p) C/preferences_chat.page:42(p)
-#: C/preferences_chat.page:54(p) C/preferences_chat.page:75(p)
-#: C/preferences_braille.page:28(p) C/preferences_braille.page:47(p)
-#: C/preferences_braille.page:65(p) C/preferences_braille.page:79(p)
-#: C/preferences_braille.page:90(p)
+#: C/preferences_chat.page:54(p) C/preferences_braille.page:28(p)
+#: C/preferences_braille.page:47(p) C/preferences_braille.page:65(p)
+#: C/preferences_braille.page:79(p) C/preferences_braille.page:90(p)
 msgid "Default value: not checked"
 msgstr "Ez a jelölőnégyzet alapértelmezetten nincs bejelölve."
 
@@ -658,7 +658,8 @@ msgid ""
 "your chosen Speech system."
 msgstr ""
 "Ebben a kombinált listamezőben kiválaszthatja azt a használni kívánt "
-"beszédszintetizátort, amelyet az ön által kiválasztott beszédrendszer támogat."
+"beszédszintetizátort, amelyet az ön által kiválasztott beszédrendszer "
+"támogat."
 
 #: C/preferences_speech.page:48(title)
 msgid "Voice settings"
@@ -674,8 +675,8 @@ msgid ""
 msgstr ""
 "Ebben a kombinált listamezőben a különböző szövegtípusokhoz más és más "
 "hangkaraktert rendelhet, így lehetősége van például jobban megkülönböztetni "
-"a nagybetűs és linkeket tartalmazó szövegeket a normál szövegektől, vagy a "
-"képernyőn megjelenő üzeneteket az <app>Orka</app> által kiküldött "
+"a nagybetűs és hivatkozásokat tartalmazó szövegeket a normál szövegektől, "
+"vagy a képernyőn megjelenő üzeneteket az <app>Orka</app> által kiküldött "
 "üzenetektől."
 
 #: C/preferences_speech.page:55(title)
@@ -770,7 +771,8 @@ msgid ""
 msgstr ""
 "Ha a <gui>Néhány</gui> központozási szintet választja, minden előzőleg írt "
 "szimbólum kimondásra kerül. Továbbá, az <app>Orka</app> ki fogja mondani az "
-"ismert matematikai szimbólumokat, pénznemeket, valamint a „^”, „@”, „/”, „&amp;”, „#” írásjeleket."
+"ismert matematikai szimbólumokat, pénznemeket, valamint a „^”, „@”, „/”, "
+"„&amp;”, „#” írásjeleket."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -785,8 +787,8 @@ msgid ""
 msgstr ""
 "Ha a <gui>Legtöbb</gui> központozási szintet választja, minden előzőleg írt "
 "szimbólum kimondásra kerül. Továbbá, az <app>Orka</app> ki fog mondani "
-"minden más ismert írásjelet, <em>kivéve</em> a „!”, „'”, „,”, „.”, "
-"„?” írásjeleket."
+"minden más ismert írásjelet, <em>kivéve</em> a „!”, „'”, „,”, „.”, „?” "
+"írásjeleket."
 
 #: C/preferences_speech.page:121(title)
 msgid "All"
@@ -820,7 +822,7 @@ msgstr ""
 "kimondandó információk mennyisége. Ha például a részletes lehetőség van "
 "beállítva és a nyílbillentyűkkel egy elgépelt szóra mozgatja a kurzort, "
 "akkor az <app>Orka</app> jelezni fogja önnek az elgépelést. Ha a tömör "
-"lehetőség van beállítva, a gyorsbillentyűk nem kerülnek kimondásra."
+"lehetőség van beállítva, ez az információ nem kerül kimondásra."
 
 #: C/preferences_speech.page:141(p) C/preferences_braille.page:103(p)
 msgid "Default value: <gui>Verbose</gui>"
@@ -850,6 +852,13 @@ msgid ""
 "may not be desired. In that case, <gui>speak cell</gui> should instead be "
 "chosen."
 msgstr ""
+"Tegyük fel, hogy át kell tekintenie a beérkezett üzenetek mappában levő "
+"üzeneteit. Ha azt szeretné, hogy az <app>Orka</app> kimondja egy üzenet "
+"esetén a feladót, tárgyat, dátumot és hogy az üzenet tartalmaz-e "
+"mellékletet, szükséges a <gui>Sor felolvasása</gui> beállítás használata. Ha "
+"viszont egy táblázat sorai között navigál, a teljes sor végighallgatása akár "
+"zavaró is lehet. Ebben az esetben érdemes például a <gui>Cella felolvasása</"
+"gui> beállítást választania."
 
 #: C/preferences_speech.page:161(p)
 msgid "Default value: <gui>Speak row</gui>"
@@ -870,7 +879,7 @@ msgid ""
 "periodically present the status of progress bars."
 msgstr ""
 "Ha az  <gui>Engedélyezve</gui> jelölőnégyzet be van jelölve, az <app>Orka</"
-"app> megadott időközönként felolvassa a folyamatjelzők változását. A "
+"app> megadott időközönként felolvassa a folyamatjelzők állapotváltozását. A "
 "felolvasás időköze a <gui>Frissítés gyakorisága</gui> léptetőgomb "
 "segítségével adható meg."
 
@@ -946,7 +955,7 @@ msgid ""
 msgstr ""
 "Ha bejelöli ezt a jelölőnégyzetet, az <app>Orka</app> csak a képernyőn "
 "megjelenő szövegeket fogja kimondani. Ez a beállítás elsősorban a "
-"gyengén látó, vagy tanulási nehézségekkel küzdő felhasználók számára lehet "
+"gyengénlátó, vagy tanulási nehézségekkel küzdő felhasználók számára lehet "
 "hasznos."
 
 #: C/preferences_speech.page:224(title)
@@ -1019,6 +1028,10 @@ msgid ""
 "text does not appear on screen, this information is presented in <app>Orca</"
 "app>'s System voice."
 msgstr ""
+"A következő kiegészítő lehetőségekkel irányíthatja a fókuszban levő "
+"objektumról elhangzó „rendszer” üzenetek kimondását. Mivel az objektumhoz "
+"társított szöveg nem jelenik meg a képernyőn, ezért ez az információ az "
+"<app>Orka</app> rendszer hangkaraktere által lesz kimondva."
 
 #: C/preferences_speech.page:267(title)
 msgid "Configuration of System Information"
@@ -1060,7 +1073,7 @@ msgid ""
 msgstr ""
 "Ha kódot vagy szövegeket szerkeszt, gyakran szüksége lehet az igazítás vagy "
 "a behúzás felolvasására. A „<gui>Behúzás és igazítás felolvasása</gui> "
-"jelölőnégyzet bejelölése után az <app>Orka</app>> kimondja ezeket az "
+"jelölőnégyzet bejelölése után az <app>Orka</app> kimondja ezeket az "
 "információkat."
 
 #: C/preferences_speech.page:292(title)
@@ -1109,7 +1122,7 @@ msgid ""
 msgstr ""
 "Ha ez a jelölőnégyzet be van jelölve és mozog a kezelőfelület komponensei "
 "között, az <app>Orka</app> oktatói üzenet kimondásával tudatja, hogyan "
-"dolgozhat egy fókuszban levő objektummalkomponenssel."
+"dolgozhat egy fókuszban levő komponenssel."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1162,7 +1175,7 @@ msgid ""
 "pronunciation dictionary."
 msgstr ""
 "Az <app>Orka</app> grafikus beállító párbeszédpanel kiejtés lapja "
-"lehetőséget ad új bejegyzések hozzáadására, szerkesztésére és törlésére a "
+"lehetőséget ad új bejegyzések hozzáadására, szerkesztésére és törlésére az "
 "<app>Orka</app> kivételszótárából."
 
 #: C/preferences_pronunciation.page:32(p)
@@ -1249,7 +1262,7 @@ msgstr "Az Orka beállításai"
 
 #: C/preferences.page:14(title)
 msgid "<app>Orca</app>'s Preferences Dialogs"
-msgstr "Az <app>Orka</app> beállító párbeszéd-panelei"
+msgstr "Az <app>Orka</app> beállító párbeszédablakai"
 
 # Megjegyzés: Megváltoztattam az eredeti fordítást, így a főoldalon is jól fog megjelenni
 #: C/preferences.page:16(title) C/preferences_introduction.page:17(title)
@@ -1364,7 +1377,7 @@ msgstr "A nagyító ablak megjelenésének beállítása"
 
 #: C/preferences_magnifier.page:18(title)
 msgid "Magnifier Preferences"
-msgstr "Nagyító beállításai"
+msgstr "A nagyító beállításai"
 
 #: C/preferences_magnifier.page:20(title)
 msgid "Enable Magnifier"
@@ -1376,6 +1389,9 @@ msgid ""
 "app>'s magnification support. When it is unchecked, the other widgets on "
 "this page become unavailable."
 msgstr ""
+"A <gui>Nagyító engedélyezése</gui> jelölőnégyzettel engedélyezheti vagy "
+"letilthatja az <app>Orka</app> nagyító támogatását. Ha ez a jelölőnégyzet "
+"nincs bejelölve, a többi felületi elem nem lesz elérhető ezen a lapon."
 
 #: C/preferences_magnifier.page:32(title)
 msgid "Zoomer"
@@ -1386,6 +1402,8 @@ msgid ""
 "The <gui>Zoomer</gui> options allow you to customize the magnifier's level, "
 "position, and size, as well as to hide the system pointer."
 msgstr ""
+"A <gui>Nagyítási beállításoknál</gui> megadhatja a nagyítási arányt, a "
+"nagyító pozícióját és méretét, valamint elrejtheti a rendszermutatót."
 
 #: C/preferences_magnifier.page:39(title)
 msgid "Scale factor"
@@ -1396,7 +1414,7 @@ msgid ""
 "<gui>Scale factor</gui> can be used to set the magnification level from 1.0x "
 "to 16.0x (fractional values are supported)."
 msgstr ""
-"<gui>Nagyítási arány</gui>: ezzel a vezérlőelemmel a nagyítási arány "
+"A <gui>Nagyítási arány</gui> léptetőgomb segítségével a nagyítási arány "
 "állítható be (1.0 és 16.0 között), a tört értékek is használhatók."
 
 #: C/preferences_magnifier.page:46(title)
@@ -1412,7 +1430,7 @@ msgid ""
 msgstr ""
 "A <gui>Pozíció</gui> kombinált listamezőben megadhatja, hogy a nagyító hol "
 "helyezkedjen el a képernyőn. Az elérhető pozíciók: <gui>Teljes képernyő</"
-"gui> <gui>Bal fél</gui>, <gui>Jobb fél</gui>, <gui>Felső fél</gui>, "
+"gui>, <gui>Bal fél</gui>, <gui>Jobb fél</gui>, <gui>Felső fél</gui>, "
 "<gui>Alsó fél</gui> és <gui>Egyéni</gui>."
 
 #: C/preferences_magnifier.page:53(p)
@@ -1421,7 +1439,7 @@ msgstr "Az alapértelmezett beállítás: <gui>Teljes képernyő</gui>"
 
 #: C/preferences_magnifier.page:58(title)
 msgid "Specifying the Bounds of a \"Custom\" Zoomer"
-msgstr ""
+msgstr "Egyéni jellemzők használata az „egyéni” nagyítópozíciónál"
 
 #: C/preferences_magnifier.page:59(p)
 msgid ""
@@ -1429,15 +1447,17 @@ msgid ""
 "to become available: <gui>Top</gui>, <gui>Left</gui>, <gui>Right </gui>, and "
 "<gui>Bottom</gui>."
 msgstr ""
-"Ha az <gui>Egyéni</gui> nagyítópozíciót választja, négy gomb válik "
-"elérhetővé: <gui>Fent</gui>, <gui>Balra</gui>, <gui>Jobbra</gui> és "
-"<gui>Lent</gui>."
+"Ha az <gui>Egyéni</gui> <gui>nagyítópozíciót</gui> választja, négy "
+"léptetőgomb válik elérhetővé: <gui>Fent</gui>, <gui>Balra</gui>, "
+"<gui>Jobbra</gui>, és <gui>Alul</gui>."
 
 #: C/preferences_magnifier.page:64(p)
 msgid ""
 "These spin buttons allow you to define the location of each edge of the zoom "
 "window. Units are in pixels."
 msgstr ""
+"Ezek a léptetőgombok lehetővé teszik a nagyító széleinek beállítását, az "
+"értékeket képpontban kell megadnia."
 
 #: C/preferences_magnifier.page:70(title)
 msgid "Hide system pointer"
@@ -1448,7 +1468,7 @@ msgid ""
 "The <gui>Hide system pointer</gui> checkbox will hide the unmagnified "
 "pointer, leaving just the magnified one visible."
 msgstr ""
-"Ha bejelöli <gui>A rendszermutató elrejtése</gui> jelölőnégyzetet, a "
+"Ha <gui>A rendszermutató elrejtése</gui> jelölőnégyzet be van jelölve, a "
 "nagyítatlan egérmutató elrejtésre kerül, így csak a nagyított egérmutató fog "
 "látszani a képernyőn."
 
@@ -1473,6 +1493,9 @@ msgid ""
 "The <gui>Mouse Pointer</gui> combo box allows you to select your tracking "
 "and alignment from the following options:"
 msgstr ""
+"Az <gui>Egérmutató</gui> kombinált listamezőben megadhatja az Ön által "
+"használni kívánt követési és igazítási beállítást. A következő lehetőségek "
+"közül választhat:"
 
 #: C/preferences_magnifier.page:92(p)
 msgid ""
@@ -1480,7 +1503,7 @@ msgid ""
 "whenever possible."
 msgstr ""
 "<gui>Középre helyezett</gui>: Ez a beállítás az egérmutatót a képernyő "
-"közepén tartja, ha ez lehetséges. Ez az alapértelmezett beállítás."
+"közepén tartja, ha ez lehetséges."
 
 #: C/preferences_magnifier.page:98(p)
 msgid ""
@@ -1530,12 +1553,11 @@ msgid ""
 "mouse tracking mode is centered, the pointer will be moved to the center; "
 "otherwise it will be moved to the item with focus."
 msgstr ""
-"<gui>Az egérmutató követi a nagyítót</gui>: Ez a jelölőnégyzet "
-"alapértelmezetten be van jelölve. Ha az egérmutató nincs a képernyőn az egér "
-"mozgatása közben, akkor a nagyítóra lesz mozgatva, így mindig láthatja, hogy "
-"éppen mire mutat. Ha a beállított egérmutató-követési mód a „középre”, akkor "
-"az egérmutató a képernyő közepére fog mozogni; egyébként a fókuszban lévő "
-"elemre."
+"Ha ez a jelölőnégyzet be van jelölve, és az egérmutató nincs a képernyőn az "
+"egér mozgatása közben, akkor a nagyítóra lesz mozgatva, így mindig láthatja, "
+"hogy éppen mire mutat. Ha a beállított egérmutató-követési mód a „középre”, "
+"akkor az egérmutató a képernyő közepére fog mozogni; egyébként a fókuszban "
+"lévő elemre lesz mozgatva."
 
 #: C/preferences_magnifier.page:141(title)
 msgid "Control and menu item"
@@ -1562,7 +1584,7 @@ msgid ""
 msgstr ""
 "<gui>Görgetés</gui>: Ha a billentyűzettel navigál, a nagyítóablak a "
 "fókuszban levő párbeszédpanel vezérlőeleme vagy menüeleme megjelenítéséhez "
-"szükséges mértékben mozgatásra kerül. Ez az alapértelmezett beállítás."
+"szükséges mértékben mozgatásra kerül."
 
 #: C/preferences_magnifier.page:159(p)
 msgid ""
@@ -1587,9 +1609,9 @@ msgid ""
 "pointer will follow you as you arrow through menu items and move among "
 "controls in dialog boxes."
 msgstr ""
-"<gui>Az egérmutató követi a fókuszt</gui>: Ha ez a jelölőnégyzet be van "
-"jelölve, az egérmutató a párbeszédpanelekben, menükben történő mozgáskor "
-"követi a fókuszt. Ez a jelölőnégyzet alapértelmezetten nincs bejelölve."
+"Ha <gui>Az egérmutató követi a fókuszt</gui> jelölőnégyzet be van jelölve, "
+"az egérmutató a párbeszédpanelekben, menükben történő mozgáskor követi a "
+"fókuszt."
 
 #: C/preferences_magnifier.page:182(title)
 msgid "Text cursor"
@@ -1613,8 +1635,7 @@ msgid ""
 "amount necessary to display it."
 msgstr ""
 "<gui>Görgetés</gui>: A szövegkurzor mozgatásakor a nagyított ablak mozgatása "
-"a szövegkurzor megjelenítéséhez szükséges mértékben. Ez az alapértelmezett "
-"beállítás."
+"a szövegkurzor megjelenítéséhez szükséges mértékben."
 
 #: C/preferences_magnifier.page:198(p)
 msgid ""
@@ -1638,15 +1659,17 @@ msgstr ""
 "A <gui>szélső margó</gui> meghatározza, hogy a képernyő széléhez mennyire "
 "kerülhet közel a kurzor, mielőtt a nagyított ablak görgetésre kerül. A margó "
 "értékét 0-tól 50%-ig lehet beállítani, az 50%-os érték egyenértékű a középre "
-"beállítással. Az alapértelmezett érték 0%."
+"beállítással."
 
 #: C/preferences_magnifier.page:217(p)
 msgid "This option is only available if \"Push\" is your text cursor tracking mode."
 msgstr ""
+"Ez a beállítás csak akkor elérhető, ha a „görgetés” szövegkurzor követési "
+"módot használja."
 
 #: C/preferences_magnifier.page:222(p)
 msgid "Default value: 0"
-msgstr "Az alapértelmezett érték: 0"
+msgstr "Az alapértelmezett érték: 0%"
 
 #: C/preferences_magnifier.page:228(title)
 msgid "Color"
@@ -1667,8 +1690,8 @@ msgstr "Színek megfordítása"
 #: C/preferences_magnifier.page:236(p)
 msgid "<gui>Invert colors</gui>: Creates a reverse or negative-image effect."
 msgstr ""
-"<gui>Színek megfordítása</gui>: Fordított- vagy negatívkép-effektust hoz "
-"létre."
+"Ha a <gui>Színek megfordítása</gui> jelölőnégyzet be van jelölve, ez a "
+"beállítás fordított- vagy negatívkép-effektust hoz létre."
 
 #: C/preferences_magnifier.page:244(title)
 msgid "Brightness"
@@ -1679,8 +1702,9 @@ msgid ""
 "<gui>Brightness</gui>: Ranges from -1 to 1 (-1 is black/no brightness; 1 is "
 "white/total brightness; 0 is \"normal\"/unchanged)."
 msgstr ""
-"<gui>Fényerő</gui>: az értékeket -1-től 1-ig lehet megadni (-1: fekete, "
-"nincs fényerő, 1: fehér, teljesen fényes, 0: normál, változatlan kép)."
+"A <gui>Fényerő</gui> léptetőgombnál az értékeket -1-től 1-ig lehet megadni, "
+"az értékek jelentése: (-1: fekete, nincs fényerő. 1: fehér, teljesen fényes. "
+"0: normál, változatlan kép."
 
 #: C/preferences_magnifier.page:249(p) C/preferences_magnifier.page:259(p)
 msgid "Default value: 0.00"
@@ -1695,9 +1719,9 @@ msgid ""
 "<gui>Contrast</gui>: Ranges from -1 to 1 (-1 is grey/no contrast; 1 is "
 "maximum contrast; 0 is \"normal\"/unchanged)."
 msgstr ""
-"<gui>Kontraszt</gui>: A kontraszt állítható, az értékeket -1-től 1-ig lehet "
-"megadni (-1: szürke, nincs kontraszt, 1: nagy kontraszt, 0: normál, "
-"változatlan kép)."
+"A <gui>Kontraszt</gui> léptetőgombnál a kontraszt állítható, az értékeket -1-"
+"től 1-ig lehet megadni., az értékek jelentése: -1: szürke, nincs kontraszt. "
+"1: nagy kontraszt,. 0: normál, változatlan kép)."
 
 # MegjegyzésKell a hosszú cím, mivel ez egy beállításcsoport.
 #: C/preferences_magnifier.page:266(title)
@@ -1710,6 +1734,10 @@ msgid ""
 "separates the magnified region from the non-magnified region. As such, these "
 "options are not available when <gui>Full Screen</gui> is selected."
 msgstr ""
+"A <gui>Szegélybeállítások</gui> segítségével testreszabhatja a szegélyeket, "
+"melyek elválasztják a nagyított területet a nagyítatlan területtől. Ezek a "
+"beállítások nem érhetők el, ha a <gui>Teljes képernyő</gui> nagyítópozíciót "
+"használja."
 
 #: C/preferences_magnifier.page:274(title)
 msgid "Enable border"
@@ -1720,14 +1748,14 @@ msgid ""
 "<gui>Enable border</gui>: This option determines if a window border is "
 "visible for the magnifier."
 msgstr ""
-"<gui>Szegély engedélyezése</gui>: Ez a jelölőnégyzet meghatározza, hogy "
+"A <gui>Szegély engedélyezése</gui> jelölőnégyzet meghatározza, hogy "
 "látszódjon-e az ablak szegélye a nagyított területen."
 
 #: C/preferences_magnifier.page:284(title)
 msgid "Border size"
 msgstr "Szegély mérete"
 
-#: C/preferences_magnifier.page:285(p) C/preferences_magnifier.page:331(p)
+#: C/preferences_magnifier.page:285(p)
 msgid "This value determines the size of the border in pixels."
 msgstr "Ez a beállítás  a szegély méretét határozza meg képpontban."
 
@@ -1741,7 +1769,7 @@ msgstr "Szegély színe"
 
 #: C/preferences_magnifier.page:294(p)
 msgid "This value determines the color of the border."
-msgstr "Ez a beállítás  a szegély méretét határozza meg képpontban."
+msgstr "Ez a beállítás  a szegély színét határozza meg."
 
 #: C/preferences_magnifier.page:297(p) C/preferences_magnifier.page:343(p)
 #: C/preferences_magnifier.page:389(p)
@@ -1781,12 +1809,15 @@ msgid ""
 "it normally is."
 msgstr ""
 "Jelölje be ezt a jelölőnégyzetet, ha az átlagosnál nagyobb méretű "
-"egérmutatót szeretne használni. A kurzor mérete így megváltoztatható az "
-"eredeti harminckét képpontról."
+"egérmutatót szeretne használni."
 
 #: C/preferences_magnifier.page:330(title)
 msgid "Cursor size"
 msgstr "Kurzor mérete"
+
+#: C/preferences_magnifier.page:331(p)
+msgid "This value determines the size of the cursor in pixels."
+msgstr "Ez a beállítás  a kurzor méretét határozza meg képpontban."
 
 #: C/preferences_magnifier.page:334(p)
 msgid "Default value: 32"
@@ -1982,6 +2013,12 @@ msgid ""
 "additional checkboxes to become available through which you can choose "
 "exactly which keys should and should not be echoed to best suit your needs."
 msgstr ""
+"Az <app>Orka</app> billentyűvisszhang beállításaival testreszabhatja, hogy "
+"mi történjen akkor, amikor egy billentyűt lenyom. Ha szeretné engedélyezni a "
+"billentyűvisszhangot, jelölje be a <gui>Billentyűvisszhang engedélyezése</"
+"gui> jelölőnégyzetet. Ha ezt megteszi, számos jelölőnégyzet válik "
+"elérhetővé, ezek segítségével teljesen személyre szabhatja, hogy mely "
+"billentyűk legyenek vagy ne legyenek kimondva."
 
 #: C/preferences_key_echo.page:33(title)
 msgid "Enable alphanumeric and punctuation keys"
@@ -2006,6 +2043,9 @@ msgid ""
 "This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
 "<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
 msgstr ""
+"Ez az opció megadja, hogy például a <key>Shift</key>, <key>Ctrl</key>, "
+"<key>Alt</key> és <key>Meta</key> billentyűk kimondásra kerüljenek-e, ha "
+"lenyomja ezeket a billentyűket."
 
 #: C/preferences_key_echo.page:54(title)
 msgid "Enable locking keys"
@@ -2045,7 +2085,7 @@ msgid ""
 msgstr ""
 "Ez a beállítás meghatározza, hogy a <key>BackSpace</key>, <key>Del </key>, "
 "<key>Enter</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
-"<key>Page Down</key>, <key>Home</key>, s <key>End</key> billentyűk "
+"<key>Page Down</key>, <key>Home</key>, és <key>End</key> billentyűk "
 "lenyomásakor kimondásra kerüljenek-e a billentyű megnevezések."
 
 #: C/preferences_key_echo.page:86(title)
@@ -2059,6 +2099,12 @@ msgid ""
 "option also applies to any key combination in which <key>Orca Modifier</key> "
 "is being held down, for instance when flat review is being used."
 msgstr ""
+"Ez a beállítás szabályozza, hogy például a <key>Balra</key>, <key>Jobbra</"
+"key>, <key>Fel</key>, és <key>Le</key> nyilak lenyomásakor kimondásra "
+"kerüljenek-e a billentyű megnevezések. Ez a beállítás alkalmazva lesz "
+"bármilyen olyan billentyűkombinációra, mely tartalmazza a nyomvatartott "
+"<key>Orka módosító</key> billentyűt. Erre egy jó példa, ha az egyszerű "
+"áttekintést használja."
 
 #: C/preferences_key_echo.page:99(title)
 msgid "Enable non-spacing diacritical keys"
@@ -2099,23 +2145,31 @@ msgstr ""
 #: C/preferences_key_echo.page:124(p)
 msgid "Key echo causes <app>Orca</app> to announce what you just <em> pressed</em>."
 msgstr ""
+"A billentyűvisszhang lehetőség segítségével az <app>Orka</app> képes "
+"kimondani, milyen billentyűt <em> nyomott le</em>."
 
 #: C/preferences_key_echo.page:130(p)
 msgid ""
 "Character echo causes <app>Orca</app> to announce what was just "
 "<em>inserted</em>."
 msgstr ""
+"A karakterenkénti visszhang lehetőséget teremt az <app>Orka</app> számára, "
+"hogy kimondja, milyen karakterrt <em>írt be</em>."
 
 #: C/preferences_key_echo.page:136(p)
 msgid ""
 "Thus to have accented characters spoken as you type them, you should enable "
 "character echo."
 msgstr ""
+"Ha ékezetes karaktereket is be szokott írni, engedélyezze a karakterenkénti "
+"visszhangot."
 
 #: C/preferences_key_echo.page:144(title)
 msgid "Enabling both key echo and character echo"
 msgstr "Karakterenkénti és szavankénti visszhang engedélyezése"
 
+# Megjegyzés: nem teljesen értem mire gondol az eredeti szöveg. Ha letiltom az alfanumerikus és írásjelek billentyűvisszhang beállítást és csak a #karakterenkénti visszhangot és a szavankénti visszhangot engedélyezem, akkor például az írásjelek esetén megismétlődik az eredeti szó, de a leütött #írásjel nem kerül echózásra (nem lesz kimondva például a , karakter a leütéskor).
+# Ezt a fordítást tutira át kell szerintem fogalmaznod.
 #: C/preferences_key_echo.page:145(p)
 msgid ""
 "If you like key echo and you frequently type accented characters, consider "
@@ -2123,6 +2177,10 @@ msgid ""
 "characters which were spoken as a result of key echo, thus minimizing the "
 "likelihood of \"double speaking\" as you type."
 msgstr ""
+"Ha szereti a karakterenkénti visszhangot és gyakran gépel be ékezetes "
+"karaktereket vagy szimbólumokat, mindkét billentyűvisszhang engedélyezésével "
+"kiszűrheti azokat a karaktereket, melyek duplikált billentyűvisszhangod "
+"generálnának."
 
 #: C/preferences_key_echo.page:155(title)
 msgid "Enable echo by word and Enable echo by sentence"
@@ -2261,12 +2319,17 @@ msgstr ""
 "Ezután nyomja le az Ön által használni kívánt billentyűkombinációt, majd "
 "nyomja meg újra az <key>Enter</key> billentyűt."
 
+# megjegyzés: az utolsó mondatrészben azért írtam többesszámmal a billentyűtársításokat, mert ha valaki törli a jelölést a módosítva jelölőnégyzetből, a
+# tartalék billentyűtársítás is visszaállításra kerül.
 #: C/preferences_key_bindings.page:71(p)
 msgid ""
 "The <gui>Modified</gui> column serves both as an indicator to what has been "
 "changed and as a way to restore the default bindings associated with that "
 "function."
 msgstr ""
+"A <gui>Módosítva</gui> oszlop két célra szolgál: jelzi, hogy milyen "
+"billentyűtársítások lettek megváltoztatva, és lehetőséget biztosít egy "
+"funkció eredeti billentyűtársításainak visszaállítására."
 
 #: C/preferences_key_bindings.page:78(p)
 msgid ""
@@ -2277,6 +2340,15 @@ msgid ""
 "end of the list are the braille bindings, for use with a refreshable braille "
 "display."
 msgstr ""
+"Az <app>Orka</app> billentyűtársítások listája alatt találni fog egy „Nincs "
+"kiosztva” elnevezésű csoportot, mely olyan Orka parancsokat tartalmaz, "
+"melyekhez nincsenek hozzárendelve billentyűtársítások. Ezek általában olyan "
+"parancsok, melyek hasznosak lehetnek a felhasználóknak, de a legtöbb "
+"felhasználónak ezekre a parancsokra nem lenne szükségük. Mivel minden ilyen "
+"parancshoz egyszerű billentyűtársítást definiálni, így ezek a parancsok "
+"alapértelmezetten nem rendelkeznek billentyűtársítással. A lista alján "
+"találhatók a braille társítások, melyeket egy frissíthető braille-kijelzőn "
+"használhat."
 
 #: C/preferences_introduction.page:3(title)
 msgid "0. Introduction to <app>Orca</app>'s Preferences"
@@ -2293,6 +2365,11 @@ msgid ""
 "which applies to all applications. An example of an Orca preference is key "
 "echo because key echo is something that applies to all applications."
 msgstr ""
+"AzOrka beállításai lehetővé teszik az <app>Orka</app> funkcióinak "
+"testreszabását, ezek a változtatások minden alkalmazásnál alkalmazva "
+"lesznek. Erre egy jó példa a billentyűvisszhang beállítás, mivel a "
+"billentyűvisszhang beállítást általában minden alkalmazásra alkalmazni "
+"szokták."
 
 #: C/preferences_introduction.page:23(p)
 msgid ""
@@ -2301,6 +2378,11 @@ msgid ""
 "and then set the key echo for Pidgin to be none. Having done so, <app>Orca</"
 "app> would always echo each word that you typed, unless you were in Pidgin."
 msgstr ""
+"Megjegyzés: Az Orka beállításai alkalmazásonként is személyre szabhatók. "
+"Lehetősége van például arra, hogy alapértelmezetten a szavankénti "
+"billentyűvisszhang beállítást használja, de például a Pidgin alkalmazásnál "
+"teljesen letiltsa a billentyűvisszhangot. Vagyis, az <app>Orka</app> minden "
+"szót ki fog mondani amit begépelt, kivéve a Pidgin alkalmazásná."
 
 #: C/preferences_introduction.page:30(title)
 msgid "Keyboard Shortcuts for Getting Into the Preferences Dialogs"
@@ -2321,19 +2403,25 @@ msgid ""
 "<keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key></keyseq>: "
 "<app>Orca</app>'s Preferences for the current application"
 msgstr ""
-"<keyseq><key>Ctrl</key><key>Orka módosító</key><key>Szóköz</key></keyseq>: "
+"<keyseq><key>Orka módosító</key><key>Ctrl</key><key>Szóköz</key></keyseq>: "
 "Megnyitja az <app>Orka</app> alkalmazásbeállító párbeszédablakát az aktuális "
 "alkalmazáshoz."
 
 #: C/preferences_introduction.page:50(p)
 msgid ""
-"In contrast to Orca preferences, there are appliation-unique preferences. "
+"In contrast to Orca preferences, there are application-unique preferences. "
 "These preferences allow you to customize <app>Orca</app> functionality that "
 "only applies in certain environments, such as on web pages or in chat "
 "applications. As a result, you will only find these options available in the "
 "application-specific preferences dialogs and only for those applications to "
 "which these options apply."
 msgstr ""
+"Az Orka beállításokkal ellentétben léteznek ún. alkalmazás-függő "
+"beállítások. Ezekkel a beállításokkal testreszabhatók az <app>Orka</app> "
+"funkciói bizonyos környezetekben, például a webes vagy csevegő "
+"alkalmazásokban. Ennek eredményeként ezeket a beállításokat csak az Orka "
+"alkalmazásbeállító párbeszédablakában fogja megtalálni, és csak a "
+"célalkalmazásoknál lesznek alkalmazva."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2442,7 +2530,7 @@ msgstr "Általános beállítások"
 
 #: C/preferences_general.page:5(desc)
 msgid "Configuring <app>Orca</app>'s fundamental behaviors"
-msgstr "Az <app>Orka</app> általános beállítások megadása"
+msgstr "Az <app>Orka</app> általános beállításainak megadása"
 
 #: C/preferences_general.page:18(title)
 msgid "General Preferences"
@@ -2469,7 +2557,7 @@ msgid ""
 "Modifier</key> as well as a number of keyboard shortcuts for performing "
 "<app>Orca</app> commands."
 msgstr ""
-"A <gui>billentyűzetkiosztás</gui> választógombcsoport segítségével "
+"A <gui>billentyűzetkiosztás</gui> választógomb-csoport segítségével "
 "megadható, hogy asztali billentyűzeten vagy hordozható számítógépen dolgozik "
 "-e. Bármely kiosztást választja, meghatározott az <key>Orka "
 "módosítóbillentyű</key> és az <app>Orka</app> parancskészlet."
@@ -2483,6 +2571,8 @@ msgid ""
 "Preferences dialog box option to quit <app>Orca</app> without presenting a "
 "confirmation dialog."
 msgstr ""
+"Megadhatja, hogy az <app>Orkából</app> való kilépéskor ne jelenjen meg "
+"megerősítést kérő párbeszédablak."
 
 #: C/preferences_general.page:45(title)
 msgid "Quit Orca Without Confirmation"
@@ -2495,10 +2585,16 @@ msgid ""
 "<gui>Quit Orca without confirmation</gui> checkbox prevents this "
 "confirmation window from appearing."
 msgstr ""
+"Amikor kilép az <app>Orka</app> képernyőolvasóból, alapértelmezetten egy "
+"megerősítést kérő párbeszédablak jelenik meg, hogy ténylegesen ki szeretne-e "
+"lépni az <app>Orkából</app>. Ha törli a jelölést a <gui>Kilépés az Orka "
+"programból jóváhagyás nélkül</gui> jelölőnégyzetből, megelőzheti a "
+"megerősítést kérő párbeszédablak megjelenését."
 
+# Megjegyzés: lehet hogy a beállíthatja fordulat jobb, dönts szabad belátásod szerint. A billentyűzetkiosztás választógombnál például a megadhatja #fordulatot használtuk.
 #: C/preferences_general.page:59(desc)
 msgid "Preferences dialog box option to disable gksu keyboard grab."
-msgstr ""
+msgstr "Megadhatja, hogy a GKSU ne ragadhassa meg a billentyűzetet."
 
 #: C/preferences_general.page:63(title)
 msgid "Disable gksu Keyboard Grab"
@@ -2530,10 +2626,10 @@ msgid ""
 "turn off the keyboard grab behavior, allowing <app>Orca</app> to function "
 "normally with system administration applications."
 msgstr ""
-"Ha bejelöli <gui>A gksu nem ragadhatja meg a billentyűzetet</gui> jelölőnégyzetet, "
-"megakadályozhatja, hogy a <app>gksu</app> alkalmazás átvegye a vezérlést a "
-"billentyűzet felett, így az <app>Orka</app> normálisan fog működni a "
-"rendszeradminisztrációs alkalmazások használatakor is."
+"Ha bejelöli <gui>A gksu nem ragadhatja meg a billentyűzetet</gui> "
+"jelölőnégyzetet, megakadályozhatja, hogy a <app>gksu</app> alkalmazás "
+"átvegye a vezérlést a billentyűzet felett, így az <app>Orka</app> normálisan "
+"fog működni a rendszeradminisztrációs alkalmazások használatakor is."
 
 #: C/preferences_general.page:81(p)
 msgid ""
@@ -2561,6 +2657,8 @@ msgid ""
 "Preferences dialog box option to enable presentation of tooltips which "
 "appear as the result of mouse hovering."
 msgstr ""
+"Beállíthatja, hogy megjelenítésre kerüljenek-e a buboréksúgók, ezek például "
+"az egér mozgatás eredményeként bukkanhatnak fel."
 
 #: C/preferences_general.page:102(title)
 msgid "Present Tooltips"
@@ -2587,6 +2685,8 @@ msgid ""
 "Preferences dialog box option for showing or hiding the <app>Orca</app> main "
 "window."
 msgstr ""
+"Megadhatja, hogy az <app>Orka</app> főablaka megjelenítésre vagy elrejtésre "
+"kerüljön."
 
 #: C/preferences_general.page:122(title)
 msgid "Show Orca Main Window"
@@ -2617,16 +2717,18 @@ msgid ""
 msgstr ""
 "Néhány felhasználó nem szereti az <app>Orka</app> főablakát, mivel az "
 "<app>Orka</app> főablaka megjelenik az ablakkezelő tab-sorrendjében amikor "
-"lenyomják az <keyseq><key>Alt</key><key>Tab</key></keyseq> az ablakok "
-"közötti váltáshoz. Ha törli a jelölést <gui>Az <app>Orka</app> főablakának "
-"megjelenítése</gui> jelölőnégyzetből, az <app>Orka</app> főablaka nem fog "
-"megjelenni."
+"lenyomják az <keyseq><key>Alt</key><key>Tab</key></keyseq> "
+"billentyűkombinációt az ablakok közötti váltáshoz. Ha törli a jelölést "
+"<gui>Az <app>Orka</app> főablakának megjelenítése</gui> jelölőnégyzetből, az "
+"<app>Orka</app> főablaka nem fog megjelenni."
 
 #: C/preferences_general.page:148(desc)
 msgid ""
 "Preferences dialog box option to cause <app>Orca</app> to automatically "
 "start when you log in."
 msgstr ""
+"Megadhatja, hogy az <app>Orka</app> automatikusan elinduljon-e a "
+"bejelentkezés után."
 
 #: C/preferences_general.page:153(title)
 msgid "Start Orca When You Login"
@@ -2644,7 +2746,7 @@ msgstr ""
 msgid ""
 "Preferences dialog box option to enable presentation of the object under the "
 "mouse pointer."
-msgstr ""
+msgstr "Megadhatja, hogy felolvasásra kerüljenek-e az egér alatti objektumok."
 
 #: C/preferences_general.page:170(title)
 msgid "Speak Object Under Mouse"
@@ -2657,22 +2759,31 @@ msgid ""
 "using <app>Orca</app>'s <link xref=\"howto_mouse_review\">Mouse Review</"
 "link> feature."
 msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> fel fogja olvasni "
+"az egér alatti objektumot, amikor az <app>Orka</app> <link xref="
+"\"howto_mouse_review\">egér áttekintő</link> funkció segítségével mozgatja "
+"az egérmutatót a képernyőn."
 
 #: C/preferences_general.page:184(desc)
 msgid ""
 "Preferences dialog box options for customizing the time and date formats "
 "used by <app>Orca</app>."
 msgstr ""
+"Megadhatja, hogy az <app>Orkában</app> milyen idő és dátumformátumot "
+"szeretne használni."
 
 #: C/preferences_general.page:189(title)
 msgid "Time Format and Date Format"
-msgstr "Dátum és idő formátum"
+msgstr "Dátum és időformátum"
 
 #: C/preferences_general.page:191(p)
 msgid ""
 "The <gui>Time Format</gui> and <gui>Date Format</gui> combo boxes allow you "
 "to specify how <app>Orca</app> will speak and braille the time and the date."
 msgstr ""
+"Az <gui>Időformátum</gui> és <gui>Dátumformátum</gui> kombinált listamezők "
+"segítségével beállíthatja, hogy az <app>Orka</app> hogyan mondja ki és "
+"jelenítse meg a braille-kijelzőn az időt és a dátumot."
 
 #: C/preferences_general.page:196(p)
 msgid "Default value: use the system locale's format for each"
@@ -2682,7 +2793,7 @@ msgstr ""
 
 #: C/preferences_general.page:202(desc)
 msgid "Preferences dialog box options for managing settings profiles."
-msgstr ""
+msgstr "Megadhatja a különböző profilokkal kapcsolatos beállításokat."
 
 #: C/preferences_general.page:206(title) C/howto_profiles.page:15(title)
 msgid "Profiles"
@@ -2694,30 +2805,45 @@ msgid ""
 "<gui>General</gui> page, make it possible for you to maintain and use "
 "multiple configurations."
 msgstr ""
+"Az <gui>Általános</gui> lap alján található <gui>Profilok</gui> csoport "
+"vezérlőelemeinek segítségével lehetősége van többféle konfiguráció "
+"létrehozására és karbantartására."
 
 #: C/preferences_general.page:215(p)
 msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
 msgstr ""
+"Az <gui>Aktív profil</gui> kombinált listamező megjeleníti az éppen használt "
+"profilt, valamint lehetővé teszi, hogy kiválaszthasson egy másik profilt, "
+"amit be szeretne tölteni"
 
 #: C/preferences_general.page:221(p)
 msgid ""
 "The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
 "indicated in the <gui>Active Profile</gui> combo box."
 msgstr ""
+"A <gui>Betöltés</gui> gombbal kezdeményezheti, hogy az <app>Orka</app> "
+"betöltse azt a profilt, melyet az <gui>Aktív profil</gui> "
+"kombináltlistamezőben korábban kiválasztott."
 
 #: C/preferences_general.page:227(p)
 msgid ""
 "The <gui>Save As</gui> button allows you to save the current set of options "
 "from the preferences dialog box to a named profile."
 msgstr ""
+"A <gui>Mentés másként</gui> gomb segítségével elmentheti a beállítások "
+"párbeszédablakban éppen megadott beállításokat az Ön által megadott nevű "
+"profilba."
 
-#: C/preferences_general.page:232(p)
+#: C/preferences_general.page:233(p)
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
 msgstr ""
+"A <gui>Kezdeti profil</gui> kombináltlistamezőben kiválaszthatja azt a "
+"profilt, melyet az <app>Orkának</app> minden alkalommal automatikusan be "
+"kell töltenie, amikor elindítja."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2751,22 +2877,28 @@ msgstr "Gecko navigáció"
 msgid ""
 "Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
 "<app>Thunderbird</app>"
-msgstr "Az <app>Orka</app> <app>Firefox</app> és <app>Thunderbird</app> támogatásának konfigurálása"
+msgstr ""
+"Az <app>Orka</app> <app>Firefox</app> és <app>Thunderbird</app> "
+"támogatásának konfigurálása"
 
 #: C/preferences_gecko.page:19(title)
 msgid "Gecko Navigation Preferences"
-msgstr "Gecko navigáció beállításai"
+msgstr "A Gecko navigáció beállításai"
 
 #: C/preferences_gecko.page:21(title)
 msgid "Page Navigation"
 msgstr "Oldalnavigáció"
 
+# Megjegyzés: át kell nézni ennek az üzenetnek a fordítását.
 #: C/preferences_gecko.page:23(p)
 msgid ""
 "The <gui>Page Navigation</gui> group of controls make it possible for you to "
 "customize how <app>Orca</app> presents, and allow you to interact with, text "
 "and other content."
 msgstr ""
+"Az <gui>Oldalnavigáció</gui> beállítócsoport vezérlőelemeinek segítségével "
+"testreszabhatja az <app>Orka</app> megjelenítő képességeit a szöveges és más "
+"tartalmakhoz."
 
 #: C/preferences_gecko.page:29(title)
 msgid "Use Orca Caret Navigation"
@@ -2778,6 +2910,10 @@ msgid ""
 "is on, <app>Orca</app> takes control of the caret as you arrow around within "
 "a page; when it is off, Gecko's native caret navigation is active."
 msgstr ""
+"Ez a jelölőnégyzet be vagy kikapcsolja az <app>Orka</app>' mutatónavigációt. "
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> vezérli a mutatót, "
+"amikor navigál egy weboldalon. Ha ez a jelölőnégyzet nincs bejelölve, a "
+"beépített Gecko navigáció lesz aktív."
 
 #: C/preferences_gecko.page:40(title) C/preferences_gecko.page:59(title)
 msgid "This setting can be toggled on the fly"
@@ -2803,7 +2939,7 @@ msgid ""
 "Structural Navigation allows you to navigate by elements such as headings, "
 "links, and form fields."
 msgstr ""
-"Ez a jelölőnégyzet be vagy kikapcsolja az <app>Orka</app> <link xref="
+"Ez a jelölőnégyzet be vagy kikapcsolja az <link xref="
 "\"howto_structural_navigation\">strukturált Orka navigációt</link>. A "
 "strukturált Orka navigáció lehetővé teszi, hogy könnyen navigálni tudjon "
 "például a címsorok, hivatkozások és űrlapmezők között."
@@ -2836,7 +2972,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:79(title)
 msgid "Position cursor at start of line when navigating vertically"
-msgstr ""
+msgstr "A kurzor kerüljön a sor elejére navigálás közben"
 
 #: C/preferences_gecko.page:80(p)
 msgid ""
@@ -2846,6 +2982,12 @@ msgid ""
 "checkbox is not checked, <app>Orca</app> will attempt to keep the caret in "
 "the same horizontal position as you navigate Up or Down."
 msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve és az <app>Orka</app> vezérli a "
+"mutatót, a mutató mindig a sor elejére fog kerülni, ha lenyomja a felfelé "
+"vagy lefelé nyil billentyűt az előző vagy következő sor felolvasásához. Ha "
+"ez a jelölőnégyzet nincs bejelölve, az <app>Orka</app> megpróbálja "
+"ugyanabban a függőleges pozícióban tartani a mutatót, melyben kezdeményezte "
+"a felfelé vagy lefelé történő navigációt."
 
 # Megjegyzés: Gecko navigációnál Orkában is így van fordítva.
 #: C/preferences_gecko.page:93(title)
@@ -2858,6 +3000,9 @@ msgid ""
 "customize how <app>Orca</app> presents the results of a search conducted "
 "using the application's built-in search functionality."
 msgstr ""
+"A <gui>Keresési feltételek</gui> beállítócsoport vezérlőelemeivel "
+"testreszabhatja, hogyan jelenítse meg az <app>Orka</app> az alkalmazások "
+"beépített keresőjében megadott keresőkifejezés eredményeit."
 
 #: C/preferences_gecko.page:101(title)
 msgid "Speak results during find"
@@ -2868,6 +3013,8 @@ msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
 msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> fel fogja olvasni "
+"azt a sort, melyben az Ön által keresett kifejezés található."
 
 #: C/preferences_gecko.page:111(title)
 msgid "Only speak changed lines during find"
@@ -2880,6 +3027,10 @@ msgid ""
 "to prevent \"chattiness\" on a line with multiple instances of the string "
 "for which you are searching."
 msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> nem fogja többször "
+"felolvasni azokat a sorokat, melyeknél több helyen is előfordul a megadott "
+"keresett kifejezés. Ezzel az opcióval megelőzheti azoknak a soroknak a "
+"többszöri felolvasását, melyekben többször előfordul a keresett kifejezés."
 
 #: C/preferences_gecko.page:123(title)
 msgid "Minimum length of matched text"
@@ -2892,6 +3043,10 @@ msgid ""
 "option is also designed to prevent \"chattiness\" as there are many matches "
 "when you first begin typing string for which you are searching."
 msgstr ""
+"Ezzel a léptetőgombbal megadhatja, hogy az <app>Orka</app> hány karakter "
+"begépelése után olvassa fel a keresett kifejezést tartalmazó sorokat. Ezzel "
+"az opcióval megelőzheti a keresett kifejezés begépelésekor előforduló "
+"rövidebb egyezéseket tartalmazó sorok felolvasását."
 
 #: C/preferences_gecko.page:131(p)
 msgid "Default value: 4"
@@ -2913,28 +3068,36 @@ msgstr "Csevegés"
 
 #: C/preferences_chat.page:6(desc)
 msgid "Configuring <app>Orca's</app> support for IM and IRC"
-msgstr "Az <app>Orka</app> azonnaliüzenő- és IRC-támogatásának beállítása"
+msgstr "Az <app>Orka</app> azonnaliüzenő- és IRC-támogatásának konfigurálása"
 
 #: C/preferences_chat.page:17(title)
 msgid "Chat Preferences"
-msgstr "Csevegés beállításai"
+msgstr "A csevegéssel kapcsolatos beállítások"
 
 #: C/preferences_chat.page:19(p)
 msgid ""
 "The following options allow you to customize how <app>Orca</app> behaves "
 "when providing access to instant messaging and internet relay chat clients."
 msgstr ""
+"A következő beállítások segítségével testreszabhatja az <app>Orka</app> "
+"működését az azonnali üzenetküldő alkalmazásokhoz vagy internetes "
+"csevegőkliensekhez való hozzáféréshez"
 
 #: C/preferences_chat.page:25(title)
 msgid "Speak Chat Room name"
 msgstr "Csevegőszoba nevének felolvasása"
 
+# Megjegyzés: ezt a beállítást meg kell majd néznem, hogy az utolsó részt jól le tudjam fordítani. A basicaly conversation itt nem szó szerinti konvertálást
+# jelent.
 #: C/preferences_chat.page:26(p)
 msgid ""
 "If this checkbox is checked, <app>Orca</app> will prefix incoming messages "
 "with the name of the room or buddy they came from, unless they came from the "
 "currently-focused conversation."
 msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> ki fogja egészíteni "
+"a bejövő üzenetet a csevegőszoba vagy a partner nevével, akitől az üzenet "
+"érkezett, kivételt képez ezalól a pillanatnyilag fókuszban levő csevegés."
 
 #: C/preferences_chat.page:36(title)
 msgid "Announce when your buddies are typing"
@@ -2946,11 +3109,15 @@ msgid ""
 "information identifying that your buddy is typing, <app>Orca</app> will "
 "announce changes in typing status."
 msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve, és az <app>Orka</app> képes "
+"azonosítani, hogy a partnere gépel, be fogja jelenteni a gépelés "
+"állapotváltozásait"
 
 #: C/preferences_chat.page:47(title)
 msgid "Provide chat room specific message histories"
 msgstr "A csevegőszoba üzenetelőzményeinek megjelenítése"
 
+# Megjegyzés: remélem jól fordítottam ezt a beállítást.
 #: C/preferences_chat.page:48(p)
 msgid ""
 "If this checkbox is checked, <app>Orca</app>'s commands for reviewing recent "
@@ -2958,6 +3125,11 @@ msgid ""
 "the history will contain the most recent messages regardless of which "
 "conversation they came from."
 msgstr ""
+"Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> üzenetelőzményeket "
+"megjelenítő parancsai csak a jelenleg fókuszban levő csevegésre lesznek "
+"alkalmazva. Ha ez a jelölőnégyzet nincs bejelölve, az üzenetelőzményeket "
+"megjelenítő parancsok bármely csevegésből érkezett üzeneteket "
+"megjeleníthetik."
 
 # Megjegyzés: Orkánál a csevegés mulnál így fordítottuk, ha lehet maradjon.
 #: C/preferences_chat.page:59(title)
@@ -2969,6 +3141,9 @@ msgid ""
 "This group of radio buttons allows you to control under what circumstances "
 "<app>Orca</app> will present an incoming message to you. Your choices are:"
 msgstr ""
+"Ezeknek a választógomboknak a segítségével megadhatja, hogy mely "
+"csatornákból legyenek felolvasva a beérkezett üzenetek. A következő "
+"lehetőségek közül választhat:"
 
 #: C/preferences_chat.page:66(gui)
 msgid "All channels"
@@ -2981,6 +3156,10 @@ msgstr "Csak az a csatorna, amely ablaka aktív"
 #: C/preferences_chat.page:72(gui)
 msgid "All channels when any chat window is active"
 msgstr "Minden csatorna, ha bármely csevegőablak ablak aktív"
+
+#: C/preferences_chat.page:75(p)
+msgid "Default value: all channels"
+msgstr "Az alapértelmezett beállítás: minden csatorna"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -3078,12 +3257,17 @@ msgid ""
 "braille display. If BrlTTY is not running, <app>Orca</app> will recover "
 "gracefully and will not communicate with the braille display."
 msgstr ""
+"Ezzel a jelölőnégyzettel megadhatja, hogy az <app>Orka</app> használja-e a "
+"braille-kijelzőt. Ha a BrlTTY nem fut, az <app>Orka</app> ezt észleli, és "
+"nem fog kommunikálni a braille-kijelzővel."
 
 #: C/preferences_braille.page:32(p)
 msgid ""
 "If you configure BrlTTY later on, you need to restart <app>Orca</app> in "
 "order to use braille."
 msgstr ""
+"Ha a BrlTTY programot később konfigurálta, újra kell indítania az <app>Orka</"
+"app> képernyőolvasót, hogy használni tudja a braille támogatást."
 
 #: C/preferences_braille.page:39(title) C/howto_text_setup.page:169(p)
 msgid "Enable Braille Monitor"
@@ -3123,6 +3307,11 @@ msgid ""
 "Then choose your desired translation table from the <gui>Contraction Table</"
 "gui> combo box."
 msgstr ""
+"Ha engedélyezni szeretné az irodalmi braille támogatást egy olyan "
+"rendszeren, melyen a liblouis telepítve van, győződjön meg arról, hogy az "
+"<gui>Irodalmi braille támogatás engedélyezése</gui> jelölőnégyzet be van-e "
+"jelölve. Ezután a <gui>Fordítási tábla</gui> kombinált listamezőben válassza "
+"ki a használni kívánt fordítási táblát."
 
 #: C/preferences_braille.page:70(title)
 msgid "Abbreviated Role Names"
@@ -3140,10 +3329,10 @@ msgstr ""
 "típusok hogyan jelenjenek meg a braille kijelzőn. Ennek jelentőségét a "
 "következő példa alapján könnyebb megérteni: Tegyük fel, hogy egy csúszka van "
 "fókuszban és a „Rövidített szerepnevek” jelölőnégyzet nincs bejelölve. Ebben "
-"az esetben a braille kijelzőn a „csúszka” szó jelenik meg, így jelzi, hogy "
-"egy csúszka vezérlőelem van fókuszban. Ha a Rövidített szerepnevek "
-"jelölőnégyzet be van jelölve, akkor a „csúszka” szó helyett rövidítve a "
-"„cszk” szó jelenik meg."
+"az esetben a braille kijelzőn a „csúszka” szó jelenik meg, az <app>Orka</"
+"app> így jelzi, hogy egy csúszka vezérlőelem van fókuszban. Ha a Rövidített "
+"szerepnevek jelölőnégyzet be van jelölve, akkor a „csúszka” szó helyett "
+"rövidítve a „cszk” szó jelenik meg."
 
 #: C/preferences_braille.page:84(title)
 msgid "Disable end of line symbol"
@@ -3205,7 +3394,7 @@ msgid ""
 "this feature and choosing which attributes are of interest is done on the "
 "<link xref=\"preferences_text_attributes\"><gui>Text Attributes</gui> page</"
 "link> of the preferences dialog."
-msgstr ""
+msgstr "Lehetőség van arra, hogy a kiválasztott szöveges attribútumok megjelenítésre kerüljenek a Braille-kijelzőn. A funkció engedélyezését és az attribútumok kiválasztását az <app>Orka</app> grafikus beállító párbeszédpanel <link xref=\"preferences_text_attributes\"><gui>Szövegattribútumok</gui> lapján</link> teheti meg."
 
 #: C/introduction.page:5(title)
 msgid "1. Welcome to Orca"
@@ -3242,11 +3431,12 @@ msgid ""
 msgstr ""
 "Az <app>Orka</app> együttműködik azokkal az alkalmazásokkal és "
 "eszközkészletekkel, amelyek támogatják az assistive technology service "
-"provider interface (AT-SPI) szabványt, amely az elsődleges akadálymentesítési "
-"infrastruktúra Linuxhoz és Solarishoz.Az AT-SPI szabványt támogató "
-"alkalmazások és eszközkészletek például a GNOME GTK+ eszközkészlete, a Java "
-"platform Swing eszközkészlete, OpenOffice, Gecko, és WebKitGtk. Az AT-SPI "
-"szabvány támogatása a KDE Qt eszközkészlethez még nem valósult meg."
+"provider interface (AT-SPI) szabványt, amely az elsődleges "
+"akadálymentesítési infrastruktúra Linuxhoz és Solarishoz. Az AT-SPI "
+"szabványt támogató alkalmazások és eszközkészletek például a GNOME GTK+ "
+"eszközkészlete, a Java platform Swing eszközkészlete, OpenOffice, Gecko, és "
+"WebKitGtk. Az AT-SPI szabvány támogatása a KDE Qt eszközkészlethez még nem "
+"valósult meg."
 
 #: C/introduction.page:34(title)
 msgid "Launching <app>Orca</app>"
@@ -3283,6 +3473,9 @@ msgid ""
 "screen reader by choosing this option in GNOME's <gui>Assistive Technology "
 "Preferences</gui> dialog."
 msgstr ""
+"Ha azt szeretné, hogy az <app>Orka</app> induljon el automatikusan "
+"alapértelmezett képernyőolvasóként, megadhatja ezt a beállítást a GNOME "
+"<gui>Akadálymentesítési technológiák</gui> beállítóeszközének segítségével."
 
 #: C/introduction.page:62(title)
 msgid "Quitting <app>Orca</app>"
@@ -3312,7 +3505,7 @@ msgid ""
 msgstr ""
 "Gépelje be az <cmd>orca -q</cmd> vagy az <cmd>orca --quit</cmd> parancsot "
 "egy terminál ablakban vagy a futtatás párbeszédablakban, majd nyomja le az "
-"<key>Enter</key> billentyűt.."
+"<key>Enter</key> billentyűt."
 
 #: C/introduction.page:88(title)
 msgid "Load-Time Options"
@@ -3337,6 +3530,8 @@ msgid ""
 "<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: Set up user "
 "preferences"
 msgstr ""
+"<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: Felhasználói "
+"beállítások megadása"
 
 #: C/introduction.page:109(p)
 msgid ""
@@ -3355,12 +3550,16 @@ msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
 "<em>dirname</em> as the alternate directory for user preferences"
 msgstr ""
+"<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>könyvtárnév</em></cmd>: Alternatív "
+"<em>könyvtárnév</em> használata a felhasználói beállítások tárolásához"
 
 #: C/introduction.page:127(p)
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
 msgstr ""
+"<cmd>-e</cmd>, <cmd>--enable=<em>opció</em></cmd>: egy opció használatának "
+"kikényszerítése, ahol az <em>opció</em> a következők egyike lehet:"
 
 #: C/introduction.page:132(cmd) C/introduction.page:147(cmd)
 msgid "speech"
@@ -3391,16 +3590,20 @@ msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
 msgstr ""
+"<cmd>-d</cmd>, <cmd>--disable=<em>opció</em></cmd>: egy opció használatának "
+"kizárása, ahol az <em>opció</em> a következők egyike lehet:"
 
 #: C/introduction.page:156(p)
 msgid ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
 "from a given <app>Orca</app> profile file"
 msgstr ""
+"<cmd>-i</cmd>, <cmd>--import-file=<em>fájlnév</em></cmd>: Profil importálása "
+"a megadott <app>Orka</app> profil fájlból"
 
 #: C/introduction.page:162(p)
 msgid "<cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>"
-msgstr "<cmd>-q</cmd>, <cmd>--quit</cmd>: Kilép az <app>Orka</app> programból."
+msgstr "<cmd>-q</cmd>, <cmd>--quit</cmd>: Kilépés az <app>Orka</app> programból."
 
 #: C/introduction.page:167(p)
 msgid ""
@@ -3429,8 +3632,8 @@ msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
 msgstr ""
-"<cmd>--debug-file=<em>filename</em></cmd>: A hibakövetési információk "
-"mentése a megadott fájlba"
+"<cmd>--debug-file=<em>fájlnév</em></cmd>: A hibakövetési információk mentése "
+"a megadott fájlba"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -3446,9 +3649,7 @@ msgstr "Az <app>Orka</app> képernyőolvasó bemutatása"
 msgid ""
 "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
 "\"><app>Orca</app>'s logo </media><app>Orca</app> Screen Reader"
-msgstr ""
-"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
-"\"><app>Orka</app> logó </media><app>Orka</app> képernyőolvasó"
+msgstr "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"><app>Orka</app> logó </media><app>Orka</app> képernyőolvasó"
 
 #: C/index.page:19(title)
 msgid "Before You Begin"
@@ -3483,14 +3684,14 @@ msgstr "Rövid referencia"
 msgid "1. WhereAmI"
 msgstr "1. A Hol vagyok művelet"
 
-# megjegyzés: itt a holvagyok műveletről lesz szó, nem valódi tartószkodási hely meghatározásáróla location (hely) fordítás félreérthető lehetne.
+# megjegyzés: itt a hol vagyok műveletről lesz szó, nem valódi tartószkodási hely meghatározásáróla location (hely) fordítás félreérthető lehetne.
 #: C/howto_whereami.page:6(desc)
 msgid "Learning about your location"
 msgstr "Parancsok az aktuális objektum azonosításához"
 
 #: C/howto_whereami.page:17(title)
 msgid "WhereAmI"
-msgstr "A Hol vagyok művelet"
+msgstr "A hol vagyok művelet"
 
 #: C/howto_whereami.page:18(p)
 msgid ""
@@ -3501,6 +3702,13 @@ msgid ""
 "a significant amount of information you may wish to know, but likely will "
 "not wish to know all of the time."
 msgstr ""
+"A dedikált címsor és állapotsor felolvasó parancsokon kívül az <app>Orka</"
+"app> két helyzetérzékeny hol vagyok műveletet is nyújt: Az egyszerű hol "
+"vagyok műveletet, és a részletesebb holvagyok műveletet. Az egyszerű hol "
+"vagyok művelet minden objektumhoz megvalósításra került. A részletesebb hol "
+"vagyok művelet olyan egyértelműen eldönthető objektumokhoz lett "
+"megvalósítva, melyeknél lehetnek olyan fontos információk, amikről csak néha "
+"szeretne értesülni."
 
 #: C/howto_whereami.page:26(p)
 msgid ""
@@ -3509,6 +3717,11 @@ msgid ""
 "However, to give you a better idea of the context-sensitive nature of "
 "<app>Orca</app>'s Where Am I feature, consider the following:"
 msgstr ""
+"A legjobb útja annak hogy járatos legyen abban hogy melyik hol vagyok "
+"művelet a jobb, ha megnyitja a <link xref=\"commands_where_am_i\">Hol vagyok "
+"művelet parancsok</link> hivatkozást és tesz egy próbát. Másrészt, talán "
+"jobban segíthetnek a helyzetérzékeny hol vagyok művelet megértésében az "
+"alábbi információk:"
 
 #: C/howto_whereami.page:32(p)
 msgid ""
@@ -3516,7 +3729,12 @@ msgid ""
 "or role of the widget, and the mnemonic and/or accelerator key if they "
 "happen to exist. In addition:"
 msgstr ""
+"A legtöbb felületi elemhez elérhetők az alábbi információk, melyeket hallani "
+"fog: felirat és/vagy név, a felületi elem vezérlőelem típusa, "
+"gyorsbillentyűje és/vagy billentyűparancsa, ha létezik. Ebben az esetben a "
+"következő fog történni, ha valamelyik hol vagyok műveletet kezdeményezi:"
 
+# Megjegyzés: a text szót szándékosan fordítom szerkesztőmezőnek, mivel Orkában is így fordítottuk korábban. Ne változtassuk meg!
 #: C/howto_whereami.page:39(p)
 msgid ""
 "If the widget is text, and you perform a basic Where Am I, you will be told "
@@ -3524,12 +3742,20 @@ msgid ""
 "basic Where Am I will tell you what text is selected. A detailed Where Am I "
 "within the text will also include the text attributes."
 msgstr ""
+"Ha a felületi elem egy szerkesztőmező, és végrehajtja az egyszerű hol vagyok "
+"műveletet, hallani fogja az aktuális sorban levő szöveget, ha előzőleg nem "
+"jelölt ki egy szövegrészt. Ha korábban kijelölt egy szövegrészt, az egyszerű "
+"hol vagyok művelet a kijelölt szöveget fogja újra kimondani. A részletesebb "
+"hol vagyok művelet által kimondott információk egy szerkesztőmező esetén "
+"tartalmazni fogják a szöveges attribútumokat is."
 
 #: C/howto_whereami.page:48(p)
 msgid ""
 "If the widget can be checked, as is the case with checkboxes and radio "
 "buttons, the checked state will be included."
 msgstr ""
+"Ha a felületi elem egy jelölőnégyzet vagy választógomb, és a felületi elem "
+"be van jelölve, a bejelölt állapot hangzik el."
 
 #: C/howto_whereami.page:54(p)
 msgid ""
@@ -3537,6 +3763,9 @@ msgid ""
 "button group, or page tab list, the position of the current item will be "
 "included."
 msgstr ""
+"Ha a felületi elem egy lista vagy egy lista kinézetű objektum, például egy "
+"kombinált listamező, választógomb csoport vagy laplista, az aktuális elem "
+"pozícióadata újra kimondásra kerül."
 
 #: C/howto_whereami.page:61(p)
 msgid ""
@@ -3545,12 +3774,19 @@ msgid ""
 "expanded, you will also be told how many children it contains. In addition, "
 "the nesting level will also be provided."
 msgstr ""
+"Ha a felületi elem hierarchikus, például egy fanézet, és egy kiterjeszthető "
+"elemen áll, kimondásra fog kerülni, hogy az elem kiterjeszthető-e vagy nem. "
+"Ha a fanézet eleme kiterjesztett, kimondásra kerül, hogy a fanézet hány "
+"szintet tartalmaz. Ezeken az információkon kívül az aktuális szintszám is "
+"kimondásrakerül."
 
 #: C/howto_whereami.page:69(p)
 msgid ""
 "If the widget is a progress bar or a slider, you will be told the current "
 "percent."
 msgstr ""
+"Ha a felületi elem egy folyamatjelző vagy csúszka, újra kimondásra kerül az "
+"aktuális százalék érték."
 
 #: C/howto_whereami.page:75(p)
 msgid ""
@@ -3559,18 +3795,27 @@ msgid ""
 "which are selected. In a detailed Where Am I, you will also be told which "
 "items are selected."
 msgstr ""
+"Ha a felületi elem egy ikon az ikonok csoportjában, az egyszerű hol vagyok "
+"művelet ki fogja mondani az ikon nevét, az összes elem számát, hogy hányadik "
+"az elem a listában, és hogy mennyi elemet jelölt ki. A részletesebb hol "
+"vagyok művelet használatakor azt is meghallgathatja, hogy mik azoknak az "
+"elemeknek a nevei, melyeket kijelölt."
 
 #: C/howto_whereami.page:83(p)
 msgid ""
 "If you are on a link, the type of link (same site, different site, FTP link, "
 "etc.) will be included."
 msgstr ""
+"Ha egy hivatkozáson áll, meghallgathatja a hivatkozás típusát (azonos oldal, "
+"különböző oldal, FTP hivatkozás, stb)."
 
 #: C/howto_whereami.page:89(p)
 msgid ""
 "If you are in a table cell, the coordinates of that cell and the cell "
 "headers will be included."
 msgstr ""
+"Ha egy táblázatcellán áll, meghallgathatja az aktuális cella "
+"cellakoordinátáit és a cellafejléceket."
 
 #: C/howto_whereami.page:95(p)
 msgid ""
@@ -3579,6 +3824,10 @@ msgid ""
 "you are currently in. To give Where Am I a try, see the list of <link xref="
 "\"commands_where_am_i\">Where Am I commands</link>."
 msgstr ""
+"És így tovább. Az <app>Orka</app> hol vagyok műveletei tehát az információk "
+"széles körét tudják nyújtani arról az objektumról, melyen éppen áll. Ha ki "
+"szeretné próbálni a hol vagyok műveleteket, nézze meg <link xref="
+"\"commands_where_am_i\">a hol vagyok művelet parancsainak listáját</link>."
 
 #: C/howto_toggling_caps_lock.page:5(title)
 msgid "7. CapsLock in Laptop Layout"
@@ -3600,21 +3849,36 @@ msgid ""
 "using <app>Orca</app>'s Laptop Layout and want to lock or unlock "
 "<key>CapsLock</key>, you can do so by performing the following steps:"
 msgstr ""
+"Az Orka két billentyűzetkiosztással rendelkezik, asztali és laptop "
+"kiosztással. Az Ön által választott billentyűzetkiosztás hatással van az "
+"alapértelmezetten használható Orka módosítóbillentyűre. Ha a laptop "
+"billentyűzetkiosztást használja, az alapértelmezett Orka módosító billentyű "
+"a <key>Nagybetűzár</key> lesz. Ha az <app>Orka</app> laptopkiosztását "
+"használja, de szeretné változtatni a <key>Nagybetűzár</key> állapotát, tegye "
+"a következőket:"
 
 #: C/howto_toggling_caps_lock.page:24(title)
 msgid "Toggling CapsLock in Laptop Layout"
 msgstr "A nagybetűzár átváltása az Orka laptop kiosztásnál"
 
+# Megjegyzés: a press the bipass next command részt azért nem fordítottam bele a szövegbe, mert magyar fordításban ennek a kombinációnak megnevezése a következő lenne:
+# "A következő billentyűparancs átadása az aktuális alkalmazásnak"
+# Így viszont túl hosszú lenne a szöveg.
 #: C/howto_toggling_caps_lock.page:26(p)
 msgid ""
 "Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</"
 "key></keyseq>, to tell <app>Orca</app> that the next command should be "
 "ignored."
 msgstr ""
+"Nyomja le az <keyseq><key>Orka módosító</key><key>BackSpace</key></keyseq> "
+"billentyűkombinációt, ezzel jelezheti az <app>Orka</app> számára, hogy a "
+"következő billentyűlenyomást hagyja figyelmen kívül."
 
 #: C/howto_toggling_caps_lock.page:32(p)
 msgid "Press <key>CapsLock</key> to toggle its locked state."
 msgstr ""
+"A nagybetűzár állapotának átváltásához nyomja le a <key>Nagybetűzár</key> "
+"billentyűt."
 
 #: C/howto_the_orca_modifier.page:5(title)
 msgid "4. The Orca Modifier"
@@ -3622,7 +3886,9 @@ msgstr "4. Az Orka módosítóbillentyű"
 
 #: C/howto_the_orca_modifier.page:6(desc)
 msgid "A key that works like <key>Shift</key>, <key>Ctrl</key>, and <key>Alt</key>"
-msgstr "A <key>Shift</key>, <key>Ctrl</key>, <key>Alt</key> mintájára működő billentyű"
+msgstr ""
+"A <key>Shift</key>, <key>Ctrl</key>, <key>Alt</key> mintájára működő "
+"billentyű"
 
 #: C/howto_the_orca_modifier.page:18(title)
 msgid "The Orca Modifier"
@@ -3635,6 +3901,11 @@ msgid ""
 "<app>Orca</app> commands and doing so without introducing conflicts with the "
 "commands of the applications you are accessing."
 msgstr ""
+"Az Orka rendelkezik egy speciális módosítóbillentyűvel, mely ugyanúgy "
+"működik, mint például a <key>Shift</key>, <key>Ctrl</key>, és <key>Alt</key> "
+"billentyűk. Ez a módosítóbillentyű speciálisan arra lett tervezve, hogy "
+"végre tudja hajtani az <app>Orka</app> parancsokat anélkül, hogy bármilyen "
+"ütközés történne az Ön által használt alkalmazások billentyűparancsaival."
 
 #: C/howto_the_orca_modifier.page:26(p)
 msgid ""
@@ -3642,6 +3913,9 @@ msgid ""
 "whether you are using <app>Orca</app>'s Laptop keyboard layout or its "
 "Desktop keyboard layout:"
 msgstr ""
+"Hogy mely billentyű lesz az „Orka módosítóbillentyű\", főként attól függ, "
+"hogy az <app>Orkának</app> a laptop vagy asztali billentyűzetkiosztását "
+"használja:"
 
 #: C/howto_the_orca_modifier.page:33(p) C/howto_text_setup.page:136(p)
 #: C/howto_keyboard_layout.page:22(p)
@@ -3649,6 +3923,8 @@ msgid ""
 "If you are using the Laptop layout, the default Orca Modifier will be "
 "<key>CapsLock</key>"
 msgstr ""
+"Ha a laptop kiosztást használja, az alapértelmezett Orka módosítóbillentyű a "
+"<key>Nagybetűzár</key> lesz."
 
 #: C/howto_the_orca_modifier.page:39(p) C/howto_text_setup.page:142(p)
 #: C/howto_keyboard_layout.page:28(p)
@@ -3657,12 +3933,18 @@ msgid ""
 "<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
 "key as <key>KeyPad 0</key>."
 msgstr ""
+"Ha az asztali kiosztást használja, az alapértelmezett Orka "
+"módosítóbillentyűk az <key>Inzert</key> és <key>Numerikus Inzert</key> "
+"billentyűk lesznek, a második billentyű egyben a  <key>Numpad 0</key> "
+"billentyű is."
 
 #: C/howto_the_orca_modifier.page:46(p)
 msgid ""
 "If you want to maintain your current keyboard layout but select a different "
 "modifier key, you can do so by performing the following steps:"
 msgstr ""
+"Ha szeretné megtartani a jelenleg használt billentyűzetkiosztást, de "
+"módosítani szeretné az Orka módosítóbillentyűt, tegye a következőket:"
 
 #: C/howto_the_orca_modifier.page:51(title)
 msgid "Changing the Orca Modifier"
@@ -3695,7 +3977,9 @@ msgstr "Lépjen az <gui>Orka módosítóbillentyűk</gui> kombinált listamezőr
 
 #: C/howto_the_orca_modifier.page:65(p)
 msgid "Arrow to the desired modifier. The available options are:"
-msgstr "Válassza ki a kívánt módosítóbillentyűt. Az elérhető lehetőségek:"
+msgstr ""
+"Válassza ki a kívánt módosítóbillentyűt. Az elérhető lehetőségek a "
+"következők:"
 
 # Megjegyzés: Átmenetileg visszatettem az eredeti angol szövegre, mivel magán az Orka beállítások párbeszédpanelen is így jelenik meg a módosítóbillentyű
 # neve.
@@ -3716,6 +4000,8 @@ msgid ""
 "A feature which allows you to perform basic configuration of <app>Orca</app> "
 "even if the graphical desktop is not running."
 msgstr ""
+"Lehetővé teszi, hogy megadhassa az <app>Orka</app> kiinduló beállításait, ha "
+"a grafikus asztali környezet nem fut."
 
 #: C/howto_text_setup.page:15(title)
 msgid "Using Text Setup"
@@ -3727,6 +4013,9 @@ msgid ""
 "configuration of <app>Orca</app> even if the graphical desktop is not "
 "running."
 msgstr ""
+"Az Orka rendelkezik egy szöveges beállító felülettel, mely lehetővé teszi, "
+"hogy megadhassa az <app>Orka</app> kiinduló beállításait, ha a grafikus "
+"asztali környezet nem fut."
 
 #: C/howto_text_setup.page:21(title)
 msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
@@ -3766,6 +4055,9 @@ msgid ""
 "installed on your system. Type the number associated with your desired "
 "speech system and press <key>Return</key>."
 msgstr ""
+"A választható beszédrendszerek attól függenek, hogy a rendszerére milyen "
+"beszédrendszerek vannak feltelepítve. Írja be az ön által használni kívánt "
+"beszédrendszer számát, majd nyomja le az <key>Enter</key> billentyűt."
 
 #: C/howto_text_setup.page:47(p)
 msgid "Select desired speech server"
@@ -3777,6 +4069,10 @@ msgid ""
 "installed on your system. Type the number associated with your desired "
 "speech server and press <key>Return</key>."
 msgstr ""
+"A választható beszédkiszolgálók attól függenek, hogy a rendszerére milyen "
+"beszédszintetizátorok vannak feltelepítve. Írja be az ön által használni "
+"kívánt beszédkiszolgáló számát, majd nyomja le az <key>Enter</key> "
+"billentyűt."
 
 #: C/howto_text_setup.page:55(p)
 msgid "Select desired voice"
@@ -3836,26 +4132,42 @@ msgid ""
 "type <cmd>y</cmd> to enable it or <cmd>n</cmd> to disable it and press "
 "<key>Return</key>. The types are:"
 msgstr ""
+"Ha azt választotta, hogy engedélyezi a billentyűvisszhangot, a "
+"beállítófelület egyenként meg fogja kérdezni az egyes billentyűvisszhang "
+"típusoknál, hogy engedélyezni kívánja-e az adott billentyűvisszhangot. A "
+"választásának megfelelően nyomja le az <cmd>i</cmd> vagy az <cmd>n</cmd> "
+"billentyűk valamelyikét, majd nyomja le az <key>Enter</key> billentyűt. A "
+"billentyűvisszhang típusok a következők:"
 
+# megjegyzés: Itt nem teljesen jó a felületi fordítás alkalmazása, mivel itt csak a típust írjuk le. A további típusoknál sem lesz jó a fordítás, ezért
+# javítottam.
 #: C/howto_text_setup.page:88(p)
 msgid "alphanumeric and punctuation keys"
-msgstr "Alfanumerikus- és írásjelek engedélyezése"
+msgstr "Alfanumerikus- és írásjelek"
 
+# megjegyzés: Itt nem teljesen jó a felületi fordítás alkalmazása, mivel itt csak a típust írjuk le. A további típusoknál sem lesz jó a fordítás, ezért
+# javítottam.
 #: C/howto_text_setup.page:96(p)
 msgid "modifier keys"
-msgstr "Módosítóbillentyűk engedélyezése"
+msgstr "Módosítóbillentyűk"
 
+# megjegyzés: Itt nem teljesen jó a felületi fordítás alkalmazása, mivel itt csak a típust írjuk le. A további típusoknál sem lesz jó a fordítás, ezért
+# javítottam.
 #: C/howto_text_setup.page:103(p)
 msgid "locking keys"
-msgstr "Zárolóbillentyűk engedélyezése"
+msgstr "Zárolóbillentyűk"
 
+# megjegyzés: Itt nem teljesen jó a felületi fordítás alkalmazása, mivel itt csak a típust írjuk le. A további típusoknál sem lesz jó a fordítás, ezért
+# javítottam.
 #: C/howto_text_setup.page:110(p)
 msgid "function keys"
-msgstr "Funkcióbillentyűk engedélyezése"
+msgstr "Funkcióbillentyűk"
 
+# megjegyzés: Itt nem teljesen jó a felületi fordítás alkalmazása, mivel itt csak a típust írjuk le. A további típusoknál sem lesz jó a fordítás, ezért
+# javítottam.
 #: C/howto_text_setup.page:117(p)
 msgid "action keys"
-msgstr "Műveletbillentyűk engedélyezése"
+msgstr "Műveletbillentyűk"
 
 #: C/howto_text_setup.page:118(p)
 msgid ""
@@ -3864,6 +4176,11 @@ msgid ""
 "<key>Page Down</key>, <key>Home</key>, and <key>End</key> should be spoken "
 "when pressed."
 msgstr ""
+"Ez az opció szabályozza, hogy a <key>BackSpace</key>, <key>Del</key>, "
+"<key>Enter</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
+"<key>Page Down</key>, <key>Home</key>, és <key>End</key> billentyűk "
+"valamelyikének lenyomásakor kimondásra kerüljenek-e ezek a "
+"billentyűmegnevezések."
 
 #: C/howto_text_setup.page:129(p)
 msgid "Select desired keyboard layout."
@@ -3874,6 +4191,9 @@ msgid ""
 "Orca has two keyboard layouts: Desktop and Laptop. The layout you choose "
 "impacts which key is used as the Orca Modifier."
 msgstr ""
+"Az Orka két billentyűzetkiosztással rendelkezik, asztali és laptop "
+"kiosztással. Az Ön által választott billentyűzetkiosztás hatással van az "
+"alapértelmezetten használható Orka módosítóbillentyűre."
 
 #: C/howto_text_setup.page:149(p) C/howto_keyboard_layout.page:35(p)
 msgid ""
@@ -3881,12 +4201,18 @@ msgid ""
 "<app>Orca</app>'s commands, especially in the areas of Flat Review, Where Am "
 "I, and Say All."
 msgstr ""
+"A választott billentyűzetkiosztás meghatároz számos <app>Orka</app> "
+"parancshoz társított billentyűtársítást, például az egyszerű áttekintés "
+"számos területénél, a hol vagyok műveleteknél és a felolvasás parancsainál."
 
 #: C/howto_text_setup.page:154(p)
 msgid ""
 "Type <cmd>1</cmd> for Desktop layout or <cmd>2</cmd> for Laptop layout and "
 "press <key>Return</key>."
 msgstr ""
+"Az asztali kiosztás választásához írja be az <cmd>1-es</cmd>, vagy a laptop "
+"kiosztás választásához a <cmd>2-es</cmd> számot. A választás megerősítéséhez "
+"nyomja le az <key>Enter</key> billentyűt."
 
 #: C/howto_text_setup.page:160(p)
 msgid "Enable Braille"
@@ -3965,10 +4291,13 @@ msgid ""
 "and other formatting associated with a given character or series of "
 "characters."
 msgstr ""
+"A terminológia szerint a „szövegattribútumok” egy karakternél vagy "
+"karaktersorozatnál többek között a betűkészletet, stílust, igazítást, és más "
+"társított formázásokat jelölnek."
 
 #: C/howto_text_attributes.page:24(title)
 msgid "Obtaining Formatting Information"
-msgstr ""
+msgstr "A formázási információ lekérdezése"
 
 #: C/howto_text_attributes.page:25(p)
 msgid ""
@@ -3977,6 +4306,11 @@ msgid ""
 "In addition, <app>Orca</app> will optionally indicate text attributes in "
 "braille by \"underlining\" them as you navigate a document."
 msgstr ""
+"Ha lenyomja az <keyseq><key>Orka módosító</key><key>F</key></keyseq> "
+"billentyűkombinációt, az <app>Orka</app> minden ismert szövegattribútummal "
+"kapcsolatos információt ki fog mondani az aktuális objektumról. Ezen kívül, "
+"az <app>Orka</app> opcionális lehetőségként képes a szövegattribútumokat "
+"braille-ben „aláhúzással” jelölni, amikor egy dokumentumban navigál. ."
 
 #: C/howto_text_attributes.page:32(p)
 msgid ""
@@ -3987,6 +4321,12 @@ msgid ""
 "order in which they should be presented, and which ones <app>Orca</app> will "
 "indicate in braille."
 msgstr ""
+"Mivel a szöveges attribútumok száma elég nagy és általában nincs szükség "
+"minden attribútumra, az <app>Orka</app> grafikus beállító párbeszédpanel "
+"<link xref=\"preferences_text_attributes\">szövegattribútumok lapján</link> "
+"testreszabható, hogy milyen attribútumok kerüljenek kimondásra, milyen "
+"sorrendben történjen a szövegattribútumok kimondása, valamint milyen "
+"attribútumokat jelenítsen meg az <app>Orka</app> a braille-kijelzőn."
 
 #: C/howto_text_attributes.page:40(p)
 msgid ""
@@ -3995,11 +4335,19 @@ msgid ""
 "text attribute presentation on an as-needed basis for each application you "
 "use."
 msgstr ""
+"Mivel a  <link xref=\"preferences_text_attributes\">Szövegattribútumok lap</"
+"link> is része az alkalmazásbeállító párbeszédpanelnek, akár alkalmazás "
+"szinten is teljesen testreszabhatja a szövegattribútumok megjelenítését."
 
 #: C/howto_text_attributes.page:48(title)
 msgid "Identifying Misspelled Words"
 msgstr "Elgépelt szavak azonosítása"
 
+# Megjegyzés: a spelling error attribútumot magyar fordításban betűtévesztésként fordítottam, nem rég lett csak kijelölve fordításra a "text-spelling"
+# attribútum a szövegattribútumok lapon. Viszont, Thunderbird esetén van például egy "Hiba" fordítású attribútum, ami ugyanezt a célt szolgálja, így mind a
+# kettőt beírtam a fordításba, ha lehet maradjanak.
+# A hiba attribútum alapértelmezetten engedélyezve van az Orka alkalmazásfüggő beállításoknál például Thunderbird esetén, a text-spelling (betűtévesztés)
+# viszont nem, így erre nem tértem ki.
 #: C/howto_text_attributes.page:49(p)
 msgid ""
 "Most applications and toolkits indicate that a word is misspelled by "
@@ -4010,6 +4358,13 @@ msgid ""
 "and braille and will therefore be presented along with any other attributes "
 "whose indication you have enabled."
 msgstr ""
+"A legtöbb alkalmazás és eszközkészlet egy szaggatott piros vonallal jelzi, "
+"ha egy szó el lett gépelve. A kisegítő technológiák számára ezt a vonalat "
+"legtöbbször egy attribútum jelöli. Ennek eredményekéntkönnyen azonosíthatja "
+"az elgépelt szavakat, ha kiválasztja a betűtévesztés és a hiba "
+"attribútumokat. A hiba attribútum alapértelmezetten engedélyezve van mind a "
+"kimondásnál, mind a braille jelölésnél, és meg fog jelenni a többi "
+"megjelenített attribútum között, melyeket engedélyezett."
 
 #: C/howto_text_attributes.page:58(p)
 msgid ""
@@ -4019,6 +4374,11 @@ msgid ""
 "app> will announce \"misspelled\" so that you can immediately go back and "
 "correct the error."
 msgstr ""
+"Mivel a hibásan írt szavak azonosíthatóak egy szövegattribútummal, ha a "
+"billentyűvisszhang és/vagy a szavankénti visszhang engedélyezett, és "
+"elgépelt egy szót, amint megjelenik a hibás szó jelzése, az <app>Orka</app> "
+"egy „Hibásan írt szó” üzenettel jelzi a hibát. Ezután visszatérhet az "
+"elgépelt szóhoz és kijavíthatja a hibát."
 
 #: C/howto_text_attributes.page:65(p)
 msgid ""
@@ -4026,14 +4386,17 @@ msgid ""
 "a word which is misspelled, <app>Orca</app> will announce the presence of "
 "the spelling error."
 msgstr ""
+"Végezetül, ha egy dokumentumban navigál a kurzorral, és a kurzor egy hibás "
+"szóhoz ér, az <app>Orka</app> közölni fogja a betűtévesztést."
 
 #: C/howto_tables.page:5(title)
 msgid "4. Tables"
 msgstr "4. Táblázatok"
 
+# Megjegyzés: javítottam és kiegészítettem a rövid leírást.
 #: C/howto_tables.page:6(desc)
 msgid "Navigating and setting dynamic headers"
-msgstr "Dinamikus fejlécek bezárása és azok beállítása"
+msgstr "Navigálás a táblázatokban, dinamikus fejlécek beállítása és törlése"
 
 #: C/howto_tables.page:17(title)
 #: C/commands_structural_navigation.page:180(title)
@@ -4047,11 +4410,17 @@ msgid ""
 "versus row reading, <link xref=\"howto_structural_navigation\">Structural "
 "Navigation</link> and Dynamic Headers."
 msgstr ""
+"Az <app>Orka</app> számos speciális funkcióval rendelkezik a táblázatokhoz "
+"való hozzáférés megkönnyítése érdekében, amikkel egy weboldalon vagy "
+"dokumentumban találkozhat. Néhány ezek közül: konfigurálható cella és sor "
+"felolvasás, <link xref=\"howto_structural_navigation\">Strukturált Orka "
+"navigáció,</link> dinamikus fejlécek támogatása."
 
 #: C/howto_tables.page:25(title)
 msgid "Cell Versus Row Reading"
-msgstr ""
+msgstr "Az aktuális cella vagy sor felolvasása"
 
+# Megjegyzés, remélem jól fordítottam ezt az üzenetet, át kell nézni.
 #: C/howto_tables.page:26(p)
 msgid ""
 "Consider the process of examining the list of messages in your Inbox. In "
@@ -4062,6 +4431,15 @@ msgid ""
 "each row. Thus in that case, you would want <app>Orca</app> to only speak "
 "the cell with focus. Similar situations occur in document tables."
 msgstr ""
+"Tegyük fel, hogy át kell tekintenie a beérkezett üzenetek mappában levő "
+"üzeneteit. Ha azt szeretné, hogy az <app>Orka</app> kimondja egy üzenet "
+"esetén a feladót, tárgyat, dátumot és hogy az üzenet tartalmaz-e "
+"mellékletet, arra van szüksége, hogy az <app>Orka</app> a táblázat teljes "
+"sorát felolvassa. Ha viszont egy táblázat sorai között navigál, a teljes sor "
+"végighallgatása akár zavaró is lehet, ha egy táblázat több cellát is "
+"tartalmaz. Ebben az esetben arra lehet szüksége, hogy az <app>Orka</app> "
+"csak a fókuszba kerülő cellát olvassa fel. Ugyanez lehet a helyzet a "
+"dokumentumok táblázataival."
 
 #: C/howto_tables.page:36(p)
 msgid ""
@@ -4073,6 +4451,11 @@ msgid ""
 "button group on the <link xref=\"preferences_speech\"><gui>Speech</gui> "
 "page</link>."
 msgstr ""
+"Az <link xref=\"preferences\"><app>Orka</app> beállító párbeszédpanelein</"
+"link> akár alkalmazás szinten is testreszabható, hogy az <app>Orka</app> "
+"csak a táblázat aktuális celláját, vagy teljes sorát olvassa-e fel. A "
+"beállítást a <link xref=\"preferences_speech\"><gui>Beszéd</gui> lapon</"
+"link> találja a <gui>Táblázatoszlopok olvasása</gui> választógomb-csoportban."
 
 #: C/howto_tables.page:45(p)
 msgid ""
@@ -4088,7 +4471,7 @@ msgstr ""
 #: C/howto_tables.page:52(title) C/howto_structural_navigation.page:19(title)
 #: C/commands_structural_navigation.page:7(title)
 msgid "Structural Navigation"
-msgstr "Strukturált Orka navigáció használata"
+msgstr "A strukturált Orka navigáció használata"
 
 #: C/howto_tables.page:53(p)
 msgid ""
@@ -4097,6 +4480,11 @@ msgid ""
 "locate tables, jump immediately to a table's first or last cell, and move to "
 "the next cell in any direction."
 msgstr ""
+"Az <app>Orka</app> <link xref=\"commands_structural_navigation#tables"
+"\">táblázatnavigációval kapcsolatos parancsai</link> lehetővé teszik, hogy "
+"gyorsan megtalálhassa a táblázatokat, elugorhasson a táblázatok első vagy "
+"utolsó cellájára, valamint hogy mozoghasson bármely irányba a táblázatok "
+"cellái között."
 
 #: C/howto_tables.page:59(p)
 msgid ""
@@ -4105,6 +4493,11 @@ msgid ""
 "position, such as the dimensions of the table you just entered and the fact "
 "that you have reached the edge of the table in the direction you are moving."
 msgstr ""
+"Amikor egy táblázatban az <app>Orka</app> strukturált navigáció segítségével "
+"navigál, az <app>Orka</app> bejelenti a táblázatban elfoglalt pillanatnyi "
+"pozíciójával kapcsolatos fontos információkat, például a táblázat méretét, "
+"valamint azt, hogy a táblázatban való mozgáskor elérte a táblázat valamelyik "
+"szélét."
 
 #: C/howto_tables.page:66(p)
 msgid ""
@@ -4114,6 +4507,11 @@ msgid ""
 "not cell coordinates are presented, multiple cell spans are indicated, and "
 "cell headers are announced."
 msgstr ""
+"Ezen kívül, az <app>Orka</app> számos konfigurálható <link xref="
+"\"preferences_table_navigation\">megjelenítéssel kapcsolatos beállítással</"
+"link> rendelkezik, melyek együttműködnek a strukturált <app>Orka</app> "
+"navigációval. Testreszabható például, hogy bejelentésre kerüljenek-e a cella "
+"koordináták, a cellák kiterjedései, és a cellafejlécek."
 
 #: C/howto_tables.page:74(title) C/howto_structural_navigation.page:52(title)
 msgid "Don't Forget To Toggle Structural Navigation On!"
@@ -4126,10 +4524,13 @@ msgid ""
 "type=\"seealso\" xref=\"howto_structural_navigation#toggling_required\"> "
 "when toggling Structural Navigation on is required.</link>"
 msgstr ""
+"Attól függően hogy éppen hol tartózkodik, szükséges lehet az <app>Orka</app> "
+"strukturált navigációjának bekapcsolása. Ha erről bővebben szeretne olvasni, "
+"olvassa el a <link type=\"seealso\" xref=\"howto_structural_navigation#toggling_required\">mikor szükséges bekapcsolnia a strukturált Orka navigációt</link> című fejezetet."
 
 #: C/howto_tables.page:84(title)
 msgid "Dynamic Headers"
-msgstr ""
+msgstr "Dinamikus fejlécek használata"
 
 #: C/howto_tables.page:85(p)
 msgid ""
@@ -4142,6 +4543,15 @@ msgid ""
 "<app>Orca</app>'s Dynamic Header support makes it possible to overcome these "
 "challenges."
 msgstr ""
+"Amikor táblázatokat fog olvasni, sok táblázatnál a táblázat valamelyik "
+"sorában vagy oszlopában levő cellák fejléceknek lesznek fenntartva. A "
+"táblázat készítője vagy jól jelöli meg ezeket a fejléceket vagy nem, ezt a "
+"legtöbb esetben elég nehéz megállapítani, a szövegek ilyenkor nagyobb "
+"betűmérettel és/vagy dőlt betűstílussal vannak formázva. Ha egy táblázatnál "
+"jól is vannak megjelölve a fejlécek, semmilyen garancia nincs arra, hogy a "
+"használt alkalmazás vagy eszközkészlet jól adja át a szöveges fejléc-"
+"információkat a kisegítő technológiáknak. Az <app>Orka</app> dinamikus "
+"fejlécek támogatásával ennek esélyét viszont nagyban növelheti."
 
 #: C/howto_tables.page:96(title)
 msgid "Setting Column Headers"
@@ -4162,17 +4572,20 @@ msgstr ""
 
 #: C/howto_tables.page:110(title)
 msgid "Set Row Headers"
-msgstr ""
+msgstr "Sorfejlécek beállítása"
 
 #: C/howto_tables.page:112(p)
 msgid "Move to the column which contains all of the row headers."
-msgstr ""
+msgstr "Lépjen a táblázat azon oszlopára, mely az összes sorfejlécet tartalmazza."
 
 #: C/howto_tables.page:117(p)
 msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>C</key></keyseq> to tell "
 "<app>Orca</app> that the current column is the one with the headers."
 msgstr ""
+"Nyomja le az <keyseq><key>Orka módosító</key><key>C</key></keyseq> "
+"billentyűkombinációt, ezzel jelezheti az <app>Orka</app> számára, hogy a "
+"táblázat aktuális oszlopa tartalmazza a fejléc-információkat."
 
 #: C/howto_tables.page:123(p)
 msgid ""
@@ -4186,15 +4599,31 @@ msgid ""
 "row will be presented. And if you change columns and there are column "
 "headers, the header associated with the new column will be presented."
 msgstr ""
+"Akár dinamikus oszlop vagy sorfejlécet állít be, amikor a cellák között "
+"navigál, az <app>Orka</app> ki fogja mondani a megváltozott fejléceket. "
+"Másképp fogalmazva, az <app>Orka</app> nem fogja kimondani az "
+"oszlopfejléceket újra és újra, ha felfelé vagy lefelé mozog egy táblázat "
+"aktuális oszlopában, nem fogja kimondani a sorfejléceket újra és újra, ha "
+"jobbra és balra mozog a táblázat aktuális sorában. Vagyis, ha átlép egy "
+"másik sorba, és definiált sorfejlécet, az új sorhoz társított sorfejléc "
+"kerül kimondásra. Ha átlép egy másik oszlopba, és definiált oszlopfejlécet, "
+"az új oszlophoz társított oszlopfejléc kerül kimondásra."
 
 #: C/howto_tables.page:135(p)
 msgid ""
 "To clear headers, simply double-click the command you used to set them. Thus "
 "double-clicking <keyseq><key>Orca Modifier</key><key>R</key></keyseq> tells "
-"<app>Orca</app> there are no row headers. Double-clicking <keyseq><key>Orca "
-"Modifier</key><key>C</key></keyseq> tells <app>Orca</app> there are no "
-"column headers."
+"<app>Orca</app> there are no column headers. Double-clicking "
+"<keyseq><key>Orca Modifier</key><key>C</key></keyseq> tells <app>Orca</app> "
+"there are no row headers."
 msgstr ""
+"Ha törölni szeretné a fejléceket, egyszerűen nyomja le kétszer egymás után "
+"azt a billentyűkombinációt, melyet a fejléc beállításához használt. Az "
+"<keyseq><key>Orka módosító</key><key>R</key></keyseq> billentyűkombináció "
+"kétszeri gyors lenyomása előírja az <app>Orka</app> számára, hogy nincsenek "
+"oszlopfejlécek. Az <keyseq><key>Orka módosító</key><key>C</key></keyseq> "
+"billentyűkombináció kétszeri gyors megnyomása előírja az <app>Orka</app> "
+"számára, hogy nincsenek sorfejlécek."
 
 #: C/howto_structural_navigation.page:7(title)
 msgid "3. Structural Navigation"
@@ -4210,6 +4639,9 @@ msgid ""
 "amongst elements in a document. The types of elements by which you can "
 "navigate include:"
 msgstr ""
+"Az <app>Orka</app> strukturált navigáció funkciója lehetővé teszi a gyors "
+"navigálást a leggyakrabban előforduló elemek között egy dokumentumban. "
+"Néhány elemtípus, melyek között egyszerűen navigálhat:"
 
 #: C/howto_structural_navigation.page:26(p)
 msgid "Headings and other text blocks"
@@ -4230,11 +4662,11 @@ msgstr "Listák és listaelemek"
 
 #: C/howto_structural_navigation.page:30(p)
 msgid "Landmarks, separators, and anchors"
-msgstr ""
+msgstr "Jelölők, elválasztók és iránypontok"
 
 #: C/howto_structural_navigation.page:31(p)
 msgid "Tables and table cells"
-msgstr ""
+msgstr "táblázatok és táblázatcellák"
 
 #: C/howto_structural_navigation.page:33(p)
 msgid ""
@@ -4242,6 +4674,10 @@ msgid ""
 "found in <link xref=\"commands_structural_navigation\">Structural Navigation "
 "Commands</link>."
 msgstr ""
+"Az elemek teljes listájáról és a hozzájuk társított navigációs "
+"billentyűparancsokról a <link xref=\"commands_structural_navigation"
+"\">Strukturált navigációval kapcsolatos parancsok</link> című fejezetben "
+"talál információkat."
 
 #: C/howto_structural_navigation.page:39(title)
 msgid "Supported Applications"
@@ -4258,12 +4694,24 @@ msgid ""
 "Structural Navigation features within <app>Evince</app> will require a "
 "similar effort on the part of its developers."
 msgstr ""
+"Jelenleg az <app>Orka</app> strukturált navigációja teljesen implementálva "
+"lett a webes tartalmakhoz, beleértve a súgó tartalmakhoz is (amit most éppen "
+"olvas). Az <app>Orka</app> strukturált navigáció táblázatokkal kapcsolatos "
+"navigálási lehetőségei is teljesen meg lettek valósítva az <app>Openoffice."
+"org Szövegszerkesztőhöz</app> és a <app>Libreoffice Szövegszerkesztőhöz</"
+"app>. A többi strukturált navigációs objektum implementálása ezekhez az "
+"irodai alkalmazásokhoz szükségessé teszi az alkalmazás fejlesztőivel való "
+"együttműködést. Bármilyen strukturált navigációval kapcsolatos funkció "
+"implementálása például az <app>Evince</app> alkalmazáshoz ugyanezt az "
+"együttműködést igényli az alkalmazás fejlesztői részéről."
 
 #: C/howto_structural_navigation.page:53(p)
 msgid ""
 "Depending on where you are, it may be necessary for you to explicitly toggle "
 "Structural Navigation on before you can use it."
 msgstr ""
+"Attól függően, hogy milyen alkalmazást használ, szükség lehet az <app>Orka</"
+"app> strukturált navigációjának bekapcsolására, mielőtt azt használni tudná."
 
 #: C/howto_structural_navigation.page:59(title)
 msgid "When Toggling Structural Navigation On Is Required"
@@ -4276,6 +4724,10 @@ msgid ""
 "reading its content. Thus there is no question as to whether the 'H' you "
 "just pressed was meant to be a writing command or a navigation command."
 msgstr ""
+"A weboldalakon szükségtelen külön bekapcsolni a strukturált Orka navigációt, "
+"mivel jórészt a dokumentum tartalmakat csak olvassa. Vagyis, nem kérdés, "
+"hogy az Ön által lenyomott H billentyű egy beírási parancsot, vagy "
+"navigálási parancsot jelent-e, ez egyértelműen eldönthető."
 
 #: C/howto_structural_navigation.page:67(p)
 msgid ""
@@ -4289,6 +4741,17 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>Z</key></keyseq> again to toggle "
 "Structural Navigation off."
 msgstr ""
+"Más a helyzet akkor, ha egy szerkeszthető dokumentummal dolgozik az "
+"<app>OpenOffice</app> és <app>LibreOffice</app> szövegszerkesztőkben, az "
+"<app>Orka</app> nem fogja tudni egyértelműen meghatározni, hogy milyen "
+"műveletet akart végrehajtani, amikor lenyomta a H billentyűt. Vagyis, "
+"mielőtt bármilyen strukturált navigációs parancsot használni szeretne egy "
+"szerkeszthető dokumentumban, mindenképpen be kell először kapcsolnia a "
+"strukturált <app>Orka</app> navigációt az <keyseq><key>Orka módosító</"
+"key><key>Z</key></keyseq> billentyűkombinációval. Ha befejezte a navigációt "
+"és szeretné folytatni a dokumentum szerkesztését, kapcsolja ki az <app>Orka</"
+"app> strukturált navigációt az <keyseq><key>Orka módosító</key><key>Z</key></"
+"keyseq> billentyűkombinációval."
 
 #: C/howto_structural_navigation.page:82(title)
 msgid "Available Settings"
@@ -4300,16 +4763,21 @@ msgid ""
 "configurable options available specifically for applications in which there "
 "is structural navigation support."
 msgstr ""
+"A fentebb említett parancsokon kívül az <app>Orka</app> számos "
+"testreszabható beállítással rendelkezik azokhoz az alkalmazásokhoz, "
+"melyekhez támogatott az <app>Orka</app> strukturált navigáció."
 
 #: C/howto_structural_navigation.page:89(title)
 msgid "Configuring Structural Navigation"
-msgstr "A strukturált Orka navigáció beállításai"
+msgstr "A strukturált Orka navigáció beállítása"
 
 #: C/howto_structural_navigation.page:91(p)
 msgid ""
 "Give focus to an application for which <app>Orca</app> has Structural "
 "Navigation support."
 msgstr ""
+"Hozza fókuszba azt az alkalmazást, melyhez az <app>Orka</app> támogatja a "
+"strukturált navigációt."
 
 #: C/howto_structural_navigation.page:97(p)
 msgid ""
@@ -4317,21 +4785,28 @@ msgid ""
 "for the current application by pressing: <keyseq><key>Ctrl</key><key>Orca "
 "Modifier</key><key>Space</key></keyseq>"
 msgstr ""
+"Nyomja le az <keyseq><key>Orka módosító</key><key>Ctrl</key><key>Szóköz</"
+"key></keyseq> billentyűkombinációt, ezzel megnyitja az  <link xref="
+"\"preferences\">Orka alkalmazásbeállító párbeszédablakot</link> a fókuszban "
+"levő alkalmazáshoz ()."
 
 #: C/howto_structural_navigation.page:106(p)
 msgid ""
 "Navigate to the last page of the dialog box which should be named according "
 "to the name of your current application."
 msgstr ""
+"Lépjen a párbeszédablak utolsó lapjára, melynek neve megegyezik az éppen "
+"használt alkalmazás nevével."
 
 #: C/howto_structural_navigation.page:112(p)
 msgid "Examine and change the settings as you see fit."
 msgstr ""
+"Nézze át a rendelkezésreálló beállításokat, ha szükséges, szabja személyre a "
+"beállításokat az Ön igényei szerint."
 
 #: C/howto_structural_navigation.page:117(p) C/howto_profiles.page:86(p)
-#: C/howto_profiles.page:130(p)
 msgid "Press the <gui>OK</gui> button."
-msgstr "Nyomja meg az <gui>OK</gui> gombot."
+msgstr "Ha végzett, aktiválja az <gui>OK</gui> gombot."
 
 #: C/howto_setting_up_orca.page:6(title)
 msgid "3. Orca Configuration"
@@ -4359,6 +4834,9 @@ msgid ""
 "setup mode. Depending on your active session's configuration, one of two "
 "things will occur:"
 msgstr ""
+"Ha először indítja el az <app>Orka</app> képernyőolvasót, automatikusan a "
+"beállító módba kerül. Az aktív munkamenet konfigurációjától függően a "
+"következő két dolog egyike történhet:"
 
 #: C/howto_setting_up_orca.page:29(p)
 msgid ""
@@ -4367,6 +4845,11 @@ msgid ""
 "link> dialog box where you can customize <app>Orca</app> completely and then "
 "use it immediately."
 msgstr ""
+"Ha az akadálymentesítési támogatás már engedélyezve lett az Ön által "
+"használt munkamenetben, az <app>Orka</app> <link xref=\"preferences"
+"\">Grafikus beállító párbeszédpanelbe</link> fog kerülni. Itt teljesen "
+"testreszabhatja az <app>Orka</app> képernyőolvasó funkcióit, és rögtön "
+"használatba veheti is azt."
 
 #: C/howto_setting_up_orca.page:38(p)
 msgid ""
@@ -4376,16 +4859,25 @@ msgid ""
 "most fundamental settings and enable accessibility support for your session. "
 "You will need to log out and log back in for the new settings to take effect."
 msgstr ""
+"Ha az Ön által használt munkamenetben az akadálymentesítési szolgáltatás még "
+"nem lett engedélyezve, az <app>Orka</app> <link xref=\"howto_text_setup"
+"\">Szöveges beállítófelülete</link> kerül elindításra. A szöveges "
+"beállítófelület lehetővé teszi a legtöbb alapvető beállítás megadását és az "
+"akadálymentesítési szolgáltatás engedélyezését az Ön által használt "
+"munkamenetben. A beállítások megadása után ki kell jelentkeznie, majd újra "
+"be kell lépnie az új beállítások érvénybelépéséhez."
 
 #: C/howto_setting_up_orca.page:50(title)
 msgid "Configuring <app>Orca</app> in the Future"
-msgstr ""
+msgstr "Az <app>Orka</app> későbbi konfigurálása"
 
 #: C/howto_setting_up_orca.page:51(p)
 msgid ""
 "If you want to configure <app>Orca</app> in the future, you can do one of "
 "the following:"
 msgstr ""
+"Ha később szeretné konfigurálni az <app>Orka</app> képernyőolvasót, a "
+"következők egyikét teheti:"
 
 #: C/howto_setting_up_orca.page:57(p)
 msgid ""
@@ -4393,12 +4885,20 @@ msgid ""
 "it to automatically be placed in the <link xref=\"preferences\">Preferences</"
 "link> dialog box."
 msgstr ""
+"Amikor legközelebb futtatja az <app>Orka</app> képernyőolvasót, a parancsot "
+"egészítse ki a <cmd>--setup</cmd> kapcsolóval. Ezzel automatikusan az <link "
+"xref=\"preferences\">Orka grafikus beállító párbeszédpanelbe</link> fog "
+"kerülni."
 
 #: C/howto_setting_up_orca.page:64(p)
 msgid ""
 "Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
 "<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link>."
 msgstr ""
+"Ha legközelebb futtatja az <app>Orka</app> képernyőolvasót, a parancsot "
+"egészítse ki a <cmd>--text-setup</cmd> kapcsolóval, ezzel a kapcsolóval újra "
+"futtathatja az <link xref=\"howto_text_setup\"><app>Orka</app> szöveges "
+"beállító felületét</link>."
 
 #: C/howto_setting_up_orca.page:71(p)
 msgid ""
@@ -4407,6 +4907,11 @@ msgid ""
 "window or by pressing <keyseq><key>Orca Modifier</key><key>Space</key></"
 "keyseq> from within any accessible application."
 msgstr ""
+"Megnyithatja az <link xref=\"preferences\">Orka grafikus beállító "
+"párbeszédablakot</link>, ha aktiválja a <gui>Beállítások</gui> gombot az "
+"<app>Orka</app> főablakában, vagy ha lenyomja az <keyseq><key>Orka módosító</"
+"key><key>Szóköz</key></keyseq> billentyűkombinációt egy akadálymentesen "
+"használható alkalmazásban."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -4443,73 +4948,98 @@ msgid ""
 "Orca's profiles allow you to save and load multiple configurations so that "
 "you can quickly access the settings you need."
 msgstr ""
+"Az Orka profiljai lehetővé teszik, hogy gyorsan menthessen és betölthessen "
+"többféle beállítási sablont, így gyorsan hozzáférhet a különböző "
+"beállításokhoz az Ön igényei szerint."
 
 #: C/howto_profiles.page:21(title)
 msgid "Maintaining Multiple Configurations"
-msgstr ""
+msgstr "Több konfiguráció fenntartása"
 
 #: C/howto_profiles.page:24(desc)
 msgid ""
 "These options appear at the bottom of the <gui>General</gui> page of the "
 "<app>Orca</app> preferences dialog."
 msgstr ""
+"A profilokkal kapcsolatos beállítások az <app>Orka</app> grafikus beállító "
+"párbeszédpanel általános lapjának alján találhatók."
 
 #: C/howto_profiles.page:31(title)
 msgid "Saving a New Profile"
-msgstr ""
+msgstr "Egy új profil elmentése"
 
 #: C/howto_profiles.page:33(p) C/howto_profiles.page:64(p)
 #: C/howto_profiles.page:119(p)
 msgid "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box."
 msgstr ""
+"Nyissa meg az <link xref=\"preferences\">Orka grafikus beállító "
+"párbeszédablakot</link>."
 
 #: C/howto_profiles.page:38(p)
 msgid "Change whatever settings you wish."
-msgstr ""
+msgstr "Változtassa meg a kívánt beállításokat."
 
 #: C/howto_profiles.page:41(p)
 msgid "On the <gui>General</gui> page, press the <gui>Save As</gui> button."
-msgstr ""
+msgstr "Az <gui>Általános</gui> lapon aktiválja a <gui>Mentés másként</gui> gombot."
 
 #: C/howto_profiles.page:46(p)
 msgid ""
 "Type the new profile name in the resulting <gui>Save Profile As</gui> dialog "
 "box."
 msgstr ""
+"A megjelenő profil mentése másként párbeszédpanelen írja be az új profil "
+"nevét a <gui>Profil neve</gui> szerkesztőmezőbe."
 
+# Megjegyzés: így egy kicsit gördülékenyebb a szöveg, nem olyan nehézkes, mint az eredeti angol szöveg. :-):-)
 #: C/howto_profiles.page:55(p)
 msgid "Press the <gui>OK</gui> button in the <gui>Save Profile As</gui> dialog box."
-msgstr ""
+msgstr "Ha végzett, aktiválja az <gui>Ok</gui> gombot."
 
 #: C/howto_profiles.page:62(title)
 msgid "Loading an Existing Profile"
-msgstr ""
+msgstr "Egy már létező profil betöltése"
 
 #: C/howto_profiles.page:69(p)
 msgid ""
 "On the <gui>General</gui> page, select the profile to load from the "
 "<gui>Active Profile</gui> combo box."
 msgstr ""
+"Az <gui>Általános</gui> lapon az <gui>Aktív profil</gui> kombinált "
+"listamezőben válassza ki azt a profilt, melyet be szeretne tölteni."
 
 #: C/howto_profiles.page:75(p)
 msgid "Press the <gui>Load</gui> button."
-msgstr ""
+msgstr "Aktiválja a <gui>Betöltés</gui> gombot."
 
 #: C/howto_profiles.page:78(p)
 msgid "You will be asked to confirm. Press the <gui>Yes</gui> button."
 msgstr ""
+"Megjelenik egy megerősítést kérő kérdés. Ha be szeretné tölteni a "
+"kiválasztott profilt, aktiválja az <gui>Igen</gui> gombot."
 
+# Megjegyzés: a következő fejezet címét szándékosan változtattam meg, mivel nem csak egy profil betöltése és szimpla mentése történik.
 #: C/howto_profiles.page:90(title)
 msgid "Changing an Existing Profile"
-msgstr ""
+msgstr "Egy már létező profil beállításainak megváltoztatása"
 
+# Megjegyzés: Szebb lett volna, ha részben bemásolták volna a profil betöltésével és mentésével kapcsolatos instrukciókat, lásd bugzillán a dokumentáció
+# 631123-as számú hiba alján levő patchet amit beküldtem, remélem kommitolja a szerző.
+# Addig is csak nagyjából így lehet a következő két bekezdést lefordítani:
 #: C/howto_profiles.page:92(p)
 msgid "Follow the steps described above to load the profile you wish to change."
 msgstr ""
+"A megváltoztatni kívánt profil betöltéséhez kövesse a fentebb leírt profil "
+"betöltésével kapcsolatos lépéseket."
 
+# Megjegyzés: Szebb lett volna, ha részben bemásolták volna a profil betöltésével és mentésével kapcsolatos instrukciókat, lásd bugzillán a dokumentáció
+# 631123-as számú hiba alján levő patchet amit beküldtem, remélem kommitolja a szerző.
+# Addig is csak nagyjából így lehet a következő bekezdést lefordítani:
 #: C/howto_profiles.page:97(p)
 msgid "Follow the steps described above to save a new profile."
 msgstr ""
+"Az új profil elmentéséhez kövesse a fentebb leírt profil mentésével "
+"kapcsolatos lépéseket."
 
 #: C/howto_profiles.page:100(p)
 msgid ""
@@ -4517,28 +5047,39 @@ msgid ""
 "profile. When you press the <gui>OK</gui> button, you will be told there is "
 "a name conflict."
 msgstr ""
+"Amikor megjelenik az új profil nevét kérő párbeszédpanel, adja meg ugyanazt "
+"a nevet, amilyen néven a profilt korábban már elmentette. Amikor aktiválja "
+"az <gui>Ok</gui> gombot, egy figyelmeztető üzenet fog megjelenni, hogy már "
+"létezik a megadott nevű profil."
 
 #: C/howto_profiles.page:110(p)
 msgid ""
 "Press the <gui>Yes</gui> button to confirm you wish to overwrite the "
 "existing profile with the new settings."
 msgstr ""
+"Aktiválja az <gui>Igen</gui> gombot. Ezzel megerősítheti, hogy a már létező "
+"profilban felül szeretné írni a beállításokat."
 
 #: C/howto_profiles.page:117(title)
 msgid "Changing the <gui>Start-up Profile</gui>"
-msgstr ""
+msgstr "A <gui>Kezdeti profil</gui> megváltoztatása"
 
 #: C/howto_profiles.page:124(p)
 msgid ""
 "On the <gui>General</gui> page, select the profile to load from the "
 "<gui>Start-up Profile</gui> combo box."
 msgstr ""
+"Az <gui>Általános</gui> lap <gui>Kezdeti profil</gui> kombinált "
+"listamezőjében válassza ki azt a profilt, melyet be szeretne tölteni."
 
-#: C/howto_profiles.page:133(p)
+#: C/howto_profiles.page:130(p)
 msgid ""
-"The next time you launch <app>Orca</app>, the newly-selected profile will be "
-"used."
+"Press the <gui>OK</gui> button. The next time you launch <app>Orca</app>, "
+"the newly-selected profile will be used."
 msgstr ""
+"Ha végzett, aktiválja az <gui>Ok</gui> gombot. Amikor következő alkalommal "
+"elindítja az <app>Orka</app> képernyőolvasót, az újonnan beállított profil "
+"kerül automatikusan betöltésre."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -4564,6 +5105,9 @@ msgid ""
 "Review</link>-based search designed to help you quickly locate objects that "
 "are visible on-screen within the current window."
 msgstr ""
+"Az <app>Orka</app> keresés funkciója az <link xref=\"howto_flat_review"
+"\">Egyszerű áttekintésre</link> épül, mely segíthet gyorsan megtalálni "
+"azokat a képernyőn látható objektumokat, melyek az aktív ablakban találhatók."
 
 #: C/howto_orca_find.page:23(title)
 msgid "Activating Orca Find"
@@ -4574,6 +5118,9 @@ msgid ""
 "To open the Orca <gui>Find</gui> dialog, use the following command based on "
 "your chosen <link xref=\"howto_keyboard_layout\">keyboard layout</link>:"
 msgstr ""
+"Ha meg szeretné nyitni az Orka <gui>Keresés</gui> párbeszédablakot, a "
+"választott <link xref=\"howto_keyboard_layout\">billentyűzetkiosztástól</"
+"link> függően használja a következő parancsok valamelyikét:"
 
 #: C/howto_orca_find.page:30(p) C/commands_find.page:30(p)
 msgid "Desktop: <keyseq><key>KP Delete</key></keyseq>"
@@ -4590,10 +5137,13 @@ msgid ""
 "For a list of additional tasks you can perform, see the <link xref="
 "\"commands_find\">Orca Find commands</link>"
 msgstr ""
+"Ha meg szeretné nézni a végrehajtható keresési feladatok listáját, olvassa "
+"el az <link xref=\"commands_find\">Orka kereséssel kapcsolatos parancsok</"
+"link> című fejezetet."
 
 #: C/howto_orca_find.page:43(p)
 msgid "When you activate Orca Find, you will be placed in a dialog box."
-msgstr ""
+msgstr "Ha aktiválja az Orka keresés funkciót, egy párbeszédablakba fog kerülni."
 
 #: C/howto_orca_find.page:47(title)
 msgid "<app>Orca</app>'s Find Dialog"
@@ -4601,51 +5151,67 @@ msgstr "Az <app>Orka</app> keresés párbeszédablak megnyitása:"
 
 #: C/howto_orca_find.page:52(p)
 msgid "Here you can specify the following items:"
-msgstr ""
+msgstr "A következő adatokat adhatja meg:"
 
 #: C/howto_orca_find.page:57(p)
 msgid "The text to find"
-msgstr "A keresett szöveg"
+msgstr "A keresendő szöveget"
 
 #: C/howto_orca_find.page:60(p)
 msgid ""
 "The location from which to begin the search, which can either be the current "
 "location or the top of the window"
 msgstr ""
+"A keresés kezdő helyét, mely lehet a jelenlegi hely, vagy az aktív ablak "
+"teteje."
 
 #: C/howto_orca_find.page:64(p)
 msgid "Default value of <gui>Start from</gui>: <gui>Current location</gui>"
 msgstr ""
+"A <gui>Kezdés</gui> beállítás alapértelmezett értéke: <gui> jelenlegi hely</"
+"gui>"
 
 #: C/howto_orca_find.page:69(p)
 msgid ""
 "Whether or not capitalization should be taken into account when seeking a "
 "match"
 msgstr ""
+"Megadhatja, hogykereséskor meg legyenek-e különböztetve a kis és nagybetűs "
+"egyezések"
 
 #: C/howto_orca_find.page:73(p)
 msgid "Default value of <gui>Match case</gui>: not checked"
 msgstr ""
+"A <gui>Kis és nagybetűk megkülönböztetése</gui> jelölőnégyzet "
+"alapértelmezetten nincs bejelölve"
 
 #: C/howto_orca_find.page:78(p)
 msgid ""
 "Whether or not to limit matches to those which match the entire word or "
 "phrase"
 msgstr ""
+"Megadhatja, hogy a találatok csak teljes szó szerinti egyezés esetén, vagy "
+"töredék esetén is megjelenjenek-e"
 
 #: C/howto_orca_find.page:82(p)
 msgid "Default value of <gui>Match entire word only</gui>: not checked"
 msgstr ""
+"Alapértelmezetten a <gui>Csak teljes szóra</gui> jelölőnégyzet nincs "
+"bejelölve"
 
 #: C/howto_orca_find.page:87(p)
 msgid ""
 "Whether Find should look down and/or to the right for the next match or up "
 "and/or to the left."
 msgstr ""
+"Megadhatja, hogy a következő találat keresése visszafelé és/vagy jobbra "
+"történjen, vagy felfelé és/vagy balra."
 
 #: C/howto_orca_find.page:91(p)
 msgid "Default value of <gui>Search backwards</gui>: not checked"
 msgstr ""
+"A <gui>Keresés visszafelé</gui> jelölőnégyzet alapértelmezetten nincs "
+"bejelölve"
 
 #: C/howto_orca_find.page:96(p)
 msgid ""
@@ -4653,16 +5219,22 @@ msgid ""
 "there is no match found from the starting location in the direction of the "
 "search."
 msgstr ""
+"Megadhatja, hogy a keresés az aktív ablak felső és alsó fele között "
+"körkörösen történjen, ha nem található egyező találat a keresett "
+"kifejezéssel a kezdő helytől kezdve a keresés iránya felé."
 
 #: C/howto_orca_find.page:101(p)
 msgid "Default value of <gui>Wrap around</gui>: checked"
-msgstr ""
+msgstr "A <gui>Körbe</gui> jelölőnégyzet alapértelmezetten be van jelölve"
 
 #: C/howto_orca_find.page:106(p)
 msgid ""
 "Having performed a search, you can quickly search for the next or previous "
 "match without having to return to the Orca Find dialog box."
 msgstr ""
+"Ha végrehajtott egy keresést, gyorsan megkeresheti az előző vagy következő "
+"találatot anélkül, hogy újra aktiválnia kellene az Orka keresés "
+"párbeszédablakot."
 
 #: C/howto_orca_find.page:110(p)
 msgid ""
@@ -4673,14 +5245,23 @@ msgid ""
 "repositioned. If you need to accomplish either, please see <link xref="
 "\"commands_mouse\">Orca's Mouse/Pointer-Related Commands</link>."
 msgstr ""
+"Mivel az Orka keresés egy <link xref=\"howto_flat_review\">Egyszerű "
+"áttekintés</link> funkció, ha található egy egyezés a keresett kifejezéssel, "
+"az egyszerű áttekintés funkció automatikusan aktiválásra kerül, és az egyező "
+"kifejezésre vagy szövegre kerül az egyszerű áttekintő kurzor. Megjegyzés: az "
+"alkalmazás fókusza vagy a mutató pozíciója ezzel szemben nem fog "
+"megváltozni, ha mégis erre lenne szüksége, olvassa el <link xref="
+"\"commands_mouse\">az Orka egérmutatóval kapcsolatos parancsai</link> című "
+"fejezetet."
 
 #: C/howto_notifications.page:5(title)
 msgid "5. Notifications"
 msgstr "5. Értesítések"
 
+# Megjegyzés: mivel itt értesítő üzenetekről van szó, beszúrtam az értesítési szót a rövid leírásba
 #: C/howto_notifications.page:6(desc)
 msgid "Reading previously-received messages"
-msgstr "Korábban kapott üzenetek olvasása"
+msgstr "Korábban kapott értesítési üzenetek olvasása"
 
 #: C/howto_notifications.page:15(title)
 msgid "Notifications"
@@ -4694,6 +5275,12 @@ msgid ""
 "media player is starting to play, and warnings that your battery level is "
 "getting low."
 msgstr ""
+"A GNOME Asztali Környezet tartalmaz egy ún. „értesítési területet\", melyet "
+"az alkalmazások arra használnak, hogy információt közölhessenek a "
+"felhasználóval. Jó példák az értesítésekre a beérkező csevegési üzenetek, a "
+"lejátszott zeneszám részletei amikor a Médialejátszóval megkezdődik egy "
+"zeneszám lejátszása, vagy a figyelmeztető üzenet, ha egy hordozható "
+"számítógép akkumlátor töltöttsége alacsony."
 
 #: C/howto_notifications.page:23(p)
 msgid ""
@@ -4705,14 +5292,24 @@ msgid ""
 "type or to change focus. For this reason, <app>Orca</app> has three commands "
 "which you can use to access previously-displayed notification messages:"
 msgstr ""
+"Mivel az értesítéseknek az a feladata, hogy úgy jelenítsék meg az "
+"információkat hogy a felhasználónak ne kelljen megszakítania amivel éppen "
+"foglalkozik, ezek az értesítő üzenetek csak megjelennek és rövid idő múlva "
+"eltűnnek, vagyis nem lehet fókuszba hozni őket. Amíg az <app>Orka</app> "
+"bejelenti ezeket az értesítő üzeneteket, könnyen előfordulhat, hogy a "
+"felhasználó véletlenül megszakítja egy értesítő üzenet kimondását, például "
+"ha elkezd újra gépelni, vagy átváltja a fókuszt egy másik alkalmazásra. Az "
+"<app>Orka</app> ennek a problémának az elkerülése érdekében rendelkezik "
+"három funkcióval, melyek segítségével hozzáférhet az előzőleg megjelenített "
+"értesítési üzenetekhez:"
 
 #: C/howto_notifications.page:35(p)
 msgid "Present the last (most recent) notification message"
-msgstr "Utolsó értesítés megjelenítése"
+msgstr "Az utolsó értesítés megjelenítése"
 
 #: C/howto_notifications.page:38(p)
 msgid "Present the previous notification message"
-msgstr "Előző értesítés megjelenítése"
+msgstr "Az előző értesítés megjelenítése"
 
 #: C/howto_notifications.page:41(p)
 msgid "Present list of all notification messages"
@@ -4724,12 +5321,18 @@ msgid ""
 "just received. The last command is the most powerful as it stores your "
 "notification message history."
 msgstr ""
+"Az első két parancs főként azért lett megvalósítva, hogy gyorsan hozzá "
+"tudjon férni egy kapott értesítési üzenethez. Az utolsó parancs segítségével "
+"az összes előző értesítést egy listában újra áttekintheti."
 
 #: C/howto_notifications.page:49(p)
 msgid ""
 "When you enter the list of notification messages, you will be told the size "
 "of the list and prompted with the following choices:"
 msgstr ""
+"Ha aktiválja az értesítések listájának megjelenítése funkciót, megtudhatja, "
+"mennyi értesítésből áll a lista, valamint a következő lehetőségekről fog "
+"tájékoztatást kapni:"
 
 #: C/howto_notifications.page:54(p)
 msgid "Press H for help."
@@ -4748,14 +5351,18 @@ msgstr "A kilépéshez nyomja meg az Esc billentyűt."
 #: C/howto_notifications.page:57(p)
 msgid "Press Space to repeat the last message read."
 msgstr ""
+"Nyomja meg a szóköz billentyűt az utoljára kimondott értesítési üzenet "
+"újbóli meghallgatásához."
 
 #: C/howto_notifications.page:58(p)
 msgid "Press one digit to read a specific message."
 msgstr ""
+"Nyomjon meg egy számot egy megadott számú értesítési üzenet újbóli "
+"meghallgatásához."
 
 #: C/howto_notifications.page:60(p)
 msgid "Note that the most recently-received message is at the top of the list."
-msgstr ""
+msgstr "Megjegyzés: az utoljára kapott értesítési üzenet lesz a legelső a listában."
 
 #: C/howto_notifications.page:63(p)
 msgid ""
@@ -4764,6 +5371,11 @@ msgid ""
 "choose. How to do so is described in the <link xref=\"howto_key_bindings"
 "\">Introduction to Key Bindings</link>."
 msgstr ""
+"Alapértelmezetten egyik <app>Orka</app> értesítési üzenet áttekintő "
+"parancshoz sincsenek billentyűtársítások hozzárendelve. Az Ön választásának "
+"megfelelően bármelyik parancshoz, vagy akár mindegyikhez hozzárendelhet új "
+"billentyűtársítást. Erről részletesebben <link xref=\"howto_key_bindings\">A "
+"billentyűtársítások bemutatása</link> című fejezetben olvashat."
 
 #: C/howto_mouse_review.page:5(title)
 msgid "4. Mouse Review"
@@ -4788,6 +5400,15 @@ msgid ""
 "with information to present, <app>Orca</app> will present that object and "
 "its information to you."
 msgstr ""
+"Az <app>Orka</app> egér áttekintő funkciója lehetőséget ad az egér alatti "
+"objektumok megjelenítésére. Az <app>Orka</app> <link xref=\"howto_flat_review"
+"\">Egyszerű áttekintés</link> funkciójával ellentétben az egér áttekintő "
+"funkció nem korlátozódik az aktív ablakra, az <app>Orka</app> megpróbál "
+"minden akadálymentesen hozzáférhető objektumot azonosítani, melyre az "
+"egérmutatót mozgatta. Ha az egérmutatót egy olyan akadálymentesen "
+"hozzáférhető objektumra mozgatta, mely valamilyen információt közölt, az "
+"<app>Orka</app> ki fogja mondani az objektumot és az objektum által közölt "
+"információkat."
 
 #: C/howto_mouse_review.page:26(p)
 msgid ""
@@ -4802,10 +5423,24 @@ msgid ""
 "xref=\"howto_key_bindings\">Introduction to Key Bindings</link>, you can "
 "enable and disable Mouse Review on an as-needed basis."
 msgstr ""
+"Mivel az egér áttekintő funkció engedélyezése azt eredményezi, hogy az "
+"<app>Orka</app> minden egérrel végzett feladatot figyel és közli az "
+"információkat, ez a funkció alapértelmezetten nincs engedélyezve. Ha azt "
+"szeretné, hogy ez a funkció mindig engedélyezve legyen, jelölje be <gui>Az "
+"egér alatti objektum felolvasása</gui> jelölőnégyzetet. Ezt a beállítást az "
+"<link xref=\"preferences_general\"><app>Orka</app> grafikus beállító "
+"párbeszédpanel általános lapján</link> találja meg. Ugyanezen párbeszédpanel "
+"<link xref=\"preferences_key_bindings\">billentyűtársítások lapjánn</link> "
+"találni fog egy nem kiosztott <app>Orka</app> parancsot, melynek "
+"segítségével szükség szerint be vagy kikapcsolhatja az egér áttekintő "
+"funkciót. Ennek a parancsnak a neve: <gui>Be vagy kikapcsolja az áttekintés "
+"egérrel módot</gui>. Ha szeretne billentyűtársítást hozzárendelni ehhez a "
+"funkcióhoz, olvassa el a <link xref=\"howto_key_bindings"
+"\">Billentyűtársítások bemutatása</link> című fejezetet."
 
 #: C/howto_mouse_review.page:40(title)
 msgid "Default Settings and Keybindings Are Independent of One Another"
-msgstr ""
+msgstr "Az alapbeállítások és billentyűtársítások függetlenek egymástól"
 
 #: C/howto_mouse_review.page:43(p)
 msgid ""
@@ -4814,6 +5449,12 @@ msgid ""
 "mode</gui> command. It is not necessary to enable it in order to toggle it "
 "because settings and keybindings are independent of one another."
 msgstr ""
+"Megjegyzés: függetlenül attól, hogy mindig engedélyezi-e az áttekintés "
+"egérrel funkciót vagy nem, vagy mindig be és kikapcsolja ezt a funkciót, "
+"érdemes billentyűtársítást létrehoznia a <gui>be vagy kikapcsolja az "
+"áttekintés egérrel módot</gui> parancshoz. Nem szükséges véglegesen "
+"engedélyeznie ezt a funkciót, mivel az alapbeállítások és a "
+"billentyűtársítások függetlenek egymástól."
 
 #: C/howto_live_regions.page:5(title)
 msgid "6. Live Regions"
@@ -4836,6 +5477,12 @@ msgid ""
 "encountered less often. This problem is actively being addressed by a number "
 "of organizations."
 msgstr ""
+"Az élő régió egy weboldal dinamikusan frissülő része, például egy táblázat a "
+"legfrissebb sport eredményekről, egy lista a jelenlegi tőzsdei "
+"árfolyamokról, egy  napló a csevegés előző hozzászólásairól, vagy az oldalon "
+"található értesítésekről. Mivel az élő régiók gyakran megváltoznak, ezért a "
+"teljesen akadálymentesen használható  weboldalakon ritkán fordulnak elő. Ez "
+"a probléma viszont rengeteg céget érint."
 
 #: C/howto_live_regions.page:27(title)
 msgid "Live Region Politeness Levels"
@@ -4849,10 +5496,15 @@ msgid ""
 "within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
 "\" to the point of being \"rude.\""
 msgstr ""
+"Minden élő régióhoz  a weboldalak készítői hozzárendelnek egy „udvariassági"
+"” szintet, ezzel jelzik az információ fontosságát és javaslatot tesznek a "
+"kisegítő technológiák számára, amikor a felhasználót informálják az élő "
+"régiók frissüléséről. Az élő régiók a „kikapcsolva\", „udvarias\", vagy "
+"\"durva” udvariassági szintekkel rendelkezhetnek."
 
 #: C/howto_live_regions.page:37(title)
 msgid "<app>Orca</app>'s Support for Live Regions"
-msgstr ""
+msgstr "Az <app>Orka</app> élő régió támogatása"
 
 #: C/howto_live_regions.page:38(p)
 msgid ""
@@ -4862,22 +5514,27 @@ msgid ""
 "you to modify the level of any or all of the regions on a page. In addition, "
 "you can:"
 msgstr ""
+"Mivel a weboldal szerzője által megadott élő régió udvariassági szint nem "
+"minden esetben felelhet meg az ön igényeinek, az <app>Orka</app> számos "
+"<link xref=\"commands_live_regions\">élő régióval kapcsolatos parancsot</"
+"link> nyújt, melyek segítségével módosíthatja akár egy vagy minden élő régió "
+"udvariassági szintjét egy oldalon. A következőket teheti meg:"
 
 #: C/howto_live_regions.page:47(p)
 msgid "Turn live region support on or off"
-msgstr "Az élő régiók támogatásának be vagy kikapcsolása"
+msgstr "Be vagy kikapcsolhatja az élő régiók támogatását"
 
 #: C/howto_live_regions.page:50(p)
 msgid "Jump to the next and previous live region spatially"
-msgstr "Ugrás a következő vagy előző élő régióra"
+msgstr "Odaugorhat a következő vagy előző élő régióra"
 
 #: C/howto_live_regions.page:53(p)
 msgid "Jump to the last live region which presented information"
-msgstr "Ugrás az utolsó élő régióra, amely információt közölt"
+msgstr "Oda ugorhat az utolsó élő régióra, amely információt közölt"
 
 #: C/howto_live_regions.page:56(p)
 msgid "Review the last nine live region messages which were presented"
-msgstr ""
+msgstr "áttekintheti az utoljára megjelent kilenc élő régió üzenetet"
 
 #: C/howto_learn_modes.page:5(title)
 msgid "5. The \"Learn\" Modes"
@@ -4899,6 +5556,12 @@ msgid ""
 "that keystroke is bound to. List Shortcuts Mode provides you with a list of "
 "all the <app>Orca</app> commands you can use."
 msgstr ""
+"A tanuló és billentyűparancs listázó módok segítségével jobban "
+"elsajátíthatja az <app>Orka</app> parancsait. A tanuló módban az <app>Orka</"
+"app> kimondja az Ön által lenyomott billentyűkombinációkat és a hozzájuk "
+"társított <app>Orka</app> parancsokat. A billentyűparancs listázó mód "
+"segítségével az összes használható <app>Orka</app> parancsot egy listában "
+"áttekintheti."
 
 #: C/howto_learn_modes.page:27(title)
 msgid "Using Learn Mode"
@@ -4917,6 +5580,8 @@ msgid ""
 "Press any key or keystroke. <app>Orca</app> will announce the keys and any "
 "associated command."
 msgstr ""
+"Nyomjon le egy billentyűkombinációt. Az <app>Orka</app> fel fogja olvasni a "
+"lenyomott billentyűkombinációt és a hozzá társított parancsot."
 
 #: C/howto_learn_modes.page:41(p)
 msgid "Press <key>Esc</key> to exit Learn Mode."
@@ -4948,11 +5613,13 @@ msgstr ""
 #: C/howto_learn_modes.page:60(p)
 msgid "Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
 msgstr ""
+"A lista áttekintéséhez használja a <key>Felfelé nyíl</key> és a <key>Lefelé "
+"nyíl</key> billentyűket."
 
 #: C/howto_learn_modes.page:66(p)
 msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
 msgstr ""
-"A billentyűparancs listázó módból a <key>Esc</key> billentyű megnyomásával "
+"A billentyűparancs listázó módból az <key>Esc</key> billentyű megnyomásával "
 "léphet ki."
 
 #: C/howto_keyboard_layout.page:5(title)
@@ -4968,6 +5635,9 @@ msgid ""
 "Orca has two keyboard layouts: Desktop (i.e. with a numeric keypad) and "
 "Laptop. The layout you choose impacts which key is used as the Orca Modifier."
 msgstr ""
+"Az Orka két billentyűzetkiosztással rendelkezik, asztali és laptop "
+"kiosztással. Az Ön által választott billentyűzetkiosztás hatással van az "
+"alapértelmezetten használható Orka módosítóbillentyűre."
 
 #: C/howto_keyboard_layout.page:41(title)
 msgid "Changing Your Keyboard Layout"
@@ -4975,11 +5645,11 @@ msgstr "A billentyűzetkiosztás megváltoztatása"
 
 #: C/howto_keyboard_layout.page:51(p)
 msgid "Move to the <gui>Keyboard Layout</gui> group of radio buttons."
-msgstr ""
+msgstr "Lépjen a <gui>Billentyűzetkiosztás</gui> választógomb-csoportra."
 
 #: C/howto_keyboard_layout.page:56(p)
 msgid "Arrow to the desired layout."
-msgstr ""
+msgstr "Válassza ki a kívánt billentyűzetkiosztást."
 
 #: C/howto_key_bindings.page:5(title)
 msgid "8. Keybindings"
@@ -4987,7 +5657,7 @@ msgstr "8. Billentyűtársítások"
 
 #: C/howto_key_bindings.page:6(desc)
 msgid "Binding, rebinding, and unbinding commands"
-msgstr "Parancsok társítása és a társítások módosítása"
+msgstr "Parancsok társítása billentyűkombinációkhoz és a társítások módosítása"
 
 #: C/howto_key_bindings.page:15(title)
 msgid "Keybindings"
@@ -5000,21 +5670,23 @@ msgid ""
 "commands by following the steps below."
 msgstr ""
 "Az <app>Orka</app> rengeteg funkciót tartalmaz. Sok funkciónak van előre "
-"definiált billentyűparancsa, de vannak olyan funkciók is, amelyekhez "
-"nincsenek társítva billentyűparancsok. Önnek lehetősége van a létező "
+"definiált billentyűtársítása, de vannak olyan funkciók is, amelyekhez "
+"nincsenek társítva billentyűtársítások. Önnek lehetősége van a létező "
 "billentyűtársítások megváltoztatására, törlésére, vagy billentyűtársítás "
 "hozzárendelésére a ki nem osztott <app>Orka</app> funkciókhoz, ha "
-"végrehajtja a következő lépéseket:"
+"végrehajtja a lentebb leírt lépések valamelyikét"
 
 #: C/howto_key_bindings.page:21(title)
 msgid "Binding an Unbound Command"
-msgstr "Billentyűparancs hozzárendelése nem kiosztott funkcióhoz"
+msgstr "Billentyűtársítás hozzárendelése egy nem kiosztott funkcióhoz"
 
 #: C/howto_key_bindings.page:32(p)
 msgid ""
 "Arrow to the cell which contains the command you want to assign a keystroke "
 "to."
-msgstr "Lépjen arra a cellára, amely tartalmazza a billentyűtársítással nem rendelkező parancsot."
+msgstr ""
+"Lépjen arra a cellára, amely tartalmazza a billentyűtársítással nem "
+"rendelkező parancsot."
 
 #: C/howto_key_bindings.page:38(p)
 msgid ""
@@ -5047,7 +5719,9 @@ msgstr "Létező billentyűtársítások megváltoztatása"
 msgid ""
 "Arrow to the cell which contains the binding you which to change and press "
 "<key>Return</key>."
-msgstr "A nyílbillentyűk segítségével lépjen a módosítani kívánt billentyűtársításra, majd nyomja meg az <key>Enter</key> billentyűt."
+msgstr ""
+"A nyílbillentyűk segítségével lépjen a módosítani kívánt "
+"billentyűtársításra, majd nyomja meg az <key>Enter</key> billentyűt."
 
 #: C/howto_key_bindings.page:90(title)
 msgid "Restoring Original Bindings"
@@ -5063,7 +5737,7 @@ msgstr ""
 msgid "Uncheck the checkbox by pressing <key>Space</key>."
 msgstr ""
 "A <key>Szóköz</key> billentyű lenyomásával törölje a jelölést a módosítva "
-"jelölőnégyzetről."
+"jelölőnégyzetből."
 
 # Megjegyzés: jobb cím nem jutott eszembe, mivel szószerinti fordításban valami ilyesmi lenne a cím:
 # nem kiosztani kiosztott billentyűtársításokat
@@ -5077,7 +5751,7 @@ msgid ""
 "Arrow to the cell which contains the binding you which to delete and press "
 "<key>Return</key>."
 msgstr ""
-"A nyílbillentyűk segítségével lépjen arra a billentyűtársításra, amelyet "
+"A nyílbillentyűk segítségével lépjen arra a billentyűtársításra, melyet "
 "törölni szeretne, majd nyomja meg az <key>Enter</key> billentyűt."
 
 #: C/howto_key_bindings.page:130(p)
@@ -5095,20 +5769,129 @@ msgid "Press <key>Return</key> to confirm."
 msgstr "A megerősítéshez nyomja meg az <key>Enter</key> billentyűt."
 
 #: C/howto_forms.page:5(title)
-msgid "5. Form Controls"
-msgstr "5. Űrlapvezérlők"
+msgid "5. Filling out forms"
+msgstr "5. Űrlapok kitöltése"
 
 #: C/howto_forms.page:6(desc)
 msgid "Accessing widgets embedded in documents"
 msgstr "Dokumentumokba ágyazott elemek elérése"
 
 #: C/howto_forms.page:17(title)
-msgid "Form Controls (WRITE ME)"
-msgstr "Űrlapvezérlők (megírandó)"
+msgid "Filling out forms"
+msgstr "Űrlapok kitöltése"
 
-#: C/howto_forms.page:18(p) C/howto_documents.page:18(p)
-msgid "Write me"
-msgstr "Megírandó"
+#: C/howto_forms.page:18(p)
+msgid ""
+"When interacting with web pages and other documents using <app>Orca</app>, "
+"you are interacting with the document itself; not a buffered copy of that "
+"document. Thus there is no special mode to get into or out of when you wish "
+"to fill out a form. Instead, simply navigate to each field whose contents "
+"you wish to change, and interact with the widget as if it were in a dialog "
+"box."
+msgstr ""
+"Amikor az <app>Orka</app> segítségével dolgozik egy weboldallal vagy egy "
+"dokumentummal, Ön a dokumentumon keresztül hajt végre minden feladatot, nem "
+"egy átmeneti pufferbe töltött másolatán a dokumentumnak. Az <app>Orkának</"
+"app> tehát nincsen olyan speciális módja, mely segítségével beléphet vagy "
+"kiléphet az űrlapokból a kitöltés közben. Ha navigálni szeretne az "
+"űrlapmezők vagy a felületi elemek között, ugyanúgy teheti ezt meg, mintha "
+"egy hagyományos párbeszédablakban navigálna."
+
+#: C/howto_forms.page:27(title)
+msgid "Navigating Amongst Form Fields"
+msgstr "Navigálás az űrlapmezők között"
+
+# Megjegyzés: itt az options szót lehetőségként fordítottam.
+#: C/howto_forms.page:28(p)
+msgid "To navigate amongst form fields, you have several options:"
+msgstr ""
+"Ha navigálni szeretne az űrlapmezők között, számos lehetőség áll "
+"rendelkezésére:"
+
+#: C/howto_forms.page:33(p)
+msgid ""
+"Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>, to "
+"navigate amongst focusable objects, regardless of type."
+msgstr ""
+"Az előző vagy következő objektum fókuszba hozására használhatja a <key>Tab</"
+"key> és <keyseq><key>Shift</key><key>Tab</key></keyseq> billentyűket, "
+"függetlenül az objektum típusától."
+
+#: C/howto_forms.page:39(p)
+msgid ""
+"Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
+"structural navigation commands for forms</link>."
+msgstr ""
+"Használhatja az <app>Orka</app> strukturált  navigációját az <link xref="
+"\"commands_structural_navigation#forms\"> űrlapok kezeléséhez</link>."
+
+#: C/howto_forms.page:45(p)
+msgid ""
+"Depending on the form, you may also be able to use <app>Orca</app>'s caret "
+"navigation commands, in other words, the arrow keys when <app>Orca</app> is "
+"controlling the caret."
+msgstr ""
+"Az űrlaptól függően használhatja az <app>Orka</app> mutatónavigációval "
+"kapcsolatos parancsait, más szóval, ha az <app>Orka</app> vezérli a mutatót, "
+"használhatja a nyílbillentyűket."
+
+#: C/howto_forms.page:54(title)
+msgid "Exiting Form Fields"
+msgstr "Kilépés az űrlapmezőkből"
+
+#: C/howto_forms.page:55(p)
+msgid ""
+"Because there is no special mode in <app>Orca</app> for interacting with "
+"forms, the most frequently-asked question is how to exit a focused form "
+"field. For this, too, you have several options:"
+msgstr ""
+"Mivel az <app>Orkának</app> nincs speciális űrlap módja az űrlapok "
+"kezeléséhez, a leggyakrabban feltett kérdés, hogyan lehet kilépni egy "
+"fókuszba került űrlapmezőből. Számos lehetőség áll rendelkezésére:"
+
+#: C/howto_forms.page:62(p)
+msgid ""
+"Use <key>Tab</key>/<keyseq><key>Shift</key><key>Tab</key></keyseq> if you "
+"wish to leave the currenty-focused form field and move to the next/previous "
+"focusable object, regardless of what that object happens to be."
+msgstr ""
+"Ha el szeretné hagyni a fókuszban levő űrlapmezőt és a következő vagy előző "
+"űrlapmezőre szeretne lépni, függetlenül attól hogy mi történt korábban az "
+"éppen fókuszban levő objektummal, használja a <key>Tab</key> és a "
+"<keyseq><key>Shift</key><key>Tab</key></keyseq> billentyűket."
+
+#: C/howto_forms.page:70(p)
+msgid ""
+"Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
+"structural navigation</link> to move to the next/previous form field: "
+"<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq><key>Orca "
+"Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
+msgstr ""
+"Használhatja az <link xref=\"commands_structural_navigation#forms\"> "
+"<app>Orka</app> strukturált navigációs parancsait</link> az előző vagy "
+"következő űrlapmezőre ugráshoz (<keyseq><key>Orka módosító</key><key>Tab</"
+"key></keyseq> és <keyseq><key>Orka módosító</key><key>Shift</key><key>Tab</"
+"key></keyseq>)."
+
+#: C/howto_forms.page:78(p)
+msgid ""
+"Use <app>Orca</app>'s commands for moving to the next/previous object or "
+"chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key></keyseq>/"
+"<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
+msgstr ""
+"Használhatja az <app>Orka</app> parancsait az előző vagy következő objektumra való "
+"ugráshoz (<keyseq><key>Orka módosító</key><key>Jobbra nyíl</key></keyseq> és "
+"<keyseq><key>Orka módosító</key><key>Balra nyíl</key></keyseq>)."
+
+#: C/howto_forms.page:85(p)
+msgid ""
+"If you are not in a list or combo box, you can use caret navigation commands "
+"to arrow out of the form field, as long as <app>Orca</app> is controlling "
+"the caret."
+msgstr ""
+"Ha az <app>Orka</app> vezérli a mutatót, és nem egy listában vagy kombinált "
+"listamezőben áll, használhatja az <app>Orka</app> mutatónavigációval "
+"kapcsolatos parancsait az űrlapmezőből történő kilépéshez."
 
 #: C/howto_flat_review.page:5(title)
 msgid "2. Flat Review"
@@ -5122,6 +5905,7 @@ msgstr "Ablak térbeli vizsgálata"
 msgid "Flat Review"
 msgstr "Az egyszerű áttekintés"
 
+# Megjegyzés: át kell nézni ezt a fordítást, hogy nem fordítottam-e félre valamit.
 #: C/howto_flat_review.page:16(p)
 msgid ""
 "<app>Orca</app>'s Flat Review feature allows you to spatially review the "
@@ -5130,6 +5914,13 @@ msgid ""
 "text, eliminating any notion of widget hierarchy or other logical grouping "
 "within the window."
 msgstr ""
+"Az <app>Orka</app> egyszerű áttekintés funkciója lehetőséget ad a képernyőn "
+"megjelenő aktív ablakban található szövegek és felületi elemek "
+"áttekintésére. Ebben a módban az <app>Orka</app> az ablakokat két dimenziós "
+"elrendezésben úgy jeleníti meg, ahogyan az ablakokban található felületi "
+"elemek vagy szövegek valójában látszanak a képernyőn. Ez azt jelenti, hogy "
+"nem fog érvényesülni semmilyen hierarchikus csoportosítás a felületi "
+"elemeknél és szövegeknél, melyet az aktív ablak használ."
 
 #: C/howto_flat_review.page:23(p)
 msgid ""
@@ -5140,6 +5931,13 @@ msgid ""
 "\"howto_orca_find\">Orca Find</link>, a Flat-Review-based feature to search "
 "the active window's contents."
 msgstr ""
+"A képernyőn megjelenő információkat az <link xref=\"commands_flat_review"
+"\">egyszerű áttekintés parancsai segítségével</link> áttekintheti soronként, "
+"szavanként, karakterenként vagy objektumonként, valamint lehetősége van "
+"szimulált egérkattintást végrehajtania azon az objektumon, ahová az egyszerű "
+"áttekintés segítségével éppen navigált. Lehetősége van keresni az "
+"áttekintendő objektumok között az <link xref=\"howto_orca_find\">Orka "
+"keresés funkciója</link> segítségével."
 
 #: C/howto_flat_review.page:31(p)
 msgid ""
@@ -5151,6 +5949,16 @@ msgid ""
 "the Flat Review context will not automatically be updated. You can cause a "
 "new context to be built by toggling Flat Review off and back on."
 msgstr ""
+"Mivel az egyszerű áttekintés az aktív ablaktartalom pillanatnyi állapotát "
+"mutatja, a pillanatnyi tartalom akkor kerül rögzítésre, amikor először belép "
+"az egyszerű áttekintés módba. Az áttekintési terület csak az éppen látható "
+"objektumokat tartalmazza. Ennek eredményeként nem használhatja az egyszerű "
+"áttekintést az olyan elemekhez való hozzáféréshez, melyek időközben jelentek "
+"meg az aktív ablakban, de kívül esnek a pillanatnyi egyszerű áttekintési "
+"területen. Vagyis, ha az ablakok tartalma megváltozik, az egyszerű "
+"áttekintés által mutatott tartalom nem fog automatikusan frissülni. "
+"Lehetősége van frissíteni az egyszerű áttekintés által mutatott tartalmat, "
+"ha ki és bekapcsolja újra az egyszerű áttekintés funkciót."
 
 #: C/howto_flat_review.page:40(p)
 msgid ""
@@ -5159,22 +5967,104 @@ msgid ""
 "and then use the application's navigation commands to move the caret or to "
 "give focus to another object, you will automatically leave Flat Review."
 msgstr ""
+"Végezetül, Az egyszerű áttekintés funkció egy módszer a képernyő "
+"áttekintésére, mely nem használható egyidőben az <app>Orka</app> fókusz "
+"követő módjával. Ha az egyszerű áttekintés módban van és használja az "
+"alkalmazások navigációs parancsait például a mutató mozgatására vagy a "
+"fókusz áthejezésére egy másik objektumra, az egyszerű áttekintés mód "
+"automatikusan elhagyásra kerül."
 
 #: C/howto_documents.page:5(title)
 msgid "1. Documents"
-msgstr "1. Dokumentumok"
+msgstr "1. Dokumentumok kezelése"
 
 #: C/howto_documents.page:6(desc)
 msgid "Reading content"
-msgstr "Tartalom olvasása"
+msgstr "Egy dokumentum tartalmának olvasása"
 
 #: C/howto_documents.page:17(title)
-msgid "Documents (WRITE ME)"
-msgstr "Dokumentumok (megírandó)"
+msgid "Documents"
+msgstr "Dokumentumok kezelése"
 
-#: C/howto_documents.page:21(p)
-msgid "This document will include SayAll"
+#: C/howto_documents.page:18(p)
+msgid ""
+"To read the contents of any document, use the application's built-in caret "
+"navigation mode. As you navigate within the text of the document, <app>Orca</"
+"app> will present your new location. As a result, you are likely already "
+"familiar with how to read a document using <app>Orca</app>. For instance:"
 msgstr ""
+"Egy dokumentum tartalmának elolvasásához használja az alkalmazások beépített "
+"mutatónavigációs módját. Amikor egy dokumentum szövegében navigál, az "
+"<app>Orka</app> közölni fogja a pillanatnyi helyet, ahol tartózkodik a "
+"dokumentumban. Ennek eredményeként ön már nagyjából jártasságot szerzett "
+"abban, hogyan olvashat el egy dokumentumot az <app>Orka</app> használatával. "
+"Másképpen fogalmazva:"
+
+#: C/howto_documents.page:26(p)
+msgid "Use <key>Left</key> and <key>Right</key> to move and read by character."
+msgstr ""
+"A karakterenkénti mozgáshoz használja a <key>Balra nyíl</key> és <key>Jobbra "
+"nyíl</key> billentyűket."
+
+#: C/howto_documents.page:31(p)
+msgid ""
+"Use <keyseq><key>Ctrl</key><key>Left</key></keyseq> and <keyseq><key>Ctrl</"
+"key><key>Right</key></keyseq> to move and read by word."
+msgstr ""
+"Ha szavanként szeretne mozogni egy dokumentumban, vagy egy "
+"dokumentumrészletet szavanként szeretne olvasni, használja a "
+"<keyseq><key>Ctrl</key><key>Balra nyíl</key></keyseq> és <keyseq><key>Ctrl</"
+"key><key>Jobbra nyíl</key></keyseq> billentyűkombinációt."
+
+#: C/howto_documents.page:37(p)
+msgid "Use <key>Up</key> and <key>Down</key> to move and read by line."
+msgstr ""
+"Ha a dokumentumot soronként szeretné olvasni, használja a <key>Felfelé nyíl</"
+"key> és <key>Lefelé nyíl</key> billentyűket."
+
+#: C/howto_documents.page:42(p)
+msgid ""
+"Use <key>Shift</key> in combination with the above commands to select and "
+"unselect text."
+msgstr ""
+"Ha szöveget szeretne kijelölni vagy meg szeretné szüntetni egy szöveg "
+"kijelölését, használja a <key>Shift</key> billentyűvel együtt az előzőleg "
+"leírt parancsokat."
+
+#: C/howto_documents.page:48(p)
+msgid ""
+"For a complete listing of GNOME's caret navigation commands, see the <link "
+"href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility Guide</link>."
+msgstr ""
+"Ha az összes GNOME mutatónavigációval kapcsolatos parancsot ismerni "
+"szeretné, olvassa el <link href=\"ghelp:gnome-access-guide\">a GNOME asztali "
+"környezet Akadálymentesítési kézikönyvét</link>."
+
+#: C/howto_documents.page:52(p)
+msgid ""
+"In addition to reading a document by caret navigation, you may find it "
+"helpful to read, spell, and obtain the Unicode value for the current text. "
+"You can do these things through <app>Orca</app>'s <link xref="
+"\"howto_flat_review\">Flat Review feature</link>."
+msgstr ""
+"Ha egy dokumentumot a mutatónavigációval olvas, előfordulhat, hogy hasznos "
+"lehet az aktuális szövegrész betűztetése vagy Unicode karakteradatainak "
+"lekérdezése. Ezeket a feladatokat elvégezheti az <app>Orka</app> <link xref="
+"\"howto_flat_review\">Egyszerű áttekintés funkciója</link> segítségével."
+
+#: C/howto_documents.page:58(p)
+msgid ""
+"Finally, in order to have <app>Orca</app> speak the entire document from "
+"your present location, use the SayAll command. It, along with a more "
+"complete listing of <app>Orca</app>'s commands for accessing document text, "
+"can be found in the <link xref=\"commands_reading\">Reading Commands</link> "
+"guide."
+msgstr ""
+"Végezetül, az <app>Orka</app> a felolvasás parancs segítségével képes "
+"felolvasni az egész dokumentumot attól a helytől kezdve, ahol pillanatnyilag "
+"a kurzor áll. Ha meg szeretné ismerni a dokumentumok kezelésével kapcsolatos "
+"parancsok teljes listáját, olvassa el a <link xref=\"commands_reading"
+"\">felolvasással kapcsolatos parancsok</link> című fejezetet."
 
 #: C/howto_bookmarks.page:4(title)
 msgid "6. Bookmarks"
@@ -5193,13 +6083,20 @@ msgid ""
 "<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
 "of interest. It includes the following features:"
 msgstr ""
+"Az <app>Orka</app> könyvjelzők funkciója lehetővé teszi, hogy megjelöljön "
+"olyan objektumokat, melyek fontosak az ön számára. A következő funkciókat "
+"használhatja:"
 
+# Megjegyzés: soha nem használtam ezt a funkciót, remélem jól fordítottam.
 #: C/howto_bookmarks.page:21(p)
 msgid ""
 "You are not limited to a single object: You can set up to six bookmarks per "
 "environment. You can also save bookmarks so that they will persist from Orca "
 "session to Orca session."
 msgstr ""
+"A könyvjelzők nincsenek lekorlátozva egy objektumra: Hat könyvjelzőt "
+"állíthat be környezetenként. Elmentheti a könyvjelzőket, így ezek "
+"megmaradnak minden Orka munkamenetben."
 
 #: C/howto_bookmarks.page:28(p)
 msgid ""
@@ -5210,6 +6107,12 @@ msgid ""
 "you can navigate to the next or previous bookmark just like you can a <link "
 "xref=\"howto_structural_navigation\">Structural Navigation</link> object."
 msgstr ""
+"A beállított könyvjelzők között később navigálhat, akár részben is "
+"elmentheti a könyvjelzőket az aktuális környezethez. A navigáció főként a "
+"könyvjelző számára épül, melyre éppen ugrani szeretne. Alternatív "
+"lehetőségként lehetősége van az előző vagy következő könyvjelzőre navigálni, "
+"ha az <link xref=\"howto_structural_navigation\">Orka strukturált "
+"navigációt</link> használja."
 
 #: C/howto_bookmarks.page:39(p)
 msgid ""
@@ -5220,18 +6123,31 @@ msgid ""
 "otherwise, <link xref=\"howto_flat_review\">Flat Review</link> will be "
 "activated with the bookmark becoming the current review item."
 msgstr ""
+"A könyvjelzővel ellátható objektumok egy ablak felületi elemei lehetnek egy "
+"alkalmazásban, vagy a weboldal objektumai, melyet éppen olvas. A "
+"pillanatnyilag használt környezet határozza meg, mi történik akkor, ha "
+"navigál a könyvjelzők között: ha egy weboldalon tartózkodik, a mutató a "
+"könyvjelzőre fog ugorni, ezáltal az olvasást a könyvjelzőtől folytathatja. "
+"Ha egy alkalmazásban tartózkodik, az <link xref=\"howto_flat_review"
+"\">Egyszerű áttekintés</link> aktiválásra kerül, az áttekintő kurzor arra az "
+"objektumra fog kerülni, melyet ellátott könyvjelzővel."
 
 #: C/howto_bookmarks.page:50(p)
 msgid ""
 "Finally, there is Where Am I information for bookmarks which lets you know "
 "where the specified bookmark is relative to your current location."
 msgstr ""
+"Végezetül, a hol vagyok művelet információt szolgáltat a könyvjelzőkről, így "
+"megtudhatja, hogy a könyvjelző az aktuális helyhez képest hol található."
 
 #: C/howto_bookmarks.page:56(p)
 msgid ""
 "The specific keybindings associated with each of the above tasks can be "
 "found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
 msgstr ""
+"Az ezekkel a funkciókkal kapcsolatos billentyűparancsok teljes listáját a "
+"<link xref=\"commands_bookmarks\">Könyvjelzőkkel kapcsolatos parancsok</"
+"link> című fejezet tartalmazza."
 
 #: C/commands_where_am_i.page:6(title)
 msgid "3. Where Am I"
@@ -5241,7 +6157,7 @@ msgstr "3. A Hol vagyok művelet"
 msgid "Where Am I"
 msgstr "Hol vagyok művelet"
 
-# megjegyzés: itt a holvagyok műveletről lesz szó, nem valódi tartószkodási hely meghatározásáróla location (hely) fordítás félreérthető lehetne.
+# megjegyzés: itt a hol vagyok műveletről lesz szó, nem valódi tartószkodási hely meghatározásáróla location (hely) fordítás félreérthető lehetne.
 #: C/commands_where_am_i.page:8(desc)
 msgid "Commands to learn about your location"
 msgstr "Parancsok az aktuális objektum azonosításához"
@@ -5259,32 +6175,39 @@ msgid ""
 "of what you can expect <app>Orca</app> to present can be found in the <link "
 "xref=\"howto_whereami\">Introduction to Where Am I</link>."
 msgstr ""
+"Az <app>Orka</app> hol vagyok művelete helyzetérzékeny információt közöl az "
+"aktuális felületi elemről vagy objektumról. Ha például egy táblázatban "
+"tartózkodik, a hol vagyok művelet minden részletet közöl a táblázat aktuális "
+"cellájáról, de egy szövegben például csak az aktuális sor kerül közlésre, ha "
+"nincs kijelölt szövegrész. Az <app>Orka</app> hol vagyok műveletről részletesebb "
+"információt <link xref=\"howto_whereami\">A hol vagyok művelet bemutatása</"
+"link> című fejezetben talál."
 
 #: C/commands_where_am_i.page:28(p)
 msgid "<app>Orca</app> provides the following Where Am I commands:"
 msgstr "Az <app>Orka</app> a következő hol vagyok művelet parancsokat nyújtja:"
 
-#: C/commands_where_am_i.page:31(p) C/commands_reading.page:200(p)
+#: C/commands_where_am_i.page:31(p) C/commands_reading.page:189(p)
 msgid "Perform basic where am I:"
-msgstr "Végrehajtja a Hol vagyok műveletet:"
+msgstr "Egyszerű holvagyok művelet végrehajtása:"
 
-#: C/commands_where_am_i.page:34(p) C/commands_reading.page:203(p)
+#: C/commands_where_am_i.page:34(p) C/commands_reading.page:192(p)
 msgid "Desktop: <key>KP Enter</key>"
 msgstr "Asztali kiosztás: <key>Numpad Enter</key>"
 
-#: C/commands_where_am_i.page:37(p) C/commands_reading.page:208(p)
+#: C/commands_where_am_i.page:37(p) C/commands_reading.page:197(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
 msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Enter</key></keyseq>"
 
-#: C/commands_where_am_i.page:42(p) C/commands_reading.page:215(p)
+#: C/commands_where_am_i.page:42(p) C/commands_reading.page:204(p)
 msgid "Perform detailed where am I:"
-msgstr "Végrehajtja a Hol vagyok műveletet, de részletesebb információt kapunk:"
+msgstr "Részletesebb hol vagyok művelet végrehajtása:"
 
-#: C/commands_where_am_i.page:45(p) C/commands_reading.page:218(p)
+#: C/commands_where_am_i.page:45(p) C/commands_reading.page:207(p)
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
 msgstr "Asztali kiosztás: <key>Numpad Enter</key> (kétszer gyorsan megnyomva)"
 
-#: C/commands_where_am_i.page:48(p) C/commands_reading.page:223(p)
+#: C/commands_where_am_i.page:48(p) C/commands_reading.page:212(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
@@ -5297,14 +6220,14 @@ msgid ""
 "In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
 "additional commands related to obtaining your present location:"
 msgstr ""
-"Hasonlóan a rendelkezésre álló Hol vagyok művelet billentyűparancsokhoz, az "
+"A rendelkezésre álló  Hol vagyok művelet billentyűparancsokon kívül az "
 "<app>Orka</app> további két billentyűparanccsal rendelkezik a pillanatnyi "
 "objektum azonosításához:"
 
-# Megjegyzés: itt átírtam a címet, így jobban néz ki a felületi fordítás helyett.
+# Megjegyzés: itt átírtam a bekezdést, így jobban néz ki a felületi fordítás helyett.
 #: C/commands_where_am_i.page:62(p)
 msgid "Present the title bar:"
-msgstr "A címsor kimondása:"
+msgstr "A címsor kimondatása:"
 
 #: C/commands_where_am_i.page:65(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
@@ -5316,10 +6239,10 @@ msgstr ""
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>"
 msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Per</key></keyseq>"
 
-# Megjegyzés: Itt is átírtam a címet.
+# Megjegyzés: Itt is átírtam a fordítást, hasonló okból.
 #: C/commands_where_am_i.page:77(p)
 msgid "Present the status bar:"
-msgstr "Az állapotsor kimondása:"
+msgstr "Az állapotsor kimondatása:"
 
 #: C/commands_where_am_i.page:80(p)
 msgid ""
@@ -5392,7 +6315,8 @@ msgstr ""
 "megjelenített <link xref=\"howto_notifications\">értesítési üzenetekhez</"
 "link> való hozzáféréshez. Ha billentyűtársítást szeretne hozzárendelni "
 "ezekhez a funkciókhoz, olvassa el a <link xref=\"howto_key_bindings"
-"\">Billentyűtársítások módosítása</link> című fejezetet."
+"\">Billentyűtársítás hozzárendelése egy nem kiosztott funkcióhoz</link> című "
+"fejezetet."
 
 #: C/commands_time_date_notifications.page:50(p)
 msgid "Present the last (most recent) notification message: (unbound)"
@@ -5797,11 +6721,12 @@ msgid ""
 "Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
 "for information on how to bind these commands to keystrokes."
 msgstr ""
-"A következő parancsok segítségével testre szabhatja az <app>Orka</app> "
+"A következő parancsok segítségével testreszabhatja az <app>Orka</app> "
 "beszédbeállításait. Számos parancs ezek közül a parancsok közül nem "
 "rendelkezik billentyűtársítással. Ha billentyűtársítást szeretne "
 "hozzárendelni ezekhez a parancsokhoz, olvassa el a <link xref="
-"\"howto_key_bindings\">Billentyűtársítások módosítása</link> című fejezetet."
+"\"howto_key_bindings\">Billentyűtársítás hozzárendelése egy nem kiosztott "
+"funkcióhoz</link> című fejezetet."
 
 #: C/commands_speech_settings.page:29(p)
 msgid "Enable/disable speech: <keyseq><key>Orca Modifier</key><key>S</key></keyseq>"
@@ -5867,19 +6792,6 @@ msgstr "Felolvasással kapcsolatos billentyűparancsok"
 
 #: C/commands_reading.page:22(p)
 msgid ""
-"To read the contents of any document, use the application's built-in caret "
-"navigation mode. As you navigate within the text of the document, <app>Orca</"
-"app> will present your new location. As a result, you are likely already "
-"familiar with how to read a document using <app>Orca</app>. However, if you "
-"would like to review GNOME's caret navigation commands, please see \"<link "
-"href=\"http://library.gnome.org/users/gnome-access-guide/stable/keynav-52."
-"html\">Caret Navigation Mode</link>\" in the <link href=\"http://library."
-"gnome.org/users/gnome-access-guide/stable\">GNOME Desktop Accessibility "
-"Guide</link>."
-msgstr ""
-
-#: C/commands_reading.page:33(p)
-msgid ""
 "In addition to the caret navigation commands which are part of GNOME, "
 "<app>Orca</app> provides a number of commands which you can use to read a "
 "document."
@@ -5890,7 +6802,7 @@ msgstr ""
 
 # Megjegyzés: a fordításban szándékosan cseréltem a "KP" szót "Numpad" szóra, így jelöltük a számbillentyűzeten végrehajtandó parancsokat asztali kiosztás
 # esetén.
-#: C/commands_reading.page:39(p)
+#: C/commands_reading.page:28(p)
 msgid ""
 "In the lists that follow, you will see several references to \"KP\". All \"KP"
 "\" keys are located on the numeric keypad. You will also notice that there "
@@ -5901,19 +6813,19 @@ msgid ""
 "Layout</link> topic."
 msgstr ""
 "A következő listában rengeteg „Numpad” kifejezés fog látszani. Minden "
-"„Numpad” kifejezéssel jelölt billentyű a numerikus billentyűzeten "
-"található. Talán már tudja, hogy a billentyűparancsok különbözhetnek, attól "
-"függően, hogy asztali vagy hordozható számítógépet használ. Másképpen "
-"fogalmazva, különbség van a billentyűparancsok között, ha az <app>Orka</app> "
+"„Numpad” kifejezéssel jelölt billentyű a numerikus billentyűzeten található. "
+"Talán már tudja, hogy a billentyűparancsok különbözhetnek, attól függően, "
+"hogy asztali vagy hordozható számítógépet használ. Másképpen fogalmazva, "
+"különbség van a billentyűparancsok között, ha az <app>Orka</app> "
 "képernyőolvasót asztali vagy laptop kiosztással használja. Ha bővebb "
 "információkra van szüksége, olvassa el a <link xref=\"howto_keyboard_layout"
 "\">Billentyűzet kiosztás</link> című fejezetet."
 
-#: C/commands_reading.page:50(title)
+#: C/commands_reading.page:39(title)
 msgid "Reading Your Current Location"
 msgstr "A jelenlegi elem helyének felolvasása"
 
-#: C/commands_reading.page:51(p)
+#: C/commands_reading.page:40(p)
 msgid ""
 "The following <app>Orca</app><link xref=\"commands_flat_review\">Flat Review "
 "Commands</link> can be used to read your current location:"
@@ -5923,41 +6835,41 @@ msgstr ""
 "aktuális elemmel kapcsolatos információkat:"
 
 # Megjegyzés: így szebben néz ki.
-#: C/commands_reading.page:57(p)
+#: C/commands_reading.page:46(p)
 msgid "Read the current line:"
 msgstr "Az aktuális sor felolvasása:"
 
-#: C/commands_reading.page:60(p) C/commands_flat_review.page:46(p)
+#: C/commands_reading.page:49(p) C/commands_flat_review.page:46(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq>"
 msgstr "Asztali kiosztás: <keyseq><key>Numpad 8</key></keyseq>"
 
-#: C/commands_reading.page:65(p) C/commands_flat_review.page:47(p)
+#: C/commands_reading.page:54(p) C/commands_flat_review.page:47(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq>"
 msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>I</key></keyseq>"
 
-#: C/commands_reading.page:72(p)
+#: C/commands_reading.page:61(p)
 msgid "Read the current word:"
 msgstr "Az aktuális szó felolvasása:"
 
-#: C/commands_reading.page:75(p) C/commands_flat_review.page:93(p)
+#: C/commands_reading.page:64(p) C/commands_flat_review.page:93(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq>"
 msgstr "Asztali kiosztás:: <keyseq><key>Numpad 5</key></keyseq>"
 
-#: C/commands_reading.page:80(p) C/commands_flat_review.page:94(p)
+#: C/commands_reading.page:69(p) C/commands_flat_review.page:94(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>"
 msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>K</key></keyseq>"
 
-#: C/commands_reading.page:87(p)
+#: C/commands_reading.page:76(p)
 msgid "Spell the current word:"
-msgstr "Lebetűzi azt az elemet vagy szót, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális szó betűztetése:"
 
-#: C/commands_reading.page:90(p) C/commands_flat_review.page:99(p)
+#: C/commands_reading.page:79(p) C/commands_flat_review.page:99(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (double-clicked)"
 msgstr ""
 "Asztali kiosztás: <keyseq><key>Numpad 5</key></keyseq> (kétszer gyorsan "
 "megnyomva)"
 
-#: C/commands_reading.page:95(p) C/commands_flat_review.page:100(p)
+#: C/commands_reading.page:84(p) C/commands_flat_review.page:100(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (double-"
 "clicked)"
@@ -5965,15 +6877,15 @@ msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>K</key></keyseq> "
 "(kétszer gyorsan megnyomva)"
 
-#: C/commands_reading.page:103(p)
+#: C/commands_reading.page:92(p)
 msgid "Phonetically spell the current word:"
-msgstr "Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális szó fonetikus betűztetése:"
 
-#: C/commands_reading.page:106(p) C/commands_flat_review.page:105(p)
+#: C/commands_reading.page:95(p) C/commands_flat_review.page:105(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)"
 msgstr "Asztali kiosztás: <keyseq><key>Numpad 5</key></keyseq> (triple-clicked)"
 
-#: C/commands_reading.page:111(p) C/commands_flat_review.page:106(p)
+#: C/commands_reading.page:100(p) C/commands_flat_review.page:106(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (triple-"
 "clicked)"
@@ -5981,30 +6893,30 @@ msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>K</key></keyseq> "
 "(háromszor gyorsan megnyomva)"
 
-#: C/commands_reading.page:119(p)
+#: C/commands_reading.page:108(p)
 msgid "Read the current character:"
 msgstr "Az aktuális karakter felolvasása:"
 
-#: C/commands_reading.page:122(p) C/commands_flat_review.page:134(p)
+#: C/commands_reading.page:111(p) C/commands_flat_review.page:134(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq>"
 msgstr "Asztali kiosztás: <keyseq><key>Numpad 2</key></keyseq>"
 
-#: C/commands_reading.page:127(p) C/commands_flat_review.page:135(p)
+#: C/commands_reading.page:116(p) C/commands_flat_review.page:135(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>"
 msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Vessző</key></keyseq>"
 
 # Megjegyzés: változtattam a fordításon, így szebbnek tűnik, mivel ezután jönnek csak a billentyűparancsok.
-#: C/commands_reading.page:134(p)
+#: C/commands_reading.page:123(p)
 msgid "Phonetically speak the current character:"
 msgstr "Az aktuális karakter fonetikus betűztetése:"
 
-#: C/commands_reading.page:137(p) C/commands_flat_review.page:140(p)
+#: C/commands_reading.page:126(p) C/commands_flat_review.page:140(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)"
 msgstr ""
 "Asztali kiosztás: <keyseq><key>Numpad 2</key></keyseq> (kétszer gyorsan "
 "megnyomva)"
 
-#: C/commands_reading.page:142(p) C/commands_flat_review.page:141(p)
+#: C/commands_reading.page:131(p) C/commands_flat_review.page:141(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (double-"
 "clicked)"
@@ -6012,22 +6924,17 @@ msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>vessző</key></keyseq> "
 "(kétszer gyorsan megnyomva)"
 
-#: C/commands_reading.page:150(p)
+#: C/commands_reading.page:139(p)
 msgid "Speak the unicode value of current character:"
-msgstr ""
-"Kimondja annak a karakternek az unicode kódját, ahol az egyszerű áttekintés "
-"áll:"
+msgstr "Az aktuális karakter unicode kódjának kimondatása:"
 
-#: C/commands_reading.page:153(p) C/commands_flat_review.page:146(p)
+#: C/commands_reading.page:142(p) C/commands_flat_review.page:146(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)"
 msgstr ""
 "Asztali kiosztás: <keyseq><key>Numpad 2</key></keyseq> (háromszor gyorsan "
 "megnyomva)"
 
-#: C/commands_reading.page:158(p) C/commands_flat_review.page:147(p)
-#| msgid ""
-#| "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (triple-"
-#| "clicked)"
+#: C/commands_reading.page:147(p) C/commands_flat_review.page:147(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-"
 "clicked)"
@@ -6035,11 +6942,11 @@ msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Vessző</key></keyseq> "
 "(háromszor gyorsan megnyomva)"
 
-#: C/commands_reading.page:168(title)
+#: C/commands_reading.page:157(title)
 msgid "Say All"
 msgstr "A felolvasás parancs"
 
-#: C/commands_reading.page:169(p)
+#: C/commands_reading.page:158(p)
 msgid ""
 "Orca's Say All command will cause <app>Orca</app> to speak the entire "
 "document beginning from your current location."
@@ -6047,21 +6954,21 @@ msgstr ""
 "Az <app>Orka</app> felolvasás parancsa lehetőséget ad a dokumentum "
 "felolvastatására az aktuális kurzorpozíciótól."
 
-#: C/commands_reading.page:175(p)
+#: C/commands_reading.page:164(p)
 msgid "Desktop: <key>KP Plus</key>"
 msgstr "Asztali kiosztás: <key>Numpad plusz</key>"
 
-#: C/commands_reading.page:178(p)
+#: C/commands_reading.page:167(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq>"
 msgstr ""
 "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>pontosvessző</key></"
 "keyseq>"
 
-#: C/commands_reading.page:185(title)
+#: C/commands_reading.page:174(title)
 msgid "Text Attributes and Selected Text"
 msgstr "Szövegattribútumokkal és a kijelölt szöveggel kapcsolatos parancsok"
 
-#: C/commands_reading.page:186(p)
+#: C/commands_reading.page:175(p)
 msgid ""
 "Orca has a dedicated command for obtaining the attributes of the text at the "
 "caret location. In addition, if you use <app>Orca</app>'s Where Am I "
@@ -6073,7 +6980,7 @@ msgstr ""
 "vagyok művelet billentyűparancsait használja miután kijelölt egy szöveget, "
 "az <app>Orka</app> képes kimondani a kijelölt szöveget."
 
-#: C/commands_reading.page:194(p)
+#: C/commands_reading.page:183(p)
 msgid ""
 "Present the text attributes: <keyseq><key>Orca Modifier</key><key>F</key></"
 "keyseq>"
@@ -6132,7 +7039,14 @@ msgid ""
 "\"bound\" to keystrokes with one exception: Toggling Mouse Review Mode. "
 "Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
 "for information on how to bind this command to a keystroke."
-msgstr "Az <app>Orka</app> számos paranccsal rendelkezik, amelyet az egérmutató helyének manipulálására és az elérhető információk felolvastatására használhat. Minden parancshoz definiálva van billentyűtársítás, az áttekintés egérrel mód be- vagy kikapcsolásának kivételével. Ha billentyűtársítást szeretne rendelni ehhez a parancshoz, olvassa el a <link xref=\"howto_key_bindings\">Billentyűtársítások módosítása</link> című fejezetet."
+msgstr ""
+"Az <app>Orka</app> számos paranccsal rendelkezik, amelyet az egérmutató "
+"helyének manipulálására és az elérhető információk felolvastatására "
+"használhat. Minden parancshoz definiálva van billentyűtársítás, az "
+"áttekintés egérrel mód be- vagy kikapcsolásának kivételével. Ha "
+"billentyűtársítást szeretne rendelni ehhez a parancshoz, olvassa el a <link "
+"xref=\"howto_key_bindings\">Billentyűtársítások módosítása</link> című "
+"fejezetet."
 
 # Megjegyzés: a fordításban szándékosan cseréltem a "KP" szót "Numpad" szóra, így jelöltük a számbillentyűzeten végrehajtandó parancsokat asztali kiosztás
 # esetén.
@@ -6147,10 +7061,10 @@ msgid ""
 "Layout</link> topic."
 msgstr ""
 "A következő listában rengeteg „Numpad” kifejezés fog látszani. Minden "
-"„Numpad” kifejezéssel jelölt billentyű a numerikus billentyűzeten "
-"található. Talán már tudja, hogy a billentyűparancsok különbözhetnek, attól "
-"függően, hogy asztali vagy hordozható számítógépet használ. Másképpen "
-"fogalmazva, különbség van a billentyűparancsok között, ha az <app>Orka</app> "
+"„Numpad” kifejezéssel jelölt billentyű a numerikus billentyűzeten található. "
+"Talán már tudja, hogy a billentyűparancsok különbözhetnek, attól függően, "
+"hogy asztali vagy hordozható számítógépet használ. Másképpen fogalmazva, "
+"különbség van a billentyűparancsok között, ha az <app>Orka</app> "
 "képernyőolvasót asztali vagy laptop kiosztással használja. Ha bővebb "
 "információkra van szüksége, olvassa el a <link xref=\"howto_keyboard_layout"
 "\">Billentyűzet kiosztás</link> című fejezetet."
@@ -6210,8 +7124,8 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>0</key></keyse
 #: C/commands_mouse.page:69(p)
 msgid "Enable/disable mouse review mode: (Unbound)"
 msgstr ""
-"Az áttekintés egérrel mód be- vagy kikapcsolása: Ehhez a parancshoz nincs előre "
-"definiálva billentyűtársítás"
+"Az áttekintés egérrel mód be- vagy kikapcsolása: Ehhez a parancshoz nincs "
+"előre definiálva billentyűtársítás"
 
 #: C/commands_magnifier.page:6(title)
 msgid "3. Magnifier Settings"
@@ -6309,14 +7223,14 @@ msgid ""
 "key></keyseq>"
 msgstr ""
 "az alapértelmezett élőrégió udvariassági szint beállítása kikapcsoltra: "
-"<keyseq><key>Shift</key><key>Bexles</"
+"<keyseq><key>Shift</key><key>Bexles</key></keyseq>"
 
 #: C/commands_live_regions.page:40(p)
 msgid ""
 "Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
 "<keyseq><key>Shift</key><key>D</key></keyseq>"
 msgstr ""
-"Ugrás a következő vagy előző élő könyvjelzőre: <keyseq><key>D</key></keyseq>/"
+"Ugrás a következő vagy előző élő régióra: <keyseq><key>D</key></keyseq>/"
 "<keyseq><key>Shift</key><key>D</key></keyseq>"
 
 #: C/commands_live_regions.page:46(p)
@@ -6366,7 +7280,7 @@ msgstr "Parancsok a soronkénti áttekintéshez"
 
 #: C/commands_flat_review.page:30(p)
 msgid "First line (The \"home\" position):"
-msgstr "Az egyszerű áttekintést a kezdő pozícióra mozgatja:"
+msgstr "Az egyszerű áttekintés mozgatása a kezdő pozícióra:"
 
 #: C/commands_flat_review.page:32(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 7</key></keyseq>"
@@ -6396,11 +7310,11 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>U</key></keyse
 # Angolul röviden fogalmaztak (current line).
 #: C/commands_flat_review.page:44(p)
 msgid "Current line:"
-msgstr "Kimondja azt a sort, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális sor kimondatása::"
 
 #: C/commands_flat_review.page:50(p)
 msgid "Spell current line:"
-msgstr "Lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális sor betűztetése:"
 
 #: C/commands_flat_review.page:52(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)"
@@ -6418,7 +7332,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:56(p)
 msgid "Phonetically spell current line:"
-msgstr "Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális sor fonetikus betűztetése:"
 
 #: C/commands_flat_review.page:58(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (triple-clicked)"
@@ -6448,7 +7362,7 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>O</key></keyse
 
 #: C/commands_flat_review.page:68(p)
 msgid "Last line (The \"end\" position):"
-msgstr "Az egyszerű áttekintést a záró pozícióra mozgatja:"
+msgstr "Az egyszerű áttekintés mozgatása a záró pozícióra:"
 
 #: C/commands_flat_review.page:70(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 9</key></keyseq>"
@@ -6468,7 +7382,7 @@ msgstr "Parancsok a szavankénti áttekintéshez"
 
 #: C/commands_flat_review.page:79(p)
 msgid "Word above:"
-msgstr "Az egyszerű áttekintést a jelenlegi szó fölötti szóra mozgatja:"
+msgstr "Az egyszerű áttekintés mozgatása a jelenlegi szó fölötti szóra:"
 
 #: C/commands_flat_review.page:81(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 4</key></keyseq>"
@@ -6497,18 +7411,16 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>J</key></keyse
 # Megjegyzés: Ugyanaz a probléma, mint a current line rövidített fogalmazásnál, ha lehet maradjon a hosszabb fordítás.
 #: C/commands_flat_review.page:91(p)
 msgid "Current word:"
-msgstr "Kimondja azt az elemet vagy szót, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális elem vagy szó kimondatása:"
 
 # Megjegyzés: maradjon a hosszabb fordítást, lásd az előző current line és current word rövidített fogalmazással kapcsolatos megjegyzéseket.
 #: C/commands_flat_review.page:97(p)
 msgid "Spell current word:"
-msgstr "Lebetűzi azt az elemet vagy szót, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális elem vagy szó betűztetése:"
 
 #: C/commands_flat_review.page:103(p)
 msgid "Phonetically spell current word:"
-msgstr ""
-"Fonetikusan lebetűzi azt az elemet vagy szót, ahol az egyszerű áttekintés "
-"áll:"
+msgstr "Az aktuális elem vagy szó fonetikus betűztetése:"
 
 #: C/commands_flat_review.page:109(p)
 msgid "Next word:"
@@ -6524,7 +7436,7 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>L</key></keyse
 
 #: C/commands_flat_review.page:115(p)
 msgid "Word below:"
-msgstr "Az egyszerű áttekintést a jelenlegi szó alatti szóra mozgatja:"
+msgstr "Az egyszerű áttekintés mozgatása a jelenlegi szó alatti szóra:"
 
 #: C/commands_flat_review.page:117(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 6</key></keyseq>"
@@ -6545,7 +7457,7 @@ msgstr "Parancsok a karakterenkénti áttekintéshez"
 # megjegyzés: itt is inkább maradjon a hosszú egyszerű áttekintés fordítás, mivel ez a funkció is az egyszerű áttekintése vonatkozik.
 #: C/commands_flat_review.page:126(p)
 msgid "Previous character:"
-msgstr "Az egyszerű áttekintést az előző karakterre mozgatja:"
+msgstr "Ugrás az előző karakterre:"
 
 #: C/commands_flat_review.page:128(p)
 msgid "Desktop: <keyseq><key>KP 1</key></keyseq>"
@@ -6558,22 +7470,20 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>M</key></keyse
 # Megjegyzés, Itt is maradjon a hosszú fordítás, mivel ez a funkció is az egyszerű áttekintésre vonatkozik.
 #: C/commands_flat_review.page:132(p)
 msgid "Current character:"
-msgstr "Kimondja azt a karaktert, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális karakter kimondatása:"
 
 #: C/commands_flat_review.page:138(p)
 msgid "Phonetically speak current character:"
-msgstr "Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális karakter fonetikus betűztetése:"
 
 #: C/commands_flat_review.page:144(p)
 msgid "Speak Unicode value of current character:"
-msgstr ""
-"Kimondja annak a karakternek az unicode kódját, ahol az egyszerű áttekintés "
-"áll:"
+msgstr "Az aktuális karakter unicode kódjának kimondatása:"
 
 # Megjegyzés: itt is maradjon a hosszabb fordítás, mivel ez a funkció is az egyszerű áttekintésre vonatkozik.
 #: C/commands_flat_review.page:150(p)
 msgid "Next character:"
-msgstr "Az egyszerű áttekintést a következő karakterre mozgatja:"
+msgstr "Ugrás a következő karakterre:"
 
 #: C/commands_flat_review.page:152(p)
 msgid "Desktop: <keyseq><key>KP 3</key></keyseq>"
@@ -6585,7 +7495,7 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>Pont</key></ke
 
 #: C/commands_flat_review.page:156(p)
 msgid "Last character on current line:"
-msgstr "Az egyszerű áttekintést a sor végére mozgatja:"
+msgstr "Ugrás az aktuális sor végére:"
 
 #: C/commands_flat_review.page:158(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 1</key></keyseq>"
@@ -6605,7 +7515,7 @@ msgstr "Egyéb parancsok"
 
 #: C/commands_flat_review.page:167(p)
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr "Belép az egyszerű áttekintés módba, majd kilép belőle:"
+msgstr "Az egyszerű áttekintés bekapcsolása vagy frissítése:"
 
 #: C/commands_flat_review.page:169(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Subtract</key></keyseq>"
@@ -6619,7 +7529,7 @@ msgstr "Laptop kiosztás: <keyseq><key>Orka módosító</key><key>P</key></keyse
 
 #: C/commands_flat_review.page:173(p)
 msgid "Review current item/widget:"
-msgstr "Kimondja azt az objektumot, ahol az egyszerű áttekintés áll:"
+msgstr "Az aktuális objektum vagy felületi elem kimondatása:"
 
 #: C/commands_flat_review.page:175(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 5</key></keyseq>"
@@ -6651,6 +7561,10 @@ msgid ""
 "you to search the <link xref=\"howto_flat_review\">Flat Review</link> "
 "context for elements located within the current window."
 msgstr ""
+"Az <app>Orka</app> <link xref=\"howto_orca_find\">keresés funkciója</link> "
+"az <link xref=\"howto_flat_review\">Egyszerű áttekintésre</link> épül, mely "
+"segíthet gyorsan megtalálni azokat a képernyőn látható objektumokat, melyek "
+"az aktív ablakban találhatók."
 
 #: C/commands_find.page:27(p)
 msgid "Open the <app>Orca</app> Find dialog:"
@@ -6713,6 +7627,9 @@ msgid ""
 "Report information on the currently active script: <keyseq><key>Ctrl</"
 "key><key>Alt</key><key>Orca Modifier</key><key>Home</key></keyseq>"
 msgstr ""
+"Információkérés az aktuális <app>Orka</app> parancsfájlról: "
+"<keyseq><key>Orka módosító</key><key>Ctrl</key><key>Alt</key><key>Home</"
+"key></keyseq>"
 
 #: C/commands_debugging.page:28(p)
 msgid ""
@@ -6731,9 +7648,9 @@ msgid ""
 "<app>Orca</app> is running: <keyseq><key>Ctrl</key><key>Alt</key><key>Orca "
 "Modifier</key><key>End</key></keyseq>"
 msgstr ""
-"Hibakeresési céllal kiírja az összes ismert alkalmazás listáját arra a "
-"konzolra, amelyen az <app>Orka</app> fut: <keyseq><key>Ctrl</key><key>Alt</"
-"key><key>Orka módosító billentyű</key><key>End</key></keyseq>"
+"Az összes ismert alkalmazás listájának kiírása hibakeresési céllal arra a "
+"konzolra, amelyen az <app>Orka</app> fut: <keyseq><key>Orka módosító</"
+"key><key>Ctrl</key><key>Alt</key><key>End</key></keyseq>"
 
 #: C/commands_debugging.page:45(p)
 msgid ""
@@ -6741,6 +7658,9 @@ msgid ""
 "<keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Up</"
 "key></keyseq>"
 msgstr ""
+"A fókuszban levő objektum hibakeresési információinak kiírása: "
+"<keyseq><key>Orka módosító</key><key>Ctrl</key><key>Alt</key><key>Page Up</"
+"key></keyseq>"
 
 #: C/commands_debugging.page:53(p)
 msgid ""
@@ -6748,6 +7668,9 @@ msgid ""
 "<keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Down</"
 "key></keyseq>"
 msgstr ""
+"A fókuszban levő alkalmazás hibakeresési információinak kiírása: "
+"<keyseq><key>Orka módosító</key><key>Ctrl</key><key>Alt</key><key>Page Down</"
+"key></keyseq>"
 
 #: C/commands_controlling_orca.page:5(title)
 msgid "1. Controlling and Learning to Use Orca"
@@ -6764,7 +7687,7 @@ msgstr "Parancsok az <app>Orka</app> kezeléséhez"
 
 #: C/commands_controlling_orca.page:20(title)
 msgid "Commands for Controlling <app>Orca</app>"
-msgstr ""
+msgstr "Parancsok az <app>Orka</app> irányításához"
 
 #: C/commands_controlling_orca.page:21(p)
 msgid ""
@@ -6772,22 +7695,33 @@ msgid ""
 "dialogs, quit <app>Orca</app>, and bypass <app>Orca</app> commands to avoid "
 "shortcut conflicts within the application being accessed."
 msgstr ""
+"A következő billentyűparancsok segítségével megnyithatja az <app>Orka</app> "
+"beállító párbeszédablakait, kiléphet az <app>Orka</app> képernyőolvasóból és "
+"figyelmen kívül hagyathat olyan <app>Orka</app> billentyűparancsokat, melyek "
+"ütköznének az éppen használt alkalmazás billentyűparancsaival."
 
 #: C/commands_controlling_orca.page:28(p)
 msgid ""
 "<link xref=\"preferences\">Orca Preferences</link> dialog: <keyseq><key>Orca "
 "Modifier</key><key>Space</key></keyseq>."
 msgstr ""
+"Az <link xref=\"preferences\">Orka beállítások párbeszédablak</link> "
+"megnyitása: <keyseq><key>Orka módosító</key><key>szóköz</key></keyseq>."
 
 #: C/commands_controlling_orca.page:34(p)
 msgid ""
 "Orca's Preferences dialog for the focused application: <keyseq><key>Ctrl</"
 "key><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgstr ""
+"Az Orka alkalmazásbeállító párbeszédablak megnyitása a fókuszban levő "
+"alkalmazáshoz: <keyseq><key>Orka módosító</key><key>Ctrl</key><key>Szóköz</"
+"key></keyseq>."
 
 #: C/commands_controlling_orca.page:40(p)
 msgid "Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
 msgstr ""
+"Kilépés az <app>Orka</app> képernyőolvasóból: <keyseq><key>Orka módosító</"
+"key><key>Q</key></keyseq>."
 
 #: C/commands_controlling_orca.page:46(p)
 msgid ""
@@ -6795,25 +7729,27 @@ msgid ""
 "Modifier</key><key>BackSpace</key></keyseq>"
 msgstr ""
 "A következő billentyűparancs átadása az aktuális alkalmazásnak: "
-"<keyseq><key>Orka módosító billentyű</key><key>BackSpace</key></keyseq>"
+"<keyseq><key>Orka módosító</key><key>BackSpace</key></keyseq>"
 
 #: C/commands_controlling_orca.page:54(title)
 msgid "Commands for Learning to Use <app>Orca</app>"
-msgstr ""
+msgstr "Parancsok az <app>Orka</app> használatának megtanulásához"
 
 #: C/commands_controlling_orca.page:64(p)
 msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
-msgstr ""
+msgstr "Belépés a tanulómódba: <keyseq><key>Orka módosító</key><key>H</key></keyseq>"
 
 #: C/commands_controlling_orca.page:70(p)
 msgid ""
 "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
 "keyseq> (double-clicked)"
 msgstr ""
+"Belépés a billentyűparancs listázó módba: <keyseq><key>Orka módosító</"
+"key><key>H</key></keyseq> (kétszer gyorsan megnyomva)"
 
 #: C/commands_controlling_orca.page:76(p)
 msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
-msgstr ""
+msgstr "Kilépés mindkét tanuló üzemmódból: <keyseq><key>Esc</key></keyseq>"
 
 #: C/commands_chat.page:6(title)
 msgid "2. Chat"
@@ -6835,24 +7771,39 @@ msgid ""
 "xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
 "how to bind these commands to keystrokes."
 msgstr ""
+"A következő parancsok segítségével használhatja az <app>Orka</app> által "
+"támogatott azonnali üzenetküldő alkalmazásokat és internetes "
+"csevegőklienseket. Számos parancs ezek közül a parancsok közül nem "
+"rendelkezik billentyűtársítással. Ha billentyűtársítást szeretne "
+"hozzárendelni ezekhez a parancsokhoz, olvassa el a <link xref="
+"\"howto_key_bindings\">Billentyűtársítás hozzárendelése egy nem kiosztott "
+"funkcióhoz</link> című fejezetet"
 
 #: C/commands_chat.page:30(p)
 msgid ""
 "Present previous chat room messages: <keyseq><key>Orca Modifier</"
 "key><key>F1</key></keyseq> through <key>F9</key>"
 msgstr ""
+"A csevegőszoba előző csevegési üzeneteinek megjelenítése: <keyseq><key>Orka "
+"módosító</key><key>F1</key></keyseq> és <keyseq><key>Orka módosító</key><key>F9</key></keyseq> között."
 
 #: C/commands_chat.page:36(p)
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
+"A csatorna nevének a csevegőüzenetek elé illesztésének be vagy kikapcsolása: "
+"ez a funkció nem rendelkezik előre definiált billentyűtársítással"
 
 #: C/commands_chat.page:41(p)
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
+"Partner gépelési értesítés be vagy kikapcsolása: ez a funkció nem "
+"rendelkezik előre definiált billentyűtársítással"
 
 #: C/commands_chat.page:44(p)
 msgid "Enable/disable room-specific histories: (Unbound)"
 msgstr ""
+"A csevegőszoba üzenetelőzményeinek megjelenítésének be vagy kikapcsolása: ez "
+"a funkció nem rendelkezik előre definiált billentyűtársítással"
 
 #: C/commands_braille.page:6(title)
 msgid "2. Braille"
@@ -6871,34 +7822,36 @@ msgid ""
 "The following commands allow you to control <app>Orca</app> from your "
 "refreshable braille display rather than your keyboard:"
 msgstr ""
+"A következő parancsok lehetővé teszik, hogy az <app>Orkát</app> egy "
+"frissíthető braille-kijelzőn irányíthassa a billentyűzet helyett:"
 
 #: C/commands_braille.page:25(p)
 msgid "Pan braille display to the left: Line Left"
-msgstr "A braille képernyőt balra görgeti: Sor balra"
+msgstr "A braille képernyő balra görgetése: Sor balra"
 
 #: C/commands_braille.page:26(p)
 msgid "Pan braille display to the right: Line Right"
-msgstr "A braille képernyőt jobbra görgeti: Sor jobbra"
+msgstr "A braille képernyő jobbra görgetése: Sor jobbra"
 
 #: C/commands_braille.page:27(p)
 msgid "Toggle flat review mode: Freeze"
-msgstr "Be- vagy kikapcsolja a braille áttekintő módot: Fagyasztás"
+msgstr "Braille áttekintő mód be vagy kikapcsolása: Fagyasztás"
 
 #: C/commands_braille.page:28(p)
 msgid "Review the word above: Line Up"
-msgstr ""
+msgstr "A braille áttekintés mozgatása a jelenlegi szó feletti szóra: sor fel"
 
 #: C/commands_braille.page:29(p)
 msgid "Review the word below: Line Down"
-msgstr ""
+msgstr "A braille áttekintés mozgatása a jelenlegi szó alatti szóra: sor le"
 
 #: C/commands_braille.page:30(p)
 msgid "Review bottom left: Bottom Right"
-msgstr ""
+msgstr "A braille áttekintés mozgatása a jobb alsó sarokba: jobbra lent"
 
 #: C/commands_braille.page:31(p)
 msgid "Review the home position: Top Left"
-msgstr "Az egyszerű áttekintést a kezdő pozícióra mozgatja: Balra fent"
+msgstr "A braille áttekintés mozgatása a kezdő pozícióra: Balra fent"
 
 #: C/commands_braille.page:32(p)
 msgid "Contracted braille: Six Dots"
@@ -6906,11 +7859,11 @@ msgstr "Irodalmi braille támogatás engedélyezése: hat pontos"
 
 #: C/commands_braille.page:33(p)
 msgid "Marks the beginning of a text selection: Cut Begin"
-msgstr "Kijelöli a kijelölés kezdetét: Kijelölés kezdete"
+msgstr "Kijelölés kezdetének kijelölése: Kijelölés kezdete"
 
 #: C/commands_braille.page:34(p)
 msgid "Marks the end of a text selection: Cut Line"
-msgstr "Kijelöli a kijelölés végét: Kijelölés vége"
+msgstr "Kijelölés végének kijelölése: Kijelölés vége"
 
 #: C/commands_braille.page:35(p)
 msgid "Processes a cursor routing key: Cursor Routing"
@@ -6978,7 +7931,7 @@ msgid ""
 "location: <keyseq><key>Alt</key><key>Shift</key><key>1</key></keyseq>-"
 "<key>6</key>"
 msgstr ""
-"A „Hol vagyok” parancs segítségével információt ad arról, hogy a könyvjelző "
+"A „Hol vagyok” parancs segítségével információkérés arról, hogy a könyvjelző "
 "a jelenlegi mutatópozícióhoz képest hol található: <keyseq><key>Alt</"
 "key><key>Shift</key><key>1</key></keyseq>-<key>6</key>"
 
