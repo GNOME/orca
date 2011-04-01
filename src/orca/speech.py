@@ -147,7 +147,7 @@ def __resolveACSS(acss=None):
         return acss
     else:
         voices = settings.voices
-        return voices[settings.DEFAULT_VOICE]
+        return ACSS(voices[settings.DEFAULT_VOICE])
 
 def sayAll(utteranceIterator, progressCallback):
     if settings.silenceSpeech:
