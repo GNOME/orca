@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: accessibility_guide HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-19 21:59+0000\n"
-"PO-Revision-Date: 2011-03-01 13:50+0100\n"
+"POT-Creation-Date: 2011-04-01 15:20+0000\n"
+"PO-Revision-Date: 2011-04-01 17:27+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
@@ -70,7 +70,7 @@ msgstr "Megjelenítendő formázások beállítása"
 #: C/preferences_introduction.page:8(name) C/preferences_general.page:11(name)
 #: C/preferences_gecko.page:12(name) C/preferences_chat.page:10(name)
 #: C/preferences_braille.page:11(name) C/introduction.page:10(name)
-#: C/index.page:5(name) C/howto_whereami.page:10(name)
+#: C/index.page:6(name) C/howto_whereami.page:10(name)
 #: C/howto_toggling_caps_lock.page:8(name)
 #: C/howto_the_orca_modifier.page:11(name) C/howto_text_setup.page:8(name)
 #: C/howto_text_attributes.page:10(name) C/howto_tables.page:10(name)
@@ -105,7 +105,7 @@ msgstr "Joanmarie Diggs"
 #: C/preferences_introduction.page:9(email)
 #: C/preferences_general.page:12(email) C/preferences_gecko.page:13(email)
 #: C/preferences_chat.page:11(email) C/preferences_braille.page:12(email)
-#: C/introduction.page:11(email) C/index.page:6(email)
+#: C/introduction.page:11(email) C/index.page:7(email)
 #: C/howto_whereami.page:11(email) C/howto_toggling_caps_lock.page:9(email)
 #: C/howto_the_orca_modifier.page:12(email) C/howto_text_setup.page:9(email)
 #: C/howto_text_attributes.page:11(email) C/howto_tables.page:11(email)
@@ -137,7 +137,7 @@ msgstr "joanied@gnome.org"
 #: C/preferences_key_bindings.page:16(p) C/preferences_introduction.page:12(p)
 #: C/preferences_general.page:15(p) C/preferences_gecko.page:16(p)
 #: C/preferences_chat.page:14(p) C/preferences_braille.page:15(p)
-#: C/introduction.page:14(p) C/index.page:9(p) C/howto_whereami.page:14(p)
+#: C/introduction.page:14(p) C/index.page:10(p) C/howto_whereami.page:14(p)
 #: C/howto_toggling_caps_lock.page:12(p) C/howto_the_orca_modifier.page:15(p)
 #: C/howto_text_setup.page:12(p) C/howto_text_attributes.page:14(p)
 #: C/howto_tables.page:14(p) C/howto_structural_navigation.page:16(p)
@@ -172,7 +172,14 @@ msgid ""
 "customize which text attributes <app>Orca</app> will present in speech, "
 "along with the order in which they should be presented, and which ones "
 "<app>Orca</app> will indicate in braille."
-msgstr "A „szövegattribútumok” kifejezés egy karakter vagy karaktersorozat betűkészletét, stílusát, igazítását, és más formázásait jelenti. Az <app>Orka</app> grafikus beállító párbeszédpanelének <gui>Szövegattribútumok</gui> lapján testreszabhatja, hogy milyen szövegattribútumok kerüljenek kimondásra, milyen sorrendben történjen a kimondás, valamint milyen attribútumokat jelenítsen meg az <app>Orka</app> a braille-kijelzőn."
+msgstr ""
+"A „szövegattribútumok” kifejezés egy karakter vagy karaktersorozat "
+"betűkészletét, stílusát, igazítását, és más formázásait jelenti. Az "
+"<app>Orka</app> grafikus beállító párbeszédpanelének "
+"<gui>Szövegattribútumok</gui> lapján testreszabhatja, hogy milyen "
+"szövegattribútumok kerüljenek kimondásra, milyen sorrendben történjen a "
+"kimondás, valamint milyen attribútumokat jelenítsen meg az <app>Orka</app> a "
+"braille-kijelzőn."
 
 #: C/preferences_text_attributes.page:30(title)
 msgid "The text attributes table"
@@ -220,34 +227,17 @@ msgstr ""
 "milyen szöveg kerüljön akkor kimondásra, ha a bejelölt attribútum nem "
 "található."
 
-# Megjegyzés: nem törlődik a kérdéses szöveg az attribútum bejelölésekor a megjelenítés ha nem oszlopból.
-# A régi acguideban a következő fordítás szerepelt, lehet hogy érdemes lenne ezt áttenni:
-# "Az „aláhúzás” attribútumnál például alapértelmezésben a „Megjelenítés, ha "
-# "nem” oszlopban a „nincs” érték szerepel. Ha a jelölőnégyzetet bejelöli és "
-# "lenyomja az <keycombo><keycap>Orka módosító</keycap><keycap>F</keycap></"
-# "keycombo> billentyűparancsot és a kérdéses szöveg nincs aláhúzva, akkor az "
-# "attribútum nem kerül kimondásra. Ha azt szeretné, hogy ez az attribútum "
-# "kimondásra kerüljön függetlenül attól, hogy a kérdéses szöveg alá van-e "
-# "húzva, jelölje be a jelölőnégyzetet, majd a „Megjelenítés, ha nem” oszlopban "
-# "lévő szövegen nyomja meg az <keycap>Enter</keycap> billentyűt. Ezután "
-# "törölje a „nincs” értéket és nyomja meg az <keycap>Enter</keycap> billentyűt."
 #: C/preferences_text_attributes.page:62(p)
 msgid ""
 "For example, by default the \"underline\" text attribute has a value of "
-"\"none.\" This causes <app>Orca</app> to inform you about underlined text as "
+"\"none\". This causes <app>Orca</app> to inform you about underlined text as "
 "long as the text is actually underlined. If you always want this attribute "
 "to be spoken irrespective of whether or not the text is underlined, the "
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Az „aláhúzás” attribútumnál például alapértelmezésben a <gui>Megjelenítés, "
-"ha nem</gui> oszlopban a „nincs” érték szerepel. Ha a jelölőnégyzetet "
-"bejelöli és lenyomja az <keyseq><key>Orka módosító</key><key>F</key></"
-"keyseq> billentyűparancsot és a kérdéses szöveg nincs aláhúzva, akkor az "
-"attribútum nem kerül kimondásra. Ha azt szeretné, hogy ez az attribútum "
-"kimondásra kerüljön függetlenül attól, hogy a kérdéses szöveg alá van-e "
-"húzva, jelölje be a <gui>Felolvasás</gui> jelölőnégyzetet, és törölje a "
-"„Nincs” szöveget a <gui>Megjelenítés, ha nem</gui> oszlopból."
+"Az „aláhúzás” attribútum alapértéke például a „nincs”. Ennek hatására az <app>Orka</app> addig értesíti az alá nem húzott szövegről, amíg a szöveg ténylegesen alá van húzva. Ha azt szeretné, hogy ez az attribútum kimondásra kerüljön függetlenül attól, hogy a kérdéses szöveg alá van-e "
+"húzva, jelölje be a <gui>Felolvasás</gui> jelölőnégyzetet, és törölje a <gui>Megjelenítés, ha nem</gui> oszlopot."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -3394,7 +3384,12 @@ msgid ""
 "this feature and choosing which attributes are of interest is done on the "
 "<link xref=\"preferences_text_attributes\"><gui>Text Attributes</gui> page</"
 "link> of the preferences dialog."
-msgstr "Lehetőség van arra, hogy a kiválasztott szöveges attribútumok megjelenítésre kerüljenek a Braille-kijelzőn. A funkció engedélyezését és az attribútumok kiválasztását az <app>Orka</app> grafikus beállító párbeszédpanel <link xref=\"preferences_text_attributes\"><gui>Szövegattribútumok</gui> lapján</link> teheti meg."
+msgstr ""
+"Lehetőség van arra, hogy a kiválasztott szöveges attribútumok megjelenítésre "
+"kerüljenek a Braille-kijelzőn. A funkció engedélyezését és az attribútumok "
+"kiválasztását az <app>Orka</app> grafikus beállító párbeszédpanel <link xref="
+"\"preferences_text_attributes\"><gui>Szövegattribútumok</gui> lapján</link> "
+"teheti meg."
 
 #: C/introduction.page:5(title)
 msgid "1. Welcome to Orca"
@@ -3637,31 +3632,33 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: C/index.page:13(None)
+#: C/index.page:14(None)
 msgid "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 msgstr "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 
 #: C/index.page:3(title)
+msgid "Orca Screen Reader"
+msgstr "Orka képernyőolvasó"
+
+#: C/index.page:4(title)
 msgid "Introduction to the <app>Orca</app> Screen Reader"
 msgstr "Az <app>Orka</app> képernyőolvasó bemutatása"
 
-#: C/index.page:12(title)
+#: C/index.page:13(title)
 msgid ""
 "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
 "\"><app>Orca</app>'s logo </media><app>Orca</app> Screen Reader"
-msgstr "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"><app>Orka</app> logó </media><app>Orka</app> képernyőolvasó"
+msgstr ""
+"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
+"\"><app>Orka</app> logó </media><app>Orka</app> képernyőolvasó"
 
-#: C/index.page:19(title)
+#: C/index.page:20(title)
 msgid "Before You Begin"
 msgstr "Mielőtt tovább lépne"
 
-#: C/index.page:20(p)
-msgid ""
-"Read the <link href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility "
-"Guide</link>"
-msgstr ""
-"Olvassa el <link href=\"ghelp:gnome-access-guide\">a GNOME asztali környezet "
-"Akadálymentesítési kézikönyvét</link>."
+#: C/index.page:21(p)
+msgid "Read the <link href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>"
+msgstr "Olvassa el az <link href=\"ghelp:gnome-help#a11y\">Akadálymentesítési súgót</link>."
 
 #: C/index.page:26(title) C/commands.page:17(title)
 msgid "Getting Started"
@@ -4526,7 +4523,9 @@ msgid ""
 msgstr ""
 "Attól függően hogy éppen hol tartózkodik, szükséges lehet az <app>Orka</app> "
 "strukturált navigációjának bekapcsolása. Ha erről bővebben szeretne olvasni, "
-"olvassa el a <link type=\"seealso\" xref=\"howto_structural_navigation#toggling_required\">mikor szükséges bekapcsolnia a strukturált Orka navigációt</link> című fejezetet."
+"olvassa el a <link type=\"seealso\" xref="
+"\"howto_structural_navigation#toggling_required\">mikor szükséges "
+"bekapcsolnia a strukturált Orka navigációt</link> című fejezetet."
 
 #: C/howto_tables.page:84(title)
 msgid "Dynamic Headers"
@@ -5496,8 +5495,8 @@ msgid ""
 "within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
 "\" to the point of being \"rude.\""
 msgstr ""
-"Minden élő régióhoz  a weboldalak készítői hozzárendelnek egy „udvariassági"
-"” szintet, ezzel jelzik az információ fontosságát és javaslatot tesznek a "
+"Minden élő régióhoz  a weboldalak készítői hozzárendelnek egy „udvariassági” "
+"szintet, ezzel jelzik az információ fontosságát és javaslatot tesznek a "
 "kisegítő technológiák számára, amikor a felhasználót informálják az élő "
 "régiók frissüléséről. Az élő régiók a „kikapcsolva\", „udvarias\", vagy "
 "\"durva” udvariassági szintekkel rendelkezhetnek."
@@ -5879,9 +5878,10 @@ msgid ""
 "chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key></keyseq>/"
 "<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
 msgstr ""
-"Használhatja az <app>Orka</app> parancsait az előző vagy következő objektumra való "
-"ugráshoz (<keyseq><key>Orka módosító</key><key>Jobbra nyíl</key></keyseq> és "
-"<keyseq><key>Orka módosító</key><key>Balra nyíl</key></keyseq>)."
+"Használhatja az <app>Orka</app> parancsait az előző vagy következő "
+"objektumra való ugráshoz (<keyseq><key>Orka módosító</key><key>Jobbra nyíl</"
+"key></keyseq> és <keyseq><key>Orka módosító</key><key>Balra nyíl</key></"
+"keyseq>)."
 
 #: C/howto_forms.page:85(p)
 msgid ""
@@ -6034,11 +6034,8 @@ msgstr ""
 #: C/howto_documents.page:48(p)
 msgid ""
 "For a complete listing of GNOME's caret navigation commands, see the <link "
-"href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility Guide</link>."
-msgstr ""
-"Ha az összes GNOME mutatónavigációval kapcsolatos parancsot ismerni "
-"szeretné, olvassa el <link href=\"ghelp:gnome-access-guide\">a GNOME asztali "
-"környezet Akadálymentesítési kézikönyvét</link>."
+"href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>."
+msgstr "Ha az összes GNOME mutatónavigációval kapcsolatos parancsot ismerni szeretné, olvassa el az <link href=\"ghelp:gnome-help#a11y\">Akadálymentesítési súgót</link>."
 
 #: C/howto_documents.page:52(p)
 msgid ""
@@ -6179,9 +6176,9 @@ msgstr ""
 "aktuális felületi elemről vagy objektumról. Ha például egy táblázatban "
 "tartózkodik, a hol vagyok művelet minden részletet közöl a táblázat aktuális "
 "cellájáról, de egy szövegben például csak az aktuális sor kerül közlésre, ha "
-"nincs kijelölt szövegrész. Az <app>Orka</app> hol vagyok műveletről részletesebb "
-"információt <link xref=\"howto_whereami\">A hol vagyok művelet bemutatása</"
-"link> című fejezetben talál."
+"nincs kijelölt szövegrész. Az <app>Orka</app> hol vagyok műveletről "
+"részletesebb információt <link xref=\"howto_whereami\">A hol vagyok művelet "
+"bemutatása</link> című fejezetben talál."
 
 #: C/commands_where_am_i.page:28(p)
 msgid "<app>Orca</app> provides the following Where Am I commands:"
@@ -7785,7 +7782,8 @@ msgid ""
 "key><key>F1</key></keyseq> through <key>F9</key>"
 msgstr ""
 "A csevegőszoba előző csevegési üzeneteinek megjelenítése: <keyseq><key>Orka "
-"módosító</key><key>F1</key></keyseq> és <keyseq><key>Orka módosító</key><key>F9</key></keyseq> között."
+"módosító</key><key>F1</key></keyseq> és <keyseq><key>Orka módosító</"
+"key><key>F9</key></keyseq> között."
 
 #: C/commands_chat.page:36(p)
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
