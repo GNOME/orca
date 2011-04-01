@@ -23,6 +23,7 @@ orca_python_PYTHON = \
 	debug.py \
 	dectalk.py \
 	desktop_keyboardmap.py \
+	dummyspeech.py \
 	espeechfactory.py \
 	event_manager.py \
 	eventsynthesizer.py \
@@ -57,6 +58,7 @@ orca_python_PYTHON = \
 	outloud.py \
 	phonnames.py \
 	orca_platform.py \
+	plug_event_manager.py \
 	pronunciation_dict.py \
 	punctuation_settings.py \
 	rolenames.py \
@@ -70,6 +72,7 @@ orca_python_PYTHON = \
 	speechdispatcherfactory.py \
 	speech_generator.py \
 	speechserver.py \
+	store_config.py \
 	structural_navigation.py \
 	text_attribute_names.py \
 	tutorialgenerator.py \
@@ -79,7 +82,9 @@ orca_pythondir=$(pyexecdir)/orca
 
 SUBDIRS = \
         scripts \
-        backends
+        backends \
+		pluglib \
+		baseplugins
 
 ui_DATA = \
 	orca-advanced-magnification.ui \

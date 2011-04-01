@@ -32,11 +32,14 @@ import keybindings
 import orca
 import orca_state
 import settings
-import speech
 
 from orca_i18n import _
 
 _settingsManager = getattr(orca, '_settingsManager')
+_pluginManager = getattr(orca, '_pluginManager')
+
+speech = _pluginManager.getPluginObject('speech')
+
 
 #############################################################################
 #                                                                           #

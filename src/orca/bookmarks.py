@@ -23,12 +23,15 @@ import pickle
 import os
 
 import rolenames
-import speech
 import settings
 import orca_state
 
 from orca_i18n import _
 
+import orca
+
+_pluginManager = getattr(orca, '_pluginManager')
+speech = _pluginManager.getPluginObject('speech')
 
 class Bookmarks:
     """Represents a default bookmark handler."""

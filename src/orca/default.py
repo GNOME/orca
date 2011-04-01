@@ -35,7 +35,6 @@ import time
 
 import orca.orca as orca
 _settingsManager = getattr(orca, '_settingsManager')
-_pluginManager = getattr(orca, '_pluginManager') 
 
 import pyatspi
 import orca.braille as braille
@@ -54,15 +53,8 @@ import orca.orca_state as orca_state
 import orca.phonnames as phonnames
 import orca.script as script
 import orca.settings as settings
-
-#import orca.speech as speech
-#import orca.speechserver as speechserver
-
-global speech
-speech = _pluginManager.getPluginObject('speech')
-#if speech == None: import orca.dummyspeech as speech
+import orca.speech as speech
 import orca.speechserver as speechserver
-
 import orca.mouse_review as mouse_review
 import orca.text_attribute_names as text_attribute_names
 import orca.notification_messages as notification_messages
@@ -1075,23 +1067,23 @@ class Script(script.Script):
                 #
                 _("Toggle mouse review mode."))
 
-#        self.inputEventHandlers["presentTimeHandler"] = \
-#            input_event.InputEventHandler(
-#                Script.presentTime,
-#                # Translators: Orca can present the current time to the
-#                # user when the user presses
-#                # a shortcut key.
-#                #
-#                _("Present current time."))
-#
-#        self.inputEventHandlers["presentDateHandler"] = \
-#            input_event.InputEventHandler(
-#                Script.presentDate,
-#                # Translators: Orca can present the current date to the
-#                # user when the user presses
-#                # a shortcut key.
-#                #
-#                _("Present current date."))
+        self.inputEventHandlers["presentTimeHandler"] = \
+            input_event.InputEventHandler(
+                Script.presentTime,
+                # Translators: Orca can present the current time to the
+                # user when the user presses
+                # a shortcut key.
+                #
+                _("Present current time."))
+
+        self.inputEventHandlers["presentDateHandler"] = \
+            input_event.InputEventHandler(
+                Script.presentDate,
+                # Translators: Orca can present the current date to the
+                # user when the user presses
+                # a shortcut key.
+                #
+                _("Present current date."))
 
         self.inputEventHandlers["bypassNextCommandHandler"] = \
             input_event.InputEventHandler(
@@ -1508,7 +1500,6 @@ class Script(script.Script):
         """Called when this script is activated."""
 
         braille.setupKeyRanges(self.brailleBindings.keys())
-        speech.updatePunctuationLevel()
 
     def updateBraille(self, obj, extraRegion=None):
         """Updates the braille display to show the give object.

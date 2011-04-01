@@ -139,6 +139,8 @@ src/orca/scripts/toolkits/J2SE-access-bridge/Makefile
 src/orca/scripts/toolkits/CALLY/Makefile
 src/orca/scripts/toolkits/WebKitGtk/Makefile
 src/orca/backends/Makefile
+src/orca/pluglib/Makefile
+src/orca/baseplugins/Makefile
 src/orca/orca
 src/orca/orca_i18n.py
 src/orca/orca_platform.py

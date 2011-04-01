@@ -35,10 +35,10 @@ import locale
 import time
 
 import acss
-try:
-    import gsmag as mag
-except:
-    import mag
+#try:
+#    import gsmag as mag
+#except:
+#    import mag
 import orca
 import orca_gtkbuilder
 import orca_state
@@ -47,15 +47,31 @@ import settings
 import input_event
 import keybindings
 import pronunciation_dict
-import braille
-import speech
-import speechserver
+#import braille
+#import speechserver
 import text_attribute_names
 
 import orca_gui_profile
 
 _settingsManager = getattr(orca, '_settingsManager')
 _scriptManager = getattr(orca, '_scriptManager')
+_pluginManager = getattr(orca, '_pluginManager')
+
+# Here, we're getting plugins for settingsManager
+plugins = _settingsManager.getPlugins()
+# What plugins will be enabled?
+activePlugins = [plug for plug in plugins if plugins[plug]['active']]
+
+if 'gsmag' in activePlugins:
+    mag = _pluginManager.getPluginObject('gsmag')
+else:
+    mag = _pluginManager.getPluginObject('mag')
+
+braille = _pluginManager.getPluginObject('braille')
+
+global speech
+speech = _pluginManager.getPluginObject('speech')
+import speechserver
 
 try:
     import louis
@@ -517,7 +533,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         keyBindingsDict = self.getKeyBindingsModelDict(self.keyBindingsModel)
         if _settingsManager.saveSettings(self.prefsDict,
                                          pronunciationDict,
-                                         keyBindingsDict):
+                                         keyBindingsDict,
+                                         # jhernandez TODO nacho's
+                                         # this dict is provisional
+                                         #
+                                         self.currentPluginsStatus):
+
             self._presentMessage(
                 _("Accessibility support for GNOME has just been enabled."))
             self._presentMessage(
@@ -823,6 +844,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         box item.
         """
 
+        global speech
+
         if len(self.speechServersChoices) == 0:
             return
 
@@ -975,6 +998,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Initialize the various speech components.
         """
 
+        global speech
+
+        print 'in orca_gui_prefs::_initSpeechState(self)'
+
         voices = self.prefsDict["voices"]
         self.defaultVoice   = acss.ACSS(voices.get(settings.DEFAULT_VOICE))
         self.uppercaseVoice = acss.ACSS(voices.get(settings.UPPERCASE_VOICE))
@@ -991,6 +1018,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # Where * = speechSystems, speechServers, speechFamilies
         #
         factories = speech.getSpeechServerFactories()
+
         if len(factories) == 0:
             self.workingFactories = []
             self.speechSystemsChoice = None
@@ -2223,6 +2251,168 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.startingProfileCombo = self.get_widget('availableProfilesComboBox2')
         self.profilesComboModel = self.get_widget('model9')
         self.__initProfileCombo()
+
+        # Orca Plugin System
+        #
+        self.plugins_tree = self.get_widget("plugins_tv")
+        self.plugins_store = self.get_widget("plugins_store")
+        self.plugabout_btn = self.get_widget("plugabout_btn")
+        self.plugconf_btn = self.get_widget("plugconf_btn")
+        self.plugabout_dialog = self.get_widget("plugabout_dialog")
+
+        self._initPluginsTreeView()
+
+        self.__updateSpeechTab(self.currentPluginsStatus['speech']['active'])
+
+    def _initPluginsTreeView(self):
+
+        self.plugins_store.clear()
+        self.currentPluginsStatus = plugins = \
+            _settingsManager.getPlugins(self.prefsDict.get('activeProfile')[1])
+        for plug in plugins:
+            type_str = ''
+            for type in plugins[plug]['type']:
+                if len(type_str) > 0:
+                    type_str += ', '
+                type_str += type
+            self.plugins_store.append([plugins[plug]['active'], \
+                                       plugins[plug]['name'], \
+                                       type_str, None, plug])
+
+    def on_plugabout_btn_clicked(self, button):
+        selection = self.plugins_tree.get_selection()
+        model, selected = selection.get_selected()
+
+        if selected:
+            plugin = plugmanager.get_plugin_class(model[selected][3])
+
+            if plugin:
+                plugin_status = plugmanager.get_plugin_status(plugin.name)
+
+                if not plugin_status:
+                    print plugin.name + " is disabled"
+                else:
+                    print plugin.name + " is enabled"
+
+                self.plugabout_dialog.set_name(plugin.name)
+                self.plugabout_dialog.set_version(plugin.version)
+                self.plugabout_dialog.set_authors(plugin.authors)
+                self.plugabout_dialog.set_website(plugin.website)
+                self.plugabout_dialog.set_comments(plugin.description)
+
+                response = self.plugabout_dialog.run()
+                if response in (gtk.RESPONSE_DELETE_EVENT, gtk.RESPONSE_CANCEL):
+                    self.plugabout_dialog.hide()
+
+    def on_plugins_tv_cursor_changed(self, treeview):
+        selection = self.plugins_tree.get_selection()
+        model, selected = selection.get_selected()
+
+    def on_plugconf_btn_clicked(self, button):
+        selection = self.plugins_tree.get_selection()
+        model, selected = selection.get_selected()
+
+        if selected:
+            plugin = plugmanager.get_plugin_class(model[selected][5])
+            if pluglib.verify_conf_dialog(plugin):
+                plugin.configure_dialog(self.parent)
+
+    def on_active_cell_toggled(self, checkbox, path):
+        active = not checkbox.get_active()
+        plugin_name = self.plugins_store[path][4]
+        self.currentPluginsStatus[plugin_name]['active'] = active
+        self.plugins_store[path][0] = active
+
+        # NA: hardcode!!! change this by the correct value
+        # obtained by the name 'magPlugin' and 'gsmagPlugin'!
+        orca_magnifier = self.plugins_store[2][0]
+        gs_magnifier = self.plugins_store[3][0]
+
+        mag_exception = False
+
+        if plugin_name == 'gsmag':
+            if not self.__checkGsmag(active) or orca_magnifier:
+                self.plugins_store[path][0] = False
+                active = False
+                mag_exception = True
+
+        if plugin_name == 'mag':
+            if gs_magnifier:
+                self.plugins_store[path][0] = False
+                active = False
+                mag_exception = True
+
+        if active:
+            _pluginManager.enablePlugin(plugin_name)
+        else:
+            if (plugin_name == 'gsmag' or plugin_name == 'mag') and not mag_exception:
+                _pluginManager.disablePlugin(plugin_name)
+            elif plugin_name != 'gsmag' and plugin_name != 'mag':
+                _pluginManager.disablePlugin(plugin_name)
+
+        if plugin_name == 'speech':
+            self.__updateSpeechTab(active)
+            self.__reloadSpeechModule(active)
+            self.applyButtonClicked(self.get_widget('notebook'))
+        elif plugin_name == 'gsmag' and not mag_exception:
+            self.__updateMagTab(active)
+            self.applyButtonClicked(self.get_widget('notebook'))
+        elif plugin_name == 'mag' and not mag_exception:
+            self.__updateMagTab(active)
+            self.applyButtonClicked(self.get_widget('notebook'))
+        elif plugin_name == 'braille':
+            self.__updateBrailleTab(active)
+            self.applyButtonClicked(self.get_widget('notebook'))
+
+    # NA: this is a hardcode feature,
+    # maybe we must to do this as IDependenciesChecker
+    def __checkGsmag(self, active):
+        if active == True:
+            try:
+                import dbus
+                _bus = dbus.SessionBus()
+                _proxy_obj = _bus.get_object("org.gnome.Magnifier",
+                                             "/org/gnome/Magnifier")
+                _magnifier = dbus.Interface(_proxy_obj, "org.gnome.Magnifier")
+                return True
+            except dbus.exceptions.DBusException:
+                return False
+
+        return True
+
+    def __updateSpeechTab(self, active):
+        notebook = self.get_widget('notebook')
+        speechTab = notebook.get_nth_page(1)
+        if active == True:
+            speechTab.show()
+        else:
+            speechTab.hide()
+            #speech.shutdown()
+
+    # We really need this method?
+    def __reloadSpeechModule(self, active):
+        speech.isActive = active
+#        global speech
+#        del(speech)
+#        speech = _pluginManager.getPluginObject('speech')
+#        if speech == None: import dummyspeech as speech
+
+    def __updateBrailleTab(self, active):
+        notebook = self.get_widget('notebook')
+        brailleTab = notebook.get_nth_page(2)
+        if active == True:
+            brailleTab.show()
+        else:
+            brailleTab.hide()
+        
+        self.get_widget("enableBrailleCheckButton").set_active(active)
+        self.get_widget("enableBrailleMonitorCheckButton").set_active(active)
+
+    def __updateMagTab(self, active):
+        notebook = self.get_widget('notebook')
+        gsmagTab = notebook.get_nth_page(4)
+
+        self.get_widget("magnifierSupportCheckButton").set_active(active)
 
     def __initProfileCombo(self):
         """Adding available profiles and setting active as the active one"""
@@ -4078,6 +4268,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         the treeview.
         """
 
+        global speech
+
         orca_state.capturingKeys = False
         myiter = treeModel.get_iter_from_string(path)
         originalBinding = treeModel.get_value(myiter, text)
@@ -4632,6 +4824,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self._populateKeyBindings()
 
         self.__initProfileCombo()
+
+        self._initPluginsTreeView()
 
 
 class OrcaAdvancedMagGUI(OrcaSetupGUI):

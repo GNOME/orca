@@ -178,6 +178,9 @@ class ScriptManager:
     def getDefaultScript(self, app=None):
         if not app and self._defaultScript:
             return self._defaultScript
+        import scripts.default as default
+        script = default.Script(app)
+        _eventManager.registerListeners(script)
 
         import scripts.default as default
         script = default.Script(app)

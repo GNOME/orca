@@ -2,9 +2,13 @@ import bisect
 import gobject
 import orca_state
 import pyatspi
-import speech
 import copy
 import time
+import orca
+
+_pluginManager = getattr(orca, '_pluginManager')
+
+speech = _pluginManager.getPluginObject('speech')
 
 from orca_i18n import _
 

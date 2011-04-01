@@ -109,6 +109,7 @@ class Options:
         self._getDebug()
         self._getHelp()
 
+
     def validate(self):
         """Parses the list of options in arglist and removes those which are
         not valid so that typos do not prevent the user from starting Orca."""
@@ -502,6 +503,17 @@ options = Options()
 if options.userPrefsDir:
     settings.userPrefsDir = options.userPrefsDir
 
+
+# From here, we're going to instantiate a Plugin Manager object
+# for interacting with plugins. The sense of this is to maintain
+# one instance and all orca modules can interact with, as same as
+# we're dealing with Settings Manager.
+# The main reason for be the first, is that settings manager needs
+# a Plugin Manager instance.
+#
+from pluglib.plugin_manager import ModulePluginManager 
+_pluginManager = ModulePluginManager()
+
 # This needs to occur prior to our importing anything which might in turn
 # import anything which might expect to be able to use the Settings Manager
 # You have been warned.
@@ -528,19 +540,28 @@ if settings.useDBus:
     import dbus.mainloop.glib
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
     import dbusserver
-    try:
-        import gsmag as mag
-    except:
-        import mag
-else:
-    import mag
 
-import braille
+#try:
+#        import gsmag as mag
+#    except:
+#        import mag
+#else:
+#    import mag
+
+#import braille
 import httpserver
 import keynames
 import keybindings
 import orca_state
-import speech
+
+# JH: We're going to store the speech plugin
+# in a global variable called speech, so this
+# import isn't needed at this moment.
+#
+#import speech
+global speech
+speech = None
+
 import notification_messages
 
 from input_event import BrailleEvent
@@ -1200,6 +1221,7 @@ def _processKeyboardEvent(event):
     debug.printInputEvent(debug.LEVEL_FINE, string)
 
     if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
+        braille = _pluginManager.getPluginObject('braille')
         braille.killFlash()
 
     # See if this is one of our special Orca modifier keys.
@@ -1308,6 +1330,7 @@ def _processKeyboardEvent(event):
                         # Check to see if there are localized words to be
                         # spoken for this key event.
                         #
+                        braille = _pluginManager.getPluginObject('braille')
                         braille.displayMessage(keyboardEvent.event_string)
                         event_string = keyboardEvent.event_string
                         event_string = keynames.getKeyName(event_string)
@@ -1460,6 +1483,10 @@ def _restoreXmodmap(keyList=[]):
 
     os.system("echo '%s' | xmodmap - > /dev/null 2>&1" % "\n".join(toRestore))
 
+def activeStartingPlugins(plugins):
+    for plug in plugins:
+        _pluginManager.enablePlugin(plug)
+
 def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """Loads (and reloads) the user settings module, reinitializing
     things such as speech if necessary.
@@ -1468,6 +1495,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """
 
     global _userSettings
+    global speech
 
     # Shutdown the output drivers and give them a chance to die.
 
@@ -1479,9 +1507,32 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         dbusserver.shutdown()
 
     httpserver.shutdown()
-    speech.shutdown()
-    braille.shutdown()
-    mag.shutdown()
+    # JH / TODO: Must do something smarter
+    # Hard code for speech plugin
+    #
+    try:
+        speech.shutdown()
+    except:
+        print 'Passing speech'
+        pass
+
+    # NA / TODO: Must do something smarter
+    # Hard code for braille plugin
+    #
+    try:
+        braille.shutdown()
+    except:
+        print 'Passing braille'
+        pass
+
+    # NA / TODO: Must do something smarter
+    # Hard code for mag plugin
+    #
+    try:
+        mag.shutdown()
+    except:
+        print 'Passing mag'
+        pass
 
     _scriptManager.deactivate()
 
@@ -1514,7 +1565,19 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     for key in _commandLineSettings:
         setattr(settings, key, _commandLineSettings[key])
 
-    if settings.enableSpeech:
+    # Here, we're getting plugins for settingsManager
+    plugins = _settingsManager.getPlugins()
+    # What plugins will be enabled?
+    activePlugins = [plug for plug in plugins if plugins[plug]['active']]
+
+    # Enable starting plugins
+    activeStartingPlugins(activePlugins)
+
+    speech = _pluginManager.getPluginObject('speech')
+
+    if settings.enableSpeech and 'speech' in activePlugins:
+        #speech = _pluginManager.getPluginObject('speech')
+#        if speech == None: import dummyspeech as speech
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
@@ -1531,8 +1594,11 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.println(debug.LEVEL_SEVERE,
                           "Could not initialize connection to speech.")
     else:
+        #if speech == None: import dummyspeech as speech
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
+
+    braille = _pluginManager.getPluginObject('braille')
 
     if settings.enableBraille:
         try:
@@ -1542,7 +1608,12 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.println(debug.LEVEL_WARNING,
                           "Could not initialize connection to braille.")
 
-    if settings.enableMagnifier:
+    if 'gsmag' in activePlugins:
+        mag = _pluginManager.getPluginObject('gsmag')
+    else:
+        mag = _pluginManager.getPluginObject('mag')
+
+    if settings.enableMagnifier and ('mag' in activePlugins or 'gsmag' in activePlugins):
         try:
             mag.init()
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -2081,13 +2152,24 @@ def shutdown(script=None, inputEvent=None):
     _eventManager.deactivate()
     _scriptManager.deactivate()
 
+    # Here, we're getting plugins for settingsManager
+    plugins = _settingsManager.getPlugins()
+    # What plugins will be enabled?
+    activePlugins = [plug for plug in plugins if plugins[plug]['active']]
+
     # Shutdown all the other support.
     #
     if settings.enableSpeech:
         speech.shutdown()
     if settings.enableBraille:
+        braille = _pluginManager.getPluginObject('braille')
         braille.shutdown()
     if settings.enableMagnifier or settings.enableMagLiveUpdating:
+        if 'gsmag' in activePlugins:
+            mag = _pluginManager.getPluginObject('gsmag')
+        else:
+            mag = _pluginManager.getPluginObject('mag')
+
         mag.shutdown()
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
@@ -2286,6 +2368,7 @@ def main():
         message = _("Welcome to Orca.")
         if not _settingsManager.getSetting('onlySpeakDisplayedText'):
             speech.speak(message, settings.voices.get(settings.SYSTEM_VOICE))
+        braille = _pluginManager.getPluginObject('braille')
         braille.displayMessage(message)
     except:
         debug.printException(debug.LEVEL_SEVERE)
@@ -2323,4 +2406,5 @@ def main():
     return 0
 
 if __name__ == "__main__":
+
     sys.exit(main())

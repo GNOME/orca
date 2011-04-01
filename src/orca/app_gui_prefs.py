@@ -41,12 +41,14 @@ import orca_gui_prefs
 import orca_prefs
 import orca_state
 import orca_platform
-import speech
 
 from orca_i18n import _  # for gettext support
 
 _scriptManager = getattr(orca, '_scriptManager')
 _settingsManager = getattr(orca, '_settingsManager')
+_pluginManager = getattr(orca, '_pluginManager')
+
+speech = _pluginManager.getPluginObject('speech')
 
 applicationName = None
 appScript = None
