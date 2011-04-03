@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: accessibility_guide HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-04-01 15:20+0000\n"
-"PO-Revision-Date: 2011-04-01 17:27+0200\n"
+"PO-Revision-Date: 2011-04-03 21:15+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "MIME-Version: 1.0\n"
@@ -176,7 +176,7 @@ msgstr ""
 "A „szövegattribútumok” kifejezés egy karakter vagy karaktersorozat "
 "betűkészletét, stílusát, igazítását, és más formázásait jelenti. Az "
 "<app>Orka</app> grafikus beállító párbeszédpanelének "
-"<gui>Szövegattribútumok</gui> lapján testreszabhatja, hogy milyen "
+"<gui>Szövegattribútumok</gui> lapján személyre szabhatja, hogy milyen "
 "szövegattribútumok kerüljenek kimondásra, milyen sorrendben történjen a "
 "kimondás, valamint milyen attribútumokat jelenítsen meg az <app>Orka</app> a "
 "braille-kijelzőn."
@@ -236,7 +236,7 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Az „aláhúzás” attribútum alapértéke például a „nincs”. Ennek hatására az <app>Orka</app> addig értesíti az alá nem húzott szövegről, amíg a szöveg ténylegesen alá van húzva. Ha azt szeretné, hogy ez az attribútum kimondásra kerüljön függetlenül attól, hogy a kérdéses szöveg alá van-e "
+"Az „aláhúzás” attribútum alapértéke például a „nincs”. Ennek hatására az <app>Orka</app> addig értesíti az aláhúzott szövegről, amíg a szöveg ténylegesen alá van húzva. Ha azt szeretné, hogy ez az attribútum kimondásra kerüljön függetlenül attól, hogy a kérdéses szöveg alá van-e "
 "húzva, jelölje be a <gui>Felolvasás</gui> jelölőnégyzetet, és törölje a <gui>Megjelenítés, ha nem</gui> oszlopot."
 
 #: C/preferences_text_attributes.page:75(title)
@@ -384,7 +384,7 @@ msgid ""
 msgstr ""
 "A következő beállításokkal személyre szabhatja az <app>Orka</app> "
 "táblázatnavigációval kapcsolatos beállításait a <link xref="
-"\"howto_structural_navigation\">Strukturált Orka navigációt</link> támogató "
+"\"howto_structural_navigation\">strukturált Orka navigációt</link> támogató "
 "alkalmazásokban."
 
 #: C/preferences_table_navigation.page:30(title)
@@ -410,7 +410,7 @@ msgstr ""
 #: C/preferences_gecko.page:36(p) C/preferences_gecko.page:55(p)
 #: C/preferences_gecko.page:106(p)
 msgid "Default value: checked"
-msgstr "Alapértelmezés: bejelölve"
+msgstr "Alapbeállítás: bejelölve"
 
 #: C/preferences_table_navigation.page:40(title)
 msgid "Speak multiple cell spans"
@@ -435,11 +435,11 @@ msgid ""
 "header if the headers for the current cell can be determined."
 msgstr ""
 "Ha ez a jelölőnégyzet be van jelölve, az <app>Orka</app> ki fogja mondani a "
-"cellafejlécek változásait, ha a cellafejlécek meg lettek adva."
+"cellafejlécek változásait, ha a jelenlegi cella fejlécei meghatározhatók."
 
 #: C/preferences_table_navigation.page:60(title)
 msgid "Skip blank cells"
-msgstr "Üres sorok kihagyása"
+msgstr "Üres cellák kihagyása"
 
 #: C/preferences_table_navigation.page:61(p)
 msgid ""
@@ -467,7 +467,7 @@ msgstr ""
 #: C/preferences_braille.page:47(p) C/preferences_braille.page:65(p)
 #: C/preferences_braille.page:79(p) C/preferences_braille.page:90(p)
 msgid "Default value: not checked"
-msgstr "Ez a jelölőnégyzet alapértelmezetten nincs bejelölve."
+msgstr "Alapbeállítás: nincs bejelölve"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -603,7 +603,7 @@ msgstr "A beszéddel kapcsolatos beállítások megadása"
 
 #: C/preferences_speech.page:18(title)
 msgid "Speech Preferences"
-msgstr "Beszéd beállítások"
+msgstr "Beszéd beállításai"
 
 #: C/preferences_speech.page:20(title)
 msgid "Enable speech"
@@ -617,7 +617,7 @@ msgid ""
 msgstr ""
 "Ez a jelölőnégyzet szabályozza, hogy az <app>Orka</app> használja-e a "
 "beszédszintetizátort. A csak nagyítót vagy braille-kijelzőt használó "
-"felhasználók általában szeretik levenni a jelölést erről a jelölőnégyzetről."
+"felhasználók töröljék ezt jelölőnégyzetet."
 
 #: C/preferences_speech.page:30(title)
 msgid "Text-To-Speech Options"
@@ -646,10 +646,7 @@ msgstr "Beszédszintetizátor"
 msgid ""
 "This combo box allows you to select the speech synthesizer to be used with "
 "your chosen Speech system."
-msgstr ""
-"Ebben a kombinált listamezőben kiválaszthatja azt a használni kívánt "
-"beszédszintetizátort, amelyet az ön által kiválasztott beszédrendszer "
-"támogat."
+msgstr "Ebben a kombinált listamezőben kiválaszthatja az Ön által kiválasztott beszédrendszerrel használni kívánt beszédszintetizátort."
 
 #: C/preferences_speech.page:48(title)
 msgid "Voice settings"
@@ -682,7 +679,7 @@ msgid ""
 msgstr ""
 "Ha egy hangkarakter beállításait szeretné konfigurálni, először válassza ki "
 "a kívánt hangkaraktert a <gui>Hangbeállítás</gui> kombinált listamezőből. "
-"Ezután állítsa be a kívánt beszédsebességet, hangmagasságot és hangerőt."
+"Ezután állítsa be a kívánt karaktert, beszédsebességet, hangmagasságot és hangerőt."
 
 #: C/preferences_speech.page:65(title)
 msgid "Person"
@@ -701,7 +698,7 @@ msgstr ""
 "például, hogy Dávid legyen az alapértelmezett hangkarakter az általános "
 "információk kimondásakor, de a hivatkozások kimondása Alíz hangján "
 "történjen. Megjegyzés: A <gui>Személy</gui> kombinált listamezőben "
-"választható hangkarakterek az ön által telepített beszédszintetizátorok "
+"választható hangkarakterek az Ön által telepített beszédszintetizátorok "
 "lehetőségeitől függenek."
 
 #: C/preferences_speech.page:75(title)
@@ -732,7 +729,7 @@ msgstr ""
 
 #: C/preferences_speech.page:93(title)
 msgid "None"
-msgstr "A nincs központozási szint"
+msgstr "Nincs"
 
 #: C/preferences_speech.page:94(p)
 msgid ""
@@ -744,13 +741,12 @@ msgid ""
 msgstr ""
 "Ha a <gui>Nincs</gui> központozási szintet választja, semmilyen írásjel "
 "kimondása nem történik meg. Kivételt képeznek ez alól a speciális "
-"szimbólumok, például a felső és alsó index-szel ellátott számok, unicode "
-"jelek és felsorolás jelek, ezek a szimbólumok ennél a központozási szintnél "
-"is kimondásra kerülnek."
+"szimbólumok, például a felső és alsó indexben lévő számok, Unicode "
+"jelek és felsorolásjelek, noha egyesek ezeket a szimbólumokat is központozási jeleknek tekintik."
 
 #: C/preferences_speech.page:103(title)
 msgid "Some"
-msgstr "A néhány központozási szint"
+msgstr "Néhány"
 
 #: C/preferences_speech.page:104(p)
 msgid ""
@@ -762,11 +758,11 @@ msgstr ""
 "Ha a <gui>Néhány</gui> központozási szintet választja, minden előzőleg írt "
 "szimbólum kimondásra kerül. Továbbá, az <app>Orka</app> ki fogja mondani az "
 "ismert matematikai szimbólumokat, pénznemeket, valamint a „^”, „@”, „/”, "
-"„&amp;”, „#” írásjeleket."
+"„&amp;”, „#” szimbólumokat is."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
-msgstr "A legtöbb központozási szint"
+msgstr "Legtöbb"
 
 #: C/preferences_speech.page:113(p)
 msgid ""
@@ -782,7 +778,7 @@ msgstr ""
 
 #: C/preferences_speech.page:121(title)
 msgid "All"
-msgstr "A mindent központozási szint"
+msgstr "Mindent"
 
 #: C/preferences_speech.page:122(p)
 msgid ""
@@ -794,7 +790,7 @@ msgstr ""
 
 #: C/preferences_speech.page:127(p)
 msgid "Default value: <gui>Most</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>Legtöbb</gui>"
+msgstr "Alapbeállítás: <gui>Legtöbb</gui>"
 
 #: C/preferences_speech.page:132(title) C/preferences_braille.page:95(title)
 msgid "Verbosity"
@@ -808,15 +804,15 @@ msgid ""
 "that the word is misspelled. When the level is set to brief, this "
 "announcement will not be made."
 msgstr ""
-"A <gui>részletesség</gui> beállításával megadható az egyes szituációkban "
+"A <gui>Részletesség</gui> beállításával megadható az egyes szituációkban "
 "kimondandó információk mennyisége. Ha például a részletes lehetőség van "
-"beállítva és a nyílbillentyűkkel egy elgépelt szóra mozgatja a kurzort, "
-"akkor az <app>Orka</app> jelezni fogja önnek az elgépelést. Ha a tömör "
+"beállítva, és a nyílbillentyűkkel egy elgépelt szóra mozgatja a kurzort, "
+"akkor az <app>Orka</app> jelezni fogja Önnek az elgépelést. Ha a Tömör "
 "lehetőség van beállítva, ez az információ nem kerül kimondásra."
 
 #: C/preferences_speech.page:141(p) C/preferences_braille.page:103(p)
 msgid "Default value: <gui>Verbose</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>Részletes</gui>"
+msgstr "Alapbeállítás: <gui>Részletes</gui>"
 
 #: C/preferences_speech.page:146(title)
 msgid "Table Rows"
@@ -828,8 +824,8 @@ msgid ""
 "when navigating amongst rows in a table. The available options are "
 "<gui>speak row</gui> and <gui>speak cell</gui>."
 msgstr ""
-"A <gui>Táblázatoszlopok olvasása</gui> választógomb csoport meghatározza, "
-"hogy mi kerüljön kimondásra, amikor egy táblázat sorai között navigál. A "
+"A <gui>Táblázatoszlopok olvasása</gui> választógombcsoport meghatározza, "
+"hogy mi kerüljön kimondásra, ha egy táblázat sorai között navigál. A "
 "választható beállítások: <gui>Sor felolvasása</gui> és <gui>Cella "
 "felolvasása</gui>."
 
@@ -842,17 +838,17 @@ msgid ""
 "may not be desired. In that case, <gui>speak cell</gui> should instead be "
 "chosen."
 msgstr ""
-"Tegyük fel, hogy át kell tekintenie a beérkezett üzenetek mappában levő "
+"Tegyük fel, hogy át kell tekintenie a Beérkezett üzenetek mappában levő "
 "üzeneteit. Ha azt szeretné, hogy az <app>Orka</app> kimondja egy üzenet "
 "esetén a feladót, tárgyat, dátumot és hogy az üzenet tartalmaz-e "
-"mellékletet, szükséges a <gui>Sor felolvasása</gui> beállítás használata. Ha "
+"mellékletet, a <gui>Sor felolvasása</gui> beállítás használandó. Ha "
 "viszont egy táblázat sorai között navigál, a teljes sor végighallgatása akár "
 "zavaró is lehet. Ebben az esetben érdemes például a <gui>Cella felolvasása</"
 "gui> beállítást választania."
 
 #: C/preferences_speech.page:161(p)
 msgid "Default value: <gui>Speak row</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>Sor felolvasása</gui>"
+msgstr "Alapbeállítás: <gui>Sor felolvasása</gui>"
 
 #: C/preferences_speech.page:166(title)
 msgid "Progress Bar Updates"
@@ -868,10 +864,8 @@ msgid ""
 "If the <gui>Enabled</gui> checkbox is checked <app>Orca</app> will "
 "periodically present the status of progress bars."
 msgstr ""
-"Ha az  <gui>Engedélyezve</gui> jelölőnégyzet be van jelölve, az <app>Orka</"
-"app> megadott időközönként felolvassa a folyamatjelzők állapotváltozását. A "
-"felolvasás időköze a <gui>Frissítés gyakorisága</gui> léptetőgomb "
-"segítségével adható meg."
+"Ha az <gui>Engedélyezve</gui> jelölőnégyzet be van jelölve, az <app>Orka</"
+"app> megadott időközönként felolvassa a folyamatjelzők állapotváltozását."
 
 #: C/preferences_speech.page:179(title)
 msgid "Frequency (secs)"
@@ -885,7 +879,7 @@ msgstr ""
 
 #: C/preferences_speech.page:183(p)
 msgid "Default value: 10"
-msgstr "Az alapértelmezett beállítás: 10"
+msgstr "Alapbeállítás: 10"
 
 #: C/preferences_speech.page:188(title)
 msgid "Restrict to"
@@ -909,7 +903,7 @@ msgid ""
 "for all progress bars, regardless of where the progress bars are located."
 msgstr ""
 "Ha a <gui>Mindent</gui> lehetőséget választja, az <app>Orka</app> minden "
-"folyamatjelző állapotváltozást ki fog mondani, függetlenül azok helyétől."
+"folyamatjelző-állapotváltozást ki fog mondani, függetlenül azok helyétől."
 
 #: C/preferences_speech.page:200(p)
 msgid ""
@@ -918,8 +912,7 @@ msgid ""
 "in the active window."
 msgstr ""
 "Ha az <gui>Alkalmazás</gui> lehetőséget választja, az <app>Orka</app> ki "
-"fogja mondani a fókuszban levő aktív alkalmazás folyamatjelző "
-"állapotváltozásait, függetlenül attól, hogy az alkalmazás ablaka aktív-e."
+"fogja mondani a fókuszban levő aktív alkalmazás folyamatjelző-állapotváltozásait, függetlenül attól, hogy az alkalmazás ablaka aktív-e."
 
 #: C/preferences_speech.page:205(p)
 msgid ""
@@ -927,11 +920,11 @@ msgid ""
 "updates for progress bars in the active window."
 msgstr ""
 "Ha az <gui>Ablak</gui> lehetőséget választja, az <app>Orka</app> csak az "
-"aktív ablak folyamatjelző állapotváltozásait fogja kimondani"
+"aktív ablak folyamatjelző-állapotváltozásait fogja kimondani."
 
 #: C/preferences_speech.page:209(p)
 msgid "Default value: <gui>Application</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>Alkalmazás</gui>"
+msgstr "Alapbeállítás: <gui>Alkalmazás</gui>"
 
 #: C/preferences_speech.page:215(title)
 msgid "Only speak displayed text"
@@ -945,7 +938,7 @@ msgid ""
 msgstr ""
 "Ha bejelöli ezt a jelölőnégyzetet, az <app>Orka</app> csak a képernyőn "
 "megjelenő szövegeket fogja kimondani. Ez a beállítás elsősorban a "
-"gyengénlátó, vagy tanulási nehézségekkel küzdő felhasználók számára lehet "
+"gyengénlátó, vagy vizuális tanulási nehézségekkel küzdő felhasználók számára lehet "
 "hasznos."
 
 #: C/preferences_speech.page:224(title)
@@ -1062,7 +1055,7 @@ msgid ""
 "announce this information."
 msgstr ""
 "Ha kódot vagy szövegeket szerkeszt, gyakran szüksége lehet az igazítás vagy "
-"a behúzás felolvasására. A „<gui>Behúzás és igazítás felolvasása</gui> "
+"a behúzás felolvasására. A <gui>Behúzás és igazítás felolvasása</gui> "
 "jelölőnégyzet bejelölése után az <app>Orka</app> kimondja ezeket az "
 "információkat."
 
@@ -1078,15 +1071,17 @@ msgid ""
 msgstr ""
 "Ha a <gui>Gyorsbillentyűk felolvasása</gui> jelölőnégyzet be van jelölve, az "
 "<app>Orka</app> kimondja a fókuszban lévő objektumokhoz társított "
-"gyorsbillentyűket. Ha például az <gui>Ok</gui> gomb van fókuszban és ez a "
-"jelölőnégyzet be van jelölve, a kimondott szöveg a következő lesz: „Ok gomb. "
-"Alt O.”"
+"gyorsbillentyűket. Ha például az <gui>OK</gui> gomb van fókuszban és ez a "
+"jelölőnégyzet be van jelölve, a kimondott szöveg a következő lesz: „<gui>OK</gui> gomb. "
+"<keyseq><key>Alt</key><key>O</key></keyseq>”."
 
 #: C/preferences_speech.page:301(title)
 msgid "Speak child position"
 msgstr "Pozícióadatok kimondásának engedélyezése"
 
-# Megjegyzés: itt is maradjon az egyéni fordítás, mivel a beállítások #ablakban is végül így fordítottuk ezt a jelölőnégyzetet. Szószerinti #fordításban gyermekpozíciók kimondása lenne a fordítás.
+# Megjegyzés: itt is maradjon az egyéni fordítás, mivel a beállítások
+# ablakban is végül így fordítottuk ezt a jelölőnégyzetet. Szószerinti
+# fordításban gyermekpozíciók kimondása lenne a fordítás.
 #: C/preferences_speech.page:302(p)
 msgid ""
 "Checking the <gui>Speak child position</gui> checkbox will cause <app>Orca</"
@@ -1096,7 +1091,7 @@ msgstr ""
 "Ha a <gui>Pozícióadatok kimondásának engedélyezése</gui> jelölőnégyzet be "
 "van jelölve, az <app>Orka</app> kimondja a fókuszban lévő objektum "
 "pozícióadatait, ha ez az adat elérhető. Ha például egy listában a második "
-"elemen áll és a listának nyolc eleme van, a kimondott adat 2/8 lesz. Ezek az "
+"elemen áll, és a listának nyolc eleme van, a kimondott adat 2/8 lesz. Ezek az "
 "információk például a következő objektumoknál hangzanak el: választógombok, "
 "kombinált listamezők, menük, listák, lapfülek, stb."
 
@@ -1164,7 +1159,7 @@ msgid ""
 "allows you to add, edit, and delete entries in <app>Orca</app>'s "
 "pronunciation dictionary."
 msgstr ""
-"Az <app>Orka</app> grafikus beállító párbeszédpanel kiejtés lapja "
+"Az <app>Orka</app> grafikus beállító párbeszédpanel <gui>Kiejtés</gui> lapja "
 "lehetőséget ad új bejegyzések hozzáadására, szerkesztésére és törlésére az "
 "<app>Orka</app> kivételszótárából."
 
@@ -1173,10 +1168,7 @@ msgid ""
 "Because the <gui>Pronunciation</gui> page is also part of the application-"
 "specific settings, you can customize your entries on an as-needed basis for "
 "each application you use."
-msgstr ""
-"Mivel a <gui>Kiejtés</gui> lap megtalálható az <app>Orka</app> alkalmazás "
-"beállító párbeszédpanelén is, így bármilyen alkalmazás elindítása után a "
-"kivételszótárak akár alkalmazás szinten is személyre szabhatók."
+msgstr "Mivel a <gui>Kiejtés</gui> lap megtalálható az <app>Orka</app> alkalmazás beállító párbeszédpanelén is, így a kivételszótárak akár alkalmazásszinten is személyre szabhatók."
 
 #: C/preferences_pronunciation.page:38(title)
 msgid "Adding a new dictionary entry"
@@ -1392,7 +1384,7 @@ msgid ""
 "The <gui>Zoomer</gui> options allow you to customize the magnifier's level, "
 "position, and size, as well as to hide the system pointer."
 msgstr ""
-"A <gui>Nagyítási beállításoknál</gui> megadhatja a nagyítási arányt, a "
+"A <gui>Nagyító beállításainál</gui> megadhatja a nagyítási arányt, a "
 "nagyító pozícióját és méretét, valamint elrejtheti a rendszermutatót."
 
 #: C/preferences_magnifier.page:39(title)
@@ -1405,7 +1397,7 @@ msgid ""
 "to 16.0x (fractional values are supported)."
 msgstr ""
 "A <gui>Nagyítási arány</gui> léptetőgomb segítségével a nagyítási arány "
-"állítható be (1.0 és 16.0 között), a tört értékek is használhatók."
+"állítható be (1,0 és 16,0 között), a tört értékek is használhatók."
 
 #: C/preferences_magnifier.page:46(title)
 msgid "Position"
@@ -1425,7 +1417,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:53(p)
 msgid "Default value: <gui>Full Screen</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>Teljes képernyő</gui>"
+msgstr "Alapbeállítás: <gui>Teljes képernyő</gui>"
 
 #: C/preferences_magnifier.page:58(title)
 msgid "Specifying the Bounds of a \"Custom\" Zoomer"
@@ -1446,8 +1438,8 @@ msgid ""
 "These spin buttons allow you to define the location of each edge of the zoom "
 "window. Units are in pixels."
 msgstr ""
-"Ezek a léptetőgombok lehetővé teszik a nagyító széleinek beállítását, az "
-"értékeket képpontban kell megadnia."
+"Ezek a léptetőgombok lehetővé teszik a nagyító szélei helyének beállítását, az "
+"értékeket képpontban kell megadni."
 
 #: C/preferences_magnifier.page:70(title)
 msgid "Hide system pointer"
@@ -1464,7 +1456,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:75(p)
 msgid "Default value: unchecked"
-msgstr "Ez a jelölőnégyzet alapértelmezetten nincs bejelölve."
+msgstr "Alapbeállítás: nincs bejelölve"
 
 #: C/preferences_magnifier.page:81(title)
 msgid "Tracking and Alignment"
@@ -1527,7 +1519,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:119(p)
 msgid "Default value: <gui>Centered</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>Középre helyezett</gui>"
+msgstr "Alapbeállítás: <gui>Középre helyezett</gui>"
 
 #: C/preferences_magnifier.page:124(title)
 msgid "Pointer follows zoomer"
@@ -1543,11 +1535,9 @@ msgid ""
 "mouse tracking mode is centered, the pointer will be moved to the center; "
 "otherwise it will be moved to the item with focus."
 msgstr ""
-"Ha ez a jelölőnégyzet be van jelölve, és az egérmutató nincs a képernyőn az "
-"egér mozgatása közben, akkor a nagyítóra lesz mozgatva, így mindig láthatja, "
-"hogy éppen mire mutat. Ha a beállított egérmutató-követési mód a „középre”, "
+"<gui>Az egérmutató követi a nagyítót</gui> jelölőnégyzettel megadható, hogy mi történjen, ha az egérmutató nincs a képernyőn, amikor először megmozdítja az egeret. Ha ez be van jelölve, és az egérmutató nincs a képernyőn az egér mozgatása közben, akkor a nagyítóra lesz mozgatva, így mindig láthatja, hogy éppen mire mutat. Ha a beállított egérmutató-követési mód a „középre”, "
 "akkor az egérmutató a képernyő közepére fog mozogni; egyébként a fókuszban "
-"lévő elemre lesz mozgatva."
+"lévő elemre."
 
 #: C/preferences_magnifier.page:141(title)
 msgid "Control and menu item"
@@ -1587,7 +1577,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:166(p) C/preferences_magnifier.page:204(p)
 msgid "Default value: <gui>Push</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>Görgetés</gui>"
+msgstr "Alapbeállítás: <gui>Görgetés</gui>"
 
 #: C/preferences_magnifier.page:171(title)
 msgid "Pointer follows focus"
@@ -1646,20 +1636,18 @@ msgid ""
 "The margin can range from 0 to 50%, with 50% being the equivalent of "
 "choosing centering."
 msgstr ""
-"A <gui>szélső margó</gui> meghatározza, hogy a képernyő széléhez mennyire "
+"A <gui>Szélső margó</gui> meghatározza, hogy a képernyő széléhez mennyire "
 "kerülhet közel a kurzor, mielőtt a nagyított ablak görgetésre kerül. A margó "
 "értékét 0-tól 50%-ig lehet beállítani, az 50%-os érték egyenértékű a középre "
 "beállítással."
 
 #: C/preferences_magnifier.page:217(p)
 msgid "This option is only available if \"Push\" is your text cursor tracking mode."
-msgstr ""
-"Ez a beállítás csak akkor elérhető, ha a „görgetés” szövegkurzor követési "
-"módot használja."
+msgstr "Ez a beállítás csak akkor elérhető, ha a „görgetés” szövegkurzor-követési módot használja."
 
 #: C/preferences_magnifier.page:222(p)
 msgid "Default value: 0"
-msgstr "Az alapértelmezett érték: 0%"
+msgstr "Alapbeállítás: 0"
 
 #: C/preferences_magnifier.page:228(title)
 msgid "Color"
@@ -1670,8 +1658,8 @@ msgid ""
 "The <gui>Color</gui> options allow you to do some rough color adjustments of "
 "the magnified region."
 msgstr ""
-"A <gui>Szín</gui> beállításcsoportban levő beállítások lehetővé teszik a "
-"nagyított területen a színek megváltoztatását."
+"A <gui>Szín</gui> beállításcsoportban levő beállítások lehetővé teszik a színek megváltoztatását a "
+"nagyított területen."
 
 #: C/preferences_magnifier.page:235(title)
 msgid "Invert colors"
@@ -1693,12 +1681,12 @@ msgid ""
 "white/total brightness; 0 is \"normal\"/unchanged)."
 msgstr ""
 "A <gui>Fényerő</gui> léptetőgombnál az értékeket -1-től 1-ig lehet megadni, "
-"az értékek jelentése: (-1: fekete, nincs fényerő. 1: fehér, teljesen fényes. "
+"az értékek jelentése: -1: fekete/nincs fényerő, 1: fehér/teljesen fényes, "
 "0: normál, változatlan kép."
 
 #: C/preferences_magnifier.page:249(p) C/preferences_magnifier.page:259(p)
 msgid "Default value: 0.00"
-msgstr "Az alapértelmezett érték 0.00."
+msgstr "Alapbeállítás: 0.00"
 
 #: C/preferences_magnifier.page:254(title)
 msgid "Contrast"
@@ -1710,8 +1698,8 @@ msgid ""
 "maximum contrast; 0 is \"normal\"/unchanged)."
 msgstr ""
 "A <gui>Kontraszt</gui> léptetőgombnál a kontraszt állítható, az értékeket -1-"
-"től 1-ig lehet megadni., az értékek jelentése: -1: szürke, nincs kontraszt. "
-"1: nagy kontraszt,. 0: normál, változatlan kép)."
+"től 1-ig lehet megadni., az értékek jelentése: -1: szürke/nincs kontraszt, "
+"1: nagy kontraszt, 0: normál/változatlan kép."
 
 # MegjegyzésKell a hosszú cím, mivel ez egy beállításcsoport.
 #: C/preferences_magnifier.page:266(title)
@@ -1724,7 +1712,7 @@ msgid ""
 "separates the magnified region from the non-magnified region. As such, these "
 "options are not available when <gui>Full Screen</gui> is selected."
 msgstr ""
-"A <gui>Szegélybeállítások</gui> segítségével testreszabhatja a szegélyeket, "
+"A <gui>Szegélybeállítások</gui> segítségével személyre szabhatja a szegélyeket, "
 "melyek elválasztják a nagyított területet a nagyítatlan területtől. Ezek a "
 "beállítások nem érhetők el, ha a <gui>Teljes képernyő</gui> nagyítópozíciót "
 "használja."
@@ -1747,11 +1735,11 @@ msgstr "Szegély mérete"
 
 #: C/preferences_magnifier.page:285(p)
 msgid "This value determines the size of the border in pixels."
-msgstr "Ez a beállítás  a szegély méretét határozza meg képpontban."
+msgstr "Ez a beállítás a szegély méretét határozza meg képpontban."
 
 #: C/preferences_magnifier.page:288(p)
 msgid "Default value: 1"
-msgstr "Az alapértelmezett érték: 1"
+msgstr "Alapbeállítás: 1"
 
 #: C/preferences_magnifier.page:293(title)
 msgid "Border color"
@@ -1759,17 +1747,17 @@ msgstr "Szegély színe"
 
 #: C/preferences_magnifier.page:294(p)
 msgid "This value determines the color of the border."
-msgstr "Ez a beállítás  a szegély színét határozza meg."
+msgstr "Ez a beállítás a szegély színét határozza meg."
 
 #: C/preferences_magnifier.page:297(p) C/preferences_magnifier.page:343(p)
 #: C/preferences_magnifier.page:389(p)
 msgid "Default value: black"
-msgstr "Az alapértelmezett beállítás: fekete"
+msgstr "Alapbeállítás: fekete"
 
 # Megjegyzés: Itt is kell a hoasszú cím, mivel beállításcsoportról van szó.
 #: C/preferences_magnifier.page:303(title)
 msgid "Cursor"
-msgstr "kurzor beállításai"
+msgstr "Kurzor beállításai"
 
 #: C/preferences_magnifier.page:305(p)
 msgid ""
@@ -1787,7 +1775,7 @@ msgid ""
 "options become available."
 msgstr ""
 "Ha ez a jelölőnégyzet be van jelölve, a nagyító kurzora látszani fog, "
-"valamint elérhető lesz a kurzor mérete és színe beállítás."
+"valamint elérhető lesz a méret és szín beállítás."
 
 #: C/preferences_magnifier.page:320(title)
 msgid "Custom size"
@@ -1807,11 +1795,11 @@ msgstr "Kurzor mérete"
 
 #: C/preferences_magnifier.page:331(p)
 msgid "This value determines the size of the cursor in pixels."
-msgstr "Ez a beállítás  a kurzor méretét határozza meg képpontban."
+msgstr "Ez a beállítás a kurzor méretét határozza meg képpontban."
 
 #: C/preferences_magnifier.page:334(p)
 msgid "Default value: 32"
-msgstr "Az alapértelmezett érték: 32"
+msgstr "Alapbeállítás: 32"
 
 #: C/preferences_magnifier.page:339(title)
 msgid "Cursor color"
@@ -1843,8 +1831,8 @@ msgid ""
 "If this checkbox is checked then the cross-hair is visible and the size and "
 "color options become available."
 msgstr ""
-"Ha ez a jelölőnégyzet be van jelölve, a nagyító kurzora látszani fog, "
-"valamint elérhető lesz a kurzor mérete és színe beállítás."
+"Ha ez a jelölőnégyzet be van jelölve, a szálkereszt látszani fog, "
+"valamint elérhető lesz a méret és szín beállítás."
 
 #: C/preferences_magnifier.page:366(title)
 msgid "Enable cross-hair clip"
@@ -1868,7 +1856,7 @@ msgstr "Ezzel a beállítással a szálkereszt mérete adható meg képpontban."
 
 #: C/preferences_magnifier.page:380(p)
 msgid "Default value: 16"
-msgstr "Alapértelmezett érték: 16"
+msgstr "Alapbeállítás: 16"
 
 #: C/preferences_magnifier.page:385(title)
 msgid "Cross-hair color"
@@ -1893,7 +1881,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:404(p)
 msgid "<gui>Smoothing</gui>: Bilinear or none."
-msgstr "<gui>Simítás</gui>: a lehetséges értékek Bilineáris, nincs."
+msgstr "<gui>Simítás</gui>: a lehetséges értékek: Bilineáris, Nincs."
 
 # Megjegyzés: a speciális beállítások lapon a brightness beállítást fényerősségnek fordítottuk, ez adható meg a piros, kék és zöld színeknél.
 # A fordításban emiatt használtam ezt.
@@ -1912,8 +1900,7 @@ msgid ""
 "choosing different contrast levels for red, blue, and green helps you to "
 "create the color scheme that works best for you."
 msgstr ""
-"<gui>Kontraszt</gui>: Piros, zöld, kék: egyéni kontrasztszintek adhatók meg. "
-"A különböző színekhez más-más kontrasztszint választásával egyéni színséma "
+"<gui>Kontraszt</gui>: Noha nem olyan jelentős, mint a fényerő változtatásai, az egyéni kontrasztszintek megadásával a piros, zöld, kék színekhez egyéni színséma "
 "hozható létre, az Ön igényeinek megfelelően."
 
 #: C/preferences_magnifier.page:421(p)
@@ -2003,12 +1990,9 @@ msgid ""
 "additional checkboxes to become available through which you can choose "
 "exactly which keys should and should not be echoed to best suit your needs."
 msgstr ""
-"Az <app>Orka</app> billentyűvisszhang beállításaival testreszabhatja, hogy "
-"mi történjen akkor, amikor egy billentyűt lenyom. Ha szeretné engedélyezni a "
-"billentyűvisszhangot, jelölje be a <gui>Billentyűvisszhang engedélyezése</"
-"gui> jelölőnégyzetet. Ha ezt megteszi, számos jelölőnégyzet válik "
-"elérhetővé, ezek segítségével teljesen személyre szabhatja, hogy mely "
-"billentyűk legyenek vagy ne legyenek kimondva."
+"Az <app>Orka</app> billentyűvisszhang-beállításaival személyre szabhatja, hogy "
+"mi történjen egy billentyű lenyomásakor. Ha szeretné engedélyezni a "
+"billentyűvisszhangot, jelölje be a <gui>Billentyűvisszhang engedélyezése</gui> jelölőnégyzetet. Ha ezt megteszi, számos jelölőnégyzet válik elérhetővé, ezek segítségével teljesen személyre szabhatja, hogy mely billentyűk legyenek vagy ne legyenek kimondva."
 
 #: C/preferences_key_echo.page:33(title)
 msgid "Enable alphanumeric and punctuation keys"
@@ -2059,7 +2043,7 @@ msgid ""
 "This option controls whether or not <key>F1</key> through <key>F12</key> "
 "should be spoken when pressed."
 msgstr ""
-"Ez az opció meghatározza, hogy az F1... F12 billentyűk lenyomásakor ezek a "
+"Ez az opció meghatározza, hogy az <key>F1</key> ... <key>F12</key> billentyűk lenyomásakor ezek a "
 "billentyűk kimondásra kerüljenek-e."
 
 #: C/preferences_key_echo.page:74(title)
@@ -2076,7 +2060,7 @@ msgstr ""
 "Ez a beállítás meghatározza, hogy a <key>BackSpace</key>, <key>Del </key>, "
 "<key>Enter</key>, <key>Escape</key>, <key>Tab</key>, <key>Page Up</key>, "
 "<key>Page Down</key>, <key>Home</key>, és <key>End</key> billentyűk "
-"lenyomásakor kimondásra kerüljenek-e a billentyű megnevezések."
+"lenyomásakor kimondásra kerüljenek-e a billentyűmegnevezések."
 
 #: C/preferences_key_echo.page:86(title)
 msgid "Enable navigation keys"
@@ -2089,12 +2073,9 @@ msgid ""
 "option also applies to any key combination in which <key>Orca Modifier</key> "
 "is being held down, for instance when flat review is being used."
 msgstr ""
-"Ez a beállítás szabályozza, hogy például a <key>Balra</key>, <key>Jobbra</"
+"Ez a beállítás szabályozza, hogy a <key>Balra</key>, <key>Jobbra</"
 "key>, <key>Fel</key>, és <key>Le</key> nyilak lenyomásakor kimondásra "
-"kerüljenek-e a billentyű megnevezések. Ez a beállítás alkalmazva lesz "
-"bármilyen olyan billentyűkombinációra, mely tartalmazza a nyomvatartott "
-"<key>Orka módosító</key> billentyűt. Erre egy jó példa, ha az egyszerű "
-"áttekintést használja."
+"kerüljenek-e a billentyűmegnevezések. Ez a beállítás minden olyan billentyűkombinációra alkalmazva lesz, amelyhez az <key>Orka módosító</key> billentyűt nyomva kell tartani, például ha az egyszerű áttekintést használja."
 
 #: C/preferences_key_echo.page:99(title)
 msgid "Enable non-spacing diacritical keys"
@@ -2130,13 +2111,13 @@ msgstr ""
 "között az, hogy a „Karakterenkénti visszhang engedélyezése” jelölőnégyzet "
 "mindig elérhető, függetlenül a többi billentyűvisszhang-beállítástól, "
 "valamint ezzel a jelölőnégyzettel az <app>Orka</app> olyan szimbólumokat is "
-"ki tud mondani, amelyeknek nincsenek dedikált billentyűi a billentyűzeten."
+"ki tud mondani, amelyeknek nincsenek dedikált billentyűi a billentyűzeten:"
 
 #: C/preferences_key_echo.page:124(p)
 msgid "Key echo causes <app>Orca</app> to announce what you just <em> pressed</em>."
 msgstr ""
 "A billentyűvisszhang lehetőség segítségével az <app>Orka</app> képes "
-"kimondani, milyen billentyűt <em> nyomott le</em>."
+"kimondani, milyen billentyűt <em>nyomott le</em>."
 
 #: C/preferences_key_echo.page:130(p)
 msgid ""
@@ -2144,7 +2125,7 @@ msgid ""
 "<em>inserted</em>."
 msgstr ""
 "A karakterenkénti visszhang lehetőséget teremt az <app>Orka</app> számára, "
-"hogy kimondja, milyen karakterrt <em>írt be</em>."
+"hogy kimondja, milyen karaktert <em>szúrt be</em>."
 
 #: C/preferences_key_echo.page:136(p)
 msgid ""
@@ -2161,16 +2142,13 @@ msgstr "Karakterenkénti és szavankénti visszhang engedélyezése"
 # Megjegyzés: nem teljesen értem mire gondol az eredeti szöveg. Ha letiltom az alfanumerikus és írásjelek billentyűvisszhang beállítást és csak a #karakterenkénti visszhangot és a szavankénti visszhangot engedélyezem, akkor például az írásjelek esetén megismétlődik az eredeti szó, de a leütött #írásjel nem kerül echózásra (nem lesz kimondva például a , karakter a leütéskor).
 # Ezt a fordítást tutira át kell szerintem fogalmaznod.
 #: C/preferences_key_echo.page:145(p)
+#, fuzzy
 msgid ""
 "If you like key echo and you frequently type accented characters, consider "
 "enabling both. <app>Orca</app>'s character echo logic attempts to filter out "
 "characters which were spoken as a result of key echo, thus minimizing the "
 "likelihood of \"double speaking\" as you type."
-msgstr ""
-"Ha szereti a karakterenkénti visszhangot és gyakran gépel be ékezetes "
-"karaktereket vagy szimbólumokat, mindkét billentyűvisszhang engedélyezésével "
-"kiszűrheti azokat a karaktereket, melyek duplikált billentyűvisszhangod "
-"generálnának."
+msgstr "Ha szereti a karakterenkénti visszhangot és gyakran gépel be ékezetes karaktereket vagy szimbólumokat, akkor engedélyezze mindkét billentyűvisszhangot. Az <app>Orka</app> karakterenkénti visszhangja megpróbálja kiszűrni azokat a karaktereket, melyek a billentyűvisszhang miatt már ki lettek mondva, így minimalizálja a „dupla beszéd” valószínűségét."
 
 #: C/preferences_key_echo.page:155(title)
 msgid "Enable echo by word and Enable echo by sentence"
@@ -2184,7 +2162,7 @@ msgid ""
 "typed."
 msgstr ""
 "Ha bejelöli a <gui>Szavankénti visszhang engedélyezése</gui> "
-"jelölőnégyzetet, az <app>Orka</app> kifogja mondani a begépelt szót a "
+"jelölőnégyzetet, az <app>Orka</app> ki fogja mondani a begépelt szót a "
 "gépelés befejezése után (például ha lenyomja a szóköz billentyűt). "
 "Hasonlóan, ha bejelöli a <gui>Mondatonkénti visszhang engedélyezése</gui> "
 "jelölőnégyzetet, az <app>Orka</app> ki fogja mondani a begépelt mondatot."
@@ -2276,7 +2254,7 @@ msgid ""
 "The <gui>Function</gui> column is a description of the <app>Orca</app> "
 "operation to be performed."
 msgstr ""
-"A <gui>Funkció</gui> oszlopfejléc az adott <app>Orka</app> művelet leírását "
+"A <gui>Funkció</gui> oszlop az adott <app>Orka</app> művelet leírását "
 "tartalmazza."
 
 #: C/preferences_key_bindings.page:53(p)
@@ -2288,12 +2266,12 @@ msgid ""
 "<key>Return</key>, pressing the keys for the new binding, and pressing "
 "<key>Return</key> again."
 msgstr ""
-"A <gui>Billentyűtársítás</gui> oszlopfejléc az adott Orka funkció elsődleges "
+"A <gui>Billentyűtársítás</gui> oszlop az adott Orka funkció elsődleges "
 "billentyűparancsát tartalmazza, esetleg az „Orka” szóval kiegészítve. Ez azt "
 "jelenti, hogy az <app>Orka</app> módosítóbillentyűt nyomva kell tartani az "
 "egyéb billentyűkkel együtt. A billentyűparancsot módosíthatja, ha a "
-"<gui>billentyűtársítás</gui> oszlopban lenyomja az <key>Enter</key> "
-"billentyűt. Ezután nyomja le az ön által használni kívánt "
+"<gui>Billentyűtársítás</gui> oszlopban lenyomja az <key>Enter</key> "
+"billentyűt. Ezután nyomja le az Ön által használni kívánt "
 "billentyűkombinációt, majd nyomja meg újra az <key>Enter</key> billentyűt."
 
 #: C/preferences_key_bindings.page:63(p)
@@ -2303,7 +2281,7 @@ msgid ""
 "pressing <key>Return</key>, pressing the keys for the new binding, and "
 "pressing <key>Return</key> again."
 msgstr ""
-"A <gui>Tartalék</gui> oszlopfejléc az adott Orka funkció másodlagos "
+"A <gui>Tartalék</gui> oszlop az adott Orka funkció másodlagos "
 "billentyűparancsát tartalmazza. A billentyűparancsot módosíthatja, ha a "
 "<gui>Tartalék</gui> oszlopban lenyomja az <key>Enter</key> billentyűt. "
 "Ezután nyomja le az Ön által használni kívánt billentyűkombinációt, majd "
@@ -2331,11 +2309,10 @@ msgid ""
 "display."
 msgstr ""
 "Az <app>Orka</app> billentyűtársítások listája alatt találni fog egy „Nincs "
-"kiosztva” elnevezésű csoportot, mely olyan Orka parancsokat tartalmaz, "
-"melyekhez nincsenek hozzárendelve billentyűtársítások. Ezek általában olyan "
-"parancsok, melyek hasznosak lehetnek a felhasználóknak, de a legtöbb "
-"felhasználónak ezekre a parancsokra nem lenne szükségük. Mivel minden ilyen "
-"parancshoz egyszerű billentyűtársítást definiálni, így ezek a parancsok "
+"kiosztva” elnevezésű csoportot. Ezek általában olyan "
+"parancsok, melyek hasznosak lehetnek egyes felhasználóknak, de a legtöbb "
+"felhasználónak ezekre a parancsokra nem lenne szüksége. Nem akartunk minden ilyen "
+"parancshoz „elhasználni” egy billentyűtársítást, így ezek a parancsok "
 "alapértelmezetten nem rendelkeznek billentyűtársítással. A lista alján "
 "találhatók a braille társítások, melyeket egy frissíthető braille-kijelzőn "
 "használhat."
@@ -2355,7 +2332,7 @@ msgid ""
 "which applies to all applications. An example of an Orca preference is key "
 "echo because key echo is something that applies to all applications."
 msgstr ""
-"AzOrka beállításai lehetővé teszik az <app>Orka</app> funkcióinak "
+"Az Orka beállításai lehetővé teszik az <app>Orka</app> funkcióinak "
 "testreszabását, ezek a változtatások minden alkalmazásnál alkalmazva "
 "lesznek. Erre egy jó példa a billentyűvisszhang beállítás, mivel a "
 "billentyűvisszhang beállítást általában minden alkalmazásra alkalmazni "
@@ -2554,7 +2531,7 @@ msgstr ""
 
 #: C/preferences_general.page:34(p)
 msgid "Default value: <gui>Desktop</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>Asztali</gui> kiosztás"
+msgstr "Alapbeállítás: <gui>Asztali</gui> kiosztás"
 
 #: C/preferences_general.page:40(desc)
 msgid ""
@@ -2887,7 +2864,7 @@ msgid ""
 "and other content."
 msgstr ""
 "Az <gui>Oldalnavigáció</gui> beállítócsoport vezérlőelemeinek segítségével "
-"testreszabhatja az <app>Orka</app> megjelenítő képességeit a szöveges és más "
+"személyre szabhatja az <app>Orka</app> megjelenítő képességeit a szöveges és más "
 "tartalmakhoz."
 
 #: C/preferences_gecko.page:29(title)
@@ -2991,7 +2968,7 @@ msgid ""
 "using the application's built-in search functionality."
 msgstr ""
 "A <gui>Keresési feltételek</gui> beállítócsoport vezérlőelemeivel "
-"testreszabhatja, hogyan jelenítse meg az <app>Orka</app> az alkalmazások "
+"személyre szabhatja, hogyan jelenítse meg az <app>Orka</app> az alkalmazások "
 "beépített keresőjében megadott keresőkifejezés eredményeit."
 
 #: C/preferences_gecko.page:101(title)
@@ -3040,7 +3017,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:131(p)
 msgid "Default value: 4"
-msgstr "Az alapértelmezett érték: 4"
+msgstr "Alapbeállítás: 4"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -3069,7 +3046,7 @@ msgid ""
 "The following options allow you to customize how <app>Orca</app> behaves "
 "when providing access to instant messaging and internet relay chat clients."
 msgstr ""
-"A következő beállítások segítségével testreszabhatja az <app>Orka</app> "
+"A következő beállítások segítségével személyre szabhatja az <app>Orka</app> "
 "működését az azonnali üzenetküldő alkalmazásokhoz vagy internetes "
 "csevegőkliensekhez való hozzáféréshez"
 
@@ -3149,7 +3126,7 @@ msgstr "Minden csatorna, ha bármely csevegőablak ablak aktív"
 
 #: C/preferences_chat.page:75(p)
 msgid "Default value: all channels"
-msgstr "Az alapértelmezett beállítás: minden csatorna"
+msgstr "Alapbeállítás: minden csatorna"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -3372,7 +3349,7 @@ msgstr ""
 
 #: C/preferences_braille.page:119(p)
 msgid "Default value: <gui>Dots 7 and 8</gui>"
-msgstr "Az alapértelmezett beállítás: <gui>hetedik és nyolcadik pont</gui>"
+msgstr "Alapbeállítás: <gui>hetedik és nyolcadik pont</gui>"
 
 #: C/preferences_braille.page:123(title)
 msgid "Text Attribute Indicators"
@@ -3932,7 +3909,7 @@ msgid ""
 msgstr ""
 "Ha az asztali kiosztást használja, az alapértelmezett Orka "
 "módosítóbillentyűk az <key>Inzert</key> és <key>Numerikus Inzert</key> "
-"billentyűk lesznek, a második billentyű egyben a  <key>Numpad 0</key> "
+"billentyűk lesznek, a második billentyű egyben a <key>Numpad 0</key> "
 "billentyű is."
 
 #: C/howto_the_orca_modifier.page:46(p)
@@ -4332,9 +4309,9 @@ msgid ""
 "text attribute presentation on an as-needed basis for each application you "
 "use."
 msgstr ""
-"Mivel a  <link xref=\"preferences_text_attributes\">Szövegattribútumok lap</"
+"Mivel a <link xref=\"preferences_text_attributes\">Szövegattribútumok lap</"
 "link> is része az alkalmazásbeállító párbeszédpanelnek, akár alkalmazás "
-"szinten is teljesen testreszabhatja a szövegattribútumok megjelenítését."
+"szinten is teljesen személyre szabhatja a szövegattribútumok megjelenítését."
 
 #: C/howto_text_attributes.page:48(title)
 msgid "Identifying Misspelled Words"
@@ -4785,7 +4762,7 @@ msgid ""
 "Modifier</key><key>Space</key></keyseq>"
 msgstr ""
 "Nyomja le az <keyseq><key>Orka módosító</key><key>Ctrl</key><key>Szóköz</"
-"key></keyseq> billentyűkombinációt, ezzel megnyitja az  <link xref="
+"key></keyseq> billentyűkombinációt, ezzel megnyitja az <link xref="
 "\"preferences\">Orka alkalmazásbeállító párbeszédablakot</link> a fókuszban "
 "levő alkalmazáshoz ()."
 
@@ -4847,7 +4824,7 @@ msgstr ""
 "Ha az akadálymentesítési támogatás már engedélyezve lett az Ön által "
 "használt munkamenetben, az <app>Orka</app> <link xref=\"preferences"
 "\">Grafikus beállító párbeszédpanelbe</link> fog kerülni. Itt teljesen "
-"testreszabhatja az <app>Orka</app> képernyőolvasó funkcióit, és rögtön "
+"személyre szabhatja az <app>Orka</app> képernyőolvasó funkcióit, és rögtön "
 "használatba veheti is azt."
 
 #: C/howto_setting_up_orca.page:38(p)
@@ -5194,9 +5171,7 @@ msgstr ""
 
 #: C/howto_orca_find.page:82(p)
 msgid "Default value of <gui>Match entire word only</gui>: not checked"
-msgstr ""
-"Alapértelmezetten a <gui>Csak teljes szóra</gui> jelölőnégyzet nincs "
-"bejelölve"
+msgstr "A <gui>Csak teljes szóra</gui> jelölőnégyzet alapértelmezetten nincs bejelölve"
 
 #: C/howto_orca_find.page:87(p)
 msgid ""
@@ -5478,9 +5453,9 @@ msgid ""
 msgstr ""
 "Az élő régió egy weboldal dinamikusan frissülő része, például egy táblázat a "
 "legfrissebb sport eredményekről, egy lista a jelenlegi tőzsdei "
-"árfolyamokról, egy  napló a csevegés előző hozzászólásairól, vagy az oldalon "
+"árfolyamokról, egy napló a csevegés előző hozzászólásairól, vagy az oldalon "
 "található értesítésekről. Mivel az élő régiók gyakran megváltoznak, ezért a "
-"teljesen akadálymentesen használható  weboldalakon ritkán fordulnak elő. Ez "
+"teljesen akadálymentesen használható weboldalakon ritkán fordulnak elő. Ez "
 "a probléma viszont rengeteg céget érint."
 
 #: C/howto_live_regions.page:27(title)
@@ -5495,7 +5470,7 @@ msgid ""
 "within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
 "\" to the point of being \"rude.\""
 msgstr ""
-"Minden élő régióhoz  a weboldalak készítői hozzárendelnek egy „udvariassági” "
+"Minden élő régióhoz a weboldalak készítői hozzárendelnek egy „udvariassági” "
 "szintet, ezzel jelzik az információ fontosságát és javaslatot tesznek a "
 "kisegítő technológiák számára, amikor a felhasználót informálják az élő "
 "régiók frissüléséről. Az élő régiók a „kikapcsolva\", „udvarias\", vagy "
@@ -5821,7 +5796,7 @@ msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation commands for forms</link>."
 msgstr ""
-"Használhatja az <app>Orka</app> strukturált  navigációját az <link xref="
+"Használhatja az <app>Orka</app> strukturált navigációját az <link xref="
 "\"commands_structural_navigation#forms\"> űrlapok kezeléséhez</link>."
 
 #: C/howto_forms.page:45(p)
@@ -6217,7 +6192,7 @@ msgid ""
 "In addition to the dedicated Where Am I commands, <app>Orca</app> has two "
 "additional commands related to obtaining your present location:"
 msgstr ""
-"A rendelkezésre álló  Hol vagyok művelet billentyűparancsokon kívül az "
+"A rendelkezésre álló Hol vagyok művelet billentyűparancsokon kívül az "
 "<app>Orka</app> további két billentyűparanccsal rendelkezik a pillanatnyi "
 "objektum azonosításához:"
 
@@ -6718,7 +6693,7 @@ msgid ""
 "Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
 "for information on how to bind these commands to keystrokes."
 msgstr ""
-"A következő parancsok segítségével testreszabhatja az <app>Orka</app> "
+"A következő parancsok segítségével személyre szabhatja az <app>Orka</app> "
 "beszédbeállításait. Számos parancs ezek közül a parancsok közül nem "
 "rendelkezik billentyűtársítással. Ha billentyűtársítást szeretne "
 "hozzárendelni ezekhez a parancsokhoz, olvassa el a <link xref="
