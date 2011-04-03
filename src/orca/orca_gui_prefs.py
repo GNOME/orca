@@ -4589,7 +4589,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # First of all, we give a chance of cancel profile change
         message = _("You are about to change the active profile. If you\n" \
-                    "have just make changes in your preferences, it will\n" \
+                    "have just made changes in your preferences, they will\n" \
                     "be dropped at profile load.\n\n" \
                     "Continue loading profile discarding previous changes?")
 
