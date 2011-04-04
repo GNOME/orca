@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&component=i18n\n"
 "POT-Creation-Date: 2011-02-25 16:39+0000\n"
-"PO-Revision-Date: 2011-02-11 23:44+0100\n"
+"PO-Revision-Date: 2011-04-04 23:05+0200\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -2419,7 +2419,7 @@ msgid ""
 msgstr ""
 "Utilitzeu les tecles cap amunt, cap avall, inici i final per navegar per la "
 "llista.\n"
-"Premeu al tecla d'escapada per sortir.\n"
+"Premeu la tecla d'escapada per sortir.\n"
 "Premeu la tecla espaiadora per repetir l'últim missatge llegit.\n"
 "Premeu un dígit per llegir un missatge en concret.\n"
 
@@ -2461,7 +2461,7 @@ msgstr "Bilineal"
 #: ../src/orca/orca_gui_prefs.py:5014 ../src/orca/orca_gui_prefs.py:5041
 #: ../src/orca/orca_gui_prefs.py:5112
 msgid "Desaturate blue"
-msgstr "Desatura el blau"
+msgstr "Dessatura el blau"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the green value for all
@@ -2471,7 +2471,7 @@ msgstr "Desatura el blau"
 #: ../src/orca/orca-advanced-magnification.ui.h:8
 #: ../src/orca/orca_gui_prefs.py:5006 ../src/orca/orca_gui_prefs.py:5104
 msgid "Desaturate green"
-msgstr "Desatura el verd"
+msgstr "Dessatura el verd"
 
 #. Translators: this refers to a color filter for people with
 #. color blindness. It will eliminate the red value for all
@@ -2482,7 +2482,7 @@ msgstr "Desatura el verd"
 #: ../src/orca/orca_gui_prefs.py:4998 ../src/orca/orca_gui_prefs.py:5040
 #: ../src/orca/orca_gui_prefs.py:5096
 msgid "Desaturate red"
-msgstr "Desatura el vermell"
+msgstr "Dessatura el vermell"
 
 #: ../src/orca/orca-advanced-magnification.ui.h:10
 msgid "Gree_n:"
@@ -2908,7 +2908,7 @@ msgid ""
 "applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
 msgstr ""
 "Un lector de pantalla, amb scripts, lliure i de codi obert que proporciona "
-"accés a les aplicacions i als jocs d'eines que implementen l'AT-SPI (p.ex. "
+"accés a les aplicacions i als jocs d'eines que implementen l'AT-SPI (p. ex. "
 "l'escriptori GNOME)."
 
 #. Translators: This text is used in the Orca About dialog.
@@ -4461,7 +4461,7 @@ msgstr "No vàlid"
 #.
 #: ../src/orca/rolenames.py:171
 msgid "invalid"
-msgstr "invàlid"
+msgstr "no vàlid"
 
 #. Translators: short braille for an accelerator (what you see in a menu).
 #. We strive to keep it under three characters to preserve real estate.
@@ -4762,19 +4762,19 @@ msgstr "marc d'escriptori"
 #: ../src/orca/rolenames.py:375
 msgctxt "shortbraille"
 msgid "dial"
-msgstr "marcar"
+msgstr "mar"
 
 #. Translators: long braille for the rolename of a dial.
 #.
 #: ../src/orca/rolenames.py:378
 msgid "Dial"
-msgstr "Marcar"
+msgstr "Marcatge"
 
 #. Translators: spoken words for the rolename of a dial.
 #.
 #: ../src/orca/rolenames.py:381
 msgid "dial"
-msgstr "marcar"
+msgstr "marcatge"
 
 #. Translators: short braille for the rolename of a dialog.
 #.
@@ -6608,7 +6608,7 @@ msgstr "S'ha inserit una fila."
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1929
 msgid "Presentation Wizard"
-msgstr "Assistent de presentació"
+msgstr "Auxiliar de presentació"
 
 #. Translators: this means a
 #. particular cell in a spreadsheet
@@ -10867,9 +10867,9 @@ msgstr ""
 #~ "Satura el vermell\n"
 #~ "Satura el verd\n"
 #~ "Satura el blau\n"
-#~ "Desatura el vermell\n"
-#~ "Desatura el verd\n"
-#~ "Desatura el blau\n"
+#~ "Dessatura el vermell\n"
+#~ "Dessatura el verd\n"
+#~ "Dessatura el blau\n"
 #~ "Desplaça positivament el to\n"
 #~ "Desplaça negativament el to"
 
