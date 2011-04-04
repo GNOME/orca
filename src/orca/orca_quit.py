@@ -91,7 +91,7 @@ class OrcaQuitGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        orca.shutdown()
+        orca.setOrcaEnabled(None, 'screen-reader-enabled', False)
 
     def quitDialogDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the quitDialog

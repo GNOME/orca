@@ -35,6 +35,26 @@ import time
 import unicodedata
 import shutil
 
+# This must happen BEFORE we import gtk (until we start using
+# introspection).
+from gi.repository.Gio import Settings
+a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')
+
+def getOrcaEnabled(gsetting, key):
+    return gsetting.get_boolean(key)
+
+def setOrcaEnabled(gsetting, key, enabled):
+    gsetting = gsetting or a11yAppSettings
+    gsetting.set_boolean(key, enabled)
+
+def onEnabledChanged(gsetting, key):
+    if not key == 'screen-reader-enabled':
+        return
+
+    enabled = getOrcaEnabled(gsetting, key)
+    if not enabled:
+        shutdown()
+
 # We're going to force the name of the app to "orca" so pygtk
 # will end up showing us as "orca" to the AT-SPI.  If we don't
 # do this, the name can end up being "-c".  See bug 364452 at
@@ -1897,7 +1917,7 @@ def quitOrca(script=None, inputEvent=None):
     """
 
     if settings.quitOrcaNoConfirmation:
-        shutdown()
+        setOrcaEnabled(a11yAppSettings, 'screen-reader-enabled', False)
     else:
         try:
             module = __import__(settings.quitModule,
@@ -1963,7 +1983,8 @@ def init(registry):
     global _initialized
     global _keyBindings
 
-    if _initialized:
+    if _initialized \
+       and getOrcaEnabled(a11yAppSettings, 'screen-reader-enabled'):
         return False
 
     # Do not hang on initialization if we can help it.
@@ -2007,6 +2028,8 @@ def init(registry):
         signal.alarm(0)
 
     _initialized = True
+    setOrcaEnabled(a11yAppSettings, 'screen-reader-enabled', True)
+    a11yAppSettings.connect('changed', onEnabledChanged)
     return True
 
 def start(registry):
