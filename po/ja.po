@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the orca package.
 # Satoru SATOH <ss@gnome.gr.jp>, 2006.
 # Takeshi AIHANA <takeshi.aihana@gmail.com>, 2006-2009.
-# Jiro MATSUZAWA <matsuzawa.jr@gmail.com>, 2010,011.
+# Jiro MATSUZAWA <matsuzawa.jr@gmail.com>, 2010, 2011.
 # Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>, 2010.
 # Takayoshi OKANO <kano@na.rim.or.jp>, 2011.
 #
