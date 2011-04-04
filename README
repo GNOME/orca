@@ -1,4 +1,4 @@
-Orca v3.0.0pre
+Orca v3.0.0
 
 Introduction
 ========================================================================
@@ -34,7 +34,7 @@ to be installed:
 * pyorbit          - Python bindings for ORBit2
 * pygtk            - GTK+ Python bindings
 * pygobject        - Python bindings for the GObject library
-* json-py          - a JSON (http://json.org) reader and writer in Python
+* json-py          - JSON encoder/decoder (included in Python >= 2.6)
 * pyxdg            - Python library to access freedesktop.org standards
 * gnome-python     - Python bindings for various GNOME libraries
 * gnome-speech-1.0 - Python bindings for gnome-speech (optional)

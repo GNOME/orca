@@ -1,3 +1,25 @@
+3.0.0 - 04-March-2011
+
+  * Fix for bug #646547 - Two typos in preferences string
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg        Bulgarian              Krasimir Chonov
+    ca        Catalan                Jordi Serratosa
+    da        Danish                 Kenneth Nielsen
+    de        German                 Simon Bienlein, Wolfgang Stöggl
+    eu        Basque                 Inaki Larranaga Murgoitio
+    hi        Hindi                  Rajesh Ranjan
+    hu        Hungarian              Attila Hammer, Gabor Kelemen
+    ja        Japanese               Takayuki KUSANO, Jiro MATSUZAWA
+    lv        Latvian                Rudolfs Mazurs
+    nb        Norwegian bokmål       Kjartan Maraas
+    pt_BR     Brazilian Portuguese   Rodrigo Padula de Oliveira
+    pt        Portuguese             Rui Batista
+    ta        Tamil                  Dr.T.Vasudevan
+
+==========
+
 2.91.93 - 25-March-2011
 
 GNOME 3.0:
