@@ -3,15 +3,15 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-03-17 20:24+0000\n"
-"PO-Revision-Date: 2011-03-20 12:27+0100\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"POT-Creation-Date: 2011-03-25 21:47+0000\n"
+"PO-Revision-Date: 2011-04-10 16:43+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1951,11 +1951,11 @@ msgstr "Configurar lo que se habla al escribir"
 
 #: C/preferences_key_echo.page:18(title)
 msgid "Key Echo Preferences"
-msgstr ""
+msgstr "Preferencias del eco de teclas"
 
 #: C/preferences_key_echo.page:20(title)
 msgid "Enable key echo"
-msgstr ""
+msgstr "Activar eco de teclas"
 
 #: C/preferences_key_echo.page:22(p)
 msgid ""
@@ -2032,7 +2032,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:99(title)
 msgid "Enable non-spacing diacritical keys"
-msgstr ""
+msgstr "Activar teclas diacríticas no espaciadas"
 
 #: C/preferences_key_echo.page:100(p)
 msgid ""
@@ -2042,7 +2042,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:110(title)
 msgid "Enable echo by character"
-msgstr ""
+msgstr "Activar eco por carácter"
 
 #: C/preferences_key_echo.page:112(p)
 msgid "Enabling this option causes Orca to echo the character you just typed."
@@ -2075,7 +2075,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:144(title)
 msgid "Enabling both key echo and character echo"
-msgstr ""
+msgstr "Activar el eco de tecla y el eco de carácter"
 
 #: C/preferences_key_echo.page:145(p)
 msgid ""
@@ -2127,7 +2127,7 @@ msgstr "Atajos de teclado"
 
 #: C/preferences_key_bindings.page:8(desc)
 msgid "Configuring <app>Orca</app>'s keyboard shortcuts"
-msgstr ""
+msgstr "Configurar los atajos de teclado de <app>Orca</app>"
 
 #: C/preferences_key_bindings.page:19(title)
 msgid "Key Bindings Preferences"
@@ -2216,7 +2216,7 @@ msgstr ""
 
 #: C/preferences_introduction.page:3(title)
 msgid "0. Introduction to <app>Orca</app>'s Preferences"
-msgstr ""
+msgstr "0. Introducción a las preferencias de <app>Orca</app>"
 
 #: C/preferences_introduction.page:4(title)
 #: C/preferences_introduction.page:15(title)
@@ -2372,7 +2372,7 @@ msgstr "General"
 
 #: C/preferences_general.page:5(desc)
 msgid "Configuring <app>Orca</app>'s fundamental behaviors"
-msgstr ""
+msgstr "Configurar el comportamiento básico de <app>Orca</app>"
 
 #: C/preferences_general.page:18(title)
 msgid "General Preferences"
@@ -2425,7 +2425,7 @@ msgstr ""
 
 #: C/preferences_general.page:63(title)
 msgid "Disable gksu Keyboard Grab"
-msgstr ""
+msgstr "Desactivar la captura de teclado desde gksu"
 
 #: C/preferences_general.page:65(p)
 msgid ""
@@ -2531,7 +2531,7 @@ msgstr ""
 
 #: C/preferences_general.page:170(title)
 msgid "Speak Object Under Mouse"
-msgstr ""
+msgstr "Leer el objeto de debajo del ratón"
 
 #: C/preferences_general.page:172(p)
 msgid ""
@@ -2622,21 +2622,23 @@ msgstr ""
 
 #: C/preferences_gecko.page:5(title)
 msgid "1. Gecko Navigation"
-msgstr ""
+msgstr "1. Navegación Gecko"
 
 #: C/preferences_gecko.page:6(title)
 msgid "Gecko Navigation"
-msgstr ""
+msgstr "Navegación Gecko"
 
 #: C/preferences_gecko.page:7(desc)
 msgid ""
 "Configuring <app>Orca</app>'s support for <app>Firefox</app> and "
 "<app>Thunderbird</app>"
 msgstr ""
+"Configurar el soporte de <app>Orca</app> para <app>Firefox</app> y "
+"<app>Thunderbird</app>"
 
 #: C/preferences_gecko.page:19(title)
 msgid "Gecko Navigation Preferences"
-msgstr ""
+msgstr "Preferencias de la navegación Gecko"
 
 #: C/preferences_gecko.page:21(title)
 msgid "Page Navigation"
@@ -2690,7 +2692,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:67(title)
 msgid "Grab focus on objects when navigating"
-msgstr ""
+msgstr "Dar el foco a los objetos cuando se navega"
 
 #: C/preferences_gecko.page:68(p)
 msgid ""
@@ -2736,7 +2738,7 @@ msgstr ""
 
 #: C/preferences_gecko.page:111(title)
 msgid "Only speak changed lines during find"
-msgstr ""
+msgstr "Hablar solamente las líneas modificadas durante la búsqueda"
 
 #: C/preferences_gecko.page:112(p)
 msgid ""
@@ -2780,7 +2782,7 @@ msgstr "Chat"
 
 #: C/preferences_chat.page:6(desc)
 msgid "Configuring <app>Orca's</app> support for IM and IRC"
-msgstr ""
+msgstr "Configurar el soporte de <app>Orca</app> IM e IRC"
 
 #: C/preferences_chat.page:17(title)
 msgid "Chat Preferences"
@@ -2794,7 +2796,7 @@ msgstr ""
 
 #: C/preferences_chat.page:25(title)
 msgid "Speak Chat Room name"
-msgstr ""
+msgstr "Leer el nombre de la sala de chat"
 
 #: C/preferences_chat.page:26(p)
 msgid ""
@@ -2805,7 +2807,7 @@ msgstr ""
 
 #: C/preferences_chat.page:36(title)
 msgid "Announce when your buddies are typing"
-msgstr ""
+msgstr "Anunciar cuando sus amigos están tecleando"
 
 #: C/preferences_chat.page:37(p)
 msgid ""
@@ -2816,7 +2818,7 @@ msgstr ""
 
 #: C/preferences_chat.page:47(title)
 msgid "Provide chat room specific message histories"
-msgstr ""
+msgstr "Proporcionar históricos de mensajes específicos de cada sala de chat"
 
 #: C/preferences_chat.page:48(p)
 msgid ""
@@ -2842,11 +2844,11 @@ msgstr "Todos los canales"
 
 #: C/preferences_chat.page:69(gui)
 msgid "A channel only if its window is active"
-msgstr ""
+msgstr "Un canal sólo si su ventana está activa"
 
 #: C/preferences_chat.page:72(gui)
 msgid "All channels when any chat window is active"
-msgstr ""
+msgstr "Todos los canales cuando cualquier ventana de chat está activa"
 
 #: C/preferences_chat.page:75(p)
 msgid "Default value: all channels"
@@ -2969,7 +2971,7 @@ msgstr ""
 
 #: C/preferences_braille.page:52(title)
 msgid "Enable Contracted Braille"
-msgstr ""
+msgstr "Activar Braille contraído"
 
 #: C/preferences_braille.page:54(p)
 msgid ""
@@ -3033,7 +3035,7 @@ msgstr ""
 
 #: C/preferences_braille.page:119(p)
 msgid "Default value: <gui>Dots 7 and 8</gui>"
-msgstr ""
+msgstr "Valor predeterminado: <gui>Puntos 7 y 8</gui>"
 
 #: C/preferences_braille.page:123(title)
 msgid "Text Attribute Indicators"
@@ -3053,7 +3055,7 @@ msgstr "1. Bienvenido a Orca"
 
 #: C/introduction.page:6(desc)
 msgid "Introducing the <app>Orca</app> screen reader"
-msgstr ""
+msgstr "Introducción al lector de la pantalla <app>Orca</app>"
 
 #: C/introduction.page:17(title)
 msgid "Welcome to Orca"
@@ -3128,6 +3130,8 @@ msgid ""
 "Type <cmd>orca -q</cmd> or <cmd>orca --quit</cmd> in a terminal window or "
 "within the <gui>Run</gui> dialog and then press <key>Return</key>."
 msgstr ""
+"Escriba <cmd>orca -q</cmd> o <cmd>orca --quit</cmd> en una ventana de la "
+"terminal o en el diálogo <gui>Ejecutar</gui> y pulse <key>Intro</key>."
 
 #: C/introduction.page:88(title)
 msgid "Load-Time Options"
@@ -3136,6 +3140,7 @@ msgstr ""
 #: C/introduction.page:89(p)
 msgid "The following options can be specified when launching <app>Orca</app>:"
 msgstr ""
+"Al lanzar <app>Orca</app> se pueden especificar las siguientes opciones:"
 
 #: C/introduction.page:94(p)
 msgid "<cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message"
@@ -3166,18 +3171,25 @@ msgstr ""
 #: C/introduction.page:115(p)
 msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
 msgstr ""
+"<cmd>-n</cmd>, <cmd>--no-setup</cmd>: omitir la configuración de las "
+"preferencias del usuario"
 
 #: C/introduction.page:120(p)
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
 "<em>dirname</em> as the alternate directory for user preferences"
 msgstr ""
+"<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>carpeta</em></cmd>: usar "
+"<em>carpeta</em> como la carpeta alternativa para las preferencias del "
+"usuario"
 
 #: C/introduction.page:127(p)
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
 msgstr ""
+"<cmd>-e</cmd>, <cmd>--enable=<em>opción</em></cmd>: forzar el uso de una "
+"opción, donde <em>opción</em> puede ser una de las siguientes:"
 
 #: C/introduction.page:132(cmd) C/introduction.page:147(cmd)
 msgid "speech"
@@ -3189,7 +3201,7 @@ msgstr "braille"
 
 #: C/introduction.page:134(cmd) C/introduction.page:149(cmd)
 msgid "braille-monitor"
-msgstr ""
+msgstr "braille-monitor"
 
 #: C/introduction.page:135(cmd) C/introduction.page:150(cmd)
 msgid "magnifier"
@@ -3201,7 +3213,7 @@ msgstr "main-window"
 
 #: C/introduction.page:137(cmd) C/introduction.page:152(cmd)
 msgid "splash-window"
-msgstr ""
+msgstr "splash-window"
 
 #: C/introduction.page:141(p)
 msgid ""
@@ -3246,12 +3258,16 @@ msgstr ""
 #: C/introduction.page:184(p)
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
+"<cmd>--debug</cmd>: enviar información de depurado a debug-YYYY-MM-DD-HH:MM:"
+"SS.out"
 
 #: C/introduction.page:189(p)
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
 msgstr ""
+"<cmd>--debug-file=<em>filename</em></cmd>: enviar información de depurado al "
+"archivo especificado"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -3261,17 +3277,19 @@ msgstr "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 
 #: C/index.page:3(title)
 msgid "Orca Screen Reader"
-msgstr ""
+msgstr "Lector de pantalla Orca"
 
 #: C/index.page:4(title)
 msgid "Introduction to the <app>Orca</app> Screen Reader"
-msgstr ""
+msgstr "Introducción al lector de pantalla <app>Orca</app>"
 
 #: C/index.page:13(title)
 msgid ""
 "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
 "\"><app>Orca</app>'s logo </media><app>Orca</app> Screen Reader"
 msgstr ""
+"<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\">Logo "
+"de <app>Orca</app> </media>Lector de pantalla<app>Orca</app>"
 
 #: C/index.page:20(title)
 msgid "Before You Begin"
@@ -3279,29 +3297,30 @@ msgstr "Antes de comenzar"
 
 #: C/index.page:21(p)
 msgid ""
-"Read the <link href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility "
-"Guide</link>"
+"Read the <link href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>"
 msgstr ""
+"Consulte la <link href=\"ghelp:gnome-help#a11y\">ayuda del acceso universal</"
+"link>"
 
-#: C/index.page:27(title) C/commands.page:17(title)
+#: C/index.page:26(title) C/commands.page:17(title)
 msgid "Getting Started"
 msgstr "Inicio"
 
-#: C/index.page:30(title)
+#: C/index.page:29(title)
 msgid "Reading Documents and Web Pages"
-msgstr ""
+msgstr "Leer documentos y páginas web"
 
-#: C/index.page:33(title) C/commands.page:26(title)
+#: C/index.page:32(title) C/commands.page:26(title)
 msgid "Reviewing and Interacting with Screen Contents"
-msgstr ""
+msgstr "Revisar e interactuar con los contenidos de la pantalla"
 
-#: C/index.page:36(title)
+#: C/index.page:35(title)
 msgid "Quick Reference"
 msgstr "Referencia rápida"
 
 #: C/howto_whereami.page:5(title)
 msgid "1. WhereAmI"
-msgstr ""
+msgstr "1. ¿Dónde estoy?"
 
 #: C/howto_whereami.page:6(desc)
 msgid "Learning about your location"
@@ -3309,7 +3328,7 @@ msgstr ""
 
 #: C/howto_whereami.page:17(title)
 msgid "WhereAmI"
-msgstr ""
+msgstr "¿Dónde estoy?"
 
 #: C/howto_whereami.page:18(p)
 msgid ""
@@ -3600,7 +3619,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:68(p)
 msgid "Enable echo by word?"
-msgstr ""
+msgstr "¿Activar eco por palabras?"
 
 #: C/howto_text_setup.page:69(p)
 msgid ""
@@ -3610,7 +3629,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:75(p)
 msgid "Enable key echo?"
-msgstr ""
+msgstr "¿Activar eco de teclas?"
 
 #: C/howto_text_setup.page:76(p)
 msgid ""
@@ -3628,7 +3647,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:88(p)
 msgid "alphanumeric and punctuation keys"
-msgstr ""
+msgstr "teclas alfanuméricas y de puntuación"
 
 #: C/howto_text_setup.page:96(p)
 msgid "modifier keys"
@@ -5008,7 +5027,7 @@ msgstr ""
 #: C/howto_documents.page:48(p)
 msgid ""
 "For a complete listing of GNOME's caret navigation commands, see the <link "
-"href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility Guide</link>."
+"href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>."
 msgstr ""
 
 #: C/howto_documents.page:52(p)
