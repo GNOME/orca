@@ -73,7 +73,7 @@ class BrlMon(gtk.Window):
 
         gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
         self.set_title("Braille Monitor")
-        self.set_default_size(cellWidth * numCells, cellHeight)
+        self.set_size_request(cellWidth * numCells, cellHeight)
         hbox = gtk.HBox(True)
         self.add(hbox)
         self.cellFrames = []
@@ -90,49 +90,10 @@ class BrlMon(gtk.Window):
             self.cellLabels.append(label)
             i += 1
 
-        # This prevents it from getting focus.
-        #
         self.set_property("accept-focus", False)
-        self.connect_after("check-resize", self.onResize)
-
-    def onResize(self, obj):
-        """Tell the window to be a dock and set its struts, which I
-        thinks means to attempt to glue it somewhere on the display.
-        """
-
-        # We know what we are doing here, so tell pylint not to flag
-        # the self.window method calls as errors (e.g., Class 'window' 
-        # has no 'get_size' member).  The disable-msg is localized to
-        # just this method.
-        #
-        # pylint: disable-msg=E1101
-
-        screen_width = gtk.gdk.screen_width()
-        [window_width, window_height] = self.window.get_size()
-        if window_width < screen_width:
-            x = (screen_width - window_width) / 2
-        else:
-            x = 0
-
-        self.window.set_type_hint(gtk.gdk.WINDOW_TYPE_HINT_DOCK)
-        self.window.property_change(
-                gtk.gdk.atom_intern("_NET_WM_STRUT_PARTIAL", False),
-                gtk.gdk.atom_intern("CARDINAL", False), 32,
-                gtk.gdk.PROP_MODE_REPLACE,
-                [0,                     # LEFT
-                 0,                     # RIGHT
-                 window_height,         # TOP
-                 0,                     # BOTTOM
-                 0,                     # LEFT_START
-                 0,                     # LEFT_END
-                 0,                     # RIGHT_START
-                 0,                     # RIGHT_END
-                 0,                     # TOP_START
-                 screen_width - 1,      # TOP_END
-                 0,                     # BOTTOM_START
-                 0])                    # BOTTOM_END
-
-        self.move(x, 0)
+        self.set_resizable(False)
+        self.set_skip_taskbar_hint(True)
+        self.set_skip_pager_hint(True)
 
     def writeText(self, cursorCell, string, mask=None):
         """Display the given text and highlight the given
