@@ -43,10 +43,6 @@ a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')
 def getOrcaEnabled(gsetting, key):
     return gsetting.get_boolean(key)
 
-def setOrcaEnabled(gsetting, key, enabled):
-    gsetting = gsetting or a11yAppSettings
-    gsetting.set_boolean(key, enabled)
-
 def onEnabledChanged(gsetting, key):
     if not key == 'screen-reader-enabled':
         return
@@ -1917,7 +1913,7 @@ def quitOrca(script=None, inputEvent=None):
     """
 
     if settings.quitOrcaNoConfirmation:
-        setOrcaEnabled(a11yAppSettings, 'screen-reader-enabled', False)
+        shutdown()
     else:
         try:
             module = __import__(settings.quitModule,
@@ -2028,7 +2024,6 @@ def init(registry):
         signal.alarm(0)
 
     _initialized = True
-    setOrcaEnabled(a11yAppSettings, 'screen-reader-enabled', True)
     a11yAppSettings.connect('changed', onEnabledChanged)
     return True
 
