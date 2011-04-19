@@ -198,34 +198,33 @@ class ScriptManager:
         Returns an instance of a Script.
         """
 
-        script = None
+        appScript = None
+        toolkitScript = None
 
         objToolkit = self._toolkitForObject(obj)
         if objToolkit:
-            script = self.scripts.get(objToolkit)
-            if not script:
-                script = self._createScript(app, obj)
-                if script:
-                    self.scripts[objToolkit] = script
-                    _eventManager.registerListeners(script)
-            if script:
-                # Only defer to the toolkit script for this object if the
-                # app script is based on a different toolkit.
-                appScript = self.scripts.get(app, self.getDefaultScript())
-                if issubclass(appScript.__class__, script.__class__):
-                    script = appScript
-                return script
+            toolkitScript = self.scripts.get(objToolkit)
+            if not toolkitScript:
+                toolkitScript = self._createScript(None, obj)
+                self.scripts[objToolkit] = toolkitScript
+                _eventManager.registerListeners(toolkitScript)
 
         if not app:
-            script = self.getDefaultScript()
+            appScript = self.getDefaultScript()
         elif app in self.scripts:
-            script = self.scripts[app]
+            appScript = self.scripts[app]
         else:
-            script = self._createScript(app, obj)
-            self.scripts[app] = script
-            _eventManager.registerListeners(script)
+            appScript = self._createScript(app, None)
+            self.scripts[app] = appScript
+            _eventManager.registerListeners(appScript)
 
-        return script
+        # Only defer to the toolkit script for this object if the app script
+        # is based on a different toolkit.
+        if toolkitScript \
+           and not issubclass(appScript.__class__, toolkitScript.__class__):
+            return toolkitScript
+
+        return appScript
 
     def setActiveScript(self, newScript, reason=None):
         """Set the new active script.
