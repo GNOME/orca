@@ -1,3 +1,29 @@
+3.0.1 - 26-April-2011
+
+  * Fix for bug #647982 - Orca sometimes presents application
+    events in GNOME 3; other times it fails to do so.
+
+  * Fix for bug #647824 - Turning screen reader "off" should not be
+    equated with "do not autostart in the future"
+
+  * Fix for bug #647547 - The braille monitor should be movable
+
+  * Fix for bug #647117 - orca autostarted in kde
+
+  * Fix for bug #646288 - Orca needs to set and respond to the
+    appropriate gsettings keys
+
+  * Fix for bug #646475 - Traceback seen with gnome-speech
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    eo        Esperanto              Kristjan Schmidt
+    es        Spanish                Jorge González and Daniel Mustieles
+    hu        Hungarian              Attila Hammer, Gabor Kelemen
+    vi        Vietnamese             Nguyễn Thái Ngọc Duy
+
+==========
+
 3.0.0 - 04-March-2011
 
   * Fix for bug #646547 - Two typos in preferences string
