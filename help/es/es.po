@@ -3,15 +3,15 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
+# Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-03-25 21:47+0000\n"
-"PO-Revision-Date: 2011-04-10 16:43+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2011-04-12 14:43+0000\n"
+"PO-Revision-Date: 2011-04-25 21:28+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -6340,15 +6340,15 @@ msgstr ""
 #: C/commands_controlling_orca.page:6(title)
 #: C/commands_controlling_orca.page:18(title)
 msgid "Controlling and Learning to Use Orca"
-msgstr ""
+msgstr "Controlar y aprender a usar Orca"
 
 #: C/commands_controlling_orca.page:7(desc)
 msgid "Commands for interacting with <app>Orca</app>"
-msgstr ""
+msgstr "Comandos para interactuar con <app>Orca</app>"
 
 #: C/commands_controlling_orca.page:20(title)
 msgid "Commands for Controlling <app>Orca</app>"
-msgstr ""
+msgstr "Comandos para controlar <app>Orca</app>"
 
 #: C/commands_controlling_orca.page:21(p)
 msgid ""
@@ -6373,20 +6373,26 @@ msgstr ""
 msgid ""
 "Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
 msgstr ""
+"Salir de <app>Orca</app>: <keyseq><key>Modificador de Orca</key><key>Q</"
+"key></keyseq>."
 
 #: C/commands_controlling_orca.page:46(p)
 msgid ""
 "Pass the next command on to the current application: <keyseq><key>Orca "
 "Modifier</key><key>BackSpace</key></keyseq>"
 msgstr ""
+"Pasar el comando siguiente a la aplicación actual: <keyseq><key>Modificador "
+"de Orca</key><key>Retroceso</key></keyseq>"
 
 #: C/commands_controlling_orca.page:54(title)
 msgid "Commands for Learning to Use <app>Orca</app>"
-msgstr ""
+msgstr "Comandos para aprender a usar <app>Orca</app>"
 
 #: C/commands_controlling_orca.page:64(p)
 msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
+"Entre en el modo de aprendizaje: <keyseq><key>Modificador de Orca</"
+"key><key>H</key></keyseq>"
 
 #: C/commands_controlling_orca.page:70(p)
 msgid ""
@@ -6396,7 +6402,7 @@ msgstr ""
 
 #: C/commands_controlling_orca.page:76(p)
 msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
-msgstr ""
+msgstr "Salga de cualquiera de los dos modos: <keyseq><key>Esc</key></keyseq>"
 
 #: C/commands_chat.page:6(title)
 msgid "2. Chat"
@@ -6404,7 +6410,7 @@ msgstr "2. Chat"
 
 #: C/commands_chat.page:8(desc)
 msgid "Commands for use with IM and IRC clients"
-msgstr ""
+msgstr "Comandos para usar con clientes de MI e IRC"
 
 #: C/commands_chat.page:19(title)
 msgid "Chat Commands"
@@ -6443,7 +6449,7 @@ msgstr "2. Braille"
 
 #: C/commands_braille.page:8(desc)
 msgid "Commands executable on braille displays"
-msgstr ""
+msgstr "Comandos ejecutables en dispositivos Braille"
 
 #: C/commands_braille.page:19(title)
 msgid "Braille Commands"
