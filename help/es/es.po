@@ -3,15 +3,15 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
 "POT-Creation-Date: 2011-04-12 14:43+0000\n"
-"PO-Revision-Date: 2011-04-25 21:28+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"PO-Revision-Date: 2011-04-26 14:03+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -233,13 +233,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
-"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
-"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
-"atributo se hable siempre independientemente de que el texto esté subrayado "
-"o no, entonces el atributo debería estar marcado y el valor de "
-"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
-"que la columna <gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
+"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
+"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
+"hable siempre independientemente de que el texto esté subrayado o no, "
+"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
+"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
+"<gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -686,7 +686,7 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué persona o hablante se debería "
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
 "usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
 "hablar de manera predeterminada, pero tener a Alicia para hablar los "
 "hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
@@ -750,8 +750,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
-"«/», «&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
+"«&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -1975,6 +1975,8 @@ msgid ""
 "<key>c</key>, <key>;</key>, <key>?</key>, and so on should be spoken when "
 "pressed."
 msgstr ""
+"Esta opción controla si las teclas <key>a</key>, <key>b</key>, <key>c</key>, "
+"<key>;</key>, <key>?</key>, etcétera se deben hablar o no cuando se pulsan."
 
 #: C/preferences_key_echo.page:44(title)
 msgid "Enable modifier keys"
@@ -1985,6 +1987,9 @@ msgid ""
 "This option controls whether or not <key>Shift</key>, <key>Ctrl</key>, "
 "<key>Alt</key> and <key>Meta</key> should be spoken when pressed."
 msgstr ""
+"Esta opción controla si las teclas <key>Shift</key>, <key>Ctrl</key>, "
+"<key>Alt</key> y <key>Windows</key>, etcétera se deben hablar o no cuando se "
+"pulsan."
 
 #: C/preferences_key_echo.page:54(title)
 msgid "Enable locking keys"
@@ -1995,6 +2000,8 @@ msgid ""
 "This option controls whether or not <key>Caps Lock</key>, <key>Scroll Lock</"
 "key>, and <key>Num Lock</key> should be spoken when pressed."
 msgstr ""
+"Esta opción controla si las teclas <key>Bloq Mayús</key>, <key>Bloq Despl</"
+"key>, y <key>Bloq Num</key>, etcétera se deben hablar o no cuando se pulsan."
 
 #: C/preferences_key_echo.page:64(title)
 msgid "Enable function keys"
@@ -2005,6 +2012,8 @@ msgid ""
 "This option controls whether or not <key>F1</key> through <key>F12</key> "
 "should be spoken when pressed."
 msgstr ""
+"Esta opción controla si las teclas <key>F1</key> hasta <key>F12</key> se "
+"deben hablar o no cuando se pulsan."
 
 #: C/preferences_key_echo.page:74(title)
 msgid "Enable action keys"
@@ -2017,6 +2026,10 @@ msgid ""
 "key>, <key>Page Down</key>, <key>Home</key>, and <key>End</key> should be "
 "spoken when pressed."
 msgstr ""
+"Esta opción controla si las teclas <key>Retroceso</key>, <key>Supr </key>, "
+"<key>Intro</key>, <key>Esc</key>, <key>Tab</key>, <key>Re Pág</key>, <key>Av "
+"Pág</key>, <key>Inicio</key>, y <key>Fin</key>, etcétera se deben hablar o "
+"no cuando se pulsan."
 
 #: C/preferences_key_echo.page:86(title)
 msgid "Enable navigation keys"
@@ -2039,6 +2052,8 @@ msgid ""
 "This option controls whether or not \"dead keys\" used to generate accented "
 "letters should be spoken when pressed."
 msgstr ""
+"Esta opción controla si las «teclas muertas» usadas para generar letras "
+"acentuadas se deben hablar o no cuando se pulsan."
 
 #: C/preferences_key_echo.page:110(title)
 msgid "Enable echo by character"
@@ -2047,6 +2062,8 @@ msgstr "Activar eco por carácter"
 #: C/preferences_key_echo.page:112(p)
 msgid "Enabling this option causes Orca to echo the character you just typed."
 msgstr ""
+"Activar esta opción provoca que Orca haga eco del carácter que acaba de "
+"escribir."
 
 #: C/preferences_key_echo.page:116(p)
 msgid ""
@@ -2066,6 +2083,8 @@ msgid ""
 "Character echo causes <app>Orca</app> to announce what was just "
 "<em>inserted</em>."
 msgstr ""
+"El eco de carácter hace que <app>Orca</app> anuncie qué es lo que se acaba "
+"de <em>insertar</em>."
 
 #: C/preferences_key_echo.page:136(p)
 msgid ""
@@ -2087,7 +2106,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:155(title)
 msgid "Enable echo by word and Enable echo by sentence"
-msgstr ""
+msgstr "Activar eco por palabras y activar eco por sentencias"
 
 #: C/preferences_key_echo.page:157(p)
 msgid ""
@@ -2172,12 +2191,17 @@ msgid ""
 "The key bindings table provides a list of <app>Orca</app> operations and the "
 "keys that are bound to them."
 msgstr ""
+"La tabla de asociaciones de teclas proporciona una lista de las operaciones "
+"de <application>Orca</application> y de las teclas que están asociadas a "
+"ellas."
 
 #: C/preferences_key_bindings.page:47(p)
 msgid ""
 "The <gui>Function</gui> column is a description of the <app>Orca</app> "
 "operation to be performed."
 msgstr ""
+"La columna <gui>Función</gui> es una descripción de la operación de "
+"<application>Orca</application> para ser realizada."
 
 #: C/preferences_key_bindings.page:53(p)
 msgid ""
@@ -2383,6 +2407,8 @@ msgid ""
 "Preferences dialog box option to select which <app>Orca</app> keyboard "
 "layout to use, desktop or laptop."
 msgstr ""
+"Opción del cuadro de diálogo de preferencias para seleccionar qué "
+"disposición del teclado de <app>Orca</app> usar, sobremesa o portátil."
 
 #: C/preferences_general.page:26(title) C/howto_keyboard_layout.page:15(title)
 msgid "Keyboard Layout"
@@ -2406,6 +2432,8 @@ msgid ""
 "Preferences dialog box option to quit <app>Orca</app> without presenting a "
 "confirmation dialog."
 msgstr ""
+"Opción del cuadro de diálogo de preferencias para salir de <app>Orca</app> "
+"sin mostrar un diálogo de confirmación."
 
 #: C/preferences_general.page:45(title)
 msgid "Quit Orca Without Confirmation"
@@ -2422,6 +2450,8 @@ msgstr ""
 #: C/preferences_general.page:59(desc)
 msgid "Preferences dialog box option to disable gksu keyboard grab."
 msgstr ""
+"Opción del cuadro de diálogo de preferencias para desactivar la captura de "
+"teclado desde gksu."
 
 #: C/preferences_general.page:63(title)
 msgid "Disable gksu Keyboard Grab"
@@ -2482,6 +2512,8 @@ msgid ""
 "Preferences dialog box option for showing or hiding the <app>Orca</app> main "
 "window."
 msgstr ""
+"Opción del cuadro de diálogo de preferencias para mostrar u ocultar la "
+"ventana principal de <app>Orca</app>."
 
 #: C/preferences_general.page:122(title)
 msgid "Show Orca Main Window"
@@ -2512,6 +2544,8 @@ msgid ""
 "Preferences dialog box option to cause <app>Orca</app> to automatically "
 "start when you log in."
 msgstr ""
+"Opción del cuadro de diálogo de preferencias para hacer que <app>Orca</app> "
+"se ejecute automáticamente al iniciar sesión."
 
 #: C/preferences_general.page:153(title)
 msgid "Start Orca When You Login"
@@ -2528,6 +2562,8 @@ msgid ""
 "Preferences dialog box option to enable presentation of the object under the "
 "mouse pointer."
 msgstr ""
+"Opción del cuadro de diálogo de preferencias para activar la presentación "
+"del objeto de debajo del puntero del ratón."
 
 #: C/preferences_general.page:170(title)
 msgid "Speak Object Under Mouse"
@@ -2546,6 +2582,8 @@ msgid ""
 "Preferences dialog box options for customizing the time and date formats "
 "used by <app>Orca</app>."
 msgstr ""
+"Opciones del cuadro de diálogo de preferencias para personalizar los "
+"formatos de fecha y hora usados por <app>Orca</app>."
 
 #: C/preferences_general.page:189(title)
 msgid "Time Format and Date Format"
@@ -2564,6 +2602,8 @@ msgstr ""
 #: C/preferences_general.page:202(desc)
 msgid "Preferences dialog box options for managing settings profiles."
 msgstr ""
+"Opciones del cuadro de diálogo de preferencias para gestionar perfiles de "
+"configuración."
 
 #: C/preferences_general.page:206(title) C/howto_profiles.page:15(title)
 msgid "Profiles"
@@ -3039,7 +3079,7 @@ msgstr "Valor predeterminado: <gui>Puntos 7 y 8</gui>"
 
 #: C/preferences_braille.page:123(title)
 msgid "Text Attribute Indicators"
-msgstr ""
+msgstr "Indicadores de atributos del texto"
 
 #: C/preferences_braille.page:124(p)
 msgid ""
@@ -3124,6 +3164,9 @@ msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>. This command "
 "works whether the <app>Orca</app> main window is enabled or not."
 msgstr ""
+"Pulse <keyseq><key>Modificador de Orca</key><key>Q</key></keyseq>. Este "
+"comando funciona tanto si la ventana principal de  <app>Orca</app> está "
+"activada como si no."
 
 #: C/introduction.page:79(p)
 msgid ""
@@ -3456,7 +3499,7 @@ msgstr ""
 
 #: C/howto_the_orca_modifier.page:5(title)
 msgid "4. The Orca Modifier"
-msgstr ""
+msgstr "4. El modificador de Orca"
 
 #: C/howto_the_orca_modifier.page:6(desc)
 msgid ""
@@ -3465,7 +3508,7 @@ msgstr ""
 
 #: C/howto_the_orca_modifier.page:18(title)
 msgid "The Orca Modifier"
-msgstr ""
+msgstr "El modificador de Orca"
 
 #: C/howto_the_orca_modifier.page:19(p)
 msgid ""
@@ -3537,7 +3580,7 @@ msgstr "TN Ins"
 #: C/howto_key_bindings.page:54(p) C/howto_key_bindings.page:86(p)
 #: C/howto_key_bindings.page:108(p) C/howto_key_bindings.page:140(p)
 msgid "Press the <gui>Apply</gui> button."
-msgstr ""
+msgstr "Pulse el botón <gui>Aplicar</gui>."
 
 #: C/howto_text_setup.page:3(desc)
 msgid ""
@@ -3581,7 +3624,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:39(p)
 msgid "Select desired speech system"
-msgstr ""
+msgstr "Seleccione el sistema de voz deseado"
 
 #: C/howto_text_setup.page:40(p)
 msgid ""
@@ -3592,7 +3635,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:47(p)
 msgid "Select desired speech server"
-msgstr ""
+msgstr "Seleccione el servidor de voz deseado"
 
 #: C/howto_text_setup.page:48(p)
 msgid ""
@@ -3603,7 +3646,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:55(p)
 msgid "Select desired voice"
-msgstr ""
+msgstr "Seleccione la voz deseada"
 
 #: C/howto_text_setup.page:56(p)
 msgid ""
@@ -3698,7 +3741,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:160(p)
 msgid "Enable Braille"
-msgstr ""
+msgstr "Activar Braille"
 
 #: C/howto_text_setup.page:161(p)
 msgid ""
@@ -4082,7 +4125,7 @@ msgstr ""
 
 #: C/howto_structural_navigation.page:89(title)
 msgid "Configuring Structural Navigation"
-msgstr ""
+msgstr "Configurar la navegación estructural"
 
 #: C/howto_structural_navigation.page:91(p)
 msgid ""
@@ -4384,7 +4427,7 @@ msgstr ""
 
 #: C/howto_orca_find.page:47(title)
 msgid "<app>Orca</app>'s Find Dialog"
-msgstr ""
+msgstr "Diálogo «Buscar» de <app>Orca</app>:"
 
 #: C/howto_orca_find.page:52(p)
 msgid "Here you can specify the following items:"
@@ -4481,6 +4524,11 @@ msgid ""
 "media player is starting to play, and warnings that your battery level is "
 "getting low."
 msgstr ""
+"El escritorio GNOME incluye un «área de notificación» que las aplicaciones "
+"pueden usar para mostrar información al usuario. Los ejemplos de "
+"notificaciones incluyen mensajes entrantes de chat, los detalles de la "
+"canción que su reproductor multimedia está empezando a reproducir y "
+"advertencias de que el nivel de su batería es bajo."
 
 #: C/howto_notifications.page:23(p)
 msgid ""
@@ -4499,11 +4547,11 @@ msgstr ""
 
 #: C/howto_notifications.page:38(p)
 msgid "Present the previous notification message"
-msgstr ""
+msgstr "Presentar el mensaje anterior de notificación"
 
 #: C/howto_notifications.page:41(p)
 msgid "Present list of all notification messages"
-msgstr ""
+msgstr "Presentar una lista de todos los mensajes de notificación"
 
 #: C/howto_notifications.page:44(p)
 msgid ""
@@ -4520,7 +4568,7 @@ msgstr ""
 
 #: C/howto_notifications.page:54(p)
 msgid "Press H for help."
-msgstr ""
+msgstr "Pulse «H» para obtener ayuda"
 
 #: C/howto_notifications.page:55(p)
 msgid "Use Up, Down, Home or End to navigate in the list."
@@ -4532,7 +4580,7 @@ msgstr "Pulse escape para salir."
 
 #: C/howto_notifications.page:57(p)
 msgid "Press Space to repeat the last message read."
-msgstr ""
+msgstr "Pulse Espacio para repetir el último mensaje leído."
 
 #: C/howto_notifications.page:58(p)
 msgid "Press one digit to read a specific message."
@@ -4556,7 +4604,7 @@ msgstr ""
 
 #: C/howto_mouse_review.page:6(desc)
 msgid "Using the pointer to examine the screen"
-msgstr ""
+msgstr "Usar el puntero para examinar la pantalla"
 
 #: C/howto_mouse_review.page:15(title)
 msgid "Mouse Review"
@@ -4606,7 +4654,7 @@ msgstr ""
 
 #: C/howto_live_regions.page:6(desc)
 msgid "Interacting with dynamic web content"
-msgstr ""
+msgstr "Interactuar con contenido web dinámico"
 
 #: C/howto_live_regions.page:17(title) C/commands_live_regions.page:7(title)
 msgid "Live Regions"
@@ -4794,7 +4842,7 @@ msgstr ""
 
 #: C/howto_key_bindings.page:44(p) C/howto_key_bindings.page:75(p)
 msgid "Press the desired key combination."
-msgstr ""
+msgstr "Pulse la combinación de teclas deseada."
 
 #: C/howto_key_bindings.page:46(p) C/howto_key_bindings.page:78(p)
 msgid ""
@@ -4805,7 +4853,7 @@ msgstr ""
 
 #: C/howto_key_bindings.page:58(title)
 msgid "Changing Existing Bindings"
-msgstr ""
+msgstr "Cambiar las asociaciones existentes"
 
 #: C/howto_key_bindings.page:69(p)
 msgid ""
@@ -5106,11 +5154,11 @@ msgstr ""
 
 #: C/commands_where_am_i.page:6(title)
 msgid "3. Where Am I"
-msgstr ""
+msgstr "3. ¿Dónde estoy?"
 
 #: C/commands_where_am_i.page:7(title)
 msgid "Where Am I"
-msgstr ""
+msgstr "¿Dónde estoy?"
 
 #: C/commands_where_am_i.page:8(desc)
 msgid "Commands to learn about your location"
@@ -5145,6 +5193,7 @@ msgstr ""
 #: C/commands_where_am_i.page:37(p) C/commands_reading.page:197(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Intro</key></keyseq>"
 
 #: C/commands_where_am_i.page:42(p) C/commands_reading.page:204(p)
 msgid "Perform detailed where am I:"
@@ -5159,6 +5208,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq> (double-"
 "clicked)"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Intro</key></keyseq> "
+"(doble pulsación)"
 
 #: C/commands_where_am_i.page:56(p)
 msgid ""
@@ -5180,7 +5231,7 @@ msgstr ""
 
 #: C/commands_where_am_i.page:77(p)
 msgid "Present the status bar:"
-msgstr ""
+msgstr "Presentar la barra de estado:"
 
 #: C/commands_where_am_i.page:80(p)
 msgid ""
@@ -5223,12 +5274,16 @@ msgstr "Obtener la fecha y la hora"
 #: C/commands_time_date_notifications.page:28(p)
 msgid "Present the time: <keyseq><key>Orca Modifier</key><key>T</key></keyseq>"
 msgstr ""
+"Presentar la hora: <keyseq><key>Modificador de Orca</key><key>T</key></"
+"keyseq>"
 
 #: C/commands_time_date_notifications.page:33(p)
 msgid ""
 "Present the date: <keyseq><key>Orca Modifier</key><key>T</key></keyseq> "
 "(double-clicked)"
 msgstr ""
+"Presentar la fecha: <keyseq><key>Modificador de Orca</key><key>T</key></"
+"keyseq> (pulsación doble)"
 
 #: C/commands_time_date_notifications.page:41(title)
 msgid "Reviewing Notification Messages"
@@ -5539,7 +5594,7 @@ msgstr ""
 
 #: C/commands_speech_settings.page:8(desc)
 msgid "Commands for customizing <app>Orca</app>'s output"
-msgstr ""
+msgstr "Comandos para personalizar la salida de <app>Orca</app>"
 
 #: C/commands_speech_settings.page:19(title)
 msgid "Speech Settings Commands"
@@ -5640,7 +5695,7 @@ msgstr ""
 
 #: C/commands_reading.page:54(p) C/commands_flat_review.page:47(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>I</key></keyseq>"
 
 #: C/commands_reading.page:61(p)
 msgid "Read the current word:"
@@ -5652,7 +5707,7 @@ msgstr ""
 
 #: C/commands_reading.page:69(p) C/commands_flat_review.page:94(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>K</key></keyseq>"
 
 #: C/commands_reading.page:76(p)
 msgid "Spell the current word:"
@@ -5667,6 +5722,8 @@ msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (double-"
 "clicked)"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>K</key></keyseq> (doble "
+"pulsación)"
 
 #: C/commands_reading.page:92(p)
 msgid "Phonetically spell the current word:"
@@ -5724,7 +5781,7 @@ msgstr ""
 
 #: C/commands_reading.page:157(title)
 msgid "Say All"
-msgstr ""
+msgstr "Leer todo"
 
 #: C/commands_reading.page:158(p)
 msgid ""
@@ -5752,9 +5809,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
-"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
-"<app>Orca</app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
+"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
+"app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(p)
 msgid ""
@@ -5883,11 +5940,11 @@ msgstr ""
 
 #: C/commands_magnifier.page:6(title)
 msgid "3. Magnifier Settings"
-msgstr ""
+msgstr "3. Configuración del magnificador"
 
 #: C/commands_magnifier.page:7(title)
 msgid "Magnifier Settings"
-msgstr ""
+msgstr "Configuración del magnificador"
 
 #: C/commands_magnifier.page:8(desc)
 msgid "Commands for customizing <app>Orca</app>'s zoomer"
@@ -5895,7 +5952,7 @@ msgstr ""
 
 #: C/commands_magnifier.page:19(title)
 msgid "Magnifier Settings Commands"
-msgstr ""
+msgstr "Comandos de la configuración del magnificador"
 
 #: C/commands_magnifier.page:20(p)
 msgid ""
@@ -6045,7 +6102,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:56(p)
 msgid "Phonetically spell current line:"
-msgstr ""
+msgstr "Deletrear fonéticamente la línea actual:"
 
 #: C/commands_flat_review.page:58(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (triple-clicked)"
@@ -6084,11 +6141,11 @@ msgstr ""
 
 #: C/commands_flat_review.page:77(title)
 msgid "Commands for Reviewing by Word"
-msgstr ""
+msgstr "Comandos para revisar por palabra"
 
 #: C/commands_flat_review.page:79(p)
 msgid "Word above:"
-msgstr ""
+msgstr "Palabra anterior:"
 
 #: C/commands_flat_review.page:81(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 4</key></keyseq>"
@@ -6117,11 +6174,11 @@ msgstr "Palabra actual:"
 
 #: C/commands_flat_review.page:97(p)
 msgid "Spell current word:"
-msgstr ""
+msgstr "Hablar la palabra actual:"
 
 #: C/commands_flat_review.page:103(p)
 msgid "Phonetically spell current word:"
-msgstr ""
+msgstr "Deletrear fonéticamente la palabra actual:"
 
 #: C/commands_flat_review.page:109(p)
 msgid "Next word:"
@@ -6137,7 +6194,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:115(p)
 msgid "Word below:"
-msgstr ""
+msgstr "Siguiente palabra:"
 
 #: C/commands_flat_review.page:117(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 6</key></keyseq>"
@@ -6150,7 +6207,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:124(title)
 msgid "Commands for Reviewing by Character"
-msgstr ""
+msgstr "Comandos para revisar por carácter"
 
 #: C/commands_flat_review.page:126(p)
 msgid "Previous character:"
@@ -6174,7 +6231,7 @@ msgstr "Leer fonéticamente el carácter actual:"
 
 #: C/commands_flat_review.page:144(p)
 msgid "Speak Unicode value of current character:"
-msgstr ""
+msgstr "Leer el valor Unicode del carácter actual:"
 
 #: C/commands_flat_review.page:150(p)
 msgid "Next character:"
@@ -6190,7 +6247,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:156(p)
 msgid "Last character on current line:"
-msgstr ""
+msgstr "Último carácter en la línea actual:"
 
 #: C/commands_flat_review.page:158(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 1</key></keyseq>"
@@ -6220,7 +6277,7 @@ msgstr ""
 
 #: C/commands_flat_review.page:173(p)
 msgid "Review current item/widget:"
-msgstr ""
+msgstr "Revisar el elemento/widget actual:"
 
 #: C/commands_flat_review.page:175(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 5</key></keyseq>"
@@ -6252,7 +6309,7 @@ msgstr ""
 
 #: C/commands_find.page:27(p)
 msgid "Open the <app>Orca</app> Find dialog:"
-msgstr ""
+msgstr "Abrir el diálogo «Buscar» de <app>Orca</app>:"
 
 #: C/commands_find.page:38(p)
 msgid "Move flat review to the next instance of a string:"
@@ -6285,7 +6342,7 @@ msgstr ""
 
 #: C/commands_debugging.page:4(title)
 msgid "1. Debugging"
-msgstr ""
+msgstr "1. Depurado"
 
 #: C/commands_debugging.page:5(title)
 msgid "Debugging"
@@ -6293,11 +6350,11 @@ msgstr "Depurar"
 
 #: C/commands_debugging.page:6(desc)
 msgid "Commands for troubleshooting"
-msgstr ""
+msgstr "Comandos para la resolución de problemas"
 
 #: C/commands_debugging.page:17(title)
 msgid "Debugging Commands"
-msgstr ""
+msgstr "Comandos de depurado"
 
 #: C/commands_debugging.page:20(p)
 msgid ""
@@ -6335,7 +6392,7 @@ msgstr ""
 
 #: C/commands_controlling_orca.page:5(title)
 msgid "1. Controlling and Learning to Use Orca"
-msgstr ""
+msgstr "1. Controlar y aprender a usar Orca"
 
 #: C/commands_controlling_orca.page:6(title)
 #: C/commands_controlling_orca.page:18(title)
@@ -6344,11 +6401,11 @@ msgstr "Controlar y aprender a usar Orca"
 
 #: C/commands_controlling_orca.page:7(desc)
 msgid "Commands for interacting with <app>Orca</app>"
-msgstr "Comandos para interactuar con <app>Orca</app>"
+msgstr ""
 
 #: C/commands_controlling_orca.page:20(title)
 msgid "Commands for Controlling <app>Orca</app>"
-msgstr "Comandos para controlar <app>Orca</app>"
+msgstr "4. Comandos para controlar <app>Orca</app>"
 
 #: C/commands_controlling_orca.page:21(p)
 msgid ""
@@ -6373,16 +6430,12 @@ msgstr ""
 msgid ""
 "Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
 msgstr ""
-"Salir de <app>Orca</app>: <keyseq><key>Modificador de Orca</key><key>Q</"
-"key></keyseq>."
 
 #: C/commands_controlling_orca.page:46(p)
 msgid ""
 "Pass the next command on to the current application: <keyseq><key>Orca "
 "Modifier</key><key>BackSpace</key></keyseq>"
 msgstr ""
-"Pasar el comando siguiente a la aplicación actual: <keyseq><key>Modificador "
-"de Orca</key><key>Retroceso</key></keyseq>"
 
 #: C/commands_controlling_orca.page:54(title)
 msgid "Commands for Learning to Use <app>Orca</app>"
@@ -6391,8 +6444,6 @@ msgstr "Comandos para aprender a usar <app>Orca</app>"
 #: C/commands_controlling_orca.page:64(p)
 msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
-"Entre en el modo de aprendizaje: <keyseq><key>Modificador de Orca</"
-"key><key>H</key></keyseq>"
 
 #: C/commands_controlling_orca.page:70(p)
 msgid ""
@@ -6402,7 +6453,7 @@ msgstr ""
 
 #: C/commands_controlling_orca.page:76(p)
 msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
-msgstr "Salga de cualquiera de los dos modos: <keyseq><key>Esc</key></keyseq>"
+msgstr ""
 
 #: C/commands_chat.page:6(title)
 msgid "2. Chat"
@@ -6410,7 +6461,7 @@ msgstr "2. Chat"
 
 #: C/commands_chat.page:8(desc)
 msgid "Commands for use with IM and IRC clients"
-msgstr "Comandos para usar con clientes de MI e IRC"
+msgstr "Comandos que usar con clientes IM e IRC"
 
 #: C/commands_chat.page:19(title)
 msgid "Chat Commands"
@@ -6449,7 +6500,7 @@ msgstr "2. Braille"
 
 #: C/commands_braille.page:8(desc)
 msgid "Commands executable on braille displays"
-msgstr "Comandos ejecutables en dispositivos Braille"
+msgstr ""
 
 #: C/commands_braille.page:19(title)
 msgid "Braille Commands"
@@ -6491,7 +6542,7 @@ msgstr ""
 
 #: C/commands_braille.page:32(p)
 msgid "Contracted braille: Six Dots"
-msgstr ""
+msgstr "Braille contraído: seis puntos"
 
 #: C/commands_braille.page:33(p)
 msgid "Marks the beginning of a text selection: Cut Begin"
@@ -6565,6 +6616,9 @@ msgid ""
 "location: <keyseq><key>Alt</key><key>Shift</key><key>1</key></keyseq>-"
 "<key>6</key>"
 msgstr ""
+"Información «¿Dónde estoy?» para el marcador relativo a la ubicación del "
+"puntero actual: <keyseq><key>Alt</key><key>Shift</key><key>1</key></keyseq>-"
+"<key>6</key>"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: C/index.page:0(None)
