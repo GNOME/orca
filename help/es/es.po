@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-04-12 14:43+0000\n"
-"PO-Revision-Date: 2011-04-26 14:03+0200\n"
+"POT-Creation-Date: 2011-04-26 19:00+0000\n"
+"PO-Revision-Date: 2011-04-29 17:06+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2175,7 +2175,7 @@ msgstr "Insertar"
 #: C/preferences_key_bindings.page:34(gui)
 #: C/howto_the_orca_modifier.page:67(p)
 msgid "Insert, KP_Insert"
-msgstr ""
+msgstr "Ins, TN Ins"
 
 #: C/preferences_key_bindings.page:35(gui)
 #: C/howto_the_orca_modifier.page:70(p)
@@ -2271,12 +2271,16 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>Space</key></keyseq>: <app>Orca</app>'s "
 "Preferences"
 msgstr ""
+"<keyseq><key>Modificador de Orca</key><key>Espacio</key></keyseq>: "
+"preferencias de <app>Orca</app>"
 
 #: C/preferences_introduction.page:39(p)
 msgid ""
 "<keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key></keyseq>: "
 "<app>Orca</app>'s Preferences for the current application"
 msgstr ""
+"<keyseq><key>Ctrl</key><key>Modificador de Orca</key><key>Espacio</key></"
+"keyseq>: preferencias de <app>Orca</app>para la aplicación actual"
 
 #: C/preferences_introduction.page:50(p)
 msgid ""
@@ -2529,6 +2533,10 @@ msgid ""
 "the <link xref=\"preferences\">Orca Preferences</link> dialog, access help "
 "content, bring up the About dialog, and quit <app>Orca</app>."
 msgstr ""
+"La ventana principal de <app>Orca</app>le proporciona una forma gráfica de "
+"mostrar el diálogo de <link xref=\"preferences\">preferencias de Orca</"
+"link>, acceder al contenido de la ayuda, mostrar el diálogo «Acerca de» y "
+"salir de <app>Orca</app>."
 
 #: C/preferences_general.page:135(p)
 msgid ""
@@ -3548,7 +3556,7 @@ msgstr ""
 
 #: C/howto_the_orca_modifier.page:51(title)
 msgid "Changing the Orca Modifier"
-msgstr ""
+msgstr "Cambiar el «modificador de Orca»"
 
 #: C/howto_the_orca_modifier.page:53(p) C/howto_keyboard_layout.page:45(p)
 #: C/howto_key_bindings.page:23(p) C/howto_key_bindings.page:60(p)
@@ -4408,12 +4416,12 @@ msgstr ""
 
 #: C/howto_orca_find.page:30(p) C/commands_find.page:30(p)
 msgid "Desktop: <keyseq><key>KP Delete</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN Supr</key></keyseq>"
 
 #: C/howto_orca_find.page:33(p) C/commands_find.page:33(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Left Bracket</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>[</key></keyseq>"
 
 #: C/howto_orca_find.page:38(p)
 msgid ""
@@ -5188,7 +5196,7 @@ msgstr ""
 
 #: C/commands_where_am_i.page:34(p) C/commands_reading.page:192(p)
 msgid "Desktop: <key>KP Enter</key>"
-msgstr ""
+msgstr "Sobremesa: <key>TN Intro</key>"
 
 #: C/commands_where_am_i.page:37(p) C/commands_reading.page:197(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Return</key></keyseq>"
@@ -5201,7 +5209,7 @@ msgstr ""
 
 #: C/commands_where_am_i.page:45(p) C/commands_reading.page:207(p)
 msgid "Desktop: <key>KP Enter</key> (double-clicked)"
-msgstr ""
+msgstr "Sobremesa: <key>TN Intro</key> (doble pulsación)"
 
 #: C/commands_where_am_i.page:48(p) C/commands_reading.page:212(p)
 msgid ""
@@ -5224,10 +5232,11 @@ msgstr "Presentar la barra de título:"
 #: C/commands_where_am_i.page:65(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN Intro</key></keyseq>"
 
 #: C/commands_where_am_i.page:70(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>/</key></keyseq>"
 
 #: C/commands_where_am_i.page:77(p)
 msgid "Present the status bar:"
@@ -5238,12 +5247,16 @@ msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Enter</key></keyseq> "
 "(double-clicked)"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN Intro</key></"
+"keyseq> (doble pulsación)"
 
 #: C/commands_where_am_i.page:86(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Slash</key></keyseq> (double-"
 "clicked)"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>/</key></keyseq> (doble "
+"pulsación)"
 
 #: C/commands_time_date_notifications.page:6(title)
 msgid "4. Time, Date, and Notification"
@@ -5643,11 +5656,11 @@ msgstr ""
 
 #: C/commands_reading.page:8(title)
 msgid "1. Reading"
-msgstr ""
+msgstr "1. Lectura"
 
 #: C/commands_reading.page:9(title)
 msgid "Reading"
-msgstr "Reading"
+msgstr "Lectura"
 
 #: C/commands_reading.page:10(desc)
 msgid "Commands for accessing document text"
@@ -5691,7 +5704,7 @@ msgstr "Leer la línea actual:"
 
 #: C/commands_reading.page:49(p) C/commands_flat_review.page:46(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 8</key></keyseq>"
 
 #: C/commands_reading.page:54(p) C/commands_flat_review.page:47(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq>"
@@ -5703,7 +5716,7 @@ msgstr "Leer la palabra actual:"
 
 #: C/commands_reading.page:64(p) C/commands_flat_review.page:93(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 5</key></keyseq>"
 
 #: C/commands_reading.page:69(p) C/commands_flat_review.page:94(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq>"
@@ -5715,7 +5728,7 @@ msgstr "Deletrear la palabra actual:"
 
 #: C/commands_reading.page:79(p) C/commands_flat_review.page:99(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (double-clicked)"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 5</key></keyseq> (doble pulsación)"
 
 #: C/commands_reading.page:84(p) C/commands_flat_review.page:100(p)
 msgid ""
@@ -5731,13 +5744,15 @@ msgstr "Deletrear fonéticamente la palabra actual:"
 
 #: C/commands_reading.page:95(p) C/commands_flat_review.page:105(p)
 msgid "Desktop: <keyseq><key>KP 5</key></keyseq> (triple-clicked)"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 5</key></keyseq> (triple pulsación)"
 
 #: C/commands_reading.page:100(p) C/commands_flat_review.page:106(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>K</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>K</key></keyseq> "
+"(triple pulsación)"
 
 #: C/commands_reading.page:108(p)
 msgid "Read the current character:"
@@ -5745,11 +5760,11 @@ msgstr "Leer el carácter actual:"
 
 #: C/commands_reading.page:111(p) C/commands_flat_review.page:134(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>TN 2</key></keyseq>"
 
 #: C/commands_reading.page:116(p) C/commands_flat_review.page:135(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>,</key></keyseq>"
 
 #: C/commands_reading.page:123(p)
 msgid "Phonetically speak the current character:"
@@ -5757,13 +5772,15 @@ msgstr "Leer fonéticamente el carácter actual:"
 
 #: C/commands_reading.page:126(p) C/commands_flat_review.page:140(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (double-clicked)"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 2</key></keyseq> (doble pulsación)"
 
 #: C/commands_reading.page:131(p) C/commands_flat_review.page:141(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (double-"
 "clicked)"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>,</key></keyseq> (doble "
+"pulsación)"
 
 #: C/commands_reading.page:139(p)
 msgid "Speak the unicode value of current character:"
@@ -5771,13 +5788,15 @@ msgstr ""
 
 #: C/commands_reading.page:142(p) C/commands_flat_review.page:146(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 2</key></keyseq> (triple pulsación)"
 
 #: C/commands_reading.page:147(p) C/commands_flat_review.page:147(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Comma</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>,</key></keyseq> "
+"(triple pulsación)"
 
 #: C/commands_reading.page:157(title)
 msgid "Say All"
@@ -5791,11 +5810,11 @@ msgstr ""
 
 #: C/commands_reading.page:164(p)
 msgid "Desktop: <key>KP Plus</key>"
-msgstr ""
+msgstr "Sobremesa: <key>TN +</key>"
 
 #: C/commands_reading.page:167(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Semicolon</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>;</key></keyseq>"
 
 #: C/commands_reading.page:174(title)
 msgid "Text Attributes and Selected Text"
@@ -5891,11 +5910,11 @@ msgstr "Pulsar con el botón izquierdo en el elemento actual:"
 
 #: C/commands_mouse.page:43(p)
 msgid "Desktop: <keyseq><key>KP Divide</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN /</key></keyseq>"
 
 #: C/commands_mouse.page:44(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>7</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>7</key></keyseq>"
 
 #: C/commands_mouse.page:48(p)
 msgid "Right-click on current item:"
@@ -5903,11 +5922,11 @@ msgstr "Pulsar con el botón derecho en el elemento actual:"
 
 #: C/commands_mouse.page:50(p)
 msgid "Desktop: <keyseq><key>KP Multiply</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>TN *</key></keyseq>"
 
 #: C/commands_mouse.page:51(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>8</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>8</key></keyseq>"
 
 #: C/commands_mouse.page:55(p)
 msgid "Route pointer to current item:"
@@ -5916,10 +5935,11 @@ msgstr "Posicionar el puntero en el elemento actual:"
 #: C/commands_mouse.page:57(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Divide</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN /</key></keyseq>"
 
 #: C/commands_mouse.page:58(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>9</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>9</key></keyseq>"
 
 #: C/commands_mouse.page:62(p)
 msgid "Move focus into or away from the current mouse over (web only):"
@@ -5929,10 +5949,11 @@ msgstr ""
 msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Multiply</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN *</key></keyseq>"
 
 #: C/commands_mouse.page:65(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>0</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>0</key></keyseq>"
 
 #: C/commands_mouse.page:69(p)
 msgid "Enable/disable mouse review mode: (Unbound)"
@@ -6064,11 +6085,14 @@ msgstr ""
 #: C/commands_flat_review.page:32(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 7</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN 7</key></keyseq>"
 
 #: C/commands_flat_review.page:33(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>U</key></keyseq>"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Ctrl</key><key>U</key></"
+"keyseq>"
 
 #: C/commands_flat_review.page:37(p)
 msgid "Previous line:"
@@ -6076,11 +6100,11 @@ msgstr "Línea anterior:"
 
 #: C/commands_flat_review.page:39(p)
 msgid "Desktop: <keyseq><key>KP 7</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 7</key></keyseq>"
 
 #: C/commands_flat_review.page:40(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>U</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>U</key></keyseq>"
 
 #: C/commands_flat_review.page:44(p)
 msgid "Current line:"
@@ -6092,13 +6116,15 @@ msgstr "Hablar la línea actual:"
 
 #: C/commands_flat_review.page:52(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (double-clicked)"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 8</key></keyseq> (doble pulsación)"
 
 #: C/commands_flat_review.page:53(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (double-"
 "clicked)"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>I</key></keyseq> (doble "
+"pulsación)"
 
 #: C/commands_flat_review.page:56(p)
 msgid "Phonetically spell current line:"
@@ -6106,13 +6132,15 @@ msgstr "Deletrear fonéticamente la línea actual:"
 
 #: C/commands_flat_review.page:58(p)
 msgid "Desktop: <keyseq><key>KP 8</key></keyseq> (triple-clicked)"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 8</key></keyseq> (triple pulsación)"
 
 #: C/commands_flat_review.page:59(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>I</key></keyseq> (triple-"
 "clicked)"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>I</key></keyseq> "
+"(triple pulsación)"
 
 #: C/commands_flat_review.page:62(p)
 msgid "Next line:"
@@ -6120,11 +6148,11 @@ msgstr "Línea siguiente:"
 
 #: C/commands_flat_review.page:64(p)
 msgid "Desktop: <keyseq><key>KP 9</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>TN 9</key></keyseq>"
 
 #: C/commands_flat_review.page:65(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>O</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>O</key></keyseq>"
 
 #: C/commands_flat_review.page:68(p)
 msgid "Last line (The \"end\" position):"
@@ -6133,11 +6161,14 @@ msgstr ""
 #: C/commands_flat_review.page:70(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 9</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN 9</key></keyseq>"
 
 #: C/commands_flat_review.page:71(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>O</key></keyseq>"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Ctrl</key><key>O</key></"
+"keyseq>"
 
 #: C/commands_flat_review.page:77(title)
 msgid "Commands for Reviewing by Word"
@@ -6150,11 +6181,14 @@ msgstr "Palabra anterior:"
 #: C/commands_flat_review.page:81(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 4</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN 4</key></keyseq>"
 
 #: C/commands_flat_review.page:82(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>J</key></keyseq>"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Ctrl</key><key>J</key></"
+"keyseq>"
 
 #: C/commands_flat_review.page:85(p)
 msgid "Previous word:"
@@ -6162,11 +6196,11 @@ msgstr "Palabra anterior:"
 
 #: C/commands_flat_review.page:87(p)
 msgid "Desktop: <keyseq><key>KP 4</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 4</key></keyseq>"
 
 #: C/commands_flat_review.page:88(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>J</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>J</key></keyseq>"
 
 #: C/commands_flat_review.page:91(p)
 msgid "Current word:"
@@ -6186,11 +6220,11 @@ msgstr "Siguiente palabra:"
 
 #: C/commands_flat_review.page:111(p)
 msgid "Desktop: <keyseq><key>KP 6</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 6</key></keyseq>"
 
 #: C/commands_flat_review.page:112(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>L</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>L</key></keyseq>"
 
 #: C/commands_flat_review.page:115(p)
 msgid "Word below:"
@@ -6199,11 +6233,14 @@ msgstr "Siguiente palabra:"
 #: C/commands_flat_review.page:117(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 6</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN 6</key></keyseq>"
 
 #: C/commands_flat_review.page:118(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>L</key></keyseq>"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Ctrl</key><key>L</key></"
+"keyseq>"
 
 #: C/commands_flat_review.page:124(title)
 msgid "Commands for Reviewing by Character"
@@ -6215,11 +6252,11 @@ msgstr "Carácter anterior:"
 
 #: C/commands_flat_review.page:128(p)
 msgid "Desktop: <keyseq><key>KP 1</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 1</key></keyseq>"
 
 #: C/commands_flat_review.page:129(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>M</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>M</key></keyseq>"
 
 #: C/commands_flat_review.page:132(p)
 msgid "Current character:"
@@ -6239,11 +6276,11 @@ msgstr "Siguiente carácter:"
 
 #: C/commands_flat_review.page:152(p)
 msgid "Desktop: <keyseq><key>KP 3</key></keyseq>"
-msgstr ""
+msgstr "Sobremesa: <keyseq><key>TN 3</key></keyseq>"
 
 #: C/commands_flat_review.page:153(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>Period</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>.</key></keyseq>"
 
 #: C/commands_flat_review.page:156(p)
 msgid "Last character on current line:"
@@ -6252,11 +6289,14 @@ msgstr "Último carácter en la línea actual:"
 #: C/commands_flat_review.page:158(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 1</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN 1</key></keyseq>"
 
 #: C/commands_flat_review.page:159(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>M</key></keyseq>"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Ctrl</key><key>M</key></"
+"keyseq>"
 
 #: C/commands_flat_review.page:165(title)
 msgid "Additional Commands"
@@ -6270,10 +6310,11 @@ msgstr ""
 msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>KP Subtract</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN -</key></keyseq>"
 
 #: C/commands_flat_review.page:170(p)
 msgid "Laptop: <keyseq><key>Orca Modifier</key><key>P</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>P</key></keyseq>"
 
 #: C/commands_flat_review.page:173(p)
 msgid "Review current item/widget:"
@@ -6282,11 +6323,14 @@ msgstr "Revisar el elemento/widget actual:"
 #: C/commands_flat_review.page:175(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 5</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN 5</key></keyseq>"
 
 #: C/commands_flat_review.page:176(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>K</key></keyseq>"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Ctrl</key><key>K</key></"
+"keyseq>"
 
 #: C/commands_find.page:6(title)
 msgid "2. Orca Find"
@@ -6318,11 +6362,12 @@ msgstr ""
 #: C/commands_find.page:41(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>TN Supr</key></keyseq>"
 
 #: C/commands_find.page:47(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Right Bracket</key></keyseq>"
-msgstr ""
+msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>]</key></keyseq>"
 
 #: C/commands_find.page:55(p)
 msgid "Move flat review to the previous instance of a string:"
@@ -6333,12 +6378,16 @@ msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
 "key></keyseq>"
 msgstr ""
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>Mayús</key><key>KP "
+"Supr</key></keyseq>"
 
 #: C/commands_find.page:66(p)
 msgid ""
 "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>Right Bracket</"
 "key></keyseq>"
 msgstr ""
+"Portátil: <keyseq><key>Modificador de Orca</key><key>Ctrl</key><key>]</key></"
+"keyseq>"
 
 #: C/commands_debugging.page:4(title)
 msgid "1. Debugging"
