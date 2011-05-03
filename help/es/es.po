@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-04-26 19:00+0000\n"
-"PO-Revision-Date: 2011-04-29 17:06+0200\n"
+"POT-Creation-Date: 2011-04-29 17:35+0000\n"
+"PO-Revision-Date: 2011-05-03 16:45+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2253,6 +2253,10 @@ msgid ""
 "which applies to all applications. An example of an Orca preference is key "
 "echo because key echo is something that applies to all applications."
 msgstr ""
+"Las preferencias de Orca le permiten personalizar la funcionalidad de "
+"<app>Orca</app> que se usa en todas las aplicaciones. Un ejemplo de "
+"preferencia de Orca es el eco de teclas, ya que es algo que se usa en todas "
+"las aplicaciones."
 
 #: C/preferences_introduction.page:23(p)
 msgid ""
@@ -2564,6 +2568,8 @@ msgid ""
 "When checked, this option will tell the system to automatically launch "
 "<app>Orca</app> when you log in."
 msgstr ""
+"Cuando está activada, esta opción le dice al sistema que lance <app>Orca</"
+"app> automáticamente cuando inicia la sesión."
 
 #: C/preferences_general.page:165(desc)
 msgid ""
@@ -2623,30 +2629,41 @@ msgid ""
 "<gui>General</gui> page, make it possible for you to maintain and use "
 "multiple configurations."
 msgstr ""
+"El grupo de controles <gui>Perfiles</gui>, que aparece en la parte inferior "
+"de la página <gui>General</gui>, le permite mantener y usar varias "
+"configuraciones."
 
 #: C/preferences_general.page:215(p)
 msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
 msgstr ""
+"El cuadro combinado <gui>Perfil activo</gui> muestra el perfil actual y le "
+"permite seleccionar un perfil diferente que cargar."
 
 #: C/preferences_general.page:221(p)
 msgid ""
 "The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
 "indicated in the <gui>Active Profile</gui> combo box."
 msgstr ""
+"El botón <gui>Cargar</gui> hará que <app>Orca</app> cargue el perfil "
+"indicado en el cuadro combinado <gui>Perfil activo</gui>."
 
 #: C/preferences_general.page:227(p)
 msgid ""
 "The <gui>Save As</gui> button allows you to save the current set of options "
 "from the preferences dialog box to a named profile."
 msgstr ""
+"El botón <gui>Guardar como</gui> le permite guardar el conjunto actual de "
+"opciones desde el cuadro de diálogo de preferencias a un perfil con nombre."
 
 #: C/preferences_general.page:233(p)
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
 msgstr ""
+"El cuadro combinado <gui>Perfil inicial</gui> le permite selección qué "
+"perfil se cargará automáticamente cada vez que ejecute <app>Orca</app>."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2698,6 +2715,9 @@ msgid ""
 "customize how <app>Orca</app> presents, and allow you to interact with, text "
 "and other content."
 msgstr ""
+"El grupo de controles <gui>Navegación por páginas</gui> le permite "
+"personalizar cómo se presenta <app>Orca</app>, y le permite interactuar con "
+"el texto y otros contenidos."
 
 #: C/preferences_gecko.page:29(title)
 msgid "Use Orca Caret Navigation"
@@ -2712,13 +2732,15 @@ msgstr ""
 
 #: C/preferences_gecko.page:40(title) C/preferences_gecko.page:59(title)
 msgid "This setting can be toggled on the fly"
-msgstr ""
+msgstr "Esta configuración se puede cambiar al vuelo"
 
 #: C/preferences_gecko.page:41(p)
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>F12</key></keyseq>."
 msgstr ""
+"Para cambiar esta configuración al vuelo sin guardarla, use "
+"<keyseq><key>Modificador de Orca</key><key>F12</key></keyseq>."
 
 #: C/preferences_gecko.page:48(title)
 msgid "Use Orca Structural Navigation"
@@ -2753,6 +2775,7 @@ msgstr ""
 #: C/preferences_gecko.page:79(title)
 msgid "Position cursor at start of line when navigating vertically"
 msgstr ""
+"Posicionar el cursor al principio de línea cuando se navega verticalmente"
 
 #: C/preferences_gecko.page:80(p)
 msgid ""
@@ -2783,6 +2806,8 @@ msgid ""
 "If this checkbox is checked, <app>Orca</app> will read the line which "
 "matches your current search query."
 msgstr ""
+"Si esta casilla está marcada, <app>Orca</app> leerá la línea que coincida "
+"con su búsqueda actual."
 
 #: C/preferences_gecko.page:111(title)
 msgid "Only speak changed lines during find"
@@ -2841,6 +2866,9 @@ msgid ""
 "The following options allow you to customize how <app>Orca</app> behaves "
 "when providing access to instant messaging and internet relay chat clients."
 msgstr ""
+"Las siguientes opciones le permiten personalizar cómo se comporta <app>Orca</"
+"app> cuando proporciona acceso a la mensajería instantánea y a clientes de "
+"IRC."
 
 #: C/preferences_chat.page:25(title)
 msgid "Speak Chat Room name"
@@ -2885,6 +2913,8 @@ msgid ""
 "This group of radio buttons allows you to control under what circumstances "
 "<app>Orca</app> will present an incoming message to you. Your choices are:"
 msgstr ""
+"Este grupo de botones de radio le permite controlar bajo qué circunstancias "
+"<app>Orca</app> le presenta un mensaje. Sus opciones son:"
 
 #: C/preferences_chat.page:66(gui)
 msgid "All channels"
@@ -2982,7 +3012,7 @@ msgstr "Braille"
 
 #: C/preferences_braille.page:5(desc)
 msgid "Configuring <app>Orca</app>'s braille display support"
-msgstr ""
+msgstr "Configurar el soporte de <app>Orca</app> para dispositivos Braille"
 
 #: C/preferences_braille.page:18(title)
 msgid "Braille Preferences"
@@ -3004,6 +3034,8 @@ msgid ""
 "If you configure BrlTTY later on, you need to restart <app>Orca</app> in "
 "order to use braille."
 msgstr ""
+"Si configura BrlTTY más tarde, deberá reiniciar <app>Orca</app> para poder "
+"usar Braille."
 
 #: C/preferences_braille.page:39(title) C/howto_text_setup.page:169(p)
 msgid "Enable Braille Monitor"
@@ -3016,6 +3048,11 @@ msgid ""
 "purposes, but is also useful for <app>Orca</app> developers who do not have "
 "access to a braille display."
 msgstr ""
+"El monitor de Braille de <application>Orca</application> proporciona una "
+"representación en la pantalla de lo que ocurre en el terminal Braille. Esta "
+"característica es básicamente para demostraciones, pero también es útil para "
+"los desarrolladores de <application>Orca</application> que no tengan acceso "
+"a dispositivos Braille."
 
 #: C/preferences_braille.page:52(title)
 msgid "Enable Contracted Braille"
@@ -3166,6 +3203,7 @@ msgstr "Para salir de <app>Orca</app>:"
 #: C/introduction.page:66(p)
 msgid "Press the <gui>Quit</gui> button in the <app>Orca</app> main window."
 msgstr ""
+"Pulse el botón <gui>Salir</gui> en la ventana principal de <app>Orca</app>."
 
 #: C/introduction.page:72(p)
 msgid ""
@@ -3186,7 +3224,7 @@ msgstr ""
 
 #: C/introduction.page:88(title)
 msgid "Load-Time Options"
-msgstr ""
+msgstr "Opciones en tiempo de carga"
 
 #: C/introduction.page:89(p)
 msgid "The following options can be specified when launching <app>Orca</app>:"
@@ -3375,7 +3413,7 @@ msgstr "1. ¿Dónde estoy?"
 
 #: C/howto_whereami.page:6(desc)
 msgid "Learning about your location"
-msgstr ""
+msgstr "Aprender sobre su ubicación"
 
 #: C/howto_whereami.page:17(title)
 msgid "WhereAmI"
@@ -3687,6 +3725,8 @@ msgid ""
 "This option causes <app>Orca</app> to speak all keys as they are pressed. "
 "Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</key>."
 msgstr ""
+"Esta opción hace que <app>Orca</app> lea todas las teclas que se pulsan. "
+"Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>."
 
 #: C/howto_text_setup.page:80(p)
 msgid ""
