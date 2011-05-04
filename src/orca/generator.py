@@ -294,6 +294,11 @@ class Generator:
             result.append(name)
         elif obj.description:
             result.append(obj.description)
+        # To make the unlabeled icons in gnome-panel more accessible.
+        if not result and obj.getRole() == pyatspi.ROLE_ICON \
+           and obj.parent.getRole() == pyatspi.ROLE_PANEL:
+            return self._generateName(obj.parent)
+
         return result
 
     def _generateLabelAndName(self, obj, **args):

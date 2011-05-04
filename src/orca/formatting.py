@@ -398,7 +398,7 @@ formatting = {
         #pyatspi.ROLE_HTML_CONTAINER: 'default'
         pyatspi.ROLE_ICON: {
             'unfocused': '[Component(obj,\
-                                     asString(label + displayedText + imageDescription + roleName))]'
+                                     asString(((label + displayedText + imageDescription) or name) + roleName))]'
             },
         #pyatspi.ROLE_IMAGE: 'default'
         pyatspi.ROLE_LABEL: {
