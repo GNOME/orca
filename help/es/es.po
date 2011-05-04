@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-04-29 17:35+0000\n"
-"PO-Revision-Date: 2011-05-03 16:45+0200\n"
+"POT-Creation-Date: 2011-05-03 21:04+0000\n"
+"PO-Revision-Date: 2011-05-04 22:34+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -233,13 +233,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
-"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
-"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
-"hable siempre independientemente de que el texto esté subrayado o no, "
-"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
-"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
-"<gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
+"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
+"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
+"atributo se hable siempre independientemente de que el texto esté subrayado "
+"o no, entonces el atributo debería estar marcado y el valor de "
+"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
+"que la columna <gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -686,11 +686,12 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
-"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
-"hablar de manera predeterminada, pero tener a Alicia para hablar los "
-"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
-"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
+"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
+"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
+"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
+"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
+"instalado."
 
 #: C/preferences_speech.page:75(title)
 msgid "Rate, Pitch, and Volume"
@@ -750,8 +751,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
-"«&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
+"«/», «&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -1964,6 +1965,11 @@ msgid ""
 "additional checkboxes to become available through which you can choose "
 "exactly which keys should and should not be echoed to best suit your needs."
 msgstr ""
+"La configuración del eco de teclas de Orca controla lo que sucede cada vez "
+"que pulsa una tecla. Para activar el eco de teclas, marque la casilla "
+"«Activar eco de teclas». Al hacerlo, se activan algunas casillas adicionales "
+"mediante las que puede elegir exactamente qué de qué teclas se debe hacer "
+"eco y de cuáles no para ajustarse mejor a sus necesidades."
 
 #: C/preferences_key_echo.page:33(title)
 msgid "Enable alphanumeric and punctuation keys"
@@ -1993,7 +1999,7 @@ msgstr ""
 
 #: C/preferences_key_echo.page:54(title)
 msgid "Enable locking keys"
-msgstr ""
+msgstr "Activar teclas de bloqueo"
 
 #: C/preferences_key_echo.page:55(p) C/howto_text_setup.page:104(p)
 msgid ""
@@ -5032,7 +5038,7 @@ msgstr ""
 
 #: C/howto_flat_review.page:5(title)
 msgid "2. Flat Review"
-msgstr ""
+msgstr "2. Revisión"
 
 #: C/howto_flat_review.page:6(desc)
 msgid "Examining a window spatially"
@@ -5040,7 +5046,7 @@ msgstr ""
 
 #: C/howto_flat_review.page:15(title) C/commands_flat_review.page:7(title)
 msgid "Flat Review"
-msgstr ""
+msgstr "Revisión"
 
 #: C/howto_flat_review.page:16(p)
 msgid ""
@@ -5103,28 +5109,39 @@ msgstr ""
 #: C/howto_documents.page:26(p)
 msgid "Use <key>Left</key> and <key>Right</key> to move and read by character."
 msgstr ""
+"Use <key>Izquierda</key> y <key>Derecha</key> para moverse y leer por "
+"carácter."
 
 #: C/howto_documents.page:31(p)
 msgid ""
 "Use <keyseq><key>Ctrl</key><key>Left</key></keyseq> and <keyseq><key>Ctrl</"
 "key><key>Right</key></keyseq> to move and read by word."
 msgstr ""
+"Use <keyseq><key>Ctrl</key><key>Izquierda</key></keyseq> y "
+"<keyseq><key>Ctrl</key><key>Derecha</key></keyseq> para moverse y leer por "
+"palabra."
 
 #: C/howto_documents.page:37(p)
 msgid "Use <key>Up</key> and <key>Down</key> to move and read by line."
 msgstr ""
+"Use <key>Arriba</key> y <key>Abajo</key> para moverse y leer por línea."
 
 #: C/howto_documents.page:42(p)
 msgid ""
 "Use <key>Shift</key> in combination with the above commands to select and "
 "unselect text."
 msgstr ""
+"Use <key>Mayús</key> junto a los comandos anteriores para seleccionar y "
+"deseleccionar texto."
 
 #: C/howto_documents.page:48(p)
 msgid ""
 "For a complete listing of GNOME's caret navigation commands, see the <link "
 "href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>."
 msgstr ""
+"Para obtener una lista completa de los comandos de la navegación del cursor "
+"de GNOME, consulte la <link href=\"ghelp:gnome-help#a11y\">Ayuda del acceso "
+"universal</link>."
 
 #: C/howto_documents.page:52(p)
 msgid ""
@@ -5149,7 +5166,7 @@ msgstr "6. Marcadores"
 
 #: C/howto_bookmarks.page:5(desc)
 msgid "Storing and retrieving objects"
-msgstr ""
+msgstr "Almacenar y recuperar objetos"
 
 #: C/howto_bookmarks.page:14(title) C/commands_bookmarks.page:7(title)
 msgid "Bookmarks"
@@ -5210,11 +5227,11 @@ msgstr "¿Dónde estoy?"
 
 #: C/commands_where_am_i.page:8(desc)
 msgid "Commands to learn about your location"
-msgstr ""
+msgstr "Comandos para aprender sobre su ubicación"
 
 #: C/commands_where_am_i.page:19(title)
 msgid "Where Am I Commands"
-msgstr ""
+msgstr "Comandos de ¿dónde estoy?"
 
 #: C/commands_where_am_i.page:20(p)
 msgid ""
@@ -5308,7 +5325,7 @@ msgstr "Fecha, hora y notificación"
 
 #: C/commands_time_date_notifications.page:8(desc)
 msgid "Commands for the getting the time, date, and notification messages"
-msgstr ""
+msgstr "Comandos para obtener la fecha, la hora y los mensajes de notificación"
 
 #: C/commands_time_date_notifications.page:19(title)
 msgid "Time, Date, and Notification Commands"
@@ -5319,6 +5336,8 @@ msgid ""
 "The following commands can be used to obtain the current time and date and "
 "to review previously-displayed notification messages:"
 msgstr ""
+"Los siguientes comandos se pueden usar para obtener la fecha y hora actuales "
+"y para revisar los mensajes de notificación anteriormente mostrados:"
 
 #: C/commands_time_date_notifications.page:25(title)
 msgid "Obtaining the Time and Date"
@@ -5361,18 +5380,19 @@ msgstr ""
 #: C/commands_time_date_notifications.page:56(p)
 msgid "Present list of all notification messages: (unbound)"
 msgstr ""
+"Presentar una lista de todos los mensajes de notificación: (sin asociar)"
 
 #: C/commands_table.page:6(title)
 msgid "3. Table Navigation"
-msgstr ""
+msgstr "3. Navegación por tablas"
 
 #: C/commands_table.page:8(desc)
 msgid "Commands for accessing tabular information"
-msgstr ""
+msgstr "Comandos para acceder a información tabular"
 
 #: C/commands_table.page:19(title)
 msgid "Table Navigation Commands"
-msgstr ""
+msgstr "Comandos de la navegación por tablas"
 
 #: C/commands_table.page:20(p)
 msgid ""
@@ -5410,6 +5430,8 @@ msgid ""
 "Toggle between cell and row reading in a table: <keyseq><key>Orca Modifier</"
 "key><key>F11</key></keyseq>"
 msgstr ""
+"Alternar entre lectura de celdas y lectura de filas en una tabla: "
+"<keyseq><key>Modificador de Orca</key><key>F11</key></keyseq>"
 
 #: C/commands_structural_navigation.page:6(title)
 msgid "2. Structural Navigation"
@@ -5429,12 +5451,17 @@ msgid ""
 "elements found in applications for which <app>Orca</app> provides structural "
 "navigation support."
 msgstr ""
+"Los comandos siguientes se pueden usar para navegar por cabeceras, enlaces y "
+"otros elementos encontrados en aplicaciones para las que <app>Orca</app> "
+"proporciona soporte de navegación estructural."
 
 #: C/commands_structural_navigation.page:27(p)
 msgid ""
 "Enable/disable Structural Navigation keys: <keyseq><key>Orca Modifier</"
 "key><key>Z</key></keyseq>"
 msgstr ""
+"Activar/desactivar las teclas de navegación estructural: "
+"<keyseq><key>Modificador de Orca</key><key>Z</key></keyseq>"
 
 #: C/commands_structural_navigation.page:34(title)
 msgid "Headings"
@@ -5445,6 +5472,8 @@ msgid ""
 "Next and previous heading: <keyseq><key>H</key></keyseq> and "
 "<keyseq><key>Shift</key><key>H</key></keyseq>"
 msgstr ""
+"Cabecera siguiente y anterior: <keyseq><key>H</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>H</key></keyseq>"
 
 #: C/commands_structural_navigation.page:44(p)
 msgid ""
@@ -5492,6 +5521,9 @@ msgid ""
 "key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</"
 "key></keyseq>"
 msgstr ""
+"Campo del formulario anterior y siguiente: <keyseq><key>Modificador de Orca</"
+"key><key>Tab</key></keyseq> y <keyseq><key>Modificador de Orca</"
+"key><key>Mayús</key><key>Tab</key></keyseq>"
 
 #: C/commands_structural_navigation.page:98(p)
 msgid ""
@@ -5643,7 +5675,7 @@ msgstr ""
 
 #: C/commands_speech_settings.page:6(title)
 msgid "2. Speech Settings"
-msgstr ""
+msgstr "2. Configuración de voz"
 
 #: C/commands_speech_settings.page:8(desc)
 msgid "Commands for customizing <app>Orca</app>'s output"
@@ -5651,7 +5683,7 @@ msgstr "Comandos para personalizar la salida de <app>Orca</app>"
 
 #: C/commands_speech_settings.page:19(title)
 msgid "Speech Settings Commands"
-msgstr ""
+msgstr "2. Comandos de configuración de voz"
 
 #: C/commands_speech_settings.page:20(p)
 msgid ""
@@ -5868,9 +5900,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
-"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
-"app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
+"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
+"<app>Orca</app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(p)
 msgid ""
