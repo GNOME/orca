@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-05-03 21:04+0000\n"
-"PO-Revision-Date: 2011-05-04 22:34+0200\n"
+"POT-Creation-Date: 2011-05-05 00:51+0000\n"
+"PO-Revision-Date: 2011-05-05 17:00+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -233,13 +233,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
-"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
-"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
-"atributo se hable siempre independientemente de que el texto esté subrayado "
-"o no, entonces el atributo debería estar marcado y el valor de "
-"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
-"que la columna <gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
+"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
+"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
+"hable siempre independientemente de que el texto esté subrayado o no, "
+"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
+"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
+"<gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -686,12 +686,11 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
-"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
-"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
-"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
-"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
-"instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
+"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
+"hablar de manera predeterminada, pero tener a Alicia para hablar los "
+"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
+"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
 
 #: C/preferences_speech.page:75(title)
 msgid "Rate, Pitch, and Volume"
@@ -751,8 +750,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
-"«/», «&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
+"«&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -2503,10 +2502,13 @@ msgid ""
 msgstr ""
 
 #: C/preferences_general.page:97(desc)
+#, fuzzy
 msgid ""
 "Preferences dialog box option to enable presentation of tooltips which "
 "appear as the result of mouse hovering."
 msgstr ""
+"Opción del cuadro de diálogo de preferencias para activar la presentación de "
+"consejos que aparece al pasar el ratón por encima."
 
 #: C/preferences_general.page:102(title)
 msgid "Present Tooltips"
@@ -3112,7 +3114,7 @@ msgstr ""
 
 #: C/preferences_braille.page:108(title)
 msgid "Selection and Hyperlink Indicators"
-msgstr ""
+msgstr "Indicadores de selección e hiperenlace"
 
 #: C/preferences_braille.page:110(p)
 msgid ""
@@ -4089,7 +4091,7 @@ msgstr ""
 
 #: C/howto_structural_navigation.page:26(p)
 msgid "Headings and other text blocks"
-msgstr ""
+msgstr "Cabeceras y otros bloques de texto"
 
 #: C/howto_structural_navigation.page:27(p)
 msgid "Form controls"
@@ -4768,7 +4770,7 @@ msgstr ""
 
 #: C/howto_learn_modes.page:5(title)
 msgid "5. The \"Learn\" Modes"
-msgstr ""
+msgstr "5. Los modos de «aprendizaje»"
 
 #: C/howto_learn_modes.page:6(desc)
 msgid "Discovering <app>Orca</app>'s commands"
@@ -4776,7 +4778,7 @@ msgstr ""
 
 #: C/howto_learn_modes.page:17(title)
 msgid "The \"Learn\" Modes"
-msgstr ""
+msgstr "Los modos de «aprendizaje»"
 
 #: C/howto_learn_modes.page:18(p) C/commands_controlling_orca.page:55(p)
 msgid ""
@@ -4789,13 +4791,15 @@ msgstr ""
 
 #: C/howto_learn_modes.page:27(title)
 msgid "Using Learn Mode"
-msgstr ""
+msgstr "Usar el modo de aprendizaje"
 
 #: C/howto_learn_modes.page:29(p)
 msgid ""
 "Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key><key>H</"
 "key></keyseq>."
 msgstr ""
+"Entre en el modo de aprendizaje pulsando <keyseq><key>Modificador de Orca</"
+"key><key>H</key></keyseq>."
 
 #: C/howto_learn_modes.page:35(p)
 msgid ""
@@ -4805,11 +4809,11 @@ msgstr ""
 
 #: C/howto_learn_modes.page:41(p)
 msgid "Press <key>Esc</key> to exit Learn Mode."
-msgstr ""
+msgstr "Pulse <key>Esc</key> para salir del modo de aprendizaje."
 
 #: C/howto_learn_modes.page:45(title)
 msgid "Using List Shortcuts Mode"
-msgstr ""
+msgstr "Usar el modo de lista de atajos"
 
 #: C/howto_learn_modes.page:47(p)
 msgid ""
@@ -4828,10 +4832,12 @@ msgstr ""
 msgid ""
 "Press <key>Up</key> or <key>Down</key> to examine the contents of the list."
 msgstr ""
+"Pulse <key>Arriba</key> o <key>abajo</key> para examinar el contenido de la "
+"lista."
 
 #: C/howto_learn_modes.page:66(p)
 msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
-msgstr ""
+msgstr "Pulse <key>Esc</key> para salir del modo de lista de atajos."
 
 #: C/howto_keyboard_layout.page:5(title)
 msgid "6. Keyboard Layout"
@@ -4869,7 +4875,7 @@ msgstr ""
 
 #: C/howto_key_bindings.page:15(title)
 msgid "Keybindings"
-msgstr "Combinaciones de teclas"
+msgstr "Asociaciones de teclas"
 
 #: C/howto_key_bindings.page:16(p)
 msgid ""
@@ -4880,7 +4886,7 @@ msgstr ""
 
 #: C/howto_key_bindings.page:21(title)
 msgid "Binding an Unbound Command"
-msgstr ""
+msgstr "Asociar un comando no asociado"
 
 #: C/howto_key_bindings.page:32(p)
 msgid ""
@@ -4929,7 +4935,7 @@ msgstr ""
 
 #: C/howto_key_bindings.page:112(title)
 msgid "Unbinding Bound Commands"
-msgstr ""
+msgstr "Desasociar comandos asociados"
 
 #: C/howto_key_bindings.page:124(p)
 msgid ""
@@ -5372,10 +5378,11 @@ msgstr ""
 #: C/commands_time_date_notifications.page:50(p)
 msgid "Present the last (most recent) notification message: (unbound)"
 msgstr ""
+"Presentar el último (el más reciente) mensaje de notificación: (sin asociar)"
 
 #: C/commands_time_date_notifications.page:53(p)
 msgid "Present the previous notification message: (unbound)"
-msgstr ""
+msgstr "Presentar el mensaje de notificación anterior: (sin asociar)"
 
 #: C/commands_time_date_notifications.page:56(p)
 msgid "Present list of all notification messages: (unbound)"
@@ -5480,36 +5487,48 @@ msgid ""
 "Next and previous heading at level 1: <keyseq><key>1</key></keyseq> and "
 "<keyseq><key>Shift</key><key>1</key></keyseq>"
 msgstr ""
+"Cabecera siguiente y anterior de nivel 1: <keyseq><key>1</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>1</key></keyseq>"
 
 #: C/commands_structural_navigation.page:51(p)
 msgid ""
 "Next and previous heading at level 2: <keyseq><key>2</key></keyseq> and "
 "<keyseq><key>Shift</key><key>2</key></keyseq>"
 msgstr ""
+"Cabecera siguiente y anterior de nivel 2: <keyseq><key>2</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>2</key></keyseq>"
 
 #: C/commands_structural_navigation.page:58(p)
 msgid ""
 "Next and previous heading at level 3: <keyseq><key>3</key></keyseq> and "
 "<keyseq><key>Shift</key><key>3</key></keyseq>"
 msgstr ""
+"Cabecera siguiente y anterior de nivel 3: <keyseq><key>3</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>3</key></keyseq>"
 
 #: C/commands_structural_navigation.page:65(p)
 msgid ""
 "Next and previous heading at level 4: <keyseq><key>4</key></keyseq> and "
 "<keyseq><key>Shift</key><key>4</key></keyseq>"
 msgstr ""
+"Cabecera siguiente y anterior de nivel 4: <keyseq><key>4</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>4</key></keyseq>"
 
 #: C/commands_structural_navigation.page:72(p)
 msgid ""
 "Next and previous heading at level 5: <keyseq><key>5</key></keyseq> and "
 "<keyseq><key>Shift</key><key>5</key></keyseq>"
 msgstr ""
+"Cabecera siguiente y anterior de nivel 5: <keyseq><key>5</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>5</key></keyseq>"
 
 #: C/commands_structural_navigation.page:79(p)
 msgid ""
 "Next and previous heading at level 6: <keyseq><key>6</key></keyseq> and "
 "<keyseq><key>Shift</key><key>6</key></keyseq>"
 msgstr ""
+"Cabecera siguiente y anterior de nivel 6: <keyseq><key>6</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>6</key></keyseq>"
 
 #: C/commands_structural_navigation.page:88(title)
 msgid "Forms"
@@ -5530,30 +5549,40 @@ msgid ""
 "Next and previous button: <keyseq><key>B</key></keyseq> and "
 "<keyseq><key>Shift</key><key>B</key></keyseq>"
 msgstr ""
+"Botón anterior y siguiente: <keyseq><key>B</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>B</key></keyseq>"
 
 #: C/commands_structural_navigation.page:105(p)
 msgid ""
 "Next and previous combo box: <keyseq><key>C</key></keyseq> and "
 "<keyseq><key>Shift</key><key>C</key></keyseq>"
 msgstr ""
+"Cuadro combinado anterior y siguiente: <keyseq><key>C</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>C</key></keyseq>"
 
 #: C/commands_structural_navigation.page:112(p)
 msgid ""
 "Next and previous entry: <keyseq><key>E</key></keyseq> and "
 "<keyseq><key>Shift</key><key>E</key></keyseq>"
 msgstr ""
+"Entrada anterior y siguiente: <keyseq><key>E</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>E</key></keyseq>"
 
 #: C/commands_structural_navigation.page:119(p)
 msgid ""
 "Next and previous radio button: <keyseq><key>R</key></keyseq> and "
 "<keyseq><key>Shift</key><key>R</key></keyseq>"
 msgstr ""
+"Botón de radio anterior y siguiente: <keyseq><key>R</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>R</key></keyseq>"
 
 #: C/commands_structural_navigation.page:126(p)
 msgid ""
 "Next and previous checkbox: <keyseq><key>X</key></keyseq> and "
 "<keyseq><key>Shift</key><key>X</key></keyseq>"
 msgstr ""
+"Casilla anterior y siguiente: <keyseq><key>X</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>X</key></keyseq>"
 
 #: C/commands_structural_navigation.page:133(p)
 msgid ""
@@ -5567,12 +5596,16 @@ msgid ""
 "Next and previous unvisited link: <keyseq><key>U</key></keyseq> and "
 "<keyseq><key>Shift</key><key>U</key></keyseq>"
 msgstr ""
+"Enlace no visitado anterior y siguiente: <keyseq><key>U</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>U</key></keyseq>"
 
 #: C/commands_structural_navigation.page:152(p)
 msgid ""
 "Next and previous visited link: <keyseq><key>V</key></keyseq> and "
 "<keyseq><key>Shift</key><key>V</key></keyseq>"
 msgstr ""
+"Enlace visitado anterior y siguiente: <keyseq><key>V</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>V</key></keyseq>"
 
 #: C/commands_structural_navigation.page:161(title)
 msgid "Lists"
@@ -5583,51 +5616,69 @@ msgid ""
 "Next and previous list: <keyseq><key>L</key></keyseq> and "
 "<keyseq><key>Shift</key><key>L</key></keyseq>"
 msgstr ""
+"Lista anterior y siguiente: <keyseq><key>L</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>L</key></keyseq>"
 
 #: C/commands_structural_navigation.page:171(p)
 msgid ""
 "Next and previous list item: <keyseq><key>I</key></keyseq> and "
 "<keyseq><key>Shift</key><key>I</key></keyseq>"
 msgstr ""
+"Elemento en la lista anterior y siguiente: <keyseq><key>I</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>I</key></keyseq>"
 
 #: C/commands_structural_navigation.page:183(p)
 msgid ""
 "Next and previous table: <keyseq><key>T</key></keyseq> and "
 "<keyseq><key>Shift</key><key>T</key></keyseq>"
 msgstr ""
+"Tabla anterior y siguiente: <keyseq><key>T</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>T</key></keyseq>"
 
 #: C/commands_structural_navigation.page:190(p)
 msgid ""
 "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>"
 msgstr ""
+"Celda a la izquierda: <keyseq><key>Alt</key><key>Mayús</key><key>Izquierda</"
+"key></keyseq>"
 
 #: C/commands_structural_navigation.page:196(p)
 msgid ""
 "Cell on right: <keyseq><key>Alt</key><key>Shift</key><key>Right</key></"
 "keyseq>"
 msgstr ""
+"Celda a la derecha: <keyseq><key>Alt</key><key>Mayús</key><key>Derecha</"
+"key></keyseq>"
 
 #: C/commands_structural_navigation.page:202(p)
 msgid ""
 "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgstr ""
+"Celda superior: <keyseq><key>Alt</key><key>Mayús</key><key>Arriba</key></"
+"keyseq>"
 
 #: C/commands_structural_navigation.page:208(p)
 msgid ""
 "Cell below: <keyseq><key>Alt</key><key>Shift</key><key>Down</key></keyseq>"
 msgstr ""
+"Celda inferior: <keyseq><key>Alt</key><key>Mayús</key><key>Abajo</key></"
+"keyseq>"
 
 #: C/commands_structural_navigation.page:214(p)
 msgid ""
 "First cell in table: <keyseq><key>Alt</key><key>Shift</key><key>Home</key></"
 "keyseq>"
 msgstr ""
+"Primera celda en la tabla: <keyseq><key>Alt</key><key>Mayús</"
+"key><key>Inicio</key></keyseq>"
 
 #: C/commands_structural_navigation.page:220(p)
 msgid ""
 "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></"
 "keyseq>"
 msgstr ""
+"Última celda en la tabla: <keyseq><key>Alt</key><key>Mayús</key><key>Fin</"
+"key></keyseq>"
 
 #: C/commands_structural_navigation.page:228(title)
 msgid "Text Blocks"
@@ -5638,18 +5689,24 @@ msgid ""
 "Next and previous paragraph: <keyseq><key>P</key></keyseq> and "
 "<keyseq><key>Shift</key><key>P</key></keyseq>"
 msgstr ""
+"Párrafo anterior y siguiente: <keyseq><key>P</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>P</key></keyseq>"
 
 #: C/commands_structural_navigation.page:238(p)
 msgid ""
 "Next and previous blockquote: <keyseq><key>Q</key></keyseq> and "
 "<keyseq><key>Shift</key><key>Q</key></keyseq>"
 msgstr ""
+"Cita anterior y siguiente: <keyseq><key>Q</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>Q</key></keyseq>"
 
 #: C/commands_structural_navigation.page:245(p)
 msgid ""
 "Next and previous \"large object\": <keyseq><key>O</key></keyseq> and "
 "<keyseq><key>Shift</key><key>O</key></keyseq>"
 msgstr ""
+"«Objeto grande» anterior y siguiente: <keyseq><key>O</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>O</key></keyseq>"
 
 #: C/commands_structural_navigation.page:254(title)
 msgid "Other Elements"
@@ -5660,18 +5717,24 @@ msgid ""
 "Next and previous landmark: <keyseq><key>M</key></keyseq> and "
 "<keyseq><key>Shift</key><key>M</key></keyseq>"
 msgstr ""
+"Punto de referencia anterior y siguiente: <keyseq><key>M</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>M</key></keyseq>"
 
 #: C/commands_structural_navigation.page:264(p)
 msgid ""
 "Next and previous separator: <keyseq><key>S</key></keyseq> and "
 "<keyseq><key>Shift</key><key>S</key></keyseq>"
 msgstr ""
+"Separador anterior y siguiente: <keyseq><key>S</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>S</key></keyseq>"
 
 #: C/commands_structural_navigation.page:271(p)
 msgid ""
 "Next and previous anchor: <keyseq><key>A</key></keyseq> and "
 "<keyseq><key>Shift</key><key>A</key></keyseq>"
 msgstr ""
+"Ancla anterior y siguiente: <keyseq><key>A</key></keyseq> y "
+"<keyseq><key>Mayús</key><key>A</key></keyseq>"
 
 #: C/commands_speech_settings.page:6(title)
 msgid "2. Speech Settings"
@@ -5900,9 +5963,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
-"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
-"<app>Orca</app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
+"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
+"app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(p)
 msgid ""
@@ -6082,7 +6145,7 @@ msgstr ""
 
 #: C/commands_live_regions.page:6(title)
 msgid "1. Live Region"
-msgstr ""
+msgstr "1. Región activa"
 
 #: C/commands_live_regions.page:8(desc)
 msgid "Commands for accessing web live regions"
@@ -6522,7 +6585,7 @@ msgstr "Controlar y aprender a usar Orca"
 
 #: C/commands_controlling_orca.page:7(desc)
 msgid "Commands for interacting with <app>Orca</app>"
-msgstr ""
+msgstr "Comandos para interactuar con <app>Orca</app>"
 
 #: C/commands_controlling_orca.page:20(title)
 msgid "Commands for Controlling <app>Orca</app>"
@@ -6540,6 +6603,8 @@ msgid ""
 "<link xref=\"preferences\">Orca Preferences</link> dialog: <keyseq><key>Orca "
 "Modifier</key><key>Space</key></keyseq>."
 msgstr ""
+"Diálogo de <link xref=\"preferences\">preferencias de Orca</link>: "
+"<keyseq><key>Modificador de Orca</key><key>Espacio</key></keyseq>."
 
 #: C/commands_controlling_orca.page:34(p)
 msgid ""
@@ -6565,16 +6630,20 @@ msgstr "Comandos para aprender a usar <app>Orca</app>"
 #: C/commands_controlling_orca.page:64(p)
 msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
+"Entrar en modo de aprendizaje: <keyseq><key>Modificador de Orca</key><key>H</"
+"key></keyseq>"
 
 #: C/commands_controlling_orca.page:70(p)
 msgid ""
 "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
 "keyseq> (double-clicked)"
 msgstr ""
+"Entrar en modo de lista de atajos: <keyseq><key>Modificador de Orca</"
+"key><key>H</key></keyseq> (doble pulsación)"
 
 #: C/commands_controlling_orca.page:76(p)
 msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
-msgstr ""
+msgstr "Salir de cualquiera de los modos: <keyseq><key>Esc</key></keyseq>"
 
 #: C/commands_chat.page:6(title)
 msgid "2. Chat"
@@ -6625,7 +6694,7 @@ msgstr ""
 
 #: C/commands_braille.page:19(title)
 msgid "Braille Commands"
-msgstr "Comandos de braille"
+msgstr "Comandos de Braille"
 
 #: C/commands_braille.page:20(p)
 msgid ""
@@ -6691,7 +6760,7 @@ msgstr "Comandos para marcar y obtener objetos"
 
 #: C/commands_bookmarks.page:19(title)
 msgid "Bookmark Commands"
-msgstr "Marcar comandos"
+msgstr "Comandos de marcadores"
 
 #: C/commands_bookmarks.page:22(p)
 msgid ""
@@ -6730,6 +6799,8 @@ msgid ""
 "Go to the next/previous bookmark for the application or page: "
 "<keyseq><key>Orca Modifier</key><key>B</key></keyseq>"
 msgstr ""
+"Ir al siguiente/anterior marcador de la aplicación o de la página: "
+"<keyseq><key>Modificador de Orca</key><key>B</key></keyseq>"
 
 #: C/commands_bookmarks.page:53(p)
 msgid ""
