@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-05-05 00:51+0000\n"
-"PO-Revision-Date: 2011-05-05 17:00+0200\n"
+"POT-Creation-Date: 2011-05-05 17:44+0000\n"
+"PO-Revision-Date: 2011-05-08 17:07+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -233,13 +233,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
-"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
-"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
-"hable siempre independientemente de que el texto esté subrayado o no, "
-"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
-"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
-"<gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
+"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
+"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
+"atributo se hable siempre independientemente de que el texto esté subrayado "
+"o no, entonces el atributo debería estar marcado y el valor de "
+"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
+"que la columna <gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -686,11 +686,12 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
-"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
-"hablar de manera predeterminada, pero tener a Alicia para hablar los "
-"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
-"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
+"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
+"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
+"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
+"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
+"instalado."
 
 #: C/preferences_speech.page:75(title)
 msgid "Rate, Pitch, and Volume"
@@ -750,8 +751,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
-"«&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
+"«/», «&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -2047,6 +2048,11 @@ msgid ""
 "option also applies to any key combination in which <key>Orca Modifier</key> "
 "is being held down, for instance when flat review is being used."
 msgstr ""
+"Esta opción controla si se deben leer las teclas <key>Izquierda</key>, "
+"<key>Derecha</key>, <key>Arriba</key>, y <key>Abajo</key> cuando al "
+"pulsarlas. Esta opción también se aplica a cualquier combinación de teclas "
+"en la que se pulse el <key>Modificador de Orca</key>, por ejemplo cuando se "
+"usa la revisión."
 
 #: C/preferences_key_echo.page:99(title)
 msgid "Enable non-spacing diacritical keys"
@@ -2077,11 +2083,17 @@ msgid ""
 "respect to accented letters and other symbols for which there is no "
 "dedicated key:"
 msgstr ""
+"Aunque el eco por carácter es bastante similar al eco de teclas "
+"alfanuméricas y de puntuación, hay diferencias importantes, especialmente en "
+"lo que respecta a las letras acentuadas y otros símbolos para los que no hay "
+"una tecla dedicada:"
 
 #: C/preferences_key_echo.page:124(p)
 msgid ""
 "Key echo causes <app>Orca</app> to announce what you just <em> pressed</em>."
 msgstr ""
+"El eco de teclas hace que <app>Orca</app> anuncie qué tecla acaba de "
+"<em>pulsar</em>."
 
 #: C/preferences_key_echo.page:130(p)
 msgid ""
@@ -2166,11 +2178,15 @@ msgid ""
 "The <gui>Orca Modifier Keys</gui> combo box allows you to select which key "
 "or keys will serve as the Orca Modifier. The available options are:"
 msgstr ""
+"El cuadro combinado <gui>Teclas modificadoras de Orca</gui> le permite "
+"elegir qué tecla o teclas servirán como «Modificador de Orca». Las opciones "
+"disponibles son:"
 
 #: C/preferences_key_bindings.page:29(p)
 msgid ""
 "<gui>KP_Insert</gui> (the same key as the <key>0</key> on the numeric keypad)"
 msgstr ""
+"<gui>TN Ins</gui> (la misma que el <key>0</key> en el teclado numérico)"
 
 #: C/preferences_key_bindings.page:33(gui)
 #: C/howto_the_orca_modifier.page:69(p)
@@ -2273,7 +2289,7 @@ msgstr ""
 
 #: C/preferences_introduction.page:30(title)
 msgid "Keyboard Shortcuts for Getting Into the Preferences Dialogs"
-msgstr ""
+msgstr "Atajos de teclado para entrar en los diálogos de preferencias"
 
 #: C/preferences_introduction.page:33(p)
 msgid ""
@@ -2459,6 +2475,10 @@ msgid ""
 "<gui>Quit Orca without confirmation</gui> checkbox prevents this "
 "confirmation window from appearing."
 msgstr ""
+"Normalmente, cuando sale de <app>Orca</app>, aparece un diálogo de "
+"confirmación preguntando si realmente quiere salir de <app>Orca</app>. "
+"Desmarcar la casilla <gui>Salir de Orca sin confirmación</gui> evita que "
+"aparezca esta ventana."
 
 #: C/preferences_general.page:59(desc)
 msgid "Preferences dialog box option to disable gksu keyboard grab."
@@ -2502,7 +2522,6 @@ msgid ""
 msgstr ""
 
 #: C/preferences_general.page:97(desc)
-#, fuzzy
 msgid ""
 "Preferences dialog box option to enable presentation of tooltips which "
 "appear as the result of mouse hovering."
@@ -2616,10 +2635,15 @@ msgid ""
 "The <gui>Time Format</gui> and <gui>Date Format</gui> combo boxes allow you "
 "to specify how <app>Orca</app> will speak and braille the time and the date."
 msgstr ""
+"Los cuadros combinados <gui>Formato de hora</gui> y <gui>Formato de fecha</"
+"gui> le permite especificar cómo leerá y mostrará <app>Orca</app> en Braille "
+"la hora y la fecha."
 
 #: C/preferences_general.page:196(p)
 msgid "Default value: use the system locale's format for each"
 msgstr ""
+"Valor predeterminado: utilizar el formato de la configuración regional del "
+"sistema para cada uno"
 
 #: C/preferences_general.page:202(desc)
 msgid "Preferences dialog box options for managing settings profiles."
@@ -2761,12 +2785,18 @@ msgid ""
 "Structural Navigation allows you to navigate by elements such as headings, "
 "links, and form fields."
 msgstr ""
+"Esta opción activa o desactiva la <link xref=\"howto_structural_navigation"
+"\">navegación estructura</link> de <app>Orca</app>. La navegación "
+"estructural le permite navegar por elementos como cabeceras, enlaces y "
+"campos de formularios."
 
 #: C/preferences_gecko.page:60(p)
 msgid ""
 "To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
 "Modifier</key><key>Z</key></keyseq>."
 msgstr ""
+"Para cambiar esta configuración al vuelo sin guardarla, use "
+"<keyseq><key>Modificador de Orca</key><key>Z</key></keyseq>."
 
 #: C/preferences_gecko.page:67(title)
 msgid "Grab focus on objects when navigating"
@@ -2888,6 +2918,9 @@ msgid ""
 "with the name of the room or buddy they came from, unless they came from the "
 "currently-focused conversation."
 msgstr ""
+"Si está casilla está marcada, <app>Orca</app> antepondrá a los mensajes "
+"entrantes el nombre de la sala o del amigo del que provienen, a menos que "
+"provengan de la conversación que tiene el foco actualmente."
 
 #: C/preferences_chat.page:36(title)
 msgid "Announce when your buddies are typing"
@@ -2899,6 +2932,9 @@ msgid ""
 "information identifying that your buddy is typing, <app>Orca</app> will "
 "announce changes in typing status."
 msgstr ""
+"Si esta casilla está marcada, y <app>Orca</app> tiene suficiente información "
+"para identificar que su amigo está escribiendo, <app>Orca</app> anunciará su "
+"estado de escritura."
 
 #: C/preferences_chat.page:47(title)
 msgid "Provide chat room specific message histories"
@@ -2911,6 +2947,10 @@ msgid ""
 "the history will contain the most recent messages regardless of which "
 "conversation they came from."
 msgstr ""
+"Si esta casilla está marcada, los comandos de <app>Orca</app> para revisar "
+"mensajes recientes sólo se aplicarán a la conversación que actualmente tiene "
+"el foco. Si no, el histórico contendrá los mensajes más recientes, "
+"independientemente de qué conversación provienen."
 
 #: C/preferences_chat.page:59(title)
 msgid "Speak messages from"
@@ -3103,6 +3143,8 @@ msgid ""
 "Checking this checkbox tells <app>Orca</app> to not present the \"$l\" "
 "string at the end of a line of text."
 msgstr ""
+"Al marcar esta casilla se indica a <app>Orca</app> que no presente la cadena "
+"«$l» al final de una línea de texto."
 
 #: C/preferences_braille.page:97(p)
 msgid ""
@@ -3160,6 +3202,9 @@ msgid ""
 "reader that provides access to the graphical desktop via user-customizable "
 "combinations of speech, braille, and/or magnification."
 msgstr ""
+"<app>Orca</app> es un lector de pantalla libre, de código abierto, flexible "
+"y ampliable que proporciona acceso al escritorio gráfico a través de "
+"combinaciones de voz, Braille y/o magnificación configurables por el usuario."
 
 #: C/introduction.page:24(p)
 msgid ""
@@ -3184,6 +3229,8 @@ msgid ""
 "Type <cmd>orca</cmd>, along with any optional parameters, in a terminal "
 "window or within the <gui>Run</gui> dialog and then press <key>Return</key>."
 msgstr ""
+"Escriba <cmd>orca</cmd>, con cualquier parámetro opcional, en una ventana de "
+"la termina o en el diálogo <gui>Ejecutar</gui> y pulse <key>Intro</key>."
 
 #: C/introduction.page:45(p)
 msgid ""
@@ -3571,6 +3618,10 @@ msgid ""
 "<app>Orca</app> commands and doing so without introducing conflicts with the "
 "commands of the applications you are accessing."
 msgstr ""
+"Orca tiene una tecla modificadora especial, similar a <key>Mayús</key>, "
+"<key>Ctrl</key>, y <key>Alt</key>. Está específicamente diseñada para "
+"ejecutar comandos de <app>Orca</app> sin generar conflictos en las "
+"aplicaciones que esté usando."
 
 #: C/howto_the_orca_modifier.page:26(p)
 msgid ""
@@ -3611,20 +3662,23 @@ msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgstr ""
+"Entre en el diálogo de <link xref=\"preferences\">Preferencias de Orca</"
+"link> pulsando <keyseq><key>Modificador de Orca</key><key>Espacio</key></"
+"keyseq>."
 
 #: C/howto_the_orca_modifier.page:59(p) C/howto_key_bindings.page:29(p)
 #: C/howto_key_bindings.page:66(p) C/howto_key_bindings.page:99(p)
 #: C/howto_key_bindings.page:121(p)
 msgid "Move to the <gui>Key Bindings</gui> page."
-msgstr ""
+msgstr "Vaya a la página <gui>Asociaciones de teclas</gui>."
 
 #: C/howto_the_orca_modifier.page:62(p)
 msgid "Move to the <gui>Orca Modifier Key(s)</gui> combobox."
-msgstr ""
+msgstr "Vaya al cuadro combinado <gui>Tecla modificadoras de Orca</gui>."
 
 #: C/howto_the_orca_modifier.page:65(p)
 msgid "Arrow to the desired modifier. The available options are:"
-msgstr ""
+msgstr "Elija el modificador que quiere. Las opciones disponibles son:"
 
 #: C/howto_the_orca_modifier.page:68(p)
 msgid "KP_Insert"
@@ -3641,10 +3695,12 @@ msgid ""
 "A feature which allows you to perform basic configuration of <app>Orca</app> "
 "even if the graphical desktop is not running."
 msgstr ""
+"Una característica que le permite realizar una configuración básica de "
+"<app>Orca</app> aunque el entorno gráfico no esté en ejecución."
 
 #: C/howto_text_setup.page:15(title)
 msgid "Using Text Setup"
-msgstr ""
+msgstr "Usar la configuración en modo texto"
 
 #: C/howto_text_setup.page:16(p)
 msgid ""
@@ -3652,6 +3708,9 @@ msgid ""
 "configuration of <app>Orca</app> even if the graphical desktop is not "
 "running."
 msgstr ""
+"Orca tiene una característica de configuración en modo texto que le permite "
+"realizar una configuración básica de <app>Orca</app> aunque el entorno "
+"gráfico no esté en ejecución."
 
 #: C/howto_text_setup.page:21(title)
 msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
@@ -5963,9 +6022,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
-"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
-"app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
+"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
+"<app>Orca</app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(p)
 msgid ""
