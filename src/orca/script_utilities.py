@@ -2577,6 +2577,20 @@ class Utilities:
         - event: the accessible event being examined
         """
 
+        if event.type.startswith("object:text-changed:insert"):
+            if not event.any_data or not event.source:
+                return False
+
+            state = event.source.getState()
+            if not state.contains(pyatspi.STATE_EDITABLE):
+                return False
+
+            lastKey, mods = self.lastKeyAndModifiers()
+            if lastKey == "Tab" and event.any_data != "\t":
+                return True
+            if lastKey == "Return" and event.any_data != "\n":
+                return True
+
         return False
 
     def isSentenceDelimiter(self, currentChar, previousChar):
