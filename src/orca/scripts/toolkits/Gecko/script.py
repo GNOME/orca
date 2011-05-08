@@ -1773,7 +1773,8 @@ class Script(default.Script):
                     message = _("Finished loading.")
                     finishedLoading = True
 
-                self.presentMessage(message)
+                if not _settingsManager.getSetting('onlySpeakDisplayedText'):
+                    self.presentMessage(message)
 
                 if finishedLoading:
                     # Store the document frame otherwise the first time it
