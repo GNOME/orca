@@ -3,20 +3,20 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
+# Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-05-05 17:44+0000\n"
-"PO-Revision-Date: 2011-05-08 17:07+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2011-05-08 15:19+0000\n"
+"PO-Revision-Date: 2011-05-09 00:51+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -233,13 +233,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
-"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
-"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
-"atributo se hable siempre independientemente de que el texto esté subrayado "
-"o no, entonces el atributo debería estar marcado y el valor de "
-"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
-"que la columna <gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
+"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
+"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
+"hable siempre independientemente de que el texto esté subrayado o no, "
+"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
+"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
+"<gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -686,12 +686,11 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
-"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
-"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
-"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
-"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
-"instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
+"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
+"hablar de manera predeterminada, pero tener a Alicia para hablar los "
+"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
+"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
 
 #: C/preferences_speech.page:75(title)
 msgid "Rate, Pitch, and Volume"
@@ -751,8 +750,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
-"«/», «&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
+"«&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -2108,6 +2107,8 @@ msgid ""
 "Thus to have accented characters spoken as you type them, you should enable "
 "character echo."
 msgstr ""
+"Por ello, para tener caracteres acentuados hablados según los escribe, debe "
+"activar el eco de carácter."
 
 #: C/preferences_key_echo.page:144(title)
 msgid "Enabling both key echo and character echo"
@@ -2248,6 +2249,9 @@ msgid ""
 "changed and as a way to restore the default bindings associated with that "
 "function."
 msgstr ""
+"La columna <gui>Modificado</gui> sirve tanto como un indicador para lo que "
+"se ha cambiado, así como una forma de restaurar las asociaciones "
+"predeterminadas con esa función."
 
 #: C/preferences_key_bindings.page:78(p)
 msgid ""
@@ -2508,6 +2512,10 @@ msgid ""
 "turn off the keyboard grab behavior, allowing <app>Orca</app> to function "
 "normally with system administration applications."
 msgstr ""
+"Marcando la casilla de verificación <gui>Desactivar captura de teclado desde "
+"gksu</gui> desactivará el comportamiento de captura del teclado, permitiendo "
+"a <app>Orca</app> que funcione normalmente con aplicaciones de "
+"administración del sistema."
 
 #: C/preferences_general.page:81(p)
 msgid ""
@@ -2834,6 +2842,9 @@ msgid ""
 "customize how <app>Orca</app> presents the results of a search conducted "
 "using the application's built-in search functionality."
 msgstr ""
+"El grupo de controles <gui>Opciones de búsqueda</gui> hace posible que "
+"personalice cómo <app>Orca</app> presenta los resultados de una búsqueda "
+"llevada a cabo usando la funcionalidad de búsqueda de la aplicación."
 
 #: C/preferences_gecko.page:101(title)
 msgid "Speak results during find"
@@ -2858,6 +2869,10 @@ msgid ""
 "to prevent \"chattiness\" on a line with multiple instances of the string "
 "for which you are searching."
 msgstr ""
+"Si esta casilla de verificación está marcada, <app>Orca</app> no presentará "
+"la línea coincidente si es la misma línea que para la coincidencia anterior. "
+"Esta opción está diseñada para evitar «charlatanería» en una línea con "
+"múltiples coincidencias de la cadena que está buscando."
 
 #: C/preferences_gecko.page:123(title)
 msgid "Minimum length of matched text"
@@ -3076,6 +3091,9 @@ msgid ""
 "braille display. If BrlTTY is not running, <app>Orca</app> will recover "
 "gracefully and will not communicate with the braille display."
 msgstr ""
+"Esta casilla de verificación conmuta entre si <app>Orca</app> puede usar un "
+"dispositivo Braille. Si BrlTTY no se está ejecutando, <app>Orca</app> se "
+"recuperará con elegancia y no se comunicará con el dispositivo Braille."
 
 #: C/preferences_braille.page:32(p)
 msgid ""
@@ -3112,6 +3130,9 @@ msgid ""
 "distros include liblouis, you will likely automatically have access to "
 "contracted braille support in <app>Orca</app>."
 msgstr ""
+"Orca suporta Braille contraído a través del proyecto liblouis. Ya que muchas "
+"distribuciones incluyen liblouis, probablemente tenga acceso automático de "
+"Braille contraído en <app>Orca</app>."
 
 #: C/preferences_braille.page:59(p)
 msgid ""
@@ -3246,6 +3267,9 @@ msgid ""
 "screen reader by choosing this option in GNOME's <gui>Assistive Technology "
 "Preferences</gui> dialog."
 msgstr ""
+"Configure <app>Orca</app> para que se lance como su lector de pantalla "
+"preferido seleccionando esta opción en el diálogo <gui>Preferencias de las "
+"tecnologías de asistencia</gui> de GNOME."
 
 #: C/introduction.page:62(title)
 msgid "Quitting <app>Orca</app>"
@@ -3498,6 +3522,8 @@ msgid ""
 "or role of the widget, and the mnemonic and/or accelerator key if they "
 "happen to exist. In addition:"
 msgstr ""
+"Se le dirá, para la mayoría de widgets, la etiqueta y/o el nombre, el tipo o "
+"el rol del widget y el mnemónico y/o tecla aceleradora si existe. Además:"
 
 #: C/howto_whereami.page:39(p)
 msgid ""
@@ -3512,6 +3538,8 @@ msgid ""
 "If the widget can be checked, as is the case with checkboxes and radio "
 "buttons, the checked state will be included."
 msgstr ""
+"Si se puede marcar el widget, como en el caso de casillas de verificación y "
+"botones de radio, se incluirá el estado marcado."
 
 #: C/howto_whereami.page:54(p)
 msgid ""
@@ -6022,9 +6050,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
-"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
-"<app>Orca</app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
+"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
+"app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(p)
 msgid ""
