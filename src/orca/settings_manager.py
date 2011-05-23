@@ -35,6 +35,7 @@ from json import load
 import debug
 from keybindings import KeyBinding
 import settings
+import pronunciation_dict
 
 try:
     import gconf
@@ -343,6 +344,14 @@ class SettingsManager(object):
         self._getCustomizedSettings()
         for key, value in self.customizedSettings.items():
             setattr(settings, str(key), value)
+        self._setPronunciationsRuntime()
+
+    def _setPronunciationsRuntime(self):
+        pronunciation_dict.pronunciation_dict = {}
+        for pron in self.pronunciations:
+            key, value = self.pronunciations[pron]
+            if key and value:
+                pronunciation_dict.setPronunciation(key, value)
 
     def getGeneralSettings(self, profile='default'):
         """Return the current general settings.
