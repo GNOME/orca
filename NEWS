@@ -1,3 +1,24 @@
+3.0.2 - 23-May-2011
+
+  * Fix for bug #647037 - Pronunciation rules not being applied until
+    user settings are reloaded
+
+  * Fix for bug #650136 - Fallback on combo box name to get the
+    displayed item
+
+  * Fix for bug #647522 - Orca should not speak page loading messages
+    if 'only speak displayed text' is enabled
+
+  * Fix for bug #431030 - GtkStatusIcon objects don't have accessible
+    names
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es        Spanish         Daniel Mustieles
+    hu        Hungarian       Gabor Kelemen
+
+==========
+
 3.0.1 - 26-April-2011
 
   * Fix for bug #647982 - Orca sometimes presents application
