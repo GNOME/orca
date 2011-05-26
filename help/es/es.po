@@ -3,20 +3,20 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-05-09 18:15+0000\n"
-"PO-Revision-Date: 2011-05-10 13:19+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"POT-Creation-Date: 2011-05-10 19:17+0000\n"
+"PO-Revision-Date: 2011-05-26 10:39+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -2807,6 +2807,10 @@ msgid ""
 "is on, <app>Orca</app> takes control of the caret as you arrow around within "
 "a page; when it is off, Gecko's native caret navigation is active."
 msgstr ""
+"Esta casilla activa o desactiva la navegación de cursor de <app>Orca</app>. "
+"Cuando está activada, <app>Orca</app> toma el control del cursor a mientras "
+"se mueve por una página; cuando está desactivada, la navegación del cursor "
+"nativa de Gecko está activa."
 
 #: C/preferences_gecko.page:40(title) C/preferences_gecko.page:59(title)
 msgid "This setting can be toggled on the fly"
@@ -3216,6 +3220,10 @@ msgid ""
 "keyboard shortcut and role name information is displayed. This information "
 "is not displayed in brief mode."
 msgstr ""
+"Este grupo de botones de radio determina la cantidad de información Braille "
+"que se mostrará en ciertas situaciones. Por ejemplo, si se establece a "
+"«detallada», se mostrará el atajo de teclado y la información de nombre del "
+"rol. Esta información no se muestra en el modo abreviado."
 
 #: C/preferences_braille.page:108(title)
 msgid "Selection and Hyperlink Indicators"
@@ -3668,7 +3676,7 @@ msgstr ""
 
 #: C/howto_toggling_caps_lock.page:32(p)
 msgid "Press <key>CapsLock</key> to toggle its locked state."
-msgstr ""
+msgstr "Pulse <key>Bloq Mayús</key> para cambiar su estado de bloque."
 
 #: C/howto_the_orca_modifier.page:5(title)
 msgid "4. The Orca Modifier"
@@ -3678,6 +3686,8 @@ msgstr "4. El modificador de Orca"
 msgid ""
 "A key that works like <key>Shift</key>, <key>Ctrl</key>, and <key>Alt</key>"
 msgstr ""
+"Una tecla que funciona como <key>Mayús</key>, <key>Ctrl</key>, y <key>Alt</"
+"key>"
 
 #: C/howto_the_orca_modifier.page:18(title)
 msgid "The Orca Modifier"
@@ -3708,6 +3718,8 @@ msgid ""
 "If you are using the Laptop layout, the default Orca Modifier will be "
 "<key>CapsLock</key>"
 msgstr ""
+"Si está usando la distribución de portátil, el Modificador de Orca "
+"predeterminado será <key>Bloq Mayús</key>"
 
 #: C/howto_the_orca_modifier.page:39(p) C/howto_text_setup.page:142(p)
 #: C/howto_keyboard_layout.page:28(p)
@@ -5906,19 +5918,19 @@ msgstr ""
 
 #: C/commands_speech_settings.page:51(p)
 msgid "Decrease the rate: (Unbound)"
-msgstr ""
+msgstr "Reducir la velocidad: (sin asociar)"
 
 #: C/commands_speech_settings.page:54(p)
 msgid "Increase the rate: (Unbound)"
-msgstr ""
+msgstr "Aumentar la velocidad: (sin asociar)"
 
 #: C/commands_speech_settings.page:57(p)
 msgid "Decrease the pitch: (Unbound)"
-msgstr ""
+msgstr "Reducir el tono: (sin asociar)"
 
 #: C/commands_speech_settings.page:60(p)
 msgid "Increase the pitch: (Unbound)"
-msgstr ""
+msgstr "Aumentar el tono: (sin asociar)"
 
 #: C/commands_reading.page:8(title)
 msgid "1. Reading"
@@ -5930,11 +5942,11 @@ msgstr "Lectura"
 
 #: C/commands_reading.page:10(desc)
 msgid "Commands for accessing document text"
-msgstr ""
+msgstr "Comandos para acceder a documentos de texto"
 
 #: C/commands_reading.page:21(title)
 msgid "Reading Commands"
-msgstr ""
+msgstr "Comandos de lectura"
 
 #: C/commands_reading.page:22(p)
 msgid ""
@@ -6342,11 +6354,11 @@ msgstr ""
 
 #: C/commands_flat_review.page:27(title)
 msgid "Commands for Reviewing by Line"
-msgstr ""
+msgstr "Comandos para revisar por línea"
 
 #: C/commands_flat_review.page:30(p)
 msgid "First line (The \"home\" position):"
-msgstr ""
+msgstr "Primera línea (la posición «inicio»):"
 
 #: C/commands_flat_review.page:32(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 7</key></keyseq>"
@@ -6422,7 +6434,7 @@ msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>O</key></keyseq>"
 
 #: C/commands_flat_review.page:68(p)
 msgid "Last line (The \"end\" position):"
-msgstr ""
+msgstr "Última línea (la posición «fin»):"
 
 #: C/commands_flat_review.page:70(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 9</key></keyseq>"
@@ -6604,7 +6616,7 @@ msgstr ""
 
 #: C/commands_find.page:8(desc)
 msgid "Commands for searching window contents"
-msgstr ""
+msgstr "Comandos para buscar contenido de la ventana"
 
 #: C/commands_find.page:19(title)
 msgid "Orca Find Commands"
@@ -6676,6 +6688,9 @@ msgid ""
 "Report information on the currently active script: <keyseq><key>Ctrl</"
 "key><key>Alt</key><key>Orca Modifier</key><key>Home</key></keyseq>"
 msgstr ""
+"Proporcionar información sobre el script activo actualmente: "
+"<keyseq><key>Ctrl</key><key>Alt</key><key>Modificador de Orca</"
+"key><key>Inicio</key></keyseq>"
 
 #: C/commands_debugging.page:28(p)
 msgid ""
@@ -6683,6 +6698,10 @@ msgid ""
 "be started from a virtual console or via gnome-terminal. Output is sent to "
 "the console only (i.e., it is not sent to speech or braille)."
 msgstr ""
+"Para que los tres comandos siguientes puedan ser de utilidad, se debe "
+"iniciar <application>Orca</application> desde una consola virtual o a través "
+"del gnome-terminal. La salida se envía sólo a la consola (es decir, no se "
+"envía ni a la locución ni a Braille)."
 
 #: C/commands_debugging.page:36(p)
 msgid ""
@@ -6690,6 +6709,9 @@ msgid ""
 "<app>Orca</app> is running: <keyseq><key>Ctrl</key><key>Alt</key><key>Orca "
 "Modifier</key><key>End</key></keyseq>"
 msgstr ""
+"Mostrar una lista de depuración con todas las aplicaciones conocidas de la "
+"consola en la que se está ejecutando <app>Orca</app>: <keyseq><key>Ctrl</"
+"key><key>Alt</key><key>Modificador de Orca</key><key>Fin</key></keyseq>"
 
 #: C/commands_debugging.page:45(p)
 msgid ""
@@ -6697,6 +6719,9 @@ msgid ""
 "<keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Up</"
 "key></keyseq>"
 msgstr ""
+"Mostrar información de depuración sobre la ascendencia del objeto que tiene "
+"el foco: <keyseq><key>Ctrl</key><key>Alt</key><key>Modificador de Orca</"
+"key><key>Re Pág</key></keyseq>"
 
 #: C/commands_debugging.page:53(p)
 msgid ""
@@ -6704,6 +6729,9 @@ msgid ""
 "<keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Down</"
 "key></keyseq>"
 msgstr ""
+"Mostrar información de depuración sobre la jerarquía de la aplicación que "
+"tiene el foco: <keyseq><key>Ctrl</key><key>Alt</key><key>Modificador de "
+"Orca</key><key>Av Pág</key></keyseq>"
 
 #: C/commands_controlling_orca.page:5(title)
 msgid "1. Controlling and Learning to Use Orca"
@@ -6742,17 +6770,24 @@ msgid ""
 "Orca's Preferences dialog for the focused application: <keyseq><key>Ctrl</"
 "key><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgstr ""
+"Diálogo de preferencias de Orca para la aplicación que tiene el foco: "
+"<keyseq><key>Ctrl</key><key>Modificador de Orca</key><key>Espacio</key></"
+"keyseq>."
 
 #: C/commands_controlling_orca.page:40(p)
 msgid ""
 "Quit <app>Orca</app>: <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>."
 msgstr ""
+"Salir de <app>Orca</app>: <keyseq><key>Modificador de Orca</key><key>Q</"
+"key></keyseq>."
 
 #: C/commands_controlling_orca.page:46(p)
 msgid ""
 "Pass the next command on to the current application: <keyseq><key>Orca "
 "Modifier</key><key>BackSpace</key></keyseq>"
 msgstr ""
+"Pasar el siguiente comando a la aplicación actual: <keyseq><key>Modificador "
+"de Orca</key><key>Retroceso</key></keyseq>"
 
 #: C/commands_controlling_orca.page:54(title)
 msgid "Commands for Learning to Use <app>Orca</app>"
@@ -6869,15 +6904,15 @@ msgstr "Braille contraído: seis puntos"
 
 #: C/commands_braille.page:33(p)
 msgid "Marks the beginning of a text selection: Cut Begin"
-msgstr ""
+msgstr "Marca el principio de una selección de texto: inicio del corte"
 
 #: C/commands_braille.page:34(p)
 msgid "Marks the end of a text selection: Cut Line"
-msgstr ""
+msgstr "Marca el final de una selección de texto: línea cortada"
 
 #: C/commands_braille.page:35(p)
 msgid "Processes a cursor routing key: Cursor Routing"
-msgstr ""
+msgstr "Procesa una tecla de enrutado del cursor: enrutado del cursor"
 
 #: C/commands_braille.page:36(p)
 msgid "Returns to object with keyboard focus: Cursor Position"
