@@ -9,21 +9,21 @@
 # Antón Méixome <meixome@mancomun.org>, 2009.
 # Antón Méixome <meixome@certima.net>, 2010.
 # Fran Dieguez <frandieguez@ubuntu.com>, 2010.
-# Fran Diéguez <frandieguez@ubuntu.com>, 2010, 2011.
+# Fran Diéguez <frandieguez@gnome.org>, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-27 00:55+0100\n"
-"PO-Revision-Date: 2011-01-26 15:35+0100\n"
-"Last-Translator: Fran Diéguez <frandieguez@ubuntu.com>\n"
-"Language-Team: Galician <gnome-gl-list@gnome.org>\n"
+"POT-Creation-Date: 2011-06-06 11:09+0200\n"
+"PO-Revision-Date: 2011-06-06 11:09+0200\n"
+"Last-Translator: Fran Diéguez <frandieguez@gnome.org>\n"
+"Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
@@ -468,7 +468,7 @@ msgstr "Mensaxe da sala de conversa %s"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2715 ../src/orca/script_utilities.py:2722
+#: ../src/orca/script_utilities.py:2736 ../src/orca/script_utilities.py:2743
 msgid "space"
 msgstr "espazo"
 
@@ -1820,9 +1820,9 @@ msgstr[1] "%d por cento."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:440
-#: ../src/orca/generator.py:697 ../src/orca/generator.py:739
-#: ../src/orca/generator.py:785
+#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:444
+#: ../src/orca/generator.py:701 ../src/orca/generator.py:743
+#: ../src/orca/generator.py:789
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:643
@@ -1896,7 +1896,7 @@ msgstr "máis lento."
 #. magnifier.  In addition to screen magnification, the user's
 #. preferred colors and mouse customizations are loaded.
 #.
-#: ../src/orca/gsmag.py:783 ../src/orca/mag.py:1714
+#: ../src/orca/gsmag.py:786 ../src/orca/mag.py:1714
 msgid "Magnifier enabled."
 msgstr "Lupa activada."
 
@@ -1904,7 +1904,7 @@ msgstr "Lupa activada."
 #. magnifier, restoring the screen contents to their normal colors
 #. and sizes.
 #.
-#: ../src/orca/gsmag.py:790 ../src/orca/mag.py:1721
+#: ../src/orca/gsmag.py:793 ../src/orca/mag.py:1721
 msgid "Magnifier disabled."
 msgstr "Lupa desactivada."
 
@@ -2707,7 +2707,7 @@ msgstr "Activar o eco por palabras? Introduza s ou n: "
 #: ../src/orca/orca_console_prefs.py:424 ../src/orca/orca_console_prefs.py:441
 #: ../src/orca/orca_console_prefs.py:459 ../src/orca/orca_console_prefs.py:549
 #: ../src/orca/orca_console_prefs.py:568 ../src/orca/orca_console_prefs.py:586
-#: ../src/orca/orca_console_prefs.py:632
+#: ../src/orca/orca_console_prefs.py:640
 msgid "Please enter y or n."
 msgstr "Introduza s ou n: "
 
@@ -2804,24 +2804,24 @@ msgstr "Activar o monitor de braille? Introduza s ou n: "
 msgid "Automatically start orca when you log in?  Enter y or n: "
 msgstr "Arrancar orca automaticamente cando inicie a sesión? Diga s ou n: "
 
-#: ../src/orca/orca_console_prefs.py:591 ../src/orca/orca_gui_prefs.py:522
+#: ../src/orca/orca_console_prefs.py:598 ../src/orca/orca_gui_prefs.py:522
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "O dispoñibilidade de accesibilidade para GNOME acaba de ser activado."
 
-#: ../src/orca/orca_console_prefs.py:597 ../src/orca/orca_gui_prefs.py:524
+#: ../src/orca/orca_console_prefs.py:604 ../src/orca/orca_gui_prefs.py:524
 msgid "You need to log out and log back in for the change to take effect."
 msgstr ""
 "Necesita saír e entrar de novo na sesión para que os cambios sexan efectivos."
 
-#: ../src/orca/orca_console_prefs.py:607
+#: ../src/orca/orca_console_prefs.py:614
 msgid "Do you want to logout now?  Enter y or n: "
 msgstr "Quere terminar a sesión agora?  Introduza s ou n: "
 
-#: ../src/orca/orca_console_prefs.py:614
+#: ../src/orca/orca_console_prefs.py:621
 msgid "Setup complete. Logging out now."
 msgstr "Completouse a configuración. Terminando a sesión agora."
 
-#: ../src/orca/orca_console_prefs.py:634
+#: ../src/orca/orca_console_prefs.py:642
 msgid "Setup complete.  Press Return to continue."
 msgstr "Completouse a configuración. Prema a tecla Intro para continuar."
 
@@ -3416,7 +3416,7 @@ msgstr "Gardar o perfil como conflito "
 #: ../src/orca/orca_gui_prefs.py:4591
 msgid ""
 "You are about to change the active profile. If you\n"
-"have just make changes in your preferences, it will\n"
+"have just made changes in your preferences, they will\n"
 "be dropped at profile load.\n"
 "\n"
 "Continue loading profile discarding previous changes?"
@@ -3606,7 +3606,7 @@ msgstr "Informe de erros a orca-list@gnome.org."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:670 ../src/orca/orca.py:2059
+#: ../src/orca/orca.py:675 ../src/orca/orca.py:2072
 msgid "Goodbye."
 msgstr "Adeus."
 
@@ -3619,7 +3619,7 @@ msgstr "Adeus."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:744
+#: ../src/orca/orca.py:749
 msgid "Exiting learn mode."
 msgstr "Saíndo do modo de aprendizaxe."
 
@@ -3631,7 +3631,7 @@ msgstr "Saíndo do modo de aprendizaxe."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/orca.py:768
+#: ../src/orca/orca.py:773
 msgid "Exiting list shortcuts mode."
 msgstr "Saíndo do modo de lista de atallos."
 
@@ -3640,9 +3640,9 @@ msgstr "Saíndo do modo de lista de atallos."
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1015
+#: ../src/orca/orca.py:1029
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
-#: ../src/orca/speech.py:287 ../src/orca/speechserver.py:218
+#: ../src/orca/speech.py:287 ../src/orca/speechserver.py:219
 msgid "off"
 msgstr "desactivado"
 
@@ -3651,23 +3651,23 @@ msgstr "desactivado"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1019
+#: ../src/orca/orca.py:1033
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
-#: ../src/orca/speech.py:282 ../src/orca/speechserver.py:213
+#: ../src/orca/speech.py:282 ../src/orca/speechserver.py:214
 msgid "on"
 msgstr "activado"
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:1377
+#: ../src/orca/orca.py:1391
 msgid "Speech enabled."
 msgstr "Voz activada."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:1382
+#: ../src/orca/orca.py:1396
 msgid "Speech disabled."
 msgstr "Voz desactivada."
 
@@ -3675,7 +3675,7 @@ msgstr "Voz desactivada."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1512
+#: ../src/orca/orca.py:1525
 msgid "Orca user settings reloaded."
 msgstr "Recargáronse as configuracións de usuario do Orca."
 
@@ -3683,7 +3683,7 @@ msgstr "Recargáronse as configuracións de usuario do Orca."
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:1690
+#: ../src/orca/orca.py:1703
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Use as frechas Arriba e Abaixo para navegar pola lisa. Prema escape para "
@@ -3693,7 +3693,7 @@ msgstr ""
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:1704
+#: ../src/orca/orca.py:1717
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3704,7 +3704,7 @@ msgstr[1] "Atopáronse %d atallos predeterminados de Orca"
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:1726
+#: ../src/orca/orca.py:1739
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3716,7 +3716,7 @@ msgstr[1] "Atopáronse %(count)d atallos de Orca para %(application)s."
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1744
+#: ../src/orca/orca.py:1757
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "Non foi posíbel atopar os atallos para %s"
@@ -3739,7 +3739,7 @@ msgstr "Non foi posíbel atopar os atallos para %s"
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1762 ../src/orca/scripts/toolkits/Gecko/script.py:6083
+#: ../src/orca/orca.py:1775 ../src/orca/scripts/toolkits/Gecko/script.py:6094
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Saltando ao final."
@@ -3762,7 +3762,7 @@ msgstr "Saltando ao final."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1783 ../src/orca/scripts/toolkits/Gecko/script.py:6151
+#: ../src/orca/orca.py:1796 ../src/orca/scripts/toolkits/Gecko/script.py:6162
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Saltando ao principio."
@@ -3775,7 +3775,7 @@ msgstr "Saltando ao principio."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1802 ../src/orca/scripts/default.py:1629
+#: ../src/orca/orca.py:1815 ../src/orca/scripts/default.py:1630
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
@@ -3783,7 +3783,7 @@ msgstr ""
 "Prema 1 para os atallos predeterminados de Orca. Prema 2 para os atallos de "
 "Orca para o aplicativo actual. Prema escape para saír."
 
-#: ../src/orca/orca.py:1852
+#: ../src/orca/orca.py:1865
 msgid "keypad "
 msgstr "teclado numérico"
 
@@ -3791,7 +3791,7 @@ msgstr "teclado numérico"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1859
+#: ../src/orca/orca.py:1872
 msgid "double click"
 msgstr "duplo clic"
 
@@ -3799,7 +3799,7 @@ msgstr "duplo clic"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1865
+#: ../src/orca/orca.py:1878
 msgid "triple click"
 msgstr "triplo clic"
 
@@ -3807,14 +3807,14 @@ msgstr "triplo clic"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2192
+#: ../src/orca/orca.py:2205
 msgid "Unable to import profile."
 msgstr "Non é posíbel importar o perfil."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2198
+#: ../src/orca/orca.py:2211
 msgid "Profile import success."
 msgstr "A importación de perfil rematou con éxito."
 
@@ -3822,12 +3822,12 @@ msgstr "A importación de perfil rematou con éxito."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2204
+#: ../src/orca/orca.py:2217
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "O importado fallou debido a que non se recoñeceu unha chave: %s"
 
-#: ../src/orca/orca.py:2273
+#: ../src/orca/orca.py:2286
 msgid "Welcome to Orca."
 msgstr "Benvido/a ao Orca."
 
@@ -5086,9 +5086,9 @@ msgstr "Ligazón"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2415
-#: ../src/orca/scripts/apps/soffice/script.py:1149
-#: ../src/orca/scripts/default.py:2031 ../src/orca/speech_generator.py:972
+#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2422
+#: ../src/orca/scripts/apps/soffice/script.py:1150
+#: ../src/orca/scripts/default.py:2032 ../src/orca/speech_generator.py:972
 msgid "link"
 msgstr "ligazón"
 
@@ -5889,7 +5889,7 @@ msgstr "compoñente incorporado"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2339
+#: ../src/orca/script_utilities.py:2346
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -5901,7 +5901,7 @@ msgstr[1] "%(count)d %(repeatChar)s caracteres"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2529
+#: ../src/orca/script_utilities.py:2536
 #, python-format
 msgid " superscript %s"
 msgstr " superíndice %s"
@@ -5911,7 +5911,7 @@ msgstr " superíndice %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2539
+#: ../src/orca/script_utilities.py:2546
 #, python-format
 msgid " subscript %s"
 msgstr " subíndice %s"
@@ -5955,8 +5955,8 @@ msgstr "Le todo o documento."
 #. Translators: this represents the number of rows in a table.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:276
-#: ../src/orca/scripts/apps/soffice/script.py:735
-#: ../src/orca/structural_navigation.py:1338
+#: ../src/orca/scripts/apps/soffice/script.py:736
+#: ../src/orca/structural_navigation.py:1322
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -5966,8 +5966,8 @@ msgstr[1] "táboa con %d filas"
 #. Translators: this represents the number of columns in a table.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:281
-#: ../src/orca/scripts/apps/soffice/script.py:740
-#: ../src/orca/structural_navigation.py:1343
+#: ../src/orca/scripts/apps/soffice/script.py:741
+#: ../src/orca/structural_navigation.py:1327
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -5977,7 +5977,7 @@ msgstr[1] "%d columnas"
 #. We've left a table.  Announce this fact.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:291
-#: ../src/orca/scripts/apps/soffice/script.py:729
+#: ../src/orca/scripts/apps/soffice/script.py:730
 msgid "leaving table."
 msgstr "deixando a táboa."
 
@@ -6133,18 +6133,18 @@ msgstr "Botón de cartafoles"
 #. user has navigated to an empty line.
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:1149
-#: ../src/orca/scripts/apps/soffice/script.py:1269
+#: ../src/orca/scripts/apps/soffice/script.py:1270
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:430
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:544
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/default.py:2130 ../src/orca/scripts/default.py:2138
-#: ../src/orca/scripts/default.py:2259 ../src/orca/scripts/default.py:2267
-#: ../src/orca/scripts/default.py:2403 ../src/orca/scripts/default.py:4492
-#: ../src/orca/scripts/default.py:4502
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5359
+#: ../src/orca/scripts/default.py:2131 ../src/orca/scripts/default.py:2139
+#: ../src/orca/scripts/default.py:2260 ../src/orca/scripts/default.py:2268
+#: ../src/orca/scripts/default.py:2404 ../src/orca/scripts/default.py:4495
+#: ../src/orca/scripts/default.py:4505
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5370
 #: ../src/orca/settings.py:1188 ../src/orca/speech_generator.py:683
 #: ../src/orca/speech_generator.py:1036
-#: ../src/orca/structural_navigation.py:3618
+#: ../src/orca/structural_navigation.py:3602
 msgid "blank"
 msgstr "en branco"
 
@@ -6216,9 +6216,9 @@ msgstr "Prema en Tab e Intro para terminar."
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:392
 #: ../src/orca/scripts/apps/gedit/script.py:469
-#: ../src/orca/scripts/apps/Thunderbird/script.py:173
-#: ../src/orca/scripts/apps/Thunderbird/script.py:321
-#: ../src/orca/scripts/apps/Thunderbird/script.py:552
+#: ../src/orca/scripts/apps/Thunderbird/script.py:175
+#: ../src/orca/scripts/apps/Thunderbird/script.py:323
+#: ../src/orca/scripts/apps/Thunderbird/script.py:555
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Verificación ortográfica"
@@ -6342,7 +6342,7 @@ msgstr "Notificarme cando se rexistren erros."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:226
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1759
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1760
 msgid "Loading.  Please wait."
 msgstr "Cargando. Agarde."
 
@@ -6350,7 +6350,7 @@ msgstr "Cargando. Agarde."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:235
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1772
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1773
 msgid "Finished loading."
 msgstr "Finalizou a carga."
 
@@ -6477,14 +6477,14 @@ msgstr "Navegación de táboa"
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:811
+#: ../src/orca/scripts/apps/soffice/script.py:812
 msgid "empty"
 msgstr "baleira"
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:891
+#: ../src/orca/scripts/apps/soffice/script.py:892
 #, python-format
 msgid "Dynamic column header set for row %d"
 msgstr "Cabeceira dinámica fixada para a fila %d"
@@ -6492,14 +6492,14 @@ msgstr "Cabeceira dinámica fixada para a fila %d"
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:913
+#: ../src/orca/scripts/apps/soffice/script.py:914
 msgid "Dynamic column header cleared."
 msgstr "Limpouse a cabeceira dinámica de columna."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:965
+#: ../src/orca/scripts/apps/soffice/script.py:966
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "Definiuse a cabeceira dinámica de fila para a columna  %s"
@@ -6507,7 +6507,7 @@ msgstr "Definiuse a cabeceira dinámica de fila para a columna  %s"
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:988
+#: ../src/orca/scripts/apps/soffice/script.py:989
 msgid "Dynamic row header cleared."
 msgstr "Limpouse a cabeceira dinámica de fila."
 
@@ -6517,7 +6517,7 @@ msgstr "Limpouse a cabeceira dinámica de fila."
 #. using.  We hate keying off stuff like this, but
 #. we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1173
+#: ../src/orca/scripts/apps/soffice/script.py:1174
 msgid "Welcome to StarOffice"
 msgstr "Benvido ao StarOffice"
 
@@ -6528,17 +6528,17 @@ msgstr "Benvido ao StarOffice"
 #. We really try to avoid doing this kind of thing, but
 #. sometimes it is necessary and we apologize.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1221
+#: ../src/orca/scripts/apps/soffice/script.py:1222
 msgid "Available fields"
 msgstr "Campos dispoñíbeis"
 
-#: ../src/orca/scripts/apps/soffice/script.py:1383
+#: ../src/orca/scripts/apps/soffice/script.py:1384
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
 "Teña en conta que o botón de desprazamento cara a abaixo ten que premerse "
 "varias veces."
 
-#: ../src/orca/scripts/apps/soffice/script.py:1399
+#: ../src/orca/scripts/apps/soffice/script.py:1400
 msgid "License Agreement Accept button now has focus."
 msgstr "O botón para aceptar o acordo de licenza ten o foco agora."
 
@@ -6548,7 +6548,7 @@ msgstr "O botón para aceptar o acordo de licenza ten o foco agora."
 #. is using.  We hate keying off stuff like this, but we're
 #. forced to in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1428
+#: ../src/orca/scripts/apps/soffice/script.py:1429
 msgid "First name"
 msgstr "Nome"
 
@@ -6556,7 +6556,7 @@ msgstr "Nome"
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1503
+#: ../src/orca/scripts/apps/soffice/script.py:1504
 msgid "Move to cell"
 msgstr "Mover á cela"
 
@@ -6564,7 +6564,7 @@ msgstr "Mover á cela"
 #. focused Impress slide and the total number of slides in the
 #. presentation.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1695
+#: ../src/orca/scripts/apps/soffice/script.py:1696
 #, python-format
 msgid "slide %(position)d of %(count)d"
 msgstr "desprazar %(position)d de %(count)d"
@@ -6572,14 +6572,14 @@ msgstr "desprazar %(position)d de %(count)d"
 #. Translators: This message is to inform the user that
 #. the last row of a table in a document was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1878
+#: ../src/orca/scripts/apps/soffice/script.py:1879
 msgid "Last row deleted."
 msgstr "Última fila eliminada."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1882
+#: ../src/orca/scripts/apps/soffice/script.py:1883
 msgid "Row deleted."
 msgstr "Fila eliminada."
 
@@ -6588,14 +6588,14 @@ msgstr "Fila eliminada."
 #. table. This typically happens when the user presses Tab
 #. from within the last cell of the table.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1889
+#: ../src/orca/scripts/apps/soffice/script.py:1890
 msgid "Row inserted at the end of the table."
 msgstr "Rila inserida ao final da táboa."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just inserted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1893
+#: ../src/orca/scripts/apps/soffice/script.py:1894
 msgid "Row inserted."
 msgstr "Fila inserida."
 
@@ -6606,7 +6606,7 @@ msgstr "Fila inserida."
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1929
+#: ../src/orca/scripts/apps/soffice/script.py:1930
 msgid "Presentation Wizard"
 msgstr "Asistente de presentación"
 
@@ -6615,13 +6615,13 @@ msgstr "Asistente de presentación"
 #. has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2063
+#: ../src/orca/scripts/apps/soffice/script.py:2064
 msgid "has formula"
 msgstr "ten fórmula"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2086
+#: ../src/orca/scripts/apps/soffice/script.py:2087
 #, python-format
 msgid "Cell %s"
 msgstr "Cela %s"
@@ -6641,15 +6641,15 @@ msgstr[1] "%d carácteres demasiado longos"
 #. a cell in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:123
-#: ../src/orca/structural_navigation.py:3625
+#: ../src/orca/structural_navigation.py:3609
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Fila %(row)d, columna %(column)d."
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:590
-#: ../src/orca/scripts/apps/Thunderbird/script.py:607
+#: ../src/orca/scripts/apps/Thunderbird/script.py:593
+#: ../src/orca/scripts/apps/Thunderbird/script.py:610
 #, python-format
 msgid "%s panel"
 msgstr "%s panel"
@@ -7514,7 +7514,7 @@ msgstr "Envía a seguinte orde ao aplicativo activo."
 #. along to the current application, bypassing Orca's
 #. interception of it.
 #.
-#: ../src/orca/scripts/default.py:1562
+#: ../src/orca/scripts/default.py:1563
 msgid "Bypass mode enabled."
 msgstr "Modo enviar tecla activado."
 
@@ -7526,7 +7526,7 @@ msgstr "Modo enviar tecla activado."
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/scripts/default.py:1585
+#: ../src/orca/scripts/default.py:1586
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
@@ -7543,7 +7543,7 @@ msgstr ""
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/scripts/default.py:1597
+#: ../src/orca/scripts/default.py:1598
 msgid "Learn mode.  Press escape to exit."
 msgstr "Modo de aprendizaxe. Prema a tecla Esc para saír."
 
@@ -7552,7 +7552,7 @@ msgstr "Modo de aprendizaxe. Prema a tecla Esc para saír."
 #. message that is presented to the user as confirmation that this
 #. mode has been entered.
 #.
-#: ../src/orca/scripts/default.py:1619
+#: ../src/orca/scripts/default.py:1620
 msgid "List shortcuts mode."
 msgstr "Modo de lista de atallos"
 
@@ -7571,8 +7571,8 @@ msgstr "Modo de lista de atallos"
 #. detailed message which will be presented if for some
 #. reason Orca cannot identify/find the current location.
 #.
-#: ../src/orca/scripts/default.py:1916 ../src/orca/scripts/default.py:2059
-#: ../src/orca/scripts/default.py:2079
+#: ../src/orca/scripts/default.py:1917 ../src/orca/scripts/default.py:2060
+#: ../src/orca/scripts/default.py:2080
 msgid "Could not find current location."
 msgstr "Non foi posíbel atopar a localización actual."
 
@@ -7581,7 +7581,7 @@ msgstr "Non foi posíbel atopar a localización actual."
 #. brief message which will be presented if for some reason
 #. Orca cannot identify/find the current location.
 #.
-#: ../src/orca/scripts/default.py:1922 ../src/orca/scripts/default.py:2085
+#: ../src/orca/scripts/default.py:1923 ../src/orca/scripts/default.py:2086
 msgctxt "location"
 msgid "Not found"
 msgstr "Non atopado"
@@ -7589,7 +7589,7 @@ msgstr "Non atopado"
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/scripts/default.py:2143 ../src/orca/scripts/default.py:2408
+#: ../src/orca/scripts/default.py:2144 ../src/orca/scripts/default.py:2409
 msgid "white space"
 msgstr "espazo en branco"
 
@@ -7603,7 +7603,7 @@ msgstr "espazo en branco"
 #. {line,word,character}.  This message lets the user know
 #. they have left the flat review feature.
 #.
-#: ../src/orca/scripts/default.py:2595
+#: ../src/orca/scripts/default.py:2596
 msgid "Leaving flat review."
 msgstr "Deixando a revisión plana."
 
@@ -7617,14 +7617,14 @@ msgstr "Deixando a revisión plana."
 #. {line,word,character}.  This message lets the user know
 #. they have entered the flat review feature.
 #.
-#: ../src/orca/scripts/default.py:2611
+#: ../src/orca/scripts/default.py:2612
 msgid "Entering flat review."
 msgstr "Entrando no modo de revisión plana."
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2629
+#: ../src/orca/scripts/default.py:2630
 msgid "Speaking of indentation and justification enabled."
 msgstr "Redacción das sangrías e xustificación activada."
 
@@ -7632,7 +7632,7 @@ msgstr "Redacción das sangrías e xustificación activada."
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
-#: ../src/orca/scripts/default.py:2634
+#: ../src/orca/scripts/default.py:2635
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "Activada"
@@ -7640,7 +7640,7 @@ msgstr "Activada"
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will not be spoken.
 #.
-#: ../src/orca/scripts/default.py:2639
+#: ../src/orca/scripts/default.py:2640
 msgid "Speaking of indentation and justification disabled."
 msgstr "Redacción das sangrías e xustificación desactivada."
 
@@ -7648,7 +7648,7 @@ msgstr "Redacción das sangrías e xustificación desactivada."
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
-#: ../src/orca/scripts/default.py:2644
+#: ../src/orca/scripts/default.py:2645
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "Desactivado"
@@ -7658,7 +7658,7 @@ msgstr "Desactivado"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2661
+#: ../src/orca/scripts/default.py:2662
 msgid "Punctuation level set to some."
 msgstr "Nivel de puntuación estabelecido a algúns."
 
@@ -7667,7 +7667,7 @@ msgstr "Nivel de puntuación estabelecido a algúns."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2667
+#: ../src/orca/scripts/default.py:2668
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Algunha"
@@ -7677,7 +7677,7 @@ msgstr "Algunha"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2675
+#: ../src/orca/scripts/default.py:2676
 msgid "Punctuation level set to most."
 msgstr "Nivel de puntuación estabelecido á maioría."
 
@@ -7686,7 +7686,7 @@ msgstr "Nivel de puntuación estabelecido á maioría."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2681
+#: ../src/orca/scripts/default.py:2682
 msgctxt "spoken punctuation"
 msgid "Most"
 msgstr "A maior parte"
@@ -7696,7 +7696,7 @@ msgstr "A maior parte"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2689
+#: ../src/orca/scripts/default.py:2690
 msgid "Punctuation level set to all."
 msgstr "Nivel de puntuación estabelecido a todos."
 
@@ -7705,7 +7705,7 @@ msgstr "Nivel de puntuación estabelecido a todos."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2695
+#: ../src/orca/scripts/default.py:2696
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Todas"
@@ -7715,7 +7715,7 @@ msgstr "Todas"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2704
+#: ../src/orca/scripts/default.py:2705
 msgid "Punctuation level set to none."
 msgstr "Nivel de puntuación estabelecido a ningún."
 
@@ -7724,7 +7724,7 @@ msgstr "Nivel de puntuación estabelecido a ningún."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2710
+#: ../src/orca/scripts/default.py:2711
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Ningunha"
@@ -7741,7 +7741,7 @@ msgstr "Ningunha"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2739
+#: ../src/orca/scripts/default.py:2740
 msgid "Key echo set to key."
 msgstr "Chave de redacción estabelecida á tecla."
 
@@ -7759,7 +7759,7 @@ msgstr "Chave de redacción estabelecida á tecla."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2754
+#: ../src/orca/scripts/default.py:2755
 msgctxt "key echo"
 msgid "key"
 msgstr "chave"
@@ -7776,7 +7776,7 @@ msgstr "chave"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2772
+#: ../src/orca/scripts/default.py:2773
 msgid "Key echo set to word."
 msgstr "Chave de redacción estabelecida a palabra."
 
@@ -7794,7 +7794,7 @@ msgstr "Chave de redacción estabelecida a palabra."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2787
+#: ../src/orca/scripts/default.py:2788
 msgctxt "key echo"
 msgid "word"
 msgstr "palabra"
@@ -7811,7 +7811,7 @@ msgstr "palabra"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2805
+#: ../src/orca/scripts/default.py:2806
 msgid "Key echo set to sentence."
 msgstr "Chave de redacción estabelecida a frase."
 
@@ -7829,7 +7829,7 @@ msgstr "Chave de redacción estabelecida a frase."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2820
+#: ../src/orca/scripts/default.py:2821
 msgctxt "key echo"
 msgid "sentence"
 msgstr "frase"
@@ -7846,7 +7846,7 @@ msgstr "frase"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2838
+#: ../src/orca/scripts/default.py:2839
 msgid "Key echo set to key and word."
 msgstr "Chave de redacción estabelecida a tecla e palabra."
 
@@ -7864,7 +7864,7 @@ msgstr "Chave de redacción estabelecida a tecla e palabra."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2853
+#: ../src/orca/scripts/default.py:2854
 msgctxt "key echo"
 msgid "key and word"
 msgstr "chave e palabra"
@@ -7881,7 +7881,7 @@ msgstr "chave e palabra"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2871
+#: ../src/orca/scripts/default.py:2872
 msgid "Key echo set to word and sentence."
 msgstr "Chave de redacción estabelecida a palabra e frase."
 
@@ -7899,7 +7899,7 @@ msgstr "Chave de redacción estabelecida a palabra e frase."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2886
+#: ../src/orca/scripts/default.py:2887
 msgctxt "key echo"
 msgid "word and sentence"
 msgstr "palabra e sentenza"
@@ -7916,7 +7916,7 @@ msgstr "palabra e sentenza"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2904
+#: ../src/orca/scripts/default.py:2905
 msgid "Key echo set to None."
 msgstr "Chave de redacción estabelecida a Ningunha."
 
@@ -7934,7 +7934,7 @@ msgstr "Chave de redacción estabelecida a Ningunha."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2919
+#: ../src/orca/scripts/default.py:2920
 msgctxt "key echo"
 msgid "None"
 msgstr "Ningunha"
@@ -7943,7 +7943,7 @@ msgstr "Ningunha"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:2939
+#: ../src/orca/scripts/default.py:2940
 msgid "Speak row"
 msgstr "Ler fila"
 
@@ -7951,7 +7951,7 @@ msgstr "Ler fila"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:2945
+#: ../src/orca/scripts/default.py:2946
 msgid "Speak cell"
 msgstr "Ler cela"
 
@@ -7965,8 +7965,8 @@ msgstr "Ler cela"
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
 #.
-#: ../src/orca/scripts/default.py:3198 ../src/orca/scripts/default.py:3331
-#: ../src/orca/scripts/default.py:5315 ../src/orca/speech_generator.py:1132
+#: ../src/orca/scripts/default.py:3199 ../src/orca/scripts/default.py:3332
+#: ../src/orca/scripts/default.py:5318 ../src/orca/speech_generator.py:1132
 #: ../src/orca/speech_generator.py:1161
 msgctxt "text"
 msgid "selected"
@@ -7980,7 +7980,7 @@ msgstr "seleccionado"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/scripts/default.py:3337 ../src/orca/scripts/default.py:5321
+#: ../src/orca/scripts/default.py:3338 ../src/orca/scripts/default.py:5324
 msgctxt "text"
 msgid "unselected"
 msgstr "non seleccionado"
@@ -7989,7 +7989,7 @@ msgstr "non seleccionado"
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
 #.
-#: ../src/orca/scripts/default.py:3429 ../src/orca/scripts/default.py:5376
+#: ../src/orca/scripts/default.py:3430 ../src/orca/scripts/default.py:5379
 msgid "misspelled"
 msgstr "Palabra incorrecta"
 
@@ -7997,14 +7997,14 @@ msgstr "Palabra incorrecta"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/scripts/default.py:4339
+#: ../src/orca/scripts/default.py:4340
 #, python-format
 msgid "Progress bar %d."
 msgstr "Barra de progreso %d."
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/scripts/default.py:4375 ../src/orca/speech_generator.py:952
+#: ../src/orca/scripts/default.py:4376 ../src/orca/speech_generator.py:952
 msgid "bold"
 msgstr "negra"
 
@@ -8015,7 +8015,7 @@ msgstr "negra"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:4392 ../src/orca/scripts/default.py:4404
+#: ../src/orca/scripts/default.py:4393 ../src/orca/scripts/default.py:4405
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -8028,7 +8028,7 @@ msgstr[1] "%(key)s %(value)s píxels"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/scripts/default.py:4783
+#: ../src/orca/scripts/default.py:4786
 msgid "string not found"
 msgstr "non se atopou a cadea"
 
@@ -8037,12 +8037,12 @@ msgstr "non se atopou a cadea"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/scripts/default.py:4855
+#: ../src/orca/scripts/default.py:4858
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Palabra incorrecta: %s"
 
-#: ../src/orca/scripts/default.py:4863
+#: ../src/orca/scripts/default.py:4866
 #, python-format
 msgid "Context is %s"
 msgstr "O contexto é %s"
@@ -8051,19 +8051,19 @@ msgstr "O contexto é %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5114
+#: ../src/orca/scripts/default.py:5117
 msgid "paragraph selected down from cursor position"
 msgstr "parágrafo seleccionado a partir da posición do cursor"
 
-#: ../src/orca/scripts/default.py:5115
+#: ../src/orca/scripts/default.py:5118
 msgid "paragraph unselected down from cursor position"
 msgstr "parágrafo deseleccionado a partir da posición do cursor"
 
-#: ../src/orca/scripts/default.py:5116
+#: ../src/orca/scripts/default.py:5119
 msgid "paragraph selected up from cursor position"
 msgstr "parágrafo seleccionado a partir da posición do cursor"
 
-#: ../src/orca/scripts/default.py:5117
+#: ../src/orca/scripts/default.py:5120
 msgid "paragraph unselected up from cursor position"
 msgstr "páxina deseleccionada a partir da posición do cursor"
 
@@ -8071,7 +8071,7 @@ msgstr "páxina deseleccionada a partir da posición do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5171
+#: ../src/orca/scripts/default.py:5174
 msgid "line selected to end from previous cursor position"
 msgstr "liña seleccionada até o final desde a posición do cursor"
 
@@ -8079,7 +8079,7 @@ msgstr "liña seleccionada até o final desde a posición do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5179
+#: ../src/orca/scripts/default.py:5182
 msgid "line selected from start to previous cursor position"
 msgstr "liña seleccionada desde o inicio até a anterior posición do cursor"
 
@@ -8087,14 +8087,14 @@ msgstr "liña seleccionada desde o inicio até a anterior posición do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5188
+#: ../src/orca/scripts/default.py:5191
 msgid "page selected from cursor position"
 msgstr "páxina seleccionada a partir da posición do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5193
+#: ../src/orca/scripts/default.py:5196
 msgid "page unselected from cursor position"
 msgstr "páxina deseleccionada a partir da posición do cursor"
 
@@ -8102,14 +8102,14 @@ msgstr "páxina deseleccionada a partir da posición do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5202
+#: ../src/orca/scripts/default.py:5205
 msgid "page selected to cursor position"
 msgstr "páxina seleccionada até a posición do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5207
+#: ../src/orca/scripts/default.py:5210
 msgid "page unselected to cursor position"
 msgstr "páxina deseleccionada até a posición do cursor"
 
@@ -8117,14 +8117,14 @@ msgstr "páxina deseleccionada até a posición do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5232
+#: ../src/orca/scripts/default.py:5235
 msgid "document selected to cursor position"
 msgstr "documento seleccionado até a posición do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5237
+#: ../src/orca/scripts/default.py:5240
 msgid "document unselected to cursor position"
 msgstr "documento deseleccionado até a posición do cursor"
 
@@ -8132,21 +8132,21 @@ msgstr "documento deseleccionado até a posición do cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5246
+#: ../src/orca/scripts/default.py:5249
 msgid "document selected from cursor position"
 msgstr "documento seleccionado a partir da posición do cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5251
+#: ../src/orca/scripts/default.py:5254
 msgid "document unselected from cursor position"
 msgstr "documento deseleccionado a partir da posición do cursor"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/scripts/default.py:5268
+#: ../src/orca/scripts/default.py:5271
 msgid "entire document selected"
 msgstr "seleccionouse todo o documento"
 
@@ -8154,7 +8154,7 @@ msgstr "seleccionouse todo o documento"
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/scripts/default.py:5808
+#: ../src/orca/scripts/default.py:5811
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
@@ -8418,19 +8418,19 @@ msgstr "Opcións de Buscar"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1428
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1429
 msgid "line selected down from cursor position"
 msgstr "liña seleccionada cara a abaixo desde a posición do cursor"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1429
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1430
 msgid "line unselected down from cursor position"
 msgstr "liña deseleccionada cara a abaixo desde a posición do cursor"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1430
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1431
 msgid "line selected up from cursor position"
 msgstr "liña seleccionada cara a arriba desde a posición do cursor"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1431
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1432
 msgid "line unselected up from cursor position"
 msgstr "liña deseleccionada cara a arriba desde a posición do cursor"
 
@@ -8439,14 +8439,14 @@ msgstr "liña deseleccionada cara a arriba desde a posición do cursor"
 #. moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1474
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1475
 msgid "New item has been added"
 msgstr "Acaba de se engadir un ítem novo"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1765
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1766
 #, python-format
 msgid "Finished loading %s."
 msgstr "Finalizou a carga de %s."
@@ -8458,7 +8458,7 @@ msgstr "Finalizou a carga de %s."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2259
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2261
 #: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:60
 #, python-format
 msgid "h%d"
@@ -8470,22 +8470,22 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5526
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5537
 msgid "Mouse over object not found."
 msgstr "O rato sobre o obxecto non foi localizado."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6010
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6021
 msgid "open"
 msgstr "abrir"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6177
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6201
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6211
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6188
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6212
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6222
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "A capacidade de áreas activas está desactivada"
@@ -8493,11 +8493,11 @@ msgstr "A capacidade de áreas activas está desactivada"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6185
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6196
 msgid "Live regions monitoring on"
 msgstr "Monitorización de áreas activas activado"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6192
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6203
 msgid "Live regions monitoring off"
 msgstr "Monitorización de áreas activas desactivado"
 
@@ -8508,7 +8508,7 @@ msgstr "Monitorización de áreas activas desactivado"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6227
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6238
 msgid "Gecko is controlling the caret."
 msgstr "O Gecko está controlando o cursor."
 
@@ -8519,7 +8519,7 @@ msgstr "O Gecko está controlando o cursor."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6239
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6250
 msgid "Orca is controlling the caret."
 msgstr "O Orca está controlando o cursor."
 
@@ -8529,7 +8529,7 @@ msgstr "O Orca está controlando o cursor."
 #. translated rolename for the heading.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:261
-#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:77
+#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:86
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s nivel %(level)d"
@@ -8537,7 +8537,7 @@ msgstr "%(role)s nivel %(level)d"
 #. Translators: this represents a list in HTML.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:301
-#: ../src/orca/structural_navigation.py:2956
+#: ../src/orca/structural_navigation.py:2940
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -8669,7 +8669,7 @@ msgstr "nivel de árbore %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1248 ../src/orca/structural_navigation.py:2971
+#: ../src/orca/settings.py:1248 ../src/orca/structural_navigation.py:2955
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nivel de aniñamento %d"
@@ -9039,7 +9039,7 @@ msgstr "Final da columna."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1331
+#: ../src/orca/structural_navigation.py:1315
 msgid "Non-uniform"
 msgstr "Non uniforme"
 
@@ -9047,8 +9047,8 @@ msgstr "Non uniforme"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1498
-#: ../src/orca/structural_navigation.py:1520
+#: ../src/orca/structural_navigation.py:1482
+#: ../src/orca/structural_navigation.py:1504
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -9057,7 +9057,7 @@ msgstr[1] "A cela expándese en %d filas"
 
 #. Translators: this represents the number of columns in a table.
 #.
-#: ../src/orca/structural_navigation.py:1504
+#: ../src/orca/structural_navigation.py:1488
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -9068,7 +9068,7 @@ msgstr[1] "%d columnas"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1512
+#: ../src/orca/structural_navigation.py:1496
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -9078,14 +9078,14 @@ msgstr[1] "A cela expándese en %d columnas"
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1874
+#: ../src/orca/structural_navigation.py:1858
 msgid "Goes to previous anchor."
 msgstr "Vai á anterior anclaxe."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1879
+#: ../src/orca/structural_navigation.py:1863
 msgid "Goes to next anchor."
 msgstr "Vai á seguinte anclaxe."
 
@@ -9094,7 +9094,7 @@ msgstr "Vai á seguinte anclaxe."
 #. that one can jump to.) This is a detailed message which
 #. will be presented to the user if no more anchors can be found.
 #.
-#: ../src/orca/structural_navigation.py:1936
+#: ../src/orca/structural_navigation.py:1920
 msgid "No more anchors."
 msgstr "Non hai máis anclaxes."
 
@@ -9107,26 +9107,26 @@ msgstr "Non hai máis anclaxes."
 #. user if the desired structural navigation object could not be
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:1946
-#: ../src/orca/structural_navigation.py:2040
-#: ../src/orca/structural_navigation.py:2130
-#: ../src/orca/structural_navigation.py:2220
-#: ../src/orca/structural_navigation.py:2325
-#: ../src/orca/structural_navigation.py:2415
-#: ../src/orca/structural_navigation.py:2517
-#: ../src/orca/structural_navigation.py:2624
-#: ../src/orca/structural_navigation.py:2746
-#: ../src/orca/structural_navigation.py:2764
-#: ../src/orca/structural_navigation.py:2874
-#: ../src/orca/structural_navigation.py:2992
-#: ../src/orca/structural_navigation.py:3088
-#: ../src/orca/structural_navigation.py:3173
-#: ../src/orca/structural_navigation.py:3264
-#: ../src/orca/structural_navigation.py:3354
-#: ../src/orca/structural_navigation.py:3435
-#: ../src/orca/structural_navigation.py:3525
-#: ../src/orca/structural_navigation.py:3725
-#: ../src/orca/structural_navigation.py:3814
+#: ../src/orca/structural_navigation.py:1930
+#: ../src/orca/structural_navigation.py:2024
+#: ../src/orca/structural_navigation.py:2114
+#: ../src/orca/structural_navigation.py:2204
+#: ../src/orca/structural_navigation.py:2309
+#: ../src/orca/structural_navigation.py:2399
+#: ../src/orca/structural_navigation.py:2501
+#: ../src/orca/structural_navigation.py:2608
+#: ../src/orca/structural_navigation.py:2730
+#: ../src/orca/structural_navigation.py:2748
+#: ../src/orca/structural_navigation.py:2858
+#: ../src/orca/structural_navigation.py:2976
+#: ../src/orca/structural_navigation.py:3072
+#: ../src/orca/structural_navigation.py:3157
+#: ../src/orca/structural_navigation.py:3248
+#: ../src/orca/structural_navigation.py:3338
+#: ../src/orca/structural_navigation.py:3419
+#: ../src/orca/structural_navigation.py:3509
+#: ../src/orca/structural_navigation.py:3709
+#: ../src/orca/structural_navigation.py:3798
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Non atopado"
@@ -9134,14 +9134,14 @@ msgstr "Non atopado"
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1964
+#: ../src/orca/structural_navigation.py:1948
 msgid "Goes to previous blockquote."
 msgstr "Vai á cita anterior."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1969
+#: ../src/orca/structural_navigation.py:1953
 msgid "Goes to next blockquote."
 msgstr "Vai á seguinte cita."
 
@@ -9150,21 +9150,21 @@ msgstr "Vai á seguinte cita."
 #. message which will be presented to the user if no more
 #. blockquotes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2030
+#: ../src/orca/structural_navigation.py:2014
 msgid "No more blockquotes."
 msgstr "Non hai máis citas."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2058
+#: ../src/orca/structural_navigation.py:2042
 msgid "Goes to previous button."
 msgstr "Vai ao botón anterior."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2063
+#: ../src/orca/structural_navigation.py:2047
 msgid "Goes to next button."
 msgstr "Vai ao seguinte botón."
 
@@ -9173,21 +9173,21 @@ msgstr "Vai ao seguinte botón."
 #. a detailed message which will be presented to the user if
 #. no more push buttons can be found.
 #.
-#: ../src/orca/structural_navigation.py:2120
+#: ../src/orca/structural_navigation.py:2104
 msgid "No more buttons."
 msgstr "Non hai máis botóns."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2148
+#: ../src/orca/structural_navigation.py:2132
 msgid "Goes to previous check box."
 msgstr "Vai á caixa anterior."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2153
+#: ../src/orca/structural_navigation.py:2137
 msgid "Goes to next check box."
 msgstr "Vai á seguinte caixa."
 
@@ -9196,7 +9196,7 @@ msgstr "Vai á seguinte caixa."
 #. detailed message which will be presented to the user if
 #. no more checkboxes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2210
+#: ../src/orca/structural_navigation.py:2194
 msgid "No more check boxes."
 msgstr "Non hai máis caixas."
 
@@ -9204,7 +9204,7 @@ msgstr "Non hai máis caixas."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2239
+#: ../src/orca/structural_navigation.py:2223
 msgid "Goes to previous large object."
 msgstr "Vai ao anterior obxecto grande."
 
@@ -9212,7 +9212,7 @@ msgstr "Vai ao anterior obxecto grande."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2245
+#: ../src/orca/structural_navigation.py:2229
 msgid "Goes to next large object."
 msgstr "Vai ao seguinte obxecto grande."
 
@@ -9223,21 +9223,21 @@ msgstr "Vai ao seguinte obxecto grande."
 #. will be presented to the user if no more large objects
 #. can be found.
 #.
-#: ../src/orca/structural_navigation.py:2315
+#: ../src/orca/structural_navigation.py:2299
 msgid "No more large objects."
 msgstr "Non hai máis obxectos grandes."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2343
+#: ../src/orca/structural_navigation.py:2327
 msgid "Goes to previous combo box."
 msgstr "Vai á caixa de combinación anterior."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2348
+#: ../src/orca/structural_navigation.py:2332
 msgid "Goes to next combo box."
 msgstr "Vai á seguinte caixa de combinación."
 
@@ -9246,21 +9246,21 @@ msgstr "Vai á seguinte caixa de combinación."
 #. detailed message which will be presented to the user if
 #. no more checkboxes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2405
+#: ../src/orca/structural_navigation.py:2389
 msgid "No more combo boxes."
 msgstr "Non hai máis caixas de combinación."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2433
+#: ../src/orca/structural_navigation.py:2417
 msgid "Goes to previous entry."
 msgstr "Vai á entrada anterior."
 
 #. Translators: this is for navigating among text entries
 #. in a form.
 #.
-#: ../src/orca/structural_navigation.py:2438
+#: ../src/orca/structural_navigation.py:2422
 msgid "Goes to next entry."
 msgstr "Vai á seguinte entrada."
 
@@ -9269,21 +9269,21 @@ msgstr "Vai á seguinte entrada."
 #. a detailed message which will be presented to the user if
 #. no more text entries can be found.
 #.
-#: ../src/orca/structural_navigation.py:2507
+#: ../src/orca/structural_navigation.py:2491
 msgid "No more entries."
 msgstr "Non hai máis entradas."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2535
+#: ../src/orca/structural_navigation.py:2519
 msgid "Goes to previous form field."
 msgstr "Vai ao campo de formulario anterior."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2542
+#: ../src/orca/structural_navigation.py:2526
 msgid "Goes to next form field."
 msgstr "Vai ao seguinte campo de formulario."
 
@@ -9292,28 +9292,28 @@ msgstr "Vai ao seguinte campo de formulario."
 #. message which will be presented to the user if no more form
 #. field can be found.
 #.
-#: ../src/orca/structural_navigation.py:2614
+#: ../src/orca/structural_navigation.py:2598
 msgid "No more form fields."
 msgstr "Non hai máis campos de formulario."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2642
+#: ../src/orca/structural_navigation.py:2626
 msgid "Goes to previous heading."
 msgstr "Vai á cabeceira anterior."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g., <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2647
+#: ../src/orca/structural_navigation.py:2631
 msgid "Goes to next heading."
 msgstr "Vai á cabeceira seguinte."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2657
+#: ../src/orca/structural_navigation.py:2641
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "Vai á cabeceira anterior no nivel %d."
@@ -9321,7 +9321,7 @@ msgstr "Vai á cabeceira anterior no nivel %d."
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2664
+#: ../src/orca/structural_navigation.py:2648
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "Vai á cabeceira seguinte no nivel %d."
@@ -9331,7 +9331,7 @@ msgstr "Vai á cabeceira seguinte no nivel %d."
 #. detailed message which Orca will present if there are no more
 #. headings found.
 #.
-#: ../src/orca/structural_navigation.py:2736
+#: ../src/orca/structural_navigation.py:2720
 msgid "No more headings."
 msgstr "Non hai máis cabeceiras."
 
@@ -9340,7 +9340,7 @@ msgstr "Non hai máis cabeceiras."
 #. <h2>, etc.) This string is the detailed message which Orca will
 #. present if there are no more headings found at the desired level.
 #.
-#: ../src/orca/structural_navigation.py:2754
+#: ../src/orca/structural_navigation.py:2738
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Non hai máis cabeceiras no nivel %d."
@@ -9350,7 +9350,7 @@ msgstr "Non hai máis cabeceiras no nivel %d."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2784
+#: ../src/orca/structural_navigation.py:2768
 msgid "Goes to previous landmark."
 msgstr "Vai ao anterior punto de referencia."
 
@@ -9359,7 +9359,7 @@ msgstr "Vai ao anterior punto de referencia."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2791
+#: ../src/orca/structural_navigation.py:2775
 msgid "Goes to next landmark."
 msgstr "Vai ao seguinte punto de referencia."
 
@@ -9369,21 +9369,21 @@ msgstr "Vai ao seguinte punto de referencia."
 #. of webpage like banners, main context, search etc.  This
 #. is an indication that one was not found.
 #.
-#: ../src/orca/structural_navigation.py:2864
+#: ../src/orca/structural_navigation.py:2848
 msgid "No landmark found."
 msgstr "Non se atoparon puntos de referencia."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2892
+#: ../src/orca/structural_navigation.py:2876
 msgid "Goes to previous list."
 msgstr "Vai á lista anterior."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2897
+#: ../src/orca/structural_navigation.py:2881
 msgid "Goes to next list."
 msgstr "Vai á seguinte lista."
 
@@ -9392,21 +9392,21 @@ msgstr "Vai á seguinte lista."
 #. string is the detailed message which Orca will present if there
 #. are no more lists found.
 #.
-#: ../src/orca/structural_navigation.py:2982
+#: ../src/orca/structural_navigation.py:2966
 msgid "No more lists."
 msgstr "Non hai máis listas."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:3010
+#: ../src/orca/structural_navigation.py:2994
 msgid "Goes to previous list item."
 msgstr "Vai ao anterior elemento de lista."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:3015
+#: ../src/orca/structural_navigation.py:2999
 msgid "Goes to next list item."
 msgstr "Vai ao seguinte elemento de lista."
 
@@ -9415,26 +9415,26 @@ msgstr "Vai ao seguinte elemento de lista."
 #. numbered list item.  This string is the detailed message
 #. which Orca will present if there are no more list items found.
 #.
-#: ../src/orca/structural_navigation.py:3078
+#: ../src/orca/structural_navigation.py:3062
 msgid "No more list items."
 msgstr "Non hai máis elementos de lista."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:3105
+#: ../src/orca/structural_navigation.py:3089
 msgid "Goes to previous live region."
 msgstr "Vai á anterior área activa."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:3109
+#: ../src/orca/structural_navigation.py:3093
 msgid "Goes to next live region."
 msgstr "Vai á seguinte área activa."
 
 #. Translators: this is for navigating to the last live region
 #. which made an announcement.
 #.
-#: ../src/orca/structural_navigation.py:3114
+#: ../src/orca/structural_navigation.py:3098
 msgid "Goes to the last live region which made an announcement."
 msgstr "Vai á última rexión que fixo un anuncio."
 
@@ -9442,19 +9442,19 @@ msgstr "Vai á última rexión que fixo un anuncio."
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/structural_navigation.py:3163
+#: ../src/orca/structural_navigation.py:3147
 msgid "No more live regions."
 msgstr "Non hai máis áreas activas."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3190
+#: ../src/orca/structural_navigation.py:3174
 msgid "Goes to previous paragraph."
 msgstr "Vai ao parágrafo anterior."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3194
+#: ../src/orca/structural_navigation.py:3178
 msgid "Goes to next paragraph."
 msgstr "Vai ao seguinte parágrafo."
 
@@ -9462,21 +9462,21 @@ msgstr "Vai ao seguinte parágrafo."
 #. from paragraph to paragraph. This string is the detailed message
 #. which Orca will present if there are no more paragraphs found.
 #.
-#: ../src/orca/structural_navigation.py:3254
+#: ../src/orca/structural_navigation.py:3238
 msgid "No more paragraphs."
 msgstr "Non hai máis parágrafos."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3282
+#: ../src/orca/structural_navigation.py:3266
 msgid "Goes to previous radio button."
 msgstr "Vai ao botón de radio anterior."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3287
+#: ../src/orca/structural_navigation.py:3271
 msgid "Goes to next radio button."
 msgstr "Vai ao seguinte botón de radio."
 
@@ -9485,21 +9485,21 @@ msgstr "Vai ao seguinte botón de radio."
 #. detailed message which Orca will present if there are no more
 #. radio buttons found.
 #.
-#: ../src/orca/structural_navigation.py:3344
+#: ../src/orca/structural_navigation.py:3328
 msgid "No more radio buttons."
 msgstr "Non hai máis botóns de radio."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
-#: ../src/orca/structural_navigation.py:3372
+#: ../src/orca/structural_navigation.py:3356
 msgid "Goes to previous separator."
 msgstr "Vai á lapela anterior."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
-#: ../src/orca/structural_navigation.py:3377
+#: ../src/orca/structural_navigation.py:3361
 msgid "Goes to next separator."
 msgstr "Vai á lapela seguinte."
 
@@ -9508,19 +9508,19 @@ msgstr "Vai á lapela seguinte."
 #. message which Orca will present if there are no more separators
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3425
+#: ../src/orca/structural_navigation.py:3409
 msgid "No more separators."
 msgstr "Non hai máis lapelas."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3452
+#: ../src/orca/structural_navigation.py:3436
 msgid "Goes to previous table."
 msgstr "Vai á táboa anterior."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3456
+#: ../src/orca/structural_navigation.py:3440
 msgid "Goes to next table."
 msgstr "Vai á seguinte táboa."
 
@@ -9528,57 +9528,57 @@ msgstr "Vai á seguinte táboa."
 #. from table to table.  This string is the detailed message which
 #. Orca will present if there are no more tables found.
 #.
-#: ../src/orca/structural_navigation.py:3515
+#: ../src/orca/structural_navigation.py:3499
 msgid "No more tables."
 msgstr "Non hai máis táboas."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3542
+#: ../src/orca/structural_navigation.py:3526
 msgid "Goes left one cell."
 msgstr "Vai á esquerda unha cela."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3546
+#: ../src/orca/structural_navigation.py:3530
 msgid "Goes right one cell."
 msgstr "Vai á dereita unha cela."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3550
+#: ../src/orca/structural_navigation.py:3534
 msgid "Goes up one cell."
 msgstr "Vai arriba unha cela."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3554
+#: ../src/orca/structural_navigation.py:3538
 msgid "Goes down one cell."
 msgstr "Vai abaixo unha cela."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3558
+#: ../src/orca/structural_navigation.py:3542
 msgid "Goes to the first cell in a table."
 msgstr "Vai á primeira cela dunha táboa."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3562
+#: ../src/orca/structural_navigation.py:3546
 msgid "Goes to the last cell in a table."
 msgstr "Vai á última cela dunha táboa."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3647
+#: ../src/orca/structural_navigation.py:3631
 msgid "Goes to previous unvisited link."
 msgstr "Vai á anterior ligazón non visitada."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3652
+#: ../src/orca/structural_navigation.py:3636
 msgid "Goes to next unvisited link."
 msgstr "Vai á seguinte ligazón non visitada."
 
@@ -9587,21 +9587,21 @@ msgstr "Vai á seguinte ligazón non visitada."
 #. detailed message which Orca will present if there are no more
 #. unvisited links found.
 #.
-#: ../src/orca/structural_navigation.py:3715
+#: ../src/orca/structural_navigation.py:3699
 msgid "No more unvisited links."
 msgstr "Non hai máis ligazóns non visitadas."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3743
+#: ../src/orca/structural_navigation.py:3727
 msgid "Goes to previous visited link."
 msgstr "Vai á anterior ligazón visitada."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3748
+#: ../src/orca/structural_navigation.py:3732
 msgid "Goes to next visited link."
 msgstr "Vai á seguinte ligazón visitada."
 
@@ -9610,7 +9610,7 @@ msgstr "Vai á seguinte ligazón visitada."
 #. message which Orca will present if there are no more visited
 #. links found.
 #.
-#: ../src/orca/structural_navigation.py:3804
+#: ../src/orca/structural_navigation.py:3788
 msgid "No more visited links."
 msgstr "Non hai máis ligazóns visitadas."
 
