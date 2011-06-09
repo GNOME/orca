@@ -133,7 +133,8 @@ runOrca()
 if [ "x$LOGNAME" != "xgdm" ] ; then
     ACCESSIBILITY_ENABLED=`gsettings \
         get org.gnome.desktop.interface toolkit-accessibility`
-    if [ "x$ACCESSIBILITY_ENABLED" != "xtrue" ] ; then
+    if [[ "x$ACCESSIBILITY_ENABLED" != "xtrue" && \
+          `echo $ARGS | grep -c "no-setup"` -eq 0 ]]; then
         # Because we will be running Orca in text-setup mode, we want to
         # make sure it is run in a terminal window.  If we're already in
         # a terminal, this is great.  If not, we spawn a gnome-terminal

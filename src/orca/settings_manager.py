@@ -37,11 +37,9 @@ from keybindings import KeyBinding
 import settings
 import pronunciation_dict
 
-try:
-    import gconf
-    gconfClient = gconf.client_get_default()
-except:
-    gconfClient = None
+from gi.repository.Gio import Settings
+a11yAppSettings = Settings('org.gnome.desktop.interface')  
+
 
 class SettingsManager(object):
     """Settings backend manager. This class manages orca user's settings
@@ -303,20 +301,11 @@ class SettingsManager(object):
         return not alreadyEnabled
 
     def isAccessibilityEnabled(self):
-        try:
-            return gconfClient.get_bool(
-                "/desktop/gnome/interface/accessibility") \
-                or gconfClient.get_bool(
-                    "/desktop/gnome/interface/accessibility2")
-        except:
-            return False
+        return a11yAppSettings.get_boolean("toolkit-accessibility")
 
     def setAccessibility(self, enable):
-        try:
-            return gconfClient.set_bool(
-                "/desktop/gnome/interface/accessibility", enable)
-        except:
-            return False
+        return a11yAppSettings.set_boolean(
+            "toolkit-accessibility", enable)
 
     def setStartingProfile(self, profile=None):
         if profile is None:
