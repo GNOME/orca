@@ -1,4 +1,4 @@
-Orca v3.1.2pre
+Orca v3.1.2pre-xdesktop
 
 Introduction
 ========================================================================
@@ -23,12 +23,8 @@ requests.
 Build Requirements
 ========================================================================
 
-Orca v2.91.x is supported on GNOME 2.91.x only.  We highly suggest you
-use the latest releases of GNOME because they contain accessibility
-infrastructure and application bug fixes that help Orca work better.
-
-Building Orca also requires the development modules for the following
-to be installed:
+Building Orca requires the development modules for the following to be
+installed:
 
 * Python           - Python platform
 * pyorbit          - Python bindings for ORBit2
