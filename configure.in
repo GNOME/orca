@@ -59,7 +59,6 @@ AM_CHECK_PYMOD(pango,,,[AC_MSG_ERROR(Could not find python module: pango)])
 AM_CHECK_PYMOD(json,,,[AC_MSG_ERROR(Could not find python module: json)])
 AM_CHECK_PYMOD(xdg,,,[AC_MSG_ERROR(Could not find python module: xdg)])
 AM_CHECK_PYMOD(wnck,,[wnck_available="yes"],[wnck_available="no"])
-AM_CHECK_PYORBIT_MOD(GNOME_Speech,[gnome_speech_available="yes"],[gnome_speech_available="no"])
 AM_CHECK_PYORBIT_MOD(GNOME_Magnifier,[gnome_mag_available="yes"],[gnome_mag_available="no"])
 AM_CHECK_PYMOD(brlapi,,[brlapi_available="yes"],[brlapi_available="no"])
 LOUIS_TABLE_DIR=""
@@ -156,7 +155,6 @@ echo
 echo Use ORBit: $ORBit_available
 echo Use CORBA: $CORBA_available
 echo Use bonobo: $bonobo_available
-echo Use gnome-speech: $gnome_speech_available
 echo Use gnome-mag: $gnome_mag_available
 echo Use brltty: $brlapi_available
 echo Use liblouis: $louis_available

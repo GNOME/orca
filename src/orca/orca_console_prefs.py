@@ -171,10 +171,9 @@ def setupSpeech(prefsDict):
         return False
     elif len(workingFactories) > 1:
         # Translators: the speech system represents what general
-        # speech wrapper is going to be used.  For example,
-        # gnome-speech is a speech system, speech dispatcher is
-        # another, emacspeak is another.  These all then provide
-        # wrappers around specific speech servers (engines).
+        # speech wrapper is going to be used.  Speech-dispatcher
+        # is an example of a speech system. It provides wrappers
+        # around specific speech servers (engines).
         #
         sayAndPrint(_("Select desired speech system:"))
         choices = {}

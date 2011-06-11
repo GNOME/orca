@@ -37,7 +37,6 @@ to be installed:
 * json-py          - a JSON (http://json.org) reader and writer in Python
 * pyxdg            - Python library to access freedesktop.org standards
 * gnome-python     - Python bindings for various GNOME libraries
-* gnome-speech-1.0 - Python bindings for gnome-speech (optional)
 * gnome-mag-1.0    - Python bindings for gnome-mag (optional) 
 * BrlTTY           - BrlTTY support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)

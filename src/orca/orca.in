@@ -78,8 +78,8 @@ restoreXmodmap()
 
 # Cleans up any orca-related processes that might be running,
 # restricting it to those processes owned by the user. These include
-# orca itself, any gnome-speech synthesis drivers, and festival
-# processes running in server mode.
+# orca itself, any speech synthesis drivers, and festival processes
+# running in server mode.
 #
 cleanup()
 {
@@ -93,7 +93,7 @@ cleanup()
         KILLARG="-TERM"
     fi
     USERID=$(id -u)
-    PATTERN="orca[.]orca|OAFIID[:]GNOME_Speech|OAFIID[:]GNOME_Magnifier|festival [-][-]server"
+    PATTERN="orca[.]orca|OAFIID[:]GNOME_Magnifier|festival [-][-]server"
 
     pkill $KILLARG -U $USERID -f "$PATTERN"
 }

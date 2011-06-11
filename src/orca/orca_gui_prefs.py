@@ -2711,9 +2711,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.pendingKeyBindings = {}
 
     def _cleanupSpeechServers(self):
-        """Remove unwanted factories and gnome-speech drivers for the current
-        active factory, when the user dismisses the Orca Preferences dialog.
-        """
+        """Remove unwanted factories and drivers for the current active
+        factory, when the user dismisses the Orca Preferences dialog."""
 
         for workingFactory in self.workingFactories:
             if not (workingFactory == self.speechSystemsChoice):
