@@ -114,21 +114,3 @@ def updatePointerFollowsZoomer(enabled):
 
 def finishLiveUpdating():
     pass
-
-def toggleColorEnhancements(script=None, inputEvent=None):
-    pass
-
-def toggleMouseEnhancements(script=None, inputEvent=None):
-    pass
-
-def increaseMagnification(script=None, inputEvent=None):
-    pass
-
-def decreaseMagnification(script=None, inputEvent=None):
-    pass
-
-def toggleMagnifier(script=None, inputEvent=None):
-    pass
-
-def cycleZoomerType(script=None, inputEvent=None):
-    pass

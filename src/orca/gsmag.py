@@ -43,8 +43,6 @@ import settings
 import orca_state
 import gconf
 
-from orca_i18n import _
-
 # Some GConf settings that gs-mag uses
 #
 A11Y_MAG_PREFS_DIR  = "/desktop/gnome/accessibility/magnifier"
@@ -743,54 +741,6 @@ def setZoomerSmoothingType(smoothingType, updateScreen=True):
     """
     # [[[WDW - To be implemented]]]
     pass
-
-########################################################################
-#                                                                      #
-# Methods for changing settings via keyboard/mouse events              #
-#                                                                      #
-########################################################################
-
-def cycleZoomerType(script=None, inputEvent=None):
-    """Allows the user to cycle through the available zoomer types."""
-    # [[[WDW - To be implemented]]]
-    pass
-
-def decreaseMagnification(script=None, inputEvent=None):
-    """Decreases the magnification level."""
-    # [[[WDW - To be implemented]]]
-    pass
-
-def increaseMagnification(script=None, inputEvent=None):
-    """Increases the magnification level."""
-    # [[[WDW - To be implemented]]]
-    pass
-
-def toggleColorEnhancements(script=None, inputEvent=None):
-    """Toggles the color enhancements on/off."""
-    # [[[WDW - To be implemented]]]
-    pass
-
-def toggleMouseEnhancements(script=None, inputEvent=None):
-    """Toggles the mouse enhancements on/off."""
-    # [[[WDW - To be implemented]]]
-    pass
-
-def toggleMagnifier(script=None, inputEvent=None):
-    """Toggles the magnifier."""
-    if not _magnifier.isActive():
-        init()
-        # Translators: this is the message spoken when a user enables the
-        # magnifier.  In addition to screen magnification, the user's
-        # preferred colors and mouse customizations are loaded.
-        #
-        orca_state.activeScript.presentMessage(_("Magnifier enabled."))
-    else:
-        shutdown()
-        # Translators: this is the message spoken when a user disables the
-        # magnifier, restoring the screen contents to their normal colors
-        # and sizes.
-        #
-        orca_state.activeScript.presentMessage(_("Magnifier disabled."))
 
 ########################################################################
 #                                                                      #

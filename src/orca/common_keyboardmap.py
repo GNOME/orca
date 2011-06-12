@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2010 Joanmarie Diggs, Mesar Hameed.
+# Copyright 2010-2011 The Orca Team
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -25,7 +25,7 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs, Mesar Hameed."
+__copyright__ = "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
 
 import settings
@@ -179,24 +179,6 @@ keymap = (
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "increaseSpeechPitchHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "toggleColorEnhancementsHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "toggleMouseEnhancementsHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "increaseMagnificationHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "decreaseMagnificationHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "toggleMagnifierHandler"),
-
-    ("", defaultModifierMask, NO_MODIFIER_MASK,
-    "cycleZoomerTypeHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "panBrailleLeftHandler"),
