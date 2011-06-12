@@ -4,11 +4,9 @@ directory after installing the docbook-utils.
 
 To generate the pdf documentation:
     db2pdf internals.sgml
-    db2pdf user_guide.sgml
 
 To generate the HTML docs:
     db2html --nochunks internals.sgml
-    db2html --nochunks user_guide.sgml
 
 The HTML will be generated in a subdirectory.  You need to copy
 it to the current directory or the image links will not work.
