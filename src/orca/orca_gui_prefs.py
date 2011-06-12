@@ -112,7 +112,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.defaultVoice = None
         self.defKeyBindings = None
         self.disableKeyGrabPref = None
-        self.enableAutostart = None
         self.getTextAttributesView = None
         self.hyperlinkVoice = None
         self.initializingSpeech = None
@@ -1777,10 +1776,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.get_widget("generalDesktopButton").set_active(True)
         else:
             self.get_widget("generalLaptopButton").set_active(True)
-
-        self.enableAutostart = settings.isOrcaAutostarted()
-        self.get_widget("autostartOrcaCheckButton").set_active( \
-                         self.enableAutostart)
         
         # Orca User Profiles
         #
@@ -2866,21 +2861,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.prefsDict["progressBarUpdateInterval"] = widget.get_value_as_int()
 
-
-    def autostartOrcaChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           autoStartOrcaCheckbutton GtkCheckButton widget.
-           The user has [un]checked the 'Start Orca when you login'
-           checkbox. Remember the new setting so that it can be used
-           to create or remove ~/.config/autostart/orca.desktop, if 
-           the user presses the Apply or OK button.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.enableAutostart = widget.get_active()
-
     def abbrevRolenamesChecked(self, widget):
         """Signal handler for the "toggled" signal for the abbrevRolenames
            GtkCheckButton widget. The user has [un]checked the 'Abbreviated
@@ -3328,20 +3308,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             }
 
         settings.setGKSUGrabDisabled(self.disableKeyGrabPref)
-
-        try:
-            status = settings.setOrcaAutostart(self.enableAutostart)
-            self.get_widget("autostartOrcaCheckButton").set_active(\
-                settings.isOrcaAutostarted())
-        except:
-            # If we are pressing Apply or OK from an application preferences
-            # dialog (rather than the general Orca preferences), then there
-            # won't be a general pane, so we won't be able to adjust this
-            # checkbox.
-            #
-            pass
-
-
 
     def applyButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the applyButton

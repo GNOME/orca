@@ -566,22 +566,6 @@ def showPreferencesUI(commandLineSettings):
             sayAndPrint(_("Please enter y or n."))
 
     stop = True
-    while True:
-        # Translators: orca can be set up to automatically start when
-        # the user logs in.
-        #
-        answer = sayAndPrint(_("Automatically start orca when you log in?  " \
-                                   "Enter y or n: "),
-                             stop,
-                             True,
-                             speechServerChoice,
-                             speechVoiceChoice)
-        try:
-            autostart = checkYes(answer)
-            break
-        except:
-            stop = False
-            sayAndPrint(_("Please enter y or n."))
 
     _settingsManager.setFirstStart(False)
 
@@ -622,7 +606,6 @@ def showPreferencesUI(commandLineSettings):
                                     speechServerChoice,
                                     speechVoiceChoice)
                         time.sleep(2)
-                        settings.setOrcaAutostart(autostart)
 
                         import gobject
                         gobject.threads_init()
@@ -637,8 +620,6 @@ def showPreferencesUI(commandLineSettings):
                          True,
                          speechServerChoice,
                          speechVoiceChoice)
-
-    settings.setOrcaAutostart(autostart)
 
     for [factory, servers] in workingFactories:
         factory.SpeechServer.shutdownActiveServers()

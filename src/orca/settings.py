@@ -921,34 +921,6 @@ chatAnnounceBuddyTyping = False
 #
 chatRoomHistories = False
 
-# Obtain/set information regarding whether Orca is autostarted for this
-# user at login time.
-#
-def isOrcaAutostarted():
-    """Return an indication of whether Orca autostart at login time is enabled.
-    """
-    prefix = "/desktop/gnome/applications/at/visual/"
-    try:
-        return ("orca" in gconfClient.get_string(prefix + "exec")) \
-           and gconfClient.get_bool(prefix + "startup")
-    except:
-        return False
-
-def setOrcaAutostart(enable):
-    """Enable or disable the autostart of Orca at login time.
-
-    Arguments:
-    - enable: if True, whether Orca autostart at login time is enabled.
-
-    Returns an indication of whether the operation was successful.
-    """
-    prefix = "/desktop/gnome/applications/at/visual/"
-    try:
-        return gconfClient.set_string(prefix + "exec", "orca") \
-           and gconfClient.set_bool(prefix + "startup", enable)
-    except:
-        return False
-
 # Obtain/set information regarding whether the gksu keyboard grab is enabled
 # or not.
 #
