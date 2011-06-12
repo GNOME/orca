@@ -113,12 +113,6 @@ class Script(default.Script):
         #
         self.currentParagraph = None
 
-        # Set the number of retries after a COMM_FAILURE to 1. The default
-        # of 5 was not allowing Orca to be responsive in the event of OOo
-        # going into crash recovery mode (see bug #397787).
-        #
-        self.commFailureAttemptLimit = 1
-
     def activate(self):
         """Called when this script is activated."""
         self.savedreadTableCellRow = \

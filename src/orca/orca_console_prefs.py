@@ -33,7 +33,6 @@ import settings
 import speech
 import speechserver
 import orca
-import orca_prefs
 import time
 
 desktopRunning = False
@@ -130,8 +129,8 @@ def setupSpeech(prefsDict):
     global speechServerChoice
     global speechVoiceChoice
 
-    # Use this because callbacks will often hang when not running
-    # with bonobo main in use.
+    # Use this because callbacks in this setup can hang.
+    # TODO: Is this true still??
     #
     settings.enableSpeechCallbacks = False
 
@@ -628,11 +627,6 @@ def showPreferencesUI(commandLineSettings):
                         import gobject
                         gobject.threads_init()
                         gobject.idle_add(logoutUser)
-                        try:
-                            import bonobo
-                            bonobo.main()
-                        except:
-                            pass
                     break
                 except:
                     stop = False

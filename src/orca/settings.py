@@ -891,15 +891,6 @@ listShortcutsModeEnabled = False
 from xdg.BaseDirectory import xdg_data_home
 userPrefsDir = os.path.join(xdg_data_home, "orca")
 
-# Assists with dealing with CORBA COMM_FAILURES.  A failure doesn't
-# always mean an object disappeared - there just might be a network
-# glitch.  So, on COMM_FAILURES, we might retry a few times before
-# giving up on an object.  This might need to be overridden by the
-# script.
-#
-commFailureWaitTime = 0.1
-commFailureAttemptLimit = 5
-
 # If non-zero, we use time.sleep() in various places to attempt to
 # free up the global interpreter lock.  Take a look at the following
 # URLs for more information:
@@ -919,11 +910,6 @@ useGILIdleHandler       = False
 # If True, use the gidle __blockPreventor() code in atspi.py.
 #
 useBlockPreventor       = False
-
-# If True, we use the bonobo main loop provided by bonobo to handle
-# all events in atspi.py.  If False, we create our own loop.
-#
-useBonoboMain           = False
 
 # If True, we handle events asynchronously - our normal mode of
 # queueing events and processing them later on the gidle thread.

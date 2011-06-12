@@ -2074,8 +2074,7 @@ def timeout(signum=None, frame=None):
     die(EXIT_CODE_HANG)
 
 def shutdown(script=None, inputEvent=None):
-    """Exits Orca.  Unregisters any event listeners and cleans up.  Also
-    quits the bonobo main loop and resets the initialized state to False.
+    """Exits Orca.  Unregisters any event listeners and cleans up.
 
     Returns True if the shutdown procedure ran or False if this module
     was never initialized.

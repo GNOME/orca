@@ -31,7 +31,6 @@ Building Orca also requires the development modules for the following
 to be installed:
 
 * Python           - Python platform
-* pyorbit          - Python bindings for ORBit2
 * pygtk            - GTK+ Python bindings
 * pygobject        - Python bindings for the GObject library
 * json-py          - a JSON (http://json.org) reader and writer in Python
