@@ -81,7 +81,6 @@ SUBDIRS = \
         backends
 
 ui_DATA = \
-	orca-advanced-magnification.ui \
 	orca-find.ui \
 	orca-mainwin.ui \
 	orca-preferences-warning.ui \

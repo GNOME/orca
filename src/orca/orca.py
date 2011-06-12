@@ -2111,7 +2111,7 @@ def shutdown(script=None, inputEvent=None):
         speech.shutdown()
     if settings.enableBraille:
         braille.shutdown()
-    if settings.enableMagnifier or settings.enableMagLiveUpdating:
+    if settings.enableMagnifier:
         mag.shutdown()
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):

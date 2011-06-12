@@ -28,7 +28,10 @@ __license__   = "LGPL"
 import os
 import pprint
 
+import orca
 import settings
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 # The same fields than in orca_gui_prefs.py:
 #
@@ -154,21 +157,6 @@ class OrcaPrefs:
             _settingsManager.setAccessibilityEnabled(True)
 
         return not alreadyEnabled
-
-    def _getDisplayString(self, display):
-        """Returns a string that represents the source or target 
-        magnifier display.
-
-        Arguments:
-        - display: the magnifier source or taget display string.
-
-        Returns a string suitable for the preferences file.
-        """
-
-        if not display:
-            return "':0.0'"
-        else:
-            return "'%s'" % display
 
     def _getSpeechServerFactoryString(self, factory):
         """Returns a string that represents the speech server factory passed in.
@@ -397,153 +385,6 @@ class OrcaPrefs:
             return "orca.settings.SAYALL_STYLE_LINE"
         elif sayAllStyle == settings.SAYALL_STYLE_SENTENCE:
             return "orca.settings.SAYALL_STYLE_SENTENCE"
-
-    def _getMagColorString(self, cursorColor):
-        """Returns a string that represents the magnification object's color
-        passed in.
-
-        Arguments:
-        - cursorColor: magnification object's color
-
-        Returns a string suitable for the preferences file.
-        """
-
-        cursorColorStr = "'%s'" % cursorColor
-
-        return cursorColorStr
-
-    def _getMagSmoothingModeString(self, smoothingMode):
-        """Returns a string that represents the magnification smoothing mode
-        passed in.
-
-        Arguments:
-        - smoothingMode: magnification smoothing mode.
-
-        Returns a string suitable for the preferences file.
-        """
-
-        if smoothingMode == settings.MAG_SMOOTHING_MODE_BILINEAR:
-            return "orca.settings.MAG_SMOOTHING_MODE_BILINEAR"
-        elif smoothingMode == settings.MAG_SMOOTHING_MODE_NONE:
-            return "orca.settings.MAG_SMOOTHING_MODE_NONE"
-        else:
-            return "orca.settings.MAG_SMOOTHING_MODE_BILINEAR"
-
-    def _getMagMouseTrackingModeString(self, mouseTrackingMode):
-        """Returns a string that represents the magnification mouse tracking
-        mode passed in.
-
-        Arguments:
-        - mouseTrackingMode: magnification mouse tracking mode.
-
-        Returns a string suitable for the preferences file.
-        """
-
-        if mouseTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
-            return "orca.settings.MAG_TRACKING_MODE_CENTERED"
-        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_NONE:
-            return "orca.settings.MAG_TRACKING_MODE_NONE"
-        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_PROPORTIONAL:
-            return "orca.settings.MAG_TRACKING_MODE_PROPORTIONAL"
-        elif mouseTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
-            return "orca.settings.MAG_TRACKING_MODE_PUSH"
-        else:
-            return "orca.settings.MAG_TRACKING_MODE_CENTERED"
-
-    def _getMagControlTrackingModeString(self, controlTrackingMode):
-        """Returns a string that represents the magnification control
-        and menu item tracking mode passed in.
-
-        Arguments:
-        - controlTrackingMode: magnification control and menu item tracking 
-                               mode.
-
-        Returns a string suitable for the preferences file.
-        """
-
-        if controlTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
-            return "orca.settings.MAG_TRACKING_MODE_CENTERED"
-        elif controlTrackingMode == settings.MAG_TRACKING_MODE_NONE:
-            return "orca.settings.MAG_TRACKING_MODE_NONE"
-        elif controlTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
-            return "orca.settings.MAG_TRACKING_MODE_PUSH"
-        else:
-            return "orca.settings.MAG_TRACKING_MODE_PUSH"
-
-    def _getMagTextTrackingModeString(self, textTrackingMode):
-        """Returns a string that represents the magnification text cursor
-        tracking mode passed in.
-
-        Arguments:
-        - textTrackingMode: magnification text cursor tracking mode.
-
-        Returns a string suitable for the preferences file.
-        """
-
-        if textTrackingMode == settings.MAG_TRACKING_MODE_CENTERED:
-            return "orca.settings.MAG_TRACKING_MODE_CENTERED"
-        elif textTrackingMode == settings.MAG_TRACKING_MODE_NONE:
-            return "orca.settings.MAG_TRACKING_MODE_NONE"
-        elif textTrackingMode == settings.MAG_TRACKING_MODE_PUSH:
-            return "orca.settings.MAG_TRACKING_MODE_PUSH"
-        else:
-            return "orca.settings.MAG_TRACKING_MODE_PUSH"
-
-    def _getMagColorFilteringModeString(self, mode):
-        """Returns a string that represents the magnification color filtering
-        mode passed in.
-
-        Arguments:
-        - mode: magnification color filtering mode.
-
-        Returns a string suitable for the preferences file.
-        """
-
-        if mode == settings.MAG_COLOR_FILTERING_MODE_NONE:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_NONE"
-        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_RED:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_SATURATE_RED"
-        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_GREEN:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_SATURATE_GREEN"
-        elif mode == settings.MAG_COLOR_FILTERING_MODE_SATURATE_BLUE:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_SATURATE_BLUE"
-        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_RED:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_DESATURATE_RED"
-        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_GREEN:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_DESATURATE_GREEN"
-        elif mode == settings.MAG_COLOR_FILTERING_MODE_DESATURATE_BLUE:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_DESATURATE_BLUE"
-        elif mode == settings.MAG_COLOR_FILTERING_MODE_POSITIVE_HUE_SHIFT:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_POSITIVE_HUE_SHIFT"
-        elif mode == settings.MAG_COLOR_FILTERING_MODE_NEGATIVE_HUE_SHIFT:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_NEGATIVE_HUE_SHIFT"
-        else:
-            return "orca.settings.MAG_COLOR_FILTERING_MODE_NONE"
-
-    def _getMagZoomerTypeString(self, magZoomerType):
-        """Returns a string that represents the magnification zoomer position
-        type passed in.
-
-        Arguments:
-        - magZoomerType: magnification zoomer position type.
-
-        Returns a string suitable for the preferences file.
-        """
-
-        if magZoomerType == settings.MAG_ZOOMER_TYPE_FULL_SCREEN:
-            return "orca.settings.MAG_ZOOMER_TYPE_FULL_SCREEN"
-        elif magZoomerType == settings.MAG_ZOOMER_TYPE_TOP_HALF:
-            return "orca.settings.MAG_ZOOMER_TYPE_TOP_HALF"
-        elif magZoomerType == settings.MAG_ZOOMER_TYPE_BOTTOM_HALF:
-            return "orca.settings.MAG_ZOOMER_TYPE_BOTTOM_HALF"
-        elif magZoomerType == settings.MAG_ZOOMER_TYPE_LEFT_HALF:
-            return "orca.settings.MAG_ZOOMER_TYPE_LEFT_HALF"
-        elif magZoomerType == settings.MAG_ZOOMER_TYPE_RIGHT_HALF:
-            return "orca.settings.MAG_ZOOMER_TYPE_RIGHT_HALF"
-        elif magZoomerType == settings.MAG_ZOOMER_TYPE_CUSTOM:
-            return "orca.settings.MAG_ZOOMER_TYPE_CUSTOM"
-        else:
-            return "orca.settings.MAG_ZOOMER_TYPE_FULL_SCREEN"
 
     def _getProgressBarVerbosityString(self, verbosityLevel):
         """Returns a string that represents the progress bar verbosity level
@@ -776,24 +617,6 @@ class OrcaPrefs:
                 value = self._getPresentTimeString(prefsDict[key])
             elif key == "sayAllStyle":
                 value = self._getSayAllStyleString(prefsDict[key])
-            elif key in ["magCursorColor",
-                         "magCrossHairColor",
-                         "magZoomerBorderColor"]:
-                value = self._getMagColorString(prefsDict[key])
-            elif key == "magSmoothingMode":
-                value = self._getMagSmoothingModeString(prefsDict[key])
-            elif key == "magMouseTrackingMode":
-                value = self._getMagMouseTrackingModeString(prefsDict[key])
-            elif key == "magControlTrackingMode":
-                value = self._getMagControlTrackingModeString(prefsDict[key])
-            elif key == "magTextTrackingMode":
-                value = self._getMagTextTrackingModeString(prefsDict[key])
-            elif key == "magZoomerType":
-                value = self._getMagZoomerTypeString(prefsDict[key])
-            elif key == "magColorFilteringMode":
-                value = self._getMagColorFilteringModeString(prefsDict[key])
-            elif key == "magSourceDisplay" or key == "magTargetDisplay":
-                value = self._getDisplayString(prefsDict[key])
             elif key == "keyboardLayout":
                 value = self._getKeyboardLayoutString(prefsDict[key])
             elif key == "orcaModifierKeys":

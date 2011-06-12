@@ -48,11 +48,6 @@ try:
     _screen = _display.get_default_screen()
     _root_window = _screen.get_root_window()
 
-    # These are used for placing the magnifier zoomer.
-    #
-    screenWidth = _screen.get_width()
-    screenHeight = _screen.get_height()
-
     # The bug that caused gnome-panel to crash is fixed in GTK 2.10.11.
     minimum_gtk_version = (100000 * 2) + \
                           (1000 * 10) + \
@@ -120,45 +115,6 @@ userCustomizableSettings = [
     "brailleLinkIndicator",
     "brailleAlignmentStyle",
     "enableBrailleMonitor",
-    "enableMagnifier",
-    "enableMagLiveUpdating",
-    "enableMagCursor",
-    "enableMagCursorExplicitSize",
-    "magHideCursor",
-    "magCursorSize",
-    "magCursorColor",
-    "enableMagCrossHair",
-    "enableMagCrossHairClip",
-    "magCrossHairSize",
-    "magCrossHairColor",
-    "magZoomerType",
-    "magZoomerLeft",
-    "magZoomerRight",
-    "magZoomerTop",
-    "magZoomerBottom",
-    "magZoomFactor",
-    "enableMagZoomerBorder",
-    "magZoomerBorderSize",
-    "magZoomerBorderColor",
-    "enableMagZoomerColorInversion",
-    "magBrightnessLevel",
-    "magBrightnessLevelRed",
-    "magBrightnessLevelBlue",
-    "magBrightnessLevelGreen",
-    "magContrastLevel",
-    "magContrastLevelRed",
-    "magContrastLevelGreen",
-    "magContrastLevelBlue",
-    "magSmoothingMode",
-    "magMouseTrackingMode",
-    "magControlTrackingMode",
-    "magTextTrackingMode",
-    "magEdgeMargin",
-    "magPointerFollowsFocus",
-    "magPointerFollowsZoomer",
-    "magColorFilteringMode",
-    "magSourceDisplay",
-    "magTargetDisplay",
     "verbalizePunctuationStyle",
     "showMainWindow",
     "quitOrcaNoConfirmation",
@@ -457,12 +413,6 @@ enableBrailleMonitor    = False
 # If True, enable magnification.
 #
 enableMagnifier                  = False
-
-# If True, changes made in the Magnifier pane will take place
-# immediately (i.e. without pressing the apply button).  Making
-# them permanent still requires pressing Apply or OK.
-#
-enableMagLiveUpdating            = True
 
 # If True, show the magnification cursor.
 #

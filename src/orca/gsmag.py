@@ -59,11 +59,6 @@ _gconfClient = gconf.client_get_default()
 #
 _isActive = False
 
-# Whether or not we're in the process of making "live update" changes
-# to the location of the magnifier.
-#
-_liveUpdatingMagnifier = False
-
 # The current modes of tracking, for use with "live update" changes.
 #
 _controlTracking = None
@@ -266,100 +261,6 @@ def magnifyAccessible(event, obj, extents=None):
 
 ########################################################################
 #                                                                      #
-# Methods for updating live tracking settings                          #
-#                                                                      #
-########################################################################
-
-def updateControlTracking(newMode):
-    """Updates the control tracking mode.
-
-    Arguments:
-    -newMode: The new mode to use.
-    """
-    global _controlTracking
-    _controlTracking = newMode
-    
-def updateEdgeMargin(amount):
-    """Updates the edge margin
-
-    Arguments:
-    -amount: The new margin to use, in pixels.
-    """
-    global _edgeMargin
-    _edgeMargin = amount
-
-def updateMouseTracking(newMode):
-    """Updates the mouse tracking mode.
-
-    Arguments:
-    -newMode: The new mode to use.
-    """
-    global _mouseTracking
-    _mouseTracking = newMode
-
-    # Comparing Orca and GS-mag, modes are the same, but different values:
-    # Orca:  centered=0, proportional=1, push=2, none=3
-    # GS-mag: none=0, centered=1, push=2, proportional=3
-    # Use Orca's values as index into following array (hack).
-    #
-    gsMagModes = \
-        [GS_MAG_CENTERED, GS_MAG_PROPORTIONAL, GS_MAG_PUSH, GS_MAG_NONE]
-    _gconfClient.set_int(MOUSE_MODE_KEY, gsMagModes[newMode])
-
-def updatePointerFollowsFocus(enabled):
-    """Updates the pointer follows focus setting.
-
-    Arguments:
-    -enabled: whether or not pointer follows focus should be enabled.
-    """
-    global _pointerFollowsFocus
-    _pointerFollowsFocus = enabled
-
-def updatePointerFollowsZoomer(enabled):
-    """Updates the pointer follows zoomer setting.
-
-    Arguments:
-    -enabled: whether or not pointer follows zoomer should be enabled.
-    """
-    global _pointerFollowsZoomer
-    _pointerFollowsZoomer = enabled
-
-def updateTextTracking(newMode):
-    """Updates the text tracking mode.
-
-    Arguments:
-    -newMode: The new mode to use.
-    """
-    global _textTracking
-    _textTracking = newMode
-
-def finishLiveUpdating():
-    """Restores things that were altered via a live update."""
-
-    global _liveUpdatingMagnifier
-    global _controlTracking
-    global _edgeMargin
-    global _mouseTracking
-    global _pointerFollowsFocus
-    global _pointerFollowsZoomer
-    global _textTracking
-
-    _liveUpdatingMagnifier = False
-    _mouseTracking = settings.magMouseTrackingMode
-    _controlTracking = settings.magControlTrackingMode
-    _textTracking = settings.magTextTrackingMode
-    _edgeMargin = settings.magEdgeMargin
-    _pointerFollowsFocus = settings.magPointerFollowsFocus
-    _pointerFollowsZoomer = settings.magPointerFollowsZoomer
-
-    if settings.enableMagnifier:
-        setupMagnifier(settings.magZoomerType)
-        init()
-    else:
-        shutdown()
-
-########################################################################
-#                                                                      #
 # Methods for updating appearance settings                             #
 #                                                                      #
 ########################################################################
@@ -554,8 +455,7 @@ def setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     - bottom:   the top edge of the zoomer (only applicable for custom)
     - restore:  a dictionary of all of the settings that should be restored
     """
-    global _liveUpdatingMagnifier
-    _liveUpdatingMagnifier = True
+
     __setupMagnifier(position, restore)
     __setupZoomer(position, left, top, right, bottom, restore)
 

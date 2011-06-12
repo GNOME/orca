@@ -372,7 +372,7 @@ class SettingsManager(object):
                 continue
             elif key == 'profile':
                 self.profileGeneral[key] = value
-            elif value != self.defaultGeneralValues[key]:
+            elif value != self.defaultGeneralValues.get(key):
                 self.profileGeneral[key] = value
             elif self.general.get(key) != value:
                 self.profileGeneral[key] = value

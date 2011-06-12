@@ -94,23 +94,5 @@ def isFullScreenCapable():
 def isFilteringCapable():
     return False
 
-def updateMouseTracking(newMode):
-    pass
 
-def updateControlTracking(newMode):
-    pass
 
-def updateTextTracking(newMode):
-    pass
-
-def updateEdgeMargin(amount):
-    pass
-
-def updatePointerFollowsFocus(enabled):
-    pass
-
-def updatePointerFollowsZoomer(enabled):
-    pass
-
-def finishLiveUpdating():
-    pass
