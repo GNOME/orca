@@ -3,7 +3,7 @@
 # Copyright 2009 Sun Microsystems Inc.
 # Copyright 2010 Willie Walker
 #  * Contributor: Willie Walker <walker.willie@gmail.com>
-#  * Contributor: Joseph Scheuhammer <clown@utoronto.ca>
+#  * Contributor: Joseph Scheuhammer <clown@alum.mit.edu>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -41,19 +41,14 @@ import debug
 import eventsynthesizer
 import settings
 import orca_state
-import gconf
+from gi.repository.Gio import Settings
 
-# Some GConf settings that gs-mag uses
+# Some magnfier GSettings
 #
-A11Y_MAG_PREFS_DIR  = "/desktop/gnome/accessibility/magnifier"
-MOUSE_MODE_KEY      = A11Y_MAG_PREFS_DIR + "/mouse_tracking"
-GS_MAG_NONE         = 0
-GS_MAG_CENTERED     = 1
-GS_MAG_PUSH         = 2
-GS_MAG_PROPORTIONAL = 3
-CROSSHAIRS_SHOW_KEY = A11Y_MAG_PREFS_DIR + "/show_cross_hairs"
+MOUSE_MODE_KEY      = "mouse-tracking"
+CROSSHAIRS_SHOW_KEY = "show-cross-hairs"
 
-_gconfClient = gconf.client_get_default()
+_magSettings = Settings('org.gnome.desktop.a11y.magnifier')
 
 # If True, the magnifier is active
 #
@@ -487,7 +482,7 @@ def setMagnifierCrossHair(enabled, updateScreen=True):
         size = settings.magCrossHairSize
 
     _magnifier.setCrosswireSize(size)
-    _gconfClient.set_bool(CROSSHAIRS_SHOW_KEY, enabled)
+    _magSettings.set_boolean(CROSSHAIRS_SHOW_KEY, enabled)
 
 def setMagnifierCrossHairClip(enabled, updateScreen=True):
     """Sets the cross-hair clip.
@@ -685,7 +680,7 @@ def init():
     try:
         _initialized = True
         _wasActiveOnInit = _magnifier.isActive()
-        _crossHairsShownOnInit = _gconfClient.get_bool(CROSSHAIRS_SHOW_KEY)
+        _crossHairsShownOnInit = _magSettings.get_boolean(CROSSHAIRS_SHOW_KEY)
         applySettings()
         _magnifier.setActive(True)
         _isActive = _magnifier.isActive()
@@ -708,7 +703,7 @@ def shutdown():
         return False
 
     _magnifier.setActive(_wasActiveOnInit)
-    _gconfClient.set_bool(CROSSHAIRS_SHOW_KEY, _crossHairsShownOnInit)
+    _magSettings.set_boolean(CROSSHAIRS_SHOW_KEY, _crossHairsShownOnInit)
     _isActive = _magnifier.isActive()
     if not _isActive:
         hideSystemPointer(False)
