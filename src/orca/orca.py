@@ -38,18 +38,7 @@ import shutil
 # This must happen BEFORE we import gtk (until we start using
 # introspection).
 from gi.repository.Gio import Settings
-a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')
-
-def getOrcaEnabled(gsetting, key):
-    return gsetting.get_boolean(key)
-
-def onEnabledChanged(gsetting, key):
-    if not key == 'screen-reader-enabled':
-        return
-
-    enabled = getOrcaEnabled(gsetting, key)
-    if not enabled:
-        shutdown()
+a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')      
 
 # We're going to force the name of the app to "orca" so pygtk
 # will end up showing us as "orca" to the AT-SPI.  If we don't
@@ -79,6 +68,24 @@ import orca_platform
 import settings
 from orca_i18n import _
 from orca_i18n import ngettext
+
+def onEnabledChanged(gsetting, key):
+    try:
+        enabled = gsetting.get_boolean(key)
+    except:
+        return
+
+    if key == 'screen-reader-enabled' and not enabled:
+        shutdown()
+    elif key == 'screen-magnifier-enabled':
+        settings.enableMagnifier = enabled
+        if enabled:
+            try:
+                mag.init()
+            except:
+                debug.printException(debug.LEVEL_SEVERE)
+                debug.println(debug.LEVEL_SEVERE,
+                              "Could not initialize connection to magnifier.")
 
 class Options:
     """Class to handle getting run-time options."""
@@ -1558,7 +1565,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.println(debug.LEVEL_WARNING,
                           "Could not initialize connection to braille.")
 
-    if settings.enableMagnifier:
+    if a11yAppSettings.get_boolean('screen-magnifier-enabled'):
         try:
             mag.init()
             debug.println(debug.LEVEL_CONFIGURATION,
@@ -1980,7 +1987,7 @@ def init(registry):
     global _keyBindings
 
     if _initialized \
-       and getOrcaEnabled(a11yAppSettings, 'screen-reader-enabled'):
+       and a11yAppSettings.get_boolean('screen-reader-enabled'):
         return False
 
     # Do not hang on initialization if we can help it.
