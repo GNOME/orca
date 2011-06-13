@@ -102,8 +102,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         label = self._script.utilities.displayedLabel(obj) or ""
         if not label and override:
             label = self._script.utilities.displayedLabel(obj.parent) or ""
-        result.append(label.strip())
-        if result:
+        if label:
+            result.append(label.strip())
             result.extend(acss)
         return result
 
