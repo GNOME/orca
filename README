@@ -1,4 +1,4 @@
-Orca v3.1.2pre
+Orca v3.1.2
 
 Introduction
 ========================================================================
@@ -12,8 +12,8 @@ technology service provider interface (AT-SPI), which is the primary
 assistive technology infrastructure for the Solaris and Linux
 operating environments.  Applications and toolkits supporting the
 AT-SPI include the GNOME GTK+ toolkit, the Java platform's Swing
-toolkit, OpenOffice, and Mozilla.  AT-SPI support for the KDE Qt
-toolkit is currently being pursued.
+toolkit, OpenOffice/LibreOffice, Gecko, and WebKitGtk.  AT-SPI support
+for the KDE Qt toolkit is currently being pursued.
 
 See also http://live.gnome.org/Orca for detailed English and Spanish
 information on Orca, including how to run Orca, how to communicate
@@ -23,7 +23,7 @@ requests.
 Build Requirements
 ========================================================================
 
-Orca v2.91.x is supported on GNOME 2.91.x only.  We highly suggest you
+Orca v3.1.x is supported on GNOME 3.1.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -35,13 +35,12 @@ to be installed:
 * pygobject        - Python bindings for the GObject library
 * json-py          - a JSON (http://json.org) reader and writer in Python
 * pyxdg            - Python library to access freedesktop.org standards
-* gnome-python     - Python bindings for various GNOME libraries
-* gnome-mag-1.0    - Python bindings for gnome-mag (optional) 
+* python-speechd   - Python bindings for Speech Dispatcher (optional)
 * BrlTTY           - BrlTTY support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 2.91.x
-DEVELOPMENT RELEASES.  THEY MAY CONTAIN VERY IMPORTANT BUG FIXES!
+YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 3.1.x DEVELOPMENT
+RELEASES.  THEY MAY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
 on your machine, you should set the PYTHON environment variable when 
@@ -78,30 +77,6 @@ BrlTTY and also using liblouis for contracted braille.
 Running Orca
 ========================================================================
 
-To run Orca, you have several options:
-
-1) Enable accessibility and the screen reader via the
-   "System->Preferences->Assistive Technology Preferences"
-   dialog box (also available as the 'gnome-at-properties'
-   application).  As of GNOME 2.16, this will cause Orca to
-   be automatically launched when you log in.
-
-2) Add Orca as a startup application in the
-   "Systems->Preferences->Sessions" dialog box (also available as
-   the 'gnome-session-properties' application).  This will cause Orca
-   to be launched automatically when you log in.
-
-3) Select "Orca Screen Reader and Magnifier" from the 
-   Applications->Accessibility launch menu (also available as
-   the 'orca' application).  This will run Orca once.
-
-4) Press Alt+F2 to bring up the "Run Application" dialog
-   box.  Enter "orca" and press Return.  This will run
-   Orca once.
-
-5) Run the "orca" command from a virtual console or 
-   gnome-terminal window.  This will run Orca once.
-
 When you run Orca for the first time, you will be prompted for your
 initial user preferences.  The first time you run Orca, you also need
 to log out and log back in in order for accessibility to be enabled in
@@ -113,45 +88,17 @@ You can bypass the Orca setup utility by running orca with the
 "--no-setup" option.  This is useful for running from environments
 such as the login screen.
 
-In general, you should not have to use any Orca-specific keystrokes;
-Orca will follow your focus as you navigate the screen using the
-built-in keyboard navigation mechanisms of the GNOME desktop.  For
-more information on accessing the desktop, including the built-in
-keyboard shortcuts of the GNOME desktop, see the GNOME Desktop
-Accessibility Guide:
+To get help while running Orca, press "Insert+F1".  This will enable
+"learn mode", which provides a spoken and brailled description of what
+various keyboard and braille input device actions will do.  To exit
+learn mode, press "Escape."  Finally, the preferences dialog contains
+a "Key Bindings" tab that lists the keyboard binding for Orca.
 
-http://www.gnome.org/learn/access-guide/latest/
+To quit Orca, you can press "Insert+q" or run "orca --quit" from the
+command line.
 
-If you find you run into an ill-behaved application, or you just want
-to explore an application using Orca's flat review mode, you can use
-the numeric keypad.  A quick overview of the keypad is as follows:
-
-Keypad 7, 8, 9:  review previous, current, and next line of window
-Keypad 4, 5, 6:  review previous, current, and next word
-Keypad 1, 2, 3:  review previous, current, and next character
-Keypad Enter:    provide "where am I?" information
-Keypad +:        read the current text document
-
-Other Orca keyboard commands include:
-
-Insert+space:       bring up the configuration GUI
-Insert+s:           turn speech on and off
-Insert+left_arrow:  slow speech down
-Insert+right_arrow: speed speech up
-Insert+up_arrow:    increase speech pitch
-Insert+down_arrow:  decrease speech pitch
-Insert+f:           read the text attributes at the caret position
-Insert+q:           quit Orca
-
-Furthermore, to get help while running Orca, press "Insert+F1".  This
-will enable "learn mode", which provides a spoken and brailled
-description of what various keyboard and braille input device actions
-will do.  To exit learn mode, press "Escape."  Finally, the
-preferences dialog contains a "Key Bindings" tab that lists the
-keyboard binding for Orca.
-
-To quit Orca, you can press "Insert+q" as shown above, or run 
-"orca --quit" from the command line.
+For more information, see the Orca documentation which is available
+within Orca as well as at: http://library.gnome.org/users/orca/stable
 
 Scripting Orca
 ========================================================================
@@ -160,7 +107,3 @@ So, you want to write a script for Orca?  The best thing to do is
 start by looking at other scripts under the src/orca/scripts/ hierarchy
 of the source tree.  Also, the docs/doc-set/internals.html file contains
 detailed information about the internal workings of Orca.
-
-More details about Orca in general are available on the Orca WIKI:
-
-http://live.gnome.org/Orca

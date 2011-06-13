@@ -1,3 +1,67 @@
+3.1.2 - 13-June-2011
+The long-overdue "spring cleaning" release
+
+General
+
+  * Fix for bug 622764 - Remove the gconf dependency
+
+  * Fix for Bug 652408 - Remove last remnants of bonobo and friends
+
+  * Fix for bug 652415 - gksu grab can be disabled via gksu-properties;
+    Orca doesn't need this option in its GUI
+
+  * Fix for bug 652413 - Orca's enableAutostart setting and GUI widget
+    are redundant in GNOME 3 and should be removed
+
+  * Fix for bug 646288 - Orca needs to respond to the appropriate
+    gsettings keys
+
+  * Fix for bug 650136 - Fall back on combobox name to get the displayed
+    item
+
+  * Removal of outdated docs and other unused, cruftastic files
+
+Speech
+
+  * Fix for bug 652246 - Orca starts speaking really slowly after the
+    Quit dialog appears
+
+  * Fix for bug 652043 - In Libreoffice, Orca doesn't present the title
+    bar
+
+  * Fix for bug 652237 - Remove gnome-speech support from the master/
+    3.1.x branch
+
+  * Fix for bug 647037 - Pronunciation rules not being applied until
+    user settings are reloaded
+
+Magnification
+
+  * Fix for bug 629321 - gsmag.py should use GSettings rather than GConf
+
+  * Fix for Bug 652241 - Magnification settings should be controlled by
+    gnome-shell mag/Universal Access tools; not by Orca
+
+  * Fix for Bug 652407 - Orca's enableMagnifier setting should be based
+    on the value of screen-magnifier-enabled
+
+  * Fix for bug 652373 - Orca's magnification keybindings are no longer
+    needed in GNOME 3 and should therefore be removed
+
+  * Fix for bug 652238 - Remove gnome-mag support from the master/3.1.x
+    branch
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca@valencia   Catalan (Valencian)  Carles Ferrando
+    cs            Czech                Marek Černocký
+    es            Spanish              Daniel Mustieles
+                                       Francisco Javier Dorado Martínez
+    gl            Galician             Fran Diéguez
+    hu            Hungarian            Attila Hammer
+
+==========
+
 3.1.1 - 9-May-2011
 
 General:
