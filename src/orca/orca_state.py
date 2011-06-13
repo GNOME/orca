@@ -125,11 +125,6 @@ orcaWD = None
 #
 prefsGladeFile = None
 
-# Handles to the magnification Advanced Settings Glade GUI object and dialog.
-#
-advancedMag = None
-advancedMagDialog = None
-
 # Whether magnification "color enhancements" are currently enabled.
 #
 colorEnhancementsEnabled = True

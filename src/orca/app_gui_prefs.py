@@ -337,23 +337,10 @@ def showPreferencesUI():
                          orca_platform.package,
                          "ui",
                          "orca-setup.ui")
-        orca_state.advancedMagUIFile = \
-            os.path.join(orca_platform.prefix,
-                         orca_platform.datadirname,
-                         orca_platform.package,
-                         "ui",
-                         "orca-advanced-magnification.ui")
 
         orca_state.appOS = \
             OrcaSetupGUI(orca_state.prefsUIFile, "orcaSetupWindow", prefsDict)
         orca_state.appOS.initAppGUIState(appScript)
-
-        orca_state.advancedMag = \
-            orca_gui_prefs.OrcaAdvancedMagGUI(orca_state.advancedMagUIFile,
-                                   "orcaMagAdvancedDialog", prefsDict)
-        orca_state.advancedMag.init()
-        orca_state.advancedMagDialog = \
-                           orca_state.advancedMag.getAdvancedMagDialog()
 
         orca_state.appOS.init()
     else:
