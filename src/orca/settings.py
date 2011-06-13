@@ -921,22 +921,6 @@ chatAnnounceBuddyTyping = False
 #
 chatRoomHistories = False
 
-# Obtain/set information regarding whether the gksu keyboard grab is enabled
-# or not.
-#
-def isGKSUGrabDisabled():
-    try:
-        return gconfClient.get_bool("/apps/gksu/disable-grab")
-    except:
-        return False
-
-def setGKSUGrabDisabled(disable):
-    try:
-        return gconfClient.set_bool("/apps/gksu/disable-grab",
-                                    disable)
-    except:
-        return False
-
 # Allow for the customization of key bindings.
 #
 def overrideKeyBindings(script, keyBindings):

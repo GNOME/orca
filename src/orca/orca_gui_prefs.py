@@ -1768,10 +1768,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             prefs["presentToolTips"] \
                 and _settingsManager.getSetting('canPresentToolTips'))
 
-        self.disableKeyGrabPref = settings.isGKSUGrabDisabled()
-        self.get_widget("disableKeyGrabCheckButton").set_active( \
-                        self.disableKeyGrabPref)
-
         if prefs["keyboardLayout"] == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             self.get_widget("generalDesktopButton").set_active(True)
         else:
@@ -3042,19 +3038,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             widget.get_active() \
             and _settingsManager.getSetting('canPresentToolTips')
 
-    def disableKeyGrabChecked(self, widget):
-        """Signal handler for the "toggled" signal for the
-           disableKeyGrabCheckButton GtkCheckButton widget.
-           The user has [un]checked the 'Disable gksu keyboard grab'
-           checkbox. Set the gconf '/apps/gksu/disable-grab' resource
-           to the new value.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.disableKeyGrabPref = widget.get_active()
-
     def keyboardLayoutChanged(self, widget):
         """Signal handler for the "toggled" signal for the generalDesktopButton,
            or generalLaptopButton GtkRadioButton widgets. The user has
@@ -3306,8 +3289,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 settings.HYPERLINK_VOICE : acss.ACSS(self.hyperlinkVoice),
                 settings.SYSTEM_VOICE    : acss.ACSS(self.systemVoice),
             }
-
-        settings.setGKSUGrabDisabled(self.disableKeyGrabPref)
 
     def applyButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the applyButton

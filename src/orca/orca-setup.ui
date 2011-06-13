@@ -373,22 +373,6 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="disableKeyGrabCheckButton">
-                        <property name="label" translatable="yes">Disable gksu _keyboard grab</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="use_underline">True</property>
-                        <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="disableKeyGrabChecked"/>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkCheckButton" id="presentToolTipsCheckButton">
                         <property name="label" translatable="yes">_Present tooltips</property>
                         <property name="visible">True</property>
