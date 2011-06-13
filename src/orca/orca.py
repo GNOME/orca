@@ -2282,7 +2282,7 @@ def main():
     # Do not run Orca if accessibility has not been enabled.
     # We do allow, however, one to force Orca to run via the
     # "-n" switch.  The main reason is so that things such
-    # as accessible login can work -- in those cases, the gconf
+    # as accessible login can work -- in those cases, the a11y
     # setting is typically not set since the gdm user does not
     # have a home.
     #

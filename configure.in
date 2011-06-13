@@ -48,7 +48,6 @@ AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find python module: gobject)])
 # Don't require the DISPLAY to be set - the gtk checking will fail 
 # if DISPLAY is not set, and we don't like that.
 #AM_CHECK_PYMOD(gtk,gdk,,[AC_MSG_ERROR(Could not find python module: gtk.gdk)])
-AM_CHECK_PYMOD(gconf,,,[AC_MSG_ERROR(Could not find python module: gconf)])
 AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find python module: dbus)])
 AM_CHECK_PYMOD(pyatspi,,,[AC_MSG_ERROR(Could not find python module: pyatspi)])
 AM_CHECK_PYMOD(cairo,,,[AC_MSG_ERROR(Could not find python module: cairo)])

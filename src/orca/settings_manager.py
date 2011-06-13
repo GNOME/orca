@@ -54,9 +54,8 @@ class SettingsManager(object):
     def __init__(self, backend='json'):
         """Initialize a SettingsManager Object.
         If backend isn't defined then uses default backend, in this
-        case gconf-backend.
+        case json-backend.
         backend parameter can use the follow values:
-        backend='gconf'
         backend='json'
         """
 

@@ -65,12 +65,6 @@ try:
 except:
     pass
 
-try:
-    import gconf
-    gconfClient = gconf.client_get_default()
-except:
-    gconfClient = None
-
 import pyatspi
 
 from acss import ACSS

@@ -854,15 +854,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - systemName: the speech system name to use to set the active combo
         box item.
         """
-        # JD -> JH: We aren't expecting this string in quotes, yet we
-        # seem to be getting it that way from the gconf backend. That
-        # is causing the 'endswith(systemName)' test to fail. That in
-        # turn is resulting in our failing to find a match. I'm not
-        # suggesting this hack is the solution; I'm merely trying to
-        # make your hang go away. :-) If you comment this line, you
-        # should see the hang and the debug output -- assuming your
-        # active speech factory is speechdispatcherfactory.
-        #
+
         systemName = systemName.strip("'")
 
         if len(self.speechSystemsChoices) == 0:
