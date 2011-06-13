@@ -165,14 +165,6 @@ do
                 continue
             fi
         else
-            # Don't let gnome-terminal change the title on us -- it
-            # wreaks havoc on the output.
-            #
-            if [ "$application" == "gnome-terminal" ]
-            then
-                gconftool-2 --set /apps/gnome-terminal/profiles/Default/title_mode --type string ignore
-            fi
-
             # Tell OpenOffice Writer and Calc to not attempt to
             # recover edited files after a crash.
             #

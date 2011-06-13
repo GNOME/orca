@@ -166,14 +166,6 @@ then
     sleep $WAIT_TIME
 fi
 
-# Don't let gnome-terminal change the title on us -- it wreaks havoc
-# on the output.
-#
-if [ "$APP_NAME" = "gnome-terminal" ]
-then
-    gconftool-2 --set /apps/gnome-terminal/profiles/Default/title_mode --type string ignore
-fi
-
 # Start the test application and let it settle in. Two processes
 # are started for OpenOffice.
 #
