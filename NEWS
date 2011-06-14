@@ -1,3 +1,29 @@
+3.1.2-xdesktop - 13-June-2011
+
+General
+
+  * Fix for bug 650136 - Fall back on combobox name to get the displayed
+    item
+
+  * Fix for bug 652246 - Orca starts speaking really slowly after the
+    Quit dialog appears
+
+  * Fix for bug 652043 - In Libreoffice, Orca doesn't present the title
+    bar
+
+  * Fix for bug 647037 - Pronunciation rules not being applied until
+    user settings are reloaded
+
+New and updated translations (THANKS EVERYONE!!!):
+    ca@valencia   Catalan (Valencian)  Carles Ferrando
+    cs            Czech                Marek Černocký
+    es            Spanish              Daniel Mustieles
+                                       Francisco Javier Dorado Martínez
+    gl            Galician             Fran Diéguez
+    hu            Hungarian            Attila Hammer
+
+==========
+
 3.1.1 - 9-May-2011
 
 General:
