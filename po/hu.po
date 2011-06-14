@@ -8,15 +8,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 23:36+0200\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2011-06-14 00:26+0000\n"
 "PO-Revision-Date: 2011-04-04 07:22+0100\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -3447,7 +3448,7 @@ msgstr "Orka képernyőolvasó és nagyító"
 #. After the message, the list of arguments, as typed by the
 #. user, is displayed.
 #.
-#: ../src/orca/orca.py:306
+#: ../src/orca/orca.py:290
 msgid "The following arguments are not valid: "
 msgstr "A következő argumentumok érvénytelenek: "
 
@@ -3458,18 +3459,18 @@ msgstr "A következő argumentumok érvénytelenek: "
 #. and splash-window. These items are not localized and are
 #. presented in a list after this message.
 #.
-#: ../src/orca/orca.py:361
+#: ../src/orca/orca.py:345
 msgid "The following items can be enabled or disabled:"
 msgstr "A következő funkciók engedélyezhetők vagy letilthatók:"
 
-#: ../src/orca/orca.py:376
+#: ../src/orca/orca.py:360
 msgid "Usage: orca [OPTION...]"
 msgstr "Használat: orca [KAPCSOLÓK…]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:382
+#: ../src/orca/orca.py:366
 msgid "Show this help message"
 msgstr "Ezen súgóüzenet megjelenítése"
 
@@ -3477,7 +3478,7 @@ msgstr "Ezen súgóüzenet megjelenítése"
 #. the names of applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:390
+#: ../src/orca/orca.py:374
 msgid "Print the known running applications"
 msgstr "Az ismert futó alkalmazások kiírása"
 
@@ -3489,7 +3490,7 @@ msgstr "Az ismert futó alkalmazások kiírása"
 #. always start with 'debug' and end with '.out', regardless of the
 #. locale.).
 #.
-#: ../src/orca/orca.py:401
+#: ../src/orca/orca.py:385
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-OO:PP:MM.out fájlba"
@@ -3498,7 +3499,7 @@ msgstr ""
 #. the name of the debug file Orca will use for debug output if the
 #. --debug option is used.
 #.
-#: ../src/orca/orca.py:408
+#: ../src/orca/orca.py:392
 msgid "Send debug output to the specified file"
 msgstr "A hibakövetési információk mentése a megadott fájlba"
 
@@ -3506,7 +3507,7 @@ msgstr "A hibakövetési információk mentése a megadott fájlba"
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
 #. that would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:415
+#: ../src/orca/orca.py:399
 msgid "Set up user preferences"
 msgstr "Felhasználói beállítások megadása"
 
@@ -3516,7 +3517,7 @@ msgstr "Felhasználói beállítások megadása"
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
 #.
-#: ../src/orca/orca.py:424
+#: ../src/orca/orca.py:408
 msgid "Set up user preferences (text version)"
 msgstr "Felhasználói beállítások (szöveges változat)"
 
@@ -3524,7 +3525,7 @@ msgstr "Felhasználói beállítások (szöveges változat)"
 #. '-n, --no-setup' that means that Orca will startup without setting
 #. up any user preferences.
 #.
-#: ../src/orca/orca.py:431
+#: ../src/orca/orca.py:415
 msgid "Skip set up of user preferences"
 msgstr "A felhasználói beállítások kihagyása"
 
@@ -3532,7 +3533,7 @@ msgstr "A felhasználói beállítások kihagyása"
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for the user preferences.
 #.
-#: ../src/orca/orca.py:438
+#: ../src/orca/orca.py:422
 msgid "Use alternate directory for user preferences"
 msgstr "Alternatív könyvtár használata a felhasználói beállításokhoz"
 
@@ -3540,7 +3541,7 @@ msgstr "Alternatív könyvtár használata a felhasználói beállításokhoz"
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:452
+#: ../src/orca/orca.py:436
 msgid "Force use of option"
 msgstr "Kapcsoló használatának kikényszerítése"
 
@@ -3548,14 +3549,14 @@ msgstr "Kapcsoló használatának kikényszerítése"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:466
+#: ../src/orca/orca.py:450
 msgid "Prevent use of option"
 msgstr "A kapcsoló használatának megakadályozása"
 
 #. Translators: this is the Orca command line option to import to Orca
 #. a user profile from a given file
 #.
-#: ../src/orca/orca.py:472
+#: ../src/orca/orca.py:456
 msgid "Import a profile from a given orca profile file"
 msgstr "Profil importálása a megadott Orka profilfájlból"
 
@@ -3564,7 +3565,7 @@ msgstr "Profil importálása a megadott Orka profilfájlból"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:480
+#: ../src/orca/orca.py:464
 msgid "Quits Orca (if shell script used)"
 msgstr "Kilépés az Orkából (parancsfájl használata esetén)"
 
@@ -3574,21 +3575,21 @@ msgstr "Kilépés az Orkából (parancsfájl használata esetén)"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:489
+#: ../src/orca/orca.py:473
 msgid "Forces orca to be terminated immediately."
 msgstr "Az Orka azonnali befejeztetésének kikényszerítése."
 
 #. Translators: this is the Orca command line option to tell Orca to
 #. replace any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:495
+#: ../src/orca/orca.py:479
 msgid "Replace a currently running Orca"
 msgstr "Lecseréli a jelenleg futó Orka folyamatot"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:501
+#: ../src/orca/orca.py:485
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3598,13 +3599,13 @@ msgstr ""
 "beállítások párbeszédablak automatikusan megjelenik, kivéve\n"
 "ha a -n vagy a --no-setup kapcsolót használja."
 
-#: ../src/orca/orca.py:513
+#: ../src/orca/orca.py:497
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "A hibákat az orca-list@gnome.org levelezőlistán jelezheti."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:691 ../src/orca/orca.py:2090
+#: ../src/orca/orca.py:675 ../src/orca/orca.py:2072
 msgid "Goodbye."
 msgstr "Viszontlátásra."
 
@@ -3617,7 +3618,7 @@ msgstr "Viszontlátásra."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:765
+#: ../src/orca/orca.py:749
 msgid "Exiting learn mode."
 msgstr "Kilépés a tanulómódból."
 
@@ -3629,7 +3630,7 @@ msgstr "Kilépés a tanulómódból."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/orca.py:789
+#: ../src/orca/orca.py:773
 msgid "Exiting list shortcuts mode."
 msgstr "Kilépés a billentyűparancsok felsorolása módból."
 
@@ -3638,7 +3639,7 @@ msgstr "Kilépés a billentyűparancsok felsorolása módból."
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1045
+#: ../src/orca/orca.py:1029
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
 #: ../src/orca/speech.py:287 ../src/orca/speechserver.py:219
 msgid "off"
@@ -3649,7 +3650,7 @@ msgstr "kikapcsolva"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1049
+#: ../src/orca/orca.py:1033
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
 #: ../src/orca/speech.py:282 ../src/orca/speechserver.py:214
 msgid "on"
@@ -3658,14 +3659,14 @@ msgstr "bekapcsolva"
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:1407
+#: ../src/orca/orca.py:1391
 msgid "Speech enabled."
 msgstr "Beszéd engedélyezése."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:1412
+#: ../src/orca/orca.py:1396
 msgid "Speech disabled."
 msgstr "Beszéd tiltása."
 
@@ -3673,7 +3674,7 @@ msgstr "Beszéd tiltása."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1541
+#: ../src/orca/orca.py:1525
 msgid "Orca user settings reloaded."
 msgstr "Az Orka felhasználói beállítások újratöltése megtörtént."
 
@@ -3681,7 +3682,7 @@ msgstr "Az Orka felhasználói beállítások újratöltése megtörtént."
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:1719
+#: ../src/orca/orca.py:1703
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "A listában való navigációhoz használja a felfelé és lefelé nyilakat, a "
@@ -3691,7 +3692,7 @@ msgstr ""
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:1733
+#: ../src/orca/orca.py:1717
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3702,7 +3703,7 @@ msgstr[1] "%d Orka alapértelmezett billentyűparancs található."
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:1755
+#: ../src/orca/orca.py:1739
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3714,7 +3715,7 @@ msgstr[1] "%(count)d Orka %(application)s billentyűparancs található."
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1773
+#: ../src/orca/orca.py:1757
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "Nincsenek %s Orka billentyűparancsok."
@@ -3737,7 +3738,7 @@ msgstr "Nincsenek %s Orka billentyűparancsok."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1791 ../src/orca/scripts/toolkits/Gecko/script.py:6094
+#: ../src/orca/orca.py:1775 ../src/orca/scripts/toolkits/Gecko/script.py:6094
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Vissza a lap aljára."
@@ -3760,7 +3761,7 @@ msgstr "Vissza a lap aljára."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1812 ../src/orca/scripts/toolkits/Gecko/script.py:6162
+#: ../src/orca/orca.py:1796 ../src/orca/scripts/toolkits/Gecko/script.py:6162
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Vissza a lap tetejére."
@@ -3773,7 +3774,7 @@ msgstr "Vissza a lap tetejére."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1831 ../src/orca/scripts/default.py:1630
+#: ../src/orca/orca.py:1815 ../src/orca/scripts/default.py:1630
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
@@ -3781,7 +3782,7 @@ msgstr ""
 "Az 1 az Orka általános billentyűparancsait, a 2 a fókuszban levő alkalmazás "
 "Orka billentyűparancsait sorolja fel. Kilépés az ESC billentyűvel."
 
-#: ../src/orca/orca.py:1881
+#: ../src/orca/orca.py:1865
 msgid "keypad "
 msgstr "Numpad "
 
@@ -3789,7 +3790,7 @@ msgstr "Numpad "
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1888
+#: ../src/orca/orca.py:1872
 msgid "double click"
 msgstr "(Kétszer gyorsan megnyomva)"
 
@@ -3797,7 +3798,7 @@ msgstr "(Kétszer gyorsan megnyomva)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1894
+#: ../src/orca/orca.py:1878
 msgid "triple click"
 msgstr "(Háromszor gyorsan megnyomva)"
 
@@ -3805,14 +3806,14 @@ msgstr "(Háromszor gyorsan megnyomva)"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2223
+#: ../src/orca/orca.py:2205
 msgid "Unable to import profile."
 msgstr "Az Orka profilt nem lehet importálni."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2229
+#: ../src/orca/orca.py:2211
 msgid "Profile import success."
 msgstr "A profil importálása sikeresen megtörtént."
 
@@ -3820,12 +3821,12 @@ msgstr "A profil importálása sikeresen megtörtént."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2235
+#: ../src/orca/orca.py:2217
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "Az importálás meghiúsult a következő ismeretlen kulcs miatt: %s"
 
-#: ../src/orca/orca.py:2304
+#: ../src/orca/orca.py:2286
 msgid "Welcome to Orca."
 msgstr "Üdvözöljük az Orkában."
 
@@ -3855,13 +3856,11 @@ msgstr "_Profil neve:"
 msgid ""
 "<b><big>Quit Orca?</big></b>\n"
 "\n"
-"This will stop all speech output and screen magnification.\n"
-"\n"
+"This will stop all speech and braille output."
 msgstr ""
 "<b><big>Kilép az Orka programból?</big></b>\n"
 "\n"
-"Ez leállít minden felolvasást és képernyőnagyítást.\n"
-"\n"
+"Ez leállítja a felolvasást és braille támogatást."
 
 #: ../src/orca/orca-setup.ui.h:2
 #, no-c-format
