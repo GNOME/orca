@@ -3553,8 +3553,7 @@ msgid ""
 msgstr ""
 "<b><big>Ali naj se program Orka konča?</big></b>\n"
 "\n"
-"S tem dejanjem se bodo zaustavile vse izgovorjave, povečave na zaslonu in odvod braillove pisave.\n"
-"\n"
+"S tem dejanjem se bodo zaustavile vse izgovorjave, povečave na zaslonu in odvod braillove pisave."
 
 #: ../src/orca/orca-setup.ui.h:1
 msgid ""
