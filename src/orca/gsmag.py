@@ -31,7 +31,10 @@ __copyright__ = "Copyright (c) 2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import dbus
-_bus = dbus.SessionBus()
+from dbus.mainloop.glib import DBusGMainLoop
+_dbusLoop = DBusGMainLoop()
+_bus = dbus.SessionBus(mainloop=_dbusLoop)
+
 _proxy_obj = _bus.get_object("org.gnome.Magnifier",
                              "/org/gnome/Magnifier")
 _magnifier = dbus.Interface(_proxy_obj, "org.gnome.Magnifier")
@@ -41,14 +44,6 @@ import debug
 import eventsynthesizer
 import settings
 import orca_state
-from gi.repository.Gio import Settings
-
-# Some magnfier GSettings
-#
-MOUSE_MODE_KEY      = "mouse-tracking"
-CROSSHAIRS_SHOW_KEY = "show-cross-hairs"
-
-_magSettings = Settings('org.gnome.desktop.a11y.magnifier')
 
 # If True, the magnifier is active
 #
@@ -74,7 +69,6 @@ _screenHeight = _screen.get_height()
 _initialized = False
 _fullScreenCapable = False
 _wasActiveOnInit = False
-_crossHairsShownOnInit = False
 
 # The width and height, in unzoomed system coordinates of the rectangle that,
 # when magnified, will fill the viewport of the magnifier - this needs to be
@@ -95,6 +89,123 @@ _maxROIX = 0
 _minROIY = 0
 _maxROIY = 0
 
+
+########################################################################
+#                                                                      #
+# D-Bus callbacks                                                      #
+#                                                                      #
+########################################################################
+
+class RoiHandler:
+    """For handling D-Bus calls to zoomRegion.getRoi() asynchronously
+    """
+    def __init__(self, left=0, top=0, width=0, height=0, centerX=0, centerY=0,
+                 edgeMarginX=0, edgeMarginY=0):
+        self.left = left
+        self.top = top
+        self.width = width
+        self.height = height
+        self.centerX = centerX
+        self.centerY = centerY
+        self.edgeMarginX = edgeMarginX
+        self.edgeMarginY = edgeMarginY
+
+    def setRoiCenter(self, reply):
+        """Given a region of interest, put that at the center of the magnifier.
+
+        Arguments:
+        - reply:  an array defining a rectangle [left, top, right, bottom]
+        """
+        roiWidth = reply[2] - reply[0]
+        roiHeight = reply[3] - reply[1]
+        if self.width > roiWidth:
+            self.centerX = self.left
+        if self.height > roiHeight:
+            self.centerY = self.top
+        _setROICenter(self.centerX, self.centerY)
+
+    def setRoiCursorPush(self, reply):
+        """Given a region of interest, nudge it if the caret or control is not
+        visible.
+
+        Arguments:
+        - reply:  an array defining a rectangle [left, top, right, bottom]
+        """
+        # Determine if the accessible is partially to the left, right,
+        # above, or below the current region of interest (ROI).
+        #
+        roiLeft = reply[0]
+        roiTop = reply[1]
+        roiWidth = reply[2] - roiLeft
+        roiHeight = reply[3] - roiTop
+        leftOfROI = (self.left - self.edgeMarginX) <= roiLeft
+        rightOfROI = \
+            (self.left + self.width + self.edgeMarginX) >= (roiLeft + roiWidth)
+        aboveROI = (self.top - self.edgeMarginY)  <= roiTop
+        belowROI = \
+            (self.top + self.height + self.edgeMarginY) >= (roiTop + roiHeight)
+
+        # The algorithm is devised to move the ROI as little as possible, yet
+        # favor the top left side of the object [[[TODO: WDW - the left/right
+        # top/bottom favoring should probably depend upon the locale.  Also,
+        # I had the notion of including a floating point snap factor between
+        # 0.0 and 1.0 that would determine how to position the object in the
+        # window relative to the ROI edges.  A snap factor of -1 would mean to
+        # snap to the closest edge.  A snap factor of 0.0 would snap to the
+        # left most or top most edge, a snap factor of 1.0 would snap to the
+        # right most or bottom most edge.  Any number in between would divide
+        # the two.]]]
+        #
+        x1 = roiLeft
+        x2 = roiLeft + roiWidth
+        y1 = roiTop
+        y2 = roiTop + roiHeight
+
+        if leftOfROI:
+            x1 = max(0, self.left - self.edgeMarginX)
+            x2 = x1 + roiWidth
+        elif rightOfROI:
+            self.left = min(_screenWidth, self.left + self.edgeMarginX)
+            if self.width > roiWidth:
+                x1 = self.left
+                x2 = x1 + roiWidth
+            else:
+                x2 = self.left + self.width
+                x1 = x2 - roiWidth
+
+        if aboveROI:
+            y1 = max(0, self.top - self.edgeMarginY)
+            y2 = y1 + roiHeight
+        elif belowROI:
+            self.top = min(_screenHeight, self.top + self.edgeMarginY)
+            if self.height > roiHeight:
+                y1 = self.top
+                y2 = y1 + roiHeight
+            else:
+                y2 = self.top + self.height
+                y1 = y2 - roiHeight
+
+        _setROICenter((x1 + x2) / 2, (y1 + y2) / 2)
+
+    def setRoiCenterErr(self, error):
+        _dbusCallbackError('_setROICenter()', error)
+
+    def setRoiCursorPushErr(self, error):
+        _dbusCallbackError('_setROICursorPush()', error)
+
+    def magnifyAccessibleErr(self, error):
+        _dbusCallbackError('magnifyAccessible()', error)
+
+def _dbusCallbackError(funcName, error):
+    """Log D-Bus errors
+
+    Arguments:
+    - funcName: The name of the gsmag function that made the D-Bus call.
+    - error: The error that D-Bus returned.
+    """
+    logLine = funcName + ' failed: ' + str(error)
+    debug.println(debug.LEVEL_WARNING, logLine)
+
 ########################################################################
 #                                                                      #
 # Methods for magnifying objects                                       #
@@ -108,7 +219,7 @@ def _setROICenter(x, y):
     - x: integer in unzoomed system coordinates representing x component
     - y: integer in unzoomed system coordinates representing y component
     """
-    _zoomer.shiftContentsTo(x, y)
+    _zoomer.shiftContentsTo(x, y, ignore_reply=True)
 
 def _setROICursorPush(x, y, width, height, edgeMargin = 0):
     """Nudges the ROI if the caret or control is not visible.
@@ -133,55 +244,11 @@ def _setROICursorPush(x, y, width, height, edgeMargin = 0):
     # above, or below the current region of interest (ROI).
     # [[[WDW - probably should not make a D-Bus call each time.]]]
     #
-    [roiLeft, roiTop, roiRight, roiBottom] = _zoomer.getRoi()
-    roiWidth = roiRight - roiLeft
-    roiHeight = roiBottom - roiTop
-    leftOfROI = (x - edgeMarginX) <= roiLeft
-    rightOfROI = (x + width + edgeMarginX) >= (roiLeft + roiWidth)
-    aboveROI = (y - edgeMarginY)  <= roiTop
-    belowROI = (y + height + edgeMarginY) >= (roiTop + roiHeight)
-
-    # The algorithm is devised to move the ROI as little as possible, yet
-    # favor the top left side of the object [[[TODO: WDW - the left/right
-    # top/bottom favoring should probably depend upon the locale.  Also,
-    # I had the notion of including a floating point snap factor between
-    # 0.0 and 1.0 that would determine how to position the object in the
-    # window relative to the ROI edges.  A snap factor of -1 would mean to
-    # snap to the closest edge.  A snap factor of 0.0 would snap to the
-    # left most or top most edge, a snap factor of 1.0 would snap to the
-    # right most or bottom most edge.  Any number in between would divide
-    # the two.]]]
-    #
-    x1 = roiLeft
-    x2 = roiLeft + roiWidth
-    y1 = roiTop
-    y2 = roiTop + roiHeight
-
-    if leftOfROI:
-        x1 = max(0, x - edgeMarginX)
-        x2 = x1 + roiWidth
-    elif rightOfROI:
-        x = min(_screenWidth, x + edgeMarginX)
-        if width > roiWidth:
-            x1 = x
-            x2 = x1 + roiWidth
-        else:
-            x2 = x + width
-            x1 = x2 - roiWidth
-
-    if aboveROI:
-        y1 = max(0, y - edgeMarginY)
-        y2 = y1 + roiHeight
-    elif belowROI:
-        y = min(_screenHeight, y + edgeMarginY)
-        if height > roiHeight:
-            y1 = y
-            y2 = y1 + roiHeight
-        else:
-            y2 = y + height
-            y1 = y2 - roiHeight
-
-    _setROICenter((x1 + x2) / 2, (y1 + y2) / 2)
+    roiPushHandler = RoiHandler(x, y, width, height,
+                                edgeMarginX=edgeMarginX,
+                                edgeMarginY=edgeMarginY)
+    _zoomer.getRoi(reply_handler=roiPushHandler.setRoiCursorPush,
+                   error_handler=roiPushHandler.setRoiCursorPushErr)
 
 def magnifyAccessible(event, obj, extents=None):
     """Sets the region of interest to the upper left of the given
@@ -242,15 +309,10 @@ def magnifyAccessible(event, obj, extents=None):
             # be visible on the screen.
             # [[[WDW - probably should not make a getRoi call each time]]]
             #
-            [roiLeft, roiTop, roiRight, roiBottom] = _zoomer.getRoi()
-            roiWidth = roiRight - roiLeft
-            roiHeight = roiBottom - roiTop
-            if width > roiWidth:
-                centerX = x
-            if height > roiHeight:
-                centerY = y
+            roiCenterHandler = RoiHandler(x, y, width, height, centerX, centerY)
+            _zoomer.getRoi(reply_handler=roiCenterHandler.setRoiCenter,
+                           error_handler=roiCenterHandler.magnifyAccessibleErr)
 
-            _setROICenter(centerX, centerY)
         elif _controlTracking == settings.MAG_TRACKING_MODE_PUSH:
             _setROICursorPush(x, y, width, height)
 
@@ -287,9 +349,9 @@ def hideSystemPointer(hidePointer):
     """
     try:
         if hidePointer:
-            _magnifier.hideCursor()
+            _magnifier.hideCursor(ignore_reply=True)
         else:
-            _magnifier.showCursor()
+            _magnifier.showCursor(ignore_reply=True)
     except:
         debug.printException(debug.LEVEL_FINEST)
 
@@ -329,16 +391,8 @@ def __setupMagnifier(position, restore=None):
     orca_state.zoomerType = position
     updateTarget = True
 
-    value = restore.get('magCrossHairColor', settings.magCrossHairColor)
-    setMagnifierObjectColor("crosswire-color", value, False)
-
     enableCrossHair = restore.get('enableMagCrossHair',
                                   settings.enableMagCrossHair)
-    setMagnifierCrossHair(enableCrossHair, False)
-
-    value = restore.get('enableMagCrossHairClip',
-                        settings.enableMagCrossHairClip)
-    setMagnifierCrossHairClip(value, False)
 
     orca_state.mouseEnhancementsEnabled = enableCrossHair
 
@@ -401,7 +455,9 @@ def __setupZoomer(position, left=None, top=None, right=None, bottom=None,
     #
     zoomerPaths = _magnifier.getZoomRegions()
     if len(zoomerPaths) > 0:
-        _zoomer = _bus.get_object('org.gnome.Magnifier', zoomerPaths[0])
+        zoomProxy = _bus.get_object('org.gnome.Magnifier', zoomerPaths[0])
+        _zoomer = dbus.Interface(zoomProxy,
+                                dbus_interface='org.gnome.Magnifier.ZoomRegion')
         _zoomer.setMagFactor(magFactor, magFactor)
         _zoomer.moveResize([prefLeft, prefTop, prefRight, prefBottom])
     else:
@@ -409,7 +465,9 @@ def __setupZoomer(position, left=None, top=None, right=None, bottom=None,
             magFactor, magFactor,
 	        [0, 0, _roiWidth, _roiHeight],
 	        [prefLeft, prefTop, prefRight, prefBottom])
-        _zoomer = _bus.get_object('org.gnome.Magnifier', zoomerPath)
+        zoomProxy = _bus.get_object('org.gnome.Magnifier', zoomerPath)
+        _zoomer = dbus.Interface(zoomProxy,
+                                dbus_interface='org.gnome.Magnifier.ZoomRegion')
         _magnifier.addZoomRegion(zoomerPath)
 
     __updateROIDimensions()
@@ -454,189 +512,6 @@ def setupMagnifier(position, left=None, top=None, right=None, bottom=None,
     __setupMagnifier(position, restore)
     __setupZoomer(position, left, top, right, bottom, restore)
 
-def setMagnifierCursor(enabled, customEnabled, size, updateScreen=True):
-    """Sets the cursor.
-
-    Arguments:
-    - enabled:        Whether or not the cursor should be enabled
-    - customEnabled:  Whether or not a custom size has been enabled
-    - size:           The size it should be set to
-    - updateScreen:   Whether or not to update the screen
-    """
-    # [[[WDW - To be implemented]]]
-    pass
-
-def setMagnifierCrossHair(enabled, updateScreen=True):
-    """Sets the cross-hair.
-
-    Arguments:
-    - enabled: Whether or not the cross-hair should be enabled
-    - updateScreen:  Whether or not to update the screen.
-    """
-
-    if not _initialized:
-        return
-
-    size = 0
-    if enabled:
-        size = settings.magCrossHairSize
-
-    _magnifier.setCrosswireSize(size)
-    _magSettings.set_boolean(CROSSHAIRS_SHOW_KEY, enabled)
-
-def setMagnifierCrossHairClip(enabled, updateScreen=True):
-    """Sets the cross-hair clip.
-
-    Arguments:
-    - enabled: Whether or not the cross-hair clip should be enabled
-    - updateScreen:   Whether or not to update the screen (ignored)
-    """
-
-    if not _initialized:
-        return
-
-    _magnifier.setCrosswireClip(enabled)
-
-def setMagnifierObjectColor(magProperty, colorSetting, updateScreen=True):
-    """Sets the specified zoomer property to the specified color.
-
-    Arguments:
-    - magProperty:  The property to set (as a string).  Only 'crosswire-color'.
-    - colorSetting: The Orca color setting to apply
-    - updateScreen:  Whether or not to update the screen
-    """
-
-    colorPreference = gtk.gdk.color_parse(colorSetting)
-    # Convert the colorPreference string to something we can use.
-    # The main issue here is that the color preferences are saved
-    # as 4 byte values per color.  We only need 2 bytes, so we
-    # get rid of the bottom 8 bits.  Default 'ff' for alpha.
-    #
-    colorPreference.red   = colorPreference.red   >> 8
-    colorPreference.blue  = colorPreference.blue  >> 8
-    colorPreference.green = colorPreference.green >> 8
-    colorString = "0x%02X%02X%02Xff" \
-                  % (colorPreference.red,
-                     colorPreference.green,
-                     colorPreference.blue)
-
-    # [[[JS - Handle only 'crosswire-color' for now]]]
-    # Shift left 8 bits to put in alpha value.
-    if magProperty == 'crosswire-color':
-        crossWireColor = int(colorString, 16)
-        _magnifier.setCrosswireColor(crossWireColor & 0xffffffff)
-
-    # [[[WDW - To be implemented]]]
-    else:
-        pass
-
-def setMagnifierObjectSize(magProperty, size, updateScreen=True):
-    """Sets the specified magnifier property to the specified size.
-
-    Arguments:
-    - magProperty:   The property to set (as a string)
-    - size:          The size to apply
-    - updateScreen:  Whether or not to update the screen
-    """
-
-    # [[[JS - Handle only 'crosswire-size' for now]]]
-    if magProperty == 'crosswire-size':
-        _magnifier.setCrosswireSize(size)
-
-    # [[[WDW - To be implemented]]]
-    else:
-        pass
-
-def setZoomerBrightness(red=0, green=0, blue=0, updateScreen=True):
-    """Increases/Decreases the brightness level by the specified
-    increments.  Increments are floats ranging from -1 (black/no
-    brightenss) to 1 (white/100% brightness).  0 means no change.
-
-    Arguments:
-    - red:    The amount to alter the red brightness level
-    - green:  The amount to alter the green brightness level
-    - blue:   The amount to alter the blue brightness level
-    - updateScreen:   Whether or not to update the screen
-    """
-    # [[[WDW - To be implemented]]]
-    pass
-
-def setZoomerContrast(red=0, green=0, blue=0, updateScreen=True):
-    """Increases/Decreases the contrast level by the specified
-    increments.  Increments are floats ranging from -1 (grey/no
-    contrast) to 1 (white/back/100% contrast).  0 means no change.
-
-    Arguments:
-    - red:    The amount to alter the red contrast level
-    - green:  The amount to alter the green contrast level
-    - blue:   The amount to alter the blue contrast level
-    - updateScreen:  Whether or not to update the screen
-    """
-    # [[[WDW - To be implemented]]]
-    pass
-
-def setZoomerColorFilter(colorFilter, updateScreen=True):
-    """Sets the zoomer's color filter.
-
-    Arguments:
-    - colorFilter: The color filter to apply
-    - updateScreen:  Whether or not to update the screen
-    """
-    # [[[WDW - To be implemented]]]
-    pass
-
-def setZoomerColorInversion(enabled, updateScreen=True):
-    """Sets the color inversion.
-
-    Arguments:
-    - enabled: Whether or not color inversion should be enabled
-    - updateScreen:   Whether or not to update the screen
-    """
-    # [[[WDW - To be implemented]]]
-    pass
-
-def setZoomerMagFactor(x, y, updateScreen=True):
-    """Sets the magnification level.
-
-    Arguments:
-    - x: The horizontal magnification level
-    - y: The vertical magnification level
-    - updateScreen:  Whether or not to update the screen
-    """
-    _zoomer.setMagFactor(x, y)
-
-def setZoomerObjectColor(magProperty, colorSetting, updateScreen=True):
-    """Sets the specified zoomer property to the specified color.
-
-    Arguments:
-    - magProperty:  The property to set (as a string)
-    - colorSetting: The Orca color setting to apply
-    - updateScreen:  Whether or not to update the screen
-    """
-    # [[[WDW - To be implemented]]]
-    pass
-
-def setZoomerObjectSize(magProperty, size, updateScreen=True):
-    """Sets the specified zoomer property to the specified size.
-
-    Arguments:
-    - magProperty:   The property to set (as a string)
-    - size:          The size to apply
-    - updateScreen:  Whether or not to update the screen
-    """
-    # [[[WDW - To be implemented]]]
-    pass
-
-def setZoomerSmoothingType(smoothingType, updateScreen=True):
-    """Sets the zoomer's smoothing type.
-
-    Arguments:
-    - smoothingType: The type of smoothing to use
-    - updateScreen:  Whether or not to update the screen
-    """
-    # [[[WDW - To be implemented]]]
-    pass
-
 ########################################################################
 #                                                                      #
 # Methods for obtaining magnifier capabilities                         #
@@ -672,7 +547,6 @@ def init():
     global _initialized
     global _isActive
     global _wasActiveOnInit
-    global _crossHairsShownOnInit
 
     if _initialized:
         return False
@@ -680,7 +554,6 @@ def init():
     try:
         _initialized = True
         _wasActiveOnInit = _magnifier.isActive()
-        _crossHairsShownOnInit = _magSettings.get_boolean(CROSSHAIRS_SHOW_KEY)
         applySettings()
         _magnifier.setActive(True)
         _isActive = _magnifier.isActive()
@@ -703,7 +576,6 @@ def shutdown():
         return False
 
     _magnifier.setActive(_wasActiveOnInit)
-    _magSettings.set_boolean(CROSSHAIRS_SHOW_KEY, _crossHairsShownOnInit)
     _isActive = _magnifier.isActive()
     if not _isActive:
         hideSystemPointer(False)
