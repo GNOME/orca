@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-04-03 14:25+0000\n"
-"PO-Revision-Date: 2011-04-06 15:51+0200\n"
+"POT-Creation-Date: 2011-06-13 10:54+0000\n"
+"PO-Revision-Date: 2011-06-19 11:20+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -464,7 +464,7 @@ msgstr "Mensaje de la sala chat %s"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2720 ../src/orca/script_utilities.py:2727
+#: ../src/orca/script_utilities.py:2736 ../src/orca/script_utilities.py:2743
 msgid "space"
 msgstr "espacio"
 
@@ -1816,9 +1816,9 @@ msgstr[1] "%d porciento."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:439
-#: ../src/orca/generator.py:696 ../src/orca/generator.py:738
-#: ../src/orca/generator.py:784
+#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:444
+#: ../src/orca/generator.py:701 ../src/orca/generator.py:743
+#: ../src/orca/generator.py:789
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:643
@@ -3409,12 +3409,6 @@ msgstr "Guardar perfil como conflicto"
 
 #. First of all, we give a chance of cancel profile change
 #: ../src/orca/orca_gui_prefs.py:4591
-#| msgid ""
-#| "You are about to change the active profile. If you\n"
-#| "have just make changes in your preferences, it will\n"
-#| "be dropped at profile load.\n"
-#| "\n"
-#| "Continue loading profile discarding previous changes?"
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -3742,7 +3736,7 @@ msgstr "No se encontraron atajos de Orca para %s"
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1775 ../src/orca/scripts/toolkits/Gecko/script.py:6093
+#: ../src/orca/orca.py:1775 ../src/orca/scripts/toolkits/Gecko/script.py:6094
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Saltando al final."
@@ -3765,7 +3759,7 @@ msgstr "Saltando al final."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1796 ../src/orca/scripts/toolkits/Gecko/script.py:6161
+#: ../src/orca/orca.py:1796 ../src/orca/scripts/toolkits/Gecko/script.py:6162
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Saltando al principio."
@@ -3857,16 +3851,19 @@ msgid "_Profile Name:"
 msgstr "Nombre del _perfil:"
 
 #: ../src/orca/orca-quit.ui.h:1
+#| msgid ""
+#| "<b><big>Quit Orca?</big></b>\n"
+#| "\n"
+#| "This will stop all speech output and screen magnification.\n"
+#| "\n"
 msgid ""
 "<b><big>Quit Orca?</big></b>\n"
 "\n"
-"This will stop all speech output and screen magnification.\n"
-"\n"
+"This will stop all speech and braille output."
 msgstr ""
 "<b><big>¿Salir de Orca?</big></b>\n"
 "\n"
-"Esto finalizará toda salida de voz y la magnificación de la pantalla.\n"
-"\n"
+"Esto finalizará toda la salida de voz y de Braille."
 
 #: ../src/orca/orca-setup.ui.h:2
 #, no-c-format
@@ -5089,7 +5086,7 @@ msgstr "Enlace"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2420
+#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2422
 #: ../src/orca/scripts/apps/soffice/script.py:1150
 #: ../src/orca/scripts/default.py:2032 ../src/orca/speech_generator.py:972
 msgid "link"
@@ -5892,7 +5889,7 @@ msgstr "componente empotrado"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2344
+#: ../src/orca/script_utilities.py:2346
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -5904,7 +5901,7 @@ msgstr[1] "%(count)d caracteres %(repeatChar)s"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2534
+#: ../src/orca/script_utilities.py:2536
 #, python-format
 msgid " superscript %s"
 msgstr "%s superíndice"
@@ -5914,7 +5911,7 @@ msgstr "%s superíndice"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2544
+#: ../src/orca/script_utilities.py:2546
 #, python-format
 msgid " subscript %s"
 msgstr " %s subíndice"
@@ -6142,7 +6139,7 @@ msgstr "Botón de directorios"
 #: ../src/orca/scripts/default.py:2260 ../src/orca/scripts/default.py:2268
 #: ../src/orca/scripts/default.py:2404 ../src/orca/scripts/default.py:4495
 #: ../src/orca/scripts/default.py:4505
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5369
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5370
 #: ../src/orca/settings.py:1188 ../src/orca/speech_generator.py:683
 #: ../src/orca/speech_generator.py:1036
 #: ../src/orca/structural_navigation.py:3602
@@ -8465,7 +8462,7 @@ msgstr "Fin de la carga de %s."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2260
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2261
 #: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:60
 #, python-format
 msgid "h%d"
@@ -8477,22 +8474,22 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5536
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5537
 msgid "Mouse over object not found."
 msgstr "Objeto bajo el ratón («mouse over») no encontrado."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6020
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6021
 msgid "open"
 msgstr "abrir"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6187
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6211
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6221
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6188
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6212
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6222
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "El soporte de regiones activas está desactivado"
@@ -8500,11 +8497,11 @@ msgstr "El soporte de regiones activas está desactivado"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6195
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6196
 msgid "Live regions monitoring on"
 msgstr "Monitorización de regiones activas activada"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6202
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6203
 msgid "Live regions monitoring off"
 msgstr "Monitorización de regiones activas desactivada"
 
@@ -8515,7 +8512,7 @@ msgstr "Monitorización de regiones activas desactivada"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6237
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6238
 msgid "Gecko is controlling the caret."
 msgstr "Gecko está controlando el cursor."
 
@@ -8526,7 +8523,7 @@ msgstr "Gecko está controlando el cursor."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6249
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6250
 msgid "Orca is controlling the caret."
 msgstr "Orca está controlando el cursor."
 
