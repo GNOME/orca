@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-04-26 19:00+0000\n"
-"PO-Revision-Date: 2011-04-28 21:12+0100\n"
+"POT-Creation-Date: 2011-06-19 09:26+0000\n"
+"PO-Revision-Date: 2011-06-20 12:33+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-Country: SLOVENIA\n"
 "X-Poedit-Language: Slovenian\n"
@@ -462,8 +462,8 @@ msgstr "Sporočilo klepetalnice %s"
 #.
 #: ../src/orca/chnames.py:39
 #: ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2720
-#: ../src/orca/script_utilities.py:2727
+#: ../src/orca/script_utilities.py:2736
+#: ../src/orca/script_utilities.py:2743
 msgid "space"
 msgstr "presledek"
 
@@ -1832,10 +1832,10 @@ msgstr[3] "%d odstotki."
 #. string used in the *.po file for gail.
 #.
 #: ../src/orca/flat_review.py:1078
-#: ../src/orca/generator.py:439
-#: ../src/orca/generator.py:696
-#: ../src/orca/generator.py:738
-#: ../src/orca/generator.py:784
+#: ../src/orca/generator.py:444
+#: ../src/orca/generator.py:701
+#: ../src/orca/generator.py:743
+#: ../src/orca/generator.py:789
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:643
@@ -3837,7 +3837,7 @@ msgstr "Ni mogoče najti veljavne bližnjice za %s."
 #. inform the user when this is taking place.
 #.
 #: ../src/orca/orca.py:1775
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6093
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6094
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Prelom na dnu."
@@ -3861,7 +3861,7 @@ msgstr "Prelom na dnu."
 #. user when this is taking place.
 #.
 #: ../src/orca/orca.py:1796
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6161
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6162
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Prelom na vrhu."
@@ -3950,16 +3950,19 @@ msgid "_Profile Name:"
 msgstr "_Ime profila:"
 
 #: ../src/orca/orca-quit.ui.h:1
+#| msgid ""
+#| "<b><big>Quit Orca?</big></b>\n"
+#| "\n"
+#| "This will stop all speech output and screen magnification.\n"
+#| "\n"
 msgid ""
 "<b><big>Quit Orca?</big></b>\n"
 "\n"
-"This will stop all speech output and screen magnification.\n"
-"\n"
+"This will stop all speech and braille output."
 msgstr ""
 "<b><big>Ali naj se program Orka konča?</big></b>\n"
 "\n"
-"S tem dejanjem se bodo zaustavile vse izgovorjave in povečave na zaslonu.\n"
-"\n"
+"S tem dejanjem bo zaustavljen odvod govora in braillove pisave."
 
 #: ../src/orca/orca-setup.ui.h:2
 #, no-c-format
@@ -5184,7 +5187,7 @@ msgstr "Povezava"
 #. text is a hypertext link.
 #.
 #: ../src/orca/rolenames.py:600
-#: ../src/orca/script_utilities.py:2420
+#: ../src/orca/script_utilities.py:2422
 #: ../src/orca/scripts/apps/soffice/script.py:1150
 #: ../src/orca/scripts/default.py:2032
 #: ../src/orca/speech_generator.py:972
@@ -5991,7 +5994,7 @@ msgstr "vgrajena enote"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2344
+#: ../src/orca/script_utilities.py:2346
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -6005,7 +6008,7 @@ msgstr[3] "%(repeatChar)s %(count)d ponovitve"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2534
+#: ../src/orca/script_utilities.py:2536
 #, python-format
 msgid " superscript %s"
 msgstr " nadpisano %s"
@@ -6015,7 +6018,7 @@ msgstr " nadpisano %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2544
+#: ../src/orca/script_utilities.py:2546
 #, python-format
 msgid " subscript %s"
 msgstr " podpisano %s"
@@ -6249,7 +6252,7 @@ msgstr "Gumb map"
 #: ../src/orca/scripts/default.py:2404
 #: ../src/orca/scripts/default.py:4495
 #: ../src/orca/scripts/default.py:4505
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5369
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5370
 #: ../src/orca/settings.py:1188
 #: ../src/orca/speech_generator.py:683
 #: ../src/orca/speech_generator.py:1036
@@ -8558,7 +8561,7 @@ msgstr "Končano nalaganje %s."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2260
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2261
 #: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:60
 #, python-format
 msgid "h%d"
@@ -8570,22 +8573,22 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5536
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5537
 msgid "Mouse over object not found."
 msgstr "Pojavnega predmeta miške ni mogoče najti."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6020
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6021
 msgid "open"
 msgstr "odpri"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6187
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6211
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6221
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6188
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6212
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6222
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Podpora samodejno posodobljenim predelom"
@@ -8593,11 +8596,11 @@ msgstr "Podpora samodejno posodobljenim predelom"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6195
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6196
 msgid "Live regions monitoring on"
 msgstr "Nadzor samodejno posodobljenih predelov je vključen."
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6202
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6203
 msgid "Live regions monitoring off"
 msgstr "Nadzor samodejno posodobljenih predelov je izključen."
 
@@ -8608,7 +8611,7 @@ msgstr "Nadzor samodejno posodobljenih predelov je izključen."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6237
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6238
 msgid "Gecko is controlling the caret."
 msgstr "Gecko nadzira kazalnik."
 
@@ -8619,7 +8622,7 @@ msgstr "Gecko nadzira kazalnik."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6249
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6250
 msgid "Orca is controlling the caret."
 msgstr "Orka nadzira kazalnik."
 
@@ -10823,6 +10826,7 @@ msgstr "Za zmanjšanje pritisnite levo puščico, za povečanje pa desno. Za naj
 
 #~ msgid "Open TTS"
 #~ msgstr "Open TTS"
+
 #~ msgid ""
 #~ "WARNING: suspending Orca, e.g. by pressing Control-Z, from\n"
 #~ "an AT-SPI enabled shell (such as gnome-terminal), can also\n"
@@ -10831,47 +10835,66 @@ msgstr "Za zmanjšanje pritisnite levo puščico, za povečanje pa desno. Za naj
 #~ "OPOZORILO: zaustavitev programa Orka s tipko CTRL+Z preko\n"
 #~ "terminalskega okna, lahko povzroči zaustavitev celotnega namizja\n"
 #~ "dokler dokončno ne ustavite programa Orka."
+
 #~ msgid "[\\S\\s]*StarOffice[\\s\\S]*"
 #~ msgstr "[\\S\\s]*StarOffice[\\s\\S]*"
+
 #~ msgid "soffice.bin"
 #~ msgstr "soffice.bin"
+
 #~ msgid "soffice"
 #~ msgstr "soffice"
+
 #~ msgid "[Ee]volution"
 #~ msgstr "[Ee]volution"
+
 #~ msgid "Deer Park"
 #~ msgstr "Deer Park"
+
 #~ msgid "Bon Echo"
 #~ msgstr "Bon Echo"
+
 #~ msgid "Minefield"
 #~ msgstr "Minsko polje"
+
 #~ msgid "Mail/News"
 #~ msgstr "Pošta/Novice"
+
 #~ msgid "bug-buddy"
 #~ msgstr "bug-buddy"
+
 #~ msgid "vte"
 #~ msgstr "vte"
+
 #~ msgid "gaim"
 #~ msgstr "gaim"
+
 #~ msgid ""
 #~ "Enable notification message list mode. Press Escape to exit or h for help"
 #~ msgstr ""
 #~ "Omogoči način seznama obvestil. Za izhod pritisnite tipko Esc, za pomoč "
 #~ "pa črko h."
+
 #~ msgid "<b>Border</b>"
 #~ msgstr "<b>Obroba</b>"
+
 #~ msgid "<b>Color</b>"
 #~ msgstr "<b>Barva</b>"
+
 #~ msgid "<b>Cross-hair</b>"
 #~ msgstr "<b>Merek</b>"
+
 #~ msgid "<b>Cursor</b>"
 #~ msgstr "<b>Kazalka</b>"
+
 #~ msgid "<b>Zoomer</b>"
 #~ msgstr "<b>Približevalnik</b>"
+
 #~ msgid "Advanced..."
 #~ msgstr "Napredno ..."
+
 #~ msgid "All"
 #~ msgstr "Vse"
+
 #~ msgid "Frequency (secs):"
 #~ msgstr "Frekvenca (sek):"
-
