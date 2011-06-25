@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-03 15:19+0200\n"
+"POT-Creation-Date: 2011-06-25 14:51+0200\n"
 "PO-Revision-Date: 2011-04-03 09:01+0200\n"
 "Last-Translator: Wolfgang Stoeggl <c72578@yahoo.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -471,7 +471,7 @@ msgstr "Nachricht aus Chatraum %s."
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2720 ../src/orca/script_utilities.py:2727
+#: ../src/orca/script_utilities.py:2722 ../src/orca/script_utilities.py:2729
 msgid "space"
 msgstr "Leerzeichen"
 
@@ -1823,9 +1823,9 @@ msgstr[1] "%d Prozent."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:439
-#: ../src/orca/generator.py:696 ../src/orca/generator.py:738
-#: ../src/orca/generator.py:784
+#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:444
+#: ../src/orca/generator.py:701 ../src/orca/generator.py:743
+#: ../src/orca/generator.py:789
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:643
@@ -3027,7 +3027,7 @@ msgstr "Proportional"
 #: ../src/orca/orca_gui_prefs.py:128 ../src/orca/orca_gui_prefs.py:2112
 #: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca-setup.ui.h:119
 msgid "Push"
-msgstr "Drücken"
+msgstr "Schieben"
 
 #. DESCRIP
 #.
@@ -3473,7 +3473,7 @@ msgstr "Orca-Bildschirmleser/-lupe"
 #. After the message, the list of arguments, as typed by the
 #. user, is displayed.
 #.
-#: ../src/orca/orca.py:290
+#: ../src/orca/orca.py:306
 msgid "The following arguments are not valid: "
 msgstr "Die folgenden Argumente sind nicht zulässig: "
 
@@ -3484,18 +3484,18 @@ msgstr "Die folgenden Argumente sind nicht zulässig: "
 #. and splash-window. These items are not localized and are
 #. presented in a list after this message.
 #.
-#: ../src/orca/orca.py:345
+#: ../src/orca/orca.py:361
 msgid "The following items can be enabled or disabled:"
 msgstr "Die folgenden Funktionen können aktiviert oder deaktiviert werden:"
 
-#: ../src/orca/orca.py:360
+#: ../src/orca/orca.py:376
 msgid "Usage: orca [OPTION...]"
 msgstr "Verwendung: orca [OPTION...]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:366
+#: ../src/orca/orca.py:382
 msgid "Show this help message"
 msgstr "Diesen Hilfetext anzeigen"
 
@@ -3503,7 +3503,7 @@ msgstr "Diesen Hilfetext anzeigen"
 #. the names of applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:374
+#: ../src/orca/orca.py:390
 msgid "Print the known running applications"
 msgstr "Bekannte Programme ausgeben"
 
@@ -3515,7 +3515,7 @@ msgstr "Bekannte Programme ausgeben"
 #. always start with 'debug' and end with '.out', regardless of the
 #. locale.).
 #.
-#: ../src/orca/orca.py:385
+#: ../src/orca/orca.py:401
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr "Fehlerdiagnose speichern unter debug-JJJJ-MM-TT-HH:MM:SS.out"
 
@@ -3523,7 +3523,7 @@ msgstr "Fehlerdiagnose speichern unter debug-JJJJ-MM-TT-HH:MM:SS.out"
 #. the name of the debug file Orca will use for debug output if the
 #. --debug option is used.
 #.
-#: ../src/orca/orca.py:392
+#: ../src/orca/orca.py:408
 msgid "Send debug output to the specified file"
 msgstr "Informationen zur Fehlerdiagnose in der angegebenen Datei speichern"
 
@@ -3531,7 +3531,7 @@ msgstr "Informationen zur Fehlerdiagnose in der angegebenen Datei speichern"
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
 #. that would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:399
+#: ../src/orca/orca.py:415
 msgid "Set up user preferences"
 msgstr "Benutzereinstellungen einrichten"
 
@@ -3541,7 +3541,7 @@ msgstr "Benutzereinstellungen einrichten"
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
 #.
-#: ../src/orca/orca.py:408
+#: ../src/orca/orca.py:424
 msgid "Set up user preferences (text version)"
 msgstr "Benutzereinstellungen einrichten (Textversion)"
 
@@ -3549,7 +3549,7 @@ msgstr "Benutzereinstellungen einrichten (Textversion)"
 #. '-n, --no-setup' that means that Orca will startup without setting
 #. up any user preferences.
 #.
-#: ../src/orca/orca.py:415
+#: ../src/orca/orca.py:431
 msgid "Skip set up of user preferences"
 msgstr "Das Einrichten der Benutzereinstellungen überspringen"
 
@@ -3557,7 +3557,7 @@ msgstr "Das Einrichten der Benutzereinstellungen überspringen"
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for the user preferences.
 #.
-#: ../src/orca/orca.py:422
+#: ../src/orca/orca.py:438
 msgid "Use alternate directory for user preferences"
 msgstr "Anderes Verzeichnis für die Benutzereinstellungen verwenden"
 
@@ -3565,7 +3565,7 @@ msgstr "Anderes Verzeichnis für die Benutzereinstellungen verwenden"
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:436
+#: ../src/orca/orca.py:452
 msgid "Force use of option"
 msgstr "Verwendung der Option erzwingen"
 
@@ -3573,14 +3573,14 @@ msgstr "Verwendung der Option erzwingen"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:450
+#: ../src/orca/orca.py:466
 msgid "Prevent use of option"
 msgstr "Verwendung der Option verhindern"
 
 #. Translators: this is the Orca command line option to import to Orca
 #. a user profile from a given file
 #.
-#: ../src/orca/orca.py:456
+#: ../src/orca/orca.py:472
 msgid "Import a profile from a given orca profile file"
 msgstr "Ein Profil aus einem angegebenen Orca-Profil importieren"
 
@@ -3589,7 +3589,7 @@ msgstr "Ein Profil aus einem angegebenen Orca-Profil importieren"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:464
+#: ../src/orca/orca.py:480
 msgid "Quits Orca (if shell script used)"
 msgstr "Orca beenden (bei der Verwendung von Shell-Skripten)"
 
@@ -3599,21 +3599,21 @@ msgstr "Orca beenden (bei der Verwendung von Shell-Skripten)"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:473
+#: ../src/orca/orca.py:489
 msgid "Forces orca to be terminated immediately."
 msgstr "Erzwingt das unmittelbare Beenden von Orca."
 
 #. Translators: this is the Orca command line option to tell Orca to
 #. replace any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:479
+#: ../src/orca/orca.py:495
 msgid "Replace a currently running Orca"
 msgstr "Ein gegenwärtig laufendes Orca ersetzen"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:485
+#: ../src/orca/orca.py:501
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3623,13 +3623,13 @@ msgstr ""
 "wird es automatisch den Einstellungsdialog starten, außer\n"
 "die Option -n bzw. --no-setup wird verwendet."
 
-#: ../src/orca/orca.py:497
+#: ../src/orca/orca.py:513
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Programmfehler an orca-list@gnome.org melden."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:675 ../src/orca/orca.py:2072
+#: ../src/orca/orca.py:691 ../src/orca/orca.py:2090
 msgid "Goodbye."
 msgstr "Auf Wiedersehen."
 
@@ -3642,7 +3642,7 @@ msgstr "Auf Wiedersehen."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:749
+#: ../src/orca/orca.py:765
 msgid "Exiting learn mode."
 msgstr "Lernmodus wird verlassen."
 
@@ -3654,7 +3654,7 @@ msgstr "Lernmodus wird verlassen."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/orca.py:773
+#: ../src/orca/orca.py:789
 msgid "Exiting list shortcuts mode."
 msgstr "Modus der Tastenkombinationen wird verlassen."
 
@@ -3663,7 +3663,7 @@ msgstr "Modus der Tastenkombinationen wird verlassen."
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1029
+#: ../src/orca/orca.py:1045
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
 #: ../src/orca/speech.py:287 ../src/orca/speechserver.py:219
 msgid "off"
@@ -3674,7 +3674,7 @@ msgstr "aus"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1033
+#: ../src/orca/orca.py:1049
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
 #: ../src/orca/speech.py:282 ../src/orca/speechserver.py:214
 msgid "on"
@@ -3683,14 +3683,14 @@ msgstr "an"
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:1391
+#: ../src/orca/orca.py:1407
 msgid "Speech enabled."
 msgstr "Sprachausgabe aktiviert."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:1396
+#: ../src/orca/orca.py:1412
 msgid "Speech disabled."
 msgstr "Sprachausgabe deaktiviert."
 
@@ -3698,7 +3698,7 @@ msgstr "Sprachausgabe deaktiviert."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1525
+#: ../src/orca/orca.py:1541
 msgid "Orca user settings reloaded."
 msgstr "Die Orca-Benutzereinstellungen wurden neu geladen."
 
@@ -3706,7 +3706,7 @@ msgstr "Die Orca-Benutzereinstellungen wurden neu geladen."
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:1703
+#: ../src/orca/orca.py:1719
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Verwenden Sie Pfeil hoch und runter um in der Liste zu navigieren. Drücken "
@@ -3716,7 +3716,7 @@ msgstr ""
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:1717
+#: ../src/orca/orca.py:1733
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3727,7 +3727,7 @@ msgstr[1] "%d Orca-Tastenkombinationen gefunden."
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:1739
+#: ../src/orca/orca.py:1755
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3739,7 +3739,7 @@ msgstr[1] "%(count)d  Orca-Tastenkombinationen für %(application)s gefunden."
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1757
+#: ../src/orca/orca.py:1773
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "Keine Orca-Tastenkombinationen für %s gefunden."
@@ -3762,7 +3762,7 @@ msgstr "Keine Orca-Tastenkombinationen für %s gefunden."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1775 ../src/orca/scripts/toolkits/Gecko/script.py:6093
+#: ../src/orca/orca.py:1791 ../src/orca/scripts/toolkits/Gecko/script.py:6094
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Nach unten springen"
@@ -3785,7 +3785,7 @@ msgstr "Nach unten springen"
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1796 ../src/orca/scripts/toolkits/Gecko/script.py:6161
+#: ../src/orca/orca.py:1812 ../src/orca/scripts/toolkits/Gecko/script.py:6162
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Nach oben springen"
@@ -3798,7 +3798,7 @@ msgstr "Nach oben springen"
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1815 ../src/orca/scripts/default.py:1630
+#: ../src/orca/orca.py:1831 ../src/orca/scripts/default.py:1630
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
@@ -3807,7 +3807,7 @@ msgstr ""
 "für die Liste der Orca-Tastenkombinationen für die aktuelle Anwendung. "
 "Drücken Sie Escape zum Verlassen."
 
-#: ../src/orca/orca.py:1865
+#: ../src/orca/orca.py:1881
 msgid "keypad "
 msgstr "Tastatur"
 
@@ -3815,7 +3815,7 @@ msgstr "Tastatur"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1872
+#: ../src/orca/orca.py:1888
 msgid "double click"
 msgstr "Doppelklick"
 
@@ -3823,7 +3823,7 @@ msgstr "Doppelklick"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1878
+#: ../src/orca/orca.py:1894
 msgid "triple click"
 msgstr "Dreifachklick"
 
@@ -3831,14 +3831,14 @@ msgstr "Dreifachklick"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2205
+#: ../src/orca/orca.py:2223
 msgid "Unable to import profile."
 msgstr "Das Profil kann nicht importiert werden."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2211
+#: ../src/orca/orca.py:2229
 msgid "Profile import success."
 msgstr "Profilimport war erfolgreich."
 
@@ -3846,12 +3846,12 @@ msgstr "Profilimport war erfolgreich."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2217
+#: ../src/orca/orca.py:2235
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "Import schlug wegen eines unbekannten Schlüssels fehl: %s"
 
-#: ../src/orca/orca.py:2286
+#: ../src/orca/orca.py:2304
 msgid "Welcome to Orca."
 msgstr "Willkommen bei Orca."
 
@@ -5111,7 +5111,7 @@ msgstr "Link"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2420
+#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2422
 #: ../src/orca/scripts/apps/soffice/script.py:1150
 #: ../src/orca/scripts/default.py:2032 ../src/orca/speech_generator.py:972
 msgid "link"
@@ -5914,7 +5914,7 @@ msgstr "eingebettete Komponente"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2344
+#: ../src/orca/script_utilities.py:2346
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -5926,7 +5926,7 @@ msgstr[1] "%(count)d mal das Zeichen %(repeatChar)s"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2534
+#: ../src/orca/script_utilities.py:2536
 #, python-format
 msgid " superscript %s"
 msgstr " hochgestellt %s"
@@ -5936,7 +5936,7 @@ msgstr " hochgestellt %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2544
+#: ../src/orca/script_utilities.py:2546
 #, python-format
 msgid " subscript %s"
 msgstr " tiefgestellt %s"
@@ -6165,7 +6165,7 @@ msgstr "Verzeichnis-Knopf"
 #: ../src/orca/scripts/default.py:2260 ../src/orca/scripts/default.py:2268
 #: ../src/orca/scripts/default.py:2404 ../src/orca/scripts/default.py:4495
 #: ../src/orca/scripts/default.py:4505
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5369
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5370
 #: ../src/orca/settings.py:1188 ../src/orca/speech_generator.py:683
 #: ../src/orca/speech_generator.py:1036
 #: ../src/orca/structural_navigation.py:3602
@@ -8488,7 +8488,7 @@ msgstr "Laden von %s abgeschlossen."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2260
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2261
 #: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:60
 #, python-format
 msgid "h%d"
@@ -8500,22 +8500,22 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5536
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5537
 msgid "Mouse over object not found."
 msgstr "Kein Mouse-Over Objekt gefunden."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6020
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6021
 msgid "open"
 msgstr "öffnen"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6187
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6211
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6221
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6188
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6212
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6222
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Unterstützung für dynamische Bereiche ist ausgeschaltet"
@@ -8523,11 +8523,11 @@ msgstr "Unterstützung für dynamische Bereiche ist ausgeschaltet"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6195
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6196
 msgid "Live regions monitoring on"
 msgstr "Überwachung der dynamischen Bereiche ist eingeschaltet"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6202
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6203
 msgid "Live regions monitoring off"
 msgstr "Überwachung der dynamischen Bereiche ist ausgeschaltet"
 
@@ -8538,7 +8538,7 @@ msgstr "Überwachung der dynamischen Bereiche ist ausgeschaltet"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6237
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6238
 msgid "Gecko is controlling the caret."
 msgstr "Navigationssteuerung erfolgt durch Gecko."
 
@@ -8549,7 +8549,7 @@ msgstr "Navigationssteuerung erfolgt durch Gecko."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6249
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6250
 msgid "Orca is controlling the caret."
 msgstr "Navigationssteuerung erfolgt durch Orca."
 
