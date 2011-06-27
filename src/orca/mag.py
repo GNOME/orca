@@ -30,9 +30,6 @@ __license__   = "LGPL"
 # unavailable. And in a GNOME 3 environment, there are no other
 # magnification solutions. Hence the lack of functionality. ;-)
 
-def applySettings():
-    pass
-
 def magnifyAccessible(event, obj, extents=None):
     pass
 
@@ -42,57 +39,7 @@ def init():
 def shutdown():
     return False
 
-def setupMagnifier(position, left=None, top=None, right=None, bottom=None,
-                   restore=None):
-    pass
 
-def setMagnifierCursor(enabled, customEnabled, size, updateScreen=True):
-    pass
-
-def setMagnifierCrossHair(enabled, updateScreen=True):
-    pass
-
-def setMagnifierCrossHairClip(enabled, updateScreen=True):
-    pass
-
-def setZoomerColorInversion(enabled, updateScreen=True):
-    pass
-
-def setZoomerBrightness(red=0, green=0, blue=0, updateScreen=True):
-    pass
-
-def setZoomerContrast(red=0, green=0, blue=0, updateScreen=True):
-    pass
-
-def setMagnifierObjectSize(magProperty, size, updateScreen=True):
-    pass
-
-def setZoomerObjectSize(magProperty, size, updateScreen=True):
-    pass
-
-def setZoomerObjectColor(magProperty, colorSetting, updateScreen=True):
-    pass
-
-def setMagnifierObjectColor(magProperty, colorSetting, updateScreen=True):
-    pass
-
-def setZoomerMagFactor(x, y, updateScreen=True):
-    pass
-
-def setZoomerSmoothingType(smoothingType, updateScreen=True):
-    pass
-
-def setZoomerColorFilter(colorFilter, updateScreen=True):
-    pass
-
-def hideSystemPointer(hidePointer):
-    pass
-
-def isFullScreenCapable():
-    return False
-
-def isFilteringCapable():
-    return False
 
 
 

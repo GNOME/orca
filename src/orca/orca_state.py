@@ -125,14 +125,3 @@ orcaWD = None
 #
 prefsGladeFile = None
 
-# Whether magnification "color enhancements" are currently enabled.
-#
-colorEnhancementsEnabled = True
-
-# Whether magnification "mouse enhancements" are currently enabled.
-#
-mouseEnhancementsEnabled = True
-
-# The current zoomer type.
-#
-zoomerType = None

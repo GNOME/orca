@@ -544,18 +544,14 @@ def getVoiceKey(voice):
 def getValueForKey(prefsDict, key):
     need2repr = ['brailleEOLIndicator', 'brailleContractionTable',
                  'brailleRequiredStateString', 'enabledBrailledTextAttributes',
-                 'enabledSpokenTextAttributes', 'magZoomerBorderColor',
-                 'magCursorColor', 'magCrossHairColor', 'magTargetDisplay',
-                 'magSourceDisplay', 'speechRequiredStateString',
+                 'enabledSpokenTextAttributes', 'speechRequiredStateString',
                  'speechServerFactory', 'presentDateFormat',
                  'presentTimeFormat']
 
     value = None
     if key in prefsDict:
         if type(prefsDict[key]) is str:
-            if key == 'magZoomerLeft':
-                value = eval('settings.%s' % prefsDict[key])
-            elif key in need2repr:
+            if key in need2repr:
                 value = "\'%s\'" % prefsDict[key]
             elif key  == 'voices':
                 key = getVoiceKey(key)
