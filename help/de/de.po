@@ -6,7 +6,9 @@
 # so wesentlich besser für die Sprachausgabe.
 #
 # alignment        - Ausrichtung
+# anchor          - 
 # flat review        - Übersicht
+# landmark      -
 # link               - Link (nur in Orca, sonst »Verweis«)
 # mouse review  - Maus-Sprachauswertung
 # present            - vorlesen (ausgeben?)
@@ -19,7 +21,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca help master\n"
-"POT-Creation-Date: 2011-02-27 13:50+0000\n"
+"POT-Creation-Date: 2011-06-26 00:56+0000\n"
 "PO-Revision-Date: 2011-02-27 13:49+0100\n"
 "Last-Translator: Christian Kirbach <Christian.Kirbach@googlemail.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
@@ -76,7 +78,7 @@ msgstr "Festlegen, welche Formatierungen vorgelesen werden"
 #: C/preferences_introduction.page:8(name) C/preferences_general.page:11(name)
 #: C/preferences_gecko.page:12(name) C/preferences_chat.page:10(name)
 #: C/preferences_braille.page:11(name) C/introduction.page:10(name)
-#: C/index.page:5(name) C/howto_whereami.page:10(name)
+#: C/index.page:6(name) C/howto_whereami.page:10(name)
 #: C/howto_toggling_caps_lock.page:8(name)
 #: C/howto_the_orca_modifier.page:11(name) C/howto_text_setup.page:8(name)
 #: C/howto_text_attributes.page:10(name) C/howto_tables.page:10(name)
@@ -111,7 +113,7 @@ msgstr "Joanmarie Diggs"
 #: C/preferences_introduction.page:9(email)
 #: C/preferences_general.page:12(email) C/preferences_gecko.page:13(email)
 #: C/preferences_chat.page:11(email) C/preferences_braille.page:12(email)
-#: C/introduction.page:11(email) C/index.page:6(email)
+#: C/introduction.page:11(email) C/index.page:7(email)
 #: C/howto_whereami.page:11(email) C/howto_toggling_caps_lock.page:9(email)
 #: C/howto_the_orca_modifier.page:12(email) C/howto_text_setup.page:9(email)
 #: C/howto_text_attributes.page:11(email) C/howto_tables.page:11(email)
@@ -143,7 +145,7 @@ msgstr "joanied@gnome.org"
 #: C/preferences_key_bindings.page:16(p) C/preferences_introduction.page:12(p)
 #: C/preferences_general.page:15(p) C/preferences_gecko.page:16(p)
 #: C/preferences_chat.page:14(p) C/preferences_braille.page:15(p)
-#: C/introduction.page:14(p) C/index.page:9(p) C/howto_whereami.page:14(p)
+#: C/introduction.page:14(p) C/index.page:10(p) C/howto_whereami.page:14(p)
 #: C/howto_toggling_caps_lock.page:12(p) C/howto_the_orca_modifier.page:15(p)
 #: C/howto_text_setup.page:12(p) C/howto_text_attributes.page:14(p)
 #: C/howto_tables.page:14(p) C/howto_structural_navigation.page:16(p)
@@ -179,12 +181,12 @@ msgid ""
 "along with the order in which they should be presented, and which ones "
 "<app>Orca</app> will indicate in braille."
 msgstr ""
-"Der Begriff »Textattribute« bezieht sich auf alle Formatierungen von Schrift, "
-"Stil, Anordnung und anderen im Bezug auf einen Buchstaben oder eine Gruppe "
-"von Buchstaben. Die Seite <gui>Textattribute</gui> von <app>Orca</app> "
-"ermöglicht es einzustellen, welche Textattribute <app>Orca</app> vorlesen "
-"soll, in welcher Reihenfolge vorgelesen werden soll, und welche <app>Orca</"
-"app> als Braille ausgeben soll."
+"Der Begriff »Textattribute« bezieht sich auf alle Formatierungen von "
+"Schrift, Stil, Anordnung und anderen im Bezug auf einen Buchstaben oder eine "
+"Gruppe von Buchstaben. Die Seite <gui>Textattribute</gui> von <app>Orca</"
+"app> ermöglicht es einzustellen, welche Textattribute <app>Orca</app> "
+"vorlesen soll, in welcher Reihenfolge vorgelesen werden soll, und welche "
+"<app>Orca</app> als Braille ausgeben soll."
 
 #: C/preferences_text_attributes.page:30(title)
 msgid "The text attributes table"
@@ -231,15 +233,6 @@ msgstr ""
 "anzugeben, wann ein aktiviertes Attribut zu ignorieren ist."
 
 #: C/preferences_text_attributes.page:62(p)
-#, fuzzy
-#| msgid ""
-#| "For example, by default the \"underline\" text attribute has a value of "
-#| "\"none.\" This causes <app>Orca</app> to inform you about underlined text "
-#| "as long as the text is actually underlined. If you always want this "
-#| "attribute to be spoken irrespective of whether or not the text is "
-#| "underlined, the <gui>Present unless</gui> column should be empty for "
-#| "underline. In addition, you should be sure that the <gui>Speak</gui> "
-#| "column for underline is checked."
 msgid ""
 "For example, by default the \"underline\" text attribute has a value of "
 "\"none\". This causes <app>Orca</app> to inform you about underlined text as "
@@ -250,10 +243,10 @@ msgid ""
 msgstr ""
 "Zum Beispiel hat das Textattribut »Unterstreichen» die Voreinstellung "
 "»keiner«. Demnach informiert <app>Orca</app> über unterstrichenen Text, wenn "
-"dieser tatsächlich unterstrichen ist. Wenn das Attribut vorgelesen werden "
-"soll unabhängig davon, ob der Text unterstrichen ist, so muss die Spalte "
-"<gui>Darstellen außer</gui> abgewählt sein für »Unterstreichen«. Zusätzlich "
-"sollten Sie sicher sein, dass die Spalte <gui>Vorlesen</gui> für "
+"dieser tatsächlich unterstrichen ist. Wenn das Attribut stets vorgelesen "
+"werden soll, unabhängig davon, ob der Text unterstrichen ist, so muss die "
+"Spalte <gui>Darstellen außer</gui> für »Unterstreichen« abgewählt sein. "
+"Zusätzlich sollten Sie sicher sein, dass die Spalte <gui>Vorlesen</gui> für "
 "»Unterstreichen« ausgewählt ist."
 
 #: C/preferences_text_attributes.page:75(title)
@@ -266,6 +259,10 @@ msgid ""
 "(<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the values "
 "of the table to what they were when the dialog was first displayed."
 msgstr ""
+"Unter der Liste der Textattribute gibt es einen Zurücksetzen-Knopf "
+"(<keyseq><key>Alt</key><key>R</key></keyseq>), welcher die Werte in der "
+"Tabelle auf die ursprünglichen zurücksetzt, als der Dialog zuerst angezeigt "
+"wurde."
 
 #: C/preferences_text_attributes.page:84(title)
 msgid "Rearranging the order of presentation"
@@ -273,7 +270,7 @@ msgstr "So passen Sie die Darstellungsreihenfolge an"
 
 #: C/preferences_text_attributes.page:86(title)
 msgid "Options for Controlling the Order in Which Attributes Are Presented"
-msgstr ""
+msgstr "Einstellungen zum Anpassen der Darstellungsreihenfolge"
 
 #: C/preferences_text_attributes.page:87(desc)
 msgid ""
@@ -282,6 +279,10 @@ msgid ""
 "will be spoken. There are four buttons which can be used to rearrange the "
 "order of presentation."
 msgstr ""
+"Wenn Sie anfangs die Seite mit den Textattributen anzeigen, werden alle Ihre "
+"aktivierten Attribute oben in der Tabelle in der Reihenfolge dargestellt, "
+"wie sie vorgelesen werden. Mit vier Knöpfen kann die Reihenfolge der "
+"Präsentation angepasst werden."
 
 #: C/preferences_text_attributes.page:97(p)
 msgid ""
@@ -325,11 +326,16 @@ msgstr ""
 "Optionen zur Konfiguration der Unterstreichung von Formatierungen im Braille"
 
 #: C/preferences_text_attributes.page:126(desc)
+#, fuzzy
 msgid ""
 "Beneath the push buttons is the <gui>Braille Indicator</gui> group of radio "
 "buttons. Here you can select the cell or cells to be used to indicate text "
 "which has at least one of the specified attributes."
 msgstr ""
+"Unterhalb des ?-Knopfs befindet sich die Gruppe der Auswahlknöpfe für die "
+"<gui>Braille-Anzeige</gui>. Hier können Sie die Zelle oder Zellen angeben, "
+"die zur Anzeige von Text verwendet werden sollen, der mindestens eines der "
+"angegebenen Attribute besitzt."
 
 #: C/preferences_text_attributes.page:135(p)
 msgid ""
@@ -581,8 +587,9 @@ msgid ""
 msgstr ""
 
 #: C/preferences_speech.page:30(title)
+#, fuzzy
 msgid "Text-To-Speech Options"
-msgstr ""
+msgstr "Wählen Sie <i>Erweiterte Optionen</i>."
 
 #: C/preferences_speech.page:33(title)
 msgid "Speech system"
@@ -852,6 +859,12 @@ msgid ""
 "speech into chunks between pauses</gui> checkbox will cause <app>Orca</app> "
 "to insert brief pauses in between each of these pieces of information."
 msgstr ""
+"Abhängig von den eingeschalteten Spracheigenschaften kann <application>Orca</"
+"application> einiges zu einem bestimmten Objekt sagen, wie etwa seinen "
+"Namen, seine Rolle, seinen Zustand, seine Tastaturkürzel, seine informative "
+"Botschaft und so weiter. Das Ankreuzfeld <guilabel>Sprechpausen zum "
+"Zerteilen nutzen</guilabel> veranlasst <application>Orca</application>, "
+"kurze Pausen zwischen diese Informationshäppchen einzufügen."
 
 #: C/preferences_speech.page:250(title)
 msgid "Say All By"
@@ -922,7 +935,7 @@ msgstr ""
 
 #: C/preferences_speech.page:301(title)
 msgid "Speak child position"
-msgstr ""
+msgstr "Position des Unterelements vorlesen"
 
 #: C/preferences_speech.page:302(p)
 msgid ""
@@ -1004,6 +1017,8 @@ msgid ""
 "Type the text of the new entry and press <key>Return</key> to finish editing "
 "the actual string."
 msgstr ""
+"Geben Sie Text des neuen Eintrags ein und beenden Sie Ihre Eingabe mit der "
+"<key>Eingabetaste</key>."
 
 #: C/preferences_pronunciation.page:51(p)
 msgid ""
@@ -1016,6 +1031,8 @@ msgid ""
 "Type the text that you would like to have spoken instead and press <key> "
 "Return</key> to finish editing the replacement string."
 msgstr ""
+"Geben Sie den stattdessen zu sprechenden Text ein und beenden Sie Ihre "
+"Eingabe mit der <key>Eingabetaste</key>."
 
 #: C/preferences_pronunciation.page:64(title)
 msgid "Editing an existing dictionary entry"
@@ -1026,10 +1043,14 @@ msgid ""
 "Move to the cell you wish to edit and press <key>Return</key> to begin "
 "editing."
 msgstr ""
+"Navigieren Sie zur gewünschten Zelle und starten Sie die Bearbeitung mit der "
+"<key>Eingabetaste</key>."
 
 #: C/preferences_pronunciation.page:72(p)
 msgid "Make your changes and then press <key>Return</key> to finish editing."
 msgstr ""
+"Tätigen Sie Ihre Änderungen und beenden Sie die Bearbeitung mit der "
+"<key>Eingabetaste</key>."
 
 #: C/preferences_pronunciation.page:78(title)
 msgid "Deleting an existing dictionary entry"
@@ -1037,7 +1058,7 @@ msgstr "Löschen eines vorhandenen Eintrags aus dem Wörterbuch"
 
 #: C/preferences_pronunciation.page:80(p)
 msgid "Move to the entry you wish to delete."
-msgstr ""
+msgstr "Verschieben Sie den Eintrag, den Sie löschen möchten."
 
 #: C/preferences_pronunciation.page:83(p)
 msgid "Press the Delete button or <keyseq><key>Alt</key><key>D</key></keyseq>."
@@ -1143,7 +1164,7 @@ msgstr "Lupe"
 
 #: C/preferences_magnifier.page:7(desc)
 msgid "Configuring the zoom window appearance"
-msgstr ""
+msgstr "Einrichtung des Vergrößerungsfensters"
 
 #: C/preferences_magnifier.page:18(title)
 msgid "Magnifier Preferences"
@@ -1197,8 +1218,9 @@ msgid "Default value: <gui>Full Screen</gui>"
 msgstr "Vorgabewert: <gui>Vollbild</gui>"
 
 #: C/preferences_magnifier.page:58(title)
+#, fuzzy
 msgid "Specifying the Bounds of a \"Custom\" Zoomer"
-msgstr ""
+msgstr "Zu viele individuelle Tastenkombinationen"
 
 #: C/preferences_magnifier.page:59(p)
 msgid ""
@@ -1264,11 +1286,17 @@ msgid ""
 "window."
 msgstr ""
 
+# #. Translators: this is an algorithm for tracking an object
+# #. of interest (mouse pointer, caret, or widget) with the
+# #. magnifier.  Push means that Orca will move the magnified
+# #. region just enough to display the object of interest.
 #: C/preferences_magnifier.page:107(p)
 msgid ""
 "<gui>Push</gui>: Moves the zoomer window the least amount necessary to keep "
 "the mouse pointer on the screen."
 msgstr ""
+"<gui>Schieben</gui>: Das Vergrößerungsfenster wird zumindest soweit "
+"verschoben, dass der Mauszeiger auf dem Bildschirm bleibt."
 
 #: C/preferences_magnifier.page:113(p)
 msgid ""
@@ -1308,6 +1336,9 @@ msgid ""
 "<gui>Centered</gui>: When navigating via keyboard, keep the focused dialog "
 "box control or menu item at the center of the screen whenever possible."
 msgstr ""
+"<gui>Zentriert</gui>: Wenn Sie mit der Tastatur navigieren, wird das "
+"Bedienelement oder der Menüeintrag des fokussierten Dialogfensters in der "
+"Mitte des Bildschirms gehalten, sofern möglich."
 
 #: C/preferences_magnifier.page:152(p)
 msgid ""
@@ -1315,6 +1346,9 @@ msgid ""
 "least amount necessary to display the focused dialog box control or menu "
 "item."
 msgstr ""
+"<gui>Schieben</gui>: Wenn Sie mit der Tastatur navigieren, wird das "
+"Vergrößerungsfenster um den kleinstmöglichen Weg verschoben, um das "
+"fokussierte Bedienelement oder Menü anzuzeigen."
 
 #: C/preferences_magnifier.page:159(p)
 msgid ""
@@ -1324,7 +1358,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:166(p) C/preferences_magnifier.page:204(p)
 msgid "Default value: <gui>Push</gui>"
-msgstr ""
+msgstr "Vorgabewert: <gui>Schieben</gui>"
 
 #: C/preferences_magnifier.page:171(title)
 msgid "Pointer follows focus"
@@ -1336,6 +1370,9 @@ msgid ""
 "pointer will follow you as you arrow through menu items and move among "
 "controls in dialog boxes."
 msgstr ""
+"<gui>Mauszeiger folgt Fokus</gui>: Wenn diese Option aktiviert ist, folgt "
+"der Mauszeiger beim Wechseln zwischen Menüeinträgen und zwischen "
+"Bedienelementen in Dialogfeldern."
 
 #: C/preferences_magnifier.page:182(title)
 msgid "Text cursor"
@@ -1350,12 +1387,21 @@ msgid ""
 "<gui>Centered</gui>: As the text cursor moves, keep it at the center of the "
 "screen whenever possible."
 msgstr ""
+"<gui>Zentriert</gui>: Wenn sich der Textcursor verschiebt, wird er in der "
+"Mitte des Bildschirms gehalten, sofern möglich."
 
+# >Push#. Translators: this is an algorithm for tracking an object
+# #. of interest (mouse pointer, caret, or widget) with the
+# #. magnifier.  Push means that Orca will move the magnified
+# #. region just enough to display the object of interest.
 #: C/preferences_magnifier.page:192(p)
 msgid ""
 "<gui>Push</gui>: As the text cursor moves, move the zoomer window the least "
 "amount necessary to display it."
 msgstr ""
+"<gui>Schieben</gui>: Wenn sich der Textcursor verschiebt, wird das "
+"Vergrößerungsfenster nur soweit verschoben, dass der Textcursor angezeigt "
+"werden kann."
 
 #: C/preferences_magnifier.page:198(p)
 msgid ""
@@ -1365,7 +1411,7 @@ msgstr ""
 
 #: C/preferences_magnifier.page:209(title)
 msgid "Edge margin"
-msgstr ""
+msgstr "Randbereich"
 
 #: C/preferences_magnifier.page:210(p)
 msgid ""
@@ -1374,11 +1420,17 @@ msgid ""
 "The margin can range from 0 to 50%, with 50% being the equivalent of "
 "choosing centering."
 msgstr ""
+"Der <gui>Randbereich</gui> beeinflusst, wie nah der Cursor dem Rand des "
+"Fensters kommen darf, bevor das Vergrößerungsfenster verschoben werden muss. "
+"Der Wert kann im Bereich von 0 bis 50% liegen, wobei 50% der Auswahl "
+"»Zentriert« entspricht."
 
 #: C/preferences_magnifier.page:217(p)
 msgid ""
 "This option is only available if \"Push\" is your text cursor tracking mode."
 msgstr ""
+"Diese Option ist nur verfügbar, wenn Sie als Textcursor-Verfolgungsmodus "
+"»Schieben« ausgewählt haben."
 
 #: C/preferences_magnifier.page:222(p)
 msgid "Default value: 0"
@@ -1453,7 +1505,7 @@ msgstr "Rahmengröße"
 
 #: C/preferences_magnifier.page:285(p)
 msgid "This value determines the size of the border in pixels."
-msgstr ""
+msgstr "Dieser Wert bestimmt die Breite des Fensterrahmens in Pixel."
 
 #: C/preferences_magnifier.page:288(p)
 msgid "Default value: 1"
@@ -1465,7 +1517,7 @@ msgstr "Rahmenfarbe"
 
 #: C/preferences_magnifier.page:294(p)
 msgid "This value determines the color of the border."
-msgstr ""
+msgstr "Dieser Wert legt die Randfarbe fest."
 
 #: C/preferences_magnifier.page:297(p) C/preferences_magnifier.page:343(p)
 #: C/preferences_magnifier.page:389(p)
@@ -1481,6 +1533,8 @@ msgid ""
 "These controls can be used to customize the size and color of the "
 "magnifier's cursor."
 msgstr ""
+"Diese Elemente können zur Anpassung von Größe und Farbe des Cursors im "
+"Vergrößerungsfenster verwendet werden."
 
 #: C/preferences_magnifier.page:310(title)
 msgid "Enable cursor"
@@ -1491,6 +1545,8 @@ msgid ""
 "If this checkbox is checked then a cursor is visible and the size and color "
 "options become available."
 msgstr ""
+"Wenn dieses Ankreuzfeld aktiviert wird, erscheint ein sichtbarer Cursor und "
+"die Optionen zur Anpassung von Größe und Farbe stehen zur Verfügung."
 
 #: C/preferences_magnifier.page:320(title)
 msgid "Custom size"
@@ -1508,7 +1564,7 @@ msgstr "Zeigergröße"
 
 #: C/preferences_magnifier.page:331(p)
 msgid "This value determines the size of the cursor in pixels."
-msgstr ""
+msgstr "Dieser Wert bestimmt die Größe des Fensterrahmens in Pixel."
 
 #: C/preferences_magnifier.page:334(p)
 msgid "Default value: 32"
@@ -1520,7 +1576,7 @@ msgstr "Zeigerfarbe"
 
 #: C/preferences_magnifier.page:340(p)
 msgid "This value determines the color of the cursor."
-msgstr ""
+msgstr "Dieser Wert legt die Cursorfarbe fest."
 
 #: C/preferences_magnifier.page:349(title)
 msgid "Cross-hair"
@@ -1531,6 +1587,8 @@ msgid ""
 "This set of controls can be used to customize the magnifier's optional area-"
 "targeting cursor."
 msgstr ""
+"Die folgenden Bedienelemente können zur Anpassung des optionalen Cursors "
+"verwendet werden, der den vergrößerten Bereich begrenzt."
 
 #: C/preferences_magnifier.page:356(title)
 msgid "Enable cross-hair"
@@ -1551,6 +1609,8 @@ msgid ""
 "If checked, the cross-hair will be \"clipped\" (removed) in the area "
 "immediately surrounding the mouse pointer."
 msgstr ""
+"Bei Aktivierung wird das Fadenkreuz im Bereich unmittelbar um den Mauszeiger "
+"abgeschnitten (entfernt)."
 
 #: C/preferences_magnifier.page:376(title)
 msgid "Cross-hair size"
@@ -1558,7 +1618,7 @@ msgstr "Größe des Fadenkreuzes"
 
 #: C/preferences_magnifier.page:377(p)
 msgid "This control sets the thickness of the cross-hair in pixels."
-msgstr ""
+msgstr "Dieses Bedienelement legt die Dicke des Fadenkreuzes in Pixel fest."
 
 #: C/preferences_magnifier.page:380(p)
 msgid "Default value: 16"
@@ -1570,7 +1630,7 @@ msgstr "Fadenkreuz-Farbe"
 
 #: C/preferences_magnifier.page:386(p)
 msgid "This value determines the color of the cross-hair."
-msgstr ""
+msgstr "Dieser Wert legt die Farbe des Fadenkreuzes fest."
 
 #: C/preferences_magnifier.page:395(title)
 msgid "Advanced"
@@ -1739,8 +1799,9 @@ msgid ""
 msgstr ""
 
 #: C/preferences_key_echo.page:99(title)
+#, fuzzy
 msgid "Enable non-spacing diacritical keys"
-msgstr ""
+msgstr "Alphanumerische und Interpunktionstasten aktivieren"
 
 #: C/preferences_key_echo.page:100(p)
 msgid ""
@@ -1876,12 +1937,16 @@ msgid ""
 "The key bindings table provides a list of <app>Orca</app> operations and the "
 "keys that are bound to them."
 msgstr ""
+"Die Tabelle der Tastenkombinationen enthält eine Liste der <app>Orca</app>-"
+"Funktionen und deren zugeordnete Tastenkombinationen."
 
 #: C/preferences_key_bindings.page:47(p)
 msgid ""
 "The <gui>Function</gui> column is a description of the <app>Orca</app> "
 "operation to be performed."
 msgstr ""
+"Die Spalte »Funktion« beschreibt die von <app>Orca</app> auszuführende "
+"Operation."
 
 #: C/preferences_key_bindings.page:53(p)
 msgid ""
@@ -2148,6 +2213,17 @@ msgid ""
 "log back in as root whenever you want to perform a system administration "
 "command."
 msgstr ""
+"Der Tastaturzugriff ist ein Versuch von gksu, die Systemsicherheit zu "
+"verbessern, indem verhindert wird, dass möglicherweise bösartige Anwendungen "
+"die geheim eingetippten Passwörter mitlesen können. Bitte beachten Sie, dass "
+"das Abstellen des Tastaturzugriffs Sie unter Umständen nicht mehr vor "
+"bösartigen Anwendungen schützt. Falls Sie dies nicht wünschen, so können Sie "
+"immer noch alle Systemverwaltungstätigkeiten mit dem speziellen "
+"Systembenutzer »root« durchführen. Dazu müssen Sie dem Konto »root« die "
+"Erlaubnis zur Anmeldung am Anmeldebildschirm erteilen. Melden Sie sich "
+"anschließend bei Bedarf ab und als »root« an, führen die "
+"Systemverwaltungsaufgaben durch und melden sich danach wieder ab, um als "
+"normaler Benutzer weiterzuarbeiten."
 
 #: C/preferences_general.page:97(desc)
 msgid ""
@@ -2167,6 +2243,11 @@ msgid ""
 "key><key>F1</key></keyseq> when an object has focus, will always result in "
 "tooltips being presented, regardless of this setting."
 msgstr ""
+"Wenn angekreuzt, wird <app>Orca</app> Informationen über Minihilfen "
+"ausgeben, wenn diese durch Mausbewegungen ausgelöst werden. Unabhängig von "
+"dieser Einstellung werden Minihilfen immer angezeigt, wenn deren Anzeige "
+"durch spezielle Aktionen wie <keyseq><key>Strg</key><key>F1</key></keyseq> "
+"bei fokussiertem Objekt erzwungen werden."
 
 #: C/preferences_general.page:117(desc)
 msgid ""
@@ -2213,6 +2294,8 @@ msgid ""
 "When checked, this option will tell the system to automatically launch "
 "<app>Orca</app> when you log in."
 msgstr ""
+"Wenn angekreuzt, wird das System <app>Orca</app> nach der Anmeldung "
+"automatisch starten."
 
 #: C/preferences_general.page:165(desc)
 msgid ""
@@ -2641,6 +2724,11 @@ msgid ""
 "purposes, but is also useful for <app>Orca</app> developers who do not have "
 "access to a braille display."
 msgstr ""
+"Der Braille-Monitor von <app>Orca</app> gibt die Informationen auf dem "
+"Bildschirm aus, die auf der Braille-Zeile angezeigt werden. Meistens wird "
+"diese Funktion zu Demonstrationszwecken verwendet, kann aber auch für "
+"Entwickler von <app>Orca</app> interessant sein, die keinen Zugang zu einer "
+"Braille-Zeile haben."
 
 #: C/preferences_braille.page:52(title)
 msgid "Enable Contracted Braille"
@@ -2691,10 +2779,15 @@ msgid ""
 "keyboard shortcut and role name information is displayed. This information "
 "is not displayed in brief mode."
 msgstr ""
+"Diese Gruppe Auswahlknöpfe legt fest, welche Informationen in verschiedenen "
+"Situationen auf der Braille-Zeile ausgegeben werden sollen. Zum Beispiel "
+"werden bei der Einstellung »Ausführlich« Tastenkombinationen und "
+"Rolleninformationen ausgegeben, während diese bei der Auswahl von »Kurz« "
+"nicht ausgegeben werden."
 
 #: C/preferences_braille.page:108(title)
 msgid "Selection and Hyperlink Indicators"
-msgstr ""
+msgstr "Indikatoren für Auswahlen und Hyperlinks"
 
 #: C/preferences_braille.page:110(p)
 msgid ""
@@ -2945,15 +3038,19 @@ msgstr ""
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
-#: C/index.page:13(None)
+#: C/index.page:14(None)
 msgid "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 msgstr "Verwende Originalbild"
 
 #: C/index.page:3(title)
+msgid "Orca Screen Reader"
+msgstr "Orca Bildschirmleser"
+
+#: C/index.page:4(title)
 msgid "Introduction to the <app>Orca</app> Screen Reader"
 msgstr "Einführung in den <app>Orca</app> Bildschirmleser"
 
-#: C/index.page:12(title)
+#: C/index.page:13(title)
 msgid ""
 "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
 "\"><app>Orca</app>'s logo </media><app>Orca</app> Screen Reader"
@@ -2961,16 +3058,15 @@ msgstr ""
 "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
 "\"><app>Orca</app>-Logo </media><app>Orca</app> Bildschirmleser"
 
-#: C/index.page:19(title)
+#: C/index.page:20(title)
 msgid "Before You Begin"
 msgstr "Bevor Sie beginnen"
 
-#: C/index.page:20(p)
+#: C/index.page:21(p)
 msgid ""
-"Read the <link href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility "
-"Guide</link>"
+"Read the <link href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>"
 msgstr ""
-"Lesen Sie das <link href=\"ghelp:gnome-access-guide\">GNOME Desktop-"
+"Lesen Sie das <link href=\"ghelp:gnome-help#a11y\">GNOME Desktop-"
 "Barrierefreiheits-Handbuch</link>"
 
 #: C/index.page:26(title) C/commands.page:17(title)
@@ -3094,8 +3190,10 @@ msgid "7. CapsLock in Laptop Layout"
 msgstr "7. Die Feststelltaste im Laptop-Layout"
 
 #: C/howto_toggling_caps_lock.page:6(desc)
+#, fuzzy
 msgid "Toggling it when it is the <key>Orca Modifier</key>"
 msgstr ""
+"Setzt eine Verzögerung zwischen dem Drücken und Akzeptieren einer Taste"
 
 #: C/howto_toggling_caps_lock.page:15(title)
 msgid "CapsLock in Laptop Layout"
@@ -3190,7 +3288,7 @@ msgstr ""
 #: C/howto_key_bindings.page:66(p) C/howto_key_bindings.page:99(p)
 #: C/howto_key_bindings.page:121(p)
 msgid "Move to the <gui>Key Bindings</gui> page."
-msgstr ""
+msgstr "Wechseln Sie nun zum Reiter <gui>Tastenbelegung</gui>."
 
 #: C/howto_the_orca_modifier.page:62(p)
 msgid "Move to the <gui>Orca Modifier Key(s)</gui> combobox."
@@ -3218,7 +3316,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:15(title)
 msgid "Using Text Setup"
-msgstr ""
+msgstr "Textbasierte Einrichtung"
 
 #: C/howto_text_setup.page:16(p)
 msgid ""
@@ -3226,6 +3324,9 @@ msgid ""
 "configuration of <app>Orca</app> even if the graphical desktop is not "
 "running."
 msgstr ""
+"Orca verfügt über eine Funktion zur Ausführung einer textbasierten "
+"Basiskonfiguration von <app>Orca</app>, für den Fall, dass die grafische "
+"Oberfläche nicht läuft."
 
 #: C/howto_text_setup.page:21(title)
 msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
@@ -3423,7 +3524,7 @@ msgstr ""
 
 #: C/howto_text_attributes.page:24(title)
 msgid "Obtaining Formatting Information"
-msgstr ""
+msgstr "Formatierungsinformationen erhalten"
 
 #: C/howto_text_attributes.page:25(p)
 msgid ""
@@ -3487,8 +3588,11 @@ msgid "4. Tables"
 msgstr "4. Tabellen"
 
 #: C/howto_tables.page:6(desc)
+#, fuzzy
 msgid "Navigating and setting dynamic headers"
 msgstr ""
+"Wählen Sie »Gewöhnliche und Mailinglisten-Kopfzeilen«, um beide "
+"herunterzuladen."
 
 #: C/howto_tables.page:17(title)
 #: C/commands_structural_navigation.page:180(title)
@@ -3504,8 +3608,9 @@ msgid ""
 msgstr ""
 
 #: C/howto_tables.page:25(title)
+#, fuzzy
 msgid "Cell Versus Row Reading"
-msgstr ""
+msgstr "Fehler beim Lesen der Server-Antwort"
 
 #: C/howto_tables.page:26(p)
 msgid ""
@@ -3596,7 +3701,7 @@ msgstr ""
 
 #: C/howto_tables.page:96(title)
 msgid "Setting Column Headers"
-msgstr ""
+msgstr "Festlegen der Spaltenköpfe"
 
 #: C/howto_tables.page:98(p)
 msgid "Move to the row which contains all of the column headers."
@@ -3610,7 +3715,7 @@ msgstr ""
 
 #: C/howto_tables.page:110(title)
 msgid "Set Row Headers"
-msgstr ""
+msgstr "Festlegen der Zeilenköpfe"
 
 #: C/howto_tables.page:112(p)
 msgid "Move to the column which contains all of the row headers."
@@ -3661,7 +3766,7 @@ msgstr ""
 
 #: C/howto_structural_navigation.page:26(p)
 msgid "Headings and other text blocks"
-msgstr ""
+msgstr "Überschriften und andere Textblöcke"
 
 #: C/howto_structural_navigation.page:27(p)
 msgid "Form controls"
@@ -3677,8 +3782,9 @@ msgid "Lists and list items"
 msgstr "Listen und Listeneinträge"
 
 #: C/howto_structural_navigation.page:30(p)
+#, fuzzy
 msgid "Landmarks, separators, and anchors"
-msgstr ""
+msgstr "?, Trennzeichen und Textanker?"
 
 #: C/howto_structural_navigation.page:31(p)
 msgid "Tables and table cells"
@@ -3913,7 +4019,7 @@ msgstr ""
 
 #: C/howto_profiles.page:38(p)
 msgid "Change whatever settings you wish."
-msgstr ""
+msgstr "Ändern Sie die Einstellungen nach Belieben."
 
 #: C/howto_profiles.page:41(p)
 msgid "On the <gui>General</gui> page, press the <gui>Save As</gui> button."
@@ -3977,8 +4083,9 @@ msgid ""
 msgstr ""
 
 #: C/howto_profiles.page:117(title)
+#, fuzzy
 msgid "Changing the <gui>Start-up Profile</gui>"
-msgstr ""
+msgstr "Ändern des <gui>Start-Profils</gui>"
 
 #: C/howto_profiles.page:124(p)
 msgid ""
@@ -4112,8 +4219,9 @@ msgid ""
 msgstr ""
 
 #: C/howto_orca_find.page:101(p)
+#, fuzzy
 msgid "Default value of <gui>Wrap around</gui>: checked"
-msgstr ""
+msgstr "Vorgabewert: <gui>Punkte 7 und 8</gui>"
 
 #: C/howto_orca_find.page:106(p)
 msgid ""
@@ -4204,14 +4312,18 @@ msgstr "Drücken Sie zum Verlassen die <key>Esc</key>-Taste."
 #: C/howto_notifications.page:57(p)
 msgid "Press Space to repeat the last message read."
 msgstr ""
+"Drücken Sie die <key>Eingabetaste</key>, um die zuletzt vorgelesene "
+"Nachricht zu wiederholen."
 
 #: C/howto_notifications.page:58(p)
 msgid "Press one digit to read a specific message."
-msgstr ""
+msgstr "Drücken Sie eine Ziffer, um eine bestimmte Nachricht vorzulesen."
 
 #: C/howto_notifications.page:60(p)
 msgid "Note that the most recently-received message is at the top of the list."
 msgstr ""
+"Beachten Sie, dass die zuletzt empfangene Nachricht ganz oben in der Liste "
+"steht."
 
 #: C/howto_notifications.page:63(p)
 msgid ""
@@ -4377,8 +4489,9 @@ msgid "Press <key>Esc</key> to exit Learn Mode."
 msgstr "Drücken Sie zum Verlassen des Lernmodus die <key>Esc</key>-Taste."
 
 #: C/howto_learn_modes.page:45(title)
+#, fuzzy
 msgid "Using List Shortcuts Mode"
-msgstr ""
+msgstr "Verwenden des Taglisten-Plugins"
 
 #: C/howto_learn_modes.page:47(p)
 msgid ""
@@ -4401,8 +4514,11 @@ msgstr ""
 "zu erkunden."
 
 #: C/howto_learn_modes.page:66(p)
+#, fuzzy
 msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
 msgstr ""
+"Um den Vollbildmodus zu verlassen, drücken Sie <key>f</key> oder <key>Esc</"
+"key>."
 
 #: C/howto_keyboard_layout.page:5(title)
 msgid "6. Keyboard Layout"
@@ -4435,8 +4551,9 @@ msgid "8. Keybindings"
 msgstr "8. Tastenkürzel"
 
 #: C/howto_key_bindings.page:6(desc)
+#, fuzzy
 msgid "Binding, rebinding, and unbinding commands"
-msgstr ""
+msgstr "Befehle zu Zeit, Datum und Benachrichtigung"
 
 #: C/howto_key_bindings.page:15(title)
 msgid "Keybindings"
@@ -4450,8 +4567,9 @@ msgid ""
 msgstr ""
 
 #: C/howto_key_bindings.page:21(title)
+#, fuzzy
 msgid "Binding an Unbound Command"
-msgstr ""
+msgstr "Shell-Befehl ausführen"
 
 #: C/howto_key_bindings.page:32(p)
 msgid ""
@@ -4495,12 +4613,16 @@ msgid "Arrow to the modified column associated with the key binding."
 msgstr ""
 
 #: C/howto_key_bindings.page:105(p)
+#, fuzzy
 msgid "Uncheck the checkbox by pressing <key>Space</key>."
 msgstr ""
+"Die können die Diaschau durch Drücken von <key>p</key> anhalten oder "
+"fortsetzen."
 
 #: C/howto_key_bindings.page:112(title)
+#, fuzzy
 msgid "Unbinding Bound Commands"
-msgstr ""
+msgstr "Befehle der Zwischenablage einschließen"
 
 #: C/howto_key_bindings.page:124(p)
 msgid ""
@@ -4703,7 +4825,7 @@ msgstr ""
 #: C/howto_documents.page:48(p)
 msgid ""
 "For a complete listing of GNOME's caret navigation commands, see the <link "
-"href=\"ghelp:gnome-access-guide\">GNOME Desktop Accessibility Guide</link>."
+"href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>."
 msgstr ""
 
 #: C/howto_documents.page:52(p)
@@ -4936,8 +5058,9 @@ msgid "Present the last (most recent) notification message: (unbound)"
 msgstr ""
 
 #: C/commands_time_date_notifications.page:53(p)
+#, fuzzy
 msgid "Present the previous notification message: (unbound)"
-msgstr ""
+msgstr "Benachrichtigung bei neuen Nachrichten für Ordner"
 
 #: C/commands_time_date_notifications.page:56(p)
 msgid "Present list of all notification messages: (unbound)"
@@ -5263,10 +5386,13 @@ msgid "Other Elements"
 msgstr "Weitere Elemente"
 
 #: C/commands_structural_navigation.page:257(p)
+#, fuzzy
 msgid ""
 "Next and previous landmark: <keyseq><key>M</key></keyseq> and "
 "<keyseq><key>Shift</key><key>M</key></keyseq>"
 msgstr ""
+"Nächste und vorhergehende Überschrift: <keyseq><key>H</key></keyseq> und "
+"<keyseq><key>Umschalttaste</key><key>H</key></keyseq>"
 
 #: C/commands_structural_navigation.page:264(p)
 msgid ""
@@ -5277,10 +5403,13 @@ msgstr ""
 "<keyseq><key>Umschalttaste</key><key>S</key></keyseq>"
 
 #: C/commands_structural_navigation.page:271(p)
+#, fuzzy
 msgid ""
 "Next and previous anchor: <keyseq><key>A</key></keyseq> and "
 "<keyseq><key>Shift</key><key>A</key></keyseq>"
 msgstr ""
+"Nächste und vorhergehende Überschrift: <keyseq><key>H</key></keyseq> und "
+"<keyseq><key>Umschalttaste</key><key>H</key></keyseq>"
 
 #: C/commands_speech_settings.page:6(title)
 msgid "2. Speech Settings"
@@ -5288,7 +5417,7 @@ msgstr "2. Spracheinstellungen"
 
 #: C/commands_speech_settings.page:8(desc)
 msgid "Commands for customizing <app>Orca</app>'s output"
-msgstr ""
+msgstr "Befehle zur Anpassung der Ausgabe von <app>Orca</app>"
 
 #: C/commands_speech_settings.page:19(title)
 msgid "Speech Settings Commands"
@@ -5306,6 +5435,8 @@ msgstr ""
 msgid ""
 "Enable/disable speech: <keyseq><key>Orca Modifier</key><key>S</key></keyseq>"
 msgstr ""
+"Sprachausgabe ein-/ausschalten: <keyseq><key>Orca-Zusatztaste</key><key>S</"
+"key></keyseq>"
 
 #: C/commands_speech_settings.page:40(p)
 msgid "Enable/disable speaking of indentation and justification: (Unbound)"
@@ -5320,20 +5451,24 @@ msgid "Cycle to the next key echo level: (Unbound)"
 msgstr ""
 
 #: C/commands_speech_settings.page:51(p)
+#, fuzzy
 msgid "Decrease the rate: (Unbound)"
-msgstr ""
+msgstr "Schrift verkleinern"
 
 #: C/commands_speech_settings.page:54(p)
+#, fuzzy
 msgid "Increase the rate: (Unbound)"
-msgstr ""
+msgstr "Schrift vergrößern"
 
 #: C/commands_speech_settings.page:57(p)
+#, fuzzy
 msgid "Decrease the pitch: (Unbound)"
-msgstr ""
+msgstr "Horizontaler Rasterabstand des Zeichengitters."
 
 #: C/commands_speech_settings.page:60(p)
+#, fuzzy
 msgid "Increase the pitch: (Unbound)"
-msgstr ""
+msgstr "Horizontaler Rasterabstand des Zeichengitters."
 
 #: C/commands_reading.page:8(title)
 msgid "1. Reading"
@@ -5370,8 +5505,9 @@ msgid ""
 msgstr ""
 
 #: C/commands_reading.page:39(title)
+#, fuzzy
 msgid "Reading Your Current Location"
-msgstr ""
+msgstr "Erfahren Sie mehr über Ihren Standort"
 
 #: C/commands_reading.page:40(p)
 msgid ""
@@ -5546,20 +5682,23 @@ msgid "Troubleshooting"
 msgstr "Fehlerbehandlung"
 
 #: C/commands_mouse.page:5(title)
+#, fuzzy
 msgid "3. Mouse/Pointer-Related"
-msgstr ""
+msgstr "Der Mauszeiger bewegt sich nicht"
 
 #: C/commands_mouse.page:6(title)
+#, fuzzy
 msgid "Mouse/Pointer-Related"
-msgstr ""
+msgstr "Der Mauszeiger bewegt sich nicht"
 
 #: C/commands_mouse.page:9(desc)
 msgid "Commands for manipulating the pointer"
 msgstr "Befehle zur Beeinflussung des Mauszeigers"
 
 #: C/commands_mouse.page:20(title)
+#, fuzzy
 msgid "Mouse/Pointer-Related Commands"
-msgstr ""
+msgstr "Befehle zur Beeinflussung des Mauszeigers"
 
 #: C/commands_mouse.page:21(p)
 msgid ""
@@ -5646,7 +5785,7 @@ msgstr "Lupeneinstellungen"
 
 #: C/commands_magnifier.page:8(desc)
 msgid "Commands for customizing <app>Orca</app>'s zoomer"
-msgstr ""
+msgstr "Befehle zur Anpassung der Lupe von <app>Orca</app>"
 
 #: C/commands_magnifier.page:19(title)
 msgid "Magnifier Settings Commands"
@@ -5662,36 +5801,42 @@ msgid ""
 msgstr ""
 
 #: C/commands_magnifier.page:29(p)
+#, fuzzy
 msgid "Enable/disable magnification: (Unbound)"
-msgstr ""
+msgstr "Automatische Aktualisierung der Daten aktivieren oder deaktivieren"
 
 #: C/commands_magnifier.page:34(p)
 msgid "Increase magnification level: (Unbound)"
 msgstr ""
 
 #: C/commands_magnifier.page:39(p)
+#, fuzzy
 msgid "Decrease magnification: (Unbound)"
-msgstr ""
+msgstr "Schrift verkleinern"
 
 #: C/commands_magnifier.page:44(p)
+#, fuzzy
 msgid "Enable/disable color enhancements: (Unbound)"
-msgstr ""
+msgstr "Automatische Aktualisierung der Daten aktivieren oder deaktivieren"
 
 #: C/commands_magnifier.page:49(p)
+#, fuzzy
 msgid "Enable/disable mouse enhancements: (Unbound)"
-msgstr ""
+msgstr "Maus_klicks per Touchpad freischalten"
 
 #: C/commands_magnifier.page:54(p)
+#, fuzzy
 msgid "Cycle to the magnifier position: (Unbound)"
-msgstr ""
+msgstr "Die X-Position des Hauptfensters."
 
 #: C/commands_live_regions.page:6(title)
 msgid "1. Live Region"
 msgstr "1. Dynamischer Bereich"
 
 #: C/commands_live_regions.page:8(desc)
+#, fuzzy
 msgid "Commands for accessing web live regions"
-msgstr ""
+msgstr "Unterstützung für dynamische Bereiche durch <app>Orca</app>"
 
 #: C/commands_live_regions.page:20(title)
 msgid "Live Region Commands"
@@ -5738,8 +5883,9 @@ msgid "1. Flat Review"
 msgstr "1. Übersicht"
 
 #: C/commands_flat_review.page:8(desc)
+#, fuzzy
 msgid "Commands for spatially reviewing windows"
-msgstr ""
+msgstr "Befehle für zeilenweises Vorlesen"
 
 #: C/commands_flat_review.page:19(title)
 msgid "Flat Review Commands"
@@ -5759,7 +5905,7 @@ msgstr "Befehle für zeilenweises Vorlesen"
 
 #: C/commands_flat_review.page:30(p)
 msgid "First line (The \"home\" position):"
-msgstr ""
+msgstr "Erste Zeile (die Heimposition):"
 
 #: C/commands_flat_review.page:32(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 7</key></keyseq>"
@@ -5835,7 +5981,7 @@ msgstr "Laptop: <keyseq><key>Orca-Zusatztaste</key><key>O</key></keyseq>"
 
 #: C/commands_flat_review.page:68(p)
 msgid "Last line (The \"end\" position):"
-msgstr ""
+msgstr "Letzte Zeile (die Endposition):"
 
 #: C/commands_flat_review.page:70(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 9</key></keyseq>"
@@ -5997,8 +6143,9 @@ msgid "Laptop: <keyseq><key>Orca Modifier</key><key>P</key></keyseq>"
 msgstr "Laptop: <keyseq><key>Orca-Zusatztaste</key><key>P</key></keyseq>"
 
 #: C/commands_flat_review.page:173(p)
+#, fuzzy
 msgid "Review current item/widget:"
-msgstr ""
+msgstr "Linksklick auf das aktuelle Objekt:"
 
 #: C/commands_flat_review.page:175(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP 5</key></keyseq>"
@@ -6018,7 +6165,7 @@ msgstr "2. Orca Suchdialog"
 
 #: C/commands_find.page:8(desc)
 msgid "Commands for searching window contents"
-msgstr ""
+msgstr "Befehle zum Durchsuchen von Fensterinhalten"
 
 #: C/commands_find.page:19(title)
 msgid "Orca Find Commands"
@@ -6036,8 +6183,9 @@ msgid "Open the <app>Orca</app> Find dialog:"
 msgstr "Den <app>Orca</app>-Suchdialog öffnen:"
 
 #: C/commands_find.page:38(p)
+#, fuzzy
 msgid "Move flat review to the next instance of a string:"
-msgstr ""
+msgstr "Die Übersicht zum Anfang der nächsten Zeile bewegen."
 
 #: C/commands_find.page:41(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
@@ -6052,8 +6200,9 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_find.page:55(p)
+#, fuzzy
 msgid "Move flat review to the previous instance of a string:"
-msgstr ""
+msgstr "Die Übersicht zum Anfang der vorherigen Zeile bewegen."
 
 #: C/commands_find.page:58(p)
 msgid ""
@@ -6099,6 +6248,11 @@ msgid ""
 "be started from a virtual console or via gnome-terminal. Output is sent to "
 "the console only (i.e., it is not sent to speech or braille)."
 msgstr ""
+"Um die folgenden drei Befehle verwenden zu können, ist es erforderlich, dass "
+"<app>Orca</app> von einer virtuellen Konsole oder durch <app>gnome-terminal</"
+"app> gestartet wird. Die Ausgabe erfolgt ausschließlich auf der Konsole (das "
+"bedeutet, dass keine Ausgabe über die Sprachausgabe oder Braille-Zeile "
+"erfolgt)."
 
 #: C/commands_debugging.page:36(p)
 msgid ""
@@ -6123,12 +6277,12 @@ msgstr ""
 
 #: C/commands_controlling_orca.page:5(title)
 msgid "1. Controlling and Learning to Use Orca"
-msgstr ""
+msgstr "1. Steuerung und Bedienung von Orca"
 
 #: C/commands_controlling_orca.page:6(title)
 #: C/commands_controlling_orca.page:18(title)
 msgid "Controlling and Learning to Use Orca"
-msgstr ""
+msgstr "Steuerung und Bedienung von Orca"
 
 #: C/commands_controlling_orca.page:7(desc)
 msgid "Commands for interacting with <app>Orca</app>"
@@ -6150,6 +6304,8 @@ msgid ""
 "<link xref=\"preferences\">Orca Preferences</link> dialog: <keyseq><key>Orca "
 "Modifier</key><key>Space</key></keyseq>."
 msgstr ""
+"Orcas <link xref=\"preferences\">Einstellungen</link>-Dialog: "
+"<keyseq><key>Orca-Zusatztaste</key><key>Leertaste</key></keyseq>."
 
 #: C/commands_controlling_orca.page:34(p)
 msgid ""
@@ -6167,28 +6323,34 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_controlling_orca.page:46(p)
+#, fuzzy
 msgid ""
 "Pass the next command on to the current application: <keyseq><key>Orca "
 "Modifier</key><key>BackSpace</key></keyseq>"
-msgstr ""
+msgstr "<keyseq><key>Orca-Zusatztaste</key><key>Q</key></keyseq>"
 
 #: C/commands_controlling_orca.page:54(title)
 msgid "Commands for Learning to Use <app>Orca</app>"
-msgstr ""
+msgstr "Befehle zum Erlernen der Bedienung von <app>Orca</app>"
 
 #: C/commands_controlling_orca.page:64(p)
 msgid "Enter learn mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
+"Starten Sie den Lernmodus: <keyseq><key>Orca-Zusatztaste</key><key>H</key></"
+"keyseq>"
 
 #: C/commands_controlling_orca.page:70(p)
+#, fuzzy
 msgid ""
 "Enter list shortcuts mode: <keyseq><key>Orca Modifier</key><key>H</key></"
 "keyseq> (double-clicked)"
-msgstr ""
+msgstr "<keyseq><key>Orca-Zusatztaste</key><key>H</key></keyseq>"
 
 #: C/commands_controlling_orca.page:76(p)
 msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
 msgstr ""
+"Beenden Sie jeden Modus: <keyseq><key>Orca-Zusatztaste</key><key>Esc</key></"
+"keyseq>"
 
 #: C/commands_chat.page:6(title)
 msgid "2. Chat"
@@ -6226,8 +6388,9 @@ msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
 
 #: C/commands_chat.page:44(p)
+#, fuzzy
 msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr ""
+msgstr "Nachrichtenverläufe je Chatraum bereitstellen"
 
 #: C/commands_braille.page:6(title)
 msgid "2. Braille"
@@ -6256,28 +6419,34 @@ msgid "Pan braille display to the right: Line Right"
 msgstr ""
 
 #: C/commands_braille.page:27(p)
+#, fuzzy
 msgid "Toggle flat review mode: Freeze"
-msgstr ""
+msgstr "Die Übersicht betreten und verlassen."
 
 #: C/commands_braille.page:28(p)
+#, fuzzy
 msgid "Review the word above: Line Up"
-msgstr ""
+msgstr "Die markierte Zeile um eine Position nach oben verschieben"
 
 #: C/commands_braille.page:29(p)
+#, fuzzy
 msgid "Review the word below: Line Down"
-msgstr ""
+msgstr "Die markierte Zeile um eine Position nach unten verschieben"
 
 #: C/commands_braille.page:30(p)
+#, fuzzy
 msgid "Review bottom left: Bottom Right"
-msgstr ""
+msgstr "Rechte Knöpfe in der Titelleiste unten"
 
 #: C/commands_braille.page:31(p)
+#, fuzzy
 msgid "Review the home position: Top Left"
-msgstr ""
+msgstr "Die Drehung um die linke obere Position"
 
 #: C/commands_braille.page:32(p)
+#, fuzzy
 msgid "Contracted braille: Six Dots"
-msgstr ""
+msgstr "Radardiagramm mit Punkten."
 
 #: C/commands_braille.page:33(p)
 msgid "Marks the beginning of a text selection: Cut Begin"
@@ -6288,8 +6457,9 @@ msgid "Marks the end of a text selection: Cut Line"
 msgstr ""
 
 #: C/commands_braille.page:35(p)
+#, fuzzy
 msgid "Processes a cursor routing key: Cursor Routing"
-msgstr ""
+msgstr "Signalton ausgeben, wenn eine Taste:"
 
 #: C/commands_braille.page:36(p)
 msgid "Returns to object with keyboard focus: Cursor Position"
@@ -6343,13 +6513,16 @@ msgid ""
 "location: <keyseq><key>Alt</key><key>Shift</key><key>1</key></keyseq>-"
 "<key>6</key>"
 msgstr ""
+"Information »Wo bin ich« für das Lesezeichen relativ zur aktuellen Position "
+"des Mauszeigers: <keyseq><key>Alt</key><key>Umschalttaste</key><key>1</key></"
+"keyseq>-<key>6</key>"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2
 #: C/index.page:0(None)
 msgid "translator-credits"
 msgstr ""
 "Mario Blättermann <mariobl@gnome.org>, 2011\n"
-"Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011."
+"Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011"
 
 #~ msgid "5. Form Controls"
 #~ msgstr "5. Formularelemente"
