@@ -1900,7 +1900,7 @@ def getListOfShortcuts(typeOfShortcuts):
             #
             clickCount = _("triple click")
         shortcut = (kb.handler.description, keybindings.getModifierNames\
-        (kb.modifiers) + keysymString.upper() + " " + clickCount)
+        (kb.modifiers) + keysymString.title() + " " + clickCount)
         shortcuts.append(shortcut)
         shortcuts = sorted(shortcuts, key=lambda shortcut: shortcut[1])
 
