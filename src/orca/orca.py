@@ -1988,8 +1988,6 @@ def init(registry):
     registry.registerEventListener(_onMouseButton,
                                    "mouse:button")
 
-    showSplashGUI()
-
     loadUserSettings()
 
     masks = []
@@ -2289,6 +2287,8 @@ def main():
         braille.displayMessage(message)
     except:
         debug.printException(debug.LEVEL_SEVERE)
+
+    showSplashGUI()
 
     # Check to see if the user wants the configuration GUI. It's
     # done here so that the user's existing preferences can be used
