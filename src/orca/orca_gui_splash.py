@@ -83,10 +83,10 @@ class OrcaSplashGUI(orca_gtkbuilder.GtkBuilderWrapper):
         box.grab_focus()
         splashScreen.show_all()
 
+        gobject.timeout_add(3000, splashScreen.hide)
+
         while gtk.events_pending():
             gtk.main_iteration()
-
-        gobject.timeout_add(3000, splashScreen.hide)
 
         return splashScreen
 
