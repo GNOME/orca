@@ -50,6 +50,7 @@ class OrcaQuitGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         quitDialog = self.get_widget("quitDialog")
+        quitDialog.connect('delete_event', self.quitDialogClosed)
 
         # Set the current time on the quit GUI dialog so that it'll
         # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
@@ -92,6 +93,12 @@ class OrcaQuitGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         orca.shutdown()
+
+    def quitDialogClosed(self, widget, data):
+        """Signal handler for the 'delete' signal. This is the equivalent
+        of the 'no' button being pressed."""
+
+        self.quitNoButtonClicked(None)
 
     def quitDialogDestroyed(self, widget):
         """Signal handler for the "destroyed" signal for the quitDialog
