@@ -1,3 +1,29 @@
+3.0.3 - 4-July-2011
+
+General
+
+  * Fix for bug 653642 - Alt+F4 followed by Escape leaves the Orca window
+    closed - but Orca still running
+
+  * Fix for bug 653628 - List shortcuts mode: shortcut is spelled out as
+    "shift T A B" instead of saying "shift tab"
+
+  * Fix for bug 653634 - Orca welcome message is cut off
+
+  * Fix for bug 653624 - bash-ism causes error in orca startup script
+
+  * Fix for bug 652043 - In Libreoffice applications Orca doesn't present
+    the title bar
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca@valencia   Catalan (Valencian)  Carles Ferrando
+    de            German               Christian Kirbach
+    tr            Turkish              Muhammet Kara
+    es            Spanish              Daniel Mustieles
+
+==========
+
 3.0.2 - 23-May-2011
 
   * Fix for bug #647037 - Pronunciation rules not being applied until

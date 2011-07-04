@@ -1,4 +1,4 @@
-Orca v3.0.2
+Orca v3.0.3
 
 Introduction
 ========================================================================
@@ -23,7 +23,7 @@ requests.
 Build Requirements
 ========================================================================
 
-Orca v2.91.x is supported on GNOME 2.91.x only.  We highly suggest you
+Orca v3.0.x is supported on GNOME 3.0.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
@@ -31,7 +31,7 @@ Building Orca also requires the development modules for the following
 to be installed:
 
 * Python           - Python platform
-* pyorbit          - Python bindings for ORBit2
+* pyorbit          - Python bindings for ORBit2 (optional)
 * pygtk            - GTK+ Python bindings
 * pygobject        - Python bindings for the GObject library
 * json-py          - JSON encoder/decoder (included in Python >= 2.6)
