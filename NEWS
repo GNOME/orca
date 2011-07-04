@@ -1,3 +1,25 @@
+3.1.3-xdesktop - 4-July-2011
+
+General
+
+  * Fix for bug 653642 - Alt+F4 followed by Escape leaves the Orca window
+    closed - but Orca still running
+
+  * Fix for bug 653628 - List shortcuts mode: shortcut is spelled out as
+    "shift T A B" instead of saying "shift tab"
+
+  * Fix for bug 653634 - Orca welcome message is cut off
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German               Christian Kirbach
+    es            Spanish              Daniel Mustieles
+    hu            Hungarian            Attila Hammer
+    sl            Slovenian            Matej Urbančič
+    tr            Turkish              Muhammet Kara
+
+==========
+
 3.1.2-xdesktop - 13-June-2011
 
 General
