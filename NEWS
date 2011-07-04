@@ -1,3 +1,35 @@
+3.1.3 - 4-July-2011
+
+General
+
+  * Fix for bug 653642 - Alt+F4 followed by Escape leaves the Orca window
+    closed - but Orca still running
+
+  * Fix for bug 653628 - List shortcuts mode: shortcut is spelled out as
+    "shift T A B" instead of saying "shift tab"
+
+  * Fix for bug 653634 - Orca welcome message is cut off
+
+  * Fix for bug 653624 - bash-ism causes error in orca startup script
+
+  * Fix for bug 653514 - The ONLY magnification work Orca should be doing
+    is handling caret and focus tracking
+
+  * Fix for bug 652500 - DBusException seen when Orca is running with
+    gnome-shell mag
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German               Christian Kirbach
+    es            Spanish              Daniel Mustieles
+    gl            Galician             Fran Diéguez
+    hu            Hungarian            Attila Hammer
+    sl            Slovenian            Matej Urbančič
+    sv            Swedish              Daniel Nylander
+    tr            Turkish              Muhammet Kara
+
+==========
+
 3.1.2 - 13-June-2011
 The long-overdue "spring cleaning" release
 
