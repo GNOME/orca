@@ -3555,7 +3555,7 @@ msgstr "Použít alternativní adresář s uživatelskými předvolbami"
 #.
 #: ../src/orca/orca.py:436
 msgid "Force use of option"
-msgstr "Donutit k použití přepínače"
+msgstr "Donutit k použití volby"
 
 #. Translators: if the user supplies an option via the '-d, --disable'
 #. command line option, it will be automatically disabled as Orca is
@@ -3563,7 +3563,7 @@ msgstr "Donutit k použití přepínače"
 #.
 #: ../src/orca/orca.py:450
 msgid "Prevent use of option"
-msgstr "Zamezit použití přepínače"
+msgstr "Zamezit použití volby"
 
 #. Translators: this is the Orca command line option to import to Orca
 #. a user profile from a given file
