@@ -3,20 +3,21 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
+# 
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-06-29 22:02+0000\n"
-"PO-Revision-Date: 2011-06-11 14:32+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-07-01 08:51+0000\n"
+"PO-Revision-Date: 2011-07-05 15:55+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -3634,6 +3635,13 @@ msgid ""
 "a significant amount of information you may wish to know, but likely will "
 "not wish to know all of the time."
 msgstr ""
+"Además de los comandos especializados para leer la barra de título y la "
+"barra de estado, Orca proporciona dos comandos ¿Dónde estoy? sensibles al "
+"contexto: ¿Dónde estoy? básico y ¿Dónde estoy? detallado. ¿Dónde estoy? "
+"básico se aplica a todos los objetos. ¿Dónde estoy? detallado se aplica sólo "
+"a aquellos objetos para los cuales existe una gran cantidad de información "
+"que podría desear saber, pero que probablemente no querrá saber todo el "
+"tiempo."
 
 #: C/howto_whereami.page:26(p)
 msgid ""
@@ -3642,6 +3650,11 @@ msgid ""
 "However, to give you a better idea of the context-sensitive nature of "
 "<app>Orca</app>'s Where Am I feature, consider the following:"
 msgstr ""
+"La mejor manera de familiarizarse con lo que presentará ¿Dónde estoy? es "
+"probando los <link xref=\"commands_where_am_i\">comandos ¿Dónde estoy?</"
+"link>. Sin embargo, para que tenga una idea más clara de la naturaleza "
+"sensible al contexto de la característica ¿Dónde estoy? de <app>Orca</app>, "
+"considere lo siguiente:"
 
 #: C/howto_whereami.page:32(p)
 msgid ""
@@ -3659,6 +3672,10 @@ msgid ""
 "basic Where Am I will tell you what text is selected. A detailed Where Am I "
 "within the text will also include the text attributes."
 msgstr ""
+"Si el widget es texto y usted ejecuta un ¿Dónde estoy? básico, se le dirá la "
+"línea actual si no se selecciona texto. Si se selecciona texto, sin embargo, "
+"un ¿Dónde estoy? básico le dirá qué texto se ha seleccionado. Un ¿Dónde "
+"estoy? detallado en el texto también incluirá los atributos de texto."
 
 #: C/howto_whereami.page:48(p)
 msgid ""
@@ -3674,6 +3691,9 @@ msgid ""
 "button group, or page tab list, the position of the current item will be "
 "included."
 msgstr ""
+"Si el widget es una lista o un objeto de tipo lista, como un cuadro "
+"combinado, un grupo de botones de radio, o una lista de pestañas de página, "
+"se incluirá la posición del elemento actual."
 
 #: C/howto_whereami.page:61(p)
 msgid ""
@@ -3682,12 +3702,18 @@ msgid ""
 "expanded, you will also be told how many children it contains. In addition, "
 "the nesting level will also be provided."
 msgstr ""
+"Si el widget es jerárquico, como un árbol, y usted está en un nodo "
+"expandible, se le dirá si ese nodo es expandible o no. Y si es expandible, "
+"también se le dirá cuántos hijos contiene. Además, se proporcionará el nivel "
+"de anidamiento."
 
 #: C/howto_whereami.page:69(p)
 msgid ""
 "If the widget is a progress bar or a slider, you will be told the current "
 "percent."
 msgstr ""
+"Si el widget es una barra de progreso o un deslizador, se le dirá el "
+"porcentaje actual."
 
 #: C/howto_whereami.page:75(p)
 msgid ""
@@ -3696,12 +3722,18 @@ msgid ""
 "which are selected. In a detailed Where Am I, you will also be told which "
 "items are selected."
 msgstr ""
+"Si el widget es un icono dentro de un grupo de iconos, un ¿Dónde estoy? "
+"básico incluirá el objeto que esté explorando, el elemento sobre el cual "
+"esté situado y el número de elementos seleccionados. En un ¿Dónde estoy? "
+"detallado, también se le dirá qué elementos están seleccionados."
 
 #: C/howto_whereami.page:83(p)
 msgid ""
 "If you are on a link, the type of link (same site, different site, FTP link, "
 "etc.) will be included."
 msgstr ""
+"Si está sobre un enlace, se incluirá el tipo de enlace (mismo sitio, "
+"diferente sitio, enlace FTP, etc.)."
 
 #: C/howto_whereami.page:89(p)
 msgid ""
@@ -3718,6 +3750,11 @@ msgid ""
 "you are currently in. To give Where Am I a try, see the list of <link xref="
 "\"commands_where_am_i\">Where Am I commands</link>."
 msgstr ""
+"Y así sucesivamente. Nuevamente, el objetivo de la característica ¿Dónde "
+"estoy? de <app>Orca</app> es proporcionarle la información que probablemente "
+"más le interesa saber acerca del objeto que está explorando actualmente. "
+"Para probar ¿Dónde estoy?, consulte la lista de <link xref="
+"\"commands_where_am_i\">comandos ¿Dónde estoy?</link>."
 
 #: C/howto_toggling_caps_lock.page:5(title)
 msgid "7. CapsLock in Laptop Layout"
@@ -3756,6 +3793,9 @@ msgid ""
 "key></keyseq>, to tell <app>Orca</app> that the next command should be "
 "ignored."
 msgstr ""
+"Pulse el comando Ignorar, <keyseq><key>Modificador de Orca</"
+"key><key>Retroceso</key></keyseq>, para indicar a <app>Orca</app>que el "
+"siguiente comando se debería ignorar."
 
 #: C/howto_toggling_caps_lock.page:32(p)
 msgid "Press <key>CapsLock</key> to toggle its locked state."
@@ -3794,6 +3834,9 @@ msgid ""
 "whether you are using <app>Orca</app>'s Laptop keyboard layout or its "
 "Desktop keyboard layout:"
 msgstr ""
+"A qué tecla se asocia, de manera predeterminada,el «Modificador de Orca», "
+"dependerá de si está usando la distribución de portátil de <app>Orca</app> o "
+"su distribución de escritorio:"
 
 #: C/howto_the_orca_modifier.page:33(p) C/howto_text_setup.page:136(p)
 #: C/howto_keyboard_layout.page:22(p)
@@ -3801,7 +3844,7 @@ msgid ""
 "If you are using the Laptop layout, the default Orca Modifier will be "
 "<key>CapsLock</key>"
 msgstr ""
-"Si está usando la distribución de portátil, el Modificado de Orca "
+"Si está usando la distribución de portátil, el Modificador de Orca "
 "predeterminado será <key>Bloq Mayús</key>"
 
 #: C/howto_the_orca_modifier.page:39(p) C/howto_text_setup.page:142(p)
@@ -3811,6 +3854,9 @@ msgid ""
 "<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
 "key as <key>KeyPad 0</key>."
 msgstr ""
+"Si está usando la distribución de escritorio, el Modificador de Orca será "
+"tanto <key>Ins</key> como <key>TN Ins</key>, esta última es la misma tecla "
+"que <key>TN 0</key>."
 
 #: C/howto_the_orca_modifier.page:46(p)
 msgid ""
@@ -3885,6 +3931,7 @@ msgstr ""
 #: C/howto_text_setup.page:21(title)
 msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
 msgstr ""
+"Iniciar la instalación asistida de <app>Orca</app> en modo de sólo texto"
 
 #: C/howto_text_setup.page:23(p)
 msgid ""
@@ -3919,6 +3966,9 @@ msgid ""
 "installed on your system. Type the number associated with your desired "
 "speech system and press <key>Return</key>."
 msgstr ""
+"Las siguientes opciones dependerán de qué sistemas de voz tenga instalados "
+"en su sistema. Escriba el número asociado a su sistema de voz deseado y "
+"pulse <key>Intro</key>."
 
 #: C/howto_text_setup.page:47(p)
 msgid "Select desired speech server"
@@ -3930,6 +3980,9 @@ msgid ""
 "installed on your system. Type the number associated with your desired "
 "speech server and press <key>Return</key>."
 msgstr ""
+"Las siguientes opciones dependerán de qué sintetizadores de voz tenga "
+"instalados en su sistema. Escriba el número asociado a su servidor de voz "
+"deseado y pulse <key>Intro</key>."
 
 #: C/howto_text_setup.page:55(p)
 msgid "Select desired voice"
@@ -6785,7 +6838,7 @@ msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
 "key></keyseq>"
 msgstr ""
-"Sobremesa: <keyseq><key>Modificador de Orca</key><key>Mayús</key><key>KP "
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>Mayús</key><key>TN "
 "Supr</key></keyseq>"
 
 #: C/commands_find.page:66(p)
