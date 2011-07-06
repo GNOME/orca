@@ -2672,7 +2672,7 @@ msgstr "Alternativní"
 #.
 #: ../src/orca/orca_gui_prefs.py:413
 msgid "Modified"
-msgstr "Změněný"
+msgstr "Změněno"
 
 #. Translators: This refers to the default/typical voice used
 #. by Orca when presenting the content of the screen and other
