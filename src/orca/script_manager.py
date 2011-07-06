@@ -63,6 +63,8 @@ class ScriptManager:
              'gnome-help':       'yelp',
              'Nereid':           'Banshee',
              'vte':              'gnome-terminal'}
+        self._toolkitNames = \
+            {'gtk':              'GAIL'}
 
         self.setActiveScript(None, "__init__")
 
@@ -126,6 +128,14 @@ class ScriptManager:
 
         if not (app and name):
             return None
+
+        altNames = self._toolkitNames.keys()
+        names = filter(lambda n: n.lower() == name.lower(), altNames)
+        if names:
+            newName = self._toolkitNames.get(names[0])
+            debug.println(debug.LEVEL_FINEST,
+                          "mapped %s to %s" % (name, newName))
+            name = newName
 
         script = None
         for package in self._scriptPackages:
