@@ -230,11 +230,15 @@ class EventManager:
                 debugging = not debug.eventDebugFilter \
                             or debug.eventDebugFilter.match(event.type)
                 if debugging:
+                    startTime = time.time()
                     debug.println(debug.eventDebugLevel,
                                   "\nvvvvv PROCESS OBJECT EVENT %s vvvvv" \
                                   % event.type)
                 self._processObjectEvent(event)
                 if debugging:
+                    debug.println(debug.eventDebugLevel,
+                                  "TOTAL PROCESSING TIME: %.4f" \
+                                  % (time.time() - startTime))
                     debug.println(debug.eventDebugLevel,
                                   "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
                                   % event.type)
