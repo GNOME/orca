@@ -26,6 +26,7 @@ __copyright__ = "Copyright (c) 2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import sys
+import time
 import traceback
 
 import pyatspi
@@ -178,6 +179,7 @@ class Generator:
         - forceTutorial: boolean (default=False) which says if we
           should force a tutorial to be spoken or not
         """
+        startTime = time.time()
         result = []
         globalsDict = {}
         self._addGlobals(globalsDict)
@@ -220,9 +222,11 @@ class Generator:
                 firstTimeCalled = False
 
             details = debug.getAccessibleDetails(debug.LEVEL_ALL, obj)
+            duration = "%.4f" % (time.time() - startTime)
+            debug.println(debug.LEVEL_ALL, "\nPREPARATION TIME: %s" % duration)
             debug.println(
                 debug.LEVEL_ALL,
-                "\ngenerate %s for %s %s (args=%s) using '%s'" \
+                "generate %s for %s %s (args=%s) using '%s'" \
                 % (self._mode,
                    args['formatType'], 
                    details,
@@ -231,6 +235,7 @@ class Generator:
 
             assert(format)
             while True:
+                currentTime = time.time()
                 try:
                     result = eval(format, globalsDict)
                     break
@@ -247,12 +252,16 @@ class Generator:
                             "Unable to find function for '%s'\n" % arg)
                         break
                     globalsDict[arg] = self._methodsDict[arg](obj, **args)
+                    duration = "%.4f" % (time.time() - currentTime)
                     debug.println(debug.LEVEL_ALL,
-                                  "%s=%s" % (arg, repr(globalsDict[arg])))
+                                  "GENERATION  TIME: %s  ---->  %s=%s" \
+                                  % (duration, arg, repr(globalsDict[arg])))
         except:
             debug.printException(debug.LEVEL_SEVERE)
             result = []
 
+        duration = "%.4f" % (time.time() - startTime)
+        debug.println(debug.LEVEL_ALL, "COMPLETION  TIME: %s" % duration)
         debug.println(debug.LEVEL_ALL, "generate %s results:" % self._mode)
         for element in result:
             debug.println(debug.LEVEL_ALL, "  " + str(element))
