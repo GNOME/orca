@@ -1371,7 +1371,7 @@ class Utilities:
         for i in range(obj.childCount - 1, -1, -1):
             if obj[i].getRole() == pyatspi.ROLE_STATUS_BAR:
                 statusBar = obj[i]
-            elif not obj[i] in skipRoles:
+            elif not obj[i].getRole() in skipRoles:
                 statusBar = self.statusBar(obj[i])
 
             if statusBar:
