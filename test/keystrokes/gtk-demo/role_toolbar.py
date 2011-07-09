@@ -30,12 +30,11 @@ sequence.append(utils.AssertPresentationAction(
     ["KNOWN ISSUE - Sometimes we are more verbose here than others. Seems to be a timing issue that needs to be investigated.",
      "BRAILLE LINE:  'Window Application main window $l'",
      "     VISIBLE:  'Window Application main window $', cursor=31",
-     "BRAILLE LINE:  'Window Application main window $l'",
-     "     VISIBLE:  'Window Application main window $', cursor=8",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame'",
      "     VISIBLE:  'Application Window Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
+     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Application main window tree level 1'",
      "SPEECH OUTPUT: 'Application Window frame'",
      "SPEECH OUTPUT: 'Open button'"]))
 
@@ -49,6 +48,9 @@ sequence.append(utils.AssertPresentationAction(
     "Open button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
+     "SPEECH OUTPUT: 'tool bar'",
+     "SPEECH OUTPUT: 'Open'",
+     "SPEECH OUTPUT: 'button'",
      "SPEECH OUTPUT: 'tool bar Open button'"]))
 
 ########################################################################
@@ -85,7 +87,9 @@ sequence.append(utils.AssertPresentationAction(
     "Quit button",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Quit Button'",
      "     VISIBLE:  'Quit Button', cursor=1",
-     "SPEECH OUTPUT: 'Quit button'"]))
+     "SPEECH OUTPUT: 'tool bar'",
+     "SPEECH OUTPUT: 'Quit'",
+     "SPEECH OUTPUT: 'button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.

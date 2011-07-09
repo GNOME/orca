@@ -90,7 +90,9 @@ sequence.append(utils.AssertPresentationAction(
     "bin icon Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
      "     VISIBLE:  'bin Icon', cursor=1",
-     "SPEECH OUTPUT: 'Icon panel bin [0-9] of [0-9]+ items selected on 1 of [0-9]+'"]))
+     "SPEECH OUTPUT: 'Icon panel'",
+     "SPEECH OUTPUT: 'bin'",
+     "SPEECH OUTPUT: '1 of 22 items selected on 1 of 22'"]))
 
 ########################################################################
 # Arrow right and wait for the next icon to be selected.
@@ -126,7 +128,9 @@ sequence.append(utils.AssertPresentationAction(
     "icon selection Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane bin Icon'",
      "     VISIBLE:  'bin Icon', cursor=1",
-     "SPEECH OUTPUT: 'Icon panel bin [0-9] of [0-9]+ items selected on 1 of [0-9]+'"]))
+     "SPEECH OUTPUT: 'Icon panel'",
+     "SPEECH OUTPUT: 'bin'",
+     "SPEECH OUTPUT: '2 of 22 items selected on 1 of 22'"]))
 
 ########################################################################
 # Close the GtkIconView demo window

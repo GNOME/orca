@@ -55,7 +55,12 @@ sequence.append(utils.AssertPresentationAction(
     "Red button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem(Control r)'",
      "     VISIBLE:  '<x> Red CheckItem(Control r)', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Color menu Red check item checked Control r 1 of 3.",
+     "SPEECH OUTPUT: 'Preferences'",
+     "SPEECH OUTPUT: 'menu'"
+     "SPEECH OUTPUT: 'Color'",
+     "SPEECH OUTPUT: 'menu'"
+     "SPEECH OUTPUT: 'Red'",
+     "SPEECH OUTPUT: 'check item checked Control r 1 of 3.'",
      "SPEECH OUTPUT: 'r'"]))
 
 ########################################################################
@@ -87,7 +92,12 @@ sequence.append(utils.AssertPresentationAction(
     "Green button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem(Control g)'",
      "     VISIBLE:  '< > Green CheckItem(Control g)', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Color menu Green check item not checked Control g 2 of 3.",
+     "SPEECH OUTPUT: 'Preferences'",
+     "SPEECH OUTPUT: 'menu'"
+     "SPEECH OUTPUT: 'Color'",
+     "SPEECH OUTPUT: 'menu'"
+     "SPEECH OUTPUT: 'Green'",
+     "SPEECH OUTPUT: 'check item not checked Control g 2 of 3.'",
      "SPEECH OUTPUT: 'g'"]))
 
 ########################################################################

@@ -54,8 +54,10 @@ sequence.append(utils.AssertPresentationAction(
     "All sheets combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: All sheets Combo'",
      "     VISIBLE:  'Only print: All sheets Combo', cursor=13",
-     "SPEECH OUTPUT: 'Only print: combo box All sheets 1 of 3.'",
-     "SPEECH OUTPUT: 'Alt o'"]))
+     "SPEECH OUTPUT: 'Only print:'",
+     "SPEECH OUTPUT: 'combo box'",
+     "SPEECH OUTPUT: 'All sheets'",
+     "SPEECH OUTPUT: '1 of 3'"]))
 
 ########################################################################
 # Down arrow to select the "Even sheets" item in the combo box.
@@ -79,8 +81,10 @@ sequence.append(utils.AssertPresentationAction(
     "Even sheets combo box item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList Page Setup Page Layout Filler Only print: Even sheets Combo'",
      "     VISIBLE:  'Only print: Even sheets Combo', cursor=13",
-     "SPEECH OUTPUT: 'Only print: combo box Even sheets 2 of 3.'",
-     "SPEECH OUTPUT: 'Alt o'"]))
+     "SPEECH OUTPUT: 'Only print:'",
+     "SPEECH OUTPUT: 'combo box'",
+     "SPEECH OUTPUT: 'Even sheets'",
+     "SPEECH OUTPUT: '2 of 3'"]))
 
 ########################################################################
 # Put things back the way they were and close the demo.

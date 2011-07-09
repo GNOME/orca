@@ -26,11 +26,11 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "OK button",
-    ["BRAILLE LINE:  'Window Button Boxes $l'",
-     "     VISIBLE:  'Window Button Boxes $l', cursor=20",
-     "BRAILLE LINE:  'Window Button Boxes $l'",
-     "     VISIBLE:  'Window Button Boxes $l', cursor=8",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes TREE LEVEL 1'",
+    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes TREE LEVEL 1",
      "     VISIBLE:  'Button Boxes TREE LEVEL 1', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Button Boxes Frame'",
      "     VISIBLE:  'Button Boxes Frame', cursor=1",
@@ -50,7 +50,8 @@ sequence.append(utils.AssertPresentationAction(
     "OK button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
-     "SPEECH OUTPUT: 'OK button.",
+     "SPEECH OUTPUT: 'OK",
+     "SPEECH OUTPUT: 'button.",
      "SPEECH OUTPUT: 'Alt o'"]))
 
 ########################################################################

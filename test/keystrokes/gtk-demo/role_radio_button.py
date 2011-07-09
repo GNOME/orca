@@ -34,7 +34,13 @@ sequence.append(utils.AssertPresentationAction(
     "All Pages radio button",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range All Pages selected radio button'"]))
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog'",
+     "     VISIBLE:  'Print Dialog', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
+     "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
+     "SPEECH OUTPUT: 'Range All Pages selected radio button'",
+     "SPEECH OUTPUT: 'Print Range Copies'",
+     "SPEECH OUTPUT: 'General page Range All Pages selected radio button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -46,7 +52,8 @@ sequence.append(utils.AssertPresentationAction(
     "All Pages radio button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog TabList General Page Range &=y All Pages RadioButton'",
      "     VISIBLE:  '&=y All Pages RadioButton', cursor=1",
-     "SPEECH OUTPUT: 'Range All Pages radio button selected 1 of 3.'",
+     "SPEECH OUTPUT: 'Range All Pages'",
+     "SPEECH OUTPUT: 'radio button selected 1 of 3.'",
      "SPEECH OUTPUT: 'Alt a'"]))
 
 # WDW - the printing dialog changed for 2.27.x - the pages radio button

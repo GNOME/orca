@@ -29,14 +29,22 @@ sequence.append(KeyComboAction("Return", 500))
 #sequence.append(WaitForWindowActivate("UI Manager"))
 sequence.append(WaitForFocus("close", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Alt>f"))
+
+# For some reason we're not getting the events we need to present the
+# first item in a menu. This is new to Gtk+ 3, but not to the Gail
+# integration into Gtk+. This Down+Up hack will trigger what we need
+# for this test in the meantime.
+sequence.append(KeyComboAction("Down"))
+sequence.append(KeyComboAction("Up"))
+
+sequence.append(utils.StartRecordingAction())
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "New menu item",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
      "     VISIBLE:  'New(Control n)', cursor=1",
-     "SPEECH OUTPUT: 'File menu New Control n'"]))
+     "SPEECH OUTPUT: 'New Control n'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
@@ -49,7 +57,10 @@ sequence.append(utils.AssertPresentationAction(
     "New menu item Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
      "     VISIBLE:  'New(Control n)', cursor=1",
-     "SPEECH OUTPUT: 'File menu New Control n 1 of 5.",
+     "SPEECH OUTPUT: 'File'",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: 'New'",
+     "SPEECH OUTPUT: 'Control n 1 of 5.'",
      "SPEECH OUTPUT: 'n'"]))
 
 ########################################################################

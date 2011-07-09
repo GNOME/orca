@@ -142,7 +142,9 @@ sequence.append(utils.AssertPresentationAction(
     "Home to 1 tab",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane 	 $l'",
      "     VISIBLE:  '	 $l', cursor=1",
-     "SPEECH OUTPUT: '1 tab '",
+     "SPEECH OUTPUT: 'left control'",
+     "SPEECH OUTPUT: 'home'",
+     "SPEECH OUTPUT: '1 tab ' voice=system",
      "SPEECH OUTPUT: '	'"]))
 
 sequence.append(utils.StartRecordingAction())

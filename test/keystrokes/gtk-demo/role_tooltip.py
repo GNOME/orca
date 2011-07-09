@@ -53,7 +53,8 @@ sequence.append(utils.AssertPresentationAction(
     "Hide Open tooltip",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
-     "SPEECH OUTPUT: 'Open button'"]))
+     "SPEECH OUTPUT: 'Open'",
+     "SPEECH OUTPUT: 'button'"]))
 
 ########################################################################
 # Move on to the Quit button.  Check its tooltip.
@@ -90,7 +91,8 @@ sequence.append(utils.AssertPresentationAction(
     "Hide Quit tooltip",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Quit Button'",
      "     VISIBLE:  'Quit Button', cursor=1",
-     "SPEECH OUTPUT: 'Quit button'"]))
+     "SPEECH OUTPUT: 'Quit'",
+     "SPEECH OUTPUT: 'button'"]))
 
 ########################################################################
 # Move on to the GTK! button.  Check its tooltip.
@@ -125,7 +127,8 @@ sequence.append(utils.AssertPresentationAction(
     "Hide GTK+ tooltip",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar GTK! Button'",
      "     VISIBLE:  'GTK! Button', cursor=1",
-     "SPEECH OUTPUT: 'GTK! button'"]))
+     "SPEECH OUTPUT: 'GTK!'",
+     "SPEECH OUTPUT: 'button'"]))
 
 ########################################################################
 # Go back to the main gtk-demo window and reselect the

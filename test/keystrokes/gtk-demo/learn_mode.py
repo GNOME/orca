@@ -37,7 +37,7 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'Reads the attributes associated with the current text character.'",
      "     VISIBLE:  'Reads the attributes associated ', cursor=0",
      "SPEECH OUTPUT: 'insert'",
-     "SPEECH OUTPUT: 'Reads the attributes associated with the current text character.'"]))
+     "SPEECH OUTPUT: 'Reads the attributes associated with the current text character.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -47,24 +47,30 @@ sequence.append(utils.AssertPresentationAction(
     "Orca command: bring up preferences",
     ["BRAILLE LINE:  'KP_Insert'",
      "     VISIBLE:  'KP_Insert', cursor=0",
+     "BRAILLE LINE:  'KP_Insert'",
+     "     VISIBLE:  'KP_Insert', cursor=0",
      "BRAILLE LINE:  'Displays the preferences configuration dialog.'",
      "     VISIBLE:  'Displays the preferences configu', cursor=0",
      "SPEECH OUTPUT: 'insert'",
-     "SPEECH OUTPUT: 'Displays the preferences configuration dialog.'"]))
+     "SPEECH OUTPUT: 'Displays the preferences configuration dialog.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))
 sequence.append(utils.AssertPresentationAction(
     "Orca command: flat review current word",
-    ["BRAILLE LINE:  'Speaks the current flat review item or word.'",
+    ["BRAILLE LINE:  'KP_Insert'",
+     "     VISIBLE:  'KP_Insert', cursor=0",
+     "BRAILLE LINE:  'Speaks the current flat review item or word.'",
      "     VISIBLE:  'Speaks the current flat review i', cursor=0",
-     "SPEECH OUTPUT: 'Speaks the current flat review item or word.'"]))
+     "SPEECH OUTPUT: 'Speaks the current flat review item or word.' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("5"))
 sequence.append(utils.AssertPresentationAction(
     "Regular typing command",
-    ["BRAILLE LINE:  '5'",
+    ["BRAILLE LINE:  'KP_Insert'",
+     "     VISIBLE:  'KP_Insert', cursor=0",
+     "BRAILLE LINE:  '5'",
      "     VISIBLE:  '5', cursor=0",
      "SPEECH OUTPUT: '5'"]))
 

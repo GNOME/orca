@@ -30,10 +30,12 @@ sequence.append(WaitAction("object:state-changed:focused",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Dialog automatic reading",
-    ["BRAILLE LINE:  'Window Expander $l'",
-     "     VISIBLE:  'Window Expander $l', cursor=16",
-     "BRAILLE LINE:  'Window Expander $l'",
-     "     VISIBLE:  'Window Expander $l', cursor=8",
+    ["BRAILLE LINE:  'gtk-demo Application Window Expander $l'",
+     "     VISIBLE:  'emo Application Window Exp $l ', cursor=32",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Expander TREE LEVEL 1'",
      "     VISIBLE:  'Expander TREE LEVEL 1', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog'",
@@ -54,7 +56,8 @@ sequence.append(utils.AssertPresentationAction(
     "Dialog Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
      "     VISIBLE:  '& y Details ToggleButton', cursor=1",
-     "SPEECH OUTPUT: 'Details toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'Details'",
+     "SPEECH OUTPUT: 'toggle button not pressed'"]))
 
 ########################################################################
 # Now close the demo and leave.

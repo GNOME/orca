@@ -26,11 +26,15 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.AssertPresentationAction(
     "General page tab",
-    ["BRAILLE LINE:  'Window Printing $l'",
-     "     VISIBLE:  'Window Printing $l', cursor=16",
-     "BRAILLE LINE:  'Window Printing $l'",
-     "     VISIBLE:  'Window Printing $l', cursor=8",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing TREE LEVEL 1'",
+    ["BRAILLE LINE:  'gtk-demo Application Window Pri $l'",
+     "     VISIBLE:  'emo Application Window Pri $l', cursor=32",
+     "BRAILLE LINE:  'gtk-demo Application Window Printing $l'",
+     "     VISIBLE:  'emo Application Window Printing ', cursor=32",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page scroll pane TreeTable Widget (double click for demo) ColumnHeader Expander TREE LEVEL 1'",
      "     VISIBLE:  'Printing TREE LEVEL 1', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog'",
      "     VISIBLE:  'Print Dialog', cursor=1",
@@ -53,7 +57,9 @@ sequence.append(utils.AssertPresentationAction(
     "General page tab Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list General page 1 of 2'"]))
+     "SPEECH OUTPUT: 'tab list'",
+     "SPEECH OUTPUT: 'General'",
+     "SPEECH OUTPUT: 'page 1 of 2'"]))
 
 ########################################################################
 # Arrow Right to the "Page Setup" tab.
@@ -77,7 +83,9 @@ sequence.append(utils.AssertPresentationAction(
     "Page Setup page tab Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Print Dialog Page Setup Page'",
      "     VISIBLE:  'Page Setup Page', cursor=1",
-     "SPEECH OUTPUT: 'tab list Page Setup page 2 of 2'"]))
+     "SPEECH OUTPUT: 'tab list'",
+     "SPEECH OUTPUT: 'Page Setup'",
+     "SPEECH OUTPUT: 'page 2 of 2'"]))
 
 ########################################################################
 # Close the demo

@@ -35,10 +35,16 @@ sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Information Alert automatic presentation",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert'", 
+    ["BRAILLE LINE:  'gtk-demo Application Dialogs Frame (1 dialog)'",
+     "     VISIBLE:  'Dialogs Frame (1 dialog)', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Dialogs Frame (1 dialog) Dialogs Panel Message Dialog Button'",
+     "     VISIBLE:  'Message Dialog Button', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert'", 
      "     VISIBLE:  'Information Alert', cursor=1", 
      "BRAILLE LINE:  'gtk-demo Application Information Alert OK Button'", 
      "     VISIBLE:  'OK Button', cursor=1", 
+     "SPEECH OUTPUT: 'Dialogs frame 1 unfocused dialog'",
+     "SPEECH OUTPUT: 'Dialogs panel Message Dialog button'",
      "SPEECH OUTPUT: 'Information This message box has been popped up the following", 
      "number of times: 1'", 
      "SPEECH OUTPUT: 'OK button'"]))
@@ -75,10 +81,16 @@ sequence.append(KeyComboAction("<Alt>i", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(utils.AssertPresentationAction(
     "Interactive Dialog no automatic presentation",
-    ["BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog'",
+    ["BRAILLE LINE:  'gtk-demo Application Dialogs Frame (1 dialog)'",
+     "     VISIBLE:  'Dialogs Frame (1 dialog)', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Dialogs Frame (1 dialog) Dialogs Panel Entry 2 Again $l'",
+     "     VISIBLE:  'Entry 2 Again $l', cursor=14",
+     "BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog'",
      "     VISIBLE:  'Interactive Dialog Dialog', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Interactive Dialog Dialog Entry 1 Testing $l'",
      "     VISIBLE:  'Entry 1 Testing $l', cursor=16",
+     "SPEECH OUTPUT: 'Dialogs frame 1 unfocused dialog'",
+     "SPEECH OUTPUT: 'Dialogs panel Entry 2 text Again'",
      "SPEECH OUTPUT: 'Interactive Dialog'",
      "SPEECH OUTPUT: 'Entry 1 text Testing selected'"]))
 

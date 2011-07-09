@@ -38,6 +38,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  '& y Details ToggleButton', cursor=1",
      "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Expander tree level 1'",
      "SPEECH OUTPUT: 'GtkExpander Expander demo. Click on the triangle for details.'",
+     "SPEECH OUTPUT: 'Details'",
      "SPEECH OUTPUT: 'Details toggle button not pressed'"]))
 
 ########################################################################
@@ -50,7 +51,8 @@ sequence.append(utils.AssertPresentationAction(
     "Toggle button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
      "     VISIBLE:  '& y Details ToggleButton', cursor=1",
-     "SPEECH OUTPUT: 'Details toggle button not pressed'"]))
+     "SPEECH OUTPUT: 'Details'",
+     "SPEECH OUTPUT: 'toggle button not pressed'"]))
 
 ########################################################################
 # Toggle the state of the "Details" button.
@@ -78,7 +80,8 @@ sequence.append(utils.AssertPresentationAction(
     "Toggle button pressed Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog &=y Details ToggleButton'",
      "     VISIBLE:  '&=y Details ToggleButton', cursor=1",
-     "SPEECH OUTPUT: 'Details toggle button pressed'"]))
+     "SPEECH OUTPUT: 'Details'",
+     "SPEECH OUTPUT: 'toggle button pressed'"]))
 
 ########################################################################
 # Toggle the state of the "Details" button.

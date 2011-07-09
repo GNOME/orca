@@ -471,7 +471,7 @@ sequence.append(TypeAction("f"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Insert+f for text attributes",
-    ["SPEECH OUTPUT: 'size 10'",
+    ["SPEECH OUTPUT: 'size 11' voice=system",
      "SPEECH OUTPUT: 'family name Sans'"]))
 
 sequence.append(utils.StartRecordingAction())

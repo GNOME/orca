@@ -27,7 +27,6 @@ sequence.append(KeyComboAction("Return", 500))
 #
 #sequence.append(WaitForWindowActivate("Application Window",None))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("F10"))
 sequence.append(WaitForFocus("File",
                              acc_role=pyatspi.ROLE_MENU))
@@ -47,7 +46,9 @@ sequence.append(utils.AssertPresentationAction(
     "File menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
      "     VISIBLE:  'File Menu', cursor=1",
-     "SPEECH OUTPUT: 'menu bar File menu 1 of 3.",
+     "SPEECH OUTPUT: 'menu bar",
+     "SPEECH OUTPUT: 'File'",
+     "SPEECH OUTPUT: 'menu 1 of 3.'",
      "SPEECH OUTPUT: 'f'"]))
 
 ########################################################################
@@ -73,12 +74,15 @@ sequence.append(utils.AssertPresentationAction(
     "Preferences menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame Preferences Menu'",
      "     VISIBLE:  'Preferences Menu', cursor=1",
-     "SPEECH OUTPUT: 'menu bar Preferences menu 2 of 3.",
+     "SPEECH OUTPUT: 'menu bar",
+     "SPEECH OUTPUT: 'Preferences",
+     "SPEECH OUTPUT: 'menu 2 of 3.",
      "SPEECH OUTPUT: 'p'"]))
 
 ########################################################################
 # Go down to the "Color" menu.
 #
+sequence.append(KeyComboAction("Down"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Color",
@@ -99,7 +103,10 @@ sequence.append(utils.AssertPresentationAction(
     "Color menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
      "     VISIBLE:  'Color Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Color menu 1 of 3.",
+     "SPEECH OUTPUT: 'Preferences",
+     "SPEECH OUTPUT: 'menu",
+     "SPEECH OUTPUT: 'Color",
+     "SPEECH OUTPUT: 'menu 2 of 4.",
      "SPEECH OUTPUT: 'c'"]))
 
 ########################################################################
@@ -125,7 +132,10 @@ sequence.append(utils.AssertPresentationAction(
     "Shape menu Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Shape Menu'",
      "     VISIBLE:  'Shape Menu', cursor=1",
-     "SPEECH OUTPUT: 'Preferences menu Shape menu 2 of 3.",
+     "SPEECH OUTPUT: 'Preferences",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: 'Shape'",
+     "SPEECH OUTPUT: 'menu 3 of 4.'",
      "SPEECH OUTPUT: 's'"]))
 
 ########################################################################

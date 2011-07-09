@@ -98,7 +98,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This is a test.  $l', cursor=17",
      "SPEECH OUTPUT: '",
      "This is only a test.'",
-     "SPEECH OUTPUT: 'unselected'"]))
+     "SPEECH OUTPUT: 'unselected' voice=system"]))
 
 ########################################################################
 # Test #4 - Shift+Down to deselect text.
