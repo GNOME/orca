@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-06-13 10:51+0000\n"
+"POT-Creation-Date: 2011-07-10 08:01+0000\n"
 "PO-Revision-Date: 2011-06-19 12:02+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -1704,7 +1704,7 @@ msgstr "Servicios de voz Emacsspeak"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/event_manager.py:261
+#: ../src/orca/event_manager.py:265
 msgid "No focus"
 msgstr "Sin foco"
 
@@ -1736,13 +1736,13 @@ msgstr "Saltando al principio"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:1098
+#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:941
 msgid "partially checked"
 msgstr "parcialmente marcado"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:1097
+#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:940
 msgid "checked"
 msgstr "marcado"
 
@@ -1751,13 +1751,13 @@ msgstr "marcado"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:1096
+#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:939
 msgid "not checked"
 msgstr "no marcado"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:1109
+#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:952
 msgid "pressed"
 msgstr "pulsado"
 
@@ -1766,14 +1766,14 @@ msgstr "pulsado"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:1109
+#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:952
 msgid "not pressed"
 msgstr "no pulsado"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:1104
+#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:947
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seleccionado"
@@ -1784,7 +1784,7 @@ msgstr "seleccionado"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:1103
+#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:946
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "no seleccionado"
@@ -1816,9 +1816,9 @@ msgstr[1] "%d porciento."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:444
-#: ../src/orca/generator.py:701 ../src/orca/generator.py:743
-#: ../src/orca/generator.py:789
+#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:453
+#: ../src/orca/generator.py:710 ../src/orca/generator.py:752
+#: ../src/orca/generator.py:798
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:643
@@ -3232,7 +3232,7 @@ msgstr "Informe de errores a orca-list@gnome.org."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:698 ../src/orca/orca.py:2096
+#: ../src/orca/orca.py:698 ../src/orca/orca.py:2094
 msgid "Goodbye."
 msgstr "Adiós."
 
@@ -3435,14 +3435,14 @@ msgstr "triple pulsación"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2229
+#: ../src/orca/orca.py:2227
 msgid "Unable to import profile."
 msgstr "No se pudo importar el perfil."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2235
+#: ../src/orca/orca.py:2233
 msgid "Profile import success."
 msgstr "Importación de perfil exitosa."
 
@@ -3450,12 +3450,12 @@ msgstr "Importación de perfil exitosa."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2241
+#: ../src/orca/orca.py:2239
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "Importación fallida debido a una clave desconocida: %s"
 
-#: ../src/orca/orca.py:2310
+#: ../src/orca/orca.py:2308
 msgid "Welcome to Orca."
 msgstr "Bienvenido a Orca."
 
@@ -3482,11 +3482,6 @@ msgid "_Profile Name:"
 msgstr "Nombre del _perfil:"
 
 #: ../src/orca/orca-quit.ui.h:1
-#| msgid ""
-#| "<b><big>Quit Orca?</big></b>\n"
-#| "\n"
-#| "This will stop all speech output and screen magnification.\n"
-#| "\n"
 msgid ""
 "<b><big>Quit Orca?</big></b>\n"
 "\n"
@@ -5634,7 +5629,7 @@ msgstr "Botón de directorios"
 #: ../src/orca/scripts/default.py:2347 ../src/orca/scripts/default.py:4438
 #: ../src/orca/scripts/default.py:4448
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5370
-#: ../src/orca/settings.py:1073 ../src/orca/speech_generator.py:683
+#: ../src/orca/settings.py:916 ../src/orca/speech_generator.py:683
 #: ../src/orca/speech_generator.py:1036
 #: ../src/orca/structural_navigation.py:3602
 msgid "blank"
@@ -8059,14 +8054,14 @@ msgstr[1] "leído %d por ciento del documento"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1081 ../src/orca/settings.py:1158
+#: ../src/orca/settings.py:924 ../src/orca/settings.py:1001
 msgid "required"
 msgstr "requerido"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:1086
+#: ../src/orca/settings.py:929
 msgctxt "text"
 msgid "read only"
 msgstr "sólo lectura"
@@ -8074,7 +8069,7 @@ msgstr "sólo lectura"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:1091 ../src/orca/settings.py:1169
+#: ../src/orca/settings.py:934 ../src/orca/settings.py:1012
 msgid "grayed"
 msgstr "sombreado"
 
@@ -8082,18 +8077,18 @@ msgstr "sombreado"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:1115 ../src/orca/settings.py:1181
+#: ../src/orca/settings.py:958 ../src/orca/settings.py:1024
 msgid "collapsed"
 msgstr "contraído"
 
-#: ../src/orca/settings.py:1115 ../src/orca/settings.py:1181
+#: ../src/orca/settings.py:958 ../src/orca/settings.py:1024
 msgid "expanded"
 msgstr "expandido"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:1120
+#: ../src/orca/settings.py:963
 msgid "multi-select"
 msgstr "selección-múltiple"
 
@@ -8101,7 +8096,7 @@ msgstr "selección-múltiple"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:1126
+#: ../src/orca/settings.py:969
 #, python-format
 msgid "tree level %d"
 msgstr "nivel de árbol %d"
@@ -8116,7 +8111,7 @@ msgstr "nivel de árbol %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1133 ../src/orca/structural_navigation.py:2955
+#: ../src/orca/settings.py:976 ../src/orca/structural_navigation.py:2955
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nivel de anidamiento %d"
@@ -8125,7 +8120,7 @@ msgstr "Nivel de anidamiento %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:1139
+#: ../src/orca/settings.py:982
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "sobre %(index)d de %(total)d"
@@ -8134,7 +8129,7 @@ msgstr "sobre %(index)d de %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:1145
+#: ../src/orca/settings.py:988
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d de %(total)d"
@@ -8143,7 +8138,7 @@ msgstr "%(index)d de %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:1164
+#: ../src/orca/settings.py:1007
 msgctxt "text"
 msgid "rdonly"
 msgstr "sólolec"
@@ -8152,7 +8147,7 @@ msgstr "sólolec"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1187
+#: ../src/orca/settings.py:1030
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVEL DE ÁRBOL %d"
@@ -8163,7 +8158,7 @@ msgstr "NIVEL DE ÁRBOL %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1195
+#: ../src/orca/settings.py:1038
 #, python-format
 msgid "LEVEL %d"
 msgstr "NIVEL %d"
@@ -8173,7 +8168,7 @@ msgstr "NIVEL %d"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1228
+#: ../src/orca/settings.py:1071
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H horas, %M minutos y %S segundos."
 
@@ -8182,7 +8177,7 @@ msgstr "%H horas, %M minutos y %S segundos."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1235
+#: ../src/orca/settings.py:1078
 msgid "%H hours and %M minutes."
 msgstr "%H horas y %M minutos."
 

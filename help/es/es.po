@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-05-29 17:06+0000\n"
-"PO-Revision-Date: 2011-06-11 14:32+0200\n"
+"POT-Creation-Date: 2011-07-10 08:01+0000\n"
+"PO-Revision-Date: 2011-07-10 13:15+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3703,6 +3703,8 @@ msgid ""
 "If you are on a link, the type of link (same site, different site, FTP link, "
 "etc.) will be included."
 msgstr ""
+"Si está sobre un enlace, se incluirá el tipo de enlace (mismo sitio, "
+"diferente sitio, enlace FTP, etc.)."
 
 #: C/howto_whereami.page:89(p)
 msgid ""
@@ -3885,7 +3887,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:21(title)
 msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
-msgstr ""
+msgstr "Lanzar la guía de configuración en modo texto de <app>Orca</app>"
 
 #: C/howto_text_setup.page:23(p)
 msgid ""
@@ -4062,7 +4064,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:178(p)
 msgid "Automatically start <app>Orca</app> when you log in"
-msgstr ""
+msgstr "Iniciar automáticamente <app>Orca</app> al iniciar sesión"
 
 #: C/howto_text_setup.page:179(p)
 msgid ""
@@ -4088,7 +4090,7 @@ msgstr "2. Atributos de texto"
 
 #: C/howto_text_attributes.page:6(desc)
 msgid "Examining text formatting"
-msgstr ""
+msgstr "Examinar el formato del texto"
 
 #: C/howto_text_attributes.page:18(p)
 msgid ""
@@ -4099,7 +4101,7 @@ msgstr ""
 
 #: C/howto_text_attributes.page:24(title)
 msgid "Obtaining Formatting Information"
-msgstr ""
+msgstr "Obtener información del formato"
 
 #: C/howto_text_attributes.page:25(p)
 msgid ""
