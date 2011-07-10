@@ -22,14 +22,19 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Application main window", 1000))
 
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return", 500))
-#sequence.append(WaitForWindowActivate("Application Window",None))
+sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(3000))
+sequence.append(WaitForWindowActivate("Application Window",None))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Open button initial focus",
     ["KNOWN ISSUE - Sometimes we are more verbose here than others. Seems to be a timing issue that needs to be investigated.",
-     "BRAILLE LINE:  'Window Application main window $l'",
-     "     VISIBLE:  'Window Application main window $', cursor=31",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Application main window TREE LEVEL 1'",
+     "     VISIBLE:  'Application main window TREE LEV', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame'",
      "     VISIBLE:  'Application Window Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
@@ -50,8 +55,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Open Button', cursor=1",
      "SPEECH OUTPUT: 'tool bar'",
      "SPEECH OUTPUT: 'Open'",
-     "SPEECH OUTPUT: 'button'",
-     "SPEECH OUTPUT: 'tool bar Open button'"]))
+     "SPEECH OUTPUT: 'button'"]))
 
 ########################################################################
 # Arrow Right to the triangular button next to the "Open" button.
@@ -87,9 +91,7 @@ sequence.append(utils.AssertPresentationAction(
     "Quit button",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Quit Button'",
      "     VISIBLE:  'Quit Button', cursor=1",
-     "SPEECH OUTPUT: 'tool bar'",
-     "SPEECH OUTPUT: 'Quit'",
-     "SPEECH OUTPUT: 'button'"]))
+     "SPEECH OUTPUT: 'Quit button'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -101,7 +103,9 @@ sequence.append(utils.AssertPresentationAction(
     "Quit button Where Am I",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Quit Button'",
      "     VISIBLE:  'Quit Button', cursor=1",
-     "SPEECH OUTPUT: 'tool bar Quit button'"]))
+     "SPEECH OUTPUT: 'tool bar'",
+     "SPEECH OUTPUT: 'Quit'",
+     "SPEECH OUTPUT: 'button'"]))
 
 ########################################################################
 # Close the Application Window demo window

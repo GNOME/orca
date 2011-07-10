@@ -30,9 +30,7 @@ sequence.append(WaitAction("object:state-changed:focused",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Dialog automatic reading",
-    ["BRAILLE LINE:  'gtk-demo Application Window Expander $l'",
-     "     VISIBLE:  'emo Application Window Exp $l ', cursor=32",
-     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
      "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application Window  $l'",
      "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",

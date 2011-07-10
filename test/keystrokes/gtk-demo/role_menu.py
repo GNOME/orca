@@ -32,7 +32,8 @@ sequence.append(WaitForFocus("File",
                              acc_role=pyatspi.ROLE_MENU))
 sequence.append(utils.AssertPresentationAction(
     "File menu",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
+    ["KNOWN ISSUE - Gtk+ 3 stopped giving us expected events for the first selected/focused item in a menu when the menu is first opened. This is not new to the Gail integration into Gtk+",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
      "     VISIBLE:  'File Menu', cursor=1",
      "SPEECH OUTPUT: 'File menu'"]))
 
@@ -44,7 +45,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "File menu Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
+    ["KNOWN ISSUE - Gtk+ 3 stopped giving us expected events for the first selected/focused item in a menu when the menu is first opened. This is not new to the Gail integration into Gtk+",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame File Menu'",
      "     VISIBLE:  'File Menu', cursor=1",
      "SPEECH OUTPUT: 'menu bar",
      "SPEECH OUTPUT: 'File'",

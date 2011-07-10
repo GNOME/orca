@@ -30,7 +30,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application Window  $l'",
      "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes TREE LEVEL 1",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes TREE LEVEL 1'",
      "     VISIBLE:  'Button Boxes TREE LEVEL 1', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Button Boxes Frame'",
      "     VISIBLE:  'Button Boxes Frame', cursor=1",

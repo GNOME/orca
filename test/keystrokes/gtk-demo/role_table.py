@@ -34,35 +34,20 @@ sequence.append(TypeAction("Editable Cells", 1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
-
-# [WDW - on Solaris, the table comes up with focus.  On 
-# Ubuntu, it doesn't.  So, we conditionally add steps to
-# handle this difference -- on Ubuntu, we need to down
-# arrow to give the table focus.
-#
-import os
-if not os.sys.platform.startswith("sun"):
-    sequence.append(WaitForWindowActivate("Shopping list",None))
-    sequence.append(KeyComboAction("Down"))
-
-sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "Table initial focus",
-    ["BRAILLE LINE:  'Window Editable Cells $l'",
-     "     VISIBLE:  'Window Editable Cells $l', cursor=22",
-     "BRAILLE LINE:  'Window Editable Cells $l'",
-     "     VISIBLE:  'Window Editable Cells $l', cursor=8",
+    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Editable Cells TREE LEVEL 2'",
      "     VISIBLE:  'Editable Cells TREE LEVEL 2', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Shopping list Frame'",
      "     VISIBLE:  'Shopping list Frame', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table'",
-     "     VISIBLE:  'Table', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
      "     VISIBLE:  '3 bottles of coke', cursor=1",
      "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Editable Cells tree level 2'",
      "SPEECH OUTPUT: 'Shopping list frame'",
-     "SPEECH OUTPUT: 'table'",
      "SPEECH OUTPUT: 'Number column header 3 bottles of coke'"]))
 
 ########################################################################
@@ -82,11 +67,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
-sequence.append(WaitAction("object:active-descendant-changed",
-                           None,
-                           None,
-                           pyatspi.ROLE_TABLE,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Table down one line",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles'",

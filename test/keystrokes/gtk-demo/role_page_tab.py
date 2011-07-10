@@ -26,15 +26,11 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
 sequence.append(utils.AssertPresentationAction(
     "General page tab",
-    ["BRAILLE LINE:  'gtk-demo Application Window Pri $l'",
-     "     VISIBLE:  'emo Application Window Pri $l', cursor=32",
-     "BRAILLE LINE:  'gtk-demo Application Window Printing $l'",
-     "     VISIBLE:  'emo Application Window Printing ', cursor=32",
-     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
      "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application Window  $l'",
      "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page scroll pane TreeTable Widget (double click for demo) ColumnHeader Expander TREE LEVEL 1'",
+     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing TREE LEVEL 1'",
      "     VISIBLE:  'Printing TREE LEVEL 1', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog'",
      "     VISIBLE:  'Print Dialog', cursor=1",

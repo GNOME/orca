@@ -125,7 +125,7 @@ sequence.append(WaitAction("object:text-selection-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret select 'his' of 'This'",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has   $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
      "     VISIBLE:  'This message box has  $l', cursor=5",
      "SPEECH OUTPUT: 'his'",
      "SPEECH OUTPUT: 'selected' voice=system"]))
@@ -153,7 +153,7 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret selection Extended Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has   $l'",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
      "     VISIBLE:  'This message box has  $l', cursor=5",
      "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
      "     VISIBLE:  'This message box has  $l', cursor=5",

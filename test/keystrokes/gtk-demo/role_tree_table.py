@@ -34,15 +34,18 @@ sequence.append(TypeAction("Tree Store", 1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
+
+sequence.append(KeyComboAction("<Shift>ISO_Left_Tab", 500))
+
 #sequence.append(WaitForWindowActivate("Card planning sheet",None))
 sequence.append(WaitForFocus("Holiday",
                              acc_role=pyatspi.ROLE_TABLE_COLUMN_HEADER))
 sequence.append(utils.AssertPresentationAction(
     "Tree table initial focus",
-    ["BRAILLE LINE:  'Window Tree Store $l'",
-     "     VISIBLE:  'Window Tree Store $l', cursor=18",
-     "BRAILLE LINE:  'Window Tree Store $l'",
-     "     VISIBLE:  'Window Tree Store $l', cursor=8",
+    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Tree Store TREE LEVEL 2'",
      "     VISIBLE:  'Tree Store TREE LEVEL 2', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Card planning sheet Frame'",

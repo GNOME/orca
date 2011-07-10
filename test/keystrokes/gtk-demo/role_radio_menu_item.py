@@ -29,6 +29,7 @@ sequence.append(KeyComboAction("Return", 500))
 #sequence.append(WaitForWindowActivate("Application Window",None))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("<Alt>p"))
+sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Color", acc_role=pyatspi.ROLE_MENU))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Right"))
@@ -56,9 +57,9 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem(Control r)'",
      "     VISIBLE:  '<x> Red CheckItem(Control r)', cursor=1",
      "SPEECH OUTPUT: 'Preferences'",
-     "SPEECH OUTPUT: 'menu'"
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu'"
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Red'",
      "SPEECH OUTPUT: 'check item checked Control r 1 of 3.'",
      "SPEECH OUTPUT: 'r'"]))
@@ -93,9 +94,9 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem(Control g)'",
      "     VISIBLE:  '< > Green CheckItem(Control g)', cursor=1",
      "SPEECH OUTPUT: 'Preferences'",
-     "SPEECH OUTPUT: 'menu'"
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Color'",
-     "SPEECH OUTPUT: 'menu'"
+     "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Green'",
      "SPEECH OUTPUT: 'check item not checked Control g 2 of 3.'",
      "SPEECH OUTPUT: 'g'"]))
