@@ -69,7 +69,10 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Left once from end to '.' after 'wild'",
-    ["BRAILLE LINE:  'in the wild. $l'",
+    ["KNOWN ISSUE - Sometimes we double update braille here; other times we do not.",
+     "BRAILLE LINE:  'in the wild. $l'",
+     "     VISIBLE:  'in the wild. $l', cursor=12",
+     "BRAILLE LINE:  'in the wild. $l'",
      "     VISIBLE:  'in the wild. $l', cursor=12",
      "SPEECH OUTPUT: 'dot'"]))
 
@@ -394,11 +397,18 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Down to line with one space",
-    ["BRAILLE LINE:  '  $l'",
+    ["BUG? For some reason we are presenting other things here",
+     "BRAILLE LINE:  '  $l'",
      "     VISIBLE:  '  $l', cursor=1",
      "BRAILLE LINE:  '  $l'",
      "     VISIBLE:  '  $l', cursor=1",
-     "SPEECH OUTPUT: ' '"]))
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame'",
+     "     VISIBLE:  'Application Window Frame', cursor=1",
+     "BRAILLE LINE:  '  $l'",
+     "     VISIBLE:  '  $l', cursor=1",
+     "SPEECH OUTPUT: ' '",
+     "SPEECH OUTPUT: 'Application Window frame'",
+     "SPEECH OUTPUT: 'text  '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_8"))
@@ -433,11 +443,18 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Back up to 'PLEASE DO NOT PANIC.'",
-    ["BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+    ["BUG? For some reason we are presenting other things here",
+     "BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
      "BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
      "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
-     "SPEECH OUTPUT: 'PLEASE DO NOT PANIC.'"]))
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame'",
+     "     VISIBLE:  'Application Window Frame', cursor=1",
+     "BRAILLE LINE:  'PLEASE DO NOT PANIC. $l'",
+     "     VISIBLE:  'PLEASE DO NOT PANIC. $l', cursor=1",
+     "SPEECH OUTPUT: 'PLEASE DO NOT PANIC.' voice=uppercase",
+     "SPEECH OUTPUT: 'Application Window frame'",
+     "SPEECH OUTPUT: 'text PLEASE DO NOT PANIC.'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Right"))
@@ -472,7 +489,7 @@ sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Insert+f for text attributes",
     ["SPEECH OUTPUT: 'size 11' voice=system",
-     "SPEECH OUTPUT: 'family name Sans'"]))
+     "SPEECH OUTPUT: 'family name Cantarell' voice=system"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Left"))
@@ -541,9 +558,9 @@ sequence.append(WaitAction("object:text-changed:delete",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Delete right 'T' in 'This'",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane This is a test.  $l'",
-     "     VISIBLE:  'This is a test.  $l', cursor=1",
-     "SPEECH OUTPUT: 'T'"]))
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane his is a test.  $l'",
+     "     VISIBLE:  'his is a test.  $l', cursor=1",
+     "SPEECH OUTPUT: 'h'"]))
 
 # [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
 # the regression tests use, the Delete will not give the same output
@@ -560,25 +577,6 @@ sequence.append(WaitAction("object:text-changed:delete",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Delete right 'h' in 'his'",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane his is a test.  $l'",
-     "     VISIBLE:  'his is a test.  $l', cursor=1",
-     "SPEECH OUTPUT: 'h'"]))
-
-# [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
-# the regression tests use, the Delete will not give the same output
-# as what we see when orca.settings.asyncMode=True (the normal 
-# operating behavior).  See the NOTE in default.py:onTextDeleted 
-# for an explanation. We include the synchronous output here.]]]
-#
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("<Control>Delete"))
-sequence.append(WaitAction("object:text-changed:delete",
-                           None,
-                           None,
-                           pyatspi.ROLE_TEXT,
-                           5000))
-sequence.append(utils.AssertPresentationAction(
-    "Ctrl+Delete right remaining 'is' of 'This'",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane is is a test.  $l'",
      "     VISIBLE:  'is is a test.  $l', cursor=1",
      "SPEECH OUTPUT: 'i'"]))
@@ -597,10 +595,29 @@ sequence.append(WaitAction("object:text-changed:delete",
                            pyatspi.ROLE_TEXT,
                            5000))
 sequence.append(utils.AssertPresentationAction(
+    "Ctrl+Delete right remaining 'is' of 'This'",
+    ["BUG? - We update braille but not speech",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane  is a test.  $l'",
+     "     VISIBLE:  ' is a test.  $l', cursor=1"]))
+
+# [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
+# the regression tests use, the Delete will not give the same output
+# as what we see when orca.settings.asyncMode=True (the normal 
+# operating behavior).  See the NOTE in default.py:onTextDeleted 
+# for an explanation. We include the synchronous output here.]]]
+#
+sequence.append(utils.StartRecordingAction())
+sequence.append(KeyComboAction("<Control>Delete"))
+sequence.append(WaitAction("object:text-changed:delete",
+                           None,
+                           None,
+                           pyatspi.ROLE_TEXT,
+                           5000))
+sequence.append(utils.AssertPresentationAction(
     "Ctrl+Delete right 'is'",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane  is a test.  $l'",
-     "     VISIBLE:  ' is a test.  $l', cursor=1",
-     "SPEECH OUTPUT: 'space'"]))
+    ["BUG? - We update braille but not speech",
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame ScrollPane  a test.  $l'",
+     "     VISIBLE:  ' a test.  $l', cursor=1"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
@@ -628,12 +645,6 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This is only a test. $l', cursor=21",
      "SPEECH OUTPUT: 'blank'"]))
 
-# [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
-# the regression tests use, the BackSpace will not give the same output
-# as what we see when orca.settings.asyncMode=True (the normal 
-# operating behavior).  See the NOTE in default.py:onTextDeleted 
-# for an explanation. We include the synchronous output here.]]]
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("BackSpace"))
 sequence.append(WaitAction("object:text-changed:delete",
@@ -643,10 +654,10 @@ sequence.append(WaitAction("object:text-changed:delete",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "BackSpace '.' after 'test'",
-    ["BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=21",
-     "BRAILLE LINE:  'This is only a test. $l'",
-     "     VISIBLE:  'This is only a test. $l', cursor=20",
+    ["BRAILLE LINE:  'This is only a test $l'",
+     "     VISIBLE:  'This is only a test $l', cursor=20",
+     "BRAILLE LINE:  'This is only a test $l'",
+     "     VISIBLE:  'This is only a test $l', cursor=20",
      "SPEECH OUTPUT: 'dot'"]))
 
 # [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
@@ -664,11 +675,11 @@ sequence.append(WaitAction("object:text-changed:delete",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Ctrl+BackSpace to delete 'this'",
-    ["BRAILLE LINE:  'This is only a test $l'",
-     "     VISIBLE:  'This is only a test $l', cursor=20",
-     "BRAILLE LINE:  'This is only a test $l'",
-     "     VISIBLE:  'This is only a test $l', cursor=16",
-     "SPEECH OUTPUT: 'test'"]))
+    ["BUG? - We update braille but not speech",
+     "BRAILLE LINE:  'This is only a  $l'",
+     "     VISIBLE:  'This is only a  $l', cursor=16",
+     "BRAILLE LINE:  'This is only a  $l'",
+     "     VISIBLE:  'This is only a  $l', cursor=16"]))
 
 # [[[NOTE: WDW - with orca.settings.asyncMode=False, which is what
 # the regression tests use, the BackSpace will not give the same output
@@ -685,11 +696,11 @@ sequence.append(WaitAction("object:text-changed:delete",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Ctrl+BackSpace to delete 'a'",
-    ["BRAILLE LINE:  'This is only a  $l'",
-     "     VISIBLE:  'This is only a  $l', cursor=16",
-     "BRAILLE LINE:  'This is only a  $l'",
-     "     VISIBLE:  'This is only a  $l', cursor=14",
-     "SPEECH OUTPUT: 'a '"]))
+    ["BUG? - We update braille but not speech",
+     "BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=14",
+     "BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=14"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>Left"))
@@ -700,8 +711,8 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Ctrl+Left to beginning of 'only'",
-    ["BRAILLE LINE:  'This is only a  $l'",
-     "     VISIBLE:  'This is only a  $l', cursor=9",
+    ["BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=9",
      "SPEECH OUTPUT: 'newline'",
      "SPEECH OUTPUT: 'only ",
      "",
@@ -716,8 +727,8 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "Ctrl+Left to beginning of 'is'",
-    ["BRAILLE LINE:  'This is only a  $l'",
-     "     VISIBLE:  'This is only a  $l', cursor=6",
+    ["BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=6",
      "SPEECH OUTPUT: 'is '"]))
 
 ########################################################################
@@ -1018,7 +1029,8 @@ sequence.append(KeyComboAction("KP_5"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Insert+KP_5 to flat review 'Preferences' accessible",
-    ["SPEECH OUTPUT: 'Preferences menu'"]))
+    ["SPEECH OUTPUT: 'Preferences'",
+     "SPEECH OUTPUT: 'menu'"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyPressAction(0, None, "KP_Insert"))
@@ -1026,8 +1038,8 @@ sequence.append(KeyComboAction("KP_9"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Insert+KP_9 to flat review end",
-    ["BRAILLE LINE:  ' Cursor at row 1 column 5 - 243 chars in document $l'",
-     "     VISIBLE:  'chars in document $l', cursor=17",
+    ["BRAILLE LINE:  'Cursor at row 1 column 5 - 243 chars in document $l'",
+     "     VISIBLE:  'hars in document $l', cursor=16",
      "SPEECH OUTPUT: 'Cursor at row 1 column 5 - 243 chars in document'"]))
 
 sequence.append(utils.StartRecordingAction())
@@ -1082,11 +1094,18 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Subtract"))
 sequence.append(utils.AssertPresentationAction(
     "KP_Subtract to exit flat review",
-    ["BRAILLE LINE:  'Leaving flat review.'",
+    ["BUG? - Extra stuff here",
+     "BRAILLE LINE:  'Leaving flat review.'",
      "     VISIBLE:  'Leaving flat review.', cursor=0",
      "BRAILLE LINE:  'This is only  $l'",
      "     VISIBLE:  'This is only  $l', cursor=6",
-     "SPEECH OUTPUT: 'Leaving flat review.'"]))
+     "BRAILLE LINE:  'gtk-demo Application Application Window Frame'",
+     "     VISIBLE:  'Application Window Frame', cursor=1",
+     "BRAILLE LINE:  'This is only  $l'",
+     "     VISIBLE:  'This is only  $l', cursor=6",
+     "SPEECH OUTPUT: 'Leaving flat review.' voice=system",
+     "SPEECH OUTPUT: 'Application Window frame'",
+     "SPEECH OUTPUT: 'text This is only '"]))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_5"))

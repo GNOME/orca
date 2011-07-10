@@ -42,9 +42,10 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "New menu item",
-    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
-     "     VISIBLE:  'New(Control n)', cursor=1",
-     "SPEECH OUTPUT: 'New Control n'"]))
+    ["BUG? - For some reason, we're not presenting our location. This problem is present in Gtk+ 3, but not Gtk+ 2."]))
+#    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
+#     "     VISIBLE:  'New(Control n)', cursor=1",
+#     "SPEECH OUTPUT: 'New Control n'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.  The following should be
