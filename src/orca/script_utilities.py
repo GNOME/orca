@@ -2292,7 +2292,7 @@ class Utilities:
 
             try:
                 infoString += " Version='%s'" \
-                              % app.version
+                              % app.toolkitVersion
             except:
                 infoString += " Version unknown"
 
