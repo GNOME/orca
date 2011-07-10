@@ -92,7 +92,7 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            pyatspi.ROLE_TABLE,
                            5000))
 sequence.append(utils.AssertPresentationAction(
-    "Table up to packages of noodles",
+    "Table Right to the Product column in the packages of noodles row",
     ["BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 5 packages of noodles'",
      "     VISIBLE:  '5 packages of noodles', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Product ColumnHeader packages of noodles Cell'",
