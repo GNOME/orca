@@ -31,24 +31,7 @@ sequence.append(WaitAction("object:state-changed:expanded",
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(PauseAction(1000))
 sequence.append(TypeAction("Editable Cells", 1000))
-
-sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
-sequence.append(utils.AssertPresentationAction(
-    "Table initial focus",
-    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Editable Cells TREE LEVEL 2'",
-     "     VISIBLE:  'Editable Cells TREE LEVEL 2', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame'",
-     "     VISIBLE:  'Shopping list Frame', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Shopping list Frame ScrollPane Table Number ColumnHeader 3 bottles of coke'",
-     "     VISIBLE:  '3 bottles of coke', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Editable Cells tree level 2'",
-     "SPEECH OUTPUT: 'Shopping list frame'",
-     "SPEECH OUTPUT: 'Number column header 3 bottles of coke'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
