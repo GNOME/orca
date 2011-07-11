@@ -1527,6 +1527,8 @@ class SpeechGenerator(generator.Generator):
                             or (requireText \
                                 and 'Text' in pyatspi.listInterfaces(parent))):
                         text = self._script.utilities.displayedText(parent)
+                    if not text and parent.getRole() == pyatspi.ROLE_MENU:
+                        text = parent.name
                     if text and len(text.strip()):
                         roleInfo = self._generateRoleName(parent)
                         if roleInfo:
