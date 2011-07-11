@@ -54,7 +54,7 @@ sequence.append(utils.AssertPresentationAction(
      "SPEECH OUTPUT: 'Preferences'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Bold'",
-     "SPEECH OUTPUT: 'check item checked Control b 4 of 4.",
+     "SPEECH OUTPUT: 'check item checked Control b 4 of 4.'",
      "SPEECH OUTPUT: 'b'"]))
 
 ########################################################################

@@ -106,9 +106,9 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Color Menu'",
      "     VISIBLE:  'Color Menu', cursor=1",
      "SPEECH OUTPUT: 'Preferences",
-     "SPEECH OUTPUT: 'menu",
-     "SPEECH OUTPUT: 'Color",
-     "SPEECH OUTPUT: 'menu 2 of 4.",
+     "SPEECH OUTPUT: 'menu'",
+     "SPEECH OUTPUT: 'Color'",
+     "SPEECH OUTPUT: 'menu 2 of 4.'",
      "SPEECH OUTPUT: 'c'"]))
 
 ########################################################################

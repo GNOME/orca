@@ -22,9 +22,9 @@ sequence.append(KeyComboAction("<Control><Alt>Home"))
 sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Report script information",
-    ["BRAILLE LINE:  'SCRIPT INFO: Script name='gtk-demo [(]module=orca.scripts.toolkits.GAIL[)]' Application name='gtk-demo' Toolkit name='GAIL' Version='[0-9]+[.][0-9]+[.][0-9]+''",
+    ["BRAILLE LINE:  'SCRIPT INFO: Script name='gtk-demo [(]module=orca.scripts.toolkits.GAIL[)]' Application name='gtk-demo' Toolkit name='gtk' Version='[0-9]+[.][0-9]+[.][0-9]+''",
      "     VISIBLE:  'SCRIPT INFO: Script name='gtk-de', cursor=0",
-     "SPEECH OUTPUT: 'SCRIPT INFO: Script name='gtk-demo [(]module=orca.scripts.toolkits.GAIL[)]' Application name='gtk-demo' Toolkit name='GAIL' Version='[0-9]+[.][0-9]+[.][0-9]+'' voice=system"]))
+     "SPEECH OUTPUT: 'SCRIPT INFO: Script name='gtk-demo [(]module=orca.scripts.toolkits.GAIL[)]' Application name='gtk-demo' Toolkit name='gtk' Version='[0-9]+[.][0-9]+[.][0-9]+'' voice=system"]))
 
 # Just a little extra wait to let some events get through.
 #
