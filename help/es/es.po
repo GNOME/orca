@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-05-29 17:06+0000\n"
-"PO-Revision-Date: 2011-06-11 14:32+0200\n"
+"POT-Creation-Date: 2011-07-10 11:16+0000\n"
+"PO-Revision-Date: 2011-07-11 20:12+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3703,6 +3703,8 @@ msgid ""
 "If you are on a link, the type of link (same site, different site, FTP link, "
 "etc.) will be included."
 msgstr ""
+"Si está sobre un enlace, se incluirá el tipo de enlace (mismo sitio, "
+"diferente sitio, enlace FTP, etc.)."
 
 #: C/howto_whereami.page:89(p)
 msgid ""
@@ -3885,7 +3887,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:21(title)
 msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
-msgstr ""
+msgstr "Lanzar la guía de configuración en modo texto de <app>Orca</app>"
 
 #: C/howto_text_setup.page:23(p)
 msgid ""
@@ -4062,7 +4064,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:178(p)
 msgid "Automatically start <app>Orca</app> when you log in"
-msgstr ""
+msgstr "Iniciar automáticamente <app>Orca</app> al iniciar sesión"
 
 #: C/howto_text_setup.page:179(p)
 msgid ""
@@ -4088,7 +4090,7 @@ msgstr "2. Atributos de texto"
 
 #: C/howto_text_attributes.page:6(desc)
 msgid "Examining text formatting"
-msgstr ""
+msgstr "Examinar el formato del texto"
 
 #: C/howto_text_attributes.page:18(p)
 msgid ""
@@ -4099,7 +4101,7 @@ msgstr ""
 
 #: C/howto_text_attributes.page:24(title)
 msgid "Obtaining Formatting Information"
-msgstr ""
+msgstr "Obtener información del formato"
 
 #: C/howto_text_attributes.page:25(p)
 msgid ""
@@ -6394,27 +6396,27 @@ msgstr ""
 
 #: C/commands_magnifier.page:29(p)
 msgid "Enable/disable magnification: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar la magnificación: (sin vincular)"
 
 #: C/commands_magnifier.page:34(p)
 msgid "Increase magnification level: (Unbound)"
-msgstr ""
+msgstr "Aumentar la magnificación: (sin vincular)"
 
 #: C/commands_magnifier.page:39(p)
 msgid "Decrease magnification: (Unbound)"
-msgstr ""
+msgstr "Reducir la magnificación: (sin vincular)"
 
 #: C/commands_magnifier.page:44(p)
 msgid "Enable/disable color enhancements: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar las mejoras de color: (sin activar)"
 
 #: C/commands_magnifier.page:49(p)
 msgid "Enable/disable mouse enhancements: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar las mejoras del ratón: (sin vincular)"
 
 #: C/commands_magnifier.page:54(p)
 msgid "Cycle to the magnifier position: (Unbound)"
-msgstr ""
+msgstr "Cambiar a la posición del magnificador: (sin vincular)"
 
 #: C/commands_live_regions.page:6(title)
 msgid "1. Live Region"
@@ -6422,17 +6424,19 @@ msgstr "1. Región activa"
 
 #: C/commands_live_regions.page:8(desc)
 msgid "Commands for accessing web live regions"
-msgstr ""
+msgstr "Comandos para acceder a regiones activas"
 
 #: C/commands_live_regions.page:20(title)
 msgid "Live Region Commands"
-msgstr ""
+msgstr "Comandos de regiones activas"
 
 #: C/commands_live_regions.page:23(p)
 msgid ""
 "Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
 "key><key>Backslash</key></keyseq>"
 msgstr ""
+"Monitorizar regiones activas: <keyseq><key>Modificador de Orca</"
+"key><key>Mayús</key><key>Barra invertida</key></keyseq>"
 
 #: C/commands_live_regions.page:29(p)
 msgid "Advance live region politeness setting: <key>Backslash</key>"
@@ -6464,15 +6468,15 @@ msgstr ""
 
 #: C/commands_flat_review.page:6(title)
 msgid "1. Flat Review"
-msgstr ""
+msgstr "1. Revisión"
 
 #: C/commands_flat_review.page:8(desc)
 msgid "Commands for spatially reviewing windows"
-msgstr ""
+msgstr "Comandos para revisión de ventanas en modo espacial"
 
 #: C/commands_flat_review.page:19(title)
 msgid "Flat Review Commands"
-msgstr ""
+msgstr "Comandos de la revisión"
 
 #: C/commands_flat_review.page:20(p)
 msgid ""
@@ -6712,7 +6716,7 @@ msgstr "Comandos adicionales"
 
 #: C/commands_flat_review.page:167(p)
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr ""
+msgstr "Conmutar la revisión (actualiza el contexto de la revisión):"
 
 #: C/commands_flat_review.page:169(p)
 msgid ""
@@ -6742,7 +6746,7 @@ msgstr ""
 
 #: C/commands_find.page:6(title)
 msgid "2. Orca Find"
-msgstr ""
+msgstr "2. Búsqueda de Orca"
 
 #: C/commands_find.page:8(desc)
 msgid "Commands for searching window contents"
@@ -6750,7 +6754,7 @@ msgstr "Comandos para buscar contenido de la ventana"
 
 #: C/commands_find.page:19(title)
 msgid "Orca Find Commands"
-msgstr ""
+msgstr "Comandos de búsqueda de Orca"
 
 #: C/commands_find.page:20(p)
 msgid ""
@@ -6765,7 +6769,7 @@ msgstr "Abrir el diálogo «Buscar» de <app>Orca</app>:"
 
 #: C/commands_find.page:38(p)
 msgid "Move flat review to the next instance of a string:"
-msgstr ""
+msgstr "Mover la revisión a la siguiente instancia de una cadena:"
 
 #: C/commands_find.page:41(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
@@ -6779,7 +6783,7 @@ msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>]</key></keyseq>"
 
 #: C/commands_find.page:55(p)
 msgid "Move flat review to the previous instance of a string:"
-msgstr ""
+msgstr "Mover la revisión a la instancia anterior de una cadena:"
 
 #: C/commands_find.page:58(p)
 msgid ""
@@ -6967,10 +6971,15 @@ msgid ""
 "Present previous chat room messages: <keyseq><key>Orca Modifier</"
 "key><key>F1</key></keyseq> through <key>F9</key>"
 msgstr ""
+"Presentar los mensajes anteriores de la sala de chat: "
+"<keyseq><key>Modificador de Orca</key><key>F1</key></keyseq> hasta <key>F9</"
+"key>"
 
 #: C/commands_chat.page:36(p)
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
+"Activar/desactivar el anuncio de una sala de chat con mensajes: (sin "
+"vincular)"
 
 #: C/commands_chat.page:41(p)
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
@@ -6978,7 +6987,7 @@ msgstr ""
 
 #: C/commands_chat.page:44(p)
 msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar historias específicas de sala: (sin vincular)"
 
 #: C/commands_braille.page:6(title)
 msgid "2. Braille"
@@ -7115,7 +7124,7 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011\n"
-"Jorge González <jorgegonz@svn.gnome.org>, 2010"
+"Jorge González <jorgegonz@svn.gnome.org>, 2011"
 
 #~ msgid "<gui>None</gui> (the default)"
 #~ msgstr "<gui>Ninguna</gui> (Predeterminado) "
