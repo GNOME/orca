@@ -6,13 +6,14 @@
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
 # 
 # 
+# 
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-07-10 03:05+0000\n"
-"PO-Revision-Date: 2011-07-12 18:29+0200\n"
+"POT-Creation-Date: 2011-07-12 16:33+0000\n"
+"PO-Revision-Date: 2011-07-15 14:08+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -4337,12 +4338,12 @@ msgid ""
 "page</link>."
 msgstr ""
 "<app>Orca</app> le permite personalizar si sólo se debería leer la celda, o "
-"si se debería leer la fila completa. Puede configurar esta preferencia Orca "
-"wide así como aplicación por aplicación. Las instrucciones para realizar "
+"si se debería leer la fila completa. Puede configurar esta preferencia de "
+"Orca así como aplicación por aplicación. Las instrucciones para realizar "
 "estas operaciones se describen en la guía sobre <link xref=\"preferences"
 "\">diálogos de preferencias de<app>Orca</app></link>. La configuración se "
-"puede encontrar en el </gui> grupo de botones de radio <gui>de las Filas de "
-"Tabla en la <link xref=\"preferences_speech\"><gui>página de </gui> Voz</"
+"puede encontrar en el </gui>grupo de botones de radio<gui>de las filas de "
+"tabla en la <link xref=\"preferences_speech\"><gui>página de </gui> Voz</"
 "link>."
 
 #: C/howto_tables.page:45(p)
@@ -4367,6 +4368,10 @@ msgid ""
 "locate tables, jump immediately to a table's first or last cell, and move to "
 "the next cell in any direction."
 msgstr ""
+"<link xref=\"commands_structural_navigation#tables\">los comandos de "
+"navegación estructural</link> de <app>Orca</app> hacen posible localizar "
+"rápidamente las tablas, saltar inmediatamente a la primera o última celda de "
+"una tabla y pasar a la siguiente celda en cualquier dirección."
 
 #: C/howto_tables.page:59(p)
 msgid ""
@@ -4375,6 +4380,11 @@ msgid ""
 "position, such as the dimensions of the table you just entered and the fact "
 "that you have reached the edge of the table in the direction you are moving."
 msgstr ""
+"A medida que navegue entre las tablas y al interior de éstas usando la "
+"navegación estructural, <app>Orca</app> anunciará detalles adicionales para "
+"ayudarle a entender su posición, tales como las dimensiones de la tabla que "
+"acaba de ingresar y el hecho de que ha alcanzado el límite de la tabla en la "
+"dirección que se está moviendo."
 
 #: C/howto_tables.page:66(p)
 msgid ""
@@ -4384,6 +4394,11 @@ msgid ""
 "not cell coordinates are presented, multiple cell spans are indicated, and "
 "cell headers are announced."
 msgstr ""
+"Además, <app>Orca</app> proporciona <link xref=\"preferences_table_navigation"
+"\">opciones de presentación</link> configurables que funcionan en conjunto "
+"con la navegación estructural y le permiten controlar si se presentan las "
+"coordenadas de celda, si se indican las celdas dentro de otra celda y si se "
+"anuncian o no las cabeceras de celda."
 
 #: C/howto_tables.page:74(title) C/howto_structural_navigation.page:52(title)
 msgid "Don't Forget To Toggle Structural Navigation On!"
@@ -4396,6 +4411,11 @@ msgid ""
 "type=\"seealso\" xref=\"howto_structural_navigation#toggling_required\"> "
 "when toggling Structural Navigation on is required.</link>"
 msgstr ""
+"Dependiendo de donde se encuentre, puede ser necesario activar "
+"explícitamente la navegación estructural antes de que pueda usarla. Para "
+"obtener más información, lea <link type=\"seealso\" xref="
+"\"howto_structural_navigation#toggling_required\">cuándo es necesario "
+"activar la navegación estructural</link>."
 
 #: C/howto_tables.page:84(title)
 msgid "Dynamic Headers"
@@ -4412,14 +4432,22 @@ msgid ""
 "<app>Orca</app>'s Dynamic Header support makes it possible to overcome these "
 "challenges."
 msgstr ""
+"Muchas de las tablas que encontrará durante la lectura tienen celdas que "
+"funcionan como cabeceras para una fila o columna. No resulta fácil decir si "
+"el creador de esa tabla marcó correctamente aquellas celdas como cabeceras o "
+"no. En muchos casos, el texto simplemente se formateó para ser más grande y/"
+"o en negrita. Incluso si la tabla se ha marcado correctamente, nada "
+"garantiza que la aplicación o el kit de herramientas expongan ese texto como "
+"información de cabecera a las tecnologías de asistencia. El soporte de "
+"cabeceras dinámicas de <app>Orca</app> hace posible superar estos desafíos."
 
 #: C/howto_tables.page:96(title)
 msgid "Setting Column Headers"
-msgstr ""
+msgstr "Configurar las cabeceras de las columnas"
 
 #: C/howto_tables.page:98(p)
 msgid "Move to the row which contains all of the column headers."
-msgstr ""
+msgstr "Muévase a la fila que contiene todas las cabeceras de las columnas."
 
 #: C/howto_tables.page:103(p)
 msgid ""
@@ -4431,7 +4459,7 @@ msgstr ""
 
 #: C/howto_tables.page:110(title)
 msgid "Set Row Headers"
-msgstr ""
+msgstr "Configurar las cabeceras de las filas"
 
 #: C/howto_tables.page:112(p)
 msgid "Move to the column which contains all of the row headers."
@@ -4458,6 +4486,16 @@ msgid ""
 "row will be presented. And if you change columns and there are column "
 "headers, the header associated with the new column will be presented."
 msgstr ""
+"Una vez configuradas las cabeceras de las columnas o las cabeceras de las "
+"filas, notará que a medida que navegue entre las celdas, <app>Orca</app> "
+"presentará todas las cabeceras que hayan cambiado. O dicho de otro modo, "
+"<app>Orca</app> no presentará la cabecera de la columna una y otra vez a "
+"medida que se desplace hacia arriba o abajo dentro de la columna actual. "
+"Asimismo, no presentará la cabecera de la fila una y otra vez a medida que "
+"se desplace hacia la izquierda o derecha dentro de la fila actual. Sin "
+"embargo, si cambia las filas y hay nuevas cabeceras de fila, se presentará "
+"la cabecera asociada a la nueva fila, y si cambia las columnas y hay nuevas "
+"cabeceras de columna, se presentará la cabecera asociada a la nueva columna."
 
 #: C/howto_tables.page:135(p)
 msgid ""
@@ -4467,6 +4505,12 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>C</key></keyseq> tells <app>Orca</app> "
 "there are no row headers."
 msgstr ""
+"Para borrar las cabeceras, simplemente pulse dos veces el comando que usaba "
+"para configurarlas. De este modo, al pulsar dos veces "
+"el<keyseq><key>Modificador de Orca</key><key>R</key></keyseq> se indica a "
+"<app>Orca</app> que no hay cabeceras de columna. Al pulsar dos veces el "
+"<keyseq><key>Modificador de Orca</key><key>C</key></keyseq> se indica a "
+"<app>Orca</app> que no hay cabeceras de fila."
 
 #: C/howto_structural_navigation.page:7(title)
 msgid "3. Structural Navigation"
@@ -4482,6 +4526,9 @@ msgid ""
 "amongst elements in a document. The types of elements by which you can "
 "navigate include:"
 msgstr ""
+"La característica Navegación Estructural de <app>Orca</app> le permite "
+"navegar entre los elementos de un documento. Entre los tipos de elementos "
+"por los cuales puede navegar se incluyen:"
 
 #: C/howto_structural_navigation.page:26(p)
 msgid "Headings and other text blocks"
@@ -4514,6 +4561,9 @@ msgid ""
 "found in <link xref=\"commands_structural_navigation\">Structural Navigation "
 "Commands</link>."
 msgstr ""
+"Puede encontrar una lista completa de elementos individuales y sus "
+"asociaciones de teclas en los <link xref=\"commands_structural_navigation"
+"\">comandos de navegación estructural</link>."
 
 #: C/howto_structural_navigation.page:39(title)
 msgid "Supported Applications"
@@ -4530,16 +4580,27 @@ msgid ""
 "Structural Navigation features within <app>Evince</app> will require a "
 "similar effort on the part of its developers."
 msgstr ""
+"Actualmente, la navegación estructural está completamente implementada en el "
+"contenido web, incluyendo el contenido de ayuda que está leyendo ahora. El "
+"soporte de navegación estructural de<app>Orca</app> para celdas de tablas "
+"también se ha implementado en <app>OpenOffice Writer</app> y en "
+"<app>LibreOffice Writer</app>. Implementar el resto de objetos de navegación "
+"estructural en estos paquetes de oficina requiere que sus respectivos "
+"desarrolladores realicen cambios. Implementar cualquier característica de "
+"navegación estructural en <app>Evince</app> requerirá un esfuerzo similar "
+"por parte de sus desarrolladores."
 
 #: C/howto_structural_navigation.page:53(p)
 msgid ""
 "Depending on where you are, it may be necessary for you to explicitly toggle "
 "Structural Navigation on before you can use it."
 msgstr ""
+"Dependiendo de dónde se encuentre, puede ser necesario activar "
+"explícitamente la navegación estructural antes de que pueda usarla."
 
 #: C/howto_structural_navigation.page:59(title)
 msgid "When Toggling Structural Navigation On Is Required"
-msgstr ""
+msgstr "Cuándo es necesario activar la navegación estructural"
 
 #: C/howto_structural_navigation.page:60(p)
 msgid ""
@@ -4548,6 +4609,11 @@ msgid ""
 "reading its content. Thus there is no question as to whether the 'H' you "
 "just pressed was meant to be a writing command or a navigation command."
 msgstr ""
+"En las páginas web, generalmente no es necesario activar la navegación "
+"estructural dado que su interacción con el documento consiste principalmente "
+"en leer su contenido. De este modo, no hay ninguna duda respecto a si la «H» "
+"que acaba de pulsar tuvo la intención de ser un comando de escritura o un "
+"comando de navegación."
 
 #: C/howto_structural_navigation.page:67(p)
 msgid ""
@@ -4561,6 +4627,16 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>Z</key></keyseq> again to toggle "
 "Structural Navigation off."
 msgstr ""
+"Por otro lado, en los documentos editables, como aquellos encontrados en "
+"<app>OpenOffice</app> y <app>LibreOffice</app>, es mucho más difícil para "
+"<app>Orca</app> predecir con exactitud lo que usted espera que ocurra como "
+"resultado de pulsar «H». Por lo tanto, antes de que pueda usar cualquier "
+"comando de navegación estructural en un documento editable, primero debe "
+"activar la navegación estructural pulsando el <keyseq><key>Modificador de "
+"Orca</key><key>Z</key></keyseq>. Cuando haya terminado de navegar y esté "
+"listo para reanudar la lectura, pulse el <keyseq><key>Modificador de Orca</"
+"key><key>Z</key></keyseq> nuevamente para desactivar la navegación "
+"estructural."
 
 #: C/howto_structural_navigation.page:82(title)
 msgid "Available Settings"
@@ -4572,6 +4648,9 @@ msgid ""
 "configurable options available specifically for applications in which there "
 "is structural navigation support."
 msgstr ""
+"Además de los comandos mencionados anteriormente, <app>Orca</app> tiene "
+"varias opciones configurables disponibles específicamente para aplicaciones "
+"en las que hay soporte de navegación estructural."
 
 #: C/howto_structural_navigation.page:89(title)
 msgid "Configuring Structural Navigation"
@@ -4582,6 +4661,8 @@ msgid ""
 "Give focus to an application for which <app>Orca</app> has Structural "
 "Navigation support."
 msgstr ""
+"Dé el foco a una aplicación para la que <app>Orca</app> tiene soporte de "
+"navegación estructural."
 
 #: C/howto_structural_navigation.page:97(p)
 msgid ""
@@ -4589,6 +4670,9 @@ msgid ""
 "for the current application by pressing: <keyseq><key>Ctrl</key><key>Orca "
 "Modifier</key><key>Space</key></keyseq>"
 msgstr ""
+"Entre en el cuadro de diálogo de <link xref=\"preferences\">preferencias de "
+"Orca</link> para la aplicación actual pulsando: <keyseq><key>Ctrl</"
+"key><key>Modificador de Orca</key><key>Espacio</key></keyseq>"
 
 #: C/howto_structural_navigation.page:106(p)
 msgid ""
