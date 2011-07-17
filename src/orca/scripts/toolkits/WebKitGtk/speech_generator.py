@@ -27,11 +27,14 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.orca as orca
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 ########################################################################
 #                                                                      #
@@ -53,6 +56,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return voice
 
     def _generateRoleName(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
