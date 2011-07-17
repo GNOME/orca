@@ -57,6 +57,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return voice
 
     def _generateRoleName(self, obj, **args):
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
         result = []
         acss = self.voice(speech_generator.SYSTEM)
         role = args.get('role', obj.getRole())
