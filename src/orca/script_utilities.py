@@ -33,6 +33,7 @@ import pyatspi
 import re
 
 import debug
+import keynames
 import input_event
 import mouse_review
 import orca_state
@@ -2726,6 +2727,7 @@ class Utilities:
         fullShortcut = fullShortcut.replace("<","")
         fullShortcut = fullShortcut.replace(">"," ")
         fullShortcut = fullShortcut.replace(":"," ").strip()
+        fullShortcut = keynames.localizeKeySequence(fullShortcut)
 
         # If the accelerator or mnemonic strings includes a Space,
         # make sure we speak it.
@@ -2736,6 +2738,7 @@ class Utilities:
             mnemonic += _("space")
         mnemonic = mnemonic.replace("<","")
         mnemonic = mnemonic.replace(">"," ").strip()
+        mnemonic = keynames.localizeKeySequence(mnemonic)
 
         if accelerator.endswith(" "):
             # Translators: this is the spoken word for the space character
@@ -2743,6 +2746,7 @@ class Utilities:
             accelerator += _("space")
         accelerator = accelerator.replace("<","")
         accelerator = accelerator.replace(">"," ").strip()
+        accelerator = keynames.localizeKeySequence(accelerator)
 
         debug.println(debug.LEVEL_FINEST, "script_utilities.getKeyBinding: " \
                       + repr([mnemonic, fullShortcut, accelerator]))
