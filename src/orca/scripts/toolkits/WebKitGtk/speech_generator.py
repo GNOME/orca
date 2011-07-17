@@ -27,11 +27,15 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.keynames as keynames
+import orca.orca as orca
 import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _
+
+_settingsManager = getattr(orca, '_settingsManager')
 
 ########################################################################
 #                                                                      #
@@ -123,3 +127,33 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return speech_generator.SpeechGenerator._generateAncestors(
             self, obj, **args)
+
+    def _generateMnemonic(self, obj, **args):
+        """Returns an array of strings (and possibly voice and audio
+        specifications) that represent the mnemonic for the object, or
+        an empty array if no mnemonic can be found.
+        """
+
+        if _settingsManager.getSetting('onlySpeakDisplayedText'):
+            return []
+
+        if not (_settingsManager.getSetting('enableMnemonicSpeaking') \
+                or args.get('forceMnemonic', False)):
+            return []
+
+        if not self._script.utilities.isWebKitGtk(obj):
+            return speech_generator.SpeechGenerator._generateMnemonic(
+                self, obj, **args)
+
+        result = []
+        acss = self.voice(speech_generator.SYSTEM)
+        mnemonic, shortcut, accelerator = \
+            self._script.utilities.mnemonicShortcutAccelerator(obj)
+        if shortcut:
+            if _settingsManager.getSetting('speechVerbosityLevel') == \
+               settings.VERBOSITY_LEVEL_VERBOSE:
+                shortcut = 'Alt Shift %s' % shortcut
+            result = [keynames.localizeKeySequence(shortcut)]
+            result.extend(acss)
+
+        return result
