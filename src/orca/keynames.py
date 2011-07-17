@@ -29,12 +29,25 @@ __license__   = "LGPL"
 import chnames
 
 from orca_i18n import _ # for gettext support
+from orca_i18n import C_
 
 # __keynames is a dictionary where the keys represent a UTF-8
 # string for a keyboard key and the values represent the common
 # phrase used to describe the key.
 #
 __keynames = {}
+
+# Translators: this is how someone would speak the name of the shift key
+#
+__keynames["Shift"]        = C_("keyboard", "Shift")
+
+# Translators: this is how someone would speak the name of the alt key
+#
+__keynames["Alt"]          = C_("keyboard", "Alt")
+
+# Translators: this is how someone would speak the name of the shift key
+#
+__keynames["Control"]      = C_("keyboard", "Control")
 
 # Translators: this is how someone would speak the name of the left shift key
 #
@@ -301,3 +314,20 @@ def getKeyName(key):
         return __keynames[key]
     except:
         return chnames.getCharacterName(key)
+
+def localizeKeySequence(keys):
+    """Given a sequence of keys, such as 'Shift Control A', localize the
+    full sequence.
+
+    Arguments:
+    - keys: the key sequence to localize
+
+    Returns a string representing the localized version to present to the
+    user
+    """
+
+    keyList = keys.split()
+    for key in keyList:
+        keys = keys.replace(key, getKeyName(key))
+
+    return keys
