@@ -45,7 +45,7 @@ __keynames["Shift"]        = C_("keyboard", "Shift")
 #
 __keynames["Alt"]          = C_("keyboard", "Alt")
 
-# Translators: this is how someone would speak the name of the shift key
+# Translators: this is how someone would speak the name of the control key
 #
 __keynames["Control"]      = C_("keyboard", "Control")
 
