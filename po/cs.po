@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-06-13 10:51+0000\n"
-"PO-Revision-Date: 2011-06-13 21:48+0200\n"
+"POT-Creation-Date: 2011-07-17 20:39+0000\n"
+"PO-Revision-Date: 2011-07-18 21:11+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -461,8 +461,8 @@ msgstr "Rychlá zpráva z diskuzní místnosti %s"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2736 ../src/orca/script_utilities.py:2743
+#: ../src/orca/chnames.py:39 ../src/orca/keynames.py:146
+#: ../src/orca/script_utilities.py:2738 ../src/orca/script_utilities.py:2746
 msgid "space"
 msgstr "mezera"
 
@@ -476,7 +476,7 @@ msgstr "nový řádek"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: ../src/orca/chnames.py:47 ../src/orca/keynames.py:117
+#: ../src/orca/chnames.py:47 ../src/orca/keynames.py:130
 msgid "tab"
 msgstr "tabulátor"
 
@@ -647,7 +647,7 @@ msgstr "podtržítko"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the grave glyph
 #.
-#: ../src/orca/chnames.py:159 ../src/orca/keynames.py:250
+#: ../src/orca/chnames.py:159 ../src/orca/keynames.py:263
 msgid "grave"
 msgstr "obrácená čárka"
 
@@ -674,7 +674,7 @@ msgstr "zavřít složenou"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
 #.
-#: ../src/orca/chnames.py:175 ../src/orca/keynames.py:265
+#: ../src/orca/chnames.py:175 ../src/orca/keynames.py:278
 msgid "tilde"
 msgstr "tilda"
 
@@ -830,7 +830,7 @@ msgstr "tečka uprostřed"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the cedilla glyph
 #.
-#: ../src/orca/chnames.py:276 ../src/orca/keynames.py:280
+#: ../src/orca/chnames.py:276 ../src/orca/keynames.py:293
 msgid "cedilla"
 msgstr "sedil"
 
@@ -1702,7 +1702,7 @@ msgstr "Syntéza hlasu Emacspeak"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/event_manager.py:261
+#: ../src/orca/event_manager.py:265
 msgid "No focus"
 msgstr "Nic není aktivní"
 
@@ -1734,13 +1734,13 @@ msgstr "Vrací se nahoru"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:1098
+#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:941
 msgid "partially checked"
 msgstr "částečně zaškrtnuto"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:1097
+#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:940
 msgid "checked"
 msgstr "zaškrtnuto"
 
@@ -1749,13 +1749,13 @@ msgstr "zaškrtnuto"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:1096
+#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:939
 msgid "not checked"
 msgstr "nezaškrtnuto"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:1109
+#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:952
 msgid "pressed"
 msgstr "stisknuto"
 
@@ -1764,14 +1764,14 @@ msgstr "stisknuto"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:1109
+#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:952
 msgid "not pressed"
 msgstr "nestisknuto"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:1104
+#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:947
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "vybráno"
@@ -1782,7 +1782,7 @@ msgstr "vybráno"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:1103
+#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:946
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "nevybráno"
@@ -1816,9 +1816,9 @@ msgstr[2] "%d procent."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:444
-#: ../src/orca/generator.py:701 ../src/orca/generator.py:743
-#: ../src/orca/generator.py:789
+#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:453
+#: ../src/orca/generator.py:710 ../src/orca/generator.py:752
+#: ../src/orca/generator.py:798
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:643
@@ -1875,155 +1875,179 @@ msgstr "Caps_Lock"
 msgid "Shift"
 msgstr "Shift"
 
+#. Translators: this is how someone would speak the name of the shift key
+#.
+#: ../src/orca/keynames.py:42
+#| msgid "Shift"
+msgctxt "keyboard"
+msgid "Shift"
+msgstr "Shift"
+
+#. Translators: this is how someone would speak the name of the alt key
+#.
+#: ../src/orca/keynames.py:46
+#| msgid "Alt_R"
+msgctxt "keyboard"
+msgid "Alt"
+msgstr "Alt"
+
+#. Translators: this is how someone would speak the name of the control key
+#.
+#: ../src/orca/keynames.py:50
+#| msgid "Ctrl"
+msgctxt "keyboard"
+msgid "Control"
+msgstr "Control"
+
 #. Translators: this is how someone would speak the name of the left shift key
 #.
-#: ../src/orca/keynames.py:41
+#: ../src/orca/keynames.py:54
 msgid "left shift"
 msgstr "levý Shift"
 
 #. Translators: this is how someone would speak the name of the left alt key
 #.
-#: ../src/orca/keynames.py:45
+#: ../src/orca/keynames.py:58
 msgid "left alt"
 msgstr "levý Alt"
 
 #. Translators: this is how someone would speak the name of the left ctrl key
 #.
-#: ../src/orca/keynames.py:49
+#: ../src/orca/keynames.py:62
 msgid "left control"
 msgstr "levý Control"
 
 #. Translators: this is how someone would speak the name of the right shift key
 #.
-#: ../src/orca/keynames.py:53
+#: ../src/orca/keynames.py:66
 msgid "right shift"
 msgstr "pravý Shift"
 
 #. Translators: this is how someone would speak the name of the right alt key
 #.
-#: ../src/orca/keynames.py:57
+#: ../src/orca/keynames.py:70
 msgid "right alt"
 msgstr "pravý AltGR"
 
 #. Translators: this is how someone would speak the name of the right ctrl key
 #.
-#: ../src/orca/keynames.py:61
+#: ../src/orca/keynames.py:74
 msgid "right control"
 msgstr "pravý Control"
 
 #. Translators: this is how someone would speak the name of the left meta key
 #.
-#: ../src/orca/keynames.py:65
+#: ../src/orca/keynames.py:78
 msgid "left meta"
 msgstr "Levý alt"
 
 #. Translators: this is how someone would speak the name of the right meta key
 #.
-#: ../src/orca/keynames.py:69
+#: ../src/orca/keynames.py:82
 msgid "right meta"
 msgstr "Pravý alt"
 
 #. Translators: this is how someone would speak the name of the num lock key
 #.
-#: ../src/orca/keynames.py:73
+#: ../src/orca/keynames.py:86
 msgid "num lock"
 msgstr "num lock"
 
 #. Translators: this is how someone would speak the name of the caps lock key
 #.
-#: ../src/orca/keynames.py:77
+#: ../src/orca/keynames.py:90
 msgid "caps lock"
 msgstr "caps lock"
 
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
-#: ../src/orca/keynames.py:81
+#: ../src/orca/keynames.py:94
 msgid "scroll lock"
 msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: ../src/orca/keynames.py:85 ../src/orca/keynames.py:89
-#: ../src/orca/keynames.py:93 ../src/orca/keynames.py:97
+#: ../src/orca/keynames.py:98 ../src/orca/keynames.py:102
+#: ../src/orca/keynames.py:106 ../src/orca/keynames.py:110
 msgid "page up"
 msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: ../src/orca/keynames.py:101 ../src/orca/keynames.py:105
-#: ../src/orca/keynames.py:109 ../src/orca/keynames.py:113
+#: ../src/orca/keynames.py:114 ../src/orca/keynames.py:118
+#: ../src/orca/keynames.py:122 ../src/orca/keynames.py:126
 msgid "page down"
 msgstr "page down"
 
 #. Translators: this is how someone would speak the name of the left tab key
 #.
-#: ../src/orca/keynames.py:121
+#: ../src/orca/keynames.py:134
 msgid "left tab"
 msgstr "levý tabulátor"
 
 #. Translators: this is how someone would speak the name of the F11 key
 #.
-#: ../src/orca/keynames.py:125
+#: ../src/orca/keynames.py:138
 msgid "F 11"
 msgstr "F 11"
 
 #. Translators: this is how someone would speak the name of the F12 key
 #.
-#: ../src/orca/keynames.py:129
+#: ../src/orca/keynames.py:142
 msgid "F 12"
 msgstr "F 12"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
-#: ../src/orca/keynames.py:137
+#: ../src/orca/keynames.py:150
 msgid "backspace"
 msgstr "backspace"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
-#: ../src/orca/keynames.py:141
+#: ../src/orca/keynames.py:154
 msgid "return"
 msgstr "enter"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
-#: ../src/orca/keynames.py:145
+#: ../src/orca/keynames.py:158
 msgid "enter"
 msgstr "enter"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: ../src/orca/keynames.py:149 ../src/orca/keynames.py:153
+#: ../src/orca/keynames.py:162 ../src/orca/keynames.py:166
 msgid "up"
 msgstr "nahoru"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: ../src/orca/keynames.py:157 ../src/orca/keynames.py:161
+#: ../src/orca/keynames.py:170 ../src/orca/keynames.py:174
 msgid "down"
 msgstr "dolů"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: ../src/orca/keynames.py:165 ../src/orca/keynames.py:169
+#: ../src/orca/keynames.py:178 ../src/orca/keynames.py:182
 msgid "left"
 msgstr "vlevo"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: ../src/orca/keynames.py:173 ../src/orca/keynames.py:177
+#: ../src/orca/keynames.py:186 ../src/orca/keynames.py:190
 msgid "right"
 msgstr "vpravo"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
-#: ../src/orca/keynames.py:181
+#: ../src/orca/keynames.py:194
 msgid "left super"
 msgstr "levý Super"
 
 #. Translators: this is how someone would speak the name of the right super key
 #.
-#: ../src/orca/keynames.py:185
+#: ../src/orca/keynames.py:198
 msgid "right super"
 msgstr "pravý Super"
 
@@ -2031,102 +2055,102 @@ msgstr "pravý Super"
 #.
 #. Translators: spoken words for the rolename of a menu.
 #.
-#: ../src/orca/keynames.py:189 ../src/orca/rolenames.py:636
+#: ../src/orca/keynames.py:202 ../src/orca/rolenames.py:636
 msgid "menu"
 msgstr "Menu"
 
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
-#: ../src/orca/keynames.py:193
+#: ../src/orca/keynames.py:206
 msgid "ISO level 3 shift"
 msgstr "shitf úrovně ISO 3"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
-#: ../src/orca/keynames.py:197
+#: ../src/orca/keynames.py:210
 msgid "help"
 msgstr "nápověda"
 
 #. Translators: this is how someone would speak the name of the multi key
 #.
-#: ../src/orca/keynames.py:201
+#: ../src/orca/keynames.py:214
 msgid "multi"
 msgstr "více"
 
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
-#: ../src/orca/keynames.py:205
+#: ../src/orca/keynames.py:218
 msgid "mode switch"
 msgstr "přepínač režimu"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
-#: ../src/orca/keynames.py:209
+#: ../src/orca/keynames.py:222
 msgid "escape"
 msgstr "escape"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: ../src/orca/keynames.py:213 ../src/orca/keynames.py:217
+#: ../src/orca/keynames.py:226 ../src/orca/keynames.py:230
 msgid "insert"
 msgstr "insert"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: ../src/orca/keynames.py:221 ../src/orca/keynames.py:225
+#: ../src/orca/keynames.py:234 ../src/orca/keynames.py:238
 msgid "delete"
 msgstr "delete"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: ../src/orca/keynames.py:229 ../src/orca/keynames.py:233
+#: ../src/orca/keynames.py:242 ../src/orca/keynames.py:246
 msgid "home"
 msgstr "home"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: ../src/orca/keynames.py:237 ../src/orca/keynames.py:241
+#: ../src/orca/keynames.py:250 ../src/orca/keynames.py:254
 msgid "end"
 msgstr "end"
 
 #. Translators: this is how someone would speak the name of the begin key
 #.
-#: ../src/orca/keynames.py:245
+#: ../src/orca/keynames.py:258
 msgid "begin"
 msgstr "begin"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the acute glyph
 #.
-#: ../src/orca/keynames.py:255
+#: ../src/orca/keynames.py:268
 msgid "acute"
 msgstr "čárka"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
 #.
-#: ../src/orca/keynames.py:260
+#: ../src/orca/keynames.py:273
 msgid "circumflex"
 msgstr "stříška"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the diaeresis glyph
 #.
-#: ../src/orca/keynames.py:270
+#: ../src/orca/keynames.py:283
 msgid "diaeresis"
 msgstr "rozlučník"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the ring glyph
 #.
-#: ../src/orca/keynames.py:275
+#: ../src/orca/keynames.py:288
 msgid "ring"
 msgstr "kroužek"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the stroke glyph
 #.
-#: ../src/orca/keynames.py:285
+#: ../src/orca/keynames.py:298
 msgid "stroke"
 msgstr "přeškrtnutí"
 
@@ -3234,7 +3258,7 @@ msgstr "Chyby hlaste na orca-list@gnome.org."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:698 ../src/orca/orca.py:2096
+#: ../src/orca/orca.py:698 ../src/orca/orca.py:2094
 msgid "Goodbye."
 msgstr "Neshledanou"
 
@@ -3439,14 +3463,14 @@ msgstr "trojité kliknutí"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2229
+#: ../src/orca/orca.py:2227
 msgid "Unable to import profile."
 msgstr "Nelze importovat profil."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2235
+#: ../src/orca/orca.py:2233
 msgid "Profile import success."
 msgstr "Profil úspěšně importován."
 
@@ -3454,12 +3478,12 @@ msgstr "Profil úspěšně importován."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2241
+#: ../src/orca/orca.py:2239
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "Import selhal kvůli nerozpoznání klíče: %s"
 
-#: ../src/orca/orca.py:2310
+#: ../src/orca/orca.py:2308
 msgid "Welcome to Orca."
 msgstr "Vítá vás Orca."
 
@@ -3486,11 +3510,6 @@ msgid "_Profile Name:"
 msgstr "Název _profilu:"
 
 #: ../src/orca/orca-quit.ui.h:1
-#| msgid ""
-#| "<b><big>Quit Orca?</big></b>\n"
-#| "\n"
-#| "This will stop all speech output and screen magnification.\n"
-#| "\n"
 msgid ""
 "<b><big>Quit Orca?</big></b>\n"
 "\n"
@@ -4585,7 +4604,7 @@ msgstr "Odkaz"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2422
+#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2423
 #: ../src/orca/scripts/apps/soffice/script.py:1144
 #: ../src/orca/scripts/default.py:1975 ../src/orca/speech_generator.py:972
 msgid "link"
@@ -5388,7 +5407,7 @@ msgstr "vnořený objekt"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2346
+#: ../src/orca/script_utilities.py:2347
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -5401,7 +5420,7 @@ msgstr[2] "%(count)d znaků %(repeatChar)s"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2536
+#: ../src/orca/script_utilities.py:2537
 #, python-format
 msgid " superscript %s"
 msgstr " horní index %s"
@@ -5411,7 +5430,7 @@ msgstr " horní index %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2546
+#: ../src/orca/script_utilities.py:2547
 #, python-format
 msgid " subscript %s"
 msgstr " dolní index %s"
@@ -5643,7 +5662,7 @@ msgstr "Tlačítko adresářů"
 #: ../src/orca/scripts/default.py:2347 ../src/orca/scripts/default.py:4438
 #: ../src/orca/scripts/default.py:4448
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5370
-#: ../src/orca/settings.py:1073 ../src/orca/speech_generator.py:683
+#: ../src/orca/settings.py:916 ../src/orca/speech_generator.py:683
 #: ../src/orca/speech_generator.py:1036
 #: ../src/orca/structural_navigation.py:3602
 msgid "blank"
@@ -7970,7 +7989,7 @@ msgstr "Pohyb kurzoru ovládá Orca."
 #. translated rolename for the heading.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:261
-#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:86
+#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:93
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s úrovně %(level)d"
@@ -8060,14 +8079,14 @@ msgstr[2] "Načteno %d procent dokumentu"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1081 ../src/orca/settings.py:1158
+#: ../src/orca/settings.py:924 ../src/orca/settings.py:1001
 msgid "required"
 msgstr "vyžadováno"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:1086
+#: ../src/orca/settings.py:929
 msgctxt "text"
 msgid "read only"
 msgstr "jen ke čtení"
@@ -8075,7 +8094,7 @@ msgstr "jen ke čtení"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:1091 ../src/orca/settings.py:1169
+#: ../src/orca/settings.py:934 ../src/orca/settings.py:1012
 msgid "grayed"
 msgstr "nepřístupné"
 
@@ -8083,18 +8102,18 @@ msgstr "nepřístupné"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:1115 ../src/orca/settings.py:1181
+#: ../src/orca/settings.py:958 ../src/orca/settings.py:1024
 msgid "collapsed"
 msgstr "sbaleno"
 
-#: ../src/orca/settings.py:1115 ../src/orca/settings.py:1181
+#: ../src/orca/settings.py:958 ../src/orca/settings.py:1024
 msgid "expanded"
 msgstr "rozbaleno"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:1120
+#: ../src/orca/settings.py:963
 msgid "multi-select"
 msgstr "vícenásobný výběr"
 
@@ -8102,7 +8121,7 @@ msgstr "vícenásobný výběr"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:1126
+#: ../src/orca/settings.py:969
 #, python-format
 msgid "tree level %d"
 msgstr "úroveň stromu %d"
@@ -8117,7 +8136,7 @@ msgstr "úroveň stromu %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1133 ../src/orca/structural_navigation.py:2955
+#: ../src/orca/settings.py:976 ../src/orca/structural_navigation.py:2955
 #, python-format
 msgid "Nesting level %d"
 msgstr "Vnořená úroveň %d"
@@ -8126,7 +8145,7 @@ msgstr "Vnořená úroveň %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:1139
+#: ../src/orca/settings.py:982
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "položka %(index)d z %(total)d"
@@ -8135,7 +8154,7 @@ msgstr "položka %(index)d z %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:1145
+#: ../src/orca/settings.py:988
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "položka %(index)d z %(total)d"
@@ -8144,7 +8163,7 @@ msgstr "položka %(index)d z %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:1164
+#: ../src/orca/settings.py:1007
 msgctxt "text"
 msgid "rdonly"
 msgstr "kčtení"
@@ -8153,7 +8172,7 @@ msgstr "kčtení"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1187
+#: ../src/orca/settings.py:1030
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "ÚROVEŇ STROMU %d"
@@ -8164,7 +8183,7 @@ msgstr "ÚROVEŇ STROMU %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1195
+#: ../src/orca/settings.py:1038
 #, python-format
 msgid "LEVEL %d"
 msgstr "ÚROVEŇ %d"
@@ -8174,7 +8193,7 @@ msgstr "ÚROVEŇ %d"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1228
+#: ../src/orca/settings.py:1071
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H hodin, %M minut a %S sekund."
 
@@ -8183,7 +8202,7 @@ msgstr "%H hodin, %M minut a %S sekund."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1235
+#: ../src/orca/settings.py:1078
 msgid "%H hours and %M minutes."
 msgstr "%H hodin a %M minut."
 
@@ -8404,7 +8423,7 @@ msgstr[2] "vybráno %(index)d z %(total)d položek"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1492 ../src/orca/speech_generator.py:1783
+#: ../src/orca/speech_generator.py:1492 ../src/orca/speech_generator.py:1786
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -8415,7 +8434,7 @@ msgstr[2] "%d nezaměřených dialogů"
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1574
+#: ../src/orca/speech_generator.py:1577
 msgid "Icon panel"
 msgstr "Lišta ikon"
 
@@ -8423,7 +8442,7 @@ msgstr "Lišta ikon"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1730
+#: ../src/orca/speech_generator.py:1733
 #, python-format
 msgid "Default button is %s"
 msgstr "Výchozí tlačítko je %s"
