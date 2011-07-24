@@ -9,13 +9,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-07-10 11:16+0000\n"
-"PO-Revision-Date: 2011-07-11 20:12+0200\n"
+"POT-Creation-Date: 2011-07-18 19:16+0000\n"
+"PO-Revision-Date: 2011-07-24 17:39+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
@@ -4277,11 +4277,11 @@ msgstr ""
 
 #: C/howto_tables.page:96(title)
 msgid "Setting Column Headers"
-msgstr ""
+msgstr "Establercer las cabeceras de columna"
 
 #: C/howto_tables.page:98(p)
 msgid "Move to the row which contains all of the column headers."
-msgstr ""
+msgstr "Muévase a la fila que contiene todas las cabeceras de columna."
 
 #: C/howto_tables.page:103(p)
 msgid ""
@@ -4293,7 +4293,7 @@ msgstr ""
 
 #: C/howto_tables.page:110(title)
 msgid "Set Row Headers"
-msgstr ""
+msgstr "Establecer cabeceras de fila"
 
 #: C/howto_tables.page:112(p)
 msgid "Move to the column which contains all of the row headers."
@@ -4344,6 +4344,9 @@ msgid ""
 "amongst elements in a document. The types of elements by which you can "
 "navigate include:"
 msgstr ""
+"La característica de navegación estructural de <app>Orca</app> le permite "
+"navegar por los elementos de un documento. Los tipos de elementos por los "
+"que puede navegar incluyen:"
 
 #: C/howto_structural_navigation.page:26(p)
 msgid "Headings and other text blocks"
@@ -4398,6 +4401,8 @@ msgid ""
 "Depending on where you are, it may be necessary for you to explicitly toggle "
 "Structural Navigation on before you can use it."
 msgstr ""
+"Dependiendo de dónde esté, puede ser necesario que active la navegación "
+"estructural antes de poder usarla."
 
 #: C/howto_structural_navigation.page:59(title)
 msgid "When Toggling Structural Navigation On Is Required"
