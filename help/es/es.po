@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-07-24 15:40+0000\n"
-"PO-Revision-Date: 2011-07-24 22:42+0200\n"
+"POT-Creation-Date: 2011-07-24 20:50+0000\n"
+"PO-Revision-Date: 2011-07-25 21:29+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -7040,23 +7040,23 @@ msgstr ""
 
 #: C/commands_braille.page:27(p)
 msgid "Toggle flat review mode: Freeze"
-msgstr ""
+msgstr "Conmuar el modo de revisión: congelar"
 
 #: C/commands_braille.page:28(p)
 msgid "Review the word above: Line Up"
-msgstr ""
+msgstr "Revisar la palabra arriba: línea arriba"
 
 #: C/commands_braille.page:29(p)
 msgid "Review the word below: Line Down"
-msgstr ""
+msgstr "Revisar la palabra debajo: línea abajo"
 
 #: C/commands_braille.page:30(p)
 msgid "Review bottom left: Bottom Right"
-msgstr ""
+msgstr "Revisar la parte inferior izquierda: inferior derecha"
 
 #: C/commands_braille.page:31(p)
 msgid "Review the home position: Top Left"
-msgstr ""
+msgstr "Revisar la posición inicial: superior izquierda"
 
 #: C/commands_braille.page:32(p)
 msgid "Contracted braille: Six Dots"
