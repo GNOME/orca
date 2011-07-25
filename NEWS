@@ -1,3 +1,26 @@
+3.0.4 - 25-July-2011
+
+General
+
+  * Fix for bug #634460 - Could orca provide date/time information within
+    the debug files?
+
+  * Fix for bug #654210 - Orca sometimes fails to present the default button
+    in a dialog
+
+  * Fix for bug #654321 - Orca's debug utility reports the toolkit version
+    as 'unknown'
+
+  * Fix for bug #654796 - Orca is not respecting the 'only speak displayed
+    text' setting with rolename presentation in WebKitGtk content
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish             Jorge González
+    ug            Uyghur              Sahran
+
+==========
+
 3.0.3 - 4-July-2011
 
 General
