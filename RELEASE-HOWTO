@@ -73,7 +73,7 @@ UPLOAD THE RELEASE:
 
 scp orca-2.29.92.tar.gz wwalker@master.gnome.org:
 ssh master.gnome.org
-install-module orca-2.29.92.tar.gz
+ftpadmin install orca-2.29.92.tar.gz
 
 
 IDENTIFY TRUNK AS "PRE":
