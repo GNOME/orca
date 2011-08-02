@@ -7,13 +7,14 @@
 # 
 # 
 # 
+# Gonzalo Sanhueza Rodríguez <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-07-12 16:33+0000\n"
-"PO-Revision-Date: 2011-07-15 14:08+0200\n"
+"POT-Creation-Date: 2011-07-25 20:24+0000\n"
+"PO-Revision-Date: 2011-08-01 10:40+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -236,13 +237,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
-"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
-"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
-"atributo se hable siempre independientemente de que el texto esté subrayado "
-"o no, entonces el atributo debería estar marcado y el valor de "
-"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
-"que la columna <gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
+"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
+"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
+"hable siempre independientemente de que el texto esté subrayado o no, "
+"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
+"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
+"<gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -689,12 +690,11 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
-"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
-"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
-"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
-"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
-"instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
+"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
+"hablar de manera predeterminada, pero tener a Alicia para hablar los "
+"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
+"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
 
 #: C/preferences_speech.page:75(title)
 msgid "Rate, Pitch, and Volume"
@@ -754,8 +754,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
-"«/», «&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
+"«&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -2551,8 +2551,8 @@ msgid ""
 "normally."
 msgstr ""
 "Cuando se ejecutan comandos desde el menú, muchas distribuciones usan una "
-"aplicación conocida como «gksu» para autorizar al usuario para ejecutar "
-"estos comandos; gksu es el IGU que le pregunta por su contraseña. Cuando se "
+"aplicación conocida como «gksu» para autorizar al usuario para ejecutar estos "
+"comandos; gksu es el IGU que le pregunta por su contraseña. Cuando se "
 "ejecuta, gksu activa lo que se conoce como una «captura de teclado», la cual "
 "es una característica que previene cualquier acción de teclado vaya a "
 "cualquier otra aplicación del escritorio, incluyendo <app>Orca</app>. El "
@@ -2583,13 +2583,13 @@ msgid ""
 "command."
 msgstr ""
 "La captura de teclado es un intento de seguridad de gksu para prevenir que "
-"aplicaciones maliciosas «rastreen» el teclado y obtengan información "
-"secreta. Tenga en cuenta que al desactivar la característica de captura de "
-"teclado de gksu puede exponerle a un comportamiento malicioso. Si no se "
-"siente cómodo con esto, siempre puede usar la cuenta de root para propósitos "
-"de administración de sistema. Para ellp, necesita activar el inicio de "
-"sesión para la cuenta root, y luego salir y entrar como root cada vez que "
-"quiera realizar un comando de administración de sistema."
+"aplicaciones maliciosas «rastreen» el teclado y obtengan información secreta. "
+"Tenga en cuenta que al desactivar la característica de captura de teclado de "
+"gksu puede exponerle a un comportamiento malicioso. Si no se siente cómodo "
+"con esto, siempre puede usar la cuenta de root para propósitos de "
+"administración de sistema. Para ellp, necesita activar el inicio de sesión "
+"para la cuenta root, y luego salir y entrar como root cada vez que quiera "
+"realizar un comando de administración de sistema."
 
 #: C/preferences_general.page:97(desc)
 msgid ""
@@ -2978,9 +2978,9 @@ msgid ""
 msgstr ""
 "Este botón contador editable es donde puede especificar el número de "
 "caracteres que deben coincidir al menos antes que <app>Orca</app> anuncie la "
-"línea coincidente. Esta opción también está diseñada para prevenir «ruido» "
-"ya que al principio cuando comienza a teclear la cadena de búsqueda hay "
-"muchas coincidencias."
+"línea coincidente. Esta opción también está diseñada para prevenir «ruido» ya "
+"que al principio cuando comienza a teclear la cadena de búsqueda hay muchas "
+"coincidencias."
 
 #: C/preferences_gecko.page:131(p)
 msgid "Default value: 4"
@@ -3675,10 +3675,10 @@ msgid ""
 "basic Where Am I will tell you what text is selected. A detailed Where Am I "
 "within the text will also include the text attributes."
 msgstr ""
-"Si el widget es texto y usted ejecuta un ¿Dónde estoy? básico, se le dirá la "
-"línea actual si no se selecciona texto. Si se selecciona texto, sin embargo, "
-"un ¿Dónde estoy? básico le dirá qué texto se ha seleccionado. Un ¿Dónde "
-"estoy? detallado en el texto también incluirá los atributos de texto."
+"Si el widget es texto y ejecuta un ¿Dónde estoy? básico, se le dirá la línea "
+"actual si no se selecciona texto. Si se selecciona texto, sin embargo, un "
+"¿Dónde estoy? básico le dirá qué texto se ha seleccionado. Un ¿Dónde estoy? "
+"detallado en el texto también incluirá los atributos de texto."
 
 #: C/howto_whereami.page:48(p)
 msgid ""
@@ -3705,10 +3705,10 @@ msgid ""
 "expanded, you will also be told how many children it contains. In addition, "
 "the nesting level will also be provided."
 msgstr ""
-"Si el widget es jerárquico, como un árbol, y usted está en un nodo "
-"expandible, se le dirá si ese nodo es expandible o no. Y si es expandible, "
-"también se le dirá cuántos hijos contiene. Además, se proporcionará el nivel "
-"de anidamiento."
+"Si el widget es jerárquico, como un árbol, y está en un nodo expandible, se "
+"le dirá si ese nodo es expandible o no. Y si es expandible, también se le "
+"dirá cuántos hijos contiene. Además, se proporcionará el nivel de "
+"anidamiento."
 
 #: C/howto_whereami.page:69(p)
 msgid ""
@@ -4629,7 +4629,7 @@ msgid ""
 msgstr ""
 "Por otro lado, en los documentos editables, como aquellos encontrados en "
 "<app>OpenOffice</app> y <app>LibreOffice</app>, es mucho más difícil para "
-"<app>Orca</app> predecir con exactitud lo que usted espera que ocurra como "
+"<app>Orca</app> predecir con exactitud lo que espera que ocurra como "
 "resultado de pulsar «H». Por lo tanto, antes de que pueda usar cualquier "
 "comando de navegación estructural en un documento editable, primero debe "
 "activar la navegación estructural pulsando el <keyseq><key>Modificador de "
@@ -4679,10 +4679,12 @@ msgid ""
 "Navigate to the last page of the dialog box which should be named according "
 "to the name of your current application."
 msgstr ""
+"Navegue hasta la última página del cuadro de diálogo cuyo nombre debería ser "
+"el nombre de su aplicación actual."
 
 #: C/howto_structural_navigation.page:112(p)
 msgid "Examine and change the settings as you see fit."
-msgstr ""
+msgstr "Examine y cambie la configuración como considere conveniente."
 
 #: C/howto_structural_navigation.page:117(p) C/howto_profiles.page:86(p)
 msgid "Press the <gui>OK</gui> button."
@@ -4714,6 +4716,9 @@ msgid ""
 "setup mode. Depending on your active session's configuration, one of two "
 "things will occur:"
 msgstr ""
+"Cuando ejecute <app>Orca</app> por primera vez, el programa entrará "
+"automáticamente en el modo de configuración. Dependiendo de la configuración "
+"de sus sesión activa, ocurrirá una de dos cosas:"
 
 #: C/howto_setting_up_orca.page:29(p)
 msgid ""
@@ -4722,6 +4727,10 @@ msgid ""
 "link> dialog box where you can customize <app>Orca</app> completely and then "
 "use it immediately."
 msgstr ""
+"Si el soporte de accesibilidad para su sesión ya se ha activado, se le "
+"situará al cuadro de diálogo de <link xref=\"preferences\">preferencias</"
+"link> de <app>Orca</app> donde puede personalizar <app>Orca</app> "
+"completamente y luego usarlo inmediatamente."
 
 #: C/howto_setting_up_orca.page:38(p)
 msgid ""
@@ -4731,6 +4740,12 @@ msgid ""
 "most fundamental settings and enable accessibility support for your session. "
 "You will need to log out and log back in for the new settings to take effect."
 msgstr ""
+"Si el soporte de accesibilidad para su sesión aún no se ha activado, se "
+"ejecutará la <link xref=\"howto_text_setup\">configuración de texto</link> "
+"de <app>Orca</app> en su lugar. La configuración de texto le permite "
+"configurar los parámetros más importantes y activar el soporte de "
+"accesibilidad para su sesión. Necesitará cerrar la sesión y volver a entrar "
+"para que la nueva configuración surta efecto."
 
 #: C/howto_setting_up_orca.page:50(title)
 msgid "Configuring <app>Orca</app> in the Future"
@@ -4749,12 +4764,18 @@ msgid ""
 "it to automatically be placed in the <link xref=\"preferences\">Preferences</"
 "link> dialog box."
 msgstr ""
+"Pase la opción <cmd>--setup</cmd> a <app>Orca</app> la próxima vez que la "
+"ejecute para situarse automáticamente al cuadro de diálogo de <link xref="
+"\"preferences\">preferencias</link>."
 
 #: C/howto_setting_up_orca.page:64(p)
 msgid ""
 "Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
 "<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link>."
 msgstr ""
+"Pase la opción de <cmd>--text-setup</cmd> a <app>Orca</app> para volver a "
+"ejecutar la <link xref=\"howto_text_setup\">configuración de texto</link> de "
+"<app>Orca</app>."
 
 #: C/howto_setting_up_orca.page:71(p)
 msgid ""
@@ -4899,6 +4920,9 @@ msgid ""
 "profile. When you press the <gui>OK</gui> button, you will be told there is "
 "a name conflict."
 msgstr ""
+"Cuando se le pida el nombre del perfil nuevo, escriba el mismo nombre del "
+"perfil actual. Cuando pulse el botón <gui>Aceptar</gui>, se le dirá que hay "
+"un conflicto de nombres."
 
 #: C/howto_profiles.page:110(p)
 msgid ""
@@ -4910,19 +4934,23 @@ msgstr ""
 
 #: C/howto_profiles.page:117(title)
 msgid "Changing the <gui>Start-up Profile</gui>"
-msgstr ""
+msgstr "Cambiar el <gui>Perfil inicial</gui>"
 
 #: C/howto_profiles.page:124(p)
 msgid ""
 "On the <gui>General</gui> page, select the profile to load from the "
 "<gui>Start-up Profile</gui> combo box."
 msgstr ""
+"En la página <gui>General</gui>, seleccione el perfil que cargar desde el "
+"cuadro combinado <gui>Perfil inicial</gui>."
 
 #: C/howto_profiles.page:130(p)
 msgid ""
 "Press the <gui>OK</gui> button. The next time you launch <app>Orca</app>, "
 "the newly-selected profile will be used."
 msgstr ""
+"Pulse el botón <gui>Aceptar</gui>. La próxima vez que ejecute <app>Orca</"
+"app>, se usará el perfil recientemente seleccionado."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -4932,15 +4960,15 @@ msgstr "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
 
 #: C/howto_orca_find.page:5(title)
 msgid "3. Orca Find"
-msgstr ""
+msgstr "3. Búsqueda de Orca"
 
 #: C/howto_orca_find.page:6(desc)
 msgid "Searching a window for objects"
-msgstr ""
+msgstr "Buscar objetos de una ventana"
 
 #: C/howto_orca_find.page:15(title) C/commands_find.page:7(title)
 msgid "Orca Find"
-msgstr ""
+msgstr "Búsqueda de Orca"
 
 #: C/howto_orca_find.page:16(p)
 msgid ""
@@ -4948,16 +4976,23 @@ msgid ""
 "Review</link>-based search designed to help you quickly locate objects that "
 "are visible on-screen within the current window."
 msgstr ""
+"La característica «Buscar» de <app>Orca</app> es una búsqueda en el modo de "
+"<link xref=\"howto_flat_review\">Revisión Plana</link> diseñada para "
+"ayudarle a localizar rápidamente los objetos visibles en pantalla que están "
+"dentro de la ventana actual."
 
 #: C/howto_orca_find.page:23(title)
 msgid "Activating Orca Find"
-msgstr ""
+msgstr "Activar la búsqueda de Orca"
 
 #: C/howto_orca_find.page:24(p)
 msgid ""
 "To open the Orca <gui>Find</gui> dialog, use the following command based on "
 "your chosen <link xref=\"howto_keyboard_layout\">keyboard layout</link>:"
 msgstr ""
+"Para abrir el diálogo <gui>Buscar</gui> de Orca, use el siguiente comando "
+"basado en la <link xref=\"howto_keyboard_layout\">distribución de teclado</"
+"link> elegida."
 
 #: C/howto_orca_find.page:30(p) C/commands_find.page:30(p)
 msgid "Desktop: <keyseq><key>KP Delete</key></keyseq>"
@@ -4973,10 +5008,12 @@ msgid ""
 "For a list of additional tasks you can perform, see the <link xref="
 "\"commands_find\">Orca Find commands</link>"
 msgstr ""
+"Para acceder a una lista de otras tareas que puede realizar, consulte los "
+"<link xref=\"commands_find\">comandos de la búsqueda de Orca</link>"
 
 #: C/howto_orca_find.page:43(p)
 msgid "When you activate Orca Find, you will be placed in a dialog box."
-msgstr ""
+msgstr "Cuando active la búsqueda de Orca, se situará en un cuadro de diálogo."
 
 #: C/howto_orca_find.page:47(title)
 msgid "<app>Orca</app>'s Find Dialog"
@@ -4995,6 +5032,8 @@ msgid ""
 "The location from which to begin the search, which can either be the current "
 "location or the top of the window"
 msgstr ""
+"La ubicación desde donde comienza la búsqueda, que puede ser la ubicación "
+"actual o la parte superior de la ventana"
 
 #: C/howto_orca_find.page:64(p)
 msgid "Default value of <gui>Start from</gui>: <gui>Current location</gui>"
@@ -6460,9 +6499,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
-"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
-"<app>Orca</app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
+"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
+"app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(p)
 msgid ""
