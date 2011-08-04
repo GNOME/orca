@@ -4342,8 +4342,8 @@ msgstr ""
 "Orca así como aplicación por aplicación. Las instrucciones para realizar "
 "estas operaciones se describen en la guía sobre <link xref=\"preferences"
 "\">diálogos de preferencias de<app>Orca</app></link>. La configuración se "
-"puede encontrar en el </gui>grupo de botones de radio<gui>de las filas de "
-"tabla en la <link xref=\"preferences_speech\"><gui>página de </gui> Voz</"
+"puede encontrar en el <gui>grupo de botones de radio</gui> de las filas de "
+"tabla en la <link xref=\"preferences_speech\"><gui>página de</gui> Voz</"
 "link>."
 
 #: C/howto_tables.page:45(p)
