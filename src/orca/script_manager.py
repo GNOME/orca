@@ -64,7 +64,8 @@ class ScriptManager:
              'Nereid':           'Banshee',
              'vte':              'gnome-terminal'}
         self._toolkitNames = \
-            {'gtk':              'GAIL'}
+            {'gtk':              'GAIL',
+             'clutter':          'CALLY'}
 
         self.setActiveScript(None, "__init__")
 
