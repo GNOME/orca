@@ -113,6 +113,14 @@ debugFile = None
 eventDebugLevel  = LEVEL_FINEST
 eventDebugFilter = None
 
+# What module(s) should be traced if traceit is being used. By default
+# we'll just attend to ourself. (And by default, we will not enable
+# traceit.) Note that enabling this functionality will drag your system
+# to a complete and utter halt and should only be used in extreme
+# desperation by developers who are attempting to reproduce a very
+# specific, immediate issue. Trust me. :-)
+TRACE = ['orca']
+
 def printException(level):
     """Prints out information regarding the current exception.
 
@@ -287,15 +295,17 @@ def traceit(frame, event, arg):
 
     if event == "line":
         lineno = frame.f_lineno
-        filename = frame.f_globals["__file__"]
+        try:
+            filename = frame.f_globals["__file__"]
+        except:
+            return traceit
+            
         if (filename.endswith(".pyc") or
             filename.endswith(".pyo")):
             filename = filename[:-1]
         name = frame.f_globals["__name__"]
-        if name == "gettext" \
-           or name == "locale" \
-           or name == "posixpath" \
-           or name == "UserDict":
+        module = name.split('.')[0]
+        if not module in TRACE:
             return traceit
         line = linecache.getline(filename, lineno)
         println(LEVEL_ALL, "TRACE %s:%s: %s" % (name, lineno, line.rstrip()))
