@@ -227,6 +227,7 @@ class EventManager:
             if isinstance(event, inputEvents):
                 self._processInputEvent(event)
             else:
+                orca_state.currentObjectEvent = event
                 debugging = not debug.eventDebugFilter \
                             or debug.eventDebugFilter.match(event.type)
                 if debugging:
@@ -242,6 +243,7 @@ class EventManager:
                     debug.println(debug.eventDebugLevel,
                                   "^^^^^ PROCESS OBJECT EVENT %s ^^^^^\n" \
                                   % event.type)
+                orca_state.currentObjectEvent = None
 
             # [[[TODO: HACK - it would seem logical to only do this if we
             # discover the queue is empty, but this inroduces a hang for

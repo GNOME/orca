@@ -48,6 +48,10 @@ activeWindow = None
 #
 activeScript = None
 
+# The object event currently being processed.
+#
+currentObjectEvent = None
+
 # The "click" count. Used to determine if the user has double or triple
 # "clicked" a key.
 #

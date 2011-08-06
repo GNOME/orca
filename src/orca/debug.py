@@ -32,6 +32,8 @@ import traceback
 import pyatspi
 import sys
 
+import orca_state
+
 # Used to turn off all debugging.
 #
 LEVEL_OFF = 10000
@@ -119,7 +121,33 @@ eventDebugFilter = None
 # to a complete and utter halt and should only be used in extreme
 # desperation by developers who are attempting to reproduce a very
 # specific, immediate issue. Trust me. :-)
-TRACE = ['orca']
+#
+TRACE_MODULES = ['orca']
+
+# What AT-SPI event(s) should be traced if traceit is being used. By
+# default, we'll trace everything. Examples of what you might wish to
+# do to narrow things down include:
+#
+# TRACE_EVENTS = ['object:state-changed', 'focus:']
+#     (for any and all object:state-changed events plus focus: events)
+# TRACE_EVENTS = ['object:state-changed:selected']
+#     (if you know the exact event type of interest)
+#
+TRACE_EVENTS = []
+
+# What pyatspi role(s) should be traced if traceit is being used. By
+# default, we'll trace everything. An example of what you might wish
+# to do to narrow things down, if you know buttons trigger the problem:
+#
+# TRACE_ROLES = [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON]
+#
+TRACE_ROLES = []
+
+# Whether or not traceit should only trace the work being done when
+# processing an actual event. This is when most bad things happen.
+# So we'll default to True.
+#
+TRACE_ONLY_PROCESSING_EVENTS = True
 
 def printException(level):
     """Prints out information regarding the current exception.
@@ -274,7 +302,7 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
     return string
 
 
-# The following code has been borrowed from the following URL:
+# The following code originated from the following URL:
 # 
 # http://www.dalkescientific.com/writings/diary/archive/ \
 #                                     2005/04/20/tracing_python_code.html
@@ -293,6 +321,17 @@ def traceit(frame, event, arg):
     - arg:   depends on the event type (see docs for sys.settrace)
     """ 
 
+    objEvent = orca_state.currentObjectEvent
+    if not objEvent:
+        if TRACE_ONLY_PROCESSING_EVENTS:
+            return
+    else:
+        if TRACE_ROLES and not objEvent.source.getRole() in TRACE_ROLES:
+            return
+        if TRACE_EVENTS and \
+           not filter(lambda x: x, map(objEvent.type.startswith, TRACE_EVENTS)):
+            return
+
     if event == "line":
         lineno = frame.f_lineno
         try:
@@ -303,10 +342,12 @@ def traceit(frame, event, arg):
         if (filename.endswith(".pyc") or
             filename.endswith(".pyo")):
             filename = filename[:-1]
+
         name = frame.f_globals["__name__"]
         module = name.split('.')[0]
-        if not module in TRACE:
+        if not module in TRACE_MODULES:
             return traceit
+
         line = linecache.getline(filename, lineno)
         println(LEVEL_ALL, "TRACE %s:%s: %s" % (name, lineno, line.rstrip()))
     return traceit
