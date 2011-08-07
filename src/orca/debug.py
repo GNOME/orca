@@ -120,13 +120,20 @@ eventDebugFilter = None
 # traceit.) Note that enabling this functionality will drag your system
 # to a complete and utter halt and should only be used in extreme
 # desperation by developers who are attempting to reproduce a very
-# specific, immediate issue. Trust me. :-)
+# specific, immediate issue. Trust me. :-) Disabling braille monitor in
+# this case is also strongly advised.
 #
 TRACE_MODULES = ['orca']
 
-# Specific modules to ignore.
+# Specific modules to ignore with traceit.
 #
-TRACE_IGNORE = ['orca.debug', 'orca.brlmon']
+TRACE_IGNORE_MODULES = ['traceback', 'linecache', 'locale', 'gettext',
+                        'logging', 'UserDict', 'encodings', 'posixpath',
+                        'genericpath', 're']
+
+# Specific apps to trace with traceit.
+#
+TRACE_APPS = []
 
 # What AT-SPI event(s) should be traced if traceit is being used. By
 # default, we'll trace everything. Examples of what you might wish to
@@ -332,7 +339,18 @@ def _shouldTraceIt():
     if not objEvent:
         return not TRACE_ONLY_PROCESSING_EVENTS
 
-    if TRACE_ROLES and not objEvent.source.getRole() in TRACE_ROLES:
+    eventSource = objEvent.source
+    if TRACE_APPS:
+        app = objEvent.host_application or eventSource.getApplication()
+        try:
+            app = objEvent.host_application or eventSource.getApplication()
+        except:
+            pass
+        else:
+            if not app.name in TRACE_APPS:
+                return False
+
+    if TRACE_ROLES and not eventSource.getRole() in TRACE_ROLES:
         return False
 
     if TRACE_EVENTS and \
@@ -359,9 +377,9 @@ def traceit(frame, event, arg):
     filename, module = _getFileAndModule(frame)
     if not (filename and module):
         return traceit
-    if module in TRACE_IGNORE:
+    if module in TRACE_IGNORE_MODULES:
         return traceit
-    if not module.split('.')[0] in TRACE_MODULES:
+    if TRACE_MODULES and not module.split('.')[0] in TRACE_MODULES:
         return traceit
     if not event in ['call', 'line', 'return']:
         return traceit
