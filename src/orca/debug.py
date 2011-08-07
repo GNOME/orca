@@ -124,6 +124,10 @@ eventDebugFilter = None
 #
 TRACE_MODULES = ['orca']
 
+# Specific modules to ignore.
+#
+TRACE_IGNORE = ['orca.debug', 'orca.brlmon']
+
 # What AT-SPI event(s) should be traced if traceit is being used. By
 # default, we'll trace everything. Examples of what you might wish to
 # do to narrow things down include:
@@ -307,7 +311,35 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
 # http://www.dalkescientific.com/writings/diary/archive/ \
 #                                     2005/04/20/tracing_python_code.html
 #
+import inspect
 import linecache
+
+def _getFileAndModule(frame):
+    filename, module = None, None
+    try:
+        filename = frame.f_globals["__file__"]
+        module = frame.f_globals["__name__"]
+    except:
+        pass
+    else:
+        if (filename.endswith(".pyc") or filename.endswith(".pyo")):
+            filename = filename[:-1]
+
+    return filename, module
+
+def _shouldTraceIt():
+    objEvent = orca_state.currentObjectEvent
+    if not objEvent:
+        return not TRACE_ONLY_PROCESSING_EVENTS
+
+    if TRACE_ROLES and not objEvent.source.getRole() in TRACE_ROLES:
+        return False
+
+    if TRACE_EVENTS and \
+       not filter(lambda x: x, map(objEvent.type.startswith, TRACE_EVENTS)):
+        return False
+
+    return True
 
 def traceit(frame, event, arg):
     """Line tracing utility to output all lines as they are executed by
@@ -319,35 +351,38 @@ def traceit(frame, event, arg):
     - event: 'call', 'line', 'return', 'exception', 'c_call', 'c_return',
              or 'c_exception'
     - arg:   depends on the event type (see docs for sys.settrace)
-    """ 
+    """
 
-    objEvent = orca_state.currentObjectEvent
-    if not objEvent:
-        if TRACE_ONLY_PROCESSING_EVENTS:
-            return
-    else:
-        if TRACE_ROLES and not objEvent.source.getRole() in TRACE_ROLES:
-            return
-        if TRACE_EVENTS and \
-           not filter(lambda x: x, map(objEvent.type.startswith, TRACE_EVENTS)):
-            return
+    if not _shouldTraceIt():
+        return None
 
-    if event == "line":
-        lineno = frame.f_lineno
-        try:
-            filename = frame.f_globals["__file__"]
-        except:
+    filename, module = _getFileAndModule(frame)
+    if not (filename and module):
+        return traceit
+    if module in TRACE_IGNORE:
+        return traceit
+    if not module.split('.')[0] in TRACE_MODULES:
+        return traceit
+    if not event in ['call', 'line', 'return']:
+        return traceit
+
+    lineno = frame.f_lineno
+    line = linecache.getline(filename, lineno).rstrip()
+    output = 'TRACE %s:%s: %s' % (module, lineno, line)
+
+    if event == 'call':
+        argvals = inspect.getargvalues(frame)
+        keys = filter(lambda x: x != 'self', argvals[0])
+        values = map(argvals[3].get, keys)
+        for i, key in enumerate(keys):
+            output += '\n  ARG %s=%s' % (key, values[i])
+
+    lineElements = line.strip().split()
+    if lineElements[0] == 'return':
+        if event == 'line':
             return traceit
-            
-        if (filename.endswith(".pyc") or
-            filename.endswith(".pyo")):
-            filename = filename[:-1]
+        output = '%s (rv: %s)' % (output, arg)
 
-        name = frame.f_globals["__name__"]
-        module = name.split('.')[0]
-        if not module in TRACE_MODULES:
-            return traceit
+    println(LEVEL_ALL, output)
 
-        line = linecache.getline(filename, lineno)
-        println(LEVEL_ALL, "TRACE %s:%s: %s" % (name, lineno, line.rstrip()))
     return traceit
