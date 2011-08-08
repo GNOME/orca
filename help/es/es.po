@@ -7,14 +7,14 @@
 # 
 # 
 # 
-# Gonzalo Sanhueza Rodríguez <gonzalo.sanhueza.r@gmail.com>, 2011.
+# Gonzalo <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-07-25 20:24+0000\n"
-"PO-Revision-Date: 2011-08-01 10:40+0200\n"
+"POT-Creation-Date: 2011-08-04 14:58+0000\n"
+"PO-Revision-Date: 2011-08-08 13:33+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -4341,8 +4341,8 @@ msgstr ""
 "si se debería leer la fila completa. Puede configurar esta preferencia de "
 "Orca así como aplicación por aplicación. Las instrucciones para realizar "
 "estas operaciones se describen en la guía sobre <link xref=\"preferences"
-"\">diálogos de preferencias de<app>Orca</app></link>. La configuración se "
-"puede encontrar en el <gui>grupo de botones de radio</gui> de las filas de "
+"\">diálogos de preferencias de <app>Orca</app></link>. La configuración se "
+"puede encontrar en el <gui>grupo de botones de radio</gui>de las filas de "
 "tabla en la <link xref=\"preferences_speech\"><gui>página de</gui> Voz</"
 "link>."
 
@@ -5038,36 +5038,46 @@ msgstr ""
 #: C/howto_orca_find.page:64(p)
 msgid "Default value of <gui>Start from</gui>: <gui>Current location</gui>"
 msgstr ""
+"Valor predeterminado de <gui>Comenzar en</gui>: <gui>Ubicación actual</gui>"
 
 #: C/howto_orca_find.page:69(p)
 msgid ""
 "Whether or not capitalization should be taken into account when seeking a "
 "match"
 msgstr ""
+"Indica si se deberían considerar o no las mayúsculas cuando se busca una "
+"coincidencia"
 
 #: C/howto_orca_find.page:73(p)
 msgid "Default value of <gui>Match case</gui>: not checked"
 msgstr ""
+"Valor predeterminado de <gui>Coincidir mayúsculas y minúsculas</gui>: no "
+"marcado"
 
 #: C/howto_orca_find.page:78(p)
 msgid ""
 "Whether or not to limit matches to those which match the entire word or "
 "phrase"
 msgstr ""
+"Indica si se deberían limitar o no las coincidencias a aquellas que "
+"coinciden con la palabra o frase completa"
 
 #: C/howto_orca_find.page:82(p)
 msgid "Default value of <gui>Match entire word only</gui>: not checked"
 msgstr ""
+"Valor predeterminado de <gui>Buscar sólo palabras completas</gui>: no marcado"
 
 #: C/howto_orca_find.page:87(p)
 msgid ""
 "Whether Find should look down and/or to the right for the next match or up "
 "and/or to the left."
 msgstr ""
+"Indica si la búsqueda de Orca debería buscar la siguiente coincidencia hacia "
+"abajo y/o hacia la derecha o hacia arriba y/o hacia la izquierda."
 
 #: C/howto_orca_find.page:91(p)
 msgid "Default value of <gui>Search backwards</gui>: not checked"
-msgstr ""
+msgstr "Valor predeterminado de <gui>Búsqueda hacia atrás</gui>: no marcado"
 
 #: C/howto_orca_find.page:96(p)
 msgid ""
@@ -5075,16 +5085,22 @@ msgid ""
 "there is no match found from the starting location in the direction of the "
 "search."
 msgstr ""
+"Indica si la búsqueda de Orca debería retornar el cursor o no a la parte "
+"superior/inferior de la ventana cuando no se encuentren coincidencias a "
+"partir de la ubicación inicial en la dirección de la búsqueda."
 
 #: C/howto_orca_find.page:101(p)
 msgid "Default value of <gui>Wrap around</gui>: checked"
-msgstr ""
+msgstr "Valor predeterminado de <gui>Retorno del cursor</gui>: marcado"
 
 #: C/howto_orca_find.page:106(p)
 msgid ""
 "Having performed a search, you can quickly search for the next or previous "
 "match without having to return to the Orca Find dialog box."
 msgstr ""
+"Tras haber realizado una búsqueda, puede buscar rápidamente la coincidencia "
+"siguiente o anterior sin tener que volver al cuadro de diálogo de la "
+"búsqueda de Orca."
 
 #: C/howto_orca_find.page:110(p)
 msgid ""
@@ -5095,6 +5111,13 @@ msgid ""
 "repositioned. If you need to accomplish either, please see <link xref="
 "\"commands_mouse\">Orca's Mouse/Pointer-Related Commands</link>."
 msgstr ""
+"Puesto que se trata de una característica de  la<link xref="
+"\"howto_flat_review\">revisión</link>, cuando se encuentre una coincidencia, "
+"se activará automáticamente la «Revisión» y el elemento o texto coincidente "
+"se convertirá en el elemento de revisión actual. Tenga en cuenta que no se "
+"modificará el foco de la aplicación, ni tampoco se reposicionará el cursor. "
+"Si necesita realizar ambas operaciones, cosulte los <link xref="
+"\"commands_mouse\">comandos de Orca relacionados con el ratón/puntero</link>."
 
 #: C/howto_notifications.page:5(title)
 msgid "5. Notifications"
@@ -5102,7 +5125,7 @@ msgstr "5. Notificaciones"
 
 #: C/howto_notifications.page:6(desc)
 msgid "Reading previously-received messages"
-msgstr ""
+msgstr "Leer los mensajes recibidos anteriormente"
 
 #: C/howto_notifications.page:15(title)
 msgid "Notifications"
@@ -5132,10 +5155,18 @@ msgid ""
 "type or to change focus. For this reason, <app>Orca</app> has three commands "
 "which you can use to access previously-displayed notification messages:"
 msgstr ""
+"Puesto que las notificaciones tienen como objetivo mostrar información a los "
+"usuarios sin interrumpir lo que estos están haciendo, estos mensajes tienden "
+"a aparecer y desaparecer de manera relativamente rápida. Además, no se "
+"pueden enfocar. Aunque <app>Orca</app> mostrará estos mensajes a medida que "
+"se reciban, es demasiado fácil interrumpir los anuncios de <app>Orca</app> "
+"de manera accidental al continuar escribiendo o cambiando el foco. Por esta "
+"razón, <app>Orca</app> tiene tres comandos que puede usar para acceder a los "
+"mensajes de notificación mostrados anteriormente:"
 
 #: C/howto_notifications.page:35(p)
 msgid "Present the last (most recent) notification message"
-msgstr ""
+msgstr "Presentar el último (el más reciente) mensaje de notificación"
 
 #: C/howto_notifications.page:38(p)
 msgid "Present the previous notification message"
@@ -5151,12 +5182,17 @@ msgid ""
 "just received. The last command is the most powerful as it stores your "
 "notification message history."
 msgstr ""
+"Los dos primeros comandos están diseñados principalmente para acceder "
+"rápidamente a un mensaje que acaba de recibir. El último comando es el más "
+"potente, puesto que almacena su historial de mensajes de notificación."
 
 #: C/howto_notifications.page:49(p)
 msgid ""
 "When you enter the list of notification messages, you will be told the size "
 "of the list and prompted with the following choices:"
 msgstr ""
+"Cuando introduzca la lista de mensajes de notificación, se le dirá el tamaño "
+"de la lista y se le mostrarán las siguientes opciones:"
 
 #: C/howto_notifications.page:54(p)
 msgid "Press H for help."
@@ -5165,22 +5201,25 @@ msgstr "Pulse «H» para obtener ayuda"
 #: C/howto_notifications.page:55(p)
 msgid "Use Up, Down, Home or End to navigate in the list."
 msgstr ""
+"Use las teclas «Arriba», «Abajo», «Inicio» o «Fin» para navegar en la lista."
 
 #: C/howto_notifications.page:56(p)
 msgid "Press Escape to exit."
-msgstr "Pulse escape para salir."
+msgstr "Pulse «Escape» para salir."
 
 #: C/howto_notifications.page:57(p)
 msgid "Press Space to repeat the last message read."
-msgstr "Pulse Espacio para repetir el último mensaje leído."
+msgstr "Pulse «Espacio» para repetir el último mensaje leído."
 
 #: C/howto_notifications.page:58(p)
 msgid "Press one digit to read a specific message."
-msgstr ""
+msgstr "Pulse un dígito para leer un mensaje específico."
 
 #: C/howto_notifications.page:60(p)
 msgid "Note that the most recently-received message is at the top of the list."
 msgstr ""
+"Tenga en cuenta que el último mensaje recibido está en la parte superior de "
+"la lista."
 
 #: C/howto_notifications.page:63(p)
 msgid ""
@@ -5189,6 +5228,11 @@ msgid ""
 "choose. How to do so is described in the <link xref=\"howto_key_bindings"
 "\">Introduction to Key Bindings</link>."
 msgstr ""
+"Todos los comandos de <app>Orca</app> que sirven para revisar las "
+"notificaciones no están asociados de manera predeterminada. Puede asociar "
+"cualquiera o todos ellos al acceso directo o accesos directos que elija. La "
+"manera de realizar esta operación se describe en la <link xref="
+"\"howto_key_bindings\">introducción a las asociaciones de teclas</link>."
 
 #: C/howto_mouse_review.page:5(title)
 msgid "4. Mouse Review"
