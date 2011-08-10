@@ -11,7 +11,7 @@ AC_INIT([orca],
 
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([1.11 tar-ustar no-dist-gzip dist-xz])
 AM_MAINTAINER_MODE([enable])
 
 dnl Gettext stuff
