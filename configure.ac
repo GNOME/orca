@@ -10,8 +10,6 @@ AC_INIT([orca],
         [orca])
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
-ORCA_VERSION=orca_version
-AC_SUBST(ORCA_VERSION)
 
 dnl Gettext stuff
 GETTEXT_PACKAGE=orca
