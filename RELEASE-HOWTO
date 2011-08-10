@@ -16,7 +16,7 @@ Make sure you are up to date:
 git pull
 git status
 
-Modify these lines in ./configure.in:
+Modify these lines in ./configure.ac:
 
 m4_define([orca_major_version], [2])
 m4_define([orca_minor_version], [29])
@@ -37,7 +37,7 @@ the .po file, not from po/Changelog. Sometimes the translator is not the
 same person as who commits the file.
 
 NOTE: You should also make sure the external dependencies listed in
-configure.in and README are accurate.
+configure.ac and README are accurate.
 
 
 BUILD THE RELEASE:
@@ -79,7 +79,7 @@ ftpadmin install orca-2.29.92.tar.gz
 IDENTIFY TRUNK AS "PRE":
 ------------------------
 
-Modify these lines in ./configure.in:
+Modify these lines in ./configure.ac:
 
   ORCA_MAJOR_VERSION=2
   ORCA_MINOR_VERSION=30
