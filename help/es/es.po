@@ -3,20 +3,25 @@
 # Copyright (C) 2010 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011.
+# 
+# 
+# 
+# Gonzalo Sanhueza Rodríguez <gonzalo.sanhueza.r@gmail.com>, 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-07-10 11:16+0000\n"
-"PO-Revision-Date: 2011-07-11 20:12+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-08-01 22:34+0000\n"
+"PO-Revision-Date: 2011-08-01 10:40+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -1884,8 +1889,8 @@ msgid ""
 "you will need to install libcolorblind and then rebuild gnome-mag."
 msgstr ""
 "<gui>Filtro del color</gui>: le permite usar uno de los filtros de "
-"colorblind disponibles a través de libcolorblind. Para beneficiarse de esta "
-"característica deberá instalar libcolorblind y volver a construir gnome-mag."
+"«colorblind» disponibles a través de «libcolorblind». Para beneficiarse de "
+"esta característica deberá instalar «libcolorblind» reconstruir «gnome-mag»."
 
 #: C/preferences_magnifier.page:429(p)
 msgid ""
@@ -3635,6 +3640,13 @@ msgid ""
 "a significant amount of information you may wish to know, but likely will "
 "not wish to know all of the time."
 msgstr ""
+"Además de los comandos especializados para leer la barra de título y la "
+"barra de estado, Orca proporciona dos comandos ¿Dónde estoy? sensibles al "
+"contexto: ¿Dónde estoy? básico y ¿Dónde estoy? detallado. ¿Dónde estoy? "
+"básico se aplica a todos los objetos. ¿Dónde estoy? detallado se aplica sólo "
+"a aquellos objetos para los cuales existe una gran cantidad de información "
+"que podría desear saber, pero que probablemente no querrá saber todo el "
+"tiempo."
 
 #: C/howto_whereami.page:26(p)
 msgid ""
@@ -3643,6 +3655,11 @@ msgid ""
 "However, to give you a better idea of the context-sensitive nature of "
 "<app>Orca</app>'s Where Am I feature, consider the following:"
 msgstr ""
+"La mejor manera de familiarizarse con lo que presentará ¿Dónde estoy? es "
+"probando los <link xref=\"commands_where_am_i\">comandos ¿Dónde estoy?</"
+"link>. Sin embargo, para que tenga una idea más clara de la naturaleza "
+"sensible al contexto de la característica ¿Dónde estoy? de <app>Orca</app>, "
+"considere lo siguiente:"
 
 #: C/howto_whereami.page:32(p)
 msgid ""
@@ -3660,6 +3677,10 @@ msgid ""
 "basic Where Am I will tell you what text is selected. A detailed Where Am I "
 "within the text will also include the text attributes."
 msgstr ""
+"Si el widget es texto y ejecuta un ¿Dónde estoy? básico, se le dirá la línea "
+"actual si no se selecciona texto. Si se selecciona texto, sin embargo, un "
+"¿Dónde estoy? básico le dirá qué texto se ha seleccionado. Un ¿Dónde estoy? "
+"detallado en el texto también incluirá los atributos de texto."
 
 #: C/howto_whereami.page:48(p)
 msgid ""
@@ -3675,6 +3696,9 @@ msgid ""
 "button group, or page tab list, the position of the current item will be "
 "included."
 msgstr ""
+"Si el widget es una lista o un objeto de tipo lista, como un cuadro "
+"combinado, un grupo de botones de radio, o una lista de pestañas de página, "
+"se incluirá la posición del elemento actual."
 
 #: C/howto_whereami.page:61(p)
 msgid ""
@@ -3683,12 +3707,18 @@ msgid ""
 "expanded, you will also be told how many children it contains. In addition, "
 "the nesting level will also be provided."
 msgstr ""
+"Si el widget es jerárquico, como un árbol, y está en un nodo expandible, se "
+"le dirá si ese nodo es expandible o no. Y si es expandible, también se le "
+"dirá cuántos hijos contiene. Además, se proporcionará el nivel de "
+"anidamiento."
 
 #: C/howto_whereami.page:69(p)
 msgid ""
 "If the widget is a progress bar or a slider, you will be told the current "
 "percent."
 msgstr ""
+"Si el widget es una barra de progreso o un deslizador, se le dirá el "
+"porcentaje actual."
 
 #: C/howto_whereami.page:75(p)
 msgid ""
@@ -3697,6 +3727,10 @@ msgid ""
 "which are selected. In a detailed Where Am I, you will also be told which "
 "items are selected."
 msgstr ""
+"Si el widget es un icono dentro de un grupo de iconos, un ¿Dónde estoy? "
+"básico incluirá el objeto que esté explorando, el elemento sobre el cual "
+"esté situado y el número de elementos seleccionados. En un ¿Dónde estoy? "
+"detallado, también se le dirá qué elementos están seleccionados."
 
 #: C/howto_whereami.page:83(p)
 msgid ""
@@ -3721,6 +3755,11 @@ msgid ""
 "you are currently in. To give Where Am I a try, see the list of <link xref="
 "\"commands_where_am_i\">Where Am I commands</link>."
 msgstr ""
+"Y así sucesivamente. Nuevamente, el objetivo de la característica ¿Dónde "
+"estoy? de <app>Orca</app> es proporcionarle la información que probablemente "
+"más le interesa saber acerca del objeto que está explorando actualmente. "
+"Para probar ¿Dónde estoy?, consulte la lista de <link xref="
+"\"commands_where_am_i\">comandos ¿Dónde estoy?</link>."
 
 #: C/howto_toggling_caps_lock.page:5(title)
 msgid "7. CapsLock in Laptop Layout"
@@ -3759,6 +3798,9 @@ msgid ""
 "key></keyseq>, to tell <app>Orca</app> that the next command should be "
 "ignored."
 msgstr ""
+"Pulse el comando Ignorar, <keyseq><key>Modificador de Orca</"
+"key><key>Retroceso</key></keyseq>, para indicar a <app>Orca</app>que el "
+"siguiente comando se debería ignorar."
 
 #: C/howto_toggling_caps_lock.page:32(p)
 msgid "Press <key>CapsLock</key> to toggle its locked state."
@@ -3797,6 +3839,9 @@ msgid ""
 "whether you are using <app>Orca</app>'s Laptop keyboard layout or its "
 "Desktop keyboard layout:"
 msgstr ""
+"A qué tecla se asocia, de manera predeterminada,el «Modificador de Orca», "
+"dependerá de si está usando la distribución de portátil de <app>Orca</app> o "
+"su distribución de escritorio:"
 
 #: C/howto_the_orca_modifier.page:33(p) C/howto_text_setup.page:136(p)
 #: C/howto_keyboard_layout.page:22(p)
@@ -3804,7 +3849,7 @@ msgid ""
 "If you are using the Laptop layout, the default Orca Modifier will be "
 "<key>CapsLock</key>"
 msgstr ""
-"Si está usando la distribución de portátil, el Modificado de Orca "
+"Si está usando la distribución de portátil, el Modificador de Orca "
 "predeterminado será <key>Bloq Mayús</key>"
 
 #: C/howto_the_orca_modifier.page:39(p) C/howto_text_setup.page:142(p)
@@ -3814,6 +3859,9 @@ msgid ""
 "<key>Insert</key> and <key>KeyPad Insert</key>, the latter being the same "
 "key as <key>KeyPad 0</key>."
 msgstr ""
+"Si está usando la distribución de escritorio, el Modificador de Orca será "
+"tanto <key>Ins</key> como <key>TN Ins</key>, esta última es la misma tecla "
+"que <key>TN 0</key>."
 
 #: C/howto_the_orca_modifier.page:46(p)
 msgid ""
@@ -3887,7 +3935,8 @@ msgstr ""
 
 #: C/howto_text_setup.page:21(title)
 msgid "Launching <app>Orca</app>'s Text-Only Guided Setup"
-msgstr "Lanzar la guía de configuración en modo texto de <app>Orca</app>"
+msgstr ""
+"Iniciar la instalación asistida de <app>Orca</app> en modo de sólo texto"
 
 #: C/howto_text_setup.page:23(p)
 msgid ""
@@ -3922,6 +3971,9 @@ msgid ""
 "installed on your system. Type the number associated with your desired "
 "speech system and press <key>Return</key>."
 msgstr ""
+"Las siguientes opciones dependerán de qué sistemas de voz tenga instalados "
+"en su sistema. Escriba el número asociado a su sistema de voz deseado y "
+"pulse <key>Intro</key>."
 
 #: C/howto_text_setup.page:47(p)
 msgid "Select desired speech server"
@@ -3933,6 +3985,9 @@ msgid ""
 "installed on your system. Type the number associated with your desired "
 "speech server and press <key>Return</key>."
 msgstr ""
+"Las siguientes opciones dependerán de qué sintetizadores de voz tenga "
+"instalados en su sistema. Escriba el número asociado a su servidor de voz "
+"deseado y pulse <key>Intro</key>."
 
 #: C/howto_text_setup.page:55(p)
 msgid "Select desired voice"
@@ -3949,6 +4004,14 @@ msgid ""
 "first choice, so in many cases you can simply type <cmd>1</cmd> and press "
 "<key>Return</key> without having to listen to the full list of voices."
 msgstr ""
+"Las «voces» corresponden a los idiomas disponibles. En el caso de «speech-"
+"dispatcher», hay aproximadamente 60 idiomas y dialectos admitidos, y cada "
+"cierto tiempo se agregan más. Escriba el número de su opción de idioma (por "
+"ejemplo, <cmd>7</cmd> para «Inglés americano») y pulse <key>Intro</key>. No "
+"necesita esperar a que se lea la lista completa. Además, <app>Orca</app> "
+"trata de poner su idioma predeterminado como primera opción, de modo que en "
+"muchos casos simplemente tendrá que escribir <cmd>1</cmd> y pulsar "
+"<key>Intro</key> sin tener que escuchar la lista completa de voces."
 
 #: C/howto_text_setup.page:68(p)
 msgid "Enable echo by word?"
@@ -3981,6 +4044,10 @@ msgid ""
 "type <cmd>y</cmd> to enable it or <cmd>n</cmd> to disable it and press "
 "<key>Return</key>. The types are:"
 msgstr ""
+"Si indica que le gustaría activar el eco de teclas, la configuración le "
+"preguntará por los tipos de eco de teclas que puede activar o desactivar. "
+"Para cada uno, escriba <cmd>s</cmd> para activarlo o <cmd>n</cmd> para "
+"desactivarlo y pulse <key>Intro</key>. Los tipos de eco de teclas son:"
 
 #: C/howto_text_setup.page:88(p)
 msgid "alphanumeric and punctuation keys"
@@ -4032,6 +4099,9 @@ msgid ""
 "<app>Orca</app>'s commands, especially in the areas of Flat Review, Where Am "
 "I, and Say All."
 msgstr ""
+"La distribución también determina las pulsaciones de teclas asociadas a un "
+"número de comandos de <app>Orca</app>, especialmente en las áreas de "
+"«Revisión plana», «¿Dónde estoy?» y «Leer todo»."
 
 #: C/howto_text_setup.page:154(p)
 msgid ""
@@ -4052,6 +4122,11 @@ msgid ""
 "usually just enter <cmd>y</cmd> here; <app>Orca</app> will recover "
 "gracefully and function even if it cannot find BrlTTY."
 msgstr ""
+"Esta función da por hecho que hay disponible un dispositivo compatible con "
+"BrlTTY. Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>. Tenga "
+"en cuenta que por lo general solamente puede introducir <cmd>s</cmd>; Orca "
+"se recuperará correctamente y funcionará incluso si no puede encontrar "
+"BrlTTY."
 
 #: C/howto_text_setup.page:170(p)
 msgid ""
@@ -4061,10 +4136,15 @@ msgid ""
 "braille output. Type <cmd>y</cmd> or <cmd>n</cmd> and press <key>Return</"
 "key>."
 msgstr ""
+"El Monitor Braille de Orca es una representación del sistema braille en "
+"pantalla. Se ha diseñado principalmente para desarrolladores videntes que "
+"necesitan verificar la salida BrlTTY, pero también puede ser útil en otras "
+"situaciones, tales como el diagnóstico o la verificación visual de la salida "
+"Braille. Escriba <cmd>s</cmd> o <cmd>n</cmd> y pulse <key>Intro</key>."
 
 #: C/howto_text_setup.page:178(p)
 msgid "Automatically start <app>Orca</app> when you log in"
-msgstr "Iniciar automáticamente <app>Orca</app> al iniciar sesión"
+msgstr "Iniciar <app>Orca</app> automáticamente al iniciar la sesión"
 
 #: C/howto_text_setup.page:179(p)
 msgid ""
@@ -4083,6 +4163,13 @@ msgid ""
 "enabled, you will simply be prompted to press <key>Return</key> after which "
 "<app>Orca</app> will be launched for you."
 msgstr ""
+"Eso es todo. <app>Orca</app> está listo para ser utilizado. Si todavía no se "
+"ha activado la accesibilidad, <app>Orca</app> la activa ahora y le pide "
+"cerrar sesión y volver a entrar para que comiencen a funcionar los "
+"servicios. Escriba <cmd>s</cmd> y pulse <key>Intro</key> para reiniciar su "
+"inicio de sesión. Si ya se activó la accesibilidad por otro lado, "
+"simplemente se le pedirá que pulse <key>Intro</key>, tras lo cual <app>Orca</"
+"app> se ejecutará."
 
 #: C/howto_text_attributes.page:5(title)
 msgid "2. Text Attributes"
@@ -4090,7 +4177,7 @@ msgstr "2. Atributos de texto"
 
 #: C/howto_text_attributes.page:6(desc)
 msgid "Examining text formatting"
-msgstr "Examinar el formato del texto"
+msgstr "Examinar formato de texto"
 
 #: C/howto_text_attributes.page:18(p)
 msgid ""
@@ -4098,10 +4185,13 @@ msgid ""
 "and other formatting associated with a given character or series of "
 "characters."
 msgstr ""
+"El término «atributos de texto» hace referencia a la tipografía, el estilo, "
+"la alineación y otro formato asociado a un carácter o serie de caracteres "
+"dados."
 
 #: C/howto_text_attributes.page:24(title)
 msgid "Obtaining Formatting Information"
-msgstr "Obtener información del formato"
+msgstr "Obtener Información de Formato"
 
 #: C/howto_text_attributes.page:25(p)
 msgid ""
@@ -4110,6 +4200,11 @@ msgid ""
 "In addition, <app>Orca</app> will optionally indicate text attributes in "
 "braille by \"underlining\" them as you navigate a document."
 msgstr ""
+"Cuando pulse <keyseq><key>Modificador de Orca</key><key>F</key></keyseq>, "
+"<app>Orca</app> leerá la información conocida en relación con los atributos "
+"de texto de un objeto. Además, <app>Orca</app> indicará opcionalmente los "
+"atributos de texto en braille, «subrayándolos» a medida que se desplaza por "
+"un documento."
 
 #: C/howto_text_attributes.page:32(p)
 msgid ""
@@ -4120,6 +4215,12 @@ msgid ""
 "order in which they should be presented, and which ones <app>Orca</app> will "
 "indicate in braille."
 msgstr ""
+"Puesto que existe un gran número de atributos de texto, y no todos se "
+"preocupan por cada atributo, la <link xref=\"preferences_text_attributes"
+"\">página de Atributos de texto del diálogo de preferencias</link> le "
+"permitirá personalizar qué atributos de texto presentará <app>Orca</app> por "
+"voz, junto al orden en que se deben presentar, y cuáles de ellos indicará "
+"<app>Orca</app> en braille."
 
 #: C/howto_text_attributes.page:40(p)
 msgid ""
@@ -4128,6 +4229,10 @@ msgid ""
 "text attribute presentation on an as-needed basis for each application you "
 "use."
 msgstr ""
+"Puesto que la <link xref=\"preferences_text_attributes\">página de Atributos "
+"de texto</link> también forma parte de la configuración específica de la "
+"aplicación, puede personalizar la presentación de los atributos de textos en "
+"función de sus necesidades para cada aplicación que use."
 
 #: C/howto_text_attributes.page:48(title)
 msgid "Identifying Misspelled Words"
@@ -4143,6 +4248,14 @@ msgid ""
 "and braille and will therefore be presented along with any other attributes "
 "whose indication you have enabled."
 msgstr ""
+"La mayoría de las aplicaciones y kits de herramientas indican que una "
+"palabra está mal escrita subrayando esa palabra con una línea roja y "
+"ondulada. La presencia de esta línea comúnmente queda expuesta a las "
+"tecnologías de asistencia como un atributo de texto. Como consecuencia, "
+"encontrará errores de ortografía entre los atributos de texto que puede "
+"elegir. De manera predeterminada, el atributo con errores de ortografía está "
+"activado tanto para voz como para braille y, por lo tanto, se presentará "
+"junto con cualesquiera otros atributos cuya indicación haya activado."
 
 #: C/howto_text_attributes.page:58(p)
 msgid ""
@@ -4152,6 +4265,11 @@ msgid ""
 "app> will announce \"misspelled\" so that you can immediately go back and "
 "correct the error."
 msgstr ""
+"Además de acceder a la presencia de errores de ortografía como un atributo "
+"de texto, si tiene activado el eco de teclas y/o el eco de palabras y "
+"escribe mal una palabra, cuando aparezca la señal de error de ortografía, "
+"<app>Orca</app> anunciará que la palabra está «mal escrita», para que pueda "
+"volver atrás inmediatamente y corregir el error."
 
 #: C/howto_text_attributes.page:65(p)
 msgid ""
@@ -4159,6 +4277,9 @@ msgid ""
 "a word which is misspelled, <app>Orca</app> will announce the presence of "
 "the spelling error."
 msgstr ""
+"Finalmente, cuando se esté desplazando dentro de un documento y el cursor se "
+"traslade a una palabra mal escrita, <app>Orca</app> anunciará la presencia "
+"de un error ortográfico."
 
 #: C/howto_tables.page:5(title)
 msgid "4. Tables"
@@ -4180,10 +4301,15 @@ msgid ""
 "versus row reading, <link xref=\"howto_structural_navigation\">Structural "
 "Navigation</link> and Dynamic Headers."
 msgstr ""
+"<app>Orca</app> proporciona varias características específicamente diseñadas "
+"para mejorar el acceso a las tablas encontradas en páginas web y otros "
+"documentos: celda configurable frente a lectura de fila, <link xref="
+"\"howto_structural_navigation\">navegación estructural</link> y cabeceras "
+"dinámicas."
 
 #: C/howto_tables.page:25(title)
 msgid "Cell Versus Row Reading"
-msgstr ""
+msgstr "Celda frente a Lectura de fila"
 
 #: C/howto_tables.page:26(p)
 msgid ""
@@ -4195,6 +4321,13 @@ msgid ""
 "each row. Thus in that case, you would want <app>Orca</app> to only speak "
 "the cell with focus. Similar situations occur in document tables."
 msgstr ""
+"Considere el proceso de examinar la lista de mensajes en su bandeja de "
+"entrada. Para que Orca anuncie el remitente, asunto, fecha y la presencia de "
+"adjuntos necesitará que <app>Orca</app> lea la fila. Por otro lado, cuando "
+"se navega entre filas de una hoja de cálculo, puede que no desee escuchar la "
+"fila completa, aunque únicamente sea porque hay demasiadas celdas en cada "
+"fila. En ese caso, querrá que <app>Orca</app> sólo lea la celda que tiene el "
+"foco. Ocurren situaciones similares en las tablas de documento."
 
 #: C/howto_tables.page:36(p)
 msgid ""
@@ -4206,6 +4339,14 @@ msgid ""
 "button group on the <link xref=\"preferences_speech\"><gui>Speech</gui> "
 "page</link>."
 msgstr ""
+"<app>Orca</app> le permite personalizar si sólo se debería leer la celda, o "
+"si se debería leer la fila completa. Puede configurar esta preferencia de "
+"Orca así como aplicación por aplicación. Las instrucciones para realizar "
+"estas operaciones se describen en la guía sobre <link xref=\"preferences"
+"\">diálogos de preferencias de <app>Orca</app></link>. La configuración se "
+"puede encontrar en el <gui>grupo de botones de radio</gui> de las filas de "
+"tabla en la <link xref=\"preferences_speech\"><gui>página de</gui> Voz</"
+"link>."
 
 #: C/howto_tables.page:45(p)
 msgid ""
@@ -4229,6 +4370,10 @@ msgid ""
 "locate tables, jump immediately to a table's first or last cell, and move to "
 "the next cell in any direction."
 msgstr ""
+"<link xref=\"commands_structural_navigation#tables\">los comandos de "
+"navegación estructural</link> de <app>Orca</app> hacen posible localizar "
+"rápidamente las tablas, saltar inmediatamente a la primera o última celda de "
+"una tabla y pasar a la siguiente celda en cualquier dirección."
 
 #: C/howto_tables.page:59(p)
 msgid ""
@@ -4237,6 +4382,11 @@ msgid ""
 "position, such as the dimensions of the table you just entered and the fact "
 "that you have reached the edge of the table in the direction you are moving."
 msgstr ""
+"A medida que navegue entre las tablas y al interior de éstas usando la "
+"navegación estructural, <app>Orca</app> anunciará detalles adicionales para "
+"ayudarle a entender su posición, tales como las dimensiones de la tabla que "
+"acaba de ingresar y el hecho de que ha alcanzado el límite de la tabla en la "
+"dirección que se está moviendo."
 
 #: C/howto_tables.page:66(p)
 msgid ""
@@ -4246,6 +4396,11 @@ msgid ""
 "not cell coordinates are presented, multiple cell spans are indicated, and "
 "cell headers are announced."
 msgstr ""
+"Además, <app>Orca</app> proporciona <link xref=\"preferences_table_navigation"
+"\">opciones de presentación</link> configurables que funcionan en conjunto "
+"con la navegación estructural y le permiten controlar si se presentan las "
+"coordenadas de celda, si se indican las celdas dentro de otra celda y si se "
+"anuncian o no las cabeceras de celda."
 
 #: C/howto_tables.page:74(title) C/howto_structural_navigation.page:52(title)
 msgid "Don't Forget To Toggle Structural Navigation On!"
@@ -4258,6 +4413,11 @@ msgid ""
 "type=\"seealso\" xref=\"howto_structural_navigation#toggling_required\"> "
 "when toggling Structural Navigation on is required.</link>"
 msgstr ""
+"Dependiendo de donde se encuentre, puede ser necesario activar "
+"explícitamente la navegación estructural antes de que pueda usarla. Para "
+"obtener más información, lea <link type=\"seealso\" xref="
+"\"howto_structural_navigation#toggling_required\">cuándo es necesario "
+"activar la navegación estructural</link>."
 
 #: C/howto_tables.page:84(title)
 msgid "Dynamic Headers"
@@ -4274,14 +4434,22 @@ msgid ""
 "<app>Orca</app>'s Dynamic Header support makes it possible to overcome these "
 "challenges."
 msgstr ""
+"Muchas de las tablas que encontrará durante la lectura tienen celdas que "
+"funcionan como cabeceras para una fila o columna. No resulta fácil decir si "
+"el creador de esa tabla marcó correctamente aquellas celdas como cabeceras o "
+"no. En muchos casos, el texto simplemente se formateó para ser más grande y/"
+"o en negrita. Incluso si la tabla se ha marcado correctamente, nada "
+"garantiza que la aplicación o el kit de herramientas expongan ese texto como "
+"información de cabecera a las tecnologías de asistencia. El soporte de "
+"cabeceras dinámicas de <app>Orca</app> hace posible superar estos desafíos."
 
 #: C/howto_tables.page:96(title)
 msgid "Setting Column Headers"
-msgstr ""
+msgstr "Configurar las cabeceras de las columnas"
 
 #: C/howto_tables.page:98(p)
 msgid "Move to the row which contains all of the column headers."
-msgstr ""
+msgstr "Muévase a la fila que contiene todas las cabeceras de las columnas."
 
 #: C/howto_tables.page:103(p)
 msgid ""
@@ -4293,7 +4461,7 @@ msgstr ""
 
 #: C/howto_tables.page:110(title)
 msgid "Set Row Headers"
-msgstr ""
+msgstr "Configurar las cabeceras de las filas"
 
 #: C/howto_tables.page:112(p)
 msgid "Move to the column which contains all of the row headers."
@@ -4320,6 +4488,16 @@ msgid ""
 "row will be presented. And if you change columns and there are column "
 "headers, the header associated with the new column will be presented."
 msgstr ""
+"Una vez configuradas las cabeceras de las columnas o las cabeceras de las "
+"filas, notará que a medida que navegue entre las celdas, <app>Orca</app> "
+"presentará todas las cabeceras que hayan cambiado. O dicho de otro modo, "
+"<app>Orca</app> no presentará la cabecera de la columna una y otra vez a "
+"medida que se desplace hacia arriba o abajo dentro de la columna actual. "
+"Asimismo, no presentará la cabecera de la fila una y otra vez a medida que "
+"se desplace hacia la izquierda o derecha dentro de la fila actual. Sin "
+"embargo, si cambia las filas y hay nuevas cabeceras de fila, se presentará "
+"la cabecera asociada a la nueva fila, y si cambia las columnas y hay nuevas "
+"cabeceras de columna, se presentará la cabecera asociada a la nueva columna."
 
 #: C/howto_tables.page:135(p)
 msgid ""
@@ -4329,6 +4507,12 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>C</key></keyseq> tells <app>Orca</app> "
 "there are no row headers."
 msgstr ""
+"Para borrar las cabeceras, simplemente pulse dos veces el comando que usaba "
+"para configurarlas. De este modo, al pulsar dos veces "
+"el<keyseq><key>Modificador de Orca</key><key>R</key></keyseq> se indica a "
+"<app>Orca</app> que no hay cabeceras de columna. Al pulsar dos veces el "
+"<keyseq><key>Modificador de Orca</key><key>C</key></keyseq> se indica a "
+"<app>Orca</app> que no hay cabeceras de fila."
 
 #: C/howto_structural_navigation.page:7(title)
 msgid "3. Structural Navigation"
@@ -4344,6 +4528,9 @@ msgid ""
 "amongst elements in a document. The types of elements by which you can "
 "navigate include:"
 msgstr ""
+"La característica Navegación Estructural de <app>Orca</app> le permite "
+"navegar entre los elementos de un documento. Entre los tipos de elementos "
+"por los cuales puede navegar se incluyen:"
 
 #: C/howto_structural_navigation.page:26(p)
 msgid "Headings and other text blocks"
@@ -4376,6 +4563,9 @@ msgid ""
 "found in <link xref=\"commands_structural_navigation\">Structural Navigation "
 "Commands</link>."
 msgstr ""
+"Puede encontrar una lista completa de elementos individuales y sus "
+"asociaciones de teclas en los <link xref=\"commands_structural_navigation"
+"\">comandos de navegación estructural</link>."
 
 #: C/howto_structural_navigation.page:39(title)
 msgid "Supported Applications"
@@ -4392,16 +4582,27 @@ msgid ""
 "Structural Navigation features within <app>Evince</app> will require a "
 "similar effort on the part of its developers."
 msgstr ""
+"Actualmente, la navegación estructural está completamente implementada en el "
+"contenido web, incluyendo el contenido de ayuda que está leyendo ahora. El "
+"soporte de navegación estructural de<app>Orca</app> para celdas de tablas "
+"también se ha implementado en <app>OpenOffice Writer</app> y en "
+"<app>LibreOffice Writer</app>. Implementar el resto de objetos de navegación "
+"estructural en estos paquetes de oficina requiere que sus respectivos "
+"desarrolladores realicen cambios. Implementar cualquier característica de "
+"navegación estructural en <app>Evince</app> requerirá un esfuerzo similar "
+"por parte de sus desarrolladores."
 
 #: C/howto_structural_navigation.page:53(p)
 msgid ""
 "Depending on where you are, it may be necessary for you to explicitly toggle "
 "Structural Navigation on before you can use it."
 msgstr ""
+"Dependiendo de dónde se encuentre, puede ser necesario activar "
+"explícitamente la navegación estructural antes de que pueda usarla."
 
 #: C/howto_structural_navigation.page:59(title)
 msgid "When Toggling Structural Navigation On Is Required"
-msgstr ""
+msgstr "Cuándo es necesario activar la navegación estructural"
 
 #: C/howto_structural_navigation.page:60(p)
 msgid ""
@@ -4410,6 +4611,11 @@ msgid ""
 "reading its content. Thus there is no question as to whether the 'H' you "
 "just pressed was meant to be a writing command or a navigation command."
 msgstr ""
+"En las páginas web, generalmente no es necesario activar la navegación "
+"estructural dado que su interacción con el documento consiste principalmente "
+"en leer su contenido. De este modo, no hay ninguna duda respecto a si la «H» "
+"que acaba de pulsar tuvo la intención de ser un comando de escritura o un "
+"comando de navegación."
 
 #: C/howto_structural_navigation.page:67(p)
 msgid ""
@@ -4423,6 +4629,16 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>Z</key></keyseq> again to toggle "
 "Structural Navigation off."
 msgstr ""
+"Por otro lado, en los documentos editables, como aquellos encontrados en "
+"<app>OpenOffice</app> y <app>LibreOffice</app>, es mucho más difícil para "
+"<app>Orca</app> predecir con exactitud lo que espera que ocurra como "
+"resultado de pulsar «H». Por lo tanto, antes de que pueda usar cualquier "
+"comando de navegación estructural en un documento editable, primero debe "
+"activar la navegación estructural pulsando el <keyseq><key>Modificador de "
+"Orca</key><key>Z</key></keyseq>. Cuando haya terminado de navegar y esté "
+"listo para reanudar la lectura, pulse el <keyseq><key>Modificador de Orca</"
+"key><key>Z</key></keyseq> nuevamente para desactivar la navegación "
+"estructural."
 
 #: C/howto_structural_navigation.page:82(title)
 msgid "Available Settings"
@@ -4434,6 +4650,9 @@ msgid ""
 "configurable options available specifically for applications in which there "
 "is structural navigation support."
 msgstr ""
+"Además de los comandos mencionados anteriormente, <app>Orca</app> tiene "
+"varias opciones configurables disponibles específicamente para aplicaciones "
+"en las que hay soporte de navegación estructural."
 
 #: C/howto_structural_navigation.page:89(title)
 msgid "Configuring Structural Navigation"
@@ -4444,6 +4663,8 @@ msgid ""
 "Give focus to an application for which <app>Orca</app> has Structural "
 "Navigation support."
 msgstr ""
+"Dé el foco a una aplicación para la que <app>Orca</app> tiene soporte de "
+"navegación estructural."
 
 #: C/howto_structural_navigation.page:97(p)
 msgid ""
@@ -4451,16 +4672,21 @@ msgid ""
 "for the current application by pressing: <keyseq><key>Ctrl</key><key>Orca "
 "Modifier</key><key>Space</key></keyseq>"
 msgstr ""
+"Entre en el cuadro de diálogo de <link xref=\"preferences\">preferencias de "
+"Orca</link> para la aplicación actual pulsando: <keyseq><key>Ctrl</"
+"key><key>Modificador de Orca</key><key>Espacio</key></keyseq>"
 
 #: C/howto_structural_navigation.page:106(p)
 msgid ""
 "Navigate to the last page of the dialog box which should be named according "
 "to the name of your current application."
 msgstr ""
+"Navegue hasta la última página del cuadro de diálogo cuyo nombre debería ser "
+"el nombre de su aplicación actual."
 
 #: C/howto_structural_navigation.page:112(p)
 msgid "Examine and change the settings as you see fit."
-msgstr ""
+msgstr "Examine y cambie la configuración como considere conveniente."
 
 #: C/howto_structural_navigation.page:117(p) C/howto_profiles.page:86(p)
 msgid "Press the <gui>OK</gui> button."
@@ -4492,6 +4718,9 @@ msgid ""
 "setup mode. Depending on your active session's configuration, one of two "
 "things will occur:"
 msgstr ""
+"Cuando ejecute <app>Orca</app> por primera vez, el programa entrará "
+"automáticamente en el modo de configuración. Dependiendo de la configuración "
+"de sus sesión activa, ocurrirá una de dos cosas:"
 
 #: C/howto_setting_up_orca.page:29(p)
 msgid ""
@@ -4500,6 +4729,10 @@ msgid ""
 "link> dialog box where you can customize <app>Orca</app> completely and then "
 "use it immediately."
 msgstr ""
+"Si el soporte de accesibilidad para su sesión ya se ha activado, se le "
+"situará al cuadro de diálogo de <link xref=\"preferences\">preferencias</"
+"link> de <app>Orca</app> donde puede personalizar <app>Orca</app> "
+"completamente y luego usarlo inmediatamente."
 
 #: C/howto_setting_up_orca.page:38(p)
 msgid ""
@@ -4509,6 +4742,12 @@ msgid ""
 "most fundamental settings and enable accessibility support for your session. "
 "You will need to log out and log back in for the new settings to take effect."
 msgstr ""
+"Si el soporte de accesibilidad para su sesión aún no se ha activado, se "
+"ejecutará la <link xref=\"howto_text_setup\">configuración de texto</link> "
+"de <app>Orca</app> en su lugar. La configuración de texto le permite "
+"configurar los parámetros más importantes y activar el soporte de "
+"accesibilidad para su sesión. Necesitará cerrar la sesión y volver a entrar "
+"para que la nueva configuración surta efecto."
 
 #: C/howto_setting_up_orca.page:50(title)
 msgid "Configuring <app>Orca</app> in the Future"
@@ -4527,12 +4766,18 @@ msgid ""
 "it to automatically be placed in the <link xref=\"preferences\">Preferences</"
 "link> dialog box."
 msgstr ""
+"Pase la opción <cmd>--setup</cmd> a <app>Orca</app> la próxima vez que la "
+"ejecute para situarse automáticamente al cuadro de diálogo de <link xref="
+"\"preferences\">preferencias</link>."
 
 #: C/howto_setting_up_orca.page:64(p)
 msgid ""
 "Pass the <cmd>--text-setup</cmd> option to <app>Orca</app> to re-run "
 "<app>Orca</app>'s <link xref=\"howto_text_setup\">text-based setup</link>."
 msgstr ""
+"Pase la opción de <cmd>--text-setup</cmd> a <app>Orca</app> para volver a "
+"ejecutar la <link xref=\"howto_text_setup\">configuración de texto</link> de "
+"<app>Orca</app>."
 
 #: C/howto_setting_up_orca.page:71(p)
 msgid ""
@@ -4677,6 +4922,9 @@ msgid ""
 "profile. When you press the <gui>OK</gui> button, you will be told there is "
 "a name conflict."
 msgstr ""
+"Cuando se le pida el nombre del perfil nuevo, escriba el mismo nombre del "
+"perfil actual. Cuando pulse el botón <gui>Aceptar</gui>, se le dirá que hay "
+"un conflicto de nombres."
 
 #: C/howto_profiles.page:110(p)
 msgid ""
@@ -4688,19 +4936,23 @@ msgstr ""
 
 #: C/howto_profiles.page:117(title)
 msgid "Changing the <gui>Start-up Profile</gui>"
-msgstr ""
+msgstr "Cambiar el <gui>Perfil inicial</gui>"
 
 #: C/howto_profiles.page:124(p)
 msgid ""
 "On the <gui>General</gui> page, select the profile to load from the "
 "<gui>Start-up Profile</gui> combo box."
 msgstr ""
+"En la página <gui>General</gui>, seleccione el perfil que cargar desde el "
+"cuadro combinado <gui>Perfil inicial</gui>."
 
 #: C/howto_profiles.page:130(p)
 msgid ""
 "Press the <gui>OK</gui> button. The next time you launch <app>Orca</app>, "
 "the newly-selected profile will be used."
 msgstr ""
+"Pulse el botón <gui>Aceptar</gui>. La próxima vez que ejecute <app>Orca</"
+"app>, se usará el perfil recientemente seleccionado."
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -4710,15 +4962,15 @@ msgstr "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
 
 #: C/howto_orca_find.page:5(title)
 msgid "3. Orca Find"
-msgstr ""
+msgstr "3. Búsqueda de Orca"
 
 #: C/howto_orca_find.page:6(desc)
 msgid "Searching a window for objects"
-msgstr ""
+msgstr "Buscar objetos de una ventana"
 
 #: C/howto_orca_find.page:15(title) C/commands_find.page:7(title)
 msgid "Orca Find"
-msgstr ""
+msgstr "Búsqueda de Orca"
 
 #: C/howto_orca_find.page:16(p)
 msgid ""
@@ -4726,16 +4978,23 @@ msgid ""
 "Review</link>-based search designed to help you quickly locate objects that "
 "are visible on-screen within the current window."
 msgstr ""
+"La característica «Buscar» de <app>Orca</app> es una búsqueda en el modo de "
+"<link xref=\"howto_flat_review\">Revisión Plana</link> diseñada para "
+"ayudarle a localizar rápidamente los objetos visibles en pantalla que están "
+"dentro de la ventana actual."
 
 #: C/howto_orca_find.page:23(title)
 msgid "Activating Orca Find"
-msgstr ""
+msgstr "Activar la búsqueda de Orca"
 
 #: C/howto_orca_find.page:24(p)
 msgid ""
 "To open the Orca <gui>Find</gui> dialog, use the following command based on "
 "your chosen <link xref=\"howto_keyboard_layout\">keyboard layout</link>:"
 msgstr ""
+"Para abrir el diálogo <gui>Buscar</gui> de Orca, use el siguiente comando "
+"basado en la <link xref=\"howto_keyboard_layout\">distribución de teclado</"
+"link> elegida."
 
 #: C/howto_orca_find.page:30(p) C/commands_find.page:30(p)
 msgid "Desktop: <keyseq><key>KP Delete</key></keyseq>"
@@ -4751,10 +5010,12 @@ msgid ""
 "For a list of additional tasks you can perform, see the <link xref="
 "\"commands_find\">Orca Find commands</link>"
 msgstr ""
+"Para acceder a una lista de otras tareas que puede realizar, consulte los "
+"<link xref=\"commands_find\">comandos de la búsqueda de Orca</link>"
 
 #: C/howto_orca_find.page:43(p)
 msgid "When you activate Orca Find, you will be placed in a dialog box."
-msgstr ""
+msgstr "Cuando active la búsqueda de Orca, se situará en un cuadro de diálogo."
 
 #: C/howto_orca_find.page:47(title)
 msgid "<app>Orca</app>'s Find Dialog"
@@ -4773,6 +5034,8 @@ msgid ""
 "The location from which to begin the search, which can either be the current "
 "location or the top of the window"
 msgstr ""
+"La ubicación desde donde comienza la búsqueda, que puede ser la ubicación "
+"actual o la parte superior de la ventana"
 
 #: C/howto_orca_find.page:64(p)
 msgid "Default value of <gui>Start from</gui>: <gui>Current location</gui>"
@@ -6396,27 +6659,27 @@ msgstr ""
 
 #: C/commands_magnifier.page:29(p)
 msgid "Enable/disable magnification: (Unbound)"
-msgstr "Activar/desactivar la magnificación: (sin vincular)"
+msgstr ""
 
 #: C/commands_magnifier.page:34(p)
 msgid "Increase magnification level: (Unbound)"
-msgstr "Aumentar la magnificación: (sin vincular)"
+msgstr ""
 
 #: C/commands_magnifier.page:39(p)
 msgid "Decrease magnification: (Unbound)"
-msgstr "Reducir la magnificación: (sin vincular)"
+msgstr ""
 
 #: C/commands_magnifier.page:44(p)
 msgid "Enable/disable color enhancements: (Unbound)"
-msgstr "Activar/desactivar las mejoras de color: (sin activar)"
+msgstr ""
 
 #: C/commands_magnifier.page:49(p)
 msgid "Enable/disable mouse enhancements: (Unbound)"
-msgstr "Activar/desactivar las mejoras del ratón: (sin vincular)"
+msgstr ""
 
 #: C/commands_magnifier.page:54(p)
 msgid "Cycle to the magnifier position: (Unbound)"
-msgstr "Cambiar a la posición del magnificador: (sin vincular)"
+msgstr ""
 
 #: C/commands_live_regions.page:6(title)
 msgid "1. Live Region"
@@ -6424,19 +6687,17 @@ msgstr "1. Región activa"
 
 #: C/commands_live_regions.page:8(desc)
 msgid "Commands for accessing web live regions"
-msgstr "Comandos para acceder a regiones activas"
+msgstr ""
 
 #: C/commands_live_regions.page:20(title)
 msgid "Live Region Commands"
-msgstr "Comandos de regiones activas"
+msgstr ""
 
 #: C/commands_live_regions.page:23(p)
 msgid ""
 "Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
 "key><key>Backslash</key></keyseq>"
 msgstr ""
-"Monitorizar regiones activas: <keyseq><key>Modificador de Orca</"
-"key><key>Mayús</key><key>Barra invertida</key></keyseq>"
 
 #: C/commands_live_regions.page:29(p)
 msgid "Advance live region politeness setting: <key>Backslash</key>"
@@ -6468,15 +6729,15 @@ msgstr ""
 
 #: C/commands_flat_review.page:6(title)
 msgid "1. Flat Review"
-msgstr "1. Revisión"
+msgstr ""
 
 #: C/commands_flat_review.page:8(desc)
 msgid "Commands for spatially reviewing windows"
-msgstr "Comandos para revisión de ventanas en modo espacial"
+msgstr ""
 
 #: C/commands_flat_review.page:19(title)
 msgid "Flat Review Commands"
-msgstr "Comandos de la revisión"
+msgstr ""
 
 #: C/commands_flat_review.page:20(p)
 msgid ""
@@ -6716,7 +6977,7 @@ msgstr "Comandos adicionales"
 
 #: C/commands_flat_review.page:167(p)
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr "Conmutar la revisión (actualiza el contexto de la revisión):"
+msgstr ""
 
 #: C/commands_flat_review.page:169(p)
 msgid ""
@@ -6746,7 +7007,7 @@ msgstr ""
 
 #: C/commands_find.page:6(title)
 msgid "2. Orca Find"
-msgstr "2. Búsqueda de Orca"
+msgstr ""
 
 #: C/commands_find.page:8(desc)
 msgid "Commands for searching window contents"
@@ -6754,7 +7015,7 @@ msgstr "Comandos para buscar contenido de la ventana"
 
 #: C/commands_find.page:19(title)
 msgid "Orca Find Commands"
-msgstr "Comandos de búsqueda de Orca"
+msgstr ""
 
 #: C/commands_find.page:20(p)
 msgid ""
@@ -6769,7 +7030,7 @@ msgstr "Abrir el diálogo «Buscar» de <app>Orca</app>:"
 
 #: C/commands_find.page:38(p)
 msgid "Move flat review to the next instance of a string:"
-msgstr "Mover la revisión a la siguiente instancia de una cadena:"
+msgstr ""
 
 #: C/commands_find.page:41(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
@@ -6783,14 +7044,14 @@ msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>]</key></keyseq>"
 
 #: C/commands_find.page:55(p)
 msgid "Move flat review to the previous instance of a string:"
-msgstr "Mover la revisión a la instancia anterior de una cadena:"
+msgstr ""
 
 #: C/commands_find.page:58(p)
 msgid ""
 "Desktop: <keyseq><key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
 "key></keyseq>"
 msgstr ""
-"Sobremesa: <keyseq><key>Modificador de Orca</key><key>Mayús</key><key>KP "
+"Sobremesa: <keyseq><key>Modificador de Orca</key><key>Mayús</key><key>TN "
 "Supr</key></keyseq>"
 
 #: C/commands_find.page:66(p)
@@ -6971,15 +7232,10 @@ msgid ""
 "Present previous chat room messages: <keyseq><key>Orca Modifier</"
 "key><key>F1</key></keyseq> through <key>F9</key>"
 msgstr ""
-"Presentar los mensajes anteriores de la sala de chat: "
-"<keyseq><key>Modificador de Orca</key><key>F1</key></keyseq> hasta <key>F9</"
-"key>"
 
 #: C/commands_chat.page:36(p)
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
-"Activar/desactivar el anuncio de una sala de chat con mensajes: (sin "
-"vincular)"
 
 #: C/commands_chat.page:41(p)
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
@@ -6987,7 +7243,7 @@ msgstr ""
 
 #: C/commands_chat.page:44(p)
 msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr "Activar/desactivar historias específicas de sala: (sin vincular)"
+msgstr ""
 
 #: C/commands_braille.page:6(title)
 msgid "2. Braille"
@@ -7124,7 +7380,7 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011\n"
-"Jorge González <jorgegonz@svn.gnome.org>, 2011"
+"Jorge González <jorgegonz@svn.gnome.org>, 2010"
 
 #~ msgid "<gui>None</gui> (the default)"
 #~ msgstr "<gui>Ninguna</gui> (Predeterminado) "
