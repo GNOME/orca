@@ -1,3 +1,5 @@
+ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+
 SUBDIRS = docs icons po src help
 
 DISTCHECK_CONFIGURE_FLAGS =     \

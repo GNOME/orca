@@ -8,6 +8,9 @@ AC_INIT([orca],
         [orca_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=orca],
         [orca])
+
+AC_CONFIG_MACRO_DIR([m4])
+
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
 
@@ -18,7 +21,6 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package])
 AM_GLIB_GNU_GETTEXT
 IT_PROG_INTLTOOL([0.40.0])
 
-AC_CONFIG_MACRO_DIR([m4])
 GNOME_DOC_INIT([0.17.3])
 
 dnl Needed programs
