@@ -396,7 +396,7 @@ def traceit(frame, event, arg):
             output += '\n  ARG %s=%s' % (key, values[i])
 
     lineElements = line.strip().split()
-    if lineElements[0] == 'return':
+    if lineElements and lineElements[0] == 'return':
         if event == 'line':
             return traceit
         output = '%s (rv: %s)' % (output, arg)
