@@ -8,13 +8,14 @@
 # 
 # 
 # Gonzalo <gonzalo.sanhueza.r@gmail.com>, 2011.
+# Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-08-04 14:58+0000\n"
-"PO-Revision-Date: 2011-08-08 13:33+0200\n"
+"POT-Creation-Date: 2011-08-08 17:34+0000\n"
+"PO-Revision-Date: 2011-08-13 12:06+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -237,13 +238,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none.» "
-"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
-"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
-"hable siempre independientemente de que el texto esté subrayado o no, "
-"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
-"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
-"<gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
+"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
+"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
+"atributo se hable siempre independientemente de que el texto esté subrayado "
+"o no, entonces el atributo debería estar marcado y el valor de "
+"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
+"que la columna <gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(title)
 msgid "Undoing changes"
@@ -690,11 +691,12 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
-"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
-"hablar de manera predeterminada, pero tener a Alicia para hablar los "
-"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
-"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
+"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
+"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
+"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
+"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
+"instalado."
 
 #: C/preferences_speech.page:75(title)
 msgid "Rate, Pitch, and Volume"
@@ -754,8 +756,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
-"«&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
+"«/», «&amp;», «#»."
 
 #: C/preferences_speech.page:112(title)
 msgid "Most"
@@ -2551,8 +2553,8 @@ msgid ""
 "normally."
 msgstr ""
 "Cuando se ejecutan comandos desde el menú, muchas distribuciones usan una "
-"aplicación conocida como «gksu» para autorizar al usuario para ejecutar estos "
-"comandos; gksu es el IGU que le pregunta por su contraseña. Cuando se "
+"aplicación conocida como «gksu» para autorizar al usuario para ejecutar "
+"estos comandos; gksu es el IGU que le pregunta por su contraseña. Cuando se "
 "ejecuta, gksu activa lo que se conoce como una «captura de teclado», la cual "
 "es una característica que previene cualquier acción de teclado vaya a "
 "cualquier otra aplicación del escritorio, incluyendo <app>Orca</app>. El "
@@ -2583,13 +2585,13 @@ msgid ""
 "command."
 msgstr ""
 "La captura de teclado es un intento de seguridad de gksu para prevenir que "
-"aplicaciones maliciosas «rastreen» el teclado y obtengan información secreta. "
-"Tenga en cuenta que al desactivar la característica de captura de teclado de "
-"gksu puede exponerle a un comportamiento malicioso. Si no se siente cómodo "
-"con esto, siempre puede usar la cuenta de root para propósitos de "
-"administración de sistema. Para ellp, necesita activar el inicio de sesión "
-"para la cuenta root, y luego salir y entrar como root cada vez que quiera "
-"realizar un comando de administración de sistema."
+"aplicaciones maliciosas «rastreen» el teclado y obtengan información "
+"secreta. Tenga en cuenta que al desactivar la característica de captura de "
+"teclado de gksu puede exponerle a un comportamiento malicioso. Si no se "
+"siente cómodo con esto, siempre puede usar la cuenta de root para propósitos "
+"de administración de sistema. Para ellp, necesita activar el inicio de "
+"sesión para la cuenta root, y luego salir y entrar como root cada vez que "
+"quiera realizar un comando de administración de sistema."
 
 #: C/preferences_general.page:97(desc)
 msgid ""
@@ -2978,9 +2980,9 @@ msgid ""
 msgstr ""
 "Este botón contador editable es donde puede especificar el número de "
 "caracteres que deben coincidir al menos antes que <app>Orca</app> anuncie la "
-"línea coincidente. Esta opción también está diseñada para prevenir «ruido» ya "
-"que al principio cuando comienza a teclear la cadena de búsqueda hay muchas "
-"coincidencias."
+"línea coincidente. Esta opción también está diseñada para prevenir «ruido» "
+"ya que al principio cuando comienza a teclear la cadena de búsqueda hay "
+"muchas coincidencias."
 
 #: C/preferences_gecko.page:131(p)
 msgid "Default value: 4"
@@ -5111,12 +5113,12 @@ msgid ""
 "repositioned. If you need to accomplish either, please see <link xref="
 "\"commands_mouse\">Orca's Mouse/Pointer-Related Commands</link>."
 msgstr ""
-"Puesto que se trata de una característica de  la<link xref="
+"Puesto que se trata de una característica de la <link xref="
 "\"howto_flat_review\">revisión</link>, cuando se encuentre una coincidencia, "
 "se activará automáticamente la «Revisión» y el elemento o texto coincidente "
 "se convertirá en el elemento de revisión actual. Tenga en cuenta que no se "
 "modificará el foco de la aplicación, ni tampoco se reposicionará el cursor. "
-"Si necesita realizar ambas operaciones, cosulte los <link xref="
+"Si necesita realizar ambas operaciones, consulte los <link xref="
 "\"commands_mouse\">comandos de Orca relacionados con el ratón/puntero</link>."
 
 #: C/howto_notifications.page:5(title)
@@ -5236,7 +5238,7 @@ msgstr ""
 
 #: C/howto_mouse_review.page:5(title)
 msgid "4. Mouse Review"
-msgstr ""
+msgstr "4. Revisión del ratón"
 
 #: C/howto_mouse_review.page:6(desc)
 msgid "Using the pointer to examine the screen"
@@ -5244,7 +5246,7 @@ msgstr "Usar el puntero para examinar la pantalla"
 
 #: C/howto_mouse_review.page:15(title)
 msgid "Mouse Review"
-msgstr ""
+msgstr "Revisión del ratón"
 
 #: C/howto_mouse_review.page:16(p)
 msgid ""
@@ -5257,6 +5259,14 @@ msgid ""
 "with information to present, <app>Orca</app> will present that object and "
 "its information to you."
 msgstr ""
+"La característica «Revisión del ratón» de <app>Orca</app> hace que "
+"<app>Orca</app> muestre el objeto bajo el puntero del ratón. A diferencia de "
+"la característica <link xref=\"howto_flat_review\">revisión</link> de "
+"<app>Orca</app>, la revisión del ratón no se limita a la ventana activa; en "
+"lugar de eso, <app>Orca</app> tratará de identificar qué objeto accesible, "
+"si existie alguno, se encuentra visualmente bajo el puntero cuando mueve el "
+"ratón. Si ha movido el puntero sobre un objeto accesible con información que "
+"mostrar, <app>Orca</app> le mostrará ese objeto y su información."
 
 #: C/howto_mouse_review.page:26(p)
 msgid ""
@@ -5271,10 +5281,24 @@ msgid ""
 "xref=\"howto_key_bindings\">Introduction to Key Bindings</link>, you can "
 "enable and disable Mouse Review on an as-needed basis."
 msgstr ""
+"Puesto que activar la «Revisión del ratón» hace que <app>Orca</app> esté "
+"atento a todos los cambios en la posición del puntero del ratón y luego los "
+"procese, esta característica está desactivada de manera predeterminada. Para "
+"que siempre esté activada, marque la casilla <gui>Leer el objeto debajo del "
+"ratón</gui> que se encuentra en la <link xref=\"preferences_general\">página "
+"general del diálogo de preferencias</link> de <app>Orca</app>. Además, "
+"encontrará un comando sin asociar con el nombre <gui>Alternar modo de "
+"revisión del ratón</gui> en la <link xref=\"preferences_key_bindings"
+"\">página de asociaciones de teclas</link> de ese mismo cuadro de diálogo. "
+"Al asociar este comando, como se describe en la <link xref="
+"\"howto_key_bindings\">introducción a las asociaciones de teclas</link>, "
+"puede activar y desactivar la revisión del ratón cuando sea necesario."
 
 #: C/howto_mouse_review.page:40(title)
 msgid "Default Settings and Keybindings Are Independent of One Another"
 msgstr ""
+"La configuración predeterminada y los atajos de teclado son independientes "
+"entre sí"
 
 #: C/howto_mouse_review.page:43(p)
 msgid ""
@@ -5283,10 +5307,15 @@ msgid ""
 "mode</gui> command. It is not necessary to enable it in order to toggle it "
 "because settings and keybindings are independent of one another."
 msgstr ""
+"Tenga en cuenta que puede elegir entre tener la «Revisión del ratón» siempre "
+"activada o no y aún poder activarla y desactivarla asociando y usando el "
+"comando <gui>Alternar modo de revisión del ratón</gui>. No es necesario "
+"activarla para poder alternarla ya que las configuraciones y asociaciones de "
+"teclas son independientes entre sí."
 
 #: C/howto_live_regions.page:5(title)
 msgid "6. Live Regions"
-msgstr ""
+msgstr "6. Regiones activas"
 
 #: C/howto_live_regions.page:6(desc)
 msgid "Interacting with dynamic web content"
@@ -5294,7 +5323,7 @@ msgstr "Interactuar con contenido web dinámico"
 
 #: C/howto_live_regions.page:17(title) C/commands_live_regions.page:7(title)
 msgid "Live Regions"
-msgstr ""
+msgstr "Regiones activas"
 
 #: C/howto_live_regions.page:18(p)
 msgid ""
@@ -5305,10 +5334,17 @@ msgid ""
 "encountered less often. This problem is actively being addressed by a number "
 "of organizations."
 msgstr ""
+"Una región activa es una sección de una página web que se actualiza "
+"dinámicamente, como una tabla de estadísticas de deportes, una lista de los "
+"precios actuales de las acciones, el registro de un chat, o un mensaje de "
+"alerta mostrado por la página que está leyendo. Mientras que las regiones "
+"activas aparecen con bastante frecuencia, las páginas web completamente "
+"accesibles con regiones activas se encuentran con menos frecuencia. Este "
+"problema lo están abordando activamente muchas organizaciones."
 
 #: C/howto_live_regions.page:27(title)
 msgid "Live Region Politeness Levels"
-msgstr ""
+msgstr "Niveles de comportamiento de las regiones activas"
 
 #: C/howto_live_regions.page:28(p)
 msgid ""
@@ -5318,10 +5354,16 @@ msgid ""
 "within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
 "\" to the point of being \"rude.\""
 msgstr ""
+"Las regiones activas tienen un nivel de «comportamiento» asociado "
+"establecido por el autor como un medio para transmitir la importancia de la "
+"información y para sugerir cuándo los deberían las tecnologías de asistencia "
+"informar a los usuarios sobre las actualizaciones realizadas en esa región. "
+"Las regiones activas pueden ser «desactivada», «cortés» o «agresiva» hasta "
+"el punto de ser «grosera»."
 
 #: C/howto_live_regions.page:37(title)
 msgid "<app>Orca</app>'s Support for Live Regions"
-msgstr ""
+msgstr "Soporte de <app>Orca</app> para regiones activas"
 
 #: C/howto_live_regions.page:38(p)
 msgid ""
@@ -5331,22 +5373,28 @@ msgid ""
 "you to modify the level of any or all of the regions on a page. In addition, "
 "you can:"
 msgstr ""
+"Puesto que podría no estar de acuerdo con el nivel de comportamiento "
+"especificado por el autor cuya página usted está viendo, <app>Orca</app> "
+"proporciona varios <link xref=\"commands_live_regions\">comandos de regiones "
+"dinámicas</link> que le permiten modificar el nivel de algunas o de todas "
+"las regiones de una página. Además, puede:"
 
 #: C/howto_live_regions.page:47(p)
 msgid "Turn live region support on or off"
-msgstr ""
+msgstr "Activar o desactivar el soporte de regiones activas"
 
 #: C/howto_live_regions.page:50(p)
 msgid "Jump to the next and previous live region spatially"
-msgstr ""
+msgstr "Saltar espacialmente a las regiones activas siguiente y anterior"
 
 #: C/howto_live_regions.page:53(p)
 msgid "Jump to the last live region which presented information"
-msgstr ""
+msgstr "Saltar a la última región activa que mostró información"
 
 #: C/howto_live_regions.page:56(p)
 msgid "Review the last nine live region messages which were presented"
 msgstr ""
+"Revisar los nueve últimos mensajes de las regiones activas que se mostraron"
 
 #: C/howto_learn_modes.page:5(title)
 msgid "5. The \"Learn\" Modes"
@@ -5354,7 +5402,7 @@ msgstr "5. Los modos de «aprendizaje»"
 
 #: C/howto_learn_modes.page:6(desc)
 msgid "Discovering <app>Orca</app>'s commands"
-msgstr ""
+msgstr "Descubrir los comandos de <app>Orca</app>"
 
 #: C/howto_learn_modes.page:17(title)
 msgid "The \"Learn\" Modes"
@@ -5368,6 +5416,12 @@ msgid ""
 "that keystroke is bound to. List Shortcuts Mode provides you with a list of "
 "all the <app>Orca</app> commands you can use."
 msgstr ""
+"Orca tiene dos modos para aprender más acerca de los comandos de <app>Orca</"
+"app>: modo de aprendizaje y modo de lista de atajos. En el modo de "
+"aprendizaje, <app>Orca</app> anunciará cada pulsación de tecla que pulse "
+"junto con cualquier comando asociado de <app>Orca</app> que esté vinculado a "
+"una pulsación de tecla. El modo de lista de atajos le proporciona una lista "
+"de todos los comandos de <app>Orca</app> que puede usar."
 
 #: C/howto_learn_modes.page:27(title)
 msgid "Using Learn Mode"
@@ -5386,6 +5440,8 @@ msgid ""
 "Press any key or keystroke. <app>Orca</app> will announce the keys and any "
 "associated command."
 msgstr ""
+"Pulse cualquier tecla. <app>Orca</app> anunciará las teclas y cualquier "
+"comando asociado."
 
 #: C/howto_learn_modes.page:41(p)
 msgid "Press <key>Esc</key> to exit Learn Mode."
@@ -6543,9 +6599,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
-"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
-"app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
+"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
+"<app>Orca</app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(p)
 msgid ""
