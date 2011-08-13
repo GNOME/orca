@@ -391,7 +391,13 @@ def traceit(frame, event, arg):
     if event == 'call':
         argvals = inspect.getargvalues(frame)
         keys = filter(lambda x: x != 'self', argvals[0])
-        values = map(argvals[3].get, keys)
+        try:
+            values = map(argvals[3].get, keys)
+        except TypeError:
+            if len(keys) == 1 and isinstance(keys[0], list):
+                values = map(argvals[3].get, keys[0])
+            else:
+                return traceit
         for i, key in enumerate(keys):
             output += '\n  ARG %s=%s' % (key, values[i])
 
