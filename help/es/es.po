@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-08-08 17:34+0000\n"
-"PO-Revision-Date: 2011-08-13 12:06+0200\n"
+"POT-Creation-Date: 2011-08-13 10:08+0000\n"
+"PO-Revision-Date: 2011-08-14 17:05+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -239,7 +239,7 @@ msgid ""
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
 "Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
-"«none.» Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
+"«none». Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
 "siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
 "atributo se hable siempre independientemente de que el texto esté subrayado "
 "o no, entonces el atributo debería estar marcado y el valor de "
@@ -5040,46 +5040,45 @@ msgstr ""
 #: C/howto_orca_find.page:64(p)
 msgid "Default value of <gui>Start from</gui>: <gui>Current location</gui>"
 msgstr ""
-"Valor predeterminado de <gui>Comenzar en</gui>: <gui>Ubicación actual</gui>"
+"Valor predeterminado de <gui>Empezar en</gui>: <gui>Posición actual</gui>"
 
 #: C/howto_orca_find.page:69(p)
 msgid ""
 "Whether or not capitalization should be taken into account when seeking a "
 "match"
 msgstr ""
-"Indica si se deberían considerar o no las mayúsculas cuando se busca una "
-"coincidencia"
+"Indica si se debe tener en cuenta la capitalización al buscar coincidencias"
 
 #: C/howto_orca_find.page:73(p)
 msgid "Default value of <gui>Match case</gui>: not checked"
 msgstr ""
-"Valor predeterminado de <gui>Coincidir mayúsculas y minúsculas</gui>: no "
-"marcado"
+"Valor predeterminado de <gui>Coincidir con mayúsculas</gui>: no seleccionado"
 
 #: C/howto_orca_find.page:78(p)
 msgid ""
 "Whether or not to limit matches to those which match the entire word or "
 "phrase"
 msgstr ""
-"Indica si se deberían limitar o no las coincidencias a aquellas que "
-"coinciden con la palabra o frase completa"
+"Indica si se deben limitar o no las coincidencias a aquellas que contengan "
+"la palabra o frase completa"
 
 #: C/howto_orca_find.page:82(p)
 msgid "Default value of <gui>Match entire word only</gui>: not checked"
 msgstr ""
-"Valor predeterminado de <gui>Buscar sólo palabras completas</gui>: no marcado"
+"Valor predeterminado de <gui>Coincidir sólo con la palabra entera</gui>: no "
+"seleccionado"
 
 #: C/howto_orca_find.page:87(p)
 msgid ""
 "Whether Find should look down and/or to the right for the next match or up "
 "and/or to the left."
 msgstr ""
-"Indica si la búsqueda de Orca debería buscar la siguiente coincidencia hacia "
-"abajo y/o hacia la derecha o hacia arriba y/o hacia la izquierda."
+"Indica si «Buscar» debe buscar hacia abajo y/o a la derecha o arriba y/o a "
+"la izquierda para la siguiente coincidencia"
 
 #: C/howto_orca_find.page:91(p)
 msgid "Default value of <gui>Search backwards</gui>: not checked"
-msgstr "Valor predeterminado de <gui>Búsqueda hacia atrás</gui>: no marcado"
+msgstr "Valor predeterminado de <gui>Buscar hacia atrás</gui>: no seleccionado"
 
 #: C/howto_orca_find.page:96(p)
 msgid ""
@@ -5087,22 +5086,22 @@ msgid ""
 "there is no match found from the starting location in the direction of the "
 "search."
 msgstr ""
-"Indica si la búsqueda de Orca debería retornar el cursor o no a la parte "
-"superior/inferior de la ventana cuando no se encuentren coincidencias a "
-"partir de la ubicación inicial en la dirección de la búsqueda."
+"Indica si «Buscar» deber saltar al inicio/final de la ventana si no existe "
+"ninguna coincidencia desde la posición de inicio, en la dirección de "
+"búsqueda."
 
 #: C/howto_orca_find.page:101(p)
 msgid "Default value of <gui>Wrap around</gui>: checked"
-msgstr "Valor predeterminado de <gui>Retorno del cursor</gui>: marcado"
+msgstr "Valor predeterminado de <gui>Salto</gui>: seleccionado"
 
 #: C/howto_orca_find.page:106(p)
 msgid ""
 "Having performed a search, you can quickly search for the next or previous "
 "match without having to return to the Orca Find dialog box."
 msgstr ""
-"Tras haber realizado una búsqueda, puede buscar rápidamente la coincidencia "
-"siguiente o anterior sin tener que volver al cuadro de diálogo de la "
-"búsqueda de Orca."
+"Una vez que haya realizado una búsqueda puede buscar rápidamente la "
+"siguiente o anterior coincidencia sin tener que volver a la cuadro de "
+"diálogo de búsqueda de Orca."
 
 #: C/howto_orca_find.page:110(p)
 msgid ""
