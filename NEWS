@@ -1,3 +1,20 @@
+3.1.5-xdesktop - 15 August 2011
+
+General
+
+  * Fix for bug 639535 - KeyError: 'profile' traceback; Orca won't
+    launch
+
+  * Fix for bug 654114 - Map "clutter" to "CALLY" toolkit script
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish              Daniel Mustieles
+    fr            French               Bruno Brouard
+    hu            Hungarian            Attila Hammer, Gabor Kelemen
+
+==========
+
 3.1.4-xdesktop - 25-July-2011
 
 General
