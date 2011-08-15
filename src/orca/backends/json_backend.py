@@ -106,7 +106,10 @@ class Backend:
                     value[voiceType] = acss.ACSS(voiceDef)
             if key not in settings.excludeKeys:
                 generalSettings[key] = value
-        generalSettings['activeProfile'] = profileSettings['profile']
+        try:
+            generalSettings['activeProfile'] = profileSettings['profile']
+        except KeyError:
+            generalSettings['activeProfile'] = ["Default", "default"] 
         return generalSettings
 
     def getPronunciations(self, profile='default'):
