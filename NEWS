@@ -1,3 +1,31 @@
+3.1.5 - 15 August 2011
+
+General
+
+  * Fix for bug 639535 - KeyError: 'profile' traceback; Orca won't
+    launch
+
+  * Fix for bug 654923 - Add Unity to OnlyShowIn value for autostart
+    desktop file
+
+  * Fix for bug 656305 - Improve autotools config
+
+  * Fix for bug 654114 - Map "clutter" to "CALLY" toolkit script
+
+  * Enhanced Orca's traceit tool.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg            Bulgarian            Alexander Shopov
+    es            Spanish              Daniel Mustieles
+    fr            French               Bruno Brouard
+    gl            Galician             Fran Diéguez
+    hu            Hungarian            Attila Hammer, Gabor Kelemen
+    pl            Polish               Piotr Drąg
+    sv            Swedish              Daniel Nylander
+
+=========
+
 3.1.4 - 25-July-2011
 
 General
