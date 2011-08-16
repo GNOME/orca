@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-08-13 10:08+0000\n"
-"PO-Revision-Date: 2011-08-14 17:05+0200\n"
+"POT-Creation-Date: 2011-08-15 15:18+0000\n"
+"PO-Revision-Date: 2011-08-16 12:03+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5263,7 +5263,7 @@ msgstr ""
 "la característica <link xref=\"howto_flat_review\">revisión</link> de "
 "<app>Orca</app>, la revisión del ratón no se limita a la ventana activa; en "
 "lugar de eso, <app>Orca</app> tratará de identificar qué objeto accesible, "
-"si existie alguno, se encuentra visualmente bajo el puntero cuando mueve el "
+"si existe alguno, se encuentra visualmente bajo el puntero cuando mueve el "
 "ratón. Si ha movido el puntero sobre un objeto accesible con información que "
 "mostrar, <app>Orca</app> le mostrará ese objeto y su información."
 
@@ -5355,7 +5355,7 @@ msgid ""
 msgstr ""
 "Las regiones activas tienen un nivel de «comportamiento» asociado "
 "establecido por el autor como un medio para transmitir la importancia de la "
-"información y para sugerir cuándo los deberían las tecnologías de asistencia "
+"información y para sugerir cuándo las tecnologías de asistencia deberían "
 "informar a los usuarios sobre las actualizaciones realizadas en esa región. "
 "Las regiones activas pueden ser «desactivada», «cortés» o «agresiva» hasta "
 "el punto de ser «grosera»."
@@ -5455,6 +5455,8 @@ msgid ""
 "Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</"
 "key><key>H</key></keyseq> twice quickly."
 msgstr ""
+"Vaya al modo de lista de atajos pulsando dos veces <keyseq><key>Modificador "
+"de Orca</key><key>H</key></keyseq> rápidamente."
 
 #: C/howto_learn_modes.page:53(p)
 msgid ""
@@ -5462,6 +5464,9 @@ msgid ""
 "app>-wide, or press <key>2</key> if you want a list of shortcuts that are "
 "specifically for the application with focus."
 msgstr ""
+"Pulse <key>1</key> si quiere una lista de todos los atajos que se aplican en "
+"todo <app>Orca</app>, o pulse <key>2</key> si quiere una lista de los atajos "
+"específicos para la aplicación que tiene el foco."
 
 #: C/howto_learn_modes.page:60(p)
 msgid ""
@@ -5480,13 +5485,16 @@ msgstr "6. Distribución del teclado"
 
 #: C/howto_keyboard_layout.page:6(desc)
 msgid "Selecting the Desktop or Laptop layout"
-msgstr ""
+msgstr "Seleccionar la distribución de escritorio o portátil"
 
 #: C/howto_keyboard_layout.page:16(p)
 msgid ""
 "Orca has two keyboard layouts: Desktop (i.e. with a numeric keypad) and "
 "Laptop. The layout you choose impacts which key is used as the Orca Modifier."
 msgstr ""
+"Orca tiene dos distribuciones de teclado: escritorio (es decir, con un "
+"teclado numérico) y portátil. La distribución que elige afecta a qué tecla "
+"se usa como modificador de Orca."
 
 #: C/howto_keyboard_layout.page:41(title)
 msgid "Changing Your Keyboard Layout"
@@ -5494,11 +5502,11 @@ msgstr "Cambiar la distribución de su teclado"
 
 #: C/howto_keyboard_layout.page:51(p)
 msgid "Move to the <gui>Keyboard Layout</gui> group of radio buttons."
-msgstr ""
+msgstr "Vaya al grupo de botones de radio <gui>Distribución de teclado</gui>."
 
 #: C/howto_keyboard_layout.page:56(p)
 msgid "Arrow to the desired layout."
-msgstr ""
+msgstr "Seleccione la distribución que quiere."
 
 #: C/howto_key_bindings.page:5(title)
 msgid "8. Keybindings"
@@ -5506,7 +5514,7 @@ msgstr "8. Asociaciones de teclas"
 
 #: C/howto_key_bindings.page:6(desc)
 msgid "Binding, rebinding, and unbinding commands"
-msgstr ""
+msgstr "Comandos de asociación, reasociación y desasociación"
 
 #: C/howto_key_bindings.page:15(title)
 msgid "Keybindings"
@@ -5518,6 +5526,9 @@ msgid ""
 "which are unbound. You can bind, rebind, and unbind <app>Orca</app>'s "
 "commands by following the steps below."
 msgstr ""
+"Orca tiene muchos comandos, algunos de los cuales están asociados a una "
+"pulsación de tecla y otros no están asociados. Puede asociar, reasociar y "
+"desasociar los comandos de <app>Orca</app> realizando los siguientes pasos."
 
 #: C/howto_key_bindings.page:21(title)
 msgid "Binding an Unbound Command"
@@ -5528,16 +5539,20 @@ msgid ""
 "Arrow to the cell which contains the command you want to assign a keystroke "
 "to."
 msgstr ""
+"Vaya a la celda que contiene el comando al cual quiere asignar una pulsación "
+"de tecla."
 
 #: C/howto_key_bindings.page:38(p)
 msgid ""
 "Arrow once to the right. This will place focus in the <gui>Key Binding</gui> "
 "column. Press <key>Return</key>."
 msgstr ""
+"Pulse una vez a la derecha. Esto situará el foco en la columna "
+"<gui>Asociación de teclas</gui>. Pulse <key>Intro</key>."
 
 #: C/howto_key_bindings.page:44(p) C/howto_key_bindings.page:75(p)
 msgid "Press the desired key combination."
-msgstr "Pulse la combinación de teclas deseada."
+msgstr "Pulse la combinación de teclas que quiere."
 
 #: C/howto_key_bindings.page:46(p) C/howto_key_bindings.page:78(p)
 msgid ""
@@ -5545,6 +5560,10 @@ msgid ""
 "will be saved and the check box in the last column (the <gui>Modified</gui> "
 "column) will indicate that the key binding has been modified."
 msgstr ""
+"Pulse <key>Intro</key> para confirmar la nueva combinación. La nueva "
+"pulsación de tecla se guardará y la casilla de verificación en la última "
+"columna (la columna <gui>Modificado</gui>) indicará que se ha modificado la "
+"asociación de teclas."
 
 #: C/howto_key_bindings.page:58(title)
 msgid "Changing Existing Bindings"
@@ -5555,18 +5574,21 @@ msgid ""
 "Arrow to the cell which contains the binding you which to change and press "
 "<key>Return</key>."
 msgstr ""
+"Vaya a la celda que contiene la asociación que quiere cambiar y pulse "
+"<key>Intro</key>."
 
 #: C/howto_key_bindings.page:90(title)
 msgid "Restoring Original Bindings"
-msgstr ""
+msgstr "Restaurar las asociaciones originales"
 
 #: C/howto_key_bindings.page:102(p)
 msgid "Arrow to the modified column associated with the key binding."
 msgstr ""
+"Vaya a la columna modificada que está vinculada con la asociación de teclas."
 
 #: C/howto_key_bindings.page:105(p)
 msgid "Uncheck the checkbox by pressing <key>Space</key>."
-msgstr ""
+msgstr "Desmarque la casilla de verificación pulsando <key>Espacio</key>."
 
 #: C/howto_key_bindings.page:112(title)
 msgid "Unbinding Bound Commands"
@@ -5577,12 +5599,16 @@ msgid ""
 "Arrow to the cell which contains the binding you which to delete and press "
 "<key>Return</key>."
 msgstr ""
+"Vaya a la celda que contiene la asociación que quiere eliminar y pulse "
+"<key>Intro</key>."
 
 #: C/howto_key_bindings.page:130(p)
 msgid ""
 "When prompted for the new keybinding, press <key>Delete</key> or "
 "<key>BackSpace</key>. You will be told that the key binding has been removed."
 msgstr ""
+"Cuando se le pida la asociación de teclas nueva, pulse <key>Supr</key> o "
+"<key>Retroceso</key>. Se le dirá que el atajo de teclado se ha quitado."
 
 #: C/howto_key_bindings.page:137(p)
 msgid "Press <key>Return</key> to confirm."
@@ -5594,7 +5620,7 @@ msgstr "5. Rellenar formularios"
 
 #: C/howto_forms.page:6(desc)
 msgid "Accessing widgets embedded in documents"
-msgstr ""
+msgstr "Acceder a los widgets incorporados en los documentos."
 
 #: C/howto_forms.page:17(title)
 msgid "Filling out forms"
@@ -5609,10 +5635,16 @@ msgid ""
 "you wish to change, and interact with the widget as if it were in a dialog "
 "box."
 msgstr ""
+"Cuando interactúa con páginas web y otros documentos usando <app>Orca</app>, "
+"está interactuando con el documento en sí, no con una copia en el búfer de "
+"ese documento. Por lo tanto, no existe un modo especial en el cual entrar o "
+"salir cuando quiera rellenar un formulario. En cambio, simplemente navegue a "
+"cada campo cuyo contenido quiere cambiar e interactúe con el widget como si "
+"fuera un cuadro de diálogo."
 
 #: C/howto_forms.page:27(title)
 msgid "Navigating Amongst Form Fields"
-msgstr ""
+msgstr "Navegar entre los campos de un formulario"
 
 #: C/howto_forms.page:28(p)
 msgid "To navigate amongst form fields, you have several options:"
