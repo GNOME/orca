@@ -3906,8 +3906,7 @@ msgid ""
 msgstr ""
 "<b><big>Orca beenden?</big></b>\n"
 "\n"
-"Hierdurch werden Sprachausgabe und Braille-Ausgabe gestoppt.\n"
-"\n"
+"Hierdurch werden Sprachausgabe und Braille-Ausgabe gestoppt."
 
 #: ../src/orca/orca-setup.ui.h:2
 #, no-c-format
