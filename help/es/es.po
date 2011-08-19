@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-08-15 15:18+0000\n"
-"PO-Revision-Date: 2011-08-16 12:03+0200\n"
+"POT-Creation-Date: 2011-08-16 10:07+0000\n"
+"PO-Revision-Date: 2011-08-19 11:58+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -5648,19 +5648,23 @@ msgstr "Navegar entre los campos de un formulario"
 
 #: C/howto_forms.page:28(p)
 msgid "To navigate amongst form fields, you have several options:"
-msgstr ""
+msgstr "Para navegar entre los campos de un formulario, tiene varias opciones:"
 
 #: C/howto_forms.page:33(p)
 msgid ""
 "Use <key>Tab</key> and <keyseq><key>Shift</key><key>Tab</key></keyseq>, to "
 "navigate amongst focusable objects, regardless of type."
 msgstr ""
+"Use <key>Tab</key> y <keyseq><key>Mayús</key><key>Tab</key></keyseq> para "
+"navegar entre objetos enfocables, sin importar el tipo."
 
 #: C/howto_forms.page:39(p)
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation commands for forms</link>."
 msgstr ""
+"Use <link xref=\"commands_structural_navigation#forms\">los comandos de "
+"navegación estructural para formularios</link> de <app>Orca</app>."
 
 #: C/howto_forms.page:45(p)
 msgid ""
@@ -5668,10 +5672,13 @@ msgid ""
 "navigation commands, in other words, the arrow keys when <app>Orca</app> is "
 "controlling the caret."
 msgstr ""
+"Dependiendo del formulario, también puede usar los comandos de navegación "
+"del cursor de <app>Orca</app>, en otras palabras, las flechas de dirección "
+"cuando <app>Orca</app> esté controlando el cursor."
 
 #: C/howto_forms.page:54(title)
 msgid "Exiting Form Fields"
-msgstr ""
+msgstr "Salir de los campos de un formulario"
 
 #: C/howto_forms.page:55(p)
 msgid ""
@@ -5679,6 +5686,9 @@ msgid ""
 "forms, the most frequently-asked question is how to exit a focused form "
 "field. For this, too, you have several options:"
 msgstr ""
+"Puesto que en <app>Orca</app> no hay un modo especial para interactuar con "
+"los formularios, la pregunta más frecuente es cómo salir de un campo de "
+"formulario enfocado. Para esto también tiene varias opciones:"
 
 #: C/howto_forms.page:62(p)
 msgid ""
@@ -5686,6 +5696,9 @@ msgid ""
 "wish to leave the currenty-focused form field and move to the next/previous "
 "focusable object, regardless of what that object happens to be."
 msgstr ""
+"Use <key>Tab</key>/<keyseq><key>Mayús</key><key>Tab</key></keyseq> si quiere "
+"abandonar el campo de formulario actualmente enfocado e ir hacia el objeto "
+"enfocable siguiente/anterior, sin importar lo que ese objeto resulte ser."
 
 #: C/howto_forms.page:70(p)
 msgid ""
@@ -5694,6 +5707,11 @@ msgid ""
 "<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq><key>Orca "
 "Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
 msgstr ""
+"Use la <link xref=\"commands_structural_navigation#forms\">navegación "
+"estructural</link> de <app>Orca</app> para ir al campo de formulario "
+"siguiente/anterior: <keyseq><key>Modificador de Orca</key><key>Tab</key></"
+"keyseq>/<keyseq><key>Modificador de Orca</key><key>Mayús</key><key>Tab</"
+"key></keyseq>."
 
 #: C/howto_forms.page:78(p)
 msgid ""
@@ -5701,6 +5719,10 @@ msgid ""
 "chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key></keyseq>/"
 "<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
 msgstr ""
+"Use los comandos de <app>Orca</app> para ir al objeto o bloque de texto "
+"siguiente/anterior: <keyseq><key>Modificador de Orca</key><key>Derecha</"
+"key></keyseq>/<keyseq><key>Modificador de Orca</key><key>Izquierda</key></"
+"keyseq>."
 
 #: C/howto_forms.page:85(p)
 msgid ""
@@ -5708,6 +5730,9 @@ msgid ""
 "to arrow out of the form field, as long as <app>Orca</app> is controlling "
 "the caret."
 msgstr ""
+"Si no está en una lista o caja combinada, puede usar los comandos de "
+"navegación del cursor para salir del campo de formulario, siempre que "
+"<app>Orca</app> esté controlando el cursor."
 
 #: C/howto_flat_review.page:5(title)
 msgid "2. Flat Review"
@@ -5715,7 +5740,7 @@ msgstr "2. Revisión"
 
 #: C/howto_flat_review.page:6(desc)
 msgid "Examining a window spatially"
-msgstr ""
+msgstr "Examinar espacialmente una ventana"
 
 #: C/howto_flat_review.page:15(title) C/commands_flat_review.page:7(title)
 msgid "Flat Review"
@@ -5729,6 +5754,11 @@ msgid ""
 "text, eliminating any notion of widget hierarchy or other logical grouping "
 "within the window."
 msgstr ""
+"La característica «Revisión» de <app>Orca</app> le permite revisar "
+"espacialmente el contenido, tanto el texto como los widgets, de la ventana "
+"activa. En este modo, <app>Orca</app> trata la ventana como si fuera una "
+"hoja de texto bidimensional, eliminando cualquier noción de jerarquía de "
+"widget u otro agrupamiento lógico dentro de la ventana."
 
 #: C/howto_flat_review.page:23(p)
 msgid ""
@@ -5739,6 +5769,12 @@ msgid ""
 "\"howto_orca_find\">Orca Find</link>, a Flat-Review-based feature to search "
 "the active window's contents."
 msgstr ""
+"El contenido «aplanado», también conocido como «el contexto de revisión», se "
+"puede <link xref=\"commands_flat_review\">navegar</link> por línea, palabra, "
+"carácter y objeto. Además, puede pulsar con el botón derecho o el izquierdo "
+"sobre el objeto que se está revisando. Finalmente, puede usar la <link xref="
+"\"howto_orca_find\">búsqueda de Orca</link>, una característica basada en la "
+"revisión para buscar el contenido de la ventana activa."
 
 #: C/howto_flat_review.page:31(p)
 msgid ""
@@ -5750,6 +5786,14 @@ msgid ""
 "the Flat Review context will not automatically be updated. You can cause a "
 "new context to be built by toggling Flat Review off and back on."
 msgstr ""
+"Puesto que el contexto de la revisión es una representación espacial del "
+"contenido de la ventana activa, este se crea cuando usted entra por primera "
+"vez a la revisión y sólo contiene aquellos objetos que son visibles. Como "
+"consecuencia, no podrá usar la revisión para acceder a los elementos que "
+"están en la ventana, pero que actualmente no se ven en la pantalla. Además, "
+"si el contenido de la ventana cambia por sí solo, el contexto de la revisión "
+"no se actualizará automáticamente. Puede crear un nuevo contexto "
+"desactivando la revisión y volviendo a activarla."
 
 #: C/howto_flat_review.page:40(p)
 msgid ""
@@ -5758,6 +5802,11 @@ msgid ""
 "and then use the application's navigation commands to move the caret or to "
 "give focus to another object, you will automatically leave Flat Review."
 msgstr ""
+"Finalmente, la revisión por naturaleza es un modo que no se puede usar al "
+"mismo tiempo que <app>Orca</app> está siguiendo la trayectoria del foco. Por "
+"lo tanto, si está en revisión y luego usa los comandos de navegación de la "
+"aplicación para mover el cursor o dar el foco a otro objeto, abandonará "
+"automáticamente la revisión."
 
 #: C/howto_documents.page:5(title)
 msgid "1. Documents"
@@ -5778,6 +5827,11 @@ msgid ""
 "app> will present your new location. As a result, you are likely already "
 "familiar with how to read a document using <app>Orca</app>. For instance:"
 msgstr ""
+"Para leer el contenido de cualquier documento, use el modo de navegación del "
+"cursor incorporado en la aplicación. A medida que navega dentro del texto "
+"del documento, <app>Orca</app> mostrará su nueva ubicación. Como "
+"consecuencia, probablemente ya sabe cómo leer un documento usando <app>Orca</"
+"app>. Por ejemplo:"
 
 #: C/howto_documents.page:26(p)
 msgid "Use <key>Left</key> and <key>Right</key> to move and read by character."
@@ -5813,7 +5867,7 @@ msgid ""
 "href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>."
 msgstr ""
 "Para obtener una lista completa de los comandos de la navegación del cursor "
-"de GNOME, consulte la <link href=\"ghelp:gnome-help#a11y\">Ayuda del acceso "
+"de GNOME, consulte la <link href=\"ghelp:gnome-help#a11y\">ayuda del acceso "
 "universal</link>."
 
 #: C/howto_documents.page:52(p)
@@ -5823,6 +5877,10 @@ msgid ""
 "You can do these things through <app>Orca</app>'s <link xref="
 "\"howto_flat_review\">Flat Review feature</link>."
 msgstr ""
+"Además de leer un documento mediante la navegación del cursor, podría serle "
+"útil leer, deletrear y obtener el valor Unicode del texto actual. Puede "
+"hacer esto a través de la <link xref=\"howto_flat_review\">característica de "
+"revisión</link>."
 
 #: C/howto_documents.page:58(p)
 msgid ""
@@ -5832,6 +5890,11 @@ msgid ""
 "can be found in the <link xref=\"commands_reading\">Reading Commands</link> "
 "guide."
 msgstr ""
+"Finalmente, para que <app>Orca</app> lea todo el documento desde su "
+"ubicación actual, use el comando «Leer todo». Puede encontrar este comando, "
+"junto con un listado más completo de comandos de <app>Orca</app> para "
+"acceder al texto de los documentos, en la guía <link xref=\"commands_reading"
+"\">comandos de lectura</link>."
 
 #: C/howto_bookmarks.page:4(title)
 msgid "6. Bookmarks"
@@ -5850,6 +5913,8 @@ msgid ""
 "<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
 "of interest. It includes the following features:"
 msgstr ""
+"El soporte de marcadores de <app>Orca</app> le permite indicar que un objeto "
+"es interesante. Incluye las siguientes características:"
 
 #: C/howto_bookmarks.page:21(p)
 msgid ""
@@ -5857,6 +5922,9 @@ msgid ""
 "environment. You can also save bookmarks so that they will persist from Orca "
 "session to Orca session."
 msgstr ""
+"No está limitado a un único objeto: puede configurar hasta seis marcadores "
+"por entorno. También puede guardar los marcadores, para que se mantengan "
+"desde una sesión de Orca a otra."
 
 #: C/howto_bookmarks.page:28(p)
 msgid ""
