@@ -5,24 +5,24 @@
 #
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2006.
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005.
-# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2010.
 # Francisco Javier Dorado Martínez <javier@tiflolinux.org>, 2007, 2008, 2010, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2010, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-07-17 20:39+0000\n"
-"PO-Revision-Date: 2011-07-18 17:43+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-08-19 12:02+0000\n"
+"PO-Revision-Date: 2011-08-21 20:36+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
 #: ../src/orca/keybindings.py:157 ../src/orca/orca_gui_main.py:141
@@ -175,7 +175,7 @@ msgstr "Línea abajo"
 #.
 #: ../src/orca/braille.py:141
 msgid "Freeze"
-msgstr "Deshabilitar"
+msgstr "Desactivar"
 
 #. Translators: this is a command for a button on a refreshable braille
 #. display (an external hardware device used by people who are blind).
@@ -1704,7 +1704,7 @@ msgstr "Servicios de voz Emacsspeak"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/event_manager.py:265
+#: ../src/orca/event_manager.py:267
 msgid "No focus"
 msgstr "Sin foco"
 
@@ -1878,7 +1878,6 @@ msgstr "Mayús"
 #. Translators: this is how someone would speak the name of the shift key
 #.
 #: ../src/orca/keynames.py:42
-#| msgid "Shift"
 msgctxt "keyboard"
 msgid "Shift"
 msgstr "Mayús"
@@ -1886,7 +1885,6 @@ msgstr "Mayús"
 #. Translators: this is how someone would speak the name of the alt key
 #.
 #: ../src/orca/keynames.py:46
-#| msgid "Alt_R"
 msgctxt "keyboard"
 msgid "Alt"
 msgstr "Alt"
@@ -1894,7 +1892,6 @@ msgstr "Alt"
 #. Translators: this is how someone would speak the name of the control key
 #.
 #: ../src/orca/keynames.py:50
-#| msgid "Ctrl"
 msgctxt "keyboard"
 msgid "Control"
 msgstr "Ctrl"
@@ -7069,7 +7066,7 @@ msgstr "espacio en blanco"
 #.
 #: ../src/orca/scripts/default.py:2539
 msgid "Leaving flat review."
-msgstr "Saliendo de la revisión plana."
+msgstr "Saliendo de la revisión."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -7083,7 +7080,7 @@ msgstr "Saliendo de la revisión plana."
 #.
 #: ../src/orca/scripts/default.py:2555
 msgid "Entering flat review."
-msgstr "Entrando en la revisión plana."
+msgstr "Entrando en la revisión."
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will be spoken.

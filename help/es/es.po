@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-08-19 12:03+0000\n"
-"PO-Revision-Date: 2011-08-20 11:47+0200\n"
+"POT-Creation-Date: 2011-08-20 09:49+0000\n"
+"PO-Revision-Date: 2011-08-21 20:36+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -4101,7 +4101,7 @@ msgid ""
 msgstr ""
 "La distribución también determina las pulsaciones de teclas asociadas a un "
 "número de comandos de <app>Orca</app>, especialmente en las áreas de "
-"«Revisión plana», «¿Dónde estoy?» y «Leer todo»."
+"«Revisión», «¿Dónde estoy?» y «Leer todo»."
 
 #: C/howto_text_setup.page:154(p)
 msgid ""
@@ -4979,9 +4979,9 @@ msgid ""
 "are visible on-screen within the current window."
 msgstr ""
 "La característica «Buscar» de <app>Orca</app> es una búsqueda en el modo de "
-"<link xref=\"howto_flat_review\">Revisión Plana</link> diseñada para "
-"ayudarle a localizar rápidamente los objetos visibles en pantalla que están "
-"dentro de la ventana actual."
+"<link xref=\"howto_flat_review\">Revisión</link> diseñada para ayudarle a "
+"localizar rápidamente los objetos visibles en pantalla que están dentro de "
+"la ventana actual."
 
 #: C/howto_orca_find.page:23(title)
 msgid "Activating Orca Find"
@@ -7182,7 +7182,7 @@ msgstr "Comandos adicionales"
 
 #: C/commands_flat_review.page:167(p)
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr ""
+msgstr "Conmutar la revisión (actualiza el contexto de revisión):"
 
 #: C/commands_flat_review.page:169(p)
 msgid ""
@@ -7212,7 +7212,7 @@ msgstr ""
 
 #: C/commands_find.page:6(title)
 msgid "2. Orca Find"
-msgstr ""
+msgstr "2. Búsqueda de Orca"
 
 #: C/commands_find.page:8(desc)
 msgid "Commands for searching window contents"
@@ -7220,7 +7220,7 @@ msgstr "Comandos para buscar contenido de la ventana"
 
 #: C/commands_find.page:19(title)
 msgid "Orca Find Commands"
-msgstr ""
+msgstr "Comandos de búsqueda de Orca"
 
 #: C/commands_find.page:20(p)
 msgid ""
@@ -7235,7 +7235,7 @@ msgstr "Abrir el diálogo «Buscar» de <app>Orca</app>:"
 
 #: C/commands_find.page:38(p)
 msgid "Move flat review to the next instance of a string:"
-msgstr ""
+msgstr "Mover la revisión a la siguiente instancia de una cadena:"
 
 #: C/commands_find.page:41(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
@@ -7249,7 +7249,7 @@ msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>]</key></keyseq>"
 
 #: C/commands_find.page:55(p)
 msgid "Move flat review to the previous instance of a string:"
-msgstr ""
+msgstr "Mover la revisión a la anterior instancia de una cadena:"
 
 #: C/commands_find.page:58(p)
 msgid ""
@@ -7480,23 +7480,23 @@ msgstr ""
 
 #: C/commands_braille.page:27(p)
 msgid "Toggle flat review mode: Freeze"
-msgstr ""
+msgstr "Conmutar el modo de revisión plano: desactivar"
 
 #: C/commands_braille.page:28(p)
 msgid "Review the word above: Line Up"
-msgstr ""
+msgstr "Revisar la palabra encina: línea arriba"
 
 #: C/commands_braille.page:29(p)
 msgid "Review the word below: Line Down"
-msgstr ""
+msgstr "Revisar la palabra debajo: línea abajo"
 
 #: C/commands_braille.page:30(p)
 msgid "Review bottom left: Bottom Right"
-msgstr ""
+msgstr "Revisar la parte inferior izquierda: abajo derecha"
 
 #: C/commands_braille.page:31(p)
 msgid "Review the home position: Top Left"
-msgstr ""
+msgstr "Revisar la posición inicial: arriba izquierda"
 
 #: C/commands_braille.page:32(p)
 msgid "Contracted braille: Six Dots"
@@ -7585,7 +7585,7 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011\n"
-"Jorge González <jorgegonz@svn.gnome.org>, 2010"
+"Jorge González <jorgegonz@svn.gnome.org>, 2011"
 
 #~ msgid "<gui>None</gui> (the default)"
 #~ msgstr "<gui>Ninguna</gui> (Predeterminado) "
