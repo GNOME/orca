@@ -8,20 +8,20 @@
 # 
 # Gonzalo <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011., 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-08-20 09:49+0000\n"
-"PO-Revision-Date: 2011-08-20 11:47+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2011-08-21 18:44+0000\n"
+"PO-Revision-Date: 2011-08-24 11:52+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -4100,7 +4100,7 @@ msgid ""
 msgstr ""
 "La distribución también determina las pulsaciones de teclas asociadas a un "
 "número de comandos de <app>Orca</app>, especialmente en las áreas de "
-"«Revisión plana», «¿Dónde estoy?» y «Leer todo»."
+"«Revisión», «¿Dónde estoy?» y «Leer todo»."
 
 #: C/howto_text_setup.page:154(p)
 msgid ""
@@ -4978,9 +4978,9 @@ msgid ""
 "are visible on-screen within the current window."
 msgstr ""
 "La característica «Buscar» de <app>Orca</app> es una búsqueda en el modo de "
-"<link xref=\"howto_flat_review\">Revisión Plana</link> diseñada para "
-"ayudarle a localizar rápidamente los objetos visibles en pantalla que están "
-"dentro de la ventana actual."
+"<link xref=\"howto_flat_review\">Revisión</link> diseñada para ayudarle a "
+"localizar rápidamente los objetos visibles en pantalla que están dentro de "
+"la ventana actual."
 
 #: C/howto_orca_find.page:23(title)
 msgid "Activating Orca Find"
@@ -5934,6 +5934,13 @@ msgid ""
 "you can navigate to the next or previous bookmark just like you can a <link "
 "xref=\"howto_structural_navigation\">Structural Navigation</link> object."
 msgstr ""
+"Una vez que ha definido un marcador, puede navegar a este más tarde y puede "
+"hacerlo sin importar si ha elegido o no guardar de manera permanente los "
+"marcadores asociados a su entorno actual. La navegación se puede basar en el "
+"número del marcador si desea saltar directamente a un elemento específico. O "
+"bien, puede navegar hacia el marcador siguiente o anterior del mismo modo "
+"que con un objeto de <link xref=\"howto_structural_navigation\">navegación "
+"estructural</link>"
 
 #: C/howto_bookmarks.page:39(p)
 msgid ""
@@ -5944,12 +5951,22 @@ msgid ""
 "otherwise, <link xref=\"howto_flat_review\">Flat Review</link> will be "
 "activated with the bookmark becoming the current review item."
 msgstr ""
+"Los objetos marcables pueden ser widgets dentro de una aplicación u objetos "
+"en la página web que está leyendo. El entorno en el cual se encuentra "
+"determina lo que sucede a medida que navega entre los marcadores: Si está en "
+"contenido web, el cursor se moverá al marcador de modo que pueda continuar "
+"leyendo; en caso contrario, la <link xref=\"howto_flat_review\">revisión</"
+"link> se activará con el marcador convirtiéndose en el actual elemento de "
+"revisión."
 
 #: C/howto_bookmarks.page:50(p)
 msgid ""
 "Finally, there is Where Am I information for bookmarks which lets you know "
 "where the specified bookmark is relative to your current location."
 msgstr ""
+"Finalmente, está la información ¿Dónde estoy? para marcadores, que le "
+"permite saber dónde el marcador especificado es relativo a su ubicación "
+"actual."
 
 #: C/howto_bookmarks.page:56(p)
 msgid ""
@@ -5985,6 +6002,13 @@ msgid ""
 "of what you can expect <app>Orca</app> to present can be found in the <link "
 "xref=\"howto_whereami\">Introduction to Where Am I</link>."
 msgstr ""
+"La característica ¿Dónde estoy? de <app>Orca</app> le muestra los detalles "
+"sensibles al contexto sobre su ubicación actual. Por ejemplo, en las tablas, "
+"¿Dónde estoy? le muestra los detalles sobre la celda de tabla en que se "
+"encuentra; sin embargo, en el texto, le mostrará la línea actual junto con "
+"cualquier texto que se seleccione. La lista completa de lo que puede esperar "
+"que <app>Orca</app> muestre se puede encontrar en la <link xref="
+"\"howto_whereami\">introducción a ¿Dónde estoy?</link>."
 
 #: C/commands_where_am_i.page:28(p)
 msgid "<app>Orca</app> provides the following Where Am I commands:"
@@ -6113,6 +6137,11 @@ msgid ""
 "xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
 "how to bind these commands to keystrokes."
 msgstr ""
+"Orca tiene tres comandos sin asociar para acceder a los <link xref="
+"\"howto_notifications\">mensajes de notificación</link> mostrados "
+"anteriormente. Consulte <link xref=\"howto_key_bindings\">modificar "
+"asociaciones de teclas</link> para obtener información sobre cómo asociar "
+"estos comandos a pulsaciones de teclas."
 
 #: C/commands_time_date_notifications.page:50(p)
 msgid "Present the last (most recent) notification message: (unbound)"
@@ -6146,30 +6175,41 @@ msgid ""
 "\"commands_structural_navigation#tables\">Structural Navigation commands</"
 "link>. In addition you can:"
 msgstr ""
+"El soporte de Orca para navegar por celdas de tabla forma parte de sus <link "
+"xref=\"commands_structural_navigation#tables\">comandos de navegación "
+"estructural</link>. Además, puede:"
 
 #: C/commands_table.page:27(p)
 msgid ""
 "Set dynamic row headers to current column: <keyseq><key>Orca Modifier</"
 "key><key>C</key></keyseq>"
 msgstr ""
+"Establecer las cabeceras dinámicas de las filas a la columna actual: "
+"<keyseq><key>Modificador de Orca</key><key>C</key></keyseq>"
 
 #: C/commands_table.page:33(p)
 msgid ""
 "Set dynamic column headers to current row: <keyseq><key>Orca Modifier</"
 "key><key>R</key></keyseq>"
 msgstr ""
+"Establecer las cabeceras dinámicas de las columnas a la fila actual: "
+"<keyseq><key>Modificador de Orca</key><key>R</key></keyseq>"
 
 #: C/commands_table.page:39(p)
 msgid ""
 "Clear dynamic row headers: <keyseq><key>Orca Modifier</key><key>C</key></"
 "keyseq> (double-clicked)"
 msgstr ""
+"Limpiar las cabeceras dinámicas de las filas: <keyseq><key>Modificador de "
+"Orca</key><key>C</key></keyseq> (doble pulsación)"
 
 #: C/commands_table.page:45(p)
 msgid ""
 "Clear dynamic column headers: <keyseq><key>Orca Modifier</key><key>R</key></"
 "keyseq> (double-clicked)"
 msgstr ""
+"Limpiar las cabeceras dinámicas de las columnas: <keyseq><key>Modificador de "
+"Orca</key><key>R</key></keyseq> (doble pulsación)"
 
 #: C/commands_table.page:51(p) C/commands_speech_settings.page:34(p)
 msgid ""
@@ -6197,7 +6237,7 @@ msgid ""
 "elements found in applications for which <app>Orca</app> provides structural "
 "navigation support."
 msgstr ""
-"Los comandos siguientes se pueden usar para navegar por cabeceras, enlaces y "
+"Los siguientes comandos se pueden usar para navegar por cabeceras, enlaces y "
 "otros elementos encontrados en aplicaciones para las que <app>Orca</app> "
 "proporciona soporte de navegación estructural."
 
@@ -6329,6 +6369,9 @@ msgid ""
 "key><key>Right</key></keyseq> and <keyseq><key>Orca Modifier</key><key>Left</"
 "key></keyseq>"
 msgstr ""
+"Objeto anterior y siguiente (salir del campo): <keyseq><key>Modificador de "
+"Orca</key><key>Derecha</key></keyseq> y <keyseq><key>Modificador de Orca</"
+"key><key>Izquierda</key></keyseq>"
 
 #: C/commands_structural_navigation.page:145(p)
 msgid ""
@@ -6494,6 +6537,11 @@ msgid ""
 "Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
 "for information on how to bind these commands to keystrokes."
 msgstr ""
+"Los siguientes comandos se pueden usar para personalizar la salida de voz de "
+"<app>Orca</app>. Notará que varios de estos comandos están «sin asociar». "
+"Consulte <link xref=\"howto_key_bindings\">modificar asociaciones de teclas</"
+"link> para obtener más información sobre cómo asociar estos comandos a "
+"pulsaciones de teclas."
 
 #: C/commands_speech_settings.page:29(p)
 msgid ""
@@ -6553,6 +6601,9 @@ msgid ""
 "<app>Orca</app> provides a number of commands which you can use to read a "
 "document."
 msgstr ""
+"Además de los comandos de navegación del cursor que forman parte de GNOME, "
+"<app>Orca</app> proporciona varios comandos que puede usar para leer un "
+"documento."
 
 #: C/commands_reading.page:28(p)
 msgid ""
@@ -6564,6 +6615,13 @@ msgid ""
 "information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
 "Layout</link> topic."
 msgstr ""
+"En las listas que se muestran a continuación, observará varias referencias a "
+"«TN». Todas las teclas «TN» se ubican en el teclado numérico. También notará "
+"que hay diferentes pulsaciones de teclas dependiendo de si está usando un "
+"ordenador de escritorio o un portátil, o para ser más preciso, si está "
+"usando la distribución de escritorio de <app>Orca</app> o su distribución de "
+"portátil. Para obtener más información, consulte el tema <link xref="
+"\"howto_keyboard_layout\">distribución del teclado</link>."
 
 #: C/commands_reading.page:39(title)
 msgid "Reading Your Current Location"
@@ -6574,6 +6632,8 @@ msgid ""
 "The following <app>Orca</app><link xref=\"commands_flat_review\">Flat Review "
 "Commands</link> can be used to read your current location:"
 msgstr ""
+"Los siguientes <link xref=\"commands_flat_review\">comandos de Revisión</"
+"link> de <app>Orca</app> se pueden usar para leer su ubicación actual."
 
 #: C/commands_reading.page:46(p)
 msgid "Read the current line:"
@@ -6661,7 +6721,7 @@ msgstr ""
 
 #: C/commands_reading.page:139(p)
 msgid "Speak the unicode value of current character:"
-msgstr ""
+msgstr "Leer el valor unicode del carácter actual:"
 
 #: C/commands_reading.page:142(p) C/commands_flat_review.page:146(p)
 msgid "Desktop: <keyseq><key>KP 2</key></keyseq> (triple-clicked)"
@@ -6684,6 +6744,8 @@ msgid ""
 "Orca's Say All command will cause <app>Orca</app> to speak the entire "
 "document beginning from your current location."
 msgstr ""
+"El comando Leer todo de Orca hará que <app>Orca</app> lea todo el documento "
+"comenzando desde su ubicación actual."
 
 #: C/commands_reading.page:164(p)
 msgid "Desktop: <key>KP Plus</key>"
@@ -6769,6 +6831,12 @@ msgid ""
 "Please see <link xref=\"howto_key_bindings\">Modifying Keybindings</link> "
 "for information on how to bind this command to a keystroke."
 msgstr ""
+"<app>Orca</app> proporciona varios comandos que se pueden usar para "
+"manipular el puntero del ratón y leer el contenido bajo este. Todos los "
+"comandos están «asociados» a pulsaciones de teclas con una excepción: "
+"alternar el modo de revisión del ratón. Consulte <link xref="
+"\"howto_key_bindings\">Modificar asociaciones de teclas</link> para obtener "
+"más información sobre cómo asociar este comando a una pulsación de tecla."
 
 #: C/commands_mouse.page:29(p)
 msgid ""
@@ -6780,6 +6848,13 @@ msgid ""
 "information, please see the <link xref=\"howto_keyboard_layout\">Keyboard "
 "Layout</link> topic."
 msgstr ""
+"En la lista que se muestra a continuación, observará varias referencias a "
+"«TN». Todas las teclas «TN» se ubican en el teclado numérico. También notará "
+"que hay diferentes pulsaciones de teclas dependiendo de si está usando un "
+"ordenador de escritorio o un portátil o, para ser más preciso, si está "
+"usando la distribución de escritorio de <app>Orca</app> o su distribución de "
+"portátil. Para obtener más información, consulte el tema <link xref="
+"\"howto_keyboard_layout\">distribución del teclado</link>."
 
 #: C/commands_mouse.page:41(p)
 msgid "Left-click on current item:"
@@ -6821,6 +6896,8 @@ msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>9</key></keyseq>"
 #: C/commands_mouse.page:62(p)
 msgid "Move focus into or away from the current mouse over (web only):"
 msgstr ""
+"Mueva el foco dentro o fuera de la cobertura actual del ratón (sólo páginas "
+"web):"
 
 #: C/commands_mouse.page:64(p)
 msgid ""
@@ -7181,7 +7258,7 @@ msgstr "Comandos adicionales"
 
 #: C/commands_flat_review.page:167(p)
 msgid "Toggle flat review (refreshes the flat review context):"
-msgstr ""
+msgstr "Conmutar la revisión (actualiza el contexto de revisión):"
 
 #: C/commands_flat_review.page:169(p)
 msgid ""
@@ -7211,7 +7288,7 @@ msgstr ""
 
 #: C/commands_find.page:6(title)
 msgid "2. Orca Find"
-msgstr ""
+msgstr "2. Búsqueda de Orca"
 
 #: C/commands_find.page:8(desc)
 msgid "Commands for searching window contents"
@@ -7219,7 +7296,7 @@ msgstr "Comandos para buscar contenido de la ventana"
 
 #: C/commands_find.page:19(title)
 msgid "Orca Find Commands"
-msgstr ""
+msgstr "Comandos de búsqueda de Orca"
 
 #: C/commands_find.page:20(p)
 msgid ""
@@ -7234,7 +7311,7 @@ msgstr "Abrir el diálogo «Buscar» de <app>Orca</app>:"
 
 #: C/commands_find.page:38(p)
 msgid "Move flat review to the next instance of a string:"
-msgstr ""
+msgstr "Mover la revisión a la siguiente instancia de una cadena:"
 
 #: C/commands_find.page:41(p)
 msgid "Desktop: <keyseq><key>Orca Modifier</key><key>KP Delete</key></keyseq>"
@@ -7248,7 +7325,7 @@ msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>]</key></keyseq>"
 
 #: C/commands_find.page:55(p)
 msgid "Move flat review to the previous instance of a string:"
-msgstr ""
+msgstr "Mover la revisión a la anterior instancia de una cadena:"
 
 #: C/commands_find.page:58(p)
 msgid ""
@@ -7479,23 +7556,23 @@ msgstr ""
 
 #: C/commands_braille.page:27(p)
 msgid "Toggle flat review mode: Freeze"
-msgstr ""
+msgstr "Conmutar el modo de revisión plano: desactivar"
 
 #: C/commands_braille.page:28(p)
 msgid "Review the word above: Line Up"
-msgstr ""
+msgstr "Revisar la palabra encina: línea arriba"
 
 #: C/commands_braille.page:29(p)
 msgid "Review the word below: Line Down"
-msgstr ""
+msgstr "Revisar la palabra debajo: línea abajo"
 
 #: C/commands_braille.page:30(p)
 msgid "Review bottom left: Bottom Right"
-msgstr ""
+msgstr "Revisar la parte inferior izquierda: abajo derecha"
 
 #: C/commands_braille.page:31(p)
 msgid "Review the home position: Top Left"
-msgstr ""
+msgstr "Revisar la posición inicial: arriba izquierda"
 
 #: C/commands_braille.page:32(p)
 msgid "Contracted braille: Six Dots"
@@ -7584,7 +7661,7 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011\n"
-"Jorge González <jorgegonz@svn.gnome.org>, 2010"
+"Jorge González <jorgegonz@svn.gnome.org>, 2011"
 
 #~ msgid "<gui>None</gui> (the default)"
 #~ msgstr "<gui>Ninguna</gui> (Predeterminado) "
