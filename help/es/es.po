@@ -7,15 +7,15 @@
 # 
 # 
 # Gonzalo <gonzalo.sanhueza.r@gmail.com>, 2011.
-# Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011., 2011.
+# Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-08-21 18:44+0000\n"
-"PO-Revision-Date: 2011-08-24 11:52+0200\n"
+"POT-Creation-Date: 2011-08-24 18:07+0000\n"
+"PO-Revision-Date: 2011-08-25 10:01+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -6911,7 +6911,7 @@ msgstr "Portátil: <keyseq><key>Modificador de Orca</key><key>0</key></keyseq>"
 
 #: C/commands_mouse.page:69(p)
 msgid "Enable/disable mouse review mode: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar el modo de revisión del ratón: (sin asociar)"
 
 #: C/commands_magnifier.page:6(title)
 msgid "3. Magnifier Settings"
@@ -6923,7 +6923,7 @@ msgstr "Configuración del magnificador"
 
 #: C/commands_magnifier.page:8(desc)
 msgid "Commands for customizing <app>Orca</app>'s zoomer"
-msgstr ""
+msgstr "Comandos para personalizar el ampliador de <app>Orca</app>"
 
 #: C/commands_magnifier.page:19(title)
 msgid "Magnifier Settings Commands"
@@ -6937,30 +6937,35 @@ msgid ""
 "Keybindings</link> for information on how to bind these commands to "
 "keystrokes."
 msgstr ""
+"Los siguientes comandos se pueden usar para personalizar el soporte de "
+"magnificación de <app>Orca</app>. Notará que todos estos comandos están «sin "
+"asociar». Consulte <link xref=\"howto_key_bindings\">modificar asociaciones "
+"de teclas</link> para obtener más información sobre cómo asociar estos "
+"comandos a pulsaciones de teclas."
 
 #: C/commands_magnifier.page:29(p)
 msgid "Enable/disable magnification: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar magnificación: (sin asociar)"
 
 #: C/commands_magnifier.page:34(p)
 msgid "Increase magnification level: (Unbound)"
-msgstr ""
+msgstr "Aumentar el nivel de magnificación: (sin asociar)"
 
 #: C/commands_magnifier.page:39(p)
 msgid "Decrease magnification: (Unbound)"
-msgstr ""
+msgstr "Disminuir magnificación: (sin asociar)"
 
 #: C/commands_magnifier.page:44(p)
 msgid "Enable/disable color enhancements: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar las mejoras del color: (sin asociar)"
 
 #: C/commands_magnifier.page:49(p)
 msgid "Enable/disable mouse enhancements: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar las mejoras del ratón: (sin asociar)"
 
 #: C/commands_magnifier.page:54(p)
 msgid "Cycle to the magnifier position: (Unbound)"
-msgstr ""
+msgstr "Rotar a la posición del magnificador: (sin asociar)"
 
 #: C/commands_live_regions.page:6(title)
 msgid "1. Live Region"
@@ -6968,57 +6973,69 @@ msgstr "1. Región activa"
 
 #: C/commands_live_regions.page:8(desc)
 msgid "Commands for accessing web live regions"
-msgstr ""
+msgstr "Comandos para acceder a las regiones activas de las páginas web"
 
 #: C/commands_live_regions.page:20(title)
 msgid "Live Region Commands"
-msgstr ""
+msgstr "Comandos de regiones activas"
 
 #: C/commands_live_regions.page:23(p)
 msgid ""
 "Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
 "key><key>Backslash</key></keyseq>"
 msgstr ""
+"Monitorizar regiones activas: <keyseq><key>Modificador de Orca</"
+"key><key>Mayús</key><key>Barra invertida</key></keyseq>"
 
 #: C/commands_live_regions.page:29(p)
 msgid "Advance live region politeness setting: <key>Backslash</key>"
 msgstr ""
+"Configuración avanzada del comportamiento de las regiones activas: "
+"<key>Barra invertida</key>"
 
 #: C/commands_live_regions.page:34(p)
 msgid ""
 "Set default politeness level to off: <keyseq><key>Shift</key><key>Backslash</"
 "key></keyseq>"
 msgstr ""
+"Desactive el nivel de comportamiento predeterminado: <keyseq><key>Mayús</"
+"key><key>Barra invertida</key></keyseq>"
 
 #: C/commands_live_regions.page:40(p)
 msgid ""
 "Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
 "<keyseq><key>Shift</key><key>D</key></keyseq>"
 msgstr ""
+"Vaya a la región activa siguiente/anterior: <keyseq><key>D</key></keyseq>/"
+"<keyseq><key>Mayús</key><key>D</key></keyseq>"
 
 #: C/commands_live_regions.page:46(p)
 msgid ""
 "Go to last live region which made an announcement: <keyseq><key>Y</key></"
 "keyseq>"
 msgstr ""
+"Vaya a la última región activa que realizó un anuncio: <keyseq><key>Y</key></"
+"keyseq>"
 
 #: C/commands_live_regions.page:52(p)
 msgid ""
 "Review live region announcements: <keyseq><key>Orca Modifier</key><key>F1</"
 "key></keyseq> through <key>F9</key>"
 msgstr ""
+"Revise los anuncios de la región activa: <keyseq><key>Modificador de Orca</"
+"key><key>F1</key></keyseq> pulsando <key>F9</key>"
 
 #: C/commands_flat_review.page:6(title)
 msgid "1. Flat Review"
-msgstr ""
+msgstr "1. Revisión"
 
 #: C/commands_flat_review.page:8(desc)
 msgid "Commands for spatially reviewing windows"
-msgstr ""
+msgstr "Comandos para revisar espacialmente las ventanas"
 
 #: C/commands_flat_review.page:19(title)
 msgid "Flat Review Commands"
-msgstr ""
+msgstr "Comandos de revisión"
 
 #: C/commands_flat_review.page:20(p)
 msgid ""
@@ -7027,6 +7044,10 @@ msgid ""
 "provide a means for reading the current line, word, and character when "
 "navigating in the text of a document."
 msgstr ""
+"Los comandos de <link xref=\"howto_flat_review\">revisión</link> de Orca "
+"están diseñados para revisar espacialmente los elementos mostrados en la "
+"pantalla. Además, suponen un medio para leer la línea, palabra y carácter "
+"actuales cuando se navega en el texto de un documento."
 
 #: C/commands_flat_review.page:27(title)
 msgid "Commands for Reviewing by Line"
@@ -7304,6 +7325,9 @@ msgid ""
 "you to search the <link xref=\"howto_flat_review\">Flat Review</link> "
 "context for elements located within the current window."
 msgstr ""
+"La <link xref=\"howto_orca_find\">característica Buscar</link> de <app>Orca</"
+"app> le permite buscar el contexto de <link xref=\"howto_flat_review"
+"\">revisión</link> para los elementos ubicados dentro de la ventana actual."
 
 #: C/commands_find.page:27(p)
 msgid "Open the <app>Orca</app> Find dialog:"
@@ -7432,6 +7456,10 @@ msgid ""
 "dialogs, quit <app>Orca</app>, and bypass <app>Orca</app> commands to avoid "
 "shortcut conflicts within the application being accessed."
 msgstr ""
+"Los siguientes comandos se pueden usar para ingresar a los diálogos de "
+"preferencias de <app>Orca</app>, salga de <app>Orca</app> e ignore los "
+"comandos de <app>Orca</app> para evitar conflictos de atajos mientras se "
+"accede a la aplicación."
 
 #: C/commands_controlling_orca.page:28(p)
 msgid ""
@@ -7507,24 +7535,35 @@ msgid ""
 "xref=\"howto_key_bindings\">Modifying Keybindings</link> for information on "
 "how to bind these commands to keystrokes."
 msgstr ""
+"Los siguientes comandos se pueden usar para acceder a información en los "
+"clientes de mensajería instantánea y charla interactiva en internet "
+"soportados por <app>Orca</app>. Notará que varios de estos comandos están "
+"«sin asociar». Consulte <link xref=\"howto_key_bindings\">Modificar "
+"asociaciones de teclas</link> para obtener más información sobre cómo "
+"asociar estos comandos a pulsaciones de teclas."
 
 #: C/commands_chat.page:30(p)
 msgid ""
 "Present previous chat room messages: <keyseq><key>Orca Modifier</"
 "key><key>F1</key></keyseq> through <key>F9</key>"
 msgstr ""
+"Mostar los mensajes de chat anteriores: <keyseq><key>Modificador de Orca</"
+"key><key>F1</key></keyseq> mediante <key>F9</key>"
 
 #: C/commands_chat.page:36(p)
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
+"Activar/desactivar anuncio del nombre de la sala con mensajes: (sin asociar)"
 
 #: C/commands_chat.page:41(p)
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
+"Activar/desactivar anuncio del estado del amigo que está escribiendo: (sin "
+"asociar)"
 
 #: C/commands_chat.page:44(p)
 msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr ""
+msgstr "Activar/desactivar los historiales de salas específicas: (sin asociar)"
 
 #: C/commands_braille.page:6(title)
 msgid "2. Braille"
@@ -7549,10 +7588,11 @@ msgstr ""
 #: C/commands_braille.page:25(p)
 msgid "Pan braille display to the left: Line Left"
 msgstr ""
+"Aplicar una panorámica a la línea braille a la izquierda: línea izquierda"
 
 #: C/commands_braille.page:26(p)
 msgid "Pan braille display to the right: Line Right"
-msgstr ""
+msgstr "Aplicar una panorámica a la línea braille a la derecha: línea derecha"
 
 #: C/commands_braille.page:27(p)
 msgid "Toggle flat review mode: Freeze"
