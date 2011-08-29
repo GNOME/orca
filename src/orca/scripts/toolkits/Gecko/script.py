@@ -2019,7 +2019,8 @@ class Script(default.Script):
                 candidate = candidate.parent
 
             if self.utilities.isSameObject(obj, candidate) \
-               and start <= offset < end:
+               and (start <= offset < end or candidate.getRole() == \
+               pyatspi.ROLE_ENTRY):
                 index = contents.index(content)
                 break
 
