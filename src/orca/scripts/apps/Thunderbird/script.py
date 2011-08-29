@@ -64,6 +64,10 @@ class Script(Gecko.Script):
         # Set the debug level for all the methods in this script.
         self.debugLevel = debug.LEVEL_FINEST
 
+        # http://bugzilla.mozilla.org/show_bug.cgi?id=659018
+        if app.toolkitVersion < "7.0":
+            app.setCacheMask(pyatspi.cache.ALL ^ pyatspi.cache.NAME)
+
         # Store the last autocompleted string for the address fields
         # so that we're not too 'chatty'.  See bug #533042.
         #
