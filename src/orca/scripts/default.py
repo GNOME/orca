@@ -3304,20 +3304,26 @@ class Script(script.Script):
         # Handle tooltip popups.
         #
         if event.source.getRole() == pyatspi.ROLE_TOOL_TIP:
-            obj = event.source
-            if event.type.startswith("object:state-changed:showing"):
-                if event.detail1 == 1:
-                    self.presentToolTip(obj)
-                elif orca_state.locusOfFocus:
-                    keyString, mods = self.utilities.lastKeyAndModifiers()
-                    if keyString == "F1":
-                        self.updateBraille(orca_state.locusOfFocus)
-                        utterances = self.speechGenerator.generateSpeech(
-                            orca_state.locusOfFocus)
-                        utterances.extend(self.tutorialGenerator.getTutorial(
-                            orca_state.locusOfFocus, False))
-                        speech.speak(utterances)
-            return
+            if not event.type.startswith("object:state-changed:showing"):
+                return
+
+            keyString, mods = self.utilities.lastKeyAndModifiers()
+            if keyString != "F1" \
+               and not  _settingsManager.getSetting('presentToolTips'):
+                return
+
+            if event.detail1 == 1:
+                self.presentToolTip(event.source)
+                return
+
+            if orca_state.locusOfFocus and keyString == "F1":
+                obj = orca_state.locusOfFocus
+                self.updateBraille(obj)
+                utterances = self.speechGenerator.generateSpeech(obj)
+                utterances.extend(
+                    self.tutorialGenerator.getTutorial(obj, False))
+                speech.speak(utterances)
+                return
 
         if event.source.getRole() in state_change_notifiers:
             notifiers = state_change_notifiers[event.source.getRole()]
