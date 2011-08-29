@@ -4579,6 +4579,12 @@ class Script(script.Script):
         Returns True if speech should be stopped; False otherwise.
         """
 
+        if not event.any_data:
+            return True
+
+        if event.source == orca_state.locusOfFocus == event.any_data.parent:
+            return False
+
         return True
 
     def getAtkNameForAttribute(self, attribName):
