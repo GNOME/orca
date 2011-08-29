@@ -31,29 +31,16 @@ import os
 
 tty = 7
 
-# Whether tool tips can be presented.
-#
-canPresentToolTips = False
-
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
     # for this is to allow "orca --text-setup" to work even if
     # the desktop is not running.
     #
-    import gtk.gdk
-    _display = gtk.gdk.display_get_default()
+    from gi.repository import Gdk
+    _display = Gdk.Display.get_default()
     _screen = _display.get_default_screen()
     _root_window = _screen.get_root_window()
-
-    # The bug that caused gnome-panel to crash is fixed in GTK 2.10.11.
-    minimum_gtk_version = (100000 * 2) + \
-                          (1000 * 10) + \
-                           11
-    current_gtk_version  = (100000 * gtk.gtk_version[0]) + \
-                           (1000 * gtk.gtk_version[1]) + \
-                            gtk.gtk_version[2]
-    canPresentToolTips = (current_gtk_version >= minimum_gtk_version)
 
     # We want to know what the tty is so we can send it to BrlAPI
     # if possible.
@@ -175,7 +162,7 @@ appGuiPreferencesModule  = "app_gui_prefs"
 # This module is expected to have the method, showQuitUI, which will
 # display the quit GUI.
 #
-quitModule = "orca_quit"
+quitModule = "orca_gui_quit"
 
 # The name of the module that holds the user interface for performing a
 # flat review find.
@@ -481,7 +468,7 @@ quitOrcaNoConfirmation  = False
 
 # Whether the user wants tooltips presented or not.
 #
-presentToolTips = False and canPresentToolTips
+presentToolTips = False
 
 # Keyboard layout options (see keyboardLayout).
 #

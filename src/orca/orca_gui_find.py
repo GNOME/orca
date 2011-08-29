@@ -27,8 +27,7 @@ __license__   = "LGPL"
 
 import os
 import sys
-import debug
-import gtk
+from gi.repository import Gtk
 import locale
 
 import find
@@ -79,22 +78,10 @@ class OrcaFindGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         findDialog = self.get_widget("findDialog")
-
-        # Set the current time on the Find GUI dialog so that it'll
-        # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
-        # It's surronded by a try/except block here so that if it's not found,
-        # then we can fail gracefully.
-        #
-        try:
-            findDialog.realize()
-            ts = orca_state.lastInputEventTimestamp
-            if ts == 0:
-                ts = gtk.get_current_event_time()
-            findDialog.window.set_user_time(ts)
-        except AttributeError:
-            debug.printException(debug.LEVEL_FINEST)
-
-        findDialog.show()
+        ts = orca_state.lastInputEventTimestamp
+        if ts == 0:
+            ts = Gtk.get_current_event_time()
+        findDialog.present_with_time(ts)
 
         # Populate the dialog box from the previous searchQuery, should
         # one exist.  Note:  This is necessary because we are destroying
@@ -261,7 +248,7 @@ def main():
 
     showFindUI()
 
-    gtk.main()
+    Gtk.main()
     sys.exit(0)
 
 if __name__ == "__main__":

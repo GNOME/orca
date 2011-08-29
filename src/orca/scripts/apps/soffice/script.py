@@ -37,7 +37,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gtk
+from gi.repository import Gtk
 import pyatspi
 
 import orca.debug as debug
@@ -294,102 +294,83 @@ class Script(default.Script):
         return keyBindings
 
     def getAppPreferencesGUI(self):
-        """Return a GtkVBox contain the application unique configuration
-        GUI items for the current application.
-        """
+        """Return a GtkGrid containing the application unique configuration
+        GUI items for the current application."""
 
-        vbox = gtk.VBox(False, 0)
-        vbox.set_border_width(12)
-        gtk.Widget.show(vbox)
+        grid = Gtk.Grid()
+        grid.set_border_width(12)
 
-        # Checkbox for "Speak spread sheet cell coordinates".
-        #
         # Translators: If checked, then Orca will speak the coordinates
         # of the current spread sheet cell. Coordinates are the row and
         # column position within the spread sheet (i.e. A1, B1, C2 ...)
         #
         label = _("Speak spread sheet cell coordinates")
-        self.speakSpreadsheetCoordinatesCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakSpreadsheetCoordinatesCheckButton)
-        gtk.Box.pack_start(vbox, self.speakSpreadsheetCoordinatesCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(\
-            self.speakSpreadsheetCoordinatesCheckButton,
-            script_settings.speakSpreadsheetCoordinates)
+        value = script_settings.speakSpreadsheetCoordinates
+        self.speakSpreadsheetCoordinatesCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakSpreadsheetCoordinatesCheckButton.set_active(value)
+        grid.attach(self.speakSpreadsheetCoordinatesCheckButton, 0, 0, 1, 1)
 
-        # Table Navigation frame.
+        tableFrame = Gtk.Frame()
+        grid.attach(tableFrame, 0, 1, 1, 1)
+
+        # Translators: this is the title of a panel containing options
+        # for specifying how to navigate tables in document content.
         #
-        tableFrame = gtk.Frame()
-        gtk.Widget.show(tableFrame)
-        gtk.Box.pack_start(vbox, tableFrame, False, False, 5)
+        label = Gtk.Label(label="<b>%s</b>" % _("Table Navigation"))
+        label.set_use_markup(True)
+        tableFrame.set_label_widget(label)
 
-        tableAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
-        gtk.Widget.show(tableAlignment)
-        gtk.Container.add(tableFrame, tableAlignment)
-        gtk.Alignment.set_padding(tableAlignment, 0, 0, 12, 0)
-
-        tableVBox = gtk.VBox(False, 0)
-        gtk.Widget.show(tableVBox)
-        gtk.Container.add(tableAlignment, tableVBox)
+        tableAlignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
+        tableAlignment.set_padding(0, 0, 12, 0)
+        tableFrame.add(tableAlignment)
+        tableGrid = Gtk.Grid()
+        tableAlignment.add(tableGrid)
 
         # Translators: this is an option to tell Orca whether or not it
         # should speak table cell coordinates in document content.
         #
         label = _("Speak _cell coordinates")
-        self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakCellCoordinatesCheckButton)
-        gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.speakCellCoordinatesCheckButton,
-            _settingsManager.getSetting('speakCellCoordinates'))
+        value = _settingsManager.getSetting('speakCellCoordinates')
+        self.speakCellCoordinatesCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakCellCoordinatesCheckButton.set_active(value)
+        tableGrid.attach(self.speakCellCoordinatesCheckButton, 0, 0, 1, 1)
 
         # Translators: this is an option to tell Orca whether or not it
         # should speak the span size of a table cell (e.g., how many
         # rows and columns a particular table cell spans in a table).
         #
         label = _("Speak _multiple cell spans")
-        self.speakCellSpanCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakCellSpanCheckButton)
-        gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.speakCellSpanCheckButton,
-            _settingsManager.getSetting('speakCellSpan'))
+        value = _settingsManager.getSetting('speakCellSpan')
+        self.speakCellSpanCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakCellSpanCheckButton.set_active(value)
+        tableGrid.attach(self.speakCellSpanCheckButton, 0, 1, 1, 1)
 
         # Translators: this is an option for whether or not to speak
         # the header of a table cell in document content.
         #
         label = _("Announce cell _header")
-        self.speakCellHeadersCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakCellHeadersCheckButton)
-        gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.speakCellHeadersCheckButton,
-            _settingsManager.getSetting('speakCellHeaders'))
-
+        value = _settingsManager.getSetting('speakCellHeaders')
+        self.speakCellHeadersCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakCellHeadersCheckButton.set_active(value)
+        tableGrid.attach(self.speakCellHeadersCheckButton, 0, 2, 1, 1)
+           
         # Translators: this is an option to allow users to skip over
         # empty/blank cells when navigating tables in document content.
         #
         label = _("Skip _blank cells")
-        self.skipBlankCellsCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.skipBlankCellsCheckButton)
-        gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-                self.skipBlankCellsCheckButton,
-                _settingsManager.getSetting('skipBlankCells'))
+        value = _settingsManager.getSetting('skipBlankCells')
+        self.skipBlankCellsCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.skipBlankCellsCheckButton.set_active(value)
+        tableGrid.attach(self.skipBlankCellsCheckButton, 0, 3, 1, 1)
 
-        # Translators: this is the title of a panel containing options
-        # for specifying how to navigate tables in document content.
-        #
-        tableLabel = gtk.Label("<b>%s</b>" % _("Table Navigation"))
-        gtk.Widget.show(tableLabel)
-        gtk.Frame.set_label_widget(tableFrame, tableLabel)
-        gtk.Label.set_use_markup(tableLabel, True)
+        grid.show_all()
 
-        return vbox
+        return grid
 
     def setAppPreferences(self, prefs):
         """Write out the application specific preferences lines and set the

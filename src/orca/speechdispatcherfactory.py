@@ -38,7 +38,7 @@ __author__    = "Tomas Cerha <cerha@brailcom.org>"
 __copyright__ = "Copyright (c) 2006-2008 Brailcom, o.p.s."
 __license__   = "LGPL"
 
-import gobject
+from gi.repository import GObject
 import re
 
 import chnames
@@ -350,9 +350,9 @@ class SpeechServer(speechserver.SpeechServer):
                         context.currentOffset = context.startOffset
                 elif t == speechserver.SayAllContext.COMPLETED:
                     context.currentOffset = context.endOffset
-                gobject.idle_add(orca_callback, context, t)
+                GObject.idle_add(orca_callback, context, t)
                 if t == speechserver.SayAllContext.COMPLETED:
-                    gobject.idle_add(self._say_all, iterator, orca_callback)
+                    GObject.idle_add(self._say_all, iterator, orca_callback)
             self._speak(context.utterance, acss, callback=callback,
                         event_types=self._CALLBACK_TYPE_MAP.keys())
         return False # to indicate, that we don't want to be called again.
@@ -426,7 +426,7 @@ class SpeechServer(speechserver.SpeechServer):
                 self._speak(utterance, acss)
 
     def sayAll(self, utteranceIterator, progressCallback):
-        gobject.idle_add(self._say_all, utteranceIterator, progressCallback)
+        GObject.idle_add(self._say_all, utteranceIterator, progressCallback)
 
     def speakCharacter(self, character, acss=None):
         self._apply_acss(acss)

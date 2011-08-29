@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2007-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gtk
+from gi.repository import Gtk
 import locale
 import os
 import sys
@@ -98,17 +98,17 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         # in gail or gtk+ (see bug #554002).  Instead, we'll just hide it.
         #
         # self.get_widget("notebook").remove_page(0)
-        self.get_widget("generalVBox").hide()
+        self.get_widget("generalGrid").hide()
 
         self.get_widget("speechSystemsLabel").set_sensitive(False)
         self.get_widget("speechSystems").set_sensitive(False)
         self.get_widget("speechServersLabel").set_sensitive(False)
         self.get_widget("speechServers").set_sensitive(False)
 
-        vbox = self.appScript.getAppPreferencesGUI()
-        if vbox:
-            label = gtk.Label(orca_state.activeScript.app.name)
-            self.get_widget("notebook").append_page(vbox, label)
+        appPage = self.appScript.getAppPreferencesGUI()
+        if appPage:
+            label = Gtk.Label(label=orca_state.activeScript.app.name)
+            self.get_widget("notebook").append_page(appPage, label)
 
     def _createPronunciationTreeView(self, pronunciations=None):
         """Create the pronunciation dictionary tree view for this specific 
@@ -366,7 +366,7 @@ def main():
 
     showPreferencesUI()
 
-    gtk.main()
+    Gtk.main()
     sys.exit(0)
 
 if __name__ == "__main__":

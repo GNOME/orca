@@ -1,3 +1,4 @@
+ABOUT-NLS
 INSTALL
 Makefile
 Makefile.in
@@ -8,6 +9,7 @@ config.h
 config.h.in
 config.guess
 config.log
+config.rpath
 config.status
 config.sub
 configure

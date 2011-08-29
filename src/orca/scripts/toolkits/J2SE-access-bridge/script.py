@@ -91,16 +91,14 @@ class Script(default.Script):
         if not keyboardEvent.keyval_name:
             return
 
-        import gtk.gdk as gdk
+        from gi.repository import Gdk
 
-        # Standardize the hw_code from a Java-unique one to a gdk one.
-        #
-        keymap = gdk.keymap_get_default()
-        keyval = gdk.keyval_from_name(keyboardEvent.keyval_name)
-        entries = keymap.get_entries_for_keyval(keyval)
+        keymap = Gdk.Keymap.get_default()
+        keyval = Gdk.keyval_from_name(keyboardEvent.keyval_name)
+        success, entries = keymap.get_entries_for_keyval(keyval)
         for entry in entries:
-            if entry[1] == 0:  # group = 0
-                keyboardEvent.hw_code = entry[0]
+            if entry.group == 0:
+                keyboardEvent.hw_code = entry.keycode
                 break
 
         # Put the event_string back to what it was prior to the Java
@@ -110,7 +108,7 @@ class Script(default.Script):
         #
         if keyboardEvent.event_string == keyboardEvent.keyval_name \
            and len(keyboardEvent.event_string) > 1:
-            keyval = gdk.keyval_from_name(keyboardEvent.keyval_name)
+            keyval = Gdk.keyval_from_name(keyboardEvent.keyval_name)
             if 0 < keyval < 256:
                 keyboardEvent.event_string = unichr(keyval).encode("UTF-8")
 

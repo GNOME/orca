@@ -85,7 +85,14 @@ class ScriptManager:
     def getModuleName(self, app):
         """Returns the module name of the script to use for application app."""
 
-        if not (app and app.name):
+        try:
+            appAndNameExist = app != None and app.name != ''
+        except (LookupError, RuntimeError):
+            appAndNameExist = False
+            debug.println(debug.LEVEL_SEVERE,
+                          "getModuleName: %s no longer exists" % app)
+
+        if not appAndNameExist:
             return None
 
         # Many python apps have an accessible name which ends in '.py'.

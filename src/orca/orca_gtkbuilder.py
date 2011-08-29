@@ -26,7 +26,7 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import gettext
-import gtk
+from gi.repository import Gtk
 
 from orca_i18n import _
 
@@ -44,7 +44,7 @@ class GtkBuilderWrapper:
 
     def __init__(self, fileName, windowName):
         # Load GtkBuilder file.
-        self.builder = gtk.Builder()
+        self.builder = Gtk.Builder()
         self.builder.set_translation_domain(gettext.textdomain())
         self.builder.add_from_file(fileName)
         self.gtkWindow = self.builder.get_object(windowName)
@@ -68,7 +68,7 @@ class GtkBuilderWrapper:
         default for all application windows.
         """
 
-        icon_theme = gtk.icon_theme_get_default()
+        icon_theme = Gtk.IconTheme.get_default()
         try:
             icon16 = icon_theme.load_icon("orca", 16, 0)
             icon22 = icon_theme.load_icon("orca", 22, 0)
@@ -78,11 +78,11 @@ class GtkBuilderWrapper:
         except:
             return
         else:
-            gtk.window_set_default_icon_list(icon16,
+            Gtk.Window.set_default_icon_list((icon16,
                                              icon22,
                                              icon24,
                                              icon32,
-                                             icon48)
+                                             icon48))
 
     def get_widget(self, attribute):
         """Return the requested widget. This routine has been introduced
@@ -125,7 +125,7 @@ class GtkBuilderWrapper:
             useMarkup = False
             useUnderline = False
 
-        if isinstance(obj, gtk.Frame):
+        if isinstance(obj, Gtk.Frame):
             # For some reason, if we localize the frame, which has a label
             # but does not (itself) support use_markup, we get unmarked
             # labels which are not bold but which do have <b></b>. If we

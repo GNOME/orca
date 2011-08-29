@@ -2553,8 +2553,8 @@ class Utilities:
     def absoluteMouseCoordinates():
         """Gets the absolute position of the mouse pointer."""
 
-        import gtk
-        rootWindow = gtk.Window().get_screen().get_root_window()
+        from gi.repository import Gtk
+        rootWindow = Gtk.Window().get_screen().get_root_window()
         x, y, modifiers = rootWindow.get_pointer()
 
         return x, y

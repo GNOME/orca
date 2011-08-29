@@ -111,10 +111,9 @@ class Script(Gecko.Script):
         return keyBindings
 
     def getAppPreferencesGUI(self):
-        """Return a GtkVBox contain the application unique configuration
-        GUI items for the current application. The chat-related options
-        get created by the chat module.
-        """
+        """Return a GtkGrid containing the application unique configuration
+        GUI items for the current application. The chat-related options get
+        created by the chat module."""
 
         return self.chat.getAppPreferencesGUI()
 

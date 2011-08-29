@@ -93,7 +93,7 @@ cleanup()
         KILLARG="-TERM"
     fi
     USERID=$(id -u)
-    PATTERN="orca[.]orca|OAFIID[:]GNOME_Magnifier|festival [-][-]server"
+    PATTERN="orca[.]orca|festival [-][-]server"
 
     pkill $KILLARG -U $USERID -f "$PATTERN"
 }

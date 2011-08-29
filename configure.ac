@@ -4,6 +4,10 @@ m4_define([orca_micro_version], [90pre])
 m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
+m4_define(gtk_required_version, 3.1.13)
+m4_define(pygobject_required_version, 2.90.3)
+m4_define(atspi_required_version, 2.1.5)
+
 AC_INIT([orca],
         [orca_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=orca],
@@ -26,33 +30,22 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package])
 
 GNOME_DOC_INIT([0.17.3])
 
+PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= gtk_required_version])
+PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0 >= pygobject_required_version])
+PKG_CHECK_MODULES([ATSPI2], [atspi-2 >= atspi_required_version])
+
 dnl Needed programs
 AC_PROG_INSTALL
-
-# WDW - I give up. No matter what I do, I seem to find a package that
-# is specified somewhere, but the packaging is not honored by various
-# distributions.
-#
-#dnl Check for various modules. NOTE: On OpenSolaris, you may
-#dnl need to set PKG_CONFIG_PATH=/usr/lib/pkgconfig in order
-#dnl for these to be found.
-#PKG_CHECK_MODULES(orca, \
-#	dbus-python >= 0.83.0 \
-#	gnome-python-desktop-2.0 >= 2.24.0 \
-#	libspi-1.0 >= 1.24.0 \
-#)
 
 dnl Check for python and python modules needed by Orca
 dnl TODO: check for incompatibilities between Orca and liblouis
 dnl per http://live.gnome.org/Orca/Braille
 AM_PATH_PYTHON(2.4)
-AM_CHECK_PYGTK(2.0,,[AC_MSG_ERROR(Could not find pygtk 2.0)])
-AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find python module: gobject)])
+#AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find python module: gobject)])
 # Don't require the DISPLAY to be set - the gtk checking will fail 
 # if DISPLAY is not set, and we don't like that.
-#AM_CHECK_PYMOD(gtk,gdk,,[AC_MSG_ERROR(Could not find python module: gtk.gdk)])
+
 AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find python module: dbus)])
-AM_CHECK_PYMOD(pyatspi,,,[AC_MSG_ERROR(Could not find python module: pyatspi)])
 AM_CHECK_PYMOD(cairo,,,[AC_MSG_ERROR(Could not find python module: cairo)])
 AM_CHECK_PYMOD(pango,,,[AC_MSG_ERROR(Could not find python module: pango)])
 AM_CHECK_PYMOD(json,,,[AC_MSG_ERROR(Could not find python module: json)])
@@ -67,7 +60,7 @@ if test x$louis_available = "xyes"; then
 fi
 AC_SUBST(LOUIS_TABLE_DIR)
 
-dnl Check for the OS. On *Solaris systems the PATH must be setted
+dnl Check for the OS. On *Solaris systems the PATH must be set
 PLATFORM=`uname -a`
 case "${PLATFORM}" in
     *SunOS*)

@@ -25,7 +25,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import gtk
 import pyatspi
 
 import orca.orca as orca
@@ -101,25 +100,23 @@ class Script(Gecko.Script):
         return Utilities(self)
 
     def getAppPreferencesGUI(self):
-        """Return a GtkVBox contain the application unique configuration
-        GUI items for the current application.
-        """
+        """Return a GtkGrid containing the application unique configuration
+        GUI items for the current application."""
 
-        vbox = Gecko.Script.getAppPreferencesGUI(self)
+        grid = Gecko.Script.getAppPreferencesGUI(self)
 
         # Reapply "say all on load" using the Thunderbird specific setting.
         #
-        gtk.ToggleButton.set_active(self.sayAllOnLoadCheckButton,
-                                    script_settings.sayAllOnLoad)
+        self.sayAllOnLoadCheckButton.set_active(script_settings.sayAllOnLoad)
 
         # We need to maintain a separate setting for grabFocusOnAncestor
         # because the version of Gecko used by the Thunderbird might be
         # different from that used by Firefox. See bug 608149.
         #
-        gtk.ToggleButton.set_active(self.grabFocusOnAncestorCheckButton,
-                                    script_settings.grabFocusOnAncestor)
+        self.grabFocusOnAncestorCheckButton.set_active(
+            script_settings.grabFocusOnAncestor)
 
-        return vbox
+        return grid
 
     def setAppPreferences(self, prefs):
         """Write out the application specific preferences lines and set the

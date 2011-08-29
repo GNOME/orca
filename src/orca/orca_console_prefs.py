@@ -37,8 +37,8 @@ import time
 
 desktopRunning = False
 try:
-    import gtk
-    if gtk.gdk.display_get_default():
+    from gi.repository import Gdk
+    if Gdk.Display.get_default():
         desktopRunning = True
 except:
     pass
@@ -607,9 +607,9 @@ def showPreferencesUI(commandLineSettings):
                                     speechVoiceChoice)
                         time.sleep(2)
 
-                        import gobject
-                        gobject.threads_init()
-                        gobject.idle_add(logoutUser)
+                        from gi.repository import GObject
+                        GObject.threads_init()
+                        GObject.idle_add(logoutUser)
                     break
                 except:
                     stop = False

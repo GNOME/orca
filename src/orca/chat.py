@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2010 Joanmarie Diggs.
+# Copyright 2010-2011 The Orca Team
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +22,7 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
+__copyright__ = "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
 
 import pyatspi
@@ -398,37 +398,31 @@ class Chat:
         return keyBindings
 
     def getAppPreferencesGUI(self):
-        """Return a GtkVBox contain the application unique configuration
-        GUI items for the current application.
-        """
+        """Return a GtkGrid containing the application unique configuration
+        GUI items for the current application. """
 
-        import gtk
+        from gi.repository import Gtk
 
-        vbox = gtk.VBox(False, 0)
-        vbox.set_border_width(12)
-        gtk.Widget.show(vbox)
+        grid = Gtk.Grid()
+        grid.set_border_width(12)
 
         # Translators: If this checkbox is checked, then Orca will speak
         # the name of the chat room.
         #
         label = _("_Speak Chat Room name")
-        self.speakNameCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakNameCheckButton)
-        gtk.Box.pack_start(vbox, self.speakNameCheckButton, False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.speakNameCheckButton,
-            _settingsManager.getSetting('chatSpeakRoomName'))
+        value = _settingsManager.getSetting('chatSpeakRoomName')
+        self.speakNameCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakNameCheckButton.set_active(value)
+        grid.attach(self.speakNameCheckButton, 0, 0, 1, 1)
 
         # Translators: If this checkbox is checked, then Orca will tell
         # you when one of your buddies is typing a message.
         #
         label = _("Announce when your _buddies are typing")
-        self.buddyTypingCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.buddyTypingCheckButton)
-        gtk.Box.pack_start(vbox, self.buddyTypingCheckButton, False, False, 0)
-        gtk.ToggleButton.set_active(
-                self.buddyTypingCheckButton,
-                _settingsManager.getSetting('chatAnnounceBuddyTyping'))
+        value = _settingsManager.getSetting('chatAnnounceBuddyTyping')
+        self.buddyTypingCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
+        self.buddyTypingCheckButton.set_active(value)
+        grid.attach(self.buddyTypingCheckButton, 0, 1, 1, 1)
 
         # Translators: If this checkbox is checked, then Orca will provide
         # the user with chat room specific message histories rather than just
@@ -436,81 +430,65 @@ class Chat:
         # chat rooms that they are currently in.
         #
         label = _("Provide chat room specific _message histories")
-        self.chatRoomHistoriesCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.chatRoomHistoriesCheckButton)
-        gtk.Box.pack_start(vbox, self.chatRoomHistoriesCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.chatRoomHistoriesCheckButton,
-            _settingsManager.getSetting('chatRoomHistories'))
+        value = _settingsManager.getSetting('chatRoomHistories')
+        self.chatRoomHistoriesCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.chatRoomHistoriesCheckButton.set_active(value)
+        grid.attach(self.chatRoomHistoriesCheckButton, 0, 2, 1, 1)
 
-        # "Speak Messages" frame.
+        messagesFrame = Gtk.Frame()
+        grid.attach(messagesFrame, 0, 3, 1, 1)
+
+        # Translators: this is the title of a panel holding options for
+        # how messages in this application's chat rooms should be spoken.
         #
-        messagesFrame = gtk.Frame()
-        gtk.Widget.show(messagesFrame)
-        gtk.Box.pack_start(vbox, messagesFrame, False, False, 5)
+        label = Gtk.Label("<b>%s</b>" % _("Speak messages from"))
+        label.set_use_markup(True)
+        messagesFrame.set_label_widget(label)
 
-        messagesAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
-        gtk.Widget.show(messagesAlignment)
-        gtk.Container.add(messagesFrame, messagesAlignment)
-        gtk.Alignment.set_padding(messagesAlignment, 0, 0, 12, 0)
+        messagesAlignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
+        messagesAlignment.set_padding(0, 0, 12, 0)
+        messagesFrame.add(messagesAlignment)
+        messagesGrid = Gtk.Grid()
+        messagesAlignment.add(messagesGrid)
 
-        messagesVBox = gtk.VBox(False, 0)
-        gtk.Widget.show(messagesVBox)
-        gtk.Container.add(messagesAlignment, messagesVBox)
-
-        verbosity = _settingsManager.getSetting('chatMessageVerbosity')
+        value = _settingsManager.getSetting('chatMessageVerbosity')
 
         # Translators: Orca will speak all new chat messages as they appear
         # irrespective of whether the chat application currently has focus.
         # This is the default behaviour.
         #
-        self.allMessagesRadioButton = gtk.RadioButton(None, _("All cha_nnels"))
-        gtk.Widget.show(self.allMessagesRadioButton)
-        gtk.Box.pack_start(messagesVBox, self.allMessagesRadioButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.allMessagesRadioButton,
-            verbosity == settings.CHAT_SPEAK_ALL)
+        label = _("All cha_nnels")
+        rb1 = Gtk.RadioButton.new_with_mnemonic(None, label)
+        rb1.set_active(value == settings.CHAT_SPEAK_ALL)
+        self.allMessagesRadioButton = rb1
+        messagesGrid.attach(self.allMessagesRadioButton, 0, 0, 1, 1)
 
         # Translators: Orca will speak only new chat messages for the channel
         # that currently has focus, irrespective of whether the chat
         # application has focus.
         #
-        self.focusedChannelRadioButton = gtk.RadioButton(
-            self.allMessagesRadioButton,
-            _("A channel only if its _window is active"))
-        gtk.Widget.show(self.focusedChannelRadioButton)
-        gtk.Box.pack_start(messagesVBox, self.focusedChannelRadioButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.focusedChannelRadioButton,
-            verbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL)
+        label = _("A channel only if its _window is active")
+        rb2 = Gtk.RadioButton.new_with_mnemonic(None, label)
+        rb2.join_group(rb1)
+        rb2.set_active(value == settings.CHAT_SPEAK_FOCUSED_CHANNEL)
+        self.focusedChannelRadioButton = rb2
+        messagesGrid.attach(self.focusedChannelRadioButton, 0, 1, 1, 1)
 
         # Translators: Orca will speak new chat messages for all channels
         # only when the chat application has focus.
         #
-        self.allChannelsRadioButton = gtk.RadioButton(
-            self.allMessagesRadioButton,
-            _("All channels when an_y %s window is active") \
-              % self._script.app.name)
-        gtk.Widget.show(self.allChannelsRadioButton)
-        gtk.Box.pack_start(messagesVBox, self.allChannelsRadioButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.allChannelsRadioButton,
-            verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED)
+        label = _("All channels when an_y %s window is active") % \
+            self._script.app.name
+        rb3 = Gtk.RadioButton.new_with_mnemonic(None, label)
+        rb3.join_group(rb1)
+        rb3.set_active(value == settings.CHAT_SPEAK_ALL_IF_FOCUSED)
+        self.allChannelsRadioButton = rb3
+        messagesGrid.attach(self.allChannelsRadioButton, 0, 2, 1, 1)
 
-        # Translators: this is the title of a panel holding options for
-        # how messages in this application's chat rooms should be spoken.
-        #
-        messagesLabel = gtk.Label("<b>%s</b>" % _("Speak messages from"))
-        gtk.Widget.show(messagesLabel)
-        gtk.Frame.set_label_widget(messagesFrame, messagesLabel)
-        messagesFrame.set_shadow_type(gtk.SHADOW_NONE)
-        gtk.Label.set_use_markup(messagesLabel, True)
+        grid.show_all()
 
-        return vbox
+        return grid
 
     def setAppPreferences(self, prefs):
         """Write out the application specific preferences lines and set the

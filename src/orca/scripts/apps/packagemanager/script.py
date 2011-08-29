@@ -27,7 +27,7 @@ __copyright__ = "Copyright (c) 2009-2010 Sun Microsystems Inc."  \
                 "Copyright (c) 2010 Joanmarie Diggs"
 __license__   = "LGPL"
 
-import gtk
+from gi.repository import Gtk
 import pyatspi
 
 import orca.scripts.default as default
@@ -98,13 +98,11 @@ class Script(default.Script):
         return Utilities(self)
 
     def getAppPreferencesGUI(self):
-        """Return a GtkVBox contain the application unique configuration
-        GUI items for the current application.
-        """
+        """Return a GtkGrid containing the application unique configuration
+        GUI items for the current application."""
 
-        vbox = gtk.VBox(False, 0)
-        vbox.set_border_width(12)
-        gtk.Widget.show(vbox)
+        grid = Gtk.Grid()
+        grid.set_border_width(12)
 
         # Translators: The Package Manager application notifies the
         # user of minor errors by displaying an icon in the status
@@ -114,15 +112,15 @@ class Script(default.Script):
         # the notification icon has appeared.
         #
         label = _("Notify me when errors have been logged.")
-        self.presentLoggedErrorsCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.presentLoggedErrorsCheckButton)
-        gtk.Box.pack_start(vbox, self.presentLoggedErrorsCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.presentLoggedErrorsCheckButton,
-            script_settings.presentLoggedErrors)
+        value = script_settings.presentLoggedErrors
+        self.presentLoggedErrorsCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.presentLoggedErrorsCheckButton.set_active(value)
+        grid.attach(self.presentLoggedErrorsCheckButton, 0, 0, 1, 1)
 
-        return vbox
+        grid.show_all()
+
+        return grid
 
     def setAppPreferences(self, prefs):
         """Write out the application specific preferences lines and set the

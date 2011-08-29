@@ -28,15 +28,15 @@ __license__   = "LGPL"
 import debug
 
 try:
-    import wnck
+    from gi.repository import Wnck
     _mouseReviewCapable = True
 except:
     debug.println(debug.LEVEL_WARNING, \
                   "Python module wnck not found, mouse review not available.")
     _mouseReviewCapable = False
 
-import gtk
-import gobject
+from gi.repository import Gdk
+from gi.repository import GObject
 
 import orca
 import pyatspi
@@ -50,8 +50,7 @@ class BoundingBox:
     """A bounding box, currently it is used to test if a given point is
     inside the bounds of the box.
     """
-    # TODO: Find if we pygtk or something already has this,
-    # if not, maybe this needs to be in a different Orca file.
+
     def __init__(self, x, y, width, height):
         """Initialize a bounding box.
 
@@ -149,7 +148,7 @@ class MouseReviewer:
             return
 
         # Need to do this and allow the main loop to cycle once to get any info
-        wnck_screen = wnck.screen_get_default()
+        wnck_screen = Wnck.Screen.get_default()
         self.active = False
         self._currentMouseOver = _ItemContext()
         self._oldMouseOver = _ItemContext()
@@ -183,7 +182,7 @@ class MouseReviewer:
         - event: The event we recieved.
         """
         if settings.mouseDwellDelay:
-            gobject.timeout_add(settings.mouseDwellDelay,
+            GObject.timeout_add(settings.mouseDwellDelay,
                                 self._mouseDwellTimeout,
                                 event.detail1,
                                 event.detail2)
@@ -195,10 +194,10 @@ class MouseReviewer:
         component.
 
         Arguments:
-        - prev_x: Previuos X coordinate of mouse pointer.
-        - prev_y: Previuos Y coordinate of mouse pointer.
+        - prev_x: Previous X coordinate of mouse pointer.
+        - prev_y: Previous Y coordinate of mouse pointer.
         """
-        display = gtk.gdk.Display(gtk.gdk.get_display())
+        display = Gdk.Display.get_default()
         screen, x, y, flags =  display.get_pointer()
         if abs(prev_x - x) <= settings.mouseDwellMaxDrift \
            and abs(prev_y - y) <= settings.mouseDwellMaxDrift \
@@ -281,7 +280,7 @@ class MouseReviewer:
         Returns position of given window in window-managers stack.
         """
         # This is neccesary because z-order is still broken in AT-SPI.
-        wnck_screen = wnck.screen_get_default()
+        wnck_screen = Wnck.Screen.get_default()
         window_order = \
             [w.get_name() for w in wnck_screen.get_windows_stacked()]
         return window_order.index(frame_name)
@@ -332,7 +331,7 @@ class MouseReviewer:
         return top_window[0]
 
 # Initialize a singleton reviewer.
-if gtk.gdk.display_get_default():
+if Gdk.Display.get_default():
     mouse_reviewer = MouseReviewer()
 else:
     raise RuntimeError('Cannot initialize mouse review, no display')

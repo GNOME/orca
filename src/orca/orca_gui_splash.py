@@ -28,38 +28,39 @@ __license__   = "LGPL"
 import os
 import sys
 import debug
-import gtk
-import gobject
+from gi.repository import Gdk
+from gi.repository import Gtk
+from gi.repository import GObject
 import locale
 
-import orca_gtkbuilder
 import orca_state
 import orca_platform
-
 from orca_i18n import _
 
 OS = None
 
-class OrcaSplashGUI(orca_gtkbuilder.GtkBuilderWrapper):
+class OrcaSplashGUI(Gtk.Window):
 
-    def __init__(self, fileName, windowName):
-        """
-        Initialize the Orca splash GUI.
+    def __init__(self):
+        """Initialize the Orca splash GUI."""
 
-        Arguments:
-        - fileName: name of the GtkBuilder file.
-        - windowName: name of the component to get from the GtkBuilder file.
-        """
-
-        orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
+        Gtk.Window.__init__(self)
+        self.activeScript = None
+        self.set_title(_('Orca'))
+        self.set_skip_taskbar_hint(True)
+        self.set_skip_pager_hint(True)
+        self.set_modal(True)
+        self.set_decorated(False)
+        self.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
+        self.set_position(Gtk.WindowPosition.CENTER)
 
     def init(self):
-        """ Initialize the splash screen dialog. """
+        """Initialize the splash screen."""
 
         self.activeScript = orca_state.activeScript
 
     def showGUI(self):
-        """ Show the splash screen dialog. """
+        """Show the splash screen dialog."""
 
         imageFile = os.path.join(orca_platform.prefix,
                     orca_platform.datadirname,
@@ -67,48 +68,39 @@ class OrcaSplashGUI(orca_gtkbuilder.GtkBuilderWrapper):
                     "gfx",
                     "orca-splash.png")
 
-        image = gtk.Image()
+        image = Gtk.Image()
         image.set_from_file(imageFile)
 
-        splashScreen = self.get_widget("splashWindow")
-        box = self.get_widget("splash_vbox")
-        box.pack_start(image, True, True)
+        self.add(image)
 
         try:
-            splashScreen.realize()
+            self.realize()
         except:
             debug.printException(debug.LEVEL_FINEST)
 
-        splashScreen.set_transient_for(None)
-        box.grab_focus()
-        splashScreen.show_all()
+        self.set_transient_for(None)
+        self.grab_focus()
+        self.show_all()
 
-        gobject.timeout_add(3000, splashScreen.hide)
+        GObject.timeout_add(3000, self.hideGUI)
 
-        while gtk.events_pending():
-            gtk.main_iteration()
+        while Gtk.events_pending():
+            Gtk.main_iteration()
 
-        return splashScreen
+        return self
 
     def hideGUI(self):
         """Hide the Orca splash screen GUI. This assumes that the GUI has
         already been created.
         """
 
-        self.get_widget("splashWindow").hide()
-
+        self.hide()
 
 def showSplashUI():
     global OS
 
     if not OS:
-        uiFile = os.path.join(orca_platform.prefix,
-                orca_platform.datadirname,
-                orca_platform.package,
-                "ui",
-                "orca-splash.ui")
-
-        OS = OrcaSplashGUI(uiFile, "splashScreen")
+        OS = OrcaSplashGUI()
         OS.init()
 
     OS.showGUI()
@@ -117,13 +109,12 @@ def hideSplashUI():
     if OS:
         OS.hideGUI()
 
-
 def main():
     locale.setlocale(locale.LC_ALL, '')
 
     showSplashUI()
 
-    gtk.main()
+    Gtk.main()
     sys.exit(0)
 
 if __name__ == "__main__":

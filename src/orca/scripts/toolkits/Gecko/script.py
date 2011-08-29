@@ -41,8 +41,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Orca Team."
 __license__   = "LGPL"
 
-import atk
-import gtk
+from gi.repository import Atk
+from gi.repository import Gtk
 import pyatspi
 import re
 import time
@@ -660,28 +660,28 @@ class Script(default.Script):
         return keyBindings
 
     def getAppPreferencesGUI(self):
-        """Return a GtkVBox contain the application unique configuration
-        GUI items for the current application.
-        """
+        """Return a GtkGrid containing the application unique configuration
+        GUI items for the current application."""
 
-        vbox = gtk.VBox(False, 0)
-        vbox.set_border_width(12)
-        gtk.Widget.show(vbox)
+        grid = Gtk.Grid()
+        grid.set_border_width(12)
 
-        # General ("Page") Navigation frame.
+        generalFrame = Gtk.Frame()
+        grid.attach(generalFrame, 0, 0, 1, 1)
+
+        # Translators: this is the title of a panel holding options for
+        # how to navigate HTML content (e.g., Orca caret navigation,
+        # positioning of caret, etc.).
         #
-        generalFrame = gtk.Frame()
-        gtk.Widget.show(generalFrame)
-        gtk.Box.pack_start(vbox, generalFrame, False, False, 5)
+        label = Gtk.Label(label="<b>%s</b>" % _("Page Navigation"))
+        label.set_use_markup(True)
+        generalFrame.set_label_widget(label)
 
-        generalAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
-        gtk.Widget.show(generalAlignment)
-        gtk.Container.add(generalFrame, generalAlignment)
-        gtk.Alignment.set_padding(generalAlignment, 0, 0, 12, 0)
-
-        generalVBox = gtk.VBox(False, 0)
-        gtk.Widget.show(generalVBox)
-        gtk.Container.add(generalAlignment, generalVBox)
+        generalAlignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
+        generalAlignment.set_padding(0, 0, 12, 0)
+        generalFrame.add(generalAlignment)
+        generalGrid = Gtk.Grid()
+        generalAlignment.add(generalGrid)
 
         # Translators: Gecko native caret navigation is where
         # Firefox itself controls how the arrow keys move the caret
@@ -691,25 +691,22 @@ class Script(default.Script):
         # Orca mode.
         #
         label = _("Use _Orca Caret Navigation")
-        self.controlCaretNavigationCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.controlCaretNavigationCheckButton)
-        gtk.Box.pack_start(generalVBox,
-                           self.controlCaretNavigationCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(self.controlCaretNavigationCheckButton,
-                                    script_settings.controlCaretNavigation)
+        value = script_settings.controlCaretNavigation
+        self.controlCaretNavigationCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.controlCaretNavigationCheckButton.set_active(value) 
+        generalGrid.attach(self.controlCaretNavigationCheckButton, 0, 0, 1, 1)
 
         # Translators: Orca provides keystrokes to navigate HTML content
         # in a structural manner: go to previous/next header, list item,
         # table, etc.
         #
         label = _("Use Orca _Structural Navigation")
-        self.structuralNavigationCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.structuralNavigationCheckButton)
-        gtk.Box.pack_start(generalVBox, self.structuralNavigationCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(self.structuralNavigationCheckButton,
-                                    self.structuralNavigation.enabled)
+        value = self.structuralNavigation.enabled
+        self.structuralNavigationCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.structuralNavigationCheckButton.set_active(value)
+        generalGrid.attach(self.structuralNavigationCheckButton, 0, 1, 1, 1)
 
         # Translators: Orca has had to implement its own caret navigation
         # model to work around issues in Gecko/Firefox. In certain versions
@@ -721,12 +718,11 @@ class Script(default.Script):
         # within Orca.
         #
         label = _("_Grab focus on objects when navigating")
-        self.grabFocusOnAncestorCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.grabFocusOnAncestorCheckButton)
-        gtk.Box.pack_start(generalVBox, self.grabFocusOnAncestorCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(self.grabFocusOnAncestorCheckButton,
-                                    script_settings.grabFocusOnAncestor)
+        value = script_settings.grabFocusOnAncestor
+        self.grabFocusOnAncestorCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.grabFocusOnAncestorCheckButton.set_active(value)
+        generalGrid.attach(self.grabFocusOnAncestorCheckButton, 0, 2, 1, 1)
 
         # Translators: when the user arrows up and down in HTML content,
         # it is some times beneficial to always position the cursor at the
@@ -736,12 +732,11 @@ class Script(default.Script):
         #
         label = \
             _("_Position cursor at start of line when navigating vertically")
-        self.arrowToLineBeginningCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.arrowToLineBeginningCheckButton)
-        gtk.Box.pack_start(generalVBox, self.arrowToLineBeginningCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(self.arrowToLineBeginningCheckButton,
-                                    script_settings.arrowToLineBeginning)
+        value = script_settings.arrowToLineBeginning
+        self.arrowToLineBeginningCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.arrowToLineBeginningCheckButton.set_active(value)
+        generalGrid.attach(self.arrowToLineBeginningCheckButton, 0, 3, 1, 1)
 
         # Translators: when the user loads a new page in Firefox, they
         # can optionally tell Orca to automatically start reading a
@@ -749,120 +744,94 @@ class Script(default.Script):
         #
         label = \
             _("Automatically start speaking a page when it is first _loaded")
-        self.sayAllOnLoadCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.sayAllOnLoadCheckButton)
-        gtk.Box.pack_start(generalVBox, self.sayAllOnLoadCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(self.sayAllOnLoadCheckButton,
-                                    script_settings.sayAllOnLoad)
+        value = script_settings.sayAllOnLoad
+        self.sayAllOnLoadCheckButton = Gtk.CheckButton.new_with_mnemonic(label)
+        self.sayAllOnLoadCheckButton.set_active(value)
+        generalGrid.attach(self.sayAllOnLoadCheckButton, 0, 4, 1, 1)
 
-        # Translators: this is the title of a panel holding options for
-        # how to navigate HTML content (e.g., Orca caret navigation,
-        # positioning of caret, etc.).
+        tableFrame = Gtk.Frame()
+        grid.attach(tableFrame, 0, 1, 1, 1)
+
+        # Translators: this is the title of a panel containing options
+        # for specifying how to navigate tables in document content.
         #
-        generalLabel = gtk.Label("<b>%s</b>" % _("Page Navigation"))
-        gtk.Widget.show(generalLabel)
-        gtk.Frame.set_label_widget(generalFrame, generalLabel)
-        gtk.Label.set_use_markup(generalLabel, True)
+        label = Gtk.Label(label="<b>%s</b>" % _("Table Navigation"))
+        label.set_use_markup(True)
+        tableFrame.set_label_widget(label)
 
-        # Table Navigation frame.
-        #
-        tableFrame = gtk.Frame()
-        gtk.Widget.show(tableFrame)
-        gtk.Box.pack_start(vbox, tableFrame, False, False, 5)
-
-        tableAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
-        gtk.Widget.show(tableAlignment)
-        gtk.Container.add(tableFrame, tableAlignment)
-        gtk.Alignment.set_padding(tableAlignment, 0, 0, 12, 0)
-
-        tableVBox = gtk.VBox(False, 0)
-        gtk.Widget.show(tableVBox)
-        gtk.Container.add(tableAlignment, tableVBox)
+        tableAlignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
+        tableAlignment.set_padding(0, 0, 12, 0)
+        tableFrame.add(tableAlignment)
+        tableGrid = Gtk.Grid()
+        tableAlignment.add(tableGrid)
 
         # Translators: this is an option to tell Orca whether or not it
         # should speak table cell coordinates in document content.
         #
         label = _("Speak _cell coordinates")
-        self.speakCellCoordinatesCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakCellCoordinatesCheckButton)
-        gtk.Box.pack_start(tableVBox, self.speakCellCoordinatesCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.speakCellCoordinatesCheckButton,
-            _settingsManager.getSetting('speakCellCoordinates'))
+        value = _settingsManager.getSetting('speakCellCoordinates')
+        self.speakCellCoordinatesCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakCellCoordinatesCheckButton.set_active(value)
+        tableGrid.attach(self.speakCellCoordinatesCheckButton, 0, 0, 1, 1)
 
         # Translators: this is an option to tell Orca whether or not it
         # should speak the span size of a table cell (e.g., how many
         # rows and columns a particular table cell spans in a table).
         #
         label = _("Speak _multiple cell spans")
-        self.speakCellSpanCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakCellSpanCheckButton)
-        gtk.Box.pack_start(tableVBox, self.speakCellSpanCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.speakCellSpanCheckButton,
-            _settingsManager.getSetting('speakCellSpan'))
+        value = _settingsManager.getSetting('speakCellSpan')
+        self.speakCellSpanCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakCellSpanCheckButton.set_active(value)
+        tableGrid.attach(self.speakCellSpanCheckButton, 0, 1, 1, 1)
 
         # Translators: this is an option for whether or not to speak
         # the header of a table cell in document content.
         #
         label = _("Announce cell _header")
-        self.speakCellHeadersCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakCellHeadersCheckButton)
-        gtk.Box.pack_start(tableVBox, self.speakCellHeadersCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.speakCellHeadersCheckButton,
-            _settingsManager.getSetting('speakCellHeaders'))
-
+        value = _settingsManager.getSetting('speakCellHeaders')
+        self.speakCellHeadersCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakCellHeadersCheckButton.set_active(value)
+        tableGrid.attach(self.speakCellHeadersCheckButton, 0, 2, 1, 1)
+           
         # Translators: this is an option to allow users to skip over
         # empty/blank cells when navigating tables in document content.
         #
         label = _("Skip _blank cells")
-        self.skipBlankCellsCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.skipBlankCellsCheckButton)
-        gtk.Box.pack_start(tableVBox, self.skipBlankCellsCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(
-            self.skipBlankCellsCheckButton,
-            _settingsManager.getSetting('skipBlankCells'))
+        value = _settingsManager.getSetting('skipBlankCells')
+        self.skipBlankCellsCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.skipBlankCellsCheckButton.set_active(value)
+        tableGrid.attach(self.skipBlankCellsCheckButton, 0, 3, 1, 1)
+
+        findFrame = Gtk.Frame()
+        grid.attach(findFrame, 0, 2, 1, 1)
 
         # Translators: this is the title of a panel containing options
-        # for specifying how to navigate tables in document content.
+        # for using Firefox's Find toolbar.
         #
-        tableLabel = gtk.Label("<b>%s</b>" % _("Table Navigation"))
-        gtk.Widget.show(tableLabel)
-        gtk.Frame.set_label_widget(tableFrame, tableLabel)
-        gtk.Label.set_use_markup(tableLabel, True)
+        label = Gtk.Label(label="<b>%s</b>" % _("Find Options"))
+        label.set_use_markup(True)
+        findFrame.set_label_widget(label)
 
-        # Find Options frame.
-        #
-        findFrame = gtk.Frame()
-        gtk.Widget.show(findFrame)
-        gtk.Box.pack_start(vbox, findFrame, False, False, 5)
-
-        findAlignment = gtk.Alignment(0.5, 0.5, 1, 1)
-        gtk.Widget.show(findAlignment)
-        gtk.Container.add(findFrame, findAlignment)
-        gtk.Alignment.set_padding(findAlignment, 0, 0, 12, 0)
-
-        findVBox = gtk.VBox(False, 0)
-        gtk.Widget.show(findVBox)
-        gtk.Container.add(findAlignment, findVBox)
+        findAlignment = Gtk.Alignment.new(0.5, 0.5, 1, 1)
+        findAlignment.set_padding(0, 0, 12, 0)
+        findFrame.add(findAlignment)
+        findGrid = Gtk.Grid()
+        findAlignment.add(findGrid)
 
         # Translators: this is an option to allow users to have Orca
         # automatically speak the line that contains the match while
         # the user is still in Firefox's Find toolbar.
         #
         label = _("Speak results during _find")
-        self.speakResultsDuringFindCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.speakResultsDuringFindCheckButton)
-        gtk.Box.pack_start(findVBox, self.speakResultsDuringFindCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(self.speakResultsDuringFindCheckButton,
-                                    script_settings.speakResultsDuringFind)
+        value = script_settings.speakResultsDuringFind
+        self.speakResultsDuringFindCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.speakResultsDuringFindCheckButton.set_active(value)
+        findGrid.attach(self.speakResultsDuringFindCheckButton, 0, 0, 1, 1)
 
         # Translators: this is an option which dictates whether the line
         # that contains the match from the Find toolbar should always
@@ -870,53 +839,36 @@ class Script(default.Script):
         # line which contained the last match.
         #
         label = _("Onl_y speak changed lines during find")
-        self.changedLinesOnlyCheckButton = gtk.CheckButton(label)
-        gtk.Widget.show(self.changedLinesOnlyCheckButton)
-        gtk.Box.pack_start(findVBox, self.changedLinesOnlyCheckButton,
-                           False, False, 0)
-        gtk.ToggleButton.set_active(self.changedLinesOnlyCheckButton,
-                              script_settings.onlySpeakChangedLinesDuringFind)
+        value = script_settings.onlySpeakChangedLinesDuringFind
+        self.changedLinesOnlyCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
+        self.changedLinesOnlyCheckButton.set_active(value)
+        findGrid.attach(self.changedLinesOnlyCheckButton, 0, 1, 1, 1)
 
-        hbox = gtk.HBox(False, 0)
-        gtk.Widget.show(hbox)
-        gtk.Box.pack_start(findVBox, hbox, False, False, 0)
+        hgrid = Gtk.Grid()
+        findGrid.attach(hgrid, 0, 2, 1, 1)
 
         # Translators: this option allows the user to specify the number
         # of matched characters that must be present before Orca speaks
         # the line that contains the results from the Find toolbar.
         #
         self.minimumFindLengthLabel = \
-              gtk.Label(_("Minimum length of matched text:"))
+              Gtk.Label(label=_("Minimum length of matched text:"))
         self.minimumFindLengthLabel.set_alignment(0, 0.5)
-        gtk.Widget.show(self.minimumFindLengthLabel)
-        gtk.Box.pack_start(hbox, self.minimumFindLengthLabel, False, False, 5)
+        hgrid.attach(self.minimumFindLengthLabel, 0, 0, 1, 1)
 
         self.minimumFindLengthAdjustment = \
-                   gtk.Adjustment(script_settings.minimumFindLength, 0, 20, 1)
-        self.minimumFindLengthSpinButton = \
-                       gtk.SpinButton(self.minimumFindLengthAdjustment, 0.0, 0)
-        gtk.Widget.show(self.minimumFindLengthSpinButton)
-        gtk.Box.pack_start(hbox, self.minimumFindLengthSpinButton,
-                           False, False, 5)
+                   Gtk.Adjustment(script_settings.minimumFindLength, 0, 20, 1)
+        self.minimumFindLengthSpinButton = Gtk.SpinButton()
+        self.minimumFindLengthSpinButton.set_adjustment(
+            self.minimumFindLengthAdjustment)
+        hgrid.attach(self.minimumFindLengthSpinButton, 1, 0, 1, 1)
+        self.minimumFindLengthLabel.set_mnemonic_widget(
+            self.minimumFindLengthSpinButton)
 
-        acc_targets = []
-        acc_src = self.minimumFindLengthLabel.get_accessible()
-        relation_set = acc_src.ref_relation_set()
-        acc_targ = self.minimumFindLengthSpinButton.get_accessible()
-        acc_targets.append(acc_targ)
-        relation = atk.Relation(acc_targets, 1)
-        relation.set_property('relation-type', atk.RELATION_LABEL_FOR)
-        relation_set.add(relation)
+        grid.show_all()
 
-        # Translators: this is the title of a panel containing options
-        # for using Firefox's Find toolbar.
-        #
-        findLabel = gtk.Label("<b>%s</b>" % _("Find Options"))
-        gtk.Widget.show(findLabel)
-        gtk.Frame.set_label_widget(findFrame, findLabel)
-        gtk.Label.set_use_markup(findLabel, True)
-
-        return vbox
+        return grid
 
     def setAppPreferences(self, prefs):
         """Write out the application specific preferences lines and set the

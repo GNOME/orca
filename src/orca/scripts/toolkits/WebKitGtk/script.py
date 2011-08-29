@@ -120,15 +120,13 @@ class Script(default.Script):
         return keyBindings
 
     def getAppPreferencesGUI(self):
-        """Return a GtkVBox contain the application unique configuration
-        GUI items for the current application.
-        """
+        """Return a GtkGrid containing the application unique configuration
+        GUI items for the current application."""
 
-        import gtk
+        from gi.repository import Gtk
 
-        vbox = gtk.VBox(False, 0)
-        vbox.set_border_width(12)
-        vbox.show()
+        grid = Gtk.Grid()
+        grid.set_border_width(12)
 
         # Translators: when the user loads a new page in WebKit, they
         # can optionally tell Orca to automatically start reading a
@@ -136,12 +134,14 @@ class Script(default.Script):
         #
         label = \
             _("Automatically start speaking a page when it is first _loaded")
-        self.sayAllOnLoadCheckButton = gtk.CheckButton(label)
-        self.sayAllOnLoadCheckButton.show()
-        vbox.pack_start(self.sayAllOnLoadCheckButton, False, False, 0)
+        self.sayAllOnLoadCheckButton = \
+            Gtk.CheckButton.new_with_mnemonic(label)
         self.sayAllOnLoadCheckButton.set_active(script_settings.sayAllOnLoad)
+        grid.attach(self.sayAllOnLoadCheckButton, 0, 0, 1, 1)
 
-        return vbox
+        grid.show_all()
+
+        return grid
 
     def setAppPreferences(self, prefs):
         """Write out the application specific preferences lines and set the

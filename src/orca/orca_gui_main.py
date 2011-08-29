@@ -25,62 +25,72 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import os
-import sys
-import gtk
 import locale
+import sys
+from gi.repository import Gtk
 
 import orca
-import orca_gtkbuilder
 import orca_platform
+import orca_state
 
-from orca_i18n import _           # for gettext support
+from orca_i18n import _
 
 OS = None
 
-class OrcaMainGUI(orca_gtkbuilder.GtkBuilderWrapper):
+class OrcaMainGUI(Gtk.Window):
 
-    def __init__(self, fileName, windowName):
-        orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
+    def __init__(self):
+        Gtk.Window.__init__(self)
+        self.set_title(_('Orca Screen Reader'))
+        self.set_has_resize_grip(False)
+
+        grid = Gtk.Grid()
+        grid.set_border_width(5)
+        self.add(grid)
+
+        preferencesButton = Gtk.Button.new_from_stock('gtk-preferences')
+        preferencesButton.connect('clicked', orca.showPreferencesGUI)
+        grid.attach(preferencesButton, 0, 0, 1, 1)
+
+        quitButton = Gtk.Button.new_from_stock('gtk-quit')
+        quitButton.connect('clicked', orca.quitOrca)
+        grid.attach(quitButton, 1, 0, 1, 1)
+
         self.aboutDialog = None
+        aboutButton = Gtk.Button.new_from_stock('gtk-about')
+        aboutButton.connect('clicked', self.aboutButtonClicked)
+        grid.attach(aboutButton, 2, 0, 1, 1)
+
+        helpButton = Gtk.Button.new_from_stock('gtk-help')
+        helpButton.connect('clicked', orca.helpForOrca)
+        grid.attach(helpButton, 3, 0, 1, 1)
+
+        accelGroup = Gtk.AccelGroup()
+        (keyVal, modMask) = Gtk.accelerator_parse('F1')
+        helpButton.add_accelerator('clicked', accelGroup, keyVal, modMask, 0)
+        self.add_accel_group(accelGroup)
+
+        self.connect('destroy', self.onDestroy)
 
     def init(self):
         pass
 
     def showGUI(self):
-        """Show the Orca main window GUI. This assumes that the GUI has 
-        already been created.
-        """
+        """Show the Orca main window GUI."""
 
-        mainWindow = self.get_widget("mainWindow")
-
-        accelGroup = gtk.AccelGroup()
-        mainWindow.add_accel_group(accelGroup)
-        helpButton = self.get_widget("helpButton")
-        (keyVal, modifierMask) = gtk.accelerator_parse("F1")
-        helpButton.add_accelerator("clicked",
-                                   accelGroup,
-                                   keyVal,
-                                   modifierMask,
-                                   0)
-
-        mainWindow.show()
+        self.show_all()
+        ts = orca_state.lastInputEventTimestamp
+        if ts == 0:
+            ts = Gtk.get_current_event_time()
+        self.present_with_time(ts)
 
     def hideGUI(self):
-        """Hide the Orca main window GUI. This assumes that the GUI has
-        already been created.
-        """
+        """Hide the Orca main window GUI."""
 
-        self.get_widget("mainWindow").hide()
+        self.hide()
 
     def aboutButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the aboutButton
-        GtkButton widget. The user has clicked the About button.
-        Call the method to bring up the About dialog.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
+        """Handler for the 'clicked' signal of the aboutButton GtkButton."""
 
         if self.aboutDialog:
             return
@@ -100,7 +110,12 @@ class OrcaMainGUI(orca_gtkbuilder.GtkBuilderWrapper):
                      "support AT-SPI (e.g., the GNOME desktop).")
         # Translators: This text is used in the Orca About dialog.
         #
-        copyrights = _("Copyright (c) 2005-2010 Sun Microsystems Inc. \n" \
+        copyrights = _("Copyright (c) 2010-2011 The Orca Team \n" \
+                       "Copyright (c) 2010 Consorcio Fernando de los Rios \n" \
+                       "Copyright (c) 2010 Igalia, S.L. \n" \
+                       "Copyright (c) 2010 Informal Informatica LTDA. \n" \
+                       "Copyright (c) 2010 Willie Walker \n" \
+                       "Copyright (c) 2005-2010 Sun Microsystems Inc. \n" \
                        "Copyright (c) 2005-2008 Google Inc. \n" \
                        "Copyright (c) 2008, 2009 Eitan Isaacson \n" \
                        "Copyright (c) 2006-2009 Brailcom, o.p.s. \n" \
@@ -130,7 +145,7 @@ class OrcaMainGUI(orca_gtkbuilder.GtkBuilderWrapper):
               "\nBoston MA  02110-1301 USA.")
         url = "http://live.gnome.org/Orca"
 
-        self.aboutDialog = gtk.AboutDialog()
+        self.aboutDialog = Gtk.AboutDialog()
         self.aboutDialog.set_authors(authors)
         self.aboutDialog.set_documenters(documenters)
         self.aboutDialog.set_translator_credits(translatorCredits)
@@ -145,52 +160,13 @@ class OrcaMainGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.aboutDialog.show()
 
     def aboutDialogOnResponse(self, dialog, responseID):
-        """Signal handler for the About Dialog's "response" signal."""
+        """Signal handler for the About Dialog's 'response' signal."""
 
         dialog.destroy()
         self.aboutDialog = None
 
-    def helpButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the helpButton
-           GtkButton widget. The user has clicked the Help button.
-           Call the method to bring up the Orca help window.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        orca.helpForOrca()
-
-    def quitButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the quitButton
-           GtkButton widget. The user has clicked the Quit button.
-           Call the method to bring up the Quit dialog.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        orca.quitOrca()
-
-    def preferencesButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the preferencesButton
-           GtkButton widget. The user has clicked the Preferences button.
-           Call the method to bring up the Preferences dialog.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        orca.showPreferencesGUI()
-
-    def mainWindowDestroyed(self, widget):
-        """Signal handler for the "destroyed" signal for the mainWindow
-           GtkWindow widget. Reset OS to None, then call the method to 
-           bring up the quit dialog.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
+    def onDestroy(self, widget):
+        """Signal handler for the 'destroy' signal for this window."""
 
         global OS
 
@@ -201,12 +177,7 @@ def showMainUI():
     global OS
 
     if not OS:
-        uiFile = os.path.join(orca_platform.prefix,
-                              orca_platform.datadirname,
-                              orca_platform.package,
-                              "ui",
-                              "orca-mainwin.ui")
-        OS = OrcaMainGUI(uiFile, "mainWindow")
+        OS = OrcaMainGUI()
         OS.init()
 
     OS.showGUI()
@@ -220,7 +191,7 @@ def main():
 
     showMainUI()
 
-    gtk.main()
+    Gtk.main()
     sys.exit(0)
 
 if __name__ == "__main__":

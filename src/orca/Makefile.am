@@ -47,10 +47,10 @@ orca_python_PYTHON = \
 	orca_gui_main.py \
 	orca_gui_prefs.py \
 	orca_gui_profile.py \
+	orca_gui_quit.py \
 	orca_gui_splash.py \
 	orca_i18n.py \
 	orca_prefs.py \
-	orca_quit.py \
 	orca_state.py \
 	outline.py \
 	outloud.py \
@@ -82,12 +82,7 @@ SUBDIRS = \
 
 ui_DATA = \
 	orca-find.ui \
-	orca-mainwin.ui \
-	orca-preferences-warning.ui \
-	orca-quit.ui \
-	orca-setup.ui \
-	orca-profile.ui \
-	orca-splash.ui
+	orca-setup.ui
 
 gfx_DATA = \
 	orca-splash.png

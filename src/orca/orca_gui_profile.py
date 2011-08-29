@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Displays a GUI for the Orca profiles window"""
+"""Displays the Save Profile As dialog."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
@@ -27,139 +27,114 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
-import os
-import sys
-import debug
-import gtk
 import locale
+import sys
+from gi.repository import Gtk
 
-import orca_gtkbuilder
 import orca_state
-import orca_platform
+from orca_i18n import _
 
 OS = None
 newProfile = None
 
+class OrcaProfileGUI(Gtk.Dialog):
 
-class OrcaProfileGUI(orca_gtkbuilder.GtkBuilderWrapper):
+    def __init__(self):
+        """Initialize the Orca profile configuration GUI."""
 
-    def __init__(self, fileName, windowName):
-        """Initialize the Orca profile configuration GUI.
+        Gtk.Dialog.__init__(self)
 
-        Arguments:
-        - fileName: name of the GtkBuilder file.
-        - windowName: name of the component to get from the GtkBuilder file.
-        """
-
-        orca_gtkbuilder.GtkBuilderWrapper.__init__(self, fileName, windowName)
-
-        # Initialize variables to None to keep pylint happy.
+        # Translators: Profiles in Orca make it possible for users to
+        # quickly switch amongst a group of pre-defined settings (e.g.
+        # an 'English' profile for reading text written in English using
+        # an English-language speech synthesizer and braille rules, and
+        # a similar 'Spanish' profile for reading Spanish text. The
+        # following string is the title of a dialog in which users can
+        # save a newly-defined profile.
         #
+        self.set_title(_('Save Profile As'))
+        self.set_has_resize_grip(False)
+
+        self.add_button('gtk-cancel', Gtk.ResponseType.CANCEL)
+        self.add_button('gtk-save', Gtk.ResponseType.ACCEPT)
+
+        grid = Gtk.Grid()
+        grid.set_property('margin', 12)
+        grid.set_row_spacing(10)
+        grid.set_column_spacing(10)
+
+        # Right now the content area is a GtkBox. We'll need to update
+        # this once GtkBox is fully deprecated.
+        contentArea = self.get_content_area()
+        contentArea.pack_start(grid, True, True, 0)
+
+        self.profileEntry = Gtk.Entry()
+        self.profileEntry.set_property('hexpand', True)
+        self.profileEntry.set_activates_default(True)
+        grid.attach(self.profileEntry, 1, 0, 1, 1)
+
+        # Translators: Profiles in Orca make it possible for users to
+        # quickly switch amongst a group of pre-defined settings (e.g.
+        # an 'English' profile for reading text written in English using
+        # an English-language speech synthesizer and braille rules, and
+        # a similar 'Spanish' profile for reading Spanish text. The
+        # following string is the label for a text entry in which the user
+        # enters the name of a new settings profile being saved via the
+        # 'Save Profile As' dialog.
+        #
+        label = Gtk.Label(_('_Profile Name:'))
+        label.set_use_underline(True)
+        label.set_mnemonic_widget(self.profileEntry)
+        grid.attach(label, 0, 0, 1, 1)
+
+        defaultButton = self.get_widget_for_response(Gtk.ResponseType.ACCEPT)
+        defaultButton.set_property('can-default', True)
+        defaultButton.set_property('has-default', True)
+
+        self.connect('response', self.onResponse)
+        self.connect('destroy', self.onDestroy)
+
         self.searchString = None
         self.profileString = None
         self.prefsDialog = None
 
     def init(self):
-        # Initialize the dialog box controls.
-        self.profileString = ""
+        self.profileString = ''
 
     def showGUI(self, prefsDialog):
-        """Show the Orca profile dialog. This assumes that the GUI has
-        already been created.
-        """
+        """Show the Save Profile As dialog."""
 
+        self.show_all()
         self.prefsDialog = prefsDialog
-        profileDialog = self.get_widget("profileDialog")
+        self.profileEntry.set_text(self.profileString)
 
-        # Set the current time on the Find GUI dialog so that it'll
-        # get focus. set_user_time is a new call in pygtk 2.9.2 or later.
-        # It's surronded by a try/except block here so that if it's not found,
-        # then we can fail gracefully.
-        #
-        try:
-            profileDialog.realize()
-            ts = orca_state.lastInputEventTimestamp
-            if ts == 0:
-                ts = gtk.get_current_event_time()
-            profileDialog.window.set_user_time(ts)
-        except AttributeError:
-            debug.printException(debug.LEVEL_FINEST)
+        ts = orca_state.lastInputEventTimestamp
+        if ts == 0:
+            ts = Gtk.get_current_event_time()
+        self.present_with_time(ts)
 
-        try:
-            profileEntry = self.get_widget("profileEntry")
-            profileEntry.set_text(self.profileString)
-        except:
-            pass
+    def onResponse(self, widget, response):
+        """Signal handler for the responses emitted by the dialog."""
 
-        # It is not safe to use run() in Orca because if the dialog loses
-        # focus, Orca stops presenting things to the user because run()
-        # blocks in a recursive main loop until the dialog emits the
-        # "response" signal or is destroyed.
-        #
-        profileDialog.show()
+        if response in [Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT]:
+            self.hide()
+            return
 
-    def cancelButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the cancelButton
-           GtkButton widget. The user has clicked the Cancel button.
-           Hide the dialog.
+        if response == Gtk.ResponseType.ACCEPT:
+            global newProfile
 
-        Arguments:
-        - widget: the component that generated the signal.
-        """
+            newProfile = self.profileEntry.get_text()
+            if newProfile:
+                self.destroy()
+            if self.prefsDialog:
+                self.prefsDialog.saveProfile(newProfile)
 
-        self.get_widget("profileDialog").hide()
-
-    def on_saveProfileButton_clicked(self, widget):
-        """Signal handler for the "clicked" signal for the findButton
-           GtkButton widget. The user has clicked the Find button.
-           Call the method to begin the search.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        # Merely hiding the dialog causes the find to take place before
-        # the original window has fully regained focus.
-        global newProfile
-
-        if self.get_widget("profileEntry").get_text() != '':
-            newProfile = self.get_widget("profileEntry").get_text()
-            self.get_widget("profileDialog").destroy()
-
-        if self.prefsDialog:
-            self.prefsDialog.saveProfile(newProfile)
-
-    # From now, this method can't have sense ...
-    def onProfileEntryChanged(self, widget, data=None):
-        """Signal handler for the "changed" signal for the ProfileEntry
-           GtkEntry widget."""
-
-        if self.get_widget("profileEntry").get_text() != '':
-            self.get_widget('availableProfilesCombo').set_sensitive(False)
-        else:
-            self.get_widget('availableProfilesCombo').set_sensitive(True)
-
-
-    def profileDialogDestroyed(self, widget):
-        """Signal handler for the "destroyed" signal for the findDialog
-           GtkWindow widget. Reset OS to None.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
+    def onDestroy(self, widget):
+        """Signal handler for the 'destroy' signal of the dialog."""
 
         global OS
 
         OS = None
-
-    def __getAvailableProfiles(self):
-        """Get available user profiles"""
-
-        import orca
-
-        _settingsManager = getattr(orca, '_settingsManager')
-
-        return _settingsManager.availableProfiles()
 
 def showProfileUI(prefsDialog=None):
     global OS
@@ -168,23 +143,17 @@ def showProfileUI(prefsDialog=None):
     newProfile = None
 
     if not OS:
-        uiFile = os.path.join(orca_platform.prefix,
-                              orca_platform.datadirname,
-                              orca_platform.package,
-                              "ui",
-                              "orca-profile.ui")
-        OS = OrcaProfileGUI(uiFile, "profileDialog")
+        OS = OrcaProfileGUI()
         OS.init()
 
     OS.showGUI(prefsDialog)
-
 
 def main():
     locale.setlocale(locale.LC_ALL, '')
 
     showProfileUI()
 
-    gtk.main()
+    Gtk.main()
     sys.exit(0)
 
 if __name__ == "__main__":

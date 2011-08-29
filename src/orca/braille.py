@@ -37,8 +37,8 @@ log = logging.getLogger("braille")
 import signal
 import os
 
-import gobject
-gobject.threads_init()
+from gi.repository import GObject
+GObject.threads_init()
 
 try:
     import louis
@@ -1464,7 +1464,7 @@ def killFlash(restoreSaved=True):
     global viewport
     if _flashEventSourceId:
         if _flashEventSourceId > 0:
-            gobject.source_remove(_flashEventSourceId)
+            GObject.source_remove(_flashEventSourceId)
         if restoreSaved:
             (_lines, _regionWithFocus, viewport, flashTime) = _saved
             refresh(panToCursor=False, stopFlash=False)
@@ -1473,9 +1473,9 @@ def killFlash(restoreSaved=True):
 def resetFlashTimer():
     global _flashEventSourceId
     if _flashEventSourceId > 0:
-        gobject.source_remove(_flashEventSourceId)
+        GObject.source_remove(_flashEventSourceId)
         flashTime = _saved[3]
-        _flashEventSourceId = gobject.timeout_add(flashTime, _flashCallback)
+        _flashEventSourceId = GObject.timeout_add(flashTime, _flashCallback)
 
 def _initFlash(flashTime):
     """Sets up the state needed to flash a message or clears any existing
@@ -1494,13 +1494,13 @@ def _initFlash(flashTime):
 
     if _flashEventSourceId:
         if _flashEventSourceId > 0:
-            gobject.source_remove(_flashEventSourceId)
+            GObject.source_remove(_flashEventSourceId)
         _flashEventSourceId = 0
     else:
         _saved = (_lines, _regionWithFocus, viewport, flashTime)
 
     if flashTime > 0:
-        _flashEventSourceId = gobject.timeout_add(flashTime, _flashCallback)
+        _flashEventSourceId = GObject.timeout_add(flashTime, _flashCallback)
     elif flashTime < 0:
         _flashEventSourceId = -666
 
@@ -1782,8 +1782,8 @@ def init(callback=None, tty=7):
             debug.println(\
                 debug.LEVEL_CONFIGURATION,
                 "Braille module has been initialized using tty=%d" % tty)
-        _brlAPISourceId = gobject.io_add_watch(_brlAPI.fileDescriptor,
-                                               gobject.IO_IN,
+        _brlAPISourceId = GObject.io_add_watch(_brlAPI.fileDescriptor,
+                                               GObject.IO_IN,
                                                _brlAPIKeyReader)
     except:
         debug.println(debug.LEVEL_CONFIGURATION,
@@ -1826,7 +1826,7 @@ def shutdown():
 
     if _brlAPIRunning:
         _brlAPIRunning = False
-        gobject.source_remove(_brlAPISourceId)
+        GObject.source_remove(_brlAPISourceId)
         _brlAPISourceId = 0
         try:
             _brlAPI.leaveTtyMode()

@@ -27,14 +27,14 @@ __license__   = "LGPL"
 
 import os
 import sys
-import debug
-import gtk
-import gobject
-import pango   # for ellipsize property constants of CellRendererText
+from gi.repository import Gtk
+from gi.repository import GObject
+from gi.repository import Pango
 import locale
 import time
 
 import acss
+import debug
 import orca
 import orca_gtkbuilder
 import orca_state
@@ -192,32 +192,32 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             for column in self.keyBindView.get_columns():
                 self.keyBindView.remove_column(column)
 
-        self.keyBindingsModel = gtk.TreeStore(
-            gobject.TYPE_STRING,  # Handler name
-            gobject.TYPE_STRING,  # Human Readable Description
-            gobject.TYPE_STRING,  # Modifier mask 1
-            gobject.TYPE_STRING,  # Used Modifiers 1
-            gobject.TYPE_STRING,  # Modifier key name 1
-            gobject.TYPE_STRING,  # Click count 1
-            gobject.TYPE_STRING,  # Original Text of the Key Binding Shown 1
-            gobject.TYPE_STRING,  # Text of the Key Binding Shown 1
-            gobject.TYPE_STRING,  # Modifier mask 2
-            gobject.TYPE_STRING,  # Used Modifiers 2
-            gobject.TYPE_STRING,  # Modifier key name 2
-            gobject.TYPE_STRING,  # Click count 2
-            gobject.TYPE_STRING,  # Original Text of the Key Binding Shown 2
-            gobject.TYPE_STRING,  # Text of the Key Binding Shown 2
-            gobject.TYPE_BOOLEAN, # Key Modified by User
-            gobject.TYPE_BOOLEAN) # Row with fields editable or not
+        self.keyBindingsModel = Gtk.TreeStore(
+            GObject.TYPE_STRING,  # Handler name
+            GObject.TYPE_STRING,  # Human Readable Description
+            GObject.TYPE_STRING,  # Modifier mask 1
+            GObject.TYPE_STRING,  # Used Modifiers 1
+            GObject.TYPE_STRING,  # Modifier key name 1
+            GObject.TYPE_STRING,  # Click count 1
+            GObject.TYPE_STRING,  # Original Text of the Key Binding Shown 1
+            GObject.TYPE_STRING,  # Text of the Key Binding Shown 1
+            GObject.TYPE_STRING,  # Modifier mask 2
+            GObject.TYPE_STRING,  # Used Modifiers 2
+            GObject.TYPE_STRING,  # Modifier key name 2
+            GObject.TYPE_STRING,  # Click count 2
+            GObject.TYPE_STRING,  # Original Text of the Key Binding Shown 2
+            GObject.TYPE_STRING,  # Text of the Key Binding Shown 2
+            GObject.TYPE_BOOLEAN, # Key Modified by User
+            GObject.TYPE_BOOLEAN) # Row with fields editable or not
 
-        self.planeCellRendererText = gtk.CellRendererText()
+        self.planeCellRendererText = Gtk.CellRendererText()
 
-        self.cellRendererText = gtk.CellRendererText()
-        self.cellRendererText.set_property("ellipsize", pango.ELLIPSIZE_END)
+        self.cellRendererText = Gtk.CellRendererText()
+        self.cellRendererText.set_property("ellipsize", Pango.EllipsizeMode.END)
 
         # HANDLER - invisble column
         #
-        column = gtk.TreeViewColumn("Handler",
+        column = Gtk.TreeViewColumn("Handler",
                                     self.planeCellRendererText,
                                     text=HANDLER)
         column.set_resizable(True)
@@ -233,7 +233,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # what action Orca will take when the user invokes an Orca-specific
         # keyboard command.
         #
-        column = gtk.TreeViewColumn(_("Function"),
+        column = Gtk.TreeViewColumn(_("Function"),
                                     self.cellRendererText,
                                     text=DESCRIP)
         column.set_resizable(True)
@@ -243,7 +243,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # MOD_MASK1 - invisble column
         #
-        column = gtk.TreeViewColumn("Mod.Mask 1",
+        column = Gtk.TreeViewColumn("Mod.Mask 1",
                                     self.planeCellRendererText,
                                     text=MOD_MASK1)
         column.set_visible(False)
@@ -253,7 +253,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # MOD_USED1 - invisble column
         #
-        column = gtk.TreeViewColumn("Use Mod.1",
+        column = Gtk.TreeViewColumn("Use Mod.1",
                                     self.planeCellRendererText,
                                     text=MOD_USED1)
         column.set_visible(False)
@@ -263,7 +263,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # KEY1 - invisble column
         #
-        column = gtk.TreeViewColumn("Key1",
+        column = Gtk.TreeViewColumn("Key1",
                                     self.planeCellRendererText,
                                     text=KEY1)
         column.set_resizable(True)
@@ -273,7 +273,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # CLICK_COUNT1 - invisble column
         #
-        column = gtk.TreeViewColumn("ClickCount1",
+        column = Gtk.TreeViewColumn("ClickCount1",
                                     self.planeCellRendererText,
                                     text=CLICK_COUNT1)
         column.set_resizable(True)
@@ -286,7 +286,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # buttons being pressed.  This will prevent automatic
         # resorting each time a cell is edited.
         #
-        column = gtk.TreeViewColumn("OldText1",
+        column = Gtk.TreeViewColumn("OldText1",
                                     self.planeCellRendererText,
                                     text=OLDTEXT1)
         column.set_resizable(True)
@@ -296,7 +296,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # TEXT1
         #
-        rendererText = gtk.CellRendererText()
+        rendererText = Gtk.CellRendererText()
         rendererText.connect("editing-started",
                              self.editingKey,
                              self.keyBindingsModel)
@@ -311,7 +311,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # the cells in the column represent keyboard combinations
         # the user can press to invoke Orca commands.
         #
-        column = gtk.TreeViewColumn(_("Key Binding"),
+        column = Gtk.TreeViewColumn(_("Key Binding"),
                                     rendererText,
                                     text=TEXT1,
                                     editable=EDITABLE)
@@ -321,7 +321,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # MOD_MASK2 - invisble column
         #
-        column = gtk.TreeViewColumn("Mod.Mask 2",
+        column = Gtk.TreeViewColumn("Mod.Mask 2",
                                     self.planeCellRendererText,
                                     text=MOD_MASK2)
         column.set_visible(False)
@@ -331,7 +331,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # MOD_USED2 - invisble column
         #
-        column = gtk.TreeViewColumn("Use Mod.2",
+        column = Gtk.TreeViewColumn("Use Mod.2",
                                     self.planeCellRendererText,
                                     text=MOD_USED2)
         column.set_visible(False)
@@ -341,7 +341,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # KEY2 - invisble column
         #
-        column = gtk.TreeViewColumn("Key2", rendererText, text=KEY2)
+        column = Gtk.TreeViewColumn("Key2", rendererText, text=KEY2)
         column.set_resizable(True)
         column.set_visible(False)
         column.set_sort_column_id(KEY2)
@@ -349,7 +349,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # CLICK_COUNT2 - invisble column
         #
-        column = gtk.TreeViewColumn("ClickCount2",
+        column = Gtk.TreeViewColumn("ClickCount2",
                                     self.planeCellRendererText,
                                     text=CLICK_COUNT2)
         column.set_resizable(True)
@@ -362,7 +362,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # buttons being pressed.  This will prevent automatic
         # resorting each time a cell is edited.
         #
-        column = gtk.TreeViewColumn("OldText2",
+        column = Gtk.TreeViewColumn("OldText2",
                                     self.planeCellRendererText,
                                     text=OLDTEXT2)
         column.set_resizable(True)
@@ -372,7 +372,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # TEXT2
         #
-        rendererText = gtk.CellRendererText()
+        rendererText = Gtk.CellRendererText()
         rendererText.connect("editing-started",
                              self.editingKey,
                              self.keyBindingsModel)
@@ -390,7 +390,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # addition to the key bindings in the "Key Bindings"
         # column.
         #
-        column = gtk.TreeViewColumn(_("Alternate"),
+        column = Gtk.TreeViewColumn(_("Alternate"),
                                     rendererText,
                                     text=TEXT2,
                                     editable=EDITABLE)
@@ -400,7 +400,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # MODIF
         #
-        rendererToggle = gtk.CellRendererToggle()
+        rendererToggle = Gtk.CellRendererToggle()
         rendererToggle.connect('toggled',
                                self.keyModifiedToggle,
                                self.keyBindingsModel,
@@ -410,7 +410,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # cells represent whether a key binding has been modified
         # from the default key binding.
         #
-        column = gtk.TreeViewColumn(_("Modified"),
+        column = Gtk.TreeViewColumn(_("Modified"),
                                     rendererToggle,
                                     active=MODIF,
                                     activatable=EDITABLE)
@@ -421,9 +421,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # EDITABLE - invisble column
         #
-        rendererToggle = gtk.CellRendererToggle()
+        rendererToggle = Gtk.CellRendererToggle()
         rendererToggle.set_property('activatable', False)
-        column = gtk.TreeViewColumn("Modified",
+        column = Gtk.TreeViewColumn("Modified",
                                     rendererToggle,
                                     active=EDITABLE)
         column.set_visible(False)
@@ -745,7 +745,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # voice type.  Whenever the families change, we'll reset the
         # voice type selection to the first one ("Default").
         #
-        comboBox = self.get_widget("voiceTypes")
+        comboBox = self.get_widget("voiceTypesCombo")
         types = []
         # Translators: This refers to the default/typical voice used
         # by Orca when presenting the content of the screen and other
@@ -1002,10 +1002,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                                         attrDict[attrList[i]])
                 if localizedKey == model[path][NAME]:
                     thisIter = model.get_iter(path)
-                    model.set(thisIter, 
-                        NAME, localizedKey,
-                        IS_SPOKEN, state,
-                        VALUE, localizedValue)
+                    model.set_value(thisIter, NAME, localizedKey)
+                    model.set_value(thisIter, IS_SPOKEN, state)
+                    model.set_value(thisIter, VALUE, localizedValue)
                     if moveToTop:
                         thisIter = model.get_iter(path)
                         otherIter = model.get_iter(i)
@@ -1039,7 +1038,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         text_attribute_names.getTextAttributeName(attrList[i])
                 if localizedKey == model[path][NAME]:
                     thisIter = model.get_iter(path)
-                    model.set(thisIter, IS_BRAILLED, state)
+                    model.set_value(thisIter, IS_BRAILLED, state)
                     break
 
         view.set_model(model)
@@ -1091,8 +1090,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.prefsDict["enabledBrailledTextAttributes"] = brailledAttrStr
 
     def contractedBrailleToggled(self, checkbox):
-        hbox = self.get_widget('contractionTablesHBox')
-        hbox.set_sensitive(checkbox.get_active())
+        grid = self.get_widget('contractionTableGrid')
+        grid.set_sensitive(checkbox.get_active())
         self.prefsDict["enableContractedBraille"] = checkbox.get_active()
 
     def contractionTableComboChanged(self, combobox):
@@ -1179,10 +1178,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             for column in self.getTextAttributesView.get_columns():
                 self.getTextAttributesView.remove_column(column)
 
-        model = gtk.ListStore(gobject.TYPE_STRING,
-                              gobject.TYPE_BOOLEAN,
-                              gobject.TYPE_BOOLEAN,
-                              gobject.TYPE_STRING)
+        model = Gtk.ListStore(GObject.TYPE_STRING,
+                              GObject.TYPE_BOOLEAN,
+                              GObject.TYPE_BOOLEAN,
+                              GObject.TYPE_STRING)
 
         # Initially setup the list store model based on the values of all
         # the known text attributes.
@@ -1197,11 +1196,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             localizedValue = \
                 text_attribute_names.getTextAttributeName( \
                                              allAttrDict[allAttrList[i]])
-            model.set(thisIter, 
-                NAME, localizedKey,
-                IS_SPOKEN, False,
-                IS_BRAILLED, False,
-                VALUE, localizedValue)
+            model.set_value(thisIter, NAME, localizedKey)
+            model.set_value(thisIter, IS_SPOKEN, False)
+            model.set_value(thisIter, IS_BRAILLED, False)
+            model.set_value(thisIter, VALUE, localizedValue)
 
         self.getTextAttributesView.set_model(model)
 
@@ -1210,12 +1208,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # Translators: Attribute here refers to text attributes such
         # as bold, underline, family-name, etc.
         #
-        column = gtk.TreeViewColumn(_("Attribute Name"))
+        column = Gtk.TreeViewColumn(_("Attribute Name"))
         column.set_min_width(250)
         column.set_resizable(True)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         column.pack_end(renderer, True)
-        column.set_attributes(renderer, text=NAME)
+        column.add_attribute(renderer, 'text', NAME)
         self.getTextAttributesView.insert_column(column, 0)
 
         # Attribute Speak column (IS_SPOKEN).
@@ -1226,10 +1224,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # presses Orca_Modifier+F.
         #
         speakAttrColumnLabel = _("Speak")
-        column = gtk.TreeViewColumn(speakAttrColumnLabel)
-        renderer = gtk.CellRendererToggle()
+        column = Gtk.TreeViewColumn(speakAttrColumnLabel)
+        renderer = Gtk.CellRendererToggle()
         column.pack_start(renderer, False)
-        column.set_attributes(renderer, active=IS_SPOKEN)
+        column.add_attribute(renderer, 'active', IS_SPOKEN)
         renderer.connect("toggled",
                          self.textAttributeSpokenToggled,
                          model)
@@ -1244,10 +1242,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # the refreshable braille display.
         #
         markAttrColumnLabel = _("Mark in braille")
-        column = gtk.TreeViewColumn(markAttrColumnLabel)
-        renderer = gtk.CellRendererToggle()
+        column = Gtk.TreeViewColumn(markAttrColumnLabel)
+        renderer = Gtk.CellRendererToggle()
         column.pack_start(renderer, False)
-        column.set_attributes(renderer, active=IS_BRAILLED)
+        column.add_attribute(renderer, 'active', IS_BRAILLED)
         renderer.connect("toggled",
                          self.textAttributeBrailledToggled,
                          model)
@@ -1269,11 +1267,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # value of underline is none (i.e. when it's not underlined).
         # "Present" here is being used as a verb.
         #
-        column = gtk.TreeViewColumn(_("Present Unless"))
-        renderer = gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(_("Present Unless"))
+        renderer = Gtk.CellRendererText()
         renderer.set_property('editable', True)
         column.pack_end(renderer, True)
-        column.set_attributes(renderer, text=VALUE)
+        column.add_attribute(renderer, 'text', VALUE)
         renderer.connect("edited", self.textAttrValueEdited, model)
 
         self.getTextAttributesView.insert_column(column, 4)
@@ -1358,8 +1356,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             for column in self.pronunciationView.get_columns():
                 self.pronunciationView.remove_column(column)
 
-        model = gtk.ListStore(gobject.TYPE_STRING,
-                              gobject.TYPE_STRING)
+        model = Gtk.ListStore(GObject.TYPE_STRING,
+                              GObject.TYPE_STRING)
 
         # Initially setup the list store model based on the values of all
         # existing entries in the pronunciation dictionary.
@@ -1392,13 +1390,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # or a particular word that is pronounced differently then the way
         # that it looks.
         #
-        column = gtk.TreeViewColumn(_("Actual String"))
+        column = Gtk.TreeViewColumn(_("Actual String"))
         column.set_min_width(250)
         column.set_resizable(True)
-        renderer = gtk.CellRendererText()
+        renderer = Gtk.CellRendererText()
         renderer.set_property('editable', True)
         column.pack_end(renderer, True) 
-        column.set_attributes(renderer, text=ACTUAL)
+        column.add_attribute(renderer, 'text', ACTUAL)
         renderer.connect("edited", self.pronActualValueEdited, model)
         self.pronunciationView.insert_column(column, 0)
 
@@ -1409,11 +1407,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # For example: if the actual string was "MHz", then the replacement
         # (spoken) string would be "megahertz".
         #
-        column = gtk.TreeViewColumn(_("Replacement String"))
-        renderer = gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(_("Replacement String"))
+        renderer = Gtk.CellRendererText()
         renderer.set_property('editable', True)
         column.pack_end(renderer, True)
-        column.set_attributes(renderer, text=REPLACEMENT)
+        column.add_attribute(renderer, 'text', REPLACEMENT)
         renderer.connect("edited", self.pronReplacementValueEdited, model)
         self.pronunciationView.insert_column(column, 1)
 
@@ -1436,11 +1434,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         enable = prefs["enableSpeech"]
         self.get_widget("speechSupportCheckButton").set_active(enable)
-        self.get_widget("speechVbox").set_sensitive(enable)
+        self.get_widget("speechOptionsGrid").set_sensitive(enable)
 
         enable = prefs["onlySpeakDisplayedText"]
         self.get_widget("onlySpeakDisplayedTextCheckButton").set_active(enable)
-        self.get_widget("speechContextVBox").set_sensitive(not enable)
+        self.get_widget("contextOptionsGrid").set_sensitive(not enable)
 
         if prefs["verbalizePunctuationStyle"] == \
                                settings.PUNCTUATION_STYLE_NONE:
@@ -1587,7 +1585,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         enable = prefs["enableProgressBarUpdates"]
         self.get_widget("speechProgressBarCheckButton").set_active(enable)
-        self.get_widget("speakUpdateIntervalHBox").set_sensitive(enable)
+        self.get_widget("progressBarUpdatesOptionsGrid").set_sensitive(enable)
 
         interval = prefs["progressBarUpdateInterval"]
         self.get_widget("speakProgressBarSpinButton").set_value(interval)
@@ -1647,7 +1645,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             selectedTable = prefs["brailleContractionTable"] or \
                              braille.getDefaultTable()
             if tableDict:
-                tablesModel = gtk.ListStore(str, str)
+                tablesModel = Gtk.ListStore(str, str)
                 names = tableDict.keys()
                 names.sort()
                 for name in names:
@@ -1757,8 +1755,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.get_widget("quitOrcaNoConfirmationCheckButton").set_active(
             prefs["quitOrcaNoConfirmation"])        
         self.get_widget("presentToolTipsCheckButton").set_active(
-            prefs["presentToolTips"] \
-                and _settingsManager.getSetting('canPresentToolTips'))
+            prefs["presentToolTips"])
 
         if prefs["keyboardLayout"] == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             self.get_widget("generalDesktopButton").set_active(True)
@@ -1812,7 +1809,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - items: the list of strings with which to populate it
         """
 
-        model = gtk.ListStore(str)
+        model = Gtk.ListStore(str)
         for item in items:
             model.append([item])
         combobox.set_model(model)
@@ -1888,37 +1885,20 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orcaSetupWindow = self.get_widget("orcaSetupWindow")
 
-        accelGroup = gtk.AccelGroup()
+        accelGroup = Gtk.AccelGroup()
         orcaSetupWindow.add_accel_group(accelGroup)
         helpButton = self.get_widget("helpButton")
-        (keyVal, modifierMask) = gtk.accelerator_parse("F1")
+        (keyVal, modifierMask) = Gtk.accelerator_parse("F1")
         helpButton.add_accelerator("clicked",
                                    accelGroup,
                                    keyVal,
                                    modifierMask,
                                    0)
 
-        # We want the Orca preferences window to have focus when it is
-        # shown. First try using the present() call. If this isn't present
-        # in the version of pygtk that the user is using, just catch the
-        # exception. Then try to set the current time on the Preferences 
-        # window using set_user_time. If that isn't found, then catch the 
-        # exception and fail gracefully.
-        #
-        orcaSetupWindow.realize()
-        try:
-            if _settingsManager.getSettings('showMainWindow'):
-                orcaSetupWindow.present()
-        except:
-            pass
-        try:
-            ts = orca_state.lastInputEventTimestamp
-            if ts == 0:
-                ts = gtk.get_current_event_time()
-            if ts > 0:
-                orcaSetupWindow.window.set_user_time(ts)
-        except AttributeError:
-            debug.printException(debug.LEVEL_FINEST)
+        ts = orca_state.lastInputEventTimestamp
+        if ts == 0:
+            ts = Gtk.get_current_event_time()
+        orcaSetupWindow.present_with_time(ts)
 
         # We always want to re-order the text attributes page so that enabled
         # items are consistently at the top.
@@ -1937,7 +1917,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - combobox: the GtkComboBox to initialize.
         """
 
-        cell = gtk.CellRendererText()
+        cell = Gtk.CellRendererText()
         combobox.pack_start(cell, True)
         # We only want to display one column; not two.
         #
@@ -1946,12 +1926,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             combobox.add_attribute(columnToDisplay, 'text', 1)
         except:
             combobox.add_attribute(cell, 'text', 1)
-        model = gtk.ListStore(int, str)
+        model = Gtk.ListStore(int, str)
         combobox.set_model(model)
 
         # Force the display comboboxes to be left aligned.
         #
-        if isinstance(combobox, gtk.ComboBoxEntry):
+        if isinstance(combobox, Gtk.ComboBoxText):
             size = combobox.size_request()
             cell.set_fixed_size(size[0] - 29, -1)
 
@@ -1999,14 +1979,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         model = self.keyBindingsModel
 
         myiter = model.append(None)
-        model.set(myiter,
-                  DESCRIP, appName,
-                  MODIF, False)
+        model.set_value(myiter, DESCRIP, appName)
+        model.set_value(myiter, MODIF, False)
 
         return myiter
 
     def _getIterOf(self, appName):
-        """Returns the gtk.TreeIter of the TreeStore model
+        """Returns the Gtk.TreeIter of the TreeStore model
         that matches the application name passed as argument
 
         Arguments:
@@ -2072,13 +2051,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         text = keybindings.getModifierNames(kb.modifiers) \
                                + kb.keysymstring \
                                + clickCount
-                    model.set(iterChild,
-                              MOD_MASK2, str(kb.modifier_mask),
-                              MOD_USED2, str(kb.modifiers),
-                              KEY2, kb.keysymstring,
-                              CLICK_COUNT2, str(kb.click_count),
-                              OLDTEXT2, text,
-                              TEXT2, text)
+
+
+                    model.set_value(iterChild, MOD_MASK2, str(kb.modifier_mask))
+                    model.set_value(iterChild, MOD_USED2, str(kb.modifiers))
+                    model.set_value(iterChild, KEY2, kb.keysymstring)
+                    model.set_value(iterChild, CLICK_COUNT2, str(kb.click_count))
+                    model.set_value(iterChild, OLDTEXT2, text)
+                    model.set_value(iterChild, TEXT2, text)
                 iterChild = model.iter_next(iterChild)
             myiter = model.iter_next(myiter)
 
@@ -2093,7 +2073,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - parent: the parent node of the treeview, where to append the kb
         - modif:  whether to check the modified field or not.
 
-        Returns a gtk.TreeIter pointing at the new row.
+        Returns a Gtk.TreeIter pointing at the new row.
         """
 
         model = self.keyBindingsModel
@@ -2110,17 +2090,19 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 text = keybindings.getModifierNames(kb.modifiers) \
                        + kb.keysymstring \
                        + clickCount
-            model.set (myiter,
-                       HANDLER,      handl,
-                       DESCRIP,      kb.handler.description,
-                       MOD_MASK1,    str(kb.modifier_mask),
-                       MOD_USED1,    str(kb.modifiers),
-                       KEY1,         kb.keysymstring,
-                       CLICK_COUNT1, str(kb.click_count),
-                       OLDTEXT1,     text,
-                       TEXT1,        text,
-                       MODIF,        modif,
-                       EDITABLE,     True)
+
+            model.set_value(myiter, HANDLER, handl)
+            model.set_value(myiter, DESCRIP, kb.handler.description)
+            model.set_value(myiter, MOD_MASK1, str(kb.modifier_mask))
+            model.set_value(myiter, MOD_USED1, str(kb.modifiers))
+            model.set_value(myiter, KEY1, kb.keysymstring)
+            model.set_value(myiter, CLICK_COUNT1, str(kb.click_count))
+            if text != None:
+                model.set_value(myiter, OLDTEXT1, text)
+                model.set_value(myiter, TEXT1, text)
+            model.set_value(myiter, MODIF, modif)
+            model.set_value(myiter, EDITABLE, True)
+
             return myiter
         else:
             return None
@@ -2136,7 +2118,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - parent:      the parent node of the treeview, where to append the kb
         - modif:       whether to check the modified field or not.
 
-        Returns a gtk.TreeIter pointing at the new row.
+        Returns a Gtk.TreeIter pointing at the new row.
         """
 
         model = self.keyBindingsModel
@@ -2151,13 +2133,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if parent != None:
             myiter = model.append(parent)
-            model.set (myiter,
-                       HANDLER,  handl,
-                       DESCRIP,  inputEvHand.description,
-                       KEY1,     str(com),
-                       TEXT1,    braille.command_name[com],
-                       MODIF,    modif,
-                       EDITABLE, False)
+            model.set_value(myiter, HANDLER, handl)
+            model.set_value(myiter, DESCRIP, inputEvHand.description)
+            model.set_value(myiter, KEY1, str(com))
+            model.set_value(myiter, TEXT1, braille.command_name[com])
+            model.set_value(myiter, MODIF, modif)
+            model.set_value(myiter, EDITABLE, False)
             return myiter
         else:
             return None
@@ -2198,7 +2179,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.keyBindView.set_model(None)
         self.keyBindView.set_headers_visible(False)
-        self.keyBindView.hide_all()
         self.keyBindView.hide()
         if clearModel:
             self.keyBindingsModel.clear()
@@ -2251,7 +2231,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.keyBindView.set_model(self.keyBindingsModel)
         self.keyBindView.set_headers_visible(True)
         self.keyBindView.expand_all()
-        self.keyBindingsModel.set_sort_column_id(OLDTEXT1, gtk.SORT_ASCENDING)
+        self.keyBindingsModel.set_sort_column_id(OLDTEXT1, Gtk.SortType.ASCENDING)
         self.keyBindView.show()
 
         # Keep track of new/unbound keybindings that have yet to be applied.
@@ -2284,12 +2264,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableSpeech"] = enable
-        self.get_widget("speechVbox").set_sensitive(enable)
+        self.get_widget("speechOptionsGrid").set_sensitive(enable)
 
     def onlySpeakDisplayedTextToggled(self, widget):
         """Signal handler for the "toggled" signal for the GtkCheckButton
         onlySpeakDisplayedText. In addition to updating the preferences,
-        set the sensitivity of the speechContextVBox.
+        set the sensitivity of the contextOptionsGrid.
 
         Arguments:
         - widget: the component that generated the signal.
@@ -2297,7 +2277,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         enable = widget.get_active()
         self.prefsDict["onlySpeakDisplayedText"] = enable
-        self.get_widget("speechContextVBox").set_sensitive(not enable)
+        self.get_widget("contextOptionsGrid").set_sensitive(not enable)
 
     def speechSystemsChanged(self, widget):
         """Signal handler for the "changed" signal for the speechSystems
@@ -2366,7 +2346,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             family = self.speechFamiliesChoices[selectedIndex]
             name = family[speechserver.VoiceFamily.NAME]
             language = family[speechserver.VoiceFamily.LOCALE]
-            voiceType = self.get_widget("voiceTypes").get_active()
+            voiceType = self.get_widget("voiceTypesCombo").get_active()
             self._setFamilyNameForVoiceType(voiceType, name, language)
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -2404,7 +2384,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         rate = widget.get_value()
-        voiceType = self.get_widget("voiceTypes").get_active()
+        voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setRateForVoiceType(voiceType, rate)
         voices = _settingsManager.getSetting('voices')
         voices[settings.DEFAULT_VOICE][acss.ACSS.RATE] = rate
@@ -2421,7 +2401,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         pitch = widget.get_value()
-        voiceType = self.get_widget("voiceTypes").get_active()
+        voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setPitchForVoiceType(voiceType, pitch)
         voices = _settingsManager.getSetting('voices')
         voices[settings.DEFAULT_VOICE][acss.ACSS.AVERAGE_PITCH] = pitch
@@ -2438,7 +2418,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         volume = widget.get_value()
-        voiceType = self.get_widget("voiceTypes").get_active()
+        voiceType = self.get_widget("voiceTypesCombo").get_active()
         self._setVolumeForVoiceType(voiceType, volume)
         voices = _settingsManager.getSetting('voices')
         voices[settings.DEFAULT_VOICE][acss.ACSS.GAIN] = volume
@@ -2457,7 +2437,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # The name of the setting that will be changed is: settingName
         # The id of the widget in the ui should be: settingNameCheckButton
         #
-        settingName = gtk.Buildable.get_name(widget)
+        settingName = Gtk.Buildable.get_name(widget)
         # strip "CheckButton" from the end.
         settingName = settingName[:-11] 
         self.prefsDict[settingName] = widget.get_active()
@@ -2645,7 +2625,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        orcaModifier = widget.get_active_text()
+        model = widget.get_model()
+        myIter = widget.get_active_iter()
+        orcaModifier = model[myIter][0]
         self.prefsDict["orcaModifierKeys"] = orcaModifier.split(', ')
 
     def progressBarVerbosityChanged(self, widget):
@@ -2657,7 +2639,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        progressBarVerbosity = widget.get_active_text()
+        model = widget.get_model()
+        myIter = widget.get_active_iter()
+        progressBarVerbosity = model[myIter][0]
+
         # Translators: Orca has a setting which determines which progress
         # bar updates should be announced. Choosing "All" means that Orca
         # will present progress bar updates regardless of what application
@@ -2693,7 +2678,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        sayAllStyle = widget.get_active_text()
+        model = widget.get_model()
+        myIter = widget.get_active_iter()
+        sayAllStyle = model[myIter][0]
+
         # Translators: If this setting is chosen and the user is reading
         # over an entire document, Orca will pause at the end of each
         # line.
@@ -2824,7 +2812,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
            speechProgressBarCheckButton GtkCheckButton widget.
            The user has [un]checked the "Speak progress bar updates" checkbox.
            Set the 'enableProgressBarUpdates' preference to the new value.
-           Set the rest of the 'update interval' hbox items [in]sensensitive
+           Set the rest of the 'update interval' items [in]sensensitive
            depending upon whether this checkbox is checked.
 
         Arguments:
@@ -2833,8 +2821,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         enable = widget.get_active()
         self.prefsDict["enableProgressBarUpdates"] = enable
-        self.get_widget("speakUpdateIntervalHBox").set_sensitive(enable)
-        self.get_widget("progressBarVerbosityHBox").set_sensitive(enable)
+        self.get_widget("progressBarUpdatesOptionsGrid").set_sensitive(enable)
 
     def speakProgressBarValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the
@@ -3026,9 +3013,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        self.prefsDict["presentToolTips"] = \
-            widget.get_active() \
-            and _settingsManager.getSetting('canPresentToolTips')
+        self.prefsDict["presentToolTips"] = widget.get_active()
 
     def keyboardLayoutChanged(self, widget):
         """Signal handler for the "toggled" signal for the generalDesktopButton,
@@ -3070,14 +3055,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        model, oldIter = self.pronunciationView.get_selection().get_selected()
+        model = self.pronunciationView.get_model()
         thisIter = model.append()
-
-        model.set(thisIter, ACTUAL, "", REPLACEMENT, "")
-        noRows = model.iter_n_children(None)
+        model.set(thisIter, ACTUAL, "", REPLACEMENT, "")        
+        path = model.get_path(thisIter)
         col = self.pronunciationView.get_column(0)
         self.pronunciationView.grab_focus()
-        self.pronunciationView.set_cursor(noRows-1, col, True) 
+        self.pronunciationView.set_cursor(path, col, True) 
 
     def pronunciationDeleteButtonClicked(self, widget):
         """Signal handler for the "clicked" signal for the
@@ -3191,8 +3175,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         [model, paths] = textSelection.get_selected_rows()
         for path in paths:
             thisIter = model.get_iter(path)
-            if path[0]:
-                otherIter = model.iter_nth_child(None, path[0]-1)
+            indices = path.get_indices()
+            if indices[0]:
+                otherIter = model.iter_nth_child(None, indices[0]-1)
                 model.swap(thisIter, otherIter)
         self._updateTextDictEntry()
 
@@ -3213,7 +3198,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         noRows = model.iter_n_children(None)
         for path in paths:
             thisIter = model.get_iter(path)
-            if path[0] < noRows-1:
+            indices = path.get_indices()
+            if indices[0] < noRows-1:
                 otherIter = model.iter_next(thisIter)
                 model.swap(thisIter, otherIter)
         self._updateTextDictEntry()
@@ -3367,15 +3353,15 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
+        if settings.showMainWindow:
+            orca.showMainWindowGUI()
+
         self.keyBindView.set_model(None)
         self.getTextAttributesView.set_model(None)
         self.pronunciationView.set_model(None)
         self.keyBindView.set_headers_visible(False)
         self.getTextAttributesView.set_headers_visible(False)
         self.pronunciationView.set_headers_visible(False)
-        self.keyBindView.hide_all()
-        self.getTextAttributesView.hide_all()
-        self.pronunciationView.hide_all()
         self.keyBindView.hide()
         self.getTextAttributesView.hide()
         self.pronunciationView.hide()
@@ -3420,17 +3406,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                             "Continue updating the existing profile with " \
                             "these new changes?") % profileToSaveLabel
 
-                dialog = gtk.MessageDialog(None,
-                        gtk.DIALOG_MODAL,
-                        type=gtk.MESSAGE_INFO,
-                        buttons=gtk.BUTTONS_YES_NO)
+                dialog = Gtk.MessageDialog(None,
+                        Gtk.DialogFlags.MODAL,
+                        type=Gtk.MessageType.INFO,
+                        buttons=Gtk.ButtonsType.YES_NO)
 
                 dialog.set_markup(_("<b>User Profile Conflict!</b>"))
                 dialog.format_secondary_markup(message)
                 dialog.set_title(_("Save Profile As Conflict"))
                 response = dialog.run()
 
-                if response == gtk.RESPONSE_YES:
+                if response == Gtk.ResponseType.YES:
                     dialog.destroy()
                     saveActiveProfile(False)
                 else:
@@ -3449,17 +3435,17 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                     "be dropped at profile load.\n\n" \
                     "Continue loading profile discarding previous changes?")
 
-        dialog = gtk.MessageDialog(None,
-                gtk.DIALOG_MODAL,
-                type=gtk.MESSAGE_INFO,
-                buttons=gtk.BUTTONS_YES_NO)
+        dialog = Gtk.MessageDialog(None,
+                Gtk.DialogFlags.MODAL,
+                type=Gtk.MessageType.INFO,
+                buttons=Gtk.ButtonsType.YES_NO)
 
         dialog.set_markup(_("<b>Load user profile info</b>"))
         dialog.format_secondary_markup(message)
         dialog.set_title(_("Load User Profile"))
         response = dialog.run()
 
-        if response == gtk.RESPONSE_YES:
+        if response == Gtk.ResponseType.YES:
             dialog.destroy()
             self.loadSelectedProfile()
         else:
@@ -3489,39 +3475,40 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         self.__initProfileCombo()
 
-class WarningDialogGUI(orca_gtkbuilder.GtkBuilderWrapper):
+class WarningDialogGUI(Gtk.MessageDialog):
 
-    def getPrefsWarningDialog(self):
-        """Return a handle to the Orca Preferences warning dialog.
-        """
+    def __init__(self):
+        Gtk.MessageDialog.__init__(self)
+        self.set_property('message-type', Gtk.MessageType.INFO)
+        msg = _('You already have an instance of an Orca preferences dialog ' \
+                'open.\nPlease close it before opening a new one.')
+        self.set_property('text', msg)
 
-        return self.orcaPrefsWarningDialog
+        self.add_button('gtk-ok', Gtk.ResponseType.OK)
+        self.connect('response', self.onResponse)
+        self.connect('destroy', self.onDestroy)
 
-    def orcaPrefsWarningDialogDestroyed(self, widget):
-        """Signal handler for the "destroyed" signal for the 
-        orcaPrefsWarningDialog GtkWindow widget. Reset orca_state.orcaWD
-        to None, so that the GUI can be rebuilt from the GtkBuilder file the
-        next time that this warning dialog has to be displayed.
+    def init(self):
+        pass
 
-        Arguments:
-        - widget: the component that generated the signal.
-        """
+    def showGUI(self):
+        """Show the Warning dialog."""
+
+        ts = orca_state.lastInputEventTimestamp
+        if ts == 0:
+            ts = Gtk.get_current_event_time()
+        self.present_with_time(ts)
+
+    def onResponse(self, widget, response):
+        """Signal handler for the responses emitted by the dialog."""
+
+        if response == Gtk.ResponseType.OK:
+            self.destroy()
+
+    def onDestroy(self, widget):
+        """Signal handler for the 'destroy' signal of the Warning dialog."""
 
         orca_state.orcaWD = None
-
-    def orcaPrefsWarningDialogOKButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the
-        orcaPrefsWarningDialogOKButton GtkButton widget. The user has clicked
-        the OK button in the Orca Application Preferences warning dialog.
-        This dialog informs the user that they already have an instance
-        of an Orca preferences dialog open, and that they will need to 
-        close it before opening a new one.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.orcaPrefsWarningDialog.destroy()
 
 def showPreferencesUI():
     if not orca_state.appOS and not orca_state.orcaOS:
@@ -3548,30 +3535,18 @@ def showPreferencesUI():
         orca_state.orcaOS = OrcaSetupGUI(orca_state.prefsUIFile,
                                          "orcaSetupWindow", prefsDict)
         orca_state.orcaOS.init()
+        orca_state.orcaOS.showGUI()
     else:
         if not orca_state.orcaWD:
-            orca_state.orcaWarningDialogUIFile = \
-                os.path.join(orca_platform.prefix,
-                             orca_platform.datadirname,
-                             orca_platform.package,
-                             "ui",
-                             "orca-preferences-warning.ui")
-            orca_state.orcaWD = \
-                WarningDialogGUI(orca_state.orcaWarningDialogUIFile,
-                                 "orcaPrefsWarningDialog")
-            warningDialog = orca_state.orcaWD.getPrefsWarningDialog()
-            warningDialog.realize()
-            warningDialog.show()
-        return
-
-    orca_state.orcaOS.showGUI()
+            orca_state.orcaWD = WarningDialogGUI()
+        orca_state.orcaWD.showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')
 
     showPreferencesUI()
 
-    gtk.main()
+    Gtk.main()
     sys.exit(0)
 
 if __name__ == "__main__":

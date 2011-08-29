@@ -31,8 +31,8 @@ Building Orca also requires the development modules for the following
 to be installed:
 
 * Python           - Python platform
-* pygtk            - GTK+ Python bindings
-* pygobject        - Python bindings for the GObject library
+* pygobject-3.0    - Python bindings for the GObject library
+* gtk+-3.0         - Gtk+ toolkit
 * json-py          - a JSON (http://json.org) reader and writer in Python
 * pyxdg            - Python library to access freedesktop.org standards
 * python-speechd   - Python bindings for Speech Dispatcher (optional)

@@ -262,7 +262,7 @@ class Script:
             return self.bookmarks
 
     def getAppPreferencesGUI(self):
-        """Return a GtkVBox contain the application unique configuration
+        """Return a GtkGrid containing the application unique configuration
         GUI items for the current application.
         """
         return None
@@ -446,8 +446,8 @@ class Script:
         """
 
         try:
-            import gtk.gdk as gdk
-            keyboardEvent.keyval_name = gdk.keyval_name(keyboardEvent.id)
+            from gi.repository import Gdk
+            keyboardEvent.keyval_name = Gdk.keyval_name(keyboardEvent.id)
         except:
             debug.println(debug.LEVEL_FINE,
                           "Could not obtain keyval_name for id: %d" \

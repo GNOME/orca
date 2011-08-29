@@ -418,7 +418,7 @@ class OrcaPrefs:
         Arguments:
         - prefs: text string - file to write the key binding to.
         - tupl:    tuple     - a tuple with the values of the
-                                 keybinding (gtk.TreeStore model columns)
+                                 keybinding (Gtk.TreeStore model columns)
         """
 
         prefs.writelines("   keyB.removeByHandler(script.inputEventHandlers['" \

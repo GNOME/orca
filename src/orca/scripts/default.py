@@ -1829,8 +1829,8 @@ class Script(script.Script):
             self.utilities.adjustTextSelection(obj, caretOffset)
             texti = obj.queryText()
             startOffset, endOffset = texti.getSelection(0)
-            import gtk
-            clipboard = gtk.clipboard_get()
+            from gi.repository import Gtk
+            clipboard = Gtk.clipboard_get()
             clipboard.set_text(texti.getText(startOffset, endOffset))
 
         return True

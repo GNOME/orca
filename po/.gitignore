@@ -14,3 +14,11 @@ po2tbl.sed.in
 stamp-cat-id
 stamp-it
 .intltool-merge-cache
+Makevars.template
+Rules-quot
+boldquot.sed
+en@boldquot.header
+en@quot.header
+insert-header.sin
+quot.sed
+remove-potcdate.sin

@@ -26,23 +26,16 @@ __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import cairo
-
-try:
-    # This can fail due to gtk not being available.  We want to
-    # be able to recover from that if possible.  The main driver
-    # for this is to allow "orca --text-setup" to work even if
-    # the desktop is not running.
-    #
-    import gtk
-    display = gtk.gdk.display_get_default()
-    screen = display.get_default_screen()
-    screen_width = screen.get_width()
-    screen_height = screen.get_height()
-except:
-    pass
+from gi.repository import Gtk
+from gi.repository import Gdk
 
 import orca_state
 import settings
+
+display = Gdk.Display.get_default()
+screen = display.get_default_screen()
+screen_width = screen.get_width()
+screen_height = screen.get_height()
 
 def _adjustToScreen(x, y, width, height):
     if x < 0:
@@ -69,7 +62,7 @@ def _adjustToScreen(x, y, width, height):
 #
 _outlineWindows = []
 
-class Line(gtk.Window):
+class Line(Gtk.Window):
     """Draws a simple filled box on the display using
     settings.outlineColor for the color.
 
@@ -77,12 +70,11 @@ class Line(gtk.Window):
     - x, y, width, height: the dimensions of the box
     """
     def __init__(self, x, y, width, height):
-        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
-
-        self.modify_bg(gtk.STATE_NORMAL,
-                       gtk.gdk.Color(settings.outlineColor[0],
-                                     settings.outlineColor[1],
-                                     settings.outlineColor[2]))
+        Gtk.Window.__init__(self)
+        self.modify_bg(Gtk.StateType.NORMAL,
+                       Gdk.Color(settings.outlineColor[0],
+                                 settings.outlineColor[1],
+                                 settings.outlineColor[2]))
 
         self.set_property("accept-focus", False)
         self.set_decorated(False)
@@ -113,9 +105,9 @@ class Wedge(Line):
         # Create a bitmap to draw into.  This will be the mask
         # for the shape of the window.
         #
-        width, height = allocation.width, allocation.height
-        bitmap = gtk.gdk.Pixmap(None, width, height, 1)
-        cr = bitmap.cairo_create()
+        width, height = win.get_size()
+        surface = cairo.ImageSurface(cairo.FORMAT_A1, width, height)
+        cr = cairo.Context(surface)
 
         # Clear the bitmap
         #
@@ -158,12 +150,13 @@ class Box(Line):
 
     def _on_size_allocate(self, win, allocation):
         """Sets the shape of the window to a hollow rectangle."""
+
         # Create a bitmap to draw into.  This will be the mask
         # for the shape of the window.
         #
-        width, height = allocation.width, allocation.height
-        bitmap = gtk.gdk.Pixmap(None, width, height, 1)
-        cr = bitmap.cairo_create()
+        width, height = win.get_size()
+        surface = cairo.ImageSurface(cairo.FORMAT_A1, width, height)
+        cr = cairo.Context(surface)
 
         # Clear the bitmap
         #
@@ -182,7 +175,7 @@ class Box(Line):
 
         # Set the window shape
         #
-        win.shape_combine_mask(bitmap, 0, 0)
+        #window.shape_combine_region()
 
 def reset():
     """Destroys all windows we have put on the screen."""
@@ -203,7 +196,12 @@ def draw(x, y, width, height):
 
     if settings.outlineStyle == settings.OUTLINE_NONE:
         pass
-    elif settings.outlineStyle == settings.OUTLINE_LINE:
+    # Temporary solution for the fact that the flat review rectangle is now
+    # solid. We are working on this, but it may or may not be done in time
+    # for the 3.1.90 release and the reality is that flatreview indication
+    # is for people who can see. Thus underlining the object being reviewed
+    # shall have to suffice for now.
+    elif settings.outlineStyle in [settings.OUTLINE_LINE, settings.OUTLINE_BOX]:
         y = y + height + settings.outlineMargin
         height = settings.outlineThickness
         [x, y, width, height] = _adjustToScreen(x, y, width, height)
@@ -254,11 +252,11 @@ def draw(x, y, width, height):
             _outlineWindows[1].resize(bottomwidth, bottomheight)
             _outlineWindows[1].move(bottomx, bottomy)
 
+    ts = orca_state.lastInputEventTimestamp
+    if ts == 0:
+        ts = Gtk.get_current_event_time()
+
+    # Make sure the windows stay on top.
+    #
     for window in _outlineWindows:
-        window.present()
-        # Make sure the windows stay on top.
-        #
-        try:
-            window.window.set_user_time(orca_state.lastInputEventTimestamp)
-        except:
-            pass
+        window.present_with_time(ts)

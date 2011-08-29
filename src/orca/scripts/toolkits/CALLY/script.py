@@ -25,10 +25,11 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Igalia, S.L."
 __license__   = "LGPL"
 
+from gi.repository import Gdk
+
 import orca.orca as orca
 import orca.scripts.default as default
 import orca.debug as debug
-import gtk.gdk as gdk
 
 # Set with non printable unicode categories. Full table:
 # http://www.fileformat.info/info/unicode/category/index.htm
@@ -135,12 +136,11 @@ class Script(default.Script):
         #
         keyval = keyboardEvent.id
         try:
-            keymap = gdk.keymap_get_default()
+            keymap = Gdk.Keymap.get_default()
 
-            if (keymap):
-                result = keymap.get_entries_for_keyval (keyval)
-                group = result[0][2]
-
+            if keymap:
+                success, entries = keymap.get_entries_for_keyval(keyval)
+                group = entries[0].group
                 keyval, egroup, level, consumed = \
                 keymap.translate_keyboard_state (keyboardEvent.hw_code,
                                                  keyboardEvent.modifiers,
@@ -157,14 +157,14 @@ class Script(default.Script):
         keyboardEvent.id = keyval
 
         # if cally doesn't provide a event_string we get that using
-        # gdk. I know that it will probably called again computing
+        # Gdk. I know that it will probably called again computing
         # keyval_name but to simplify code, and not start to add
         # guess-code here I will maintain that in this way
         #
         if (keyboardEvent.event_string == ""):
             debug.println (debug.LEVEL_FINE, "Computing event_string")
             try:
-                keyboardEvent.event_string = gdk.keyval_name (keyboardEvent.id)
+                keyboardEvent.event_string = Gdk.keyval_name(keyboardEvent.id)
             except:
                 debug.println(debug.LEVEL_FINE,
                               "Could not obtain keyval_name for id: %d" \

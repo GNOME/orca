@@ -44,8 +44,8 @@ import debug
 #
 _isActive = False
 
-import gtk
-_display = gtk.gdk.display_get_default()
+from gi.repository import Gdk
+_display = Gdk.Display.get_default()
 _screen = _display.get_default_screen()
 _screenWidth = _screen.get_width()
 _screenHeight = _screen.get_height()

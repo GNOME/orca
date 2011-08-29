@@ -35,12 +35,10 @@ import time
 import unicodedata
 import shutil
 
-# This must happen BEFORE we import gtk (until we start using
-# introspection).
 from gi.repository.Gio import Settings
 a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')      
 
-# We're going to force the name of the app to "orca" so pygtk
+# We're going to force the name of the app to "orca" so we
 # will end up showing us as "orca" to the AT-SPI.  If we don't
 # do this, the name can end up being "-c".  See bug 364452 at
 # http://bugzilla.gnome.org/show_bug.cgi?id=364452 for more
@@ -48,15 +46,14 @@ a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')
 #
 sys.argv[0] = "orca"
 import pyatspi
-import pygtk
-pygtk.require('2.0')
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
     # for this is to allow "orca --text-setup" to work even if
     # the desktop is not running.
     #
-    import gtk
+    from gi.repository import Gtk
+    from gi.repository import Gdk
 except:
     pass
 
@@ -99,7 +96,7 @@ class Options:
 
         self.desktopRunning = False
         try:
-            if gtk.gdk.display_get_default():
+            if Gdk.Display.get_default():
                 self.desktopRunning = True
         except:
             pass
@@ -1161,12 +1158,12 @@ def _processKeyCaptured(event):
             # If it's not on the keypad, get the name of the unshifted
             # character. (i.e. "1" instead of "!")
             #
-            keymap = gtk.gdk.keymap_get_default()
-            entries = keymap.get_entries_for_keycode(event.hw_code)
-            event.event_string = gtk.gdk.keyval_name(entries[0][0])
+            keymap = Gdk.Keymap.get_default()
+            success, entries = keymap.get_entries_for_keycode(event.hw_code)
+            event.event_string = Gdk.keyval_name(entries[0].keycode)
             if event.event_string.startswith("KP") and \
                event.event_string != "KP_Enter":
-                name = gtk.gdk.keyval_name(entries[1][0])
+                name = Gdk.keyval_name(entries[1].keycode)
                 if name.startswith("KP"):
                     event.event_string = name
 
@@ -1694,9 +1691,9 @@ def helpForOrca(script=None, inputEvent=None, page=""):
     uri = "ghelp:orca"
     if page:
         uri += "?%s" % page
-    gtk.show_uri(gtk.gdk.screen_get_default(),
+    Gtk.show_uri(Gdk.Screen.get_default(),
                  uri,
-                 gtk.get_current_event_time())
+                 Gtk.get_current_event_time())
     return True
 
 def listShortcuts(event):

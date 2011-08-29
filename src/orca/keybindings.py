@@ -26,15 +26,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-try:
-    # This can fail due to gtk not being available.  We want to
-    # be able to recover from that if possible.  The main driver
-    # for this is to allow "orca --text-setup" to work even if
-    # the desktop is not running.
-    #
-    import gtk
-except ImportError:
-    pass
+from gi.repository import Gdk
 
 import pyatspi
 import debug
@@ -58,7 +50,7 @@ def getAllKeysyms(keysym):
 
         # Find the numerical value of the keysym
         #
-        keyval = gtk.gdk.keyval_from_name(keysym)
+        keyval = Gdk.keyval_from_name(keysym)
 
         if keyval != 0:
             # Find the keycodes for the keysym.  Since a keysym
@@ -67,8 +59,9 @@ def getAllKeysyms(keysym):
             # level (each entry is of the form [keycode, group,
             # level]).
             #
-            keymap = gtk.gdk.keymap_get_default()
-            entries = keymap.get_entries_for_keyval(keyval)
+            keymap = Gdk.Keymap.get_default()
+            success, entries = keymap.get_entries_for_keyval(keyval)
+
             keycode = 0
             if entries:
                 for entry in entries:
@@ -80,13 +73,12 @@ def getAllKeysyms(keysym):
             # we are looking for.
             #
             if keycode != 0:
-                entries = keymap.get_entries_for_keycode(keycode)
-                if entries:
-                    for entry in entries:
-                        keyval = entry[0]
-                        name = gtk.gdk.keyval_name(keyval)
-                        if name and (name != keysym):
-                            _keysymsCache[keysym].append(name)
+                success, entries = keymap.get_entries_for_keycode(keycode)
+                for entry in entries:
+                    keyval = entry[0]
+                    name = Gdk.keyval_name(keyval)
+                    if name and (name != keysym):
+                        _keysymsCache[keysym].append(name)
 
     return _keysymsCache[keysym]
 
@@ -120,11 +112,11 @@ def getKeycode(keysym):
         return 0
 
     if keysym not in _keycodeCache:
-        keymap = gtk.gdk.keymap_get_default()
+        keymap = Gdk.Keymap.get_default()
 
         # Find the numerical value of the keysym
         #
-        keyval = gtk.gdk.keyval_from_name(keysym)
+        keyval = Gdk.keyval_from_name(keysym)
         if keyval == 0:
             return 0
 
@@ -134,14 +126,14 @@ def getKeycode(keysym):
         # entry is of the form [keycode, group, level]).
         #
         _keycodeCache[keysym] = 0
-        entries = keymap.get_entries_for_keyval(keyval)
-        if entries:
-            for entry in entries:
-                if entry[1] == 0:  # group = 0
-                    _keycodeCache[keysym] = entry[0]
-                    break
-                if _keycodeCache[keysym] == 0:
-                    _keycodeCache[keysym] = entries[0][0]
+        success, entries = keymap.get_entries_for_keyval(keyval)
+
+        for entry in entries:
+            if entry.group == 0:
+                _keycodeCache[keysym] = entry.keycode
+                break
+            if _keycodeCache[keysym] == 0:
+                _keycodeCache[keysym] = entries[0].keycode
 
         #print keysym, keyval, entries, _keycodeCache[keysym]
 
