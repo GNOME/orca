@@ -1,3 +1,40 @@
+3.1.90 - 29 August 2011
+
+General
+
+  * Fix for bug 626254 - Migrate from PyGTK to PyGObject introspection-
+    based bindings
+
+  * Fix for bug 652485 - Remove deprecated (or soon-to-be deprecated)
+    GtkBox, GtkTable, etc. and use GtkGrid instead.
+
+  * Fix for bug 657646 - Default stopSpeechOnActiveDescendantChanged()
+    should not be so restrictive
+
+  * Fix for bug 657579 - Orca should not present tooltips shown as a
+    result of mouse hovering unless the 'present tooltips' setting is
+    enabled
+
+Gecko
+
+  * Fix for bug 599361 - Significant delay building up the contents
+    of certain lines in Firefox
+
+  * Fix for bug 650904 - Work around AT-SPI2 caching issues with
+    Thunderbird
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan              Gil Forcada 
+    de            German               Mario Blättermann
+    es            Spanish              Gonzalo Sanhueza, Jorge González
+    id            Indonesian           Andika Triwidada
+    nb            Norwegian bokmål     Kjartan Maraas
+    sr            Serbian              Miroslav Nikolić
+    ug            Uyghur               Abduxukur Abdurixit, Sahran
+
+=========
+
 3.1.5 - 15 August 2011
 
 General

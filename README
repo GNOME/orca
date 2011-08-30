@@ -1,4 +1,4 @@
-Orca v3.1.90pre
+Orca v3.1.90
 
 Introduction
 ========================================================================
@@ -40,7 +40,7 @@ to be installed:
 * BrlAPI           - BrlAPI support for braille (optional)
 
 YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 3.1.x DEVELOPMENT
-RELEASES.  THEY MAY CONTAIN VERY IMPORTANT BUG FIXES!
+RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
 on your machine, you should set the PYTHON environment variable when 
