@@ -4582,6 +4582,18 @@ class Script(script.Script):
         if not event.any_data:
             return True
 
+        # In an object which manages its descendants, the
+        # 'descendants' may really be a single object which changes
+        # its name. If the name-change occurs followed by the active
+        # descendant changing (to the same object) we won't present
+        # the locusOfFocus because it hasn't changed. Thus we need to
+        # be sure not to cut of the presentation of the name-change
+        # event.
+
+        if orca_state.locusOfFocus == event.any_data and \
+                event.any_data.name == self.pointOfReference.get('oldName'):
+            return False
+
         if event.source == orca_state.locusOfFocus == event.any_data.parent:
             return False
 
