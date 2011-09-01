@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-08-31 20:50+0000\n"
-"PO-Revision-Date: 2011-09-01 19:48+0200\n"
+"POT-Creation-Date: 2011-09-01 17:49+0000\n"
+"PO-Revision-Date: 2011-09-01 19:54+0200\n"
 "Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2517,7 +2517,6 @@ msgid "<b>Results must:</b>"
 msgstr "<b>Los resultados deben:</b>"
 
 #: ../src/orca/orca-find.ui.h:2
-#| msgid "<b>Start from:</b>"
 msgid "<b>Search direction:</b>"
 msgstr "<b>Dirección de búsqueda:</b>"
 
@@ -2590,7 +2589,6 @@ msgid "_Wrap around"
 msgstr "_Salto"
 
 #: ../src/orca/orca_gui_main.py:44
-#| msgid "Orca Screen Reader / Magnifier"
 msgid "Orca Screen Reader"
 msgstr "Lector de pantalla Orca"
 
@@ -2614,12 +2612,6 @@ msgstr ""
 #. Translators: This text is used in the Orca About dialog.
 #.
 #: ../src/orca/orca_gui_main.py:113
-#| msgid ""
-#| "Copyright (c) 2005-2010 Sun Microsystems Inc. \n"
-#| "Copyright (c) 2005-2008 Google Inc. \n"
-#| "Copyright (c) 2008, 2009 Eitan Isaacson \n"
-#| "Copyright (c) 2006-2009 Brailcom, o.p.s. \n"
-#| "Copyright (c) 2001, 2002 BAUM Retec, A.G."
 msgid ""
 "Copyright (c) 2010-2011 The Orca Team \n"
 "Copyright (c) 2010 Consorcio Fernando de los Rios \n"
@@ -3120,10 +3112,6 @@ msgid "Load User Profile"
 msgstr "Cargar Perfil de Usuario"
 
 #: ../src/orca/orca_gui_prefs.py:3483
-#| msgid ""
-#| "You already have an instance of an Orca preferences dialog open.\n"
-#| "\n"
-#| "Please close it before opening a new one."
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -3163,15 +3151,10 @@ msgid "_Profile Name:"
 msgstr "Nombre del _perfil:"
 
 #: ../src/orca/orca_gui_quit.py:45
-#| msgid "Quits Orca"
 msgid "Quit Orca?"
 msgstr "¿Salir de Orca?"
 
 #: ../src/orca/orca_gui_quit.py:47
-#| msgid ""
-#| "<b><big>Quit Orca?</big></b>\n"
-#| "\n"
-#| "This will stop all speech and braille output."
 msgid "This will stop all speech and braille output."
 msgstr "Esto finalizará toda la salida de voz y de Braille."
 
@@ -3576,12 +3559,10 @@ msgid "<b>Braille Indicator</b>"
 msgstr "<b>Indicador Braille</b>"
 
 #: ../src/orca/orca-setup.ui.h:4
-#| msgid "<b>Color Settings</b>"
 msgid "<b>Display Settings</b>"
 msgstr "<b>Configuración de pantalla</b>"
 
 #: ../src/orca/orca-setup.ui.h:5
-#| msgid "<b>Color Settings</b>"
 msgid "<b>Global Voice Settings</b>"
 msgstr "<b>Configuración global de voz</b>"
 
@@ -3594,8 +3575,6 @@ msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Distribución de teclado</b>"
 
 #: ../src/orca/orca-setup.ui.h:8
-#| msgctxt "Magnification"
-#| msgid "<b>Border</b>"
 msgid "<b>Mouse</b>"
 msgstr "<b>Ratón</b>"
 
@@ -3621,7 +3600,6 @@ msgid "<b>Selection Indicator</b>"
 msgstr "<b>Indicador de selección</b>"
 
 #: ../src/orca/orca-setup.ui.h:15
-#| msgid "<b>Contrast</b>"
 msgid "<b>Spoken Context</b>"
 msgstr "<b>Contexto hablado</b>"
 
@@ -3635,12 +3613,10 @@ msgid "<b>Text attributes</b>"
 msgstr "<b>Atributos de texto</b>"
 
 #: ../src/orca/orca-setup.ui.h:19
-#| msgid "<b>Braille Indicator</b>"
 msgid "<b>Time and Date</b>"
 msgstr "<b>Fecha y hora</b>"
 
 #: ../src/orca/orca-setup.ui.h:20
-#| msgid "<b>Contrast</b>"
 msgid "<b>User Interface</b>"
 msgstr "<b>Interfaz de usuario</b>"
 
@@ -3649,9 +3625,8 @@ msgid "<b>Verbosity</b>"
 msgstr "<b>Cantidad de información</b>"
 
 #: ../src/orca/orca-setup.ui.h:22
-#| msgid "<b>Color Settings</b>"
 msgid "<b>Voice Type Settings</b>"
-msgstr ""
+msgstr "<b>Configuración del tipo de voz</b>"
 
 #: ../src/orca/orca-setup.ui.h:23
 msgid "Active _Profile:"
@@ -3930,7 +3905,6 @@ msgid "Vo_lume:"
 msgstr "_Volumen:"
 
 #: ../src/orca/orca-setup.ui.h:118
-#| msgid "soffice"
 msgid "Voice"
 msgstr "Voz"
 
@@ -3998,7 +3972,6 @@ msgid "_Time format:"
 msgstr "Formato de _hora:"
 
 #: ../src/orca/orca-setup.ui.h:136
-#| msgid "_Voice settings:"
 msgid "_Voice Type:"
 msgstr "Tipo de _voz:"
 
