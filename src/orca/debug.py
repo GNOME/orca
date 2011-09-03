@@ -197,9 +197,17 @@ def println(level, text = ""):
 
     if level >= debugLevel:
         if debugFile:
-            debugFile.writelines([text, "\n"])
+            try:
+                debugFile.writelines([text, "\n"])
+            except TypeError:
+                text = "TypeError when trying to write text"
+                debugFile.writelines([text, "\n"])
         else:
-            sys.stderr.writelines([text, "\n"])
+            try:
+                sys.stderr.writelines([text, "\n"])
+            except TypeError:
+                text = "TypeError when trying to write text"
+                sys.stderr.writelines([text, "\n"])
 
 def printObjectEvent(level, event, sourceInfo=None):
     """Prints out an Python Event object.  The given level may be
