@@ -179,6 +179,20 @@ class SpeechGenerator(generator.Generator):
                 result.extend(acss)
         return result
 
+    def _generatePlaceholderText(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the 'placeholder' text. This is typically text that
+        serves as a functional label and is found in a text widget until
+        that widget is given focus at which point the text is removed,
+        the assumption being that the user was able to see the text prior
+        to giving the widget focus.
+        """
+        acss = self.voice(DEFAULT)
+        result = generator.Generator._generatePlaceholderText(self, obj, **args)
+        if result:
+            result.extend(acss)
+        return result
+
     def _generateDescription(self, obj, **args):
         """Returns an array of strings fo use by speech and braille that
         represent the description of the object, if that description
