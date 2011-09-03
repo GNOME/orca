@@ -2447,7 +2447,12 @@ class Utilities:
         """
 
         newLine = ""
-        words = self.WORDS_RE.split(line.decode("UTF-8"))
+        try:
+            line = line.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
+
+        words = self.WORDS_RE.split(line)
         for word in words:
             if word.isalnum():
                 word = self._pronunciationForSegment(word)
@@ -2480,7 +2485,10 @@ class Utilities:
         Returns: a new line adjusted for repeat character counts (if enabled).
         """
 
-        line = line.decode("UTF-8")
+        try:
+            line = line.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
 
         if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
             return line.encode("UTF-8")

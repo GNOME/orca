@@ -286,7 +286,10 @@ class SpeechServer(speechserver.SpeechServer):
         #
         spokenEllipsis = _(" dot dot dot")
         newText = re.sub(ELLIPSIS, spokenEllipsis, oldText)
-        newText = newText.decode("UTF-8")
+        try:
+            newText = newText.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
 
         symbols = set(re.findall(PUNCTUATION, newText))
         for symbol in symbols:

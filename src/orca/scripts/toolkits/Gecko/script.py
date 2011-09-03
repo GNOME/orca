@@ -5027,7 +5027,11 @@ class Script(default.Script):
                 # So far so good. If the line doesn't begin with an EOC, we
                 # have our first character for this object.
                 #
-                if not line.startswith(self.EMBEDDED_OBJECT_CHARACTER):
+                try:
+                    isEOC = line.startswith(self.EMBEDDED_OBJECT_CHARACTER)
+                except:
+                    isEOC = False
+                if not isEOC:
                     offset = start
                 else:
                     # The line may begin with a link, or it may begin with
@@ -5202,11 +5206,17 @@ class Script(default.Script):
     #
     def getACSS(self, obj, string):
         """Returns the ACSS to speak anything for the given obj."""
+
+        try:
+            string = string.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
+
         if obj.getRole() == pyatspi.ROLE_LINK:
             acss = self.voices[settings.HYPERLINK_VOICE]
         elif string and isinstance(string, basestring) \
-            and string.decode("UTF-8").isupper() \
-            and string.decode("UTF-8").strip().isalpha():
+            and string.isupper() \
+            and string.strip().isalpha():
             acss = self.voices[settings.UPPERCASE_VOICE]
         else:
             acss = self.voices[settings.DEFAULT_VOICE]

@@ -351,9 +351,14 @@ class Region:
 
         self.expandOnCursor = expandOnCursor
 
+        try:
+            string = string.decode("UTF-8")
+        except UnicodeEncodeError:
+            debug.printException(debug.LEVEL_SEVERE)
+
         # The uncontracted string for the line.
         #
-        self.rawLine = string.decode("UTF-8").strip("\n")
+        self.rawLine = string.strip("\n")
 
         if self.contracted:
             self.contractionTable = settings.brailleContractionTable or \
