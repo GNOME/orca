@@ -310,6 +310,19 @@ class Generator:
 
         return result
 
+    def _generatePlaceholderText(self, obj, **args):
+        """Returns an array of strings for use by speech and braille that
+        represent the 'placeholder' text. This is typically text that
+        serves as a functional label and is found in a text widget until
+        that widget is given focus at which point the text is removed,
+        the assumption being that the user was able to see the text prior
+        to giving the widget focus.
+        """
+        result = filter(lambda x:
+                        x.startswith('placeholder-text:'),
+                        obj.getAttributes())
+        return map(lambda x: x.replace('placeholder-text:', ''), result)
+
     def _generateLabelAndName(self, obj, **args):
         """Returns the label and the name as an array of strings for speech
         and braille.  The name will only be present if the name is
