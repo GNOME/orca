@@ -22,8 +22,7 @@
     <p>
       The <gui>Enable speech</gui> check box controls whether or not
       <app>Orca</app> will make use of a speech synthesizer.
-      Magnification-only and Braille-only users will likely want to
-      uncheck this checkbox.
+      Braille-only users will likely want to uncheck this checkbox.
     </p>
   </section>
   <section id="tts_options">

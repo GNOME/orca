@@ -23,14 +23,12 @@ DOC_FIGURES = \
 	figures/preferences_disable_gksu_keyboard_grab.png \
 	figures/preferences_enable_braille_monitor.png \
 	figures/preferences_enable_braille_support.png \
-	figures/preferences_enable_magnifier.png \
 	figures/preferences_enable_speech.png \
 	figures/preferences_gecko_find_options.png \
 	figures/preferences_gecko_page_navigation.png \
 	figures/preferences_key_bindings_table.png \
 	figures/preferences_keyboard_layout.png \
 	figures/preferences_key_echo.png \
-	figures/preferences_magnifier_advanced.png \
 	figures/preferences_only_speak_displayed_text.png \
 	figures/preferences_Orca_modifier_keys.png \
 	figures/preferences_present_tooltips.png \
@@ -69,7 +67,6 @@ DOC_PAGES = \
 	commands_find.page \
 	commands_flat_review.page \
 	commands_live_regions.page \
-	commands_magnifier.page \
 	commands_mouse.page \
 	commands.page \
 	commands_reading.page \
@@ -107,7 +104,6 @@ DOC_PAGES = \
 	preferences_introduction.page \
 	preferences_key_bindings.page \
 	preferences_key_echo.page \
-	preferences_magnifier.page \
 	preferences.page \
 	preferences_pronunciation.page \
 	preferences_speech.page \

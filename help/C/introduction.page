@@ -18,12 +18,11 @@
   <p>
     <app>Orca</app> is a free, open source, flexible, and extensible
     screen reader that provides access to the graphical desktop via
-    user-customizable combinations of speech, braille, and/or
-    magnification.
+    speech and refreshable braille.
   </p>
   <p>
     <app>Orca</app> works with applications and toolkits that support
-    the assistive technology service provider interface (AT-SPI), which
+    the Assistive Technology Service Provider Interface (AT-SPI), which
     is the primary assistive technology infrastructure for Linux and
     Solaris. Applications and toolkits supporting the AT-SPI include the
     GNOME Gtk+ toolkit, the Java platform's Swing toolkit, OpenOffice,
@@ -43,17 +42,11 @@
       </item>
       <item>
         <p>
-          Configure <app>Orca</app> to launch automatically, by enabling
-          this option in <app>Orca</app>'s <link xref="howto_text_setup">text
-          setup</link> or on the <gui>General</gui> page of <app>Orca</app>'s
-          <link xref="preferences">Preferences dialog</link>.
-        </p>
-      </item>
-      <item>
-        <p>
-          Configure <app>Orca</app> to be launched automatically as your
-          preferred screen reader by choosing this option in GNOME's
-          <gui>Assistive Technology Preferences</gui> dialog.
+          The method for configuring <app>Orca</app> to be launched
+          automatically as your preferred screen reader will depend upon
+          which desktop environment you use. For instance, in GNOME 3.x
+          this option can be found in the Universal Access Control Center
+          panel on the <gui>Seeing</gui> page.
         </p>
       </item>
     </list>
@@ -132,7 +125,6 @@
             <item><p><cmd>speech</cmd></p></item>
             <item><p><cmd>braille</cmd></p></item>
             <item><p><cmd>braille-monitor</cmd></p></item>
-            <item><p><cmd>magnifier</cmd></p></item>
             <item><p><cmd>main-window</cmd></p></item>
             <item><p><cmd>splash-window</cmd></p></item>
           </list>
@@ -147,7 +139,6 @@
             <item><p><cmd>speech</cmd></p></item>
             <item><p><cmd>braille</cmd></p></item>
             <item><p><cmd>braille-monitor</cmd></p></item>
-            <item><p><cmd>magnifier</cmd></p></item>
             <item><p><cmd>main-window</cmd></p></item>
             <item><p><cmd>splash-window</cmd></p></item>
           </list>

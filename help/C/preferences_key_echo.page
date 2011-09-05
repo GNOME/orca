@@ -6,7 +6,7 @@
       Configuring what is spoken as you type
     </desc>
     <link type="guide" xref="preferences#orca" />
-    <link type="next" xref="preferences_magnifier" />
+    <link type="next" xref="preferences_key_bindings" />
     <credit type="author">
       <name>Joanmarie Diggs</name>
       <email>joanied@gnome.org</email>

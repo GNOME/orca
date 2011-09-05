@@ -1,7 +1,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_speech_settings">
   <info>
     <link type="next" xref="commands_braille" />
-    <link type="guide" xref="commands#speech_braille_magnification" />
+    <link type="guide" xref="commands#speech_braille" />
     <link type="seealso" xref="preferences_speech"  />
     <title type="sort">2. Speech Settings</title>
     <title type="link">Speech</title>

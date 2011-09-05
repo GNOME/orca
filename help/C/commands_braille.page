@@ -1,7 +1,7 @@
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="commands_braille">
   <info>
-    <link type="next" xref="commands_magnifier" />
-    <link type="guide" xref="commands#speech_braille_magnification" />
+    <link type="next" xref="commands_reading" />
+    <link type="guide" xref="commands#speech_braille" />
     <link type="seealso" xref="preferences_braille" />
     <title type="sort">2. Braille</title>
     <title type="link">Braille</title>
