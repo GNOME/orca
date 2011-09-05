@@ -23,7 +23,7 @@
   </p>
   <p>
     <app>Orca</app> works with applications and toolkits that support
-    the assistive technology service provider interface (AT-SPI), which
+    the Assistive Technology Service Provider Interface (AT-SPI), which
     is the primary assistive technology infrastructure for Linux and
     Solaris. Applications and toolkits supporting the AT-SPI include the
     GNOME Gtk+ toolkit, the Java platform's Swing toolkit, OpenOffice,
@@ -51,9 +51,11 @@
       </item>
       <item>
         <p>
-          Configure <app>Orca</app> to be launched automatically as your
-          preferred screen reader by choosing this option in GNOME's
-          <gui>Assistive Technology Preferences</gui> dialog.
+          The method for configuring <app>Orca</app> to be launched
+          automatically as your preferred screen reader will depend upon
+          which desktop environment you use. For instance, in GNOME 3.x
+          this option can be found in the Universal Access Control Center
+          panel on the <gui>Seeing</gui> page.
         </p>
       </item>
     </list>
