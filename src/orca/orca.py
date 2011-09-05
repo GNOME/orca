@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2004-2009 Sun Microsystems Inc.
-# Copyright 2010 Joanmarie Diggs, Mesar Hameed
+# Copyright 2010-2011 The Orca Team
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -24,7 +24,7 @@ __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
-                "Copyright (c) 2010 Joanmarie Diggs, Mesar Hameed."
+                "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
 
 import getopt
@@ -104,7 +104,6 @@ class Options:
         self.canEnable = {'speech':'enableSpeech',
                           'braille':'enableBraille',
                           'braille-monitor':'enableBrailleMonitor',
-                          'magnifier':'enableMagnifier',
                           'main-window':'showMainWindow',
                           'splash-window':'showSplashWindow'}
 
@@ -353,13 +352,13 @@ class Options:
         returns False."""
 
         if self.cannotEnable:
-            valid = "\nspeech, braille, braille-monitor, magnifier, " \
+            valid = "\nspeech, braille, braille-monitor, " \
                     "main-window, splash-window"
             # Translators: This message is displayed when the user
             # tries to enable or disable a feature via an argument,
             # but specified an invalid feature. Valid features are:
-            # speech, braille, braille-monitor, magnifier, main-window,
-            # and splash-window. These items are not localized and are
+            # speech, braille, braille-monitor, main-window, and
+            # splash-window. These items are not localized and are
             # presented in a list after this message.
             #
             msg = _("The following items can be enabled or disabled:")
@@ -445,7 +444,6 @@ class Options:
                         + "speech" + "|" \
                         + "braille" + "|" \
                         + "braille-monitor" + "|" \
-                        + "magnifier" + "|" \
                         + "main-window" + "|" \
                         + "splash-window" + "] ")
 
@@ -459,7 +457,6 @@ class Options:
                         + "speech" + "|" \
                         + "braille" + "|" \
                         + "braille-monitor" + "|" \
-                        + "magnifier" + "|" \
                         + "main-window" + "|" \
                         + "splash-window" + "] ")
 

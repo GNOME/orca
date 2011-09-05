@@ -1,8 +1,8 @@
 [Desktop Entry]
 _Name=Orca
-_GenericName=Screen Reader and Magnifier
-_X-GNOME-FullName=Orca Screen Reader and Magnifier
-_Comment=Present on-screen information as speech or braille, or magnify the screen
+_GenericName=Screen Reader
+_X-GNOME-FullName=Orca Screen Reader
+_Comment=Provide access to graphical desktop environments via synthesized speech and/or refreshable braille
 Exec=orca --replace
 Icon=orca
 Terminal=false

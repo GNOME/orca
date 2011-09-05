@@ -143,86 +143,6 @@
       </row>
     </data>
   </object>
-  <object class="GtkListStore" id="model3">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Full Screen</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Top Half</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Bottom Half</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Left Half</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Right Half</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Custom</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model4">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Centered</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Push</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">None</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model5">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Centered</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Push</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">None</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model6">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Centered</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Proportional</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">Push</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">None</col>
-      </row>
-    </data>
-  </object>
   <object class="GtkListStore" id="model7">
     <columns>
       <!-- column-name gchararray -->
@@ -1113,7 +1033,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="xalign">1</property>
-                                <property name="label" translatable="yes">_Voice Type:</property>
+                                <property name="label" translatable="yes" comments="Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.">_Voice type:</property>
                                 <property name="use_underline">True</property>
                                 <property name="justify">right</property>
                               </object>
@@ -1132,7 +1052,7 @@
                       <object class="GtkLabel" id="voiceTypeSettingsLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Voice Type Settings&lt;/b&gt;</property>
+                        <property name="label" translatable="yes"  comments="Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.">&lt;b&gt;Voice Type Settings&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </object>
                     </child>
