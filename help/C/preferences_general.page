@@ -54,44 +54,6 @@
       Default value: not checked
     </p>
   </section>
-  <section id="disablegksu">
-    <info>
-      <desc>
-        Preferences dialog box option to disable gksu keyboard grab.
-      </desc>
-    </info>
-    <title>Disable gksu Keyboard Grab</title>
-    <media type="image" mime="image/png" src="figures/preferences_disable_gksu_keyboard_grab.png"/>
-    <p>
-      When running commands from the launch menu, many distributions
-      use an application known as gksu to authorize the user to run
-      these commands; gksu is the GUI that asks you for your password.
-      When it runs, gksu enables what is known as a "keyboard grab,"
-      which is a feature to prevent keyboard actions from going to any
-      other application on the desktop, including <app>Orca</app>. The
-      result of a keyboard grab is that <app>Orca</app> will not receive
-      any keyboard events, preventing <app>Orca</app> from functioning
-      normally.
-    </p>
-    <p>
-      By checking the <gui>Disable gksu keyboard grab</gui> checkbox, you will
-      turn off the keyboard grab behavior, allowing <app>Orca</app> to
-      function normally with system administration applications.
-    </p>
-    <p>
-      The keyboard grab is a security attempt by gksu to prevent nefarious
-      applications from "sniffing" the keyboard and grabbing secret
-      information. Please be advised that disabling the gksu keyboard grab
-      feature can expose you to such nefarious behavior. If you do not feel
-      comfortable with this, you can always use the root account for system
-      administration purposes. To do so, you need to enable the root account
-      for login, and then logout and log back in as root whenever you want to
-      perform a system administration command.
-    </p>
-    <p>
-      Default value: not checked
-    </p>
-  </section>
   <section id="presenttooltips">
     <info>
       <desc>
