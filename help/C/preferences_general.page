@@ -47,7 +47,7 @@
       <p>
         Normally, when you quit <app>Orca</app>, a confirmation dialog will
         appear asking you if you do indeed wish to quit <app>Orca</app>.
-        Unchecking the <gui>Quit Orca without confirmation</gui> checkbox
+        Checking the <gui>Quit Orca without confirmation</gui> checkbox
         prevents this confirmation window from appearing.
     </p>
     <p>
