@@ -1,3 +1,38 @@
+3.1.91 - 5 September 2011
+
+General
+
+  * Fix for bug 658141 - Need to add support for the 'placeholder-text'
+    object attribute
+
+  * Fix for bug 658133 - Firefox lines which begin with bullets are not
+    always presented by Orca
+
+  * Fix for bug 657732 - stopSpeechOnActiveDescendant shouldn't cut off
+    the presentation of a name-change
+
+  * Fix for bug 657902 - Remove static binding cruft from configure.ac
+    and acinclude.m4
+
+Documentation
+
+  * Began update of the Orca 3.2 documentation
+
+  * Fix for bug 655642 - Problems in the docs
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                Marek Černocký
+    es            Spanish              Jorge González
+    gl            Galician             Fran Diéguez
+    hu            Hungarian            Attila Hammer, Gabor Kelemen
+    lt            Lithuanian           Aurimas Černius
+    ru            Russian              Anatol Kamynin, Yuri Myasoedov
+    sv            Swedish              Daniel Nylander
+    ta            Tamil                Dr.T.Vasudevan
+
+=========
+
 3.1.90 - 29 August 2011
 
 General
