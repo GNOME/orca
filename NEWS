@@ -1,3 +1,34 @@
+3.1.91-xdesktop - 5 September 2011
+
+General
+
+  * Fix for bug 658141 - Need to add support for the 'placeholder-text'
+    object attribute
+
+  * Fix for bug 658133 - Firefox lines which begin with bullets are not
+    always presented by Orca
+
+  * Fix for bug 657732 - stopSpeechOnActiveDescendant shouldn't cut off
+    the presentation of a name-change.
+
+  * Fix for bug 599361 - Significant delay building up the contents of
+    certain lines in Firefox
+
+  * Fix for bug 657646 - Default stopSpeechOnActiveDescendantChanged()
+    should not be so restrictive
+
+  * Fix for bug 657579 - Orca should not present tooltips shown as a
+    result of mouse hovering unless the 'present tooltips' setting is
+    enabled
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German               Mario Blättermann
+    gl            Galician             Fran Diéguez
+    es            Spanish              Gonzalo Sanhueza, Jorge González
+
+==========
+
 3.1.5-xdesktop - 15 August 2011
 
 General
