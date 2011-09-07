@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-08-24 18:07+0000\n"
-"PO-Revision-Date: 2011-08-25 10:01+0200\n"
+"POT-Creation-Date: 2011-09-05 16:40+0000\n"
+"PO-Revision-Date: 2011-09-07 18:28+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2519,16 +2519,21 @@ msgid "Quit Orca Without Confirmation"
 msgstr "Salir de Orca sin confirmación"
 
 #: C/preferences_general.page:47(p)
+#| msgid ""
+#| "Normally, when you quit <app>Orca</app>, a confirmation dialog will "
+#| "appear asking you if you do indeed wish to quit <app>Orca</app>. "
+#| "Unchecking the <gui>Quit Orca without confirmation</gui> checkbox "
+#| "prevents this confirmation window from appearing."
 msgid ""
 "Normally, when you quit <app>Orca</app>, a confirmation dialog will appear "
-"asking you if you do indeed wish to quit <app>Orca</app>. Unchecking the "
+"asking you if you do indeed wish to quit <app>Orca</app>. Checking the "
 "<gui>Quit Orca without confirmation</gui> checkbox prevents this "
 "confirmation window from appearing."
 msgstr ""
 "Normalmente, cuando sale de <app>Orca</app>, aparece un diálogo de "
 "confirmación preguntando si realmente quiere salir de <app>Orca</app>. "
 "Desmarcar la casilla <gui>Salir de Orca sin confirmación</gui> evita que "
-"aparezca esta ventana."
+"aparezca esta ventana de confirmación."
 
 #: C/preferences_general.page:59(desc)
 msgid "Preferences dialog box option to disable gksu keyboard grab."
@@ -3349,9 +3354,16 @@ msgstr ""
 "combinaciones de voz, Braille y/o magnificación configurables por el usuario."
 
 #: C/introduction.page:24(p)
+#| msgid ""
+#| "<app>Orca</app> works with applications and toolkits that support the "
+#| "assistive technology service provider interface (AT-SPI), which is the "
+#| "primary assistive technology infrastructure for Linux and Solaris. "
+#| "Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
+#| "toolkit, the Java platform's Swing toolkit, OpenOffice, Gecko, and "
+#| "WebKitGtk. AT-SPI support for the KDE Qt toolkit is being pursued."
 msgid ""
 "<app>Orca</app> works with applications and toolkits that support the "
-"assistive technology service provider interface (AT-SPI), which is the "
+"Assistive Technology Service Provider Interface (AT-SPI), which is the "
 "primary assistive technology infrastructure for Linux and Solaris. "
 "Applications and toolkits supporting the AT-SPI include the GNOME Gtk+ "
 "toolkit, the Java platform's Swing toolkit, OpenOffice, Gecko, and "
@@ -3394,29 +3406,35 @@ msgstr ""
 "\"preferences\">diálogo de preferencias</link> de <app>Orca</app>."
 
 #: C/introduction.page:53(p)
+#| msgid ""
+#| "Configure <app>Orca</app> to be launched automatically as your preferred "
+#| "screen reader by choosing this option in GNOME's <gui>Assistive "
+#| "Technology Preferences</gui> dialog."
 msgid ""
-"Configure <app>Orca</app> to be launched automatically as your preferred "
-"screen reader by choosing this option in GNOME's <gui>Assistive Technology "
-"Preferences</gui> dialog."
+"The method for configuring <app>Orca</app> to be launched automatically as "
+"your preferred screen reader will depend upon which desktop environment you "
+"use. For instance, in GNOME 3.x this option can be found in the Universal "
+"Access Control Center panel on the <gui>Seeing</gui> page."
 msgstr ""
-"Configure <app>Orca</app> para que se lance como su lector de pantalla "
-"preferido seleccionando esta opción en el diálogo <gui>Preferencias de las "
-"tecnologías de asistencia</gui> de GNOME."
+"El método para configurar <app>Orca</app> para que se lance como su lector "
+"de pantalla preferido dependerá de qué entorno de escritorio use. Por "
+"ejemplo, en GNOME 3.x, esta opción se puede encontrar en el panel de control "
+"del Acceso universal o en la página <gui>Ver</gui>."
 
-#: C/introduction.page:62(title)
+#: C/introduction.page:64(title)
 msgid "Quitting <app>Orca</app>"
 msgstr "Salir de <app>Orca</app>"
 
-#: C/introduction.page:63(p)
+#: C/introduction.page:65(p)
 msgid "To quit <app>Orca</app>:"
 msgstr "Para salir de <app>Orca</app>:"
 
-#: C/introduction.page:66(p)
+#: C/introduction.page:68(p)
 msgid "Press the <gui>Quit</gui> button in the <app>Orca</app> main window."
 msgstr ""
 "Pulse el botón <gui>Salir</gui> en la ventana principal de <app>Orca</app>."
 
-#: C/introduction.page:72(p)
+#: C/introduction.page:74(p)
 msgid ""
 "Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>. This command "
 "works whether the <app>Orca</app> main window is enabled or not."
@@ -3425,7 +3443,7 @@ msgstr ""
 "comando funciona tanto si la ventana principal de  <app>Orca</app> está "
 "activada como si no."
 
-#: C/introduction.page:79(p)
+#: C/introduction.page:81(p)
 msgid ""
 "Type <cmd>orca -q</cmd> or <cmd>orca --quit</cmd> in a terminal window or "
 "within the <gui>Run</gui> dialog and then press <key>Return</key>."
@@ -3433,26 +3451,26 @@ msgstr ""
 "Escriba <cmd>orca -q</cmd> o <cmd>orca --quit</cmd> en una ventana de la "
 "terminal o en el diálogo <gui>Ejecutar</gui> y pulse <key>Intro</key>."
 
-#: C/introduction.page:88(title)
+#: C/introduction.page:90(title)
 msgid "Load-Time Options"
 msgstr "Opciones en tiempo de carga"
 
-#: C/introduction.page:89(p)
+#: C/introduction.page:91(p)
 msgid "The following options can be specified when launching <app>Orca</app>:"
 msgstr ""
 "Al lanzar <app>Orca</app> se pueden especificar las siguientes opciones:"
 
-#: C/introduction.page:94(p)
+#: C/introduction.page:96(p)
 msgid "<cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message"
 msgstr "<cmd>-?</cmd>, <cmd>--help</cmd>: mostrar el mensaje de ayuda"
 
-#: C/introduction.page:97(p)
+#: C/introduction.page:99(p)
 msgid ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: Show the version of <app>Orca</app>"
 msgstr ""
 "<cmd>-v</cmd>, <cmd>--version</cmd>: mostrar la versión de <app>Orca</app>"
 
-#: C/introduction.page:103(p)
+#: C/introduction.page:105(p)
 msgid ""
 "<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: Set up user "
 "preferences"
@@ -3460,7 +3478,7 @@ msgstr ""
 "<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: configurar las "
 "preferencias de usuario"
 
-#: C/introduction.page:109(p)
+#: C/introduction.page:111(p)
 msgid ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
 "version)"
@@ -3468,13 +3486,13 @@ msgstr ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: configurar las preferencias de "
 "usuario (versión texto)"
 
-#: C/introduction.page:115(p)
+#: C/introduction.page:117(p)
 msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
 msgstr ""
 "<cmd>-n</cmd>, <cmd>--no-setup</cmd>: omitir la configuración de las "
 "preferencias del usuario"
 
-#: C/introduction.page:120(p)
+#: C/introduction.page:122(p)
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
 "<em>dirname</em> as the alternate directory for user preferences"
@@ -3483,7 +3501,7 @@ msgstr ""
 "<em>carpeta</em> como la carpeta alternativa para las preferencias del "
 "usuario"
 
-#: C/introduction.page:127(p)
+#: C/introduction.page:129(p)
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -3491,31 +3509,31 @@ msgstr ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>opción</em></cmd>: forzar el uso de una "
 "opción, donde <em>opción</em> puede ser una de las siguientes:"
 
-#: C/introduction.page:132(cmd) C/introduction.page:147(cmd)
+#: C/introduction.page:134(cmd) C/introduction.page:149(cmd)
 msgid "speech"
 msgstr "voz"
 
-#: C/introduction.page:133(cmd) C/introduction.page:148(cmd)
+#: C/introduction.page:135(cmd) C/introduction.page:150(cmd)
 msgid "braille"
 msgstr "braille"
 
-#: C/introduction.page:134(cmd) C/introduction.page:149(cmd)
+#: C/introduction.page:136(cmd) C/introduction.page:151(cmd)
 msgid "braille-monitor"
 msgstr "braille-monitor"
 
-#: C/introduction.page:135(cmd) C/introduction.page:150(cmd)
+#: C/introduction.page:137(cmd) C/introduction.page:152(cmd)
 msgid "magnifier"
 msgstr "magnificador"
 
-#: C/introduction.page:136(cmd) C/introduction.page:151(cmd)
+#: C/introduction.page:138(cmd) C/introduction.page:153(cmd)
 msgid "main-window"
 msgstr "main-window"
 
-#: C/introduction.page:137(cmd) C/introduction.page:152(cmd)
+#: C/introduction.page:139(cmd) C/introduction.page:154(cmd)
 msgid "splash-window"
 msgstr "splash-window"
 
-#: C/introduction.page:141(p)
+#: C/introduction.page:143(p)
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -3523,7 +3541,7 @@ msgstr ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>opción</em></cmd>: evitar el uso de una "
 "opción, donde la <em>opción</em> puede ser una de las siguientes:"
 
-#: C/introduction.page:156(p)
+#: C/introduction.page:158(p)
 msgid ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
 "from a given <app>Orca</app> profile file"
@@ -3531,11 +3549,11 @@ msgstr ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>nombre de archivo</em></cmd>: importar "
 "un archivo desde un perfil de <app>Orca</app> dado"
 
-#: C/introduction.page:162(p)
+#: C/introduction.page:164(p)
 msgid "<cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>"
 msgstr "<cmd>-q</cmd>, <cmd>--quit</cmd>: salir de <app>Orca</app>"
 
-#: C/introduction.page:167(p)
+#: C/introduction.page:169(p)
 msgid ""
 "<cmd>-f</cmd>, <cmd>--forcequit</cmd>: Forces <app>Orca</app> to be "
 "terminated immediately."
@@ -3543,25 +3561,25 @@ msgstr ""
 "<cmd>-f</cmd>, <cmd>--forcequit</cmd>: forzar a <app>Orca</app> a terminar "
 "inmediatamente."
 
-#: C/introduction.page:173(p)
+#: C/introduction.page:175(p)
 msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgstr ""
 "<cmd>--replace</cmd>: reemplazar una instancia <app>Orca</app> en ejecución"
 
-#: C/introduction.page:178(p)
+#: C/introduction.page:180(p)
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: imprimir las aplicaciones conocidas "
 "en ejecución"
 
-#: C/introduction.page:184(p)
+#: C/introduction.page:186(p)
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: enviar información de depurado a debug-YYYY-MM-DD-HH:MM:"
 "SS.out"
 
-#: C/introduction.page:189(p)
+#: C/introduction.page:191(p)
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
