@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-09-04 06:31+0000\n"
-"PO-Revision-Date: 2011-09-05 13:34+0200\n"
+"POT-Creation-Date: 2011-09-07 18:12+0000\n"
+"PO-Revision-Date: 2011-09-08 08:11+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,20 +31,22 @@ msgstr ""
 msgid "Orca"
 msgstr "Orca"
 
-#: ../orca.desktop.in.h:2
-msgid "Orca Screen Reader and Magnifier"
-msgstr "Čtení obrazovky a lupa Orca"
+#: ../orca.desktop.in.h:2 ../src/orca/orca_gui_main.py:44
+msgid "Orca Screen Reader"
+msgstr "Čtečka obrazovky Orca"
 
 #: ../orca.desktop.in.h:3
 msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
+"Provide access to graphical desktop environments via synthesized speech and/"
+"or refreshable braille"
 msgstr ""
-"Prezentuje informace zobrazované na obrazovce jako řeč, braillský výstup, či "
-"zvětšení obrazovky."
+"Poskytuje přístup ke grafickému pracovnímu prostředí pomocí hlasového "
+"generátoru a/nebo braillského řádku"
 
 #: ../orca.desktop.in.h:4
-msgid "Screen Reader and Magnifier"
-msgstr "Čtení obrazovky a lupa"
+#| msgid "Orca Screen Reader"
+msgid "Screen Reader"
+msgstr "Čtečka obrazovky"
 
 #: ../src/orca/app_gui_prefs.py:136
 #, python-format
@@ -2520,7 +2522,6 @@ msgid "<b>Results must:</b>"
 msgstr "<b>Výsledky musí:</b>"
 
 #: ../src/orca/orca-find.ui.h:2
-#| msgid "<b>Start from:</b>"
 msgid "<b>Search direction:</b>"
 msgstr "<b>Směr hledání:</b>"
 
@@ -2592,11 +2593,6 @@ msgstr "Z_ačátek okna"
 msgid "_Wrap around"
 msgstr "Přecházet přes _konec/začátek"
 
-#: ../src/orca/orca_gui_main.py:44
-#| msgid "Orca Screen Reader / Magnifier"
-msgid "Orca Screen Reader"
-msgstr "Čtečka obrazovky Orca"
-
 #. Translators: This is used in the Orca About dialog.
 #.
 #: ../src/orca/orca_gui_main.py:105
@@ -2617,12 +2613,6 @@ msgstr ""
 #. Translators: This text is used in the Orca About dialog.
 #.
 #: ../src/orca/orca_gui_main.py:113
-#| msgid ""
-#| "Copyright (c) 2005-2010 Sun Microsystems Inc. \n"
-#| "Copyright (c) 2005-2008 Google Inc. \n"
-#| "Copyright (c) 2008, 2009 Eitan Isaacson \n"
-#| "Copyright (c) 2006-2009 Brailcom, o.p.s. \n"
-#| "Copyright (c) 2001, 2002 BAUM Retec, A.G."
 msgid ""
 "Copyright (c) 2010-2011 The Orca Team \n"
 "Copyright (c) 2010 Consorcio Fernando de los Rios \n"
@@ -2862,7 +2852,7 @@ msgstr "Rozdělovat projev na části podle pa_uz"
 #. line.
 #.
 #: ../src/orca/orca_gui_prefs.py:1501 ../src/orca/orca_gui_prefs.py:2689
-#: ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca-setup.ui.h:56
 msgid "Line"
 msgstr "Řádcích"
 
@@ -2871,7 +2861,7 @@ msgstr "Řádcích"
 #. sentence.
 #.
 #: ../src/orca/orca_gui_prefs.py:1501 ../src/orca/orca_gui_prefs.py:2695
-#: ../src/orca/orca-setup.ui.h:91
+#: ../src/orca/orca-setup.ui.h:83
 msgid "Sentence"
 msgstr "Větách"
 
@@ -2882,7 +2872,7 @@ msgstr "Větách"
 #.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
 #: ../src/orca/orca_gui_prefs.py:1600 ../src/orca/orca_gui_prefs.py:2651
-#: ../src/orca/orca-setup.ui.h:77
+#: ../src/orca/orca-setup.ui.h:72
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Všechny"
@@ -2912,7 +2902,7 @@ msgstr "Okno"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1721 ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca_gui_prefs.py:1721 ../src/orca/orca-setup.ui.h:51
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Oznamovat znaky _diakritiky"
 
@@ -2923,7 +2913,7 @@ msgstr "Oznamovat znaky _diakritiky"
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1729 ../src/orca/orca-setup.ui.h:50
+#: ../src/orca/orca_gui_prefs.py:1729 ../src/orca/orca-setup.ui.h:48
 msgid "Enable echo by cha_racter"
 msgstr "Číst po _znacích"
 
@@ -2958,7 +2948,7 @@ msgstr "Braillské klávesové zkratky"
 #. corner will be used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2480 ../src/orca/orca_gui_prefs.py:2521
-#: ../src/orca/orca_gui_prefs.py:2561 ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca_gui_prefs.py:2561 ../src/orca/orca-setup.ui.h:34
 msgid "Dot _7"
 msgstr "Bod _7"
 
@@ -2967,7 +2957,7 @@ msgstr "Bod _7"
 #. will be used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2487 ../src/orca/orca_gui_prefs.py:2528
-#: ../src/orca/orca_gui_prefs.py:2568 ../src/orca/orca-setup.ui.h:37
+#: ../src/orca/orca_gui_prefs.py:2568 ../src/orca/orca-setup.ui.h:35
 msgid "Dot _8"
 msgstr "Bod _8"
 
@@ -2976,7 +2966,7 @@ msgstr "Bod _8"
 #. used to 'underline' text of interest.
 #.
 #: ../src/orca/orca_gui_prefs.py:2494 ../src/orca/orca_gui_prefs.py:2535
-#: ../src/orca/orca_gui_prefs.py:2575 ../src/orca/orca-setup.ui.h:38
+#: ../src/orca/orca_gui_prefs.py:2575 ../src/orca/orca-setup.ui.h:36
 msgid "Dots 7 an_d 8"
 msgstr "_Body 7 a 8"
 
@@ -2984,7 +2974,7 @@ msgstr "_Body 7 a 8"
 #. symbols will be spoken as a user reads a document.
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/orca_gui_prefs.py:2598 ../src/orca/orca-setup.ui.h:140
+#: ../src/orca/orca_gui_prefs.py:2598 ../src/orca/orca-setup.ui.h:132
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "Žád_ná"
@@ -2994,7 +2984,7 @@ msgstr "Žád_ná"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2606 ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca_gui_prefs.py:2606 ../src/orca/orca-setup.ui.h:85
 msgid "So_me"
 msgstr "Ně_která"
 
@@ -3002,7 +2992,7 @@ msgstr "Ně_která"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2613 ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca_gui_prefs.py:2613 ../src/orca/orca-setup.ui.h:57
 msgid "M_ost"
 msgstr "_Většina"
 
@@ -3020,7 +3010,7 @@ msgstr "_Stručný"
 #. they just want the current cell to be presented to them.
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/orca_gui_prefs.py:2805 ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca_gui_prefs.py:2805 ../src/orca/orca-setup.ui.h:88
 msgid "Speak _cell"
 msgstr "Číst _buňku"
 
@@ -3074,7 +3064,7 @@ msgstr "Klávesová zkratka byla odebrána."
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3035 ../src/orca/orca-setup.ui.h:123
+#: ../src/orca/orca_gui_prefs.py:3035 ../src/orca/orca-setup.ui.h:114
 msgid "_Desktop"
 msgstr "_Stolní počítač"
 
@@ -3122,10 +3112,6 @@ msgid "Load User Profile"
 msgstr "Načtení uživatelského profilu"
 
 #: ../src/orca/orca_gui_prefs.py:3483
-#| msgid ""
-#| "You already have an instance of an Orca preferences dialog open.\n"
-#| "\n"
-#| "Please close it before opening a new one."
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -3165,15 +3151,10 @@ msgid "_Profile Name:"
 msgstr "Název _profilu:"
 
 #: ../src/orca/orca_gui_quit.py:45
-#| msgid "Quits Orca"
 msgid "Quit Orca?"
 msgstr "Ukončit aplikaci Orca?"
 
 #: ../src/orca/orca_gui_quit.py:47
-#| msgid ""
-#| "<b><big>Quit Orca?</big></b>\n"
-#| "\n"
-#| "This will stop all speech and braille output."
 msgid "This will stop all speech and braille output."
 msgstr "Tímto se zastaví hlasové čtení a Brailský výstup."
 
@@ -3182,29 +3163,29 @@ msgstr "Tímto se zastaví hlasové čtení a Brailský výstup."
 #. After the message, the list of arguments, as typed by the
 #. user, is displayed.
 #.
-#: ../src/orca/orca.py:310
+#: ../src/orca/orca.py:309
 msgid "The following arguments are not valid: "
 msgstr "Následující argument není platný: "
 
 #. Translators: This message is displayed when the user
 #. tries to enable or disable a feature via an argument,
 #. but specified an invalid feature. Valid features are:
-#. speech, braille, braille-monitor, magnifier, main-window,
-#. and splash-window. These items are not localized and are
+#. speech, braille, braille-monitor, main-window, and
+#. splash-window. These items are not localized and are
 #. presented in a list after this message.
 #.
-#: ../src/orca/orca.py:365
+#: ../src/orca/orca.py:364
 msgid "The following items can be enabled or disabled:"
 msgstr "Následující položky mohou být zapnuty nebo vypnuty:"
 
-#: ../src/orca/orca.py:380
+#: ../src/orca/orca.py:379
 msgid "Usage: orca [OPTION...]"
 msgstr "Použití: orca [PŘEPÍNAČ…]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:386
+#: ../src/orca/orca.py:385
 msgid "Show this help message"
 msgstr "Zobrazit tuto nápovědu."
 
@@ -3212,7 +3193,7 @@ msgstr "Zobrazit tuto nápovědu."
 #. the names of applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:394
+#: ../src/orca/orca.py:393
 msgid "Print the known running applications"
 msgstr "Vypsat podporované běžící aplikace"
 
@@ -3224,7 +3205,7 @@ msgstr "Vypsat podporované běžící aplikace"
 #. always start with 'debug' and end with '.out', regardless of the
 #. locale.).
 #.
-#: ../src/orca/orca.py:405
+#: ../src/orca/orca.py:404
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr "Posílat výstup ladění do debug-RRRR-MM-DD-HH:MM:SS.out"
 
@@ -3232,7 +3213,7 @@ msgstr "Posílat výstup ladění do debug-RRRR-MM-DD-HH:MM:SS.out"
 #. the name of the debug file Orca will use for debug output if the
 #. --debug option is used.
 #.
-#: ../src/orca/orca.py:412
+#: ../src/orca/orca.py:411
 msgid "Send debug output to the specified file"
 msgstr "Posílat výstup ladění do určeného souboru"
 
@@ -3240,7 +3221,7 @@ msgstr "Posílat výstup ladění do určeného souboru"
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
 #. that would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:419
+#: ../src/orca/orca.py:418
 msgid "Set up user preferences"
 msgstr "Nastavit uživatelské předvolby"
 
@@ -3250,7 +3231,7 @@ msgstr "Nastavit uživatelské předvolby"
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
 #.
-#: ../src/orca/orca.py:428
+#: ../src/orca/orca.py:427
 msgid "Set up user preferences (text version)"
 msgstr "Nastavit uživatelské předvolby (textová verze)"
 
@@ -3258,7 +3239,7 @@ msgstr "Nastavit uživatelské předvolby (textová verze)"
 #. '-n, --no-setup' that means that Orca will startup without setting
 #. up any user preferences.
 #.
-#: ../src/orca/orca.py:435
+#: ../src/orca/orca.py:434
 msgid "Skip set up of user preferences"
 msgstr "Přeskočit nastavit uživatelských předvoleb"
 
@@ -3266,7 +3247,7 @@ msgstr "Přeskočit nastavit uživatelských předvoleb"
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for the user preferences.
 #.
-#: ../src/orca/orca.py:442
+#: ../src/orca/orca.py:441
 msgid "Use alternate directory for user preferences"
 msgstr "Použít alternativní adresář s uživatelskými předvolbami"
 
@@ -3274,7 +3255,7 @@ msgstr "Použít alternativní adresář s uživatelskými předvolbami"
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:456
+#: ../src/orca/orca.py:454
 msgid "Force use of option"
 msgstr "Donutit k použití volby"
 
@@ -3282,14 +3263,14 @@ msgstr "Donutit k použití volby"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:470
+#: ../src/orca/orca.py:467
 msgid "Prevent use of option"
 msgstr "Zamezit použití volby"
 
 #. Translators: this is the Orca command line option to import to Orca
 #. a user profile from a given file
 #.
-#: ../src/orca/orca.py:476
+#: ../src/orca/orca.py:473
 msgid "Import a profile from a given orca profile file"
 msgstr "Importovat profil ze zadaného souboru s profilem orca"
 
@@ -3298,7 +3279,7 @@ msgstr "Importovat profil ze zadaného souboru s profilem orca"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:484
+#: ../src/orca/orca.py:481
 msgid "Quits Orca (if shell script used)"
 msgstr "Ukončit nástroj Orca (je-li použit skript shellu)"
 
@@ -3308,21 +3289,21 @@ msgstr "Ukončit nástroj Orca (je-li použit skript shellu)"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:493
+#: ../src/orca/orca.py:490
 msgid "Forces orca to be terminated immediately."
 msgstr "Přinutit nástroj Orca, aby se ihned ukončil."
 
 #. Translators: this is the Orca command line option to tell Orca to
 #. replace any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:499
+#: ../src/orca/orca.py:496
 msgid "Replace a currently running Orca"
 msgstr "Nahradit všechny běžící procesy Orca"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:505
+#: ../src/orca/orca.py:502
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3332,13 +3313,13 @@ msgstr ""
 "automaticky spustí nastavení předvoleb, pokud nebyl zadán\n"
 "přepínač -n nebo --no-setup."
 
-#: ../src/orca/orca.py:517
+#: ../src/orca/orca.py:514
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Chyby hlaste na orca-list@gnome.org."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:695 ../src/orca/orca.py:2091
+#: ../src/orca/orca.py:692 ../src/orca/orca.py:2088
 msgid "Goodbye."
 msgstr "Neshledanou"
 
@@ -3351,7 +3332,7 @@ msgstr "Neshledanou"
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:769
+#: ../src/orca/orca.py:766
 msgid "Exiting learn mode."
 msgstr "Vypíná se výukový režim"
 
@@ -3363,7 +3344,7 @@ msgstr "Vypíná se výukový režim"
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/orca.py:793
+#: ../src/orca/orca.py:790
 msgid "Exiting list shortcuts mode."
 msgstr "Vypíná se režim výpisu klávesových zkratek."
 
@@ -3372,7 +3353,7 @@ msgstr "Vypíná se režim výpisu klávesových zkratek."
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1049
+#: ../src/orca/orca.py:1046
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
 #: ../src/orca/speech.py:287 ../src/orca/speechserver.py:219
 msgid "off"
@@ -3383,7 +3364,7 @@ msgstr "vypnuto"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1053
+#: ../src/orca/orca.py:1050
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
 #: ../src/orca/speech.py:282 ../src/orca/speechserver.py:214
 msgid "on"
@@ -3392,14 +3373,14 @@ msgstr "zapnuto"
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:1411
+#: ../src/orca/orca.py:1408
 msgid "Speech enabled."
 msgstr "Čtení zapnuto"
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:1416
+#: ../src/orca/orca.py:1413
 msgid "Speech disabled."
 msgstr "Čtení vypnuto"
 
@@ -3407,7 +3388,7 @@ msgstr "Čtení vypnuto"
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1545
+#: ../src/orca/orca.py:1542
 msgid "Orca user settings reloaded."
 msgstr "Uživatelské nastavení znovu načteno."
 
@@ -3415,7 +3396,7 @@ msgstr "Uživatelské nastavení znovu načteno."
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:1723
+#: ../src/orca/orca.py:1720
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Použijte šipky nahoru a dolů pro pohyb v seznamu. Stiskem Escape jej vypnete."
@@ -3424,7 +3405,7 @@ msgstr ""
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:1737
+#: ../src/orca/orca.py:1734
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3436,7 +3417,7 @@ msgstr[2] "Nalezeno %d výchozích klávesových zkratek Orca."
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:1759
+#: ../src/orca/orca.py:1756
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3452,7 +3433,7 @@ msgstr[2] ""
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1777
+#: ../src/orca/orca.py:1774
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "Pro aplikaci %s nenalezena žádná klávesová zkratka Orca."
@@ -3475,7 +3456,7 @@ msgstr "Pro aplikaci %s nenalezena žádná klávesová zkratka Orca."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1795 ../src/orca/scripts/toolkits/Gecko/script.py:6057
+#: ../src/orca/orca.py:1792 ../src/orca/scripts/toolkits/Gecko/script.py:6057
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Vrací se dolů."
@@ -3498,7 +3479,7 @@ msgstr "Vrací se dolů."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1816 ../src/orca/scripts/toolkits/Gecko/script.py:6125
+#: ../src/orca/orca.py:1813 ../src/orca/scripts/toolkits/Gecko/script.py:6125
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Vrací se nahoru."
@@ -3511,7 +3492,7 @@ msgstr "Vrací se nahoru."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1835 ../src/orca/scripts/default.py:1573
+#: ../src/orca/orca.py:1832 ../src/orca/scripts/default.py:1573
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
@@ -3519,7 +3500,7 @@ msgstr ""
 "Zmáčkněte 1 pro výchozí klávesové zkratky Orca. Zmáčkněte 2 pro klávesové "
 "zkratky Orca pro aktuální aplikaci. Zmáčkněte Escape pro ukončení."
 
-#: ../src/orca/orca.py:1885
+#: ../src/orca/orca.py:1882
 msgid "keypad "
 msgstr "klávesnice"
 
@@ -3527,7 +3508,7 @@ msgstr "klávesnice"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1892
+#: ../src/orca/orca.py:1889
 msgid "double click"
 msgstr "dvojité kliknutí"
 
@@ -3535,7 +3516,7 @@ msgstr "dvojité kliknutí"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1898
+#: ../src/orca/orca.py:1895
 msgid "triple click"
 msgstr "trojité kliknutí"
 
@@ -3543,14 +3524,14 @@ msgstr "trojité kliknutí"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2224
+#: ../src/orca/orca.py:2221
 msgid "Unable to import profile."
 msgstr "Nelze importovat profil."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2230
+#: ../src/orca/orca.py:2227
 msgid "Profile import success."
 msgstr "Profil úspěšně importován."
 
@@ -3558,12 +3539,12 @@ msgstr "Profil úspěšně importován."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2236
+#: ../src/orca/orca.py:2233
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "Import selhal kvůli nerozpoznání klíče: %s"
 
-#: ../src/orca/orca.py:2305
+#: ../src/orca/orca.py:2302
 msgid "Welcome to Orca."
 msgstr "Vítá vás Orca."
 
@@ -3580,7 +3561,6 @@ msgid "<b>Braille Indicator</b>"
 msgstr "<b>Indikátor braillu</b>"
 
 #: ../src/orca/orca-setup.ui.h:4
-#| msgid "Display more options"
 msgid "<b>Display Settings</b>"
 msgstr "<b>Nastavení zobrazení</b>"
 
@@ -3597,7 +3577,6 @@ msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Rozložení klávesnice</b>"
 
 #: ../src/orca/orca-setup.ui.h:8
-#| msgid "<b>Profiles</b>"
 msgid "<b>Mouse</b>"
 msgstr "<b>Myš</b>"
 
@@ -3636,12 +3615,10 @@ msgid "<b>Text attributes</b>"
 msgstr "<b>Vlastnosti textu</b>"
 
 #: ../src/orca/orca-setup.ui.h:19
-#| msgid "<b>Braille Indicator</b>"
 msgid "<b>Time and Date</b>"
 msgstr "<b>Čas a datum</b>"
 
 #: ../src/orca/orca-setup.ui.h:20
-#| msgid "<b>User Profile Conflict!</b>"
 msgid "<b>User Interface</b>"
 msgstr "<b>Uživatelské rozhraní</b>"
 
@@ -3649,361 +3626,322 @@ msgstr "<b>Uživatelské rozhraní</b>"
 msgid "<b>Verbosity</b>"
 msgstr "<b>Výřečnost</b>"
 
-#: ../src/orca/orca-setup.ui.h:22
-#| msgid "_Voice settings:"
+#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
+#: ../src/orca/orca-setup.ui.h:23
 msgid "<b>Voice Type Settings</b>"
 msgstr "<b>Nastavení typu hlasu</b>"
 
-#: ../src/orca/orca-setup.ui.h:23
+#: ../src/orca/orca-setup.ui.h:24
 msgid "Active _Profile:"
 msgstr "Aktivní _profil:"
 
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/orca-setup.ui.h:24 ../src/orca/rolenames.py:1127
+#: ../src/orca/orca-setup.ui.h:25 ../src/orca/rolenames.py:1127
 msgid "Application"
 msgstr "Aplikace"
-
-#: ../src/orca/orca-setup.ui.h:25
-msgid "Bottom Half"
-msgstr "Dolní polovina"
 
 #: ../src/orca/orca-setup.ui.h:26
 msgid "Braille"
 msgstr "Braill"
 
 #: ../src/orca/orca-setup.ui.h:30
-msgid "Centered"
-msgstr "Vždycky na střed"
-
-#: ../src/orca/orca-setup.ui.h:31
 msgid "Contraction _Table:"
 msgstr "_Tabulka zkratkopisu:"
 
-#: ../src/orca/orca-setup.ui.h:32
-msgid "Custom"
-msgstr "Vlastní"
-
-#: ../src/orca/orca-setup.ui.h:33
+#: ../src/orca/orca-setup.ui.h:31
 msgid "Dat_e format:"
 msgstr "Formát d_ata:"
 
-#: ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca-setup.ui.h:32
 msgid "Default"
 msgstr "Výchozí"
 
-#: ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/orca-setup.ui.h:33
 msgid "Disable _end of line symbol"
 msgstr "Zakázat znak konc_e řádku"
 
-#: ../src/orca/orca-setup.ui.h:39
+#: ../src/orca/orca-setup.ui.h:37
 msgid "Enable Braille _monitor"
 msgstr "Zapnout _braillský zobrazovač"
 
-#: ../src/orca/orca-setup.ui.h:40
+#: ../src/orca/orca-setup.ui.h:38
 msgid "Enable Braille _support"
 msgstr "Zapnout podpo_ru braillských zařízení"
 
-#: ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca-setup.ui.h:39
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "Oznamovat _alfanumerické a interpunkční znaky"
 
-#: ../src/orca/orca-setup.ui.h:42
+#: ../src/orca/orca-setup.ui.h:40
 msgid "Enable _function keys"
 msgstr "Oznamovat _funkční klávesy"
 
-#: ../src/orca/orca-setup.ui.h:43
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Enable _key echo"
 msgstr "Oznamovat _klávesy"
 
-#: ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca-setup.ui.h:42
 msgid "Enable _modifier keys"
 msgstr "Oznamovat _modifikační klávesy"
 
-#: ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca-setup.ui.h:43
 msgid "Enable _navigation keys"
 msgstr "Oznamovat _navigační klávesy"
 
-#: ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca-setup.ui.h:44
 msgid "Enable ac_tion keys"
 msgstr "Oznamova_t akční klávesy"
 
-#: ../src/orca/orca-setup.ui.h:47
+#: ../src/orca/orca-setup.ui.h:45
 msgid "Enable echo by _sentence"
 msgstr "Číst po _větách"
 
-#: ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/orca-setup.ui.h:46
 msgid "Enable echo by _word"
 msgstr "Číst po _slovech"
 
-#: ../src/orca/orca-setup.ui.h:51
+#: ../src/orca/orca-setup.ui.h:49
 msgid "Enable lockin_g keys"
 msgstr "Oznamovat zam_ykací klávesy"
 
-#: ../src/orca/orca-setup.ui.h:54
-msgid "Full Screen"
-msgstr "Celá obrazovka"
-
-#: ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/orca-setup.ui.h:52
 msgid "General"
 msgstr "Obecné"
 
-#: ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Hyperlink"
 msgstr "Odkaz"
 
-#: ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca-setup.ui.h:54
 msgid "Key Bindings"
 msgstr "Klávesové zkratky"
 
-#: ../src/orca/orca-setup.ui.h:58
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Key Echo"
 msgstr "Odezva klávesnice"
 
-#: ../src/orca/orca-setup.ui.h:59
-msgid "Left Half"
-msgstr "Levá polovina"
-
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/orca-setup.ui.h:59
 msgid "Move _down one"
 msgstr "Posunout _dolů"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:65
+#: ../src/orca/orca-setup.ui.h:61
 msgid "Move _up one"
 msgstr "Pos_unout nahoru"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/orca-setup.ui.h:63
 msgid "Move to _bottom"
 msgstr "_Posunout úplně dolů"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:69
+#: ../src/orca/orca-setup.ui.h:65
 msgid "Move to _top"
 msgstr "Posunou_t úplně nahoru"
 
-#: ../src/orca/orca-setup.ui.h:70
-msgid "None"
-msgstr "Žádný"
-
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: ../src/orca/orca-setup.ui.h:72
+#: ../src/orca/orca-setup.ui.h:67
 msgid "Only speak displayed text"
 msgstr "Číst pouze zobrazený text"
 
-#: ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/orca-setup.ui.h:68
 msgid "Orca Preferences"
 msgstr "Předvolby Orca"
 
-#: ../src/orca/orca-setup.ui.h:74
+#: ../src/orca/orca-setup.ui.h:69
 msgid "Orca _Modifier Key(s):"
 msgstr "_Modifikační klávesy Orca:"
 
-#: ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/orca-setup.ui.h:70
 msgid "Pi_tch:"
 msgstr "Výš_ka:"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:79
+#: ../src/orca/orca-setup.ui.h:74
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "Frekvence (v sekundách):"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:81
+#: ../src/orca/orca-setup.ui.h:76
 msgctxt "ProgressBarUpdates"
 msgid "Enable_d"
 msgstr "_Povoleno"
 
-#: ../src/orca/orca-setup.ui.h:82
+#: ../src/orca/orca-setup.ui.h:77
 msgid "Pronunciation"
 msgstr "Výslovnost"
 
-#: ../src/orca/orca-setup.ui.h:83
-msgid "Proportional"
-msgstr "Přímo úměrné"
-
-#: ../src/orca/orca-setup.ui.h:84
-msgid "Push"
-msgstr "Po posunutí"
-
-#: ../src/orca/orca-setup.ui.h:85
+#: ../src/orca/orca-setup.ui.h:78
 msgid "Quit Orca _without confirmation"
 msgstr "_Ukončit aplikaci Orca bez potvrzení"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
-#: ../src/orca/orca-setup.ui.h:87
+#: ../src/orca/orca-setup.ui.h:80
 msgid "Restrict to:"
 msgstr "Omezit na:"
 
-#: ../src/orca/orca-setup.ui.h:88
-msgid "Right Half"
-msgstr "Pravá polovina"
-
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
-#: ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca-setup.ui.h:82
 msgid "Say All B_y:"
 msgstr "Pl_ynulé čtení po:"
 
-#: ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca-setup.ui.h:84
 msgid "Show Orca _main window"
 msgstr "_Zobrazit hlavní okno Orca"
 
-#: ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca-setup.ui.h:86
 msgid "Spea_k object mnemonics"
 msgstr "Číst _klávesové zkratky objektů"
 
-#: ../src/orca/orca-setup.ui.h:97
+#: ../src/orca/orca-setup.ui.h:89
 msgid "Speak _indentation and justification"
 msgstr "Číst od_sazení a zarovnání"
 
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:90
 msgid "Speak _none"
 msgstr "_Nečíst nic"
 
-#: ../src/orca/orca-setup.ui.h:99
+#: ../src/orca/orca-setup.ui.h:91
 msgid "Speak blank lines"
 msgstr "Číst prázdný řádek"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').
-#: ../src/orca/orca-setup.ui.h:101
+#: ../src/orca/orca-setup.ui.h:93
 msgid "Speak child p_osition"
 msgstr "Uvádět p_ořadová čísla položek"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
-#: ../src/orca/orca-setup.ui.h:103
+#: ../src/orca/orca-setup.ui.h:95
 msgid "Speak multicase strings as wor_ds"
 msgstr "Číst pospojované slova jako je_dnotlivá"
 
-#: ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca-setup.ui.h:96
 msgid "Speak object under mo_use"
 msgstr "Vyslovit objekt pod k_urzorem"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
-#: ../src/orca/orca-setup.ui.h:106
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Speak ro_w"
 msgstr "Číst řáde_k"
 
-#: ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca-setup.ui.h:99
 msgid "Speak tutorial messages"
 msgstr "Číst výukové zprávy"
 
-#: ../src/orca/orca-setup.ui.h:108
+#: ../src/orca/orca-setup.ui.h:100
 msgid "Speech"
 msgstr "Řeč"
 
-#: ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/orca-setup.ui.h:101
 msgid "Speech _system:"
 msgstr "Řečový s_ystém:"
 
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Speech synthesi_zer:"
 msgstr "_Hlasový výstup:"
 
-#: ../src/orca/orca-setup.ui.h:111
+#: ../src/orca/orca-setup.ui.h:103
 msgid "Start-up Profile:"
 msgstr "Počáteční profil:"
 
-#: ../src/orca/orca-setup.ui.h:112
+#: ../src/orca/orca-setup.ui.h:104
 msgid "System"
 msgstr "Systém"
 
-#: ../src/orca/orca-setup.ui.h:113
+#: ../src/orca/orca-setup.ui.h:105
 msgid "Text Attributes"
 msgstr "Vlastnosti textu"
 
-#: ../src/orca/orca-setup.ui.h:114
-msgid "Top Half"
-msgstr "Horní polovina"
-
-#: ../src/orca/orca-setup.ui.h:115
+#: ../src/orca/orca-setup.ui.h:106
 msgid "Uppercase"
 msgstr "Velká písmena"
 
-#: ../src/orca/orca-setup.ui.h:116
+#: ../src/orca/orca-setup.ui.h:107
 msgid "Ver_bose"
 msgstr "Výř_ečný"
 
-#: ../src/orca/orca-setup.ui.h:117
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Vo_lume:"
 msgstr "H_lasitost:"
 
-#: ../src/orca/orca-setup.ui.h:118
+#: ../src/orca/orca-setup.ui.h:109
 msgid "Voice"
 msgstr "Hlas"
 
 #. Translators: long braille for the rolename of a window.
 #.
-#: ../src/orca/orca-setup.ui.h:119 ../src/orca/rolenames.py:1079
+#: ../src/orca/orca-setup.ui.h:110 ../src/orca/rolenames.py:1079
 msgid "Window"
 msgstr "Okno"
 
-#: ../src/orca/orca-setup.ui.h:120
+#: ../src/orca/orca-setup.ui.h:111
 msgid "_Abbreviated role names"
 msgstr "_Stručné názvy prvků"
 
-#: ../src/orca/orca-setup.ui.h:121
+#: ../src/orca/orca-setup.ui.h:112
 msgid "_All"
 msgstr "Vše_chna"
 
-#: ../src/orca/orca-setup.ui.h:122
+#: ../src/orca/orca-setup.ui.h:113
 msgid "_Delete"
 msgstr "_Vymazat"
 
-#: ../src/orca/orca-setup.ui.h:124
+#: ../src/orca/orca-setup.ui.h:115
 msgid "_Enable Contracted Braille"
 msgstr "_Zapnout zkratkopis u Braillu"
 
-#: ../src/orca/orca-setup.ui.h:125
+#: ../src/orca/orca-setup.ui.h:116
 msgid "_Enable speech"
 msgstr "P_ovolit čtení"
 
-#: ../src/orca/orca-setup.ui.h:126
+#: ../src/orca/orca-setup.ui.h:117
 msgid "_Laptop"
 msgstr "Pře_nosný počítač"
 
 #. This button will load the selected settings profile in the application.
-#: ../src/orca/orca-setup.ui.h:128
+#: ../src/orca/orca-setup.ui.h:119
 msgid "_Load"
 msgstr "_Načíst"
 
-#: ../src/orca/orca-setup.ui.h:129
+#: ../src/orca/orca-setup.ui.h:120
 msgid "_New entry"
 msgstr "Nová po_ložka"
 
-#: ../src/orca/orca-setup.ui.h:130
+#: ../src/orca/orca-setup.ui.h:121
 msgid "_Person:"
 msgstr "Oso_ba:"
 
-#: ../src/orca/orca-setup.ui.h:131
+#: ../src/orca/orca-setup.ui.h:122
 msgid "_Present tooltips"
 msgstr "Prezentovat _bublinovou nápovědu"
 
-#: ../src/orca/orca-setup.ui.h:132
+#: ../src/orca/orca-setup.ui.h:123
 msgid "_Rate:"
 msgstr "_Tempo:"
 
-#: ../src/orca/orca-setup.ui.h:133
+#: ../src/orca/orca-setup.ui.h:124
 msgid "_Reset"
 msgstr "O_bnovit"
 
-#: ../src/orca/orca-setup.ui.h:134
+#: ../src/orca/orca-setup.ui.h:125
 msgid "_Speak all"
 msgstr "Čí_st vše"
 
-#: ../src/orca/orca-setup.ui.h:135
+#: ../src/orca/orca-setup.ui.h:126
 msgid "_Time format:"
 msgstr "Formá_t času:"
 
-#: ../src/orca/orca-setup.ui.h:136
-#| msgid "_Voice settings:"
-msgid "_Voice Type:"
+#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
+#: ../src/orca/orca-setup.ui.h:128
+#| msgid "_Voice Type:"
+msgid "_Voice type:"
 msgstr "Typ _hlasu:"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
-#: ../src/orca/orca-setup.ui.h:138
+#: ../src/orca/orca-setup.ui.h:130
 msgctxt "braille dots"
 msgid "_None"
 msgstr "Žád_ný"
