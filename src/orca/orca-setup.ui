@@ -2158,7 +2158,7 @@
                               <object class="GtkGrid" id="brailleSelectionGrid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="row_spacing">20</property>
+                                <property name="column_spacing">20</property>
                                 <child>
                                   <object class="GtkRadioButton" id="brailleSelectionNoneButton">
                                     <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.">_None</property>
@@ -2274,7 +2274,7 @@
                               <object class="GtkGrid" id="brailleHyperlinkGrid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="row_spacing">20</property>
+                                <property name="column_spacing">20</property>
                                 <child>
                                   <object class="GtkRadioButton" id="brailleLinkNoneButton">
                                     <property name="label" translatable="yes" context="braille dots" comments="Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.">_None</property>
