@@ -216,8 +216,8 @@ class BrlMon(Gtk.Window):
 
         try:
             string = string.decode("UTF-8")
-        except:
-            string = ""
+        except UnicodeEncodeError:
+            pass
 
         length = min(len(string), len(self.cells))
         for i in range(length):

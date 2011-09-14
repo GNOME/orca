@@ -354,7 +354,7 @@ class Region:
         try:
             string = string.decode("UTF-8")
         except UnicodeEncodeError:
-            debug.printException(debug.LEVEL_SEVERE)
+            debug.printException(debug.LEVEL_FINEST)
 
         # The uncontracted string for the line.
         #
@@ -1372,12 +1372,22 @@ def refresh(panToCursor=True,
         cursorCell += 1 # Normalize to 1-based offset
 
     logLine = "BRAILLE LINE:  '%s'" % string
+    try:
+        logLine = logLine.encode("UTF-8")
+    except UnicodeDecodeError:
+        pass
+
     debug.println(debug.LEVEL_INFO, logLine)
-    log.info(logLine.encode("UTF-8"))
+    log.info(logLine)
+
     logLine = "     VISIBLE:  '%s', cursor=%d" % \
                     (string[startPos:endPos], cursorCell)
+    try:
+        logLine = logLine.encode("UTF-8")
+    except UnicodeDecodeError:
+        pass
+
     debug.println(debug.LEVEL_INFO, logLine)
-    log.info(logLine.encode("UTF-8"))
 
     substring = string[startPos:endPos]
     if not _brlAPIRunning:
