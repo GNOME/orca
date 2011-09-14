@@ -2375,7 +2375,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def rateValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the rateScale
-           GtkHScale widget. The user has changed the current rate value.
+           GtkScale widget. The user has changed the current rate value.
            Save the new rate value based on the currently selected voice
            type.
 
@@ -2392,7 +2392,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def pitchValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the pitchScale
-           GtkHScale widget. The user has changed the current pitch value.
+           GtkScale widget. The user has changed the current pitch value.
            Save the new pitch value based on the currently selected voice
            type.
 
@@ -2409,7 +2409,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
     def volumeValueChanged(self, widget):
         """Signal handler for the "value_changed" signal for the voiceScale
-           GtkHScale widget. The user has changed the current volume value.
+           GtkScale widget. The user has changed the current volume value.
            Save the new volume value based on the currently selected voice
            type.
 
