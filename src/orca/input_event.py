@@ -101,10 +101,6 @@ class KeyboardEvent(InputEvent):
             if value < 32:
                 self.event_string = chr(value + 0x40)
 
-        # Filter out the NUMLOCK modifier -- it always causes problems.
-        #
-        self.modifiers = self.modifiers \
-                          & settings.ALL_BUT_NUMLOCK_MODIFIER_MASK
 
     def toString(self):
         return ("KEYBOARDEVENT: type=%d\n" % self.type) \

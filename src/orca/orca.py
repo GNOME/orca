@@ -1050,16 +1050,10 @@ def keyEcho(event):
                                      + " " + _("on")
 
             elif event_string == "Num_Lock":
-                # [[[TODO: richb - we are not getting a correct modifier
-                # state value returned when Num Lock is turned off.
-                # Commenting out the speaking of the bogus on/off state
-                # until this can be fixed.]]]
-                #
-                #if modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
-                #    eventType = KeyEventType.LOCKING_UNLOCKED
-                #else:
-                #    eventType = KeyEventType.LOCKING_LOCKED
-                pass
+                if modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
+                    eventType = KeyEventType.LOCKING_UNLOCKED
+                else:
+                    eventType = KeyEventType.LOCKING_LOCKED
 
             if brailleMessage:
                 braille.displayMessage(brailleMessage,
