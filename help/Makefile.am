@@ -7,20 +7,14 @@ DOC_FIGURES = \
 	figures/orca-logo.png \
 	figures/perferences_table_navigation.png \
 	figures/preferences_abbreviated_role_names.png \
-	figures/preferences_advanced_button.png \
-	figures/preferences_border.png \
 	figures/preferences_braille_contracted.png \
 	figures/preferences_braille_indicators.png \
 	figures/preferences_braille_verbosity.png \
 	figures/preferences_break_speech_into_chunks.png \
 	figures/preferences_character_echo.png \
 	figures/preferences_chat.png \
-	figures/preferences_color.png \
-	figures/preferences_cross-hair.png \
-	figures/preferences_cursor.png \
 	figures/preferences_date_and_time.png \
 	figures/preferences_disable_eol_symbol.png \
-	figures/preferences_disable_gksu_keyboard_grab.png \
 	figures/preferences_enable_braille_monitor.png \
 	figures/preferences_enable_braille_support.png \
 	figures/preferences_enable_speech.png \
@@ -43,17 +37,14 @@ DOC_FIGURES = \
 	figures/preferences_speak_multicase_strings_as_words.png \
 	figures/preferences_speak_object_under_mouse.png \
 	figures/preferences_speech_verbosity.png \
-	figures/preferences_start_Orca_when_you_login.png \
 	figures/preferences_system_voice_options.png \
 	figures/preferences_table_navigation.png \
 	figures/preferences_table_rows.png \
 	figures/preferences_text_attributes_braille.png \
 	figures/preferences_text_attributes_rearranging.png \
 	figures/preferences_text_attributes_table.png \
-	figures/preferences_tracking_and_alignment.png \
 	figures/preferences_tts_options.png \
 	figures/preferences_word_and_sentence_echo.png \
-	figures/preferences_zoomer.png \
 	figures/profiles_conflict.png \
 	figures/profiles_load.png \
 	figures/profiles_save_as.png
