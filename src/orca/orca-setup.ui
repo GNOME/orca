@@ -879,6 +879,7 @@
                                 <property name="label" translatable="yes">Pi_tch:</property>
                                 <property name="use_underline">True</property>
                                 <property name="justify">right</property>
+                                <property name="mnemonic_widget">pitchScale</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -913,6 +914,7 @@
                                 <property name="label" translatable="yes">_Rate:</property>
                                 <property name="use_underline">True</property>
                                 <property name="justify">right</property>
+                                <property name="mnemonic_widget">rateScale</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -942,6 +944,7 @@
                                 <property name="label" translatable="yes">_Person:</property>
                                 <property name="use_underline">True</property>
                                 <property name="justify">right</property>
+                                <property name="mnemonic_widget">speechFamilies</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -971,6 +974,7 @@
                                 <property name="label" translatable="yes">Speech synthesi_zer:</property>
                                 <property name="use_underline">True</property>
                                 <property name="justify">right</property>
+                                <property name="mnemonic_widget">speechServers</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -1000,6 +1004,7 @@
                                 <property name="label" translatable="yes">Speech _system:</property>
                                 <property name="use_underline">True</property>
                                 <property name="justify">right</property>
+                                <property name="mnemonic_widget">speechSystems</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -1036,6 +1041,7 @@
                                 <property name="label" translatable="yes" comments="Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.">_Voice type:</property>
                                 <property name="use_underline">True</property>
                                 <property name="justify">right</property>
+                                <property name="mnemonic_widget">voiceTypesCombo</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
