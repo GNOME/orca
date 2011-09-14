@@ -2374,7 +2374,13 @@ class Utilities:
 
         newSegment = pronunciation_dict.getPronunciation(
             segment, self._script.app_pronunciation_dict)
-        if newSegment == segment:
+
+        try:
+            unchanged = newSegment == segment
+        except UnicodeEncodeError, UnicodeDecodeError:
+            unchanged = True
+
+        if unchanged:
             newSegment = pronunciation_dict.getPronunciation(segment)
 
         return newSegment
@@ -2393,7 +2399,11 @@ class Utilities:
 
         import punctuation_settings
 
-        line = line.decode("UTF-8")
+        try:
+            line = line.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
+
         endOffset = startOffset + len(line)
 
         try:
@@ -2453,18 +2463,14 @@ class Utilities:
             pass
 
         words = self.WORDS_RE.split(line)
-        for word in words:
-            if word.isalnum():
-                word = self._pronunciationForSegment(word)
-            newLine += word
+        newLine = ' '.join(map(self._pronunciationForSegment, words))
 
-        if line != newLine:
-            debug.println(debug.LEVEL_FINEST,
-                          "adjustForPronunciation: \n  From '%s'\n  To   '%s'" \
-                          % (line, newLine))
-            return newLine.encode("UTF-8")
-        else:
-            return line
+        try:
+            newLine = newLine.encode("UTF-8")
+        except UnicodeDecodeError:
+            pass
+
+        return newLine
 
     def adjustForRepeats(self, line):
         """Adjust line to include repeat character counts. As some people
@@ -2519,7 +2525,12 @@ class Utilities:
         #
         # pylint: disable-msg=E1103
 
-        return newLine.encode("UTF-8")
+        try:
+            newLine = newLine.encode("UTF-8")
+        except UnicodeDecodeError:
+            pass
+
+        return newLine
 
     def adjustForDigits(self, string):
         """Adjusts the string to convert digit-like text, such as subscript
@@ -2531,7 +2542,11 @@ class Utilities:
         Returns: a new string which contains actual digits.
         """
 
-        uString = string.decode("UTF-8")
+        try:
+            uString = string.decode("UTF-8")
+        except UnicodeEncodeError:
+            uString = string
+
         subscripted = set(re.findall(self.SUBSCRIPTS_RE, uString))
         superscripted = set(re.findall(self.SUPERSCRIPTS_RE, uString))
 
@@ -2555,7 +2570,12 @@ class Utilities:
             newString = _(" subscript %s") % "".join(new)
             uString = re.sub(number, newString, uString)
 
-        return uString.encode("UTF-8")
+        try:
+            uString = uString.encode("UTF-8")
+        except UnicodeDecodeError:
+            pass
+
+        return uString
 
     @staticmethod
     def absoluteMouseCoordinates():

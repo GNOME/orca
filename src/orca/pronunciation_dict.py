@@ -28,7 +28,11 @@ __license__   = "LGPL"
 
 def getPronunciation(word, pronunciations=None):
     """Given a word, return a string that represents what this word
-    sounds like.
+    sounds like. Note: This code does not handle the pronunciation
+    of character names. If you want a character name to be spoken,
+    treat it as a punctuation character at LEVEL_NONE in
+    puncutation_settings.py. See, for example, the left_arrow and
+    right_arrow characters.
 
     Arguments:
     - word: the word to get the "sounds like" representation for.
@@ -42,19 +46,11 @@ def getPronunciation(word, pronunciations=None):
     if isinstance(word, unicode):
         word = word.encode("UTF-8")
 
-    try:
-        lowerWord = word.decode("UTF-8").lower().encode("UTF-8")
-        if pronunciations != None:
-            return pronunciations[lowerWord][1]
-        else:
-            return pronunciation_dict[lowerWord][1]
-    except:
-        # If you want a character name to be spoken, treat it as a
-        # punctuation character at LEVEL_NONE in puncutation_settings.py.
-        # See, for example, the left_arrow and right_arrow characters.
-        #
-        #return chnames.getCharacterName(word)
-        return word
+    lowerWord = word.decode("UTF-8").lower().encode("UTF-8")
+    dictionary = pronunciations or pronunciation_dict
+    entry = dictionary.get(lowerWord, [word, word])
+
+    return entry[1]
 
 def setPronunciation(word, replacementString, pronunciations=None):
     """Given an actual word, and a replacement string, set a key/value

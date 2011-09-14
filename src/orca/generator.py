@@ -264,7 +264,7 @@ class Generator:
         debug.println(debug.LEVEL_ALL, "COMPLETION  TIME: %s" % duration)
         debug.println(debug.LEVEL_ALL, "generate %s results:" % self._mode)
         for element in result:
-            debug.println(debug.LEVEL_ALL, "  " + str(element))
+            debug.println(debug.LEVEL_ALL, "  %s" % element)
 
         return result
 

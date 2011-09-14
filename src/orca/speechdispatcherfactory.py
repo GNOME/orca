@@ -311,7 +311,12 @@ class SpeechServer(speechserver.SpeechServer):
         if orca_state.activeScript:
             newText = orca_state.activeScript.utilities.adjustForDigits(newText)
 
-        return newText.encode("UTF-8")
+        try:
+            newText = newText.encode("UTF-8")
+        except UnicodeDecodeError:
+            pass
+
+        return newText
 
     def _speak(self, text, acss, **kwargs):
         if isinstance(text, ACSS):
