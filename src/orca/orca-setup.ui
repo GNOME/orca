@@ -838,7 +838,8 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHScale" id="volumeScale">
+                              <object class="GtkScale" id="volumeScale">
+                                <property name="orientation">horizontal</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="adjustment">adjustment3</property>
@@ -855,7 +856,8 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHScale" id="pitchScale">
+                              <object class="GtkScale" id="pitchScale">
+                                <property name="orientation">horizontal</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="adjustment">adjustment1</property>
@@ -889,7 +891,8 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHScale" id="rateScale">
+                              <object class="GtkScale" id="rateScale">
+                                <property name="orientation">horizontal</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="adjustment">adjustment2</property>
