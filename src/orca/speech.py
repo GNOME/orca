@@ -258,6 +258,11 @@ def speak(content, acss=None, interrupt=True):
             element.play()
 
     if toSpeak:
+        try:
+            toSpeak = map(lambda x: x.decode("UTF-8"), toSpeak)
+        except UnicodeEncodeError:
+            debug.printException(debug.LEVEL_FINEST)
+
         string = " ".join(toSpeak)
         _speak(string, activeVoice, interrupt)
 
