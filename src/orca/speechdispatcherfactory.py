@@ -177,6 +177,11 @@ class SpeechServer(speechserver.SpeechServer):
         # the list will contain the names of all available "real"
         # voices provided by the speech engine.
         #
+        try:
+            serverId = serverId.encode("UTF-8")
+        except UnicodeDecodeError:
+            pass
+
         self._default_voice_name = _("%s default voice") % serverId
         
         try:

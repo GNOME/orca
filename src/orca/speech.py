@@ -178,6 +178,12 @@ def _speak(text, acss, interrupt):
                 if key != settings.DEFAULT_VOICE:
                     extraDebug = " voice=%s" % key
                 break
+
+    try:
+        extraDebug = extraDebug.encode("UTF-8")
+    except UnicodeDecodeError:
+        pass
+
     debug.println(debug.LEVEL_INFO, logLine + extraDebug)
     log.info(logLine + extraDebug)
 
