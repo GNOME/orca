@@ -2326,6 +2326,16 @@ class Utilities:
         import punctuation_settings
         import chnames
 
+        try:
+            line = line.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
+
+        try:
+            segment = segment.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
+
         style = settings.verbalizePunctuationStyle
         isPunctChar = True
         try:
@@ -2343,11 +2353,17 @@ class Utilities:
                 # space characters".  The %d is the number and the %s
                 # is the spoken word for the character.
                 #
-                line += " " \
-                     + ngettext("%(count)d %(repeatChar)s character",
+                repeatSegment = ngettext("%(count)d %(repeatChar)s character",
                                 "%(count)d %(repeatChar)s characters",
-                                count) \
-                       % {"count" : count, "repeatChar": repeatChar}
+                                 count) \
+                                 % {"count" : count, "repeatChar": repeatChar}
+
+                try:
+                    repeatSegment = repeatSegment.decode("UTF-8")
+                except UnicodeEncodeError:
+                    pass
+
+                line = "%s %s" % (line, repeatSegment)
             else:
                 line += segment
         else:
