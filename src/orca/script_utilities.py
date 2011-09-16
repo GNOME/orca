@@ -511,7 +511,9 @@ class Utilities:
             if selectedItem:
                 displayedText = self.displayedText(selectedItem)
                 #print "SELECTEDITEM", displayedText
-            elif combo.name and len(combo.name):
+                if displayedText:
+                    return displayedText
+            if combo.name and len(combo.name):
                 # We give preference to the name over the text because
                 # the text for combo boxes seems to never change in
                 # some cases.  The main one where we see this is in
