@@ -3033,6 +3033,10 @@ class Script(script.Script):
         - event: the Event
         """
 
+        if event.type.startswith("focus:") \
+                and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+            return
+
         # [[[TODO: WDW - HACK to deal with quirky GTK+ menu behavior.
         # The problem is that when moving to submenus in a menu, the
         # menu gets focus first and then the submenu gets focus all
