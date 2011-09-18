@@ -3033,8 +3033,10 @@ class Script(script.Script):
         - event: the Event
         """
 
+        state = event.source.getState()
         if event.type.startswith("focus:") \
-                and not event.source.getState().contains(pyatspi.STATE_FOCUSED):
+           and state.contains(pyatspi.STATE_FOCUSABLE) \
+           and not state.contains(pyatspi.STATE_FOCUSED):
             return
 
         # [[[TODO: WDW - HACK to deal with quirky GTK+ menu behavior.
