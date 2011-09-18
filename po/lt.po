@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-08-31 20:50+0000\n"
-"PO-Revision-Date: 2011-09-02 23:42+0300\n"
+"POT-Creation-Date: 2011-09-13 23:08+0000\n"
+"PO-Revision-Date: 2011-09-18 16:00+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
 "MIME-Version: 1.0\n"
@@ -32,16 +32,18 @@ msgid "Orca"
 msgstr "Orca"
 
 #: ../orca.desktop.in.h:2
-msgid "Orca Screen Reader and Magnifier"
-msgstr "Ekrano skaityklė ir lupa Orca"
+#: ../src/orca/orca_gui_main.py:44
+msgid "Orca Screen Reader"
+msgstr "Orca ekrano skaityklė"
 
 #: ../orca.desktop.in.h:3
-msgid "Present on-screen information as speech or braille, or magnify the screen"
-msgstr "Pateikti ekrane esančią informaciją kaip kalbą ar brailio raštą arba padidinti ekraną"
+msgid "Provide access to graphical desktop environments via synthesized speech and/or refreshable braille"
+msgstr "Suteikia prieiga prie grafinių darbastalio aplinkų su sintezuota kalba ir (arba) atnaujinamu brailiu"
 
 #: ../orca.desktop.in.h:4
-msgid "Screen Reader and Magnifier"
-msgstr "Ekrano skaityklė ir lupa"
+#| msgid "Orca Screen Reader"
+msgid "Screen Reader"
+msgstr "Ekrano skaityklė"
 
 #: ../src/orca/app_gui_prefs.py:136
 #, python-format
@@ -467,8 +469,8 @@ msgstr "Žinutė iš pokalbių kambario %s"
 #.
 #: ../src/orca/chnames.py:39
 #: ../src/orca/keynames.py:146
-#: ../src/orca/script_utilities.py:2738
 #: ../src/orca/script_utilities.py:2746
+#: ../src/orca/script_utilities.py:2754
 msgid "space"
 msgstr "tarpas"
 
@@ -669,7 +671,7 @@ msgstr "kairysis riestinis skliaustas"
 #.
 #: ../src/orca/chnames.py:167
 msgid "vertical bar"
-msgstr "vertikalus brūšnelis"
+msgstr "vertikalus brūkšnelis"
 
 #. Translators: this is the spoken word for the character '}' (U+007d)
 #.
@@ -1836,10 +1838,10 @@ msgstr[2] "%d procentų."
 #. string used in the *.po file for gail.
 #.
 #: ../src/orca/flat_review.py:1078
-#: ../src/orca/generator.py:453
-#: ../src/orca/generator.py:710
-#: ../src/orca/generator.py:752
-#: ../src/orca/generator.py:798
+#: ../src/orca/generator.py:466
+#: ../src/orca/generator.py:723
+#: ../src/orca/generator.py:765
+#: ../src/orca/generator.py:811
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:641
@@ -1900,7 +1902,6 @@ msgstr "Shift"
 #. Translators: this is how someone would speak the name of the shift key
 #.
 #: ../src/orca/keynames.py:42
-#| msgid "Shift"
 msgctxt "keyboard"
 msgid "Shift"
 msgstr "Lyg2"
@@ -1908,7 +1909,6 @@ msgstr "Lyg2"
 #. Translators: this is how someone would speak the name of the alt key
 #.
 #: ../src/orca/keynames.py:46
-#| msgid "Alt_R"
 msgctxt "keyboard"
 msgid "Alt"
 msgstr "Alt"
@@ -1916,7 +1916,6 @@ msgstr "Alt"
 #. Translators: this is how someone would speak the name of the control key
 #.
 #: ../src/orca/keynames.py:50
-#| msgid "Ctrl"
 msgctxt "keyboard"
 msgid "Control"
 msgstr "Valdymas"
@@ -2563,7 +2562,6 @@ msgid "<b>Results must:</b>"
 msgstr "<b>Rezultatai privalo:</b>"
 
 #: ../src/orca/orca-find.ui.h:2
-#| msgid "<b>Start from:</b>"
 msgid "<b>Search direction:</b>"
 msgstr "<b>Paieškos kryptis:</b>"
 
@@ -2637,11 +2635,6 @@ msgstr "Lango _viršus"
 msgid "_Wrap around"
 msgstr "_Priėjus pabaigą pradėti nuo pradžių"
 
-#: ../src/orca/orca_gui_main.py:44
-#| msgid "Orca Screen Reader / Magnifier"
-msgid "Orca Screen Reader"
-msgstr "Orca ekrano skaityklė"
-
 #. Translators: This is used in the Orca About dialog.
 #.
 #: ../src/orca/orca_gui_main.py:105
@@ -2657,12 +2650,6 @@ msgstr "Laisva, atviro kodo ekrano skaityklė su scenarijais, leidžianti pasiek
 #. Translators: This text is used in the Orca About dialog.
 #.
 #: ../src/orca/orca_gui_main.py:113
-#| msgid ""
-#| "Copyright (c) 2005-2010 Sun Microsystems Inc. \n"
-#| "Copyright (c) 2005-2008 Google Inc. \n"
-#| "Copyright (c) 2008, 2009 Eitan Isaacson \n"
-#| "Copyright (c) 2006-2009 Brailcom, o.p.s. \n"
-#| "Copyright (c) 2001, 2002 BAUM Retec, A.G."
 msgid ""
 "Copyright (c) 2010-2011 The Orca Team \n"
 "Copyright (c) 2010 Consorcio Fernando de los Rios \n"
@@ -2900,7 +2887,7 @@ msgstr "Skaidyti kalbą į _dalis tarp pauzių"
 #.
 #: ../src/orca/orca_gui_prefs.py:1501
 #: ../src/orca/orca_gui_prefs.py:2689
-#: ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca-setup.ui.h:56
 msgid "Line"
 msgstr "Eilutė"
 
@@ -2910,7 +2897,7 @@ msgstr "Eilutė"
 #.
 #: ../src/orca/orca_gui_prefs.py:1501
 #: ../src/orca/orca_gui_prefs.py:2695
-#: ../src/orca/orca-setup.ui.h:91
+#: ../src/orca/orca-setup.ui.h:83
 msgid "Sentence"
 msgstr "Sakinys"
 
@@ -2922,7 +2909,7 @@ msgstr "Sakinys"
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
 #: ../src/orca/orca_gui_prefs.py:1600
 #: ../src/orca/orca_gui_prefs.py:2651
-#: ../src/orca/orca-setup.ui.h:77
+#: ../src/orca/orca-setup.ui.h:72
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Visos"
@@ -2954,7 +2941,7 @@ msgstr "Langas"
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
 #: ../src/orca/orca_gui_prefs.py:1721
-#: ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca-setup.ui.h:51
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Įjungti ne tarpų _diakritinius klavišus"
 
@@ -2966,7 +2953,7 @@ msgstr "Įjungti ne tarpų _diakritinius klavišus"
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
 #: ../src/orca/orca_gui_prefs.py:1729
-#: ../src/orca/orca-setup.ui.h:50
+#: ../src/orca/orca-setup.ui.h:48
 msgid "Enable echo by cha_racter"
 msgstr "Įjungti _simbolių atkartojimą"
 
@@ -3004,7 +2991,7 @@ msgstr "Brailio priskyrimai"
 #: ../src/orca/orca_gui_prefs.py:2480
 #: ../src/orca/orca_gui_prefs.py:2521
 #: ../src/orca/orca_gui_prefs.py:2561
-#: ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca-setup.ui.h:34
 msgid "Dot _7"
 msgstr "_7 taškas"
 
@@ -3015,7 +3002,7 @@ msgstr "_7 taškas"
 #: ../src/orca/orca_gui_prefs.py:2487
 #: ../src/orca/orca_gui_prefs.py:2528
 #: ../src/orca/orca_gui_prefs.py:2568
-#: ../src/orca/orca-setup.ui.h:37
+#: ../src/orca/orca-setup.ui.h:35
 msgid "Dot _8"
 msgstr "_8 taškas"
 
@@ -3026,7 +3013,7 @@ msgstr "_8 taškas"
 #: ../src/orca/orca_gui_prefs.py:2494
 #: ../src/orca/orca_gui_prefs.py:2535
 #: ../src/orca/orca_gui_prefs.py:2575
-#: ../src/orca/orca-setup.ui.h:38
+#: ../src/orca/orca-setup.ui.h:36
 msgid "Dots 7 an_d 8"
 msgstr "7 i_r 8 taškai"
 
@@ -3035,7 +3022,7 @@ msgstr "7 i_r 8 taškai"
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
 #: ../src/orca/orca_gui_prefs.py:2598
-#: ../src/orca/orca-setup.ui.h:140
+#: ../src/orca/orca-setup.ui.h:132
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Nėra"
@@ -3046,7 +3033,7 @@ msgstr "_Nėra"
 #. (such as #, @, $) will.
 #.
 #: ../src/orca/orca_gui_prefs.py:2606
-#: ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca-setup.ui.h:85
 msgid "So_me"
 msgstr "_Kai kurie"
 
@@ -3055,7 +3042,7 @@ msgstr "_Kai kurie"
 #. document.
 #.
 #: ../src/orca/orca_gui_prefs.py:2613
-#: ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca-setup.ui.h:57
 msgid "M_ost"
 msgstr "_Dauguma"
 
@@ -3075,7 +3062,7 @@ msgstr "_Trumpas"
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
 #: ../src/orca/orca_gui_prefs.py:2805
-#: ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca-setup.ui.h:88
 msgid "Speak _cell"
 msgstr "Perskaityti _langelį"
 
@@ -3130,7 +3117,7 @@ msgstr "Klavišo susiejimas buvo pašalintas."
 #. or laptop).
 #.
 #: ../src/orca/orca_gui_prefs.py:3035
-#: ../src/orca/orca-setup.ui.h:123
+#: ../src/orca/orca-setup.ui.h:114
 msgid "_Desktop"
 msgstr "_Darbastalis"
 
@@ -3178,10 +3165,6 @@ msgid "Load User Profile"
 msgstr "Įkelti naudotojo profilį"
 
 #: ../src/orca/orca_gui_prefs.py:3483
-#| msgid ""
-#| "You already have an instance of an Orca preferences dialog open.\n"
-#| "\n"
-#| "Please close it before opening a new one."
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -3221,15 +3204,10 @@ msgid "_Profile Name:"
 msgstr "_Profilio pavadinimas:"
 
 #: ../src/orca/orca_gui_quit.py:45
-#| msgid "Quits Orca"
 msgid "Quit Orca?"
 msgstr "Užverti Orcą?"
 
 #: ../src/orca/orca_gui_quit.py:47
-#| msgid ""
-#| "<b><big>Quit Orca?</big></b>\n"
-#| "\n"
-#| "This will stop all speech and braille output."
 msgid "This will stop all speech and braille output."
 msgstr "Šis veiksmas nutrauks skaitymą balsu bei brailio išvedimą."
 
@@ -3238,29 +3216,29 @@ msgstr "Šis veiksmas nutrauks skaitymą balsu bei brailio išvedimą."
 #. After the message, the list of arguments, as typed by the
 #. user, is displayed.
 #.
-#: ../src/orca/orca.py:310
+#: ../src/orca/orca.py:309
 msgid "The following arguments are not valid: "
 msgstr "Šie argumentai yra netinkami: "
 
 #. Translators: This message is displayed when the user
 #. tries to enable or disable a feature via an argument,
 #. but specified an invalid feature. Valid features are:
-#. speech, braille, braille-monitor, magnifier, main-window,
-#. and splash-window. These items are not localized and are
+#. speech, braille, braille-monitor, main-window, and
+#. splash-window. These items are not localized and are
 #. presented in a list after this message.
 #.
-#: ../src/orca/orca.py:365
+#: ../src/orca/orca.py:364
 msgid "The following items can be enabled or disabled:"
 msgstr "Šie elementai gali būti įjungti arba išjungti:"
 
-#: ../src/orca/orca.py:380
+#: ../src/orca/orca.py:379
 msgid "Usage: orca [OPTION...]"
 msgstr "Naudojimas: orca [PARINKTIS...]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:386
+#: ../src/orca/orca.py:385
 msgid "Show this help message"
 msgstr "Rodyti šį pagalbos pranešimą"
 
@@ -3268,7 +3246,7 @@ msgstr "Rodyti šį pagalbos pranešimą"
 #. the names of applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:394
+#: ../src/orca/orca.py:393
 msgid "Print the known running applications"
 msgstr "Spausdinti žinomas veikiančias programas"
 
@@ -3280,7 +3258,7 @@ msgstr "Spausdinti žinomas veikiančias programas"
 #. always start with 'debug' and end with '.out', regardless of the
 #. locale.).
 #.
-#: ../src/orca/orca.py:405
+#: ../src/orca/orca.py:404
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr "Siųsti derinimo išvestį į debug-YYYY-MM-DD-HH:MM:SS.out"
 
@@ -3288,7 +3266,7 @@ msgstr "Siųsti derinimo išvestį į debug-YYYY-MM-DD-HH:MM:SS.out"
 #. the name of the debug file Orca will use for debug output if the
 #. --debug option is used.
 #.
-#: ../src/orca/orca.py:412
+#: ../src/orca/orca.py:411
 msgid "Send debug output to the specified file"
 msgstr "Siųsti derinimo išvestį į specifinį failą"
 
@@ -3296,7 +3274,7 @@ msgstr "Siųsti derinimo išvestį į specifinį failą"
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
 #. that would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:419
+#: ../src/orca/orca.py:418
 msgid "Set up user preferences"
 msgstr "Orca nustatymai"
 
@@ -3306,7 +3284,7 @@ msgstr "Orca nustatymai"
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
 #.
-#: ../src/orca/orca.py:428
+#: ../src/orca/orca.py:427
 msgid "Set up user preferences (text version)"
 msgstr "Nustatyti naudotojo parinktis (tektinė versija)"
 
@@ -3314,7 +3292,7 @@ msgstr "Nustatyti naudotojo parinktis (tektinė versija)"
 #. '-n, --no-setup' that means that Orca will startup without setting
 #. up any user preferences.
 #.
-#: ../src/orca/orca.py:435
+#: ../src/orca/orca.py:434
 msgid "Skip set up of user preferences"
 msgstr "Praleisti naudotojo nustatymus"
 
@@ -3322,7 +3300,7 @@ msgstr "Praleisti naudotojo nustatymus"
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for the user preferences.
 #.
-#: ../src/orca/orca.py:442
+#: ../src/orca/orca.py:441
 msgid "Use alternate directory for user preferences"
 msgstr "Naudoti atskirą katalogą naudotojo parinktims"
 
@@ -3330,7 +3308,7 @@ msgstr "Naudoti atskirą katalogą naudotojo parinktims"
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:456
+#: ../src/orca/orca.py:454
 msgid "Force use of option"
 msgstr "Priverstinai naudoti parinktį"
 
@@ -3338,14 +3316,14 @@ msgstr "Priverstinai naudoti parinktį"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:470
+#: ../src/orca/orca.py:467
 msgid "Prevent use of option"
 msgstr "Drausti naudoti parinktį"
 
 #. Translators: this is the Orca command line option to import to Orca
 #. a user profile from a given file
 #.
-#: ../src/orca/orca.py:476
+#: ../src/orca/orca.py:473
 msgid "Import a profile from a given orca profile file"
 msgstr "Importuoti profilį iš pateikto orca profilio failo"
 
@@ -3354,7 +3332,7 @@ msgstr "Importuoti profilį iš pateikto orca profilio failo"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:484
+#: ../src/orca/orca.py:481
 msgid "Quits Orca (if shell script used)"
 msgstr "Išjungia Orca (jei naudojamas apvalkalo scenarijus)"
 
@@ -3364,21 +3342,21 @@ msgstr "Išjungia Orca (jei naudojamas apvalkalo scenarijus)"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:493
+#: ../src/orca/orca.py:490
 msgid "Forces orca to be terminated immediately."
 msgstr "Priverčia orca nedelsiant išsijungti."
 
 #. Translators: this is the Orca command line option to tell Orca to
 #. replace any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:499
+#: ../src/orca/orca.py:496
 msgid "Replace a currently running Orca"
 msgstr "Pakeisti jau veikiančią Orca"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:505
+#: ../src/orca/orca.py:502
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3388,14 +3366,14 @@ msgstr ""
 "automatiškai paleis nustatymus, nebent bus\n"
 "naudojama parinktis -n arba --no-setup."
 
-#: ../src/orca/orca.py:517
+#: ../src/orca/orca.py:514
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Praneškite apie klaida adresu orca-list@gnome.org."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:695
-#: ../src/orca/orca.py:2091
+#: ../src/orca/orca.py:692
+#: ../src/orca/orca.py:2088
 msgid "Goodbye."
 msgstr "Viso gero."
 
@@ -3408,7 +3386,7 @@ msgstr "Viso gero."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:769
+#: ../src/orca/orca.py:766
 msgid "Exiting learn mode."
 msgstr "Išjungiamas mokymosi režimas."
 
@@ -3420,7 +3398,7 @@ msgstr "Išjungiamas mokymosi režimas."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/orca.py:793
+#: ../src/orca/orca.py:790
 msgid "Exiting list shortcuts mode."
 msgstr "Esama trumpinių išvardinimo veiksena."
 
@@ -3429,7 +3407,7 @@ msgstr "Esama trumpinių išvardinimo veiksena."
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1049
+#: ../src/orca/orca.py:1046
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
 #: ../src/orca/speech.py:287
 #: ../src/orca/speechserver.py:219
@@ -3441,7 +3419,7 @@ msgstr "išjungta"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1053
+#: ../src/orca/orca.py:1050
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
 #: ../src/orca/speech.py:282
 #: ../src/orca/speechserver.py:214
@@ -3451,14 +3429,14 @@ msgstr "įjungta"
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:1411
+#: ../src/orca/orca.py:1408
 msgid "Speech enabled."
 msgstr "Kalbėjimas įjungtas."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:1416
+#: ../src/orca/orca.py:1413
 msgid "Speech disabled."
 msgstr "Kalbėjimas išjungtas."
 
@@ -3466,7 +3444,7 @@ msgstr "Kalbėjimas išjungtas."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1545
+#: ../src/orca/orca.py:1542
 msgid "Orca user settings reloaded."
 msgstr "Orca naudotojo nustatymai įkelti iš naujo."
 
@@ -3474,7 +3452,7 @@ msgstr "Orca naudotojo nustatymai įkelti iš naujo."
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:1723
+#: ../src/orca/orca.py:1720
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr "Naudokite rodykles aukštyn ir žemyn vaikščiojimui sąraše. Spauskite išeiti išėjimui."
 
@@ -3482,7 +3460,7 @@ msgstr "Naudokite rodykles aukštyn ir žemyn vaikščiojimui sąraše. Spauskit
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:1737
+#: ../src/orca/orca.py:1734
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3494,7 +3472,7 @@ msgstr[2] "Rasta %d Orca numatytųjų trumpinių"
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:1759
+#: ../src/orca/orca.py:1756
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3507,7 +3485,7 @@ msgstr[2] "Rasta %(count)d Orca trumpinių %(application)s"
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1777
+#: ../src/orca/orca.py:1774
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "Nerasta Orca trumpinių programai %s."
@@ -3530,8 +3508,8 @@ msgstr "Nerasta Orca trumpinių programai %s."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1795
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6047
+#: ../src/orca/orca.py:1792
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6057
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Einama iki apačios."
@@ -3554,8 +3532,8 @@ msgstr "Einama iki apačios."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1816
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6115
+#: ../src/orca/orca.py:1813
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6125
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Einama iki viršaus."
@@ -3568,12 +3546,12 @@ msgstr "Einama iki viršaus."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1835
+#: ../src/orca/orca.py:1832
 #: ../src/orca/scripts/default.py:1573
 msgid "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the current application. Press escape to exit."
 msgstr "Spauskite 1 Orca numatytiems trumpiniams. Spauskite 2 Orca trumpiniams dabartinei programai. Spauskite išeiti išėjimui."
 
-#: ../src/orca/orca.py:1885
+#: ../src/orca/orca.py:1882
 msgid "keypad "
 msgstr "skaičių klaviatūra"
 
@@ -3581,7 +3559,7 @@ msgstr "skaičių klaviatūra"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1892
+#: ../src/orca/orca.py:1889
 msgid "double click"
 msgstr "dvigubas paspaudimas"
 
@@ -3589,7 +3567,7 @@ msgstr "dvigubas paspaudimas"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1898
+#: ../src/orca/orca.py:1895
 msgid "triple click"
 msgstr "trigubas paspaudimas"
 
@@ -3597,14 +3575,14 @@ msgstr "trigubas paspaudimas"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2224
+#: ../src/orca/orca.py:2221
 msgid "Unable to import profile."
 msgstr "Nepavyksta importuoti profilio."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2230
+#: ../src/orca/orca.py:2227
 msgid "Profile import success."
 msgstr "Profilis sėkmingai importuotas."
 
@@ -3612,12 +3590,12 @@ msgstr "Profilis sėkmingai importuotas."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2236
+#: ../src/orca/orca.py:2233
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "Importas nepavyko dėl neatpažinto klavišo: %s"
 
-#: ../src/orca/orca.py:2305
+#: ../src/orca/orca.py:2302
 msgid "Welcome to Orca."
 msgstr "Sveiki paleidę Orca."
 
@@ -3634,12 +3612,10 @@ msgid "<b>Braille Indicator</b>"
 msgstr "<b>Brailio indikatorius</b>"
 
 #: ../src/orca/orca-setup.ui.h:4
-#| msgid "<b>Zoomer Settings</b>"
 msgid "<b>Display Settings</b>"
 msgstr "<b>Rodyti nustatymus</b>"
 
 #: ../src/orca/orca-setup.ui.h:5
-#| msgid "<b>Zoomer Settings</b>"
 msgid "<b>Global Voice Settings</b>"
 msgstr "<b>Bendrieji balso nustatymai</b>"
 
@@ -3690,7 +3666,6 @@ msgid "<b>Text attributes</b>"
 msgstr "<b>Teksto požymiai</b>"
 
 #: ../src/orca/orca-setup.ui.h:19
-#| msgid "<b>Braille Indicator</b>"
 msgid "<b>Time and Date</b>"
 msgstr "<b>Data ir laikas</b>"
 
@@ -3702,364 +3677,324 @@ msgstr "<b>Naudotojo sąsaja</b>"
 msgid "<b>Verbosity</b>"
 msgstr "<b>Išsamumas</b>"
 
-#: ../src/orca/orca-setup.ui.h:22
-#| msgid "<b>Zoomer Settings</b>"
+#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
+#: ../src/orca/orca-setup.ui.h:23
 msgid "<b>Voice Type Settings</b>"
 msgstr "<b>Balso tipo nustatymai</b>"
 
-#: ../src/orca/orca-setup.ui.h:23
+#: ../src/orca/orca-setup.ui.h:24
 msgid "Active _Profile:"
 msgstr "Aktyvus _profilis:"
 
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/orca-setup.ui.h:24
+#: ../src/orca/orca-setup.ui.h:25
 #: ../src/orca/rolenames.py:1127
 msgid "Application"
 msgstr "Programa"
-
-#: ../src/orca/orca-setup.ui.h:25
-msgid "Bottom Half"
-msgstr "Apatinė pusė"
 
 #: ../src/orca/orca-setup.ui.h:26
 msgid "Braille"
 msgstr "Brailis"
 
 #: ../src/orca/orca-setup.ui.h:30
-msgid "Centered"
-msgstr "Centruotas"
-
-#: ../src/orca/orca-setup.ui.h:31
 msgid "Contraction _Table:"
 msgstr "Sutraukimo _lentelė:"
 
-#: ../src/orca/orca-setup.ui.h:32
-msgid "Custom"
-msgstr "Pasirinktinis"
-
-#: ../src/orca/orca-setup.ui.h:33
+#: ../src/orca/orca-setup.ui.h:31
 msgid "Dat_e format:"
 msgstr "_Datos formatas:"
 
-#: ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca-setup.ui.h:32
 msgid "Default"
 msgstr "Numatytasis"
 
-#: ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/orca-setup.ui.h:33
 msgid "Disable _end of line symbol"
 msgstr "Išjungti _eilutės pabaigos simbolį"
 
-#: ../src/orca/orca-setup.ui.h:39
+#: ../src/orca/orca-setup.ui.h:37
 msgid "Enable Braille _monitor"
 msgstr "Įjungti brailio _monitorių"
 
-#: ../src/orca/orca-setup.ui.h:40
+#: ../src/orca/orca-setup.ui.h:38
 msgid "Enable Braille _support"
 msgstr "Įjungti brailio _palaikymą"
 
-#: ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca-setup.ui.h:39
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "Įjungti _alfaskaitmeninius ir skyrybos klavišus"
 
-#: ../src/orca/orca-setup.ui.h:42
+#: ../src/orca/orca-setup.ui.h:40
 msgid "Enable _function keys"
 msgstr "Įjungti _funkcijų klavišus"
 
-#: ../src/orca/orca-setup.ui.h:43
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Enable _key echo"
 msgstr "Įjungti _klavišų aidą"
 
-#: ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca-setup.ui.h:42
 msgid "Enable _modifier keys"
 msgstr "Įjungti _modifikuojančius klavišus"
 
-#: ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca-setup.ui.h:43
 msgid "Enable _navigation keys"
 msgstr "Įjungti _judėjimo klavišus"
 
-#: ../src/orca/orca-setup.ui.h:46
+#: ../src/orca/orca-setup.ui.h:44
 msgid "Enable ac_tion keys"
 msgstr "Įjungti _veiksmų klavišus"
 
-#: ../src/orca/orca-setup.ui.h:47
+#: ../src/orca/orca-setup.ui.h:45
 msgid "Enable echo by _sentence"
 msgstr "Įjungti s_akinių atkartojimą"
 
-#: ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/orca-setup.ui.h:46
 msgid "Enable echo by _word"
 msgstr "Įjungti ž_odžių atkartojimą"
 
-#: ../src/orca/orca-setup.ui.h:51
+#: ../src/orca/orca-setup.ui.h:49
 msgid "Enable lockin_g keys"
 msgstr "Įjungti už_rakinančius klavišus"
 
-#: ../src/orca/orca-setup.ui.h:54
-msgid "Full Screen"
-msgstr "Viso ekrano veiksena"
-
-#: ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/orca-setup.ui.h:52
 msgid "General"
 msgstr "Bendra"
 
-#: ../src/orca/orca-setup.ui.h:56
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Hyperlink"
 msgstr "Nuoroda"
 
-#: ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca-setup.ui.h:54
 msgid "Key Bindings"
 msgstr "Klavišų priskyrimai"
 
-#: ../src/orca/orca-setup.ui.h:58
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Key Echo"
 msgstr "Klavišų aidas"
 
-#: ../src/orca/orca-setup.ui.h:59
-msgid "Left Half"
-msgstr "Kairė pusė"
-
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/orca-setup.ui.h:59
 msgid "Move _down one"
 msgstr "Perkelti vienu žemiau"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:65
+#: ../src/orca/orca-setup.ui.h:61
 msgid "Move _up one"
 msgstr "Perkelti vienu aukščiau"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/orca-setup.ui.h:63
 msgid "Move to _bottom"
 msgstr "Perkelti į _apačią"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:69
+#: ../src/orca/orca-setup.ui.h:65
 msgid "Move to _top"
 msgstr "Perkelti į _viršų"
 
-#: ../src/orca/orca-setup.ui.h:70
-msgid "None"
-msgstr "Nėra"
-
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: ../src/orca/orca-setup.ui.h:72
+#: ../src/orca/orca-setup.ui.h:67
 msgid "Only speak displayed text"
 msgstr "Sakyti tik rodomą tekstą"
 
-#: ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/orca-setup.ui.h:68
 msgid "Orca Preferences"
 msgstr "Orca nustatymai"
 
-#: ../src/orca/orca-setup.ui.h:74
+#: ../src/orca/orca-setup.ui.h:69
 msgid "Orca _Modifier Key(s):"
 msgstr "Orca _modifikuojantys klavišai:"
 
-#: ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/orca-setup.ui.h:70
 msgid "Pi_tch:"
 msgstr "Aukš_tumas:"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:79
+#: ../src/orca/orca-setup.ui.h:74
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "Dažnis (sekundėmis):"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:81
+#: ../src/orca/orca-setup.ui.h:76
 msgctxt "ProgressBarUpdates"
 msgid "Enable_d"
 msgstr "Į_jungta"
 
-#: ../src/orca/orca-setup.ui.h:82
+#: ../src/orca/orca-setup.ui.h:77
 msgid "Pronunciation"
 msgstr "Tarimas"
 
-#: ../src/orca/orca-setup.ui.h:83
-msgid "Proportional"
-msgstr "Proporcingas"
-
-#: ../src/orca/orca-setup.ui.h:84
-msgid "Push"
-msgstr "Paspausti"
-
-#: ../src/orca/orca-setup.ui.h:85
+#: ../src/orca/orca-setup.ui.h:78
 msgid "Quit Orca _without confirmation"
 msgstr "Uždaryti Orca _be patvirtinimo"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
-#: ../src/orca/orca-setup.ui.h:87
+#: ../src/orca/orca-setup.ui.h:80
 msgid "Restrict to:"
 msgstr "Apriboti:"
 
-#: ../src/orca/orca-setup.ui.h:88
-msgid "Right Half"
-msgstr "Dešinė pusė"
-
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
-#: ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca-setup.ui.h:82
 msgid "Say All B_y:"
 msgstr "Garsiai skaityti viską _po"
 
-#: ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca-setup.ui.h:84
 msgid "Show Orca _main window"
 msgstr "Rodyti Orca _pagrindinį langą"
 
-#: ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca-setup.ui.h:86
 msgid "Spea_k object mnemonics"
 msgstr "Sakyti objektų mnemonikas"
 
-#: ../src/orca/orca-setup.ui.h:97
+#: ../src/orca/orca-setup.ui.h:89
 msgid "Speak _indentation and justification"
 msgstr "Garsiai skaityt_i įtraukas ir lygiuotes"
 
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:90
 msgid "Speak _none"
 msgstr "Garsiai neskaityti nieko"
 
-#: ../src/orca/orca-setup.ui.h:99
+#: ../src/orca/orca-setup.ui.h:91
 msgid "Speak blank lines"
 msgstr "Skaityti tuščias eilutes"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').
-#: ../src/orca/orca-setup.ui.h:101
+#: ../src/orca/orca-setup.ui.h:93
 msgid "Speak child p_osition"
 msgstr "Sakyti vaiko _padėtį"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
-#: ../src/orca/orca-setup.ui.h:103
+#: ../src/orca/orca-setup.ui.h:95
 msgid "Speak multicase strings as wor_ds"
 msgstr "Perskaityti skirtingo dydžio eilutes kaip _žodžius"
 
-#: ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca-setup.ui.h:96
 msgid "Speak object under mo_use"
 msgstr "Sakyti objektą po pele"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
-#: ../src/orca/orca-setup.ui.h:106
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Speak ro_w"
 msgstr "Perskaityti _eilutę"
 
-#: ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca-setup.ui.h:99
 msgid "Speak tutorial messages"
 msgstr "Perskaityti mokymosi pranešimus"
 
-#: ../src/orca/orca-setup.ui.h:108
+#: ../src/orca/orca-setup.ui.h:100
 msgid "Speech"
 msgstr "Kalbėjimas"
 
-#: ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/orca-setup.ui.h:101
 msgid "Speech _system:"
 msgstr "Kalbėjimo _sistema:"
 
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Speech synthesi_zer:"
 msgstr "Kalbėjimo sinte_zatorius:"
 
-#: ../src/orca/orca-setup.ui.h:111
+#: ../src/orca/orca-setup.ui.h:103
 msgid "Start-up Profile:"
 msgstr "Pradžios profilis:"
 
-#: ../src/orca/orca-setup.ui.h:112
+#: ../src/orca/orca-setup.ui.h:104
 msgid "System"
 msgstr "Sistema"
 
-#: ../src/orca/orca-setup.ui.h:113
+#: ../src/orca/orca-setup.ui.h:105
 msgid "Text Attributes"
 msgstr "Teksto požymiai"
 
-#: ../src/orca/orca-setup.ui.h:114
-msgid "Top Half"
-msgstr "Viršutinė pusė"
-
-#: ../src/orca/orca-setup.ui.h:115
+#: ../src/orca/orca-setup.ui.h:106
 msgid "Uppercase"
 msgstr "Didžiosiomis"
 
-#: ../src/orca/orca-setup.ui.h:116
+#: ../src/orca/orca-setup.ui.h:107
 msgid "Ver_bose"
 msgstr "Iš_samus"
 
-#: ../src/orca/orca-setup.ui.h:117
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Vo_lume:"
 msgstr "Ga_rsumas:"
 
-#: ../src/orca/orca-setup.ui.h:118
-#| msgid "soffice"
+#: ../src/orca/orca-setup.ui.h:109
 msgid "Voice"
 msgstr "Balsas"
 
 #. Translators: long braille for the rolename of a window.
 #.
-#: ../src/orca/orca-setup.ui.h:119
+#: ../src/orca/orca-setup.ui.h:110
 #: ../src/orca/rolenames.py:1079
 msgid "Window"
 msgstr "Langas"
 
-#: ../src/orca/orca-setup.ui.h:120
+#: ../src/orca/orca-setup.ui.h:111
 msgid "_Abbreviated role names"
 msgstr "_Sutrumpinti vaidmenų pavadinimai"
 
-#: ../src/orca/orca-setup.ui.h:121
+#: ../src/orca/orca-setup.ui.h:112
 msgid "_All"
 msgstr "_Visos"
 
-#: ../src/orca/orca-setup.ui.h:122
+#: ../src/orca/orca-setup.ui.h:113
 msgid "_Delete"
 msgstr "_Ištrinti"
 
-#: ../src/orca/orca-setup.ui.h:124
+#: ../src/orca/orca-setup.ui.h:115
 msgid "_Enable Contracted Braille"
 msgstr "_Įjungti sutrauktą brailį"
 
-#: ../src/orca/orca-setup.ui.h:125
+#: ../src/orca/orca-setup.ui.h:116
 msgid "_Enable speech"
 msgstr "Į_jungti kalbėjimą"
 
-#: ../src/orca/orca-setup.ui.h:126
+#: ../src/orca/orca-setup.ui.h:117
 msgid "_Laptop"
 msgstr "_Nešiojamasis kompiuteris"
 
 #. This button will load the selected settings profile in the application.
-#: ../src/orca/orca-setup.ui.h:128
+#: ../src/orca/orca-setup.ui.h:119
 msgid "_Load"
 msgstr "_Įkelti"
 
-#: ../src/orca/orca-setup.ui.h:129
+#: ../src/orca/orca-setup.ui.h:120
 msgid "_New entry"
 msgstr "-Naujas įrašas"
 
-#: ../src/orca/orca-setup.ui.h:130
+#: ../src/orca/orca-setup.ui.h:121
 msgid "_Person:"
 msgstr "_Asmuo:"
 
-#: ../src/orca/orca-setup.ui.h:131
+#: ../src/orca/orca-setup.ui.h:122
 msgid "_Present tooltips"
 msgstr "_Rodyti paaiškinimus"
 
-#: ../src/orca/orca-setup.ui.h:132
+#: ../src/orca/orca-setup.ui.h:123
 msgid "_Rate:"
 msgstr "_Dažnis:"
 
-#: ../src/orca/orca-setup.ui.h:133
+#: ../src/orca/orca-setup.ui.h:124
 msgid "_Reset"
 msgstr "_Atstatyti"
 
-#: ../src/orca/orca-setup.ui.h:134
+#: ../src/orca/orca-setup.ui.h:125
 msgid "_Speak all"
 msgstr "Garsiai skaityti viską"
 
-#: ../src/orca/orca-setup.ui.h:135
+#: ../src/orca/orca-setup.ui.h:126
 msgid "_Time format:"
 msgstr "_Laiko formatas"
 
-#: ../src/orca/orca-setup.ui.h:136
-#| msgid "_Voice settings:"
-msgid "_Voice Type:"
+#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
+#: ../src/orca/orca-setup.ui.h:128
+#| msgid "_Voice Type:"
+msgid "_Voice type:"
 msgstr "_Balso tipas:"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
-#: ../src/orca/orca-setup.ui.h:138
+#: ../src/orca/orca-setup.ui.h:130
 msgctxt "braille dots"
 msgid "_None"
 msgstr "_Nėra"
@@ -4746,7 +4681,7 @@ msgstr "Nuoroda"
 #: ../src/orca/script_utilities.py:2423
 #: ../src/orca/scripts/apps/soffice/script.py:1125
 #: ../src/orca/scripts/default.py:1975
-#: ../src/orca/speech_generator.py:972
+#: ../src/orca/speech_generator.py:986
 msgid "link"
 msgstr "nuoroda"
 
@@ -5563,7 +5498,7 @@ msgstr[2] "%(count)d %(repeatChar)s simbolių"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2537
+#: ../src/orca/script_utilities.py:2545
 #, python-format
 msgid " superscript %s"
 msgstr "viršutinis indeksas %s"
@@ -5573,7 +5508,7 @@ msgstr "viršutinis indeksas %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2547
+#: ../src/orca/script_utilities.py:2555
 #, python-format
 msgid " subscript %s"
 msgstr "apatinis indeksas %s"
@@ -5659,7 +5594,7 @@ msgstr "eilutė %(row)d, stulpelis %(column)d"
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/scripts/apps/acroread/script.py:316
-#: ../src/orca/speech_generator.py:765
+#: ../src/orca/speech_generator.py:779
 #, python-format
 msgid "column %d"
 msgstr "stulpelis %d"
@@ -5805,10 +5740,10 @@ msgstr "Aplankų mygtukas"
 #: ../src/orca/scripts/default.py:2347
 #: ../src/orca/scripts/default.py:4444
 #: ../src/orca/scripts/default.py:4454
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5323
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5333
 #: ../src/orca/settings.py:903
-#: ../src/orca/speech_generator.py:683
-#: ../src/orca/speech_generator.py:1036
+#: ../src/orca/speech_generator.py:697
+#: ../src/orca/speech_generator.py:1050
 #: ../src/orca/structural_navigation.py:3602
 msgid "blank"
 msgstr "tuščia"
@@ -5973,7 +5908,7 @@ msgstr "Darbastalis "
 #. pane or table.
 #.
 #: ../src/orca/scripts/apps/nautilus/script.py:138
-#: ../src/orca/speech_generator.py:1355
+#: ../src/orca/speech_generator.py:1369
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -7565,8 +7500,8 @@ msgstr "Garsiai perskaityti langelį"
 #: ../src/orca/scripts/default.py:3142
 #: ../src/orca/scripts/default.py:3275
 #: ../src/orca/scripts/default.py:5285
-#: ../src/orca/speech_generator.py:1132
-#: ../src/orca/speech_generator.py:1161
+#: ../src/orca/speech_generator.py:1146
+#: ../src/orca/speech_generator.py:1175
 msgctxt "text"
 msgid "selected"
 msgstr "pažymėtas"
@@ -7606,7 +7541,7 @@ msgstr "Pažangos juosta %d."
 #. Translators: bold as in the font sense.
 #.
 #: ../src/orca/scripts/default.py:4325
-#: ../src/orca/speech_generator.py:952
+#: ../src/orca/speech_generator.py:966
 msgid "bold"
 msgstr "paryškinta"
 
@@ -7921,7 +7856,7 @@ msgstr "Perjungia navigaciją tarp prigimtinės Gecko ir Orca žymeklio"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:596
 msgid "Moves focus into and away from the current mouse over."
-msgstr "Pašalina aktyvuma nuo elemento po pele."
+msgstr "Pašalina aktyvumą nuo elemento po pele."
 
 #. Translators: this is the title of a panel holding options for
 #. how to navigate HTML content (e.g., Orca caret navigation,
@@ -8069,22 +8004,22 @@ msgstr "a%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5490
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5500
 msgid "Mouse over object not found."
 msgstr "Nerastas objektas po pele."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5974
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5984
 msgid "open"
 msgstr "atverti"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6141
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6165
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6151
 #: ../src/orca/scripts/toolkits/Gecko/script.py:6175
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6185
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Tiesioginės srities palaikymas išjungtas"
@@ -8092,11 +8027,11 @@ msgstr "Tiesioginės srities palaikymas išjungtas"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6149
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6159
 msgid "Live regions monitoring on"
 msgstr "Tiesioginės srities stebėjimas įjungtas"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6156
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6166
 msgid "Live regions monitoring off"
 msgstr "Tiesioginės srities stebėjimas išjungtas"
 
@@ -8107,7 +8042,7 @@ msgstr "Tiesioginės srities stebėjimas išjungtas"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6191
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6201
 msgid "Gecko is controlling the caret."
 msgstr "Gecko valdo žymeklį."
 
@@ -8118,7 +8053,7 @@ msgstr "Gecko valdo žymeklį."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6203
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6213
 msgid "Orca is controlling the caret."
 msgstr "Orca valdo žymeklį."
 
@@ -8392,20 +8327,20 @@ msgid " dot dot dot"
 msgstr " taškas taškas taškas"
 
 #. Translators: This string announces speech rate change.
-#: ../src/orca/speechdispatcherfactory.py:371
+#: ../src/orca/speechdispatcherfactory.py:374
 msgid "slower."
 msgstr "lėčiau."
 
-#: ../src/orca/speechdispatcherfactory.py:371
+#: ../src/orca/speechdispatcherfactory.py:374
 msgid "faster."
 msgstr "greičiau."
 
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/speechdispatcherfactory.py:381
+#: ../src/orca/speechdispatcherfactory.py:384
 msgid "lower."
 msgstr "žemiau."
 
-#: ../src/orca/speechdispatcherfactory.py:381
+#: ../src/orca/speechdispatcherfactory.py:384
 msgid "higher."
 msgstr "aukščiau."
 
@@ -8414,14 +8349,14 @@ msgstr "aukščiau."
 #. and the second item the name of the file being linked
 #. to.
 #.
-#: ../src/orca/speech_generator.py:429
+#: ../src/orca/speech_generator.py:443
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)s saisto su %(file)s"
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/speech_generator.py:435
+#: ../src/orca/speech_generator.py:449
 #, python-format
 msgid "%s link"
 msgstr "%s nuoroda"
@@ -8429,7 +8364,7 @@ msgstr "%s nuoroda"
 #. Translators: this is an indication that a given
 #. link points to an object that is on the same page.
 #.
-#: ../src/orca/speech_generator.py:471
+#: ../src/orca/speech_generator.py:485
 msgid "same page"
 msgstr "tas pats puslapis"
 
@@ -8441,8 +8376,8 @@ msgstr "tas pats puslapis"
 #. link points to an object that is at the same site
 #. (but not on the same page) as the link.
 #.
-#: ../src/orca/speech_generator.py:477
-#: ../src/orca/speech_generator.py:490
+#: ../src/orca/speech_generator.py:491
+#: ../src/orca/speech_generator.py:504
 msgid "same site"
 msgstr "ta pati svetainė"
 
@@ -8450,13 +8385,13 @@ msgstr "ta pati svetainė"
 #. link points to an object that is at a different
 #. site than that of the link.
 #.
-#: ../src/orca/speech_generator.py:496
+#: ../src/orca/speech_generator.py:510
 msgid "different site"
 msgstr "kita svetainė"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/speech_generator.py:526
+#: ../src/orca/speech_generator.py:540
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -8466,14 +8401,14 @@ msgstr[2] "%d baitų"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/speech_generator.py:530
+#: ../src/orca/speech_generator.py:544
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobaitai"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/speech_generator.py:534
+#: ../src/orca/speech_generator.py:548
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabaitai"
@@ -8481,28 +8416,28 @@ msgstr "%.2f megabaitai"
 #. Translators: this is in reference to a table cell being
 #. selected or not.
 #.
-#: ../src/orca/speech_generator.py:736
+#: ../src/orca/speech_generator.py:750
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "nepažymėta"
 
 #. Translators: this is in references to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:794
+#: ../src/orca/speech_generator.py:808
 #, python-format
 msgid "row %d"
 msgstr "eilutė %d"
 
 #. Translators: this is in references to a column in a
 #. table.
-#: ../src/orca/speech_generator.py:823
+#: ../src/orca/speech_generator.py:837
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "stulpelis %(index)d iš %(total)d"
 
 #. Translators: this is in reference to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:828
+#: ../src/orca/speech_generator.py:842
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "eilutė %(index)d iš %(total)d"
@@ -8510,14 +8445,14 @@ msgstr "eilutė %(index)d iš %(total)d"
 #. Translators: This is to indicate to the user that
 #. he/she is in the last cell of a table in a document.
 #.
-#: ../src/orca/speech_generator.py:864
+#: ../src/orca/speech_generator.py:878
 msgid "End of table"
 msgstr "Lentelė pabaiga"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1205
+#: ../src/orca/speech_generator.py:1219
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -8528,7 +8463,7 @@ msgstr[2] "%d tarpų "
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1216
+#: ../src/orca/speech_generator.py:1230
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -8538,7 +8473,7 @@ msgstr[2] "%d tabuliatorių "
 
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/speech_generator.py:1284
+#: ../src/orca/speech_generator.py:1298
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -8549,8 +8484,8 @@ msgstr[2] "%d procentų."
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/speech_generator.py:1383
-#: ../src/orca/speech_generator.py:1404
+#: ../src/orca/speech_generator.py:1397
+#: ../src/orca/speech_generator.py:1418
 msgid "0 items"
 msgstr "0 įrašų"
 
@@ -8558,7 +8493,7 @@ msgstr "0 įrašų"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/speech_generator.py:1439
+#: ../src/orca/speech_generator.py:1453
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -8569,8 +8504,8 @@ msgstr[2] "Pasirinkta %(index)d elementas iš %(total)d"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1492
-#: ../src/orca/speech_generator.py:1786
+#: ../src/orca/speech_generator.py:1506
+#: ../src/orca/speech_generator.py:1800
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -8581,7 +8516,7 @@ msgstr[2] "%d neaktyvių dialogų"
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1577
+#: ../src/orca/speech_generator.py:1591
 msgid "Icon panel"
 msgstr "piktogramų skydelis"
 
@@ -8589,7 +8524,7 @@ msgstr "piktogramų skydelis"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1733
+#: ../src/orca/speech_generator.py:1747
 #, python-format
 msgid "Default button is %s"
 msgstr "Mygtukas pagal nutylėjimą yra %s"
@@ -8780,14 +8715,14 @@ msgstr "Daugiau inkarų nėra."
 #: ../src/orca/structural_navigation.py:3798
 msgctxt "structural navigation"
 msgid "Not found"
-msgstr "Nėrasta"
+msgstr "Nerasta"
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
 #: ../src/orca/structural_navigation.py:1948
 msgid "Goes to previous blockquote."
-msgstr "Perkelia prie ankstenio citatos bloko."
+msgstr "Perkelia prie ankstesnio citatos bloko."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
@@ -8857,7 +8792,7 @@ msgstr "Daugiau žymimųjų langelių nėra."
 #.
 #: ../src/orca/structural_navigation.py:2223
 msgid "Goes to previous large object."
-msgstr "Perkelia prie annkstesnio stambaus objekto."
+msgstr "Perkelia prie ankstesnio stambaus objekto."
 
 #. Translators: this is for navigating a document in a
 #. structural manner, where a 'large object' is a logical
@@ -9122,14 +9057,14 @@ msgstr "Daugiau pastraipų nėra."
 #.
 #: ../src/orca/structural_navigation.py:3266
 msgid "Goes to previous radio button."
-msgstr "Perkelia prie ankstesnio radio mygtuko."
+msgstr "Perkelia prie ankstesnio radijo mygtuko."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
 #: ../src/orca/structural_navigation.py:3271
 msgid "Goes to next radio button."
-msgstr "Perkelia prie kito radio mygtuko."
+msgstr "Perkelia prie kito radijo mygtuko."
 
 #. Translators: this is for navigating in document content by moving
 #. from radio button to radio button in a form. This string is the
@@ -9138,7 +9073,7 @@ msgstr "Perkelia prie kito radio mygtuko."
 #.
 #: ../src/orca/structural_navigation.py:3328
 msgid "No more radio buttons."
-msgstr "Daugiau radio mygtukų nėra."
+msgstr "Daugiau radijo mygtukų nėra."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
@@ -9686,7 +9621,7 @@ msgstr "nėra"
 #: ../src/orca/text_attribute_names.py:360
 msgctxt "textattr"
 msgid "engrave"
-msgstr "išgraviūruotas"
+msgstr "graviruotas"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -9958,7 +9893,7 @@ msgstr "išplėstas"
 #: ../src/orca/text_attribute_names.py:551
 msgctxt "textattr"
 msgid "extra expanded"
-msgstr "labai išplėtas"
+msgstr "labai išplėstas"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -9988,7 +9923,7 @@ msgstr "mažosios raidės"
 #: ../src/orca/text_attribute_names.py:572
 msgctxt "textattr"
 msgid "oblique"
-msgstr "istrižas"
+msgstr "įstrižas"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "style".
@@ -10089,7 +10024,7 @@ msgstr "teksto viršus"
 #: ../src/orca/text_attribute_names.py:643
 msgctxt "textattr"
 msgid "middle"
-msgstr "miduryje"
+msgstr "viduryje"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "vertical-align".
@@ -10330,7 +10265,49 @@ msgstr "Įėjimui į po-meniu , spauskite rodyklę į dešinę."
 #. on a slider.
 #: ../src/orca/tutorialgenerator.py:716
 msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
-msgstr "Sumažinimui, spauskite rodyklę į kairę, padidinimui, spauskite rodyklę į dešinę. Mažiausiam spauskite pradžio, didžiausiam - pabaigos klavišą."
+msgstr "Sumažinimui, spauskite rodyklę į kairę, padidinimui, spauskite rodyklę į dešinę. Mažiausiam spauskite pradžios, didžiausiam - pabaigos klavišą."
+
+#~ msgid "Orca Screen Reader and Magnifier"
+#~ msgstr "Ekrano skaityklė ir lupa Orca"
+
+#~ msgid ""
+#~ "Present on-screen information as speech or braille, or magnify the screen"
+#~ msgstr ""
+#~ "Pateikti ekrane esančią informaciją kaip kalbą ar brailio raštą arba "
+#~ "padidinti ekraną"
+
+#~ msgid "Screen Reader and Magnifier"
+#~ msgstr "Ekrano skaityklė ir lupa"
+
+#~ msgid "Bottom Half"
+#~ msgstr "Apatinė pusė"
+
+#~ msgid "Centered"
+#~ msgstr "Centruotas"
+
+#~ msgid "Custom"
+#~ msgstr "Pasirinktinis"
+
+#~ msgid "Full Screen"
+#~ msgstr "Viso ekrano veiksena"
+
+#~ msgid "Left Half"
+#~ msgstr "Kairė pusė"
+
+#~ msgid "None"
+#~ msgstr "Nėra"
+
+#~ msgid "Proportional"
+#~ msgstr "Proporcingas"
+
+#~ msgid "Push"
+#~ msgstr "Paspausti"
+
+#~ msgid "Right Half"
+#~ msgstr "Dešinė pusė"
+
+#~ msgid "Top Half"
+#~ msgstr "Viršutinė pusė"
 
 #~ msgid "Warning"
 #~ msgstr "Įspėjimas"
