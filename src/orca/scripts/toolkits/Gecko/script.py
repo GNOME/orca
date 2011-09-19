@@ -5320,7 +5320,11 @@ class Script(default.Script):
             elif acss == clumped[-1][1] \
                  and isinstance(element, basestring) \
                  and isinstance(clumped[-1][0], basestring):
-                clumped [-1][0] = clumped[-1][0].rstrip(" ")
+                clumped[-1][0] = clumped[-1][0].rstrip(" ")
+                try:
+                    clumped[-1][0] = clumped[-1][0].decode("UTF-8")
+                except UnicodeEncodeError:
+                    pass
                 try:
                     element = element.decode("UTF-8")
                 except UnicodeEncodeError:
