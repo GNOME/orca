@@ -354,7 +354,7 @@ class Region:
         try:
             string = string.decode("UTF-8")
         except UnicodeEncodeError:
-            debug.printException(debug.LEVEL_FINEST)
+            pass
 
         # The uncontracted string for the line.
         #

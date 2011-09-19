@@ -249,6 +249,11 @@ def speak(content, acss=None, interrupt=True):
                 newItemsToSpeak.append(toSpeak.pop())
 
             if toSpeak:
+                try:
+                    toSpeak = map(lambda x: x.decode("UTF-8"), toSpeak)
+                except UnicodeEncodeError:
+                    pass
+
                 string = " ".join(toSpeak)
                 _speak(string, activeVoice, interrupt)
             activeVoice = newVoice
@@ -261,7 +266,7 @@ def speak(content, acss=None, interrupt=True):
         try:
             toSpeak = map(lambda x: x.decode("UTF-8"), toSpeak)
         except UnicodeEncodeError:
-            debug.printException(debug.LEVEL_FINEST)
+            pass
 
         string = " ".join(toSpeak)
         _speak(string, activeVoice, interrupt)

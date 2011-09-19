@@ -2609,12 +2609,22 @@ class Utilities:
         and returns the new string.  Edge cases, such as no initial text or
         no newText, are handled gracefully."""
 
-        if not newText or len(newText) == 0:
+        if not newText:
             return text
-        elif text and len(text):
-            return text + delimiter + newText
-        else:
+        if not text:
             return newText
+
+        try:
+            text = text.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
+
+        try:
+            newText = newText.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
+
+        return text + delimiter + newText
 
     def isAutoTextEvent(self, event):
         """Returns True if event is associated with text being autocompleted
