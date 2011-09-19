@@ -2479,7 +2479,7 @@ class Utilities:
             pass
 
         words = self.WORDS_RE.split(line)
-        newLine = ' '.join(map(self._pronunciationForSegment, words))
+        newLine = ''.join(map(self._pronunciationForSegment, words))
 
         try:
             newLine = newLine.encode("UTF-8")
@@ -2848,44 +2848,36 @@ class Utilities:
             value = obj.queryValue()
         except NotImplementedError:
             return ""
+        else:
+            currentValue = value.currentValue
 
-        # OK, this craziness is all about trying to figure out the most
-        # meaningful formatting string for the floating point values.
-        # The number of places to the right of the decimal point should
-        # be set by the minimumIncrement, but the minimumIncrement isn't
-        # always set.  So...we'll default the minimumIncrement to 1/100
-        # of the range.  But, if max == min, then we'll just go for showing
-        # them off to two meaningful digits.
-        #
+        # "The reports of my implementation are greatly exaggerated."
         try:
-            minimumIncrement = value.minimumIncrement
-        except:
-            minimumIncrement = 0.0
-
-        if minimumIncrement == 0.0:
-            minimumIncrement = (value.maximumValue - value.minimumValue) \
-                               / 100.0
+            maxValue = value.maximumValue
+        except LookupError:
+            maxValue = 0.0
+            debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
+                          "LookupError accessing maximumValue for %s" % obj)
+        try:
+            minValue = value.minimumValue
+        except LookupError:
+            minValue = 0.0
+            debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
+                          "LookupError accessing minimumValue for %s" % obj)
+        try:
+            minIncrement = value.minimumIncrement
+        except LookupError:
+            minIncrement = (maxValue - minValue) / 100.0
+            debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
+                          "LookupError accessing minimumIncrement for %s" % obj)
 
         try:
-            decimalPlaces = max(0, -math.log10(minimumIncrement))
-        except:
-            try:
-                decimalPlaces = max(0, -math.log10(value.minimumValue))
-            except:
-                try:
-                    decimalPlaces = max(0, -math.log10(value.maximumValue))
-                except:
-                    decimalPlaces = 0
+            decimalPlaces = math.ceil(max(0, -math.log10(minIncrement)))
+        except ValueError:
+            return ""
 
         formatter = "%%.%df" % decimalPlaces
-        valueString = formatter % value.currentValue
-        #minString   = formatter % value.minimumValue
-        #maxString   = formatter % value.maximumValue
-
-        # [[[TODO: WDW - probably want to do this as a percentage at some
-        # point?  Logged as bugzilla bug 319743.]]]
-        #
-        return valueString
+        return formatter % currentValue
 
     @staticmethod
     def unicodeValueString(character):
