@@ -1,3 +1,68 @@
+3.1.92 - 19 September 2011
+
+General:
+
+  * Fix for bug 659054 - Orca fails to present decimal values of
+    GtkScale widgets in Gtk+ 3
+
+  * Fix for bug 659379 - Orca is not presenting panel menus and menu
+    items in fallback mode
+
+  * Fix for bug 659264 - Return in onFocus if the object is not focused
+
+  * Fix for bug 659122 - Unicode decode error traceback with speech
+    generation if I using hungarian locale
+
+  * Fix for bug 617833 - Orca should indicate state of NumLock key
+
+  * Fix for bug 652485 - Gtk+ Deprecations (Remainder of the work)
+
+  * Fix for bug 659015 - The mnemonic widget property on the voice page
+    is absent for several widgets
+
+  * Fix for bug 658134 - Lines with unexpected characters are not always
+    displayed in braille by Orca
+
+  * Fix for bug 658781 - Some text not spoken at all since gobject
+    introspection changes in orca 3.1.9x.
+
+  * Fix for bug 658993 - Two GtkGrid spacing issues
+
+Build:
+
+  * Fix for bug 659092 - Do not reference non-existing doc figures
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ast        Asturian                        Xandru Armesto
+    bg         Bulgarian                       Alexander Shopov
+    ca         Catalan                         Pau Iranzo
+    cs         Czech                           Marek Černocký
+    da         Danish                          Kenneth Nielsen
+    de         German                          Christian Kirbach
+    en_GB      British English                 Bruce Cowan
+    es         Spanish                         Jorge González,
+                                               Daniel Mustieles
+    fi         Finnish                         Timo Jyrinki
+    fr         French                          Bruno Brouard
+    gl         Galician                        Fran Diéguez
+    hu         Hungarian                       Attila Hammer
+    it         Italian                         Luca Ferretti
+    lt         Lithuanian                      Aurimas Černius
+    lv         Latvian                         Rudolfs Mazurs
+    pa         Punjabi                         Amanpreet Singh Alam
+    pl         Polish                          Piotr Drąg
+    pt         Portuguese                      Rui Batista
+    ru         Russian                         Yuri Myasoedov
+    sl         Slovenian                       Matej Urbančič
+    sv         Swedish                         Daniel Nylander
+    ta         Tamil                           Dr.T.Vasudevan
+    zh_CN      Simplified Chinese              Yinghua Wang
+    zh_HK      Traditional Chinese - HongKong  Chao-Hsiung Liao
+    zh_TW      Traditional Chinese - Taiwan    Chao-Hsiung Liao
+
+=========
+
 3.1.91 - 5 September 2011
 
 General
