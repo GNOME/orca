@@ -5321,6 +5321,10 @@ class Script(default.Script):
                  and isinstance(element, basestring) \
                  and isinstance(clumped[-1][0], basestring):
                 clumped [-1][0] = clumped[-1][0].rstrip(" ")
+                try:
+                    element = element.decode("UTF-8")
+                except UnicodeEncodeError:
+                    pass
                 clumped[-1][0] += " " + element
             else:
                 clumped.append([element, acss])
