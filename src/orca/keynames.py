@@ -297,6 +297,15 @@ __keynames["dead_cedilla"] = _("cedilla")
 #
 __keynames["dead_stroke"] = _("stroke")
 
+# Translators: this is how someone would speak the name of the minus key
+#
+__keynames["minus"]      = _("minus")
+
+# Translators: this is how someone would speak the name of the plus key
+#
+__keynames["plus"]      = _("plus")
+
+
 def getKeyName(key):
     """Given a keyboard key, return its name as people might refer to it
     in ordinary conversation.
