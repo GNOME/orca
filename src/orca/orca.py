@@ -1150,8 +1150,15 @@ def _processKeyCaptured(event):
             # character. (i.e. "1" instead of "!")
             #
             keymap = Gdk.Keymap.get_default()
-            success, entries = keymap.get_entries_for_keycode(event.hw_code)
+            entries_for_keycode = keymap.get_entries_for_keycode(event.hw_code)
+            success = entries_for_keycode[0]
+            entries = entries_for_keycode[1]
             event.event_string = Gdk.keyval_name(entries[0].keycode)
+
+            if not event.event_string:
+                orca_state.capturingKeys = False
+                return False
+
             if event.event_string.startswith("KP") and \
                event.event_string != "KP_Enter":
                 name = Gdk.keyval_name(entries[1].keycode)

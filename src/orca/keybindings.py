@@ -73,7 +73,10 @@ def getAllKeysyms(keysym):
             # we are looking for.
             #
             if keycode != 0:
-                success, entries = keymap.get_entries_for_keycode(keycode)
+                entries_for_keycode = keymap.get_entries_for_keycode(keycode)
+                success = entries_for_keycode[0]
+                entries = entries_for_keycode[1]
+
                 for entry in entries:
                     keyval = entry[0]
                     name = Gdk.keyval_name(keyval)
