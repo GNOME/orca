@@ -2045,7 +2045,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 if model.get(iterChild, DESCRIP)[0] == kb.handler.description:
                     exist = True
                     if not kb.keysymstring:
-                        text = None
+                        text = ''
                     else:
                         clickCount = self._clickCountToString(kb.click_count)
                         text = keybindings.getModifierNames(kb.modifiers) \
