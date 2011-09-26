@@ -1,3 +1,22 @@
+3.2.0 - 26 September 2011
+
+General
+
+  * Fix for bug 660091 - Unbound alternative keybindings in
+    user-settings.conf prevent the preferences window from
+    being shown
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca@valencia   Catalan (Valencian)    Carles Ferrando, Pau Iranzo
+    eu            Basque                 Inaki Larranaga Murgoitio
+    hu            Hungarian              Attila Hammer, Gabor Kelemen
+    pt_BR         Brazilian Portuguese   Antonio Fernandes C. Neto
+    ru            Russian                Anatol Kamynin 
+    sr            Serbian                Miroslav Nikolić
+
+=========
+
 3.1.92 - 19 September 2011
 
 General:
