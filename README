@@ -1,4 +1,4 @@
-Orca v3.2.0
+Orca v3.2.1pre
 
 Introduction
 ========================================================================
@@ -23,7 +23,7 @@ requests.
 Build Requirements
 ========================================================================
 
-Orca v3.1.x is supported on GNOME 3.1.x only.  We highly suggest you
+Orca v3.2.x is supported on GNOME 3.2.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
