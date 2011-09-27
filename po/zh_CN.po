@@ -15,12 +15,12 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2011-09-12 13:32+0000\n"
-"PO-Revision-Date: 2011-03-03 21:03+0800\n"
+"PO-Revision-Date: 2011-09-28 02:16+0800\n"
 "Last-Translator: YunQiang Su <wzssyqa@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bits\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
@@ -3570,7 +3570,6 @@ msgid "<b>Selection Indicator</b>"
 msgstr "<b>选择指示器</b>"
 
 #: ../src/orca/orca-setup.ui.h:15
-#, fuzzy
 #| msgid "<b>Contrast</b>"
 msgid "<b>Spoken Context</b>"
 msgstr "<b>朗读上下文</b>"
