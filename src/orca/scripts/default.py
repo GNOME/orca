@@ -5787,6 +5787,11 @@ class Script(script.Script):
     def presentTime(self, inputEvent):
         """ Presents the current time. """
         timeFormat = _settingsManager.getSetting('presentTimeFormat')
+        try:
+            timeFormat = timeFormat.encode("UTF-8")
+        except UnicodeDecodeError:
+            pass
+
         message = time.strftime(timeFormat, time.localtime())
         self.presentMessage(message)
         return True
@@ -5794,6 +5799,11 @@ class Script(script.Script):
     def presentDate(self, inputEvent):
         """ Presents the current date. """
         dateFormat = _settingsManager.getSetting('presentDateFormat')
+        try:
+            dateFormat = dateFormat.encode("UTF-8")
+        except UnicodeDecodeError:
+            pass
+
         message = time.strftime(dateFormat, time.localtime())
         self.presentMessage(message)
         return True
