@@ -311,6 +311,10 @@ class SpeechServer(speechserver.SpeechServer):
             charName = " %s " % chnames.getCharacterName(symbol)
             if action == punctuation_settings.PUNCTUATION_INSERT:
                 charName += symbol
+            try:
+                charName = charName.decode("UTF-8")
+            except UnicodeEncodeError:
+                pass
             newText = re.sub(symbol, charName, newText)
 
         if orca_state.activeScript:
