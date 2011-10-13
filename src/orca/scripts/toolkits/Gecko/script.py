@@ -3368,7 +3368,7 @@ class Script(default.Script):
         # If the last object is a link, it may be more efficient to check
         # for text that follows.
         #
-        if obj.getRole() == pyatspi.ROLE_LINK:
+        if obj and obj.getRole() == pyatspi.ROLE_LINK:
             text = self.utilities.queryNonEmptyText(obj.parent)
             if text:
                 char = text.getText(text.characterCount - 1,
