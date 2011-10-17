@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2011-08-16 10:05+0000\n"
-"PO-Revision-Date: 2011-08-20 21:07+0700\n"
+"PO-Revision-Date: 2011-10-17 19:57+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "MIME-Version: 1.0\n"
@@ -306,39 +306,32 @@ msgid "Welsh Grade 2"
 msgstr "Welsh Tingkat 2"
 
 #: ../src/orca/braille.py:277
-#, fuzzy
 msgid "German Grade 0"
-msgstr "Low German"
+msgstr "Jerman Tingkat 0"
 
 #: ../src/orca/braille.py:278
-#, fuzzy
 msgid "German Grade 1"
-msgstr "Low German"
+msgstr "Jerman Tingkat 1"
 
 #: ../src/orca/braille.py:279
-#, fuzzy
 msgid "German Grade 2"
-msgstr "Low German"
+msgstr "Jerman Tingkat 2"
 
 #: ../src/orca/braille.py:280
-#, fuzzy
 msgid "U.K. English Grade 2"
-msgstr "Inggris Australia"
+msgstr "Inggris Britania Tingkat 2"
 
 #: ../src/orca/braille.py:281
-#, fuzzy
 msgid "U.K. English Grade 1"
-msgstr "Inggris Australia"
+msgstr "Inggris Britania Tingkat 1"
 
 #: ../src/orca/braille.py:282
-#, fuzzy
 msgid "U.S. English Grade 1"
-msgstr "Inggris Australia"
+msgstr "Inggris Amerika Tingkat 1"
 
 #: ../src/orca/braille.py:283
-#, fuzzy
 msgid "U.S. English Grade 2"
-msgstr "Inggris Australia"
+msgstr "Inggris Amerika Tingkat 2"
 
 #: ../src/orca/braille.py:284
 msgid "Canada French Grade 1"
@@ -349,19 +342,16 @@ msgid "France French Grade 1"
 msgstr "Perancis Perancis Tingkat 1"
 
 #: ../src/orca/braille.py:286
-#, fuzzy
 msgid "Greek Grade 1"
-msgstr "Yunani (_MacGreek)"
+msgstr "Yunani Tingkat 1"
 
 #: ../src/orca/braille.py:287
-#, fuzzy
 msgid "Hindi Grade 1"
-msgstr "Hindi (Mac_Devanagari)"
+msgstr "Hindi Tingkat 1"
 
 #: ../src/orca/braille.py:288
-#, fuzzy
 msgid "Italian Grade 1"
-msgstr "Susunan Italia"
+msgstr "Italia Tingkat 1"
 
 #: ../src/orca/braille.py:289
 msgid "Belgium Dutch Grade 1"
@@ -473,7 +463,7 @@ msgstr "spasi"
 #.
 #: ../src/orca/chnames.py:43
 msgid "newline"
-msgstr ""
+msgstr "ganti baris"
 
 #. Translators: this is the spoken word for the tab character
 #.
@@ -481,7 +471,6 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:47
 #: ../src/orca/keynames.py:130
-#, fuzzy
 msgid "tab"
 msgstr "tab"
 
@@ -489,21 +478,19 @@ msgstr "tab"
 #.
 #: ../src/orca/chnames.py:51
 msgid "exclaim"
-msgstr ""
+msgstr "tanda seru"
 
 #. Translators: this is the spoken word for the character '"' (U+0022)
 #.
 #: ../src/orca/chnames.py:55
-#, fuzzy
 msgid "quote"
-msgstr "Kutip"
+msgstr "tanda kutip"
 
 #. Translators: this is the spoken word for the character '#' (U+0023)
 #.
 #: ../src/orca/chnames.py:59
-#, fuzzy
 msgid "number"
-msgstr "angka"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '$' (U+0024)
 #.
@@ -562,9 +549,8 @@ msgstr "koma"
 #. Translators: this is the spoken word for the character '-' (U+002d)
 #.
 #: ../src/orca/chnames.py:99
-#, fuzzy
 msgid "dash"
-msgstr "Bergaris putus-titik"
+msgstr "minus"
 
 #. Translators: this is the spoken word for the character '.' (U+002e)
 #.
@@ -588,7 +574,7 @@ msgstr "titik dua"
 #.
 #: ../src/orca/chnames.py:115
 msgid "semicolon"
-msgstr ""
+msgstr "titik koma"
 
 #. Translators: this is the spoken word for the character '< ' (U+003c)
 #.
@@ -708,19 +694,19 @@ msgstr ""
 #.
 #: ../src/orca/chnames.py:188
 msgid "cents"
-msgstr ""
+msgstr "sen"
 
 #. Translators: this is the spoken word for the character '£' (U+00a3)
 #.
 #: ../src/orca/chnames.py:192
 msgid "pounds"
-msgstr ""
+msgstr "poundsterling"
 
 #. Translators: this is the spoken word for the character '¤' (U+00a4)
 #.
 #: ../src/orca/chnames.py:196
 msgid "currency sign"
-msgstr ""
+msgstr "tanda mata uang"
 
 #. Translators: this is the spoken word for the character '¥' (U+00a5)
 #.
@@ -801,21 +787,19 @@ msgstr "derajat"
 #.
 #: ../src/orca/chnames.py:248
 msgid "plus or minus"
-msgstr ""
+msgstr "plus atau minus"
 
 #. Translators: this is the spoken word for the character '²' (U+00b2)
 #.
 #: ../src/orca/chnames.py:252
-#, fuzzy
 msgid "superscript 2"
-msgstr "Superskrip"
+msgstr "2 superskrip"
 
 #. Translators: this is the spoken word for the character '³' (U+00b3)
 #.
 #: ../src/orca/chnames.py:256
-#, fuzzy
 msgid "superscript 3"
-msgstr "Superskrip"
+msgstr "3 superskrip"
 
 #. Translators: this is the spoken word for the character '´' (U+00b4)
 #.
@@ -857,9 +841,8 @@ msgstr "Cedilla"
 #. Translators: this is the spoken word for the character '¹' (U+00b9)
 #.
 #: ../src/orca/chnames.py:280
-#, fuzzy
 msgid "superscript 1"
-msgstr "Superskrip"
+msgstr "1 superskrip"
 
 #. Translators: this is the spoken word for the character 'º' (U+00ba)
 #.
@@ -876,29 +859,26 @@ msgstr ""
 #. Translators: this is the spoken word for the character '¼' (U+00bc)
 #.
 #: ../src/orca/chnames.py:292
-#, fuzzy
 msgid "one fourth"
-msgstr "({0} Suntingan)"
+msgstr "seperempat"
 
 #. Translators: this is the spoken word for the character '½' (U+00bd)
 #.
 #: ../src/orca/chnames.py:296
-#, fuzzy
 msgid "one half"
-msgstr "Berlian Setengah"
+msgstr "setengah"
 
 #. Translators: this is the spoken word for the character '¾' (U+00be)
 #.
 #: ../src/orca/chnames.py:300
-#, fuzzy
 msgid "three fourths"
-msgstr "tiga keriting"
+msgstr "tiga perempat"
 
 #. Translators: this is the spoken word for the character '¿' (U+00bf)
 #.
 #: ../src/orca/chnames.py:304
 msgid "inverted question mark"
-msgstr ""
+msgstr "tanda tanya terjungkir"
 
 #. Translators: this is the spoken word for the character 'á' (U+00e1)
 #.
@@ -939,9 +919,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character 'Å' (U+00c5)
 #.
 #: ../src/orca/chnames.py:332
-#, fuzzy
 msgid "A RING"
-msgstr "Cincin FDDI"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'Æ' (U+00c6)
 #.
@@ -952,9 +931,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character 'Ç' (U+00c7)
 #.
 #: ../src/orca/chnames.py:340
-#, fuzzy
 msgid "C CEDILLA"
-msgstr "Cedilla"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'È' (U+00c8)
 #.
@@ -1049,9 +1027,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character '×' (U+00d7)
 #.
 #: ../src/orca/chnames.py:404
-#, fuzzy
 msgid "times"
-msgstr "<b>Jadwal</b>"
+msgstr "kali"
 
 #. Translators: this is the spoken word for the character 'Ø' (U+00d8)
 #.
@@ -1128,9 +1105,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character 'å' (U+00e5)
 #.
 #: ../src/orca/chnames.py:456
-#, fuzzy
 msgid "a ring"
-msgstr "Cincin FDDI"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'æ' (U+00e6)
 #.
@@ -1141,9 +1117,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character 'ç' (U+00e7)
 #.
 #: ../src/orca/chnames.py:464
-#, fuzzy
 msgid "c cedilla"
-msgstr "Cedilla"
+msgstr ""
 
 #. Translators: this is the spoken word for the character 'è' (U+00e8)
 #.
@@ -1238,9 +1213,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character '÷' (U+00f7)
 #.
 #: ../src/orca/chnames.py:528
-#, fuzzy
 msgid "divided by"
-msgstr "Dipakai oleh %s"
+msgstr "dibagi"
 
 #. Translators: this is the spoken word for the character 'ø' (U+00f8)
 #.
@@ -1305,9 +1279,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character '–' (U+2013)
 #.
 #: ../src/orca/chnames.py:572
-#, fuzzy
 msgid "en dash"
-msgstr "Simbol en-dash --"
+msgstr ""
 
 #. Translators: this is the spoken word for the left single quote: ‘
 #. (U+2018)
@@ -1350,23 +1323,20 @@ msgstr ""
 #. Translators: this is the spoken word for the character '†' (U+2020)
 #.
 #: ../src/orca/chnames.py:602
-#, fuzzy
 msgid "dagger"
-msgstr "Simbol belati"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '‡' (U+2021)
 #.
 #: ../src/orca/chnames.py:606
-#, fuzzy
 msgid "double dagger"
-msgstr "Simbol belati"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '•' (U+2022)
 #.
 #: ../src/orca/chnames.py:610
-#, fuzzy
 msgid "bullet"
-msgstr "Bulet"
+msgstr "bulet"
 
 #. Translators: this is the spoken word for the character '‣' (U+2023)
 #.
@@ -1377,9 +1347,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character '‰' (U+2030)
 #.
 #: ../src/orca/chnames.py:618
-#, fuzzy
 msgid "per mille"
-msgstr "Per_iode:"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '′' (U+2032)
 #.
@@ -1390,9 +1359,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character '″' (U+2033)
 #.
 #: ../src/orca/chnames.py:626
-#, fuzzy
 msgid "double prime"
-msgstr "Klik ganda"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '⁃' (U+2043)
 #.
@@ -1403,9 +1371,8 @@ msgstr ""
 #. Translators: this is the spoken word for the character '€' (U+20ac)
 #.
 #: ../src/orca/chnames.py:634
-#, fuzzy
 msgid "euro"
-msgstr "Euro"
+msgstr "euro"
 
 #. Translators: this is the spoken word for the character '™' (U+2122)
 #.
@@ -1416,63 +1383,56 @@ msgstr ""
 #. Translators: this is the spoken word for the character '←' (U+2190)
 #.
 #: ../src/orca/chnames.py:642
-#, fuzzy
 msgid "left arrow"
-msgstr "Panah ke kiri"
+msgstr "panah ke kiri"
 
 #. Translators: this is the spoken word for the character '→' (U+2192)
 #.
 #: ../src/orca/chnames.py:646
-#, fuzzy
 msgid "right arrow"
-msgstr "Panah ke kanan"
+msgstr "panah ke kanan"
 
 #. Translators: this is the spoken word for the character '≈' (U+2248)
 #.
 #: ../src/orca/chnames.py:650
-#, fuzzy
 msgid "almost equal to"
-msgstr "sama dengan"
+msgstr "hampir sama dengan"
 
 #. Translators: this is the spoken word for the character '≠' (U+2260)
 #.
 #: ../src/orca/chnames.py:654
-#, fuzzy
 msgid "not equal to"
-msgstr "sama dengan"
+msgstr "tidak sama dengan"
 
 #. Translators: this is the spoken word for the character '≤' (U+2264)
 #.
 #: ../src/orca/chnames.py:658
 msgid "less than or equal to"
-msgstr ""
+msgstr "kurang dari atau sama dengan"
 
 #. Translators: this is the spoken word for the character '≥' (U+2265)
 #.
 #: ../src/orca/chnames.py:662
 msgid "greater than or equal to"
-msgstr ""
+msgstr "lebih dari atau sama dengan"
 
 #. Translators: this is the spoken word for the character '√' (U+221a)
 #.
 #: ../src/orca/chnames.py:666
-#, fuzzy
 msgid "square root"
-msgstr "Akar pangkat"
+msgstr "akar"
 
 #. Translators: this is the spoken word for the character '∛' (U+221b)
 #.
 #: ../src/orca/chnames.py:670
-#, fuzzy
 msgid "cube root"
-msgstr "panel dasar"
+msgstr "akar pangkat tiga"
 
 #. Translators: this is the spoken word for the character '∞' (U+221e)
 #.
 #: ../src/orca/chnames.py:674
-#, fuzzy
 msgid "infinity"
-msgstr "Infinitas"
+msgstr "tak hingga"
 
 #. Translators: this is the spoken word for the character '■' (U+25a0)
 #. It can be used as a bullet in a list.
@@ -1483,17 +1443,15 @@ msgstr "Infinitas"
 #.
 #: ../src/orca/chnames.py:679
 #: ../src/orca/chnames.py:854
-#, fuzzy
 msgid "black square"
-msgstr "Kuadrat [Ctrl+2]"
+msgstr "bujur sangkar hitam"
 
 #. Translators: this is the spoken word for the character '□' (U+25a1)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:684
-#, fuzzy
 msgid "white square"
-msgstr "Kuadrat [Ctrl+2]"
+msgstr "bujur sangkar putih"
 
 #. Translators: this is the spoken word for the character '◆' (U+25c6)
 #. It can be used as a bullet in a list.
@@ -1504,47 +1462,42 @@ msgstr "Kuadrat [Ctrl+2]"
 #.
 #: ../src/orca/chnames.py:689
 #: ../src/orca/chnames.py:860
-#, fuzzy
 msgid "black diamond"
-msgstr "Berlian Berlubang"
+msgstr "berlian hitam"
 
 #. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:694
-#, fuzzy
 msgid "white circle"
-msgstr "Lingkaran tengah"
+msgstr "lingkaran putih"
 
 #. Translators: this is the spoken word for the character '●' (U+25cf)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:699
-#, fuzzy
 msgid "black circle"
-msgstr "Lingkaran tengah"
+msgstr "lingkaran hitam"
 
 #. Translators: this is the spoken word for the character '◦' (U+25e6)
 #.
 #: ../src/orca/chnames.py:703
-#, fuzzy
 msgid "white bullet"
-msgstr "_White Space"
+msgstr "bulet putih"
 
 #. Translators: this is the spoken word for the character '✓' (U+2713)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:708
-#, fuzzy
 msgid "check mark"
-msgstr "Mark Probst"
+msgstr "tanda contreng"
 
 #. Translators: this is the spoken word for the character '✔' (U+2714)
 #. It can be used as a bullet in a list.
 #.
 #: ../src/orca/chnames.py:713
 msgid "heavy check mark"
-msgstr ""
+msgstr "contreng tebal"
 
 #. Translators: this is the spoken word for the character 'x' (U+2717)
 #. This symbol is included here because it can be used as a bullet in
@@ -1563,79 +1516,68 @@ msgstr ""
 #. the bullet without too much verbiage, hence simply "right-pointing arrow".
 #.
 #: ../src/orca/chnames.py:729
-#, fuzzy
 msgid "right-pointing arrow"
-msgstr "Panah kiri-kanan"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '⁰' (U+2070)
 #.
 #: ../src/orca/chnames.py:733
-#, fuzzy
 msgid "superscript 0"
-msgstr "Superskrip"
+msgstr "0 superskrip"
 
 #. Translators: this is the spoken word for the character '⁴' (U+2074)
 #.
 #: ../src/orca/chnames.py:737
-#, fuzzy
 msgid "superscript 4"
-msgstr "Superskrip"
+msgstr "4 superskrip"
 
 #. Translators: this is the spoken word for the character '⁵' (U+2075)
 #.
 #: ../src/orca/chnames.py:741
-#, fuzzy
 msgid "superscript 5"
-msgstr "Superskrip"
+msgstr "5 superskrip"
 
 #. Translators: this is the spoken word for the character '⁶' (U+2076)
 #.
 #: ../src/orca/chnames.py:745
-#, fuzzy
 msgid "superscript 6"
-msgstr "Superskrip"
+msgstr "6 superskrip"
 
 #. Translators: this is the spoken word for the character '⁷' (U+2077)
 #.
 #: ../src/orca/chnames.py:749
-#, fuzzy
 msgid "superscript 7"
-msgstr "Superskrip"
+msgstr "7 superskrip"
 
 #. Translators: this is the spoken word for the character '⁸' (U+2078)
 #.
 #: ../src/orca/chnames.py:753
-#, fuzzy
 msgid "superscript 8"
-msgstr "Superskrip"
+msgstr "8 superskrip"
 
 #. Translators: this is the spoken word for the character '⁹' (U+2079)
 #.
 #: ../src/orca/chnames.py:757
-#, fuzzy
 msgid "superscript 9"
-msgstr "Superskrip"
+msgstr "9 superskrip"
 
 #. Translators: this is the spoken word for the character '⁺' (U+207a)
 #.
 #: ../src/orca/chnames.py:761
-#, fuzzy
 msgid "superscript plus"
-msgstr "Kuarto Plus AS"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '⁻' (U+207b)
 #.
 #: ../src/orca/chnames.py:765
-#, fuzzy
 msgid "superscript minus"
-msgstr "Mode superskrip [Ctrl]"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '⁼' (U+207c)
 #.
 #: ../src/orca/chnames.py:769
-#, fuzzy
 msgid "superscript equals"
-msgstr "Mode superskrip [Ctrl]"
+msgstr ""
 
 #. Translators: this is the spoken word for the character '⁽' (U+207d)
 #.
@@ -1652,93 +1594,80 @@ msgstr ""
 #. Translators: this is the spoken word for the character 'ⁿ' (U+207f)
 #.
 #: ../src/orca/chnames.py:781
-#, fuzzy
 msgid "superscript n"
-msgstr "Superskrip"
+msgstr "n superskrip"
 
 #. Translators: this is the spoken word for the character '₀' (U+2080)
 #.
 #: ../src/orca/chnames.py:785
-#, fuzzy
 msgid "subscript 0"
-msgstr "Subskrip"
+msgstr "0 subskrip"
 
 #. Translators: this is the spoken word for the character '₁' (U+2081)
 #.
 #: ../src/orca/chnames.py:789
-#, fuzzy
 msgid "subscript 1"
-msgstr "Subskrip"
+msgstr "1 subskrip"
 
 #. Translators: this is the spoken word for the character '₂' (U+2082)
 #.
 #: ../src/orca/chnames.py:793
-#, fuzzy
 msgid "subscript 2"
-msgstr "Subskrip"
+msgstr "2 subskrip"
 
 #. Translators: this is the spoken word for the character '₃' (U+2083)
 #.
 #: ../src/orca/chnames.py:797
-#, fuzzy
 msgid "subscript 3"
-msgstr "Subskrip"
+msgstr "3 subskrip"
 
 #. Translators: this is the spoken word for the character '₄' (U+2084)
 #.
 #: ../src/orca/chnames.py:801
-#, fuzzy
 msgid "subscript 4"
-msgstr "Subskrip"
+msgstr "4 subskrip"
 
 #. Translators: this is the spoken word for the character '₅' (U+2085)
 #.
 #: ../src/orca/chnames.py:805
-#, fuzzy
 msgid "subscript 5"
-msgstr "Subskrip"
+msgstr "5 subskrip"
 
 #. Translators: this is the spoken word for the character '₆' (U+2086)
 #.
 #: ../src/orca/chnames.py:809
-#, fuzzy
 msgid "subscript 6"
-msgstr "Subskrip"
+msgstr "6 subskrip"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
 #: ../src/orca/chnames.py:813
-#, fuzzy
 msgid "subscript 7"
-msgstr "Subskrip"
+msgstr "7 subskrip"
 
 #. Translators: this is the spoken word for the character '₈' (U+2088)
 #.
 #: ../src/orca/chnames.py:817
-#, fuzzy
 msgid "subscript 8"
-msgstr "Subskrip"
+msgstr "8 subskrip"
 
 #. Translators: this is the spoken word for the character '₉' (U+2089)
 #.
 #: ../src/orca/chnames.py:821
-#, fuzzy
 msgid "subscript 9"
-msgstr "Subskrip"
+msgstr "9 subskrip"
 
 #. Translators: this is the spoken word for the character '₊' (U+208a)
 #.
 #: ../src/orca/chnames.py:825
-#, fuzzy
 msgid "subscript plus"
-msgstr "Kuarto Plus AS"
+msgstr "plus subskrip"
 
 #. Translators: this is the spoken word for the character '₋' (U+208b)
 #.
 #: ../src/orca/chnames.py:829
-#, fuzzy
 msgid "subscript minus"
-msgstr "Mode subskrip [Alt]"
+msgstr "minus subskrip"
 
 #. Translators: this is the spoken word for the character '₌' (U+208c)
 #.
@@ -1885,27 +1814,24 @@ msgstr "Properti tak dipilih"
 #. Translators: The component orientation is horizontal.
 #.
 #: ../src/orca/flat_review.py:425
-#, fuzzy
 msgid "horizontal"
-msgstr "_Horisontal"
+msgstr "horisontal"
 
 #. Translators: The component orientation is vertical.
 #.
 #: ../src/orca/flat_review.py:429
-#, fuzzy
 msgid "vertical"
-msgstr "_Vertikal"
+msgstr "vertikal"
 
 #. Translators: this is the percentage value of a slider,
 #. progress bar or other component that displays a value as
 #. a percentage.
 #.
 #: ../src/orca/flat_review.py:447
-#, fuzzy, python-format
+#, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
-msgstr[0] "Persen"
-msgstr[1] ""
+msgstr[0] "%d persen"
 
 #. Translators: this is the action name for
 #. the 'toggle' action. It must be the same
@@ -1960,7 +1886,6 @@ msgstr "Alt"
 #. "control" modifier.
 #.
 #: ../src/orca/keybindings.py:186
-#, fuzzy
 msgid "Ctrl"
 msgstr "Ctrl"
 
@@ -1976,14 +1901,12 @@ msgstr "Peringatan Caps Lock"
 #. "shift " modifier.
 #.
 #: ../src/orca/keybindings.py:196
-#, fuzzy
 msgid "Shift"
 msgstr "Shift"
 
 #. Translators: this is how someone would speak the name of the shift key
 #.
 #: ../src/orca/keynames.py:42
-#, fuzzy
 msgctxt "keyboard"
 msgid "Shift"
 msgstr "Shift"
@@ -1991,7 +1914,6 @@ msgstr "Shift"
 #. Translators: this is how someone would speak the name of the alt key
 #.
 #: ../src/orca/keynames.py:46
-#, fuzzy
 msgctxt "keyboard"
 msgid "Alt"
 msgstr "Alt"
@@ -1999,7 +1921,6 @@ msgstr "Alt"
 #. Translators: this is how someone would speak the name of the control key
 #.
 #: ../src/orca/keynames.py:50
-#, fuzzy
 msgctxt "keyboard"
 msgid "Control"
 msgstr "Kontrol"
@@ -2007,79 +1928,68 @@ msgstr "Kontrol"
 #. Translators: this is how someone would speak the name of the left shift key
 #.
 #: ../src/orca/keynames.py:54
-#, fuzzy
 msgid "left shift"
-msgstr "Geser Kiri"
+msgstr "shift kiri"
 
 #. Translators: this is how someone would speak the name of the left alt key
 #.
 #: ../src/orca/keynames.py:58
-#, fuzzy
 msgid "left alt"
-msgstr "Tombol Alt"
+msgstr "alt kiri"
 
 #. Translators: this is how someone would speak the name of the left ctrl key
 #.
 #: ../src/orca/keynames.py:62
-#, fuzzy
 msgid "left control"
-msgstr "<b>Gaya Kendali</b>"
+msgstr "control kiri"
 
 #. Translators: this is how someone would speak the name of the right shift key
 #.
 #: ../src/orca/keynames.py:66
-#, fuzzy
 msgid "right shift"
-msgstr "Geser Kanan"
+msgstr "shift kanan"
 
 #. Translators: this is how someone would speak the name of the right alt key
 #.
 #: ../src/orca/keynames.py:70
-#, fuzzy
 msgid "right alt"
-msgstr "Tombol Alt"
+msgstr "alt kanan"
 
 #. Translators: this is how someone would speak the name of the right ctrl key
 #.
 #: ../src/orca/keynames.py:74
-#, fuzzy
 msgid "right control"
-msgstr "<b>Gaya Kendali</b>"
+msgstr "control kanan"
 
 #. Translators: this is how someone would speak the name of the left meta key
 #.
 #: ../src/orca/keynames.py:78
-#, fuzzy
 msgid "left meta"
-msgstr "Perubah Meta"
+msgstr "meta kiri"
 
 #. Translators: this is how someone would speak the name of the right meta key
 #.
 #: ../src/orca/keynames.py:82
-#, fuzzy
 msgid "right meta"
-msgstr "Perubah Meta"
+msgstr "meta kanan"
 
 #. Translators: this is how someone would speak the name of the num lock key
 #.
 #: ../src/orca/keynames.py:86
-#, fuzzy
 msgid "num lock"
-msgstr "Num_Lock"
+msgstr "num lock"
 
 #. Translators: this is how someone would speak the name of the caps lock key
 #.
 #: ../src/orca/keynames.py:90
-#, fuzzy
 msgid "caps lock"
-msgstr "Peringatan Caps Lock"
+msgstr "caps lock"
 
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
 #: ../src/orca/keynames.py:94
-#, fuzzy
 msgid "scroll lock"
-msgstr "Scroll_Lock"
+msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
@@ -2087,9 +1997,8 @@ msgstr "Scroll_Lock"
 #: ../src/orca/keynames.py:102
 #: ../src/orca/keynames.py:106
 #: ../src/orca/keynames.py:110
-#, fuzzy
 msgid "page up"
-msgstr "Page_Up"
+msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
@@ -2097,9 +2006,8 @@ msgstr "Page_Up"
 #: ../src/orca/keynames.py:118
 #: ../src/orca/keynames.py:122
 #: ../src/orca/keynames.py:126
-#, fuzzy
 msgid "page down"
-msgstr "Page_Down"
+msgstr "page down"
 
 #. Translators: this is how someone would speak the name of the left tab key
 #.
@@ -2111,37 +2019,32 @@ msgstr "Pindahkan Tab Ke Ki_ri"
 #. Translators: this is how someone would speak the name of the F11 key
 #.
 #: ../src/orca/keynames.py:138
-#, fuzzy
 msgid "F 11"
-msgstr "-11"
+msgstr "F 11"
 
 #. Translators: this is how someone would speak the name of the F12 key
 #.
 #: ../src/orca/keynames.py:142
-#, fuzzy
 msgid "F 12"
-msgstr "12"
+msgstr "F 12"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
 #: ../src/orca/keynames.py:150
-#, fuzzy
 msgid "backspace"
-msgstr "BackSpace"
+msgstr "backspace"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
 #: ../src/orca/keynames.py:154
-#, fuzzy
 msgid "return"
-msgstr "Kembali"
+msgstr "return"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
 #: ../src/orca/keynames.py:158
-#, fuzzy
 msgid "enter"
-msgstr "T_engah:"
+msgstr "enter"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
@@ -2229,48 +2132,42 @@ msgstr "Pindah Pengguna"
 #. Translators: this is how someone would speak the name of the escape key
 #.
 #: ../src/orca/keynames.py:222
-#, fuzzy
 msgid "escape"
-msgstr "Esc (Escape)"
+msgstr "escape"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
 #: ../src/orca/keynames.py:226
 #: ../src/orca/keynames.py:230
-#, fuzzy
 msgid "insert"
-msgstr "Sisipkan"
+msgstr "insert"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
 #: ../src/orca/keynames.py:234
 #: ../src/orca/keynames.py:238
-#, fuzzy
 msgid "delete"
-msgstr "_Hapus"
+msgstr "delete"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
 #: ../src/orca/keynames.py:242
 #: ../src/orca/keynames.py:246
-#, fuzzy
 msgid "home"
-msgstr " (rumah)\n"
+msgstr "home"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
 #: ../src/orca/keynames.py:250
 #: ../src/orca/keynames.py:254
-#, fuzzy
 msgid "end"
-msgstr "<i>Akhir: 0</i>"
+msgstr "end"
 
 #. Translators: this is how someone would speak the name of the begin key
 #.
 #: ../src/orca/keynames.py:258
-#, fuzzy
 msgid "begin"
-msgstr "Mulai"
+msgstr "begin"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the acute glyph
@@ -2297,9 +2194,8 @@ msgstr ""
 #. non-spacing diacritical key for the ring glyph
 #.
 #: ../src/orca/keynames.py:288
-#, fuzzy
 msgid "ring"
-msgstr "Cincin FDDI"
+msgstr ""
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the stroke glyph
@@ -2352,23 +2248,23 @@ msgstr ""
 #. Translators: output the politeness level
 #.
 #: ../src/orca/liveregions.py:386
-#, fuzzy, python-format
+#, python-format
 msgid "politeness level %s"
-msgstr "Aras Log"
+msgstr "aras kesopanan %s"
 
 #. Translators: Orca can present the last notification message
 #. to the user when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:82
 msgid "Present last notification message."
-msgstr ""
+msgstr "Sajikan pesan pemberitahuan terakhir."
 
 #. Translators: Orca can present the previous notification message
 #. to the user when the user presses a shortcut key.
 #.
 #: ../src/orca/notification_messages.py:90
 msgid "Present previous notification message."
-msgstr ""
+msgstr "Sajikan pesan pemberitahuan sebelumnya."
 
 #. Translators: Orca can enable the notification messages
 #. list mode when the user presses a shortcut key.
@@ -2382,13 +2278,12 @@ msgstr ""
 #.
 #: ../src/orca/notification_messages.py:128
 msgid "No notification messages"
-msgstr ""
+msgstr "Tak ada pesan pemberitahuan"
 
 #. Translators: This is a brief message presented to the user when
 #. when the top of a list of notifications is reached.
 #.
 #: ../src/orca/notification_messages.py:159
-#, fuzzy
 msgctxt "notification"
 msgid "Top"
 msgstr "Puncak"
@@ -2397,7 +2292,6 @@ msgstr "Puncak"
 #. when the bottom of a list of notifications is reached.
 #.
 #: ../src/orca/notification_messages.py:166
-#, fuzzy
 msgctxt "notification"
 msgid "Bottom"
 msgstr "Dasar"
@@ -2415,17 +2309,15 @@ msgstr ""
 #. Translators: This message inform to the user the number of
 #. messages in the list.
 #: ../src/orca/notification_messages.py:243
-#, fuzzy, python-format
+#, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
-msgstr[0] "Pesan"
-msgstr[1] ""
+msgstr[0] "%d pesan.\n"
 
 #. Translators: This is a help message.
 #: ../src/orca/notification_messages.py:245
-#, fuzzy
 msgid "Press h for help.\n"
-msgstr "Tampilkan bantuan untuk Aisleriot"
+msgstr "Tekan h untuk bantuan.\n"
 
 #. Translators: The following string instructs the user how to navigate
 #. amongst the list of commands presented in list notification
@@ -2457,11 +2349,11 @@ msgstr ""
 #.
 #: ../src/orca/orca_console_prefs.py:70
 msgid "^[Yy1]"
-msgstr ""
+msgstr "^[Yy1]"
 
 #: ../src/orca/orca_console_prefs.py:71
 msgid "^[Nn0]"
-msgstr ""
+msgstr "^[Tt0]"
 
 #. Translators: this means speech synthesis (i.e., the machine
 #. speaks to you from its speakers) is not installed or working.
@@ -2491,9 +2383,8 @@ msgstr ""
 #: ../src/orca/orca_console_prefs.py:231
 #: ../src/orca/orca_console_prefs.py:283
 #: ../src/orca/orca_console_prefs.py:489
-#, fuzzy
 msgid "Enter choice: "
-msgstr "Masukkan Teks"
+msgstr "Masukkan pilihan:"
 
 #. Translators: this is letting the user they input an
 #. invalid integer value on the command line and is
@@ -2504,9 +2395,8 @@ msgstr "Masukkan Teks"
 #: ../src/orca/orca_console_prefs.py:289
 #: ../src/orca/orca_console_prefs.py:504
 #: ../src/orca/orca_console_prefs.py:506
-#, fuzzy
 msgid "Please enter a valid number."
-msgstr "Silakan masukkan suatu angka dari 1 sampai %i:"
+msgstr "Silakan masukkan angka yang valid."
 
 #. Translators: this means speech synthesis will not be used.
 #.
@@ -2522,9 +2412,8 @@ msgstr ""
 #. synthesis engines) can be found.
 #.
 #: ../src/orca/orca_console_prefs.py:211
-#, fuzzy
 msgid "No servers available.\n"
-msgstr "Diska tidak tersedia"
+msgstr "Tak ada server yang tersedia.\n"
 
 #. Translators: this is prompting for a numerical choice from a list
 #. of available speech synthesis engines.
@@ -2538,9 +2427,8 @@ msgstr ""
 #. female, child) are available.
 #.
 #: ../src/orca/orca_console_prefs.py:250
-#, fuzzy
 msgid "No voices available.\n"
-msgstr "Diska tidak tersedia"
+msgstr "Tak ada suara yang tersedia.\n"
 
 #. Translators: this is prompting for a numerical value from a
 #. list of choices of speech synthesis voices (e.g., male,
@@ -2548,7 +2436,7 @@ msgstr "Diska tidak tersedia"
 #.
 #: ../src/orca/orca_console_prefs.py:261
 msgid "Select desired voice:"
-msgstr ""
+msgstr "Pilih suara yang diinginkan:"
 
 #. Translators: the word echo feature of Orca will speak the
 #. word prior to the caret when the user types a word
@@ -2568,9 +2456,8 @@ msgstr ""
 #: ../src/orca/orca_console_prefs.py:547
 #: ../src/orca/orca_console_prefs.py:566
 #: ../src/orca/orca_console_prefs.py:616
-#, fuzzy
 msgid "Please enter y or n."
-msgstr "Silakan masukkan suatu nama berkas!"
+msgstr "Silakan masukkan y atau t."
 
 #. Translators: if key echo is enabled, Orca will speak the
 #. name of a key as the user types on the keyboard.  If the
@@ -2768,9 +2655,8 @@ msgstr "_Penggalan kata"
 #. Translators: This is used in the Orca About dialog.
 #.
 #: ../src/orca/orca_gui_main.py:95
-#, fuzzy
 msgid "The Orca Team"
-msgstr "Gabung ke tim"
+msgstr "Tim Orca"
 
 #. Translators: This text is used in the Orca About dialog.
 #.
@@ -2793,11 +2679,8 @@ msgstr ""
 #. translate it to contain your name. And thank you for your work!
 #.
 #: ../src/orca/orca_gui_main.py:111
-#, fuzzy
 msgid "translator-credits"
-msgstr ""
-"Andika Triwidada <andika@gmail.com>, 2009, 2010.\n"
-"Dirgita <dirgitadevina@yahoo.co.id>, 2010."
+msgstr "Andika Triwidada <andika@gmail.com>, 2011"
 
 #. Translators: This text is used in the Orca About dialog. Orca is
 #. licensed under GPL2+.
@@ -2829,7 +2712,6 @@ msgstr ""
 #. keyboard command.
 #.
 #: ../src/orca/orca_gui_prefs.py:236
-#, fuzzy
 msgid "Function"
 msgstr "Fungsi"
 
@@ -2902,7 +2784,6 @@ msgstr "Hipertaut"
 #. selected. And so on.
 #.
 #: ../src/orca/orca_gui_prefs.py:773
-#, fuzzy
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Sistem"
@@ -2913,7 +2794,6 @@ msgstr "Sistem"
 #. as bold, underline, family-name, etc.
 #.
 #: ../src/orca/orca_gui_prefs.py:1213
-#, fuzzy
 msgid "Attribute Name"
 msgstr "Nama Atribut"
 
@@ -2925,7 +2805,6 @@ msgstr "Nama Atribut"
 #. presses Orca_Modifier+F.
 #.
 #: ../src/orca/orca_gui_prefs.py:1228
-#, fuzzy
 msgid "Speak"
 msgstr "Bicara"
 
@@ -3005,9 +2884,8 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:1503
 #: ../src/orca/orca_gui_prefs.py:2701
 #: ../src/orca/orca-setup.ui.h:54
-#, fuzzy
 msgid "Line"
-msgstr "Baris"
+msgstr "Garis"
 
 #. Translators: If this setting is chosen and the user is reading
 #. over an entire document, Orca will pause at the end of each
@@ -3016,9 +2894,8 @@ msgstr "Baris"
 #: ../src/orca/orca_gui_prefs.py:1503
 #: ../src/orca/orca_gui_prefs.py:2707
 #: ../src/orca/orca-setup.ui.h:85
-#, fuzzy
 msgid "Sentence"
-msgstr "Kalimat baru"
+msgstr "Kalimat"
 
 #. Translators: Orca has a setting which determines which progress
 #. bar updates should be announced. Choosing "All" means that Orca
@@ -3029,7 +2906,6 @@ msgstr "Kalimat baru"
 #: ../src/orca/orca_gui_prefs.py:1602
 #: ../src/orca/orca_gui_prefs.py:2666
 #: ../src/orca/orca-setup.ui.h:71
-#, fuzzy
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Semua"
@@ -3041,7 +2917,6 @@ msgstr "Semua"
 #. in the current window).
 #.
 #: ../src/orca/orca_gui_prefs.py:1609
-#, fuzzy
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Aplikasi"
@@ -3053,7 +2928,6 @@ msgstr "Aplikasi"
 #.
 #: ../src/orca/orca_gui_prefs.py:1615
 #: ../src/orca/orca_gui_prefs.py:2674
-#, fuzzy
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Jendela"
@@ -3234,9 +3108,9 @@ msgstr ""
 #. creating a new key binding.
 #.
 #: ../src/orca/orca_gui_prefs.py:3002
-#, fuzzy, python-format
+#, python-format
 msgid "The new key is: %s"
-msgstr "Kunci adalah NULL"
+msgstr "Tombol baru adalah: %s"
 
 #. Translators: this is a spoken prompt confirming that an
 #. existing key combination (e.g., Ctrl+Alt+f) that was
@@ -3461,14 +3335,14 @@ msgstr ""
 
 #: ../src/orca/orca.py:520
 msgid "Report bugs to orca-list@gnome.org."
-msgstr ""
+msgstr "Laporkan kutu ke orca-list@gnome.org."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
 #: ../src/orca/orca.py:698
 #: ../src/orca/orca.py:2094
 msgid "Goodbye."
-msgstr ""
+msgstr "Sampai jumpa."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -3504,7 +3378,6 @@ msgstr ""
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
 #: ../src/orca/speech.py:287
 #: ../src/orca/speechserver.py:219
-#, fuzzy
 msgid "off"
 msgstr "mati"
 
@@ -3517,7 +3390,6 @@ msgstr "mati"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
 #: ../src/orca/speech.py:282
 #: ../src/orca/speechserver.py:214
-#, fuzzy
 msgid "on"
 msgstr "nyala"
 
@@ -3657,9 +3529,8 @@ msgstr ""
 #. using a mouse.
 #.
 #: ../src/orca/orca.py:1895
-#, fuzzy
 msgid "double click"
-msgstr "Klik ganda"
+msgstr "klik ganda"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -3696,14 +3567,12 @@ msgid "Import failed due to an unrecognized key: %s"
 msgstr ""
 
 #: ../src/orca/orca.py:2308
-#, fuzzy
 msgid "Welcome to Orca."
-msgstr "Selamat Datang di Empathy"
+msgstr "Selamat Datang di Orca."
 
 #: ../src/orca/orca-preferences-warning.ui.h:1
-#, fuzzy
 msgid "Warning"
-msgstr "nPeringata"
+msgstr "Peringatan"
 
 #: ../src/orca/orca-preferences-warning.ui.h:2
 msgid ""
@@ -3801,7 +3670,6 @@ msgstr "Nama Profil"
 #.
 #: ../src/orca/orca-setup.ui.h:17
 #: ../src/orca/rolenames.py:1127
-#, fuzzy
 msgid "Application"
 msgstr "Aplikasi"
 
@@ -3811,7 +3679,6 @@ msgid "Bottom Half"
 msgstr "Berlian Setengah"
 
 #: ../src/orca/orca-setup.ui.h:19
-#, fuzzy
 msgid "Braille"
 msgstr "Braille"
 
@@ -3895,7 +3762,6 @@ msgid "Enable lockin_g keys"
 msgstr "Aktifkan tombol panah"
 
 #: ../src/orca/orca-setup.ui.h:48
-#, fuzzy
 msgid "Full Screen"
 msgstr "Layar Penuh"
 
@@ -4315,14 +4181,12 @@ msgstr ""
 #. Translators: long braille for the rolename of an animation widget.
 #.
 #: ../src/orca/rolenames.py:216
-#, fuzzy
 msgid "Animation"
 msgstr "Animasi"
 
 #. Translators: spoken words for the rolename of an animation widget.
 #.
 #: ../src/orca/rolenames.py:219
-#, fuzzy
 msgid "animation"
 msgstr "animasi"
 
@@ -4335,14 +4199,12 @@ msgstr ""
 #. Translators: long braille for the rolename of an animation widget.
 #.
 #: ../src/orca/rolenames.py:228
-#, fuzzy
 msgid "Arrow"
 msgstr "Panah"
 
 #. Translators: spoken words for the rolename of an animation widget.
 #.
 #: ../src/orca/rolenames.py:231
-#, fuzzy
 msgid "arrow"
 msgstr "panah"
 
@@ -4356,14 +4218,12 @@ msgstr "_Kalender:"
 #. Translators: long braille for the rolename of a calendar widget.
 #.
 #: ../src/orca/rolenames.py:240
-#, fuzzy
 msgid "Calendar"
 msgstr "Kalender"
 
 #. Translators: spoken words for the rolename of a calendar widget.
 #.
 #: ../src/orca/rolenames.py:243
-#, fuzzy
 msgid "calendar"
 msgstr "kalender"
 
@@ -4376,14 +4236,12 @@ msgstr ""
 #. Translators: long braille for the rolename of a canvas widget.
 #.
 #: ../src/orca/rolenames.py:252
-#, fuzzy
 msgid "Canvas"
-msgstr "kanvas"
+msgstr "Kanvas"
 
 #. Translators: spoken words for the rolename of a canvas widget.
 #.
 #: ../src/orca/rolenames.py:255
-#, fuzzy
 msgid "canvas"
 msgstr "kanvas"
 
@@ -4612,14 +4470,12 @@ msgstr ""
 #. Translators: long braille for the rolename of a dialog.
 #.
 #: ../src/orca/rolenames.py:390
-#, fuzzy
 msgid "Dialog"
 msgstr "Dialog"
 
 #. Translators: spoken words for the rolename of a dialog.
 #.
 #: ../src/orca/rolenames.py:393
-#, fuzzy
 msgid "dialog"
 msgstr "dialog"
 
@@ -4772,14 +4628,12 @@ msgstr "formulir"
 #. Translators: long braille for the rolename of a frame.
 #.
 #: ../src/orca/rolenames.py:489
-#, fuzzy
 msgid "Frame"
 msgstr "Bingkai"
 
 #. Translators: spoken words for the rolename of a frame.
 #.
 #: ../src/orca/rolenames.py:492
-#, fuzzy
 msgid "frame"
 msgstr "bingkai"
 
@@ -4838,14 +4692,12 @@ msgstr "Kontainer"
 #. Translators: long braille for the rolename of a icon.
 #.
 #: ../src/orca/rolenames.py:537
-#, fuzzy
 msgid "Icon"
 msgstr "Ikon"
 
 #. Translators: spoken words for the rolename of a icon.
 #.
 #: ../src/orca/rolenames.py:540
-#, fuzzy
 msgid "icon"
 msgstr "ikon"
 
@@ -4858,14 +4710,12 @@ msgstr ""
 #. Translators: long braille for the rolename of a image.
 #.
 #: ../src/orca/rolenames.py:549
-#, fuzzy
 msgid "Image"
 msgstr "Gambar"
 
 #. Translators: spoken words for the rolename of a image.
 #.
 #: ../src/orca/rolenames.py:552
-#, fuzzy
 msgid "image"
 msgstr "gambar"
 
@@ -4897,14 +4747,12 @@ msgstr ""
 #. Translators: long braille for the rolename of a label.
 #.
 #: ../src/orca/rolenames.py:573
-#, fuzzy
 msgid "Label"
 msgstr "Label"
 
 #. Translators: spoken words for the rolename of a label.
 #.
 #: ../src/orca/rolenames.py:576
-#, fuzzy
 msgid "label"
 msgstr "label"
 
@@ -5191,16 +5039,14 @@ msgstr ""
 #. Translators: long braille for the rolename of a push button.
 #.
 #: ../src/orca/rolenames.py:753
-#, fuzzy
 msgid "Button"
 msgstr "Tombol"
 
 #. Translators: spoken words for the rolename of a push button.
 #.
 #: ../src/orca/rolenames.py:756
-#, fuzzy
 msgid "button"
-msgstr "Tombol"
+msgstr "tombol"
 
 #. Translators: short braille for the rolename of a radio button.
 #.
@@ -5470,14 +5316,12 @@ msgstr ""
 #. Translators: long braille for the rolename of a table cell.
 #.
 #: ../src/orca/rolenames.py:921
-#, fuzzy
 msgid "Cell"
 msgstr "Sel"
 
 #. Translators: spoken words for the rolename of a table cell.
 #.
 #: ../src/orca/rolenames.py:924
-#, fuzzy
 msgid "cell"
 msgstr "sel"
 
@@ -5503,42 +5347,36 @@ msgstr "anggota menu yang dapat dilepas"
 #. Translators: short braille for the rolename of a terminal.
 #.
 #: ../src/orca/rolenames.py:966
-#, fuzzy
 msgid "term"
-msgstr "istilah"
+msgstr "term"
 
 #. Translators: long braille for the rolename of a terminal.
 #.
 #: ../src/orca/rolenames.py:969
-#, fuzzy
 msgid "Terminal"
 msgstr "Terminal"
 
 #. Translators: spoken words for the rolename of a terminal.
 #.
 #: ../src/orca/rolenames.py:972
-#, fuzzy
 msgid "terminal"
 msgstr "terminal"
 
 #. Translators: short braille for the rolename of a text entry field.
 #.
 #: ../src/orca/rolenames.py:978
-#, fuzzy
 msgid "txt"
-msgstr "-bugreport.txt"
+msgstr "txt"
 
 #. Translators: long braille for the rolename of a text entry field.
 #.
 #: ../src/orca/rolenames.py:981
-#, fuzzy
 msgid "Text"
 msgstr "Teks"
 
 #. Translators: spoken words for the rolename of a text entry field.
 #.
 #: ../src/orca/rolenames.py:984
-#, fuzzy
 msgid "text"
 msgstr "teks"
 
@@ -5577,7 +5415,6 @@ msgstr "Bilah Ala_t"
 #. Translators: spoken words for the rolename of a toolbar.
 #.
 #: ../src/orca/rolenames.py:1010
-#, fuzzy
 msgid "tool bar"
 msgstr "bilah alat"
 
@@ -5690,7 +5527,6 @@ msgstr ""
 #. Translators: spoken words for the rolename of a window.
 #.
 #: ../src/orca/rolenames.py:1082
-#, fuzzy
 msgid "window"
 msgstr "jendela"
 
@@ -5703,14 +5539,12 @@ msgstr ""
 #. Translators: long braille for the rolename of a header.
 #.
 #: ../src/orca/rolenames.py:1091
-#, fuzzy
 msgid "Header"
 msgstr "Tajuk"
 
 #. Translators: spoken words for the rolename of a header.
 #.
 #: ../src/orca/rolenames.py:1094
-#, fuzzy
 msgid "header"
 msgstr "tajuk"
 
@@ -5723,14 +5557,12 @@ msgstr ""
 #. Translators: long braille for the rolename of a footer.
 #.
 #: ../src/orca/rolenames.py:1103
-#, fuzzy
 msgid "Footer"
 msgstr "Kaki"
 
 #. Translators: spoken words for the rolename of a footer.
 #.
 #: ../src/orca/rolenames.py:1106
-#, fuzzy
 msgid "footer"
 msgstr "kaki"
 
@@ -5743,14 +5575,12 @@ msgstr ""
 #. Translators: long braille for the rolename of a paragraph.
 #.
 #: ../src/orca/rolenames.py:1115
-#, fuzzy
 msgid "Paragraph"
 msgstr "Paragraf"
 
 #. Translators: spoken words for the rolename of a paragraph.
 #.
 #: ../src/orca/rolenames.py:1118
-#, fuzzy
 msgid "paragraph"
 msgstr "paragraf"
 
@@ -5764,7 +5594,6 @@ msgstr "App GNOME"
 #. Translators: spoken words for the rolename of a application.
 #.
 #: ../src/orca/rolenames.py:1130
-#, fuzzy
 msgid "application"
 msgstr "aplikasi"
 
@@ -5871,7 +5700,6 @@ msgstr "gtk-doc"
 #. rolename of a document.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:76
-#, fuzzy
 msgid "Document"
 msgstr "Dokumen"
 
@@ -5879,9 +5707,8 @@ msgstr "Dokumen"
 #. rolename of a document.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:80
-#, fuzzy
 msgid "document"
-msgstr "_Dokumen"
+msgstr "dokumen"
 
 #. Translators: the Orca "SayAll" command allows the
 #. user to press a key and have the entire document in
@@ -6111,7 +5938,6 @@ msgstr "_Kosongkan"
 #. status of having been read or unread.
 #.
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:136
-#, fuzzy
 msgid "Read"
 msgstr "Baca"
 
@@ -9645,10 +9471,9 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:62
-#, fuzzy
 msgctxt "textattr"
 msgid "background color"
-msgstr "Warna Latar:"
+msgstr "warna latar"
 
 #. Translators: this attribute specifies whether to make the background
 #. color for each character the height of the highest font used on the
@@ -9680,10 +9505,9 @@ msgstr "Mask latar titik-titik"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:85
-#, fuzzy
 msgctxt "textattr"
 msgid "direction"
-msgstr "<b>Arah</b>"
+msgstr "arah"
 
 #. Translators: this attribute specifies whether the text is editable.
 #. It will be a "true" or "false" value.
@@ -9691,10 +9515,9 @@ msgstr "<b>Arah</b>"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:92
-#, fuzzy
 msgctxt "textattr"
 msgid "editable"
-msgstr "<i>(Dapat disunting)</i>"
+msgstr "dapat disunting"
 
 #. Translators: this attribute specifies the font family name of the text.
 #. See:
@@ -9712,10 +9535,9 @@ msgstr "Nama Keluarga"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:105
-#, fuzzy
 msgctxt "textattr"
 msgid "foreground color"
-msgstr "Warna Depan"
+msgstr "warna depan"
 
 #. Translators: this attribute specifies whether a GdkBitmap is set for
 #. stippling the foreground color. It will be a "true" or "false" value.
@@ -9735,10 +9557,9 @@ msgstr "Mask latar depan titik-titik"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:120
-#, fuzzy
 msgctxt "textattr"
 msgid "font effect"
-msgstr "Tanpa Efek"
+msgstr "efek fonta"
 
 #. Translators: this attribute specifies the indentation of the text
 #. (in pixels).
@@ -9770,10 +9591,9 @@ msgstr ""
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:144
-#, fuzzy
 msgctxt "textattr"
 msgid "invisible"
-msgstr "Tak kelihatan"
+msgstr "tak nampak"
 
 #. Translators: this attribute specifies how the justification of the text.
 #. Values are "left", "right", "center" or "fill".
@@ -9893,17 +9713,15 @@ msgstr "Angkat"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:223
-#, fuzzy
 msgctxt "textattr"
 msgid "scale"
-msgstr "Skala"
+msgstr "skala"
 
 #. Translators: this attribute specifies the size of the text.
 #. See:
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:229
-#, fuzzy
 msgctxt "textattr"
 msgid "size"
 msgstr "ukuran"
@@ -9916,10 +9734,9 @@ msgstr "ukuran"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:238
-#, fuzzy
 msgctxt "textattr"
 msgid "stretch"
-msgstr "Regangan"
+msgstr "regangan"
 
 #. Translators: this attribute specifies whether the text is strike though
 #. (in other words, whether there is a line drawn through it). Values are
@@ -9928,10 +9745,9 @@ msgstr "Regangan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:246
-#, fuzzy
 msgctxt "textattr"
 msgid "strike through"
-msgstr "Core_t"
+msgstr "dicoret"
 
 #. Translators: this attribute specifies the slant style of the text,
 #. if set. Values are "normal", "oblique" or "italic".
@@ -9939,10 +9755,9 @@ msgstr "Core_t"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:253
-#, fuzzy
 msgctxt "textattr"
 msgid "style"
-msgstr "_Gaya:"
+msgstr "gaya"
 
 #. Translators: this attribute specifies the decoration of the text.
 #. See:
@@ -9950,10 +9765,9 @@ msgstr "_Gaya:"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:260
-#, fuzzy
 msgctxt "textattr"
 msgid "text decoration"
-msgstr "Berkas Teks"
+msgstr "dekorasi teks"
 
 #. Translators: this attribute specifies the angle at which the text is
 #. displayed (i.e. rotated from the norm) and is represented in degrees
@@ -9963,10 +9777,9 @@ msgstr "Berkas Teks"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:269
-#, fuzzy
 msgctxt "textattr"
 msgid "text rotation"
-msgstr "Putaran Jarum Jam"
+msgstr "rotasi teks"
 
 #. Translators: this attribute specifies the shadow effects applied to the text.
 #. See:
@@ -9974,10 +9787,9 @@ msgstr "Putaran Jarum Jam"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:276
-#, fuzzy
 msgctxt "textattr"
 msgid "text shadow"
-msgstr "Bayangan jatuh"
+msgstr "bayangan teks"
 
 #. Translators: this attributes specifies whether the text is underlined.
 #. Values are "none", "single", "double" or "low".
