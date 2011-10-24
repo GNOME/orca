@@ -1,3 +1,25 @@
+3.3.1 - 24 October 2011
+
+General
+
+  * Fix for bug 661706 - Sanity check needed in Gecko script's
+    getBottomOfFile() to ensure we have a "last object"
+
+  * Fix for bug 659122 - UnicodeDecodeError and UnicodeEncodeError keep
+    cropping up since introspection
+
+  * Fix for bug 659122 - Traceback presenting time and date
+
+  * Fix for bug 660163 - Traceback when try to edit a keybinding
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    id            Indonesian             Andika Triwidada
+    uk            Ukranian               Daniel Korostil
+    zh_CN         Simplified Chinese     YunQiang Su
+
+=========
+
 3.1.92 - 19 September 2011
 
 General:
