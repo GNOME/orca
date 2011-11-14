@@ -2969,7 +2969,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             mods = self.newBinding.modifiers
             clickCount = self.newBinding.click_count
         except:
-            string = None
+            string = ''
             mods = 0
             clickCount = 1
 
