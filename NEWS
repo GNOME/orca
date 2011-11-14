@@ -1,3 +1,22 @@
+3.2.2 - 14 November 2011
+
+General
+
+  * Fix for bug #659023 - Orca does not speak the desktop icon names in
+    fallback mode if tutorial messages are enabled
+
+  * Fix for bug #661893 - Viewing package list of a www.launchpad.net PPA
+    causes Orca to stop working on Firefox 7.0.1
+
+  * Fix for bug #660099 - Cannot re-bind Orca keybindings via Preferences
+    dialog
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    te            Telugu                 A Mohan Vamsee
+
+=========
+
 3.2.1 - 17 October 2011
 
 General
