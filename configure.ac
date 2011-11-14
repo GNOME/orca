@@ -5,7 +5,7 @@ m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
 m4_define(gtk_required_version, 3.1.91)
-m4_define(pygobject_required_version, 2.90.3)
+m4_define(pygobject_required_version, 3.0.2)
 m4_define(atspi_required_version, 2.1.92)
 
 AC_INIT([orca],

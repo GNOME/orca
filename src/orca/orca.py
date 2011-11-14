@@ -1151,9 +1151,8 @@ def _processKeyCaptured(event):
             #
             keymap = Gdk.Keymap.get_default()
             entries_for_keycode = keymap.get_entries_for_keycode(event.hw_code)
-            success = entries_for_keycode[0]
-            entries = entries_for_keycode[1]
-            event.event_string = Gdk.keyval_name(entries[0].keycode)
+            entries = entries_for_keycode[-1]
+            event.event_string = Gdk.keyval_name(entries[0])
 
             if not event.event_string:
                 orca_state.capturingKeys = False
