@@ -5119,6 +5119,7 @@ class Script(default.Script):
                and lastExtents != nextExtents \
                or nextExtents == (0, 0, 0, 0):
                 toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
+                toAdd = filter(lambda x: x not in objects, toAdd)
                 objects.extend(toAdd)
             elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
                                         pyatspi.ROLE_TABLE_CELL] \
