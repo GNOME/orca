@@ -283,7 +283,10 @@ class TutorialGenerator:
         desktopMsg = _("To get to the system menus press the alt+f1 key.")
 
         scriptName = self._script.name
-        sibling = obj.parent.getChildAtIndex(0)
+        try:
+            sibling = obj.parent.getChildAtIndex(0)
+        except AttributeError:
+            sibling = None
         if 'nautilus' in scriptName and obj == sibling:
             utterances.append(desktopMsg)
 
