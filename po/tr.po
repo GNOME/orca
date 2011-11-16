@@ -2,42 +2,47 @@
 # Copyright (C) 2008
 # This file is distributed under the same license as the orca package.
 #
+#
 # Baris Cicek <baris@teamforce.name.tr>, 2008, 2009.
 # Muhammet Kara <muhammet.k@gmail.com>, 2011.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-06-25 12:53+0000\n"
-"PO-Revision-Date: 2011-06-25 22:57+0300\n"
+"POT-Creation-Date: 2011-11-14 16:32+0000\n"
+"PO-Revision-Date: 2011-11-16 10:55+0200\n"
 "Last-Translator: Muhammet Kara <muhammet.k@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"Language: tr\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
-#: ../src/orca/keybindings.py:157 ../src/orca/orca_gui_main.py:141
-#: ../src/orca/orca_gui_prefs.py:2102 ../src/orca/orca_gui_prefs.py:2207
-#: ../src/orca/orca-splash.ui.h:1
+#: ../src/orca/keybindings.py:152 ../src/orca/orca_gui_splash.py:49
+#: ../src/orca/orca_gui_main.py:156 ../src/orca/orca_gui_prefs.py:2082
+#: ../src/orca/orca_gui_prefs.py:2187
 msgid "Orca"
 msgstr "Orca"
 
-#: ../orca.desktop.in.h:2
-msgid "Orca Screen Reader and Magnifier"
-msgstr "Orca Ekran Okuyucu ve Büyüteci"
+#: ../orca.desktop.in.h:2 ../src/orca/orca_gui_main.py:44
+#| msgid "Orca Screen Reader / Magnifier"
+msgid "Orca Screen Reader"
+msgstr "Orca Ekran Okuyucusu"
 
 #: ../orca.desktop.in.h:3
 msgid ""
-"Present on-screen information as speech or braille, or magnify the screen"
-msgstr "Braille ile veya sesli olarak "
+"Provide access to graphical desktop environments via synthesized speech and/"
+"or refreshable braille"
+msgstr ""
 
 #: ../orca.desktop.in.h:4
-msgid "Screen Reader and Magnifier"
-msgstr "Ekran Okuyucusu ve Büyüteci"
+#| msgid "Screen Reader and Magnifier"
+msgid "Screen Reader"
+msgstr "Ekran Okuyucusu"
 
 #: ../src/orca/app_gui_prefs.py:136
 #, python-format
@@ -47,7 +52,7 @@ msgstr "%s için Orca Tercihleri"
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:2213
+#: ../src/orca/app_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:2193
 msgid "Unbound"
 msgstr "Bağsız"
 
@@ -379,14 +384,14 @@ msgstr "Önceki sohbet odası mesajını seslendir ve braille ile belirt."
 #. Translators: If this checkbox is checked, then Orca will speak
 #. the name of the chat room.
 #.
-#: ../src/orca/chat.py:414
+#: ../src/orca/chat.py:412
 msgid "_Speak Chat Room name"
 msgstr "_Sohbet Odasının Adını Seslendir."
 
 #. Translators: If this checkbox is checked, then Orca will tell
 #. you when one of your buddies is typing a message.
 #.
-#: ../src/orca/chat.py:425
+#: ../src/orca/chat.py:421
 msgid "Announce when your _buddies are typing"
 msgstr "_Arkadaşlarınız yazarken bunu duyur"
 
@@ -395,67 +400,74 @@ msgstr "_Arkadaşlarınız yazarken bunu duyur"
 #. a single history which contains the latest messages from all the
 #. chat rooms that they are currently in.
 #.
-#: ../src/orca/chat.py:438
+#: ../src/orca/chat.py:432
 msgid "Provide chat room specific _message histories"
 msgstr "Sohbet odasına özel _mesaj geçmişlerini sağla"
+
+#. Translators: this is the title of a panel holding options for
+#. how messages in this application's chat rooms should be spoken.
+#.
+#: ../src/orca/chat.py:445
+msgid "Speak messages from"
+msgstr "Gelen mesajları seslendir"
 
 #. Translators: Orca will speak all new chat messages as they appear
 #. irrespective of whether the chat application currently has focus.
 #. This is the default behaviour.
 #.
-#: ../src/orca/chat.py:468
+#: ../src/orca/chat.py:461
 msgid "All cha_nnels"
 msgstr "Tüm ka_nallar"
 
-#: ../src/orca/chat.py:482
+#. Translators: Orca will speak only new chat messages for the channel
+#. that currently has focus, irrespective of whether the chat
+#. application has focus.
+#.
+#: ../src/orca/chat.py:471
 msgid "A channel only if its _window is active"
 msgstr "Sadece _penceresi etkinse bir kanal"
 
-#: ../src/orca/chat.py:495
+#. Translators: Orca will speak new chat messages for all channels
+#. only when the chat application has focus.
+#.
+#: ../src/orca/chat.py:481
 #, python-format
 msgid "All channels when an_y %s window is active"
 msgstr "_Bir %s penceresi etkin olduğunda tüm kanallar"
 
-#. Translators: this is the title of a panel holding options for
-#. how messages in this application's chat rooms should be spoken.
-#.
-#: ../src/orca/chat.py:507
-msgid "Speak messages from"
-msgstr "Gelen mesajları seslendir"
-
-#: ../src/orca/chat.py:571
+#: ../src/orca/chat.py:549
 msgid "speak chat room name."
 msgstr "sohbet odasının adını seslendir."
 
-#: ../src/orca/chat.py:575
+#: ../src/orca/chat.py:553
 msgid "Do not speak chat room name."
 msgstr "Sohbet odasının adını seslendirme."
 
-#: ../src/orca/chat.py:588
+#: ../src/orca/chat.py:566
 msgid "announce when your buddies are typing."
 msgstr "arkadaşlarınız yazarken duyur."
 
-#: ../src/orca/chat.py:593
+#: ../src/orca/chat.py:571
 msgid "Do not announce when your buddies are typing."
 msgstr "Arkadaşlarım yazarken bunu duyurma."
 
-#: ../src/orca/chat.py:606
+#: ../src/orca/chat.py:584
 msgid "Provide chat room specific message histories."
 msgstr "Sohbet odasına özel ileti geçmişlerini sağla."
 
-#: ../src/orca/chat.py:610
+#: ../src/orca/chat.py:588
 msgid "Do not provide chat room specific message histories."
 msgstr "Sohbet odasına özel ileti geçmişlerini sağlama."
 
-#: ../src/orca/chat.py:670
+#: ../src/orca/chat.py:648
 #, python-format
 msgid "Message from chat room %s"
 msgstr "Sohbet odasından mesaj %s"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/keynames.py:133
-#: ../src/orca/script_utilities.py:2736 ../src/orca/script_utilities.py:2743
+#: ../src/orca/chnames.py:39 ../src/orca/keynames.py:146
+#: ../src/orca/script_utilities.py:2792 ../src/orca/script_utilities.py:2800
 msgid "space"
 msgstr "boşluk"
 
@@ -469,7 +481,7 @@ msgstr "yeni satır"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: ../src/orca/chnames.py:47 ../src/orca/keynames.py:117
+#: ../src/orca/chnames.py:47 ../src/orca/keynames.py:130
 msgid "tab"
 msgstr "sekme"
 
@@ -640,7 +652,7 @@ msgstr "alt çizgi"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the grave glyph
 #.
-#: ../src/orca/chnames.py:159 ../src/orca/keynames.py:250
+#: ../src/orca/chnames.py:159 ../src/orca/keynames.py:263
 msgid "grave"
 msgstr "grave"
 
@@ -667,7 +679,7 @@ msgstr "sağ parantez"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
 #.
-#: ../src/orca/chnames.py:175 ../src/orca/keynames.py:265
+#: ../src/orca/chnames.py:175 ../src/orca/keynames.py:278
 msgid "tilde"
 msgstr "tilda"
 
@@ -823,7 +835,7 @@ msgstr "orta nokta"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the cedilla glyph
 #.
-#: ../src/orca/chnames.py:276 ../src/orca/keynames.py:280
+#: ../src/orca/chnames.py:276 ../src/orca/keynames.py:293
 msgid "cedilla"
 msgstr "çengel işareti"
 
@@ -1695,7 +1707,7 @@ msgstr "Emacspeak Konuşma Servisleri"
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/event_manager.py:261
+#: ../src/orca/event_manager.py:267
 msgid "No focus"
 msgstr "Odak yok"
 
@@ -1727,13 +1739,13 @@ msgstr "En Üste Kaydırılıyor"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:1098
+#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:928
 msgid "partially checked"
 msgstr "kısmen seçili"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:1097
+#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:927
 msgid "checked"
 msgstr "seçili"
 
@@ -1742,13 +1754,13 @@ msgstr "seçili"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:1096
+#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:926
 msgid "not checked"
 msgstr "seçili değil"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:1109
+#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:939
 msgid "pressed"
 msgstr "basılı"
 
@@ -1757,14 +1769,14 @@ msgstr "basılı"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:1109
+#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:939
 msgid "not pressed"
 msgstr "basılı değil"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:1104
+#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:934
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seçili"
@@ -1775,7 +1787,7 @@ msgstr "seçili"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:1103
+#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:933
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "seçili değil"
@@ -1806,214 +1818,238 @@ msgstr[0] "yüzde %d."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:444
-#: ../src/orca/generator.py:701 ../src/orca/generator.py:743
-#: ../src/orca/generator.py:789
+#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:466
+#: ../src/orca/generator.py:723 ../src/orca/generator.py:765
+#: ../src/orca/generator.py:811
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
-#: ../src/orca/scripts/apps/packagemanager/script.py:643
-#: ../src/orca/tutorialgenerator.py:526 ../src/orca/tutorialgenerator.py:566
+#: ../src/orca/scripts/apps/packagemanager/script.py:641
+#: ../src/orca/tutorialgenerator.py:529 ../src/orca/tutorialgenerator.py:569
 msgid "toggle"
 msgstr "seçim düğmesi"
 
 #. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
 #.
-#: ../src/orca/keybindings.py:164
+#: ../src/orca/keybindings.py:159
 msgid "Alt_R"
 msgstr "Alt_R"
 
 #. Translators: this is presented in a GUI to represent the
 #. "super" modifier.
 #.
-#: ../src/orca/keybindings.py:169
+#: ../src/orca/keybindings.py:164
 msgid "Super"
 msgstr "Süper"
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
-#: ../src/orca/keybindings.py:174
+#: ../src/orca/keybindings.py:169
 msgid "Meta2"
 msgstr "Meta2"
 
 #. Translators: this is presented in a GUI to represent the
 #. "left alt" modifier.
 #.
-#: ../src/orca/keybindings.py:181
+#: ../src/orca/keybindings.py:176
 msgid "Alt_L"
 msgstr "Alt_L"
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
 #.
-#: ../src/orca/keybindings.py:186
+#: ../src/orca/keybindings.py:181
 msgid "Ctrl"
 msgstr "Ctrl"
 
 #. Translators: this is presented in a GUI to represent the
 #. "caps lock" modifier.
 #.
-#: ../src/orca/keybindings.py:191
+#: ../src/orca/keybindings.py:186
 msgid "Caps_Lock"
 msgstr "Büyük _Harf Kilidi"
 
 #. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
-#: ../src/orca/keybindings.py:196
+#: ../src/orca/keybindings.py:191
 msgid "Shift"
-msgstr "Kaydır"
+msgstr "Shift"
+
+#. Translators: this is how someone would speak the name of the shift key
+#.
+#: ../src/orca/keynames.py:42
+#| msgid "Shift"
+msgctxt "keyboard"
+msgid "Shift"
+msgstr "Shift"
+
+#. Translators: this is how someone would speak the name of the alt key
+#.
+#: ../src/orca/keynames.py:46
+#| msgid "Alt_R"
+msgctxt "keyboard"
+msgid "Alt"
+msgstr "Alt"
+
+#. Translators: this is how someone would speak the name of the control key
+#.
+#: ../src/orca/keynames.py:50
+#| msgid "Ctrl"
+msgctxt "keyboard"
+msgid "Control"
+msgstr "Control"
 
 #. Translators: this is how someone would speak the name of the left shift key
 #.
-#: ../src/orca/keynames.py:41
+#: ../src/orca/keynames.py:54
 msgid "left shift"
 msgstr "sola kaydır"
 
 #. Translators: this is how someone would speak the name of the left alt key
 #.
-#: ../src/orca/keynames.py:45
+#: ../src/orca/keynames.py:58
 msgid "left alt"
 msgstr "sol alt"
 
 #. Translators: this is how someone would speak the name of the left ctrl key
 #.
-#: ../src/orca/keynames.py:49
+#: ../src/orca/keynames.py:62
 msgid "left control"
 msgstr "sol kontrol"
 
 #. Translators: this is how someone would speak the name of the right shift key
 #.
-#: ../src/orca/keynames.py:53
+#: ../src/orca/keynames.py:66
 msgid "right shift"
 msgstr "sağa kaydır"
 
 #. Translators: this is how someone would speak the name of the right alt key
 #.
-#: ../src/orca/keynames.py:57
+#: ../src/orca/keynames.py:70
 msgid "right alt"
 msgstr "sağ alt"
 
 #. Translators: this is how someone would speak the name of the right ctrl key
 #.
-#: ../src/orca/keynames.py:61
+#: ../src/orca/keynames.py:74
 msgid "right control"
 msgstr "sağ kontrol"
 
 #. Translators: this is how someone would speak the name of the left meta key
 #.
-#: ../src/orca/keynames.py:65
+#: ../src/orca/keynames.py:78
 msgid "left meta"
 msgstr "sol meta"
 
 #. Translators: this is how someone would speak the name of the right meta key
 #.
-#: ../src/orca/keynames.py:69
+#: ../src/orca/keynames.py:82
 msgid "right meta"
 msgstr "sağ meta"
 
 #. Translators: this is how someone would speak the name of the num lock key
 #.
-#: ../src/orca/keynames.py:73
+#: ../src/orca/keynames.py:86
 msgid "num lock"
 msgstr "num lock"
 
 #. Translators: this is how someone would speak the name of the caps lock key
 #.
-#: ../src/orca/keynames.py:77
+#: ../src/orca/keynames.py:90
 msgid "caps lock"
 msgstr "büyük harf kilidi"
 
 #. Translators: this is how someone would speak the name of the scroll lock key
 #.
-#: ../src/orca/keynames.py:81
+#: ../src/orca/keynames.py:94
 msgid "scroll lock"
 msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: ../src/orca/keynames.py:85 ../src/orca/keynames.py:89
-#: ../src/orca/keynames.py:93 ../src/orca/keynames.py:97
+#: ../src/orca/keynames.py:98 ../src/orca/keynames.py:102
+#: ../src/orca/keynames.py:106 ../src/orca/keynames.py:110
 msgid "page up"
 msgstr "önceki sayfa"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: ../src/orca/keynames.py:101 ../src/orca/keynames.py:105
-#: ../src/orca/keynames.py:109 ../src/orca/keynames.py:113
+#: ../src/orca/keynames.py:114 ../src/orca/keynames.py:118
+#: ../src/orca/keynames.py:122 ../src/orca/keynames.py:126
 msgid "page down"
 msgstr "sonraki sayfa"
 
 #. Translators: this is how someone would speak the name of the left tab key
 #.
-#: ../src/orca/keynames.py:121
+#: ../src/orca/keynames.py:134
 msgid "left tab"
 msgstr "sol tab"
 
 #. Translators: this is how someone would speak the name of the F11 key
 #.
-#: ../src/orca/keynames.py:125
+#: ../src/orca/keynames.py:138
 msgid "F 11"
 msgstr "F 11"
 
 #. Translators: this is how someone would speak the name of the F12 key
 #.
-#: ../src/orca/keynames.py:129
+#: ../src/orca/keynames.py:142
 msgid "F 12"
 msgstr "F 12"
 
 #. Translators: this is how someone would speak the name of the backspace key
 #.
-#: ../src/orca/keynames.py:137
+#: ../src/orca/keynames.py:150
 msgid "backspace"
 msgstr "geri tuşu"
 
 #. Translators: this is how someone would speak the name of the return key
 #.
-#: ../src/orca/keynames.py:141
+#: ../src/orca/keynames.py:154
 msgid "return"
 msgstr "enter"
 
 #. Translators: this is how someone would speak the name of the enter key
 #.
-#: ../src/orca/keynames.py:145
+#: ../src/orca/keynames.py:158
 msgid "enter"
 msgstr "enter"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: ../src/orca/keynames.py:149 ../src/orca/keynames.py:153
+#: ../src/orca/keynames.py:162 ../src/orca/keynames.py:166
 msgid "up"
 msgstr "yukarı"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: ../src/orca/keynames.py:157 ../src/orca/keynames.py:161
+#: ../src/orca/keynames.py:170 ../src/orca/keynames.py:174
 msgid "down"
 msgstr "aşağı"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: ../src/orca/keynames.py:165 ../src/orca/keynames.py:169
+#: ../src/orca/keynames.py:178 ../src/orca/keynames.py:182
 msgid "left"
 msgstr "sol"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: ../src/orca/keynames.py:173 ../src/orca/keynames.py:177
+#: ../src/orca/keynames.py:186 ../src/orca/keynames.py:190
 msgid "right"
 msgstr "sağ"
 
 #. Translators: this is how someone would speak the name of the left super key
 #.
-#: ../src/orca/keynames.py:181
+#: ../src/orca/keynames.py:194
 msgid "left super"
 msgstr "sol süper"
 
 #. Translators: this is how someone would speak the name of the right super key
 #.
-#: ../src/orca/keynames.py:185
+#: ../src/orca/keynames.py:198
 msgid "right super"
 msgstr "sağ süper"
 
@@ -2021,102 +2057,102 @@ msgstr "sağ süper"
 #.
 #. Translators: spoken words for the rolename of a menu.
 #.
-#: ../src/orca/keynames.py:189 ../src/orca/rolenames.py:636
+#: ../src/orca/keynames.py:202 ../src/orca/rolenames.py:636
 msgid "menu"
 msgstr "menü"
 
 #. Translators: this is how someone would speak the name of the ISO shift key
 #.
-#: ../src/orca/keynames.py:193
+#: ../src/orca/keynames.py:206
 msgid "ISO level 3 shift"
 msgstr "ISO seviye 3 shift"
 
 #. Translators: this is how someone would speak the name of the help key
 #.
-#: ../src/orca/keynames.py:197
+#: ../src/orca/keynames.py:210
 msgid "help"
 msgstr "yardım"
 
 #. Translators: this is how someone would speak the name of the multi key
 #.
-#: ../src/orca/keynames.py:201
+#: ../src/orca/keynames.py:214
 msgid "multi"
 msgstr "çoklu"
 
 #. Translators: this is how someone would speak the name of the mode switch key
 #.
-#: ../src/orca/keynames.py:205
+#: ../src/orca/keynames.py:218
 msgid "mode switch"
 msgstr "kip değiştir"
 
 #. Translators: this is how someone would speak the name of the escape key
 #.
-#: ../src/orca/keynames.py:209
+#: ../src/orca/keynames.py:222
 msgid "escape"
 msgstr "esc"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: ../src/orca/keynames.py:213 ../src/orca/keynames.py:217
+#: ../src/orca/keynames.py:226 ../src/orca/keynames.py:230
 msgid "insert"
 msgstr "insert"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: ../src/orca/keynames.py:221 ../src/orca/keynames.py:225
+#: ../src/orca/keynames.py:234 ../src/orca/keynames.py:238
 msgid "delete"
 msgstr "delete"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: ../src/orca/keynames.py:229 ../src/orca/keynames.py:233
+#: ../src/orca/keynames.py:242 ../src/orca/keynames.py:246
 msgid "home"
 msgstr "home"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: ../src/orca/keynames.py:237 ../src/orca/keynames.py:241
+#: ../src/orca/keynames.py:250 ../src/orca/keynames.py:254
 msgid "end"
 msgstr "end"
 
 #. Translators: this is how someone would speak the name of the begin key
 #.
-#: ../src/orca/keynames.py:245
+#: ../src/orca/keynames.py:258
 msgid "begin"
 msgstr "başlangıç"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the acute glyph
 #.
-#: ../src/orca/keynames.py:255
+#: ../src/orca/keynames.py:268
 msgid "acute"
 msgstr "tiz"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the circumflex glyph
 #.
-#: ../src/orca/keynames.py:260
+#: ../src/orca/keynames.py:273
 msgid "circumflex"
 msgstr "düzeltme işareti"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the diaeresis glyph
 #.
-#: ../src/orca/keynames.py:270
+#: ../src/orca/keynames.py:283
 msgid "diaeresis"
 msgstr "ses değiştirme işareti"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the ring glyph
 #.
-#: ../src/orca/keynames.py:275
+#: ../src/orca/keynames.py:288
 msgid "ring"
 msgstr "halka"
 
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the stroke glyph
 #.
-#: ../src/orca/keynames.py:285
+#: ../src/orca/keynames.py:298
 msgid "stroke"
 msgstr "vuru"
 
@@ -2477,14 +2513,23 @@ msgid "Setup complete.  Press Return to continue."
 msgstr "Kurulum tamamlandı.  Devam etmek için geri tuşuna basın."
 
 #: ../src/orca/orca-find.ui.h:1
+msgid "<b>Results must:</b>"
+msgstr ""
+
+#: ../src/orca/orca-find.ui.h:2
+#| msgid "<b>Start from:</b>"
+msgid "<b>Search direction:</b>"
+msgstr "<b>Arama yönü:</b>"
+
+#: ../src/orca/orca-find.ui.h:3
 msgid "<b>Start from:</b>"
 msgstr "<b>İtibaren başla:</b>"
 
-#: ../src/orca/orca-find.ui.h:2 ../src/orca/orca_gui_find.py:147
+#: ../src/orca/orca-find.ui.h:4 ../src/orca/orca_gui_find.py:134
 msgid "C_urrent location"
 msgstr "Şimdiki kon_um"
 
-#: ../src/orca/orca-find.ui.h:3
+#: ../src/orca/orca-find.ui.h:5
 msgid "Close"
 msgstr "Kapat"
 
@@ -2498,61 +2543,61 @@ msgstr "Kapat"
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.ui.h:4 ../src/orca/scripts/apps/gedit/script.py:319
+#: ../src/orca/orca-find.ui.h:6 ../src/orca/scripts/apps/gedit/script.py:319
 #: ../src/orca/scripts/apps/gedit/script.py:321
 #: ../src/orca/scripts/apps/gnome-search-tool/script.py:164
 msgid "Find"
 msgstr "Bul"
 
-#: ../src/orca/orca-find.ui.h:5
+#: ../src/orca/orca-find.ui.h:7
 msgid "Match _entire word only"
 msgstr "Sadece tüm k_elimeyi eşleştir"
 
-#: ../src/orca/orca-find.ui.h:6
+#: ../src/orca/orca-find.ui.h:8
 msgid "Orca Find Dialog"
 msgstr "Orca Arama Penceresi"
 
-#: ../src/orca/orca-find.ui.h:7
+#: ../src/orca/orca-find.ui.h:9
 msgid "Search _backwards"
 msgstr "_Geriye doğru ara"
 
-#: ../src/orca/orca-find.ui.h:8
+#: ../src/orca/orca-find.ui.h:10
 msgid "Search for:"
 msgstr "Aranacak:"
 
-#: ../src/orca/orca-find.ui.h:9
+#: ../src/orca/orca-find.ui.h:11
 msgid "Start from:"
 msgstr "İtibaren başla:"
 
-#: ../src/orca/orca-find.ui.h:10
+#: ../src/orca/orca-find.ui.h:12
 msgid "Top of window"
 msgstr "Pencerenin üstü"
 
-#: ../src/orca/orca-find.ui.h:11
+#: ../src/orca/orca-find.ui.h:13
 msgid "_Match case"
 msgstr "Eşleş_me durumu"
 
-#: ../src/orca/orca-find.ui.h:12
+#: ../src/orca/orca-find.ui.h:14
 msgid "_Search for:"
 msgstr "_Aranacak:"
 
-#: ../src/orca/orca-find.ui.h:13
+#: ../src/orca/orca-find.ui.h:15
 msgid "_Top of window"
 msgstr "Pencerenin üs_tü"
 
-#: ../src/orca/orca-find.ui.h:14
+#: ../src/orca/orca-find.ui.h:16
 msgid "_Wrap around"
 msgstr " _Sarmala"
 
 #. Translators: This is used in the Orca About dialog.
 #.
-#: ../src/orca/orca_gui_main.py:95
+#: ../src/orca/orca_gui_main.py:105
 msgid "The Orca Team"
 msgstr "Orca Ekibi"
 
 #. Translators: This text is used in the Orca About dialog.
 #.
-#: ../src/orca/orca_gui_main.py:98
+#: ../src/orca/orca_gui_main.py:108
 msgid ""
 "A free, open source scriptable screen reader, which provides access to "
 "applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
@@ -2562,14 +2607,30 @@ msgstr ""
 
 #. Translators: This text is used in the Orca About dialog.
 #.
-#: ../src/orca/orca_gui_main.py:103
+#: ../src/orca/orca_gui_main.py:113
+#| msgid ""
+#| "Copyright (c) 2005-2010 Sun Microsystems Inc. \n"
+#| "Copyright (c) 2005-2008 Google Inc. \n"
+#| "Copyright (c) 2008, 2009 Eitan Isaacson \n"
+#| "Copyright (c) 2006-2009 Brailcom, o.p.s. \n"
+#| "Copyright (c) 2001, 2002 BAUM Retec, A.G."
 msgid ""
+"Copyright (c) 2010-2011 The Orca Team \n"
+"Copyright (c) 2010 Consorcio Fernando de los Rios \n"
+"Copyright (c) 2010 Igalia, S.L. \n"
+"Copyright (c) 2010 Informal Informatica LTDA. \n"
+"Copyright (c) 2010 Willie Walker \n"
 "Copyright (c) 2005-2010 Sun Microsystems Inc. \n"
 "Copyright (c) 2005-2008 Google Inc. \n"
 "Copyright (c) 2008, 2009 Eitan Isaacson \n"
 "Copyright (c) 2006-2009 Brailcom, o.p.s. \n"
 "Copyright (c) 2001, 2002 BAUM Retec, A.G."
 msgstr ""
+"Telif Hakkı (c) 2010-2011 Orca Ekibi \n"
+"Telif Hakkı (c) 2010 Consorcio Fernando de los Rios \n"
+"Telif Hakkı (c) 2010 Igalia, S.L. \n"
+"Telif Hakkı (c) 2010 Informal Informatica LTDA. \n"
+"Telif Hakkı (c) 2010 Willie Walker \n"
 "Telif Hakkı (c) 2005-2010 Sun Microsystems Inc. \n"
 "Telif Hakkı (c) 2005-2008 Google Inc. \n"
 "Telif Hakkı (c) 2008, 2009 Eitan Isaacson \n"
@@ -2579,14 +2640,14 @@ msgstr ""
 #. Translators: This text is used in the Orca About dialog. Please
 #. translate it to contain your name. And thank you for your work!
 #.
-#: ../src/orca/orca_gui_main.py:111
+#: ../src/orca/orca_gui_main.py:126
 msgid "translator-credits"
 msgstr "Muhammet Kara <muhammet.k@gmail.com>"
 
 #. Translators: This text is used in the Orca About dialog. Orca is
 #. licensed under GPL2+.
 #.
-#: ../src/orca/orca_gui_main.py:116
+#: ../src/orca/orca_gui_main.py:131
 msgid ""
 "Orca is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU Lesser General\n"
@@ -2690,7 +2751,7 @@ msgstr "Sistem"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1213
+#: ../src/orca/orca_gui_prefs.py:1211
 msgid "Attribute Name"
 msgstr "Öznitelik Adı"
 
@@ -2701,7 +2762,7 @@ msgstr "Öznitelik Adı"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1228
+#: ../src/orca/orca_gui_prefs.py:1226
 msgid "Speak"
 msgstr "Seslendir"
 
@@ -2712,7 +2773,7 @@ msgstr "Seslendir"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1246
+#: ../src/orca/orca_gui_prefs.py:1244
 msgid "Mark in braille"
 msgstr "braille içinde işaretle"
 
@@ -2731,7 +2792,7 @@ msgstr "braille içinde işaretle"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1272
+#: ../src/orca/orca_gui_prefs.py:1270
 msgid "Present Unless"
 msgstr " Sadece Mevcut"
 
@@ -2742,7 +2803,7 @@ msgstr " Sadece Mevcut"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1395
+#: ../src/orca/orca_gui_prefs.py:1393
 msgid "Actual String"
 msgstr "Asıl Dizgi"
 
@@ -2753,7 +2814,7 @@ msgstr "Asıl Dizgi"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1412
+#: ../src/orca/orca_gui_prefs.py:1410
 msgid "Replacement String"
 msgstr "Okunuş Dizgisi"
 
@@ -2766,7 +2827,7 @@ msgstr "Okunuş Dizgisi"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1491 ../src/orca/orca-setup.ui.h:21
+#: ../src/orca/orca_gui_prefs.py:1489 ../src/orca/orca-setup.ui.h:28
 msgid "Break speech into ch_unks between pauses"
 msgstr "Duraklamalar arasında konuşmaları par_çalara ayır"
 
@@ -2774,8 +2835,8 @@ msgstr "Duraklamalar arasında konuşmaları par_çalara ayır"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:1503 ../src/orca/orca_gui_prefs.py:2701
-#: ../src/orca/orca-setup.ui.h:54
+#: ../src/orca/orca_gui_prefs.py:1501 ../src/orca/orca_gui_prefs.py:2689
+#: ../src/orca/orca-setup.ui.h:56
 msgid "Line"
 msgstr "Satır"
 
@@ -2783,8 +2844,8 @@ msgstr "Satır"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:1503 ../src/orca/orca_gui_prefs.py:2707
-#: ../src/orca/orca-setup.ui.h:85
+#: ../src/orca/orca_gui_prefs.py:1501 ../src/orca/orca_gui_prefs.py:2695
+#: ../src/orca/orca-setup.ui.h:83
 msgid "Sentence"
 msgstr "Cümle"
 
@@ -2794,8 +2855,8 @@ msgstr "Cümle"
 #. and window they happen to be in.
 #.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca_gui_prefs.py:1602 ../src/orca/orca_gui_prefs.py:2666
-#: ../src/orca/orca-setup.ui.h:71
+#: ../src/orca/orca_gui_prefs.py:1600 ../src/orca/orca_gui_prefs.py:2651
+#: ../src/orca/orca-setup.ui.h:72
 msgctxt "ProgressBar"
 msgid "All"
 msgstr "Tümü"
@@ -2806,7 +2867,7 @@ msgstr "Tümü"
 #. progress bar is in the active application (but not necessarily
 #. in the current window).
 #.
-#: ../src/orca/orca_gui_prefs.py:1609
+#: ../src/orca/orca_gui_prefs.py:1607
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Uygulama"
@@ -2816,7 +2877,7 @@ msgstr "Uygulama"
 #. Orca will present progress bar updates as long as the progress
 #. bar is in the active window.
 #.
-#: ../src/orca/orca_gui_prefs.py:1615 ../src/orca/orca_gui_prefs.py:2674
+#: ../src/orca/orca_gui_prefs.py:1613 ../src/orca/orca_gui_prefs.py:2659
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Pencere"
@@ -2825,7 +2886,7 @@ msgstr "Pencere"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1723 ../src/orca/orca-setup.ui.h:47
+#: ../src/orca/orca_gui_prefs.py:1721 ../src/orca/orca-setup.ui.h:51
 #, fuzzy
 #| msgid "Enable _navigation keys"
 msgid "Enable non-spacing _diacritical keys"
@@ -2838,7 +2899,7 @@ msgstr "Boşluksuz a_yıran tuşları etkinleştir"
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1731 ../src/orca/orca-setup.ui.h:44
+#: ../src/orca/orca_gui_prefs.py:1729 ../src/orca/orca-setup.ui.h:48
 #, fuzzy
 #| msgid "Enable echo by _word"
 msgid "Enable echo by cha_racter"
@@ -2848,7 +2909,7 @@ msgstr "Ka_rakter ile yankıyı etkinleştir"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2040
+#: ../src/orca/orca_gui_prefs.py:2019
 msgid "(double click)"
 msgstr "(çift.tıklama)"
 
@@ -2856,7 +2917,7 @@ msgstr "(çift.tıklama)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2046
+#: ../src/orca/orca_gui_prefs.py:2025
 msgid "(triple click)"
 msgstr "(üçlü.tıklama)"
 
@@ -2865,7 +2926,7 @@ msgstr "(üçlü.tıklama)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2150 ../src/orca/orca_gui_prefs.py:2245
+#: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca_gui_prefs.py:2225
 msgid "Braille Bindings"
 msgstr "Braille Bağları"
 
@@ -2874,8 +2935,8 @@ msgstr "Braille Bağları"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2500 ../src/orca/orca_gui_prefs.py:2541
-#: ../src/orca/orca_gui_prefs.py:2581 ../src/orca/orca-setup.ui.h:30
+#: ../src/orca/orca_gui_prefs.py:2480 ../src/orca/orca_gui_prefs.py:2521
+#: ../src/orca/orca_gui_prefs.py:2561 ../src/orca/orca-setup.ui.h:34
 msgid "Dot _7"
 msgstr "Nokta _7"
 
@@ -2883,8 +2944,8 @@ msgstr "Nokta _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2507 ../src/orca/orca_gui_prefs.py:2548
-#: ../src/orca/orca_gui_prefs.py:2588 ../src/orca/orca-setup.ui.h:31
+#: ../src/orca/orca_gui_prefs.py:2487 ../src/orca/orca_gui_prefs.py:2528
+#: ../src/orca/orca_gui_prefs.py:2568 ../src/orca/orca-setup.ui.h:35
 msgid "Dot _8"
 msgstr "Nokta _8"
 
@@ -2892,8 +2953,8 @@ msgstr "Nokta _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2514 ../src/orca/orca_gui_prefs.py:2555
-#: ../src/orca/orca_gui_prefs.py:2595 ../src/orca/orca-setup.ui.h:32
+#: ../src/orca/orca_gui_prefs.py:2494 ../src/orca/orca_gui_prefs.py:2535
+#: ../src/orca/orca_gui_prefs.py:2575 ../src/orca/orca-setup.ui.h:36
 msgid "Dots 7 an_d 8"
 msgstr "N_okta 7 ve 8"
 
@@ -2901,7 +2962,7 @@ msgstr "N_okta 7 ve 8"
 #. symbols will be spoken as a user reads a document.
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/orca_gui_prefs.py:2618 ../src/orca/orca-setup.ui.h:134
+#: ../src/orca/orca_gui_prefs.py:2598 ../src/orca/orca-setup.ui.h:132
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Hiçbiri"
@@ -2911,7 +2972,7 @@ msgstr "_Hiçbiri"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2626 ../src/orca/orca-setup.ui.h:87
+#: ../src/orca/orca_gui_prefs.py:2606 ../src/orca/orca-setup.ui.h:85
 msgid "So_me"
 msgstr "Ba_zı"
 
@@ -2919,7 +2980,7 @@ msgstr "Ba_zı"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2633 ../src/orca/orca-setup.ui.h:55
+#: ../src/orca/orca_gui_prefs.py:2613 ../src/orca/orca-setup.ui.h:57
 msgid "M_ost"
 msgstr "En ç_ok"
 
@@ -2927,8 +2988,8 @@ msgstr "En ç_ok"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2793 ../src/orca/orca_gui_prefs.py:2882
-#: ../src/orca/orca-setup.ui.h:22
+#: ../src/orca/orca_gui_prefs.py:2781 ../src/orca/orca_gui_prefs.py:2869
+#: ../src/orca/orca-setup.ui.h:29
 msgid "Brie_f"
 msgstr "Ö_zet"
 
@@ -2937,7 +2998,7 @@ msgstr "Ö_zet"
 #. they just want the current cell to be presented to them.
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/orca_gui_prefs.py:2817 ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca_gui_prefs.py:2805 ../src/orca/orca-setup.ui.h:88
 msgid "Speak _cell"
 msgstr "H_ücreyi seslendir"
 
@@ -2945,11 +3006,11 @@ msgstr "H_ücreyi seslendir"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:2902
+#: ../src/orca/orca_gui_prefs.py:2889
 msgid "enter new key"
 msgstr "yeni anahtar girin"
 
-#: ../src/orca/orca_gui_prefs.py:2932
+#: ../src/orca/orca_gui_prefs.py:2919
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "Anahtar bağı silindi. Onaylamak için giriş tuşuna basın."
 
@@ -2957,7 +3018,7 @@ msgstr "Anahtar bağı silindi. Onaylamak için giriş tuşuna basın."
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:2957
+#: ../src/orca/orca_gui_prefs.py:2944
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "Girilen anahtar zaten %s ile bağlı"
@@ -2966,7 +3027,7 @@ msgstr "Girilen anahtar zaten %s ile bağlı"
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:2963
+#: ../src/orca/orca_gui_prefs.py:2950
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Anahtar alındı: %s. Onaylamak için giriş tuşuna basın."
@@ -2975,7 +3036,7 @@ msgstr "Anahtar alındı: %s. Onaylamak için giriş tuşuna basın."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:3002
+#: ../src/orca/orca_gui_prefs.py:2989
 #, python-format
 msgid "The new key is: %s"
 msgstr "Yeni anahtar: %s"
@@ -2984,21 +3045,21 @@ msgstr "Yeni anahtar: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:3010
+#: ../src/orca/orca_gui_prefs.py:2997
 msgid "The keybinding has been removed."
 msgstr "Anahtar bağı kaldırıldı."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3050 ../src/orca/orca-setup.ui.h:116
+#: ../src/orca/orca_gui_prefs.py:3035 ../src/orca/orca-setup.ui.h:114
 msgid "_Desktop"
 msgstr "_Masaüstü"
 
 #. We're here because given profile name exists, so we have
 #. to give that info to the user and give him the chance
 #. to continue, or not saving the profile
-#: ../src/orca/orca_gui_prefs.py:3419
+#: ../src/orca/orca_gui_prefs.py:3405
 #, python-format
 msgid ""
 "Profile <b>%s</b> already exists.\n"
@@ -3007,17 +3068,17 @@ msgstr ""
 "<b>%s</b> profili zaten mevcut.\n"
 "Mevcut profil üzerinde bu değişiklikleri yapmak ister misiniz?"
 
-#: ../src/orca/orca_gui_prefs.py:3428
+#: ../src/orca/orca_gui_prefs.py:3414
 msgid "<b>User Profile Conflict!</b>"
 msgstr "<b>Kullanıcı Profili Çakışması!</b>"
 
-#: ../src/orca/orca_gui_prefs.py:3430
+#: ../src/orca/orca_gui_prefs.py:3416
 #, fuzzy
 msgid "Save Profile As Conflict"
 msgstr "Değişik büyüklükteki dizgilleri _kelime olarak oku"
 
 #. First of all, we give a chance of cancel profile change
-#: ../src/orca/orca_gui_prefs.py:3447
+#: ../src/orca/orca_gui_prefs.py:3433
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -3026,52 +3087,100 @@ msgid ""
 "Continue loading profile discarding previous changes?"
 msgstr ""
 
-#: ../src/orca/orca_gui_prefs.py:3457
+#: ../src/orca/orca_gui_prefs.py:3443
 msgid "<b>Load user profile info</b>"
 msgstr "<b>Kullanıcı profil bilgisini yükle</b>"
 
-#: ../src/orca/orca_gui_prefs.py:3459
+#: ../src/orca/orca_gui_prefs.py:3445
 msgid "Load User Profile"
 msgstr "Kullanıcı Profilini Yükle"
 
+#: ../src/orca/orca_gui_prefs.py:3483
+#, fuzzy
+#| msgid ""
+#| "You already have an instance of an Orca preferences dialog open.\n"
+#| "\n"
+#| "Please close it before opening a new one."
+msgid ""
+"You already have an instance of an Orca preferences dialog open.\n"
+"Please close it before opening a new one."
+msgstr ""
+"Zaten açık olan bir Orca Tercihleri pencereniz var\n"
+"\n"
+"Lütfen yeni bir tane açmadan önce onu kapatın."
+
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:3530
+#: ../src/orca/orca_gui_prefs.py:3517
 msgid "Starting Orca Preferences."
 msgstr "Orca Tercihlerini Başlat."
 
-#: ../src/orca/orca-mainwin.ui.h:1
-msgid "Orca Screen Reader / Magnifier"
-msgstr "Orca Ekran Okuyucu / Büyüteci"
+#. Translators: Profiles in Orca make it possible for users to
+#. quickly switch amongst a group of pre-defined settings (e.g.
+#. an 'English' profile for reading text written in English using
+#. an English-language speech synthesizer and braille rules, and
+#. a similar 'Spanish' profile for reading Spanish text. The
+#. following string is the title of a dialog in which users can
+#. save a newly-defined profile.
+#.
+#: ../src/orca/orca_gui_profile.py:55
+msgid "Save Profile As"
+msgstr "Profili Farklı Kaydet"
+
+#. Translators: Profiles in Orca make it possible for users to
+#. quickly switch amongst a group of pre-defined settings (e.g.
+#. an 'English' profile for reading text written in English using
+#. an English-language speech synthesizer and braille rules, and
+#. a similar 'Spanish' profile for reading Spanish text. The
+#. following string is the label for a text entry in which the user
+#. enters the name of a new settings profile being saved via the
+#. 'Save Profile As' dialog.
+#.
+#: ../src/orca/orca_gui_profile.py:85
+msgid "_Profile Name:"
+msgstr "_Profil Adı:"
+
+#: ../src/orca/orca_gui_quit.py:45
+#| msgid "Quits Orca"
+msgid "Quit Orca?"
+msgstr "Orca'dan Çıkılsın Mı?"
+
+#: ../src/orca/orca_gui_quit.py:47
+#| msgid ""
+#| "<b><big>Quit Orca?</big></b>\n"
+#| "\n"
+#| "This will stop all speech and braille output."
+msgid "This will stop all speech and braille output."
+msgstr "Bu, tüm seslendirme ve braille çıktısını durduracaktır."
 
 #. Translators: This message is displayed when the user tries
 #. to start Orca and includes an invalid option as an argument.
 #. After the message, the list of arguments, as typed by the
 #. user, is displayed.
 #.
-#: ../src/orca/orca.py:313
+#: ../src/orca/orca.py:309
 msgid "The following arguments are not valid: "
 msgstr "Aşağıdaki argümanlar geçersizdir:"
 
 #. Translators: This message is displayed when the user
 #. tries to enable or disable a feature via an argument,
 #. but specified an invalid feature. Valid features are:
-#. speech, braille, braille-monitor, magnifier, main-window,
-#. and splash-window. These items are not localized and are
+#. speech, braille, braille-monitor, main-window, and
+#. splash-window. These items are not localized and are
 #. presented in a list after this message.
 #.
-#: ../src/orca/orca.py:368
+#: ../src/orca/orca.py:364
 msgid "The following items can be enabled or disabled:"
 msgstr "Bu öğeler etkinleştirilebilir ve devre dışı bırakılabilir:"
 
-#: ../src/orca/orca.py:383
+#: ../src/orca/orca.py:379
 msgid "Usage: orca [OPTION...]"
 msgstr "Kullanım: orca [SEÇENEK...]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:389
+#: ../src/orca/orca.py:385
 msgid "Show this help message"
 msgstr "Bu yardım mesajını gösterir"
 
@@ -3079,7 +3188,7 @@ msgstr "Bu yardım mesajını gösterir"
 #. the names of applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:397
+#: ../src/orca/orca.py:393
 msgid "Print the known running applications"
 msgstr "Bilinen çalışan uygulamaları yazar."
 
@@ -3091,7 +3200,7 @@ msgstr "Bilinen çalışan uygulamaları yazar."
 #. always start with 'debug' and end with '.out', regardless of the
 #. locale.).
 #.
-#: ../src/orca/orca.py:408
+#: ../src/orca/orca.py:404
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr "Hata ayıklama çıktısını debug-YYYY-AA-GG-SS:DD:SS.out dosyasına gönder"
 
@@ -3099,7 +3208,7 @@ msgstr "Hata ayıklama çıktısını debug-YYYY-AA-GG-SS:DD:SS.out dosyasına g
 #. the name of the debug file Orca will use for debug output if the
 #. --debug option is used.
 #.
-#: ../src/orca/orca.py:415
+#: ../src/orca/orca.py:411
 msgid "Send debug output to the specified file"
 msgstr "Hata ayıklama çıktısını belirtilen dosyaya gönder"
 
@@ -3107,7 +3216,7 @@ msgstr "Hata ayıklama çıktısını belirtilen dosyaya gönder"
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
 #. that would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:422
+#: ../src/orca/orca.py:418
 msgid "Set up user preferences"
 msgstr "Kullanıcı tercihlerini yapılandır"
 
@@ -3117,7 +3226,7 @@ msgstr "Kullanıcı tercihlerini yapılandır"
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
 #.
-#: ../src/orca/orca.py:431
+#: ../src/orca/orca.py:427
 msgid "Set up user preferences (text version)"
 msgstr "Kullanıcı tercihlerini yapılandır (metin sürümü)"
 
@@ -3125,7 +3234,7 @@ msgstr "Kullanıcı tercihlerini yapılandır (metin sürümü)"
 #. '-n, --no-setup' that means that Orca will startup without setting
 #. up any user preferences.
 #.
-#: ../src/orca/orca.py:438
+#: ../src/orca/orca.py:434
 msgid "Skip set up of user preferences"
 msgstr "Kullanıcı tercihlerini yapılandırmayı geç"
 
@@ -3133,7 +3242,7 @@ msgstr "Kullanıcı tercihlerini yapılandırmayı geç"
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for the user preferences.
 #.
-#: ../src/orca/orca.py:445
+#: ../src/orca/orca.py:441
 msgid "Use alternate directory for user preferences"
 msgstr "Kullanıcı tercihleri için alternatif dizini kullan"
 
@@ -3141,7 +3250,7 @@ msgstr "Kullanıcı tercihleri için alternatif dizini kullan"
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:459
+#: ../src/orca/orca.py:454
 msgid "Force use of option"
 msgstr "Seçeneği kullanmaya zorla"
 
@@ -3149,14 +3258,14 @@ msgstr "Seçeneği kullanmaya zorla"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:473
+#: ../src/orca/orca.py:467
 msgid "Prevent use of option"
 msgstr "Seçeneği kullanmayı önle"
 
 #. Translators: this is the Orca command line option to import to Orca
 #. a user profile from a given file
 #.
-#: ../src/orca/orca.py:479
+#: ../src/orca/orca.py:473
 msgid "Import a profile from a given orca profile file"
 msgstr "Verilen orca profil dosyasından bir profili içe aktar"
 
@@ -3165,7 +3274,7 @@ msgstr "Verilen orca profil dosyasından bir profili içe aktar"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:487
+#: ../src/orca/orca.py:481
 msgid "Quits Orca (if shell script used)"
 msgstr "Orca'dan çık.(eğer kabuk betiği kullanılmışsa)"
 
@@ -3175,21 +3284,21 @@ msgstr "Orca'dan çık.(eğer kabuk betiği kullanılmışsa)"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:496
+#: ../src/orca/orca.py:490
 msgid "Forces orca to be terminated immediately."
 msgstr "Orca'yı derhal kapanmaya zorlar."
 
 #. Translators: this is the Orca command line option to tell Orca to
 #. replace any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:502
+#: ../src/orca/orca.py:496
 msgid "Replace a currently running Orca"
 msgstr "Halen çalışmakta olan bir Orca'nın yerini al"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:508
+#: ../src/orca/orca.py:502
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3199,13 +3308,13 @@ msgstr ""
 "-n veya --no-setup seçenekleri kullanılmadığı taktirde Orca otomatik olarak "
 "tercih yapılandırmasını başlatacaktır."
 
-#: ../src/orca/orca.py:520
+#: ../src/orca/orca.py:514
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Hataları orca-list@gnome.org adresine bildirin."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:698 ../src/orca/orca.py:2096
+#: ../src/orca/orca.py:692 ../src/orca/orca.py:2088
 msgid "Goodbye."
 msgstr "Güle Güle."
 
@@ -3218,7 +3327,7 @@ msgstr "Güle Güle."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:772
+#: ../src/orca/orca.py:766
 msgid "Exiting learn mode."
 msgstr "Öğrenme kipinden çıkıyor."
 
@@ -3230,20 +3339,19 @@ msgstr "Öğrenme kipinden çıkıyor."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/orca.py:796
-#, fuzzy
+#: ../src/orca/orca.py:790
 #| msgid "Exiting learn mode."
 msgid "Exiting list shortcuts mode."
-msgstr "Fare gözden geçirme kipini açar/kapar."
+msgstr "Kısayolları listeleme kipinden çıkılıyor."
 
 #. Translators: this represents the state of a check box
 #.
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1052
+#: ../src/orca/orca.py:1046
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
-#: ../src/orca/speech.py:287 ../src/orca/speechserver.py:219
+#: ../src/orca/speech.py:303 ../src/orca/speechserver.py:219
 msgid "off"
 msgstr "seçili değil"
 
@@ -3252,23 +3360,23 @@ msgstr "seçili değil"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1056
+#: ../src/orca/orca.py:1050
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
-#: ../src/orca/speech.py:282 ../src/orca/speechserver.py:214
+#: ../src/orca/speech.py:298 ../src/orca/speechserver.py:214
 msgid "on"
 msgstr "seçili"
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:1414
+#: ../src/orca/orca.py:1408
 msgid "Speech enabled."
 msgstr "Konuşma etkin."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:1419
+#: ../src/orca/orca.py:1413
 msgid "Speech disabled."
 msgstr "Konuşma kapatıldı."
 
@@ -3276,7 +3384,7 @@ msgstr "Konuşma kapatıldı."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1548
+#: ../src/orca/orca.py:1542
 msgid "Orca user settings reloaded."
 msgstr "Orca kullanıcı ayarları yeniden yüklendi."
 
@@ -3284,7 +3392,7 @@ msgstr "Orca kullanıcı ayarları yeniden yüklendi."
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:1726
+#: ../src/orca/orca.py:1720
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Listede gezinmek için Yukarı ve Aşağı Ok tuşlarını kullanın. Çıkmak için Esc "
@@ -3294,7 +3402,7 @@ msgstr ""
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:1740
+#: ../src/orca/orca.py:1734
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3304,7 +3412,7 @@ msgstr[0] "%d Orca öntanımlı kısayolu bulundu."
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:1762
+#: ../src/orca/orca.py:1756
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3315,7 +3423,7 @@ msgstr[0] ""
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1780
+#: ../src/orca/orca.py:1774
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "%s için hiç Orca kısayolu bulunamadı."
@@ -3338,7 +3446,7 @@ msgstr "%s için hiç Orca kısayolu bulunamadı."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1798 ../src/orca/scripts/toolkits/Gecko/script.py:6094
+#: ../src/orca/orca.py:1792 ../src/orca/scripts/toolkits/Gecko/script.py:6066
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "En alta kaydırılıyor."
@@ -3361,7 +3469,7 @@ msgstr "En alta kaydırılıyor."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1819 ../src/orca/scripts/toolkits/Gecko/script.py:6162
+#: ../src/orca/orca.py:1813 ../src/orca/scripts/toolkits/Gecko/script.py:6134
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "En üste kaydırılıyor."
@@ -3374,7 +3482,7 @@ msgstr "En üste kaydırılıyor."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1838 ../src/orca/scripts/default.py:1573
+#: ../src/orca/orca.py:1832 ../src/orca/scripts/default.py:1573
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
@@ -3382,7 +3490,7 @@ msgstr ""
 "Orca'nın öntanımlı ksıayolları için 1'e basın. Orca'nın geçerli uygulama "
 "kısayolları için 2'ye basın. Çıkmak için Esc'ye basın."
 
-#: ../src/orca/orca.py:1888
+#: ../src/orca/orca.py:1882
 msgid "keypad "
 msgstr ""
 
@@ -3390,7 +3498,7 @@ msgstr ""
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1895
+#: ../src/orca/orca.py:1889
 msgid "double click"
 msgstr "çift tıklama"
 
@@ -3398,7 +3506,7 @@ msgstr "çift tıklama"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1901
+#: ../src/orca/orca.py:1895
 msgid "triple click"
 msgstr "üç tıklama"
 
@@ -3406,14 +3514,14 @@ msgstr "üç tıklama"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2229
+#: ../src/orca/orca.py:2221
 msgid "Unable to import profile."
 msgstr "Profil içe aktarılamadı."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2235
+#: ../src/orca/orca.py:2227
 msgid "Profile import success."
 msgstr "Profilin içe aktarımı başarılı."
 
@@ -3421,46 +3529,14 @@ msgstr "Profilin içe aktarımı başarılı."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2241
+#: ../src/orca/orca.py:2233
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "İçe aktarma tanınmayan bir anahtar nedeniyle başarısız oldu: %s"
 
-#: ../src/orca/orca.py:2310
+#: ../src/orca/orca.py:2302
 msgid "Welcome to Orca."
 msgstr "Orca'ya hoşgeldiniz."
-
-#: ../src/orca/orca-preferences-warning.ui.h:1
-msgid "Warning"
-msgstr "Dikkat"
-
-#: ../src/orca/orca-preferences-warning.ui.h:2
-msgid ""
-"You already have an instance of an Orca preferences dialog open.\n"
-"\n"
-"Please close it before opening a new one."
-msgstr ""
-"Zaten açık olan bir Orca Tercihleri pencereniz var\n"
-"\n"
-"Lütfen yeni bir tane açmadan önce onu kapatın."
-
-#: ../src/orca/orca-profile.ui.h:1
-msgid "Save Profile As"
-msgstr "Profili Farklı Kaydet"
-
-#: ../src/orca/orca-profile.ui.h:2
-msgid "_Profile Name:"
-msgstr "_Profil Adı:"
-
-#: ../src/orca/orca-quit.ui.h:1
-msgid ""
-"<b><big>Quit Orca?</big></b>\n"
-"\n"
-"This will stop all speech and braille output."
-msgstr ""
-"<b><big>Orca Kapatılsın mı?</big></b>\n"
-"\n"
-"Bu, tüm seslendirme ve braille çıktısını sonlandıracaktır."
 
 #: ../src/orca/orca-setup.ui.h:1
 msgid ""
@@ -3475,395 +3551,397 @@ msgid "<b>Braille Indicator</b>"
 msgstr "<b>Braille Göstergesi</b>"
 
 #: ../src/orca/orca-setup.ui.h:4
+#| msgid "<b>Color Settings</b>"
+msgid "<b>Display Settings</b>"
+msgstr "<b>Görüntü Ayarları</b>"
+
+#: ../src/orca/orca-setup.ui.h:5
+#| msgid "<b>Color Settings</b>"
+msgid "<b>Global Voice Settings</b>"
+msgstr "<b>Genel Ses Ayarları</b>"
+
+#: ../src/orca/orca-setup.ui.h:6
 msgid "<b>Hyperlink Indicator</b>"
 msgstr "<b>Bağ Belirteci</b>"
 
-#: ../src/orca/orca-setup.ui.h:5
+#: ../src/orca/orca-setup.ui.h:7
 msgid "<b>Keyboard Layout</b>"
 msgstr "<b>Klavye Düzeni</b>"
 
-#: ../src/orca/orca-setup.ui.h:6
+#: ../src/orca/orca-setup.ui.h:8
+#| msgid "<b>Profiles</b>"
+msgid "<b>Mouse</b>"
+msgstr "<b>Fare</b>"
+
+#: ../src/orca/orca-setup.ui.h:9
 msgid "<b>Profiles</b>"
 msgstr "<b>Profiller</b>"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
-#: ../src/orca/orca-setup.ui.h:8
+#: ../src/orca/orca-setup.ui.h:11
 msgid "<b>Progress Bar Updates</b>"
 msgstr "<b>İlerleme Çubuğu Güncellemeleri</b>"
 
-#: ../src/orca/orca-setup.ui.h:9
+#: ../src/orca/orca-setup.ui.h:12
 msgid "<b>Pronunciation Dictionary</b>"
 msgstr "<b>Telaffuz Sözlüğü</b>"
 
-#: ../src/orca/orca-setup.ui.h:10
+#: ../src/orca/orca-setup.ui.h:13
 msgid "<b>Punctuation Level</b>"
 msgstr "<b>Noktalama Seviyesi</b>"
 
-#: ../src/orca/orca-setup.ui.h:11
+#: ../src/orca/orca-setup.ui.h:14
 msgid "<b>Selection Indicator</b>"
 msgstr "<b>Seçim Göstergesi</b>"
 
+#: ../src/orca/orca-setup.ui.h:15
+#, fuzzy
+#| msgid "<b>Contrast</b>"
+msgid "<b>Spoken Context</b>"
+msgstr "<b>Karşıtlık</b>"
+
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
-#: ../src/orca/orca-setup.ui.h:13
+#: ../src/orca/orca-setup.ui.h:17
 msgid "<b>Table Rows</b>"
 msgstr "<b>Tablo Satırları</b>"
 
-#: ../src/orca/orca-setup.ui.h:14
+#: ../src/orca/orca-setup.ui.h:18
 msgid "<b>Text attributes</b>"
 msgstr "<b>Metin öznitelikleri</b>"
 
-#: ../src/orca/orca-setup.ui.h:15
+#: ../src/orca/orca-setup.ui.h:19
+#| msgid "<b>Braille Indicator</b>"
+msgid "<b>Time and Date</b>"
+msgstr "<b>Saat ve Tarih</b>"
+
+#: ../src/orca/orca-setup.ui.h:20
+#| msgid "<b>Contrast</b>"
+msgid "<b>User Interface</b>"
+msgstr "<b>Kullanıcı Arayüzü</b>"
+
+#: ../src/orca/orca-setup.ui.h:21
 msgid "<b>Verbosity</b>"
 msgstr "<b>Detaylı</b>"
 
-#: ../src/orca/orca-setup.ui.h:16
+#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
+#: ../src/orca/orca-setup.ui.h:23
+#| msgid "<b>Border Settings</b>"
+msgid "<b>Voice Type Settings</b>"
+msgstr "<b>Ses Türü Ayarları</b>"
+
+#: ../src/orca/orca-setup.ui.h:24
 msgid "Active _Profile:"
 msgstr "Etkin _Profil:"
 
 #. Translators: long braille for the rolename of a application.
 #.
-#: ../src/orca/orca-setup.ui.h:17 ../src/orca/rolenames.py:1127
+#: ../src/orca/orca-setup.ui.h:25 ../src/orca/rolenames.py:1127
 msgid "Application"
 msgstr "Uygulama"
 
-#: ../src/orca/orca-setup.ui.h:18
-msgid "Bottom Half"
-msgstr "Alt Yarım"
-
-#: ../src/orca/orca-setup.ui.h:19
+#: ../src/orca/orca-setup.ui.h:26
 msgid "Braille"
 msgstr "Braille"
 
-#: ../src/orca/orca-setup.ui.h:23
-msgid "Centered"
-msgstr "Ortalanmış"
-
-#: ../src/orca/orca-setup.ui.h:24
+#: ../src/orca/orca-setup.ui.h:30
 msgid "Contraction _Table:"
 msgstr "Daraltma _Tablosu"
 
-#: ../src/orca/orca-setup.ui.h:25
-msgid "Custom"
-msgstr "Özel"
-
-#. Translators: Orca can present the current date to the user, here they can choose how the date should be presented to them.
-#: ../src/orca/orca-setup.ui.h:27
+#: ../src/orca/orca-setup.ui.h:31
 msgid "Dat_e format:"
 msgstr "Tarih bi_çimi:"
 
-#: ../src/orca/orca-setup.ui.h:28
+#: ../src/orca/orca-setup.ui.h:32
 msgid "Default"
 msgstr "Öntanımlı"
 
-#: ../src/orca/orca-setup.ui.h:29
+#: ../src/orca/orca-setup.ui.h:33
 msgid "Disable _end of line symbol"
 msgstr "_Satır sonu sembolünü kapat"
 
-#: ../src/orca/orca-setup.ui.h:33
+#: ../src/orca/orca-setup.ui.h:37
 msgid "Enable Braille _monitor"
 msgstr "Braille _izleyiciyi etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca-setup.ui.h:38
 msgid "Enable Braille _support"
 msgstr "Braille de_steğini etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/orca-setup.ui.h:39
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "_Abecesayısal ve noktalama tuşlarını etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca-setup.ui.h:40
 msgid "Enable _function keys"
 msgstr "İş_lev anahtarlarını etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:37
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Enable _key echo"
 msgstr "_Tuş yankısını etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:38
+#: ../src/orca/orca-setup.ui.h:42
 msgid "Enable _modifier keys"
 msgstr "_Düzenleyici tuşları etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:39
+#: ../src/orca/orca-setup.ui.h:43
 msgid "Enable _navigation keys"
 msgstr "Yö_n tuşlarını etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:40
+#: ../src/orca/orca-setup.ui.h:44
 msgid "Enable ac_tion keys"
 msgstr "Eylem _tuşlarını etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca-setup.ui.h:45
 msgid "Enable echo by _sentence"
 msgstr "_Cümle ile yankıyı etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:42
+#: ../src/orca/orca-setup.ui.h:46
 msgid "Enable echo by _word"
 msgstr "_Kelime ile yankıyı etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:45
+#: ../src/orca/orca-setup.ui.h:49
 msgid "Enable lockin_g keys"
 msgstr "_Kilitleme tuşlarını etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:48
-msgid "Full Screen"
-msgstr "Tam Ekran"
-
-#: ../src/orca/orca-setup.ui.h:49
+#: ../src/orca/orca-setup.ui.h:52
 msgid "General"
 msgstr "Genel"
 
-#: ../src/orca/orca-setup.ui.h:50
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Hyperlink"
 msgstr "Hiper Bağ"
 
-#: ../src/orca/orca-setup.ui.h:51
+#: ../src/orca/orca-setup.ui.h:54
 msgid "Key Bindings"
 msgstr "Anahtar Bağları"
 
-#: ../src/orca/orca-setup.ui.h:52
+#: ../src/orca/orca-setup.ui.h:55
 msgid "Key Echo"
 msgstr "Anahtar Yankısı"
 
-#: ../src/orca/orca-setup.ui.h:53
-msgid "Left Half"
-msgstr "Üst Yarım"
-
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca-setup.ui.h:59
 msgid "Move _down one"
 msgstr "Bir _aşağı taşı"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:59
+#: ../src/orca/orca-setup.ui.h:61
 msgid "Move _up one"
 msgstr "Bir y_ukarı taşı"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca-setup.ui.h:63
 msgid "Move to _bottom"
 msgstr "En a_lta taşı"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:63
+#: ../src/orca/orca-setup.ui.h:65
 msgid "Move to _top"
 msgstr "_Tepeye taşı"
 
-#: ../src/orca/orca-setup.ui.h:64
-msgid "None"
-msgstr "Hiçbiri"
-
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
-#: ../src/orca/orca-setup.ui.h:66
+#: ../src/orca/orca-setup.ui.h:67
 msgid "Only speak displayed text"
 msgstr "Sadece görüntülenen metni seslendir"
 
-#: ../src/orca/orca-setup.ui.h:67
+#: ../src/orca/orca-setup.ui.h:68
 msgid "Orca Preferences"
 msgstr "Orca Tercihleri"
 
-#: ../src/orca/orca-setup.ui.h:68
+#: ../src/orca/orca-setup.ui.h:69
 msgid "Orca _Modifier Key(s):"
 msgstr "Orca _Değiştirici Tuş(ları):"
 
-#: ../src/orca/orca-setup.ui.h:69
+#: ../src/orca/orca-setup.ui.h:70
 msgid "Pi_tch:"
 msgstr "Karak_ter sıklığı:"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
-#: ../src/orca/orca-setup.ui.h:73
+#: ../src/orca/orca-setup.ui.h:74
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "Sıklık (saniye):"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
-#: ../src/orca/orca-setup.ui.h:75
+#: ../src/orca/orca-setup.ui.h:76
 msgctxt "ProgressBarUpdates"
 msgid "Enable_d"
 msgstr "Etkinleştiril_di"
 
-#: ../src/orca/orca-setup.ui.h:76
+#: ../src/orca/orca-setup.ui.h:77
 msgid "Pronunciation"
 msgstr "Telaffuz"
 
-#: ../src/orca/orca-setup.ui.h:77
-msgid "Proportional"
-msgstr "Orantılı"
-
 #: ../src/orca/orca-setup.ui.h:78
-msgid "Push"
-msgstr "Bas"
-
-#: ../src/orca/orca-setup.ui.h:79
 msgid "Quit Orca _without confirmation"
 msgstr "Onay _olmadan Orca'dan çık"
 
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. The options are all progress bars, only progress bars in the active application, or only progress bars in the current window.
-#: ../src/orca/orca-setup.ui.h:81
+#: ../src/orca/orca-setup.ui.h:80
 msgid "Restrict to:"
 msgstr "Şununla sınırlandır:"
 
-#: ../src/orca/orca-setup.ui.h:82
-msgid "Right Half"
-msgstr "Sağ Yarım"
-
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
-#: ../src/orca/orca-setup.ui.h:84
+#: ../src/orca/orca-setup.ui.h:82
 msgid "Say All B_y:"
 msgstr "_Seslendirme Türü:"
 
-#: ../src/orca/orca-setup.ui.h:86
+#: ../src/orca/orca-setup.ui.h:84
 msgid "Show Orca _main window"
 msgstr "Orca a_na penceresini göster"
 
-#: ../src/orca/orca-setup.ui.h:88
+#: ../src/orca/orca-setup.ui.h:86
 msgid "Spea_k object mnemonics"
 msgstr "Nesne hatırlatıcılarını _oku"
 
-#: ../src/orca/orca-setup.ui.h:91
+#: ../src/orca/orca-setup.ui.h:89
 msgid "Speak _indentation and justification"
 msgstr "G_irintili yazma ve yaslamaları seslendir"
 
-#: ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca-setup.ui.h:90
 msgid "Speak _none"
 msgstr "Hiçbiri_ni seslendirme"
 
-#: ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca-setup.ui.h:91
 msgid "Speak blank lines"
 msgstr "Boş satırları seslendir"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').
-#: ../src/orca/orca-setup.ui.h:95
+#: ../src/orca/orca-setup.ui.h:93
 #, fuzzy
 msgid "Speak child p_osition"
 msgstr "Çocuk k_onumunu seslendir"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
-#: ../src/orca/orca-setup.ui.h:97
+#: ../src/orca/orca-setup.ui.h:95
 msgid "Speak multicase strings as wor_ds"
 msgstr "Değişik büyüklükteki dizgilleri _kelime olarak oku"
 
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:96
 msgid "Speak object under mo_use"
 msgstr "_Farenin altındaki nesneyi seslendir"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
-#: ../src/orca/orca-setup.ui.h:100
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Speak ro_w"
 msgstr "_Satır seslendir"
 
-#: ../src/orca/orca-setup.ui.h:101
+#: ../src/orca/orca-setup.ui.h:99
 msgid "Speak tutorial messages"
 msgstr "Kılavuz mesajlarını seslendir"
 
-#: ../src/orca/orca-setup.ui.h:102
+#: ../src/orca/orca-setup.ui.h:100
 msgid "Speech"
 msgstr "Konuşma"
 
-#: ../src/orca/orca-setup.ui.h:103
+#: ../src/orca/orca-setup.ui.h:101
 msgid "Speech _system:"
 msgstr "Konuşma _sistemi:"
 
-#: ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Speech synthesi_zer:"
 msgstr "Konuşma _bireştiricisi:"
 
-#: ../src/orca/orca-setup.ui.h:105
+#: ../src/orca/orca-setup.ui.h:103
 msgid "Start-up Profile:"
 msgstr "Ba_şlangıç Profili:"
 
-#: ../src/orca/orca-setup.ui.h:106
+#: ../src/orca/orca-setup.ui.h:104
 msgid "System"
 msgstr "Sistem"
 
-#: ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca-setup.ui.h:105
 msgid "Text Attributes"
 msgstr "Metin Öznitelikleri"
 
-#: ../src/orca/orca-setup.ui.h:108
-msgid "Top Half"
-msgstr "Üst Yarı"
-
-#: ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/orca-setup.ui.h:106
 msgid "Uppercase"
 msgstr "Büyük harf"
 
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca-setup.ui.h:107
 msgid "Ver_bose"
 msgstr "_Detay"
 
-#: ../src/orca/orca-setup.ui.h:111
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Vo_lume:"
 msgstr "S_es:"
 
+#: ../src/orca/orca-setup.ui.h:109
+#| msgid "soffice"
+msgid "Voice"
+msgstr "Ses"
+
 #. Translators: long braille for the rolename of a window.
 #.
-#: ../src/orca/orca-setup.ui.h:112 ../src/orca/rolenames.py:1079
+#: ../src/orca/orca-setup.ui.h:110 ../src/orca/rolenames.py:1079
 msgid "Window"
 msgstr "Pencere"
 
-#: ../src/orca/orca-setup.ui.h:113
+#: ../src/orca/orca-setup.ui.h:111
 msgid "_Abbreviated role names"
 msgstr "Kıs_altılmış rol adları"
 
-#: ../src/orca/orca-setup.ui.h:114
+#: ../src/orca/orca-setup.ui.h:112
 msgid "_All"
 msgstr "He_psi"
 
-#: ../src/orca/orca-setup.ui.h:115
+#: ../src/orca/orca-setup.ui.h:113
 msgid "_Delete"
 msgstr "_Sil"
 
-#: ../src/orca/orca-setup.ui.h:117
+#: ../src/orca/orca-setup.ui.h:115
 msgid "_Enable Contracted Braille"
 msgstr "Daraltılmış Braille'yi _Etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:118
+#: ../src/orca/orca-setup.ui.h:116
 msgid "_Enable speech"
 msgstr "Konuşmayı _etkinleştir"
 
-#: ../src/orca/orca-setup.ui.h:119
+#: ../src/orca/orca-setup.ui.h:117
 msgid "_Laptop"
 msgstr "_Dizüstü"
 
 #. This button will load the selected settings profile in the application.
-#: ../src/orca/orca-setup.ui.h:121
+#: ../src/orca/orca-setup.ui.h:119
 msgid "_Load"
 msgstr "Yük_le"
 
-#: ../src/orca/orca-setup.ui.h:122
+#: ../src/orca/orca-setup.ui.h:120
 msgid "_New entry"
 msgstr "Ye_ni girdi"
 
-#: ../src/orca/orca-setup.ui.h:123
+#: ../src/orca/orca-setup.ui.h:121
 msgid "_Person:"
 msgstr "K_işi:"
 
-#: ../src/orca/orca-setup.ui.h:124
+#: ../src/orca/orca-setup.ui.h:122
 msgid "_Present tooltips"
 msgstr "İ_puçlarını göster"
 
-#: ../src/orca/orca-setup.ui.h:125
+#: ../src/orca/orca-setup.ui.h:123
 msgid "_Rate:"
 msgstr "O_ran:"
 
-#: ../src/orca/orca-setup.ui.h:126
+#: ../src/orca/orca-setup.ui.h:124
 msgid "_Reset"
 msgstr "Sıfı_rla"
 
-#: ../src/orca/orca-setup.ui.h:127
+#: ../src/orca/orca-setup.ui.h:125
 msgid "_Speak all"
 msgstr "Hepsini _seslendir"
 
-#. Translators: Orca can present the current time to the user, here they can choose how the time should be presented to them.
-#: ../src/orca/orca-setup.ui.h:129
+#: ../src/orca/orca-setup.ui.h:126
 msgid "_Time format:"
 msgstr "_Zaman biçimi:"
 
-#: ../src/orca/orca-setup.ui.h:130
-msgid "_Voice settings:"
-msgstr "_Ses ayarları:"
+#. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
+#: ../src/orca/orca-setup.ui.h:128
+#| msgid "_Voice settings:"
+msgid "_Voice type:"
+msgstr "_Ses türü:"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
-#: ../src/orca/orca-setup.ui.h:132
+#: ../src/orca/orca-setup.ui.h:130
 msgctxt "braille dots"
 msgid "_None"
 msgstr "_Hiçbiri"
@@ -4547,9 +4625,9 @@ msgstr "Bağlantı"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2422
-#: ../src/orca/scripts/apps/soffice/script.py:1144
-#: ../src/orca/scripts/default.py:1975 ../src/orca/speech_generator.py:972
+#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2449
+#: ../src/orca/scripts/apps/soffice/script.py:1125
+#: ../src/orca/scripts/default.py:1975 ../src/orca/speech_generator.py:986
 msgid "link"
 msgstr "bağlantı"
 
@@ -5350,7 +5428,7 @@ msgstr "gömülü bileşen"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2346
+#: ../src/orca/script_utilities.py:2356
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -5361,7 +5439,7 @@ msgstr[0] "%(count)d %(repeatChar)s karakter"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2536
+#: ../src/orca/script_utilities.py:2576
 #, python-format
 msgid " superscript %s"
 msgstr " üstsimge %s"
@@ -5371,7 +5449,7 @@ msgstr " üstsimge %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2546
+#: ../src/orca/script_utilities.py:2586
 #, python-format
 msgid " subscript %s"
 msgstr " altsimge %s"
@@ -5415,7 +5493,7 @@ msgstr "Tüm belgeyi seslendir."
 #. Translators: this represents the number of rows in a table.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:276
-#: ../src/orca/scripts/apps/soffice/script.py:730
+#: ../src/orca/scripts/apps/soffice/script.py:711
 #: ../src/orca/structural_navigation.py:1322
 #, python-format
 msgid "table with %d row"
@@ -5425,7 +5503,7 @@ msgstr[0] "%d satırlı tablo"
 #. Translators: this represents the number of columns in a table.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:281
-#: ../src/orca/scripts/apps/soffice/script.py:735
+#: ../src/orca/scripts/apps/soffice/script.py:716
 #: ../src/orca/structural_navigation.py:1327
 #, python-format
 msgid "%d column"
@@ -5435,7 +5513,7 @@ msgstr[0] "%d sütun"
 #. We've left a table.  Announce this fact.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:291
-#: ../src/orca/scripts/apps/soffice/script.py:724
+#: ../src/orca/scripts/apps/soffice/script.py:705
 msgid "leaving table."
 msgstr "tablodan çıkılıyor."
 
@@ -5443,7 +5521,7 @@ msgstr "tablodan çıkılıyor."
 #. on in a table.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:309
-#, fuzzy, python-format
+#, python-format
 #| msgid "row %d, column %d"
 msgid "row %(row)d, column %(column)d"
 msgstr "satır %(row)d, sütun %(column)d"
@@ -5454,7 +5532,7 @@ msgstr "satır %(row)d, sütun %(column)d"
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/scripts/apps/acroread/script.py:316
-#: ../src/orca/speech_generator.py:765
+#: ../src/orca/speech_generator.py:779
 #, python-format
 msgid "column %d"
 msgstr "sütun %d"
@@ -5589,17 +5667,17 @@ msgstr "Dizin düğmesi"
 #. user has navigated to an empty line.
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:1149
-#: ../src/orca/scripts/apps/soffice/script.py:1264
+#: ../src/orca/scripts/apps/soffice/script.py:1245
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:430
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:544
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
 #: ../src/orca/scripts/default.py:2074 ../src/orca/scripts/default.py:2082
 #: ../src/orca/scripts/default.py:2203 ../src/orca/scripts/default.py:2211
-#: ../src/orca/scripts/default.py:2347 ../src/orca/scripts/default.py:4438
-#: ../src/orca/scripts/default.py:4448
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5370
-#: ../src/orca/settings.py:1073 ../src/orca/speech_generator.py:683
-#: ../src/orca/speech_generator.py:1036
+#: ../src/orca/scripts/default.py:2347 ../src/orca/scripts/default.py:4450
+#: ../src/orca/scripts/default.py:4460
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5342
+#: ../src/orca/settings.py:903 ../src/orca/speech_generator.py:697
+#: ../src/orca/speech_generator.py:1050
 #: ../src/orca/structural_navigation.py:3602
 msgid "blank"
 msgstr "boşluk"
@@ -5672,9 +5750,9 @@ msgstr "Sonlandırmak için Sekme ve Geri tuşuna basın."
 #.
 #: ../src/orca/scripts/apps/gedit/script.py:392
 #: ../src/orca/scripts/apps/gedit/script.py:469
-#: ../src/orca/scripts/apps/Thunderbird/script.py:175
-#: ../src/orca/scripts/apps/Thunderbird/script.py:323
-#: ../src/orca/scripts/apps/Thunderbird/script.py:555
+#: ../src/orca/scripts/apps/Thunderbird/script.py:176
+#: ../src/orca/scripts/apps/Thunderbird/script.py:324
+#: ../src/orca/scripts/apps/Thunderbird/script.py:556
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Yazım Kontrolü Yap"
@@ -5762,7 +5840,7 @@ msgstr "Masa."
 #. pane or table.
 #.
 #: ../src/orca/scripts/apps/nautilus/script.py:138
-#: ../src/orca/speech_generator.py:1355
+#: ../src/orca/speech_generator.py:1369
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -5788,23 +5866,23 @@ msgstr "Bildirim"
 #. checkbox. If it is checked, Orca will inform the user when
 #. the notification icon has appeared.
 #.
-#: ../src/orca/scripts/apps/packagemanager/script.py:116
+#: ../src/orca/scripts/apps/packagemanager/script.py:114
 msgid "Notify me when errors have been logged."
 msgstr "Hata kaydı yapıldığında bilgilendir."
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/apps/packagemanager/script.py:226
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1760
+#: ../src/orca/scripts/apps/packagemanager/script.py:224
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1712
 msgid "Loading.  Please wait."
 msgstr "Yükleniyor.  Lütfen bekleyin."
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/apps/packagemanager/script.py:235
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1773
+#: ../src/orca/scripts/apps/packagemanager/script.py:233
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1725
 msgid "Finished loading."
 msgstr "Yükleme bitti."
 
@@ -5814,7 +5892,7 @@ msgstr "Yükleme bitti."
 #. the error in a dialog box. This is the message Orca will
 #. present to inform the user that this has occurred.
 #.
-#: ../src/orca/scripts/apps/packagemanager/script.py:257
+#: ../src/orca/scripts/apps/packagemanager/script.py:255
 msgid "An error occurred. View the error log for details."
 msgstr "Bir hata oluştu. Ayrıntılar için hata kaydına bakınız."
 
@@ -5824,11 +5902,10 @@ msgstr "Bir hata oluştu. Ayrıntılar için hata kaydına bakınız."
 #. the search results after the search has been completed.
 #.
 #: ../src/orca/scripts/apps/packagemanager/tutorialgenerator.py:60
-#, fuzzy
 msgid "Use Ctrl+L to move focus to the results."
 msgstr "Odağı sonuçlara taşımak için Ctrl+L kullanın."
 
-#: ../src/orca/scripts/apps/pidgin/script.py:155
+#: ../src/orca/scripts/apps/pidgin/script.py:154
 #, python-format
 msgid "New chat tab %s"
 msgstr "Yeni sohbet sekmesi %s"
@@ -5880,21 +5957,27 @@ msgstr ""
 msgid "Clears the dynamic row headers"
 msgstr "Dinamik satır başlıklarını temizler."
 
-#. Checkbox for "Speak spread sheet cell coordinates".
-#.
 #. Translators: If checked, then Orca will speak the coordinates
 #. of the current spread sheet cell. Coordinates are the row and
 #. column position within the spread sheet (i.e. A1, B1, C2 ...)
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:311
+#: ../src/orca/scripts/apps/soffice/script.py:307
 msgid "Speak spread sheet cell coordinates"
 msgstr "Hesap çizelgesi hücre koordinatlarını seslendir"
+
+#. Translators: this is the title of a panel containing options
+#. for specifying how to navigate tables in document content.
+#.
+#: ../src/orca/scripts/apps/soffice/script.py:320
+#: ../src/orca/scripts/toolkits/Gecko/script.py:758
+msgid "Table Navigation"
+msgstr "Tablo Dolaşımı"
 
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:338
-#: ../src/orca/scripts/toolkits/Gecko/script.py:786
+#: ../src/orca/scripts/apps/soffice/script.py:333
+#: ../src/orca/scripts/toolkits/Gecko/script.py:771
 msgid "Speak _cell coordinates"
 msgstr "Hü_cre koordinatlarını seslendir"
 
@@ -5902,46 +5985,38 @@ msgstr "Hü_cre koordinatlarını seslendir"
 #. should speak the span size of a table cell (e.g., how many
 #. rows and columns a particular table cell spans in a table).
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:351
-#: ../src/orca/scripts/toolkits/Gecko/script.py:799
+#: ../src/orca/scripts/apps/soffice/script.py:344
+#: ../src/orca/scripts/toolkits/Gecko/script.py:782
 msgid "Speak _multiple cell spans"
 msgstr "_Birden fazla kapsayan hücreleri seslendir"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in document content.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:363
-#: ../src/orca/scripts/toolkits/Gecko/script.py:811
+#: ../src/orca/scripts/apps/soffice/script.py:354
+#: ../src/orca/scripts/toolkits/Gecko/script.py:792
 msgid "Announce cell _header"
 msgstr "_Hücre başlığını duyur"
 
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in document content.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:375
-#: ../src/orca/scripts/toolkits/Gecko/script.py:823
+#: ../src/orca/scripts/apps/soffice/script.py:364
+#: ../src/orca/scripts/toolkits/Gecko/script.py:802
 msgid "Skip _blank cells"
 msgstr "_Boş hücreleri atla"
-
-#. Translators: this is the title of a panel containing options
-#. for specifying how to navigate tables in document content.
-#.
-#: ../src/orca/scripts/apps/soffice/script.py:387
-#: ../src/orca/scripts/toolkits/Gecko/script.py:835
-msgid "Table Navigation"
-msgstr "Tablo Dolaşımı"
 
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:806
+#: ../src/orca/scripts/apps/soffice/script.py:787
 msgid "empty"
 msgstr "boş"
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:886
+#: ../src/orca/scripts/apps/soffice/script.py:867
 #, python-format
 msgid "Dynamic column header set for row %d"
 msgstr "%d satırı için dinamik sütun başlığı kümesi"
@@ -5949,14 +6024,14 @@ msgstr "%d satırı için dinamik sütun başlığı kümesi"
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:908
+#: ../src/orca/scripts/apps/soffice/script.py:889
 msgid "Dynamic column header cleared."
 msgstr "Dinamik sütun başlığı temizlendi."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:960
+#: ../src/orca/scripts/apps/soffice/script.py:941
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "%s sütunu için dinamik satır başlığı kümesi"
@@ -5964,7 +6039,7 @@ msgstr "%s sütunu için dinamik satır başlığı kümesi"
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:983
+#: ../src/orca/scripts/apps/soffice/script.py:964
 msgid "Dynamic row header cleared."
 msgstr "Dinamik satır başlığı temizlendi."
 
@@ -5974,7 +6049,7 @@ msgstr "Dinamik satır başlığı temizlendi."
 #. using.  We hate keying off stuff like this, but
 #. we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1168
+#: ../src/orca/scripts/apps/soffice/script.py:1149
 msgid "Welcome to StarOffice"
 msgstr "StarOffice'e hoşgeldiniz"
 
@@ -5985,16 +6060,16 @@ msgstr "StarOffice'e hoşgeldiniz"
 #. We really try to avoid doing this kind of thing, but
 #. sometimes it is necessary and we apologize.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1216
+#: ../src/orca/scripts/apps/soffice/script.py:1197
 msgid "Available fields"
 msgstr "Erişilebilir alanlar"
 
-#: ../src/orca/scripts/apps/soffice/script.py:1378
+#: ../src/orca/scripts/apps/soffice/script.py:1359
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr ""
 "Aşağı Kaydırma düğmesinin birçok kez basılması gerektiğine dikkat edin."
 
-#: ../src/orca/scripts/apps/soffice/script.py:1394
+#: ../src/orca/scripts/apps/soffice/script.py:1375
 msgid "License Agreement Accept button now has focus."
 msgstr "Lisans Anlaşması Kabul tuşu şu an odaklandı."
 
@@ -6004,7 +6079,7 @@ msgstr "Lisans Anlaşması Kabul tuşu şu an odaklandı."
 #. is using.  We hate keying off stuff like this, but we're
 #. forced to in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1423
+#: ../src/orca/scripts/apps/soffice/script.py:1404
 msgid "First name"
 msgstr "İlk adı"
 
@@ -6012,7 +6087,7 @@ msgstr "İlk adı"
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1498
+#: ../src/orca/scripts/apps/soffice/script.py:1479
 msgid "Move to cell"
 msgstr "Hücreye taşı"
 
@@ -6020,22 +6095,22 @@ msgstr "Hücreye taşı"
 #. focused Impress slide and the total number of slides in the
 #. presentation.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1690
-#, fuzzy, python-format
+#: ../src/orca/scripts/apps/soffice/script.py:1671
+#, python-format
 msgid "slide %(position)d of %(count)d"
-msgstr "%(count)d %(repeatChar)s karakter"
+msgstr "slayt %(position)d / %(count)d"
 
 #. Translators: This message is to inform the user that
 #. the last row of a table in a document was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1873
+#: ../src/orca/scripts/apps/soffice/script.py:1854
 msgid "Last row deleted."
 msgstr "Son satır silindi."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1877
+#: ../src/orca/scripts/apps/soffice/script.py:1858
 msgid "Row deleted."
 msgstr "Satır silindi."
 
@@ -6044,14 +6119,14 @@ msgstr "Satır silindi."
 #. table. This typically happens when the user presses Tab
 #. from within the last cell of the table.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1884
+#: ../src/orca/scripts/apps/soffice/script.py:1865
 msgid "Row inserted at the end of the table."
 msgstr "Tablonun sonuna satır eklendi."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just inserted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1888
+#: ../src/orca/scripts/apps/soffice/script.py:1869
 msgid "Row inserted."
 msgstr "Satır eklendi."
 
@@ -6062,7 +6137,7 @@ msgstr "Satır eklendi."
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1924
+#: ../src/orca/scripts/apps/soffice/script.py:1905
 msgid "Presentation Wizard"
 msgstr "Sunum Sihirbazı"
 
@@ -6071,13 +6146,13 @@ msgstr "Sunum Sihirbazı"
 #. has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2058
+#: ../src/orca/scripts/apps/soffice/script.py:2039
 msgid "has formula"
 msgstr "formülü"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2081
+#: ../src/orca/scripts/apps/soffice/script.py:2062
 #, python-format
 msgid "Cell %s"
 msgstr "%s hücresi"
@@ -6097,15 +6172,15 @@ msgstr[0] "%d karakter çok uzun"
 #.
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:123
 #: ../src/orca/structural_navigation.py:3609
-#, fuzzy, python-format
+#, python-format
 #| msgid "Row %d, column %d."
 msgid "Row %(row)d, column %(column)d."
 msgstr "Satır %(row)d, sütun %(column)d."
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:593
-#: ../src/orca/scripts/apps/Thunderbird/script.py:610
+#: ../src/orca/scripts/apps/Thunderbird/script.py:594
+#: ../src/orca/scripts/apps/Thunderbird/script.py:611
 #, python-format
 msgid "%s panel"
 msgstr "%s paneli"
@@ -6974,9 +7049,8 @@ msgstr "Öğrenme kipi. Çıkış için kaçış tuşuna basın."
 #. mode has been entered.
 #.
 #: ../src/orca/scripts/default.py:1563
-#, fuzzy
 msgid "List shortcuts mode."
-msgstr "Atlama kipi etkin."
+msgstr "Kısayolları listeleme kipi."
 
 #. Translators: Orca has a command that allows the user to
 #. move the mouse pointer to the current object. This is a
@@ -6995,10 +7069,9 @@ msgstr "Atlama kipi etkin."
 #.
 #: ../src/orca/scripts/default.py:1860 ../src/orca/scripts/default.py:2003
 #: ../src/orca/scripts/default.py:2023
-#, fuzzy
 #| msgid "C_urrent location"
 msgid "Could not find current location."
-msgstr "Şimdiki konum bulunamadı."
+msgstr "Geçerli konum bulunamadı."
 
 #. Translators: Orca has a command that allows the user to
 #. move the mouse pointer to the current object. This is a
@@ -7411,9 +7484,9 @@ msgstr "Sütunu seslendir"
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
 #.
-#: ../src/orca/scripts/default.py:3142 ../src/orca/scripts/default.py:3275
-#: ../src/orca/scripts/default.py:5261 ../src/orca/speech_generator.py:1132
-#: ../src/orca/speech_generator.py:1161
+#: ../src/orca/scripts/default.py:3148 ../src/orca/scripts/default.py:3281
+#: ../src/orca/scripts/default.py:5291 ../src/orca/speech_generator.py:1146
+#: ../src/orca/speech_generator.py:1175
 msgctxt "text"
 msgid "selected"
 msgstr "seçilmiş"
@@ -7426,7 +7499,7 @@ msgstr "seçilmiş"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/scripts/default.py:3281 ../src/orca/scripts/default.py:5267
+#: ../src/orca/scripts/default.py:3287 ../src/orca/scripts/default.py:5297
 msgctxt "text"
 msgid "unselected"
 msgstr "seçilmemiş"
@@ -7435,7 +7508,7 @@ msgstr "seçilmemiş"
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
 #.
-#: ../src/orca/scripts/default.py:3373 ../src/orca/scripts/default.py:5322
+#: ../src/orca/scripts/default.py:3385 ../src/orca/scripts/default.py:5352
 #, fuzzy
 #| msgid "Misspelled word:"
 msgid "misspelled"
@@ -7445,14 +7518,14 @@ msgstr "imla hatalı"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/scripts/default.py:4283
+#: ../src/orca/scripts/default.py:4295
 #, python-format
 msgid "Progress bar %d."
 msgstr "İlerleme çubuğu %d."
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/scripts/default.py:4319 ../src/orca/speech_generator.py:952
+#: ../src/orca/scripts/default.py:4331 ../src/orca/speech_generator.py:966
 msgid "bold"
 msgstr "kalın"
 
@@ -7463,7 +7536,7 @@ msgstr "kalın"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:4336 ../src/orca/scripts/default.py:4348
+#: ../src/orca/scripts/default.py:4348 ../src/orca/scripts/default.py:4360
 #, fuzzy, python-format
 #| msgid "%s %s pixel"
 #| msgid_plural "%s %s pixels"
@@ -7477,7 +7550,7 @@ msgstr[0] "%(key)s %(value)s benek"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/scripts/default.py:4729
+#: ../src/orca/scripts/default.py:4759
 msgid "string not found"
 msgstr "dizgi bulunamadı"
 
@@ -7486,12 +7559,12 @@ msgstr "dizgi bulunamadı"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/scripts/default.py:4801
+#: ../src/orca/scripts/default.py:4831
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Yanlış yazılmış kelime: %s"
 
-#: ../src/orca/scripts/default.py:4809
+#: ../src/orca/scripts/default.py:4839
 #, python-format
 msgid "Context is %s"
 msgstr "İçerik %s"
@@ -7500,25 +7573,25 @@ msgstr "İçerik %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5060
+#: ../src/orca/scripts/default.py:5090
 #, fuzzy
 #| msgid "page selected from cursor position"
 msgid "paragraph selected down from cursor position"
 msgstr "paragraf imleç konumundan aşağı doğru seçili"
 
-#: ../src/orca/scripts/default.py:5061
+#: ../src/orca/scripts/default.py:5091
 #, fuzzy
 #| msgid "page unselected from cursor position"
 msgid "paragraph unselected down from cursor position"
 msgstr "paragraf imleç konumundan aşağı doğru seçili değil"
 
-#: ../src/orca/scripts/default.py:5062
+#: ../src/orca/scripts/default.py:5092
 #, fuzzy
 #| msgid "page selected from cursor position"
 msgid "paragraph selected up from cursor position"
 msgstr "paragraf imleç konumundan yukarı doğru seçili"
 
-#: ../src/orca/scripts/default.py:5063
+#: ../src/orca/scripts/default.py:5093
 #, fuzzy
 #| msgid "page unselected from cursor position"
 msgid "paragraph unselected up from cursor position"
@@ -7528,7 +7601,7 @@ msgstr "paragraf imleç konumundan yukarı doğru seçili değil"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5117
+#: ../src/orca/scripts/default.py:5147
 msgid "line selected to end from previous cursor position"
 msgstr "önceki imleç konumundan satır sonuna kadar seçildi"
 
@@ -7536,7 +7609,7 @@ msgstr "önceki imleç konumundan satır sonuna kadar seçildi"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5125
+#: ../src/orca/scripts/default.py:5155
 msgid "line selected from start to previous cursor position"
 msgstr "satır önceki imleç konumundan itibaren seçildi"
 
@@ -7544,14 +7617,14 @@ msgstr "satır önceki imleç konumundan itibaren seçildi"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5134
+#: ../src/orca/scripts/default.py:5164
 msgid "page selected from cursor position"
 msgstr "sayfa imleç konumundan itibaren seçili"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5139
+#: ../src/orca/scripts/default.py:5169
 msgid "page unselected from cursor position"
 msgstr "sayfa imleç konumundan itibaren seçimsiz"
 
@@ -7559,14 +7632,14 @@ msgstr "sayfa imleç konumundan itibaren seçimsiz"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5148
+#: ../src/orca/scripts/default.py:5178
 msgid "page selected to cursor position"
 msgstr "sayfa imleç konumuna kadar seçili"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5153
+#: ../src/orca/scripts/default.py:5183
 msgid "page unselected to cursor position"
 msgstr "imleç konumuna kadar seçimsiz"
 
@@ -7574,14 +7647,14 @@ msgstr "imleç konumuna kadar seçimsiz"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5178
+#: ../src/orca/scripts/default.py:5208
 msgid "document selected to cursor position"
 msgstr "belge imleç konumuna kadar seçili"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5183
+#: ../src/orca/scripts/default.py:5213
 msgid "document unselected to cursor position"
 msgstr "belge imleç konumuna kadar seçimsiz"
 
@@ -7589,21 +7662,21 @@ msgstr "belge imleç konumuna kadar seçimsiz"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5192
+#: ../src/orca/scripts/default.py:5222
 msgid "document selected from cursor position"
 msgstr "belge imleç konumundan itibaren seçili"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5197
+#: ../src/orca/scripts/default.py:5227
 msgid "document unselected from cursor position"
 msgstr "belge imleç konumundan itibaren seçimsiz"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/scripts/default.py:5214
+#: ../src/orca/scripts/default.py:5244
 msgid "entire document selected"
 msgstr "tüm belge seçildi"
 
@@ -7611,7 +7684,7 @@ msgstr "tüm belge seçildi"
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/scripts/default.py:5754
+#: ../src/orca/scripts/default.py:5784
 #, python-format
 msgid "Unicode %s"
 msgstr ""
@@ -7777,6 +7850,14 @@ msgstr "Gecko doğal ve Orca düzeltme imi konumlandırması arasında geçiş y
 msgid "Moves focus into and away from the current mouse over."
 msgstr "Odağı şimdiki fare üzerine kaydırır ve üzerinden uzaklaştırır."
 
+#. Translators: this is the title of a panel holding options for
+#. how to navigate HTML content (e.g., Orca caret navigation,
+#. positioning of caret, etc.).
+#.
+#: ../src/orca/scripts/toolkits/Gecko/script.py:676
+msgid "Page Navigation"
+msgstr "Sayfa Dolaşımı"
+
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
 #. around HTML content.  It's often broken, so Orca needs
@@ -7792,7 +7873,7 @@ msgstr "_Orca Düzeltme İmi Dolaşımını Kullan"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:706
+#: ../src/orca/scripts/toolkits/Gecko/script.py:704
 msgid "Use Orca _Structural Navigation"
 msgstr "Orca Yapı_sal Dolaşımını Kullan"
 
@@ -7805,7 +7886,7 @@ msgstr "Orca Yapı_sal Dolaşımını Kullan"
 #. situation the user is in, so we must provide this as an option
 #. within Orca.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:723
+#: ../src/orca/scripts/toolkits/Gecko/script.py:720
 msgid "_Grab focus on objects when navigating"
 msgstr ""
 
@@ -7815,7 +7896,7 @@ msgstr ""
 #. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:738
+#: ../src/orca/scripts/toolkits/Gecko/script.py:734
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "_Dikey olarak gezinirken imleci satır başına konumlandır"
 
@@ -7823,23 +7904,22 @@ msgstr "_Dikey olarak gezinirken imleci satır başına konumlandır"
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:751
+#: ../src/orca/scripts/toolkits/Gecko/script.py:746
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Bir sayfa i_lk kez yüklendiğinde otomatik olarak seslendirmeye başla"
 
-#. Translators: this is the title of a panel holding options for
-#. how to navigate HTML content (e.g., Orca caret navigation,
-#. positioning of caret, etc.).
+#. Translators: this is the title of a panel containing options
+#. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:763
-msgid "Page Navigation"
-msgstr "Sayfa Dolaşımı"
+#: ../src/orca/scripts/toolkits/Gecko/script.py:815
+msgid "Find Options"
+msgstr "Bulma Seçenekleri"
 
 #. Translators: this is an option to allow users to have Orca
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:859
+#: ../src/orca/scripts/toolkits/Gecko/script.py:829
 msgid "Speak results during _find"
 msgstr "_Bul işlemi sırasında sonuçları seslendir"
 
@@ -7848,7 +7928,7 @@ msgstr "_Bul işlemi sırasında sonuçları seslendir"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:872
+#: ../src/orca/scripts/toolkits/Gecko/script.py:841
 msgid "Onl_y speak changed lines during find"
 msgstr "Bul işlemi sırasında _sadece değişen satırları seslendir"
 
@@ -7856,34 +7936,27 @@ msgstr "Bul işlemi sırasında _sadece değişen satırları seslendir"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:889
+#: ../src/orca/scripts/toolkits/Gecko/script.py:856
 msgid "Minimum length of matched text:"
 msgstr "Eşleşen metnin en az uzunluğu:"
-
-#. Translators: this is the title of a panel containing options
-#. for using Firefox's Find toolbar.
-#.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:914
-msgid "Find Options"
-msgstr "Bulma Seçenekleri"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1429
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1381
 msgid "line selected down from cursor position"
 msgstr "satır imleç konumundan aşağı doğru seçildi"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1430
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1382
 msgid "line unselected down from cursor position"
 msgstr "satır imleç konumundan aşağı doğru seçimsiz"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1431
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1383
 msgid "line selected up from cursor position"
 msgstr "satır imleç konumundan yukarı doğru seçildi"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1432
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1384
 msgid "line unselected up from cursor position"
 msgstr "satır imleç konumundan yukarı doğru seçimsiz"
 
@@ -7892,14 +7965,14 @@ msgstr "satır imleç konumundan yukarı doğru seçimsiz"
 #. moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1475
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1427
 msgid "New item has been added"
 msgstr "Yeni öğe eklendi"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1766
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1718
 #, python-format
 msgid "Finished loading %s."
 msgstr "%s yüklemesi bitti."
@@ -7911,7 +7984,7 @@ msgstr "%s yüklemesi bitti."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2261
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2214
 #: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:60
 #, python-format
 msgid "h%d"
@@ -7923,23 +7996,23 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5537
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5509
 #, fuzzy
 msgid "Mouse over object not found."
 msgstr "Fare üzerindeki nesne bulunamadı."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6021
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5993
 msgid "open"
 msgstr "aç"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6188
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6212
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6222
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6160
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6184
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6194
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Değişken bölge desteği kapalı"
@@ -7947,11 +8020,11 @@ msgstr "Değişken bölge desteği kapalı"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6196
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6168
 msgid "Live regions monitoring on"
 msgstr "Değişken bölgeleri izleme açık"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6203
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6175
 msgid "Live regions monitoring off"
 msgstr "Değişken bölgeleri izleme kapalı"
 
@@ -7962,7 +8035,7 @@ msgstr "Değişken bölgeleri izleme kapalı"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6238
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6210
 msgid "Gecko is controlling the caret."
 msgstr "Gecko düzeltme imini kontrol ediyor."
 
@@ -7973,7 +8046,7 @@ msgstr "Gecko düzeltme imini kontrol ediyor."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6250
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6222
 msgid "Orca is controlling the caret."
 msgstr "Orca düzeltme imini kontrol ediyor."
 
@@ -7983,7 +8056,7 @@ msgstr "Orca düzeltme imini kontrol ediyor."
 #. translated rolename for the heading.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:261
-#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:86
+#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:93
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s seviye %(level)d"
@@ -8059,14 +8132,14 @@ msgstr[0] "Belgenin yüzde %d kadarı okundu"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:1081 ../src/orca/settings.py:1158
+#: ../src/orca/settings.py:911 ../src/orca/settings.py:988
 msgid "required"
 msgstr "gerekli"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:1086
+#: ../src/orca/settings.py:916
 msgctxt "text"
 msgid "read only"
 msgstr "salt okunur"
@@ -8074,7 +8147,7 @@ msgstr "salt okunur"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:1091 ../src/orca/settings.py:1169
+#: ../src/orca/settings.py:921 ../src/orca/settings.py:999
 msgid "grayed"
 msgstr "soluklaştırılmış"
 
@@ -8082,18 +8155,18 @@ msgstr "soluklaştırılmış"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:1115 ../src/orca/settings.py:1181
+#: ../src/orca/settings.py:945 ../src/orca/settings.py:1011
 msgid "collapsed"
 msgstr "kapanmış"
 
-#: ../src/orca/settings.py:1115 ../src/orca/settings.py:1181
+#: ../src/orca/settings.py:945 ../src/orca/settings.py:1011
 msgid "expanded"
 msgstr "genişletilmiş"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:1120
+#: ../src/orca/settings.py:950
 msgid "multi-select"
 msgstr "çoklu-seçim"
 
@@ -8101,7 +8174,7 @@ msgstr "çoklu-seçim"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:1126
+#: ../src/orca/settings.py:956
 #, python-format
 msgid "tree level %d"
 msgstr "ağaç seviyesi %d"
@@ -8116,7 +8189,7 @@ msgstr "ağaç seviyesi %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:1133 ../src/orca/structural_navigation.py:2955
+#: ../src/orca/settings.py:963 ../src/orca/structural_navigation.py:2955
 #, python-format
 msgid "Nesting level %d"
 msgstr "Dallanma seviyesi %d"
@@ -8125,7 +8198,7 @@ msgstr "Dallanma seviyesi %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:1139
+#: ../src/orca/settings.py:969
 #, fuzzy, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "%(index)d üstünde toplamda %(total)d"
@@ -8134,7 +8207,7 @@ msgstr "%(index)d üstünde toplamda %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:1145
+#: ../src/orca/settings.py:975
 #, fuzzy, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d toplamda %(total)d"
@@ -8143,7 +8216,7 @@ msgstr "%(index)d toplamda %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:1164
+#: ../src/orca/settings.py:994
 msgctxt "text"
 msgid "rdonly"
 msgstr "saltokunur"
@@ -8152,7 +8225,7 @@ msgstr "saltokunur"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1187
+#: ../src/orca/settings.py:1017
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "AĞAÇ SEVİYESİ %d"
@@ -8163,7 +8236,7 @@ msgstr "AĞAÇ SEVİYESİ %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1195
+#: ../src/orca/settings.py:1025
 #, python-format
 msgid "LEVEL %d"
 msgstr "SEVİYE %d"
@@ -8173,7 +8246,7 @@ msgstr "SEVİYE %d"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1228
+#: ../src/orca/settings.py:1058
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H saat, %M dakika ve %S saniye."
 
@@ -8182,7 +8255,7 @@ msgstr "%H saat, %M dakika ve %S saniye."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1235
+#: ../src/orca/settings.py:1065
 msgid "%H hours and %M minutes."
 msgstr "%H saat ve %M dakika."
 
@@ -8203,16 +8276,7 @@ msgstr "Öntanımlı Sentezleyici"
 msgid "Speech Dispatcher"
 msgstr "Konuşma Sentezleyici"
 
-#. Translators: This string will appear in the list of
-#. available voices for the current speech engine.  %s will be
-#. replaced by the name of the current speech engine, such as
-#. "Festival default voice" or "IBMTTS default voice".  It
-#. refers to the default voice configured for given speech
-#. engine within the speech subsystem.  Apart from this item,
-#. the list will contain the names of all available "real"
-#. voices provided by the speech engine.
-#.
-#: ../src/orca/speechdispatcherfactory.py:180
+#: ../src/orca/speechdispatcherfactory.py:185
 #, python-format
 msgid "%s default voice"
 msgstr "%s öntanımlı ses"
@@ -8223,25 +8287,25 @@ msgstr "%s öntanımlı ses"
 #. new string well.  For example, "Open..." turns into
 #. "Open dot dot dot".
 #.
-#: ../src/orca/speechdispatcherfactory.py:287
+#: ../src/orca/speechdispatcherfactory.py:292
 msgid " dot dot dot"
 msgstr " nokta nokta nokta"
 
 #. Translators: This string announces speech rate change.
-#: ../src/orca/speechdispatcherfactory.py:371
+#: ../src/orca/speechdispatcherfactory.py:388
 msgid "slower."
 msgstr "daha yavaş."
 
-#: ../src/orca/speechdispatcherfactory.py:371
+#: ../src/orca/speechdispatcherfactory.py:388
 msgid "faster."
 msgstr "daha hızlı."
 
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/speechdispatcherfactory.py:381
+#: ../src/orca/speechdispatcherfactory.py:398
 msgid "lower."
 msgstr "daha düşük."
 
-#: ../src/orca/speechdispatcherfactory.py:381
+#: ../src/orca/speechdispatcherfactory.py:398
 msgid "higher."
 msgstr "daha yüksek."
 
@@ -8250,7 +8314,7 @@ msgstr "daha yüksek."
 #. and the second item the name of the file being linked
 #. to.
 #.
-#: ../src/orca/speech_generator.py:429
+#: ../src/orca/speech_generator.py:443
 #, fuzzy, python-format
 #| msgid "%s link to %s"
 msgid "%(uri)s link to %(file)s"
@@ -8258,7 +8322,7 @@ msgstr "%(uri)s  %(file)s kadarına bağlı"
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/speech_generator.py:435
+#: ../src/orca/speech_generator.py:449
 #, python-format
 msgid "%s link"
 msgstr "%s bağlantısı"
@@ -8266,7 +8330,7 @@ msgstr "%s bağlantısı"
 #. Translators: this is an indication that a given
 #. link points to an object that is on the same page.
 #.
-#: ../src/orca/speech_generator.py:471
+#: ../src/orca/speech_generator.py:485
 msgid "same page"
 msgstr "aynı sayfa"
 
@@ -8278,7 +8342,7 @@ msgstr "aynı sayfa"
 #. link points to an object that is at the same site
 #. (but not on the same page) as the link.
 #.
-#: ../src/orca/speech_generator.py:477 ../src/orca/speech_generator.py:490
+#: ../src/orca/speech_generator.py:491 ../src/orca/speech_generator.py:504
 msgid "same site"
 msgstr "aynı site"
 
@@ -8286,13 +8350,13 @@ msgstr "aynı site"
 #. link points to an object that is at a different
 #. site than that of the link.
 #.
-#: ../src/orca/speech_generator.py:496
+#: ../src/orca/speech_generator.py:510
 msgid "different site"
 msgstr "başka site"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/speech_generator.py:526
+#: ../src/orca/speech_generator.py:540
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -8300,14 +8364,14 @@ msgstr[0] "%d bayt"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/speech_generator.py:530
+#: ../src/orca/speech_generator.py:544
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobayt"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/speech_generator.py:534
+#: ../src/orca/speech_generator.py:548
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabayt"
@@ -8315,21 +8379,21 @@ msgstr "%.2f megabayt"
 #. Translators: this is in reference to a table cell being
 #. selected or not.
 #.
-#: ../src/orca/speech_generator.py:736
+#: ../src/orca/speech_generator.py:750
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "seçili değil"
 
 #. Translators: this is in references to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:794
+#: ../src/orca/speech_generator.py:808
 #, python-format
 msgid "row %d"
 msgstr "satır %d"
 
 #. Translators: this is in references to a column in a
 #. table.
-#: ../src/orca/speech_generator.py:823
+#: ../src/orca/speech_generator.py:837
 #, fuzzy, python-format
 #| msgid "column %d of %d"
 msgid "column %(index)d of %(total)d"
@@ -8337,7 +8401,7 @@ msgstr "sütun %(index)d toplamda %(total)d"
 
 #. Translators: this is in reference to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:828
+#: ../src/orca/speech_generator.py:842
 #, fuzzy, python-format
 #| msgid "row %d of %d"
 msgid "row %(index)d of %(total)d"
@@ -8346,14 +8410,14 @@ msgstr "satır %(index)d toplamda %(total)d"
 #. Translators: This is to indicate to the user that
 #. he/she is in the last cell of a table in a document.
 #.
-#: ../src/orca/speech_generator.py:864
+#: ../src/orca/speech_generator.py:878
 msgid "End of table"
 msgstr "Tablonun sonu"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1205
+#: ../src/orca/speech_generator.py:1219
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -8362,7 +8426,7 @@ msgstr[0] "%d boşluk"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1216
+#: ../src/orca/speech_generator.py:1230
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -8370,7 +8434,7 @@ msgstr[0] "%d sekme karakteri"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/speech_generator.py:1284
+#: ../src/orca/speech_generator.py:1298
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -8379,7 +8443,7 @@ msgstr[0] "yüzde %d"
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/speech_generator.py:1383 ../src/orca/speech_generator.py:1404
+#: ../src/orca/speech_generator.py:1397 ../src/orca/speech_generator.py:1418
 msgid "0 items"
 msgstr "0 öge"
 
@@ -8387,7 +8451,7 @@ msgstr "0 öge"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/speech_generator.py:1439
+#: ../src/orca/speech_generator.py:1453
 #, fuzzy, python-format
 #| msgid "%d of %d item selected"
 #| msgid_plural "%d of %d items selected"
@@ -8398,7 +8462,7 @@ msgstr[0] "%(index)d of %(total)d item selected"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1492 ../src/orca/speech_generator.py:1783
+#: ../src/orca/speech_generator.py:1506 ../src/orca/speech_generator.py:1800
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -8407,7 +8471,7 @@ msgstr[0] "%d odaksız pencere"
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1574
+#: ../src/orca/speech_generator.py:1591
 msgid "Icon panel"
 msgstr "Simge paneli"
 
@@ -8415,7 +8479,7 @@ msgstr "Simge paneli"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1730
+#: ../src/orca/speech_generator.py:1747
 #, python-format
 msgid "Default button is %s"
 msgstr "Öntanımlı düğme %s"
@@ -8988,10 +9052,9 @@ msgstr "Sonraki karaktere gider."
 #. found.
 #.
 #: ../src/orca/structural_navigation.py:3409
-#, fuzzy
 #| msgid "No more paragraphs."
 msgid "No more separators."
-msgstr "Başla çıpa yok."
+msgstr "Başka ayraç yok."
 
 #. Translators: this is for navigating among tables in a document.
 #.
@@ -10097,7 +10160,7 @@ msgid "To get to the system menus press the alt+f1 key."
 msgstr "Sistem menüsünü almak için alt+f1 tuşlarına bakın."
 
 #. Translators: this is the tutorial string when navigating lists.
-#: ../src/orca/tutorialgenerator.py:317
+#: ../src/orca/tutorialgenerator.py:320
 msgid "Use up and down to select an item."
 msgstr "Bir öğe seçmek için yukarı ve aşağı kullanın."
 
@@ -10105,7 +10168,7 @@ msgstr "Bir öğe seçmek için yukarı ve aşağı kullanın."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:347 ../src/orca/tutorialgenerator.py:497
+#: ../src/orca/tutorialgenerator.py:350 ../src/orca/tutorialgenerator.py:500
 msgid "To collapse, press shift plus left."
 msgstr "Katlamak için lütfen shift ile sola basın."
 
@@ -10113,31 +10176,31 @@ msgstr "Katlamak için lütfen shift ile sola basın."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:503
+#: ../src/orca/tutorialgenerator.py:356 ../src/orca/tutorialgenerator.py:506
 msgid "To expand, press shift plus right."
 msgstr "Açmak için lütfen shift ile sağa basın."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
-#: ../src/orca/tutorialgenerator.py:385
+#: ../src/orca/tutorialgenerator.py:388
 msgid "Type in text."
 msgstr "Metin içine yaz."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
-#: ../src/orca/tutorialgenerator.py:413
+#: ../src/orca/tutorialgenerator.py:416
 msgid "Use left and right to view other tabs."
 msgstr "Diğer sekmeleri görüntülemek için sol ve sağ kullan."
 
 #. Translators: this is the tutorial string for activating a push button.
-#: ../src/orca/tutorialgenerator.py:438
+#: ../src/orca/tutorialgenerator.py:441
 msgid "To activate press space."
 msgstr "Etkinleştirmek için boşluğa basın."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
-#: ../src/orca/tutorialgenerator.py:466
+#: ../src/orca/tutorialgenerator.py:469
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
@@ -10145,12 +10208,12 @@ msgstr ""
 "değeri yazın."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
-#: ../src/orca/tutorialgenerator.py:654
+#: ../src/orca/tutorialgenerator.py:657
 msgid "Use arrow keys to change."
 msgstr "Değiştirmek için ok tuşlarını kullanın."
 
 #. Translators: this is a tip for the user, how to navigate menues.
-#: ../src/orca/tutorialgenerator.py:679
+#: ../src/orca/tutorialgenerator.py:682
 msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
@@ -10160,19 +10223,59 @@ msgstr ""
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
-#: ../src/orca/tutorialgenerator.py:684
+#: ../src/orca/tutorialgenerator.py:687
 msgid "To enter sub menu, press right arrow."
 msgstr "Alt menüye girmek için, lütfen sağ ok."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
-#: ../src/orca/tutorialgenerator.py:716
+#: ../src/orca/tutorialgenerator.py:719
 msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
 msgstr ""
 "Azaltmak için lütfen sol ok, arttırmak için ise sağ ok. En aza gitmek için "
 "home ve en fazlaya gitmek için end."
+
+#~ msgid "Orca Screen Reader and Magnifier"
+#~ msgstr "Orca Ekran Okuyucu ve Büyüteci"
+
+#~ msgid ""
+#~ "Present on-screen information as speech or braille, or magnify the screen"
+#~ msgstr "Braille ile veya sesli olarak "
+
+#~ msgid "Warning"
+#~ msgstr "Dikkat"
+
+#~ msgid "Bottom Half"
+#~ msgstr "Alt Yarım"
+
+#~ msgid "Centered"
+#~ msgstr "Ortalanmış"
+
+#~ msgid "Custom"
+#~ msgstr "Özel"
+
+#~ msgid "Full Screen"
+#~ msgstr "Tam Ekran"
+
+#~ msgid "Left Half"
+#~ msgstr "Üst Yarım"
+
+#~ msgid "None"
+#~ msgstr "Hiçbiri"
+
+#~ msgid "Proportional"
+#~ msgstr "Orantılı"
+
+#~ msgid "Push"
+#~ msgstr "Bas"
+
+#~ msgid "Right Half"
+#~ msgstr "Sağ Yarım"
+
+#~ msgid "Top Half"
+#~ msgstr "Üst Yarı"
 
 #~ msgid ""
 #~ "Prints debug information about the currently active application to the "
@@ -10273,17 +10376,8 @@ msgstr ""
 #~ msgid "%"
 #~ msgstr "%"
 
-#~ msgid "<b>Border Settings</b>"
-#~ msgstr "<b>Kenar Ayarları</b>"
-
-#~ msgid "<b>Color Settings</b>"
-#~ msgstr "<b>Renk Ayarları</b>"
-
 #~ msgid "<b>Contracted Braille</b>"
 #~ msgstr "<b>Daraltılmış Braille</b>"
-
-#~ msgid "<b>Contrast</b>"
-#~ msgstr "<b>Karşıtlık</b>"
 
 #~ msgid "<b>Cross-hair Settings</b>"
 #~ msgstr "<b>Artı İmleci Ayarları</b>"
@@ -10537,9 +10631,6 @@ msgstr ""
 
 #~ msgid "soffice.bin"
 #~ msgstr "soffice.bin"
-
-#~ msgid "soffice"
-#~ msgstr "soffice"
 
 #~ msgid "[Ee]volution"
 #~ msgstr "[Ee]volution"
