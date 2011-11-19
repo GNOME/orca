@@ -1028,6 +1028,63 @@ class Utilities:
         return label
 
     @staticmethod
+    def linkBasename(obj):
+        """Returns the relevant information from the URI.  The idea is
+        to attempt to strip off all prefix and suffix, much like the
+        basename command in a shell."""
+
+        basename = None
+
+        try:
+            hyperlink = obj.queryHyperlink()
+        except:
+            pass
+        else:
+            uri = hyperlink.getURI(0)
+            if uri and len(uri):
+                # Sometimes the URI is an expression that includes a URL.
+                # Currently that can be found at the bottom of safeway.com.
+                # It can also be seen in the backwards.html test file.
+                #
+                expression = uri.split(',')
+                if len(expression) > 1:
+                    for item in expression:
+                        if item.find('://') >=0:
+                            if not item[0].isalnum():
+                                item = item[1:-1]
+                            if not item[-1].isalnum():
+                                item = item[0:-2]
+                            uri = item
+                            break
+
+                # We're assuming that there IS a base name to be had.
+                # What if there's not? See backwards.html.
+                #
+                uri = uri.split('://')[-1]
+
+                # Get the last thing after all the /'s, unless it ends
+                # in a /.  If it ends in a /, we'll look to the stuff
+                # before the ending /.
+                #
+                if uri[-1] == "/":
+                    basename = uri[0:-1]
+                    basename = basename.split('/')[-1]
+                elif not uri.count("/"):
+                    basename = uri
+                else:
+                    basename = uri.split('/')[-1]
+                    if basename.startswith("index"):
+                        basename = uri.split('/')[-2]
+
+                    # Now, try to strip off the suffixes.
+                    #
+                    basename = basename.split('.')[0]
+                    basename = basename.split('?')[0]
+                    basename = basename.split('#')[0]
+
+        return basename
+
+    @staticmethod
     def linkIndex(obj, characterIndex):
         """A brute force method to see if an offset is a link.  This
         is provided because not all Accessible Hypertext implementations
