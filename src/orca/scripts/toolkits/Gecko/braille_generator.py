@@ -124,7 +124,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             # If there's no text for the link, expose part of the
             # URI to the user.
             #
-            basename = self._script.getLinkBasename(link)
+            basename = self._script.utilities.linkBasename(link)
             if basename:
                 result.append(basename)
 

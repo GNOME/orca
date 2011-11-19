@@ -452,7 +452,7 @@ class SpeechGenerator(generator.Generator):
                     # If there's no text for the link, expose part of the
                     # URI to the user.
                     #
-                    text = self._script.getLinkBasename(obj)
+                    text = self._script.utilities.linkBasename(obj)
                 if text:
                     linkOutput += " " + text
                 result.append(linkOutput)
