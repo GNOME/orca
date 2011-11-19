@@ -135,3 +135,24 @@ class Utilities(script_utilities.Utilities):
                 self, child, line, startOffset - adjustment)
 
         return adjustedLine
+
+    def displayedText(self, obj):
+        """Returns the text being displayed for an object.
+
+        Arguments:
+        - obj: the object
+
+        Returns the text being displayed for an object or None if there isn't
+        any text being shown.
+        """
+
+        text = script_utilities.Utilities.displayedText(self, obj)
+        if text and text != self.EMBEDDED_OBJECT_CHARACTER:
+            return text
+
+        if obj.getRole() == pyatspi.ROLE_LINK:
+            text = ' '.join(map(self.displayedText, (x for x in obj)))
+            if not text:
+                text = self.linkBasename(obj)
+
+        return text
