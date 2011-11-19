@@ -1061,6 +1061,8 @@ class Utilities:
                 # What if there's not? See backwards.html.
                 #
                 uri = uri.split('://')[-1]
+                if not uri:
+                    return basename
 
                 # Get the last thing after all the /'s, unless it ends
                 # in a /.  If it ends in a /, we'll look to the stuff
