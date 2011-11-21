@@ -1,3 +1,32 @@
+3.3.2 - 21 November 2011
+
+General
+
+  * Fix for bug #664386 - Orca does not always present image links in
+    WebKitGtk content
+
+  * Fix for bug #664384 - Need to move getLinkBasename() functionality
+    out of Gecko script so all scripts can use it
+
+  * Fix for bug #659023 - Orca does not speak the desktop icon names in
+    fallback mode if tutorial messages are enabled
+
+  * Fix for bug #661893 - Viewing package list of a www.launchpad.net PPA
+    causes Orca to stop working on Firefox 7.0.1
+
+  * Fix for bug #660099 - Cannot re-bind Orca keybindings via Preferences
+    dialog
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish                Daniel Mustieles
+    id            Indonesian             Andika Triwidada
+    nb            Norwegian bokmål       Kjartan Maraas
+    te            Telugu                 A Mohan Vamsee
+    tr            Turkish                Muhammet Kara
+
+=========
+
 3.3.1 - 24 October 2011
 
 General
