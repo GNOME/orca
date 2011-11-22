@@ -150,7 +150,7 @@ class Utilities(script_utilities.Utilities):
         if text and text != self.EMBEDDED_OBJECT_CHARACTER:
             return text
 
-        if obj.getRole() == pyatspi.ROLE_LINK:
+        if obj.getRole() in [pyatspi.ROLE_LINK, pyatspi.ROLE_LIST_ITEM]:
             text = ' '.join(map(self.displayedText, (x for x in obj)))
             if not text:
                 text = self.linkBasename(obj)
