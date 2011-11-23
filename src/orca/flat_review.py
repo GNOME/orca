@@ -429,10 +429,12 @@ class ValueZone(Zone):
                     orientation = _("vertical")
                         
             value = self.accessible.queryValue()
-            percentValue = int((value.currentValue
-                                / (value.maximumValue
-                                   - value.minimumValue))
-                               * 100.0)
+            try:
+                percentValue = int((value.currentValue /
+                                    (value.maximumValue - value.minimumValue))
+                                   * 100.0)
+            except ZeroDivisionError:
+                percentValue = 0
 
             if orientation:
                 speechValue = orientation + " " + \
