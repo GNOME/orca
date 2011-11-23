@@ -29,6 +29,8 @@ __license__   = "LGPL"
 
 import getopt
 import os
+import subprocess
+import re
 import signal
 import sys
 import time
@@ -1414,6 +1416,44 @@ def toggleSilenceSpeech(script=None, inputEvent=None):
         settings.silenceSpeech = True
     return True
 
+def _setXmodmap(xkbmap):
+    """Set the keyboard map using xkbcomp."""
+    p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],
+        stdin=subprocess.PIPE, stdout=None, stderr=None)
+    p.communicate(xkbmap)
+
+def _setCapsLockAsOrcaModifier(enable):
+    """Enable or disable use of the caps lock key as an Orca modifier key."""
+    interpretCapsLineProg = re.compile(
+        r'^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$', re.I)
+    capsModLineProg = re.compile(
+        r'^\s*action\s*=\s*SetMods\s*\(\s*modifiers\s*=\s*Lock\s*,\s*clearLocks\s*\)\s*;\s*$', re.I)
+    normalCapsLineProg = re.compile(
+        r'^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Lock\s*\)\s*;\s*$', re.I)
+    normalCapsLine = '        action= LockMods(modifiers=Lock);'
+    capsModLine =    '        action= SetMods(modifiers=Lock,clearLocks);'
+    lines = _originalXmodmap.split('\n')
+    foundCapsInterpretSection = False
+    for i in range(len(lines)):
+        line = lines[i]
+        if not foundCapsInterpretSection:
+            if interpretCapsLineProg.match(line):
+                foundCapsInterpretSection = True
+        else:
+            if enable:
+                if normalCapsLineProg.match(line):
+                    lines[i] = capsModLine
+                    _setXmodmap('\n'.join(lines))
+                    return
+            else:
+                if capsModLineProg.match(line):
+                    lines[i] = normalCapsLine
+                    _setXmodmap('\n'.join(lines))
+                    return
+            if line.find('}'):
+                # Failed to find the line we need to change
+                return
+
 def _createOrcaXmodmap():
     """Makes an Orca-specific Xmodmap so that the keys behave as we
     need them to do. This is especially the case for the Orca modifier.
@@ -1423,20 +1463,11 @@ def _createOrcaXmodmap():
 
     cmd = []
     if "Caps_Lock" in settings.orcaModifierKeys:
-        cmd.append("clear Lock")
+        _setCapsLockAsOrcaModifier(True)
         _capsLockCleared = True
     elif _capsLockCleared:
-        cmd.append("add Lock = Caps_Lock")
+        _setCapsLockAsOrcaModifier(False)
         _capsLockCleared = False
-
-    # Clear other keysyms so that we always treat the Orca modifier as
-    # the Orca modifier (e.g. remove KP_0 from KP_Insert).
-    #
-    for keyName in settings.orcaModifierKeys:
-        if keyName in ["Caps_Lock", "KP_Insert", "Insert"]:
-            cmd.append("keysym %s = %s" % (keyName, keyName))
-
-    os.system("echo '%s' | xmodmap - > /dev/null 2>&1" % "\n".join(cmd))
 
 def _storeXmodmap(keyList):
     """Save the original xmodmap for the keys in keyList before we alter it.
@@ -1446,12 +1477,7 @@ def _storeXmodmap(keyList):
     """
 
     global _originalXmodmap
-
-    items = "|".join(keyList)
-    cmd = "xmodmap -pke | grep -E '(%s)'" % items
-    filehandle = os.popen(cmd)
-    _originalXmodmap = filehandle.read()
-    filehandle.close()
+    _originalXmodmap = subprocess.check_output(['xkbcomp', os.environ['DISPLAY'], '-'])
 
 def _restoreXmodmap(keyList=[]):
     """Restore the original xmodmap values for the keys in keyList.
@@ -1461,21 +1487,11 @@ def _restoreXmodmap(keyList=[]):
       to restore the entire saved xmodmap.
     """
 
-    toRestore = []
-    lines = _originalXmodmap.split("\n")
-    if not keyList:
-        toRestore = lines
-
-    for key in keyList:
-        line = filter(lambda k: " %s" % key in k, lines)
-        toRestore.extend(line)
-
     global _capsLockCleared
-    if _capsLockCleared:
-        toRestore.append("add Lock = Caps_Lock")
-        _capsLockCleared = False
-
-    os.system("echo '%s' | xmodmap - > /dev/null 2>&1" % "\n".join(toRestore))
+    _capsLockCleared = False
+    p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],
+        stdin=subprocess.PIPE, stdout=None, stderr=None)
+    p.communicate(_originalXmodmap)
 
 def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     """Loads (and reloads) the user settings module, reinitializing
