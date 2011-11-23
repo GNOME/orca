@@ -20,7 +20,7 @@
     traditional keyboard navigation techniques to move from component
     to component in the application (e.g., pressing the Tab key to
     move from pushbutton to text area to toggle button, etc.), Orca
-    will present this to the user via braille, speech, magnification,
+    will present this to the user via braille, speech,
     or a combination thereof.  In the cases where more complex
     navigation is needed, such as structural navigation of complex
     text documents, Orca also provides a facility to define keyboard
@@ -51,7 +51,7 @@
     the main components of Orca are as follows: desktop applications
     that support the AT-SPI, the AT-SPI registry and infrastructure,
     Orca itself, Orca Scripts, and system services (e.g., speech,
-    braille, magnification).</para>
+    braille).</para>
 
     <figure>
       <title>High Level Orca Architecture. The main components of Orca
@@ -225,7 +225,7 @@
         <para>The <literal>orca.settings</literal> module (not depicted in
         the high level Orca architecture diagram) holds preferences
         set by the user during configuration.  These settings include
-        the following: use of speech, braille, and/or magnification,
+        the following: use of speech and/or braille,
         voice styles, key echo, text echo, etc.</para>
 
         <para>Any Orca module can check the value of a setting by
@@ -266,7 +266,7 @@
 
     <section id="archsystemservices"><title>System Services</title>
       <para> Orca relies on existing system services to provide
-      support for speech synthesis, braille, and screen magnification.
+      support for speech synthesis and braille.
       To interact with these services, Orca provides the modules
       described in the following sections.</para>
 
@@ -358,20 +358,6 @@
         the <literal>orca.braille</literal> module.  More information
         on braille generators can be found in the
         &scriptguidelink;.</para>
-        <para>&todo; flesh this section out more.</para>
-      </section>
-
-      <section id="archmag"><title>orca.mag</title>
-        <para> The <literal>orca.mag</literal> module
-        provides Orca's Python interface to the system's gnome-mag
-        <citation><xref linkend="gnome-mag"
-        endterm="gnome-mag.abbrev"/></citation> CORBA service(s).  The
-        magnification component provides methods that permit Orca
-        discover screen magnification services and set their desktop
-        region of interest.  The script is responsible for
-        calling <literal>orca.mag.magnifyAccessible</literal> with the
-        appropriate parameters to set the magnifier's region of
-        interest.</para>
         <para>&todo; flesh this section out more.</para>
       </section>
     </section>

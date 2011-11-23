@@ -30,14 +30,12 @@ orca_python_PYTHON = \
 	flat_review.py \
 	formatting.py \
 	generator.py \
-	gsmag.py \
 	httpserver.py \
 	input_event.py \
 	keybindings.py \
 	keynames.py \
 	laptop_keyboardmap.py \
 	liveregions.py \
-	mag.py \
 	mouse_review.py \
 	notification_messages.py \
 	orca.py \

@@ -358,10 +358,9 @@ class Script(default.Script):
                  orca_state.locusOfFocus.getIndexInParent()]
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
-        """Updates braille, magnification, and outputs speech for the
-        event.source or the otherObj. Overridden here to force the braille
-        display to be updated when the user arrows left/right into another
-        object."""
+        """Updates braille and outputs speech for the event.source or the
+        otherObj. Overridden here to force the braille display to be updated
+        when the user arrows left/right into another object."""
 
         default.Script._presentTextAtNewCaretPosition(self, event, otherObj)
 

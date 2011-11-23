@@ -4,10 +4,9 @@
       Scripts, and system services.  The key communication between the
       components is depicted.</a></dt><dt>4.1. <a href="#id2493928">Orca Script Diagram</a></dt></dl></div><div class="preface" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="archforward"></a>Foreword</h2></div></div></div><p>Orca is a free, open source, flexible, and extensible screen
 reader that provides access to the graphical desktop via
-user-customizable combinations of speech, braille, and/or
-magnification.  Under development by the Sun Microsystems, Inc.,
-Accessibility Program Office since 2004, Orca has been created with
-early input from and continued engagement with its end users.</p><p>Orca works with applications and toolkits that support the
+user-customizable combinations of speech and/or braille.
+</p>
+<p>Orca works with applications and toolkits that support the
 assistive technology service provider interface (AT-SPI), which is the
 primary assistive technology infrastructure for the Solaris and Linux
 operating environments.  Applications and toolkits supporting the
@@ -63,7 +62,7 @@ python -V
     traditional keyboard navigation techniques to move from component
     to component in the application (e.g., pressing the Tab key to
     move from pushbutton to text area to toggle button, etc.), Orca
-    will present this to the user via braille, speech, magnification,
+    will present this to the user via braille, speech,
     or a combination thereof.  In the cases where more complex
     navigation is needed, such as structural navigation of complex
     text documents, Orca also provides a facility to define keyboard
@@ -88,7 +87,7 @@ python -V
     the main components of Orca are as follows: desktop applications
     that support the AT-SPI, the AT-SPI registry and infrastructure,
     Orca itself, Orca Scripts, and system services (e.g., speech,
-    braille, magnification).</p><div class="figure"><a name="id2489678"></a><p class="title"><b>Figure 2.1. High Level Orca Architecture. The main components of Orca
+    braille).</p><div class="figure"><a name="id2489678"></a><p class="title"><b>Figure 2.1. High Level Orca Architecture. The main components of Orca
       are as follows: desktop applications that support the AT-SPI,
       the AT-SPI registry and infrastructure, Orca itself, Orca
       Scripts, and system services.  The key communication between the
@@ -195,7 +194,7 @@ python -V
       never be set directly.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archsettings"></a>settings</h3></div></div></div><p>The <code class="literal">orca.settings</code> module (not depicted in
         the high level Orca architecture diagram) holds preferences
         set by the user during configuration.  These settings include
-        the following: use of speech, braille, and/or magnification,
+        the following: use of speech and/or braille,
         voice styles, key echo, text echo, etc.</p><p>Any Orca module can check the value of a setting by
         examining the field directly in the
         <code class="literal">orca.settings</code> module.  In addition, the
@@ -291,15 +290,8 @@ python -V
         instance to help generate text to be sent to
         the <code class="literal">orca.braille</code> module.  More information
         on braille generators can be found in the
-        <a href="#scriptguide" title="Chapter 3. Introduction to Scripting">Orca Script Writing Guide</a>.</p><p><span class="emphasis"><em>TODO:</em></span> flesh this section out more.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="archmag"></a>orca.mag</h3></div></div></div><p> The <code class="literal">orca.mag</code> module
-        provides Orca's Python interface to the system's gnome-mag
-        [<span class="citation"><a href="#gnome-mag">gnome-mag</a></span>] CORBA service(s).  The
-        magnification component provides methods that permit Orca
-        discover screen magnification services and set their desktop
-        region of interest.  The script is responsible for
-        calling <code class="literal">orca.mag.magnifyAccessible</code> with the
-        appropriate parameters to set the magnifier's region of
-        interest.</p><p><span class="emphasis"><em>TODO:</em></span> flesh this section out more.</p></div></div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="scriptguide"></a>Chapter 3. Introduction to Scripting</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt><dd><dl><dt><span class="section"><a href="#birth">Birth</a></span></dt><dt><span class="section"><a href="#birth">Life</a></span></dt><dt><span class="section"><a href="#birth">Death</a></span></dt></dl></dd></dl></div><p>The goal of scripting is to provide Orca with the capability
+        <a href="#scriptguide" title="Chapter 3. Introduction to Scripting">Orca Script Writing Guide</a>.</p><p><span class="emphasis"><em>TODO:</em></span> flesh this section out more.</p></div><div class="section" lang="en">
+        </div></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="scriptguide"></a>Chapter 3. Introduction to Scripting</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#sgcontract">Script Contract</a></span></dt><dt><span class="section"><a href="#sglifecycle">Script Life Cycle</a></span></dt><dd><dl><dt><span class="section"><a href="#birth">Birth</a></span></dt><dt><span class="section"><a href="#birth">Life</a></span></dt><dt><span class="section"><a href="#birth">Death</a></span></dt></dl></dd></dl></div><p>The goal of scripting is to provide Orca with the capability
     of providing a natural feeling and compelling user experience for
     the various user interaction models of different desktop
     applications.</p><p>The Orca scripting approach allows scripts to extend and/or

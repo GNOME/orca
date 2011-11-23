@@ -44,10 +44,6 @@ import orca.find as find
 import orca.flat_review as flat_review
 import orca.input_event as input_event
 import orca.keybindings as keybindings
-try:
-    import orca.gsmag as mag
-except:
-    import orca.mag as mag
 import orca.outline as outline
 import orca.orca_state as orca_state
 import orca.phonnames as phonnames
@@ -1237,9 +1233,6 @@ class Script(script.Script):
         except:
             pass
 
-        if newLocusOfFocus:
-            mag.magnifyAccessible(event, newLocusOfFocus)
-
         # We always automatically go back to focus tracking mode when
         # the focus changes.
         #
@@ -1432,7 +1425,6 @@ class Script(script.Script):
                           "VISUAL CHANGE: '%s' '%s' (event=None)" \
                           % (obj.name, obj.getRole()))
 
-        mag.magnifyAccessible(event, obj)
         self.updateBraille(obj)
         utterances = self.speechGenerator.generateSpeech(
                          obj, alreadyFocused=True)
@@ -3776,14 +3768,11 @@ class Script(script.Script):
     ########################################################################
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
-        """Updates braille, magnification, and outputs speech for the
-        event.source or the otherObj."""
+        """Updates braille and outputs speech for the event.source or the
+        otherObj."""
 
         obj = otherObj or event.source
         text = obj.queryText()
-
-        if obj:
-            mag.magnifyAccessible(event, obj)
 
         # Update the Braille display - if we can just reposition
         # the cursor, then go for it.

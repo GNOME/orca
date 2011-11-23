@@ -55,10 +55,6 @@ import orca.eventsynthesizer as eventsynthesizer
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.liveregions as liveregions
-try:
-    import orca.gsmag as mag
-except:
-    import orca.mag as mag
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.rolenames as rolenames
@@ -5430,13 +5426,6 @@ class Script(default.Script):
         text = self.utilities.queryNonEmptyText(obj)
         if text:
             text.setCaretOffset(characterOffset)
-            if characterOffset == text.characterCount:
-                characterOffset -= 1
-                mag.magnifyAccessible(None,
-                                      obj,
-                                      self.getExtents(obj,
-                                                      characterOffset,
-                                                      characterOffset + 1))
 
     def moveToMouseOver(self, inputEvent):
         """Positions the caret offset to the next character or object

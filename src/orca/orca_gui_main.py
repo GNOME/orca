@@ -114,7 +114,6 @@ class OrcaMainGUI(Gtk.Window):
                        "Copyright (c) 2010 Consorcio Fernando de los Rios \n" \
                        "Copyright (c) 2010 Igalia, S.L. \n" \
                        "Copyright (c) 2010 Informal Informatica LTDA. \n" \
-                       "Copyright (c) 2010 Willie Walker \n" \
                        "Copyright (c) 2005-2010 Sun Microsystems Inc. \n" \
                        "Copyright (c) 2005-2008 Google Inc. \n" \
                        "Copyright (c) 2008, 2009 Eitan Isaacson \n" \

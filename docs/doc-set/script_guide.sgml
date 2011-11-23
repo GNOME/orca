@@ -293,7 +293,7 @@
       <literal>locusOfFocusChanged</literal> method of the active
       script. The <literal>locusOfFocusChanged</literal> method is the
       primary entry point where a script will present information to
-      the user via speech, braille, and magnification.</para>
+      the user via speech and/or braille.</para>
 
       <para>In many cases, the locus of focus doesn't change, but some
       property of the current locus of focus changes.  For example,
@@ -417,7 +417,7 @@
       <para>Event listeners are what make Orca work.  Orca's main goal
       in life is to listen for AT-SPI events
       from <literal>pyatspi</literal> and then perform some action,
-      such as speech, braille, or magnification.</para>
+      such as speech and/or braille.</para>
 
       <para>&note; as a script writer, the majority of the "trickery"
       you will be doing is figuring out which event(s) you need to
@@ -524,7 +524,7 @@ def onChildrenChanged(self, event):
 </programlisting>
 
       <para>As seen in this method, it is possible for an event handler
-      to use speech, braille, and magnification if it wants.  Usually,
+      to use speech and/or braille if it wants.  Usually,
       however, the <literal>locusOfFocusChanged</literal> and
       <literal>visualAppearanceChanged</literal> script methods should
       be reserved for those actions.</para>
@@ -794,8 +794,8 @@ def getBrailleBindings(self):
       things a script writer wants to do, especially getting debug
       output to determine just what the AT-SPI is sending it.  This
       chapter discusses the debug utilities of Orca as well as a
-      variety of utilities to assist a script in managing speech,
-      braille, and magnification.</para>
+      variety of utilities to assist a script in managing speech and
+      braille.</para>
     
     <section id="sgtts"><title>Speech Synthesis</title>
 

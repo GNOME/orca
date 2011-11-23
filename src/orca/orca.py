@@ -76,15 +76,6 @@ def onEnabledChanged(gsetting, key):
 
     if key == 'screen-reader-enabled' and not enabled:
         shutdown()
-    elif key == 'screen-magnifier-enabled':
-        settings.enableMagnifier = enabled
-        if enabled:
-            try:
-                mag.init()
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                debug.println(debug.LEVEL_SEVERE,
-                              "Could not initialize connection to magnifier.")
 
 class Options:
     """Class to handle getting run-time options."""
@@ -547,12 +538,6 @@ if settings.useDBus:
     import dbus.mainloop.glib
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
     import dbusserver
-    try:
-        import gsmag as mag
-    except:
-        import mag
-else:
-    import mag
 
 import braille
 import httpserver
@@ -1514,7 +1499,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     httpserver.shutdown()
     speech.shutdown()
     braille.shutdown()
-    mag.shutdown()
 
     _scriptManager.deactivate()
 
@@ -1574,19 +1558,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
             debug.printException(debug.LEVEL_WARNING)
             debug.println(debug.LEVEL_WARNING,
                           "Could not initialize connection to braille.")
-
-    if a11yAppSettings.get_boolean('screen-magnifier-enabled'):
-        try:
-            mag.init()
-            debug.println(debug.LEVEL_CONFIGURATION,
-                          "Magnification module has been initialized.")
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
-            debug.println(debug.LEVEL_SEVERE,
-                          "Could not initialize connection to magnifier.")
-    else:
-        debug.println(debug.LEVEL_CONFIGURATION,
-                      "Magnification module has NOT been initialized.")
 
     # I'm not sure where else this should go. But it doesn't really look
     # right here.
@@ -1985,9 +1956,9 @@ def showSplashGUI(script=None, inputEvent=None):
 _initialized = False
 
 def init(registry):
-    """Initialize the orca module, which initializes speech, braille,
-    and mag modules.  Also builds up the application list, registers
-    for AT-SPI events, and creates scripts for all known applications.
+    """Initialize the orca module, which initializes the speech and braille
+    modules.  Also builds up the application list, registers for AT-SPI events,
+    and creates scripts for all known applications.
 
     Returns True if the initialization procedure has run, or False if this
     module has already been initialized.
@@ -2119,8 +2090,6 @@ def shutdown(script=None, inputEvent=None):
         speech.shutdown()
     if settings.enableBraille:
         braille.shutdown()
-    if settings.enableMagnifier:
-        mag.shutdown()
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)

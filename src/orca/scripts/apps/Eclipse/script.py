@@ -43,9 +43,8 @@ class Script(default.Script):
                    "Page_Down", "Home", "End"]
 
     def _presentTextAtNewCaretPosition(self, event, otherObj=None):
-        """Updates braille, magnification, and outputs speech for the
-        event.source or the otherObj. Overridden here so that we can
-        give more feedback to user
+        """Updates braille and outputs speech for the event.source or the
+        otherObj. Overridden here so that we can give more feedback to user.
         """
 
         if self.utilities.isDuplicateEvent(event):

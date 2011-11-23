@@ -389,10 +389,6 @@ flashIsPersistent       = False
 #
 enableBrailleMonitor    = False
 
-# If True, enable magnification.
-#
-enableMagnifier                  = False
-
 # if True, enable character echo.
 # Note that it is allowable for both enableEchoByCharacter and enableKeyEcho
 # to be True
