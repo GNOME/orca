@@ -5,7 +5,6 @@ SUBDIRS = \
 	Eclipse \
 	ekiga \
 	empathy \
-	epiphany \
 	evolution \
 	gajim \
 	gcalctool \
@@ -35,8 +34,7 @@ SUBDIRS = \
 	rhythmbox \
 	soffice \
 	Thunderbird \
-	xfwm4 \
-	yelp
+	xfwm4
 
 orca_pathdir=$(pyexecdir)
 

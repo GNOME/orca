@@ -1,8 +1,9 @@
 # Orca
 #
 # Copyright (C) 2010-2011 The Orca Team
+# Copyright (C) 2011 Igalia, S.L.
 #
-# Author: Joanmarie Diggs <joanmarie.diggs@gmail.com>
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +23,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010-2011 The Orca Team"
+__copyright__ = "Copyright (C) 2010-2011 The Orca Team" \
+                "Copyright (C) 2011 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -55,7 +57,7 @@ class Script(default.Script):
 
     CARET_NAVIGATION_KEYS = ['Left', 'Right', 'Up', 'Down', 'Home', 'End']
 
-    def __init__(self, app, isBrowser=False):
+    def __init__(self, app, isBrowser=True):
         """Creates a new script for WebKitGtk applications.
 
         Arguments:
@@ -174,6 +176,33 @@ class Script(default.Script):
 
         types = self.getEnabledStructuralNavigationTypes()
         return StructuralNavigation(self, types, True)
+
+    def getEnabledStructuralNavigationTypes(self):
+        """Returns a list of the structural navigation object types
+        enabled in this script."""
+
+        enabledTypes = [StructuralNavigation.ANCHOR,
+                        StructuralNavigation.BLOCKQUOTE,
+                        StructuralNavigation.BUTTON,
+                        StructuralNavigation.CHECK_BOX,
+                        StructuralNavigation.CHUNK,
+                        StructuralNavigation.COMBO_BOX,
+                        StructuralNavigation.ENTRY,
+                        StructuralNavigation.FORM_FIELD,
+                        StructuralNavigation.HEADING,
+                        StructuralNavigation.LANDMARK,
+                        StructuralNavigation.LIST,
+                        StructuralNavigation.LIST_ITEM,
+                        StructuralNavigation.LIVE_REGION,
+                        StructuralNavigation.PARAGRAPH,
+                        StructuralNavigation.RADIO_BUTTON,
+                        StructuralNavigation.SEPARATOR,
+                        StructuralNavigation.TABLE,
+                        StructuralNavigation.TABLE_CELL,
+                        StructuralNavigation.UNVISITED_LINK,
+                        StructuralNavigation.VISITED_LINK]
+
+        return enabledTypes
 
     def getUtilities(self):
         """Returns the utilites for this script."""

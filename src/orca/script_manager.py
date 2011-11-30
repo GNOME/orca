@@ -57,10 +57,8 @@ class ScriptManager:
              'Miramar':          'Thunderbird',
              'Shredder':         'Thunderbird',
              'bug-buddy':        'gnome_segv2',
-             'epiphany-browser': 'epiphany',
              'gaim':             'pidgin',
              'gnome-calculator': 'gcalctool',
-             'gnome-help':       'yelp',
              'Nereid':           'Banshee',
              'vte':              'gnome-terminal'}
         self._toolkitNames = \

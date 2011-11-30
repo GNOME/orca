@@ -88,7 +88,6 @@ src/orca/scripts/apps/ddu/Makefile
 src/orca/scripts/apps/Eclipse/Makefile
 src/orca/scripts/apps/ekiga/Makefile
 src/orca/scripts/apps/empathy/Makefile
-src/orca/scripts/apps/epiphany/Makefile
 src/orca/scripts/apps/evolution/Makefile
 src/orca/scripts/apps/gajim/Makefile
 src/orca/scripts/apps/gcalctool/Makefile
@@ -119,7 +118,6 @@ src/orca/scripts/apps/rhythmbox/Makefile
 src/orca/scripts/apps/soffice/Makefile
 src/orca/scripts/apps/Thunderbird/Makefile
 src/orca/scripts/apps/xfwm4/Makefile
-src/orca/scripts/apps/yelp/Makefile
 src/orca/scripts/toolkits/Makefile
 src/orca/scripts/toolkits/Gecko/Makefile
 src/orca/scripts/toolkits/J2SE-access-bridge/Makefile
