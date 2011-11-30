@@ -223,7 +223,7 @@ class ScriptManager:
         if objToolkit:
             toolkitScript = self.scripts.get(objToolkit)
             if not toolkitScript:
-                toolkitScript = self._createScript(None, obj)
+                toolkitScript = self._createScript(app, obj)
                 self.scripts[objToolkit] = toolkitScript
                 _eventManager.registerListeners(toolkitScript)
 

@@ -491,6 +491,7 @@ class EventManager:
             debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
 
         script = self._getScriptForEvent(event)
+        debug.println(debug.LEVEL_FINEST, "Script for event: %s" % script.name)
         setNewActiveScript, reason = self._isActivatableEvent(event, script)
         if setNewActiveScript:
             app = event.host_application or event.source.getApplication()
