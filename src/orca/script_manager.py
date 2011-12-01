@@ -221,11 +221,13 @@ class ScriptManager:
 
         objToolkit = self._toolkitForObject(obj)
         if objToolkit:
-            toolkitScript = self.toolkitScripts.get(app)
+            toolkitScripts = self.toolkitScripts.get(app, {})
+            toolkitScript = toolkitScripts.get(objToolkit)
             if not toolkitScript:
                 toolkitScript = self._createScript(app, obj)
-                self.toolkitScripts[app] = toolkitScript
+                toolkitScripts[objToolkit] = toolkitScript
                 _eventManager.registerListeners(toolkitScript)
+            self.toolkitScripts[app] = toolkitScripts
 
         if not app:
             appScript = self.getDefaultScript()
@@ -287,11 +289,12 @@ class ScriptManager:
             del appScript
 
             try:
-                toolkitScript = self.toolkitScripts.pop(app)
+                toolkitScripts = self.toolkitScripts.pop(app)
             except KeyError:
                 pass
             else:
-                _eventManager.deregisterListeners(toolkitScript)
-                del toolkitScript
+                for toolkitScript in toolkitScripts:
+                    _eventManager.deregisterListeners(toolkitScript)
+                    del toolkitScript
 
             del app
