@@ -36,7 +36,8 @@ _eventManager = getattr(orca, '_eventManager')
 class ScriptManager:
 
     def __init__(self):
-        self.scripts = {}
+        self.appScripts = {}
+        self.toolkitScripts = {}
         self._appModules = apps.__all__
         self._toolkitModules = toolkits.__all__
         self._defaultScript = None
@@ -78,7 +79,8 @@ class ScriptManager:
 
         self._defaultScript  = None
         self.setActiveScript(None, "deactivate")
-        self.scripts = {}
+        self.appScripts = {}
+        self.toolkitScripts = {}
 
     def getModuleName(self, app):
         """Returns the module name of the script to use for application app."""
@@ -219,19 +221,19 @@ class ScriptManager:
 
         objToolkit = self._toolkitForObject(obj)
         if objToolkit:
-            toolkitScript = self.scripts.get(objToolkit)
+            toolkitScript = self.toolkitScripts.get(app)
             if not toolkitScript:
-                toolkitScript = self._createScript(None, obj)
-                self.scripts[objToolkit] = toolkitScript
+                toolkitScript = self._createScript(app, obj)
+                self.toolkitScripts[app] = toolkitScript
                 _eventManager.registerListeners(toolkitScript)
 
         if not app:
             appScript = self.getDefaultScript()
-        elif app in self.scripts:
-            appScript = self.scripts[app]
+        elif app in self.appScripts:
+            appScript = self.appScripts[app]
         else:
             appScript = self._createScript(app, None)
-            self.scripts[app] = appScript
+            self.appScripts[app] = appScript
             _eventManager.registerListeners(appScript)
 
         # Only defer to the toolkit script for this object if the app script
@@ -277,10 +279,19 @@ class ScriptManager:
             debug.printException(debug.LEVEL_FINEST)
             return
 
-        appList = self.scripts.keys()
+        appList = self.appScripts.keys()
         appList = filter(lambda a: a!= None and a not in desktop, appList)
         for app in appList:
-            script = self.scripts.pop(app)
-            _eventManager.deregisterListeners(script)
+            appScript = self.appScripts.pop(app)
+            _eventManager.deregisterListeners(appScript)
+            del appScript
+
+            try:
+                toolkitScript = self.toolkitScripts.pop(app)
+            except KeyError:
+                pass
+            else:
+                _eventManager.deregisterListeners(toolkitScript)
+                del toolkitScript
+
             del app
-            del script
