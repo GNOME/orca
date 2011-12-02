@@ -85,57 +85,6 @@ class Utilities(script_utilities.Utilities):
 
         return readOnly
 
-    def adjustForLinks(self, obj, line, startOffset):
-        """Adjust line to include the word "link" after any hypertext links.
-        Overridden here to deal with parents containing children which in
-        turn contain the links and implement the hypertext interface.
-
-        Arguments:
-        - obj: the accessible object that this line came from.
-        - line: the string to adjust for links.
-        - startOffset: the caret offset at the start of the line.
-
-        Returns: a new line adjusted to add the speaking of "link" after
-        text which is also a link.
-        """
-
-        adjustedLine = script_utilities.Utilities.adjustForLinks(
-                self, obj, line, startOffset)
-
-        roles = [pyatspi.ROLE_LIST_ITEM]
-        if not obj.getRole() in roles or not obj.childCount:
-            return adjustedLine
-
-        child = obj[0]
-        try:
-            hypertext = obj.queryHypertext()
-            nLinks = hypertext.getNLinks()
-        except NotImplementedError:
-            nLinks = 0
-
-        if not nLinks:
-            try:
-                hypertext = child.queryHypertext()
-                nLinks = hypertext.getNLinks()
-            except NotImplementedError:
-                pass
-
-        if not nLinks:
-            return adjustedLine
-
-        try:
-            objText = obj.queryText()
-            childText = child.queryText()
-        except NotImplementedError:
-            return adjustedLine
-
-        adjustment = objText.characterCount - childText.characterCount
-        if adjustment:
-            adjustedLine = script_utilities.Utilities.adjustForLinks(
-                self, child, line, startOffset - adjustment)
-
-        return adjustedLine
-
     def displayedText(self, obj):
         """Returns the text being displayed for an object.
 

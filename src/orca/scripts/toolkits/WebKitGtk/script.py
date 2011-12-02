@@ -227,8 +227,7 @@ class Script(default.Script):
             self.updateBraille(event.source)
             return
 
-        if self.utilities.isWebKitGtk(orca_state.locusOfFocus):
-            orca.setLocusOfFocus(event, event.source, False)
+        orca.setLocusOfFocus(event, event.source, False)
 
         default.Script.onCaretMoved(self, event)
 
@@ -271,6 +270,10 @@ class Script(default.Script):
         Arguments:
         - event: the Event
         """
+
+        lastKey, mods = self.utilities.lastKeyAndModifiers()
+        if lastKey in self.CARET_NAVIGATION_KEYS:
+            return True
 
         obj = event.source
         role = obj.getRole()
@@ -364,7 +367,10 @@ class Script(default.Script):
 
         default.Script.sayLine(self, obj)
 
-        rolesToSpeak = [pyatspi.ROLE_HEADING]
+        if obj.getRole() == pyatspi.ROLE_PANEL and obj.getIndexInParent() == 0:
+            obj = obj.parent
+
+        rolesToSpeak = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK]
         if obj.getRole() in rolesToSpeak:
             speech.speak(self.speechGenerator.getRoleName(obj))
 
@@ -382,10 +388,6 @@ class Script(default.Script):
            and event.detail1:
             if event.source.getRole() == pyatspi.ROLE_LINK:
                 return False
-
-            lastKey, mods = self.utilities.lastKeyAndModifiers()
-            if lastKey in self.CARET_NAVIGATION_KEYS:
-                return True
 
         return default.Script.skipObjectEvent(self, event)
 
