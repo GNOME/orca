@@ -283,7 +283,8 @@ class Script(default.Script):
         textRoles = [pyatspi.ROLE_HEADING,
                      pyatspi.ROLE_PANEL,
                      pyatspi.ROLE_PARAGRAPH,
-                     pyatspi.ROLE_SECTION]
+                     pyatspi.ROLE_SECTION,
+                     pyatspi.ROLE_TABLE_CELL]
         if role in textRoles:
             return
 
