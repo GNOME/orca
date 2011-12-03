@@ -271,10 +271,6 @@ class Script(default.Script):
         - event: the Event
         """
 
-        lastKey, mods = self.utilities.lastKeyAndModifiers()
-        if lastKey in self.CARET_NAVIGATION_KEYS:
-            return True
-
         obj = event.source
         role = obj.getRole()
         if role == pyatspi.ROLE_LIST_ITEM and obj.childCount:
@@ -288,11 +284,10 @@ class Script(default.Script):
         if role in textRoles:
             return
 
-        if role == pyatspi.ROLE_LINK and obj.childCount:
-            try:
-                text = obj.queryText()
-            except NotImplementedError:
-                orca.setLocusOfFocus(event, obj[0])
+        if not (role == pyatspi.ROLE_LINK and obj.childCount):
+            lastKey, mods = self.utilities.lastKeyAndModifiers()
+            if lastKey in self.CARET_NAVIGATION_KEYS:
+                return
 
         default.Script.onFocus(self, event)
 
