@@ -403,7 +403,9 @@ class Script(default.Script):
                 voice = self.voices[settings.DEFAULT_VOICE]
 
             phrase = self.utilities.adjustForRepeats(phrase)
-            phrase = self.utilities.adjustForLinks(obj, phrase, startOffset)
+            links = filter(lambda x: x.getRole() == pyatspi.ROLE_LINK, obj)
+            if links:
+                phrase = self.utilities.adjustForLinks(obj, phrase, startOffset)
             speech.speak(phrase, voice)
         else:
             # Speak blank line if appropriate.
