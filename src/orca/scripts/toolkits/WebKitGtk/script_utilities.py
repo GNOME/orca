@@ -1,6 +1,9 @@
 # Orca
 #
-# Copyright 2010 Joanmarie Diggs.
+# Copyright (C) 2010 Joanmarie Diggs
+# Copyright (C) 2011 Igalia, S.L.
+#
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -20,12 +23,15 @@
 __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
+__copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
+                "Copyright (c) 2011 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
+import re
 
 import orca.script_utilities as script_utilities
+import orca.settings as settings
 
 #############################################################################
 #                                                                           #
@@ -105,3 +111,51 @@ class Utilities(script_utilities.Utilities):
                 text = self.linkBasename(obj)
 
         return text
+
+    def getObjectsFromEOCs(self, obj, boundary=None, offset=None):
+        """Breaks the string containing a mixture of text and embedded object
+        characters into a list of (obj, startOffset, endOffset, string) tuples.
+
+        Arguments
+        - obj: the object whose EOCs we need to expand into tuples
+        - boundary: the pyatspi text boundary type. If None, get all text.
+        - offset: the character offset. If None, use the current offset.
+
+        Returns a list of (obj, startOffset, endOffset, string) tuples.
+        """
+
+        try:
+            text = obj.queryText()
+            htext = obj.queryHypertext()
+        except (AttributeError, NotImplementedError):
+            return [(obj, 0, 1, '')]
+
+        if offset == None:
+            offset = text.caretOffset
+        if boundary == None:
+            start = offset
+            end = text.characterCount
+            string = text.getText(start, end)
+        else:
+            if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
+                key, mods = self.lastKeyAndModifiers()
+                if (mods & settings.SHIFT_MODIFIER_MASK) and key == 'Right':
+                    offset -= 1
+            string, start, end = text.getTextAtOffset(offset, boundary)
+
+        if not string:
+            return [(obj, 0, 1, '')]
+
+        string = string.decode('UTF-8')
+        pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
+        offsets = [m.start(0) for m in re.finditer(pattern, string)]
+        objects = \
+            [(o, obj[htext.getLinkIndex(o + start)], 0, 1, '') for o in offsets]
+
+        pattern = re.compile('[^%s]+' % self.EMBEDDED_OBJECT_CHARACTER)
+        spans = [m.span() for m in re.finditer(pattern, string)]
+        for (s1, s2) in spans:
+            objects.append([s1, obj, s1 + start, s2 + start, string[s1:s2]])
+
+        objects = sorted(objects, key=lambda x: x[0])
+        return map(lambda o: o[1:5], objects)

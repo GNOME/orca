@@ -111,8 +111,8 @@ class OrcaMainGUI(Gtk.Window):
         # Translators: This text is used in the Orca About dialog.
         #
         copyrights = _("Copyright (c) 2010-2011 The Orca Team \n" \
+                       "Copyright (c) 2010-2011 Igalia, S.L. \n" \
                        "Copyright (c) 2010 Consorcio Fernando de los Rios \n" \
-                       "Copyright (c) 2010 Igalia, S.L. \n" \
                        "Copyright (c) 2010 Informal Informatica LTDA. \n" \
                        "Copyright (c) 2005-2010 Sun Microsystems Inc. \n" \
                        "Copyright (c) 2005-2008 Google Inc. \n" \

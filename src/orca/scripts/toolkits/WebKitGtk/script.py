@@ -347,33 +347,73 @@ class Script(default.Script):
         """Speak the character at the caret.
 
         Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-          interface
+        - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        if obj.getRole() == pyatspi.ROLE_SEPARATOR:
-            speech.speak(self.speechGenerator.generateSpeech(obj))
-            return
+        boundary = pyatspi.TEXT_BOUNDARY_CHAR
+        objects = self.utilities.getObjectsFromEOCs(obj, boundary)
+        for (obj, start, end, string) in objects:
+            if string:
+                speech.speakCharacter(string)
+            else:
+                speech.speak(self.speechGenerator.generateSpeech(obj))
 
-        default.Script.sayCharacter(self, obj)
-
-    def sayLine(self, obj):
-        """Speaks the line of an AccessibleText object that contains the
-        caret.
+    def sayWord(self, obj):
+        """Speaks the word at the caret.
 
         Arguments:
-        - obj: an Accessible object that implements the AccessibleText
-               interface
+        - obj: an Accessible object that implements the AccessibleText interface
         """
 
-        default.Script.sayLine(self, obj)
+        boundary = pyatspi.TEXT_BOUNDARY_WORD_START
+        objects = self.utilities.getObjectsFromEOCs(obj, boundary)
+        for (obj, start, end, string) in objects:
+            self.sayPhrase(obj, start, end)
 
-        if obj.getRole() == pyatspi.ROLE_PANEL and obj.getIndexInParent() == 0:
-            obj = obj.parent
+    def sayLine(self, obj):
+        """Speaks the line at the caret.
 
-        rolesToSpeak = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK]
-        if obj.getRole() in rolesToSpeak:
-            speech.speak(self.speechGenerator.getRoleName(obj))
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText interface
+        """
+
+        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        objects = self.utilities.getObjectsFromEOCs(obj, boundary)
+        for (obj, start, end, string) in objects:
+            self.sayPhrase(obj, start, end)
+
+            # TODO: Move these next items into the speech generator.
+            if obj.getRole() == pyatspi.ROLE_PANEL \
+               and obj.getIndexInParent() == 0:
+                obj = obj.parent
+
+            rolesToSpeak = [pyatspi.ROLE_HEADING, pyatspi.ROLE_LINK]
+            if obj.getRole() in rolesToSpeak:
+                speech.speak(self.speechGenerator.getRoleName(obj))
+
+    def sayPhrase(self, obj, startOffset, endOffset):
+        """Speaks the text of an Accessible object between the given offsets.
+
+        Arguments:
+        - obj: an Accessible object that implements the AccessibleText interface
+        - startOffset: the start text offset.
+        - endOffset: the end text offset.
+        """
+
+        phrase = self.utilities.substring(obj, startOffset, endOffset)
+        if len(phrase) and phrase != "\n":
+            if phrase.decode("UTF-8").isupper():
+                voice = self.voices[settings.UPPERCASE_VOICE]
+            else:
+                voice = self.voices[settings.DEFAULT_VOICE]
+
+            phrase = self.utilities.adjustForRepeats(phrase)
+            phrase = self.utilities.adjustForLinks(obj, phrase, startOffset)
+            speech.speak(phrase, voice)
+        else:
+            # Speak blank line if appropriate.
+            #
+            self.sayCharacter(obj)
 
     def skipObjectEvent(self, event):
         """Gives us, and scripts, the ability to decide an event isn't
