@@ -112,6 +112,18 @@ class Utilities(script_utilities.Utilities):
 
         return text
 
+    @staticmethod
+    def getHyperlinkRange(obj):
+        """Returns the start and end indices associated with the embedded
+        object, obj."""
+
+        try:
+            hyperlink = obj.queryHyperlink()
+        except NotImplementedError:
+            return 0, 0
+
+        return hyperlink.startIndex, hyperlink.endIndex
+
     def getObjectsFromEOCs(self, obj, boundary=None, offset=None):
         """Breaks the string containing a mixture of text and embedded object
         characters into a list of (obj, startOffset, endOffset, string) tuples.
@@ -130,32 +142,33 @@ class Utilities(script_utilities.Utilities):
         except (AttributeError, NotImplementedError):
             return [(obj, 0, 1, '')]
 
+        string = text.getText(0, -1).decode('UTF-8')
+        if not string:
+            return [(obj, 0, 1, '')]
+
         if offset == None:
             offset = text.caretOffset
         if boundary == None:
             start = offset
             end = text.characterCount
-            string = text.getText(start, end)
         else:
             if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
                 key, mods = self.lastKeyAndModifiers()
                 if (mods & settings.SHIFT_MODIFIER_MASK) and key == 'Right':
                     offset -= 1
-            string, start, end = text.getTextAtOffset(offset, boundary)
+            segment, start, end = text.getTextAtOffset(offset, boundary)
 
-        if not string:
-            return [(obj, 0, 1, '')]
-
-        string = string.decode('UTF-8')
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
         offsets = [m.start(0) for m in re.finditer(pattern, string)]
-        objects = \
-            [(o, obj[htext.getLinkIndex(o + start)], 0, 1, '') for o in offsets]
+        offsets = filter(lambda x: start <= x < end, offsets)
 
-        pattern = re.compile('[^%s]+' % self.EMBEDDED_OBJECT_CHARACTER)
-        spans = [m.span() for m in re.finditer(pattern, string)]
-        for (s1, s2) in spans:
-            objects.append([s1, obj, s1 + start, s2 + start, string[s1:s2]])
+        objects = []
+        objs = [obj[htext.getLinkIndex(offset)] for offset in offsets]
+        ranges = [self.getHyperlinkRange(x) for x in objs]
+        for i, (first, last) in enumerate(ranges):
+            objects.append((obj, start, first, string[start:first]))
+            objects.append((objs[i], first, last, ''))
+            start = last
+        objects.append((obj, start, end, string[start:end]))
 
-        objects = sorted(objects, key=lambda x: x[0])
-        return map(lambda o: o[1:5], objects)
+        return objects
