@@ -2452,7 +2452,7 @@ class Utilities:
 
         try:
             unchanged = newSegment == segment
-        except UnicodeEncodeError, UnicodeDecodeError:
+        except (UnicodeEncodeError, UnicodeDecodeError):
             unchanged = True
 
         if unchanged:
@@ -2965,3 +2965,31 @@ class Utilities:
         except:
             debug.printException(debug.LEVEL_WARNING)
             return ""
+
+    def getObjectsFromEOCs(self, obj, boundary=None, offset=None):
+        """Breaks the string containing a mixture of text and embedded object
+        characters into a list of (obj, startOffset, endOffset, string) tuples.
+
+        Arguments
+        - obj: the object whose EOCs we need to expand into tuples
+        - boundary: the pyatspi text boundary type. If None, get all text.
+        - offset: the character offset. If None, use the current offset.
+
+        Returns a list of (obj, startOffset, endOffset, string) tuples.
+        """
+
+        # For now, each script should implement this functionality itself.
+
+        return []
+
+    @staticmethod
+    def getHyperlinkRange(obj):
+        """Returns the start and end indices associated with the embedded
+        object, obj."""
+
+        try:
+            hyperlink = obj.queryHyperlink()
+        except NotImplementedError:
+            return 0, 0
+
+        return hyperlink.startIndex, hyperlink.endIndex

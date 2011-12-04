@@ -1,8 +1,9 @@
 # Orca
 #
 # Copyright (C) 2010 Joanmarie Diggs
+# Copyright (C) 2011 Igalia, S.L.
 #
-# Author: Joanmarie Diggs <joanied@gnome.org>
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +23,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs"
+__copyright__ = "Copyright (c) 2010 Joanmarie Diggs" \
+                "Copyright (c) 2011 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -55,6 +57,29 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             voice = settings.voices[settings.UPPERCASE_VOICE]
 
         return voice
+
+    def _generateLabel(self, obj, **args):
+        result = \
+            speech_generator.SpeechGenerator._generateLabel(self, obj, **args)
+        if result:
+            return result
+
+        role = args.get('role', obj.getRole())
+        inferRoles = [pyatspi.ROLE_CHECK_BOX,
+                      pyatspi.ROLE_COMBO_BOX,
+                      pyatspi.ROLE_ENTRY,
+                      pyatspi.ROLE_LIST,
+                      pyatspi.ROLE_PASSWORD_TEXT,
+                      pyatspi.ROLE_RADIO_BUTTON]
+        if not role in inferRoles:
+            return result
+
+        label = self._script.labelInference.infer(obj)
+        if label:
+            result.append(label)
+            result.extend(self.voice(speech_generator.DEFAULT))
+
+        return result
 
     def _generateRoleName(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):

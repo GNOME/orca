@@ -34,6 +34,7 @@ orca_python_PYTHON = \
 	input_event.py \
 	keybindings.py \
 	keynames.py \
+	label_inference.py \
 	laptop_keyboardmap.py \
 	liveregions.py \
 	mouse_review.py \

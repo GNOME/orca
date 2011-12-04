@@ -45,6 +45,7 @@ import braille_generator
 import debug
 import flat_review
 import formatting
+import label_inference
 import keybindings
 import orca_state
 import script_utilities
@@ -83,6 +84,7 @@ class Script:
         self.presentIfInactive = True
 
         self.utilities = self.getUtilities()
+        self.labelInference = self.getLabelInference()
         self.structuralNavigation = self.getStructuralNavigation()
         self.chat = self.getChat()
         self.inputEventHandlers = {}
@@ -210,6 +212,10 @@ class Script:
         """Returns the utilites for this script.
         """
         return script_utilities.Utilities(self)
+
+    def getLabelInference(self):
+        """Returns the label inference functionality for this script."""
+        return label_inference.LabelInference(self)
 
     def getEnabledStructuralNavigationTypes(self):
         """Returns a list of the structural navigation object types

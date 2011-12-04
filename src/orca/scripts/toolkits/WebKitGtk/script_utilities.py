@@ -112,18 +112,6 @@ class Utilities(script_utilities.Utilities):
 
         return text
 
-    @staticmethod
-    def getHyperlinkRange(obj):
-        """Returns the start and end indices associated with the embedded
-        object, obj."""
-
-        try:
-            hyperlink = obj.queryHyperlink()
-        except NotImplementedError:
-            return 0, 0
-
-        return hyperlink.startIndex, hyperlink.endIndex
-
     def getObjectsFromEOCs(self, obj, boundary=None, offset=None):
         """Breaks the string containing a mixture of text and embedded object
         characters into a list of (obj, startOffset, endOffset, string) tuples.
