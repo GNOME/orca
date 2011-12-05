@@ -293,7 +293,7 @@ class ScriptManager:
             except KeyError:
                 pass
             else:
-                for toolkitScript in toolkitScripts:
+                for toolkitScript in toolkitScripts.values():
                     _eventManager.deregisterListeners(toolkitScript)
                     del toolkitScript
 
