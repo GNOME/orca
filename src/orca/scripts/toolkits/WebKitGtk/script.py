@@ -276,6 +276,12 @@ class Script(default.Script):
         if role == pyatspi.ROLE_LIST_ITEM and obj.childCount:
             return
 
+        widgetRoles = [pyatspi.ROLE_MENU,
+                       pyatspi.ROLE_MENU_ITEM]
+        if role in widgetRoles:
+            default.Script.onFocus(self, event)
+            return
+
         textRoles = [pyatspi.ROLE_HEADING,
                      pyatspi.ROLE_PANEL,
                      pyatspi.ROLE_PARAGRAPH,
