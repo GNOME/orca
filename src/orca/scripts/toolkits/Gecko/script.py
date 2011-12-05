@@ -279,6 +279,9 @@ class Script(default.Script):
         self.preMouseOverContext = [None, -1]
         self.inMouseOverObject = False
 
+        # See bug 665522 - comment 5
+        app.setCacheMask(pyatspi.cache.ALL ^ pyatspi.cache.CHILDREN)
+
     def activate(self):
         """Called when this script is activated."""
         self.savedEnabledBrailledTextAttributes = \
