@@ -206,7 +206,7 @@ class Generator:
                 else:
                     args['formatType'] = 'unfocused'
 
-            format = self._script.formatting.getFormat(**args)
+            formatting = self._script.formatting.getFormat(**args)
 
             # Add in the context if this is the first time
             # we've been called.
@@ -215,7 +215,7 @@ class Generator:
                 if args.get('includeContext', True):
                     prefix = self._script.formatting.getPrefix(**args)
                     suffix = self._script.formatting.getSuffix(**args)
-                    format = '%s + %s + %s' % (prefix, format, suffix)
+                    formatting = '%s + %s + %s' % (prefix, formatting, suffix)
                 args['recursing'] = True
                 firstTimeCalled = True
             else:
@@ -231,13 +231,13 @@ class Generator:
                    args['formatType'], 
                    details,
                    repr(args),
-                   format))
+                   formatting))
 
-            assert(format)
+            assert(formatting)
             while True:
                 currentTime = time.time()
                 try:
-                    result = eval(format, globalsDict)
+                    result = eval(formatting, globalsDict)
                     break
                 except NameError:
                     result = []
@@ -911,6 +911,11 @@ class Generator:
         displayedText = self._script.utilities.displayedText(obj)
         if not displayedText:
             return []
+
+        try:
+            displayedText = displayedText.decode('UTF-8')
+        except (UnicodeDecodeError, UnicodeEncodeError):
+            pass
 
         return [displayedText]
 
