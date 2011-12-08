@@ -2087,8 +2087,13 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 text = None
             else:
                 clickCount = self._clickCountToString(kb.click_count)
+                modifierNames = keybindings.getModifierNames(kb.modifiers)
+                try:
+                    keysymstring = kb.keysymstring.encode('UTF-8')
+                except (UnicodeDecodeError, UnicodeEncodeError):
+                    keysymstring = kb.keysymstring
                 text = keybindings.getModifierNames(kb.modifiers) \
-                       + kb.keysymstring \
+                       + keysymstring \
                        + clickCount
 
             model.set_value(myiter, HANDLER, handl)
