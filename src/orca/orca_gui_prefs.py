@@ -687,6 +687,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if len(self.speechFamiliesChoices) == 0:
             return
 
+        if isinstance(familyName, unicode):
+            familyName = familyName.encode('UTF-8')
+
         valueSet = False
         i = 0
         for family in self.speechFamiliesChoices:
@@ -795,6 +798,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         if not serverInfo:
             serverInfo = speech.getInfo()
+
+        try:
+            serverInfo = map(lambda x: x.encode('UTF-8'), serverInfo)
+        except (UnicodeDecodeError, UnicodeEncodeError):
+            pass
 
         valueSet = False
         i = 0
@@ -1569,6 +1577,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
            sdtime(settings.TIME_FORMAT_24_HM_WITH_WORDS, ltime())])
         indextime = TIME_FORMAT_LOCALE
         timeFormat = self.prefsDict["presentTimeFormat"]
+        if isinstance(timeFormat, unicode):
+            timeFormat = timeFormat.encode('UTF-8')
         if timeFormat == settings.TIME_FORMAT_LOCALE:
             indextime = TIME_FORMAT_LOCALE
         elif timeFormat == settings.TIME_FORMAT_24_HMS:

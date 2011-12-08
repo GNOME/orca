@@ -2450,12 +2450,12 @@ class Utilities:
         newSegment = pronunciation_dict.getPronunciation(
             segment, self._script.app_pronunciation_dict)
 
-        try:
-            unchanged = newSegment == segment
-        except (UnicodeEncodeError, UnicodeDecodeError):
-            unchanged = True
+        if isinstance(segment, unicode):
+            segment = segment.encode('UTF-8')
+        if isinstance(newSegment, unicode):
+            newSegment = newSegment.encode('UTF-8')
 
-        if unchanged:
+        if newSegment == segment:
             newSegment = pronunciation_dict.getPronunciation(segment)
 
         return newSegment

@@ -249,6 +249,8 @@ class SpeechServer(speechserver.SpeechServer):
             pass
         else:
             name = acss_family.get(speechserver.VoiceFamily.NAME)
+            if isinstance(name, unicode):
+                name = name.encode('UTF-8')
             if name != self._default_voice_name:
                 self._send_command(set_synthesis_voice, name)
             
