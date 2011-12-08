@@ -150,6 +150,11 @@ def getModifierNames(mods):
     text = ""
     if mods & settings.ORCA_MODIFIER_MASK:
         text += _("Orca") + "+"
+    elif mods & (1 << pyatspi.MODIFIER_SHIFTLOCK):
+        # Translators: this is presented in a GUI to represent the
+        # "caps lock" modifier.
+        #
+        text += _("Caps_Lock") + "+"
     #if mods & (1 << pyatspi.MODIFIER_NUMLOCK):
     #    text += _("Num_Lock") + "+"
     if mods & 128:
@@ -179,11 +184,6 @@ def getModifierNames(mods):
         # "control" modifier.
         #
         text += _("Ctrl") + "+"
-    if mods & (1 << pyatspi.MODIFIER_SHIFTLOCK):
-        # Translators: this is presented in a GUI to represent the
-        # "caps lock" modifier.
-        #
-        text += _("Caps_Lock") + "+"
     if mods & settings.SHIFT_MODIFIER_MASK:
         # Translators: this is presented in a GUI to represent the
         # "shift " modifier.
