@@ -839,7 +839,15 @@ def isModifierKey(event_string):
                      'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R' ]
 
     if not orca_state.bypassNextCommand:
-        modifierKeys.extend(settings.orcaModifierKeys)
+        orcaModifiers = settings.orcaModifierKeys
+        try:
+            orcaModifiers = map(lambda x: x.encode('UTF-8'), orcaModifiers)
+        except (UnicodeDecodeError, UnicodeEncodeError):
+            pass
+        modifierKeys.extend(orcaModifiers)
+
+    if isinstance(event_string, unicode):
+        event_string.encode('UTF-8')
 
     reply = event_string in modifierKeys
     debug.println(debug.LEVEL_FINEST,
@@ -1250,6 +1258,12 @@ def _processKeyboardEvent(event):
             allPossibleKeysyms.extend(keybindings.getAllKeysyms(keysym))
     else:
         allPossibleKeysyms = settings.orcaModifierKeys
+
+    try:
+        allPossibleKeysyms = \
+            map(lambda x: x.encode('UTF-8'), allPossibleKeysyms)
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        pass
 
     isOrcaModifier = allPossibleKeysyms.count(keyboardEvent.event_string) > 0
 
