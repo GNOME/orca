@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import os
 import sys
+from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.repository import Pango
@@ -2989,6 +2990,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             mods = 0
             clickCount = 1
 
+        mods = mods & Gdk.ModifierType.MODIFIER_MASK
         if mods & (1 << pyatspi.MODIFIER_SHIFTLOCK) \
            and mods & settings.ORCA_MODIFIER_MASK:
             mods ^= (1 << pyatspi.MODIFIER_SHIFTLOCK)
