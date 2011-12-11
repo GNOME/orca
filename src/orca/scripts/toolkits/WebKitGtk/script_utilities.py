@@ -137,7 +137,7 @@ class Utilities(script_utilities.Utilities):
         if offset == None:
             offset = text.caretOffset
         if boundary == None:
-            start = offset
+            start = 0
             end = text.characterCount
         else:
             if boundary == pyatspi.TEXT_BOUNDARY_CHAR:
@@ -158,5 +158,6 @@ class Utilities(script_utilities.Utilities):
             objects.append((objs[i], first, last, ''))
             start = last
         objects.append((obj, start, end, string[start:end]))
+        objects = filter(lambda x: x[1] < x[2], objects)
 
         return objects
