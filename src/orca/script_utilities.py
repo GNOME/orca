@@ -930,9 +930,14 @@ class Utilities:
         # more than once.  Go figure, but we need to check for this.
         #
         label = []
-        relations = obj.getRelationSet()
-        allTargets = []
+        try:
+            relations = obj.getRelationSet()
+        except (LookupError, RuntimeError):
+            debug.println(debug.LEVEL_SEVERE,
+                          "labelsForObject() - Error getting RelationSet")
+            return label
 
+        allTargets = []
         for relation in relations:
             if relation.getRelationType() \
                    == pyatspi.RELATION_LABELLED_BY:

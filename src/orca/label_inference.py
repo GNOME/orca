@@ -29,6 +29,8 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import debug
+
 class LabelInference:
 
     def __init__(self, script):
@@ -39,7 +41,9 @@ class LabelInference:
         """
 
         self._script = script
-        self._lines = {}
+        self._lineCache = {}
+        self._extentsCache = {}
+        self._isWidgetCache = {}
 
     def infer(self, obj, focusedOnly=True):
         """Attempt to infer the functional/displayed label of obj.
@@ -51,31 +55,53 @@ class LabelInference:
         Returns the text which we think is the label, or None.
         """
 
-        isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
-        if focusedOnly and not isFocused:
+        debug.println(debug.LEVEL_FINE, "INFER label for: %s" % obj)
+        if not obj:
+            return None
+
+        if focusedOnly and not obj.getState().contains(pyatspi.STATE_FOCUSED):
+            debug.println(debug.LEVEL_FINE, "INFER - object not focused")
             return None
 
         result = None
         if not result:
-            result = self.inferFromLine(obj)
+            result = self.inferFromTextLeft(obj)
+            debug.println(debug.LEVEL_FINE, "INFER - Text Left: %s" % result)
+        if not result or self._preferRight(obj):
+            result = self.inferFromTextRight(obj)
+            debug.println(debug.LEVEL_FINE, "INFER - Text Right: %s" % result)
         if not result:
             result = self.inferFromTable(obj)
+            debug.println(debug.LEVEL_FINE, "INFER - Table: %s" % result)
         if not result:
-            result = self.inferFromOtherLines(obj)
+            result = self.inferFromTextAbove(obj)
+            debug.println(debug.LEVEL_FINE, "INFER - Text Above: %s" % result)
+        if not result:
+            result = self.inferFromTextBelow(obj)
+            debug.println(debug.LEVEL_FINE, "INFER - Text Below: %s" % result)
+
+        # TODO - We probably do not wish to "infer" from these. Instead, we
+        # should ensure that this content gets presented as part of the widget.
+        # (i.e. the label is something on screen. Widget name and description
+        # are each something other than a label.)
         if not result:
             result = obj.name
+            debug.println(debug.LEVEL_FINE, "INFER - Name: %s" % result)
         if not result:
             result = obj.description
+            debug.println(debug.LEVEL_FINE, "INFER - Description: %s" % result)
         if result:
             result = result.strip()
-        self.clearCache()
 
+        self.clearCache()
         return result
 
     def clearCache(self):
         """Dumps whatever we've stored for performance purposes."""
 
-        self._lines = {}
+        self._lineCache = {}
+        self._extentsCache = {}
+        self._isWidgetCache = {}
 
     def _preferRight(self, obj):
         """Returns True if we should prefer text on the right, rather than the
@@ -83,6 +109,20 @@ class LabelInference:
 
         onRightRoles = [pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_RADIO_BUTTON]
         return obj.getRole() in onRightRoles
+
+    def _preferTop(self, obj):
+        """Returns True if we should prefer text above, rather than below for
+        the object obj."""
+
+        roles = [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST]
+
+        # Put new-to-pyatspi roles here.
+        try:
+            roles.append(pyatspi.ROLE_LIST_BOX)
+        except:
+            pass
+
+        return obj.getRole() in roles
 
     def _isSimpleObject(self, obj):
         """Returns True if the given object has 'simple' contents, such as text
@@ -96,15 +136,12 @@ class LabelInference:
         if len(children) > 1:
             return False
 
-        if self._isWidget(obj):
-            return False
-
         try:
             text = obj.queryText()
         except NotImplementedError:
             return True
 
-        string = text.getText(0, -1).decode('UTF-8')
+        string = text.getText(0, -1).decode('UTF-8').strip()
         if string.find(self._script.EMBEDDED_OBJECT_CHARACTER) > -1:
             return len(string) == 1
 
@@ -116,28 +153,46 @@ class LabelInference:
         if not obj:
             return False
 
+        rv = self._isWidgetCache.get(hash(obj))
+        if rv != None:
+            return rv
+
         widgetRoles = [pyatspi.ROLE_CHECK_BOX,
                        pyatspi.ROLE_RADIO_BUTTON,
+                       pyatspi.ROLE_TOGGLE_BUTTON,
                        pyatspi.ROLE_COMBO_BOX,
-                       pyatspi.ROLE_DOCUMENT_FRAME,
                        pyatspi.ROLE_LIST,
+                       pyatspi.ROLE_MENU,
+                       pyatspi.ROLE_MENU_ITEM,
                        pyatspi.ROLE_ENTRY,
                        pyatspi.ROLE_PASSWORD_TEXT,
                        pyatspi.ROLE_PUSH_BUTTON]
 
-        return obj.getRole() in widgetRoles
+        # Put new-to-pyatspi roles here.
+        try:
+            widgetRoles.append(pyatspi.ROLE_LIST_BOX)
+        except:
+            pass
+
+        isWidget = obj.getRole() in widgetRoles
+        self._isWidgetCache[hash(obj)] = isWidget
+        return isWidget
 
     def _getExtents(self, obj, startOffset=0, endOffset=-1):
         """Returns (x, y, width, height) of the text at the given offsets
         if the object implements accessible text, or just the extents of
         the object if it doesn't implement accessible text."""
 
-        extents = 0, 0, 0, 0
+        if not obj:
+            return 0, 0, 0, 0
 
+        rv = self._extentsCache.get((hash(obj), startOffset, endOffset))
+        if rv:
+            return rv
+
+        extents = 0, 0, 0, 0
         try:
             text = obj.queryText()
-        except AttributeError:
-            return extents
         except NotImplementedError:
             pass
         else:
@@ -145,18 +200,20 @@ class LabelInference:
             if not obj.getRole() in skipTextExtents:
                 extents = text.getRangeExtents(startOffset, endOffset, 0)
 
-        if extents[2] and extents[3]:
-            return extents
+        if not (extents[2] and extents[3]):
+            ext = obj.queryComponent().getExtents(0)
+            extents = ext.x, ext.y, ext.width, ext.height
 
-        ext = obj.queryComponent().getExtents(0)
-        extents = ext.x, ext.y, ext.width, ext.height
-
+        self._extentsCache[(hash(obj), startOffset, endOffset)] = extents
         return extents
 
     def _createLabelFromContents(self, obj):
         """Gets the functional label text associated with the object obj."""
 
         if not self._isSimpleObject(obj):
+            return ''
+
+        if self._isWidget(obj):
             return ''
 
         contents = self._script.utilities.getObjectsFromEOCs(obj)
@@ -172,7 +229,7 @@ class LabelInference:
         """Get the (obj, startOffset, endOffset, string) tuples for the line
         containing the object, obj."""
 
-        rv = self._lines.get(hash(obj))
+        rv = self._lineCache.get(hash(obj))
         if rv:
             return rv
 
@@ -184,13 +241,27 @@ class LabelInference:
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
         rv = self._script.utilities.getObjectsFromEOCs(obj, boundary, start)
-        self._lines[key] = rv
+        self._lineCache[key] = rv
 
         return rv
 
-    def inferFromLine(self, obj, proximity=75):
+    def _getPreviousObject(self, obj):
+        """Gets the object prior to obj."""
+
+        index = obj.getIndexInParent()
+        if not index > 0:
+            return obj.parent
+
+        prevObj = obj.parent[index-1]
+        if prevObj and prevObj.childCount:
+            prevObj = prevObj[prevObj.childCount - 1]
+
+        return prevObj
+
+    def inferFromTextLeft(self, obj, proximity=75):
         """Attempt to infer the functional/displayed label of obj by
-        looking at the contents of the current line.
+        looking at the contents of the current line, which are to the
+        left of this object
 
         Arguments
         - obj: the unlabeled widget
@@ -208,26 +279,146 @@ class LabelInference:
             index = len(contents)
 
         onLeft = contents[max(0, index-1):index]
-        onLeft = filter(lambda o: not self._isWidget(o[0]), onLeft)
-        if onLeft:
-            lObj, lStart, lEnd, lString = onLeft[0]
-            lString = (lString or lObj.name).strip()
-            if lString:
-                lExtents = self._getExtents(lObj, lStart, lEnd)
-                lDistance = extents[0] - (lExtents[0] + lExtents[2])
-                if not self._preferRight(obj) and lDistance <= proximity:
-                    return lString
+        onLeft = filter(lambda o: o[0] and not self._isWidget(o[0]), onLeft)
+        if not onLeft:
+            return None
+
+        lObj, start, end, string = onLeft[-1]
+        string = (string or lObj.name).strip()
+        if not string:
+            return None
+
+        lExtents = self._getExtents(lObj, start, end)
+        distance = extents[0] - (lExtents[0] + lExtents[2])
+        if distance <= proximity:
+            return string
+
+        return None
+
+    def inferFromTextRight(self, obj, proximity=25):
+        """Attempt to infer the functional/displayed label of obj by
+        looking at the contents of the current line, which are to the
+        right of this object
+
+        Arguments
+        - obj: the unlabeled widget
+        - proximity: pixels expected for a match
+
+        Returns the text which we think is the label, or None.
+        """
+
+        extents = self._getExtents(obj)
+        contents = self._getLineContents(obj)
+        content = filter(lambda o: o[0] == obj, contents)
+        try:
+            index = contents.index(content[0])
+        except IndexError:
+            index = len(contents)
 
         onRight = contents[min(len(contents), index+1):]
-        onRight = filter(lambda o: not self._isWidget(o[0]), onRight)
-        if onRight:
-            rObj, rStart, rEnd, rString = onRight[0]
-            rString = (rString or rObj.name).strip()
-            if rString:
-                rExtents = self._getExtents(rObj, rStart, rEnd)
-                rDistance = rExtents[0] - (extents[0] + extents[2])
-                if self._preferRight(obj) or rDistance <= proximity:
-                    return rString
+        onRight = filter(lambda o: o[0] and not self._isWidget(o[0]), onRight)
+        if not onRight:
+            return None
+
+        rObj, start, end, string = onRight[0]
+        string = (string or rObj.name).strip()
+        if not string:
+            return None
+
+        rExtents = self._getExtents(rObj, start, end)
+        distance = rExtents[0] - (extents[0] + extents[2])
+        if distance <= proximity or self._preferRight(obj):
+            return string
+
+        return None
+
+    def inferFromTextAbove(self, obj, proximity=20):
+        """Attempt to infer the functional/displayed label of obj by
+        looking at the contents of the line above the line containing
+        the object obj.
+
+        Arguments
+        - obj: the unlabeled widget
+        - proximity: pixels expected for a match
+
+        Returns the text which we think is the label, or None.
+        """
+
+        thisLine = self._getLineContents(obj)
+        prevObj, start, end, string = thisLine[0]
+        if obj == prevObj:
+            start, end = self._script.utilities.getHyperlinkRange(prevObj)
+            prevObj = prevObj.parent
+
+        try:
+            text = prevObj.queryText()
+        except (AttributeError, NotImplementedError):
+            return None
+
+        objX, objY, objWidth, objHeight = self._getExtents(obj)
+        if not (objWidth and objHeight):
+            return None
+
+        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        line = text.getTextBeforeOffset(start, boundary)
+        string = line[0].strip()
+        if string:
+            x, y, width, height = self._getExtents(prevObj, start, end)
+            distance = objY - (y + height)
+            if distance <= proximity:
+                return string
+
+        while prevObj:
+            prevObj = self._getPreviousObject(prevObj)
+            x, y, width, height = self._getExtents(prevObj)
+            distance = objY - (y + height)
+            if distance > proximity:
+                return None
+            if distance < 1:
+                continue
+            if x + 150 < objX:
+                continue
+            string = self._createLabelFromContents(prevObj)
+            if string:
+                return string
+
+        return None
+
+    def inferFromTextBelow(self, obj, proximity=20):
+        """Attempt to infer the functional/displayed label of obj by
+        looking at the contents of the line above the line containing
+        the object obj.
+
+        Arguments
+        - obj: the unlabeled widget
+        - proximity: pixels expected for a match
+
+        Returns the text which we think is the label, or None.
+        """
+
+        thisLine = self._getLineContents(obj)
+        nextObj, start, end, string = thisLine[-1]
+        if obj == nextObj:
+            start, end = self._script.utilities.getHyperlinkRange(nextObj)
+            nextObj = nextObj.parent
+
+        try:
+            text = nextObj.queryText()
+        except (AttributeError, NotImplementedError):
+            return None
+
+        objX, objY, objWidth, objHeight = self._getExtents(obj)
+        if not (objWidth and objHeight):
+            return None
+
+        boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+        line = text.getTextAfterOffset(end - 1, boundary)
+        string = line[0].strip()
+        if string:
+            x, y, width, height = self._getExtents(nextObj, start, end)
+            distance = y - (objY + objHeight)
+            if distance <= proximity:
+                return string
 
         return None
 
@@ -280,7 +471,7 @@ class LabelInference:
             if label:
                 return label
 
-        if row < table.nRows:
+        if row < table.nRows and not self._preferTop(obj):
             candidate = table.getAccessibleAt(row + 1, col)
             label = self._createLabelFromContents(candidate)
             if label:
@@ -294,6 +485,9 @@ class LabelInference:
             return None
 
         cells = [table.getAccessibleAt(i, col) for i in range(1, table.nRows)]
+        if filter(lambda x: x == None, cells):
+            debug.println(debug.LEVEL_FINE, "INFER: Potentially broken table!")
+            return None
         if filter(lambda x: x[0] and x[0].getRole() != obj.getRole(), cells):
             return None
 
@@ -302,15 +496,3 @@ class LabelInference:
             return label
 
         return None
-
-    def inferFromOtherLines(self, obj):
-        """Attempt to infer the functional/displayed label of obj by
-        looking at the contents of the previous and/or next line.
-
-        Arguments
-        - obj: the unlabeled widget
-
-        Returns the text which we think is the label, or None.
-        """
-
-        pass
