@@ -2824,7 +2824,11 @@ class Utilities:
         #
         # The keybindings in <full-path> should be separated by ":"
         #
-        bindingStrings = action.getKeyBinding(0).decode("UTF-8").split(';')
+        try:
+            bindingStrings = action.getKeyBinding(0).decode("UTF-8").split(';')
+        except AttributeError:
+            self._script.generatorCache[self.KEY_BINDING][obj] = ["", "", ""]
+            return self._script.generatorCache[self.KEY_BINDING][obj]
 
         if len(bindingStrings) == 3:
             mnemonic       = bindingStrings[0]

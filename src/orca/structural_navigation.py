@@ -1174,7 +1174,9 @@ class StructuralNavigation:
         index = obj.getIndexInParent() - 1
         if index >= 0:
             prevObj = obj.parent[index]
-            if prevObj.childCount:
+            if not prevObj:
+                debug.println(debug.LEVEL_FINE, 'Error: Dead Accessible')
+            elif prevObj.childCount:
                 prevObj = prevObj[prevObj.childCount - 1]
         elif not self._script.utilities.isSameObject(obj.parent, stopAncestor):
             prevObj = obj.parent
@@ -1205,6 +1207,9 @@ class StructuralNavigation:
             index = obj.getIndexInParent() + 1
             if 0 < index < obj.parent.childCount:
                 nextObj = obj.parent[index]
+                if not nextObj:
+                    debug.println(debug.LEVEL_FINE, 'Error: Dead Accessible')
+                    break
             elif not self._script.utilities.isSameObject(
                     obj.parent, stopAncestor):
                 obj = obj.parent
