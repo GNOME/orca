@@ -2581,19 +2581,9 @@ class StructuralNavigation:
         """
 
         if obj:
-            if obj.getRole() in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX]:
-                obj.queryComponent().grabFocus()
-            else:
-                # TODO: I think we should just grab focus on the object
-                # regardless of the object type.  But that's not what we
-                # do now, and it causes an extra newline character to show
-                # up in the regression test output for entries, so for the
-                # purpose of passing the regression tests, I'm not making
-                # that change yet.
-                #
-                [obj, characterOffset] = self._getCaretPosition(obj)
-                self._setCaretPosition(obj, characterOffset)
-                self._presentObject(obj, characterOffset)
+            if obj.getRole() == pyatspi.ROLE_TEXT and obj.childCount:
+                obj = obj[0]
+            obj.queryComponent().grabFocus()
         else:
             # Translators: this is for navigating document content by
             # moving from form field to form filed. This is a detailed

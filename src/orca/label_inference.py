@@ -131,7 +131,12 @@ class LabelInference:
         if not obj:
             return False
 
-        children = [child for child in obj]
+        try:
+            children = [child for child in obj]
+        except LookupError:
+            debug.println(debug.LEVEL_FINE, 'Dead Accessible in %s' % obj)
+            return False
+
         children = filter(lambda x: x.getRole() != pyatspi.ROLE_LINK, children)
         if len(children) > 1:
             return False
