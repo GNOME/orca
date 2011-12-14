@@ -278,6 +278,7 @@ class Script(default.Script):
 
         widgetRoles = [pyatspi.ROLE_MENU,
                        pyatspi.ROLE_MENU_ITEM,
+                       pyatspi.ROLE_LIST_ITEM,
                        pyatspi.ROLE_RADIO_BUTTON]
         if role in widgetRoles:
             default.Script.onFocus(self, event)
