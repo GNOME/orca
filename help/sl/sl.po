@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "POT-Creation-Date: 2010-12-21 14:29+0000\n"
-"PO-Revision-Date: 2010-12-25 21:10+0100\n"
+"PO-Revision-Date: 2011-12-16 15:49+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -23,19 +23,19 @@ msgstr ""
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_text_attributes.page:31(None)
 msgid "@@image: 'figures/preferences_text_attributes_table.png'; md5=067627aeb9adfd314523903f408bb977"
-msgstr ""
+msgstr "@@image: 'figures/preferences_text_attributes_table.png'; md5=067627aeb9adfd314523903f408bb977"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_text_attributes.page:93(None)
 msgid "@@image: 'figures/preferences_text_attributes_rearranging.png'; md5=0834c9af2a15c3d08be77f3a963ad245"
-msgstr ""
+msgstr "@@image: 'figures/preferences_text_attributes_rearranging.png'; md5=0834c9af2a15c3d08be77f3a963ad245"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_text_attributes.page:131(None)
 msgid "@@image: 'figures/preferences_text_attributes_braille.png'; md5=3482a961cc9d30db5537ccb998bb7c71"
-msgstr ""
+msgstr "@@image: 'figures/preferences_text_attributes_braille.png'; md5=3482a961cc9d30db5537ccb998bb7c71"
 
 #: C/preferences_text_attributes.page:7(title)
 msgid "8. Text Attributes"
@@ -225,11 +225,11 @@ msgstr "Naziv \"atributi besedila\" se sklicuje na pisavo, slog, poravnavo in dr
 
 #: C/preferences_text_attributes.page:30(title)
 msgid "The text attributes table"
-msgstr "Preglednica atributov besedila"
+msgstr "Razpredelnica atributov besedila"
 
 #: C/preferences_text_attributes.page:32(p)
 msgid "The text attributes table is where you specify what attributes will and will not be presented and under what conditions. Each row consists of four columns."
-msgstr "V preglednici atributov besedila navedete pod katerimi pogoji atributi bodo ali ne bodo prisotni. Vsaka vrstica je sestavljena iz štirih stolpcev."
+msgstr "V razpredelnici atributov besedila navedete pod katerimi pogoji atributi bodo ali ne bodo prisotni. Vsaka vrstica je sestavljena iz štirih stolpcev."
 
 #: C/preferences_text_attributes.page:39(p)
 msgid "<gui>Attribute Name</gui>: The name of the text attribute."
@@ -257,7 +257,7 @@ msgstr "Razveljavljanje sprememb"
 
 #: C/preferences_text_attributes.page:76(p)
 msgid "Beneath the list of text attributes, there is a Reset button (<keyseq><key>Alt</key><key>R</key></keyseq>) which will restore the values of the table to what they were when the dialog was first displayed."
-msgstr "Pod seznamom atributov besedila je gumb Ponastavi (<keyseq><key>Alt</key><key>R</key></keyseq>), ki bo obnovil vrednosti preglednice na vrednosti ob prvem prikazu pogovornega okna."
+msgstr "Pod seznamom atributov besedila je gumb Ponastavi (<keyseq><key>Alt</key><key>R</key></keyseq>), ki bo obnovil vrednosti razpredelnice na vrednosti ob prvem prikazu pogovornega okna."
 
 #: C/preferences_text_attributes.page:84(title)
 msgid "Rearranging the order of presentation"
@@ -269,7 +269,7 @@ msgstr "Možnosti za nadziranje vrstnega reda v katerem so atributi predstavljen
 
 #: C/preferences_text_attributes.page:87(desc)
 msgid "When you initially display the text attribute page, all of your enabled attributes are placed at the top of the table in the order in which they will be spoken. There are four buttons which can be used to rearrange the order of presentation."
-msgstr "Ko boste prvič prikazali stran atributov besedila, bodo vsi vaši izbrani atributi postavljeni na vrh preglednice v vrstnem redu izgovorjave. Na voljo so štirje gumbi s katerimi lahko preuredite vrstni red predstavitve:"
+msgstr "Ko boste prvič prikazali stran atributov besedila, bodo vsi vaši izbrani atributi postavljeni na vrh razpredelnice v vrstnem redu izgovorjave. Na voljo so štirje gumbi s katerimi lahko preuredite vrstni red predstavitve:"
 
 #: C/preferences_text_attributes.page:97(p)
 msgid "<gui>Move to top</gui> (<keyseq><key>Alt</key><key>T</key></keyseq>): moves the selected attribute to the top of the list."
@@ -319,28 +319,28 @@ msgstr "<gui>Piki 7 in 8</gui>: Podčrtaj atribute besedila tako s Pikama 7 in 8
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_table_navigation.page:22(None)
 msgid "@@image: 'figures/preferences_table_navigation.png'; md5=a97b98bd9e3499e06844d56156419a7d"
-msgstr ""
+msgstr "@@image: 'figures/preferences_table_navigation.png'; md5=a97b98bd9e3499e06844d56156419a7d"
 
 #: C/preferences_table_navigation.page:8(title)
 msgid "2. Table Navigation"
-msgstr "2. Krmarjenje po preglednici"
+msgstr "2. Krmarjenje po razpredelnici"
 
 #: C/preferences_table_navigation.page:9(title)
 #: C/commands_table.page:7(title)
 msgid "Table Navigation"
-msgstr "Krmarjenje po preglednici"
+msgstr "Krmarjenje po razpredelnici"
 
 #: C/preferences_table_navigation.page:10(desc)
 msgid "Configuring <app>Orca</app>'s navigation within tables"
-msgstr "Nastavljanje krmarjenja <app>Orke</app> po preglednicah"
+msgstr "Nastavljanje krmarjenja <app>Orke</app> po razpredelnicah"
 
 #: C/preferences_table_navigation.page:21(title)
 msgid "Table Navigation Preferences"
-msgstr "Možnosti krmarjenja preglednice"
+msgstr "Možnosti krmarjenja razpredelnice"
 
 #: C/preferences_table_navigation.page:23(p)
 msgid "The following option allows you to customize how <app>Orca</app> behaves when navigating within a table in <link xref=\"howto_structural_navigation\">Structural-Navigation</link>-enabled applications."
-msgstr "Naslednja možnost vam omogoča prilagajanje kako se <app>Orka</app> obnaša pri krmarjenju v tabeli v programih z omočenim <link xref=\"howto_structural_navigation\">Structural-Navigation</link>strukturnim krmarjenjem</link>."
+msgstr "Naslednja možnost vam omogoča prilagajanje kako se <app>Orka</app> obnaša pri krmarjenju v razpredelnici v programih z omočenim <link xref=\"howto_structural_navigation\">strukturnim krmarjenjem</link>."
 
 #: C/preferences_table_navigation.page:30(title)
 msgid "Speak cell coordinates"
@@ -392,7 +392,7 @@ msgstr "Preskoči prazne celice"
 
 #: C/preferences_table_navigation.page:61(p)
 msgid "If this checkbox is checked, <app>Orca</app> will skip blank cells when you are using <app>Orca</app>'s table structural navigation commands to access the table."
-msgstr "V primeru, da je to izbirno polje izbrano, bo <app>Orka</app> preskočila prazne celice kadar za dostop do preglednice uporabljate <app>Orkine</app> ukaze strukturnega krmarjenja."
+msgstr "V primeru, da je to izbirno polje izbrano, bo <app>Orka</app> preskočila prazne celice kadar za dostop do razpredelnice uporabljate <app>Orkine</app> ukaze strukturnega krmarjenja."
 
 #: C/preferences_table_navigation.page:66(p)
 #: C/preferences_magnifier.page:27(p)
@@ -429,73 +429,73 @@ msgstr "Prikazana vrednost: ni izbrano"
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:21(None)
 msgid "@@image: 'figures/preferences_enable_speech.png'; md5=66fff525659d9e3db4130f58f962f82e"
-msgstr ""
+msgstr "@@image: 'figures/preferences_enable_speech.png'; md5=66fff525659d9e3db4130f58f962f82e"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:31(None)
 msgid "@@image: 'figures/preferences_tts_options.png'; md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
-msgstr ""
+msgstr "@@image: 'figures/preferences_tts_options.png'; md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:76(None)
 msgid "@@image: 'figures/preferences_rate_pitch_volume.png'; md5=98d310294cb4c7b945ecf81fda0df1f7"
-msgstr ""
+msgstr "@@image: 'figures/preferences_rate_pitch_volume.png'; md5=98d310294cb4c7b945ecf81fda0df1f7"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:85(None)
 msgid "@@image: 'figures/preferences_punctuation_level.png'; md5=2578236bb97ab0109675417fcdb8dd4b"
-msgstr ""
+msgstr "@@image: 'figures/preferences_punctuation_level.png'; md5=2578236bb97ab0109675417fcdb8dd4b"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:133(None)
 msgid "@@image: 'figures/preferences_speech_verbosity.png'; md5=d689e49513907f75e54b3635b7419247"
-msgstr ""
+msgstr "@@image: 'figures/preferences_speech_verbosity.png'; md5=d689e49513907f75e54b3635b7419247"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:147(None)
 msgid "@@image: 'figures/preferences_table_rows.png'; md5=736ba1cf57c3cdc79de019160f3636ab"
-msgstr ""
+msgstr "@@image: 'figures/preferences_table_rows.png'; md5=736ba1cf57c3cdc79de019160f3636ab"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:167(None)
 msgid "@@image: 'figures/preferences_progress_bar_updates.png'; md5=65ae433495a3efd95cd5259f10865c98"
-msgstr ""
+msgstr "@@image: 'figures/preferences_progress_bar_updates.png'; md5=65ae433495a3efd95cd5259f10865c98"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:216(None)
 msgid "@@image: 'figures/preferences_only_speak_displayed_text.png'; md5=4636b63366ca45dd7f2679821e8e0099"
-msgstr ""
+msgstr "@@image: 'figures/preferences_only_speak_displayed_text.png'; md5=4636b63366ca45dd7f2679821e8e0099"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:225(None)
 msgid "@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; md5=ac2c1da480acd938209d7f29b5ce12f1"
-msgstr ""
+msgstr "@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; md5=ac2c1da480acd938209d7f29b5ce12f1"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:237(None)
 msgid "@@image: 'figures/preferences_break_speech_into_chunks.png'; md5=c2193d97d780a2a9349dcff4a64a3135"
-msgstr ""
+msgstr "@@image: 'figures/preferences_break_speech_into_chunks.png'; md5=c2193d97d780a2a9349dcff4a64a3135"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:249(None)
 msgid "@@image: 'figures/preferences_say_all_by.png'; md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
-msgstr ""
+msgstr "@@image: 'figures/preferences_say_all_by.png'; md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_speech.page:259(None)
 msgid "@@image: 'figures/preferences_system_voice_options.png'; md5=15083bf706ad1b905332746300f206a9"
-msgstr ""
+msgstr "@@image: 'figures/preferences_system_voice_options.png'; md5=15083bf706ad1b905332746300f206a9"
 
 #: C/preferences_speech.page:5(title)
 msgid "2. Speech"
@@ -634,11 +634,11 @@ msgstr "Privzeta vrednost: <gui>Podrobno</gui>"
 
 #: C/preferences_speech.page:146(title)
 msgid "Table Rows"
-msgstr "Vrstice preglednice"
+msgstr "Vrstice razpredelnice"
 
 #: C/preferences_speech.page:148(p)
 msgid "The <gui>Table Rows</gui> radio button group determines what gets spoken when navigating amongst rows in a table. The available options are <gui>speak row</gui> and <gui>speak cell</gui>."
-msgstr "Skupina izbirnih gumbov <gui>Vrstice predlednice</gui> določi, kaj bo izgovorjeno ob krmarjenju v vrsticah v preglednici. Razpoložljive možnosti so <gui>govori vrstico</gui> in <gui>govori celico</gui>."
+msgstr "Skupina izbirnih gumbov <gui>Vrstice razpredelnice</gui> določi, kaj bo izgovorjeno ob krmarjenju v vrsticah v razpredelnici. Razpoložljive možnosti so <gui>govori vrstico</gui> in <gui>govori celico</gui>."
 
 #: C/preferences_speech.page:153(p)
 msgid "Consider the process of examining the list of messages in your Inbox. In order to have <app>Orca</app> announce the sender, subject, date, and presence of attachments you would need <gui>speak row</gui>. On the other hand, when navigating amongst rows in a spreadsheet, hearing the full row may not be desired. In that case, <gui>speak cell</gui> should instead be chosen."
@@ -788,7 +788,7 @@ msgstr "V primeru, da je izbirno polje <gui>Izgovori sporočila vodnika</gui> iz
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_pronunciation.page:31(None)
 msgid "@@image: 'figures/preferences_pronunciation.png'; md5=a4fa07be0148dfa9ddc12d7c40f4c864"
-msgstr ""
+msgstr "@@image: 'figures/preferences_pronunciation.png'; md5=a4fa07be0148dfa9ddc12d7c40f4c864"
 
 #: C/preferences_pronunciation.page:6(title)
 msgid "7. Pronunciation"
@@ -884,56 +884,55 @@ msgstr "Edinstvene možnosti programa"
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:21(None)
 msgid "@@image: 'figures/preferences_enable_magnifier.png'; md5=0129d09c51c20afe13efe370fa91a0b1"
-msgstr ""
+msgstr "@@image: 'figures/preferences_enable_magnifier.png'; md5=0129d09c51c20afe13efe370fa91a0b1"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:33(None)
 msgid "@@image: 'figures/preferences_zoomer.png'; md5=895ba22ba94f4552fd85e99306b1b566"
-msgstr ""
+msgstr "@@image: 'figures/preferences_zoomer.png'; md5=895ba22ba94f4552fd85e99306b1b566"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:82(None)
 msgid "@@image: 'figures/preferences_tracking_and_alignment.png'; md5=90444cfdc60633e80f62f56d6ca4ff9f"
-msgstr ""
+msgstr "@@image: 'figures/preferences_tracking_and_alignment.png'; md5=90444cfdc60633e80f62f56d6ca4ff9f"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:229(None)
-#, fuzzy
 msgid "@@image: 'figures/preferences_color.png'; md5=516f342d24c34d2b338066e8c0e6289d"
-msgstr "@@image: 'figures/empathy-logo.png'; md5=14568248b11d2cfe7992c5edd7e157e8"
+msgstr "@@image: 'figures/preferences_color.png'; md5=516f342d24c34d2b338066e8c0e6289d"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:265(None)
 msgid "@@image: 'figures/preferences_border.png'; md5=cd909a43c0e6a30e9634070c69d98ecc"
-msgstr ""
+msgstr "@@image: 'figures/preferences_border.png'; md5=cd909a43c0e6a30e9634070c69d98ecc"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:304(None)
 msgid "@@image: 'figures/preferences_cursor.png'; md5=24ac906c5652d48ea6613baf1c3ee355"
-msgstr ""
+msgstr "@@image: 'figures/preferences_cursor.png'; md5=24ac906c5652d48ea6613baf1c3ee355"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:350(None)
 msgid "@@image: 'figures/preferences_cross-hair.png'; md5=8e14c03b420b1505e3fcd9707965004d"
-msgstr ""
+msgstr "@@image: 'figures/preferences_cross-hair.png'; md5=8e14c03b420b1505e3fcd9707965004d"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:396(None)
 msgid "@@image: 'figures/preferences_advanced_button.png'; md5=7992710657c23612df3d0713d8bfaea7"
-msgstr ""
+msgstr "@@image: 'figures/preferences_advanced_button.png'; md5=7992710657c23612df3d0713d8bfaea7"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_magnifier.page:402(None)
 msgid "@@image: 'figures/preferences_magnifier_advanced.png'; md5=95167358edeb3371a05a717eb1e1ea6f"
-msgstr ""
+msgstr "@@image: 'figures/preferences_magnifier_advanced.png'; md5=95167358edeb3371a05a717eb1e1ea6f"
 
 #: C/preferences_magnifier.page:5(title)
 msgid "5. Magnifier"
@@ -1324,19 +1323,19 @@ msgstr "<gui>Nastavitve več zaslonov  - Ciljni zaslon</gui>: ZASLON okenskega s
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_key_echo.page:21(None)
 msgid "@@image: 'figures/preferences_key_echo.png'; md5=8a24d33dfd2f274ce4da3e756e866d65"
-msgstr ""
+msgstr "@@image: 'figures/preferences_key_echo.png'; md5=8a24d33dfd2f274ce4da3e756e866d65"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_key_echo.page:111(None)
 msgid "@@image: 'figures/preferences_character_echo.png'; md5=ae0f0f530ed8a742d08df4d388561847"
-msgstr ""
+msgstr "@@image: 'figures/preferences_character_echo.png'; md5=ae0f0f530ed8a742d08df4d388561847"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_key_echo.page:156(None)
 msgid "@@image: 'figures/preferences_word_and_sentence_echo.png'; md5=d31bd26801793b290e740fcabe7ba86d"
-msgstr ""
+msgstr "@@image: 'figures/preferences_word_and_sentence_echo.png'; md5=d31bd26801793b290e740fcabe7ba86d"
 
 #: C/preferences_key_echo.page:3(title)
 msgid "Key Echo"
@@ -1466,13 +1465,13 @@ msgstr "Izbira izbirnega polja <gui>Omogoči odmev besed</gui> določi, da <app>
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_key_bindings.page:22(None)
 msgid "@@image: 'figures/preferences_Orca_modifier_keys.png'; md5=e7f8a86f1476d63486769af2fdf34a9a"
-msgstr ""
+msgstr "@@image: 'figures/preferences_Orca_modifier_keys.png'; md5=e7f8a86f1476d63486769af2fdf34a9a"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_key_bindings.page:40(None)
 msgid "@@image: 'figures/preferences_key_bindings_table.png'; md5=87f1b17b497b7c34c9d88cacb2c3046c"
-msgstr ""
+msgstr "@@image: 'figures/preferences_key_bindings_table.png'; md5=87f1b17b497b7c34c9d88cacb2c3046c"
 
 #: C/preferences_key_bindings.page:6(title)
 msgid "6. Key Bindings"
@@ -1519,11 +1518,11 @@ msgstr "Caps_Lock"
 
 #: C/preferences_key_bindings.page:39(title)
 msgid "The Key Bindings Table"
-msgstr "Preglednica tipkovnih bližnjic"
+msgstr "Razpredelnica tipkovnih bližnjic"
 
 #: C/preferences_key_bindings.page:41(p)
 msgid "The key bindings table provides a list of <app>Orca</app> operations and the keys that are bound to them."
-msgstr "Preglednica tipkovnih bližnjic zagotavlja seznam operacij <app>Orke</app> in tipk, ki so vezane na njih."
+msgstr "Razpredelnica tipkovnih bližnjic zagotavlja seznam operacij <app>Orke</app> in tipk, ki so vezane na njih."
 
 #: C/preferences_key_bindings.page:47(p)
 msgid "The <gui>Function</gui> column is a description of the <app>Orca</app> operation to be performed."
@@ -1582,63 +1581,62 @@ msgstr "Te možnosti so edinstvene za določen program. Omogočajo vam prilagaja
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:27(None)
 msgid "@@image: 'figures/preferences_keyboard_layout.png'; md5=87362e2a6c4530f1a7928a84eb2a4fb2"
-msgstr ""
+msgstr "@@image: 'figures/preferences_keyboard_layout.png'; md5=87362e2a6c4530f1a7928a84eb2a4fb2"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:46(None)
 msgid "@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; md5=b79e1083ad179abaa45fafaf5d80cdd7"
-msgstr ""
+msgstr "@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; md5=b79e1083ad179abaa45fafaf5d80cdd7"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:64(None)
 msgid "@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; md5=25eb0099c32ea81aca97096abca57b77"
-msgstr ""
+msgstr "@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; md5=25eb0099c32ea81aca97096abca57b77"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:103(None)
 msgid "@@image: 'figures/preferences_present_tooltips.png'; md5=a6e33e8bb91b375f1432bcd41d271f5f"
-msgstr ""
+msgstr "@@image: 'figures/preferences_present_tooltips.png'; md5=a6e33e8bb91b375f1432bcd41d271f5f"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:123(None)
 msgid "@@image: 'figures/preferences_show_Orca_main_window.png'; md5=f9dcacd77f6dbe80f5c70575212a8717"
-msgstr ""
+msgstr "@@image: 'figures/preferences_show_Orca_main_window.png'; md5=f9dcacd77f6dbe80f5c70575212a8717"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:128(None)
-#, fuzzy
 msgid "@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
-msgstr "@@image: 'figures/main-window.png'; md5=19fb1edfaade98c5786473ea9d46afaf"
+msgstr "@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:154(None)
 msgid "@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=3c23f673e1056fbd5d4d102ae3395c6f"
-msgstr ""
+msgstr "@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=3c23f673e1056fbd5d4d102ae3395c6f"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:171(None)
 msgid "@@image: 'figures/preferences_speak_object_under_mouse.png'; md5=e1a7682e7ee6427a47a7900f45b37387"
-msgstr ""
+msgstr "@@image: 'figures/preferences_speak_object_under_mouse.png'; md5=e1a7682e7ee6427a47a7900f45b37387"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:190(None)
 msgid "@@image: 'figures/preferences_date_and_time.png'; md5=931f4814b0e41379a06eeae11cd88c1b"
-msgstr ""
+msgstr "@@image: 'figures/preferences_date_and_time.png'; md5=931f4814b0e41379a06eeae11cd88c1b"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_general.page:207(None)
 #: C/howto_profiles.page:28(None)
 msgid "@@image: 'figures/preferences_profiles.png'; md5=9c4666e94c98347f5f4efc24c74c9458"
-msgstr ""
+msgstr "@@image: 'figures/preferences_profiles.png'; md5=9c4666e94c98347f5f4efc24c74c9458"
 
 #: C/preferences_general.page:3(title)
 msgid "1. General"
@@ -1810,13 +1808,13 @@ msgstr "Spustno polje <gui>Zagonski profila</gui> vam omogoča izbiro profila, k
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_gecko.page:22(None)
 msgid "@@image: 'figures/preferences_gecko_page_navigation.png'; md5=882c3f79d6d26636c42b9e6351a3cbbe"
-msgstr ""
+msgstr "@@image: 'figures/preferences_gecko_page_navigation.png'; md5=882c3f79d6d26636c42b9e6351a3cbbe"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_gecko.page:94(None)
 msgid "@@image: 'figures/preferences_gecko_find_options.png'; md5=641af19881288848ba7f8fdc6d4db02e"
-msgstr ""
+msgstr "@@image: 'figures/preferences_gecko_find_options.png'; md5=641af19881288848ba7f8fdc6d4db02e"
 
 #: C/preferences_gecko.page:5(title)
 msgid "1. Gecko Navigation"
@@ -1927,7 +1925,7 @@ msgstr "Privzeta vrednost: 4"
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_chat.page:18(None)
 msgid "@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
-msgstr ""
+msgstr "@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
 
 #: C/preferences_chat.page:4(title)
 msgid "3. Chat"
@@ -1998,43 +1996,43 @@ msgstr "Vsi kanali kadar je katerokoli klepetalno okno dejavno"
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_braille.page:21(None)
 msgid "@@image: 'figures/preferences_enable_braille_support.png'; md5=f08627f0177c20df349ab87fde697f1f"
-msgstr ""
+msgstr "@@image: 'figures/preferences_enable_braille_support.png'; md5=f08627f0177c20df349ab87fde697f1f"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_braille.page:40(None)
 msgid "@@image: 'figures/preferences_enable_braille_monitor.png'; md5=2dead5fbf717ce30339e2248e4f61aed"
-msgstr ""
+msgstr "@@image: 'figures/preferences_enable_braille_monitor.png'; md5=2dead5fbf717ce30339e2248e4f61aed"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_braille.page:53(None)
 msgid "@@image: 'figures/preferences_braille_contracted.png'; md5=81d80b6854847656862fe4ea167d29f8"
-msgstr ""
+msgstr "@@image: 'figures/preferences_braille_contracted.png'; md5=81d80b6854847656862fe4ea167d29f8"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_braille.page:71(None)
 msgid "@@image: 'figures/preferences_abbreviated_role_names.png'; md5=f26a6ef63ff0d1b40514830de7788c8b"
-msgstr ""
+msgstr "@@image: 'figures/preferences_abbreviated_role_names.png'; md5=f26a6ef63ff0d1b40514830de7788c8b"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_braille.page:85(None)
 msgid "@@image: 'figures/preferences_disable_eol_symbol.png'; md5=c43c2b7dff5efd265a40a260c2bc0d73"
-msgstr ""
+msgstr "@@image: 'figures/preferences_disable_eol_symbol.png'; md5=c43c2b7dff5efd265a40a260c2bc0d73"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_braille.page:96(None)
 msgid "@@image: 'figures/preferences_braille_verbosity.png'; md5=18969c222b3e1ea91cc75d47bb0fe48d"
-msgstr ""
+msgstr "@@image: 'figures/preferences_braille_verbosity.png'; md5=18969c222b3e1ea91cc75d47bb0fe48d"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/preferences_braille.page:109(None)
 msgid "@@image: 'figures/preferences_braille_indicators.png'; md5=719cd227dee9df85de633c4e2417301b"
-msgstr ""
+msgstr "@@image: 'figures/preferences_braille_indicators.png'; md5=719cd227dee9df85de633c4e2417301b"
 
 #: C/preferences_braille.page:3(title)
 msgid "3. Braille"
@@ -2084,7 +2082,7 @@ msgstr "Orka podpira skrajšano Braillovo pisavo preko projekta liblouis. Ker ve
 
 #: C/preferences_braille.page:59(p)
 msgid "To enable contracted braille on a system where liblouis has been installed, be sure that the <gui>Enable Contraced Braille</gui> checkbox is checked. Then choose your desired translation table from the <gui>Contraction Table</gui> combo box."
-msgstr "Za omogočitev skrčene Braillove pisave na sistemu, kjer je bil nameščen liblouis, se prepričajte, da je izbirno polje <gui>Omogoči skrčeno Braillovo pisavo<gui> izbrano. Nato v spustnem polju <gui>Preglednica skrčenja</gui> izberite želeno preglednico prevoda."
+msgstr "Za omogočitev skrčene Braillove pisave na sistemu, kjer je bil nameščen liblouis, se prepričajte, da je izbirno polje <gui>Omogoči skrčeno Braillovo pisavo<gui> izbrano. Nato v spustnem polju <gui>Razpredelnica skrčenja</gui> izberite želeno razpredelnico prevoda."
 
 #: C/preferences_braille.page:70(title)
 msgid "Abbreviated Role Names"
@@ -2287,9 +2285,8 @@ msgstr "<cmd>--debug-file=<em>imedatoteke</em></cmd>: pošlji izhod razhroščev
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/index.page:13(None)
-#, fuzzy
 msgid "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
-msgstr "@@image: 'figures/empathy-logo.png'; md5=14568248b11d2cfe7992c5edd7e157e8"
+msgstr "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 
 #: C/index.page:3(title)
 msgid "Introduction to the <app>Orca</app> Screen Reader"
@@ -2379,7 +2376,7 @@ msgstr "V primeru da ste na povezavi bo vključena vrsta (enaka stran, druga str
 
 #: C/howto_whereami.page:89(p)
 msgid "If you are in a table cell, the coordinates of that cell and the cell headers will be included."
-msgstr "V primeru da ste v celici preglednice, bodo vključene glave in koordinate te celice."
+msgstr "V primeru da ste v celici razpredelnice, bodo vključene glave in koordinate te celice."
 
 #: C/howto_whereami.page:95(p)
 msgid "And so on. Again, the goal of <app>Orca</app>'s Where Am I is to provide you with the details you are most likely interested in knowing about the object you are currently in. To give Where Am I a try, see the list of <link xref=\"commands_where_am_i\">Where Am I commands</link>."
@@ -2674,7 +2671,7 @@ msgstr "Ko krmarite po dokumentu in se kazalka premakne na napačno črkovano be
 
 #: C/howto_tables.page:5(title)
 msgid "4. Tables"
-msgstr "4. Preglednice"
+msgstr "4. Razpredelnice"
 
 #: C/howto_tables.page:6(desc)
 msgid "Navigating and setting dynamic headers"
@@ -2683,11 +2680,11 @@ msgstr "Krmarjenje in nastavljanje dinamičnih glav"
 #: C/howto_tables.page:17(title)
 #: C/commands_structural_navigation.page:180(title)
 msgid "Tables"
-msgstr "Preglednice"
+msgstr "Razpredelnice"
 
 #: C/howto_tables.page:18(p)
 msgid "<app>Orca</app> provides several features specifically designed to improve access to tables found in web pages and other documents: configurable cell versus row reading, <link xref=\"howto_structural_navigation\">Structural Navigation</link> and Dynamic Headers."
-msgstr "<app>Orka</app> zagotavlja več zmožnosti, ki so zasnovane posebno za izboljšanje dostopa do preglednic v spletnih straneh in drugih dokumentih: nastavljivo branje celic ali vrstic, <link xref=\"howto_structural_navigation\">Strukturno krmarjenje</link> in dinamične glave."
+msgstr "<app>Orka</app> zagotavlja več zmožnosti, ki so zasnovane posebno za izboljšanje dostopa do razpredelnic v spletnih straneh in drugih dokumentih: nastavljivo branje celic ali vrstic, <link xref=\"howto_structural_navigation\">Strukturno krmarjenje</link> in dinamične glave."
 
 #: C/howto_tables.page:25(title)
 msgid "Cell Versus Row Reading"
@@ -2695,11 +2692,11 @@ msgstr "Branje celic ali vrstic"
 
 #: C/howto_tables.page:26(p)
 msgid "Consider the process of examining the list of messages in your Inbox. In order to have Orca announce the sender, subject, date, and presence of attachments you would need <app>Orca</app> to speak the row. On the other hand, when navigating amongst rows in a spreadsheet, hearing the full row may not be desired if for no other reason than the sheer number of cells in each row. Thus in that case, you would want <app>Orca</app> to only speak the cell with focus. Similar situations occur in document tables."
-msgstr "Razmislite o opravilu preučevanja sporočil v vašem dohodnem predalu. Da Orka oznani pošiljatelja, zadevo, datum in prisotnost prilog, boste potrebovali <app>Orko</app>, ki bo izgovorila vrstico. Po drugi strani je pri krmarjenju med vrsticami v besedilu poslušanje celotne vrstice nezaželeno, če ne zaradi drugega, zaradi števila celic v vsaki vrstici. Zato boste v tem primeru želeli, da <app>Orka</app> izgovori samo celice v žarišču. Podobni primeri se zgodijo v preglednicah dokumenta."
+msgstr "Razmislite o opravilu preučevanja sporočil v vašem dohodnem predalu. Da Orka oznani pošiljatelja, zadevo, datum in prisotnost prilog, boste potrebovali <app>Orko</app>, ki bo izgovorila vrstico. Po drugi strani je pri krmarjenju med vrsticami v besedilu poslušanje celotne vrstice nezaželeno, če ne zaradi drugega, zaradi števila celic v vsaki vrstici. Zato boste v tem primeru želeli, da <app>Orka</app> izgovori samo celice v žarišču. Podobni primeri se zgodijo v razpredelnicah dokumenta."
 
 #: C/howto_tables.page:36(p)
 msgid "<app>Orca</app> allows you to customize whether only the cell should be read, or if the full row should be. You can set this preference Orca wide as well as on an application-by-application basis. How to do each is described in the guide on <link xref=\"preferences\"><app>Orca</app>'s preferences dialogs</link>. The setting can be found in the <gui>Table Rows</gui> radio button group on the <link xref=\"preferences_speech\"><gui>Speech</gui> page</link>."
-msgstr "<app>Orka</app> vam omogoča prilagoditev ali naj bo prikazana le celica ali polna vrstica. To možnost lahko nastavite za celotno Orko ali pa za posamezen program. Kako to storiti je opisano v <link xref=\"preferences\">pogovornih oknih možnosti <app>Orke</app></link>. Nastavitev lahko najdete v skupini izbirnih gumbov <gui>Vrstice preglednice</gui> na <link xref=\"preferences_speech\">strani <gui>Govor</gui></link>."
+msgstr "<app>Orka</app> vam omogoča prilagoditev ali naj bo prikazana le celica ali polna vrstica. To možnost lahko nastavite za celotno Orko ali pa za posamezen program. Kako to storiti je opisano v <link xref=\"preferences\">pogovornih oknih možnosti <app>Orke</app></link>. Nastavitev lahko najdete v skupini izbirnih gumbov <gui>Vrstice razpredelnice</gui> na <link xref=\"preferences_speech\">strani <gui>Govor</gui></link>."
 
 #: C/howto_tables.page:45(p)
 msgid "In addition, there is an <app>Orca</app> command which allows you to toggle this setting on the fly: <keyseq><key>Orca Modifier</key><key>F11</key></keyseq>."
@@ -2713,11 +2710,11 @@ msgstr "Strukturno krmarjenje"
 
 #: C/howto_tables.page:53(p)
 msgid "<app>Orca</app>'s <link xref=\"commands_structural_navigation#tables\">table Structural Navigation commands</link> make it possible for you to quickly locate tables, jump immediately to a table's first or last cell, and move to the next cell in any direction."
-msgstr "<app>Orkini</app>'s <link xref=\"commands_structural_navigation#tables\">ukazi strukturnega krmarjenja</link> vam omogočajo hitro iskanje preglednic, takojšen skok na prvo ali zadnjo celico preglednice in premik na naslednjo celico v katerikoli smeri."
+msgstr "<app>Orkini</app>'s <link xref=\"commands_structural_navigation#tables\">ukazi strukturnega krmarjenja</link> vam omogočajo hitro iskanje razpredelnic, takojšen skok na prvo ali zadnjo celico razpredelnice in premik na naslednjo celico v katerikoli smeri."
 
 #: C/howto_tables.page:59(p)
 msgid "As you navigate amongst and within tables using Structural Navigation, <app>Orca</app> will announce additional details to help you understand your position, such as the dimensions of the table you just entered and the fact that you have reached the edge of the table in the direction you are moving."
-msgstr "Ko med preglednicami krmarite s strukturnim krmarjenjem, bo <app>Orka</app> oznanila dodatne podrobnosti, ki vam bodo pomagale razumeti vaš položaj kot so mere preglednice, ki ste jih pravkar vnesli in dejstvo, da ste v smeri premikanja dosegli rob preglednice."
+msgstr "Ko med razpredelnicami krmarite s strukturnim krmarjenjem, bo <app>Orka</app> oznanila dodatne podrobnosti, ki vam bodo pomagale razumeti vaš položaj kot so mere razpredelnice, ki ste jih pravkar vnesli in dejstvo, da ste v smeri premikanja dosegli rob razpredelnice."
 
 #: C/howto_tables.page:66(p)
 msgid "In addition, <app>Orca</app> provides configurable <link xref=\"preferences_table_navigation\">presentation options</link> which work in conjunction with Structural Navigation and allow you to control whether or not cell coordinates are presented, multiple cell spans are indicated, and cell headers are announced."
@@ -2738,7 +2735,7 @@ msgstr "Dinamične glave"
 
 #: C/howto_tables.page:85(p)
 msgid "Many of the tables you will encounter while reading have cells which serve as the header for a row or a column. Whether or not the creator of that table correctly marked those cells as headers is hard to say. In many cases, the text was simply formatted to be larger and/or bold. And even if the table is correctly marked up, that is no guarantee that the application or toolkit exposes that text as header information to assistive technologies. <app>Orca</app>'s Dynamic Header support makes it possible to overcome these challenges."
-msgstr "Veliko preglednic ima celice, ki služijo kot glava za vrstico ali stolpec. Ali je ustvarjalec te preglednice označil kot glave je teko reči. V veliko primerih je besedilo bilo oblikovano kot večje in/ali krepko. Tudi če je preglednica pravilno označena, ni nujno, da program ali zbirka orodij dostopnim tehnologijam besedilo izpostavi kot podatke glave. <app>Orkina</app> podpora dinamičnih glav vam pomaga rešiti te težave."
+msgstr "Veliko razpredelnic ima celice, ki služijo kot glava za vrstico ali stolpec. Ali je ustvarjalec te razpredelnice označil kot glave je teko reči. V veliko primerih je besedilo bilo oblikovano kot večje in/ali krepko. Tudi če je razpredelnica pravilno označena, ni nujno, da program ali zbirka orodij dostopnim tehnologijam besedilo izpostavi kot podatke glave. <app>Orkina</app> podpora dinamičnih glav vam pomaga rešiti te težave."
 
 #: C/howto_tables.page:96(title)
 msgid "Setting Column Headers"
@@ -2807,7 +2804,7 @@ msgstr "Oznake mest, ločnice in sidra"
 
 #: C/howto_structural_navigation.page:31(p)
 msgid "Tables and table cells"
-msgstr "Preglednice in celice preglednic"
+msgstr "Razpredelnice in celice razpredelnic"
 
 #: C/howto_structural_navigation.page:33(p)
 msgid "A full list of individual elements and their associated keybindings can be found in <link xref=\"commands_structural_navigation\">Structural Navigation Commands</link>."
@@ -2819,7 +2816,7 @@ msgstr "Podprti programi"
 
 #: C/howto_structural_navigation.page:40(p)
 msgid "Currently, Structural Navigation is fully implemented for web content, including the help content you are reading now. <app>Orca</app>'s Structural Navigation support for table cells has also been implemented for <app>OpenOffice Writer</app> and <app>LibreOffice Writer</app>. Implementing the remainder of the Structural Navigation objects to these office suites requires changes to be made by their respective developers. Implementing any Structural Navigation features within <app>Evince</app> will require a similar effort on the part of its developers."
-msgstr "Trenutno je strukturno krmarjenje polno podprto za spletno vsebino vključno z vsebino pomoči, ki jo berete sedaj. <app>Orkina</app> podpora strukturnega krmarjenja za celice preglednic je podprta tudi v programih <app>OpenOffice Writer</app> in <app>LibreOffice Writer</app>. Podpora preostankov predmetov strukturnega krmarjenja v teh pisarniških zbirkah zahteva spremembe s strani razvijalcev pisarniških zbirk. Podpora zmožnosti strukturnega krmarjenja v <app>Evince</app> bo zahtevala podobno delo s strani njegovih razvijalcev."
+msgstr "Trenutno je strukturno krmarjenje polno podprto za spletno vsebino vključno z vsebino pomoči, ki jo berete sedaj. <app>Orkina</app> podpora strukturnega krmarjenja za celice razpredelnic je podprta tudi v programih <app>OpenOffice Writer</app> in <app>LibreOffice Writer</app>. Podpora preostankov predmetov strukturnega krmarjenja v teh pisarniških zbirkah zahteva spremembe s strani razvijalcev pisarniških zbirk. Podpora zmožnosti strukturnega krmarjenja v <app>Evince</app> bo zahtevala podobno delo s strani njegovih razvijalcev."
 
 #: C/howto_structural_navigation.page:53(p)
 msgid "Depending on where you are, it may be necessary for you to explicitly toggle Structural Navigation on before you can use it."
@@ -2926,22 +2923,20 @@ msgstr "Pojdite v pogovorno polje <link xref=\"preferences\">Možnosti</link> s 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/howto_profiles.page:51(None)
-#, fuzzy
 msgid "@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
-msgstr "@@image: 'figures/eog_save_as_window.png'; md5=fdebb65611d88ced4201754b0f417783"
+msgstr "@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/howto_profiles.page:82(None)
-#, fuzzy
 msgid "@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
-msgstr "@@image: 'figures/empathy-logo.png'; md5=14568248b11d2cfe7992c5edd7e157e8"
+msgstr "@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/howto_profiles.page:106(None)
 msgid "@@image: 'figures/profiles_conflict.png'; md5=0da0839b41fce88a4c177e5fb52b3e6b"
-msgstr ""
+msgstr "@@image: 'figures/profiles_conflict.png'; md5=0da0839b41fce88a4c177e5fb52b3e6b"
 
 #: C/howto_profiles.page:5(title)
 msgid "9. Profiles"
@@ -3040,9 +3035,8 @@ msgstr "Ob naslednjem zagonu <app>Orke</app> bo uporabljen novo izbrani profil."
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/howto_orca_find.page:50(None)
-#, fuzzy
 msgid "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
-msgstr "@@image: 'figures/empathy-logo.png'; md5=14568248b11d2cfe7992c5edd7e157e8"
+msgstr "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
 
 #: C/howto_orca_find.page:5(title)
 msgid "3. Orca Find"
@@ -3258,7 +3252,7 @@ msgstr "Samodejno posodobljeni predeli"
 
 #: C/howto_live_regions.page:18(p)
 msgid "A live region is a dynamically-updated portion of a web page, such as a table of sports statistics, a list of current stock prices, a log from a chat, or an alert displayed by the page you are reading. While live regions appear quite frequently, fully accessible web pages with live regions are encountered less often. This problem is actively being addressed by a number of organizations."
-msgstr "Samodejno posodobljen predel je dinamično posodabljajoč se del spletne strani kot je preglednica ali športna statistika, seznam trenutnih cen delnic, dnevnik klepeta ali alarm prikazan na strani, ki jo berete. Čeprav se samodejno posodoblejni predeli pojavljajo pogosto so spletne strani s samodejno posodabljajočimi predeli manj pogoste. Težavo dejavno rešuje več organizacij."
+msgstr "Samodejno posodobljen predel je dinamično posodabljajoč se del spletne strani kot je razpredelnica ali športna statistika, seznam trenutnih cen delnic, dnevnik klepeta ali alarm prikazan na strani, ki jo berete. Čeprav se samodejno posodoblejni predeli pojavljajo pogosto so spletne strani s samodejno posodabljajočimi predeli manj pogoste. Težavo dejavno rešuje več organizacij."
 
 #: C/howto_live_regions.page:27(title)
 msgid "Live Region Politeness Levels"
@@ -3560,7 +3554,7 @@ msgstr "Ukazi opravila kje sem"
 
 #: C/commands_where_am_i.page:20(p)
 msgid "<app>Orca</app>'s Where Am I feature gives you context-sensitive details about your present location. For instance, in tables, Where Am I will give you details about the table cell you are in, but in text it will present the current line along with any text which happens to be selected. The full list of what you can expect <app>Orca</app> to present can be found in the <link xref=\"howto_whereami\">Introduction to Where Am I</link>."
-msgstr "<app>Orkina</app> zmožnost Kje sem, vam da na vsebino občutljive podrobnosti o vašem trenutnem mestu. Na primer v preglednicah vam Kje sem da podrobnosti o celici preglednice v kateri ste. V besedilu pa vam predstavi trenutno vrstico in morebitno trenutno izbrano besedilo. Poln seznam stvari, ki vam jih bo <app>Orka</app> predstavila, lahko najdete v <link xref=\"howto_whereami\">Uvod v Kje sem jaz</link>."
+msgstr "<app>Orkina</app> zmožnost Kje sem, vam da na vsebino občutljive podrobnosti o vašem trenutnem mestu. Na primer v razpredelnicah vam Kje sem da podrobnosti o celici razpredelnice v kateri ste. V besedilu pa vam predstavi trenutno vrstico in morebitno trenutno izbrano besedilo. Poln seznam stvari, ki vam jih bo <app>Orka</app> predstavila, lahko najdete v <link xref=\"howto_whereami\">Uvod v Kje sem jaz</link>."
 
 #: C/commands_where_am_i.page:28(p)
 msgid "<app>Orca</app> provides the following Where Am I commands:"
@@ -3678,7 +3672,7 @@ msgstr "Predstavi seznam vseh obvestilnih sporočil: (nedoločeno)"
 
 #: C/commands_table.page:6(title)
 msgid "3. Table Navigation"
-msgstr "3. Krmarjenje po preglednici"
+msgstr "3. Krmarjenje po razpredelnici"
 
 #: C/commands_table.page:8(desc)
 msgid "Commands for accessing tabular information"
@@ -3686,11 +3680,11 @@ msgstr "Ukazi za dostop do tabelaričnih podatkov"
 
 #: C/commands_table.page:19(title)
 msgid "Table Navigation Commands"
-msgstr "Ukazi krmarjenja po preglednicah"
+msgstr "Ukazi krmarjenja po razpredelnicah"
 
 #: C/commands_table.page:20(p)
 msgid "Orca's support for navigation by table cell is part of its <link xref=\"commands_structural_navigation#tables\">Structural Navigation commands</link>. In addition you can:"
-msgstr "Orkina podpora za krmarjenje po celicah preglednice je del njenih <link xref=\"commands_structural_navigation#tables\">ukazov strukturnega krmarjenja</link>. Poleg tega lahko:"
+msgstr "Orkina podpora za krmarjenje po celicah razpredelnice je del njenih <link xref=\"commands_structural_navigation#tables\">ukazov strukturnega krmarjenja</link>. Poleg tega lahko:"
 
 #: C/commands_table.page:27(p)
 msgid "Set dynamic row headers to current column: <keyseq><key>Orca Modifier</key><key>C</key></keyseq>"
@@ -3711,7 +3705,7 @@ msgstr "Počistite dinamične glave stolpcev: <keyseq><key>Spremenilna tipka Ork
 #: C/commands_table.page:51(p)
 #: C/commands_speech_settings.page:34(p)
 msgid "Toggle between cell and row reading in a table: <keyseq><key>Orca Modifier</key><key>F11</key></keyseq>"
-msgstr "Preklopite med branjem celice in vrstice v preglednici: <keyseq><key>Spremenilna tipka Orka</key><key>F11</key></keyseq>  "
+msgstr "Preklopite med branjem celice in vrstice v razpredelnici: <keyseq><key>Spremenilna tipka Orka</key><key>F11</key></keyseq>  "
 
 #: C/commands_structural_navigation.page:6(title)
 msgid "2. Structural Navigation"
@@ -3819,7 +3813,7 @@ msgstr "Naslednji in predhodni predmet seznama: <keyseq><key>I</key></keyseq> in
 
 #: C/commands_structural_navigation.page:183(p)
 msgid "Next and previous table: <keyseq><key>T</key></keyseq> and <keyseq><key>Shift</key><key>T</key></keyseq>"
-msgstr "Naslednja in predhodna preglednica: <keyseq><key>T</key></keyseq> in <keyseq><key>Dvigalka</key><key>T</key></keyseq>"
+msgstr "Naslednja in predhodna razpredelnica: <keyseq><key>T</key></keyseq> in <keyseq><key>Dvigalka</key><key>T</key></keyseq>"
 
 #: C/commands_structural_navigation.page:190(p)
 msgid "Cell on left: <keyseq><key>Alt</key><key>Shift</key><key>Left</key></keyseq>"
@@ -3839,11 +3833,11 @@ msgstr "Celica spodaj: <keyseq><key>Alt</key><key>Dvigalka</key><key>Navzdol</ke
 
 #: C/commands_structural_navigation.page:214(p)
 msgid "First cell in table: <keyseq><key>Alt</key><key>Shift</key><key>Home</key></keyseq>"
-msgstr "Prva celica v preglednici: <keyseq><key>Alt</key><key>Dvigalka</key><key>Domov</key></keyseq>"
+msgstr "Prva celica v razpredelnici: <keyseq><key>Alt</key><key>Dvigalka</key><key>Domov</key></keyseq>"
 
 #: C/commands_structural_navigation.page:220(p)
 msgid "Last cell in table: <keyseq><key>Alt</key><key>Shift</key><key>End</key></keyseq>"
-msgstr "Zadnja celica v preglednici: <keyseq><key>Alt</key><key>Dvigalka</key><key>Konec</key></keyseq>"
+msgstr "Zadnja celica v razpredelnici: <keyseq><key>Alt</key><key>Dvigalka</key><key>Konec</key></keyseq>"
 
 #: C/commands_structural_navigation.page:228(title)
 msgid "Text Blocks"
@@ -4783,14 +4777,19 @@ msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 
 #~ msgid "<gui>None</gui> (the default)"
 #~ msgstr "<gui>Brez</gui> (privzeto)"
+
 #~ msgid "Dot 7"
 #~ msgstr "Pika 7"
+
 #~ msgid "Dot 8"
 #~ msgstr "Pika 8"
+
 #~ msgid "Dots 7 and 8"
 #~ msgstr "Piki 7 in 8"
+
 #~ msgid "Structural Navigation Preferences"
 #~ msgstr "Možnosti strukturnega krmarjenja"
+
 #~ msgid ""
 #~ "<gui>Use <app>Orca</app> Structural Navigation</gui>: This checkbox "
 #~ "toggles structural navigation on and off. To toggle this setting on the "
@@ -4801,41 +4800,48 @@ msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 #~ "toggles structural navigation on and off. To toggle this setting on the "
 #~ "fly without saving it, use <keyseq><key>Orca Modifier</key><key>Z</key></"
 #~ "keyseq>."
+
 #~ msgid ""
 #~ "Preferences dialog box option to enable and disable <app>Orca</app>'s "
 #~ "speech output."
 #~ msgstr ""
 #~ "Možnost polja pogovornega okna za omogočanje in onemogočanje "
 #~ "<app>Orkinega</app> izhoda govora."
+
 #~ msgid ""
 #~ "Preferences dialog box options to configure the text-to-speech settings "
 #~ "to be used by <app>Orca</app>."
 #~ msgstr ""
 #~ "Pogovorno okno možnosti za nastavljanje nastavitev besedilo-v-govor, ki "
 #~ "jih uporablja <app>Orka</app>."
+
 #~ msgid ""
 #~ "Preferences dialog box option to set the level of verbalized punctuation."
 #~ msgstr ""
 #~ "Možnost pogovornega okna možnosti za nastavljanje besednega postavljanja "
 #~ "ločil."
+
 #~ msgid ""
 #~ "Preferences dialog box option to control the amount of information which "
 #~ "will be spoken in various situations."
 #~ msgstr ""
 #~ "Možnost pogovornega okna možnosti za nadzor količine podatkov, ki bo "
 #~ "izgovorjena ob različnih situacijah."
+
 #~ msgid ""
 #~ "Preferences dialog box option to configure what gets spoken when "
 #~ "navigating amongst rows in a table."
 #~ msgstr ""
 #~ "Možnost pogovornega okna možnosti za nastavljanje kaj bo izgovorjeno pri "
-#~ "krmarjenju med vrsticami v preglednici."
+#~ "krmarjenju med vrsticami v razpredelnici."
+
 #~ msgid ""
 #~ "Preferences dialog box options to control which progress bar updates get "
 #~ "spoken."
 #~ msgstr ""
 #~ "Možnosti pogovornega okna, ki nadzirajo katere posodobitve vrstice "
 #~ "napredka so izgovorjene."
+
 #~ msgid ""
 #~ "The <gui>Restrict to</gui> combo box allows you to control which progress "
 #~ "bars should be spoken, assuming the speaking of progress bar updates has "
@@ -4859,6 +4865,7 @@ msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 #~ "<gui>Okno</gui> določi, da bo <app>Orka</app> izgovorila le posodobitve "
 #~ "za vrstice napredka v dejavnem oknu. Privzeta vrednost je <gui>Program</"
 #~ "gui>."
+
 #~ msgid ""
 #~ "Preferences dialog box option to cause <app>Orca</app> to only speak "
 #~ "actual text displayed on screen. This option is intended primarily for "
@@ -4867,52 +4874,61 @@ msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 #~ "Možnost določi, da <app>Orka</app> izgovori le besedilo, ki je prikazano "
 #~ "na zaslonu. Ta možnost je namenjena predvsem za slabovidne uporabnike in "
 #~ "uporabnike z nezmožnostjo učenja vida."
+
 #~ msgid ""
 #~ "Preferences dialog box option to cause <app>Orca</app> to present "
 #~ "multicase strings as if they were separate words."
 #~ msgstr ""
 #~ "Možnost, ki določi, da <app>Orka</app> predstavi nize z več besedami kot "
 #~ "da so ločene besede."
+
 #~ msgid ""
 #~ "Preferences dialog box option to cause <app>Orca</app> to add pauses to "
 #~ "the items being spoken."
 #~ msgstr ""
 #~ "Možnost, ki določi, da <app>Orka</app> izgovorjenim predmetom doda "
 #~ "premore."
+
 #~ msgid ""
 #~ "Preferences dialog box option controlling <app>Orca</app>'s Say All "
 #~ "style. The options are by sentence and by line."
 #~ msgstr ""
 #~ "Možnost, ki nadzira <app>Orkin<app> slog Reci vse. Možnosti sta po stavku "
 #~ "in po vrstici."
+
 #~ msgid ""
 #~ "Preferences dialog box options for controlling the presentation of a "
 #~ "variety of supplemental, \"system\" information about the item with focus."
 #~ msgstr ""
 #~ "Možnost za nadziranje predstavitve različnih dodatnih \"sistemskih\" "
 #~ "podatkov o predmetu v žarišču."
+
 #~ msgid ""
 #~ "Preferences dialog box option for controlling whether or not blank lines "
 #~ "are announced by <app>Orca</app>."
 #~ msgstr "Možnost za nadzor ali <app>Orka</app> oznani prazne vrstice ali ne."
+
 #~ msgid ""
 #~ "Preferences dialog box option for enabling/disabling the speaking of "
 #~ "indentation and justification whilst navigating within text."
 #~ msgstr ""
 #~ "Možnost za omogočanje/onemogočanje govora zamika in poravnave med "
 #~ "krmarjenjem po besedilu. "
+
 #~ msgid ""
 #~ "Preferences dialog box option for enabling/disabling the speaking of "
 #~ "mnemonics and keyboard shortcuts associated with the focused item."
 #~ msgstr ""
 #~ "Možnost za omogočanje/onemogočanje izgovorjave mnemonične tehnike in "
 #~ "tipkovnih bližnjic povezanih s predmetom v žarišču."
+
 #~ msgid ""
 #~ "Preferences dialog box option for enabling/disabling the speaking of the "
 #~ "position of the current item in a menu, list, or tree."
 #~ msgstr ""
 #~ "Možnost za omogočanje/onemogočanje izgovorjave položaja trenutnega "
 #~ "predmeta menija v meniju, seznamu ali drevesu."
+
 #~ msgid ""
 #~ "Preferences dialog box option for controlling whether or not <app>Orca</"
 #~ "app> provides tutorial information, such as how to interact with the "
@@ -4920,6 +4936,7 @@ msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 #~ msgstr ""
 #~ "Možnost za nadziranje ali <app>Orka</app> zagotovi podatke vodnika kot so "
 #~ "kako se sporazumevati s predmetom, ki je trenutno v žarišču."
+
 #~ msgid ""
 #~ "Sometimes your speech synthesizer just doesn't say the right thing for a "
 #~ "given string. You might prefer to hear \"laughing out loud\" rather than "
@@ -4937,14 +4954,18 @@ msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 #~ "slovarja. Ker je stran izgovorjave tudi del nastavitev za določene "
 #~ "programe, lahko svoje vnose prilagodite za vsak program, ki ga "
 #~ "uporabljate."
+
 #~ msgid "To add a new entry into <app>Orca</app>'s pronunciation dictionary:"
 #~ msgstr "Za dodajanje novega vnosa v <app>Orkin</app> slovar izgovorjave:"
+
 #~ msgid ""
 #~ "To edit an existing entry in <app>Orca</app>'s pronunciation dictionary:"
 #~ msgstr ""
 #~ "Za urejanje obstoječega vnosa v <app>Orkinem</app> slovarju izgovorjave:"
+
 #~ msgid "To delete an entry from <app>Orca</app>'s pronunciation dictionary:"
 #~ msgstr "Za izbris vnosa iz <app>Orkinega</app> slovarja izgovorjave:"
+
 #~ msgid ""
 #~ "<app>Orca</app>'s preferences dialogs allow you to customize the behavior "
 #~ "and features of <app>Orca</app>, including speech, braille, "
@@ -4957,80 +4978,110 @@ msgstr "Andrej Žnidaršič <andrej.znidarsic@gmail.com>"
 #~ "pisavo, povečavo in razporeditvijo tipkovnice. Te prilagoditve lahko "
 #~ "nastavite splošno ali jih omejite na določen program. Ti vodiči vas bodo "
 #~ "seznanili z vsem prilagoditvami, ki jih lahko naredite."
+
 #~ msgid "Configuring magnification, colors, and pointer"
 #~ msgstr "Nastavljanje povečave, barv in kazalnika"
+
 #~ msgid "Left Half"
 #~ msgstr "Leva polovica"
+
 #~ msgid "Right Half"
 #~ msgstr "Desna polovica"
+
 #~ msgid "Top Half"
 #~ msgstr "Zgornja polovica"
+
 #~ msgid "Bottom Half"
 #~ msgstr "Spodnja polovica"
+
 #~ msgid ""
 #~ "Choosing <gui>Custom</gui> causes four spin buttons to become available:"
 #~ msgstr ""
 #~ "Izbira <gui>Po meri</gui> povzroči, da so na voljo štirje vrtilni gumbi:"
+
 #~ msgid "Top"
 #~ msgstr "Na vrhu"
+
 #~ msgid "Left"
 #~ msgstr "Levo"
+
 #~ msgid "Right"
 #~ msgstr "Desno"
+
 #~ msgid "Bottom"
 #~ msgstr "Na dnu"
+
 #~ msgid ""
 #~ "<gui>Custom color</gui>: If the cursor is enabled, a custom color can "
 #~ "also be applied."
 #~ msgstr ""
 #~ "<gui>Barva po meri</gui>: V primeru, da je kazalka omogočena, je lahko "
 #~ "uveljavljena tudi barva po meri."
+
 #~ msgid ""
 #~ "<gui>Enable cross-hair</gui>: If checked, you can additionally configure "
 #~ "the clipping behavior, size and color of the cross-hair."
 #~ msgstr ""
 #~ "<gui>Omogoči merek</gui>: V primeru, da je izbrana lahko nastavite "
 #~ "obnašanje izreza, velikost in barvo merka."
+
 #~ msgid ""
 #~ "<gui>Cross-hair color</gui>: This control allows a custom color to be "
 #~ "used for the cross-hair."
 #~ msgstr ""
 #~ "<gui>Barva merka</gui>: Ta nadzornik vam za merek omogoča uporabo barve "
 #~ "po meri."
+
 #~ msgid "Preferences dialog box option to select the Orca Modifier key."
 #~ msgstr "Možnost za izbiro pomožne tipke Orka."
+
 #~ msgid "To save a new profile:"
 #~ msgstr "Za shranjevanje novega profila:"
+
 #~ msgid "To load an existing profile:"
 #~ msgstr "Za nalaganje obstoječega profila:"
+
 #~ msgid "To make changes to an existing profile:"
 #~ msgstr "Za spremembe obstoječega profila:"
+
 #~ msgid "Current location"
 #~ msgstr "Trenutno mesto"
+
 #~ msgid "Top of window"
 #~ msgstr "Vrh okna"
+
 #~ msgid "Match case"
 #~ msgstr "Upoštevaj velikost črk"
+
 #~ msgid "Match entire word only"
 #~ msgstr "Ujemaj le celotne besede"
+
 #~ msgid "Search backwards"
 #~ msgstr "Išči nazaj"
+
 #~ msgid "To restore a modified key binding:"
 #~ msgstr "Za obnovitev spremenjene tipkovne bližnjice:"
+
 #~ msgid "Tables (WRITE ME)"
-#~ msgstr "Preglednice (NAPIŠI ME)"
+#~ msgstr "Razpredelnice (NAPIŠI ME)"
+
 #~ msgid "Bookmarks (WRITE ME)"
 #~ msgstr "Zaznamki (NAPIŠI ME)"
+
 #~ msgid "2. Obtaining Text Attribute Information"
 #~ msgstr "2.Pridobivanje podatkov o atributih besedila"
+
 #~ msgid "Obtaining formatting details"
 #~ msgstr "Pridobivanje podrobnosti o oblikovanju"
+
 #~ msgid "A5 Tables"
-#~ msgstr "Preglednice A5"
+#~ msgstr "Razpredelnice A5"
+
 #~ msgid "Accessing document tables efficiently"
-#~ msgstr "Učinkovit dostop do preglednic dokumentov"
+#~ msgstr "Učinkovit dostop do razpredelnic dokumentov"
+
 #~ msgid "3. Web Pages"
 #~ msgstr "3. Spletne strani"
+
 #~ msgid "Web Pages (WRITE ME)"
 #~ msgstr "Spletne strani (NAPIŠI ME)"
-
