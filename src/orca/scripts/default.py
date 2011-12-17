@@ -1368,7 +1368,10 @@ class Script(script.Script):
         # If this object is CONTROLLED_BY the object that currently
         # has focus, speak/braille this object.
         #
-        relations = obj.getRelationSet()
+        try:
+            relations = obj.getRelationSet()
+        except LookupError:
+            relations = []
         for relation in relations:
             if relation.getRelationType() \
                    == pyatspi.RELATION_CONTROLLED_BY:
