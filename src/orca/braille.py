@@ -1388,6 +1388,7 @@ def refresh(panToCursor=True,
         pass
 
     debug.println(debug.LEVEL_INFO, logLine)
+    log.info(logLine)
 
     substring = string[startPos:endPos]
     if not _brlAPIRunning:
