@@ -284,7 +284,7 @@ class SpeechServer(speechserver.SpeechServer):
         # new string well.  For example, "Open..." turns into
         # "Open dot dot dot".
         #
-        spokenEllipsis = _(" dot dot dot")
+        spokenEllipsis = _(" dot dot dot") + " "
         newText = re.sub(ELLIPSIS, spokenEllipsis, oldText)
         try:
             newText = newText.decode("UTF-8")
