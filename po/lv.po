@@ -10,9 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lv\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
-"cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-09-13 23:08+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2011-12-17 19:56+0000\n"
 "PO-Revision-Date: 2011-09-16 15:18+0300\n"
 "Last-Translator: Rūdofls Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <locale@laka.lv>\n"
@@ -25,9 +25,9 @@ msgstr ""
 "Language: lv\n"
 
 #: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
-#: ../src/orca/keybindings.py:149 ../src/orca/orca_gui_splash.py:49
-#: ../src/orca/orca_gui_main.py:156 ../src/orca/orca_gui_prefs.py:2082
-#: ../src/orca/orca_gui_prefs.py:2187
+#: ../src/orca/keybindings.py:152 ../src/orca/orca_gui_splash.py:49
+#: ../src/orca/orca_gui_main.py:155 ../src/orca/orca_gui_prefs.py:2094
+#: ../src/orca/orca_gui_prefs.py:2204
 msgid "Orca"
 msgstr "Orca"
 
@@ -57,7 +57,7 @@ msgstr "Orca %s iestatījumi"
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:2193
+#: ../src/orca/app_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:2210
 msgid "Unbound"
 msgstr "Nav saistīti"
 
@@ -477,7 +477,7 @@ msgstr "Ziņojums no čata istabas %s"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:146
-#: ../src/orca/script_utilities.py:2746 ../src/orca/script_utilities.py:2754
+#: ../src/orca/script_utilities.py:2860 ../src/orca/script_utilities.py:2868
 msgid "space"
 msgstr "atstarpe"
 
@@ -1751,13 +1751,13 @@ msgstr "Iesaiņojums līdz Augšai"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:928
+#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:924
 msgid "partially checked"
 msgstr "daļēji atzīmēts"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:927
+#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:923
 msgid "checked"
 msgstr "pārbaudīts"
 
@@ -1766,13 +1766,13 @@ msgstr "pārbaudīts"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:926
+#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:922
 msgid "not checked"
 msgstr "nav pārbaudīts"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:939
+#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:935
 msgid "pressed"
 msgstr "nospiests"
 
@@ -1781,14 +1781,14 @@ msgstr "nospiests"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:939
+#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:935
 msgid "not pressed"
 msgstr "nav nospiests"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:934
+#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:930
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "izvēlēts"
@@ -1799,7 +1799,7 @@ msgstr "izvēlēts"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:933
+#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:929
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "nav izvēlēts"
@@ -1820,7 +1820,7 @@ msgstr "vertikāls"
 #. progress bar or other component that displays a value as
 #. a percentage.
 #.
-#: ../src/orca/flat_review.py:447
+#: ../src/orca/flat_review.py:449
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -1832,62 +1832,62 @@ msgstr[2] "%d procenti."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1078 ../src/orca/generator.py:466
+#: ../src/orca/flat_review.py:1080 ../src/orca/generator.py:466
 #: ../src/orca/generator.py:723 ../src/orca/generator.py:765
 #: ../src/orca/generator.py:811
 #: ../src/orca/scripts/apps/evolution/script.py:500
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
-#: ../src/orca/scripts/apps/packagemanager/script.py:641
-#: ../src/orca/tutorialgenerator.py:526 ../src/orca/tutorialgenerator.py:566
+#: ../src/orca/scripts/apps/packagemanager/script.py:640
+#: ../src/orca/tutorialgenerator.py:529 ../src/orca/tutorialgenerator.py:569
 msgid "toggle"
 msgstr "pārslēgt"
 
 #. Translators: this is presented in a GUI to represent the
+#. "caps lock" modifier.
+#.
+#: ../src/orca/keybindings.py:157
+msgid "Caps_Lock"
+msgstr "Burtslēgs"
+
+#. Translators: this is presented in a GUI to represent the
 #. "right alt" modifier.
 #.
-#: ../src/orca/keybindings.py:156
+#: ../src/orca/keybindings.py:164
 msgid "Alt_R"
 msgstr "Alt_L"
 
 #. Translators: this is presented in a GUI to represent the
 #. "super" modifier.
 #.
-#: ../src/orca/keybindings.py:161
+#: ../src/orca/keybindings.py:169
 msgid "Super"
 msgstr "Super"
 
 #. Translators: this is presented in a GUI to represent the
 #. "meta 2" modifier.
 #.
-#: ../src/orca/keybindings.py:166
+#: ../src/orca/keybindings.py:174
 msgid "Meta2"
 msgstr "Meta2"
 
 #. Translators: this is presented in a GUI to represent the
 #. "left alt" modifier.
 #.
-#: ../src/orca/keybindings.py:173
+#: ../src/orca/keybindings.py:181
 msgid "Alt_L"
 msgstr "Alt_K"
 
 #. Translators: this is presented in a GUI to represent the
 #. "control" modifier.
 #.
-#: ../src/orca/keybindings.py:178
+#: ../src/orca/keybindings.py:186
 msgid "Ctrl"
 msgstr "Ctrl"
 
 #. Translators: this is presented in a GUI to represent the
-#. "caps lock" modifier.
-#.
-#: ../src/orca/keybindings.py:183
-msgid "Caps_Lock"
-msgstr "Burtslēgs"
-
-#. Translators: this is presented in a GUI to represent the
 #. "shift " modifier.
 #.
-#: ../src/orca/keybindings.py:188
+#: ../src/orca/keybindings.py:191
 msgid "Shift"
 msgstr "Shift"
 
@@ -2510,11 +2510,11 @@ msgstr "Ieslēgt brailu? Ievadiet y vai n: "
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "Ieslēgt Braila monitoru? Ievadiet y vai n: "
 
-#: ../src/orca/orca_console_prefs.py:580 ../src/orca/orca_gui_prefs.py:485
+#: ../src/orca/orca_console_prefs.py:580 ../src/orca/orca_gui_prefs.py:487
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "GNOME pieejamības atbalsts tikko ticis ieslēgts."
 
-#: ../src/orca/orca_console_prefs.py:586 ../src/orca/orca_gui_prefs.py:487
+#: ../src/orca/orca_console_prefs.py:586 ../src/orca/orca_gui_prefs.py:489
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "Jums vajag iziet un ienākt atpakaļ, lai izmaiņas stātos spēkā."
 
@@ -2636,10 +2636,9 @@ msgstr ""
 #| "Copyright (c) 2001, 2002 BAUM Retec, A.G."
 msgid ""
 "Copyright (c) 2010-2011 The Orca Team \n"
+"Copyright (c) 2010-2011 Igalia, S.L. \n"
 "Copyright (c) 2010 Consorcio Fernando de los Rios \n"
-"Copyright (c) 2010 Igalia, S.L. \n"
 "Copyright (c) 2010 Informal Informatica LTDA. \n"
-"Copyright (c) 2010 Willie Walker \n"
 "Copyright (c) 2005-2010 Sun Microsystems Inc. \n"
 "Copyright (c) 2005-2008 Google Inc. \n"
 "Copyright (c) 2008, 2009 Eitan Isaacson \n"
@@ -2655,14 +2654,14 @@ msgstr ""
 #. Translators: This text is used in the Orca About dialog. Please
 #. translate it to contain your name. And thank you for your work!
 #.
-#: ../src/orca/orca_gui_main.py:126
+#: ../src/orca/orca_gui_main.py:125
 msgid "translator-credits"
 msgstr "Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>"
 
 #. Translators: This text is used in the Orca About dialog. Orca is
 #. licensed under GPL2+.
 #.
-#: ../src/orca/orca_gui_main.py:131
+#: ../src/orca/orca_gui_main.py:130
 msgid ""
 "Orca is free software; you can redistribute it and/or\n"
 "modify it under the terms of the GNU Lesser General\n"
@@ -2688,7 +2687,7 @@ msgstr ""
 #. what action Orca will take when the user invokes an Orca-specific
 #. keyboard command.
 #.
-#: ../src/orca/orca_gui_prefs.py:236
+#: ../src/orca/orca_gui_prefs.py:238
 msgid "Function"
 msgstr "Funkcija"
 
@@ -2696,7 +2695,7 @@ msgstr "Funkcija"
 #. the cells in the column represent keyboard combinations
 #. the user can press to invoke Orca commands.
 #.
-#: ../src/orca/orca_gui_prefs.py:314
+#: ../src/orca/orca_gui_prefs.py:316
 msgid "Key Binding"
 msgstr "Atslēgas Saistījums"
 
@@ -2707,7 +2706,7 @@ msgstr "Atslēgas Saistījums"
 #. addition to the key bindings in the "Key Bindings"
 #. column.
 #.
-#: ../src/orca/orca_gui_prefs.py:393
+#: ../src/orca/orca_gui_prefs.py:395
 msgid "Alternate"
 msgstr "Trauksme"
 
@@ -2715,7 +2714,7 @@ msgstr "Trauksme"
 #. cells represent whether a key binding has been modified
 #. from the default key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:413
+#: ../src/orca/orca_gui_prefs.py:415
 msgid "Modified"
 msgstr "Modificēts"
 
@@ -2723,7 +2722,7 @@ msgstr "Modificēts"
 #. by Orca when presenting the content of the screen and other
 #. messages.
 #.
-#: ../src/orca/orca_gui_prefs.py:754
+#: ../src/orca/orca_gui_prefs.py:759
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Noklusētā"
@@ -2731,7 +2730,7 @@ msgstr "Noklusētā"
 #. Translators: This refers to the voice used by Orca when
 #. presenting one or more characters which is in uppercase.
 #.
-#: ../src/orca/orca_gui_prefs.py:758
+#: ../src/orca/orca_gui_prefs.py:763
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Lielie burti"
@@ -2740,7 +2739,7 @@ msgstr "Lielie burti"
 #. presenting one or more characters which is part of a
 #. hyperlink.
 #.
-#: ../src/orca/orca_gui_prefs.py:763
+#: ../src/orca/orca_gui_prefs.py:768
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Hipersaite"
@@ -2754,7 +2753,7 @@ msgstr "Hipersaite"
 #. user Tabs into a list of six items and the third item is
 #. selected. And so on.
 #.
-#: ../src/orca/orca_gui_prefs.py:773
+#: ../src/orca/orca_gui_prefs.py:778
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Sistēma"
@@ -2764,7 +2763,7 @@ msgstr "Sistēma"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1211
+#: ../src/orca/orca_gui_prefs.py:1221
 msgid "Attribute Name"
 msgstr "Atribūta nosaukums"
 
@@ -2775,7 +2774,7 @@ msgstr "Atribūta nosaukums"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1226
+#: ../src/orca/orca_gui_prefs.py:1236
 msgid "Speak"
 msgstr "Runā"
 
@@ -2786,7 +2785,7 @@ msgstr "Runā"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1244
+#: ../src/orca/orca_gui_prefs.py:1254
 msgid "Mark in braille"
 msgstr "Marķēt Brailā"
 
@@ -2805,7 +2804,7 @@ msgstr "Marķēt Brailā"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1270
+#: ../src/orca/orca_gui_prefs.py:1280
 msgid "Present Unless"
 msgstr "Parādīt, ja vien"
 
@@ -2816,7 +2815,7 @@ msgstr "Parādīt, ja vien"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1393
+#: ../src/orca/orca_gui_prefs.py:1403
 msgid "Actual String"
 msgstr "Pati virkne"
 
@@ -2827,7 +2826,7 @@ msgstr "Pati virkne"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1410
+#: ../src/orca/orca_gui_prefs.py:1420
 msgid "Replacement String"
 msgstr "Aizvietojošā virkne"
 
@@ -2840,7 +2839,7 @@ msgstr "Aizvietojošā virkne"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1489 ../src/orca/orca-setup.ui.h:28
+#: ../src/orca/orca_gui_prefs.py:1499 ../src/orca/orca-setup.ui.h:28
 msgid "Break speech into ch_unks between pauses"
 msgstr "Sadalīt r_unu fragmentos starp pauzēm"
 
@@ -2848,7 +2847,7 @@ msgstr "Sadalīt r_unu fragmentos starp pauzēm"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:1501 ../src/orca/orca_gui_prefs.py:2689
+#: ../src/orca/orca_gui_prefs.py:1511 ../src/orca/orca_gui_prefs.py:2706
 #: ../src/orca/orca-setup.ui.h:56
 msgid "Line"
 msgstr "Rinda"
@@ -2857,7 +2856,7 @@ msgstr "Rinda"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:1501 ../src/orca/orca_gui_prefs.py:2695
+#: ../src/orca/orca_gui_prefs.py:1511 ../src/orca/orca_gui_prefs.py:2712
 #: ../src/orca/orca-setup.ui.h:83
 msgid "Sentence"
 msgstr "Teikums"
@@ -2868,7 +2867,7 @@ msgstr "Teikums"
 #. and window they happen to be in.
 #.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca_gui_prefs.py:1600 ../src/orca/orca_gui_prefs.py:2651
+#: ../src/orca/orca_gui_prefs.py:1612 ../src/orca/orca_gui_prefs.py:2668
 #: ../src/orca/orca-setup.ui.h:72
 msgctxt "ProgressBar"
 msgid "All"
@@ -2880,7 +2879,7 @@ msgstr "Viss"
 #. progress bar is in the active application (but not necessarily
 #. in the current window).
 #.
-#: ../src/orca/orca_gui_prefs.py:1607
+#: ../src/orca/orca_gui_prefs.py:1619
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Lietotne"
@@ -2890,7 +2889,7 @@ msgstr "Lietotne"
 #. Orca will present progress bar updates as long as the progress
 #. bar is in the active window.
 #.
-#: ../src/orca/orca_gui_prefs.py:1613 ../src/orca/orca_gui_prefs.py:2659
+#: ../src/orca/orca_gui_prefs.py:1625 ../src/orca/orca_gui_prefs.py:2676
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Logs"
@@ -2899,7 +2898,7 @@ msgstr "Logs"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1721 ../src/orca/orca-setup.ui.h:51
+#: ../src/orca/orca_gui_prefs.py:1733 ../src/orca/orca-setup.ui.h:51
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Aktivēt ne-atstarpes _diakritiskos taustiņus"
 
@@ -2910,7 +2909,7 @@ msgstr "Aktivēt ne-atstarpes _diakritiskos taustiņus"
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1729 ../src/orca/orca-setup.ui.h:48
+#: ../src/orca/orca_gui_prefs.py:1741 ../src/orca/orca-setup.ui.h:48
 msgid "Enable echo by cha_racter"
 msgstr "Ieslēgt atbalsi pa _rakstzīmēm"
 
@@ -2918,7 +2917,7 @@ msgstr "Ieslēgt atbalsi pa _rakstzīmēm"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2019
+#: ../src/orca/orca_gui_prefs.py:2031
 msgid "(double click)"
 msgstr "(dubultklikšķis)"
 
@@ -2926,7 +2925,7 @@ msgstr "(dubultklikšķis)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:2025
+#: ../src/orca/orca_gui_prefs.py:2037
 msgid "(triple click)"
 msgstr "(trīskāršs klikšķis)"
 
@@ -2935,7 +2934,7 @@ msgstr "(trīskāršs klikšķis)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2132 ../src/orca/orca_gui_prefs.py:2225
+#: ../src/orca/orca_gui_prefs.py:2149 ../src/orca/orca_gui_prefs.py:2242
 msgid "Braille Bindings"
 msgstr "Braille Bindings"
 
@@ -2944,8 +2943,8 @@ msgstr "Braille Bindings"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2480 ../src/orca/orca_gui_prefs.py:2521
-#: ../src/orca/orca_gui_prefs.py:2561 ../src/orca/orca-setup.ui.h:34
+#: ../src/orca/orca_gui_prefs.py:2497 ../src/orca/orca_gui_prefs.py:2538
+#: ../src/orca/orca_gui_prefs.py:2578 ../src/orca/orca-setup.ui.h:34
 msgid "Dot _7"
 msgstr "_7 punkti"
 
@@ -2953,8 +2952,8 @@ msgstr "_7 punkti"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2487 ../src/orca/orca_gui_prefs.py:2528
-#: ../src/orca/orca_gui_prefs.py:2568 ../src/orca/orca-setup.ui.h:35
+#: ../src/orca/orca_gui_prefs.py:2504 ../src/orca/orca_gui_prefs.py:2545
+#: ../src/orca/orca_gui_prefs.py:2585 ../src/orca/orca-setup.ui.h:35
 msgid "Dot _8"
 msgstr "_8 punkti"
 
@@ -2962,8 +2961,8 @@ msgstr "_8 punkti"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2494 ../src/orca/orca_gui_prefs.py:2535
-#: ../src/orca/orca_gui_prefs.py:2575 ../src/orca/orca-setup.ui.h:36
+#: ../src/orca/orca_gui_prefs.py:2511 ../src/orca/orca_gui_prefs.py:2552
+#: ../src/orca/orca_gui_prefs.py:2592 ../src/orca/orca-setup.ui.h:36
 msgid "Dots 7 an_d 8"
 msgstr "7 un 8 _punkti"
 
@@ -2971,7 +2970,7 @@ msgstr "7 un 8 _punkti"
 #. symbols will be spoken as a user reads a document.
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/orca_gui_prefs.py:2598 ../src/orca/orca-setup.ui.h:132
+#: ../src/orca/orca_gui_prefs.py:2615 ../src/orca/orca-setup.ui.h:132
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Nekādas"
@@ -2981,7 +2980,7 @@ msgstr "_Nekādas"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2606 ../src/orca/orca-setup.ui.h:85
+#: ../src/orca/orca_gui_prefs.py:2623 ../src/orca/orca-setup.ui.h:85
 msgid "So_me"
 msgstr "Da_žs"
 
@@ -2989,7 +2988,7 @@ msgstr "Da_žs"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2613 ../src/orca/orca-setup.ui.h:57
+#: ../src/orca/orca_gui_prefs.py:2630 ../src/orca/orca-setup.ui.h:57
 msgid "M_ost"
 msgstr "Pā_rsvarā"
 
@@ -2997,7 +2996,7 @@ msgstr "Pā_rsvarā"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2781 ../src/orca/orca_gui_prefs.py:2869
+#: ../src/orca/orca_gui_prefs.py:2798 ../src/orca/orca_gui_prefs.py:2886
 #: ../src/orca/orca-setup.ui.h:29
 msgid "Brie_f"
 msgstr "Īs_s"
@@ -3007,7 +3006,7 @@ msgstr "Īs_s"
 #. they just want the current cell to be presented to them.
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/orca_gui_prefs.py:2805 ../src/orca/orca-setup.ui.h:88
+#: ../src/orca/orca_gui_prefs.py:2822 ../src/orca/orca-setup.ui.h:88
 msgid "Speak _cell"
 msgstr "I_zrunāt šūnu"
 
@@ -3015,11 +3014,11 @@ msgstr "I_zrunāt šūnu"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:2889
+#: ../src/orca/orca_gui_prefs.py:2906
 msgid "enter new key"
 msgstr "ievadiet jaunu tasutiņu"
 
-#: ../src/orca/orca_gui_prefs.py:2919
+#: ../src/orca/orca_gui_prefs.py:2936
 msgid "Key binding deleted. Press enter to confirm."
 msgstr ""
 "Taustiņu sasaiste dzēsta. Spiediet ievadīšanas taustiņu, lai apstiprinātu."
@@ -3028,7 +3027,7 @@ msgstr ""
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:2944
+#: ../src/orca/orca_gui_prefs.py:2961
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "Ievadītais taustiņš jau ir sasaistīts ar %s"
@@ -3037,7 +3036,7 @@ msgstr "Ievadītais taustiņš jau ir sasaistīts ar %s"
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:2950
+#: ../src/orca/orca_gui_prefs.py:2967
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Uzstādīšana pabeigta:%s. Nospiediet \"atgriezties\", lai turpinātu."
@@ -3046,7 +3045,7 @@ msgstr "Uzstādīšana pabeigta:%s. Nospiediet \"atgriezties\", lai turpinātu."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:2989
+#: ../src/orca/orca_gui_prefs.py:3011
 #, python-format
 msgid "The new key is: %s"
 msgstr "Jaunais taustiņš ir: %s"
@@ -3055,21 +3054,21 @@ msgstr "Jaunais taustiņš ir: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:2997
+#: ../src/orca/orca_gui_prefs.py:3019
 msgid "The keybinding has been removed."
 msgstr "Taustiņu sasaiste ir izņemta."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:3035 ../src/orca/orca-setup.ui.h:114
+#: ../src/orca/orca_gui_prefs.py:3057 ../src/orca/orca-setup.ui.h:114
 msgid "_Desktop"
 msgstr "_DarbaVirsmas"
 
 #. We're here because given profile name exists, so we have
 #. to give that info to the user and give him the chance
 #. to continue, or not saving the profile
-#: ../src/orca/orca_gui_prefs.py:3405
+#: ../src/orca/orca_gui_prefs.py:3427
 #, python-format
 msgid ""
 "Profile <b>%s</b> already exists.\n"
@@ -3078,16 +3077,16 @@ msgstr ""
 "Profils <b>%s</b> jau eksistē.\n"
 "Turpināt esošā profila atjaunināšanu ar šīm izmaiņām?"
 
-#: ../src/orca/orca_gui_prefs.py:3414
+#: ../src/orca/orca_gui_prefs.py:3436
 msgid "<b>User Profile Conflict!</b>"
 msgstr "<b>Lietotāja profila konflikts!</b>"
 
-#: ../src/orca/orca_gui_prefs.py:3416
+#: ../src/orca/orca_gui_prefs.py:3438
 msgid "Save Profile As Conflict"
 msgstr "Saglabāt profilu kā konfliktu"
 
 #. First of all, we give a chance of cancel profile change
-#: ../src/orca/orca_gui_prefs.py:3433
+#: ../src/orca/orca_gui_prefs.py:3455
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -3096,15 +3095,15 @@ msgid ""
 "Continue loading profile discarding previous changes?"
 msgstr ""
 
-#: ../src/orca/orca_gui_prefs.py:3443
+#: ../src/orca/orca_gui_prefs.py:3465
 msgid "<b>Load user profile info</b>"
 msgstr "<b>Ielādēt lietotāja profila informāciju</b>"
 
-#: ../src/orca/orca_gui_prefs.py:3445
+#: ../src/orca/orca_gui_prefs.py:3467
 msgid "Load User Profile"
 msgstr "Ielādēt lietotāja profilu"
 
-#: ../src/orca/orca_gui_prefs.py:3483
+#: ../src/orca/orca_gui_prefs.py:3505
 #, fuzzy
 #| msgid ""
 #| "You already have an instance of an Orca preferences dialog open.\n"
@@ -3120,7 +3119,7 @@ msgstr ""
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:3517
+#: ../src/orca/orca_gui_prefs.py:3539
 msgid "Starting Orca Preferences."
 msgstr "Startē Orca iestatījumus."
 
@@ -3174,7 +3173,7 @@ msgstr ""
 #. After the message, the list of arguments, as typed by the
 #. user, is displayed.
 #.
-#: ../src/orca/orca.py:309
+#: ../src/orca/orca.py:302
 msgid "The following arguments are not valid: "
 msgstr "Sekojošie parametri nav derīgi: "
 
@@ -3185,18 +3184,18 @@ msgstr "Sekojošie parametri nav derīgi: "
 #. splash-window. These items are not localized and are
 #. presented in a list after this message.
 #.
-#: ../src/orca/orca.py:364
+#: ../src/orca/orca.py:357
 msgid "The following items can be enabled or disabled:"
 msgstr "Sekojošos priekšmetus var aktivēt vai deaktivēt:"
 
-#: ../src/orca/orca.py:379
+#: ../src/orca/orca.py:372
 msgid "Usage: orca [OPTION...]"
 msgstr "Lietojums: orca [OPCIJA...]"
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:385
+#: ../src/orca/orca.py:378
 msgid "Show this help message"
 msgstr "Rādīt šo palīdzības ziņojumu"
 
@@ -3204,7 +3203,7 @@ msgstr "Rādīt šo palīdzības ziņojumu"
 #. the names of applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:393
+#: ../src/orca/orca.py:386
 msgid "Print the known running applications"
 msgstr "Drukāt zināmās palaistās lietotnes"
 
@@ -3216,7 +3215,7 @@ msgstr "Drukāt zināmās palaistās lietotnes"
 #. always start with 'debug' and end with '.out', regardless of the
 #. locale.).
 #.
-#: ../src/orca/orca.py:404
+#: ../src/orca/orca.py:397
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr "Nosūtīt atkļūdošanas izvadi uz debug-YYYY-MM-DD-HH:MM:SS.out"
 
@@ -3224,7 +3223,7 @@ msgstr "Nosūtīt atkļūdošanas izvadi uz debug-YYYY-MM-DD-HH:MM:SS.out"
 #. the name of the debug file Orca will use for debug output if the
 #. --debug option is used.
 #.
-#: ../src/orca/orca.py:411
+#: ../src/orca/orca.py:404
 msgid "Send debug output to the specified file"
 msgstr "Sūtīt atkļūdošanas izvadi uz norādīto failu"
 
@@ -3232,7 +3231,7 @@ msgstr "Sūtīt atkļūdošanas izvadi uz norādīto failu"
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog
 #. that would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:418
+#: ../src/orca/orca.py:411
 msgid "Set up user preferences"
 msgstr "Iestatīt lietotāja iestatījumus"
 
@@ -3242,7 +3241,7 @@ msgstr "Iestatīt lietotāja iestatījumus"
 #. startup. For this to happen properly, Orca will need to be run
 #. from a terminal window.
 #.
-#: ../src/orca/orca.py:427
+#: ../src/orca/orca.py:420
 msgid "Set up user preferences (text version)"
 msgstr "Iestatīt lietotāja iestatījumus (teksta versija)"
 
@@ -3250,7 +3249,7 @@ msgstr "Iestatīt lietotāja iestatījumus (teksta versija)"
 #. '-n, --no-setup' that means that Orca will startup without setting
 #. up any user preferences.
 #.
-#: ../src/orca/orca.py:434
+#: ../src/orca/orca.py:427
 msgid "Skip set up of user preferences"
 msgstr "Izlaist lietotāja iestatījumu iestatīšanu"
 
@@ -3258,7 +3257,7 @@ msgstr "Izlaist lietotāja iestatījumu iestatīšanu"
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for the user preferences.
 #.
-#: ../src/orca/orca.py:441
+#: ../src/orca/orca.py:434
 msgid "Use alternate directory for user preferences"
 msgstr "Izmantot citu mapi lietotāja iestatījumiem"
 
@@ -3266,7 +3265,7 @@ msgstr "Izmantot citu mapi lietotāja iestatījumiem"
 #. command line option, it will be automatically enabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:454
+#: ../src/orca/orca.py:447
 msgid "Force use of option"
 msgstr "Piespiest opcijas izmantošanu"
 
@@ -3274,14 +3273,14 @@ msgstr "Piespiest opcijas izmantošanu"
 #. command line option, it will be automatically disabled as Orca is
 #. started.
 #.
-#: ../src/orca/orca.py:467
+#: ../src/orca/orca.py:460
 msgid "Prevent use of option"
 msgstr "Novērts opcijas izmantošanu"
 
 #. Translators: this is the Orca command line option to import to Orca
 #. a user profile from a given file
 #.
-#: ../src/orca/orca.py:473
+#: ../src/orca/orca.py:466
 msgid "Import a profile from a given orca profile file"
 msgstr "Importēt profilu no dota orca profila faila"
 
@@ -3290,7 +3289,7 @@ msgstr "Importēt profilu no dota orca profila faila"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:481
+#: ../src/orca/orca.py:474
 msgid "Quits Orca (if shell script used)"
 msgstr "Iziet no Orca (ja izmantots čaulas skripts)"
 
@@ -3300,21 +3299,21 @@ msgstr "Iziet no Orca (ja izmantots čaulas skripts)"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:490
+#: ../src/orca/orca.py:483
 msgid "Forces orca to be terminated immediately."
 msgstr "Piespiež orca pārtraukt darbību nekavējoties."
 
 #. Translators: this is the Orca command line option to tell Orca to
 #. replace any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:496
+#: ../src/orca/orca.py:489
 msgid "Replace a currently running Orca"
 msgstr "Aizstāj pašlaik palaisto Orca"
 
 #. Translators: this is text being sent to a terminal and we want to
 #. keep the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:502
+#: ../src/orca/orca.py:495
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3324,13 +3323,13 @@ msgstr ""
 "palaidīs iestatījumu iestatīšanu, ja vien nebūs izmantotas\n"
 "opcijas -n vai --no-setup."
 
-#: ../src/orca/orca.py:514
+#: ../src/orca/orca.py:507
 msgid "Report bugs to orca-list@gnome.org."
 msgstr "Ziņojiet par kļūdām uz orca-list@gnome.org."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:692 ../src/orca/orca.py:2088
+#: ../src/orca/orca.py:679 ../src/orca/orca.py:2089
 msgid "Goodbye."
 msgstr "Uz redzēšanos."
 
@@ -3343,7 +3342,7 @@ msgstr "Uz redzēšanos."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/orca.py:766
+#: ../src/orca/orca.py:753
 msgid "Exiting learn mode."
 msgstr "Iziet no mācīšanās režīma."
 
@@ -3355,7 +3354,7 @@ msgstr "Iziet no mācīšanās režīma."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/orca.py:790
+#: ../src/orca/orca.py:777
 msgid "Exiting list shortcuts mode."
 msgstr "Iziet no īsceļu režīma."
 
@@ -3364,9 +3363,9 @@ msgstr "Iziet no īsceļu režīma."
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1046
+#: ../src/orca/orca.py:1041
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:221
-#: ../src/orca/speech.py:287 ../src/orca/speechserver.py:219
+#: ../src/orca/speech.py:303 ../src/orca/speechserver.py:219
 msgid "off"
 msgstr "izslēgts"
 
@@ -3375,23 +3374,23 @@ msgstr "izslēgts"
 #. Translators: this represents the state of a locking modifier
 #. key (e.g., Caps Lock)
 #.
-#: ../src/orca/orca.py:1050
+#: ../src/orca/orca.py:1045
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:217
-#: ../src/orca/speech.py:282 ../src/orca/speechserver.py:214
+#: ../src/orca/speech.py:298 ../src/orca/speechserver.py:214
 msgid "on"
 msgstr "ieslēgts"
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/orca.py:1408
+#: ../src/orca/orca.py:1409
 msgid "Speech enabled."
 msgstr "Izruna ieslēgta."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/orca.py:1413
+#: ../src/orca/orca.py:1414
 msgid "Speech disabled."
 msgstr "Izruna izslēgta."
 
@@ -3399,7 +3398,7 @@ msgstr "Izruna izslēgta."
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:1542
+#: ../src/orca/orca.py:1556
 msgid "Orca user settings reloaded."
 msgstr "Orca lietotāja uzstādījumi pārlādēti."
 
@@ -3407,7 +3406,7 @@ msgstr "Orca lietotāja uzstādījumi pārlādēti."
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:1720
+#: ../src/orca/orca.py:1721
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Izmantojiet augšup vai lejup bultas, lai pārvietotos pa sarakstu. Spiediet "
@@ -3417,7 +3416,7 @@ msgstr ""
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:1734
+#: ../src/orca/orca.py:1735
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3429,7 +3428,7 @@ msgstr[2] "Atrasti %d Orca noklusēto īsceļu."
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:1756
+#: ../src/orca/orca.py:1757
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3442,7 +3441,7 @@ msgstr[2] "Atrasti %(count)d Orca īsceļi lietotnei %(application)s."
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1774
+#: ../src/orca/orca.py:1775
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "Nav atrastu Orca īsceļu lietotnei %s."
@@ -3465,7 +3464,7 @@ msgstr "Nav atrastu Orca īsceļu lietotnei %s."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1792 ../src/orca/scripts/toolkits/Gecko/script.py:6057
+#: ../src/orca/orca.py:1793 ../src/orca/scripts/toolkits/Gecko/script.py:6002
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Apliec līdz apakšai."
@@ -3488,7 +3487,7 @@ msgstr "Apliec līdz apakšai."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1813 ../src/orca/scripts/toolkits/Gecko/script.py:6125
+#: ../src/orca/orca.py:1814 ../src/orca/scripts/toolkits/Gecko/script.py:6070
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Apliec līdz augšai."
@@ -3501,7 +3500,7 @@ msgstr "Apliec līdz augšai."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1832 ../src/orca/scripts/default.py:1573
+#: ../src/orca/orca.py:1833 ../src/orca/scripts/default.py:1568
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
@@ -3509,7 +3508,7 @@ msgstr ""
 "Spiediet 1 Orca noklusētajiem īsceļiem. Spiediet 2 Orca īsceļiem pašreizējai "
 "lietotnei. Spiediet atsoļa taustiņu, lai izietu."
 
-#: ../src/orca/orca.py:1882
+#: ../src/orca/orca.py:1883
 msgid "keypad "
 msgstr "cipartastatūra "
 
@@ -3517,7 +3516,7 @@ msgstr "cipartastatūra "
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1889
+#: ../src/orca/orca.py:1890
 msgid "double click"
 msgstr "dubultklikšķis"
 
@@ -3525,7 +3524,7 @@ msgstr "dubultklikšķis"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca.py:1895
+#: ../src/orca/orca.py:1896
 msgid "triple click"
 msgstr "trīskāršs klikšķis"
 
@@ -3533,14 +3532,14 @@ msgstr "trīskāršs klikšķis"
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:2221
+#: ../src/orca/orca.py:2220
 msgid "Unable to import profile."
 msgstr "Nevarēja importēt profilu."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:2227
+#: ../src/orca/orca.py:2226
 msgid "Profile import success."
 msgstr "Izdevās importēt profilu."
 
@@ -3548,12 +3547,12 @@ msgstr "Izdevās importēt profilu."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:2233
+#: ../src/orca/orca.py:2232
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "Importēšana neizdevās, jo netika atpazīta atslēga: %s"
 
-#: ../src/orca/orca.py:2302
+#: ../src/orca/orca.py:2301
 msgid "Welcome to Orca."
 msgstr "Laipni lūdzu Orca."
 
@@ -4647,9 +4646,9 @@ msgstr "Saite"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2423
+#: ../src/orca/rolenames.py:600 ../src/orca/script_utilities.py:2513
 #: ../src/orca/scripts/apps/soffice/script.py:1125
-#: ../src/orca/scripts/default.py:1975 ../src/orca/speech_generator.py:986
+#: ../src/orca/scripts/default.py:1970 ../src/orca/speech_generator.py:986
 msgid "link"
 msgstr "saite"
 
@@ -5450,7 +5449,7 @@ msgstr "iegultā komponente"
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2347
+#: ../src/orca/script_utilities.py:2420
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -5463,7 +5462,7 @@ msgstr[2] "%(count)d %(repeatChar)s rakstzīmes"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2545
+#: ../src/orca/script_utilities.py:2640
 #, python-format
 msgid " superscript %s"
 msgstr " augšraksts  %s"
@@ -5473,7 +5472,7 @@ msgstr " augšraksts  %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2555
+#: ../src/orca/script_utilities.py:2650
 #, python-format
 msgid " subscript %s"
 msgstr " apakšraksts %s"
@@ -5509,8 +5508,8 @@ msgstr "dokuments"
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:114
 #: ../src/orca/scripts/apps/evolution/script.py:161
-#: ../src/orca/scripts/default.py:197
-#: ../src/orca/scripts/toolkits/Gecko/script.py:553
+#: ../src/orca/scripts/default.py:193
+#: ../src/orca/scripts/toolkits/Gecko/script.py:552
 msgid "Speaks entire document."
 msgstr "Izrunā visu dokumentu."
 
@@ -5518,7 +5517,7 @@ msgstr "Izrunā visu dokumentu."
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:276
 #: ../src/orca/scripts/apps/soffice/script.py:711
-#: ../src/orca/structural_navigation.py:1322
+#: ../src/orca/structural_navigation.py:1327
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -5530,7 +5529,7 @@ msgstr[2] "tabula ar %d rindām"
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:281
 #: ../src/orca/scripts/apps/soffice/script.py:716
-#: ../src/orca/structural_navigation.py:1327
+#: ../src/orca/structural_navigation.py:1332
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -5699,14 +5698,14 @@ msgstr "Direktoriju poga"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:430
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:544
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/default.py:2074 ../src/orca/scripts/default.py:2082
-#: ../src/orca/scripts/default.py:2203 ../src/orca/scripts/default.py:2211
-#: ../src/orca/scripts/default.py:2347 ../src/orca/scripts/default.py:4444
-#: ../src/orca/scripts/default.py:4454
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5333
-#: ../src/orca/settings.py:903 ../src/orca/speech_generator.py:697
+#: ../src/orca/scripts/default.py:2069 ../src/orca/scripts/default.py:2077
+#: ../src/orca/scripts/default.py:2198 ../src/orca/scripts/default.py:2206
+#: ../src/orca/scripts/default.py:2342 ../src/orca/scripts/default.py:4442
+#: ../src/orca/scripts/default.py:4452
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5285
+#: ../src/orca/settings.py:899 ../src/orca/speech_generator.py:697
 #: ../src/orca/speech_generator.py:1050
-#: ../src/orca/structural_navigation.py:3602
+#: ../src/orca/structural_navigation.py:3597
 msgid "blank"
 msgstr "tukšs"
 
@@ -5844,7 +5843,7 @@ msgstr "Neviens fails nav atrasts."
 #. friendly to the assistive technology infrastructure.
 #.
 #: ../src/orca/scripts/apps/gtk-window-decorator/script.py:89
-#: ../src/orca/scripts/apps/metacity/script.py:114
+#: ../src/orca/scripts/apps/metacity/script.py:110
 msgid "inaccessible"
 msgstr "nepieejams"
 
@@ -5858,11 +5857,11 @@ msgstr "Strādā pieslēgts / atslēgts"
 #. between workspaces.  The goal here is to find a match
 #. with that prefix.
 #.
-#: ../src/orca/scripts/apps/metacity/script.py:107
+#: ../src/orca/scripts/apps/metacity/script.py:103
 msgid "Workspace "
 msgstr "Darba virsma"
 
-#: ../src/orca/scripts/apps/metacity/script.py:107
+#: ../src/orca/scripts/apps/metacity/script.py:103
 msgid "Desk "
 msgstr "Desk "
 
@@ -5906,7 +5905,7 @@ msgstr "Paziņot man, kad kļūdas ir reģistrētas žurnālā."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:224
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1712
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1711
 msgid "Loading.  Please wait."
 msgstr "Ielādējas. Lūdzu gaidiet."
 
@@ -5914,7 +5913,7 @@ msgstr "Ielādējas. Lūdzu gaidiet."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:233
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1725
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1724
 msgid "Finished loading."
 msgstr "Ielāde beigsies."
 
@@ -6000,7 +5999,7 @@ msgstr "Izrunāt izklājlapas šūnas koordinātas"
 #. for specifying how to navigate tables in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:320
-#: ../src/orca/scripts/toolkits/Gecko/script.py:758
+#: ../src/orca/scripts/toolkits/Gecko/script.py:757
 msgid "Table Navigation"
 msgstr "Pārvietošanās tabulā"
 
@@ -6008,7 +6007,7 @@ msgstr "Pārvietošanās tabulā"
 #. should speak table cell coordinates in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:333
-#: ../src/orca/scripts/toolkits/Gecko/script.py:771
+#: ../src/orca/scripts/toolkits/Gecko/script.py:770
 msgid "Speak _cell coordinates"
 msgstr "Izrunāt šūnas koordinātas"
 
@@ -6017,7 +6016,7 @@ msgstr "Izrunāt šūnas koordinātas"
 #. rows and columns a particular table cell spans in a table).
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:344
-#: ../src/orca/scripts/toolkits/Gecko/script.py:782
+#: ../src/orca/scripts/toolkits/Gecko/script.py:781
 msgid "Speak _multiple cell spans"
 msgstr "Izrunāt vairāku šūnu savienoju_mus"
 
@@ -6025,7 +6024,7 @@ msgstr "Izrunāt vairāku šūnu savienoju_mus"
 #. the header of a table cell in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:354
-#: ../src/orca/scripts/toolkits/Gecko/script.py:792
+#: ../src/orca/scripts/toolkits/Gecko/script.py:791
 msgid "Announce cell _header"
 msgstr "Pateikt sūnas _galveni"
 
@@ -6033,7 +6032,7 @@ msgstr "Pateikt sūnas _galveni"
 #. empty/blank cells when navigating tables in document content.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:364
-#: ../src/orca/scripts/toolkits/Gecko/script.py:802
+#: ../src/orca/scripts/toolkits/Gecko/script.py:801
 msgid "Skip _blank cells"
 msgstr "Izlaist _tukšās šūnas"
 
@@ -6203,7 +6202,7 @@ msgstr[2] "%d rakstzīmes par garu"
 #. a cell in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:123
-#: ../src/orca/structural_navigation.py:3609
+#: ../src/orca/structural_navigation.py:3604
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Rinda %(row)d, kolonna %(column)d."
@@ -6219,7 +6218,7 @@ msgstr "%s panelis"
 #. Translators: this command will move the mouse pointer
 #. to the current item without clicking on it.
 #.
-#: ../src/orca/scripts/default.py:154
+#: ../src/orca/scripts/default.py:150
 msgid "Routes the pointer to the current item."
 msgstr "Novieto rādītāju uz pašreizējā priekšmeta."
 
@@ -6233,7 +6232,7 @@ msgstr "Novieto rādītāju uz pašreizējā priekšmeta."
 #. {line,word,character}.  A left click means to generate
 #. a left mouse button click on the current item.
 #.
-#: ../src/orca/scripts/default.py:169
+#: ../src/orca/scripts/default.py:165
 msgid "Performs left click on current flat review item."
 msgstr "Izpilda kreiso klikšķi uz pašreizējā vienotā pārskata objekta."
 
@@ -6247,7 +6246,7 @@ msgstr "Izpilda kreiso klikšķi uz pašreizējā vienotā pārskata objekta."
 #. {line,word,character}.  A right click means to generate
 #. a right mouse button click on the current item.
 #.
-#: ../src/orca/scripts/default.py:184
+#: ../src/orca/scripts/default.py:180
 msgid "Performs right click on current flat review item."
 msgstr "Izpilda labo klikšķi uz pašreizējā vienotā pārskata objekta."
 
@@ -6258,7 +6257,7 @@ msgstr "Izpilda labo klikšķi uz pašreizējā vienotā pārskata objekta."
 #. name of the current pushbutton with focus as well as
 #. its mnemonic.
 #.
-#: ../src/orca/scripts/default.py:209
+#: ../src/orca/scripts/default.py:205
 msgid "Performs the basic where am I operation."
 msgstr "Izpilda vienkāršo \"kur es atrodos\" darbību."
 
@@ -6269,21 +6268,21 @@ msgstr "Izpilda vienkāršo \"kur es atrodos\" darbību."
 #. name of the current pushbutton with focus as well as
 #. its mnemonic.
 #.
-#: ../src/orca/scripts/default.py:221
+#: ../src/orca/scripts/default.py:217
 msgid "Performs the detailed where am I operation."
 msgstr "Izpilda detalizēto \"kur es atrodos\" darbību."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
 #.
-#: ../src/orca/scripts/default.py:234
+#: ../src/orca/scripts/default.py:230
 msgid "Speaks the title bar."
 msgstr "Izrunā virsraksta joslu."
 
 #. Translators: This command will cause the window's
 #. status bar contents to be spoken.
 #.
-#: ../src/orca/scripts/default.py:247
+#: ../src/orca/scripts/default.py:243
 msgid "Speaks the status bar."
 msgstr "Izrunā stāvokļa joslu."
 
@@ -6292,7 +6291,7 @@ msgstr "Izrunā stāvokļa joslu."
 #. that text.  For example, they may want to find the
 #. "OK" button.
 #.
-#: ../src/orca/scripts/default.py:257
+#: ../src/orca/scripts/default.py:253
 msgid "Opens the Orca Find dialog."
 msgstr "Atvērt Orca meklētāja logu."
 
@@ -6302,7 +6301,7 @@ msgstr "Atvērt Orca meklētāja logu."
 #. "OK" button.  This string is used for finding the
 #. next occurence of a string.
 #.
-#: ../src/orca/scripts/default.py:268
+#: ../src/orca/scripts/default.py:264
 msgid "Searches for the next instance of a string."
 msgstr "Meklē nākamo daļu no virknes."
 
@@ -6312,7 +6311,7 @@ msgstr "Meklē nākamo daļu no virknes."
 #. "OK" button.  This string is used for finding the
 #. previous occurence of a string.
 #.
-#: ../src/orca/scripts/default.py:279
+#: ../src/orca/scripts/default.py:275
 msgid "Searches for the previous instance of a string."
 msgstr "Meklē iepriekšējo daļu no virknes."
 
@@ -6322,7 +6321,7 @@ msgstr "Meklē iepriekšējo daļu no virknes."
 #. zones in the active window for the application that
 #. currently has focus.
 #.
-#: ../src/orca/scripts/default.py:290
+#: ../src/orca/scripts/default.py:286
 msgid "Paints and prints the visible zones in the active window."
 msgstr "Zīmē un drukā redzamās zonas aktīvajā logā."
 
@@ -6335,7 +6334,7 @@ msgstr "Zīmē un drukā redzamās zonas aktīvajā logā."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/scripts/default.py:304
+#: ../src/orca/scripts/default.py:300
 msgid "Enters and exits flat review mode."
 msgstr "Ienāk un iziet no vienotā pārskata."
 
@@ -6348,7 +6347,7 @@ msgstr "Ienāk un iziet no vienotā pārskata."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/scripts/default.py:318
+#: ../src/orca/scripts/default.py:314
 msgid "Moves flat review to the beginning of the previous line."
 msgstr "Virza vienoto pārskatu uz iepriekšējās rindas sākumu."
 
@@ -6362,7 +6361,7 @@ msgstr "Virza vienoto pārskatu uz iepriekšējās rindas sākumu."
 #. {line,word,character}.  The home position is the
 #. beginning of the content in the window.
 #.
-#: ../src/orca/scripts/default.py:333
+#: ../src/orca/scripts/default.py:329
 msgid "Moves flat review to the home position."
 msgstr "Virza vienoto pārskatu uz māju novietojumu."
 
@@ -6376,7 +6375,7 @@ msgstr "Virza vienoto pārskatu uz māju novietojumu."
 #. {line,word,character}.  This particular command will
 #. cause Orca to speak the current line.
 #.
-#: ../src/orca/scripts/default.py:348
+#: ../src/orca/scripts/default.py:344
 msgid "Speaks the current flat review line."
 msgstr "Izrunā esošo vienotā pārskatā rindu."
 
@@ -6390,7 +6389,7 @@ msgstr "Izrunā esošo vienotā pārskatā rindu."
 #. {line,word,character}. This particular command will
 #. cause Orca to spell the current line.
 #.
-#: ../src/orca/scripts/default.py:363
+#: ../src/orca/scripts/default.py:359
 msgid "Spells the current flat review line."
 msgstr "Nosauc pa burtiem esošo vienotā pārskatā rindu."
 
@@ -6405,7 +6404,7 @@ msgstr "Nosauc pa burtiem esošo vienotā pārskatā rindu."
 #. cause Orca to "phonetically spell" the current line,
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #.
-#: ../src/orca/scripts/default.py:379
+#: ../src/orca/scripts/default.py:375
 msgid "Phonetically spells the current flat review line."
 msgstr "Fonētiski nosauc pa burtiem esošo vienotā pārskatā rindu."
 
@@ -6418,7 +6417,7 @@ msgstr "Fonētiski nosauc pa burtiem esošo vienotā pārskatā rindu."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/scripts/default.py:393
+#: ../src/orca/scripts/default.py:389
 msgid "Moves flat review to the beginning of the next line."
 msgstr "Virza vienoto pārskatu uz nākamās rindas sākumu."
 
@@ -6432,7 +6431,7 @@ msgstr "Virza vienoto pārskatu uz nākamās rindas sākumu."
 #. {line,word,character}.  The end position is the last
 #. bit of information in the window.
 #.
-#: ../src/orca/scripts/default.py:408
+#: ../src/orca/scripts/default.py:404
 msgid "Moves flat review to the end position."
 msgstr "Virza vienoto pārskatu uz beigu novietojumu."
 
@@ -6447,7 +6446,7 @@ msgstr "Virza vienoto pārskatu uz beigu novietojumu."
 #. in the window until you reach the top (i.e., it will
 #. wrap across lines if necessary).
 #.
-#: ../src/orca/scripts/default.py:424
+#: ../src/orca/scripts/default.py:420
 msgid "Moves flat review to the previous item or word."
 msgstr "Virza vienoto pārskatu uz iepriekšējo lietu vai vārdu."
 
@@ -6462,7 +6461,7 @@ msgstr "Virza vienoto pārskatu uz iepriekšējo lietu vai vārdu."
 #. geographically above, as if you drew a vertical line
 #. in the window.
 #.
-#: ../src/orca/scripts/default.py:440
+#: ../src/orca/scripts/default.py:436
 msgid "Moves flat review to the word above the current word."
 msgstr "Virza vienoto pārskatu uz vārdu, kas ir virs esošā vārda."
 
@@ -6476,7 +6475,7 @@ msgstr "Virza vienoto pārskatu uz vārdu, kas ir virs esošā vārda."
 #. {line,word,character}.  This command will speak the
 #. current word or item.
 #.
-#: ../src/orca/scripts/default.py:455
+#: ../src/orca/scripts/default.py:451
 msgid "Speaks the current flat review item or word."
 msgstr "Izrunā esošā pārskata lietu vai vārdu."
 
@@ -6490,7 +6489,7 @@ msgstr "Izrunā esošā pārskata lietu vai vārdu."
 #. {line,word,character}.  This command will spell out
 #. the current word or item letter by letter.
 #.
-#: ../src/orca/scripts/default.py:470
+#: ../src/orca/scripts/default.py:466
 msgid "Spells the current flat review item or word."
 msgstr "Nosauc pa burtiem esošā pārskata lietu vai vārdu."
 
@@ -6505,7 +6504,7 @@ msgstr "Nosauc pa burtiem esošā pārskata lietu vai vārdu."
 #. the current word or item phonetically, saying "Alpha"
 #. for "a", "Bravo" for "b" and so on.
 #.
-#: ../src/orca/scripts/default.py:486
+#: ../src/orca/scripts/default.py:482
 msgid "Phonetically spells the current flat review item or word."
 msgstr ""
 "Fonētiski izrunā pa burtiem vai pārbauda esošā pārskata lietu vai vārdu."
@@ -6522,7 +6521,7 @@ msgstr ""
 #. some other GUI widget.  The 'speaks' means it will
 #. speak the text associated with the object.
 #.
-#: ../src/orca/scripts/default.py:503
+#: ../src/orca/scripts/default.py:499
 msgid "Speaks the current flat review object."
 msgstr "Izrunā esošā pārskata objektu."
 
@@ -6537,7 +6536,7 @@ msgstr "Izrunā esošā pārskata objektu."
 #. in the window until you reach the end (i.e., it will
 #. wrap across lines if necessary).
 #.
-#: ../src/orca/scripts/default.py:519
+#: ../src/orca/scripts/default.py:515
 msgid "Moves flat review to the next item or word."
 msgstr "Virza vienoto pārskatu uz nākamo lietu vai vārdu."
 
@@ -6552,7 +6551,7 @@ msgstr "Virza vienoto pārskatu uz nākamo lietu vai vārdu."
 #. geographically below, as if you drew a vertical line
 #. downward on the screen.
 #.
-#: ../src/orca/scripts/default.py:535
+#: ../src/orca/scripts/default.py:531
 msgid "Moves flat review to the word below the current word."
 msgstr "Virza vienoto pārskatu uz vārdu, kas ir zem esošā vārda."
 
@@ -6567,7 +6566,7 @@ msgstr "Virza vienoto pārskatu uz vārdu, kas ir zem esošā vārda."
 #. in the window until you reach the top (i.e., it will
 #. wrap across lines if necessary).
 #.
-#: ../src/orca/scripts/default.py:551
+#: ../src/orca/scripts/default.py:547
 msgid "Moves flat review to the previous character."
 msgstr "Virza vienoto pārskatu uz iepriekšējo simbolu."
 
@@ -6580,7 +6579,7 @@ msgstr "Virza vienoto pārskatu uz iepriekšējo simbolu."
 #. the user to explore this text by the {previous,next}
 #. {line,word,character}.
 #.
-#: ../src/orca/scripts/default.py:565
+#: ../src/orca/scripts/default.py:561
 msgid "Moves flat review to the end of the line."
 msgstr "Virza vienoto pārskatu uz rindas beigām."
 
@@ -6597,7 +6596,7 @@ msgstr "Virza vienoto pārskatu uz rindas beigām."
 #. this case will be the spoken language form of the
 #. character currently being reviewed.
 #.
-#: ../src/orca/scripts/default.py:583
+#: ../src/orca/scripts/default.py:579
 msgid "Speaks the current flat review character."
 msgstr "Izrunā esošo vienoto pārskata simbolu."
 
@@ -6615,7 +6614,7 @@ msgstr "Izrunā esošo vienoto pārskata simbolu."
 #. character currently being reviewed, saying "Alpha"
 #. for "a", "Bravo" for "b" and so on.
 #.
-#: ../src/orca/scripts/default.py:602
+#: ../src/orca/scripts/default.py:598
 msgid "Phonetically speaks the current flat review character."
 msgstr "Fonētiski izrunā esošo vienoto pārskata simbolu."
 
@@ -6632,7 +6631,7 @@ msgstr "Fonētiski izrunā esošo vienoto pārskata simbolu."
 #. cause Orca to speak information about the current character
 #. Like its unicode value and other relevant information
 #.
-#: ../src/orca/scripts/default.py:620
+#: ../src/orca/scripts/default.py:616
 msgid "Speaks unicode value of the current flat review character."
 msgstr "Izrunā unikoda vērtību esošā vienotā pārskata simbolam."
 
@@ -6647,7 +6646,7 @@ msgstr "Izrunā unikoda vērtību esošā vienotā pārskata simbolam."
 #. in the window until you reach the end (i.e., it will
 #. wrap across lines if necessary).
 #.
-#: ../src/orca/scripts/default.py:637
+#: ../src/orca/scripts/default.py:633
 msgid "Moves flat review to the next character."
 msgstr "Virza vienotu pārskatu uz nākamo simbolu."
 
@@ -6655,7 +6654,7 @@ msgstr "Virza vienotu pārskatu uz nākamo simbolu."
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:646
+#: ../src/orca/scripts/default.py:642
 msgid "Toggles whether to read just the current table cell or the whole row."
 msgstr "Parslēdz uz tikai esošās tabulas šūnu vai visu rindu lasīšanu."
 
@@ -6663,7 +6662,7 @@ msgstr "Parslēdz uz tikai esošās tabulas šūnu vai visu rindu lasīšanu."
 #. text attributes, such as bold, italic, font name,
 #. font size, etc.
 #.
-#: ../src/orca/scripts/default.py:656
+#: ../src/orca/scripts/default.py:652
 msgid "Reads the attributes associated with the current text character."
 msgstr "Lasa atribūtus saistītos ar esošo teksta simbolu."
 
@@ -6673,7 +6672,7 @@ msgstr "Lasa atribūtus saistītos ar esošo teksta simbolu."
 #. via speech and braille. This information will be
 #. helpful to script writers.
 #.
-#: ../src/orca/scripts/default.py:668
+#: ../src/orca/scripts/default.py:664
 msgid "Reports information on current script."
 msgstr "Ziņo informāciju par pašreizējo skriptu."
 
@@ -6686,8 +6685,8 @@ msgstr "Ziņo informāciju par pašreizējo skriptu."
 #. braille display so they can pan left and right over
 #. this line.
 #.
-#: ../src/orca/scripts/default.py:682
-#: ../src/orca/scripts/toolkits/Gecko/script.py:567
+#: ../src/orca/scripts/default.py:678
+#: ../src/orca/scripts/toolkits/Gecko/script.py:566
 msgid "Pans the braille display to the left."
 msgstr "Pagriež braila displeju pa kreisi."
 
@@ -6700,8 +6699,8 @@ msgstr "Pagriež braila displeju pa kreisi."
 #. braille display so they can pan left and right over
 #. this line.
 #.
-#: ../src/orca/scripts/default.py:697
-#: ../src/orca/scripts/toolkits/Gecko/script.py:582
+#: ../src/orca/scripts/default.py:693
+#: ../src/orca/scripts/toolkits/Gecko/script.py:581
 msgid "Pans the braille display to the right."
 msgstr "Pagriež braila displeju pa labi."
 
@@ -6715,7 +6714,7 @@ msgstr "Pagriež braila displeju pa labi."
 #. {line,word,character}.  The bottom left is the bottom
 #. left of the window currently being reviewed.
 #.
-#: ../src/orca/scripts/default.py:713
+#: ../src/orca/scripts/default.py:709
 msgid "Moves flat review to the bottom left."
 msgstr "Virza vienotu pārskatu uz apakšu pa kreisi."
 
@@ -6732,7 +6731,7 @@ msgstr "Virza vienotu pārskatu uz apakšu pa kreisi."
 #. feature used here will return the flat review to the
 #. object with focus.
 #.
-#: ../src/orca/scripts/default.py:731
+#: ../src/orca/scripts/default.py:727
 msgid "Returns to object with keyboard focus."
 msgstr "Atgriežas pie objekta ar tastatūras fokusu."
 
@@ -6742,7 +6741,7 @@ msgstr "Atgriežas pie objekta ar tastatūras fokusu."
 #. feature used here is an option to toggle between
 #. contracted and uncontracted.
 #.
-#: ../src/orca/scripts/default.py:742
+#: ../src/orca/scripts/default.py:738
 msgid "Turns contracted braille on and off."
 msgstr "Ieslēdz un izslēdz kontrakcijas Brailu"
 
@@ -6752,21 +6751,21 @@ msgstr "Ieslēdz un izslēdz kontrakcijas Brailu"
 #. tell the machine they are interested in a particular
 #. character on the display.
 #.
-#: ../src/orca/scripts/default.py:753
+#: ../src/orca/scripts/default.py:749
 msgid "Processes a cursor routing key."
 msgstr "Apstrādā kursora novietošanas taustiņu."
 
 #. Translators: this is used to indicate the start point
 #. of a text selection.
 #.
-#: ../src/orca/scripts/default.py:761
+#: ../src/orca/scripts/default.py:757
 msgid "Marks the beginning of a text selection."
 msgstr "Marķē teksta izvēles sākumu."
 
 #. Translators: this is used to indicate the end point
 #. of a text selection.
 #.
-#: ../src/orca/scripts/default.py:769
+#: ../src/orca/scripts/default.py:765
 msgid "Marks the end of a text selection."
 msgstr "Marķē teksta izvēles beigas."
 
@@ -6777,7 +6776,7 @@ msgstr "Marķē teksta izvēles beigas."
 #. particular key combination, or they might just be to
 #. echo the name of the key if Orca doesn't have a handler.
 #.
-#: ../src/orca/scripts/default.py:781
+#: ../src/orca/scripts/default.py:777
 msgid "Enters learn mode.  Press escape to exit learn mode."
 msgstr ""
 "Ienāk mācīšanās režīmā. Nospiediet atsoli, lai izietu no mācīšanās režīma."
@@ -6790,7 +6789,7 @@ msgstr ""
 #. the list, changeover to another list by pressing 1/2,
 #. and exit the "List Shortcuts Mode" by pressing Escape.
 #.
-#: ../src/orca/scripts/default.py:794
+#: ../src/orca/scripts/default.py:790
 msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
 msgstr ""
 "Ienāk īsceļu saraksta režīmā. Nospiediet atsoli, lai izietu no īsceļu "
@@ -6799,14 +6798,14 @@ msgstr ""
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
-#: ../src/orca/scripts/default.py:804
+#: ../src/orca/scripts/default.py:800
 msgid "Decreases the speech rate."
 msgstr "Samazina izrunas ātrumu."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
-#: ../src/orca/scripts/default.py:812
+#: ../src/orca/scripts/default.py:808
 msgid "Increases the speech rate."
 msgstr "Palielina izrunas ātrumu."
 
@@ -6814,7 +6813,7 @@ msgstr "Palielina izrunas ātrumu."
 #. pitch/frequency the speech synthesis engine will
 #. generate speech.
 #.
-#: ../src/orca/scripts/default.py:821
+#: ../src/orca/scripts/default.py:817
 msgid "Decreases the speech pitch."
 msgstr "Samazina izrunas placi."
 
@@ -6822,11 +6821,11 @@ msgstr "Samazina izrunas placi."
 #. pitch/frequency the speech synthesis engine will
 #. generate speech.
 #.
-#: ../src/orca/scripts/default.py:830
+#: ../src/orca/scripts/default.py:826
 msgid "Increases the speech pitch."
 msgstr "Palielina izrunas placi."
 
-#: ../src/orca/scripts/default.py:835
+#: ../src/orca/scripts/default.py:831
 msgid "Quits Orca"
 msgstr "Iziet no Orca"
 
@@ -6834,7 +6833,7 @@ msgstr "Iziet no Orca"
 #. the dialog that allows users to set their preferences
 #. for Orca.
 #.
-#: ../src/orca/scripts/default.py:844
+#: ../src/orca/scripts/default.py:840
 msgid "Displays the preferences configuration dialog."
 msgstr "Attēlo izvēles konfigurācijas logu."
 
@@ -6842,21 +6841,21 @@ msgstr "Attēlo izvēles konfigurācijas logu."
 #. dialog is the dialog that allows users to set their
 #. preferences for a specific application within Orca.
 #.
-#: ../src/orca/scripts/default.py:853
+#: ../src/orca/scripts/default.py:849
 msgid "Displays the application preferences configuration dialog."
 msgstr "Attēlo aplikāciju izvēles konfigurācijas dialogu."
 
 #. Translators: Orca allows the user to turn speech synthesis
 #. on or off.  We call it 'silencing'.
 #.
-#: ../src/orca/scripts/default.py:861
+#: ../src/orca/scripts/default.py:857
 msgid "Toggles the silencing of speech."
 msgstr "Pārslēdz izrunas klusēšanu."
 
 #. Translators: Orca allows the user to enable/disable
 #. the speaking of indentation and justification.
 #.
-#: ../src/orca/scripts/default.py:870
+#: ../src/orca/scripts/default.py:866
 msgid "Toggles the speaking of indentation and justification."
 msgstr "Pārslēdz atkāpes un izlīdzināšanas izrunāšanu."
 
@@ -6864,7 +6863,7 @@ msgstr "Pārslēdz atkāpes un izlīdzināšanas izrunāšanu."
 #. punctuation levels.
 #. None, some, most, or all, punctuation will be spoken.
 #.
-#: ../src/orca/scripts/default.py:879
+#: ../src/orca/scripts/default.py:875
 msgid "Cycles to the next speaking of punctuation level."
 msgstr "Iet cauri uz nākamo interpunkcijas izrunāšanas līmeni."
 
@@ -6881,7 +6880,7 @@ msgstr "Iet cauri uz nākamo interpunkcijas izrunāšanas līmeni."
 #. The following string refers to a command that allows the
 #. user to quickly choose which type of echo is being used.
 #.
-#: ../src/orca/scripts/default.py:897
+#: ../src/orca/scripts/default.py:893
 msgid "Cycles to the next key echo level."
 msgstr "Iet cauri uz nākamo taustiņa atbalss līmeni."
 
@@ -6890,7 +6889,7 @@ msgstr "Iet cauri uz nākamo taustiņa atbalss līmeni."
 #. that prints a list of all known applications currently
 #. running on the desktop, to stdout.
 #.
-#: ../src/orca/scripts/default.py:907
+#: ../src/orca/scripts/default.py:903
 msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
@@ -6903,7 +6902,7 @@ msgstr ""
 #. that allows the user to adjust the level of debug
 #. information that Orca generates at run time.
 #.
-#: ../src/orca/scripts/default.py:918
+#: ../src/orca/scripts/default.py:914
 msgid "Cycles the debug level at run time."
 msgstr "Iet cauri atkļūdošanas līmeņiem izpildes laikā."
 
@@ -6915,7 +6914,7 @@ msgstr "Iet cauri atkļūdošanas līmeņiem izpildes laikā."
 #. the components that are its descendants in the component
 #. tree).
 #.
-#: ../src/orca/scripts/default.py:931
+#: ../src/orca/scripts/default.py:927
 msgid "Prints debug information about the ancestry of the object with focus."
 msgstr "Izdrukā atkļūdošanas informāciju par fokusē esošā objekta senčiem."
 
@@ -6926,7 +6925,7 @@ msgstr "Izdrukā atkļūdošanas informāciju par fokusē esošā objekta senči
 #. component hierarchy (i.e. all the components and all
 #. their descendants in the component tree).
 #.
-#: ../src/orca/scripts/default.py:944
+#: ../src/orca/scripts/default.py:940
 msgid "Prints debug information about the application with focus."
 msgstr "Izdrukā atkļūdošanas informāciju par lietotnēm, kas ir fokusā."
 
@@ -6934,7 +6933,7 @@ msgstr "Izdrukā atkļūdošanas informāciju par lietotnēm, kas ir fokusā."
 #. will not normally see. It describes a debug routine
 #. that will print Orca memory usage information.
 #.
-#: ../src/orca/scripts/default.py:953
+#: ../src/orca/scripts/default.py:949
 msgid "Prints memory usage information."
 msgstr "Izdrukā atmiņas izmantošanas informāciju."
 
@@ -6942,7 +6941,7 @@ msgstr "Izdrukā atmiņas izmantošanas informāciju."
 #. the relationship of the given bookmark to the current
 #. position
 #.
-#: ../src/orca/scripts/default.py:962
+#: ../src/orca/scripts/default.py:958
 msgid "Bookmark where am I with respect to current position."
 msgstr ""
 "Ielikt grāmatzīmē \"kur es esmu\" attiecībā pret pašreizējo novietojumu."
@@ -6950,28 +6949,28 @@ msgstr ""
 #. Translators: this command moves the current position to the
 #. location stored at the bookmark.
 #.
-#: ../src/orca/scripts/default.py:970
+#: ../src/orca/scripts/default.py:966
 msgid "Go to bookmark."
 msgstr "Iet uz grāmatzīmi."
 
 #. Translators: this event handler binds an in-page accessible
 #. object location to the given input key command.
 #.
-#: ../src/orca/scripts/default.py:978
+#: ../src/orca/scripts/default.py:974
 msgid "Add bookmark."
 msgstr "Pievienot grāmatzīmi."
 
 #. Translators: this event handler saves all bookmarks for the
 #. current application to disk.
 #.
-#: ../src/orca/scripts/default.py:986
+#: ../src/orca/scripts/default.py:982
 msgid "Save bookmarks."
 msgstr "Saglabāt grāmatzīmes."
 
 #. Translators: this event handler cycles through the registered
 #. bookmarks and takes the user to the next bookmark location.
 #.
-#: ../src/orca/scripts/default.py:994
+#: ../src/orca/scripts/default.py:990
 msgid "Go to next bookmark location."
 msgstr "Iet uz nākamo grāmatzīmes vietu."
 
@@ -6979,14 +6978,14 @@ msgstr "Iet uz nākamo grāmatzīmes vietu."
 #. registered bookmarks and takes the user to the previous
 #. bookmark location.
 #.
-#: ../src/orca/scripts/default.py:1003
+#: ../src/orca/scripts/default.py:999
 msgid "Go to previous bookmark location."
 msgstr "Iet uz iepriekšējo grāmatzīmes vietu."
 
 #. Translators: Orca allows the item under the pointer to
 #. be spoken. This toggles the feature.
 #.
-#: ../src/orca/scripts/default.py:1011
+#: ../src/orca/scripts/default.py:1007
 msgid "Toggle mouse review mode."
 msgstr "Pārslēgt peles pārskata režīmu."
 
@@ -6994,7 +6993,7 @@ msgstr "Pārslēgt peles pārskata režīmu."
 #. user when the user presses
 #. a shortcut key.
 #.
-#: ../src/orca/scripts/default.py:1020
+#: ../src/orca/scripts/default.py:1016
 msgid "Present current time."
 msgstr "Rāda pašreizējo laiku."
 
@@ -7002,7 +7001,7 @@ msgstr "Rāda pašreizējo laiku."
 #. user when the user presses
 #. a shortcut key.
 #.
-#: ../src/orca/scripts/default.py:1029
+#: ../src/orca/scripts/default.py:1025
 msgid "Present current date."
 msgstr "Rāda pašreizējo datumu."
 
@@ -7013,7 +7012,7 @@ msgstr "Rāda pašreizējo datumu."
 #. along to the current application, bypassing Orca's
 #. interception of it.
 #.
-#: ../src/orca/scripts/default.py:1041
+#: ../src/orca/scripts/default.py:1037
 msgid "Passes the next command on to the current application."
 msgstr "Padod nākamo komandu uz pašreizējo lietotni."
 
@@ -7024,7 +7023,7 @@ msgstr "Padod nākamo komandu uz pašreizējo lietotni."
 #. along to the current application, bypassing Orca's
 #. interception of it.
 #.
-#: ../src/orca/scripts/default.py:1506
+#: ../src/orca/scripts/default.py:1501
 msgid "Bypass mode enabled."
 msgstr "Apiešanas režīms aktivēts."
 
@@ -7036,7 +7035,7 @@ msgstr "Apiešanas režīms aktivēts."
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/scripts/default.py:1529
+#: ../src/orca/scripts/default.py:1524
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
@@ -7053,7 +7052,7 @@ msgstr ""
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/scripts/default.py:1541
+#: ../src/orca/scripts/default.py:1536
 msgid "Learn mode.  Press escape to exit."
 msgstr "Mācīšanās režīms. Nospiediet atsoli, lai izietu."
 
@@ -7062,7 +7061,7 @@ msgstr "Mācīšanās režīms. Nospiediet atsoli, lai izietu."
 #. message that is presented to the user as confirmation that this
 #. mode has been entered.
 #.
-#: ../src/orca/scripts/default.py:1563
+#: ../src/orca/scripts/default.py:1558
 msgid "List shortcuts mode."
 msgstr "Īsceļu saraksta režīms."
 
@@ -7081,8 +7080,8 @@ msgstr "Īsceļu saraksta režīms."
 #. detailed message which will be presented if for some
 #. reason Orca cannot identify/find the current location.
 #.
-#: ../src/orca/scripts/default.py:1860 ../src/orca/scripts/default.py:2003
-#: ../src/orca/scripts/default.py:2023
+#: ../src/orca/scripts/default.py:1855 ../src/orca/scripts/default.py:1998
+#: ../src/orca/scripts/default.py:2018
 msgid "Could not find current location."
 msgstr "Nevarēja atrast pašreizējo atrašanās vietu."
 
@@ -7091,7 +7090,7 @@ msgstr "Nevarēja atrast pašreizējo atrašanās vietu."
 #. brief message which will be presented if for some reason
 #. Orca cannot identify/find the current location.
 #.
-#: ../src/orca/scripts/default.py:1866 ../src/orca/scripts/default.py:2029
+#: ../src/orca/scripts/default.py:1861 ../src/orca/scripts/default.py:2024
 msgctxt "location"
 msgid "Not found"
 msgstr "Nav atrasts"
@@ -7099,7 +7098,7 @@ msgstr "Nav atrasts"
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/scripts/default.py:2087 ../src/orca/scripts/default.py:2352
+#: ../src/orca/scripts/default.py:2082 ../src/orca/scripts/default.py:2347
 msgid "white space"
 msgstr "tīrā atstarpe"
 
@@ -7113,7 +7112,7 @@ msgstr "tīrā atstarpe"
 #. {line,word,character}.  This message lets the user know
 #. they have left the flat review feature.
 #.
-#: ../src/orca/scripts/default.py:2539
+#: ../src/orca/scripts/default.py:2534
 msgid "Leaving flat review."
 msgstr "Pamet vienoto pārskatu."
 
@@ -7127,14 +7126,14 @@ msgstr "Pamet vienoto pārskatu."
 #. {line,word,character}.  This message lets the user know
 #. they have entered the flat review feature.
 #.
-#: ../src/orca/scripts/default.py:2555
+#: ../src/orca/scripts/default.py:2550
 msgid "Entering flat review."
 msgstr "Ieiet vienotajā pārskatā."
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2573
+#: ../src/orca/scripts/default.py:2568
 msgid "Speaking of indentation and justification enabled."
 msgstr "Aktivēta atkāpju un izlīdzinājumu izrunāšana."
 
@@ -7142,7 +7141,7 @@ msgstr "Aktivēta atkāpju un izlīdzinājumu izrunāšana."
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
-#: ../src/orca/scripts/default.py:2578
+#: ../src/orca/scripts/default.py:2573
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "Aktivēts"
@@ -7150,7 +7149,7 @@ msgstr "Aktivēts"
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will not be spoken.
 #.
-#: ../src/orca/scripts/default.py:2583
+#: ../src/orca/scripts/default.py:2578
 msgid "Speaking of indentation and justification disabled."
 msgstr "Deaktivēta atkāpju un izlīdzinājumu izrunāšana."
 
@@ -7158,7 +7157,7 @@ msgstr "Deaktivēta atkāpju un izlīdzinājumu izrunāšana."
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
-#: ../src/orca/scripts/default.py:2588
+#: ../src/orca/scripts/default.py:2583
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "Deaktivēts"
@@ -7168,7 +7167,7 @@ msgstr "Deaktivēts"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2605
+#: ../src/orca/scripts/default.py:2600
 msgid "Punctuation level set to some."
 msgstr "Interpunkcijas izrunāšanas līmenis iestatīts uz dažām."
 
@@ -7177,7 +7176,7 @@ msgstr "Interpunkcijas izrunāšanas līmenis iestatīts uz dažām."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2611
+#: ../src/orca/scripts/default.py:2606
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Dažas"
@@ -7187,7 +7186,7 @@ msgstr "Dažas"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2619
+#: ../src/orca/scripts/default.py:2614
 msgid "Punctuation level set to most."
 msgstr "Interpunkcijas izrunāšanas līmenis iestatīts uz vairumu."
 
@@ -7196,7 +7195,7 @@ msgstr "Interpunkcijas izrunāšanas līmenis iestatīts uz vairumu."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2625
+#: ../src/orca/scripts/default.py:2620
 msgctxt "spoken punctuation"
 msgid "Most"
 msgstr "Vairums"
@@ -7206,7 +7205,7 @@ msgstr "Vairums"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2633
+#: ../src/orca/scripts/default.py:2628
 msgid "Punctuation level set to all."
 msgstr "Interpunkcijas izrunāšanas līmenis iestatīts uz visām."
 
@@ -7215,7 +7214,7 @@ msgstr "Interpunkcijas izrunāšanas līmenis iestatīts uz visām."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2639
+#: ../src/orca/scripts/default.py:2634
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Visas"
@@ -7225,7 +7224,7 @@ msgstr "Visas"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2648
+#: ../src/orca/scripts/default.py:2643
 msgid "Punctuation level set to none."
 msgstr "Interpunkcijas izrunāšanas līmenis iestatīts uz nekādām."
 
@@ -7234,7 +7233,7 @@ msgstr "Interpunkcijas izrunāšanas līmenis iestatīts uz nekādām."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2654
+#: ../src/orca/scripts/default.py:2649
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Nekādas"
@@ -7251,7 +7250,7 @@ msgstr "Nekādas"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2683
+#: ../src/orca/scripts/default.py:2678
 msgid "Key echo set to key."
 msgstr "Taustiņu atbalss iestatīts uz taustiņš."
 
@@ -7269,7 +7268,7 @@ msgstr "Taustiņu atbalss iestatīts uz taustiņš."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2698
+#: ../src/orca/scripts/default.py:2693
 msgctxt "key echo"
 msgid "key"
 msgstr "taustiņš"
@@ -7286,7 +7285,7 @@ msgstr "taustiņš"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2716
+#: ../src/orca/scripts/default.py:2711
 msgid "Key echo set to word."
 msgstr "Taustiņu atbalss iestatīts uz vārds."
 
@@ -7304,7 +7303,7 @@ msgstr "Taustiņu atbalss iestatīts uz vārds."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2731
+#: ../src/orca/scripts/default.py:2726
 msgctxt "key echo"
 msgid "word"
 msgstr "vārds"
@@ -7321,7 +7320,7 @@ msgstr "vārds"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2749
+#: ../src/orca/scripts/default.py:2744
 msgid "Key echo set to sentence."
 msgstr "Taustiņu atbalss iestatīts uz teikums."
 
@@ -7339,7 +7338,7 @@ msgstr "Taustiņu atbalss iestatīts uz teikums."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2764
+#: ../src/orca/scripts/default.py:2759
 msgctxt "key echo"
 msgid "sentence"
 msgstr "teikums"
@@ -7356,7 +7355,7 @@ msgstr "teikums"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2782
+#: ../src/orca/scripts/default.py:2777
 msgid "Key echo set to key and word."
 msgstr "Taustiņu atbalss iestatīts uz taustiņš un vārds."
 
@@ -7374,7 +7373,7 @@ msgstr "Taustiņu atbalss iestatīts uz taustiņš un vārds."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2797
+#: ../src/orca/scripts/default.py:2792
 msgctxt "key echo"
 msgid "key and word"
 msgstr "taustiņš un vārds"
@@ -7391,7 +7390,7 @@ msgstr "taustiņš un vārds"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2815
+#: ../src/orca/scripts/default.py:2810
 msgid "Key echo set to word and sentence."
 msgstr "Taustiņu atbalss iestatīts uz vārds un teikums."
 
@@ -7409,7 +7408,7 @@ msgstr "Taustiņu atbalss iestatīts uz vārds un teikums."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2830
+#: ../src/orca/scripts/default.py:2825
 msgctxt "key echo"
 msgid "word and sentence"
 msgstr "vārds un teikums"
@@ -7426,7 +7425,7 @@ msgstr "vārds un teikums"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2848
+#: ../src/orca/scripts/default.py:2843
 msgid "Key echo set to None."
 msgstr "Taustiņu atbalss iestatīts uz nekas."
 
@@ -7444,7 +7443,7 @@ msgstr "Taustiņu atbalss iestatīts uz nekas."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2863
+#: ../src/orca/scripts/default.py:2858
 msgctxt "key echo"
 msgid "None"
 msgstr "Nekas"
@@ -7453,7 +7452,7 @@ msgstr "Nekas"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:2883
+#: ../src/orca/scripts/default.py:2878
 msgid "Speak row"
 msgstr "izrunāt rindu"
 
@@ -7461,7 +7460,7 @@ msgstr "izrunāt rindu"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:2889
+#: ../src/orca/scripts/default.py:2884
 msgid "Speak cell"
 msgstr "izrunāt šūnu"
 
@@ -7475,8 +7474,8 @@ msgstr "izrunāt šūnu"
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
 #.
-#: ../src/orca/scripts/default.py:3142 ../src/orca/scripts/default.py:3275
-#: ../src/orca/scripts/default.py:5285 ../src/orca/speech_generator.py:1146
+#: ../src/orca/scripts/default.py:3143 ../src/orca/scripts/default.py:3276
+#: ../src/orca/scripts/default.py:5283 ../src/orca/speech_generator.py:1146
 #: ../src/orca/speech_generator.py:1175
 msgctxt "text"
 msgid "selected"
@@ -7490,7 +7489,7 @@ msgstr "izvēlēts"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/scripts/default.py:3281 ../src/orca/scripts/default.py:5291
+#: ../src/orca/scripts/default.py:3282 ../src/orca/scripts/default.py:5289
 msgctxt "text"
 msgid "unselected"
 msgstr "izvēle atcelta"
@@ -7499,7 +7498,7 @@ msgstr "izvēle atcelta"
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
 #.
-#: ../src/orca/scripts/default.py:3379 ../src/orca/scripts/default.py:5346
+#: ../src/orca/scripts/default.py:3380 ../src/orca/scripts/default.py:5344
 msgid "misspelled"
 msgstr "nepareizi uzrakstīts"
 
@@ -7507,14 +7506,14 @@ msgstr "nepareizi uzrakstīts"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/scripts/default.py:4289
+#: ../src/orca/scripts/default.py:4287
 #, python-format
 msgid "Progress bar %d."
 msgstr "Progresa josla %d."
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/scripts/default.py:4325 ../src/orca/speech_generator.py:966
+#: ../src/orca/scripts/default.py:4323 ../src/orca/speech_generator.py:966
 msgid "bold"
 msgstr "treknraksts"
 
@@ -7525,7 +7524,7 @@ msgstr "treknraksts"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:4342 ../src/orca/scripts/default.py:4354
+#: ../src/orca/scripts/default.py:4340 ../src/orca/scripts/default.py:4352
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -7539,7 +7538,7 @@ msgstr[2] "%(key)s %(value)s pikseļi"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/scripts/default.py:4753
+#: ../src/orca/scripts/default.py:4751
 msgid "string not found"
 msgstr "meklējamais vārds nav atrasts"
 
@@ -7548,12 +7547,12 @@ msgstr "meklējamais vārds nav atrasts"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/scripts/default.py:4825
+#: ../src/orca/scripts/default.py:4823
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Nepareizi uzrakstīts vārds: %s"
 
-#: ../src/orca/scripts/default.py:4833
+#: ../src/orca/scripts/default.py:4831
 #, python-format
 msgid "Context is %s"
 msgstr "Konteksts ir %s"
@@ -7562,19 +7561,19 @@ msgstr "Konteksts ir %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5084
+#: ../src/orca/scripts/default.py:5082
 msgid "paragraph selected down from cursor position"
 msgstr "rindkopa izvēlēta zem kursora"
 
-#: ../src/orca/scripts/default.py:5085
+#: ../src/orca/scripts/default.py:5083
 msgid "paragraph unselected down from cursor position"
 msgstr "rindkopai ir atcelta izvēle zem kursora"
 
-#: ../src/orca/scripts/default.py:5086
+#: ../src/orca/scripts/default.py:5084
 msgid "paragraph selected up from cursor position"
 msgstr "rindkopa izvēlēta virs kursora"
 
-#: ../src/orca/scripts/default.py:5087
+#: ../src/orca/scripts/default.py:5085
 msgid "paragraph unselected up from cursor position"
 msgstr "rindkopai ir atcelta izvēle virs kursora"
 
@@ -7582,7 +7581,7 @@ msgstr "rindkopai ir atcelta izvēle virs kursora"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5141
+#: ../src/orca/scripts/default.py:5139
 msgid "line selected to end from previous cursor position"
 msgstr "rinda izvēlēta līdz beigām no iepriekšējās kursora vietas"
 
@@ -7590,7 +7589,7 @@ msgstr "rinda izvēlēta līdz beigām no iepriekšējās kursora vietas"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5149
+#: ../src/orca/scripts/default.py:5147
 msgid "line selected from start to previous cursor position"
 msgstr "rinda izvēlēta no sākuma līdz iepriekšējās kursora vietas"
 
@@ -7598,14 +7597,14 @@ msgstr "rinda izvēlēta no sākuma līdz iepriekšējās kursora vietas"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5158
+#: ../src/orca/scripts/default.py:5156
 msgid "page selected from cursor position"
 msgstr "lapa izvēlēta no kursora"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5163
+#: ../src/orca/scripts/default.py:5161
 msgid "page unselected from cursor position"
 msgstr "lapai atvelta izvēlē no kursora"
 
@@ -7613,14 +7612,14 @@ msgstr "lapai atvelta izvēlē no kursora"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5172
+#: ../src/orca/scripts/default.py:5170
 msgid "page selected to cursor position"
 msgstr "lapa izvēlēta līdz kursoram"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5177
+#: ../src/orca/scripts/default.py:5175
 msgid "page unselected to cursor position"
 msgstr "lapai atcelta izvēle līdz kursora vietai"
 
@@ -7628,14 +7627,14 @@ msgstr "lapai atcelta izvēle līdz kursora vietai"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5202
+#: ../src/orca/scripts/default.py:5200
 msgid "document selected to cursor position"
 msgstr "dokuments izvēlēts līdz kursora atrašanās vietai"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5207
+#: ../src/orca/scripts/default.py:5205
 msgid "document unselected to cursor position"
 msgstr "dokumentam atcelta izvēle līdz kursora vietai"
 
@@ -7643,21 +7642,21 @@ msgstr "dokumentam atcelta izvēle līdz kursora vietai"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5216
+#: ../src/orca/scripts/default.py:5214
 msgid "document selected from cursor position"
 msgstr "dokuments izvēlēts no kursora atrašanās vietas"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5221
+#: ../src/orca/scripts/default.py:5219
 msgid "document unselected from cursor position"
 msgstr "dokumentam atcelta izvēle no kursora vietas"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/scripts/default.py:5238
+#: ../src/orca/scripts/default.py:5236
 msgid "entire document selected"
 msgstr "izvēlēts viss dokuments"
 
@@ -7665,7 +7664,7 @@ msgstr "izvēlēts viss dokuments"
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/scripts/default.py:5778
+#: ../src/orca/scripts/default.py:5776
 #, python-format
 msgid "Unicode %s"
 msgstr "Unikods %s"
@@ -7691,119 +7690,119 @@ msgstr "attēla kartes saite"
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:400
+#: ../src/orca/scripts/toolkits/Gecko/script.py:399
 msgid "Goes to next character."
 msgstr "Pāriet uz nākamo simbolu."
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:408
+#: ../src/orca/scripts/toolkits/Gecko/script.py:407
 msgid "Goes to previous character."
 msgstr "Pāriet uz iepriekšējo simbolu."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:416
+#: ../src/orca/scripts/toolkits/Gecko/script.py:415
 msgid "Goes to next word."
 msgstr "Pāriet uz nākamo lietu vai vārdu."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:424
+#: ../src/orca/scripts/toolkits/Gecko/script.py:423
 msgid "Goes to previous word."
 msgstr "Pāriet uz iepriekšējo lietu vai vārdu."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:432
+#: ../src/orca/scripts/toolkits/Gecko/script.py:431
 msgid "Goes to next line."
 msgstr "Pāriet uz nākamo līniju."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:440
+#: ../src/orca/scripts/toolkits/Gecko/script.py:439
 msgid "Goes to previous line."
 msgstr "Pāriet uz iepriekšējo līniju."
 
 #. Translators: this command will move the user to the
 #. beginning of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:448
+#: ../src/orca/scripts/toolkits/Gecko/script.py:447
 msgid "Goes to the top of the file."
 msgstr "Pāriet uz faila augšpusi."
 
 #. Translators: this command will move the user to the
 #. end of an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:456
+#: ../src/orca/scripts/toolkits/Gecko/script.py:455
 msgid "Goes to the bottom of the file."
 msgstr "Pāriet uz faila apakšu."
 
 #. Translators: this command will move the user to the
 #. beginning of the line in an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:464
+#: ../src/orca/scripts/toolkits/Gecko/script.py:463
 msgid "Goes to the beginning of the line."
 msgstr "Iet uz rindas sākumu."
 
 #. Translators: this command will move the user to the
 #. end of the line in an HTML document.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:472
+#: ../src/orca/scripts/toolkits/Gecko/script.py:471
 msgid "Goes to the end of the line."
 msgstr "Iet uz rindas beigām."
 
 #. Translators: this is for causing a collapsed combo box
 #. which was reached by Orca's caret navigation to be expanded.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:480
+#: ../src/orca/scripts/toolkits/Gecko/script.py:479
 msgid "Causes the current combo box to be expanded."
 msgstr "Liek pašreizējam kombinētajam lodziņam izvērsties."
 
 #. Translators: this is for advancing the live regions
 #. politeness setting
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:488
+#: ../src/orca/scripts/toolkits/Gecko/script.py:487
 msgid "Advance live region politeness setting."
 msgstr "Turpināt dzīvo apgabalu pieklājības iestatīšanu."
 
 #. Translators: this is for setting all live regions
 #. to 'off' politeness.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:496
+#: ../src/orca/scripts/toolkits/Gecko/script.py:495
 msgid "Set default live region politeness level to off."
 msgstr "Iestatīt noklusēto dzīvā apgabala pieklājību uz izslēgts."
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:504
+#: ../src/orca/scripts/toolkits/Gecko/script.py:503
 msgid "Monitor live regions."
 msgstr "Monitora dzīvie apgabali."
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:512
+#: ../src/orca/scripts/toolkits/Gecko/script.py:511
 msgid "Review live region announcement."
 msgstr "Pārskatīt dzīvo apgabalu paziņojumus."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:520
+#: ../src/orca/scripts/toolkits/Gecko/script.py:519
 msgid "Goes to the previous object."
 msgstr "Iet uz iepriekšējo objektu."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:528
+#: ../src/orca/scripts/toolkits/Gecko/script.py:527
 msgid "Goes to the next object."
 msgstr "Iet uz nākamo objektu."
 
@@ -7814,7 +7813,7 @@ msgstr "Iet uz nākamo objektu."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:540
+#: ../src/orca/scripts/toolkits/Gecko/script.py:539
 msgid "Switches between Gecko native and Orca caret navigation."
 msgstr "Pārslēgi starp Gecko un Orca patvaļīgu navigāciju."
 
@@ -7826,7 +7825,7 @@ msgstr "Pārslēgi starp Gecko un Orca patvaļīgu navigāciju."
 #. mouse over object, this command will hide the mouse
 #. over and return the user to the object he/she was in.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:596
+#: ../src/orca/scripts/toolkits/Gecko/script.py:595
 msgid "Moves focus into and away from the current mouse over."
 msgstr "Pārvieto fokusu uz un no objekta, virs kura ir pele."
 
@@ -7834,7 +7833,7 @@ msgstr "Pārvieto fokusu uz un no objekta, virs kura ir pele."
 #. how to navigate HTML content (e.g., Orca caret navigation,
 #. positioning of caret, etc.).
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:676
+#: ../src/orca/scripts/toolkits/Gecko/script.py:675
 msgid "Page Navigation"
 msgstr "Pārvietošanās lapā"
 
@@ -7845,7 +7844,7 @@ msgstr "Pārvietošanās lapā"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:693
+#: ../src/orca/scripts/toolkits/Gecko/script.py:692
 msgid "Use _Orca Caret Navigation"
 msgstr "Izmantot _Orca kursora pārvietošanos"
 
@@ -7853,7 +7852,7 @@ msgstr "Izmantot _Orca kursora pārvietošanos"
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:704
+#: ../src/orca/scripts/toolkits/Gecko/script.py:703
 msgid "Use Orca _Structural Navigation"
 msgstr "Izmantot Orca _strukturālo pārvietošanos"
 
@@ -7866,7 +7865,7 @@ msgstr "Izmantot Orca _strukturālo pārvietošanos"
 #. situation the user is in, so we must provide this as an option
 #. within Orca.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:720
+#: ../src/orca/scripts/toolkits/Gecko/script.py:719
 msgid "_Grab focus on objects when navigating"
 msgstr "Sa_grābt fokusu objektiem, kad pārvietojas"
 
@@ -7876,7 +7875,7 @@ msgstr "Sa_grābt fokusu objektiem, kad pārvietojas"
 #. above the current cursor position.  This option allows the user
 #. to decide the behavior they want.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:734
+#: ../src/orca/scripts/toolkits/Gecko/script.py:733
 msgid "_Position cursor at start of line when navigating vertically"
 msgstr "Novietot kursoru rindas sākumā, kad _pārvietojas vertikāli"
 
@@ -7884,14 +7883,14 @@ msgstr "Novietot kursoru rindas sākumā, kad _pārvietojas vertikāli"
 #. can optionally tell Orca to automatically start reading a
 #. page from beginning to end.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:746
+#: ../src/orca/scripts/toolkits/Gecko/script.py:745
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Automātiski sākt _lapas runāšanu, kad tā ir pirmo reizi ielādējusies."
 
 #. Translators: this is the title of a panel containing options
 #. for using Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:815
+#: ../src/orca/scripts/toolkits/Gecko/script.py:814
 msgid "Find Options"
 msgstr "Meklēšanas opcijas"
 
@@ -7899,7 +7898,7 @@ msgstr "Meklēšanas opcijas"
 #. automatically speak the line that contains the match while
 #. the user is still in Firefox's Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:829
+#: ../src/orca/scripts/toolkits/Gecko/script.py:828
 msgid "Speak results during _find"
 msgstr "Izrunāt rezultātus _meklēšanas laikā"
 
@@ -7908,7 +7907,7 @@ msgstr "Izrunāt rezultātus _meklēšanas laikā"
 #. be spoken, or only spoken if it is a different line than the
 #. line which contained the last match.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:841
+#: ../src/orca/scripts/toolkits/Gecko/script.py:840
 msgid "Onl_y speak changed lines during find"
 msgstr "Iz_runāt tikai mainītās rindas meklēšanas laikā"
 
@@ -7916,7 +7915,7 @@ msgstr "Iz_runāt tikai mainītās rindas meklēšanas laikā"
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:856
+#: ../src/orca/scripts/toolkits/Gecko/script.py:855
 msgid "Minimum length of matched text:"
 msgstr "Minimālais sakrītošā teksta garums:"
 
@@ -7924,19 +7923,19 @@ msgstr "Minimālais sakrītošā teksta garums:"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1381
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1380
 msgid "line selected down from cursor position"
 msgstr "rinda izvēlēta zem kursora"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1382
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1381
 msgid "line unselected down from cursor position"
 msgstr "rindai atcelta izvēle zem kursora"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1383
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1382
 msgid "line selected up from cursor position"
 msgstr "rinda izvēlēta virs kursora "
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1384
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1383
 msgid "line unselected up from cursor position"
 msgstr "rindai atcelta izvēle virs kursora"
 
@@ -7945,14 +7944,14 @@ msgstr "rindai atcelta izvēle virs kursora"
 #. moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1427
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1426
 msgid "New item has been added"
 msgstr "Tika pievienots jauns vienums"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1718
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1717
 #, python-format
 msgid "Finished loading %s."
 msgstr "Ielāde beigsies %s."
@@ -7964,7 +7963,7 @@ msgstr "Ielāde beigsies %s."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2214
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2213
 #: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:60
 #, python-format
 msgid "h%d"
@@ -7976,22 +7975,22 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5500
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5445
 msgid "Mouse over object not found."
 msgstr "Pele virs objekta nav atrasta."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5984
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5929
 msgid "open"
 msgstr "atver"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6151
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6175
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6185
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6096
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6120
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6130
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Dzīvo apgabalu atbalsts ir izslēgts."
@@ -7999,11 +7998,11 @@ msgstr "Dzīvo apgabalu atbalsts ir izslēgts."
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6159
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6104
 msgid "Live regions monitoring on"
 msgstr "Dzīvo apgabalu pārraudzība ieslēgta"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6166
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6111
 msgid "Live regions monitoring off"
 msgstr "Dzīvo apgabalu pārraudzība izslēgta"
 
@@ -8014,7 +8013,7 @@ msgstr "Dzīvo apgabalu pārraudzība izslēgta"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6201
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6146
 msgid "Gecko is controlling the caret."
 msgstr "Gecko kontrolē caret."
 
@@ -8025,7 +8024,7 @@ msgstr "Gecko kontrolē caret."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6213
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6158
 msgid "Orca is controlling the caret."
 msgstr "Orca kontrolē caret."
 
@@ -8035,7 +8034,7 @@ msgstr "Orca kontrolē caret."
 #. translated rolename for the heading.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:261
-#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:93
+#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:118
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s līmenis %(level)d"
@@ -8043,7 +8042,7 @@ msgstr "%(role)s līmenis %(level)d"
 #. Translators: this represents a list in HTML.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:301
-#: ../src/orca/structural_navigation.py:2940
+#: ../src/orca/structural_navigation.py:2935
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -8125,14 +8124,14 @@ msgstr[2] "%d procenti no dokumenta izlasīti"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:911 ../src/orca/settings.py:988
+#: ../src/orca/settings.py:907 ../src/orca/settings.py:984
 msgid "required"
 msgstr "nepieciešams"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:916
+#: ../src/orca/settings.py:912
 msgctxt "text"
 msgid "read only"
 msgstr "tikai lasāms"
@@ -8140,7 +8139,7 @@ msgstr "tikai lasāms"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:921 ../src/orca/settings.py:999
+#: ../src/orca/settings.py:917 ../src/orca/settings.py:995
 msgid "grayed"
 msgstr "ēnots"
 
@@ -8148,18 +8147,18 @@ msgstr "ēnots"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:945 ../src/orca/settings.py:1011
+#: ../src/orca/settings.py:941 ../src/orca/settings.py:1007
 msgid "collapsed"
 msgstr "sakļauts"
 
-#: ../src/orca/settings.py:945 ../src/orca/settings.py:1011
+#: ../src/orca/settings.py:941 ../src/orca/settings.py:1007
 msgid "expanded"
 msgstr "paplašināts"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:950
+#: ../src/orca/settings.py:946
 msgid "multi-select"
 msgstr "dudzveidīgs"
 
@@ -8167,7 +8166,7 @@ msgstr "dudzveidīgs"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:956
+#: ../src/orca/settings.py:952
 #, python-format
 msgid "tree level %d"
 msgstr "koka līmenis %d"
@@ -8182,7 +8181,7 @@ msgstr "koka līmenis %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:963 ../src/orca/structural_navigation.py:2955
+#: ../src/orca/settings.py:959 ../src/orca/structural_navigation.py:2950
 #, python-format
 msgid "Nesting level %d"
 msgstr "Koka līmenis %d"
@@ -8191,7 +8190,7 @@ msgstr "Koka līmenis %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:969
+#: ../src/orca/settings.py:965
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "uz %(index)d no %(total)d"
@@ -8200,7 +8199,7 @@ msgstr "uz %(index)d no %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:975
+#: ../src/orca/settings.py:971
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d no %(total)d"
@@ -8209,7 +8208,7 @@ msgstr "%(index)d no %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:994
+#: ../src/orca/settings.py:990
 msgctxt "text"
 msgid "rdonly"
 msgstr "tikailas"
@@ -8218,7 +8217,7 @@ msgstr "tikailas"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1017
+#: ../src/orca/settings.py:1013
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "KOKA LĪMENIS %d"
@@ -8229,7 +8228,7 @@ msgstr "KOKA LĪMENIS %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1025
+#: ../src/orca/settings.py:1021
 #, python-format
 msgid "LEVEL %d"
 msgstr "LĪMENIS %d"
@@ -8239,7 +8238,7 @@ msgstr "LĪMENIS %d"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1058
+#: ../src/orca/settings.py:1054
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H stundas, %M minūtes un %S sekundes."
 
@@ -8248,7 +8247,7 @@ msgstr "%H stundas, %M minūtes un %S sekundes."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1065
+#: ../src/orca/settings.py:1061
 msgid "%H hours and %M minutes."
 msgstr "%H stundas un %M minūtes."
 
@@ -8269,16 +8268,7 @@ msgstr "Noklusētais sintezators"
 msgid "Speech Dispatcher"
 msgstr "Runas dispečers"
 
-#. Translators: This string will appear in the list of
-#. available voices for the current speech engine.  %s will be
-#. replaced by the name of the current speech engine, such as
-#. "Festival default voice" or "IBMTTS default voice".  It
-#. refers to the default voice configured for given speech
-#. engine within the speech subsystem.  Apart from this item,
-#. the list will contain the names of all available "real"
-#. voices provided by the speech engine.
-#.
-#: ../src/orca/speechdispatcherfactory.py:180
+#: ../src/orca/speechdispatcherfactory.py:185
 #, python-format
 msgid "%s default voice"
 msgstr "%s noklusēta balss"
@@ -8289,25 +8279,25 @@ msgstr "%s noklusēta balss"
 #. new string well.  For example, "Open..." turns into
 #. "Open dot dot dot".
 #.
-#: ../src/orca/speechdispatcherfactory.py:287
+#: ../src/orca/speechdispatcherfactory.py:294
 msgid " dot dot dot"
 msgstr "punkts punkts punkts"
 
 #. Translators: This string announces speech rate change.
-#: ../src/orca/speechdispatcherfactory.py:374
+#: ../src/orca/speechdispatcherfactory.py:390
 msgid "slower."
 msgstr "lēnāk."
 
-#: ../src/orca/speechdispatcherfactory.py:374
+#: ../src/orca/speechdispatcherfactory.py:390
 msgid "faster."
 msgstr "ātrāk."
 
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/speechdispatcherfactory.py:384
+#: ../src/orca/speechdispatcherfactory.py:400
 msgid "lower."
 msgstr "zemāk."
 
-#: ../src/orca/speechdispatcherfactory.py:384
+#: ../src/orca/speechdispatcherfactory.py:400
 msgid "higher."
 msgstr "augstāk."
 
@@ -8435,7 +8425,7 @@ msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d tabulācija"
 msgstr[1] "%d tabulācijas"
-msgstr[2] "tabulācija"
+msgstr[2] "%d tabulāciju"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
@@ -8586,7 +8576,7 @@ msgstr "Kolonnas apakšā."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1315
+#: ../src/orca/structural_navigation.py:1320
 msgid "Non-uniform"
 msgstr "Ne-vienveidīgs"
 
@@ -8594,8 +8584,8 @@ msgstr "Ne-vienveidīgs"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1482
-#: ../src/orca/structural_navigation.py:1504
+#: ../src/orca/structural_navigation.py:1487
+#: ../src/orca/structural_navigation.py:1509
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -8605,7 +8595,7 @@ msgstr[2] "Šūna apvieno %d rindu"
 
 #. Translators: this represents the number of columns in a table.
 #.
-#: ../src/orca/structural_navigation.py:1488
+#: ../src/orca/structural_navigation.py:1493
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -8617,7 +8607,7 @@ msgstr[2] " %d kolonnu"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1496
+#: ../src/orca/structural_navigation.py:1501
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -8628,14 +8618,14 @@ msgstr[2] "Šūna apvieno %d kolonnu"
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1858
+#: ../src/orca/structural_navigation.py:1863
 msgid "Goes to previous anchor."
 msgstr "Iet uz iepriekšējo enkuru."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1863
+#: ../src/orca/structural_navigation.py:1868
 msgid "Goes to next anchor."
 msgstr "Iet uz nākamo enkuru."
 
@@ -8644,7 +8634,7 @@ msgstr "Iet uz nākamo enkuru."
 #. that one can jump to.) This is a detailed message which
 #. will be presented to the user if no more anchors can be found.
 #.
-#: ../src/orca/structural_navigation.py:1920
+#: ../src/orca/structural_navigation.py:1925
 msgid "No more anchors."
 msgstr "Vairs nav enkuru."
 
@@ -8657,26 +8647,26 @@ msgstr "Vairs nav enkuru."
 #. user if the desired structural navigation object could not be
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:1930
-#: ../src/orca/structural_navigation.py:2024
-#: ../src/orca/structural_navigation.py:2114
-#: ../src/orca/structural_navigation.py:2204
-#: ../src/orca/structural_navigation.py:2309
-#: ../src/orca/structural_navigation.py:2399
-#: ../src/orca/structural_navigation.py:2501
-#: ../src/orca/structural_navigation.py:2608
-#: ../src/orca/structural_navigation.py:2730
-#: ../src/orca/structural_navigation.py:2748
-#: ../src/orca/structural_navigation.py:2858
-#: ../src/orca/structural_navigation.py:2976
-#: ../src/orca/structural_navigation.py:3072
-#: ../src/orca/structural_navigation.py:3157
-#: ../src/orca/structural_navigation.py:3248
-#: ../src/orca/structural_navigation.py:3338
-#: ../src/orca/structural_navigation.py:3419
-#: ../src/orca/structural_navigation.py:3509
-#: ../src/orca/structural_navigation.py:3709
-#: ../src/orca/structural_navigation.py:3798
+#: ../src/orca/structural_navigation.py:1935
+#: ../src/orca/structural_navigation.py:2029
+#: ../src/orca/structural_navigation.py:2119
+#: ../src/orca/structural_navigation.py:2209
+#: ../src/orca/structural_navigation.py:2314
+#: ../src/orca/structural_navigation.py:2404
+#: ../src/orca/structural_navigation.py:2506
+#: ../src/orca/structural_navigation.py:2603
+#: ../src/orca/structural_navigation.py:2725
+#: ../src/orca/structural_navigation.py:2743
+#: ../src/orca/structural_navigation.py:2853
+#: ../src/orca/structural_navigation.py:2971
+#: ../src/orca/structural_navigation.py:3067
+#: ../src/orca/structural_navigation.py:3152
+#: ../src/orca/structural_navigation.py:3243
+#: ../src/orca/structural_navigation.py:3333
+#: ../src/orca/structural_navigation.py:3414
+#: ../src/orca/structural_navigation.py:3504
+#: ../src/orca/structural_navigation.py:3704
+#: ../src/orca/structural_navigation.py:3793
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "Nav atrasts"
@@ -8684,14 +8674,14 @@ msgstr "Nav atrasts"
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1948
+#: ../src/orca/structural_navigation.py:1953
 msgid "Goes to previous blockquote."
 msgstr "Iet uz iepriekšējo bloka citātu."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:1953
+#: ../src/orca/structural_navigation.py:1958
 msgid "Goes to next blockquote."
 msgstr "Iet uz nākamo bloka citātu."
 
@@ -8700,21 +8690,21 @@ msgstr "Iet uz nākamo bloka citātu."
 #. message which will be presented to the user if no more
 #. blockquotes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2014
+#: ../src/orca/structural_navigation.py:2019
 msgid "No more blockquotes."
 msgstr "Vairs nav bloka citātu."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2042
+#: ../src/orca/structural_navigation.py:2047
 msgid "Goes to previous button."
 msgstr "Iet uz iepriekšējo pogu."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2047
+#: ../src/orca/structural_navigation.py:2052
 msgid "Goes to next button."
 msgstr "Iet uz nākamo pogu."
 
@@ -8723,21 +8713,21 @@ msgstr "Iet uz nākamo pogu."
 #. a detailed message which will be presented to the user if
 #. no more push buttons can be found.
 #.
-#: ../src/orca/structural_navigation.py:2104
+#: ../src/orca/structural_navigation.py:2109
 msgid "No more buttons."
 msgstr "Vairs nav pogu."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2132
+#: ../src/orca/structural_navigation.py:2137
 msgid "Goes to previous check box."
 msgstr "Iet uz iepriekšējo atzīmes rūtiņu."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2137
+#: ../src/orca/structural_navigation.py:2142
 msgid "Goes to next check box."
 msgstr "Iet uz nākamo atzīmes rūtiņu."
 
@@ -8746,7 +8736,7 @@ msgstr "Iet uz nākamo atzīmes rūtiņu."
 #. detailed message which will be presented to the user if
 #. no more checkboxes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2194
+#: ../src/orca/structural_navigation.py:2199
 msgid "No more check boxes."
 msgstr "Vairs nav atzīmes rūtiņu."
 
@@ -8754,7 +8744,7 @@ msgstr "Vairs nav atzīmes rūtiņu."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2223
+#: ../src/orca/structural_navigation.py:2228
 msgid "Goes to previous large object."
 msgstr "Pāriet uz iepriekšējā pārskata objektu."
 
@@ -8762,7 +8752,7 @@ msgstr "Pāriet uz iepriekšējā pārskata objektu."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2229
+#: ../src/orca/structural_navigation.py:2234
 msgid "Goes to next large object."
 msgstr "Pāriet uz esošā pārskata objektu."
 
@@ -8773,21 +8763,21 @@ msgstr "Pāriet uz esošā pārskata objektu."
 #. will be presented to the user if no more large objects
 #. can be found.
 #.
-#: ../src/orca/structural_navigation.py:2299
+#: ../src/orca/structural_navigation.py:2304
 msgid "No more large objects."
 msgstr "Nav vairāk lielu objektu."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2327
+#: ../src/orca/structural_navigation.py:2332
 msgid "Goes to previous combo box."
 msgstr "Iet uz iepriekšējo kombinēto lodziņu."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2332
+#: ../src/orca/structural_navigation.py:2337
 msgid "Goes to next combo box."
 msgstr "Iet uz nākamo kombinēto lodziņu."
 
@@ -8796,21 +8786,21 @@ msgstr "Iet uz nākamo kombinēto lodziņu."
 #. detailed message which will be presented to the user if
 #. no more checkboxes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2389
+#: ../src/orca/structural_navigation.py:2394
 msgid "No more combo boxes."
 msgstr "Vairs nav kombinēto lodziņu."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2417
+#: ../src/orca/structural_navigation.py:2422
 msgid "Goes to previous entry."
 msgstr "Pāriet uz iepriekšējo ierakstu."
 
 #. Translators: this is for navigating among text entries
 #. in a form.
 #.
-#: ../src/orca/structural_navigation.py:2422
+#: ../src/orca/structural_navigation.py:2427
 msgid "Goes to next entry."
 msgstr "Pāriet uz nākamo ierakstu."
 
@@ -8819,21 +8809,21 @@ msgstr "Pāriet uz nākamo ierakstu."
 #. a detailed message which will be presented to the user if
 #. no more text entries can be found.
 #.
-#: ../src/orca/structural_navigation.py:2491
+#: ../src/orca/structural_navigation.py:2496
 msgid "No more entries."
 msgstr "Vairs nav ierakstu."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2519
+#: ../src/orca/structural_navigation.py:2524
 msgid "Goes to previous form field."
 msgstr "Pāriet uz iepriekšējo formas lauku."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2526
+#: ../src/orca/structural_navigation.py:2531
 msgid "Goes to next form field."
 msgstr "Pāriet uz nākamo formas lauku."
 
@@ -8842,28 +8832,28 @@ msgstr "Pāriet uz nākamo formas lauku."
 #. message which will be presented to the user if no more form
 #. field can be found.
 #.
-#: ../src/orca/structural_navigation.py:2598
+#: ../src/orca/structural_navigation.py:2593
 msgid "No more form fields."
 msgstr "Formas lauku nav."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2626
+#: ../src/orca/structural_navigation.py:2621
 msgid "Goes to previous heading."
 msgstr "Pāriet uz iepriekšējo virsrakstu."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g., <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2631
+#: ../src/orca/structural_navigation.py:2626
 msgid "Goes to next heading."
 msgstr "Pāriet uz nākamo virsrakstu."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2641
+#: ../src/orca/structural_navigation.py:2636
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "Iet uz iepriekšējo %d. līmeņa virsrakstu."
@@ -8871,7 +8861,7 @@ msgstr "Iet uz iepriekšējo %d. līmeņa virsrakstu."
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2648
+#: ../src/orca/structural_navigation.py:2643
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "Iet uz nākamo %d. līmeņa virsrakstu."
@@ -8881,7 +8871,7 @@ msgstr "Iet uz nākamo %d. līmeņa virsrakstu."
 #. detailed message which Orca will present if there are no more
 #. headings found.
 #.
-#: ../src/orca/structural_navigation.py:2720
+#: ../src/orca/structural_navigation.py:2715
 msgid "No more headings."
 msgstr "Nav vairāk virsrakstu."
 
@@ -8890,7 +8880,7 @@ msgstr "Nav vairāk virsrakstu."
 #. <h2>, etc.) This string is the detailed message which Orca will
 #. present if there are no more headings found at the desired level.
 #.
-#: ../src/orca/structural_navigation.py:2738
+#: ../src/orca/structural_navigation.py:2733
 #, python-format
 msgid "No more headings at level %d."
 msgstr "Nav vairāk virsrakstu līmenī %d."
@@ -8900,7 +8890,7 @@ msgstr "Nav vairāk virsrakstu līmenī %d."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2768
+#: ../src/orca/structural_navigation.py:2763
 msgid "Goes to previous landmark."
 msgstr "Iet uz iepriekšējo orientieri."
 
@@ -8909,7 +8899,7 @@ msgstr "Iet uz iepriekšējo orientieri."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:2775
+#: ../src/orca/structural_navigation.py:2770
 msgid "Goes to next landmark."
 msgstr "Iet uz nākamo orientieri."
 
@@ -8919,21 +8909,21 @@ msgstr "Iet uz nākamo orientieri."
 #. of webpage like banners, main context, search etc.  This
 #. is an indication that one was not found.
 #.
-#: ../src/orca/structural_navigation.py:2848
+#: ../src/orca/structural_navigation.py:2843
 msgid "No landmark found."
 msgstr "Nav atrastu orientieru."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2876
+#: ../src/orca/structural_navigation.py:2871
 msgid "Goes to previous list."
 msgstr "Pāriet uz iepriekšējo sarakstu."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:2881
+#: ../src/orca/structural_navigation.py:2876
 msgid "Goes to next list."
 msgstr "Pāriet uz nākamo sarakstu."
 
@@ -8942,21 +8932,21 @@ msgstr "Pāriet uz nākamo sarakstu."
 #. string is the detailed message which Orca will present if there
 #. are no more lists found.
 #.
-#: ../src/orca/structural_navigation.py:2966
+#: ../src/orca/structural_navigation.py:2961
 msgid "No more lists."
 msgstr "Sarakstu nav."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:2994
+#: ../src/orca/structural_navigation.py:2989
 msgid "Goes to previous list item."
 msgstr "Pāriet uz iepriekšējo saraksta vienību."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:2999
+#: ../src/orca/structural_navigation.py:2994
 msgid "Goes to next list item."
 msgstr "Pāriet uz nākamo saraksta vienību."
 
@@ -8965,26 +8955,26 @@ msgstr "Pāriet uz nākamo saraksta vienību."
 #. numbered list item.  This string is the detailed message
 #. which Orca will present if there are no more list items found.
 #.
-#: ../src/orca/structural_navigation.py:3062
+#: ../src/orca/structural_navigation.py:3057
 msgid "No more list items."
 msgstr "Saraksta vienību nav."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:3089
+#: ../src/orca/structural_navigation.py:3084
 msgid "Goes to previous live region."
 msgstr "Iet uz iepriekšējo dzīvo apgabalu."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:3093
+#: ../src/orca/structural_navigation.py:3088
 msgid "Goes to next live region."
 msgstr "Iet uz nākamo dzīvo apgabalu."
 
 #. Translators: this is for navigating to the last live region
 #. which made an announcement.
 #.
-#: ../src/orca/structural_navigation.py:3098
+#: ../src/orca/structural_navigation.py:3093
 msgid "Goes to the last live region which made an announcement."
 msgstr "Pāriet uz pēdējo dzīvo apgabalu, kurā ir veikts paziņojums."
 
@@ -8992,19 +8982,19 @@ msgstr "Pāriet uz pēdējo dzīvo apgabalu, kurā ir veikts paziņojums."
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/structural_navigation.py:3147
+#: ../src/orca/structural_navigation.py:3142
 msgid "No more live regions."
 msgstr "Vairs nav dzīvo apgabalu."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3174
+#: ../src/orca/structural_navigation.py:3169
 msgid "Goes to previous paragraph."
 msgstr "Iet uz iepriekšējo rindkopu."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3178
+#: ../src/orca/structural_navigation.py:3173
 msgid "Goes to next paragraph."
 msgstr "Iet uz nākamo rindkopu."
 
@@ -9012,21 +9002,21 @@ msgstr "Iet uz nākamo rindkopu."
 #. from paragraph to paragraph. This string is the detailed message
 #. which Orca will present if there are no more paragraphs found.
 #.
-#: ../src/orca/structural_navigation.py:3238
+#: ../src/orca/structural_navigation.py:3233
 msgid "No more paragraphs."
 msgstr "Vairs nav rindkopu."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3266
+#: ../src/orca/structural_navigation.py:3261
 msgid "Goes to previous radio button."
 msgstr "Iet uz iepriekšējo radio pogu."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3271
+#: ../src/orca/structural_navigation.py:3266
 msgid "Goes to next radio button."
 msgstr "Iet uz nākamo radio pogu."
 
@@ -9035,21 +9025,21 @@ msgstr "Iet uz nākamo radio pogu."
 #. detailed message which Orca will present if there are no more
 #. radio buttons found.
 #.
-#: ../src/orca/structural_navigation.py:3328
+#: ../src/orca/structural_navigation.py:3323
 msgid "No more radio buttons."
 msgstr "Vairs nav radio pogu."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
-#: ../src/orca/structural_navigation.py:3356
+#: ../src/orca/structural_navigation.py:3351
 msgid "Goes to previous separator."
 msgstr "Iet uz iepriekšējo atdalītāju."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
-#: ../src/orca/structural_navigation.py:3361
+#: ../src/orca/structural_navigation.py:3356
 msgid "Goes to next separator."
 msgstr "Iet uz nākamo atdalītāju."
 
@@ -9058,19 +9048,19 @@ msgstr "Iet uz nākamo atdalītāju."
 #. message which Orca will present if there are no more separators
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3409
+#: ../src/orca/structural_navigation.py:3404
 msgid "No more separators."
 msgstr "Vairs nav atdalītāju."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3436
+#: ../src/orca/structural_navigation.py:3431
 msgid "Goes to previous table."
 msgstr "Pāriet uz iepriekšējo tabulu."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3440
+#: ../src/orca/structural_navigation.py:3435
 msgid "Goes to next table."
 msgstr "Pāriet uz nākamo tabulu."
 
@@ -9078,57 +9068,57 @@ msgstr "Pāriet uz nākamo tabulu."
 #. from table to table.  This string is the detailed message which
 #. Orca will present if there are no more tables found.
 #.
-#: ../src/orca/structural_navigation.py:3499
+#: ../src/orca/structural_navigation.py:3494
 msgid "No more tables."
 msgstr "Nav vairāk tabulu."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3526
+#: ../src/orca/structural_navigation.py:3521
 msgid "Goes left one cell."
 msgstr "Pāriet uz kreiso šūnu."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3530
+#: ../src/orca/structural_navigation.py:3525
 msgid "Goes right one cell."
 msgstr "Pāriet uz labo šūnu."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3534
+#: ../src/orca/structural_navigation.py:3529
 msgid "Goes up one cell."
 msgstr "Pāriet uz augšējo šūnu."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3538
+#: ../src/orca/structural_navigation.py:3533
 msgid "Goes down one cell."
 msgstr "Pāriet uz apakšējo šūnu."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3542
+#: ../src/orca/structural_navigation.py:3537
 msgid "Goes to the first cell in a table."
 msgstr "Pāriet uz pirmo šūnu tabulā."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3546
+#: ../src/orca/structural_navigation.py:3541
 msgid "Goes to the last cell in a table."
 msgstr "Pāriet uz pēdējo šūnu tabulā."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3631
+#: ../src/orca/structural_navigation.py:3626
 msgid "Goes to previous unvisited link."
 msgstr "Pāriet uz iepriekšējo neapmeklēto saiti."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3636
+#: ../src/orca/structural_navigation.py:3631
 msgid "Goes to next unvisited link."
 msgstr "Pāriet uz nākamo neapmeklēto saiti."
 
@@ -9137,21 +9127,21 @@ msgstr "Pāriet uz nākamo neapmeklēto saiti."
 #. detailed message which Orca will present if there are no more
 #. unvisited links found.
 #.
-#: ../src/orca/structural_navigation.py:3699
+#: ../src/orca/structural_navigation.py:3694
 msgid "No more unvisited links."
 msgstr "Neapmeklētu saišu nav."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3727
+#: ../src/orca/structural_navigation.py:3722
 msgid "Goes to previous visited link."
 msgstr "Pāriet uz iepriekšējo apmeklēto saiti."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:3732
+#: ../src/orca/structural_navigation.py:3727
 msgid "Goes to next visited link."
 msgstr "Pāriet uz nākamo apmeklēto saiti."
 
@@ -9160,7 +9150,7 @@ msgstr "Pāriet uz nākamo apmeklēto saiti."
 #. message which Orca will present if there are no more visited
 #. links found.
 #.
-#: ../src/orca/structural_navigation.py:3788
+#: ../src/orca/structural_navigation.py:3783
 msgid "No more visited links."
 msgstr "Apmeklētu saišu nav."
 
@@ -10167,7 +10157,7 @@ msgid "To get to the system menus press the alt+f1 key."
 msgstr "Lai saņemtu sistēmas izvēlnes, spiediet alt+f1 taustiņu."
 
 #. Translators: this is the tutorial string when navigating lists.
-#: ../src/orca/tutorialgenerator.py:317
+#: ../src/orca/tutorialgenerator.py:320
 msgid "Use up and down to select an item."
 msgstr "Lietojiet bultiņas uz augšu un leju, lai izvēlētos priekšmetu."
 
@@ -10175,7 +10165,7 @@ msgstr "Lietojiet bultiņas uz augšu un leju, lai izvēlētos priekšmetu."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:347 ../src/orca/tutorialgenerator.py:497
+#: ../src/orca/tutorialgenerator.py:350 ../src/orca/tutorialgenerator.py:500
 msgid "To collapse, press shift plus left."
 msgstr "Lai sakļautu, spiediet pārslēgšanas un kreisās bultiņas taustiņu."
 
@@ -10183,32 +10173,32 @@ msgstr "Lai sakļautu, spiediet pārslēgšanas un kreisās bultiņas taustiņu.
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:353 ../src/orca/tutorialgenerator.py:503
+#: ../src/orca/tutorialgenerator.py:356 ../src/orca/tutorialgenerator.py:506
 msgid "To expand, press shift plus right."
 msgstr "Lai izvērstu, spiediet pārslēgšanas un labās bultiņas taustiņu."
 
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
-#: ../src/orca/tutorialgenerator.py:385
+#: ../src/orca/tutorialgenerator.py:388
 msgid "Type in text."
 msgstr "Ievadiet tekstu."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
-#: ../src/orca/tutorialgenerator.py:413
+#: ../src/orca/tutorialgenerator.py:416
 msgid "Use left and right to view other tabs."
 msgstr ""
 "Izmantojiet kreiso un labo bultiņu taustiņus, lai skatītu citas cilnes."
 
 #. Translators: this is the tutorial string for activating a push button.
-#: ../src/orca/tutorialgenerator.py:438
+#: ../src/orca/tutorialgenerator.py:441
 msgid "To activate press space."
 msgstr "Lai aktivētu, spiediet atstarpes taustiņu."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
-#: ../src/orca/tutorialgenerator.py:466
+#: ../src/orca/tutorialgenerator.py:469
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
@@ -10216,12 +10206,12 @@ msgstr ""
 "vēlamo skaitlisko vērtību."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
-#: ../src/orca/tutorialgenerator.py:654
+#: ../src/orca/tutorialgenerator.py:657
 msgid "Use arrow keys to change."
 msgstr "Izmantojiet bultiņu taustiņus, lai mainītu."
 
 #. Translators: this is a tip for the user, how to navigate menues.
-#: ../src/orca/tutorialgenerator.py:679
+#: ../src/orca/tutorialgenerator.py:682
 msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
@@ -10231,13 +10221,13 @@ msgstr ""
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
-#: ../src/orca/tutorialgenerator.py:684
+#: ../src/orca/tutorialgenerator.py:687
 msgid "To enter sub menu, press right arrow."
 msgstr "Lai ieietu apakšizvēlnē, spiediet labās bultiņas taustiņu."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
-#: ../src/orca/tutorialgenerator.py:716
+#: ../src/orca/tutorialgenerator.py:719
 msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
