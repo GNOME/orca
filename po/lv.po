@@ -9781,7 +9781,7 @@ msgid "%d tab"
 msgid_plural "%d tabs"
 msgstr[0] "%d tabulācija"
 msgstr[1] "%d tabulācijas"
-msgstr[2] "tabulācija"
+msgstr[2] "%d tabulācija"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
