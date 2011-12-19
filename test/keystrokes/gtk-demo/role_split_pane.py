@@ -18,15 +18,15 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Paned Widgets", 1000))
+sequence.append(TypeAction("Paned Widgets"))
 sequence.append(KeyComboAction("Return", 500))
+
+sequence.append(KeyComboAction("Return", 500))
+sequence.append(PauseAction(1000))
 
 ########################################################################
 # When the demo comes up, go to the split pane.
 #
-#sequence.append(WaitForWindowActivate("Panes",None))
-sequence.append(WaitForFocus("Hi there", acc_role=pyatspi.ROLE_PUSH_BUTTON))
-
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("F8", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_SPLIT_PANE))

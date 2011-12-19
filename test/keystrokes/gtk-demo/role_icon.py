@@ -39,18 +39,15 @@ sequence.append(utils.AssertPresentationAction(
     "Layered pane focus",
     ["KNOWN ISSUE - Sometimes we get the 'Icon View Basics' stuff; other times we don't. Probably a timing issue.",
      "BRAILLE LINE:  'gtk-demo Application Window Icon View Basics $l'",
-     "     VISIBLE:  'Icon View Basics $l', cursor=17",
-     "BRAILLE LINE:  'Window Icon View Basics $l'",
-     "     VISIBLE:  'Window Icon View Basics $l', cursor=24",
-     "BRAILLE LINE:  'Window Icon View Basics $l'",
-     "     VISIBLE:  'Window Icon View Basics $l', cursor=8",
+     "     VISIBLE:  'ication Window Icon View Basics ', cursor=16",
+     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
+     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Icon View Basics TREE LEVEL 2'",
-     "     VISIBLE:  'Icon View Basics TREE LEVEL 2', cursor=1",
+     "     VISIBLE:  'gtk-demo Application GTK+ Code D', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame'",
      "     VISIBLE:  'GtkIconView demo Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkIconView demo Frame ScrollPane LayeredPane'",
      "     VISIBLE:  'LayeredPane', cursor=1",
-     "SPEECH OUTPUT: 'text Icon View Basics'",
      "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Icon View Basics tree level 2'",
      "SPEECH OUTPUT: 'GtkIconView demo frame'",
      "SPEECH OUTPUT: 'layered pane'"]))
@@ -92,7 +89,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'bin Icon', cursor=1",
      "SPEECH OUTPUT: 'Icon panel'",
      "SPEECH OUTPUT: 'bin'",
-     "SPEECH OUTPUT: '1 of 22 items selected on 1 of 22'"]))
+     "SPEECH OUTPUT: '1 of 20 items selected on 1 of 20'"]))
 
 ########################################################################
 # Arrow right and wait for the next icon to be selected.
@@ -130,7 +127,7 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'bin Icon', cursor=1",
      "SPEECH OUTPUT: 'Icon panel'",
      "SPEECH OUTPUT: 'bin'",
-     "SPEECH OUTPUT: '2 of 22 items selected on 1 of 22'"]))
+     "SPEECH OUTPUT: '2 of 20 items selected on 1 of 20'"]))
 
 ########################################################################
 # Close the GtkIconView demo window

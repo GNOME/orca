@@ -18,27 +18,20 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Printing", 1000))
+sequence.append(TypeAction("Printing"))
+sequence.append(KeyComboAction("Return", 500))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
-#sequence.append(WaitForWindowActivate("Print",None))
-sequence.append(WaitForFocus("General", acc_role=pyatspi.ROLE_PAGE_TAB))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "General page tab",
-    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Printing TREE LEVEL 1'",
-     "     VISIBLE:  'Printing TREE LEVEL 1', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Print Dialog'",
+    ["BRAILLE LINE:  'gtk-demo Application Print Dialog'",
      "     VISIBLE:  'Print Dialog', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog TabList'",
      "     VISIBLE:  'TabList', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Print Dialog General Page'",
      "     VISIBLE:  'General Page', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Printing tree level 1'",
      "SPEECH OUTPUT: 'Print Range Copies'",
      "SPEECH OUTPUT: 'tab list'",
      "SPEECH OUTPUT: 'General page'"]))

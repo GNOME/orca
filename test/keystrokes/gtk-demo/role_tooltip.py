@@ -28,11 +28,6 @@ sequence.append(KeyComboAction("Return", 500))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))
-sequence.append(WaitAction("object:state-changed:visible",
-                           None,
-                           None,
-                           pyatspi.ROLE_TOOL_TIP,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Show Open tooltip",
     ["BRAILLE LINE:  'Open a file'",
@@ -44,11 +39,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))
-sequence.append(WaitAction("object:state-changed:visible",
-                           None,
-                           None,
-                           pyatspi.ROLE_TOOL_TIP,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Hide Open tooltip",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
@@ -66,11 +56,6 @@ sequence.append(WaitForFocus("Quit", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))
-sequence.append(WaitAction("object:state-changed:visible",
-                           None,
-                           None,
-                           pyatspi.ROLE_TOOL_TIP,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Show Quit tooltip",
     ["BRAILLE LINE:  'Quit'",
@@ -82,11 +67,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))
-sequence.append(WaitAction("object:state-changed:visible",
-                           None,
-                           None,
-                           pyatspi.ROLE_TOOL_TIP,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Hide Quit tooltip",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Quit Button'",
@@ -102,11 +82,6 @@ sequence.append(WaitForFocus("GTK!", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))
-sequence.append(WaitAction("object:state-changed:visible",
-                           None,
-                           None,
-                           pyatspi.ROLE_TOOL_TIP,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Show GTK+ tooltip",
     ["BRAILLE LINE:  'GTK+'",
@@ -118,11 +93,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("<Control>F1"))
-sequence.append(WaitAction("object:state-changed:visible",
-                           None,
-                           None,
-                           pyatspi.ROLE_TOOL_TIP,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Hide GTK+ tooltip",
     ["BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar GTK! Button'",
@@ -135,9 +105,7 @@ sequence.append(utils.AssertPresentationAction(
 # "Application main window" menu.  Let the harness kill the app.
 #
 sequence.append(KeyComboAction("<Alt>F4", 500))
-#sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
 sequence.append(PauseAction(1000))
-sequence.append(KeyComboAction("Home"))
 
 # Just a little extra wait to let some events get through.
 #

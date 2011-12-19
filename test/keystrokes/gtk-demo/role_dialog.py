@@ -18,35 +18,33 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Expander", 1000))
+sequence.append(TypeAction("Expander"))
+sequence.append(PauseAction(1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
-#sequence.append(WaitForWindowActivate("GtkExpander",None))
-sequence.append(WaitAction("object:state-changed:focused",
-                           None,
-                           None,
-                           pyatspi.ROLE_TOGGLE_BUTTON,
-                           5000))
 sequence.append(utils.AssertPresentationAction(
     "Dialog automatic reading",
-    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
+    ["KNOWN ISSUE - Sometimes the test present the toggle button; sometimes not. Seems to be a test and timing issue.",
+     "BRAILLE LINE:  'gtk-demo Application Window Expander $l'",
+     "     VISIBLE:  'emo Application Window Expander ', cursor=24",
      "BRAILLE LINE:  'gtk-demo Application Window  $l'",
      "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
      "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Expander TREE LEVEL 1'",
-     "     VISIBLE:  'Expander TREE LEVEL 1', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog'",
-     "     VISIBLE:  'GtkExpander Dialog', cursor=1",
+     "     VISIBLE:  'gtk-demo Application GTK+ Code D', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
      "     VISIBLE:  '& y Details ToggleButton', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog'",
+     "     VISIBLE:  'GtkExpander Dialog', cursor=1",
      "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Expander tree level 1'",
      "SPEECH OUTPUT: 'GtkExpander Expander demo. Click on the triangle for details.'",
      "SPEECH OUTPUT: 'Details toggle button not pressed'"]))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.
+# Give focus to the toggle button. Do a basic "Where Am I" via KP_Enter.
 #
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))

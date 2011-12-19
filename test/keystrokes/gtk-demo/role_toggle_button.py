@@ -18,31 +18,15 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Expander", 1000))
-
-sequence.append(utils.StartRecordingAction())
-sequence.append(KeyComboAction("Return", 500))
-#sequence.append(WaitForWindowActivate("GtkExpander",None))
-sequence.append(WaitForFocus("Details", acc_role=pyatspi.ROLE_TOGGLE_BUTTON))
-sequence.append(utils.AssertPresentationAction(
-    "Toggle button initial focus",
-    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Expander TREE LEVEL 1'",
-     "     VISIBLE:  'Expander TREE LEVEL 1', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog'",
-     "     VISIBLE:  'GtkExpander Dialog', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application GtkExpander Dialog & y Details ToggleButton'",
-     "     VISIBLE:  '& y Details ToggleButton', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Expander tree level 1'",
-     "SPEECH OUTPUT: 'GtkExpander Expander demo. Click on the triangle for details.'",
-     "SPEECH OUTPUT: 'Details toggle button not pressed'"]))
+sequence.append(TypeAction("Expander"))
+sequence.append(KeyComboAction("Return"))
 
 ########################################################################
-# Do a basic "Where Am I" via KP_Enter.
+# Give focus to the toggle button. Do a basic "Where Am I" via KP_Enter.
 #
+sequence.append(PauseAction(1000))
+sequence.append(KeyComboAction("Tab"))
+sequence.append(KeyComboAction("Tab"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))

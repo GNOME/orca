@@ -231,7 +231,7 @@ class SettingsManager(object):
             success = True
             msg += "failed due to ImportError. Giving up."
         except AttributeError:
-            msg += "failed due to AttributeError. Will try again."
+            return False
         else:
             msg += "succeeded."
             fileHnd.close()

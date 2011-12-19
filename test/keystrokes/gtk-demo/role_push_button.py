@@ -18,25 +18,18 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Button Boxes", 1000))
+sequence.append(TypeAction("Button Boxes"))
+sequence.append(KeyComboAction("Return", 500))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
-#sequence.append(WaitForWindowActivate("Print",None))
-sequence.append(WaitForFocus("OK", acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "OK button",
-    ["BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Button Boxes TREE LEVEL 1'",
-     "     VISIBLE:  'Button Boxes TREE LEVEL 1', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Button Boxes Frame'",
+    ["BRAILLE LINE:  'gtk-demo Application Button Boxes Frame'",
      "     VISIBLE:  'Button Boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Button Boxes Frame Horizontal Button Boxes Panel Spread Panel OK Button'",
      "     VISIBLE:  'OK Button', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Button Boxes tree level 1'",
      "SPEECH OUTPUT: 'Button Boxes frame'",
      "SPEECH OUTPUT: 'Horizontal Button Boxes panel Spread panel OK button'"]))
 

@@ -36,9 +36,9 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Red", acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Red button",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem(Control r)'",
-     "     VISIBLE:  '<x> Red CheckItem(Control r)', cursor=1",
-     "SPEECH OUTPUT: 'Red check item checked Control r'"]))
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem\((Control|Primary) r\)'",
+     "     VISIBLE:  '<x> Red CheckItem\((Control|Primary) r\)', cursor=1",
+     "SPEECH OUTPUT: 'Red check item checked (Control|Primary) r'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -54,14 +54,14 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Red button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem(Control r)'",
-     "     VISIBLE:  '<x> Red CheckItem(Control r)', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu <x> Red CheckItem\((Control|Primary) r\)'",
+     "     VISIBLE:  '<x> Red CheckItem\((Control|Primary) r\)', cursor=1",
      "SPEECH OUTPUT: 'Preferences'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Color'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Red'",
-     "SPEECH OUTPUT: 'check item checked Control r 1 of 3.'",
+     "SPEECH OUTPUT: 'check item checked (Control|Primary) r 1 of 3.'",
      "SPEECH OUTPUT: 'r'"]))
 
 ########################################################################
@@ -73,9 +73,9 @@ sequence.append(WaitForFocus("Green",
                              acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Green button",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem(Control g)'",
-     "     VISIBLE:  '< > Green CheckItem(Control g)', cursor=1",
-     "SPEECH OUTPUT: 'Green check item not checked Control g'"]))
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem\((Control|Primary) g\)'",
+     "     VISIBLE:  '< > Green CheckItem\((Control|Primary) g\)', cursor=1",
+     "SPEECH OUTPUT: 'Green check item not checked (Control|Primary) g'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -91,14 +91,14 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Green button Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem(Control g)'",
-     "     VISIBLE:  '< > Green CheckItem(Control g)', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar Preferences Menu < > Green CheckItem\((Control|Primary) g\)'",
+     "     VISIBLE:  '< > Green CheckItem\((Control|Primary) g\)', cursor=1",
      "SPEECH OUTPUT: 'Preferences'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Color'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Green'",
-     "SPEECH OUTPUT: 'check item not checked Control g 2 of 3.'",
+     "SPEECH OUTPUT: 'check item not checked (Control|Primary) g 2 of 3.'",
      "SPEECH OUTPUT: 'g'"]))
 
 ########################################################################

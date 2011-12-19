@@ -71,8 +71,9 @@ sequence.append(KeyComboAction("Down", 500))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TABLE))
 sequence.append(utils.AssertPresentationAction(
     "Enter table",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs  '",
-     "     VISIBLE:  '< > Fixed? 60482 Normal scrollab', cursor=1",
+    ["BUG? - For some reason, the VISIBLE braille is not scrolling to the focused cell.",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Fixed? ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs  '",
+     "     VISIBLE:  'gtk-demo Application GtkListStor', cursor=1",
      "SPEECH OUTPUT: 'Fixed? column header Fixed? check box not checked 60482 Normal scrollable notebooks and hidden tabs image'"]))
 
 #    ["KNOWN ISSUE -   Currently we are speaking the selected state here. We probably should not be doing this.",
@@ -156,8 +157,9 @@ sequence.append(WaitAction("object:active-descendant-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "60482 cell",
-    ["BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs  '",
-     "     VISIBLE:  '60482 Normal scrollable notebook', cursor=1",
+    ["BUG? - For some reason, the VISIBLE braille is not scrolling to the focused cell.",
+     "BRAILLE LINE:  'gtk-demo Application GtkListStore demo Frame ScrollPane Table Bug number ColumnHeader < > Fixed? 60482 Normal scrollable notebooks and hidden tabs  '",
+     "     VISIBLE:  'gtk-demo Application GtkListStor', cursor=1",
      "SPEECH OUTPUT: 'Bug number column header 60482'"]))
 
 ########################################################################

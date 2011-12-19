@@ -42,7 +42,7 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "New menu item",
-    ["BUG? - For some reason, we're not presenting our location. This problem is present in Gtk+ 3, but not Gtk+ 2."]))
+    ["KNOWN ISSUE - See Gtk bug 654410."]))
 #    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
 #     "     VISIBLE:  'New(Control n)', cursor=1",
 #     "SPEECH OUTPUT: 'New Control n'"]))
@@ -56,12 +56,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "New menu item Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New(Control n)'",
-     "     VISIBLE:  'New(Control n)', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar New\((Control|Primary) n\)'",
+     "     VISIBLE:  'New\((Control|Primary) n\)', cursor=1",
      "SPEECH OUTPUT: 'File'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'New'",
-     "SPEECH OUTPUT: 'Control n 1 of 5.'",
+     "SPEECH OUTPUT: '(Control|Primary) n 1 of 5.'",
      "SPEECH OUTPUT: 'n'"]))
 
 ########################################################################
@@ -72,9 +72,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Open menu item",
-    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Open(Control o)'",
-     "     VISIBLE:  'Open(Control o)', cursor=1",
-     "SPEECH OUTPUT: 'Open Control o'"]))
+    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Open\((Control|Primary) o\)'",
+     "     VISIBLE:  'Open\((Control|Primary) o\)', cursor=1",
+     "SPEECH OUTPUT: 'Open (Control|Primary) o'"]))
 
 ########################################################################
 # Now, continue on down the menu.
@@ -84,9 +84,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Save", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Save menu item",
-    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Save(Control s)'",
-     "     VISIBLE:  'Save(Control s)', cursor=1",
-     "SPEECH OUTPUT: 'Save Control s'"]))
+    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Save\((Control|Primary) s\)'",
+     "     VISIBLE:  'Save\((Control|Primary) s\)', cursor=1",
+     "SPEECH OUTPUT: 'Save (Control|Primary) s'"]))
 
 ########################################################################
 # Now, continue on down the menu.
@@ -96,9 +96,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Save As...", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Save As... menu item",
-    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Save As...(Control s)'",
-     "     VISIBLE:  'Save As...(Control s)', cursor=1",
-     "SPEECH OUTPUT: 'Save As... Control s'"]))
+    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Save As...\((Control|Primary) s\)'",
+     "     VISIBLE:  'Save As...\((Control|Primary) s\)', cursor=1",
+     "SPEECH OUTPUT: 'Save As... (Control|Primary) s'"]))
 
 ########################################################################
 # Now, continue on down the menu.
@@ -108,9 +108,9 @@ sequence.append(KeyComboAction("Down"))
 sequence.append(WaitForFocus("Quit", acc_role=pyatspi.ROLE_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Quit menu item",
-    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Quit(Control q)'",
-     "     VISIBLE:  'Quit(Control q)', cursor=1",
-     "SPEECH OUTPUT: 'Quit Control q'"]))
+    ["BRAILLE LINE:  'gtk-demo Application UI Manager Frame MenuBar Quit\((Control|Primary) q\)'",
+     "     VISIBLE:  'Quit\((Control|Primary) q\)', cursor=1",
+     "SPEECH OUTPUT: 'Quit (Control|Primary) q'"]))
 
 ########################################################################
 # Dismiss the menu once we get to the "Quit" menu item and wait for

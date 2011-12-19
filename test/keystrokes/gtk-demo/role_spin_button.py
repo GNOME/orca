@@ -18,16 +18,12 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Color Selector", 1000))
+sequence.append(TypeAction("Color Selector"))
 sequence.append(KeyComboAction("Return", 500))
 
-########################################################################
-# When the Printing demo window appears, open the color selector.
-# 
-#sequence.append(WaitForWindowActivate("Print",None))
-sequence.append(WaitForFocus("Change the above color",
-                             acc_role=pyatspi.ROLE_PUSH_BUTTON))
+sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return", 500))
+sequence.append(PauseAction(1000))
 
 ########################################################################
 #
@@ -80,8 +76,8 @@ sequence.append(WaitAction("object:property-change:accessible-value",
 sequence.append(PauseAction(1000))
 sequence.append(utils.AssertPresentationAction(
     "Hue spin button decrement value",
-    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 239 $l'",
-     "     VISIBLE:  'Hue: 239 $l', cursor=6",
+    ["BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 240 $l'",
+     "     VISIBLE:  'Hue: 240 $l', cursor=6",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 239 $l'",
      "     VISIBLE:  'Hue: 239 $l', cursor=6",
      "BRAILLE LINE:  'gtk-demo Application Changing color ColorChooser ColorChooser Hue: 239 $l'",

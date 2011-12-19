@@ -20,6 +20,8 @@ sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
 sequence.append(TypeAction("Combo boxes", 1000))
 sequence.append(KeyComboAction("Return", 500))
+sequence.append(PauseAction(1000))
+sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
 # When the Combo boxes demo window appears, open the combo box.
@@ -35,34 +37,20 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel Warning Combo'",
      "     VISIBLE:  'Warning Combo', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Window'",
-     "     VISIBLE:  'gtk-demo Application Window', cursor=22",
-     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
-     "     VISIBLE:  'Warning', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
-     "SPEECH OUTPUT: 'Some stock icons panel Warning combo box'",
-     "SPEECH OUTPUT: 'window'",
-     "SPEECH OUTPUT: 'Some stock icons panel Warning'"]))
+     "SPEECH OUTPUT: 'Some stock icons panel Warning combo box'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
-#
-# JD to WDW: This to me looks like two bug fixes:
-# 1) Lost a trailing space
-# 2) Before we were saying "menu"; I don't think we should in a combo box,
-#    even though technically there is a menu in between a combo box and
-#    the options it contains in the hierarchy.
-# Question: Should we be presenting the containing panel or not?
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Warning combo box item Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning Warning'",
-     "     VISIBLE:  'Warning', cursor=1",
-     "SPEECH OUTPUT: 'Some stock icons'",
-     "SPEECH OUTPUT: 'panel'",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel Warning Combo'",
+     "     VISIBLE:  'Warning Combo', cursor=1",
+     "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'Warning'",
      "SPEECH OUTPUT: '1 of 5'"]))
 
@@ -73,29 +61,21 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Down"))
 sequence.append(utils.AssertPresentationAction(
     "New combo box item",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning New'",
-     "     VISIBLE:  'New', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel New Combo'",
+     "     VISIBLE:  'New Combo', cursor=1",
      "SPEECH OUTPUT: 'New'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
-#
-# JD to WDW: This to me looks like two bug fixes:
-# 1) Lost a trailing space
-# 2) Before we were saying "menu"; I don't think we should in a combo box,
-#    even though technically there is a menu in between a combo box and
-#    the options it contains in the hierarchy.
-# Question: Should we be presenting the containing panel or not?
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "New combo box item Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboWarning New'",
-     "     VISIBLE:  'New', cursor=1",
-     "SPEECH OUTPUT: 'Some stock icons'",
-     "SPEECH OUTPUT: 'panel'",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel New Combo'",
+     "     VISIBLE:  'New Combo', cursor=1",
+     "SPEECH OUTPUT: 'combo box'",
      "SPEECH OUTPUT: 'New'",
      "SPEECH OUTPUT: '3 of 5'"]))
 
@@ -105,16 +85,23 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForFocus("New", acc_role=pyatspi.ROLE_COMBO_BOX))
 sequence.append(utils.AssertPresentationAction(
     "New combo box item selection",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame'",
+    ["KNOWN ISSUE - We get some additional crap presented due to unexpected/improper window events from Gtk+",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame'",
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel New Combo'",
      "     VISIBLE:  'New Combo', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Window'",
+     "     VISIBLE:  'gtk-demo Application Window', cursor=22",
+     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Some stock icons Panel  ComboNew New'",
+     "     VISIBLE:  'New', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
-     "SPEECH OUTPUT: 'Some stock icons panel New combo box'"]))
+     "SPEECH OUTPUT: 'Some stock icons panel New combo box'",
+     "SPEECH OUTPUT: 'window'",
+     "SPEECH OUTPUT: 'Some stock icons panel New'"]))
 
+sequence.append(KeyComboAction("Escape"))
 sequence.append(KeyComboAction("Tab"))
 sequence.append(WaitForFocus("Boston", acc_role=pyatspi.ROLE_COMBO_BOX))
 
@@ -139,8 +126,8 @@ sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("r", 500))
 sequence.append(utils.AssertPresentationAction(
     "Editable text combo box typing",
-    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Fou $l'",
-     "     VISIBLE:  'Fou $l', cursor=5",
+    ["BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
+     "     VISIBLE:  'Four $l', cursor=5",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Four $l'",
      "     VISIBLE:  'Four $l', cursor=5"]))
 
@@ -229,11 +216,8 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'Combo boxes Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l Combo'",
      "     VISIBLE:  'Two $l Combo', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Combo boxes Frame Editable Panel Two $l'",
-     "     VISIBLE:  'Two $l', cursor=1",
      "SPEECH OUTPUT: 'Combo boxes frame'",
-     "SPEECH OUTPUT: 'Editable panel Two combo box'",
-     "SPEECH OUTPUT: 'Two'"]))
+     "SPEECH OUTPUT: 'Editable panel Two combo box'"]))
 
 sequence.append(KeyComboAction("<Shift>ISO_Left_Tab"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))

@@ -68,15 +68,6 @@ sequence.append(utils.AssertPresentationAction(
 ########################################################################
 # Do an extended "Where Am I" via double KP_Enter.
 #
-# JD to WDW: The difference here is that we are not repeating the speech
-# output. Personally I think that's a good thing. Is there any reason
-# we should be duplicating output in the case of a detailed/extended
-# where am i?
-#
-# WDW to JD: the first should be for the first KP_Enter (i.e., basic
-# where am I) and the second should be for the second KP_Enter (i.e.,
-# extended where am I). So, why did we end up losing one?
-#
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(KeyComboAction("KP_Enter"))
@@ -105,10 +96,10 @@ sequence.append(WaitAction("object:text-caret-moved",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret movement to 'h'",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=2",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=2",
      "SPEECH OUTPUT: 'T'",
      "SPEECH OUTPUT: 'unselected' voice=system",
      "SPEECH OUTPUT: 'h'"]))
@@ -125,8 +116,8 @@ sequence.append(WaitAction("object:text-selection-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret select 'his' of 'This'",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=5",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=5",
      "SPEECH OUTPUT: 'his'",
      "SPEECH OUTPUT: 'selected' voice=system"]))
 
@@ -138,8 +129,8 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret selection Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=5",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=5",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times:'",
      "SPEECH OUTPUT: 'selected label'"]))
@@ -153,10 +144,10 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret selection Extended Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=5",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=5",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=5",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=5",
      "SPEECH OUTPUT: 'This message box has been popped up the following",
      "number of times:'",
      "SPEECH OUTPUT: 'selected label'"]))
@@ -175,10 +166,10 @@ sequence.append(WaitAction("object:text-selection-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret select 'T' in 'This'",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=2",
-     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=2",
+     "BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=1",
      "SPEECH OUTPUT: 'h'",
      "SPEECH OUTPUT: 'unselected' voice=system",
      "SPEECH OUTPUT: 'T' voice=uppercase",
@@ -196,8 +187,8 @@ sequence.append(WaitAction("object:text-selection-changed",
                            5000))
 sequence.append(utils.AssertPresentationAction(
     "This message box label caret select rest of 'This'",
-    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has  $l'",
-     "     VISIBLE:  'This message box has  $l', cursor=5",
+    ["BRAILLE LINE:  'gtk-demo Application Information Alert This message box has been popped up the following $l'",
+     "     VISIBLE:  'This message box has been popped', cursor=5",
      "SPEECH OUTPUT: 'This'",
      "SPEECH OUTPUT: 'unselected' voice=system"]))
 

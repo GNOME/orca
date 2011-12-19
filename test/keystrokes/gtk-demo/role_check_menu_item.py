@@ -37,9 +37,9 @@ sequence.append(KeyComboAction("Up"))
 sequence.append(WaitForFocus("Bold", acc_role=pyatspi.ROLE_CHECK_MENU_ITEM))
 sequence.append(utils.AssertPresentationAction(
     "Bold check item",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar <x> Bold CheckItem(Control b)'",
-     "     VISIBLE:  '<x> Bold CheckItem(Control b)', cursor=1",
-     "SPEECH OUTPUT: 'Bold check item checked Control b'"]))
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar <x> Bold CheckItem\((Control|Primary) b\)'",
+     "     VISIBLE:  '<x> Bold CheckItem\((Control|Primary) b\)', cursor=1",
+     "SPEECH OUTPUT: 'Bold check item checked (Control|Primary) b'"]))
 
 ########################################################################
 # Do a basic "Where Am I" via KP_Enter.
@@ -49,12 +49,12 @@ sequence.append(KeyComboAction("KP_Enter"))
 sequence.append(PauseAction(3000))
 sequence.append(utils.AssertPresentationAction(
     "Bold check item Where Am I",
-    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar <x> Bold CheckItem(Control b)'",
-     "     VISIBLE:  '<x> Bold CheckItem(Control b)', cursor=1",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame MenuBar <x> Bold CheckItem\((Control|Primary) b\)'",
+     "     VISIBLE:  '<x> Bold CheckItem\((Control|Primary) b\)', cursor=1",
      "SPEECH OUTPUT: 'Preferences'",
      "SPEECH OUTPUT: 'menu'",
      "SPEECH OUTPUT: 'Bold'",
-     "SPEECH OUTPUT: 'check item checked Control b 4 of 4.'",
+     "SPEECH OUTPUT: 'check item checked (Control|Primary) b 4 of 4.'",
      "SPEECH OUTPUT: 'b'"]))
 
 ########################################################################

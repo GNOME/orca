@@ -19,27 +19,19 @@ sequence.append(WaitForWindowActivate("GTK+ Code Demos"))
 #
 sequence.append(KeyComboAction("<Control>f"))
 sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_TEXT))
-sequence.append(TypeAction("Application main window", 1000))
+sequence.append(TypeAction("Application main window"))
+sequence.append(KeyComboAction("Return"))
+sequence.append(PauseAction(1000))
 
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))
-sequence.append(PauseAction(3000))
-sequence.append(WaitForWindowActivate("Application Window",None))
 sequence.append(WaitForFocus("Open", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(utils.AssertPresentationAction(
     "Open button initial focus",
-    ["KNOWN ISSUE - Sometimes we are more verbose here than others. Seems to be a timing issue that needs to be investigated.",
-     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application Window  $l'",
-     "     VISIBLE:  'gtk-demo Application Window  $l', cursor=29",
-     "BRAILLE LINE:  'gtk-demo Application GTK+ Code Demos Frame TabList Widget (double click for demo) Page ScrollPane TreeTable Widget (double click for demo) ColumnHeader Application main window TREE LEVEL 1'",
-     "     VISIBLE:  'Application main window TREE LEV', cursor=1",
-     "BRAILLE LINE:  'gtk-demo Application Application Window Frame'",
+    ["BRAILLE LINE:  'gtk-demo Application Application Window Frame'",
      "     VISIBLE:  'Application Window Frame', cursor=1",
      "BRAILLE LINE:  'gtk-demo Application Application Window Frame ToolBar Open Button'",
      "     VISIBLE:  'Open Button', cursor=1",
-     "SPEECH OUTPUT: 'Widget (double click for demo) page Widget (double click for demo) column header Application main window tree level 1'",
      "SPEECH OUTPUT: 'Application Window frame'",
      "SPEECH OUTPUT: 'Open button'"]))
 
@@ -118,7 +110,6 @@ sequence.append(KeyComboAction("<Alt>F4"))
 #
 #sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
 sequence.append(PauseAction(1000))
-sequence.append(KeyComboAction("Home"))
 
 # Just a little extra wait to let some events get through.
 #

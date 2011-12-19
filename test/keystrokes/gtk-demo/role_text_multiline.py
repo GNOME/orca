@@ -102,11 +102,11 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  ' $l', cursor=1"]))
 
 sequence.append(KeyComboAction("Return", 500))
-sequence.append(TypeAction("I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.", 500))
+sequence.append(TypeAction("I am just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.", 500))
 sequence.append(KeyComboAction("Return", 500))
 sequence.append(TypeAction("The keyboard sure can get sticky.", 500))
 sequence.append(KeyComboAction("Return", 500))
-sequence.append(TypeAction("Tis this and thus thou art in Rome?", 500))
+sequence.append(TypeAction("Tis this and thus thou art in Rome.", 500))
 sequence.append(KeyComboAction("Return", 500))
 
 ########################################################################
@@ -236,7 +236,7 @@ sequence.append(utils.AssertPresentationAction(
 
 ########################################################################
 # Press Home to move to the beginning of the line. Arrow down to 
-# "I'm typing away..." and use Shift End to select to the end of the 
+# "I am typing away..." and use Shift End to select to the end of the 
 # line.
 #
 sequence.append(utils.StartRecordingAction())
@@ -270,16 +270,16 @@ sequence.append(utils.AssertPresentationAction(
      "     VISIBLE:  'This is a test. $l', cursor=1",
      "BRAILLE LINE:  ' $l'",
      "     VISIBLE:  ' $l', cursor=1",
-     "BRAILLE LINE:  'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
-     "     VISIBLE:  'I'm just typing away like a mad ', cursor=1",
-     "BRAILLE LINE:  'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
+     "BRAILLE LINE:  'I am just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
+     "     VISIBLE:  'I am just typing away like a mad', cursor=1",
+     "BRAILLE LINE:  'I am just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type. $l'",
      "     VISIBLE:  'y life than eat fruit and type. ', cursor=32",
      "SPEECH OUTPUT: 'T'",
-     "SPEECH OUTPUT: 'unselected'",
-     "SPEECH OUTPUT: 'blank'",
-     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
-     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
-     "SPEECH OUTPUT: 'selected'"]))
+     "SPEECH OUTPUT: 'unselected' voice=system",
+     "SPEECH OUTPUT: 'blank' voice=system",
+     "SPEECH OUTPUT: 'I am just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
+     "SPEECH OUTPUT: 'I am just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.'",
+     "SPEECH OUTPUT: 'selected' voice=system"]))
 
 ########################################################################
 # Shift Control Right arrow to select the first two words on the next
@@ -309,7 +309,7 @@ sequence.append(utils.AssertPresentationAction(
     ["BRAILLE LINE:  'The keyboard sure can get sticky. $l'",
      "     VISIBLE:  'The keyboard sure can get sticky', cursor=13",
      "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
+     "SPEECH OUTPUT: 'I am just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
      "The keyboard'",
      "SPEECH OUTPUT: 'selected'"]))
 
@@ -327,11 +327,11 @@ sequence.append(utils.AssertPresentationAction(
      "BRAILLE LINE:  'The keyboard sure can get sticky. $l'",
      "     VISIBLE:  'The keyboard sure can get sticky', cursor=13",
      "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
+     "SPEECH OUTPUT: 'I am just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
      "The keyboard'",
      "SPEECH OUTPUT: 'selected'",
      "SPEECH OUTPUT: 'text'",
-     "SPEECH OUTPUT: 'I'm just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
+     "SPEECH OUTPUT: 'I am just typing away like a mad little monkey with nothing better to do in my life than eat fruit and type.",
      "The keyboard'",
      "SPEECH OUTPUT: 'selected'"]))
 
@@ -346,7 +346,7 @@ sequence.append(utils.AssertPresentationAction(
     ["SPEECH OUTPUT: '",
      "The keyboard sure can get sticky.'",
      "SPEECH OUTPUT: '",
-     "Tis this and thus thou art in Rome?'",
+     "Tis this and thus thou art in Rome.'",
      "SPEECH OUTPUT: '",
      "'"]))
 

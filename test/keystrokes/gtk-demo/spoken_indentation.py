@@ -474,14 +474,6 @@ sequence.append(utils.AssertPresentationAction(
 #
 sequence.append(KeyComboAction("<Alt>F4"))
 
-########################################################################
-# Go back to the main gtk-demo window and reselect the
-# "Application main window" menu.  Let the harness kill the app.
-#
-#sequence.append(WaitForWindowActivate("GTK+ Code Demos",None))
-sequence.append(PauseAction(1000))
-sequence.append(KeyComboAction("Home"))
-
 # Just a little extra wait to let some events get through.
 #
 sequence.append(PauseAction(3000))
