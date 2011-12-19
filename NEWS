@@ -1,3 +1,88 @@
+3.3.3 - 19 December 2011
+
+General
+
+  * Fix for bug 665769 - Preferences not saved or restored correctly
+    due to comparing unicode and utf-8 strings
+
+  * Several fixes to help Orca better cope with dead and vanishing
+    accessible objects
+
+  * Fix for bug 666416 - Leading ellipsis cause incorrect speech output
+
+  * Fix for bug 666060 - Orca does not always speak guessed form field
+    labels when structural navigation is used
+
+  * Fix for bug 665288 - Orca's script manager cannot adequately handle
+    multiple "unknown" applications which embed content from other
+    toolkits
+
+  * Fix for bug 665191 - Orca fails to use the correct toolkit script
+    for "unknown" applications
+
+Keybindings
+
+  * Fix for bug 658122 - Caps_Lock should not be toggled when Orca
+    commands are used in laptop layout
+
+  * Fix for bug 665804 - Problems binding and rebinding commands with
+    Caps_Lock and Shift
+
+Flat Review
+
+  * Fix for bug 664466 - Orca's flat review cannot access the top line
+    of gnome-terminal console
+
+  * Work around for bug 665522 - Flat Review broken in Gecko apps with
+    AT-SPI2
+
+WebKitGtk
+
+  * Implement label inference (aka "label guess") functionality
+
+  * Add support for speech presentation of embedded object characters
+
+  * Fix for Bug 665586 - Orca does not present the selected menu /
+    menu item for Dojo widgets
+
+  * Fix for bug 665614 - Orca does not present selection changes
+    in radio button groups when the arrow keys are used
+
+  * Fix for bug 664396 - List containing links is not brailled properly
+
+  * Add LIST_ITEM to the roles treated as widgets in onFocus()
+
+  * Fix for Orca speaking text table cell role and selection state
+
+  * Adjust getObjectsFromEOCs to deal with unexpected accessible
+    hyperlink indices
+
+  * Fix for bug 665223 - WebKitGtk-based application scripts should be
+    consolidated
+
+Cruft Removal
+
+  * Fix for bug 665216 - Remove Orca's support for Gecko-based Yelp v2
+
+  * Fix for bug 664651 - Remove the legacy magnification code
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German                 Gabor Karsay
+    el            Greek                  Simos Xenitellis
+                                         Vagelis Mamalakis
+    es            Spanish                Daniel Mustieles
+    fr            French                 Bruno Brouard
+                                         Laurent Coudeur
+                                         Julien Hardelin
+    lv            Latvian                Peteris Krisjanis 
+    nb            Norwegian bokmål       Kjartan Maraas
+    sl            Slovenian              Matej Urbančič
+    sv            Swedish                Daniel Nylander
+    te            Telugu                 Praveen Illa
+
+=========
+
 3.3.2 - 21 November 2011
 
 General
