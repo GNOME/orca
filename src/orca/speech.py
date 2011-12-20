@@ -35,7 +35,6 @@ import time
 import chnames
 import debug
 import keynames
-import orca
 import orca_state
 import settings
 import sound
@@ -271,32 +270,29 @@ def speak(content, acss=None, interrupt=True):
         string = " ".join(toSpeak)
         _speak(string, activeVoice, interrupt)
 
-def speakKeyEvent(event_string, eventType):
+def speakKeyEvent(event):
     """Speaks a key event immediately.
 
     Arguments:
-    - event_string: string representing the key event as defined by
-                    input_event.KeyboardEvent.
-    - eventType:    key event type as one of orca.KeyEventType constants.
-
+    - event: input_event.KeyboardEvent to speak.
     """
     if settings.silenceSpeech:
         return
 
     if _speechserver:
-        _speechserver.speakKeyEvent(event_string, eventType)
+        _speechserver.speakKeyEvent(event)
     else:
         # Check to see if there are localized words to be spoken for
         # this key event.
         #
-        event_string = keynames.getKeyName(event_string)
-
-        if eventType == orca.KeyEventType.LOCKING_LOCKED:
+        event_string = keynames.getKeyName(event.event_string)
+        lockingState = event.getLockingState()
+        if lockingState == True:
             # Translators: this represents the state of a locking modifier
             # key (e.g., Caps Lock)
             #
             event_string += " " + _("on")
-        elif eventType == orca.KeyEventType.LOCKING_UNLOCKED:
+        elif lockingState == False:
             # Translators: this represents the state of a locking modifier
             # key (e.g., Caps Lock)
             #

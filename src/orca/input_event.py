@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2011 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -26,13 +27,17 @@ will be used which should be used to handle all input events."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
+                "Copyright (c) 2010-2011 Igalia, S.L."
 __license__   = "LGPL"
 
-import debug
-import settings
+import pyatspi
 import time
+import unicodedata
+
+import debug
 import orca_state
+import settings
 
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
@@ -47,12 +52,21 @@ class InputEvent:
 
         Arguments:
         - eventType: the input event type (one of KEYBOARD_EVENT, BRAILLE_EVENT,
-                MOUSE_BUTTON_EVENT, MOUSE_MOTION_EVENT, SPEECH_EVENT).
+          MOUSE_BUTTON_EVENT, MOUSE_MOTION_EVENT, SPEECH_EVENT).
         """
 
         self.type = eventType
 
 class KeyboardEvent(InputEvent):
+
+    TYPE_UNKNOWN          = "unknown"
+    TYPE_PRINTABLE        = "printable"
+    TYPE_MODIFIER         = "modifier"
+    TYPE_LOCKING          = "locking"
+    TYPE_FUNCTION         = "function"
+    TYPE_ACTION           = "action"
+    TYPE_NAVIGATION       = "navigation"
+    TYPE_DIACRITICAL      = "diacritical"
 
     def __init__(self, event):
         """Creates a new InputEvent of type KEYBOARD_EVENT.
@@ -61,8 +75,6 @@ class KeyboardEvent(InputEvent):
         - event: the AT-SPI keyboard event
         """
 
-        # We start just copying the pyatspi event.
-        #
         InputEvent.__init__(self, KEYBOARD_EVENT)
         self.id = event.id
         self.type = event.type
@@ -84,7 +96,7 @@ class KeyboardEvent(InputEvent):
         # are filled.
         #
         script = orca_state.activeScript
-        if (script):
+        if script:
             script.checkKeyboardEventData(self)
 
         # Control characters come through as control characters, so we
@@ -101,6 +113,43 @@ class KeyboardEvent(InputEvent):
             if value < 32:
                 self.event_string = chr(value + 0x40)
 
+        self.keyType = None
+        if self.isNavigationKey():
+            self.keyType = KeyboardEvent.TYPE_NAVIGATION
+            self.shouldEcho = settings.enableNavigationKeys
+        elif self.isActionKey():
+            self.keyType = KeyboardEvent.TYPE_ACTION
+            self.shouldEcho = settings.enableActionKeys
+        elif self.isModifierKey():
+            self.keyType = KeyboardEvent.TYPE_MODIFIER
+            self.shouldEcho = settings.enableModifierKeys
+        elif self.isFunctionKey():
+            self.keyType = KeyboardEvent.TYPE_FUNCTION
+            self.shouldEcho = settings.enableFunctionKeys
+        elif self.isDiacriticalKey():
+            self.keyType = KeyboardEvent.TYPE_DIACRITICAL
+            self.shouldEcho = settings.enableDiacriticalKeys
+        elif self.isLockingKey():
+            self.keyType = KeyboardEvent.TYPE_LOCKING
+            self.shouldEcho = settings.enableLockingKeys
+        elif self.isPrintableKey():
+            self.keyType = KeyboardEvent.TYPE_PRINTABLE
+            self.shouldEcho = \
+                settings.enablePrintableKeys or settings.enableEchoByCharacter
+        else:
+            self.keyType = KeyboardEvent.TYPE_UNKNOWN
+            self.shouldEcho = False
+
+        # Never echo if the user doesn't want any echo, as defined by
+        # preferences and whether or not we are in a password field.
+        self.shouldEcho = self.shouldEcho and settings.enableKeyEcho
+        if self.shouldEcho:
+            try:
+                role = orca_state.locusOfFocus.getRole()
+            except:
+                pass
+            else:
+                self.shouldEcho = role != pyatspi.ROLE_PASSWORD_TEXT
 
     def toString(self):
         return ("KEYBOARDEVENT: type=%d\n" % self.type) \
@@ -111,7 +160,127 @@ class KeyboardEvent(InputEvent):
             + ("                keyval_name=(%s)\n" % self.keyval_name) \
             + ("                is_text=%s\n" % self.is_text) \
             + ("                timestamp=%d\n" % self.timestamp) \
-            + ("                time=%f" % time.time())
+            + ("                time=%f\n" % time.time()) \
+            + ("                keyType=%s\n" % self.keyType) \
+            + ("                shouldEcho=%s\n" % self.shouldEcho)
+
+    def isNavigationKey(self):
+        """Return True if this is a navigation key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_NAVIGATION
+
+        return self.event_string in \
+            ["Left", "Right", "Up", "Down", "Home", "End"]
+
+    def isActionKey(self):
+        """Return True if this is an action key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_ACTION
+
+        return self.event_string in \
+            ["Return", "Escape", "Tab", "BackSpace", "Delete",
+             "Page_Up", "Page_Down"]
+
+    def isDiacriticalKey(self):
+        """Return True if this is a non-spacing diacritical key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_DIACRITICAL
+
+        return self.event_string.startswith("dead_")
+
+    def isFunctionKey(self):
+        """Return True if this is a function key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_FUNCTION
+
+        return self.event_string in \
+            ["F1", "F2", "F3", "F4", "F5", "F6",
+             "F7","F8", "F9", "F10", "F11", "F12"]
+
+    def isLockingKey(self):
+        """Return True if this is a locking key."""
+
+        if self.keyType:
+            return self.keyType in KeyboardEvent.TYPE_LOCKING
+
+        lockingKeys = ["Caps_Lock", "Num_Lock", "Scroll_Lock"]
+        if not self.event_string in lockingKeys:
+            return False
+
+        if not orca_state.bypassNextCommand:
+            return not self.event_string in settings.orcaModifierKeys
+
+        return True
+
+    def isModifierKey(self):
+        """Return True if this is a modifier key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_MODIFIER
+
+        modifierKeys = ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
+                        'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R']
+
+        if not orca_state.bypassNextCommand:
+            orcaMods = settings.orcaModifierKeys
+            try:
+                orcaMods = map(lambda x: x.encode('UTF-8'), orcaMods)
+            except (UnicodeDecodeError, UnicodeEncodeError):
+                pass
+            modifierKeys.extend(orcaMods)
+
+        string = self.event_string
+        if isinstance(string, unicode):
+            string = string.encode('UTF-8')
+
+        return string in modifierKeys
+
+    def isPrintableKey(self):
+        """Return True if this is a printable key."""
+
+        if self.keyType:
+            return self.keyType == KeyboardEvent.TYPE_PRINTABLE
+
+        if self.event_string == "space":
+            return True
+
+        unicodeString = self.event_string.decode("UTF-8")
+        if not len(unicodeString) == 1:
+            return False
+
+        if unicodeString.isalnum() or unicodeString.isspace():
+            return True
+
+        return unicodedata.category(unicodeString)[0] in ('P', 'S')
+
+    def isCharacterEchoable(self):
+        """Returns True if the script will echo this event as part of
+        character echo. We do this to not double-echo a given printable
+        character."""
+
+        if not self.isPrintableKey():
+            return False
+
+        script = orca_state.activeScript
+        return script and script.utilities.willEchoCharacter(self)
+
+    def getLockingState(self):
+        """Returns True if the event locked a locking key, False if the
+        event unlocked a locking key, and None if we do not know or this
+        is not a locking key."""
+
+        if self.event_string == "Caps_Lock":
+            mod = pyatspi.MODIFIER_SHIFTLOCK
+        elif self.event_string == "Num_Lock":
+            mod = pyatspi.MODIFIER_NUMLOCK
+        else:
+            return None
+
+        return not self.modifiers & (1 << mod)
 
 class BrailleEvent(InputEvent):
 

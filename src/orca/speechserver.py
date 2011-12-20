@@ -33,7 +33,6 @@ __license__   = "LGPL"
 import logging
 import keynames
 import settings
-import orca
 import orca_state
 
 log = logging.getLogger("speech")
@@ -184,17 +183,14 @@ class SpeechServer(object):
         """
         pass
 
-    def speakKeyEvent(self, event_string, eventType):
+    def speakKeyEvent(self, event):
         """Speaks a key event immediately.
 
         Arguments:
-        - event_string: string representing the key event as defined by
-                        input_event.KeyboardEvent.
-        - eventType:    key event type as one of orca.KeyEventType constants.
-
+        - event: the input_event.KeyboardEvent.
         """
-        if eventType == orca.KeyEventType.PRINTABLE and \
-               event_string.decode("UTF-8").isupper():
+        if event.isPrintableKey() \
+           and event.event_string.decode("UTF-8").isupper():
             voice = ACSS(settings.voices[settings.UPPERCASE_VOICE])
         else:
             voice = ACSS(settings.voices[settings.DEFAULT_VOICE])
@@ -202,17 +198,18 @@ class SpeechServer(object):
         # Check to see if there are localized words to be spoken for
         # this key event.
         #
-        event_string = keynames.getKeyName(event_string)
+        event_string = keynames.getKeyName(event.event_string)
         if orca_state.activeScript and orca_state.usePronunciationDictionary:
             event_string = orca_state.activeScript.\
                 utilities.adjustForPronunciation(event_string)
 
-        if eventType == orca.KeyEventType.LOCKING_LOCKED:
+        lockingState = event.getLockingState()
+        if lockingState == True:
             # Translators: this represents the state of a locking modifier
             # key (e.g., Caps Lock)
             #
             event_string += " " + _("on")
-        elif eventType == orca.KeyEventType.LOCKING_UNLOCKED:
+        elif lockingState == False:
             # Translators: this represents the state of a locking modifier
             # key (e.g., Caps Lock)
             #

@@ -45,7 +45,6 @@ import chnames
 import debug
 import speechserver
 import settings
-import orca
 import orca_state
 import punctuation_settings
 from acss import ACSS
@@ -463,21 +462,20 @@ class SpeechServer(speechserver.SpeechServer):
                 utilities.adjustForPronunciation(name)
         self.speak(name, acss)
 
-    def speakKeyEvent(self, event_string, eventType):
-        if eventType == orca.KeyEventType.PRINTABLE:
+    def speakKeyEvent(self, event):
+        if event.isPrintableKey():
             # We currently only handle printable characters by Speech
             # Dispatcher's KEY command.  For other keys, such as Ctrl, Shift
             # etc. we prefer Orca's verbalization.
-            if event_string.decode("UTF-8").isupper():
+            if event.event_string.decode("UTF-8").isupper():
                 acss = settings.voices[settings.UPPERCASE_VOICE]
             else:
                 acss = None
-            key = self.KEY_NAMES.get(event_string, event_string)
+            key = self.KEY_NAMES.get(event.event_string, event.event_string)
             self._apply_acss(acss)
             self._send_command(self._client.key, key)
         else:
-            return super(SpeechServer, self).speakKeyEvent(event_string, 
-                                                           eventType)
+            return super(SpeechServer, self).speakKeyEvent(event)
 
     def increaseSpeechRate(self, step=5):
         self._change_default_speech_rate()

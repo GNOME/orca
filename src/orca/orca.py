@@ -34,7 +34,6 @@ import re
 import signal
 import sys
 import time
-import unicodedata
 import shutil
 
 from gi.repository.Gio import Settings
@@ -792,181 +791,6 @@ _keyBindings = None
 #
 _orcaModifierPressed = False
 
-def isPrintableKey(event_string):
-    """Return an indication of whether this is an alphanumeric or
-       punctuation key.
-
-    Arguments:
-    - event: the event string
-
-    Returns True if this is an alphanumeric or punctuation key.
-    """
-
-    if event_string == "space":
-        reply = True
-    else:
-        unicodeString = event_string.decode("UTF-8")
-        reply = (len(unicodeString) == 1) \
-                and (unicodeString.isalnum() or unicodeString.isspace()
-                or unicodedata.category(unicodeString)[0] in ('P', 'S'))
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.isPrintableKey: returning: %s" % reply)
-    return reply
-
-def isModifierKey(event_string):
-    """Return an indication of whether this is a modifier key.
-
-    Arguments:
-    - event: the event string
-
-    Returns True if this is a modifier key
-    """
-
-    modifierKeys = [ 'Alt_L', 'Alt_R', 'Control_L', 'Control_R', \
-                     'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R' ]
-
-    if not orca_state.bypassNextCommand:
-        orcaModifiers = settings.orcaModifierKeys
-        try:
-            orcaModifiers = map(lambda x: x.encode('UTF-8'), orcaModifiers)
-        except (UnicodeDecodeError, UnicodeEncodeError):
-            pass
-        modifierKeys.extend(orcaModifiers)
-
-    if isinstance(event_string, unicode):
-        event_string.encode('UTF-8')
-
-    reply = event_string in modifierKeys
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.isModifierKey: returning: %s" % reply)
-    return reply
-
-def isLockingKey(event_string):
-    """Return an indication of whether this is a locking key.
-
-    Arguments:
-    - event: the event string
-
-    Returns True if this is a locking key.
-    """
-
-    lockingKeys = [ "Caps_Lock", "Num_Lock", "Scroll_Lock" ]
-
-    reply = event_string in lockingKeys
-    if not orca_state.bypassNextCommand:
-        reply = reply and not event_string in settings.orcaModifierKeys
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.isLockingKey: returning: %s" % reply)
-    return reply
-
-def isFunctionKey(event_string):
-    """Return an indication of whether this is a function key.
-
-    Arguments:
-    - event: the event string
-
-    Returns True if this is a function key.
-    """
-
-    # [[[TODO:richb - what should be done about the function keys on the left
-    #    side of my Sun keyboard and the other keys (like Scroll Lock), which
-    #    generate "Fn" key events?]]]
-
-    functionKeys = [ "F1", "F2", "F3", "F4", "F5", "F6",
-                     "F7", "F8", "F9", "F10", "F11", "F12" ]
-
-    reply = event_string in functionKeys
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.isFunctionKey: returning: %s" % reply)
-    return reply
-
-def isActionKey(event_string):
-    """Return an indication of whether this is an action key.
-
-    Arguments:
-    - event: the event string
-
-    Returns True if this is an action key.
-    """
-
-    actionKeys = [ "Return", "Escape", "Tab", "BackSpace", "Delete",
-                   "Page_Up", "Page_Down", "Home", "End" ]
-
-    reply = event_string in actionKeys
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.isActionKey: returning: %s" % reply)
-    return reply
-
-def isNavigationKey(event_string):
-    """Return an indication of whether this is a navigation (arrow) key
-    or if the user has the Orca modifier key held done.
-
-    Arguments:
-    - event: the event string
-    - modifiers: key modifiers state
-
-    Returns True if this is a navigation key.
-    """
-
-    navigationKeys = [ "Left", "Right", "Up", "Down" ]
-
-    reply = event_string in navigationKeys
-    if not reply and not orca_state.bypassNextCommand:
-        reply = _orcaModifierPressed
-
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.isNavigationKey: returning: %s" % reply)
-    return reply
-
-def isDiacriticalKey(event_string):
-    """Return an indication of whether this is a non-spacing diacritical key
-
-    Arguments:
-    - event: the event string
-    - modifiers: key modifiers state
-
-    Returns True if this is a non-spacing diacritical key
-    """
-
-    reply = event_string.startswith("dead_")
-
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.isDiacriticalKey: returning: %s" % reply)
-    return reply
-
-class KeyEventType:
-    """Definition of available key event types."""
-
-    # An alphanumeric or punctuation key event.
-    PRINTABLE = 'PRINTABLE'
-
-    # A modifier key event.
-    MODIFIER = 'MODIFIER'
-
-    # A locking key event.
-    LOCKING = 'LOCKING'
-
-    # A locking key lock event.
-    LOCKING_LOCKED = 'LOCKING_LOCKED'
-
-    # A locking key unlock event.
-    LOCKING_UNLOCKED = 'LOCKING_UNLOCKED'
-
-    # A function key event.
-    FUNCTION = 'FUNCTION'
-
-    # An action key event.
-    ACTION = 'ACTION'
-
-    # A navigation key event.
-    NAVIGATION = 'NAVIGATION'
-
-    # A diacritical key event.
-    DIACRITICAL = 'DIACRITICAL'
-
-    def __init__(self):
-        pass
-
 def keyEcho(event):
     """If the keyEcho setting is enabled, check to see what type of key
     event it is and echo it via speech, if the user wants that type of
@@ -979,126 +803,42 @@ def keyEcho(event):
     - event: an AT-SPI DeviceEvent
     """
 
-    # If this keyboard event was for an object like a password text
-    # field, then don't echo it.
-    #
-    try:
-        role = orca_state.locusOfFocus.getRole()
-    except (LookupError, RuntimeError):
-        debug.println(debug.LEVEL_SEVERE,
-                      "orca.keyEcho() - locusOfFocus no longer exists")
-        setLocusOfFocus(None, None, False)
+    if not event.shouldEcho:
         return False
-    except:
-        pass
-    else:
-        if role == pyatspi.ROLE_PASSWORD_TEXT:
-            return False
 
     event_string = event.event_string
+    modifiers = event.modifiers
+    eventType = event.keyType
     debug.println(debug.LEVEL_FINEST,
                   "orca.keyEcho: string to echo: %s" % event_string)
 
-    # If key echo is enabled, then check to see what type of key event
-    # it is and echo it via speech, if the user wants that type of key
-    # echoed.
-    #
-    if settings.enableKeyEcho:
-
-        if isModifierKey(event_string):
-            if not settings.enableModifierKeys:
-                return False
-            eventType = KeyEventType.MODIFIER
-
-        elif isNavigationKey(event_string):
-            if not settings.enableNavigationKeys:
-                return False
-            eventType = KeyEventType.NAVIGATION
-
-        elif isDiacriticalKey(event_string):
-            if not settings.enableDiacriticalKeys:
-                return False
-            eventType = KeyEventType.DIACRITICAL
-
-        elif isPrintableKey(event_string):
-            if not (settings.enablePrintableKeys \
-                    or settings.enableEchoByCharacter):
-                return False
-            eventType = KeyEventType.PRINTABLE
-
-        elif isLockingKey(event_string):
-            if not settings.enableLockingKeys:
-                return False
-            eventType = KeyEventType.LOCKING
-
-            modifiers = event.modifiers
-
-            brailleMessage = None
-            if event_string == "Caps_Lock":
-                if modifiers & (1 << pyatspi.MODIFIER_SHIFTLOCK):
-                    eventType = KeyEventType.LOCKING_UNLOCKED
-                    brailleMessage = keynames.getKeyName(event_string) \
-                                     + " " + _("off")
-                else:
-                    eventType = KeyEventType.LOCKING_LOCKED
-                    brailleMessage = keynames.getKeyName(event_string) \
-                                     + " " + _("on")
-
-            elif event_string == "Num_Lock":
-                if modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
-                    eventType = KeyEventType.LOCKING_UNLOCKED
-                else:
-                    eventType = KeyEventType.LOCKING_LOCKED
-
-            if brailleMessage:
-                braille.displayMessage(brailleMessage,
-                                       flashTime=settings.brailleFlashTime)
-
-        elif isFunctionKey(event_string):
-            if not settings.enableFunctionKeys:
-                return False
-            eventType = KeyEventType.FUNCTION
-
-        elif isActionKey(event_string):
-            if not settings.enableActionKeys:
-                return False
-            eventType = KeyEventType.ACTION
-
+    if event.event_string == "Caps_Lock":
+        if event.getLockingState():
+            brailleMessage = keynames.getKeyName(event_string) + " " + _("off")
         else:
-            debug.println(debug.LEVEL_FINEST,
-                  "orca.keyEcho: event string not handled: %s" % event_string)
-            return False
+            brailleMessage = keynames.getKeyName(event_string) + " " + _("on")
+        braille.displayMessage(brailleMessage,
+                               flashTime=settings.brailleFlashTime)
 
-        # We keep track of the time as means to let others know that
-        # we are probably echoing a key and should not be interrupted.
-        #
-        orca_state.lastKeyEchoTime = time.time()
+    # We keep track of the time as means to let others know that
+    # we are probably echoing a key and should not be interrupted.
+    #
+    orca_state.lastKeyEchoTime = time.time()
 
-        # Before we echo printable keys, let's try to make sure the
-        # character echo isn't going to also echo something.
-        #
-        characterEcho = \
-            eventType == KeyEventType.PRINTABLE \
-            and not _orcaModifierPressed \
-            and orca_state.activeScript \
-            and orca_state.activeScript.utilities.willEchoCharacter(event)
+    # Before we echo printable keys, let's try to make sure the
+    # character echo isn't going to also echo something.
+    #
+    characterEcho = event.isCharacterEchoable() and not _orcaModifierPressed
+    if not characterEcho:
+        debug.println(debug.LEVEL_FINEST,
+                      "orca.keyEcho: speaking: %s" % event_string)
+        speech.speakKeyEvent(event)
+        return True
 
-        # One last check for echoing -- a PRINTABLE key may have squeaked
-        # through due to the enableEchoByCharacter check above.  We only
-        # want to echo PRINTABLE keys if enablePrintableKeys is True.
-        #
-        if not (characterEcho or
-                (eventType == KeyEventType.PRINTABLE \
-                 and not settings.enablePrintableKeys)):
-            debug.println(debug.LEVEL_FINEST,
-                          "orca.keyEcho: speaking: %s" % event_string)
-            speech.speakKeyEvent(event_string, eventType)
-            return True
-        elif characterEcho:
-            debug.println(debug.LEVEL_FINEST,
-                          "orca.keyEcho: letting character echo handle: %s" \
-                          % event_string)
-            return False
+    debug.println(debug.LEVEL_FINEST,
+                  "orca.keyEcho: letting character echo handle: %s" \
+                  % event_string)
+    return False
 
 def _setClickCount(inputEvent):
     """Sets the count of the number of clicks a user has made to one
@@ -1136,8 +876,7 @@ def _processKeyCaptured(event):
     """
 
     if event.type == 0:
-        if isModifierKey(event.event_string) \
-           or isLockingKey(event.event_string):
+        if event.isModifierKey() or event.isLockingKey():
             return True
         else:
             # We want the keyname rather than the printable character.
@@ -1214,37 +953,8 @@ def _processKeyboardEvent(event):
     if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
         braille.killFlash()
 
-    # See if this is one of our special Orca modifier keys.
-    #
-    # Just looking at the keycode should suffice, but there is a
-    # "feature" in the Java Access Bridge where it chooses to emit
-    # Java platform-independent keycodes instead of the keycodes
-    # for the base platform:
-    #
-    # http://bugzilla.gnome.org/show_bug.cgi?id=106004
-    # http://bugzilla.gnome.org/show_bug.cgi?id=318615
-    #
-    # So...we need to workaround this problem.
-    #
-    # If you make the following expression True we will get a positive
-    # match for all keysyms associated with a given keysym specified
-    # as an Orca modifier key.
-    #
-    # For example, assume the Orca modifier is set to \ for some
-    # reason.  The key that has \ on it produces \ without the Shift
-    # key and | with the Shift key.  If the following expression is
-    # True, both the \ and | will be viewed as the Orca modifier.  If
-    # the following expression is False, only the \ will be viewed as
-    # the Orca modifier (i.e., Shift+\ will still function as the |
-    # character).  In general, I think we want to avoid sucking in all
-    # possible keysyms because it can have unexpected results.
-    #
-    if False:
-        allPossibleKeysyms = []
-        for keysym in settings.orcaModifierKeys:
-            allPossibleKeysyms.extend(keybindings.getAllKeysyms(keysym))
-    else:
-        allPossibleKeysyms = settings.orcaModifierKeys
+
+    allPossibleKeysyms = settings.orcaModifierKeys
 
     try:
         allPossibleKeysyms = \
@@ -1291,7 +1001,7 @@ def _processKeyboardEvent(event):
     # store the "click count" for the purpose of supporting keybindings
     # with unique behaviors when double- or triple-clicked.
     #
-    if not isModifierKey(keyboardEvent.event_string):
+    if not keyboardEvent.isModifierKey():
         _setClickCount(keyboardEvent)
         orca_state.lastNonModifierKeyEvent = keyboardEvent
 
@@ -1311,16 +1021,15 @@ def _processKeyboardEvent(event):
                 consumed = notification_messages.listNotificationMessages(
                     keyboardEvent)
             if (not consumed):
-                consumed = _keyBindings.consumeKeyboardEvent( \
-                  None, keyboardEvent)
+                consumed = _keyBindings.consumeKeyboardEvent(
+                    None, keyboardEvent)
             if (not consumed):
                 consumed = _eventManager.processKeyboardEvent(keyboardEvent)
             if (not consumed) and settings.learnModeEnabled:
                 if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
                     clickCount = orca_state.activeScript.getClickCount()
-                    if isPrintableKey(keyboardEvent.event_string) \
-                       and clickCount == 2:
-                        orca_state.activeScript.phoneticSpellCurrentItem(\
+                    if keyboardEvent.isPrintableKey() and clickCount == 2:
+                        orca_state.activeScript.phoneticSpellCurrentItem(
                             keyboardEvent.event_string)
                     else:
                         # Check to see if there are localized words to be
@@ -1347,7 +1056,7 @@ def _processKeyboardEvent(event):
                     _restoreOrcaKeys = False
 
             if not consumed \
-               and not isModifierKey(keyboardEvent.event_string) \
+               and not keyboardEvent.isModifierKey() \
                and keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
                 orca_state.bypassNextCommand = False
     except:
