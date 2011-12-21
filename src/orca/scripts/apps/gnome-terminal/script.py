@@ -75,7 +75,7 @@ class Script(default.Script):
         allowed to happen for this script.
         """
 
-        if orca.isPrintableKey(keyEvent.event_string):
+        if keyEvent.isPrintableKey():
             return False
 
         return True
