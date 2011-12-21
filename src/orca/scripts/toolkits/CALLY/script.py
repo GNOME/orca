@@ -141,10 +141,11 @@ class Script(default.Script):
             if keymap:
                 success, entries = keymap.get_entries_for_keyval(keyval)
                 group = entries[0].group
-                keyval, egroup, level, consumed = \
-                keymap.translate_keyboard_state (keyboardEvent.hw_code,
-                                                 keyboardEvent.modifiers,
-                                                 group)
+                modifiers = Gdk.ModifierType(keyboardEvent.modifiers)
+                success, keyval, egroup, level, consumed = \
+                    keymap.translate_keyboard_state (keyboardEvent.hw_code,
+                                                     modifiers,
+                                                     group)
         except:
             debug.println(debug.LEVEL_FINE,
                           "Could not compute keyval with modifiers")
