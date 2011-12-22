@@ -29,6 +29,7 @@ __license__   = "LGPL"
 
 import os
 
+import debug
 import orca_prefs
 import settings
 
@@ -90,7 +91,11 @@ class OrcaPrefs(orca_prefs.OrcaPrefs):
         """
 
         self._writeKeyBindingsPreamble(prefs)
-        self._iterateKeyBindings(prefs, treeModel)
+        try:
+            self._iterateKeyBindings(prefs, treeModel)
+        except:
+            debug.println(debug.LEVEL_FINEST, "FAILURE: _iterateKeyBindings")
+            debug.printException(debug.LEVEL_FINEST)
         self._writeAppKeyBindingsPostamble(prefs, appName, appScript)
 
     def _writePronunciationsPreamble(self, prefs):
