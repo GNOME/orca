@@ -317,6 +317,9 @@ class KeyboardEvent(InputEvent):
         if not self.isPrintableKey():
             return False
 
+        if settings.learnModeEnabled:
+            return False
+
         script = orca_state.activeScript
         return script and script.utilities.willEchoCharacter(self)
 
@@ -422,22 +425,6 @@ class MouseButtonEvent(InputEvent):
         self.button = event.type[len("mouse:button:"):-1]
         self.time = time.time()
 
-class MouseMotionEvent(InputEvent):
-
-    def __init__(self, event):
-        """[[[TODO: WDW - undefined at the moment.]]]
-        """
-        InputEvent.__init__(self, MOUSE_MOTION_EVENT)
-        self.event = event
-
-class SpeechEvent(InputEvent):
-
-    def __init__(self, event):
-        """[[[TODO: WDW - undefined at the moment.]]]
-        """
-        InputEvent.__init__(self, SPEECH_EVENT)
-        self.event = event
-
 class InputEventHandler:
 
     def __init__(self, function, description, learnModeEnabled=True):
@@ -494,13 +481,3 @@ class InputEventHandler:
                 debug.printException(debug.LEVEL_SEVERE)
 
         return consumed
-
-def keyEventToString(event):
-    return ("KEYEVENT: type=%d\n" % event.type) \
-        + ("          id=%d\n" % event.id) \
-        + ("          hw_code=%d\n" % event.hw_code) \
-        + ("          modifiers=%d\n" % event.modifiers) \
-        + ("          event_string=(%s)\n" % event.event_string) \
-        + ("          is_text=%s\n" % event.is_text) \
-        + ("          timestamp=%d\n" % event.timestamp) \
-        + ("          time=%f" % time.time())

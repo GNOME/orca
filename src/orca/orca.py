@@ -548,7 +548,6 @@ import notification_messages
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
-from input_event import keyEventToString
 
 import gc
 if settings.debugMemoryUsage:
@@ -715,26 +714,6 @@ def cycleDebugLevel(script=None, inputEvent=None):
 
     return True
 
-def exitLearnMode(self, inputEvent=None):
-    """Turns learn mode off.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    # Translators: Orca has a "Learn Mode" that will allow
-    # the user to type any key on the keyboard and hear what
-    # the effects of that key would be.  The effects might
-    # be what Orca would do if it had a handler for the
-    # particular key combination, or they might just be to
-    # echo the name of the key if Orca doesn't have a handler.
-    # Exiting learn mode puts the user back in normal operating
-    # mode.
-    #
-    message = _("Exiting learn mode.")
-    orca_state.activeScript.presentMessage(message)
-    settings.learnModeEnabled = False
-    return True
-
 def exitListShortcutsMode(self, inputEvent=None):
     """Turns list shortcuts mode off.
 
@@ -764,12 +743,6 @@ def exitListShortcutsMode(self, inputEvent=None):
 #                                                                      #
 ########################################################################
 
-# Keybindings that Orca itself cares about.
-#
-_keyBindings = None
-
-# True if the orca modifier key is currently pressed.
-#
 _orcaModifierPressed = False
 
 def keyEcho(event):
@@ -821,36 +794,6 @@ def keyEcho(event):
                   % event_string)
     return False
 
-def _setClickCount(inputEvent):
-    """Sets the count of the number of clicks a user has made to one
-    of the non-modifier keys on the keyboard.  Note that this looks at
-    the event_string (keysym) instead of hw_code (keycode) because
-    the Java platform gives us completely different keycodes for keys.
-
-    Arguments:
-    - inputEvent: the current input event.
-    """
-
-    lastInputEvent = orca_state.lastNonModifierKeyEvent
-
-    if inputEvent.type == pyatspi.KEY_RELEASED_EVENT:
-        pass
-    elif not isinstance(inputEvent, KeyboardEvent):
-        orca_state.clickCount = 0
-    elif not isinstance(lastInputEvent, KeyboardEvent):
-        orca_state.clickCount = 1
-    elif (lastInputEvent.event_string != inputEvent.event_string) or \
-         (lastInputEvent.modifiers != inputEvent.modifiers):
-        orca_state.clickCount = 1
-    elif (inputEvent.time - lastInputEvent.time) < \
-           settings.doubleClickTimeout:
-        # Cap the possible number of clicks at 3.
-        #
-        if orca_state.clickCount < 3:
-            orca_state.clickCount += 1
-    else:
-        orca_state.clickCount = 1
-
 def _processKeyCaptured(event):
     """Called when a new key event arrives and orca_state.capturingKeys=True.
     (used for key bindings redefinition)
@@ -900,150 +843,65 @@ def _processKeyboardEvent(event):
     """
     global _orcaModifierPressed
 
-    # Input methods appear to play games with repeating events
-    # and also making up events with no timestamps.  We try
-    # to handle that here. See bug #589504.
-    #
-    if (event.timestamp == 0) \
-       or (event.timestamp == orca_state.lastInputEventTimestamp \
-           and orca_state.lastInputEvent \
-           and orca_state.lastInputEvent.hw_code == event.hw_code \
-           and orca_state.lastInputEvent.type == event.type):
-        debug.println(debug.LEVEL_FINE, keyEventToString(event))
+    # Weed out duplicate and otherwise bogus events.
+    keyboardEvent = KeyboardEvent(event)
+    debug.println(debug.LEVEL_FINE, keyboardEvent.toString())
+    if keyboardEvent.ignoreDueToTimestamp():
         debug.println(debug.LEVEL_FINE, "IGNORING EVENT DUE TO TIMESTAMP")
         return
 
-    orca_state.lastInputEventTimestamp = event.timestamp
-
-    # Log the keyboard event for future playback, if desired.
-    # Note here that the key event_string being output is
-    # exactly what we received.  The KeyboardEvent object,
-    # however, will translate the event_string for control
-    # characters to their upper case ASCII equivalent.
-    #
-    string = keyEventToString(event)
-    debug.printInputEvent(debug.LEVEL_FINE, string)
-
-    keyboardEvent = KeyboardEvent(event)
-
-    # Log the KeyboardEvent translated from the pyatspi keyboardEvent.
-    #
-    string = keyboardEvent.toString()
-    debug.printInputEvent(debug.LEVEL_FINE, string)
-
-    if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
-        braille.killFlash()
-
-
-    allPossibleKeysyms = settings.orcaModifierKeys
-
-    try:
-        allPossibleKeysyms = \
-            map(lambda x: x.encode('UTF-8'), allPossibleKeysyms)
-    except (UnicodeDecodeError, UnicodeEncodeError):
-        pass
-
-    isOrcaModifier = allPossibleKeysyms.count(keyboardEvent.event_string) > 0
-
-    if event.type == pyatspi.KEY_PRESSED_EVENT:
-        # Key presses always interrupt speech.
-        #
-        speech.stop()
-
-        # We treat the Insert key as a modifier - so just swallow it and
-        # set our internal state.
-        #
-        if isOrcaModifier:
-            _orcaModifierPressed = True
-
-        # If learn mode is enabled, it will echo the keys.
-        #
-        if not settings.learnModeEnabled and \
-           orca_state.activeScript.echoKey(keyboardEvent):
-            try:
-                keyEcho(keyboardEvent)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-
-    elif isOrcaModifier \
-        and (keyboardEvent.type == pyatspi.KEY_RELEASED_EVENT):
-        _orcaModifierPressed = False
-
+    # Figure out what we've got.
+    isOrcaModifier = keyboardEvent.isOrcaModifier()
+    isPressedEvent = keyboardEvent.isPressedKey()
+    if isOrcaModifier:
+        _orcaModifierPressed = isPressedEvent
     if _orcaModifierPressed:
-        keyboardEvent.modifiers = keyboardEvent.modifiers \
-                                  | settings.ORCA_MODIFIER_MASK
+        keyboardEvent.modifiers |= settings.ORCA_MODIFIER_MASK
 
+    # Update our state.
+    orca_state.lastInputEventTimestamp = event.timestamp
     orca_state.lastInputEvent = keyboardEvent
-
-    # If this is a key event for a non-modifier key, save a handle to it.
-    # This is needed to help determine user actions when a multi-key chord
-    # has been pressed, and we might get the key events in different orders.
-    # See comment #15 of bug #435201 for more details.  We also want to
-    # store the "click count" for the purpose of supporting keybindings
-    # with unique behaviors when double- or triple-clicked.
-    #
     if not keyboardEvent.isModifierKey():
-        _setClickCount(keyboardEvent)
+        keyboardEvent.setClickCount()
         orca_state.lastNonModifierKeyEvent = keyboardEvent
 
-    # Orca gets first stab at the event.  Then, the presenter gets
-    # a shot. [[[TODO: WDW - might want to let the presenter try first?
-    # The main reason this is staying as is is that we may not want
-    # scripts to override fundamental Orca key bindings.]]]
-    #
-    consumed = False
-    try:
-        if orca_state.capturingKeys:
-            consumed = _processKeyCaptured(keyboardEvent)
-        else:
-            if settings.listShortcutsModeEnabled:
-                consumed = listShortcuts(keyboardEvent)
-            elif notification_messages.listNotificationMessagesModeEnabled:
-                consumed = notification_messages.listNotificationMessages(
-                    keyboardEvent)
-            if (not consumed):
-                consumed = _keyBindings.consumeKeyboardEvent(
-                    None, keyboardEvent)
-            if (not consumed):
-                consumed = _eventManager.processKeyboardEvent(keyboardEvent)
-            if (not consumed) and settings.learnModeEnabled:
-                if keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
-                    clickCount = orca_state.activeScript.getClickCount()
-                    if keyboardEvent.isPrintableKey() and clickCount == 2:
-                        orca_state.activeScript.phoneticSpellCurrentItem(
-                            keyboardEvent.event_string)
-                    else:
-                        # Check to see if there are localized words to be
-                        # spoken for this key event.
-                        #
-                        braille.displayMessage(keyboardEvent.event_string)
-                        event_string = keyboardEvent.event_string
-                        event_string = keynames.getKeyName(event_string)
-                        speech.speak(event_string)
-                elif (event.type == pyatspi.KEY_RELEASED_EVENT) and \
-                     (keyboardEvent.event_string == "Escape"):
-                    exitLearnMode(keyboardEvent)
+    # Echo it based on what it is and the user's settings.
+    script = orca_state.activeScript
+    if script and isPressedEvent:
+        script.presentationInterrupt()
+        if script.echoKey(keyboardEvent):
+            keyboardEvent.present()
+ 
+    # Special modes.
+    if not isPressedEvent and keyboardEvent.event_string == "Escape":
+        script.exitLearnMode(keyboardEvent)
+    if orca_state.capturingKeys:
+        return _processKeyCaptured(keyboardEvent)
+    if settings.listShortcutsModeEnabled:
+        return listShortcuts(keyboardEvent)
+    if notification_messages.listNotificationMessagesModeEnabled:
+        return notification_messages.listNotificationMessages(keyboardEvent)
+    if settings.learnModeEnabled:
+        if keyboardEvent.isPrintableKey() and not _orcaModifierPressed:
+            return True
 
-                consumed = True
+    # See if the event manager wants it (i.e. it is bound to a command.
+    if _eventManager.processKeyboardEvent(keyboardEvent):
+        return True
 
-            global _restoreOrcaKeys
-            if not consumed \
-               and keyboardEvent.type == pyatspi.KEY_RELEASED_EVENT:
-                if isOrcaModifier and orca_state.bypassNextCommand:
-                    _restoreXmodmap()
-                    _restoreOrcaKeys = True
-                elif _restoreOrcaKeys and not orca_state.bypassNextCommand:
-                    _createOrcaXmodmap()
-                    _restoreOrcaKeys = False
-
-            if not consumed \
-               and not keyboardEvent.isModifierKey() \
-               and keyboardEvent.type == pyatspi.KEY_PRESSED_EVENT:
-                orca_state.bypassNextCommand = False
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-
-    return consumed or isOrcaModifier
+    # Do any needed xmodmap crap.
+    global _restoreOrcaKeys
+    if not isPressedEvent:
+        if isOrcaModifier and orca_state.bypassNextCommand:
+            _restoreXmodmap()
+            _restoreOrcaKeys = True
+        elif _restoreOrcaKeys and not orca_state.bypassNextCommand:
+            _createOrcaXmodmap()
+            _restoreOrcaKeys = False
+    elif not keyboardEvent.isModifierKey():
+        orca_state.bypassNextCommand = False
+ 
+    return isOrcaModifier
 
 ########################################################################
 #                                                                      #
@@ -1669,7 +1527,6 @@ def init(registry):
     """
 
     global _initialized
-    global _keyBindings
 
     if _initialized \
        and a11yAppSettings.get_boolean('screen-reader-enabled'):
@@ -1680,12 +1537,6 @@ def init(registry):
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
-
-    # Note that we have moved the Orca specific keybindings to the default
-    # script, so _keyBindings is currently empty. The logic is retained
-    # here, just in case we wish to reinstate them in the future.
-    #
-    _keyBindings = keybindings.KeyBindings()
 
     loadUserSettings()
     _eventManager.registerKeystrokeListener(_processKeyboardEvent)

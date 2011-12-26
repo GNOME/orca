@@ -1537,6 +1537,31 @@ class Script(script.Script):
         _settingsManager.setSetting('learnModeEnabled', True)
         return True
 
+    def exitLearnMode(self, inputEvent=None):
+        """Turns learn mode off.
+
+        Returns True to indicate the input event has been consumed.
+        """
+
+        if not _settingsManager.getSetting('learnModeEnabled'):
+            return False
+
+        if isinstance(inputEvent, input_event.KeyboardEvent) \
+           and not inputEvent.event_string == 'Escape':
+            return False
+
+        # Translators: Orca has a "Learn Mode" that will allow
+        # the user to type any key on the keyboard and hear what
+        # the effects of that key would be.  The effects might
+        # be what Orca would do if it had a handler for the
+        # particular key combination, or they might just be to
+        # echo the name of the key if Orca doesn't have a handler.
+        # Exiting learn mode puts the user back in normal operating
+        # mode.
+        #
+        self.presentMessage(_("Exiting learn mode."))
+        settings.learnModeEnabled = False
+
     def enterListShortcutsMode(self, inputEvent):
         """Turns list shortcuts mode on.  The user must press the escape key to
         exit list shortcuts mode. Key bindings for learn mode & list shortcuts
@@ -5371,12 +5396,10 @@ class Script(script.Script):
         if we fully present the event; False otherwise."""
 
         braille.displayKeyEvent(event)
-
         orcaModifierPressed = event.isOrcaModifier() and event.isPressedKey()
         if event.isCharacterEchoable() and not orcaModifierPressed:
             return False
-
-        if orca_state.learnModeEnabled:
+        if settings.learnModeEnabled:
             if event.isPrintableKey() and event.getClickCount() == 2:
                 self.phoneticSpellCurrentItem(event.event_string)
                 return True
