@@ -31,7 +31,6 @@ from gi.repository import Gdk
 import pyatspi
 import debug
 import settings
-import orca_state
 
 from orca_i18n import _           # for gettext support
 
@@ -191,6 +190,24 @@ def getModifierNames(mods):
         text += _("Shift") + "+"
     return text
 
+def getClickCountString(count):
+    """Returns a human-consumable string representing the number of
+    clicks, such as 'double click' and 'triple click'."""
+
+    if count == 2:
+        # Translators: Orca keybindings support double
+        # and triple "clicks" or key presses, similar to
+        # using a mouse.
+        #
+        return _("double click")
+    if count == 3:
+        # Translators: Orca keybindings support double
+        # and triple "clicks" or key presses, similar to
+        # using a mouse.
+        #
+        return _("triple click")
+    return ""
+
 class KeyBinding:
     """A single key binding, consisting of a keycode, a modifier mask,
     and the InputEventHandler.
@@ -236,6 +253,26 @@ class KeyBinding:
             return result == self.modifiers
         else:
             return False
+
+    def description(self):
+        """Returns the description of this binding's functionality."""
+
+        try:
+            return self.handler.description
+        except:
+            return ''
+
+    def asString(self, convertKeysym=False):
+        """Returns a more human-consumable string representing this binding."""
+
+        mods = getModifierNames(self.modifiers)
+        clickCount = getClickCountString(self.click_count)
+        keysym = self.keysymstring
+        if convertKeysym:
+            keysym = keysym.replace('KP_', _('keypad ')).title()
+        string = '%s%s %s' % (mods, keysym, clickCount)
+
+        return string.strip()
 
 class KeyBindings:
     """Structure that maintains a set of KeyBinding instances.
@@ -331,18 +368,35 @@ class KeyBindings:
 
         return hasIt
 
+    def getBoundBindings(self, uniqueOnly=False):
+        """Returns the KeyBinding instances which are bound to a keystroke.
+
+        Arguments:
+        - uniqueOnly: Should alternative bindings for the same handler be
+          filtered out (default: False)
+        """
+
+        bound = filter(lambda kb: kb.keysymstring, self.keyBindings)
+        if uniqueOnly:
+            handlers = [kb.handler.description for kb in bound]
+            bound = [bound[i] for i in map(handlers.index, set(handlers))]
+
+        return bound
+
+    def getBindingsForHandler(self, handler):
+        """Returns the KeyBinding instances associated with handler."""
+
+        return filter(lambda kb: kb.handler == handler, self.keyBindings)
+
     def getInputHandler(self, keyboardEvent):
         """Returns the input handler of the key binding that matches the
         given keycode and modifiers, or None if no match exists.
         """
 
-        if not orca_state.activeScript:
-            return None
-
         candidates = []
-        clickCount = orca_state.activeScript.getClickCount()
+        clickCount = keyboardEvent.getClickCount()
         for keyBinding in self.keyBindings:
-            if keyBinding.matches(keyboardEvent.hw_code, \
+            if keyBinding.matches(keyboardEvent.hw_code,
                                   keyboardEvent.modifiers):
                 if keyBinding.modifier_mask == keyboardEvent.modifiers and \
                    keyBinding.click_count == clickCount:

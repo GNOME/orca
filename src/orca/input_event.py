@@ -18,17 +18,13 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Provides support for handling input events.  This provides several classes
-to define input events (InputEvent, KeyboardEvent, BrailleEvent,
-MouseButtonEvent, MouseMotionEvent, and SpeechEvent), and also provides a
-InputEventHandler class.  It is intended that instances of InputEventHandler
-will be used which should be used to handle all input events."""
+"""Provides support for handling input events."""
 
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
-                "Copyright (c) 2010-2011 Igalia, S.L."
+                "Copyright (c) 2011 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -36,8 +32,10 @@ import time
 import unicodedata
 
 import debug
+import keynames
 import orca_state
 import settings
+from orca_i18n import C_
 
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
@@ -51,11 +49,52 @@ class InputEvent:
         """Creates a new input event of the given type.
 
         Arguments:
-        - eventType: the input event type (one of KEYBOARD_EVENT, BRAILLE_EVENT,
-          MOUSE_BUTTON_EVENT, MOUSE_MOTION_EVENT, SPEECH_EVENT).
+        - eventType: one of KEYBOARD_EVENT, BRAILLE_EVENT, MOUSE_BUTTON_EVENT
         """
 
         self.type = eventType
+
+    def getClickCount(self):
+        """Return the count of the number of clicks a user has made."""
+
+        # TODO - JD: I relocated this out of script.py, because it seems
+        # to belong there even less than here. Need to revisit how this
+        # functionality is used and where.
+        return orca_state.clickCount
+
+    def setClickCount(self):
+        """Sets the count of the number of clicks a user has made to one
+        of the non-modifier keys on the keyboard.  Note that this looks at
+        the event_string (keysym) instead of hw_code (keycode) because
+        the Java platform gives us completely different keycodes for keys.
+
+        Arguments:
+        - inputEvent: the current input event.
+        """
+
+        # TODO - JD: This setter for the getter I found in script.py was
+        # in orca.py. :-/ Again, this needs sorting out. But for now it
+        # is less out of place here.
+
+        lastInputEvent = orca_state.lastNonModifierKeyEvent
+        if self.type == pyatspi.KEY_RELEASED_EVENT:
+            return
+
+        if not isinstance(self, KeyboardEvent):
+            orca_state.clickCount = 0
+            return
+
+        if not isinstance(lastInputEvent, KeyboardEvent):
+            orca_state.clickCount = 1
+            return
+
+        if self.time - lastInputEvent.time < settings.doubleClickTimeout:
+            # Cap the possible number of clicks at 3.
+            if orca_state.clickCount < 3:
+                orca_state.clickCount += 1
+                return
+
+        orca_state.clickCount = 1
 
 class KeyboardEvent(InputEvent):
 
@@ -222,22 +261,30 @@ class KeyboardEvent(InputEvent):
         if self.keyType:
             return self.keyType == KeyboardEvent.TYPE_MODIFIER
 
-        modifierKeys = ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
-                        'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R']
+        if self.isOrcaModifier():
+            return True
 
-        if not orca_state.bypassNextCommand:
-            orcaMods = settings.orcaModifierKeys
-            try:
-                orcaMods = map(lambda x: x.encode('UTF-8'), orcaMods)
-            except (UnicodeDecodeError, UnicodeEncodeError):
-                pass
-            modifierKeys.extend(orcaMods)
+        return self.event_string in \
+            ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
+             'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R']
+
+    def isOrcaModifier(self):
+        """Return True if this is the Orca modifier key."""
+
+        if orca_state.bypassNextCommand:
+            return False
+
+        orcaMods = settings.orcaModifierKeys
+        try:
+            orcaMods = map(lambda x: x.encode('UTF-8'), orcaMods)
+        except (UnicodeDecodeError, UnicodeEncodeError):
+            pass
 
         string = self.event_string
         if isinstance(string, unicode):
             string = string.encode('UTF-8')
 
-        return string in modifierKeys
+        return string in orcaMods
 
     def isPrintableKey(self):
         """Return True if this is a printable key."""
@@ -256,6 +303,11 @@ class KeyboardEvent(InputEvent):
             return True
 
         return unicodedata.category(unicodeString)[0] in ('P', 'S')
+
+    def isPressedKey(self):
+        """Returns True if the key is pressed"""
+
+        return self.type == pyatspi.KEY_PRESSED_EVENT
 
     def isCharacterEchoable(self):
         """Returns True if the script will echo this event as part of
@@ -281,6 +333,71 @@ class KeyboardEvent(InputEvent):
             return None
 
         return not self.modifiers & (1 << mod)
+
+    def getLockingStateString(self):
+        """Returns the string which reflects the locking state we wish to
+        include when presenting a locking key."""
+
+        locked = self.getLockingState()
+        if locked == None:
+            return ''
+
+        if not locked:
+            # Translators: This string is used to present the state of a
+            # locking key, such as Caps Lock. If Caps Lock is "off", then
+            # letters typed will appear in lowercase; if Caps Lock is "on",
+            # they will instead appear in uppercase. This string is also
+            # applied to Num Lock and potentially will be applied to similar
+            # keys in the future.
+            return C_("locking key state", "off")
+
+        # Translators: This string is used to present the state of a
+        # locking key, such as Caps Lock. If Caps Lock is "off", then
+        # letters typed will appear in lowercase; if Caps Lock is "on",
+        # they will instead appear in uppercase. This string is also
+        # applied to Num Lock and potentially will be applied to similar
+        # keys in the future.
+        return C_("locking key state", "on")
+
+    def getKeyName(self):
+        """Returns the string to be used for presenting the key to the user."""
+
+        return keynames.getKeyName(self.event_string)
+
+    def ignoreDueToTimestamp(self):
+        """Returns True if the event should be ignored due to its timestamp,
+        which might be completely absent or suggest that this input event is
+        a duplicate."""
+
+        if not self.timestamp:
+            return True
+        if self.timestamp != orca_state.lastInputEventTimestamp:
+            return False
+        if not orca_state.lastInputEvent:
+            return False
+        if self.hw_code == orca_state.lastInputEvent.hw_code \
+           and self.type == orca_state.lastInputEvent.type:
+            return True
+
+        return False
+
+    def present(self):
+        """Presents the event via the appropriate medium/media. Returns True
+        if we presented the event. False if there was some reason the event
+        was not worthy of presentation."""
+
+        if not self.shouldEcho:
+            return False
+
+        orca_state.lastKeyEchoTime = time.time()
+        debug.println(debug.LEVEL_FINEST,
+                      "KeyboardEvent.present: %s" % self.event_string)
+
+        script = orca_state.activeScript
+        if script:
+            return script.presentKeyboardEvent(self)
+
+        return False
 
 class BrailleEvent(InputEvent):
 

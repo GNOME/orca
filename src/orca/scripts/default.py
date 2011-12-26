@@ -5359,6 +5359,31 @@ class Script(script.Script):
     #                                                                          #
     ############################################################################
 
+    def presentationInterrupt(self):
+        """Convenience method to interrupt presentation of whatever is being
+        presented at the moment."""
+
+        speech.stop()
+        braille.killFlash()
+
+    def presentKeyboardEvent(self, event):
+        """Convenience method to present the KeyboardEvent event. Returns True
+        if we fully present the event; False otherwise."""
+
+        braille.displayKeyEvent(event)
+
+        orcaModifierPressed = event.isOrcaModifier() and event.isPressedKey()
+        if event.isCharacterEchoable() and not orcaModifierPressed:
+            return False
+
+        if orca_state.learnModeEnabled:
+            if event.isPrintableKey() and event.getClickCount() == 2:
+                self.phoneticSpellCurrentItem(event.event_string)
+                return True
+
+        speech.speakKeyEvent(event)
+        return True
+
     def presentMessage(self, fullMessage, briefMessage=None, voice=None):
         """Convenience method to speak a message and 'flash' it in braille.
 

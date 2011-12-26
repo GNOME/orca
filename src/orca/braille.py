@@ -1569,6 +1569,16 @@ def displayMessage(message, cursor=-1, flashTime=0):
     setFocus(region)
     refresh(True, stopFlash=False)
 
+def displayKeyEvent(event):
+    """Displays a KeyboardEvent. Typically reserved for locking keys like
+    Caps Lock and Num Lock."""
+
+    lockingStateString = event.getLockingStateString()
+    if lockingStateString:
+        keyname = event.getKeyName()
+        msg = "%s %s" % (keyname, lockingStateString)
+        displayMessage(msg, flashTime=settings.brailleFlashTime)
+
 def panLeft(panAmount=0):
     """Pans the display to the left, limiting the pan to the beginning
     of the line being displayed.
