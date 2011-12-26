@@ -35,16 +35,17 @@ except:
                   "Python module wnck not found, mouse review not available.")
     _mouseReviewCapable = False
 
+import pyatspi
 from gi.repository import Gdk
 from gi.repository import GObject
 
 import orca
-import pyatspi
 import speech
 import braille
 import settings
 
 _scriptManager = getattr(orca, '_scriptManager')
+_eventManager = getattr(orca, '_eventManager')
 
 class BoundingBox:
     """A bounding box, currently it is used to test if a given point is
@@ -166,11 +167,11 @@ class MouseReviewer:
         if on is None:
             on = not self.active
         if on and not self.active:
-            pyatspi.Registry.registerEventListener(self._onMouseMoved,
-                                                   "mouse:abs")
+            _eventManager.registerModuleListeners(
+                {"mouse:abs":self._onMouseMoved})
         elif not on and self.active:
-            pyatspi.Registry.deregisterEventListener(self._onMouseMoved,
-                                                     "mouse:abs")
+            _eventManager.deregisterModuleListeners(
+                {"mouse:abs":self._onMouseMoved})
         self.active = on
 
     def _onMouseMoved(self, event):

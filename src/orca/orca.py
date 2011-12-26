@@ -548,7 +548,6 @@ import notification_messages
 
 from input_event import BrailleEvent
 from input_event import KeyboardEvent
-from input_event import MouseButtonEvent
 from input_event import keyEventToString
 
 import gc
@@ -682,24 +681,6 @@ def _onChildrenChanged(e):
             debug.printException(debug.LEVEL_FINEST)
             shutdown()
             return
-
-def _onMouseButton(e):
-    """Tracks mouse button events, stopping any speech in progress.
-
-    Arguments:
-    - e: at-spi event from the at-api registry
-    """
-
-    mouse_event = MouseButtonEvent(e)
-    orca_state.lastInputEvent = mouse_event
-
-    # A mouse button event looks like: mouse:button:1p, where the
-    # number is the button number and the 'p' is either 'p' or 'r',
-    # meaning pressed or released.  We only want to stop speech on
-    # button presses.
-    #
-    if mouse_event.pressed:
-        speech.stop()
 
 ########################################################################
 #                                                                      #
@@ -1706,28 +1687,8 @@ def init(registry):
     #
     _keyBindings = keybindings.KeyBindings()
 
-    # Create and load an app's script when it is added to the desktop
-    #
-    registry.registerEventListener(_onChildrenChanged,
-                                   "object:children-changed")
-
-    # We also want to stop speech when a mouse button is pressed.
-    #
-    registry.registerEventListener(_onMouseButton,
-                                   "mouse:button")
-
     loadUserSettings()
-
-    masks = []
-    mask = 0
-    # Cover all masks in 8 bits.
-    while mask <= 255:
-        masks.append(mask)
-        mask += 1
-    pyatspi.Registry.registerKeystrokeListener(
-        _processKeyboardEvent,
-        mask=masks,
-        kind=(pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT))
+    _eventManager.registerKeystrokeListener(_processKeyboardEvent)
 
     if settings.timeoutCallback and (settings.timeoutTime > 0):
         signal.alarm(0)
@@ -1796,13 +1757,6 @@ def shutdown(script=None, inputEvent=None):
     # Translators: this is what Orca speaks and brailles when it quits.
     #
     orca_state.activeScript.presentMessage(_("Goodbye."))
-
-    # Deregister our event listeners
-    #
-    pyatspi.Registry.deregisterEventListener(_onChildrenChanged,
-                                             "object:children-changed")
-    pyatspi.Registry.deregisterEventListener(_onMouseButton,
-                                             "mouse:button")
 
     _eventManager.deactivate()
     _scriptManager.deactivate()

@@ -3119,30 +3119,36 @@ class Script(script.Script):
         - event: the Event
         """
 
+        mouseEvent = input_event.MouseButtonEvent(event)
+        orca_state.lastInputEvent = mouseEvent
+
+        if mouseEvent.pressed:
+            speech.stop()
+            return
+
         # If we've received a mouse button released event, then check if
         # there are and text selections for the locus of focus and speak
         # them.
         #
-        state = event.type[-1]
-        if state == "r":
-            obj = orca_state.locusOfFocus
-            try:
-                text = obj.queryText()
-            except:
-                pass
-            else:
-                [textContents, startOffset, endOffset] = \
-                    self.utilities.allSelectedText(obj)
-                if textContents:
-                    utterances = []
-                    utterances.append(textContents)
+        obj = orca_state.locusOfFocus
+        try:
+            text = obj.queryText()
+        except:
+            return
 
-                    # Translators: when the user selects (highlights) text in
-                    # a document, Orca lets them know this.
-                    #
-                    utterances.append(C_("text", "selected"))
-                    speech.speak(utterances)
-                self.updateBraille(orca_state.locusOfFocus)
+        self.updateBraille(orca_state.locusOfFocus)
+        textContents = self.utilities.allSelectedText(obj)[0]
+        if not textContents:
+            return
+
+        utterances = []
+        utterances.append(textContents)
+
+        # Translators: when the user selects (highlights) text in
+        # a document, Orca lets them know this.
+        #
+        utterances.append(C_("text", "selected"))
+        speech.speak(utterances)
 
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
@@ -3506,10 +3512,8 @@ class Script(script.Script):
         #
         string = event.any_data
         speakThis = False
-        if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent) \
-           and orca_state.lastInputEvent.button == "2":
-            speakThis = True
-
+        if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
+            speakThis = orca_state.lastInputEvent.button == "2"
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             wasCommand = mods & settings.COMMAND_MODIFIER_MASK

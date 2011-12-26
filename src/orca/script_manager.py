@@ -199,7 +199,7 @@ class ScriptManager:
 
         import scripts.default as default
         script = default.Script(app)
-        _eventManager.registerListeners(script)
+        _eventManager.registerScriptListeners(script)
 
         if not app:
             self._defaultScript = script
@@ -226,7 +226,7 @@ class ScriptManager:
             if not toolkitScript:
                 toolkitScript = self._createScript(app, obj)
                 toolkitScripts[objToolkit] = toolkitScript
-                _eventManager.registerListeners(toolkitScript)
+                _eventManager.registerScriptListeners(toolkitScript)
             self.toolkitScripts[app] = toolkitScripts
 
         if not app:
@@ -236,7 +236,7 @@ class ScriptManager:
         else:
             appScript = self._createScript(app, None)
             self.appScripts[app] = appScript
-            _eventManager.registerListeners(appScript)
+            _eventManager.registerScriptListeners(appScript)
 
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.
@@ -285,7 +285,7 @@ class ScriptManager:
         appList = filter(lambda a: a!= None and a not in desktop, appList)
         for app in appList:
             appScript = self.appScripts.pop(app)
-            _eventManager.deregisterListeners(appScript)
+            _eventManager.deregisterScriptListeners(appScript)
             del appScript
 
             try:
@@ -294,7 +294,7 @@ class ScriptManager:
                 pass
             else:
                 for toolkitScript in toolkitScripts.values():
-                    _eventManager.deregisterListeners(toolkitScript)
+                    _eventManager.deregisterScriptListeners(toolkitScript)
                     del toolkitScript
 
             del app

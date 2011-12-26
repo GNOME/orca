@@ -46,7 +46,7 @@ class EventManager:
 
     def __init__(self):
 
-        self._listenerCounts = {}
+        self._scriptListenerCounts = {}
         self.registry = pyatspi.Registry
         self._enqueueCount = 0
         self._dequeueCount = 0
@@ -67,7 +67,8 @@ class EventManager:
 
         self._registerListener("window:activate")
         self._registerListener("window:deactivate")
-        self._registerListener("object:children-changed:remove")
+        self._registerListener("object:children-changed")
+        self._registerListener("mouse:button")
 
         win = orca_state.activeScript.utilities.activeWindow()
         if win:
@@ -96,9 +97,9 @@ class EventManager:
     def deactivate(self):
         """Called when this event manager is deactivated."""
 
-        for eventType in self._listenerCounts.keys():
+        for eventType in self._scriptListenerCounts.keys():
             self.registry.deregisterEventListener(self._enqueue, eventType)
-        self._listenerCounts = {}
+        self._scriptListenerCounts = {}
 
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
@@ -297,11 +298,11 @@ class EventManager:
         - eventType: the event type.
         """
 
-        if eventType in self._listenerCounts:
-            self._listenerCounts[eventType] += 1
+        if eventType in self._scriptListenerCounts:
+            self._scriptListenerCounts[eventType] += 1
         else:
             self.registry.registerEventListener(self._enqueue, eventType)
-            self._listenerCounts[eventType] = 1
+            self._scriptListenerCounts[eventType] = 1
 
     def _deregisterListener(self, eventType):
         """Tells this module to stop listening for the given event type.
@@ -310,17 +311,17 @@ class EventManager:
         - eventType: the event type.
         """
 
-        if not eventType in self._listenerCounts:
+        if not eventType in self._scriptListenerCounts:
             return
 
-        self._listenerCounts[eventType] -= 1
-        if self._listenerCounts[eventType] == 0:
+        self._scriptListenerCounts[eventType] -= 1
+        if self._scriptListenerCounts[eventType] == 0:
             self.registry.deregisterEventListener(self._enqueue, eventType)
-            del self._listenerCounts[eventType]
+            del self._scriptListenerCounts[eventType]
 
-    def registerListeners(self, script):
-        """Tells the FocusTrackingPresenter to listen for all
-        the event types of interest to the script.
+    def registerScriptListeners(self, script):
+        """Tells the event manager to start listening for all the event types
+        of interest to the script.
 
         Arguments:
         - script: the script.
@@ -329,9 +330,9 @@ class EventManager:
         for eventType in script.listeners.keys():
             self._registerListener(eventType)
 
-    def deregisterListeners(self, script):
-        """Tells the FocusTrackingPresenter to stop listening for all the
-        event types of interest to the script.
+    def deregisterScriptListeners(self, script):
+        """Tells the event manager to stop listening for all the event types
+        of interest to the script.
 
         Arguments:
         - script: the script.
@@ -339,6 +340,41 @@ class EventManager:
 
         for eventType in script.listeners.keys():
             self._deregisterListener(eventType)
+
+    def registerModuleListeners(self, listeners):
+        """Register the listeners on behalf of the caller."""
+
+        for eventType, function in listeners.items():
+            self.registry.registerEventListener(function, eventType)
+
+    def deregisterModuleListeners(self, listeners):
+        """Deegister the listeners on behalf of the caller."""
+
+        for eventType, function in listeners.items():
+            self.registry.deregisterEventListener(function, eventType)
+
+    def registerKeystrokeListener(self, function, mask=None, kind=None):
+        """Register the keystroke listener on behalf of the caller."""
+
+        if mask == None:
+            mask = range(256)
+
+        if kind == None:
+            kind = (pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT)
+
+        self.registry.registerKeystrokeListener(function, mask=mask, kind=kind)
+
+    def deregisterKeystrokeListener(self, function, mask=None, kind=None):
+        """Deregister the keystroke listener on behalf of the caller."""
+
+        if mask == None:
+            mask = range(256)
+
+        if kind == None:
+            kind = (pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT)
+
+        self.registry.deregisterKeystrokeListener(
+            function, mask=mask, kind=kind)
 
     def _processInputEvent(self, event):
         """Processes the given input event based on the keybinding from the
