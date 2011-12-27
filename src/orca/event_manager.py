@@ -409,6 +409,9 @@ class EventManager:
         of debugging).
         """
 
+        if not event.source:
+            return False, "event.source? What event.source??"
+
         if not script:
             script = self._getScriptForEvent(event)
 
