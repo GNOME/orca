@@ -1823,8 +1823,8 @@ def main():
     script = orca_state.activeScript
     if script:
         window = script.utilities.activeWindow()
-        if window:
-            setLocusOfFocus(None, window, force=True)
+        if window and not orca_state.locusOfFocus:
+            setLocusOfFocus(None, window)
 
     # Check to see if the user wants the configuration GUI. It's
     # done here so that the user's existing preferences can be used
