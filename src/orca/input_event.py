@@ -40,8 +40,6 @@ from orca_i18n import C_
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"
 MOUSE_BUTTON_EVENT = "mouse:button"
-MOUSE_MOTION_EVENT = "mouse:motion"
-SPEECH_EVENT       = "speech"
 
 class InputEvent:
 

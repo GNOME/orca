@@ -119,14 +119,11 @@ class Script(default.Script):
                 _('Read the latest n messages in the incoming messages text '
                   'area.'))
 
-    def getKeyBindings(self):
+    def getAppKeyBindings(self):
+        """Returns the application-specific keybindings for this script."""
 
-        debug.println(self.debugLevel, "gnome-mud.getKeyBindings.")
+        keyBindings = keybindings.KeyBindings()
 
-        keyBindings = default.Script.getKeyBindings(self)
-
-        # Here we define keybindings Orca+F1 to Orca+F9 for reading a previous
-        # message.
         messageKeys = [ "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"]
         for messagekey in messageKeys:
             keyBindings.add(

@@ -66,20 +66,10 @@ class Script(default.Script):
         default.Script.setupInputEventHandlers(self)
         self.inputEventHandlers.update(self.chat.inputEventHandlers)
 
-    def getKeyBindings(self):
-        """Defines the key bindings for this script. Here we need to add
-        the keybindings associated with chat functionality.
+    def getAppKeyBindings(self):
+        """Returns the application-specific keybindings for this script."""
 
-        Returns an instance of keybindings.KeyBindings.
-        """
-
-        keyBindings = default.Script.getKeyBindings(self)
-
-        bindings = self.chat.keyBindings
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
-        return keyBindings
+        return self.chat.keyBindings
 
     def getAppPreferencesGUI(self):
         """Return a GtkGrid containing the application unique configuration

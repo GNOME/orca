@@ -212,8 +212,7 @@ class Script(default.Script):
 
             # If the last input event was a keyboard event, check to see if
             # the text for this event matches what the user typed. If it does,
-            # then call orca.keyEcho() to echo it (based on the user's key
-            # echo preferences).
+            # then echo it (based on the user's key echo preferences).
             #
             # Note that the text widgets sometimes compress their events,
             # thus we might get a longer string from a single text inserted
@@ -246,7 +245,7 @@ class Script(default.Script):
             speakThis = True
 
         if matchFound:
-            echoed = orca.keyEcho(orca_state.lastInputEvent)
+            echoed = orca_state.lastInputEvent.present()
         else:
             echoed = False
 

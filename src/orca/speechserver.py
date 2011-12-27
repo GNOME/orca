@@ -31,7 +31,6 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import logging
-import keynames
 import settings
 import orca_state
 
@@ -40,7 +39,6 @@ log = logging.getLogger("speech")
 import debug
 
 from acss import ACSS
-from orca_i18n import _           # for gettext support
 
 class VoiceFamily(dict):
     """Holds the family description for a voice."""
@@ -195,25 +193,13 @@ class SpeechServer(object):
         else:
             voice = ACSS(settings.voices[settings.DEFAULT_VOICE])
 
-        # Check to see if there are localized words to be spoken for
-        # this key event.
-        #
-        event_string = keynames.getKeyName(event.event_string)
+        event_string = event.getKeyName()
         if orca_state.activeScript and orca_state.usePronunciationDictionary:
             event_string = orca_state.activeScript.\
                 utilities.adjustForPronunciation(event_string)
 
-        lockingState = event.getLockingState()
-        if lockingState == True:
-            # Translators: this represents the state of a locking modifier
-            # key (e.g., Caps Lock)
-            #
-            event_string += " " + _("on")
-        elif lockingState == False:
-            # Translators: this represents the state of a locking modifier
-            # key (e.g., Caps Lock)
-            #
-            event_string += " " + _("off")
+        lockingStateString = event.getLockingStateString()
+        event_string = "%s %s" % (event_string, lockingStateString)
 
         logLine = "SPEECH OUTPUT: '" + event_string +"'"
         debug.println(debug.LEVEL_INFO, logLine)

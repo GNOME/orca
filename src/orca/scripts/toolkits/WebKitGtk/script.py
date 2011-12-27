@@ -107,19 +107,10 @@ class Script(default.Script):
                 #
                 _("Speaks entire document."))
 
-    def getKeyBindings(self):
-        """Defines the key bindings for this script. Setup the default
-        key bindings, then add one in for reading the input line.
+    def getToolkitKeyBindings(self):
+        """Returns the toolkit-specific keybindings for this script."""
 
-        Returns an instance of keybindings.KeyBindings.
-        """
-
-        keyBindings = default.Script.getKeyBindings(self)
-        bindings = self.structuralNavigation.keyBindings
-        for keyBinding in bindings.keyBindings:
-            keyBindings.add(keyBinding)
-
-        return keyBindings
+        return self.structuralNavigation.keyBindings
 
     def getAppPreferencesGUI(self):
         """Return a GtkGrid containing the application unique configuration

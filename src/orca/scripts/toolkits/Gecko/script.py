@@ -631,15 +631,11 @@ class Script(default.Script):
         keyBindings.load(keymaps.arrowKeymap, self.inputEventHandlers)
         return keyBindings
 
-    def getKeyBindings(self):
-        """Defines the key bindings for this script.
+    def getToolkitKeyBindings(self):
+        """Returns the toolkit-specific keybindings for this script."""
 
-        Returns an instance of keybindings.KeyBindings.
-        """
+        keyBindings = keybindings.KeyBindings()
 
-        keyBindings = default.Script.getKeyBindings(self)
-
-        # load common keymap
         keyBindings.load(keymaps.commonKeymap, self.inputEventHandlers)
 
         if _settingsManager.getSetting('keyboardLayout') == \

@@ -139,6 +139,16 @@ class Script:
         """
         return keybindings.KeyBindings()
 
+    def getToolkitKeyBindings(self):
+        """Returns the toolkit-specific keybindings for this script."""
+
+        return keybindings.KeyBindings()
+
+    def getAppKeyBindings(self):
+        """Returns the application-specific keybindings for this script."""
+
+        return keybindings.KeyBindings()
+
     def getKeyBindingsForInputHandler(self, inputEventHandler):
         """ Returns a KeyBindings object with the list of KeyBindings that
         matche the passed inputEventHandler as argument (at least the
@@ -320,13 +330,6 @@ class Script:
         - appState: an object obtained from getAppState
         """
         return
-
-    def getClickCount(self):
-        """Return the count of the number of clicks a user has made to one
-        of the keys on the keyboard.
-        """
-
-        return orca_state.clickCount
 
     def getSettings(self):
         """Returns the settings associated with this script, regardless of

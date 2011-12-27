@@ -34,14 +34,12 @@ import time
 
 import chnames
 import debug
-import keynames
 import orca_state
 import settings
 import sound
 import speech_generator
 
 from acss import ACSS
-from orca_i18n import _           # for gettext support
 
 # The speech server to use for all speech operations.
 #
@@ -281,26 +279,15 @@ def speakKeyEvent(event):
 
     if _speechserver:
         _speechserver.speakKeyEvent(event)
-    else:
-        # Check to see if there are localized words to be spoken for
-        # this key event.
-        #
-        event_string = keynames.getKeyName(event.event_string)
-        lockingState = event.getLockingState()
-        if lockingState == True:
-            # Translators: this represents the state of a locking modifier
-            # key (e.g., Caps Lock)
-            #
-            event_string += " " + _("on")
-        elif lockingState == False:
-            # Translators: this represents the state of a locking modifier
-            # key (e.g., Caps Lock)
-            #
-            event_string += " " + _("off")
+        return
 
-        logLine = "SPEECH OUTPUT: '" + event_string +"'"
-        debug.println(debug.LEVEL_INFO, logLine)
-        log.info(logLine)
+    # This should only happen during regression tests.
+    keyname = event.getKeyName()
+    lockingStateString = event.getLockingStateString()
+    msg = "%s %s" % (keyname, lockingStateString)
+    logLine = "SPEECH OUTPUT: '%s'" % msg
+    debug.println(debug.LEVEL_INFO, logLine)
+    log.info(logLine)
 
 def speakCharacter(character, acss=None):
     """Speaks a single character immediately.

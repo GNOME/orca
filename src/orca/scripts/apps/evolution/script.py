@@ -29,6 +29,7 @@ import pyatspi
 
 import orca.debug as debug
 import orca.scripts.default as default
+import orca.keybindings as keybindings
 import orca.input_event as input_event
 import orca.rolenames as rolenames
 import orca.braille as braille
@@ -170,23 +171,18 @@ class Script(default.Script):
                 _("Toggle whether we present new mail " \
                   "if we are not the active script."))
 
-    def getKeyBindings(self):
-        """Defines the new key binding for this script. Setup the default
-        key bindings, then add one in for toggling whether we present new
-        mail if we not not the active script.
+    def getAppKeyBindings(self):
+        """Returns the application-specific keybindings for this script."""
 
-        Returns an instance of keybindings.KeyBindings.
-        """
+        keyBindings = keybindings.KeyBindings()
 
-        debug.println(self.debugLevel, "Evolution.getKeyBindings.")
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "n",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["toggleReadMailHandler"]))
 
-        keyBindings = default.Script.getKeyBindings(self)
-
-        keymap = (
-          ("n", settings.defaultModifierMask, settings.ORCA_MODIFIER_MASK,
-          "toggleReadMailHandler"),
-        )
-        keyBindings.load(keymap, self.inputEventHandlers)
         return keyBindings
 
     def getListeners(self):

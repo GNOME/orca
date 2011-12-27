@@ -42,6 +42,7 @@ import pyatspi
 
 import orca.debug as debug
 import orca.scripts.default as default
+import orca.keybindings as keybindings
 import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -261,32 +262,50 @@ class Script(default.Script):
                 #
                 _("Clears the dynamic row headers"))
 
-    def getKeyBindings(self):
-        """Defines the key bindings for this script. Setup the default
-        key bindings, then add one in for reading the input line.
+    def getAppKeyBindings(self):
+        """Returns the application-specific keybindings for this script."""
 
-        Returns an instance of keybindings.KeyBindings.
-        """
+        keyBindings = keybindings.KeyBindings()
 
-        keyBindings = default.Script.getKeyBindings(self)
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "a",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["presentInputLineHandler"]))
 
-        keymap = (
-          ("a", settings.defaultModifierMask, settings.ORCA_MODIFIER_MASK,
-          "presentInputLineHandler"),
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "r",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["setDynamicColumnHeadersHandler"],
+                1))
 
-          ("r", settings.defaultModifierMask, settings.ORCA_MODIFIER_MASK,
-          "setDynamicColumnHeadersHandler", 1),
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "r",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["clearDynamicColumnHeadersHandler"],
+                2))
 
-          ("r", settings.defaultModifierMask, settings.ORCA_MODIFIER_MASK,
-          "clearDynamicColumnHeadersHandler", 2),
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "c",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["setDynamicRowHeadersHandler"],
+                1))
 
-          ("c", settings.defaultModifierMask, settings.ORCA_MODIFIER_MASK,
-          "setDynamicRowHeadersHandler", 1),
+        keyBindings.add(
+            keybindings.KeyBinding(
+                "c",
+                settings.defaultModifierMask,
+                settings.ORCA_MODIFIER_MASK,
+                self.inputEventHandlers["clearDynamicRowHeadersHandler"],
+                2))
 
-          ("c", settings.defaultModifierMask, settings.ORCA_MODIFIER_MASK,
-          "clearDynamicRowHeadersHandler", 2),
-        )
-        keyBindings.load(keymap, self.inputEventHandlers)
         bindings = self.structuralNavigation.keyBindings
         for keyBinding in bindings.keyBindings:
             keyBindings.add(keyBinding)

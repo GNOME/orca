@@ -1269,7 +1269,7 @@ def listShortcuts(event):
         _("Use Up and Down Arrow to navigate the list. Press Escape to exit.")
 
     if event.type == pyatspi.KEY_PRESSED_EVENT:
-        clickCount = orca_state.activeScript.getClickCount()
+        clickCount = event.getClickCount()
         if (event.event_string == "1"):
             if not numShortcuts or orca_state.typeOfShortcuts != "default":
                 orca_state.listOfShortcuts = getListOfShortcuts("default")

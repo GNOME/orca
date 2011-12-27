@@ -1134,6 +1134,26 @@ class Script(script.Script):
 
         keyBindings = script.Script.getKeyBindings(self)
 
+        bindings = self.getDefaultKeyBindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.getToolkitKeyBindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        bindings = self.getAppKeyBindings()
+        for keyBinding in bindings.keyBindings:
+            keyBindings.add(keyBinding)
+
+        return keyBindings
+
+    def getDefaultKeyBindings(self):
+        """Returns the default script's keybindings, i.e. without any of
+        the toolkit or application specific commands added."""
+
+        keyBindings = keybindings.KeyBindings()
+
         layout = _settingsManager.getSetting('keyboardLayout')
         if layout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP:
             for keyBinding in self.__getDesktopBindings().keyBindings:
@@ -2497,7 +2517,10 @@ class Script(script.Script):
         self.flatReviewContext = None
 
     def sayAll(self, inputEvent):
-        clickCount = self.getClickCount()
+        try:
+            clickCount = inputEvent.getClickCount()
+        except:
+            clickCount = 1
         doubleClick = clickCount == 2
         self.lastSayAllEvent = inputEvent
 
