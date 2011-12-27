@@ -70,30 +70,6 @@ class EventManager:
         self._registerListener("object:children-changed")
         self._registerListener("mouse:button")
 
-        win = orca_state.activeScript.utilities.activeWindow()
-        if win:
-            # Generate a fake window activation event so the application
-            # can tell the user about itself.
-            #
-            class _FakeEvent:
-                def __init__(self, source, eventType,
-                             detail1, detail2, any_data):
-                    self.source = source
-                    self.type = eventType
-                    self.detail1 = detail1
-                    self.detail2 = detail2
-                    self.any_data = any_data
-                    self.host_application = None
-
-            class _FakeData:
-                def __init__(self):
-                    pass
-                def value(self):
-                    return None
-
-            fe = _FakeEvent(win, "window:activate", 0, 0, _FakeData())
-            self._enqueue(fe)
-
     def deactivate(self):
         """Called when this event manager is deactivated."""
 

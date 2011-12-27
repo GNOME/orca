@@ -1820,6 +1820,11 @@ def main():
         debug.printException(debug.LEVEL_SEVERE)
 
     showSplashGUI()
+    script = orca_state.activeScript
+    if script:
+        window = script.utilities.activeWindow()
+        if window:
+            setLocusOfFocus(None, window, force=True)
 
     # Check to see if the user wants the configuration GUI. It's
     # done here so that the user's existing preferences can be used
