@@ -792,7 +792,16 @@ class Utilities:
     def isLink(self, obj):
         """Returns True if obj is a link."""
 
-        return obj and obj.getRole() == pyatspi.ROLE_LINK
+        if not obj:
+            return False
+
+        try:
+            role = obj.getRole()
+        except LookupError:
+            debug.println(debug.LEVEL_FINE, 'LookupError - isLink getting role')
+            return False
+
+        return role == pyatspi.ROLE_LINK
 
     def isReadOnlyTextArea(self, obj):
         """Returns True if obj is a text entry area that is read only."""

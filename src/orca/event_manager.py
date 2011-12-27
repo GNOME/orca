@@ -412,6 +412,16 @@ class EventManager:
         if not event.source:
             return False, "event.source? What event.source??"
 
+        role = state = None
+        try:
+            role = event.source.getRole()
+        except LookupError:
+            return False, "LookupError getting event.source's role"
+        try:
+            state = event.source.getState()
+        except LookupError:
+            return False, "LookupError getting event.source's state"
+        
         if not script:
             script = self._getScriptForEvent(event)
 
@@ -436,8 +446,8 @@ class EventManager:
         # This condition appears with gnome-screensave-dialog.
         # See bug 530368.
         if eType.startswith('object:state-changed:showing') \
-           and event.source.getRole() == pyatspi.ROLE_PANEL \
-           and event.source.getState().contains(pyatspi.STATE_MODAL):
+           and role == pyatspi.ROLE_PANEL \
+           and state.contains(pyatspi.STATE_MODAL):
             return True, "Modal panel is showing."
 
         return False, "No reason found to activate a different script."

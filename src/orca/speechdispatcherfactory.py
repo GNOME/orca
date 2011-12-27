@@ -83,6 +83,7 @@ class SpeechServer(speechserver.SpeechServer):
     
     KEY_NAMES = {
         '_':     'underscore',
+        ' ':     'space',
         'space': 'space',
         '"':     'double-quote',
         }

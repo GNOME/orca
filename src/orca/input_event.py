@@ -290,7 +290,7 @@ class KeyboardEvent(InputEvent):
         if self.keyType:
             return self.keyType == KeyboardEvent.TYPE_PRINTABLE
 
-        if self.event_string == "space":
+        if self.event_string in ["space", " "]:
             return True
 
         unicodeString = self.event_string.decode("UTF-8")

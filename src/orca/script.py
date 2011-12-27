@@ -377,11 +377,23 @@ class Script:
         - event: the Event
         """
 
+        if not event.source:
+            msg = 'script.processObjectEvent: event.source went away'
+            debug.println(debug.LEVEL_FINE, msg)
+            return
+
+        try:
+            role = event.source.getRole()
+        except LookupError:
+            msg = 'script.processObjectEvent: LookupError getting role'
+            debug.println(debug.LEVEL_FINE, msg)
+            return
+
         # Check to see if we really want to process this event.
         #
         processEvent = (orca_state.activeScript == self \
                         or self.presentIfInactive)
-        if event.source.getRole() == pyatspi.ROLE_PROGRESS_BAR \
+        if role == pyatspi.ROLE_PROGRESS_BAR \
            and not processEvent \
            and settings.progressBarVerbosity == settings.PROGRESS_BAR_ALL:
             processEvent = True
