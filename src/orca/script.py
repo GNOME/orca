@@ -71,7 +71,12 @@ class Script:
         self.app = app
 
         if app:
-            self.name = self.app.name
+            try:
+                self.name = self.app.name
+            except LookupError:
+                msg = 'script.__init__: LookupError trying to get app.name'
+                debug.println(debug.LEVEL_FINE, msg)
+                self.name = "default"
         else:
             self.name = "default"
 
