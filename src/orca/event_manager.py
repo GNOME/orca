@@ -468,6 +468,8 @@ class EventManager:
                     _scriptManager.reclaimScripts()
                     if settings.debugMemoryUsage:
                         orca.cleanupGarbage()
+                    if not event.source.childCount:
+                        orca.shutdown()
                     return
             except (LookupError, RuntimeError):
                 # If we got this error here, we'll get it again when we

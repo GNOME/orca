@@ -657,30 +657,6 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         orca_state.activeScript.locusOfFocusChanged(
             event, oldLocusOfFocus, orca_state.locusOfFocus)
 
-def _onChildrenChanged(e):
-    """Tracks children-changed events on the desktop to determine when
-    apps start and stop.
-
-    Arguments:
-    - e: at-spi event from the at-api registry
-    """
-
-    desktop = pyatspi.Registry.getDesktop(0)
-    if e.source == desktop:
-
-        # If the desktop is empty, the user has logged out-- shutdown Orca
-        #
-        try:
-            if desktop.childCount == 0:
-                if not _settingsManager.getSetting('onlySpeakDisplayedText'):
-                    speech.speak(_("Goodbye."))
-                shutdown()
-                return
-        except: # could be a CORBA.COMM_FAILURE
-            debug.printException(debug.LEVEL_FINEST)
-            shutdown()
-            return
-
 ########################################################################
 #                                                                      #
 # DEBUG support.                                                       #
