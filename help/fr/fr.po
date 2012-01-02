@@ -4,19 +4,18 @@
 #
 #
 # Laurent Coudeur <laurentc@iol.ie>, 2011.
-# Bruno Brouard <annoa.b@gmail.com>, 2011.
+# Bruno Brouard <annoa.b@gmail.com>, 2011, 2012.
 # Julien Hardelin <jhardlin@orange.fr>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2011-11-26 21:00+0000\n"
-"PO-Revision-Date: 2011-11-28 21:10+0100\n"
-"Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
-"Language-Team: French <GNOME French Team <gnomefr@traduc.org>>\n"
+"POT-Creation-Date: 2011-11-30 11:34+0000\n"
+"PO-Revision-Date: 2012-01-02 10:48+0100\n"
+"Last-Translator: Bruno Brouard <annoa.b@gmail.com>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bits\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -26,6 +25,8 @@ msgid ""
 "@@image: 'figures/preferences_text_attributes_table.png'; "
 "md5=067627aeb9adfd314523903f408bb977"
 msgstr ""
+"@@image: 'figures/preferences_text_attributes_table.png'; "
+"md5=067627aeb9adfd314523903f408bb977"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -34,6 +35,8 @@ msgid ""
 "@@image: 'figures/preferences_text_attributes_rearranging.png'; "
 "md5=0834c9af2a15c3d08be77f3a963ad245"
 msgstr ""
+"@@image: 'figures/preferences_text_attributes_rearranging.png'; "
+"md5=0834c9af2a15c3d08be77f3a963ad245"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -42,6 +45,8 @@ msgid ""
 "@@image: 'figures/preferences_text_attributes_braille.png'; "
 "md5=3482a961cc9d30db5537ccb998bb7c71"
 msgstr ""
+"@@image: 'figures/preferences_text_attributes_braille.png'; "
+"md5=3482a961cc9d30db5537ccb998bb7c71"
 
 #: C/preferences_text_attributes.page:7(title)
 msgid "8. Text Attributes"
@@ -352,6 +357,8 @@ msgid ""
 "@@image: 'figures/preferences_table_navigation.png'; "
 "md5=a97b98bd9e3499e06844d56156419a7d"
 msgstr ""
+"@@image: 'figures/preferences_table_navigation.png'; "
+"md5=a97b98bd9e3499e06844d56156419a7d"
 
 #: C/preferences_table_navigation.page:8(title)
 msgid "2. Table Navigation"
@@ -462,6 +469,8 @@ msgid ""
 "@@image: 'figures/preferences_enable_speech.png'; "
 "md5=66fff525659d9e3db4130f58f962f82e"
 msgstr ""
+"@@image: 'figures/preferences_enable_speech.png'; "
+"md5=66fff525659d9e3db4130f58f962f82e"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -470,6 +479,8 @@ msgid ""
 "@@image: 'figures/preferences_tts_options.png'; "
 "md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
 msgstr ""
+"@@image: 'figures/preferences_tts_options.png'; "
+"md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -478,6 +489,8 @@ msgid ""
 "@@image: 'figures/preferences_rate_pitch_volume.png'; "
 "md5=98d310294cb4c7b945ecf81fda0df1f7"
 msgstr ""
+"@@image: 'figures/preferences_rate_pitch_volume.png'; "
+"md5=98d310294cb4c7b945ecf81fda0df1f7"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -486,6 +499,8 @@ msgid ""
 "@@image: 'figures/preferences_punctuation_level.png'; "
 "md5=2578236bb97ab0109675417fcdb8dd4b"
 msgstr ""
+"@@image: 'figures/preferences_punctuation_level.png'; "
+"md5=2578236bb97ab0109675417fcdb8dd4b"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -494,6 +509,8 @@ msgid ""
 "@@image: 'figures/preferences_speech_verbosity.png'; "
 "md5=d689e49513907f75e54b3635b7419247"
 msgstr ""
+"@@image: 'figures/preferences_speech_verbosity.png'; "
+"md5=d689e49513907f75e54b3635b7419247"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -502,6 +519,8 @@ msgid ""
 "@@image: 'figures/preferences_table_rows.png'; "
 "md5=736ba1cf57c3cdc79de019160f3636ab"
 msgstr ""
+"@@image: 'figures/preferences_table_rows.png'; "
+"md5=736ba1cf57c3cdc79de019160f3636ab"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -510,6 +529,8 @@ msgid ""
 "@@image: 'figures/preferences_progress_bar_updates.png'; "
 "md5=65ae433495a3efd95cd5259f10865c98"
 msgstr ""
+"@@image: 'figures/preferences_progress_bar_updates.png'; "
+"md5=65ae433495a3efd95cd5259f10865c98"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -518,6 +539,8 @@ msgid ""
 "@@image: 'figures/preferences_only_speak_displayed_text.png'; "
 "md5=4636b63366ca45dd7f2679821e8e0099"
 msgstr ""
+"@@image: 'figures/preferences_only_speak_displayed_text.png'; "
+"md5=4636b63366ca45dd7f2679821e8e0099"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -526,6 +549,8 @@ msgid ""
 "@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
 "md5=ac2c1da480acd938209d7f29b5ce12f1"
 msgstr ""
+"@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
+"md5=ac2c1da480acd938209d7f29b5ce12f1"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -534,6 +559,8 @@ msgid ""
 "@@image: 'figures/preferences_break_speech_into_chunks.png'; "
 "md5=c2193d97d780a2a9349dcff4a64a3135"
 msgstr ""
+"@@image: 'figures/preferences_break_speech_into_chunks.png'; "
+"md5=c2193d97d780a2a9349dcff4a64a3135"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -542,6 +569,8 @@ msgid ""
 "@@image: 'figures/preferences_say_all_by.png'; "
 "md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
 msgstr ""
+"@@image: 'figures/preferences_say_all_by.png'; "
+"md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -550,6 +579,8 @@ msgid ""
 "@@image: 'figures/preferences_system_voice_options.png'; "
 "md5=15083bf706ad1b905332746300f206a9"
 msgstr ""
+"@@image: 'figures/preferences_system_voice_options.png'; "
+"md5=15083bf706ad1b905332746300f206a9"
 
 #: C/preferences_speech.page:5(title)
 msgid "2. Speech"
@@ -1064,6 +1095,8 @@ msgid ""
 "@@image: 'figures/preferences_pronunciation.png'; "
 "md5=a4fa07be0148dfa9ddc12d7c40f4c864"
 msgstr ""
+"@@image: 'figures/preferences_pronunciation.png'; "
+"md5=a4fa07be0148dfa9ddc12d7c40f4c864"
 
 #: C/preferences_pronunciation.page:6(title)
 msgid "7. Pronunciation"
@@ -1203,6 +1236,8 @@ msgid ""
 "@@image: 'figures/preferences_key_echo.png'; "
 "md5=8a24d33dfd2f274ce4da3e756e866d65"
 msgstr ""
+"@@image: 'figures/preferences_key_echo.png'; "
+"md5=8a24d33dfd2f274ce4da3e756e866d65"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1211,6 +1246,8 @@ msgid ""
 "@@image: 'figures/preferences_character_echo.png'; "
 "md5=ae0f0f530ed8a742d08df4d388561847"
 msgstr ""
+"@@image: 'figures/preferences_character_echo.png'; "
+"md5=ae0f0f530ed8a742d08df4d388561847"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1219,6 +1256,8 @@ msgid ""
 "@@image: 'figures/preferences_word_and_sentence_echo.png'; "
 "md5=d31bd26801793b290e740fcabe7ba86d"
 msgstr ""
+"@@image: 'figures/preferences_word_and_sentence_echo.png'; "
+"md5=d31bd26801793b290e740fcabe7ba86d"
 
 #: C/preferences_key_echo.page:3(title)
 msgid "Key Echo"
@@ -1434,6 +1473,8 @@ msgid ""
 "@@image: 'figures/preferences_Orca_modifier_keys.png'; "
 "md5=e7f8a86f1476d63486769af2fdf34a9a"
 msgstr ""
+"@@image: 'figures/preferences_Orca_modifier_keys.png'; "
+"md5=e7f8a86f1476d63486769af2fdf34a9a"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1442,6 +1483,8 @@ msgid ""
 "@@image: 'figures/preferences_key_bindings_table.png'; "
 "md5=87f1b17b497b7c34c9d88cacb2c3046c"
 msgstr ""
+"@@image: 'figures/preferences_key_bindings_table.png'; "
+"md5=87f1b17b497b7c34c9d88cacb2c3046c"
 
 #: C/preferences_key_bindings.page:6(title)
 msgid "6. Key Bindings"
@@ -1648,6 +1691,8 @@ msgid ""
 "@@image: 'figures/preferences_keyboard_layout.png'; "
 "md5=87362e2a6c4530f1a7928a84eb2a4fb2"
 msgstr ""
+"@@image: 'figures/preferences_keyboard_layout.png'; "
+"md5=87362e2a6c4530f1a7928a84eb2a4fb2"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1656,6 +1701,8 @@ msgid ""
 "@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
 "md5=b79e1083ad179abaa45fafaf5d80cdd7"
 msgstr ""
+"@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
+"md5=b79e1083ad179abaa45fafaf5d80cdd7"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1664,6 +1711,8 @@ msgid ""
 "@@image: 'figures/preferences_present_tooltips.png'; "
 "md5=a6e33e8bb91b375f1432bcd41d271f5f"
 msgstr ""
+"@@image: 'figures/preferences_present_tooltips.png'; "
+"md5=a6e33e8bb91b375f1432bcd41d271f5f"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1672,6 +1721,8 @@ msgid ""
 "@@image: 'figures/preferences_show_Orca_main_window.png'; "
 "md5=f9dcacd77f6dbe80f5c70575212a8717"
 msgstr ""
+"@@image: 'figures/preferences_show_Orca_main_window.png'; "
+"md5=f9dcacd77f6dbe80f5c70575212a8717"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1679,6 +1730,7 @@ msgstr ""
 msgid ""
 "@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
 msgstr ""
+"@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1687,6 +1739,8 @@ msgid ""
 "@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=THIS FILE "
 "DOESN'T EXIST"
 msgstr ""
+"@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=THIS FILE "
+"DOESN'T EXIST"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1695,6 +1749,8 @@ msgid ""
 "@@image: 'figures/preferences_speak_object_under_mouse.png'; "
 "md5=e1a7682e7ee6427a47a7900f45b37387"
 msgstr ""
+"@@image: 'figures/preferences_speak_object_under_mouse.png'; "
+"md5=e1a7682e7ee6427a47a7900f45b37387"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1703,6 +1759,8 @@ msgid ""
 "@@image: 'figures/preferences_date_and_time.png'; "
 "md5=931f4814b0e41379a06eeae11cd88c1b"
 msgstr ""
+"@@image: 'figures/preferences_date_and_time.png'; "
+"md5=931f4814b0e41379a06eeae11cd88c1b"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1711,6 +1769,8 @@ msgid ""
 "@@image: 'figures/preferences_profiles.png'; "
 "md5=9c4666e94c98347f5f4efc24c74c9458"
 msgstr ""
+"@@image: 'figures/preferences_profiles.png'; "
+"md5=9c4666e94c98347f5f4efc24c74c9458"
 
 #: C/preferences_general.page:3(title)
 msgid "1. General"
@@ -1985,6 +2045,8 @@ msgid ""
 "@@image: 'figures/preferences_gecko_page_navigation.png'; "
 "md5=882c3f79d6d26636c42b9e6351a3cbbe"
 msgstr ""
+"@@image: 'figures/preferences_gecko_page_navigation.png'; "
+"md5=882c3f79d6d26636c42b9e6351a3cbbe"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -1993,6 +2055,8 @@ msgid ""
 "@@image: 'figures/preferences_gecko_find_options.png'; "
 "md5=641af19881288848ba7f8fdc6d4db02e"
 msgstr ""
+"@@image: 'figures/preferences_gecko_find_options.png'; "
+"md5=641af19881288848ba7f8fdc6d4db02e"
 
 #: C/preferences_gecko.page:5(title)
 msgid "1. Gecko Navigation"
@@ -2184,6 +2248,7 @@ msgstr "Valeur par défaut : 4"
 msgid ""
 "@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
 msgstr ""
+"@@image: 'figures/preferences_chat.png'; md5=f77f2387185d7498ae9842104a7ae5c0"
 
 #: C/preferences_chat.page:4(title)
 msgid "3. Chat"
@@ -2291,6 +2356,8 @@ msgid ""
 "@@image: 'figures/preferences_enable_braille_support.png'; "
 "md5=f08627f0177c20df349ab87fde697f1f"
 msgstr ""
+"@@image: 'figures/preferences_enable_braille_support.png'; "
+"md5=f08627f0177c20df349ab87fde697f1f"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2299,6 +2366,8 @@ msgid ""
 "@@image: 'figures/preferences_enable_braille_monitor.png'; "
 "md5=2dead5fbf717ce30339e2248e4f61aed"
 msgstr ""
+"@@image: 'figures/preferences_enable_braille_monitor.png'; "
+"md5=2dead5fbf717ce30339e2248e4f61aed"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2307,6 +2376,8 @@ msgid ""
 "@@image: 'figures/preferences_braille_contracted.png'; "
 "md5=81d80b6854847656862fe4ea167d29f8"
 msgstr ""
+"@@image: 'figures/preferences_braille_contracted.png'; "
+"md5=81d80b6854847656862fe4ea167d29f8"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2315,6 +2386,8 @@ msgid ""
 "@@image: 'figures/preferences_abbreviated_role_names.png'; "
 "md5=f26a6ef63ff0d1b40514830de7788c8b"
 msgstr ""
+"@@image: 'figures/preferences_abbreviated_role_names.png'; "
+"md5=f26a6ef63ff0d1b40514830de7788c8b"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2323,6 +2396,8 @@ msgid ""
 "@@image: 'figures/preferences_disable_eol_symbol.png'; "
 "md5=c43c2b7dff5efd265a40a260c2bc0d73"
 msgstr ""
+"@@image: 'figures/preferences_disable_eol_symbol.png'; "
+"md5=c43c2b7dff5efd265a40a260c2bc0d73"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2331,6 +2406,8 @@ msgid ""
 "@@image: 'figures/preferences_braille_verbosity.png'; "
 "md5=18969c222b3e1ea91cc75d47bb0fe48d"
 msgstr ""
+"@@image: 'figures/preferences_braille_verbosity.png'; "
+"md5=18969c222b3e1ea91cc75d47bb0fe48d"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -2339,6 +2416,8 @@ msgid ""
 "@@image: 'figures/preferences_braille_indicators.png'; "
 "md5=719cd227dee9df85de633c4e2417301b"
 msgstr ""
+"@@image: 'figures/preferences_braille_indicators.png'; "
+"md5=719cd227dee9df85de633c4e2417301b"
 
 #: C/preferences_braille.page:3(title)
 msgid "3. Braille"
@@ -2743,7 +2822,7 @@ msgstr ""
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/index.page:14(None)
 msgid "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
-msgstr ""
+msgstr "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 
 #: C/index.page:3(title)
 msgid "Orca Screen Reader"
@@ -3986,6 +4065,7 @@ msgstr ""
 msgid ""
 "@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
 msgstr ""
+"@@image: 'figures/profiles_save_as.png'; md5=e900250869a33ea0030fb42d4bf1da4e"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -3993,6 +4073,7 @@ msgstr ""
 msgid ""
 "@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
 msgstr ""
+"@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
 #. It doesn't matter what you translate it to: it's not used at all.
@@ -4001,6 +4082,8 @@ msgid ""
 "@@image: 'figures/profiles_conflict.png'; "
 "md5=0da0839b41fce88a4c177e5fb52b3e6b"
 msgstr ""
+"@@image: 'figures/profiles_conflict.png'; "
+"md5=0da0839b41fce88a4c177e5fb52b3e6b"
 
 #: C/howto_profiles.page:5(title)
 msgid "9. Profiles"
@@ -4146,7 +4229,7 @@ msgstr ""
 #. It doesn't matter what you translate it to: it's not used at all.
 #: C/howto_orca_find.page:50(None)
 msgid "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
-msgstr ""
+msgstr "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
 
 #: C/howto_orca_find.page:5(title)
 msgid "3. Orca Find"
@@ -6893,5 +6976,6 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "Laurent Coudeur <laurentc@iol.ie>, 2011\n"
-"Bruno Brouard <annoa.b@gmail.com>, 2011\n"
+"Bruno Brouard <annoa.b@gmail.com>, 2011-12\n"
 "Julien Hardelin <jhardlin@orange.fr>, 2011"
+
