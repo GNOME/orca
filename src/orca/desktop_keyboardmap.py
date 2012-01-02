@@ -79,27 +79,12 @@ keymap = (
     ("KP_Delete", defaultModifierMask, ORCA_SHIFT_MODIFIER_MASK,
     "findPreviousHandler"),
 
-    ("KP_7", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPreviousLineHandler"),
-
     ("KP_Home", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewPreviousLineHandler"),
-
-    ("KP_7", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewHomeHandler"),
 
     ("KP_Home", defaultModifierMask, ORCA_MODIFIER_MASK, 
     "reviewHomeHandler"),
 
-    ("KP_8", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewCurrentLineHandler", 1),
-
-    ("KP_8", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewSpellCurrentLineHandler", 2),
-
-    ("KP_8", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPhoneticCurrentLineHandler", 3),
-
     ("KP_Up", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewCurrentLineHandler", 1),
 
@@ -108,40 +93,19 @@ keymap = (
 
     ("KP_Up", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewPhoneticCurrentLineHandler", 3),
-
-    ("KP_9", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewNextLineHandler"),
 
     ("KP_Page_Up", defaultModifierMask, NO_MODIFIER_MASK, 
     "reviewNextLineHandler"),
 
-    ("KP_9", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewEndHandler"),
-
     ("KP_Page_Up", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewEndHandler"),
-
-    ("KP_4", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPreviousItemHandler"),
 
     ("KP_Left", defaultModifierMask, NO_MODIFIER_MASK, 
     "reviewPreviousItemHandler"),
 
-    ("KP_4", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewAboveHandler"),
-
     ("KP_Left", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewAboveHandler"),
 
-    ("KP_5", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewCurrentItemHandler", 1),
-
-    ("KP_5", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewSpellCurrentItemHandler", 2),
-
-    ("KP_5", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPhoneticCurrentItemHandler", 3),
-
     ("KP_Begin", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewCurrentItemHandler", 1),
 
@@ -150,46 +114,22 @@ keymap = (
 
     ("KP_Begin", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewPhoneticCurrentItemHandler", 3),
-
-    ("KP_5", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewCurrentAccessibleHandler"),
 
     ("KP_Begin", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewCurrentAccessibleHandler"),
 
-    ("KP_6", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewNextItemHandler"),
-
     ("KP_Right", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewNextItemHandler"),
-
-    ("KP_6", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewBelowHandler"),
 
     ("KP_Right", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewBelowHandler"),
 
-    ("KP_1", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewPreviousCharacterHandler"),
-
     ("KP_End", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewPreviousCharacterHandler"),
-
-    ("KP_1", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewEndOfLineHandler"),
 
     ("KP_End", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewEndOfLineHandler"),
 
-    ("KP_2", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewCurrentCharacterHandler", 1),
-
-    ("KP_2", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewSpellCurrentCharacterHandler", 2),
-
-    ("KP_2", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewUnicodeCurrentCharacterHandler", 3),
-
     ("KP_Down", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewCurrentCharacterHandler", 1),
 
@@ -198,9 +138,6 @@ keymap = (
 
     ("KP_Down", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewUnicodeCurrentCharacterHandler", 3),
-
-    ("KP_3", defaultModifierMask, NO_MODIFIER_MASK,
-    "reviewNextCharacterHandler"),
 
     ("KP_Page_Down", defaultModifierMask, NO_MODIFIER_MASK,
     "reviewNextCharacterHandler"),

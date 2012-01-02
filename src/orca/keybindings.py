@@ -32,57 +32,10 @@ import pyatspi
 import debug
 import settings
 
-from orca_i18n import _           # for gettext support
+from orca_i18n import _
 
 _keysymsCache = {}
 _keycodeCache = {}
-
-def getAllKeysyms(keysym):
-    """Given a keysym, find all other keysyms associated with the key
-    that is mapped to the given keysym.  This allows us, for example,
-    to determine that the key bound to KP_Insert is also bound to KP_0."""
-
-    if keysym not in _keysymsCache:
-        # The keysym itself is always part of the list.
-        #
-        _keysymsCache[keysym] = [keysym]
-
-        # Find the numerical value of the keysym
-        #
-        keyval = Gdk.keyval_from_name(keysym)
-
-        if keyval != 0:
-            # Find the keycodes for the keysym.  Since a keysym
-            # can be associated with more than one key, we'll shoot
-            # for the keysym that's in group 0, regardless of shift
-            # level (each entry is of the form [keycode, group,
-            # level]).
-            #
-            keymap = Gdk.Keymap.get_default()
-            success, entries = keymap.get_entries_for_keyval(keyval)
-
-            keycode = 0
-            if entries:
-                for entry in entries:
-                    if entry[1] == 0:  # group = 0
-                        keycode = entry[0]
-                        break
-
-            # Find the keysyms bound to the keycode.  These are what
-            # we are looking for.
-            #
-            if keycode != 0:
-                entries_for_keycode = keymap.get_entries_for_keycode(keycode)
-                success = entries_for_keycode[0]
-                entries = entries_for_keycode[1]
-
-                for entry in entries:
-                    keyval = entry[0]
-                    name = Gdk.keyval_name(keyval)
-                    if name and (name != keysym):
-                        _keysymsCache[keysym].append(name)
-
-    return _keysymsCache[keysym]
 
 def getKeycode(keysym):
     """Converts an XKeysym string (e.g., 'KP_Enter') to a keycode that
@@ -407,6 +360,9 @@ class KeyBindings:
                 if keyBinding.keysymstring:
                     candidates.append(keyBinding)
 
+        if keyboardEvent.modifiers & (1 << pyatspi.MODIFIER_NUMLOCK):
+            return None
+
         # If we're still here, we don't have an exact match. Prefer
         # the one whose click count is closest to, but does not exceed,
         # the actual click count.
@@ -465,54 +421,3 @@ class KeyBindings:
                 debug.println(debug.LEVEL_WARNING, \
                   "WARNING: could not find %s handler to associate " \
                   "with keybinding." % handler)
-
-    def validate(self):
-        """Tries to find keybindings where the keysym is not set for the
-        keyboard layout or where multiple keybindings map to the same
-        physical key."""
-
-        errorString = ""
-
-        # Find keybindings where the keysym is not found in the
-        # system's keymap.
-        #
-        for keyBinding in self.keyBindings:
-            keysymstring = keyBinding.keysymstring
-            if keysymstring:
-                if not getKeycode(keysymstring):
-                    errorString += "No physical key defines %s\n" \
-                                   % keysymstring
-                    if keyBinding.handler:
-                        errorString += "needed for %s\n" \
-                                       % keyBinding.handler.description
-
-        # Now, find duplicate bindings that are unintended duplicates.
-        #
-        for i in range(0, len(self.keyBindings)):
-            iKeyBinding = self.keyBindings[i]
-            if not iKeyBinding.keycode:
-                iKeyBinding.keycode = getKeycode(iKeyBinding.keysymstring)
-            if iKeyBinding.keycode:
-                for j in range(i + 1, len(self.keyBindings)):
-                    jKeyBinding = self.keyBindings[j]
-                    if not jKeyBinding.keycode:
-                        jKeyBinding.keycode = \
-                            getKeycode(jKeyBinding.keysymstring)
-                    if (iKeyBinding.keycode == jKeyBinding.keycode) \
-                       and (iKeyBinding.click_count \
-                            == jKeyBinding.click_count) \
-                       and (iKeyBinding.handler != jKeyBinding.handler) \
-                       and ((iKeyBinding.modifiers
-                             & iKeyBinding.modifier_mask) \
-                            == (jKeyBinding.modifiers
-                                & jKeyBinding.modifier_mask)):
-                        errorString += "%s maps to the same key as %s\n" \
-                                       % (iKeyBinding.keysymstring,
-                                          jKeyBinding.keysymstring)
-                        if iKeyBinding.handler:
-                            errorString += "used by %s\n" \
-                                           % iKeyBinding.handler.description
-                        if jKeyBinding.handler:
-                            errorString += "used by %s\n" \
-                                           % jKeyBinding.handler.description
-        return errorString
