@@ -230,9 +230,8 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
                 node = iterOrca
             else:
                 node = iterUnbound
-            if not self._addAlternateKeyBinding(kb):
-                handl = appScript.getInputEventHandlerKey(kb.handler)
-                self._insertRow(handl, kb, node)
+            handl = appScript.getInputEventHandlerKey(kb.handler)
+            self._insertRow(handl, kb, node)
 
         if not self.keyBindingsModel.iter_has_child(iterApp):
             self.keyBindingsModel.remove(iterApp)

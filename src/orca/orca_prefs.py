@@ -36,8 +36,7 @@ _settingsManager = getattr(orca, '_settingsManager')
 # The same fields than in orca_gui_prefs.py:
 #
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, OLDTEXT1, \
- TEXT1, MOD_MASK2, MOD_USED2, KEY2, CLICK_COUNT2, OLDTEXT2, TEXT2, MODIF, \
- EDITABLE) = range(16)
+ TEXT1, MODIF, EDITABLE) = range(10)
 
 (ACTUAL, REPLACEMENT) = range(2)
 
@@ -423,7 +422,7 @@ class OrcaPrefs:
 
         prefs.writelines("   keyB.removeByHandler(script.inputEventHandlers['" \
                          + str(tupl[HANDLER])+"'])\n")
-        if not (tupl[TEXT1] or tupl[TEXT2]):
+        if not (tupl[TEXT1]):
             prefs.writelines("   keyB.add(orca.keybindings.KeyBinding(\n")
             prefs.writelines("      '',\n")
             prefs.writelines("      %d,\n" % settings.defaultModifierMask)
@@ -449,24 +448,6 @@ class OrcaPrefs:
                 prefs.writelines("      " + str(tupl[CLICK_COUNT1])  + \
                                  "))\n\n")
 
-        if (tupl[TEXT2]):
-            prefs.writelines("   keyB.add(orca.keybindings.KeyBinding(\n")
-            prefs.writelines("      '" + str(tupl[KEY2]) + "',\n")
-            if tupl[MOD_MASK2] or tupl[MOD_USED2]:
-                prefs.writelines("      " + str(tupl[MOD_MASK2]) + ",\n")
-                prefs.writelines("      " + str(tupl[MOD_USED2]) + ",\n")
-            else:
-                prefs.writelines("      %d,\n" % settings.defaultModifierMask)
-                prefs.writelines("      0,\n")
-            if (tupl[CLICK_COUNT2] == "1"):
-                prefs.writelines('      script.inputEventHandlers["' + \
-                                 str(tupl[HANDLER]) +'"]))\n\n')
-            else:
-                prefs.writelines('      script.inputEventHandlers["' + \
-                                 str(tupl[HANDLER]) +'"],\n')
-                prefs.writelines("      " + str(tupl[CLICK_COUNT2])  + \
-                                 "))\n\n")
-
     def _writeKeyBindingsPostamble(self, prefs):
         """Writes the postamble to the user-settings.py keyBindings section."""
 
@@ -485,8 +466,7 @@ class OrcaPrefs:
         while thisIter != None:
             iterChild = treeModel.iter_children(thisIter)
             while iterChild != None:
-                values = treeModel.get(iterChild,
-                                       0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
+                values = treeModel.get(iterChild, 0,1,2,3,4,5,6,7,8,9)
                 if values[MODIF]:
                     self._writeKeyBinding(prefs, values)
                 iterChild = treeModel.iter_next(iterChild)

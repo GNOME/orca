@@ -67,8 +67,7 @@ from orca_i18n import _  # for gettext support
 from orca_i18n import C_ # to provide qualified translatable strings
 
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, OLDTEXT1, \
- TEXT1, MOD_MASK2, MOD_USED2, KEY2, CLICK_COUNT2, OLDTEXT2, TEXT2, MODIF, \
- EDITABLE) = range(16)
+ TEXT1, MODIF, EDITABLE) = range(10)
 
 (NAME, IS_SPOKEN, IS_BRAILLED, VALUE) = range(4)
 
@@ -203,12 +202,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             GObject.TYPE_STRING,  # Click count 1
             GObject.TYPE_STRING,  # Original Text of the Key Binding Shown 1
             GObject.TYPE_STRING,  # Text of the Key Binding Shown 1
-            GObject.TYPE_STRING,  # Modifier mask 2
-            GObject.TYPE_STRING,  # Used Modifiers 2
-            GObject.TYPE_STRING,  # Modifier key name 2
-            GObject.TYPE_STRING,  # Click count 2
-            GObject.TYPE_STRING,  # Original Text of the Key Binding Shown 2
-            GObject.TYPE_STRING,  # Text of the Key Binding Shown 2
             GObject.TYPE_BOOLEAN, # Key Modified by User
             GObject.TYPE_BOOLEAN) # Row with fields editable or not
 
@@ -317,87 +310,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                                     rendererText,
                                     text=TEXT1,
                                     editable=EDITABLE)
+
         column.set_resizable(True)
         column.set_sort_column_id(OLDTEXT1)
-        self.keyBindView.append_column(column)
-
-        # MOD_MASK2 - invisble column
-        #
-        column = Gtk.TreeViewColumn("Mod.Mask 2",
-                                    self.planeCellRendererText,
-                                    text=MOD_MASK2)
-        column.set_visible(False)
-        column.set_resizable(True)
-        column.set_sort_column_id(MOD_MASK2)
-        self.keyBindView.append_column(column)
-
-        # MOD_USED2 - invisble column
-        #
-        column = Gtk.TreeViewColumn("Use Mod.2",
-                                    self.planeCellRendererText,
-                                    text=MOD_USED2)
-        column.set_visible(False)
-        column.set_resizable(True)
-        column.set_sort_column_id(MOD_USED2)
-        self.keyBindView.append_column(column)
-
-        # KEY2 - invisble column
-        #
-        column = Gtk.TreeViewColumn("Key2", rendererText, text=KEY2)
-        column.set_resizable(True)
-        column.set_visible(False)
-        column.set_sort_column_id(KEY2)
-        self.keyBindView.append_column(column)
-
-        # CLICK_COUNT2 - invisble column
-        #
-        column = Gtk.TreeViewColumn("ClickCount2",
-                                    self.planeCellRendererText,
-                                    text=CLICK_COUNT2)
-        column.set_resizable(True)
-        column.set_visible(False)
-        column.set_sort_column_id(CLICK_COUNT2)
-        self.keyBindView.append_column(column)
-
-        # OLDTEXT2 - invisble column which will store a copy of the
-        # original keybinding in TEXT1 prior to the Apply or OK
-        # buttons being pressed.  This will prevent automatic
-        # resorting each time a cell is edited.
-        #
-        column = Gtk.TreeViewColumn("OldText2",
-                                    self.planeCellRendererText,
-                                    text=OLDTEXT2)
-        column.set_resizable(True)
-        column.set_visible(False)
-        column.set_sort_column_id(OLDTEXT2)
-        self.keyBindView.append_column(column)
-
-        # TEXT2
-        #
-        rendererText = Gtk.CellRendererText()
-        rendererText.connect("editing-started",
-                             self.editingKey,
-                             self.keyBindingsModel)
-        rendererText.connect("editing-canceled",
-                             self.editingCanceledKey)
-        rendererText.connect('edited',
-                             self.editedKey,
-                             self.keyBindingsModel,
-                             MOD_MASK2, MOD_USED2, KEY2, CLICK_COUNT2, TEXT2)
-
-        # Translators: Alternate is a table column header where
-        # the cells in the column represent keyboard combinations
-        # the user can press to invoke Orca commands.  These
-        # represent alternative key bindings that are used in
-        # addition to the key bindings in the "Key Bindings"
-        # column.
-        #
-        column = Gtk.TreeViewColumn(_("Alternate"),
-                                    rendererText,
-                                    text=TEXT2,
-                                    editable=EDITABLE)
-        column.set_resizable(True)
-        column.set_sort_column_id(OLDTEXT2)
         self.keyBindView.append_column(column)
 
         # MODIF
@@ -1867,8 +1782,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                     value = []
                     value.append(model.get(
                             child, KEY1, MOD_MASK1, MOD_USED1, CLICK_COUNT1))
-                    value.append(model.get(
-                            child, KEY2, MOD_MASK2, MOD_USED2, CLICK_COUNT2))
                     modelDict[key] = value
                 child = model.iter_next(child)
             node = model.iter_next(node)
@@ -2035,44 +1948,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         return clickCountString
 
-    def _addAlternateKeyBinding(self, kb):
-        """Adds an alternate keybinding to the existing handler and
-        returns true.  In case it doesn't exist yet, just returns
-        false.
-
-        Argument:
-        - kb: the keybinding to be added as an alternate keybinding.
-        """
-
-        model = self.keyBindingsModel
-        myiter = model.get_iter_first()
-        exist = False
-
-        while myiter != None:
-            iterChild = model.iter_children(myiter)
-            while iterChild != None:
-                if model.get(iterChild, DESCRIP)[0] == kb.handler.description:
-                    exist = True
-                    if not kb.keysymstring:
-                        text = ''
-                    else:
-                        clickCount = self._clickCountToString(kb.click_count)
-                        text = keybindings.getModifierNames(kb.modifiers) \
-                               + kb.keysymstring \
-                               + clickCount
-
-
-                    model.set_value(iterChild, MOD_MASK2, str(kb.modifier_mask))
-                    model.set_value(iterChild, MOD_USED2, str(kb.modifiers))
-                    model.set_value(iterChild, KEY2, kb.keysymstring)
-                    model.set_value(iterChild, CLICK_COUNT2, str(kb.click_count))
-                    model.set_value(iterChild, OLDTEXT2, text)
-                    model.set_value(iterChild, TEXT2, text)
-                iterChild = model.iter_next(iterChild)
-            myiter = model.iter_next(myiter)
-
-        return exist
-
     def _insertRow(self, handl, kb, parent=None, modif=False):
         """Appends a new row with the new keybinding data to the treeview
 
@@ -2217,12 +2092,11 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self.defKeyBindings = defScript.getKeyBindings()
             for kb in self.defKeyBindings.keyBindings:
                 if not self.kbindings.hasKeyBinding(kb, "strict"):
-                    if not self._addAlternateKeyBinding(kb):
-                        handl = defScript.getInputEventHandlerKey(kb.handler)
-                        if kb.keysymstring:
-                            self._insertRow(handl, kb, iterOrca)
-                        else:
-                            self._insertRow(handl, kb, iterUnbound)
+                    handl = defScript.getInputEventHandlerKey(kb.handler)
+                    if kb.keysymstring:
+                        self._insertRow(handl, kb, iterOrca)
+                    else:
+                        self._insertRow(handl, kb, iterUnbound)
                 self.kbindings.add(kb)
 
         if not self.keyBindingsModel.iter_has_child(iterUnbound):
