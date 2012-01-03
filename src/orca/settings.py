@@ -74,7 +74,6 @@ userCustomizableSettings = [
     "enableKeyEcho",
     "enablePrintableKeys",
     "enableModifierKeys",
-    "enableLockingKeys",
     "enableFunctionKeys",
     "enableActionKeys",
     "enableNavigationKeys",
@@ -416,10 +415,6 @@ enablePrintableKeys     = True
 #
 enableModifierKeys      = True
 
-# If True and key echo is enabled, echo Locking keys.
-#
-enableLockingKeys       = True
-
 # If True and key echo is enabled, echo Function keys.
 #
 enableFunctionKeys      = True
@@ -456,6 +451,12 @@ showMainWindow          = True
 # <Orca-modifier>-q.
 #
 quitOrcaNoConfirmation  = False
+
+# If True, always present locking key state changes; if False, never present
+# locking key state changes. If None, make the decision based on Orca's normal
+# behavior.
+#
+presentLockingKeys = None
 
 # Whether the user wants tooltips presented or not.
 #

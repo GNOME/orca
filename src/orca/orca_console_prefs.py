@@ -365,7 +365,6 @@ def setupSpeech(prefsDict):
         prefsDict["enableKeyEcho"]       = False
         prefsDict["enablePrintableKeys"] = False
         prefsDict["enableModifierKeys"]  = False
-        prefsDict["enableLockingKeys"]   = False
         prefsDict["enableFunctionKeys"]  = False
         prefsDict["enableActionKeys"]    = False
 
@@ -399,23 +398,6 @@ def setupSpeech(prefsDict):
                              speechVoiceChoice)
         try:
             prefsDict["enableModifierKeys"] = checkYes(answer)
-            break
-        except:
-            stop = False
-            sayAndPrint(_("Please enter y or n."))
-
-    stop = True
-    while keyEcho and True:
-        # Translators: this is in reference to key echo for
-        # Caps Lock, Num Lock, Scroll Lock, etc.
-        #
-        answer = sayAndPrint(_("Enable locking keys?  Enter y or n: "),
-                             stop,
-                             True,
-                             speechServerChoice,
-                             speechVoiceChoice)
-        try:
-            prefsDict["enableLockingKeys"] = checkYes(answer)
             break
         except:
             stop = False

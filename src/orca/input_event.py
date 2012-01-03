@@ -168,7 +168,9 @@ class KeyboardEvent(InputEvent):
             self.shouldEcho = settings.enableDiacriticalKeys
         elif self.isLockingKey():
             self.keyType = KeyboardEvent.TYPE_LOCKING
-            self.shouldEcho = settings.enableLockingKeys
+            self.shouldEcho = settings.presentLockingKeys
+            if self.shouldEcho == None:
+                self.shouldEcho = not settings.onlySpeakDisplayedText
         elif self.isPrintableKey():
             self.keyType = KeyboardEvent.TYPE_PRINTABLE
             self.shouldEcho = \
@@ -177,9 +179,11 @@ class KeyboardEvent(InputEvent):
             self.keyType = KeyboardEvent.TYPE_UNKNOWN
             self.shouldEcho = False
 
+        if not self.isLockingKey():
+            self.shouldEcho = self.shouldEcho and settings.enableKeyEcho
+
         # Never echo if the user doesn't want any echo, as defined by
         # preferences and whether or not we are in a password field.
-        self.shouldEcho = self.shouldEcho and settings.enableKeyEcho
         if self.shouldEcho:
             try:
                 role = orca_state.locusOfFocus.getRole()
@@ -387,7 +391,7 @@ class KeyboardEvent(InputEvent):
         if we presented the event. False if there was some reason the event
         was not worthy of presentation."""
 
-        if not self.shouldEcho:
+        if self.shouldEcho == False:
             return False
 
         orca_state.lastKeyEchoTime = time.time()
