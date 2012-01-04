@@ -254,21 +254,6 @@ class Script:
         """
         return where_am_I.WhereAmI(self)
 
-    def echoKey(self, keyEvent):
-        """Determine whether this script should echo the current key event.
-        Note that the keyEcho() method in orca.py will still take into
-        account whatever the user's various preferences for key echoing
-        are, which may override what is return by this echoKey() method.
-
-        Arguments:
-        - keyEvent - the key event
-
-        Returns an indication of whether a key echo event should be
-        allowed to happen for this script.
-        """
-
-        return True
-
     def getBookmarks(self):
         """Returns the "bookmarks" class for this script.
         """

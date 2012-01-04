@@ -540,7 +540,6 @@ if settings.useDBus:
 
 import braille
 import httpserver
-import keynames
 import keybindings
 import orca_state
 import speech
@@ -721,55 +720,6 @@ def exitListShortcutsMode(self, inputEvent=None):
 
 _orcaModifierPressed = False
 
-def keyEcho(event):
-    """If the keyEcho setting is enabled, check to see what type of key
-    event it is and echo it via speech, if the user wants that type of
-    key echoed.
-
-    Uppercase keys will be spoken using the "uppercase" voice style,
-    whereas lowercase keys will be spoken using the "default" voice style.
-
-    Arguments:
-    - event: an AT-SPI DeviceEvent
-    """
-
-    if not event.shouldEcho:
-        return False
-
-    event_string = event.event_string
-    modifiers = event.modifiers
-    eventType = event.keyType
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.keyEcho: string to echo: %s" % event_string)
-
-    if event.event_string == "Caps_Lock":
-        if event.getLockingState():
-            brailleMessage = keynames.getKeyName(event_string) + " " + _("off")
-        else:
-            brailleMessage = keynames.getKeyName(event_string) + " " + _("on")
-        braille.displayMessage(brailleMessage,
-                               flashTime=settings.brailleFlashTime)
-
-    # We keep track of the time as means to let others know that
-    # we are probably echoing a key and should not be interrupted.
-    #
-    orca_state.lastKeyEchoTime = time.time()
-
-    # Before we echo printable keys, let's try to make sure the
-    # character echo isn't going to also echo something.
-    #
-    characterEcho = event.isCharacterEchoable() and not _orcaModifierPressed
-    if not characterEcho:
-        debug.println(debug.LEVEL_FINEST,
-                      "orca.keyEcho: speaking: %s" % event_string)
-        speech.speakKeyEvent(event)
-        return True
-
-    debug.println(debug.LEVEL_FINEST,
-                  "orca.keyEcho: letting character echo handle: %s" \
-                  % event_string)
-    return False
-
 def _processKeyCaptured(event):
     """Called when a new key event arrives and orca_state.capturingKeys=True.
     (used for key bindings redefinition)
@@ -806,7 +756,7 @@ def _processKeyCaptured(event):
 
 def _processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
-    attributes, such as the lastInputEvent.  Also calls keyEcho as well
+    attributes, such as the lastInputEvent.  Also does key echo as well
     as any local keybindings before passing the event on to the active
     script.  This method is called synchronously from the AT-SPI registry
     and should be performant.  In addition, it must return True if it has

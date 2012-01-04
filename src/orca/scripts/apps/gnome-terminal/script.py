@@ -60,26 +60,6 @@ class Script(default.Script):
         #
         self.presentIfInactive = False
 
-    def echoKey(self, keyEvent):
-        """Determine whether this script should echo the current key event.
-        If this is a printable key, then return False.
-
-        Note that the keyEcho() method in orca.py will still take into
-        account whatever the user's various preferences for key echoing
-        are, which may override what is return by this echoKey() method.
-
-        Arguments:
-        - keyEvent - the key event
-
-        Returns an indication of whether a key echo event should be
-        allowed to happen for this script.
-        """
-
-        if keyEvent.isPrintableKey():
-            return False
-
-        return True
-
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
