@@ -330,6 +330,9 @@ class KeyboardEvent(InputEvent):
         event unlocked a locking key, and None if we do not know or this
         is not a locking key."""
 
+        if not self.isLockingKey():
+            return None
+
         if self.event_string == "Caps_Lock":
             mod = pyatspi.MODIFIER_SHIFTLOCK
         elif self.event_string == "Num_Lock":
