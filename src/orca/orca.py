@@ -818,7 +818,8 @@ def _processKeyboardEvent(event):
     # Do any needed xmodmap crap.
     global _restoreOrcaKeys
     if not isPressedEvent:
-        if isOrcaModifier and orca_state.bypassNextCommand:
+        if keyboardEvent.event_string in settings.orcaModifierKeys \
+           and orca_state.bypassNextCommand:
             _restoreXmodmap()
             _restoreOrcaKeys = True
         elif _restoreOrcaKeys and not orca_state.bypassNextCommand:
