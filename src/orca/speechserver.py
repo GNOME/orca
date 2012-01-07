@@ -281,6 +281,10 @@ class SpeechServer(object):
         """
         pass
 
+    def updatePunctuationLevel(self):
+        """Punctuation level changed, inform this speechServer."""
+        pass
+
     def stop(self):
         """Stops ongoing speech and flushes the queue."""
         pass
