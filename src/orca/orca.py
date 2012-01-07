@@ -795,8 +795,7 @@ def _processKeyboardEvent(event):
     script = orca_state.activeScript
     if script and isPressedEvent:
         script.presentationInterrupt()
-        if not keyboardEvent.isPrintableKey():
-            keyboardEvent.present()
+        keyboardEvent.present()
  
     # Special modes.
     if not isPressedEvent and keyboardEvent.event_string == "Escape":

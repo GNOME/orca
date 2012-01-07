@@ -288,6 +288,11 @@ class KeyboardEvent(InputEvent):
 
         return string in orcaMods
 
+    def isOrcaModified(self):
+        """Return True if this key is Orca modified."""
+
+        return self.modifiers & settings.ORCA_MODIFIER_MASK
+
     def isPrintableKey(self):
         """Return True if this is a printable key."""
 
@@ -395,6 +400,9 @@ class KeyboardEvent(InputEvent):
         was not worthy of presentation."""
 
         if self.shouldEcho == False:
+            return False
+
+        if self.isOrcaModified():
             return False
 
         orca_state.lastKeyEchoTime = time.time()
