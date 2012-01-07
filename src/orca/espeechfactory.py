@@ -204,9 +204,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._settings = {}
         if initial:
             self._settings.update(initial)
-        self._settings['punctuations'] = self._punc_map.get(
-            settings.verbalizePunctuationStyle, 'all')
-        self.configure(self._settings)
+            self.configure(self._settings)
 
     def configure(self, engineSettings):
         """Configure engine with settings."""
@@ -405,17 +403,6 @@ class SpeechServer(speechserver.SpeechServer):
             self._settings['punctuations'] = mode
             self._output.write("tts_set_punctuations %s\n" % mode)
             self._output.flush()
-
-    _punc_map = {
-        settings.PUNCTUATION_STYLE_ALL:  'all',
-        settings.PUNCTUATION_STYLE_SOME: 'some',
-        settings.PUNCTUATION_STYLE_NONE: 'none',
-        }
-
-    def updatePunctuationLevel(self):
-        """Punctuation level changed, inform this speechServer."""
-        self.punctuations(self._punc_map.get(
-                settings.verbalizePunctuationStyle, 'all'))
 
     def rate(self, r):
         """Set speech rate."""
