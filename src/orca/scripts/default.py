@@ -3560,11 +3560,15 @@ class Script(script.Script):
         #
         string = event.any_data
         speakThis = False
+        wasCommand = False
         if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
             speakThis = orca_state.lastInputEvent.button == "2"
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             wasCommand = mods & settings.COMMAND_MODIFIER_MASK
+            if not wasCommand and keyString in ["Return", "Tab"] \
+               and event.source.getRole() == pyatspi.ROLE_TERMINAL:
+                wasCommand = True
             wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT \
                                and event.source.queryText().getNSelections())
 
@@ -3599,6 +3603,9 @@ class Script(script.Script):
                 speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
             else:
                 speech.speak(string)
+
+        if wasCommand:
+            return
 
         try:
             text = event.source.queryText()

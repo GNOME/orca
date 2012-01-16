@@ -30,7 +30,6 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.scripts.default as default
-import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -142,115 +141,6 @@ class Script(default.Script):
             speech.speakCharacter(character, voice)
         else:
             speech.speak(character, voice, False)
-
-    def onTextInserted(self, event):
-        """Called whenever text is inserted into an object.
-
-        Arguments:
-        - event: the Event
-        """
-
-        # We only do special things for terminals.
-        #
-        if event.source.getRole() != pyatspi.ROLE_TERMINAL:
-            default.Script.onTextInserted(self, event)
-            return
-
-        # Ignore text insertions from non-focused objects, unless the
-        # currently focused object is the parent of the object from which
-        # text was inserted.
-        #
-        if (event.source != orca_state.locusOfFocus) \
-            and (event.source.parent != orca_state.locusOfFocus):
-            return
-
-        self.updateBraille(event.source)
-
-        text = event.any_data
-
-        # When one does a delete in a terminal, the remainder of the
-        # line is "inserted" instead of being shifted left.  We will
-        # detect this by seeing if the keystring was a delete action.
-        # If we run into this case, we don't really want to speak the
-        # rest of the line.
-        #
-        # We'll let our super class handle "Delete".  We'll handle Ctrl+D.
-        #
-
-        if not orca_state.lastInputEvent:
-            return
-
-        matchFound = False
-        speakThis = False
-        if isinstance(orca_state.lastInputEvent, input_event.KeyboardEvent):
-            keyString, mods = self.utilities.lastKeyAndModifiers()
-            controlPressed = mods & settings.CTRL_MODIFIER_MASK
-            if keyString in ["Delete", "BackSpace"]:
-                return
-            elif (keyString == "D") and controlPressed:
-                text = text.decode("UTF-8")[0].decode("UTF-8")
-
-            # If the last input event was a keyboard event, check to see if
-            # the text for this event matches what the user typed. If it does,
-            # then echo it (based on the user's key echo preferences).
-            #
-            # Note that the text widgets sometimes compress their events,
-            # thus we might get a longer string from a single text inserted
-            # event, while we also get individual keyboard events for the
-            # characters used to type the string.  This is ugly.  We attempt
-            # to handle it here by only echoing text if we think it was the
-            # result of a command (e.g., a paste operation).
-            #
-            # Note that we have to special case the space character as it
-            # comes across as "space" in the keyboard event and " " in the
-            # text event.
-            #
-            # For terminal, Return usually ends up in more text from the
-            # system, which we want to hear.  Tab is also often used for
-            # command line completion, so we want to hear that, too.
-            #
-            # Finally, if we missed some command and the system is giving
-            # us a string typically longer than what the length of a
-            # compressed string is (we choose 5 here), then output that.
-            #
-            wasCommand = controlPressed or keyString in ["Return", "Tab"]
-            if (text == " " and keyString == "space") or text == keyString:
-                matchFound = True
-            elif wasCommand or (len(text) > 5):
-                speakThis = True
-
-        elif isinstance(orca_state.lastInputEvent, \
-                        input_event.MouseButtonEvent) and \
-             orca_state.lastInputEvent.button == "2":
-            speakThis = True
-
-        if matchFound:
-            echoed = orca_state.lastInputEvent.present()
-        else:
-            echoed = False
-
-        if not echoed:
-            # We might need to echo this if it is a single character.
-            #
-            speakThis = speakThis \
-                or ((_settingsManager.getSetting('enableEchoByCharacter') \
-                     or (_settingsManager.getSetting('enableKeyEcho') \
-                     and _settingsManager.getSetting('enablePrintableKeys'))) \
-                    and text \
-                    and event.source.getRole() \
-                        != pyatspi.ROLE_PASSWORD_TEXT \
-                    and len(text.decode("UTF-8")) == 1)
-
-        if speakThis:
-            if text.decode("UTF-8").isupper():
-                speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
-            else:
-                speech.speak(text)
-
-        if _settingsManager.getSetting('enableEchoByWord') \
-           and self.utilities.isWordDelimiter(text.decode("UTF-8")[-1:]):
-            if matchFound:
-                self.echoPreviousWord(event.source)
 
     def getTextLineAtCaret(self, acc, offset=None):
         """Gets the line of text where the caret is.
