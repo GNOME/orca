@@ -793,8 +793,9 @@ def _processKeyboardEvent(event):
 
     # Echo it based on what it is and the user's settings.
     script = orca_state.activeScript
-    if script and isPressedEvent:
-        script.presentationInterrupt()
+    if script:
+        if isPressedEvent:
+            script.presentationInterrupt()
         keyboardEvent.present()
  
     # Special modes.

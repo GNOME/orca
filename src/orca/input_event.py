@@ -182,16 +182,6 @@ class KeyboardEvent(InputEvent):
         if not self.isLockingKey():
             self.shouldEcho = self.shouldEcho and settings.enableKeyEcho
 
-        # Never echo if the user doesn't want any echo, as defined by
-        # preferences and whether or not we are in a password field.
-        if self.shouldEcho:
-            try:
-                role = orca_state.locusOfFocus.getRole()
-            except:
-                pass
-            else:
-                self.shouldEcho = role != pyatspi.ROLE_PASSWORD_TEXT
-
     def toString(self):
         return ("KEYBOARDEVENT: type=%d\n" % self.type) \
             + ("                id=%d\n" % self.id) \
@@ -404,6 +394,29 @@ class KeyboardEvent(InputEvent):
 
         if self.isOrcaModified():
             return False
+
+        try:
+            role = orca_state.locusOfFocus.getRole()
+        except:
+            return False
+
+        if role == pyatspi.ROLE_PASSWORD_TEXT:
+            return False
+
+        # Normally we present key presses; this is problematic when the user is
+        # being prompted for a password in a terminal. See bgo 668025.
+        if self.isPressedKey() == (role == pyatspi.ROLE_TERMINAL):
+            return False
+
+        if role == pyatspi.ROLE_TERMINAL:
+            try:
+                text = orca_state.locusOfFocus.queryText()
+                string = text.getText(0, -1).strip()
+            except:
+                pass
+            else:
+                if not string.endswith(self.event_string):
+                    return False
 
         orca_state.lastKeyEchoTime = time.time()
         debug.println(debug.LEVEL_FINEST,
