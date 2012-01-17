@@ -1,3 +1,49 @@
+3.3.4 - 16 January 2012
+
+Stability and Performance
+
+  * Explicitly handle dead accessible objects to prevent triggering
+    crashes in GNOME Shell
+
+  * Refactor InputEvent handling so that it is more performant and
+    less convoluted
+
+  * Get rid of the fake window:activate event as it is no longer
+    required and may be triggering window manager warnings
+
+  * Move wayward event management functionality to the Event Manager
+
+  * Fix for the problem of updatePunctuationLevel() causing breakage
+    for Emacspeak users
+
+  * Fix for bug 666628 - gdk_keymap_translate_keyboard_state() expects
+    Gdk.ModifierType; not int
+
+  * Fix for bug 666594 - app-specific preferences cannot be saved for
+    certain configurations
+
+Keyboard and Keybindings
+
+  * Speak state changes in locking keys independent of key echo
+
+  * Make it possible to use the NumPad as expected in the Desktop Layout
+
+  * Remove the redundant "alternative" keybinding functionality
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg            Bulgarian              Alexander Shopov
+    es            Spanish                Daniel Mustieles
+    fr            French                 Bruno Brouard
+    gl            Galician               Fran Diéguez
+    hu            Hungarian              Attila Hammer
+    ja            Japanese               Jiro MATSUZAWA
+    mk            Macedonian             Jovan Naumovski
+    nb            Norwegian bokmål       Kjartan Maraas
+    sl            Slovenian              Matej Urbančič
+
+=========
+
 3.3.3 - 19 December 2011
 
 General
