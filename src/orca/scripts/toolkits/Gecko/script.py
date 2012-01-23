@@ -2005,17 +2005,21 @@ class Script(default.Script):
             # precedes it.  Therefore, that's what we need to look at when
             # trying to determine our position.
             #
-            if candidate.getRole() in [pyatspi.ROLE_LIST,
-                                       pyatspi.ROLE_COMBO_BOX] \
-               and candidate.getState().contains(pyatspi.STATE_FOCUSABLE) \
+            try:
+                role = candidate.getRole()
+                state = candidate.getState()
+            except LookupError:
+                role = None
+                state = pyatspi.StateSet()
+            if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX] \
+               and state.contains(pyatspi.STATE_FOCUSABLE) \
                and not self.utilities.isSameObject(obj, candidate):
                 start = self.utilities.characterOffsetInParent(candidate)
                 end = start + 1
                 candidate = candidate.parent
 
             if self.utilities.isSameObject(obj, candidate) \
-               and (start <= offset < end or candidate.getRole() == \
-               pyatspi.ROLE_ENTRY):
+               and (start <= offset < end or role == pyatspi.ROLE_ENTRY):
                 index = contents.index(content)
                 break
 
@@ -5407,7 +5411,10 @@ class Script(default.Script):
             # wrong.]]]
             #
             if obj and not self._objectForFocusGrab:
-                obj.queryComponent().grabFocus()
+                try:
+                    obj.queryComponent().grabFocus()
+                except LookupError:
+                    pass
 
             if self._objectForFocusGrab:
                 # [[[See https://bugzilla.mozilla.org/show_bug.cgi?id=363214.
@@ -5420,7 +5427,10 @@ class Script(default.Script):
                 #
                 #if objectForFocus.getRole() == pyatspi.ROLE_DOCUMENT_FRAME:
                 #    objectForFocus = objectForFocus.parent
-                self._objectForFocusGrab.queryComponent().grabFocus()
+                try:
+                    self._objectForFocusGrab.queryComponent().grabFocus()
+                except LookupError:
+                    pass
 
         text = self.utilities.queryNonEmptyText(obj)
         if text:
