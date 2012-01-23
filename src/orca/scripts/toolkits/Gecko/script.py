@@ -2007,9 +2007,11 @@ class Script(default.Script):
             #
             try:
                 role = candidate.getRole()
-                state = candidate.getState()
             except LookupError:
                 role = None
+            try:
+                state = candidate.getState()
+            except LookupError:
                 state = pyatspi.StateSet()
             if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX] \
                and state.contains(pyatspi.STATE_FOCUSABLE) \
