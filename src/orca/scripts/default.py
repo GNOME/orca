@@ -3566,7 +3566,7 @@ class Script(script.Script):
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             wasCommand = mods & settings.COMMAND_MODIFIER_MASK
-            if not wasCommand and keyString in ["Return", "Tab"] \
+            if not wasCommand and keyString in ["Return", "Tab", "space"] \
                and event.source.getRole() == pyatspi.ROLE_TERMINAL:
                 wasCommand = True
             wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT \
