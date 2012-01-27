@@ -593,7 +593,10 @@ class Utilities:
                         break
 
         if not displayedText:
-            displayedText = obj.name
+            try:
+                displayedText = obj.name
+            except LookupError:
+                pass
 
         # [[[WDW - HACK because push buttons can have labels as their
         # children.  An example of this is the Font: button on the General
