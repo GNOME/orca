@@ -808,7 +808,7 @@ def _processKeyboardEvent(event):
     if notification_messages.listNotificationMessagesModeEnabled:
         return notification_messages.listNotificationMessages(keyboardEvent)
     if settings.learnModeEnabled:
-        if keyboardEvent.isPrintableKey() and not _orcaModifierPressed:
+        if not _orcaModifierPressed:
             return True
 
     # See if the event manager wants it (i.e. it is bound to a command.

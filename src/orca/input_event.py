@@ -389,7 +389,7 @@ class KeyboardEvent(InputEvent):
         if we presented the event. False if there was some reason the event
         was not worthy of presentation."""
 
-        if self.shouldEcho == False:
+        if self.shouldEcho == False and not settings.learnModeEnabled:
             return False
 
         if self.isOrcaModified():
