@@ -301,8 +301,13 @@ class Generator:
         name = self._script.utilities.displayedText(obj)
         if name:
             result.append(name)
-        elif obj.description:
-            result.append(obj.description)
+        else:
+            try:
+                description = obj.description
+            except LookupError:
+                return result
+            if description:
+                result.append(description)
         # To make the unlabeled icons in gnome-panel more accessible.
         if not result and obj.getRole() == pyatspi.ROLE_ICON \
            and obj.parent.getRole() == pyatspi.ROLE_PANEL:
