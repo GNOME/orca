@@ -2806,6 +2806,24 @@ class Utilities:
 
         return (eventStr, mods)
 
+    @staticmethod
+    def labelFromKeySequence(sequence):
+        """Turns a key sequence into a user-presentable label."""
+
+        try:
+            from gi.repository import Gtk
+            key, mods = Gtk.accelerator_parse(sequence)
+            sequence = Gtk.accelerator_get_label(key, mods)
+        except:
+            if sequence.endswith(" "):
+                # Translators: this is the spoken word for the space character
+                #
+                sequence += _("space")
+            sequence = sequence.replace("<","")
+            sequence = sequence.replace(">"," ").strip()
+
+        return keynames.localizeKeySequence(sequence)
+
     def mnemonicShortcutAccelerator(self, obj):
         """Gets the mnemonic, accelerator string and possibly shortcut
         for the given object.  These are based upon the first accessible
@@ -2858,29 +2876,10 @@ class Utilities:
             fullShortcut   = ""
             accelerator    = ""
 
-        fullShortcut = fullShortcut.replace("<","")
-        fullShortcut = fullShortcut.replace(">"," ")
         fullShortcut = fullShortcut.replace(":"," ").strip()
-        fullShortcut = keynames.localizeKeySequence(fullShortcut)
-
-        # If the accelerator or mnemonic strings includes a Space,
-        # make sure we speak it.
-        #
-        if mnemonic.endswith(" "):
-            # Translators: this is the spoken word for the space character
-            #
-            mnemonic += _("space")
-        mnemonic = mnemonic.replace("<","")
-        mnemonic = mnemonic.replace(">"," ").strip()
-        mnemonic = keynames.localizeKeySequence(mnemonic)
-
-        if accelerator.endswith(" "):
-            # Translators: this is the spoken word for the space character
-            #
-            accelerator += _("space")
-        accelerator = accelerator.replace("<","")
-        accelerator = accelerator.replace(">"," ").strip()
-        accelerator = keynames.localizeKeySequence(accelerator)
+        fullShortcut = self.labelFromKeySequence(fullShortcut)
+        mnemonic = self.labelFromKeySequence(accelerator)
+        accelerator = self.labelFromKeySequence(accelerator)
 
         debug.println(debug.LEVEL_FINEST, "script_utilities.getKeyBinding: " \
                       + repr([mnemonic, fullShortcut, accelerator]))
