@@ -1,21 +1,21 @@
 # translation of orca.HEAD.te.po to Telugu
 # Telugu translation of orca
-# Copyright (C) 2012 Gnome Telugu Contributors
+# Copyright (C) 2012 Swecha Telugu localisation Contributors
 # This file is distributed under the same license as the orca package.
 #
 # Krishna Babu K <kkrothap@redhat.com>, 2008, 2009.
 # A Mohan Vamsee<mohan.arza@ymail.com>2011.
 # GVS.Giri <gvs.giri947@gmail.com>,2011
 # Praveen Illa <mail2ipn@gmail.com>, 2011, 2012.
-#
+# Sasi Bhushan Boddepalli <sasi@swecha.net>, 2012
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.te\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2011-12-18 09:04+0000\n"
-"PO-Revision-Date: 2012-01-23 12:00+0530\n"
-"Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
+"POT-Creation-Date: 2012-01-23 06:32+0000\n"
+"PO-Revision-Date: 2012-01-31 16:32+0530\n"
+"Last-Translator: Sasi Bhushan Boddepalli <sasi@swecha.nfet>\n"
 "Language-Team: Telugu <indlinux-telugu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -132,6 +132,7 @@ msgstr "బుక్‌మార్క్‍‌లు దాయబడలేవ�
 #. windows that this application has.
 #.
 #: ../src/orca/braille_generator.py:170
+#, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
 msgstr[0] "%d డైలాగ్"
@@ -8245,8 +8246,10 @@ msgstr "ఎక్కువ."
 #. to.
 #.
 #: ../src/orca/speech_generator.py:443
+#, python-format
+#| msgid "%(uri)s link to %(file)s"
 msgid "%(uri)s link to %(file)s"
-msgstr " %(దస్త్రం)s కు లింకు %(uri)s"
+msgstr " %(దస్త్రం)ల కు లింకు  %(uri)లు"
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
@@ -8323,14 +8326,18 @@ msgstr "అడ్డువరుస %d"
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/speech_generator.py:837
+#, python-format
+#| msgid "column %(index)d of %(total)d"
 msgid "column %(index)d of %(total)d"
-msgstr "%(అనుక్రమణిక)d నిలువువరుస %(మొత్తం)d లోనిది"
+msgstr "%(index)d నిలువువరుస %(మొత్తం)d లోనిది"
 
 #. Translators: this is in reference to a row in a table.
 #.
 #: ../src/orca/speech_generator.py:842
+#, python-format
+#| msgid "row %(index)d of %(total)d"
 msgid "row %(index)d of %(total)d"
-msgstr "%(మొత్తం)d యొక్క %(అనుక్రమణిక)d అడ్డువరుస"
+msgstr "%(total)d యొక్క %(index)d అడ్డువరుస "
 
 #. Translators: This is to indicate to the user that
 #. he/she is in the last cell of a table in a document.
@@ -8380,10 +8387,13 @@ msgstr "0 అంశములు"
 #. An example of an icon panel is the Nautilus folder view.
 #.
 #: ../src/orca/speech_generator.py:1453
+#, python-format
+#| msgid "%(index)d of %(total)d item selected"
+#| msgid_plural "%(index)d of %(total)d items selected"
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
-msgstr[0] "ఎంపికచేసిన అంశము %2d యొక్క %1d"
-msgstr[1] "ఎంపికచేసిన అంశములు %2d యొక్క %1d"
+msgstr[0] "ఎంపికచేసిన అంశము %(total)d యొక్క %(index)d"
+msgstr[1] "ఎంపికచేసిన అంశము %(total)d యొక్క %(index)d"
 
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
