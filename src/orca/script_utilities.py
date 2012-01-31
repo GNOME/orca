@@ -2675,7 +2675,7 @@ class Utilities:
 
         from gi.repository import Gtk
         rootWindow = Gtk.Window().get_screen().get_root_window()
-        x, y, modifiers = rootWindow.get_pointer()
+        window, x, y, modifiers = rootWindow.get_pointer()
 
         return x, y
 
