@@ -1315,8 +1315,11 @@ class Utilities:
         # comment is here to remind us this is being done in poor taste
         # and we need to eventually clean up our act.]]]
         #
-        if not activeDescendant and obj and obj.childCount:
-            activeDescendant = obj[-1]
+        if not activeDescendant and obj and obj.childCount >= 0:
+            try:
+                activeDescendant = obj[-1]
+            except:
+                pass
 
         self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT][obj] = \
             activeDescendant or obj

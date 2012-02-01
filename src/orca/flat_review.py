@@ -428,12 +428,16 @@ class ValueZone(Zone):
                     #
                     orientation = _("vertical")
                         
-            value = self.accessible.queryValue()
+            try:
+                value = self.accessible.queryValue()
+            except NotImplementedError:
+                debug.println(debug.LEVEL_FINE,
+                              'ValueZone does not implement Value interface')
             try:
                 percentValue = int((value.currentValue /
                                     (value.maximumValue - value.minimumValue))
                                    * 100.0)
-            except ZeroDivisionError:
+            except:
                 percentValue = 0
 
             if orientation:
@@ -1265,6 +1269,10 @@ class Context:
 
         # If we're at a leaf node, then we've got a good one on our hands.
         #
+        try:
+            childCount = root.childCount
+        except LookupError:
+            childCount = -1
         if root.childCount <= 0:
             return self.getZonesFromAccessible(root, rootexts)
 
@@ -1733,6 +1741,10 @@ class Context:
         Returns True if the locus of interest actually changed.
         """
 
+        if not self.lines:
+            debug.println(debug.LEVEL_FINE, 'goPrevious(): no lines in context')
+            return False
+
         moved = False
 
         if flatReviewType == Context.ZONE:
@@ -1855,6 +1867,10 @@ class Context:
         - wrap: if True, will cross boundaries, including top and
                 bottom; if False, will stop on boundaries.
         """
+
+        if not self.lines:
+            debug.println(debug.LEVEL_FINE, 'goNext(): no lines in context')
+            return False
 
         moved = False
 

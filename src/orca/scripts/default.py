@@ -3045,7 +3045,10 @@ class Script(script.Script):
 
         # Should the event source be the locusOfFocus?
         #
-        role = orca_state.locusOfFocus.getRole()
+        try:
+            role = orca_state.locusOfFocus.getRole()
+        except LookupError:
+            role = None
         if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_DIALOG]:
             frameApp = orca_state.locusOfFocus.getApplication()
             eventApp = event.source.getApplication()
