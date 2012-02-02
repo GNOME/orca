@@ -281,6 +281,9 @@ class KeyboardEvent(InputEvent):
     def isOrcaModified(self):
         """Return True if this key is Orca modified."""
 
+        if orca_state.bypassNextCommand:
+            return False
+
         return self.modifiers & settings.ORCA_MODIFIER_MASK
 
     def isPrintableKey(self):
