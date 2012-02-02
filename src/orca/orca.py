@@ -807,9 +807,6 @@ def _processKeyboardEvent(event):
         return listShortcuts(keyboardEvent)
     if notification_messages.listNotificationMessagesModeEnabled:
         return notification_messages.listNotificationMessages(keyboardEvent)
-    if settings.learnModeEnabled:
-        if not _orcaModifierPressed:
-            return True
 
     # See if the event manager wants it (i.e. it is bound to a command.
     if _eventManager.processKeyboardEvent(keyboardEvent):
@@ -828,7 +825,7 @@ def _processKeyboardEvent(event):
     elif not keyboardEvent.isModifierKey():
         orca_state.bypassNextCommand = False
  
-    return isOrcaModifier
+    return isOrcaModifier or settings.learnModeEnabled
 
 ########################################################################
 #                                                                      #

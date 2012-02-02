@@ -389,11 +389,9 @@ class KeyboardEvent(InputEvent):
         if we presented the event. False if there was some reason the event
         was not worthy of presentation."""
 
-        if self.shouldEcho == False and not settings.learnModeEnabled:
-            return False
-
-        if self.isOrcaModified():
-            return False
+        if not settings.learnModeEnabled:
+            if self.shouldEcho == False or self.isOrcaModified():
+                return False
 
         try:
             role = orca_state.locusOfFocus.getRole()
