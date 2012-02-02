@@ -409,11 +409,12 @@ class KeyboardEvent(InputEvent):
         if role == pyatspi.ROLE_TERMINAL:
             try:
                 text = orca_state.locusOfFocus.queryText()
-                string = text.getText(0, -1).strip()
+                o = text.caretOffset
+                string = text.getText(o-1, o)
             except:
                 pass
             else:
-                if not string.endswith(self.event_string):
+                if not self.event_string in [string, 'space']:
                     return False
 
         orca_state.lastKeyEchoTime = time.time()
