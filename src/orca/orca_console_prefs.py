@@ -33,7 +33,6 @@ import settings
 import speech
 import speechserver
 import orca
-import time
 
 desktopRunning = False
 try:
@@ -587,11 +586,7 @@ def showPreferencesUI(commandLineSettings):
                                     False,
                                     speechServerChoice,
                                     speechVoiceChoice)
-                        time.sleep(2)
-
-                        from gi.repository import GObject
-                        GObject.threads_init()
-                        GObject.idle_add(logoutUser)
+                        logoutUser()
                     break
                 except:
                     stop = False
