@@ -404,21 +404,26 @@ class KeyboardEvent(InputEvent):
         if role == pyatspi.ROLE_PASSWORD_TEXT:
             return False
 
-        # Normally we present key presses; this is problematic when the user is
-        # being prompted for a password in a terminal. See bgo 668025.
-        if self.isPressedKey() == (role == pyatspi.ROLE_TERMINAL):
-            return False
-
+        # Worst. Hack. EVER. We have no reliable way of knowing a password is
+        # being entered into a terminal -- other than the fact that the text
+        # typed ain't there. As a result, we have to do special things when
+        # not in special modes. :( See bgo 668025.
         if role == pyatspi.ROLE_TERMINAL:
-            try:
-                text = orca_state.locusOfFocus.queryText()
-                o = text.caretOffset
-                string = text.getText(o-1, o)
-            except:
-                pass
-            else:
-                if not self.event_string in [string, 'space']:
-                    return False
+            if not self.isPressedKey():
+                try:
+                    text = orca_state.locusOfFocus.queryText()
+                    o = text.caretOffset
+                    string = text.getText(o-1, o)
+                except:
+                    pass
+                else:
+                    if not self.event_string in [string, 'space']:
+                        return False
+            elif not (settings.learnModeEnabled or self.isLockingKey()):
+                return False
+
+        elif not self.isPressedKey():
+            return False
 
         orca_state.lastKeyEchoTime = time.time()
         debug.println(debug.LEVEL_FINEST,
