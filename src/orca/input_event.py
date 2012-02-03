@@ -86,7 +86,8 @@ class InputEvent:
             orca_state.clickCount = 1
             return
 
-        if self.time - lastInputEvent.time < settings.doubleClickTimeout:
+        if self.time - lastInputEvent.time < settings.doubleClickTimeout \
+            and lastInputEvent.event_string == self.event_string:
             # Cap the possible number of clicks at 3.
             if orca_state.clickCount < 3:
                 orca_state.clickCount += 1
