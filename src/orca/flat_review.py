@@ -1271,7 +1271,7 @@ class Context:
         #
         try:
             childCount = root.childCount
-        except LookupError:
+        except (LookupError, RuntimeError):
             childCount = -1
         if root.childCount <= 0:
             return self.getZonesFromAccessible(root, rootexts)

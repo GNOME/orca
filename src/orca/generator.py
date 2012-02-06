@@ -304,7 +304,7 @@ class Generator:
         else:
             try:
                 description = obj.description
-            except LookupError:
+            except (LookupError, RuntimeError):
                 return result
             if description:
                 result.append(description)

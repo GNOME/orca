@@ -1390,7 +1390,7 @@ class Script(script.Script):
         #
         try:
             relations = obj.getRelationSet()
-        except LookupError:
+        except (LookupError, RuntimeError):
             relations = []
         for relation in relations:
             if relation.getRelationType() \
@@ -3047,7 +3047,7 @@ class Script(script.Script):
         #
         try:
             role = orca_state.locusOfFocus.getRole()
-        except LookupError:
+        except (LookupError, RuntimeError):
             role = None
         if role in [pyatspi.ROLE_FRAME, pyatspi.ROLE_DIALOG]:
             frameApp = orca_state.locusOfFocus.getApplication()

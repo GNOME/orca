@@ -133,7 +133,7 @@ class LabelInference:
 
         try:
             children = [child for child in obj]
-        except LookupError:
+        except (LookupError, RuntimeError):
             debug.println(debug.LEVEL_FINE, 'Dead Accessible in %s' % obj)
             return False
 

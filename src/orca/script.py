@@ -73,8 +73,8 @@ class Script:
         if app:
             try:
                 self.name = self.app.name
-            except LookupError:
-                msg = 'script.__init__: LookupError trying to get app.name'
+            except (LookupError, RuntimeError):
+                msg = 'script.__init__: Error trying to get app.name'
                 debug.println(debug.LEVEL_FINE, msg)
                 self.name = "default"
         else:
@@ -365,8 +365,8 @@ class Script:
 
         try:
             role = event.source.getRole()
-        except LookupError:
-            msg = 'script.processObjectEvent: LookupError getting role'
+        except (LookupError, RuntimeError):
+            msg = 'script.processObjectEvent: Error getting role'
             debug.println(debug.LEVEL_FINE, msg)
             return
 

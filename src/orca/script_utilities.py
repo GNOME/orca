@@ -595,7 +595,7 @@ class Utilities:
         if not displayedText:
             try:
                 displayedText = obj.name
-            except LookupError:
+            except (LookupError, RuntimeError):
                 pass
 
         # [[[WDW - HACK because push buttons can have labels as their
@@ -800,8 +800,8 @@ class Utilities:
 
         try:
             role = obj.getRole()
-        except LookupError:
-            debug.println(debug.LEVEL_FINE, 'LookupError - isLink getting role')
+        except (LookupError, RuntimeError):
+            debug.println(debug.LEVEL_FINE, 'Error - isLink getting role')
             return False
 
         return role == pyatspi.ROLE_LINK
@@ -2946,22 +2946,22 @@ class Utilities:
         # "The reports of my implementation are greatly exaggerated."
         try:
             maxValue = value.maximumValue
-        except LookupError:
+        except (LookupError, RuntimeError):
             maxValue = 0.0
             debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
-                          "LookupError accessing maximumValue for %s" % obj)
+                          "Error accessing maximumValue for %s" % obj)
         try:
             minValue = value.minimumValue
-        except LookupError:
+        except (LookupError, RuntimeError):
             minValue = 0.0
             debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
-                          "LookupError accessing minimumValue for %s" % obj)
+                          "Error accessing minimumValue for %s" % obj)
         try:
             minIncrement = value.minimumIncrement
-        except LookupError:
+        except (LookupError, RuntimeError):
             minIncrement = (maxValue - minValue) / 100.0
             debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
-                          "LookupError accessing minimumIncrement for %s" % obj)
+                          "Error accessing minimumIncrement for %s" % obj)
 
         try:
             decimalPlaces = math.ceil(max(0, -math.log10(minIncrement)))

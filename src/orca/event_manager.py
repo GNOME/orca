@@ -415,12 +415,12 @@ class EventManager:
         role = state = None
         try:
             role = event.source.getRole()
-        except LookupError:
-            return False, "LookupError getting event.source's role"
+        except (LookupError, RuntimeError):
+            return False, "Error getting event.source's role"
         try:
             state = event.source.getState()
-        except LookupError:
-            return False, "LookupError getting event.source's state"
+        except (LookupError, RuntimeError):
+            return False, "Error getting event.source's state"
         
         if not script:
             script = self._getScriptForEvent(event)

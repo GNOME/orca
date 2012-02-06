@@ -2007,11 +2007,11 @@ class Script(default.Script):
             #
             try:
                 role = candidate.getRole()
-            except LookupError:
+            except (LookupError, RuntimeError):
                 role = None
             try:
                 state = candidate.getState()
-            except LookupError:
+            except (LookupError, RuntimeError):
                 state = pyatspi.StateSet()
             if role in [pyatspi.ROLE_LIST, pyatspi.ROLE_COMBO_BOX] \
                and state.contains(pyatspi.STATE_FOCUSABLE) \
@@ -5415,7 +5415,7 @@ class Script(default.Script):
             if obj and not self._objectForFocusGrab:
                 try:
                     obj.queryComponent().grabFocus()
-                except LookupError:
+                except (LookupError, RuntimeError):
                     pass
 
             if self._objectForFocusGrab:
@@ -5431,7 +5431,7 @@ class Script(default.Script):
                 #    objectForFocus = objectForFocus.parent
                 try:
                     self._objectForFocusGrab.queryComponent().grabFocus()
-                except LookupError:
+                except (LookupError, RuntimeError):
                     pass
 
         text = self.utilities.queryNonEmptyText(obj)
