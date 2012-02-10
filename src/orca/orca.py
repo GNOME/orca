@@ -36,8 +36,11 @@ import sys
 import time
 import shutil
 
-from gi.repository.Gio import Settings
-a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')      
+try:
+    from gi.repository.Gio import Settings
+    a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')
+except:
+    a11yAppSettings = None
 
 # We're going to force the name of the app to "orca" so we
 # will end up showing us as "orca" to the AT-SPI.  If we don't
@@ -1452,8 +1455,7 @@ def init(registry):
 
     global _initialized
 
-    if _initialized \
-       and a11yAppSettings.get_boolean('screen-reader-enabled'):
+    if _initialized and _settingsManager.isScreenReaderServiceEnabled():
         return False
 
     # Do not hang on initialization if we can help it.
@@ -1469,7 +1471,11 @@ def init(registry):
         signal.alarm(0)
 
     _initialized = True
-    a11yAppSettings.connect('changed', onEnabledChanged)
+    # In theory, we can do this through dbus. In practice, it fails to
+    # work sometimes. Until we know why, we need to leave this as-is
+    # so that we respond when gnome-control-center is used to stop Orca.
+    if a11yAppSettings:
+        a11yAppSettings.connect('changed', onEnabledChanged)
     return True
 
 def start(registry):

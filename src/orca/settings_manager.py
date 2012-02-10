@@ -28,6 +28,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
+import dbus
 import os
 import imp
 from json import load
@@ -37,9 +38,10 @@ from keybindings import KeyBinding
 import settings
 import pronunciation_dict
 
-from gi.repository.Gio import Settings
-a11yAppSettings = Settings('org.gnome.desktop.interface')  
-
+_bus = dbus.SessionBus()
+_proxy = _bus.get_object("org.a11y.Bus", "/org/a11y/bus")
+_desktopProps = \
+    dbus.Interface(_proxy, dbus_interface='org.freedesktop.DBus.Properties')
 
 class SettingsManager(object):
     """Settings backend manager. This class manages orca user's settings
@@ -300,11 +302,18 @@ class SettingsManager(object):
         return not alreadyEnabled
 
     def isAccessibilityEnabled(self):
-        return a11yAppSettings.get_boolean("toolkit-accessibility")
+        return bool(_desktopProps.Get('org.a11y.Status', 'IsEnabled'))
 
     def setAccessibility(self, enable):
-        return a11yAppSettings.set_boolean(
-            "toolkit-accessibility", enable)
+        _desktopProps.Set('org.a11y.Status', 'IsEnabled', enable)
+        return True
+
+    def isScreenReaderServiceEnabled(self):
+        """Returns True if the screen reader service is enabled. Note that
+        this does not necessarily mean that Orca (or any other screen reader)
+        is running at the moment."""
+
+        return bool(_desktopProps.Get('org.a11y.Status', 'ScreenReaderEnabled'))
 
     def setStartingProfile(self, profile=None):
         if profile is None:
