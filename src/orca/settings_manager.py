@@ -31,6 +31,7 @@ __license__   = "LGPL"
 import dbus
 import os
 import imp
+from dbus.mainloop.glib import DBusGMainLoop
 from json import load
 
 import debug
@@ -38,7 +39,8 @@ from keybindings import KeyBinding
 import settings
 import pronunciation_dict
 
-_bus = dbus.SessionBus()
+_dbusLoop = DBusGMainLoop()
+_bus = dbus.SessionBus(mainloop=_dbusLoop)
 _proxy = _bus.get_object("org.a11y.Bus", "/org/a11y/bus")
 _desktopProps = \
     dbus.Interface(_proxy, dbus_interface='org.freedesktop.DBus.Properties')
