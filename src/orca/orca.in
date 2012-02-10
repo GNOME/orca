@@ -119,35 +119,6 @@ runOrca()
     restoreXmodmap
 }
 
-# Orca will fall into a text-based question and answer session if the
-# user has not configured orca and/or accessibility yet.  We will
-# force that to happen in the foreground (i.e., RUNONCE=true).  In
-# addition, if the user passes any command line arguments to orca, we
-# will run it in the foreground as well to avoid a situation where
-# orca dumps itself into the text-based setup utility.
-#
-# We make a special exception for gdm, which is used to handle the
-# accessible login.  If we're running as gdm, we assume everything is
-# all set and we don't need to muck around.
-#
-if [ "x$LOGNAME" != "xgdm" ] ; then
-    ACCESSIBILITY_ENABLED=`gsettings \
-        get org.gnome.desktop.interface toolkit-accessibility`
-    if [ "x$ACCESSIBILITY_ENABLED" != "xtrue" ] &&
-       [ `echo $ARGS | grep -c "no-setup"` -eq 0 ]; then
-        # Because we will be running Orca in text-setup mode, we want to
-        # make sure it is run in a terminal window.  If we're already in
-        # a terminal, this is great.  If not, we spawn a gnome-terminal
-        # and run orca in it.
-        #
-        tty -s && IN_TTY="true" || IN_TTY="false"
-        if [ "x$IN_TTY" = "xfalse" ] ; then
-            exec gnome-terminal -x $0 $ARGS
-            exit
-        fi
-    fi
-fi
-
 if [ `echo $ARGS | grep -c "\-q"` -gt 0 ] ; then
     # If the user has done -q or --quit, that means to tell any
     # existing orca process to quit.  So, we just do a cleanup.

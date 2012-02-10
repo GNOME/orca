@@ -1708,17 +1708,8 @@ def main():
 
     settings.userPrefsDir = options.userPrefsDir
 
-    # Do not run Orca if accessibility has not been enabled.
-    # We do allow, however, one to force Orca to run via the
-    # "-n" switch.  The main reason is so that things such
-    # as accessible login can work -- in those cases, the a11y
-    # setting is typically not set since the gdm user does not
-    # have a home.
-    #
-    a11yEnabled = _settingsManager.isAccessibilityEnabled()
-    if not options.bypassSetup and not a11yEnabled:
-        _showPreferencesConsole()
-        die()
+    if not _settingsManager.isAccessibilityEnabled():
+        _settingsManager.setAccessibility(True)
 
     if options.setupRequested and not (options.bypassSetup or options.showGUI):
         _showPreferencesConsole()
