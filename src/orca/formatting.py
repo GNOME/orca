@@ -119,6 +119,11 @@ formatting = {
             'unfocused': 'labelAndName + roleName + checkedState + required + availability + ' + MNEMONIC + ' + accelerator + positionInList',
             'basicWhereAmI': 'ancestors + labelAndName + roleName + checkedState + accelerator + positionInList + ' + MNEMONIC
             },
+        pyatspi.ROLE_COLOR_CHOOSER: {
+            'focused': 'value',
+            'unfocused': 'label + roleName + value + required + availability + ' + MNEMONIC,
+            'basicWhereAmI': 'label + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
+            },
         pyatspi.ROLE_COMBO_BOX: {
             'focused': 'name + positionInList',
             'unfocused': 'label + name + roleName + positionInList + ' + MNEMONIC + ' + accelerator',
