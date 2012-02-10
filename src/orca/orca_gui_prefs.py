@@ -2849,7 +2849,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orca_state.capturingKeys = False
         myiter = treeModel.get_iter_from_string(path)
-        originalBinding = treeModel.get_value(myiter, text)
+        try:
+            originalBinding = treeModel.get_value(myiter, text)
+        except:
+            originalBinding = ''
         modified = (originalBinding != new_text)
 
         try:
