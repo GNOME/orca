@@ -2881,7 +2881,7 @@ class Utilities:
 
         fullShortcut = fullShortcut.replace(":"," ").strip()
         fullShortcut = self.labelFromKeySequence(fullShortcut)
-        mnemonic = self.labelFromKeySequence(accelerator)
+        mnemonic = self.labelFromKeySequence(mnemonic)
         accelerator = self.labelFromKeySequence(accelerator)
 
         debug.println(debug.LEVEL_FINEST, "script_utilities.getKeyBinding: " \
