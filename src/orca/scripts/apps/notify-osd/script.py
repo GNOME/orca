@@ -44,8 +44,8 @@ class Script(default.Script):
         """
         listeners = default.Script.getListeners(self)
 
-        listeners["window:create"] = \
-            self.onWindowCreate
+        listeners["object:property-change:accessible-name"] = \
+            self.onNameChange
 
         listeners["object:property-change:accessible-value"] = \
             self.onValueChange
@@ -64,8 +64,8 @@ class Script(default.Script):
             self.displayBrailleMessage("%s" % value,
                                        flashTime=settings.brailleFlashTime)
 
-    def onWindowCreate(self, event):
-        """Called whenever a window is created in the notify-osd
+    def onNameChange(self, event):
+        """Called whenever an object's accessible name changes in the notify-osd
         application.
 
         Arguments:
