@@ -680,26 +680,6 @@ def _processBrailleEvent(event):
 #                                                                      #
 ########################################################################
 
-def toggleSilenceSpeech(script=None, inputEvent=None):
-    """Toggle the silencing of speech.
-
-    Returns True to indicate the input event has been consumed.
-    """
-    speech.stop()
-    if settings.silenceSpeech:
-        settings.silenceSpeech = False
-        # Translators: this is a spoken prompt letting the user know
-        # that speech synthesis has been turned back on.
-        #
-        orca_state.activeScript.presentMessage(_("Speech enabled."))
-    else:
-        # Translators: this is a spoken prompt letting the user know
-        # that speech synthesis has been temporarily turned off.
-        #
-        orca_state.activeScript.presentMessage(_("Speech disabled."))
-        settings.silenceSpeech = True
-    return True
-
 def _setXmodmap(xkbmap):
     """Set the keyboard map using xkbcomp."""
     p = subprocess.Popen(['xkbcomp', '-w0', '-', os.environ['DISPLAY']],

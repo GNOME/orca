@@ -850,7 +850,7 @@ class Script(script.Script):
 
         self.inputEventHandlers["toggleSilenceSpeechHandler"] = \
             input_event.InputEventHandler(
-                orca.toggleSilenceSpeech,
+                Script.toggleSilenceSpeech,
                 # Translators: Orca allows the user to turn speech synthesis
                 # on or off.  We call it 'silencing'.
                 #
@@ -2625,6 +2625,26 @@ class Script(script.Script):
             self.drawOutline(x, y, width, height)
             self._reviewCurrentItem(inputEvent, self.targetCursorCell)
 
+        return True
+
+    def toggleSilenceSpeech(self, inputEvent=None):
+        """Toggle the silencing of speech.
+
+        Returns True to indicate the input event has been consumed.
+        """
+        speech.stop()
+        if _settingsManager.getSetting('silenceSpeech'):
+            _settingsManager.setSetting('silenceSpeech', False)
+            # Translators: this is a spoken prompt letting the user know
+            # that speech synthesis has been turned back on.
+            #
+            self.presentMessage(_("Speech enabled."))
+        else:
+            # Translators: this is a spoken prompt letting the user know
+            # that speech synthesis has been temporarily turned off.
+            #
+            self.presentMessage(_("Speech disabled."))
+            _settingsManager.setSetting('silenceSpeech', True)
         return True
 
     def toggleSpeakingIndentationJustification(self, inputEvent=None):
