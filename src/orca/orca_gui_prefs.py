@@ -2804,7 +2804,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         eventState = keyPressedEvent.state
 
         modifierKeys =  ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
-                         'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R']
+                         'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R',
+                         'Num_Lock', 'Caps_Lock']
         if eventString in modifierKeys:
             return False
 
@@ -2816,11 +2817,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if eventString in orcaMods:
             self._capturedKey = ['', settings.ORCA_MODIFIER_MASK, 0]
             return False
-
-        if eventString.startswith("KP") and eventString != "KP_Enter":
-            name = Gdk.keyval_name(entries[1])
-            if name.startswith("KP"):
-                eventString = name
 
         if not self._capturedKey:
             self._capturedKey = [eventString, eventState, 1]
@@ -2889,6 +2885,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             # entered has already been bound to another command.
             #
             msg = _("The key entered is already bound to %s") % description
+            self._capturedKey = []
         else:
             # Translators: this is a spoken prompt letting the user know Orca
             # know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
