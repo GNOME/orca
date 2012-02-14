@@ -750,11 +750,6 @@ def overrideKeyBindings(script, keyBindings):
 def overridePronunciations(script, pronunciations):
     return pronunciations
 
-# Show deprecated messeges in debug output.
-# Set this to True to help find potential pyatspi porting problems
-#
-deprecatedMessages = False
-
 # This is a list of events that Orca should immidiately drop and never look at.
 #
 ignoredEventsList = ['object:bounds-changed']
