@@ -529,40 +529,6 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
 
 _orcaModifierPressed = False
 
-def _processKeyCaptured(event):
-    """Called when a new key event arrives and orca_state.capturingKeys=True.
-    (used for key bindings redefinition)
-    """
-
-    if event.type == 0:
-        if event.isModifierKey() or event.isLockingKey():
-            return True
-        else:
-            # We want the keyname rather than the printable character.
-            # If it's not on the keypad, get the name of the unshifted
-            # character. (i.e. "1" instead of "!")
-            #
-            keymap = Gdk.Keymap.get_default()
-            entries_for_keycode = keymap.get_entries_for_keycode(event.hw_code)
-            entries = entries_for_keycode[-1]
-            event.event_string = Gdk.keyval_name(entries[0])
-
-            if not event.event_string:
-                orca_state.capturingKeys = False
-                return False
-
-            if event.event_string.startswith("KP") and \
-               event.event_string != "KP_Enter":
-                name = Gdk.keyval_name(entries[1].keycode)
-                if name.startswith("KP"):
-                    event.event_string = name
-
-            orca_state.lastCapturedKey = event
-    else:
-        pass
-
-    return False
-
 def _processKeyboardEvent(event):
     """The primary key event handler for Orca.  Keeps track of various
     attributes, such as the lastInputEvent.  Also does key echo as well
@@ -611,7 +577,7 @@ def _processKeyboardEvent(event):
     if not isPressedEvent and keyboardEvent.event_string == "Escape":
         script.exitLearnMode(keyboardEvent)
     if orca_state.capturingKeys:
-        return _processKeyCaptured(keyboardEvent)
+        return False
     if settings.listShortcutsModeEnabled:
         return listShortcuts(keyboardEvent)
     if notification_messages.listNotificationMessagesModeEnabled:

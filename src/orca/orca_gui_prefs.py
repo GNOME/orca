@@ -147,6 +147,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.profilesCombo = None
         self.profilesComboModel = None
         self.startingProfileCombo = None
+        self._capturedKey = []
 
     def _getGeneralSettings(self, prefsDict):
         if prefsDict is None:
@@ -2783,7 +2784,55 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """Stops user input of a Key for a selected key binding"""
 
         orca_state.capturingKeys = False
+        self._capturedKey = []
         return
+
+    def _processKeyCaptured(self, keyPressedEvent):
+        """Called when a new key event arrives and we are capturing keys.
+        (used for key bindings redefinition)
+        """
+
+        # We want the keyname rather than the printable character.
+        # If it's not on the keypad, get the name of the unshifted
+        # character. (i.e. "1" instead of "!")
+        #
+        keycode = keyPressedEvent.hardware_keycode
+        keymap = Gdk.Keymap.get_default()
+        entries_for_keycode = keymap.get_entries_for_keycode(keycode)
+        entries = entries_for_keycode[-1]
+        eventString = Gdk.keyval_name(entries[0])
+        eventState = keyPressedEvent.state
+
+        modifierKeys =  ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
+                         'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R']
+        if eventString in modifierKeys:
+            return False
+
+        orcaMods = settings.orcaModifierKeys
+        try:
+            orcaMods = map(lambda x: x.encode('UTF-8'), orcaMods)
+        except (UnicodeDecodeError, UnicodeEncodeError):
+            pass
+        if eventString in orcaMods:
+            self._capturedKey = ['', settings.ORCA_MODIFIER_MASK, 0]
+            return False
+
+        if eventString.startswith("KP") and eventString != "KP_Enter":
+            name = Gdk.keyval_name(entries[1])
+            if name.startswith("KP"):
+                eventString = name
+
+        if not self._capturedKey:
+            self._capturedKey = [eventString, eventState, 1]
+            return True
+
+        string, modifiers, clickCount = self._capturedKey
+        isOrcaModifier = modifiers & settings.ORCA_MODIFIER_MASK
+        if isOrcaModifier:
+            eventState |= settings.ORCA_MODIFIER_MASK
+            self._capturedKey = [eventString, eventState, clickCount + 1]
+
+        return True
 
     def kbKeyPressed(self, editable, event):
         """Special handler for the key_pressed events when editing the
@@ -2791,12 +2840,18 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         entry.
         """
 
-        captured = orca_state.lastCapturedKey
-        if not captured or captured.event_string in ["Return", "Escape"]:
+        keyProcessed = self._processKeyCaptured(event)
+        if not keyProcessed:
+            return True
+
+        if not self._capturedKey:
             return False
 
-        keyName = captured.event_string
-        isOrcaModifier = captured.modifiers & settings.ORCA_MODIFIER_MASK
+        keyName, modifiers, clickCount = self._capturedKey
+        if not keyName or keyName in ["Return", "Escape"]:
+            return False
+
+        isOrcaModifier = modifiers & settings.ORCA_MODIFIER_MASK
         if keyName in ["Delete", "BackSpace"] and not isOrcaModifier:
             editable.set_text("")
             # Translators: this is a spoken prompt letting the user know
@@ -2805,24 +2860,28 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             #
             self._presentMessage(
                 _("Key binding deleted. Press enter to confirm."))
+            self._capturedKey = []
             self.newBinding = None
             return True
 
-        clickCount = orca_state.clickCount
         self.newBinding = keybindings.KeyBinding(keyName,
                                                  settings.defaultModifierMask,
-                                                 captured.modifiers,
+                                                 modifiers,
                                                  None,
                                                  clickCount)
-        modifierNames = keybindings.getModifierNames(captured.modifiers)
-        clickCount = self._clickCountToString(clickCount)
-        newString = modifierNames + keyName + clickCount
+        modifierNames = keybindings.getModifierNames(modifiers)
+        clickCountString = self._clickCountToString(clickCount)
+        newString = modifierNames + keyName + clickCountString
         description = self.pendingKeyBindings.get(newString)
-        if description is None \
-           and self.kbindings.hasKeyBinding(self.newBinding, "keysNoMask"):
-            handler = self.kbindings.getInputHandler(captured)
-            if handler:
-                description = handler.description
+
+        if description is None:
+            match = lambda x: x.keysymstring == keyName \
+                          and x.modifiers == modifiers \
+                          and x.click_count == clickCount \
+                          and x.handler
+            matches = filter(match, self.kbindings.keyBindings)
+            if matches:
+                description = matches[0].handler.description
 
         if description:
             # Translators: this is a spoken prompt letting the user know
@@ -2848,6 +2907,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         """
 
         orca_state.capturingKeys = False
+        self._capturedKey = []
         myiter = treeModel.get_iter_from_string(path)
         try:
             originalBinding = treeModel.get_value(myiter, text)
