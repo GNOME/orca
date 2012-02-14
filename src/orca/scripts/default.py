@@ -1620,6 +1620,29 @@ class Script(script.Script):
         _settingsManager.setSetting('listShortcutsModeEnabled', True)
         return True
 
+    def exitListShortcutsMode(self, inputEvent=None):
+        """Turns list shortcuts mode off.
+
+        Returns True to indicate the input event has been consumed.
+        """
+
+        orca_state.listOfShortcuts = []
+        orca_state.typeOfShortcuts = ""
+        orca_state.ptrToShortcut = -1
+        settings.listShortcutsModeEnabled = False
+
+        # Translators: Orca has a "List Shortcuts Mode" that allows the user to
+        # list a group of keyboard shortcuts. Pressing 1 makes it possible for
+        # the user to navigate amongst a list of global ("default") commands.
+        # Pressing 2 allows the user to navigate amongst Orca commands specific
+        # to the application with focus. Escape exists this mode. This string
+        # is the prompt which will be presented to the user in both speech and
+        # braille upon exiting this mode.
+        #
+        message = _("Exiting list shortcuts mode.")
+        self.presentMessage(message)
+        return True
+
     def findNext(self, inputEvent):
         """Searches forward for the next instance of the string
         searched for via the Orca Find dialog.  Other than direction

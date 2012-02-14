@@ -525,29 +525,6 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         orca_state.activeScript.locusOfFocusChanged(
             event, oldLocusOfFocus, orca_state.locusOfFocus)
 
-def exitListShortcutsMode(self, inputEvent=None):
-    """Turns list shortcuts mode off.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    orca_state.listOfShortcuts = []
-    orca_state.typeOfShortcuts = ""
-    orca_state.ptrToShortcut = -1
-    settings.listShortcutsModeEnabled = False
-
-    # Translators: Orca has a "List Shortcuts Mode" that allows the user to
-    # list a group of keyboard shortcuts. Pressing 1 makes it possible for
-    # the user to navigate amongst a list of global ("default") commands.
-    # Pressing 2 allows the user to navigate amongst Orca commands specific
-    # to the application with focus. Escape exists this mode. This string
-    # is the prompt which will be presented to the user in both speech and
-    # braille upon exiting this mode.
-    #
-    message = _("Exiting list shortcuts mode.")
-    orca_state.activeScript.presentMessage(message)
-    return True
-
 ########################################################################
 #                                                                      #
 # METHODS FOR PRE-PROCESSING AND MASSAGING KEYBOARD EVENTS.            #
@@ -1018,7 +995,6 @@ def listShortcuts(event):
 
     numShortcuts = len(orca_state.listOfShortcuts)
     consumed = False
-    clickCount = 0
     message = ""
 
     # Translators: The following string instructs the user how to navigate
@@ -1029,7 +1005,6 @@ def listShortcuts(event):
         _("Use Up and Down Arrow to navigate the list. Press Escape to exit.")
 
     if event.type == pyatspi.KEY_PRESSED_EVENT:
-        clickCount = event.getClickCount()
         if (event.event_string == "1"):
             if not numShortcuts or orca_state.typeOfShortcuts != "default":
                 orca_state.listOfShortcuts = getListOfShortcuts("default")
@@ -1127,7 +1102,7 @@ def listShortcuts(event):
                 orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
         elif (event.event_string == "Escape"):
-            exitListShortcutsMode(event)
+            orca_state.activeScript.exitListShortcutsMode(event)
             consumed = True 
         else:
             # Translators: Orca has a 'List Shortcuts' mode by which a user can
