@@ -40,7 +40,7 @@ AC_PROG_INSTALL
 dnl Check for python and python modules needed by Orca
 dnl TODO: check for incompatibilities between Orca and liblouis
 dnl per http://live.gnome.org/Orca/Braille
-AM_PATH_PYTHON(2.4)
+AM_PATH_PYTHON(2.7)
 #AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find python module: gobject)])
 # Don't require the DISPLAY to be set - the gtk checking will fail 
 # if DISPLAY is not set, and we don't like that.

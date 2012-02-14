@@ -30,7 +30,7 @@ infrastructure and application bug fixes that help Orca work better.
 Building Orca also requires the development modules for the following
 to be installed:
 
-* Python           - Python platform
+* Python           - Python platform (minimum version 2.7)
 * pygobject-3.0    - Python bindings for the GObject library
 * gtk+-3.0         - Gtk+ toolkit
 * json-py          - a JSON (http://json.org) reader and writer in Python
@@ -39,18 +39,18 @@ to be installed:
 * BrlTTY           - BrlTTY support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
 
-YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 3.1.x DEVELOPMENT
+YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 3.3.x DEVELOPMENT
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
 on your machine, you should set the PYTHON environment variable when 
 configuring Orca.  For example:
 
-   PYTHON=/usr/bin/python2.6 ./autogen.sh
+   PYTHON=/usr/bin/python2.7 ./autogen.sh
 
 or
 
-   PYTHON=/usr/bin/python2.6 ./configure
+   PYTHON=/usr/bin/python2.7 ./configure
 
 NOTE FOR BRLTTY USERS:
 ========================================================================
