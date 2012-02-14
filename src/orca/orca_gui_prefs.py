@@ -2818,7 +2818,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             self._capturedKey = ['', settings.ORCA_MODIFIER_MASK, 0]
             return False
 
-        if not self._capturedKey:
+        if not self._capturedKey \
+           or eventString in ['Return', 'Escape']:
             self._capturedKey = [eventString, eventState, 1]
             return True
 
