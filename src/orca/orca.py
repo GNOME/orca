@@ -525,39 +525,6 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         orca_state.activeScript.locusOfFocusChanged(
             event, oldLocusOfFocus, orca_state.locusOfFocus)
 
-########################################################################
-#                                                                      #
-# DEBUG support.                                                       #
-#                                                                      #
-########################################################################
-
-def cycleDebugLevel(script=None, inputEvent=None):
-    levels = [debug.LEVEL_ALL, "all",
-              debug.LEVEL_FINEST, "finest",
-              debug.LEVEL_FINER, "finer",
-              debug.LEVEL_FINE, "fine",
-              debug.LEVEL_CONFIGURATION, "configuration",
-              debug.LEVEL_INFO, "info",
-              debug.LEVEL_WARNING, "warning",
-              debug.LEVEL_SEVERE, "severe",
-              debug.LEVEL_OFF, "off"]
-
-    try:
-        levelIndex = levels.index(debug.debugLevel) + 2
-    except:
-        levelIndex = 0
-    else:
-        if levelIndex >= len(levels):
-            levelIndex = 0
-
-    debug.debugLevel = levels[levelIndex]
-
-    briefMessage = levels[levelIndex + 1]
-    fullMessage =  "Debug level %s." % briefMessage
-    orca_state.activeScript.presentMessage(fullMessage, briefMessage)
-
-    return True
-
 def exitListShortcutsMode(self, inputEvent=None):
     """Turns list shortcuts mode off.
 
