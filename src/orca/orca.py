@@ -488,10 +488,6 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
         # Either it's None or it's an invalid remote object.
         oldLocusOfFocus = None
 
-    orca_state.focusHistory = \
-        orca_state.focusHistory[:settings.focusHistoryLength - 1]
-    orca_state.focusHistory.insert(0, oldLocusOfFocus)
-
     orca_state.locusOfFocus = obj
     try:
         app = orca_state.locusOfFocus.getApplication()

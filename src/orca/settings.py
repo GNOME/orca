@@ -755,11 +755,6 @@ def overridePronunciations(script, pronunciations):
 #
 deprecatedMessages = False
 
-# Focus history length. We keep a reference to past focused accessibles to
-# maximize on caching.
-#
-focusHistoryLength = 5
-
 # This is a list of events that Orca should immidiately drop and never look at.
 #
 ignoredEventsList = ['object:bounds-changed']
