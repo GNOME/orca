@@ -43,7 +43,7 @@ YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 3.3.x DEVELOPMENT
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
-on your machine, you shhould set the PYTHON environment variable when 
+on your machine, you should set the PYTHON environment variable when 
 configuring Orca.  For example:
 
    PYTHON=/usr/bin/python2.7 ./autogen.sh
