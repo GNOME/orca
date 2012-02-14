@@ -1310,6 +1310,29 @@ def showSplashGUI(script=None, inputEvent=None):
 #
 _initialized = False
 
+def setProcessName():
+    """Attempts to set the process name to 'orca'."""
+
+    # Disabling the import error of setproctitle.
+    # pylint: disable-msg=F0401
+    try:
+        from setproctitle import setproctitle
+    except ImportError:
+        pass
+    else:
+        setproctitle('orca')
+        return True
+
+    try:
+        from ctypes import cdll
+        libc = cdll.LoadLibrary('libc.so.6')
+        libc.prctl(15, 'orca', 0, 0, 0)
+        return True
+    except:
+        pass
+
+    return False
+
 def init(registry):
     """Initialize the orca module, which initializes the speech and braille
     modules.  Also builds up the application list, registers for AT-SPI events,
@@ -1350,6 +1373,8 @@ def start(registry):
 
     if not _initialized:
         init(registry)
+
+    setProcessName()
 
     # Do not hang on startup if we can help it.
     #

@@ -20,15 +20,14 @@ information on Orca, including how to run Orca, how to communicate
 with the Orca user community, and where to log bugs and feature
 requests.
 
-Build Requirements
+Dependencies
 ========================================================================
 
 Orca v3.3.x is supported on GNOME 3.3.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
-Building Orca also requires the development modules for the following
-to be installed:
+Orca also has the following dependencies:
 
 * Python           - Python platform (minimum version 2.7)
 * pygobject-3.0    - Python bindings for the GObject library
@@ -38,12 +37,13 @@ to be installed:
 * python-speechd   - Python bindings for Speech Dispatcher (optional)
 * BrlTTY           - BrlTTY support for braille (optional)
 * BrlAPI           - BrlAPI support for braille (optional)
+* py-setproctitle  - Python library to set the process title (optional)
 
 YOU ALSO NEED THE LATEST AT-SPI AND ATK FOR THE GNOME 3.3.x DEVELOPMENT
 RELEASES.  THEY CONTAIN VERY IMPORTANT BUG FIXES!
 
 NOTE: If you have multiple versions of the python interpreter installed
-on your machine, you should set the PYTHON environment variable when 
+on your machine, you shhould set the PYTHON environment variable when 
 configuring Orca.  For example:
 
    PYTHON=/usr/bin/python2.7 ./autogen.sh
