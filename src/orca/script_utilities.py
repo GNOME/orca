@@ -1486,6 +1486,28 @@ class Utilities:
 
         return obj
 
+    @staticmethod
+    def spatialComparison(obj1, obj2):
+        """Compares the physical locations of obj1 and obj2 and returns -1,
+        0, or 1 to indicate if obj1 physically is before, is in the same
+        place as, or is after obj2."""
+
+        try:
+            extents1 = obj1.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        except:
+            extents1 = 0, 0, 0, 0
+
+        try:
+            extents2 = obj2.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        except:
+            extents2 = 0, 0, 0, 0
+
+        rv = extents1[1] - extents2[1] or extents1[0] - extents2[0]
+        rv = max(rv, -1)
+        rv = min(rv, 1)
+
+        return rv
+
     def unrelatedLabels(self, root):
         """Returns a list containing all the unrelated (i.e., have no
         relations to anything and are not a fundamental element of a
@@ -1499,42 +1521,11 @@ class Utilities:
         """
 
         allLabels = self.descendantsWithRole(root, pyatspi.ROLE_LABEL)
-        unrelatedLabels = []
-        for label in allLabels:
-            relations = label.getRelationSet()
-            if len(relations) == 0:
-                parent = label.parent
-                if parent and (parent.getRole() == pyatspi.ROLE_PUSH_BUTTON):
-                    pass
-                elif parent and (parent.getRole() == pyatspi.ROLE_PANEL) \
-                   and (parent.name == label.name):
-                    pass
-                elif label.getState().contains(pyatspi.STATE_SHOWING):
-                    unrelatedLabels.append(label)
-
-        # Now sort the labels based on their geographic position, top to
-        # bottom, left to right.  This is a very inefficient sort, but the
-        # assumption here is that there will not be a lot of labels to
-        # worry about.
-        #
-        sortedLabels = []
-        for label in unrelatedLabels:
-            label_extents = \
-                label.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
-            index = 0
-            for sortedLabel in sortedLabels:
-                sorted_extents = \
-                    sortedLabel.queryComponent().getExtents(
-                  pyatspi.DESKTOP_COORDS)
-                if (label_extents.y > sorted_extents.y) \
-                   or ((label_extents.y == sorted_extents.y) \
-                       and (label_extents.x > sorted_extents.x)):
-                    index += 1
-                else:
-                    break
-            sortedLabels.insert(index, label)
-
-        return sortedLabels
+        labels = filter(lambda x: not x.getRelationSet(), allLabels)
+        labels = filter(lambda x: x.parent and x.name != x.parent.name, labels)
+        labels = filter(
+            lambda x: x.getState().contains(pyatspi.STATE_SHOWING), labels)
+        return sorted(labels, self.spatialComparison)
 
     def unfocusedAlertAndDialogCount(self, obj):
         """If the current application has one or more alert or dialog
