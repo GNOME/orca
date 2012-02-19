@@ -192,7 +192,8 @@ class Script(default.Script):
         """
 
         # We override the behaviour for the selection
-        if event.type.startswith("object:state-changed:selected"):
+        if event.type.startswith("object:state-changed:selected") \
+           and event.detail1:
             # For the moment we announce any selection change
 
             if event.source is not None:
