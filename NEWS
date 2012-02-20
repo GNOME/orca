@@ -1,3 +1,52 @@
+3.3.90 - 20 February 2012
+
+General
+
+  * Only set the locusOfFocus when gnome-shell selection changes to
+    selected
+
+  * Clean up Orca's locating and sorting of "unrelated" labels
+
+  * Clean up Orca's code for capturing of keys for rebinding
+
+  * Delete an old setting we no longer use (from the pyatspi1 port)
+
+  * Get rid of orca_state.focusHistory: We no longer use it but we
+    keep storing it
+
+  * Move input event handlers out of orca.py
+
+  * Fix for bug 596359 - Should set the process name to "orca"
+
+  * Fix for bug 628473 - orca.py should use argparse instead of getopts
+
+  * Fix for bug 669632 - Orca does not present correct mnemonic for menu
+    items
+
+  * Fix notify-osd script to listen for accessible-name/value signals
+    only
+
+  * Orca needs to speak value changes for objects of ROLE_COLOR_CHOOSER
+
+  * Use dbus rather than gsettings to check if accessibility support and
+    screen reader are enabled
+
+  * Remove forced terminal-setup; enable accessibility support instead
+
+  * Fix a traceback which prevented certain keybindings from binding
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    be            Belarusian             Kasia Bondarava
+    cs            Czech                  Marek Černocký
+    es            Spanish                Daniel Mustieles
+    nb            Norwegian bokmål       Kjartan Maraas
+    ru            Russian                Yuri Myasoedov
+    sl            Slovenian              Matej Urbančič
+    sv            Swedish                Daniel Nylander
+
+=========
+
 3.3.5 - 6 February 2012
 
 General
