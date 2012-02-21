@@ -112,6 +112,8 @@ class Options(argparse.Namespace):
         self._validFeaturesPrinted = False
         self.setupRequested = False
         self.showGUI = False
+        self.debug = False
+        self.debugFile = None
 
     def validate(self):
         """Validate the commandline options."""
@@ -161,6 +163,11 @@ class Options(argparse.Namespace):
                     disable.append(i)
 
         self.disable = disable
+
+        if self.debugFile:
+            self.debug = True
+        elif self.debug:
+            self.debugFile = time.strftime('debug-%Y-%m-%d-%H:%M:%S.out')
 
     def _printMessageAndExit(self, msg):
         """Prints the specified message string and then exits."""
