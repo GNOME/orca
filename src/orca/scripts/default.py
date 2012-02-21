@@ -1424,6 +1424,15 @@ class Script(script.Script):
                         speech.speak(utterances)
                         return
 
+        if obj.getRole() == pyatspi.ROLE_NOTIFICATION \
+           and obj.getState().contains(pyatspi.STATE_SHOWING):
+            utterances = self.speechGenerator.generateSpeech(obj)
+            speech.speak(utterances)
+            labels = self.utilities.unrelatedLabels(obj)
+            msg = ''.join(map(self.utilities.displayedText, labels))
+            self.displayBrailleMessage(msg, flashTime=settings.brailleFlashTime)
+            notification_messages.saveMessage(msg)
+
         if not self.utilities.isSameObject(obj, orca_state.locusOfFocus):
             return
 
@@ -5966,6 +5975,7 @@ state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked",
                                                         None)
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
+state_change_notifiers[pyatspi.ROLE_NOTIFICATION]    = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_RADIO_BUTTON]    = ("checked", None)
 state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("checked",
                                                         "pressed",

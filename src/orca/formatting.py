@@ -188,6 +188,9 @@ formatting = {
             'unfocused': 'labelAndName + menuItemCheckedState + availability + ' + MNEMONIC + ' + accelerator + positionInList',
             'basicWhereAmI': 'ancestors + labelAndName + accelerator + positionInList + ' + MNEMONIC
             },
+        pyatspi.ROLE_NOTIFICATION: {
+            'unfocused': 'roleName + unrelatedLabels'
+            },
         pyatspi.ROLE_PAGE_TAB: {
             'focused': 'labelAndName + roleName + positionInList + ' + MNEMONIC + ' + accelerator',
             'unfocused': 'labelAndName + roleName + positionInList + ' + MNEMONIC + ' + accelerator',
