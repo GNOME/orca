@@ -983,8 +983,6 @@ rolenames[ROLE_TEXT] = Rolename(
     #
     _("text"))
 
-rolenames[ROLE_ENTRY] = rolenames[ROLE_TEXT]
-
 rolenames[ROLE_TOGGLE_BUTTON] = Rolename(
     ROLE_TOGGLE_BUTTON,
     # Translators: short braille for the rolename of a toggle button.
