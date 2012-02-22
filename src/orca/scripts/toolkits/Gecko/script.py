@@ -2269,7 +2269,7 @@ class Script(default.Script):
             # Add whitespace if we need it. [[[TODO: JD - But should we be
             # doing this in the braille generators rather than here??]]]
             #
-            if len(line.regions) \
+            if regions and len(line.regions) \
                and regions[0].string and line.regions[-1].string \
                and not regions[0].string[0] in whitespace \
                and not line.regions[-1].string[-1] in whitespace:
