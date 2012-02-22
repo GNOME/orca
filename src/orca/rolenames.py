@@ -1,5 +1,6 @@
 # Orca
 #
+# Copyright 2012 Igalia, S.L.
 # Copyright 2004-2008 Sun Microsystems Inc.
 # Copyright 2001, 2002 BAUM Retec, A.G.
 #
@@ -24,13 +25,14 @@ object into localized strings for speech and braille."""
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2004-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
+
+import pyatspi
+from gi.repository import Atspi, Atk
 
 import debug
 import settings
-
-import pyatspi
 
 from orca_i18n import _  # for gettext support
 from orca_i18n import C_ # to provide qualified translatable strings
@@ -1199,6 +1201,22 @@ def _adjustRole(obj, role):
 
     return role
 
+def getLocalizedRoleName(obj, role=None):
+    """Returns the localized role name for the given Accessible.
+
+    Arguments:
+    - obj: an Accessible object
+    - role: an optional pyatspi role to use instead
+    """
+
+    if not isinstance(role, pyatspi.Role):
+        return obj.getLocalizedRoleName()
+
+    nonlocalized = Atspi.role_get_name(role)
+    atkRole = Atk.role_for_name(nonlocalized)
+
+    return Atk.role_get_localized_name(atkRole)
+
 def getSpeechForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
     suitable to be spoken.  If a localized name cannot be discovered, this
@@ -1211,20 +1229,7 @@ def getSpeechForRoleName(obj, role=None):
     to be spoken.
     """
 
-    role = _adjustRole(obj, role or obj.getRole())
-
-    # If the enum is not in the dictionary, check by name.
-    role_entry = \
-        rolenames.get(role) or rolenames.get(obj.getRoleName())
-    if role_entry:
-        return role_entry.speech
-    else:
-        debug.println(debug.LEVEL_WARNING, "No rolename for %s" % repr(role))
-        localizedRoleName = obj.getLocalizedRoleName()
-        if localizedRoleName and len(localizedRoleName):
-            return localizedRoleName
-        else:
-            return repr(role)
+    return getLocalizedRoleName(obj, role)
 
 def getShortBrailleForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
@@ -1265,20 +1270,8 @@ def getLongBrailleForRoleName(obj, role=None):
     a Braille display.
     """
 
-    role = _adjustRole(obj, role or obj.getRole())
-
-    # If the enum is not in the dictionary, check by name.
-    role_entry = \
-        rolenames.get(role) or rolenames.get(obj.getRoleName())
-    if role_entry:
-        return role_entry.brailleLong
-    else:
-        debug.println(debug.LEVEL_WARNING, "No rolename for %s" % repr(role))
-        localizedRoleName = obj.getLocalizedRoleName()
-        if localizedRoleName and len(localizedRoleName):
-            return localizedRoleName
-        else:
-            return repr(role)
+    localized = getLocalizedRoleName(obj, role)
+    return ''.join(map(str.title, localized.split()))
 
 def getBrailleForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
