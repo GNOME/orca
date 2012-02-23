@@ -33,7 +33,7 @@ AC_CACHE_VAL(py_cv_mod_$py_mod_var, [
 ifelse([$2],[], [prog="
 import sys
 try:
-	from gi.repository import Gtk
+	from gi.repository import GObject
 	import $1
 except ImportError:
 	sys.exit(1)
