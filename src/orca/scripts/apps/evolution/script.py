@@ -31,7 +31,6 @@ import orca.debug as debug
 import orca.scripts.default as default
 import orca.keybindings as keybindings
 import orca.input_event as input_event
-import orca.rolenames as rolenames
 import orca.braille as braille
 import orca.orca as orca
 import orca.orca_state as orca_state
@@ -96,42 +95,6 @@ class Script(default.Script):
 
         # Evolution defines new custom roles. We need to make them known
         # to Orca for Speech and Braille output.
-
-        # Pylint is confused and flags several errors of the type:
-        #
-        # E1101:282:Script.__init__: Module 'orca.rolenames' has no
-        # 'ROLE_CALENDAR_VIEW' member
-        #
-        # So for now, we just disable these errors in this method.
-        #
-        # pylint: disable-msg=E1101
-
-        rolenames.ROLE_CALENDAR_VIEW = "Calendar View"
-        rolenames.rolenames[rolenames.ROLE_CALENDAR_VIEW] = rolenames.Rolename(
-            rolenames.ROLE_CALENDAR_VIEW,
-            # Translators: short braille for the rolename of a calendar view.
-            #
-            _("calv"),
-            # Translators: long braille for the rolename of a calendar view.
-            #
-            _("CalendarView"),
-            # Translators: spoken words for the rolename of a calendar view.
-            #
-            _("calendar view"))
-
-        rolenames.ROLE_CALENDAR_EVENT = "Calendar Event"
-        rolenames.rolenames[rolenames.ROLE_CALENDAR_EVENT] = \
-            rolenames.Rolename(
-            rolenames.ROLE_CALENDAR_EVENT,
-            # Translators: short braille for the rolename of a calendar event.
-            #
-            _("cale"),
-            # Translators: long braille for the rolename of a calendar event.
-            #
-            _("CalendarEvent"),
-            # Translators: spoken words for the rolename of a calendar event.
-            #
-            _("calendar event"))
 
     def getSpeechGenerator(self):
         """Returns the speech generator for this script.
@@ -260,15 +223,6 @@ class Script(default.Script):
         - oldLocusOfFocus: Accessible that is the old locus of focus
         - newLocusOfFocus: Accessible that is the new locus of focus
         """
-
-        # Pylint is confused and flags several errors of the type:
-        #
-        # E1101:1040:Script.locusOfFocusChanged: Module 'orca.rolenames'
-        # has no 'ROLE_CALENDAR_EVENT' member
-        #
-        # So for now, we just disable these errors in this method.
-        #
-        # pylint: disable-msg=E1101
 
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
@@ -650,8 +604,7 @@ class Script(default.Script):
         # which is determined by the number of children in the parent Calendar
         # View's table.
 
-        self.rolesList = [rolenames.ROLE_CALENDAR_EVENT, \
-                          rolenames.ROLE_CALENDAR_VIEW]
+        self.rolesList = ['Calendar Event', 'Calendar View']
         if self.utilities.hasMatchingHierarchy(event.source, self.rolesList):
             debug.println(self.debugLevel,
                           "evolution.locusOfFocusChanged - calendar view: " \
@@ -722,7 +675,7 @@ class Script(default.Script):
 
         self.rolesList = [pyatspi.ROLE_UNKNOWN, \
                           pyatspi.ROLE_TABLE, \
-                          rolenames.ROLE_CALENDAR_VIEW]
+                          'Calendar View']
         if self.utilities.hasMatchingHierarchy(event.source, self.rolesList):
             debug.println(self.debugLevel,
                       "evolution.locusOfFocusChanged - calendar view: " \
@@ -737,7 +690,7 @@ class Script(default.Script):
             found = False
 
             for child in calendarView:
-                if (child.getRoleName() == rolenames.ROLE_CALENDAR_EVENT):
+                if child.getRoleName() == 'Calendar Event':
                     apptExtents = child.queryComponent().getExtents(0)
 
                     if extents.y == apptExtents.y:
