@@ -41,7 +41,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Orca Team."
 __license__   = "LGPL"
 
-from gi.repository import Atk
 from gi.repository import Gtk
 import pyatspi
 import re
@@ -1438,7 +1437,8 @@ class Script(default.Script):
            and event.source.getRole() in [pyatspi.ROLE_SCROLL_PANE,
                                           pyatspi.ROLE_FRAME]:
             utterances = []
-            utterances.append(rolenames.getSpeechForRoleName(event.any_data))
+            utterances.append(
+                self.speechGenerator.getLocalizedRoleName(event.any_data))
             verbosity = _settingsManager.getSetting('speechVerbosityLevel')
             if verbosity == settings.VERBOSITY_LEVEL_VERBOSE:
                 utterances.extend(
@@ -1619,8 +1619,9 @@ class Script(default.Script):
             linkText = text.getText(0, -1)
             speech.speak(linkText, self.voices[settings.HYPERLINK_VOICE])
         else:
-            speech.speak(rolenames.getSpeechForRoleName(event.source),
-                         self.voices[settings.HYPERLINK_VOICE])
+            speech.speak(
+                self.speechGenerator.getLocalizedRoleName(event.source),
+                self.voices[settings.HYPERLINK_VOICE])
 
         self.updateBraille(event.source)
 
@@ -1671,7 +1672,7 @@ class Script(default.Script):
                         keyEvent = orca_state.lastNonModifierKeyEvent
                         speakIt = (keyEvent.event_string == ("Down"))
                     if speakIt:
-                        speech.speak(rolenames.getSpeechForRoleName(\
+                        speech.speak(self.speechGenerator.getLocalizedRoleName(\
                                 event.source, pyatspi.ROLE_AUTOCOMPLETE))
 
         # We care when the document frame changes it's busy state.  That
@@ -1971,7 +1972,8 @@ class Script(default.Script):
             if self.flatReviewContext:
                 self.toggleFlatReviewMode()
             self.updateBraille(newLocusOfFocus)
-            speech.speak(rolenames.getSpeechForRoleName(newLocusOfFocus))
+            speech.speak(
+                self.speechGenerator.getLocalizedRoleName(newLocusOfFocus))
             return
 
         default.Script.locusOfFocusChanged(self,

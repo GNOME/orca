@@ -34,7 +34,6 @@ import urlparse
 
 import orca.speech as speech
 import orca.bookmarks as bookmarks
-import orca.rolenames as rolenames
 
 from orca.orca_i18n import _
 
@@ -127,7 +126,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         p = cur_obj.parent
         while p:
             if bookmark_ancestors.count(p) > 0:
-                rolename = rolenames.getSpeechForRoleName(p)
+                rolename = p.getLocalizedRoleName()
                 # Translators: this announces that the bookmark and the current
                 # object share a common ancestor
                 #

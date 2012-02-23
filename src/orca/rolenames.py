@@ -1217,20 +1217,6 @@ def getLocalizedRoleName(obj, role=None):
 
     return Atk.role_get_localized_name(atkRole)
 
-def getSpeechForRoleName(obj, role=None):
-    """Returns the localized name of the given Accessible object; the name is
-    suitable to be spoken.  If a localized name cannot be discovered, this
-    will return the string as defined by the at-spi.
-
-    Arguments:
-    - obj: an Accessible object
-
-    Returns a string containing the localized name of the object suitable
-    to be spoken.
-    """
-
-    return getLocalizedRoleName(obj, role)
-
 def getShortBrailleForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
     a short string suitable for a Braille display.  If a localized name cannot

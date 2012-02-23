@@ -25,12 +25,12 @@ __date__      = "$Date:$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
 import urlparse, urllib2
+from gi.repository import Atspi, Atk
 
 import generator
-import pyatspi
 import orca
-import rolenames
 import settings
 import sound
 import text_attribute_names
@@ -253,7 +253,7 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(SYSTEM)
         role = args.get('role', obj.getRole())
         if (role != pyatspi.ROLE_UNKNOWN):
-            result.append(rolenames.getSpeechForRoleName(obj, role))
+            result.append(self.getLocalizedRoleName(obj, role))
             result.extend(acss)
         return result
 
@@ -266,6 +266,24 @@ class SpeechGenerator(generator.Generator):
         method for scripts to call.
         """
         return self._generateRoleName(obj, **args)
+
+    @staticmethod
+    def getLocalizedRoleName(obj, role=None):
+        """Returns the localized name of the given Accessible object; the name
+        is suitable to be spoken.
+
+        Arguments:
+        - obj: an Accessible object
+        - role: an optional pyatspi role to use instead
+        """
+
+        if not isinstance(role, pyatspi.Role):
+            return obj.getLocalizedRoleName()
+
+        nonlocalized = Atspi.role_get_name(role)
+        atkRole = Atk.role_for_name(nonlocalized)
+
+        return Atk.role_get_localized_name(atkRole)
 
     def _generateUnrelatedLabels(self, obj, **args):
         """Returns, as an array of strings (and possibly voice

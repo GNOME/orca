@@ -22,7 +22,6 @@
 import pickle
 import os
 
-import rolenames
 import speech
 import settings
 import orca_state
@@ -123,7 +122,7 @@ class Bookmarks:
         p = cur_obj.parent
         while p:
             if bookmark_ancestors.count(p) > 0:
-                rolename = rolenames.getSpeechForRoleName(p)
+                rolename = p.getLocalizedRoleName()
                 # Translators: this announces that the bookmark and the current
                 # object share a common ancestor
                 #

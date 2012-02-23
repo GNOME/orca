@@ -33,7 +33,6 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.orca as orca
-import orca.rolenames as rolenames
 import orca.speech_generator as speech_generator
 
 from orca.orca_i18n import _
@@ -248,7 +247,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 link = self._script.utilities.ancestorWithRole(
                     obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
                 if link:
-                    result.append(rolenames.getSpeechForRoleName(link))
+                    result.append(self.getLocalizedRoleName(link))
 
             if role == pyatspi.ROLE_HEADING:
                 level = self._script.getHeadingLevel(obj)
@@ -259,12 +258,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     # translated rolename for the heading.
                     #
                     result.append(_("%(role)s level %(level)d") % {
-                        'role': rolenames.getSpeechForRoleName(obj, role),
+                        'role': self.getLocalizedRoleName(obj, role),
                         'level': level})
                 else:
-                    result.append(rolenames.getSpeechForRoleName(obj, role))
+                    result.append(self.getLocalizedRoleName(obj, role))
             else:
-                result.append(rolenames.getSpeechForRoleName(obj, role))
+                result.append(self.getLocalizedRoleName(obj, role))
 
             if result:
                 result.extend(acss)
@@ -275,7 +274,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 # want to indicate that.
                 #
                 acss = self.voice(speech_generator.HYPERLINK)
-                result.append(rolenames.getSpeechForRoleName(obj[0]))
+                result.append(self.getLocalizedRoleName(obj[0]))
                 result.extend(acss)
 
         return result
@@ -425,7 +424,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if not _settingsManager.getSetting('onlySpeakDisplayedText'):
                 acss = self.voice(speech_generator.SYSTEM)
                 if not (role in dontSpeakRoles) and len(newResult):
-                    roleInfo = rolenames.getSpeechForRoleName(parent)
+                    roleInfo = self.getLocalizedRoleName(parent)
                     if roleInfo:
                         result.extend(acss)
                         result.append(roleInfo)

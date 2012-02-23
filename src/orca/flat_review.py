@@ -440,11 +440,11 @@ class ValueZone(Zone):
             except:
                 percentValue = 0
 
+            rolename = self.accessible.getLocalizedRoleName()
             if orientation:
-                speechValue = orientation + " " + \
-                              rolenames.getSpeechForRoleName(self.accessible)
+                speechValue = orientation + " " + rolename
             else:
-                speechValue = rolenames.getSpeechForRoleName(self.accessible)
+                speechValue = rolename
                 
             # Translators: this is the percentage value of a slider, 
             # progress bar or other component that displays a value as 
