@@ -5,8 +5,9 @@ orca.desktop.in
 orca-autostart.desktop.in
 src/orca/app_gui_prefs.py
 src/orca/bookmarks.py
-src/orca/braille_generator.py
 src/orca/braille.py
+src/orca/braille_generator.py
+src/orca/braille_rolenames.py
 src/orca/chat.py
 src/orca/chnames.py
 src/orca/espeechfactory.py
@@ -31,7 +32,6 @@ src/orca/orca.in
 src/orca/orca.py
 [type: gettext/glade]src/orca/orca-setup.ui
 src/orca/phonnames.py
-src/orca/rolenames.py
 src/orca/script_utilities.py
 src/orca/scripts/apps/acroread/script.py
 src/orca/scripts/apps/evolution/script.py

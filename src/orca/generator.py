@@ -33,7 +33,6 @@ import pyatspi
 
 import braille
 import debug
-import rolenames
 import settings
 
 from orca_i18n import _         # for gettext support
@@ -620,18 +619,11 @@ class Generator:
                            == settings.VERBOSITY_LEVEL_VERBOSE \
                            and not args.get('formatType', None) \
                                    in ['basicWhereAmI', 'detailedWhereAmI']:
-                            text += " " + rolenames.rolenames[\
-                                    pyatspi.ROLE_ROW_HEADER].speech
+                            text = desc + " " + self.getLocalizedRoleName(
+                                obj, pyatspi.ROLE_ROW_HEADER)
                     elif args['mode'] == 'braille':
-                        if settings.brailleVerbosityLevel \
-                           == settings.VERBOSITY_LEVEL_VERBOSE:
-                            if settings.brailleRolenameStyle \
-                               == settings.BRAILLE_ROLENAME_STYLE_LONG:
-                                text = desc + " " + rolenames.rolenames[\
-                                       pyatspi.ROLE_ROW_HEADER].brailleLong
-                            else:
-                                text = desc + " " + rolenames.rolenames[\
-                                       pyatspi.ROLE_ROW_HEADER].brailleShort
+                        text = desc + " " + self.getLocalizedRoleName(
+                            obj, pyatspi.ROLE_ROW_HEADER)
                     result.append(text)
         return result
 
@@ -681,18 +673,11 @@ class Generator:
                            == settings.VERBOSITY_LEVEL_VERBOSE \
                            and not args.get('formatType', None) \
                                    in ['basicWhereAmI', 'detailedWhereAmI']:
-                            text += " " + rolenames.rolenames[\
-                                    pyatspi.ROLE_COLUMN_HEADER].speech
+                            text = desc + " " + self.getLocalizedRoleName(
+                                obj, pyatspi.ROLE_COLUMN_HEADER)
                     elif args['mode'] == 'braille':
-                        if settings.brailleVerbosityLevel \
-                           == settings.VERBOSITY_LEVEL_VERBOSE:
-                            if settings.brailleRolenameStyle \
-                               == settings.BRAILLE_ROLENAME_STYLE_LONG:
-                                text = desc + " " + rolenames.rolenames[\
-                                       pyatspi.ROLE_COLUMN_HEADER].brailleLong
-                            else:
-                                text = desc + " " + rolenames.rolenames[\
-                                       pyatspi.ROLE_COLUMN_HEADER].brailleShort
+                        text = desc + " " + self.getLocalizedRoleName(
+                            obj, pyatspi.ROLE_COLUMN_HEADER)
                     result.append(text)
         return result
 

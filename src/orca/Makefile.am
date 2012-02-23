@@ -15,6 +15,7 @@ orca_python_PYTHON = \
 	bookmarks.py \
 	braille.py \
 	braille_generator.py \
+	braille_rolenames.py \
 	brlmon.py \
 	chat.py \
 	chnames.py \
@@ -57,7 +58,6 @@ orca_python_PYTHON = \
 	orca_platform.py \
 	pronunciation_dict.py \
 	punctuation_settings.py \
-	rolenames.py \
 	script.py \
 	script_manager.py \
 	script_utilities.py \

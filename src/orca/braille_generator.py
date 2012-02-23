@@ -26,14 +26,15 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
+from gi.repository import Atspi, Atk
 
 import braille
 import generator
 import orca
 import orca_state
-import rolenames
 import settings
 
+from braille_rolenames import shortRoleNames
 from orca_i18n import ngettext  # for ngettext support
 
 _settingsManager = getattr(orca, '_settingsManager')
@@ -127,8 +128,33 @@ class BrailleGenerator(generator.Generator):
                 == settings.VERBOSITY_LEVEL_VERBOSE)\
                and not args.get('readingRow', False)\
                and (role != pyatspi.ROLE_UNKNOWN)):
-            result.append(rolenames.getBrailleForRoleName(obj, role))
+            result.append(self.getLocalizedRoleName(obj, role))
         return result
+
+    @staticmethod
+    def getLocalizedRoleName(obj, role=None):
+        """Returns the localized name of the given Accessible object; the name
+        is suitable to be brailled.
+
+        Arguments:
+        - obj: an Accessible object
+        - role: an optional pyatspi role to use instead
+        """
+
+        if _settingsManager.getSetting('brailleRolenameStyle') \
+                == settings.BRAILLE_ROLENAME_STYLE_SHORT:
+            objRole = role or obj.getRole()
+            rv = shortRoleNames.get(objRole)
+            if rv:
+                return rv
+
+        if not isinstance(role, pyatspi.Role):
+            return obj.getLocalizedRoleName()
+
+        nonlocalized = Atspi.role_get_name(role)
+        atkRole = Atk.role_for_name(nonlocalized)
+
+        return Atk.role_get_localized_name(atkRole)
 
     #####################################################################
     #                                                                   #

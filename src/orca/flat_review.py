@@ -25,16 +25,16 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import pyatspi
 import re
 
-import pyatspi
 import braille
 import debug
 import eventsynthesizer
 import orca_state
-import rolenames
 import settings
 
+from braille_generator import BrailleGenerator
 from orca_i18n import _         # for gettext support
 from orca_i18n import C_        # to provide qualified translatable strings
 from orca_i18n import ngettext
@@ -455,15 +455,13 @@ class ValueZone(Zone):
                                      percentValue) % percentValue
             speechValue = speechValue + " " + percentString
 
+            rolename = BrailleGenerator.getLocalizedRoleName(self.accessible)
             if orientation:
                 brailleValue = "%s %s %d%%" % (orientation,
-                    rolenames.getBrailleForRoleName(self.accessible),      
+                    rolename,
                     percentValue)
             else:
-                brailleValue = "%s %d%%" % \
-                    (rolenames.getBrailleForRoleName(self.accessible),
-                    percentValue)
-
+                brailleValue = "%s %d%%" % (rolename, percentValue)
             if attr == "string":
                 return speechValue
             elif attr == "length":

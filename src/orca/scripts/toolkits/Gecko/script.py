@@ -56,7 +56,6 @@ import orca.keybindings as keybindings
 import orca.liveregions as liveregions
 import orca.orca as orca
 import orca.orca_state as orca_state
-import orca.rolenames as rolenames
 import orca.settings as settings
 import orca.speech as speech
 import orca.speechserver as speechserver
@@ -1803,7 +1802,8 @@ class Script(default.Script):
             speech.speak(
                 "%s %s" \
                 % (documentFrame.name,
-                   rolenames.rolenames[pyatspi.ROLE_PAGE_TAB].speech))
+                   self.speechGenerator.getLocalizedRoleName(
+                        documentFrame, pyatspi.ROLE_PAGE_TAB)))
 
             [obj, characterOffset] = self.getCaretContext()
             if not obj:
@@ -2186,7 +2186,7 @@ class Script(default.Script):
 
                 if role == pyatspi.ROLE_CAPTION:
                     regions.append(self.getNewBrailleRegion(
-                        " " + rolenames.getBrailleForRoleName(obj)))
+                        " " + self.brailleGenerator.getLocalizedRoleName(obj)))
 
                 if isFocusedObj:
                     focusedRegion = regions[0]
