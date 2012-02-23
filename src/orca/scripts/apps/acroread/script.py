@@ -31,7 +31,6 @@ import orca.debug as debug
 import orca.scripts.default as default
 import orca.input_event as input_event
 import orca.orca as orca
-import orca.rolenames as rolenames
 import orca.orca_state as orca_state
 import orca.settings as settings
 import orca.speech as speech
@@ -59,28 +58,6 @@ class Script(default.Script):
 
         self.debugLevel = debug.LEVEL_FINEST
         default.Script.__init__(self, app)
-
-        # Acroread documents are contained in an object whose rolename
-        # is "Document".  "Link" is also capitalized in acroread.  We
-        # need to make these known to Orca for speech and braille output.
-        #
-        rolenames.rolenames[self.ROLE_DOCUMENT] = \
-            rolenames.Rolename(self.ROLE_DOCUMENT,
-                               # Translators: short braille for the
-                               # rolename of a document.
-                               #
-                               _("doc"),
-                               # Translators: long braille for the
-                               # rolename of a document.
-                               #
-                               _("Document"),
-                               # Translators: spoken words for the
-                               # rolename of a document.
-                               #
-                               _("document"))
-
-        rolenames.rolenames[self.ROLE_LINK] = \
-            rolenames.rolenames[pyatspi.ROLE_LINK]
 
         # To handle the multiple, identical object:text-caret-moved events
         # and possible focus events that result from a single key press
