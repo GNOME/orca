@@ -1270,9 +1270,7 @@ def getLongBrailleForRoleName(obj, role=None):
     a Braille display.
     """
 
-    localized = getLocalizedRoleName(obj, role)
-    localized = [x[0].upper() + x[1:len(x)] for x in localized.split()]
-    return ''.join(localized)
+    return getLocalizedRoleName(obj, role)
 
 def getBrailleForRoleName(obj, role=None):
     """Returns the localized name of the given Accessible object; the name is
