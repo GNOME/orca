@@ -579,7 +579,11 @@ class Line:
                 region.brailleOffset = brailleOffset
                 self.brailleRegions.append(region)
 
-                brailleOffset += len(region.string.decode("UTF-8"))
+                try:
+                    regionString = region.string.decode("UTF-8")
+                except UnicodeEncodeError:
+                    regionString = region.string
+                brailleOffset += len(regionString)
 
             if not settings.disableBrailleEOL:
                 if len(self.brailleRegions):
