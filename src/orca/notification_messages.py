@@ -29,7 +29,6 @@ import settings
 import pyatspi
 import input_event
 import orca_state
-import speech
 import debug
 
 from orca_i18n import _
@@ -98,9 +97,8 @@ inputEventHandlers["enableNotificationMessageListModeHandler"] = \
             _("Present notification messages list"))
 
 def _showMessage(msg):
-    speech.speak(msg, None, True)
-    orca_state.activeScript.displayBrailleMessage(msg, \
-                   flashTime=settings.brailleFlashTime)
+    orca_state.activeScript.presentationInterrupt()
+    orca_state.activeScript.presentMessage(msg)
 
 def saveMessage(msg):
     """save the message in a list to be presented later"""
@@ -203,7 +201,6 @@ def listNotificationMessages(event):
 
     if event.type != pyatspi.KEY_PRESSED_EVENT:
         return False
-    speech.stop()
     if event.event_string == "Escape":
         exitListNotificationMessagesMode()
         speak = False
