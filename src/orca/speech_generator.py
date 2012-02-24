@@ -278,7 +278,10 @@ class SpeechGenerator(generator.Generator):
         """
 
         if not isinstance(role, pyatspi.Role):
-            return obj.getLocalizedRoleName()
+            try:
+                return obj.getLocalizedRoleName()
+            except:
+                pass
 
         nonlocalized = Atspi.role_get_name(role)
         atkRole = Atk.role_for_name(nonlocalized)
