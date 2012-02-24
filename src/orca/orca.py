@@ -888,7 +888,7 @@ def showMainWindowGUI(script=None, inputEvent=None):
                             globals(),
                             locals(),
                             [''])
-        if settings.showMainWindow:
+        if settings.showMainWindow or settings.overrideDisabledMainWindow:
             module.showMainUI()
         else:
             module.hideMainUI()

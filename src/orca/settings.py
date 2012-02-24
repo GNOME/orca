@@ -458,6 +458,11 @@ quitOrcaNoConfirmation  = False
 #
 presentLockingKeys = None
 
+# If True, ignore the directive in the autostart file which prevents the
+# main window from showing up.
+#
+overrideDisabledMainWindow = False
+
 # Whether the user wants tooltips presented or not.
 #
 presentToolTips = False
