@@ -1715,20 +1715,20 @@ class Utilities:
         accessible text, or -1 something was amuck.
         """
 
+        offset = -1
         try:
             hyperlink = obj.queryHyperlink()
         except NotImplementedError:
-            offset = -1
+            pass
         else:
             # We need to make sure that this is an embedded object in
             # some accessible text (as opposed to an imagemap link).
             #
             try:
                 obj.parent.queryText()
-            except NotImplementedError:
-                offset = -1
-            else:
                 offset = hyperlink.startIndex
+            except:
+                pass
 
         return offset
 
@@ -1782,7 +1782,10 @@ class Utilities:
                     childText = self.expandEOCs(child)
                     if not childText:
                         childText = ""
-                    toBuild[index] = childText.decode("UTF-8")
+                    try:
+                        toBuild[index] = childText.decode("UTF-8")
+                    except UnicodeEncodeError:
+                        toBuild[index] = childText
                 string = "".join(toBuild)
 
         return string

@@ -3263,7 +3263,7 @@ class Script(default.Script):
         try:
             state = obj.getState()
         except:
-            debug.printException(debug.LEVEL_WARNING)
+            pass
             return False
         else:
             return state.contains(pyatspi.STATE_SHOWING) \
@@ -3306,6 +3306,10 @@ class Script(default.Script):
         text = self.utilities.queryNonEmptyText(documentFrame)
         if text:
             char = text.getText(text.characterCount - 1, text.characterCount)
+            try:
+                char = char.decode("UTF-8")
+            except UnicodeEncodeError:
+                pass
             if char != self.EMBEDDED_OBJECT_CHARACTER:
                 return [documentFrame, text.characterCount - 1]
 
@@ -3320,6 +3324,10 @@ class Script(default.Script):
             if text:
                 char = text.getText(text.characterCount - 1,
                                     text.characterCount)
+                try:
+                    char = char.decode("UTF-8")
+                except UnicodeEncodeError:
+                    pass
                 if char != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj.parent, text.characterCount - 1]
 
@@ -3591,7 +3599,6 @@ class Script(default.Script):
             try:
                 summary = self._collectionPageSummary()
             except:
-                debug.printException(debug.LEVEL_SEVERE)
                 summary = self._iterativePageSummary(obj)
         else:
             summary = self._iterativePageSummary(obj)
@@ -4258,7 +4265,10 @@ class Script(default.Script):
                 if unicodeText[nextOffset] != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj, nextOffset]
                 elif obj.childCount:
-                    child = obj[self.getChildIndex(obj, nextOffset)]
+                    try:
+                        child = obj[self.getChildIndex(obj, nextOffset)]
+                    except:
+                        break
                     if child:
                         return self.findNextCaretInOrder(child,
                                                          -1,
@@ -4278,7 +4288,7 @@ class Script(default.Script):
                                                  -1,
                                                  includeNonText)
             except:
-                debug.printException(debug.LEVEL_SEVERE)
+                pass
 
         elif includeNonText and (startOffset < 0) \
              and (not self.utilities.isLayoutOnly(obj)):
@@ -4309,7 +4319,7 @@ class Script(default.Script):
                             -1,
                             includeNonText)
                     except:
-                        debug.printException(debug.LEVEL_SEVERE)
+                        pass
             obj = obj.parent
 
         return [None, -1]
@@ -4389,7 +4399,7 @@ class Script(default.Script):
                     -1,
                     includeNonText)
             except:
-                debug.printException(debug.LEVEL_SEVERE)
+                pass
 
         elif includeNonText and (startOffset < 0) \
             and (not self.utilities.isLayoutOnly(obj)):
@@ -4420,7 +4430,7 @@ class Script(default.Script):
                             -1,
                             includeNonText)
                     except:
-                        debug.printException(debug.LEVEL_SEVERE)
+                        pass
             obj = obj.parent
 
         return [None, -1]
