@@ -2022,7 +2022,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="yalign">0.40999999642372131</property>
-                                        <property name="label" translatable="yes">Contraction _Table:</property>
+                                        <property name="label" translatable="yes" comments="Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille 'contractions' get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for 'ing' (dots 3-4-6), and the letter 'e' (dots 1-5) all by itself means 'every'. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in liblouis' tables.">Contraction _Table:</property>
                                         <property name="use_underline">True</property>
                                         <property name="mnemonic_widget">contractionTableCombo</property>
                                         <accessibility>
