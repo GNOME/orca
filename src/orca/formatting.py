@@ -213,8 +213,8 @@ formatting = {
             'unfocused': 'labelAndName + percentage'
             },
         pyatspi.ROLE_PUSH_BUTTON: {
-            'unfocused': 'labelAndName + roleName + availability + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'labelAndName + roleName + ' + MNEMONIC + ' + accelerator'
+            'unfocused': 'labelAndName + expandableState + roleName + availability + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'labelAndName + expandableState + roleName + ' + MNEMONIC + ' + accelerator'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'focused': 'radioState',
@@ -306,9 +306,9 @@ formatting = {
             'detailedWhereAmI': 'label + placeholderText + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
-            'focused': 'toggleState',
-            'unfocused': 'labelAndName + roleName + toggleState + availability + ' + MNEMONIC + ' + accelerator',
-            'basicWhereAmI': 'labelAndName + roleName + toggleState'
+            'focused': 'expandableState or toggleState',
+            'unfocused': 'labelAndName + roleName + (expandableState or toggleState) + availability + ' + MNEMONIC + ' + accelerator',
+            'basicWhereAmI': 'labelAndName + roleName + (expandableState or toggleState)'
             },
         pyatspi.ROLE_TOOL_TIP: {
             'unfocused': 'labelAndName',
@@ -461,7 +461,7 @@ formatting = {
         #pyatspi.ROLE_PROGRESS_BAR: 'default'
         pyatspi.ROLE_PUSH_BUTTON: {
             'unfocused': '[Component(obj,\
-                                     asString(((label + displayedText) or description) + roleName))]'
+                                     asString(((label + displayedText) or description) + expandableState + roleName))]'
             },
         pyatspi.ROLE_RADIO_BUTTON: {
             'unfocused': '[Component(obj,\
@@ -523,7 +523,7 @@ formatting = {
             },
         pyatspi.ROLE_TOGGLE_BUTTON: {
             'unfocused': '[Component(obj,\
-                                     asString(((label + displayedText) or description) + roleName),\
+                                     asString(((label + displayedText) or description) + expandableState + roleName),\
                                      indicator=asString(toggleState))]'
             },
         #pyatspi.ROLE_TOOL_BAR: 'default'
