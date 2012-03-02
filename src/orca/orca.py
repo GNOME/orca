@@ -2,6 +2,7 @@
 #
 # Copyright 2004-2009 Sun Microsystems Inc.
 # Copyright 2010-2011 The Orca Team
+# Copyright 2012 Igalia
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -24,7 +25,8 @@ __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
-                "Copyright (c) 2010-2011 The Orca Team"
+                "Copyright (c) 2010-2011 The Orca Team" \
+                "Copyright (c) 2012 Igalia"
 __license__   = "LGPL"
 
 import argparse
@@ -415,7 +417,6 @@ if settings.useDBus:
 
 import braille
 import httpserver
-import keybindings
 import orca_state
 import speech
 import notification_messages
@@ -1074,69 +1075,26 @@ def listShortcuts(event):
 
 
 def getListOfShortcuts(typeOfShortcuts):
-    """This function returns a list of Orca default shortcuts if the argument
-    is 'default'. It returns a list of Orca shortcuts which are specific to
-    the focused application, if the argument is "application". Orca default
-    shortcuts are those found in the default script. Application-specific
-    shortcuts are those which are present in the active script, but not in
-    the default script. Only one shortcut per handler is listed. The list is
-    sorted on shortcuts.
+    """Returns a list of (description, shortcut) tuples, sorted by shortcut.
 
     Arguments:
     - typeOfShortcuts: a string specifying the desired type of shortcuts.
-
-    Returns a list of shortcuts; depending on the value of argument.
+      Valid values are 'default' for Orca-wide shortcuts and 'application'
+      for Orca shortcuts unique to the currently-focused application.
     """
 
-    numShortcuts = len(orca_state.listOfShortcuts)
-    shortcuts = []
-    shortcut = ""
-    clickCount = ""
-    brlKeyName = ""     
-    brlHandler = None
-    defScript = _scriptManager.getDefaultScript()
-    defKeyBindings = defScript.getKeyBindings()
-    defBrlBindings = defScript.getBrailleBindings()
-    kbindings = keybindings.KeyBindings()
+    script = orca_state.activeScript
     if typeOfShortcuts == "default":
-        for kb in defKeyBindings.keyBindings:
-            if kb.keysymstring:
-                if not kbindings.hasKeyBinding(kb,"description"):
-                    kbindings.add(kb)
+        bindings = script.getDefaultKeyBindings()
+        bound = bindings.getBoundBindings()
     elif typeOfShortcuts == "application":
-        for kb in orca_state.activeScript.keyBindings.keyBindings:
-            if kb.keysymstring:
-                if not (defKeyBindings.hasKeyBinding(kb,"description") or \
-                kbindings.hasKeyBinding(kb,"description")):
-                    kbindings.add(kb)
+        app = script.getAppKeyBindings()
+        toolkit = script.getToolkitKeyBindings()
+        bound = app.getBoundBindings()
+        bound.extend(toolkit.getBoundBindings())
 
-    for kb in kbindings.keyBindings:
-        keysymString = kb.keysymstring.replace("KP_", _("keypad "))
-        clickCount = ""
-        if kb.click_count == 2:
-            # Translators: Orca keybindings support double
-            # and triple "clicks" or key presses, similar to
-            # using a mouse.
-            #
-            clickCount = _("double click")
-        elif kb.click_count == 3:
-            # Translators: Orca keybindings support double
-            # and triple "clicks" or key presses, similar to
-            # using a mouse.
-            #
-            clickCount = _("triple click")
-        shortcut = (kb.handler.description, keybindings.getModifierNames\
-        (kb.modifiers) + keysymString.title() + " " + clickCount)
-        shortcuts.append(shortcut)
-        shortcuts = sorted(shortcuts, key=lambda shortcut: shortcut[1])
-
-    if typeOfShortcuts == "orcaDefault":
-        for bb in defBrlBindings.keys():
-            brlKeyName = braille.command_name[bb]
-            brlHandler = defBrlBindings[bb]
-            shortcut = (brlHandler.description, brlKeyName)
-            shortcuts.append(shortcut) 
-    return shortcuts
+    shortcuts = [(kb.handler.description, kb.asString(True)) for kb in bound]
+    return sorted(shortcuts, key=lambda shortcut: shortcut[1])
 
 def quitOrca(script=None, inputEvent=None):
     """Quit Orca. Check if the user wants to confirm this action.
