@@ -34,7 +34,6 @@ import re
 import signal
 import sys
 import time
-import shutil
 
 from types import MethodType
 
@@ -1465,34 +1464,9 @@ def main():
         if multipleOrcas():
             die(0)
 
-    # Check if old config location exists, try to copy all 
-    # the data from old location to the new location.
-    #
     if not options.userPrefsDir:
         from xdg.BaseDirectory import xdg_data_home
         options.userPrefsDir = os.path.join(xdg_data_home, "orca")
-    oldUserPrefsDir = os.path.join(os.environ["HOME"], ".orca")
-
-    if not os.path.exists(options.userPrefsDir):
-        os.makedirs(options.userPrefsDir)
-
-    for baseDirName, dirNames, fileNames in os.walk(oldUserPrefsDir):
-
-        for dirName in dirNames:
-            relPath = os.path.relpath(baseDirName, oldUserPrefsDir)
-            dstDir = os.path.join(os.path.join(
-                    options.userPrefsDir, relPath), dirName)
-            if not os.path.exists(dstDir):
-                os.mkdir(dstDir)
-
-        for fileName in fileNames:
-            srcFile = os.path.join(baseDirName, fileName)
-            relPath = os.path.relpath(baseDirName, oldUserPrefsDir)
-            dstFile = os.path.join(os.path.join(
-                    options.userPrefsDir, relPath),
-                                   fileName)
-            if not os.path.exists(dstFile):
-                shutil.copy(srcFile, dstFile)
 
     settings.userPrefsDir = options.userPrefsDir
 
