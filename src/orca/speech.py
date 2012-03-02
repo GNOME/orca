@@ -246,10 +246,11 @@ def speak(content, acss=None, interrupt=True):
                 newItemsToSpeak.append(toSpeak.pop())
 
             if toSpeak:
-                try:
-                    toSpeak = map(lambda x: x.decode("UTF-8"), toSpeak)
-                except UnicodeEncodeError:
-                    pass
+                for i, item in enumerate(toSpeak):
+                    try:
+                        toSpeak[i] = item.decode("UTF-8")
+                    except UnicodeEncodeError:
+                        pass
 
                 string = " ".join(toSpeak)
                 _speak(string, activeVoice, interrupt)

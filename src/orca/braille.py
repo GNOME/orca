@@ -607,11 +607,20 @@ class Text(Region):
             self.caretOffset = 0
             self.lineOffset = 0
 
-        string = string.decode("UTF-8")
+        try:
+            string = string.decode("UTF-8")
+        except UnicodeEncodeError:
+            pass
         if label:
-            label = label.decode("UTF-8")
+            try:
+                label = label.decode("UTF-8")
+            except UnicodeEncodeError:
+                pass
         if eol:
-            eol = eol.decode("UTF-8")
+            try:
+                eol = eol.decode("UTF-8")
+            except UnicodeEncodeError:
+                pass
 
         try:
             endOffset = endOffset - self.lineOffset
