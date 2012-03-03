@@ -97,7 +97,6 @@ inputEventHandlers["enableNotificationMessageListModeHandler"] = \
             _("Present notification messages list"))
 
 def _showMessage(msg):
-    orca_state.activeScript.presentationInterrupt()
     orca_state.activeScript.presentMessage(msg)
 
 def saveMessage(msg):
@@ -201,6 +200,7 @@ def listNotificationMessages(event):
 
     if event.type != pyatspi.KEY_PRESSED_EVENT:
         return False
+    orca_state.activeScript.presentationInterrupt()
     if event.event_string == "Escape":
         exitListNotificationMessagesMode()
         speak = False
