@@ -2810,7 +2810,9 @@ class Utilities:
         try:
             from gi.repository import Gtk
             key, mods = Gtk.accelerator_parse(sequence)
-            sequence = Gtk.accelerator_get_label(key, mods)
+            newSequence = Gtk.accelerator_get_label(key, mods)
+            if newSequence and not newSequence.endswith('+'):
+                sequence = newSequence
         except:
             if sequence.endswith(" "):
                 # Translators: this is the spoken word for the space character
