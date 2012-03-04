@@ -57,6 +57,7 @@ class ScriptManager:
              'Mail/News':        'Thunderbird',
              'Miramar':          'Thunderbird',
              'Shredder':         'Thunderbird',
+             'Earlybird':        'Thunderbird',
              'bug-buddy':        'gnome_segv2',
              'gaim':             'pidgin',
              'gnome-calculator': 'gcalctool',
