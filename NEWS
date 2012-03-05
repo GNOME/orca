@@ -1,3 +1,60 @@
+3.3.91 - 5 March 2012
+
+General
+
+  * Check for (and where appropriate present) expandable and expanded
+    states for toggle buttons and push buttons 
+
+  * Present gnome-shell notifications (also requires fix for bug 648645)
+
+  * Fix for bug 670547 - Module for notification messages should use
+    SYSTEM_VOICE
+
+  * Handle Earlybird (Thunderbird pre-release) as Thunderbird
+
+  * Fix for bug 666424 - toolkits/gecko/script.py:updateBraille can
+    cause traceback
+
+  * Fix for several UnicodeEncodeError and UnicodeDecodeError bugs
+
+  * Fix the presentation of mnemonics which are accented letters
+
+  * Present the localized rolenames we get via pyatspi rather than use
+    Orca's pre-pyatspi rolename code for non-abbreviated rolenames
+
+  * Fix for bug 670596 - Please don't present entry roles as text roles
+
+  * Remove the old settings migration code from orca.py
+
+  * Fix for getListOfShortcuts() incorrectly eliminating commands
+
+  * Add an orca-customizations.py option to override the disabled main
+    window
+
+  * Fix for Orca not using the specified debug-file when debug flag is
+    not also provided
+
+  * Fix man page errors
+
+  * Avoid incorrectly detecting python modules which not installed
+
+  * Fix for bug 670827 - Contraction Table: need translator comment
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    be            Belarusian           Kasia Bondarava, Ihar Hrachyshka
+    bg            Bulgarian            Alexander Shopov
+    da            Danish               Kenneth Nielsen
+    fr            French               Bruno Brouard
+    gl            Galician             Fran Diéguez
+    pl            Polish               Piotr Drąg
+    ru            Russian              Yuri Myasoedov
+    sr            Serbian              Мирослав Николић
+    sr@latin      Serbian              Miroslav Nikolić
+    ta            Tamil                Dr.T.Vasudevan
+
+=========
+
 3.3.90 - 20 February 2012
 
 General
