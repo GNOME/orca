@@ -5976,6 +5976,7 @@ state_change_notifiers[pyatspi.ROLE_CHECK_BOX]       = ("checked",
 state_change_notifiers[pyatspi.ROLE_PANEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_LABEL]           = ("showing", None)
 state_change_notifiers[pyatspi.ROLE_NOTIFICATION]    = ("showing", None)
+state_change_notifiers[pyatspi.ROLE_PUSH_BUTTON]     = ("expanded", None)
 state_change_notifiers[pyatspi.ROLE_RADIO_BUTTON]    = ("checked", None)
 state_change_notifiers[pyatspi.ROLE_TOGGLE_BUTTON]   = ("checked",
                                                         "pressed",
