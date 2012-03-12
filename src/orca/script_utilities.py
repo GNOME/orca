@@ -546,7 +546,11 @@ class Utilities:
         except:
             displayedText = None
 
-        role = obj.getRole()
+        try:
+            role = obj.getRole()
+        except (LookupError, RuntimeError):
+            role = None
+
         if role == pyatspi.ROLE_COMBO_BOX:
             displayedText = self._displayedTextInComboBox(obj)
             if not self._script.generatorCache.has_key(self.DISPLAYED_TEXT):
