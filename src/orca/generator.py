@@ -308,6 +308,10 @@ class Generator:
             if description:
                 result.append(description)
         # To make the unlabeled icons in gnome-panel more accessible.
+        try:
+            role = args.get('role', obj.getRole())
+        except (LookupError, RuntimeError):
+            return result
         if not result and obj.getRole() == pyatspi.ROLE_ICON \
            and obj.parent.getRole() == pyatspi.ROLE_PANEL:
             return self._generateName(obj.parent)

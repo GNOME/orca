@@ -29,6 +29,7 @@ import pyatspi
 import urlparse, urllib2
 from gi.repository import Atspi, Atk
 
+import debug
 import generator
 import orca
 import settings
@@ -140,7 +141,12 @@ class SpeechGenerator(generator.Generator):
         needed a _generateDescription for whereAmI. :-) See below.
         """
 
-        role = args.get('role', obj.getRole())
+        try:
+            role = args.get('role', obj.getRole())
+        except (LookupError, RuntimeError):
+            debug.println(debug.LEVEL_FINE, "Error getting role for: %s" % obj)
+            role = None
+
         if role == pyatspi.ROLE_LAYERED_PANE:
             if _settingsManager.getSetting('onlySpeakDisplayedText'):
                 return []
