@@ -185,8 +185,14 @@ class ScriptManager:
         if script:
             return script
 
-        if app and getattr(app, "toolkitName", None):
-            script = self._newNamedScript(app, app.toolkitName)
+        try:
+            toolkitName = getattr(app, "toolkitName", None)
+        except (LookupError, RuntimeError):
+            msg = "Error getting toolkitName for: %s" % app
+            debug.println(debug.LEVEL_FINE, msg)
+        else:
+            if app and toolkitName:
+                script = self._newNamedScript(app, toolkitName)
 
         if not script:
             script = self.getDefaultScript(app)
