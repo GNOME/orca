@@ -136,7 +136,7 @@ class Options(argparse.Namespace):
         if self.showHelp:
             self._printMessageAndExit(parser.print_help)
 
-        if self.listApps:
+        if self.listApps and self.desktopRunning:
             apps = filter(lambda x: x != None, pyatspi.Registry.getDesktop(0))
             names = [app.name for app in apps]
             message = "\n".join(names)
