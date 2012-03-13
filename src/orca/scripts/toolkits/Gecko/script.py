@@ -1390,6 +1390,30 @@ class Script(default.Script):
 
         default.Script.onTextSelectionChanged(self, event)
 
+    def onSelectionChanged(self, event):
+        """Called when an object's selection changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        try:
+            role = event.source.getRole()
+        except:
+            pass
+        else:
+            if role == pyatspi.ROLE_MENU:
+                try:
+                    parent = event.source.parent
+                    parentRole = parent.getRole()
+                except:
+                    pass
+                else:
+                    self.visualAppearanceChanged(event, parent)
+                    return
+
+        default.Script.onSelectionChanged(self, event)
+
     def onChildrenChanged(self, event):
         """Called when a child node has changed.  In particular, we are looking
         for addition events often associated with Javascipt insertion.  One such

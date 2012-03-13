@@ -3314,7 +3314,6 @@ class Script(script.Script):
         Arguments:
         - event: the Event
         """
-
         if not event or not event.source:
             return
 
