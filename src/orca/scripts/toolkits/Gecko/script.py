@@ -1409,8 +1409,9 @@ class Script(default.Script):
                 except:
                     pass
                 else:
-                    self.visualAppearanceChanged(event, parent)
-                    return
+                    if parentRole == pyatspi.ROLE_COMBO_BOX:
+                        self.visualAppearanceChanged(event, parent)
+                        return
 
         default.Script.onSelectionChanged(self, event)
 
