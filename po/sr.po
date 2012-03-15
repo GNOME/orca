@@ -525,7 +525,7 @@ msgstr "проценат"
 #.
 #: ../src/orca/chnames.py:71
 msgid "and"
-msgstr "америчко и"
+msgstr "и"
 
 #. Translators: this is the spoken word for the character ''' (U+0027)
 #.
@@ -851,7 +851,7 @@ msgstr "седиља"
 #.
 #: ../src/orca/chnames.py:280
 msgid "superscript 1"
-msgstr "изложилац 0"
+msgstr "изложилац 1"
 
 #. Translators: this is the spoken word for the character 'º' (U+00ba)
 #.
@@ -1043,25 +1043,25 @@ msgstr "пута"
 #.
 #: ../src/orca/chnames.py:408
 msgid "O STROKE"
-msgstr "Прецртано велико о"
+msgstr "ПРЕЦРТАНО ВЕЛИКО О"
 
 #. Translators: this is the spoken word for the character 'Ù' (U+00d9)
 #.
 #: ../src/orca/chnames.py:412
 msgid "U GRAVE"
-msgstr "краткоузлазно"
+msgstr "ВЕЛИКО КРАТКОУЗЛАЗНО У"
 
 #. Translators: this is the spoken word for the character 'Ú' (U+00da)
 #.
 #: ../src/orca/chnames.py:416
 msgid "U ACUTE"
-msgstr "дугоузлазно"
+msgstr "ВЕЛИКО ДУГОУЗЛАЗНО У"
 
 #. Translators: this is the spoken word for the character 'Û' (U+00db)
 #.
 #: ../src/orca/chnames.py:420
 msgid "U CIRCUMFLEX"
-msgstr "дугосилазно"
+msgstr "ВЕЛИКО ДУГОСИЛАЗНО У"
 
 #. Translators: this is the spoken word for the character 'Ü' (U+00dc)
 #.
@@ -1470,7 +1470,7 @@ msgstr "бели квадратић"
 #.
 #: ../src/orca/chnames.py:689 ../src/orca/chnames.py:860
 msgid "black diamond"
-msgstr "црни дијамант"
+msgstr "црни ромб"
 
 #. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
@@ -1644,7 +1644,7 @@ msgstr "индекс 5"
 #.
 #: ../src/orca/chnames.py:809
 msgid "subscript 6"
-msgstr "индекс 5"
+msgstr "индекс 6"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
@@ -3195,7 +3195,7 @@ msgstr "Ово ће зауставити све излазе говора и б�
 #.
 #: ../src/orca/orca.py:221
 msgid "The following items can be enabled or disabled:"
-msgstr "Следеће ставке могу укључене или искључене:"
+msgstr "Следеће ставке могу бити укључене или искључене:"
 
 #. Translators: This message is displayed when the user tries to start
 #. Orca and includes an invalid option as an argument. After the message,

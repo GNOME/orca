@@ -525,7 +525,7 @@ msgstr "procenat"
 #.
 #: ../src/orca/chnames.py:71
 msgid "and"
-msgstr "američko i"
+msgstr "i"
 
 #. Translators: this is the spoken word for the character ''' (U+0027)
 #.
@@ -851,7 +851,7 @@ msgstr "sedilja"
 #.
 #: ../src/orca/chnames.py:280
 msgid "superscript 1"
-msgstr "izložilac 0"
+msgstr "izložilac 1"
 
 #. Translators: this is the spoken word for the character 'º' (U+00ba)
 #.
@@ -1043,25 +1043,25 @@ msgstr "puta"
 #.
 #: ../src/orca/chnames.py:408
 msgid "O STROKE"
-msgstr "Precrtano veliko o"
+msgstr "PRECRTANO VELIKO O"
 
 #. Translators: this is the spoken word for the character 'Ù' (U+00d9)
 #.
 #: ../src/orca/chnames.py:412
 msgid "U GRAVE"
-msgstr "kratkouzlazno"
+msgstr "VELIKO KRATKOUZLAZNO U"
 
 #. Translators: this is the spoken word for the character 'Ú' (U+00da)
 #.
 #: ../src/orca/chnames.py:416
 msgid "U ACUTE"
-msgstr "dugouzlazno"
+msgstr "VELIKO DUGOUZLAZNO U"
 
 #. Translators: this is the spoken word for the character 'Û' (U+00db)
 #.
 #: ../src/orca/chnames.py:420
 msgid "U CIRCUMFLEX"
-msgstr "dugosilazno"
+msgstr "VELIKO DUGOSILAZNO U"
 
 #. Translators: this is the spoken word for the character 'Ü' (U+00dc)
 #.
@@ -1470,7 +1470,7 @@ msgstr "beli kvadratić"
 #.
 #: ../src/orca/chnames.py:689 ../src/orca/chnames.py:860
 msgid "black diamond"
-msgstr "crni dijamant"
+msgstr "crni romb"
 
 #. Translators: this is the spoken word for the character '○' (U+25cb)
 #. It can be used as a bullet in a list.
@@ -1644,7 +1644,7 @@ msgstr "indeks 5"
 #.
 #: ../src/orca/chnames.py:809
 msgid "subscript 6"
-msgstr "indeks 5"
+msgstr "indeks 6"
 
 #. Translators: this is the spoken word for the character '₇' (U+2087)
 #.
@@ -3195,7 +3195,7 @@ msgstr "Ovo će zaustaviti sve izlaze govora i brajevog pisma."
 #.
 #: ../src/orca/orca.py:221
 msgid "The following items can be enabled or disabled:"
-msgstr "Sledeće stavke mogu uključene ili isključene:"
+msgstr "Sledeće stavke mogu biti uključene ili isključene:"
 
 #. Translators: This message is displayed when the user tries to start
 #. Orca and includes an invalid option as an argument. After the message,
