@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright (C) 2010 Igalia, S.L.
+# Copyright (C) 2010-2012 Igalia, S.L.
 #
 # Author: Alejandro Pinheiro Iglesias <apinheiro@igalia.com>
 #
@@ -22,9 +22,10 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Igalia, S.L."
+__copyright__ = "Copyright (c) 2010-2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import pyatspi
 from gi.repository import Gdk
 
 import orca.orca as orca
@@ -205,3 +206,34 @@ class Script(default.Script):
 
         else: #in any other case, we use the default behaviour
             default.Script.onStateChanged(self, event)
+
+    def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
+        """Called when the visual object with focus changes.
+
+        Arguments:
+        - event: if not None, the Event that caused the change
+        - oldLocusOfFocus: Accessible that is the old locus of focus
+        - newLocusOfFocus: Accessible that is the new locus of focus
+        """
+
+        # TODO - JD/API: We are overriding the default script's method here
+        # to handle one specific case: In the gnome-shell overview, for
+        # documents and places, the objects which claim focus are not the
+        # objects of ROLE_PUSH_BUTTON, but rather an immediate child of those
+        # objects which happens to be a nameless panel. When this issue is
+        # fixed in gnome-shell, this method should be removed. BGO#672242.
+
+        if newLocusOfFocus and not newLocusOfFocus.name:
+            try:
+                role = newLocusOfFocus.getRole()
+                parent = newLocusOfFocus.parent
+                parentRole = parent.getRole()
+            except:
+                pass
+            else:
+                if role == pyatspi.ROLE_PANEL \
+                   and parentRole == pyatspi.ROLE_PUSH_BUTTON:
+                    newLocusOfFocus = parent
+
+        default.Script.locusOfFocusChanged(
+            self, event, oldLocusOfFocus, newLocusOfFocus)
