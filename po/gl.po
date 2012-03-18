@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: orca-master-po-gl-70969.merged\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-21 11:34+0100\n"
-"PO-Revision-Date: 2012-02-21 11:35+0100\n"
+"PO-Revision-Date: 2012-03-18 22:59+0100\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
 "Language: gl\n"
@@ -9663,7 +9663,7 @@ msgstr "carácter de palabra"
 #: ../src/orca/text_attribute_names.py:454
 msgctxt "textattr"
 msgid "ltr"
-msgstr "E a D"
+msgstr "ltr"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
