@@ -266,7 +266,8 @@ class Script(Gecko.Script):
         # cell and consume the event so that the Gecko script
         # doesn't reset it.
         #
-        if obj.getRole() == pyatspi.ROLE_TABLE_CELL:
+        if obj.getRole() == pyatspi.ROLE_TABLE_CELL \
+           and parent.getRole() != pyatspi.ROLE_LIST_ITEM:
             table = parent.queryTable()
             row = table.getRowAtIndex(self.utilities.cellIndex(obj))
             for i in range(0, table.nColumns):
