@@ -1,3 +1,45 @@
+3.3.92 - 19 March 2012
+
+General
+
+  * Fix for bug 672276 - Tracebacks seen when interacting with
+    Thunderbird's message filter rules dialog
+
+  * Fix for bug 672242 - Orca presents an extra panel on places&devices
+    and documents search result 
+
+  * Sanity check that we have a desktop to get before we attempt to get
+    its apps
+
+  * Fix for bug 659839 - Gecko combobox selection is no longer presented
+
+  * Do not treat "busy indicator" progress bars as progress bars with
+    values
+
+  * Handle errors seen when restarting gnome-shell
+
+  * Handle GErrors which prevent Orca from speaking menu items in Skype
+
+  * Attend to object:state-changed:expanded events for push buttons
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                Gil Forcada
+    ca            Catalan (Valencian)    Carles Ferrando
+    en_GB         British English        Bruce Cowan
+    eu            Basque                 Inaki Larranaga Murgoitio
+    fi            Finnish                Timo Jyrinki
+    gl            Galician               Fran Diéguez
+    hu            Hungarian              Attila Hammer
+    lv            Latvian                Rudolfs Mazurs
+    pt_BR         Brazilian Portuguese   Antonio Fernandes C. Neto
+    sr            Serbian                Мирослав Николић
+    sr@latin      Serbian                Miroslav Nikolić
+    te            Telugu                 Sasi bhushan Boddepalli
+    uk            Ukranian               Daniel Korostil
+
+=========
+
 3.3.91 - 5 March 2012
 
 General
