@@ -1568,8 +1568,12 @@ class SpeechGenerator(generator.Generator):
                             or (requireText \
                                 and 'Text' in pyatspi.listInterfaces(parent))):
                         text = self._script.utilities.displayedText(parent)
-                    if not text and parent.getRole() \
-                           in [pyatspi.ROLE_MENU, pyatspi.ROLE_PAGE_TAB]:
+                    try:
+                        pRole = parent.getRole()
+                    except:
+                        pRole = None
+                    if not text \
+                       and pRole in [pyatspi.ROLE_MENU, pyatspi.ROLE_PAGE_TAB]:
                         text = parent.name
                     if text and len(text.strip()):
                         roleInfo = self._generateRoleName(parent)
@@ -1577,12 +1581,12 @@ class SpeechGenerator(generator.Generator):
                             roleInfo.reverse()
                         # Push announcement of cell to the end
                         #
-                        if parent.getRole() not in [pyatspi.ROLE_TABLE_CELL,
-                                                    pyatspi.ROLE_FILLER]:
+                        if pRole not in \
+                               [pyatspi.ROLE_TABLE_CELL, pyatspi.ROLE_FILLER]:
                             result.extend(roleInfo)
                         result.extend(acss)
                         result.append(text)
-                        if parent.getRole() == pyatspi.ROLE_TABLE_CELL:
+                        if pRole == pyatspi.ROLE_TABLE_CELL:
                             result.extend(roleInfo)
                 parent = parent.parent
         result.reverse()

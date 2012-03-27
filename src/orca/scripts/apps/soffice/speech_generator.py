@@ -275,8 +275,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         except NotImplementedError:
             parentTable = None
         index = self._script.utilities.cellIndex(obj)
-        if "lastRow" in self._script.pointOfReference and \
-           self._script.pointOfReference["lastRow"] != \
+        if "lastRow" in self._script.pointOfReference and parentTable \
+           and self._script.pointOfReference["lastRow"] != \
            parentTable.getRowAtIndex(index):
             if table in self._script.dynamicRowHeaders:
                 column = self._script.dynamicRowHeaders[table]

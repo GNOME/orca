@@ -507,10 +507,10 @@ def setLocusOfFocus(event, obj, notifyScript=True, force=False):
             debug.println(debug.LEVEL_FINE,
                           "LOCUS OF FOCUS: None event=None")
     else:
-        if not app:
-            appname = "None"
-        else:
+        try:
             appname = "'" + app.name + "'"
+        except:
+            appname = "None"
         debug.println(debug.LEVEL_FINE,
                       "LOCUS OF FOCUS: app=%s name='%s' role='%s'" \
                       % (appname,
