@@ -1,4 +1,4 @@
-# Orca
+
 #
 # Copyright 2010 Joanmarie Diggs.
 #
@@ -212,10 +212,14 @@ class Utilities:
 
         obj = obj.parent
         while obj and (obj != obj.parent):
-            if obj.getRole() in ancestorRoles:
+            try:
+                role = obj.getRole()
+            except:
+                break
+            if role in ancestorRoles:
                 ancestor = obj
                 break
-            elif obj.getRole() in stopRoles:
+            elif role in stopRoles:
                 break
             else:
                 obj = obj.parent
@@ -759,17 +763,21 @@ class Utilities:
 
         layoutOnly = False
 
-        if obj:
+        try:
             attributes = obj.getAttributes()
-        else:
+        except:
             attributes = None
+        try:
+            role = obj.getRole()
+        except:
+            role = None
 
-        if obj and (obj.getRole() == pyatspi.ROLE_TABLE) and attributes:
+        if role == pyatspi.ROLE_TABLE and attributes:
             for attribute in attributes:
                 if attribute == "layout-guess:true":
                     layoutOnly = True
                     break
-        elif obj and (obj.getRole() == pyatspi.ROLE_PANEL):
+        elif role == pyatspi.ROLE_PANEL:
             text = self.displayedText(obj)
             label = self.displayedLabel(obj)
             if not ((label and len(label)) or (text and len(text))):
@@ -1031,9 +1039,11 @@ class Utilities:
                     potentialLabels.append(child1)
             else:
                 parent = obj.parent
-                if parent and \
-                    ((parent.getRole() == pyatspi.ROLE_FILLER) \
-                            or (parent.getRole() == pyatspi.ROLE_PANEL)):
+                try:
+                    parentRole = parent.getRole()
+                except:
+                    parentRole = None
+                if parentRole in [pyatspi.ROLE_FILLER, pyatspi.ROLE_PANEL]:
                     for potentialLabel in parent:
                         try:
                             useLabel = self.__isLabeling(potentialLabel, obj)
@@ -1472,15 +1482,9 @@ class Utilities:
         - obj: the Accessible object
         """
 
-        debug.println(debug.LEVEL_FINEST,
-                      "Finding top-level object for source.name="
-                      + obj.name or "None")
-
         while obj and obj.parent and (obj != obj.parent) \
               and (obj.parent.getRole() != pyatspi.ROLE_APPLICATION):
             obj = obj.parent
-            debug.println(debug.LEVEL_FINEST, "--> obj.name="
-                          + obj.name or "None")
 
         if obj and obj.parent and \
            (obj.parent.getRole() == pyatspi.ROLE_APPLICATION):

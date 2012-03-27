@@ -237,8 +237,11 @@ class BrailleGenerator(generator.Generator):
             # page tab lists might be a nice thing to include. Logged
             # as bugzilla bug 319751.]]]
             #
-            role = parent.getRole()
-            if role != pyatspi.ROLE_FILLER \
+            try:
+                role = parent.getRole()
+            except:
+                role = None
+            if role and role != pyatspi.ROLE_FILLER \
                 and role != pyatspi.ROLE_SECTION \
                 and role != pyatspi.ROLE_SPLIT_PANE \
                 and role != pyatspi.ROLE_DESKTOP_FRAME \
@@ -253,8 +256,7 @@ class BrailleGenerator(generator.Generator):
             # container for the grouped objects.  When we detect this,
             # we add the label to the overall context.]]]
             #
-            if parent.getRole() in [pyatspi.ROLE_FILLER,
-                                    pyatspi.ROLE_PANEL]:
+            if role in [pyatspi.ROLE_FILLER, pyatspi.ROLE_PANEL]:
                 label = self._script.utilities.displayedLabel(parent)
                 if label and len(label) and not label.isspace():
                     if not excludeRadioButtonGroup:
