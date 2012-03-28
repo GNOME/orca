@@ -2935,7 +2935,10 @@ class Utilities:
         # Use ARIA "valuetext" attribute if present.  See
         # http://bugzilla.gnome.org/show_bug.cgi?id=552965
         #
-        attributes = obj.getAttributes()
+        try:
+            attributes = obj.getAttributes()
+        except:
+            return ""
         for attribute in attributes:
             if attribute.startswith("valuetext"):
                 return attribute[10:]
