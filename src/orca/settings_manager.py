@@ -39,11 +39,14 @@ from keybindings import KeyBinding
 import settings
 import pronunciation_dict
 
-_dbusLoop = DBusGMainLoop()
-_bus = dbus.SessionBus(mainloop=_dbusLoop)
-_proxy = _bus.get_object("org.a11y.Bus", "/org/a11y/bus")
-_desktopProps = \
-    dbus.Interface(_proxy, dbus_interface='org.freedesktop.DBus.Properties')
+try:
+    _dbusLoop = DBusGMainLoop()
+    _bus = dbus.SessionBus(mainloop=_dbusLoop)
+    _proxy = _bus.get_object("org.a11y.Bus", "/org/a11y/bus")
+    _desktopProps = \
+        dbus.Interface(_proxy, dbus_interface='org.freedesktop.DBus.Properties')
+except:
+    _desktopProps = None
 
 class SettingsManager(object):
     """Settings backend manager. This class manages orca user's settings
@@ -304,9 +307,15 @@ class SettingsManager(object):
         return not alreadyEnabled
 
     def isAccessibilityEnabled(self):
+        if not _desktopProps:
+            return False
+
         return bool(_desktopProps.Get('org.a11y.Status', 'IsEnabled'))
 
     def setAccessibility(self, enable):
+        if not _desktopProps:
+            return False
+
         _desktopProps.Set('org.a11y.Status', 'IsEnabled', enable)
         return True
 
@@ -314,6 +323,9 @@ class SettingsManager(object):
         """Returns True if the screen reader service is enabled. Note that
         this does not necessarily mean that Orca (or any other screen reader)
         is running at the moment."""
+
+        if not _desktopProps:
+            return False
 
         return bool(_desktopProps.Get('org.a11y.Status', 'ScreenReaderEnabled'))
 
