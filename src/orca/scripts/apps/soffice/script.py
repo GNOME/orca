@@ -1842,7 +1842,10 @@ class Script(default.Script):
         if not event.type.startswith('object:children-changed:add'):
             return
 
-        role = event.any_data.getRole()
+        try:
+            role = event.any_data.getRole()
+        except:
+            role = None
         if role == pyatspi.ROLE_TABLE:
             if self.isSpreadSheetCell(event.any_data, True):
                 orca.setLocusOfFocus(event, event.any_data)
