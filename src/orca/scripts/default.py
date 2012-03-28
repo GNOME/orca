@@ -4731,7 +4731,7 @@ class Script(script.Script):
         # event.
 
         if orca_state.locusOfFocus == event.any_data and \
-                event.any_data.name == self.pointOfReference.get('oldName'):
+           event.any_data.name == self.pointOfReference.get('oldName', ''):
             return False
 
         if event.source == orca_state.locusOfFocus == event.any_data.parent:
