@@ -60,6 +60,7 @@ class ScriptManager:
              'Earlybird':        'Thunderbird',
              'bug-buddy':        'gnome_segv2',
              'gaim':             'pidgin',
+             'empathy-chat':     'empathy',
              'gnome-calculator': 'gcalctool',
              'Nereid':           'Banshee',
              'vte':              'gnome-terminal'}
