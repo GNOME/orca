@@ -3641,22 +3641,29 @@ class Script(script.Script):
         string = event.any_data
         speakThis = False
         wasCommand = False
+        try:
+            role = event.source.getRole()
+        except:
+            role = None
         if isinstance(orca_state.lastInputEvent, input_event.MouseButtonEvent):
             speakThis = orca_state.lastInputEvent.button == "2"
         else:
             keyString, mods = self.utilities.lastKeyAndModifiers()
             wasCommand = mods & settings.COMMAND_MODIFIER_MASK
             if not wasCommand and keyString in ["Return", "Tab", "space"] \
-               and event.source.getRole() == pyatspi.ROLE_TERMINAL:
+               and role == pyatspi.ROLE_TERMINAL:
                 wasCommand = True
-            wasAutoComplete = (event.source.getRole() == pyatspi.ROLE_TEXT \
-                               and event.source.queryText().getNSelections())
+            try:
+                selections = event.source.queryText().getNSelections()
+            except:
+                selections = 0
 
+            wasAutoComplete = role == pyatspi.ROLE_TEXT and selections
             if (string == " " and keyString == "space") or string == keyString:
                 pass
             elif wasCommand or wasAutoComplete:
                 speakThis = True
-            elif event.source.getRole() == pyatspi.ROLE_PASSWORD_TEXT \
+            elif role == pyatspi.ROLE_PASSWORD_TEXT \
                  and _settingsManager.getSetting('enableKeyEcho') \
                  and _settingsManager.getSetting('enablePrintableKeys'):
                 # Echoing "star" is preferable to echoing the descriptive
@@ -3674,8 +3681,7 @@ class Script(script.Script):
         speakThis = speakThis \
                     or (_settingsManager.getSetting('enableEchoByCharacter') \
                         and string \
-                        and event.source.getRole() \
-                            != pyatspi.ROLE_PASSWORD_TEXT \
+                        and role != pyatspi.ROLE_PASSWORD_TEXT \
                         and len(string.decode("UTF-8")) == 1)
 
         if speakThis:
@@ -5147,8 +5153,11 @@ class Script(script.Script):
                 lineString = text.getText(caretOffset, caretOffset + 1)
                 startOffset = caretOffset
             else:
-                [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                    caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
+                try:
+                    [lineString, startOffset, endOffset] = text.getTextAtOffset(
+                        caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
+                except:
+                    return ["", 0, 0]
 
             # Sometimes we get the trailing line-feed-- remove it
             #

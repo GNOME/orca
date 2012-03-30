@@ -1704,7 +1704,11 @@ class Utilities:
             return []
 
         rv = []
-        for i in xrange(text.getNSelections()):
+        try:
+            nSelections = text.getNSelections()
+        except:
+            nSelections = 0
+        for i in xrange(nSelections):
             rv.append(text.getSelection(i))
 
         return rv
