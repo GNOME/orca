@@ -640,8 +640,12 @@ class Context:
         currentWordIndex = 0
         currentCharIndex = 0
 
-        if orca_state.locusOfFocus and \
-           orca_state.locusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
+        try:
+            role = orca_state.locusOfFocus.getRole()
+        except:
+            role = None
+
+        if role == pyatspi.ROLE_TABLE_CELL:
             searchZone = orca_state.activeScript.\
                 utilities.realActiveDescendant(orca_state.locusOfFocus)
         else:
