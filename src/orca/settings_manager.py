@@ -146,7 +146,7 @@ class SettingsManager(object):
         orca.settings"""
         def _createDir(dirName):
             if not os.path.isdir(dirName):
-                os.mkdir(dirName)
+                os.makedirs(dirName)
 
         # Set up the user's preferences directory
         # ($XDG_DATA_HOME/orca by default).
