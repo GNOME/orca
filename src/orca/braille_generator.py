@@ -336,9 +336,12 @@ class BrailleGenerator(generator.Generator):
             text = None
         if text and (self._script.utilities.isTextArea(obj) \
                      or (obj.getRole() in [pyatspi.ROLE_LABEL])):
-            [lineString, startOffset, endOffset] = text.getTextAtOffset(
-                text.caretOffset,
-                pyatspi.TEXT_BOUNDARY_LINE_START)
+            try:
+                [lineString, startOffset, endOffset] = text.getTextAtOffset(
+                    text.caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
+            except:
+                return include
+
             include = startOffset == 0
             if include:
                 for relation in obj.getRelationSet():
