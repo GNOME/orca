@@ -22,9 +22,7 @@ orca_python_PYTHON = \
 	common_keyboardmap.py \
 	dbusserver.py \
 	debug.py \
-	dectalk.py \
 	desktop_keyboardmap.py \
-	espeechfactory.py \
 	event_manager.py \
 	eventsynthesizer.py \
 	find.py \
@@ -53,7 +51,6 @@ orca_python_PYTHON = \
 	orca_prefs.py \
 	orca_state.py \
 	outline.py \
-	outloud.py \
 	phonnames.py \
 	orca_platform.py \
 	pronunciation_dict.py \

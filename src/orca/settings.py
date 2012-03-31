@@ -320,8 +320,7 @@ onlySpeakDisplayedText = False
 # Settings that apply to the particular speech engine to
 # use as well details on the default voices to use.
 #
-speechFactoryModules    = ["speechdispatcherfactory",
-                           "espeechfactory"]
+speechFactoryModules    = ["speechdispatcherfactory"]
 speechServerFactory     = "speechdispatcherfactory"
 speechServerInfo        = None # None means let the factory decide.
 
