@@ -36,11 +36,10 @@ import debug
 import input_event
 import keybindings
 import orca
-import orca_gtkbuilder
 import orca_gui_prefs
-import orca_prefs
 import orca_state
 import orca_platform
+import settings
 import speech
 
 from orca_i18n import _  # for gettext support
@@ -242,7 +241,7 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
         self.kbindings = self.appKeyBindings
         orca_gui_prefs.OrcaSetupGUI._populateKeyBindings(self, False)
 
-    def okButtonClicked(self, widget):
+    def okButtonClicked(self, widget=None):
         """Signal handler for the "clicked" signal for the okButton
            GtkButton widget. The user has clicked the OK button.
            Write out the users preferences. If GNOME accessibility hadn't
@@ -270,40 +269,6 @@ class OrcaSetupGUI(orca_gui_prefs.OrcaSetupGUI):
 
         orca_state.appOS = None
 
-class WarningDialogGUI(orca_gtkbuilder.GtkBuilderWrapper):
-
-    def getPrefsWarningDialog(self):
-        """Return a handle to the Orca Preferences warning dialog.
-        """
-
-        return self.orcaPrefsWarningDialog
-
-    def orcaPrefsWarningDialogDestroyed(self, widget):
-        """Signal handler for the "destroyed" signal for the 
-        orcaPrefsWarningDialog GtkWindow widget. Reset orca_state.orcaWD
-        to None, so that the GUI can be rebuilt from the GtkBuilder file the
-        next time that this warning dialog has to be displayed.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        orca_state.orcaWD = None
-
-    def orcaPrefsWarningDialogOKButtonClicked(self, widget):
-        """Signal handler for the "clicked" signal for the
-        orcaPrefsWarningDialogOKButton GtkButton widget. The user has clicked
-        the OK button in the Orca Preferences warning dialog.
-        This dialog informs the user that they already have an instance 
-        of an Orca preferences dialog open, and that they will need to 
-        close it before opening a new one.
-
-        Arguments:
-        - widget: the component that generated the signal.
-        """
-
-        self.orcaPrefsWarningDialog.destroy()
-
 def showPreferencesUI():
     global applicationName, appScript
 
@@ -329,7 +294,10 @@ def showPreferencesUI():
         line = _("Starting Orca Preferences for %s.") % applicationName
         appScript.presentMessage(line)
 
-        prefsDict = orca_prefs.readPreferences()
+        prefsDict = {}
+        for key in settings.userCustomizableSettings:
+            prefsDict[key] = _settingsManager.getSetting(key)
+
         orca_state.prefsUIFile = \
             os.path.join(orca_platform.prefix,
                          orca_platform.datadirname,
@@ -342,23 +310,11 @@ def showPreferencesUI():
         orca_state.appOS.initAppGUIState(appScript)
 
         orca_state.appOS.init()
+        orca_state.appOS.showGUI()
     else:
         if not orca_state.orcaWD:
-            orca_state.orcaWarningDialogUIFile = \
-                os.path.join(orca_platform.prefix,
-                             orca_platform.datadirname,
-                             orca_platform.package,
-                             "ui",
-                             "orca-preferences-warning.ui")
-            orca_state.orcaWD = \
-                WarningDialogGUI(orca_state.orcaWarningDialogUIFile,
-                                 "orcaPrefsWarningDialog")
-            warningDialog = orca_state.orcaWD.getPrefsWarningDialog()
-            warningDialog.realize()
-            warningDialog.show()
-        return
-
-    orca_state.appOS.showGUI()
+            orca_state.orcaWD = orca_gui_prefs.WarningDialogGUI()
+        orca_state.orcaWD.showGUI()
 
 def main():
     locale.setlocale(locale.LC_ALL, '')

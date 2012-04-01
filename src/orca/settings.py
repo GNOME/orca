@@ -654,13 +654,6 @@ learnModeEnabled        = False
 #
 listShortcutsModeEnabled = False
 
-# The location of the user's preferences. By default this is
-# $XDG_DATA_HOME/orca.
-# It can be overridden by the Orca -d command line option.
-#
-from xdg.BaseDirectory import xdg_data_home
-userPrefsDir = os.path.join(xdg_data_home, "orca")
-
 # If non-zero, we use time.sleep() in various places to attempt to
 # free up the global interpreter lock.  Take a look at the following
 # URLs for more information:

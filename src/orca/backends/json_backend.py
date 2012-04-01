@@ -33,15 +33,14 @@ from orca import settings, acss
 
 class Backend:
 
-    def __init__(self):
+    def __init__(self, prefsDir):
         """ Initialize the JSON Backend.
         """ 
         self.general = {}
         self.pronunciations = {}
         self.keybindings = {}
         self.profiles = {}
-        self.settingsFile = os.path.join(settings.userPrefsDir,
-                                         "user-settings.conf")
+        self.settingsFile = os.path.join(prefsDir, "user-settings.conf")
 
     def saveDefaultSettings(self, general, pronunciations, keybindings):
         """ Save default settings for all the properties from

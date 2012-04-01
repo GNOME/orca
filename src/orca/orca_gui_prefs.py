@@ -365,7 +365,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                         self._initComboBox(self.get_widget("speechFamilies"))
         self._initSpeechState()
 
-        self._isInitialSetup = not os.path.exists(settings.userPrefsDir)
+        # TODO - JD: Will this ever be the case??
+        self._isInitialSetup = \
+            not os.path.exists(_settingsManager.getPrefsDir())
 
         self._initGUIState()
 
@@ -3269,7 +3271,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.windowClosed(widget)
         self.get_widget("orcaSetupWindow").destroy()
 
-    def okButtonClicked(self, widget = None):
+    def okButtonClicked(self, widget=None):
         """Signal handler for the "clicked" signal for the okButton
            GtkButton widget. The user has clicked the OK button.
            Write out the users preferences. If GNOME accessibility hadn't

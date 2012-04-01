@@ -22,12 +22,13 @@
 import pickle
 import os
 
+import orca
 import speech
-import settings
 import orca_state
 
 from orca_i18n import _
 
+_settingsManager = getattr(orca, '_settingsManager')
 
 class Bookmarks:
     """Represents a default bookmark handler."""
@@ -212,7 +213,7 @@ class Bookmarks:
         """ Read saved bookmarks from disk.  Currently an unpickled object
         that represents a bookmark """
         filename = filename or self._script.name.split(' ')[0]
-        orcaDir = settings.userPrefsDir
+        orcaDir = _settingsManager.getPrefsDir()
         orcaBookmarksDir = os.path.join(orcaDir, "bookmarks")
         try:
             inputFile = open( os.path.join( orcaBookmarksDir, \
@@ -227,7 +228,7 @@ class Bookmarks:
         """ Write bookmarks to disk.  bookmarksObj must be a pickleable 
         object. """
         filename = filename or self._script.name.split(' ')[0]
-        orcaDir = settings.userPrefsDir
+        orcaDir = _settingsManager.getPrefsDir()
         orcaBookmarksDir = os.path.join(orcaDir, "bookmarks")
         # create directory if it does not exist.  correct place??
         try:

@@ -2,7 +2,7 @@
 #
 # Copyright 2004-2009 Sun Microsystems Inc.
 # Copyright 2010-2011 The Orca Team
-# Copyright 2012 Igalia
+# Copyright 2012 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -384,16 +384,12 @@ options, invalidOpts = parser.parse_known_args(sys.argv[1].split(),
                                                namespace = Options())
 options.validate()
 
-
-if options.userPrefsDir:
-    settings.userPrefsDir = options.userPrefsDir
-
 # This needs to occur prior to our importing anything which might in turn
 # import anything which might expect to be able to use the Settings Manager
 # You have been warned.
 #
 from settings_manager import SettingsManager
-_settingsManager = SettingsManager()
+_settingsManager = SettingsManager(prefsDir=options.userPrefsDir)
 if _settingsManager is None:
     print "Could not load the settings manager. Exiting."
     sys.exit(1)
@@ -1422,12 +1418,6 @@ def main():
         if multipleOrcas():
             die(0)
 
-    if not options.userPrefsDir:
-        from xdg.BaseDirectory import xdg_data_home
-        options.userPrefsDir = os.path.join(xdg_data_home, "orca")
-
-    settings.userPrefsDir = options.userPrefsDir
-
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
 
@@ -1440,8 +1430,7 @@ def main():
         print "environment variable has been set."
         return 1
 
-    userprefs = settings.userPrefsDir
-    sys.path.insert(0, userprefs)
+    sys.path.insert(0, _settingsManager.getPrefsDir())
     sys.path.insert(0, '') # current directory
 
     init(pyatspi.Registry)
@@ -1472,13 +1461,6 @@ def main():
     elif not options.bypassSetup \
          and (not _userSettings or _settingsManager.isFirstStart()):
         if options.desktopRunning:
-            if not os.path.exists(userprefs):
-                # Hack to work around b.g.o. 601657.
-                #
-                try:
-                    os.mkdir(userprefs)
-                except:
-                    debug.printException(debug.LEVEL_FINEST)
             showPreferencesGUI()
         else:
             _showPreferencesConsole()

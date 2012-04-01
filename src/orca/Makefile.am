@@ -48,7 +48,6 @@ orca_python_PYTHON = \
 	orca_gui_quit.py \
 	orca_gui_splash.py \
 	orca_i18n.py \
-	orca_prefs.py \
 	orca_state.py \
 	outline.py \
 	phonnames.py \

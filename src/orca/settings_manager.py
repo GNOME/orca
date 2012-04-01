@@ -33,6 +33,7 @@ import os
 import imp
 from dbus.mainloop.glib import DBusGMainLoop
 from json import load
+from xdg.BaseDirectory import xdg_data_home
 
 import debug
 from keybindings import KeyBinding
@@ -58,7 +59,7 @@ class SettingsManager(object):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __init__(self, backend='json'):
+    def __init__(self, backend='json', prefsDir=None):
         """Initialize a SettingsManager Object.
         If backend isn't defined then uses default backend, in this
         case json-backend.
@@ -70,6 +71,7 @@ class SettingsManager(object):
         self._backend = None
         self.profile = None
         self.backendName = backend
+        self._prefsDir = prefsDir or os.path.join(xdg_data_home, "orca")
 
         # Dictionaries for store the default values
         # The keys and values are defined at orca.settings
@@ -102,7 +104,7 @@ class SettingsManager(object):
         self._customizationCompleted = False
 
         # Load the backend and the default values
-        self._backend = self.backendModule.Backend()
+        self._backend = self.backendModule.Backend(self._prefsDir)
         self._setDefaultGeneral()
         self._setDefaultPronunciations()
         self._setDefaultKeybindings()
@@ -117,8 +119,7 @@ class SettingsManager(object):
         # yet, so we need to create the user config directories and store the
         # initial default settings
         #
-        if self.isFirstStart():
-            self._createDefaults()
+        self._createDefaults()
 
         # Set the active profile and load its stored settings
         if self.profile is None:
@@ -151,7 +152,7 @@ class SettingsManager(object):
         # Set up the user's preferences directory
         # ($XDG_DATA_HOME/orca by default).
         #
-        orcaDir = settings.userPrefsDir
+        orcaDir = self._prefsDir
         _createDir(orcaDir)
 
         # Set up $XDG_DATA_HOME/orca/orca-scripts as a Python package
@@ -180,10 +181,10 @@ class SettingsManager(object):
         if not os.path.exists(userCustomFile):
             os.close(os.open(userCustomFile, os.O_CREAT, 0700))
 
-
-        self._backend.saveDefaultSettings(self.defaultGeneral,
-                                          self.defaultPronunciations,
-                                          self.defaultKeybindings)
+        if self.isFirstStart():
+            self._backend.saveDefaultSettings(self.defaultGeneral,
+                                              self.defaultPronunciations,
+                                              self.defaultKeybindings)
 
     def _setDefaultPronunciations(self):
         """Get the pronunciations by default from orca.settings"""
@@ -227,7 +228,7 @@ class SettingsManager(object):
         likelihood that the results won't be different if we keep trying."""
 
         success = False
-        pathList = [settings.userPrefsDir]
+        pathList = [self._prefsDir]
         try:
             msg = "Attempt to load orca-customizations "
             (fileHnd, moduleName, desc) = \
@@ -245,6 +246,9 @@ class SettingsManager(object):
             success = True
         debug.println(debug.LEVEL_ALL, msg)
         return success
+
+    def getPrefsDir(self):
+        return self._prefsDir
 
     def setSetting(self, settingName, settingValue):
         self._setSettingsRuntime({settingName:settingValue})
