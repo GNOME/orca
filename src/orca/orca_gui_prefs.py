@@ -2803,12 +2803,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         eventString = Gdk.keyval_name(entries[0])
         eventState = keyPressedEvent.state
 
-        modifierKeys =  ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
-                         'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R',
-                         'Num_Lock', 'Caps_Lock']
-        if eventString in modifierKeys:
-            return False
-
         orcaMods = settings.orcaModifierKeys
         try:
             orcaMods = map(lambda x: x.encode('UTF-8'), orcaMods)
@@ -2816,6 +2810,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             pass
         if eventString in orcaMods:
             self._capturedKey = ['', settings.ORCA_MODIFIER_MASK, 0]
+            return False
+
+        modifierKeys =  ['Alt_L', 'Alt_R', 'Control_L', 'Control_R',
+                         'Shift_L', 'Shift_R', 'Meta_L', 'Meta_R',
+                         'Num_Lock', 'Caps_Lock']
+        if eventString in modifierKeys:
             return False
 
         if not self._capturedKey \
@@ -2929,7 +2929,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         treeModel.set(myiter,
                       modMask, str(settings.defaultModifierMask),
-                      modUsed, str(mods),
+                      modUsed, str(int(mods)),
                       key, string,
                       text, new_text,
                       click_count, str(clickCount),
