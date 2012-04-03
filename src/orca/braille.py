@@ -1447,13 +1447,18 @@ def refresh(panToCursor=True,
 
     if settings.enableBrailleMonitor:
         if not _monitor:
-            _monitor = brlmon.BrlMon(_displaySize[0])
-            _monitor.show_all()
+            try:
+                _monitor = brlmon.BrlMon(_displaySize[0])
+                _monitor.show_all()
+            except:
+                debug.println(debug.LEVEL_WARNING, "brlmon failed")
+                _monitor = None
         if attributeMask:
             subMask = attributeMask[startPos:endPos]
         else:
             subMask = None
-        _monitor.writeText(cursorCell, substring, subMask)
+        if _monitor:
+            _monitor.writeText(cursorCell, substring, subMask)
     elif _monitor:
         _monitor.destroy()
         _monitor = None
