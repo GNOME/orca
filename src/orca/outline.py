@@ -36,6 +36,13 @@ display = Gdk.Display.get_default()
 screen = display.get_default_screen()
 screen_width = screen.get_width()
 screen_height = screen.get_height()
+try:
+    window_manager = screen.get_window_manager_name()
+except:
+    window_manager = None
+else:
+    if window_manager == 'unknown':
+        window_manager = None
 
 def _adjustToScreen(x, y, width, height):
     if x < 0:
@@ -194,7 +201,7 @@ def draw(x, y, width, height):
     be composed of multiple windows depending upon the
     settings.outlineStyle."""
 
-    if settings.outlineStyle == settings.OUTLINE_NONE:
+    if settings.outlineStyle == settings.OUTLINE_NONE or not window_manager:
         pass
     # Temporary solution for the fact that the flat review rectangle is now
     # solid. We are working on this, but it may or may not be done in time
