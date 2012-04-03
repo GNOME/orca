@@ -56,6 +56,8 @@ except:
     _brlAPIAvailable = False
     _brlAPIRunning = False
 
+import settings
+
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
@@ -69,7 +71,6 @@ except:
 import debug
 import eventsynthesizer
 import orca_state
-import settings
 
 # Right now, the orca autogen.sh/configure needs a priori knowledge of
 # where the liblouis tables are.  When running autogen.sh/configure,
