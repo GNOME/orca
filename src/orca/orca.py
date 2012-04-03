@@ -61,6 +61,9 @@ try:
     #
     from gi.repository import Gtk
     from gi.repository import Gdk
+    # Note: This last import is here due to bgo #673396.
+    # See bgo#673397 for the rest of the story.
+    from gi.repository.GdkX11 import X11Screen
 except:
     pass
 
