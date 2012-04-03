@@ -64,7 +64,8 @@ try:
     #
     import brlmon
 except:
-    pass
+    settings.enableBrailleMonitor = False
+
 import debug
 import eventsynthesizer
 import orca_state
