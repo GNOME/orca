@@ -385,6 +385,11 @@ class BrailleGenerator(generator.Generator):
             while content and isinstance(content[-1], Space):
                 content = content[0:-1]
             for element in content:
+                try:
+                    element = element.decode("UTF-8")
+                except UnicodeEncodeError:
+                    pass
+
                 if isinstance(element, Space) and prior:
                     combined += element.delimiter
                     prior = None
