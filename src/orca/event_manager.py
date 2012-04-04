@@ -393,6 +393,10 @@ class EventManager:
         script = None
         try:
             app = event.host_application or event.source.getApplication()
+            if app.getState().contains(pyatspi.STATE_DEFUNCT):
+                msg = 'WARNING: App is defunct. Cannot get script for event.'
+                debug.println(debug.LEVEL_WARNING, msg)
+                return None
         except:
             debug.printException(debug.LEVEL_WARNING)
         else:
@@ -518,6 +522,9 @@ class EventManager:
             debug.printDetails(debug.LEVEL_FINEST, "    ", event.source)
 
         script = self._getScriptForEvent(event)
+        if not script:
+            return
+
         debug.println(debug.LEVEL_FINEST, "Script for event: %s" % script.name)
         setNewActiveScript, reason = self._isActivatableEvent(event, script)
         if setNewActiveScript:
