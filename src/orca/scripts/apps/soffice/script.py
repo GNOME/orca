@@ -1903,6 +1903,11 @@ class Script(default.Script):
             if event.source.getRoleName() == 'text frame':
                 return
 
+        parent = event.source.parent
+        if parent.getRole() == pyatspi.ROLE_EXTENDED:
+            if parent.getRoleName() == 'text frame':
+                return
+
         # If this is state change "focused" event and event.source isn't a
         # focused object, then just return. See bug #517502 for more details.
         #
