@@ -3612,6 +3612,12 @@ class Script(script.Script):
         if event.source.getRole() == pyatspi.ROLE_SLIDER:
             return
 
+        state = event.source.getState()            
+        if event.source.getRole() == pyatspi.ROLE_TABLE_CELL \
+           and not state.contains(pyatspi.STATE_FOCUSED) \
+           and not state.contains(pyatspi.STATE_SELECTED):
+            return
+
         self.updateBraille(event.source)
 
         if event.source.getRole() == pyatspi.ROLE_SPIN_BUTTON:
