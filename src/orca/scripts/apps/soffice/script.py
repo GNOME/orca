@@ -1904,7 +1904,7 @@ class Script(default.Script):
                 return
 
         parent = event.source.parent
-        if parent.getRole() == pyatspi.ROLE_EXTENDED:
+        if parent and parent.getRole() == pyatspi.ROLE_EXTENDED:
             if parent.getRoleName() == 'text frame':
                 return
 
