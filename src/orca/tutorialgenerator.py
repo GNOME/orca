@@ -93,7 +93,7 @@ class TutorialGenerator:
         self.tutorialGenerators[pyatspi.ROLE_CHECK_MENU_ITEM]     = \
             self._getTutorialForCheckBox
         self.tutorialGenerators[pyatspi.ROLE_MENU_ITEM]           = \
-            self._getTutorialForPushButton
+            self._getTutorialForMenuItem
         self.tutorialGenerators[pyatspi.ROLE_RADIO_MENU_ITEM]     = \
             self._getTutorialForCheckBox
         self.tutorialGenerators[pyatspi.ROLE_SLIDER]              = \
@@ -370,6 +370,32 @@ class TutorialGenerator:
                              obj,
                              alreadyFocused,
                              utterances)
+        return utterances
+
+    def _getTutorialForMenuItem(self, obj, alreadyFocused, forceTutorial):
+        """Get the tutorial string for a menu item
+
+        Arguments:
+        - obj: the menu item
+        - alreadyFocused: False if object just received focus
+        - forceTutorial: used for when whereAmI really needs the tutorial string
+
+        Returns a list of utterances to be spoken for the object.
+        """
+
+        utterances = []
+        # Translators: this is the tutorial string for activating a menu item
+        msg = _("To activate press return.")
+
+        if (not alreadyFocused and self.lastTutorial != [msg]) \
+           or forceTutorial:
+            utterances.append(msg)
+
+        self._debugGenerator("_getTutorialForMenuItem",
+                             obj,
+                             alreadyFocused,
+                             utterances)
+
         return utterances
 
     def _getTutorialForText(self, obj, alreadyFocused, forceTutorial):
