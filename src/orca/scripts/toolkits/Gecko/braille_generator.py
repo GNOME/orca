@@ -225,7 +225,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         s = obj.querySelection()
         items = [s.getSelectedChild(i) for i in xrange(s.nSelectedChildren)]
-        if not items:
+        if not items and obj.childCount:
             items.append(obj[0])
         items = map(self._generateName, items)
         for item in items:
