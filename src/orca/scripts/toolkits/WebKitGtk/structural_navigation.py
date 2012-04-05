@@ -1,8 +1,9 @@
 # Orca
 #
 # Copyright (C) 2010 Joanmarie Diggs
+# Copyright (C) 2011-2012 Igalia, S.L.
 #
-# Author: Joanmarie Diggs <joanied@gnome.org>
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +23,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs"
+__copyright__ = "Copyright (c) 2010 Joanmarie Diggs" \
+                "Copyright (c) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -57,8 +59,16 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
           positioned.
         """
 
-        if obj.getRole() == pyatspi.ROLE_LIST and obj.childCount:
-            obj = obj[0]
+        if not obj.childCount:
+            return [obj, 0]
+
+        child = obj[0]
+        if obj.getRole() == pyatspi.ROLE_LIST:
+            return [child, 0]
+
+        name = obj.name
+        if name and name == child.name and child.getRole() == pyatspi.ROLE_LINK:
+            return [child, 0]
 
         return [obj, 0]
 
