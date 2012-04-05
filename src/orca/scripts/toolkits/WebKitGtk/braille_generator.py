@@ -1,8 +1,9 @@
 # Orca
 #
 # Copyright (C) 2010 Joanmarie Diggs
+# Copyright (C) 2011-2012 Igalia, S.L.
 #
-# Author: Joanmarie Diggs <joanied@gnome.org>
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +23,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Joanmarie Diggs"
+__copyright__ = "Copyright (c) 2010 Joanmarie Diggs" \
+                "Copyright (c) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -43,6 +45,20 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def __init__(self, script):
         braille_generator.BrailleGenerator.__init__(self, script)
 
+    def __generateHeadingRole(self, obj):
+        result = []
+        level = self._script.utilities.headingLevel(obj)
+        # Translators: the 'h' below represents a heading level
+        # attribute for content that you might find in something
+        # such as HTML content (e.g., <h1>). The translated form
+        # is meant to be a single character followed by a numeric
+        # heading level, where the single character is to indicate
+        # 'heading'.
+        #
+        result.append(_("h%d" % level))
+
+        return result
+
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being displayed."""
 
@@ -50,19 +66,13 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_HEADING:
             level = self._script.utilities.headingLevel(obj)
-            # Translators: the 'h' below represents a heading level
-            # attribute for content that you might find in something
-            # such as HTML content (e.g., <h1>). The translated form
-            # is meant to be a single character followed by a numeric
-            # heading level, where the single character is to indicate
-            # 'heading'.
-            #
-            result.append(_("h%d" % level))
         elif not role in [pyatspi.ROLE_SECTION,
                           pyatspi.ROLE_FORM,
                           pyatspi.ROLE_UNKNOWN]:
             result.extend(braille_generator.BrailleGenerator._generateRoleName(
                 self, obj, **args))
+            if obj.parent and obj.parent.getRole() == pyatspi.ROLE_HEADING:
+                result.extend(self.__generateHeadingRole(obj.parent))
 
         return result
 

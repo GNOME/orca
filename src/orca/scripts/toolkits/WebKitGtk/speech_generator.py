@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright (C) 2010 Joanmarie Diggs
-# Copyright (C) 2011 Igalia, S.L.
+# Copyright (C) 2011-2012 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -24,7 +24,7 @@ __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs" \
-                "Copyright (c) 2011 Igalia, S.L."
+                "Copyright (c) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -80,6 +80,24 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
+    def __generateHeadingRole(self, obj):
+        result = []
+        role = pyatspi.ROLE_HEADING
+        level = self._script.utilities.headingLevel(obj)
+        if level:
+            # Translators: the %(level)d is in reference to a heading
+            # level in HTML (e.g., For <h3>, the level is 3)
+            # and the %(role)s is in reference to a previously
+            # translated rolename for the heading.
+            #
+            result.append(_("%(role)s level %(level)d") % {
+                    'role': self.getLocalizedRoleName(obj, role),
+                    'level': level})
+        else:
+            result.append(self.getLocalizedRoleName(obj, role))
+
+        return result
+
     def _generateRoleName(self, obj, **args):
         if _settingsManager.getSetting('onlySpeakDisplayedText'):
             return []
@@ -105,22 +123,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     obj, [pyatspi.ROLE_LINK], [pyatspi.ROLE_DOCUMENT_FRAME])
                 if link:
                     result.append(self.getLocalizedRoleName(link))
-
-            if role == pyatspi.ROLE_HEADING:
-                level = self._script.utilities.headingLevel(obj)
-                if level:
-                    # Translators: the %(level)d is in reference to a heading
-                    # level in HTML (e.g., For <h3>, the level is 3)
-                    # and the %(role)s is in reference to a previously
-                    # translated rolename for the heading.
-                    #
-                    result.append(_("%(role)s level %(level)d") % {
-                        'role': self.getLocalizedRoleName(obj, role),
-                        'level': level})
-                else:
-                    result.append(self.getLocalizedRoleName(obj, role))
+            elif role == pyatspi.ROLE_HEADING:
+                result.extend(self.__generateHeadingRole(obj))
             else:
                 result.append(self.getLocalizedRoleName(obj, role))
+                if obj.parent and obj.parent.getRole() == pyatspi.ROLE_HEADING:
+                    result.extend(self.__generateHeadingRole(obj.parent))
 
             if result:
                 result.extend(acss)
