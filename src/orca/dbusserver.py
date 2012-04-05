@@ -170,6 +170,7 @@ def shutdown():
 def main():
     import pyatspi
     init()
+    debug.println(debug.LEVEL_FINEST, 'INFO: dbusserver starting registry')
     pyatspi.Registry.start()
 
 if __name__ == "__main__":

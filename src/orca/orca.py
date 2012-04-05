@@ -736,6 +736,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     Returns True to indicate the input event has been consumed.
     """
 
+    debug.println(debug.LEVEL_FINEST, 'INFO: Loading User Settings')
+
     global _userSettings
 
     # Shutdown the output drivers and give them a chance to die.
@@ -840,6 +842,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     if settings.useDBus:
         dbusserver.init()
     httpserver.init()
+
+    debug.println(debug.LEVEL_FINEST, 'INFO: User Settings Loaded')
 
     return True
 
@@ -1193,6 +1197,8 @@ def init(registry):
     module has already been initialized.
     """
 
+    debug.println(debug.LEVEL_FINEST, 'INFO: Initializing Orca module')
+
     global _initialized
 
     if _initialized and _settingsManager.isScreenReaderServiceEnabled():
@@ -1216,11 +1222,16 @@ def init(registry):
     # so that we respond when gnome-control-center is used to stop Orca.
     if a11yAppSettings:
         a11yAppSettings.connect('changed', onEnabledChanged)
+
+    debug.println(debug.LEVEL_FINEST, 'INFO: Orca module initialized')
+
     return True
 
 def start(registry):
     """Starts Orca.
     """
+
+    debug.println(debug.LEVEL_FINEST, 'INFO: Starting Orca')
 
     if not _initialized:
         init(registry)
@@ -1239,6 +1250,7 @@ def start(registry):
     if settings.cacheValues:
         pyatspi.setCacheLevel(pyatspi.CACHE_PROPERTIES)
 
+    debug.println(debug.LEVEL_FINEST, 'INFO: Orca starting registry')
     registry.start(gil=settings.useGILIdleHandler)
 
 def die(exitCode=1):
@@ -1265,6 +1277,8 @@ def shutdown(script=None, inputEvent=None):
     Returns True if the shutdown procedure ran or False if this module
     was never initialized.
     """
+
+    debug.println(debug.LEVEL_FINEST, 'INFO: Shutting down Orca')
 
     global _initialized
 
@@ -1297,7 +1311,10 @@ def shutdown(script=None, inputEvent=None):
     _initialized = False
     _restoreXmodmap(_orcaModifiers)
 
+    debug.println(debug.LEVEL_FINEST, 'INFO: Orca stopping registry')
     pyatspi.Registry.stop()
+
+    debug.println(debug.LEVEL_FINEST, 'INFO: Orca shutdown complete')
 
     return True
 

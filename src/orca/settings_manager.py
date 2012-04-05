@@ -66,6 +66,8 @@ class SettingsManager(object):
         backend='json'
         """
 
+        debug.println(debug.LEVEL_FINEST, 'INFO: Initializing settings manager')
+
         self.backendModule = None
         self._backend = None
         self.profile = None
@@ -128,6 +130,8 @@ class SettingsManager(object):
         # For handling the currently-"classic" application settings
         self.settingsPackages = ["app-settings"]
         self._knownAppSettings = {}
+
+        debug.println(debug.LEVEL_FINEST, 'INFO: Settings manager initialized')
 
     def _loadBackend(self):
         """Load specific backend for manage user settings"""

@@ -36,6 +36,7 @@ _eventManager = getattr(orca, '_eventManager')
 class ScriptManager:
 
     def __init__(self):
+        debug.println(debug.LEVEL_FINEST, 'INFO: Initializing script manager')
         self.appScripts = {}
         self.toolkitScripts = {}
         self._appModules = apps.__all__
@@ -69,20 +70,25 @@ class ScriptManager:
              'clutter':          'CALLY'}
 
         self.setActiveScript(None, "__init__")
+        debug.println(debug.LEVEL_FINEST, 'INFO: Script manager initialized')
 
     def activate(self):
         """Called when this script manager is activated."""
 
+        debug.println(debug.LEVEL_FINEST, 'INFO: Activating script manager')
         self._defaultScript  = None
         self.setActiveScript(self.getScript(None), "activate")
+        debug.println(debug.LEVEL_FINEST, 'INFO: Script manager activated')
 
     def deactivate(self):
         """Called when this script manager is deactivated."""
 
+        debug.println(debug.LEVEL_FINEST, 'INFO: Dectivating script manager')
         self._defaultScript  = None
         self.setActiveScript(None, "deactivate")
         self.appScripts = {}
         self.toolkitScripts = {}
+        debug.println(debug.LEVEL_FINEST, 'INFO: Script manager deactivated')
 
     def getModuleName(self, app):
         """Returns the module name of the script to use for application app."""
