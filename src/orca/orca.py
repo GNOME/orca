@@ -26,7 +26,7 @@ __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2010-2011 The Orca Team" \
-                "Copyright (c) 2012 Igalia"
+                "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import argparse
@@ -1269,6 +1269,7 @@ def timeout(signum=None, frame=None):
     debug.println(debug.LEVEL_SEVERE,
                   "TIMEOUT: something has hung.  Aborting.")
     debug.printStack(debug.LEVEL_ALL)
+    examineProcesses()
     die(EXIT_CODE_HANG)
 
 def shutdown(script=None, inputEvent=None):
@@ -1367,6 +1368,34 @@ def abortOnSignal(signum, frame):
                   "Aborting due to signal = %d" \
                   % signum)
     die(signum)
+
+def getCmdline(pid):
+    try:
+        openFile = os.popen('cat /proc/%s/cmdline' % pid)
+        cmdline = openFile.read()
+        openFile.close()
+    except:
+        cmdline = '(Could not obtain cmdline)'
+    cmdline = cmdline.replace('\x00', ' ')
+
+    return cmdline
+
+def examineProcesses():
+    desktop = pyatspi.Registry.getDesktop(0)
+    debug.println(
+        debug.LEVEL_ALL, 'INFO: Desktop has %i apps:' % desktop.childCount)
+    for i, app in enumerate(desktop):
+        pid = app.get_process_id()
+        cmd = getCmdline(pid)
+        try:
+            name = app.name
+        except:
+            name = 'ERROR: Could not get name'
+        else:
+            if name == '':
+                name = 'WARNING: Possible hang'
+        debug.println(
+            debug.LEVEL_ALL, '%3i. %s (pid: %s) %s' % (i+1, name, pid, cmd))
 
 def multipleOrcas():
     """Returns True if multiple instances of Orca are running
