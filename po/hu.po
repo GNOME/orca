@@ -1,18 +1,17 @@
 # Hungarian translation of orca
-# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, Free Software Foundation, Inc.
+# Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2012, Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
 #
 # Kálmán Kéménczy <kkemenczy at novell dot com>, 2006, 2007.
-# Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2007, 2008, 2009, 2010, 2011.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
 # Attila Hammer <hammera at pickup dot hu>, 2008, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&keywords=I18N+L10N&component=i18n\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2012-03-13 21:39+0000\n"
-"PO-Revision-Date: 2012-03-14 05:13+0200\n"
-"Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
+"PO-Revision-Date: 2012-04-06 02:52+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -759,8 +758,7 @@ msgid "emb"
 msgstr "bkmp"
 
 #: ../src/orca/chat.py:337
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "A csatorna nevének a csevegőüzenetek elé szúrása be/ki."
 
 #: ../src/orca/chat.py:343
@@ -2931,8 +2929,7 @@ msgstr "A GNOME akadálymentesítési támogatása engedélyezve."
 
 #: ../src/orca/orca_console_prefs.py:567 ../src/orca/orca_gui_prefs.py:405
 msgid "You need to log out and log back in for the change to take effect."
-msgstr ""
-"Ki kell jelentkeznie és újra be kell lépnie a módosítás életbe lépéséhez."
+msgstr "Ki kell jelentkeznie és újra be kell lépnie a módosítás életbe lépéséhez."
 
 #: ../src/orca/orca_console_prefs.py:577
 msgid "Do you want to logout now?  Enter y or n: "
@@ -3637,8 +3634,7 @@ msgstr "Az ismert futó alkalmazások kiírása"
 #.
 #: ../src/orca/orca.py:287
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr ""
-"A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-OO:PP:MM.out fájlba"
+msgstr "A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-OO:PP:MM.out fájlba"
 
 #. Translators: this enables debug output for Orca and overrides the name
 #. of the debug file Orca will use for debug output if the --debug option
@@ -4780,8 +4776,7 @@ msgstr "Törli a dinamikus oszlopfejléceket."
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:254
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
 "Beállítja a dinamikus sorfejlécekként használandó oszlopot a táblázat "
 "celláinak felolvasásakor."
@@ -5076,7 +5071,7 @@ msgstr "Jobb kattintást végez azon az elemen, ahol az egyszerű áttekintés �
 #.
 #: ../src/orca/scripts/default.py:205
 msgid "Performs the basic where am I operation."
-msgstr "Végrehajtja ahol vagyok műveletet."
+msgstr "Végrehajtja a hol vagyok műveletet."
 
 #. Translators: the "Where am I" feature of Orca allows
 #. a user to press a key and then have information
@@ -5087,8 +5082,7 @@ msgstr "Végrehajtja ahol vagyok műveletet."
 #.
 #: ../src/orca/scripts/default.py:217
 msgid "Performs the detailed where am I operation."
-msgstr ""
-"Végrehajtja a hol vagyok műveletet, de részletesebb információt kapunk."
+msgstr "Végrehajtja a hol vagyok műveletet, de részletesebb információt kapunk."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -5224,8 +5218,7 @@ msgstr "Lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
 #.
 #: ../src/orca/scripts/default.py:375
 msgid "Phonetically spells the current flat review line."
-msgstr ""
-"Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
+msgstr "Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5436,8 +5429,7 @@ msgstr "Kimondja azt a karaktert, ahol az egyszerű áttekintés áll."
 #.
 #: ../src/orca/scripts/default.py:598
 msgid "Phonetically speaks the current flat review character."
-msgstr ""
-"Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll."
+msgstr "Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -6640,8 +6632,7 @@ msgstr "Élő régiók udvariassági beállításának módosítása."
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:493
 msgid "Set default live region politeness level to off."
-msgstr ""
-"Az élő régió alapértelmezett udvariassági szintjének beállítása kikapcsoltra."
+msgstr "Az élő régió alapértelmezett udvariassági szintjének beállítása kikapcsoltra."
 
 #. Translators: this is a toggle to monitor live regions
 #. or not.
@@ -6692,8 +6683,7 @@ msgstr "Váltás a Gecko beépített vagy az Orka mutatónavigáció között."
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:593
 msgid "Moves focus into and away from the current mouse over."
-msgstr ""
-"A fókuszt az egérmutatónál felbukkanó objektumra, vagy arról elmozgatja."
+msgstr "A fókuszt az egérmutatónál felbukkanó objektumra, vagy arról elmozgatja."
 
 #. Translators: this is the title of a panel holding options for
 #. how to navigate HTML content (e.g., Orca caret navigation,
@@ -9046,8 +9036,7 @@ msgstr "Egy elem kijelöléséhez használja a fel- és le nyíl billentyűket."
 #. this string informs the user how to collapse the node.
 #: ../src/orca/tutorialgenerator.py:350 ../src/orca/tutorialgenerator.py:500
 msgid "To collapse, press shift plus left."
-msgstr ""
-"A fanézet összecsukásához használja a Shift+bal nyíl billentyűkombinációt."
+msgstr "A fanézet összecsukásához használja a Shift+bal nyíl billentyűkombinációt."
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.
@@ -9070,8 +9059,7 @@ msgstr "Gépelje be a kért információt, vagy módosítsa a meglévőt."
 #. user how to navigate these.
 #: ../src/orca/tutorialgenerator.py:416
 msgid "Use left and right to view other tabs."
-msgstr ""
-"A lapfülek közötti váltáshoz használja a balra- és jobbra nyíl billentyűket."
+msgstr "A lapfülek közötti váltáshoz használja a balra- és jobbra nyíl billentyűket."
 
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:441
@@ -9081,8 +9069,7 @@ msgstr "Aktiválásához nyomja meg a szóköz billentyűt."
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
 #: ../src/orca/tutorialgenerator.py:469
-msgid ""
-"Use up or down arrow to select value. Or type in the desired numerical value."
+msgid "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
 "Az érték megadásához használja a felfelé és lefelé nyílbillentyűket, vagy "
 "gépelje be az értéket."
@@ -9627,3 +9614,4 @@ msgstr ""
 
 #~ msgid "Enable lockin_g keys"
 #~ msgstr "_Zárolóbillentyűk engedélyezése"
+
