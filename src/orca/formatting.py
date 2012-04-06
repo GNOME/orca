@@ -408,7 +408,12 @@ formatting = {
             'unfocused': '[Component(obj,\
                                      asString(((label + displayedText + imageDescription) or name) + roleName))]'
             },
-        #pyatspi.ROLE_IMAGE: 'default'
+        pyatspi.ROLE_IMAGE: {
+            'focused':   '[Component(obj,\
+                                     asString(labelAndName + value + roleName + required))]',
+            'unfocused': '[Component(obj,\
+                                     asString(labelAndName + value + roleName + required))]',
+            },
         pyatspi.ROLE_LABEL: {
             'unfocused': '[Text(obj,\
                                 asString(label),\
