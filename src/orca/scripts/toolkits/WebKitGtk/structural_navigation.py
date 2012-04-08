@@ -83,6 +83,14 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
 
         if characterOffset == 0:
             child, offset = self._script.setCaretAtStart(obj)
+
+            if child and child.getRole() == pyatspi.ROLE_LIST_ITEM:
+                for c in child:
+                    start, end = self._script.utilities.getHyperlinkRange(c)
+                    if start == offset:
+                        child = c
+                        break
+
             orca.setLocusOfFocus(None, child, False)
             return
 
