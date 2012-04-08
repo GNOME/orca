@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright (C) 2010-2011 The Orca Team
-# Copyright (C) 2011 Igalia, S.L.
+# Copyright (C) 2011-2012 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -24,7 +24,7 @@ __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (C) 2010-2011 The Orca Team" \
-                "Copyright (C) 2011 Igalia, S.L."
+                "Copyright (C) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -447,8 +447,12 @@ class Script(default.Script):
         if not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
             return False
 
-        if orca_state.locusOfFocus.getRole() in doNotHandleRoles:
+        role = orca_state.locusOfFocus.getRole()
+        if role in doNotHandleRoles:
             states = orca_state.locusOfFocus.getState()
+            if role == pyatspi.ROLE_LIST_ITEM:
+                return not states.contains(pyatspi.STATE_SELECTABLE)
+
             if states.contains(pyatspi.STATE_FOCUSED):
                 return False
 
