@@ -65,7 +65,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         result = []
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_HEADING:
-            level = self._script.utilities.headingLevel(obj)
+            result.extend(self.__generateHeadingRole(obj))
         elif not role in [pyatspi.ROLE_SECTION,
                           pyatspi.ROLE_FORM,
                           pyatspi.ROLE_UNKNOWN]:
