@@ -481,6 +481,10 @@ class Script(Gecko.Script):
         # address so that we're not too "chatty." See bug #533042.
         #
         if parent.getRole() == pyatspi.ROLE_AUTOCOMPLETE:
+            if len(event.any_data) == 1:
+                default.Script.onTextInserted(self, event)
+                return
+
             if event.type.endswith("system") and event.any_data:
                 # The autocompleted address may start with the name,
                 # or it might start with the text typed by the user
