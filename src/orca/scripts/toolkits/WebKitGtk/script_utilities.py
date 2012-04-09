@@ -102,6 +102,10 @@ class Utilities(script_utilities.Utilities):
         """
 
         text = script_utilities.Utilities.displayedText(self, obj)
+        try:
+            text = text.decode('UTF-8')
+        except:
+            pass
         if text and text != self.EMBEDDED_OBJECT_CHARACTER:
             return text
 
