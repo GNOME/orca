@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright (C) 2010 Joanmarie Diggs
-# Copyright (C) 2011 Igalia, S.L.
+# Copyright (C) 2011-2012 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -24,7 +24,7 @@ __id__ = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs." \
-                "Copyright (c) 2011 Igalia, S.L."
+                "Copyright (c) 2011-2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -151,7 +151,10 @@ class Utilities(script_utilities.Utilities):
         offsets = filter(lambda x: start <= x < end, offsets)
 
         objects = []
-        objs = [obj[htext.getLinkIndex(offset)] for offset in offsets]
+        try:
+            objs = [obj[htext.getLinkIndex(offset)] for offset in offsets]
+        except:
+            objs = []
         ranges = [self.getHyperlinkRange(x) for x in objs]
         for i, (first, last) in enumerate(ranges):
             objects.append((obj, start, first, string[start:first]))
