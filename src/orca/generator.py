@@ -598,7 +598,10 @@ class Generator:
             pass
         else:
             index = self._script.utilities.cellIndex(obj)
-            rowIndex = table.getRowAtIndex(index)
+            try:
+                rowIndex = table.getRowAtIndex(index)
+            except:
+                rowIndex = -1
             if rowIndex >= 0:
                 # Get the header information.  In Java Swing, the
                 # information is not exposed via the description

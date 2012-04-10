@@ -721,10 +721,13 @@ class Utilities:
             if not isinstance(role, list):
                 role = [role]
 
-            if isinstance(role[0], str):
-                current_role = current.getRoleName()
-            else:
-                current_role = current.getRole()
+            try:
+                if isinstance(role[0], str):
+                    current_role = current.getRoleName()
+                else:
+                    current_role = current.getRole()
+            except:
+                current_role = None
 
             if not current_role in role:
                 return False
