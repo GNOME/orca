@@ -92,17 +92,21 @@ class BrailleGenerator(generator.Generator):
         except:
             focusedRegion = None
         for region in result:
+            try:
+                role = obj.getRole()
+            except:
+                role = None
             if isinstance(region, (braille.Component, braille.Text)) \
                and region.accessible == obj:
                 focusedRegion = region
                 break
             elif isinstance(region, braille.Text) \
-                 and obj.getRole() == pyatspi.ROLE_COMBO_BOX \
+                 and role == pyatspi.ROLE_COMBO_BOX \
                  and region.accessible.parent == obj:
                 focusedRegion = region
                 break
             elif isinstance(region, braille.Component) \
-                 and obj.getRole() == pyatspi.ROLE_TABLE_CELL \
+                 and role == pyatspi.ROLE_TABLE_CELL \
                  and region.accessible.parent == obj:
                 focusedRegion = region
                 break

@@ -183,8 +183,12 @@ class Generator:
         globalsDict = {}
         self._addGlobals(globalsDict)
         globalsDict['obj'] = obj
-        globalsDict['role'] = args.get('role', obj.getRole())
-
+        try:
+            globalsDict['role'] = args.get('role', obj.getRole())
+        except:
+            msg = 'Cannot generate presentation for: %s. Aborting'
+            debug.println(debug.LEVEL_FINEST, msg)
+            return result
         try:
             # We sometimes want to override the role.  We'll keep the
             # role in the args dictionary as a means to let us do so.
@@ -992,7 +996,11 @@ class Generator:
         empty array if the object has no such label.
         """
         result = []
-        if obj.getRole() == pyatspi.ROLE_RADIO_BUTTON:
+        try:
+            role = obj.getRole()
+        except:
+            role = None
+        if role == pyatspi.ROLE_RADIO_BUTTON:
             radioGroupLabel = None
             relations = obj.getRelationSet()
             for relation in relations:
