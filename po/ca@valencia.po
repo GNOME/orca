@@ -2,6 +2,7 @@
 # Copyright © 2006, 2007, 2008 Free Software Foundation, Inc.
 # This file is distributed under the same license as the orca package.
 # Gil Forcada <gilforcada@guifi.net>, 2006-2011, 2011, 2012.
+# Jordi Serratosa <jordis@softcatala.cat>, 2012.
 #
 # per veure els símbols als quals s'ha de posar noms vegeu:
 # http://www.fileformat.info/info/unicode/char/search.htm
@@ -14,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-12 00:14+0100\n"
+"POT-Creation-Date: 2012-04-10 23:45+0200\n"
 "PO-Revision-Date: 2012-03-12 00:12+0100\n"
 "Last-Translator: Gil Forcada <gilforcada@guifi.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -24,10 +25,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bits\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
+#: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:215
 #: ../src/orca/keybindings.py:104 ../src/orca/orca_gui_splash.py:49
-#: ../src/orca/orca_gui_main.py:155 ../src/orca/orca_gui_prefs.py:1967
-#: ../src/orca/orca_gui_prefs.py:2077
+#: ../src/orca/orca_gui_main.py:155 ../src/orca/orca_gui_prefs.py:1969
+#: ../src/orca/orca_gui_prefs.py:2079
 msgid "Orca"
 msgstr "Orca"
 
@@ -47,7 +48,7 @@ msgstr ""
 "Proporciona accés a entorns d'escriptori gràfics a través d'un sintetitzador "
 "de veu i/o braille"
 
-#: ../src/orca/app_gui_prefs.py:136
+#: ../src/orca/app_gui_prefs.py:135
 #, python-format
 msgid "Orca Preferences for %s"
 msgstr "Preferències de l'Orca per a %s"
@@ -55,11 +56,11 @@ msgstr "Preferències de l'Orca per a %s"
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:2083
+#: ../src/orca/app_gui_prefs.py:220 ../src/orca/orca_gui_prefs.py:2085
 msgid "Unbound"
 msgstr "Sense vincle"
 
-#: ../src/orca/app_gui_prefs.py:314
+#: ../src/orca/app_gui_prefs.py:279
 msgid "No application has focus."
 msgstr "No hi ha cap aplicació que tinga el focus."
 
@@ -67,7 +68,7 @@ msgstr "No hi ha cap aplicació que tinga el focus."
 #. for allowing users to set application specific settings from within
 #. Orca for the application that currently has focus.
 #.
-#: ../src/orca/app_gui_prefs.py:329
+#: ../src/orca/app_gui_prefs.py:294
 #, python-format
 msgid "Starting Orca Preferences for %s."
 msgstr "S'estan iniciant les preferències de l'Orca per a %s."
@@ -77,19 +78,19 @@ msgstr "S'estan iniciant les preferències de l'Orca per a %s."
 #. application window and provides keystrokes for the user to jump to
 #. those spots.  These spots are known as 'bookmarks'.
 #.
-#: ../src/orca/bookmarks.py:79
+#: ../src/orca/bookmarks.py:80
 msgid "bookmark entered"
 msgstr "s'ha introduït el marcador"
 
 #. Translators: this announces that the current object is the same
 #. object pointed to by the bookmark.
 #.
-#: ../src/orca/bookmarks.py:103
+#: ../src/orca/bookmarks.py:104
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:107
 msgid "bookmark is current object"
 msgstr "l'objecte actual és el marcador"
 
-#: ../src/orca/bookmarks.py:111
+#: ../src/orca/bookmarks.py:112
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:115
 msgid "bookmark and current object have same parent"
 msgstr "el marcador i l'objecte actual tenen el mateix pare"
@@ -97,7 +98,7 @@ msgstr "el marcador i l'objecte actual tenen el mateix pare"
 #. Translators: this announces that the bookmark and the current
 #. object share a common ancestor
 #.
-#: ../src/orca/bookmarks.py:129
+#: ../src/orca/bookmarks.py:130
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:133
 #, python-format
 msgid "shared ancestor %s"
@@ -106,7 +107,7 @@ msgstr "antecessor compartit %s"
 #. Translators: This announces that a comparison between the bookmark
 #. and the current object can not be determined.
 #.
-#: ../src/orca/bookmarks.py:136
+#: ../src/orca/bookmarks.py:137
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:140
 msgid "comparison unknown"
 msgstr "comparació desconeguda"
@@ -114,7 +115,7 @@ msgstr "comparació desconeguda"
 #. Translators: this announces that a bookmark has been saved to
 #. disk
 #.
-#: ../src/orca/bookmarks.py:145
+#: ../src/orca/bookmarks.py:146
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:155
 msgid "bookmarks saved"
 msgstr "s'han alçat els marcadors"
@@ -122,7 +123,7 @@ msgstr "s'han alçat els marcadors"
 #. Translators: this announces that a bookmark could not be saved to
 #. disk
 #.
-#: ../src/orca/bookmarks.py:150
+#: ../src/orca/bookmarks.py:151
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:160
 msgid "bookmarks could not be saved"
 msgstr "no s'han pogut alçar els marcadors"
@@ -131,7 +132,7 @@ msgstr "no s'han pogut alçar els marcadors"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls to the left.
 #.
-#: ../src/orca/braille.py:117
+#: ../src/orca/braille.py:119
 msgid "Line Left"
 msgstr "Línia esquerra"
 
@@ -139,7 +140,7 @@ msgstr "Línia esquerra"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls to the right.
 #.
-#: ../src/orca/braille.py:123
+#: ../src/orca/braille.py:125
 msgid "Line Right"
 msgstr "Línia dreta"
 
@@ -147,7 +148,7 @@ msgstr "Línia dreta"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls up.
 #.
-#: ../src/orca/braille.py:129
+#: ../src/orca/braille.py:131
 msgid "Line Up"
 msgstr "Línia amunt"
 
@@ -155,7 +156,7 @@ msgstr "Línia amunt"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls down.
 #.
-#: ../src/orca/braille.py:135
+#: ../src/orca/braille.py:137
 msgid "Line Down"
 msgstr "Línia avall"
 
@@ -163,7 +164,7 @@ msgstr "Línia avall"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, it instructs the braille display to freeze.
 #.
-#: ../src/orca/braille.py:141
+#: ../src/orca/braille.py:143
 msgid "Freeze"
 msgstr "Congela"
 
@@ -172,7 +173,7 @@ msgstr "Congela"
 #. When pressing the button, the display scrolls to the top left of the
 #. window.
 #.
-#: ../src/orca/braille.py:148
+#: ../src/orca/braille.py:150
 msgid "Top Left"
 msgstr "A dalt a l'esquerra"
 
@@ -181,7 +182,7 @@ msgstr "A dalt a l'esquerra"
 #. When pressing the button, the display scrolls to the bottom right of
 #. the window.
 #.
-#: ../src/orca/braille.py:155
+#: ../src/orca/braille.py:157
 msgid "Bottom Right"
 msgstr "A baix a la dreta"
 
@@ -190,7 +191,7 @@ msgstr "A baix a la dreta"
 #. When pressing the button, the display scrolls to position containing
 #. the cursor.
 #.
-#: ../src/orca/braille.py:162
+#: ../src/orca/braille.py:164
 msgid "Cursor Position"
 msgstr "Posició del cursor"
 
@@ -199,7 +200,7 @@ msgstr "Posició del cursor"
 #. When pressing the button, the display toggles between contracted and
 #. contracted braille.
 #.
-#: ../src/orca/braille.py:169
+#: ../src/orca/braille.py:171
 msgid "Six Dots"
 msgstr "Sis punts"
 
@@ -209,7 +210,7 @@ msgstr "Sis punts"
 #. routings keys and are a way for a user to tell the machine they are
 #. interested in a particular character on the display.
 #.
-#: ../src/orca/braille.py:177
+#: ../src/orca/braille.py:179
 msgid "Cursor Routing"
 msgstr "Encaminament del cursor"
 
@@ -220,7 +221,7 @@ msgstr "Encaminament del cursor"
 #. character cell mode operation on virtual consoles, the act of copying
 #. text is erroneously called a "cut" operation.
 #.
-#: ../src/orca/braille.py:186
+#: ../src/orca/braille.py:188
 msgid "Cut Begin"
 msgstr "Inici de selecció"
 
@@ -231,7 +232,7 @@ msgstr "Inici de selecció"
 #. character cell mode operation on virtual consoles, the act of copying
 #. text is erroneously called a "cut" operation.
 #.
-#: ../src/orca/braille.py:195
+#: ../src/orca/braille.py:197
 msgid "Cut Line"
 msgstr "Final de selecció"
 
@@ -239,119 +240,119 @@ msgstr "Final de selecció"
 #. languages. You could read about braille tables at:
 #. http://en.wikipedia.org/wiki/Braille
 #.
-#: ../src/orca/braille.py:261
+#: ../src/orca/braille.py:263
 msgid "Czech Grade 1"
 msgstr "Txec grau 1"
 
-#: ../src/orca/braille.py:262
+#: ../src/orca/braille.py:264
 msgid "Spanish Grade 1"
 msgstr "Espanyol grau 1"
 
-#: ../src/orca/braille.py:263
+#: ../src/orca/braille.py:265
 msgid "Canada French Grade 2"
 msgstr "Francés canadenc grau 2"
 
-#: ../src/orca/braille.py:264
+#: ../src/orca/braille.py:266
 msgid "France French Grade 2"
 msgstr "Francés de França grau 2"
 
-#: ../src/orca/braille.py:265
+#: ../src/orca/braille.py:267
 msgid "Latvian Grade 1"
 msgstr "Letó grau 1"
 
-#: ../src/orca/braille.py:266
+#: ../src/orca/braille.py:268
 msgid "Netherlands Dutch Grade 1"
 msgstr "Holandés d'Holanda grau 1"
 
-#: ../src/orca/braille.py:267
+#: ../src/orca/braille.py:269
 msgid "Norwegian Grade 0"
 msgstr "Noruec grau 0"
 
-#: ../src/orca/braille.py:268
+#: ../src/orca/braille.py:270
 msgid "Norwegian Grade 1"
 msgstr "Noruec grau 1"
 
-#: ../src/orca/braille.py:269
+#: ../src/orca/braille.py:271
 msgid "Norwegian Grade 2"
 msgstr "Noruec grau 2"
 
-#: ../src/orca/braille.py:270
+#: ../src/orca/braille.py:272
 msgid "Norwegian Grade 3"
 msgstr "Noruec grau 3"
 
-#: ../src/orca/braille.py:271
+#: ../src/orca/braille.py:273
 msgid "Polish Grade 1"
 msgstr "Polonés grau 1"
 
-#: ../src/orca/braille.py:272
+#: ../src/orca/braille.py:274
 msgid "Portuguese Grade 1"
 msgstr "Portugués grau 1"
 
-#: ../src/orca/braille.py:273
+#: ../src/orca/braille.py:275
 msgid "Swedish Grade 1"
 msgstr "Suec grau 1"
 
-#: ../src/orca/braille.py:274
+#: ../src/orca/braille.py:276
 msgid "Arabic Grade 1"
 msgstr "Àrab grau 1"
 
-#: ../src/orca/braille.py:275
+#: ../src/orca/braille.py:277
 msgid "Welsh Grade 1"
 msgstr "Gal·lès grau 1"
 
-#: ../src/orca/braille.py:276
+#: ../src/orca/braille.py:278
 msgid "Welsh Grade 2"
 msgstr "Gal·lès grau 2"
 
-#: ../src/orca/braille.py:277
+#: ../src/orca/braille.py:279
 msgid "German Grade 0"
 msgstr "Alemany grau 0"
 
-#: ../src/orca/braille.py:278
+#: ../src/orca/braille.py:280
 msgid "German Grade 1"
 msgstr "Alemany grau 1"
 
-#: ../src/orca/braille.py:279
+#: ../src/orca/braille.py:281
 msgid "German Grade 2"
 msgstr "Alemany grau 2"
 
-#: ../src/orca/braille.py:280
+#: ../src/orca/braille.py:282
 msgid "U.K. English Grade 2"
 msgstr "Anglés de Regne Unit grau 2"
 
-#: ../src/orca/braille.py:281
+#: ../src/orca/braille.py:283
 msgid "U.K. English Grade 1"
 msgstr "Anglés de Regne Unit grau 1"
 
-#: ../src/orca/braille.py:282
+#: ../src/orca/braille.py:284
 msgid "U.S. English Grade 1"
 msgstr "Anglés d'Estats Units d'Amèrica grau 1"
 
-#: ../src/orca/braille.py:283
+#: ../src/orca/braille.py:285
 msgid "U.S. English Grade 2"
 msgstr "Anglés d'Estats Units d'Amèrica grau 2"
 
-#: ../src/orca/braille.py:284
+#: ../src/orca/braille.py:286
 msgid "Canada French Grade 1"
 msgstr "Francés de Canadà grau 1"
 
-#: ../src/orca/braille.py:285
+#: ../src/orca/braille.py:287
 msgid "France French Grade 1"
 msgstr "Francés de França grau 1"
 
-#: ../src/orca/braille.py:286
+#: ../src/orca/braille.py:288
 msgid "Greek Grade 1"
 msgstr "Grec grau 1"
 
-#: ../src/orca/braille.py:287
+#: ../src/orca/braille.py:289
 msgid "Hindi Grade 1"
 msgstr "Hindi grau 1"
 
-#: ../src/orca/braille.py:288
+#: ../src/orca/braille.py:290
 msgid "Italian Grade 1"
 msgstr "Italià grau 1"
 
-#: ../src/orca/braille.py:289
+#: ../src/orca/braille.py:291
 msgid "Belgium Dutch Grade 1"
 msgstr "Holandés de Bèlgica grau 1"
 
@@ -359,7 +360,7 @@ msgstr "Holandés de Bèlgica grau 1"
 #. alert and dialog windows plus the total number of
 #. windows that this application has.
 #.
-#: ../src/orca/braille_generator.py:199
+#: ../src/orca/braille_generator.py:206
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -699,7 +700,7 @@ msgstr "barei"
 #. Translators: short braille for the rolename of a tooltip.
 #: ../src/orca/braille_rolenames.py:251
 msgid "tip"
-msgstr "consei"
+msgstr "consell"
 
 #. Translators: short braille for the rolename of a tree.
 #: ../src/orca/braille_rolenames.py:254
@@ -868,7 +869,7 @@ msgstr "Missatge de la sala de xat %s"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:146
-#: ../src/orca/script_utilities.py:2820
+#: ../src/orca/script_utilities.py:2835
 msgid "space"
 msgstr "espai"
 
@@ -2095,19 +2096,11 @@ msgstr "subíndex parèntesi dret"
 msgid "right-pointing arrowhead"
 msgstr "punta de fletxa que apunta cap a la dreta"
 
-#. Translators: this refers to the speech synthesis services
-#. provided by the separate emacspeak utility available at
-#. http://emacspeak.sourceforge.net/.
-#.
-#: ../src/orca/espeechfactory.py:104
-msgid "Emacspeak Speech Services"
-msgstr "Servei de pronunciació Emacspeak"
-
 #. Translators: this is intended to be a short phrase to
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/event_manager.py:244
+#: ../src/orca/event_manager.py:251
 msgid "No focus"
 msgstr "Sense focus"
 
@@ -2139,13 +2132,13 @@ msgstr "Ajusta fins al principi"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:915
+#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:907
 msgid "partially checked"
 msgstr "verificat parcialment"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:914
+#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:906
 msgid "checked"
 msgstr "verificat"
 
@@ -2154,13 +2147,13 @@ msgstr "verificat"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:913
+#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:905
 msgid "not checked"
 msgstr "no verificat"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:926
+#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:918
 msgid "pressed"
 msgstr "premut"
 
@@ -2169,14 +2162,14 @@ msgstr "premut"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:926
+#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:918
 msgid "not pressed"
 msgstr "no premut"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:921
+#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:913
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "seleccionat"
@@ -2187,7 +2180,7 @@ msgstr "seleccionat"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:920
+#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:912
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "no seleccionat"
@@ -2219,13 +2212,13 @@ msgstr[1] "%d per cent."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1086 ../src/orca/generator.py:470
-#: ../src/orca/generator.py:713 ../src/orca/generator.py:755
-#: ../src/orca/generator.py:801
+#: ../src/orca/flat_review.py:1090 ../src/orca/generator.py:478
+#: ../src/orca/generator.py:727 ../src/orca/generator.py:769
+#: ../src/orca/generator.py:815
 #: ../src/orca/scripts/apps/evolution/script.py:450
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:640
-#: ../src/orca/tutorialgenerator.py:529 ../src/orca/tutorialgenerator.py:569
+#: ../src/orca/tutorialgenerator.py:555 ../src/orca/tutorialgenerator.py:595
 msgid "toggle"
 msgstr "commuta"
 
@@ -2924,11 +2917,11 @@ msgstr "Voleu habilitar el Braille? Teclegeu y (sí) o n (no): "
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "Voleu habilitar el monitor de Braille? Teclegeu y (sí) o n (no): "
 
-#: ../src/orca/orca_console_prefs.py:561 ../src/orca/orca_gui_prefs.py:403
+#: ../src/orca/orca_console_prefs.py:561 ../src/orca/orca_gui_prefs.py:405
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "S'acaben d'habilitar les funcions d''accessibilitat del GNOME."
 
-#: ../src/orca/orca_console_prefs.py:567 ../src/orca/orca_gui_prefs.py:405
+#: ../src/orca/orca_console_prefs.py:567 ../src/orca/orca_gui_prefs.py:407
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "Heu d'eixir i tornar a entrar perquè el canvi tinga efecte."
 
@@ -3137,7 +3130,7 @@ msgstr "Modificat"
 #. by Orca when presenting the content of the screen and other
 #. messages.
 #.
-#: ../src/orca/orca_gui_prefs.py:675
+#: ../src/orca/orca_gui_prefs.py:677
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "Predeterminada"
@@ -3145,7 +3138,7 @@ msgstr "Predeterminada"
 #. Translators: This refers to the voice used by Orca when
 #. presenting one or more characters which is in uppercase.
 #.
-#: ../src/orca/orca_gui_prefs.py:679
+#: ../src/orca/orca_gui_prefs.py:681
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "Majúscules"
@@ -3154,7 +3147,7 @@ msgstr "Majúscules"
 #. presenting one or more characters which is part of a
 #. hyperlink.
 #.
-#: ../src/orca/orca_gui_prefs.py:684
+#: ../src/orca/orca_gui_prefs.py:686
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "Enllaç"
@@ -3168,7 +3161,7 @@ msgstr "Enllaç"
 #. user Tabs into a list of six items and the third item is
 #. selected. And so on.
 #.
-#: ../src/orca/orca_gui_prefs.py:694
+#: ../src/orca/orca_gui_prefs.py:696
 msgctxt "VoiceType"
 msgid "System"
 msgstr "Sistema"
@@ -3178,7 +3171,7 @@ msgstr "Sistema"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1137
+#: ../src/orca/orca_gui_prefs.py:1139
 msgid "Attribute Name"
 msgstr "Nom de l'atribut"
 
@@ -3189,7 +3182,7 @@ msgstr "Nom de l'atribut"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1152
+#: ../src/orca/orca_gui_prefs.py:1154
 msgid "Speak"
 msgstr "Pronuncia"
 
@@ -3200,7 +3193,7 @@ msgstr "Pronuncia"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1170
+#: ../src/orca/orca_gui_prefs.py:1172
 msgid "Mark in braille"
 msgstr "Marca-ho en braille"
 
@@ -3219,7 +3212,7 @@ msgstr "Marca-ho en braille"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1196
+#: ../src/orca/orca_gui_prefs.py:1198
 msgid "Present Unless"
 msgstr "Present a menys que"
 
@@ -3230,7 +3223,7 @@ msgstr "Present a menys que"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1319
+#: ../src/orca/orca_gui_prefs.py:1321
 msgid "Actual String"
 msgstr "Frase"
 
@@ -3241,7 +3234,7 @@ msgstr "Frase"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1336
+#: ../src/orca/orca_gui_prefs.py:1338
 msgid "Replacement String"
 msgstr "Text explicatiu"
 
@@ -3254,7 +3247,7 @@ msgstr "Text explicatiu"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1415 ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca_gui_prefs.py:1417 ../src/orca/orca-setup.ui.h:41
 msgid "Break speech into ch_unks between pauses"
 msgstr "Separa la pronunciació en _parts entre les pauses"
 
@@ -3262,7 +3255,7 @@ msgstr "Separa la pronunciació en _parts entre les pauses"
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:1427 ../src/orca/orca_gui_prefs.py:2578
+#: ../src/orca/orca_gui_prefs.py:1429 ../src/orca/orca_gui_prefs.py:2580
 #: ../src/orca/orca-setup.ui.h:5
 msgid "Line"
 msgstr "Línia"
@@ -3271,7 +3264,7 @@ msgstr "Línia"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:1427 ../src/orca/orca_gui_prefs.py:2584
+#: ../src/orca/orca_gui_prefs.py:1429 ../src/orca/orca_gui_prefs.py:2586
 #: ../src/orca/orca-setup.ui.h:6
 msgid "Sentence"
 msgstr "Frase"
@@ -3282,7 +3275,7 @@ msgstr "Frase"
 #. and window they happen to be in.
 #.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca_gui_prefs.py:1528 ../src/orca/orca_gui_prefs.py:2540
+#: ../src/orca/orca_gui_prefs.py:1530 ../src/orca/orca_gui_prefs.py:2542
 #: ../src/orca/orca-setup.ui.h:8
 msgctxt "ProgressBar"
 msgid "All"
@@ -3294,7 +3287,7 @@ msgstr "Totes"
 #. progress bar is in the active application (but not necessarily
 #. in the current window).
 #.
-#: ../src/orca/orca_gui_prefs.py:1535
+#: ../src/orca/orca_gui_prefs.py:1537
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "Aplicació"
@@ -3304,7 +3297,7 @@ msgstr "Aplicació"
 #. Orca will present progress bar updates as long as the progress
 #. bar is in the active window.
 #.
-#: ../src/orca/orca_gui_prefs.py:1541 ../src/orca/orca_gui_prefs.py:2548
+#: ../src/orca/orca_gui_prefs.py:1543 ../src/orca/orca_gui_prefs.py:2550
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "Finestra"
@@ -3313,7 +3306,7 @@ msgstr "Finestra"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1647 ../src/orca/orca-setup.ui.h:105
+#: ../src/orca/orca_gui_prefs.py:1649 ../src/orca/orca-setup.ui.h:105
 msgid "Enable non-spacing _diacritical keys"
 msgstr "Habilita les tecles _diacrítiques sense espai"
 
@@ -3324,7 +3317,7 @@ msgstr "Habilita les tecles _diacrítiques sense espai"
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1655 ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca_gui_prefs.py:1657 ../src/orca/orca-setup.ui.h:107
 msgid "Enable echo by cha_racter"
 msgstr "Habilita l'eco per _caràcter"
 
@@ -3332,7 +3325,7 @@ msgstr "Habilita l'eco per _caràcter"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:1942
+#: ../src/orca/orca_gui_prefs.py:1944
 msgid "(double click)"
 msgstr "(doble clic)"
 
@@ -3340,7 +3333,7 @@ msgstr "(doble clic)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:1948
+#: ../src/orca/orca_gui_prefs.py:1950
 msgid "(triple click)"
 msgstr "(triple clic)"
 
@@ -3349,7 +3342,7 @@ msgstr "(triple clic)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2022 ../src/orca/orca_gui_prefs.py:2114
+#: ../src/orca/orca_gui_prefs.py:2024 ../src/orca/orca_gui_prefs.py:2116
 msgid "Braille Bindings"
 msgstr "Vinculacions de Braille"
 
@@ -3358,8 +3351,8 @@ msgstr "Vinculacions de Braille"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2369 ../src/orca/orca_gui_prefs.py:2410
-#: ../src/orca/orca_gui_prefs.py:2450 ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca_gui_prefs.py:2371 ../src/orca/orca_gui_prefs.py:2412
+#: ../src/orca/orca_gui_prefs.py:2452 ../src/orca/orca-setup.ui.h:92
 msgid "Dot _7"
 msgstr "Punt _7"
 
@@ -3367,8 +3360,8 @@ msgstr "Punt _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2376 ../src/orca/orca_gui_prefs.py:2417
-#: ../src/orca/orca_gui_prefs.py:2457 ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca_gui_prefs.py:2378 ../src/orca/orca_gui_prefs.py:2419
+#: ../src/orca/orca_gui_prefs.py:2459 ../src/orca/orca-setup.ui.h:93
 msgid "Dot _8"
 msgstr "Punt _8"
 
@@ -3376,8 +3369,8 @@ msgstr "Punt _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2383 ../src/orca/orca_gui_prefs.py:2424
-#: ../src/orca/orca_gui_prefs.py:2464 ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca_gui_prefs.py:2385 ../src/orca/orca_gui_prefs.py:2426
+#: ../src/orca/orca_gui_prefs.py:2466 ../src/orca/orca-setup.ui.h:94
 msgid "Dots 7 an_d 8"
 msgstr "Punts 7 _i 8"
 
@@ -3385,7 +3378,7 @@ msgstr "Punts 7 _i 8"
 #. symbols will be spoken as a user reads a document.
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/orca_gui_prefs.py:2487 ../src/orca/orca-setup.ui.h:59
+#: ../src/orca/orca_gui_prefs.py:2489 ../src/orca/orca-setup.ui.h:59
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "_Cap"
@@ -3395,7 +3388,7 @@ msgstr "_Cap"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2495 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca_gui_prefs.py:2497 ../src/orca/orca-setup.ui.h:60
 msgid "So_me"
 msgstr "Algu_ns"
 
@@ -3403,7 +3396,7 @@ msgstr "Algu_ns"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2502 ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca_gui_prefs.py:2504 ../src/orca/orca-setup.ui.h:61
 msgid "M_ost"
 msgstr "M_olts"
 
@@ -3411,7 +3404,7 @@ msgstr "M_olts"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2670 ../src/orca/orca_gui_prefs.py:2758
+#: ../src/orca/orca_gui_prefs.py:2672 ../src/orca/orca_gui_prefs.py:2760
 #: ../src/orca/orca-setup.ui.h:49
 msgid "Brie_f"
 msgstr "In_forme"
@@ -3421,7 +3414,7 @@ msgstr "In_forme"
 #. they just want the current cell to be presented to them.
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/orca_gui_prefs.py:2694 ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca_gui_prefs.py:2696 ../src/orca/orca-setup.ui.h:53
 msgid "Speak _cell"
 msgstr "Pronuncia la _cel·la"
 
@@ -3429,11 +3422,11 @@ msgstr "Pronuncia la _cel·la"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:2778
+#: ../src/orca/orca_gui_prefs.py:2780
 msgid "enter new key"
 msgstr "teclegeu la clau nova"
 
-#: ../src/orca/orca_gui_prefs.py:2859
+#: ../src/orca/orca_gui_prefs.py:2861
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "S'ha suprimit la vinculació de tecla. Premeu retorn per confirmar-ho."
 
@@ -3441,7 +3434,7 @@ msgstr "S'ha suprimit la vinculació de tecla. Premeu retorn per confirmar-ho."
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:2888
+#: ../src/orca/orca_gui_prefs.py:2890
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "La tecla introduïda ja està vinculada a %s."
@@ -3450,7 +3443,7 @@ msgstr "La tecla introduïda ja està vinculada a %s."
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:2895
+#: ../src/orca/orca_gui_prefs.py:2897
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "S'ha capturat la tecla %s. Premeu retorn per confirmar-la."
@@ -3459,7 +3452,7 @@ msgstr "S'ha capturat la tecla %s. Premeu retorn per confirmar-la."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:2943
+#: ../src/orca/orca_gui_prefs.py:2945
 #, python-format
 msgid "The new key is: %s"
 msgstr "La tecla nova és: %s"
@@ -3468,21 +3461,21 @@ msgstr "La tecla nova és: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:2951
+#: ../src/orca/orca_gui_prefs.py:2953
 msgid "The keybinding has been removed."
 msgstr "S'ha mogut la vinculació de tecla."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:2989 ../src/orca/orca-setup.ui.h:12
+#: ../src/orca/orca_gui_prefs.py:2991 ../src/orca/orca-setup.ui.h:12
 msgid "_Desktop"
 msgstr "_Escriptori"
 
 #. We're here because given profile name exists, so we have
 #. to give that info to the user and give him the chance
 #. to continue, or not saving the profile
-#: ../src/orca/orca_gui_prefs.py:3359
+#: ../src/orca/orca_gui_prefs.py:3361
 #, python-format
 msgid ""
 "Profile <b>%s</b> already exists.\n"
@@ -3491,16 +3484,16 @@ msgstr ""
 "Ja existeix el perfil <b>%s</b>.\n"
 "Voleu actualitzar-lo amb estos canvis?"
 
-#: ../src/orca/orca_gui_prefs.py:3368
+#: ../src/orca/orca_gui_prefs.py:3370
 msgid "<b>User Profile Conflict!</b>"
 msgstr "<b>Conflicte en el perfil d'usuari</b>"
 
-#: ../src/orca/orca_gui_prefs.py:3370
+#: ../src/orca/orca_gui_prefs.py:3372
 msgid "Save Profile As Conflict"
 msgstr "Alça el perfil com a conflictiu"
 
 #. First of all, we give a chance of cancel profile change
-#: ../src/orca/orca_gui_prefs.py:3387
+#: ../src/orca/orca_gui_prefs.py:3389
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -3514,15 +3507,15 @@ msgstr ""
 "\n"
 "Voleu continuar carregant el perfil obviant els canvis anteriors?"
 
-#: ../src/orca/orca_gui_prefs.py:3397
+#: ../src/orca/orca_gui_prefs.py:3399
 msgid "<b>Load user profile info</b>"
 msgstr "<b>Càrrega de la informació del perfil d'usuari</b>"
 
-#: ../src/orca/orca_gui_prefs.py:3399
+#: ../src/orca/orca_gui_prefs.py:3401
 msgid "Load User Profile"
 msgstr "Carrega el perfil d'usuari"
 
-#: ../src/orca/orca_gui_prefs.py:3437
+#: ../src/orca/orca_gui_prefs.py:3439
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -3532,7 +3525,7 @@ msgstr ""
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:3471
+#: ../src/orca/orca_gui_prefs.py:3473
 msgid "Starting Orca Preferences."
 msgstr "S'estan iniciant les preferències de l'Orca."
 
@@ -3576,7 +3569,7 @@ msgstr "Es pararan totes les eixides de veu i braille"
 #. splash-window. These items are not localized and are
 #. presented in a list after this message.
 #.
-#: ../src/orca/orca.py:222
+#: ../src/orca/orca.py:225
 msgid "The following items can be enabled or disabled:"
 msgstr "Els elements següents es poden habilitar o inhabilitar:"
 
@@ -3584,18 +3577,18 @@ msgstr "Els elements següents es poden habilitar o inhabilitar:"
 #. Orca and includes an invalid option as an argument. After the message,
 #. the list of arguments, as typed by the user, is displayed.
 #.
-#: ../src/orca/orca.py:242
+#: ../src/orca/orca.py:245
 msgid "The following arguments are not valid: "
 msgstr "Els arguments següents no són vàlids: "
 
-#: ../src/orca/orca.py:249
+#: ../src/orca/orca.py:252
 msgid "orca - scriptable screen reader and magnifier"
 msgstr "Orca- lector de pantalla i ampliador"
 
 #. Translators: this is text being sent to a terminal and we want to keep
 #. the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:253
+#: ../src/orca/orca.py:256
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3605,14 +3598,14 @@ msgid ""
 msgstr ""
 "Si l'usuari no ha configurat prèviament l'Orca, l'Orca\n"
 "automàticament iniciarà la configuració de les preferències\n"
-"a no ser que es faça servir l'opció -n o --no-setup.\n"
+"llevat que es faça servir l'opció -n o --no-setup.\n"
 "\n"
 "Informeu de les errades a orca-list@gnome.org."
 
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:264
+#: ../src/orca/orca.py:267
 msgid "Show this help message"
 msgstr "Mostra este missatge d'ajuda"
 
@@ -3620,7 +3613,7 @@ msgstr "Mostra este missatge d'ajuda"
 #. the names of applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:276
+#: ../src/orca/orca.py:279
 msgid "Print the known running applications"
 msgstr "Mostra les aplicacions que se sap que s'estan executant"
 
@@ -3631,7 +3624,7 @@ msgstr "Mostra les aplicacions que se sap que s'estan executant"
 #. should not be translated (i.e., it will always start with 'debug' and end
 #. with '.out', regardless of the locale.).
 #.
-#: ../src/orca/orca.py:287
+#: ../src/orca/orca.py:290
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "Envia la informació de depuració al fitxer depuracio-YYYY-MM-DD-HH:MM:SS.out"
@@ -3640,7 +3633,7 @@ msgstr ""
 #. of the debug file Orca will use for debug output if the --debug option
 #. is used.
 #.
-#: ../src/orca/orca.py:296
+#: ../src/orca/orca.py:299
 msgid "Send debug output to the specified file"
 msgstr "Envia la informació de depuració al fitxer especificat"
 
@@ -3648,7 +3641,7 @@ msgstr "Envia la informació de depuració al fitxer especificat"
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog that
 #. would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:305
+#: ../src/orca/orca.py:308
 msgid "Set up user preferences"
 msgstr "Configura les preferències de l'usuari"
 
@@ -3658,7 +3651,7 @@ msgstr "Configura les preferències de l'usuari"
 #. For this to happen properly, Orca will need to be run from a terminal
 #. window.
 #.
-#: ../src/orca/orca.py:316
+#: ../src/orca/orca.py:319
 msgid "Set up user preferences (text version)"
 msgstr "Configura les preferències de l'usuari (versió text)"
 
@@ -3666,7 +3659,7 @@ msgstr "Configura les preferències de l'usuari (versió text)"
 #. '-n, --no-setup' that means that Orca will startup without setting up any
 #. user preferences.
 #.
-#: ../src/orca/orca.py:324
+#: ../src/orca/orca.py:327
 msgid "Skip set up of user preferences"
 msgstr "Salta la configuració de les preferències de l'usuari"
 
@@ -3674,28 +3667,28 @@ msgstr "Salta la configuració de les preferències de l'usuari"
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for the user preferences.
 #.
-#: ../src/orca/orca.py:332
+#: ../src/orca/orca.py:335
 msgid "Use alternate directory for user preferences"
 msgstr "Utilitza un directori alternatiu per a les preferències d'usuari"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
 #. command line option, it will be automatically enabled as Orca is started.
 #.
-#: ../src/orca/orca.py:340
+#: ../src/orca/orca.py:343
 msgid "Force use of option"
 msgstr "Força l'ús de l'opció"
 
 #. Translators: if the user supplies an option via the '-d, --disable'
 #. command line option, it will be automatically disabled as Orca is started.
 #.
-#: ../src/orca/orca.py:348
+#: ../src/orca/orca.py:351
 msgid "Prevent use of option"
 msgstr "Evita l'ús de l'opció"
 
 #. Translators: this is the Orca command line option to import to Orca a user
 #. profile from a given file
 #.
-#: ../src/orca/orca.py:355
+#: ../src/orca/orca.py:358
 msgid "Import a profile from a given orca profile file"
 msgstr "Importa el perfil des d'un fitxer de perfil de l'Orca"
 
@@ -3704,7 +3697,7 @@ msgstr "Importa el perfil des d'un fitxer de perfil de l'Orca"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:364
+#: ../src/orca/orca.py:367
 msgid "Quits Orca (if shell script used)"
 msgstr "Tanca l'Orca (si s'utilitza un script)"
 
@@ -3714,14 +3707,14 @@ msgstr "Tanca l'Orca (si s'utilitza un script)"
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:374
+#: ../src/orca/orca.py:377
 msgid "Forces orca to be terminated immediately."
 msgstr "Força la fi de l'execució de l'Orca."
 
 #. Translators: this is the Orca command line option to tell Orca to replace
 #. any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:381
+#: ../src/orca/orca.py:384
 msgid "Replace a currently running Orca"
 msgstr "Reemplaça una instància de l'Orca en execució"
 
@@ -3729,7 +3722,7 @@ msgstr "Reemplaça una instància de l'Orca en execució"
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:790
+#: ../src/orca/orca.py:791
 msgid "Orca user settings reloaded."
 msgstr "S'han tornat a carregar les configuracions de l'usuari per a l'Orca."
 
@@ -3737,7 +3730,7 @@ msgstr "S'han tornat a carregar les configuracions de l'usuari per a l'Orca."
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:954
+#: ../src/orca/orca.py:957
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "Utilitzeu les tecles cap amunt i cap avall per navegar per la llista. Premeu "
@@ -3747,7 +3740,7 @@ msgstr ""
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:967
+#: ../src/orca/orca.py:970
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3758,7 +3751,7 @@ msgstr[1] "S'han trobat %d dreceres predeterminades de l'Orca."
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:989
+#: ../src/orca/orca.py:992
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3770,7 +3763,7 @@ msgstr[1] "S'han trobat %(count)d dreceres de l'Orca per a %(application)s."
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1007
+#: ../src/orca/orca.py:1010
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "No s'ha trobat cap drecera de l'Orca per a %s."
@@ -3793,7 +3786,7 @@ msgstr "No s'ha trobat cap drecera de l'Orca per a %s."
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1025 ../src/orca/scripts/toolkits/Gecko/script.py:6022
+#: ../src/orca/orca.py:1028 ../src/orca/scripts/toolkits/Gecko/script.py:6054
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "Continua la cerca des de baix."
@@ -3816,7 +3809,7 @@ msgstr "Continua la cerca des de baix."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1046 ../src/orca/scripts/toolkits/Gecko/script.py:6090
+#: ../src/orca/orca.py:1049 ../src/orca/scripts/toolkits/Gecko/script.py:6122
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "Continua la cerca des de dalt."
@@ -3829,7 +3822,7 @@ msgstr "Continua la cerca des de dalt."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1065 ../src/orca/scripts/default.py:1622
+#: ../src/orca/orca.py:1068 ../src/orca/scripts/default.py:1626
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
@@ -3840,7 +3833,7 @@ msgstr ""
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:1279
+#: ../src/orca/orca.py:1293
 msgid "Goodbye."
 msgstr "Adéu."
 
@@ -3848,14 +3841,14 @@ msgstr "Adéu."
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:1403
+#: ../src/orca/orca.py:1448
 msgid "Unable to import profile."
 msgstr "No s'ha pogut importar el perfil."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:1409
+#: ../src/orca/orca.py:1454
 msgid "Profile import success."
 msgstr "S'ha importat el perfil correctament."
 
@@ -3863,12 +3856,12 @@ msgstr "S'ha importat el perfil correctament."
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:1415
+#: ../src/orca/orca.py:1460
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "No s'ha pogut importar el perfil degut a una clau desconeguda: %s"
 
-#: ../src/orca/orca.py:1450
+#: ../src/orca/orca.py:1488
 msgid "Welcome to Orca."
 msgstr "Benvingut a l'Orca."
 
@@ -4304,7 +4297,7 @@ msgstr ""
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2429
+#: ../src/orca/script_utilities.py:2444
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -4314,9 +4307,9 @@ msgstr[1] " %(count)d caràcters %(repeatChar)s"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/script_utilities.py:2522
+#: ../src/orca/script_utilities.py:2537
 #: ../src/orca/scripts/apps/soffice/script.py:1144
-#: ../src/orca/scripts/default.py:2047 ../src/orca/speech_generator.py:1007
+#: ../src/orca/scripts/default.py:2051 ../src/orca/speech_generator.py:1013
 msgid "link"
 msgstr "enllaç"
 
@@ -4325,7 +4318,7 @@ msgstr "enllaç"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2649
+#: ../src/orca/script_utilities.py:2664
 #, python-format
 msgid " superscript %s"
 msgstr " superíndex %s"
@@ -4335,7 +4328,7 @@ msgstr " superíndex %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2659
+#: ../src/orca/script_utilities.py:2674
 #, python-format
 msgid " subscript %s"
 msgstr " subíndex %s"
@@ -4399,7 +4392,7 @@ msgstr "fila %(row)d, columna %(column)d"
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/scripts/apps/acroread/script.py:293
-#: ../src/orca/speech_generator.py:800
+#: ../src/orca/speech_generator.py:806
 #, python-format
 msgid "column %d"
 msgstr "columna %d"
@@ -4502,13 +4495,13 @@ msgstr "Botó de directoris"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:430
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:544
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/default.py:2146 ../src/orca/scripts/default.py:2154
-#: ../src/orca/scripts/default.py:2275 ../src/orca/scripts/default.py:2283
-#: ../src/orca/scripts/default.py:2419 ../src/orca/scripts/default.py:4582
-#: ../src/orca/scripts/default.py:4592
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5299
-#: ../src/orca/settings.py:890 ../src/orca/speech_generator.py:718
-#: ../src/orca/speech_generator.py:1071
+#: ../src/orca/scripts/default.py:2150 ../src/orca/scripts/default.py:2158
+#: ../src/orca/scripts/default.py:2279 ../src/orca/scripts/default.py:2287
+#: ../src/orca/scripts/default.py:2423 ../src/orca/scripts/default.py:4600
+#: ../src/orca/scripts/default.py:4610
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5331
+#: ../src/orca/settings.py:882 ../src/orca/speech_generator.py:724
+#: ../src/orca/speech_generator.py:1077
 #: ../src/orca/structural_navigation.py:3597
 msgid "blank"
 msgstr "buida"
@@ -4582,8 +4575,8 @@ msgstr "Premeu la tecla de tabulació i la de retorn per acabar."
 #: ../src/orca/scripts/apps/gedit/script.py:392
 #: ../src/orca/scripts/apps/gedit/script.py:469
 #: ../src/orca/scripts/apps/Thunderbird/script.py:176
-#: ../src/orca/scripts/apps/Thunderbird/script.py:324
-#: ../src/orca/scripts/apps/Thunderbird/script.py:556
+#: ../src/orca/scripts/apps/Thunderbird/script.py:325
+#: ../src/orca/scripts/apps/Thunderbird/script.py:561
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "Verifica l'ortografia"
@@ -4646,7 +4639,7 @@ msgstr "No s'ha trobat cap fitxer."
 #. friendly to the assistive technology infrastructure.
 #.
 #: ../src/orca/scripts/apps/gtk-window-decorator/script.py:89
-#: ../src/orca/scripts/apps/metacity/script.py:110
+#: ../src/orca/scripts/apps/metacity/script.py:117
 msgid "inaccessible"
 msgstr "inaccessible"
 
@@ -4660,11 +4653,11 @@ msgstr "Treballeu en línia / fora de línia"
 #. between workspaces.  The goal here is to find a match
 #. with that prefix.
 #.
-#: ../src/orca/scripts/apps/metacity/script.py:103
+#: ../src/orca/scripts/apps/metacity/script.py:110
 msgid "Workspace "
 msgstr "Espai de treball "
 
-#: ../src/orca/scripts/apps/metacity/script.py:103
+#: ../src/orca/scripts/apps/metacity/script.py:110
 msgid "Desk "
 msgstr "Escriptori "
 
@@ -4672,7 +4665,7 @@ msgstr "Escriptori "
 #. pane or table.
 #.
 #: ../src/orca/scripts/apps/nautilus/script.py:138
-#: ../src/orca/speech_generator.py:1390
+#: ../src/orca/speech_generator.py:1396
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -4707,7 +4700,7 @@ msgstr "Avisa'm quan s'hagen registrat errades."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:224
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1707
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1739
 #: ../src/orca/scripts/toolkits/WebKitGtk/script.py:313
 msgid "Loading.  Please wait."
 msgstr "S'està carregant. Espereu."
@@ -4716,7 +4709,7 @@ msgstr "S'està carregant. Espereu."
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:233
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1720
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1752
 #: ../src/orca/scripts/toolkits/WebKitGtk/script.py:323
 msgid "Finished loading."
 msgstr "S'ha acabat de carregar."
@@ -4938,14 +4931,14 @@ msgstr "diapositiva %(position)d de %(count)d"
 #. Translators: This message is to inform the user that
 #. the last row of a table in a document was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1873
+#: ../src/orca/scripts/apps/soffice/script.py:1876
 msgid "Last row deleted."
 msgstr "S'ha suprimit l'última fila."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1877
+#: ../src/orca/scripts/apps/soffice/script.py:1880
 msgid "Row deleted."
 msgstr "S'ha suprimit la fila."
 
@@ -4954,14 +4947,14 @@ msgstr "S'ha suprimit la fila."
 #. table. This typically happens when the user presses Tab
 #. from within the last cell of the table.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1884
+#: ../src/orca/scripts/apps/soffice/script.py:1887
 msgid "Row inserted at the end of the table."
 msgstr "S'ha inserit una fila al final de la taula."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just inserted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1888
+#: ../src/orca/scripts/apps/soffice/script.py:1891
 msgid "Row inserted."
 msgstr "S'ha inserit una fila."
 
@@ -4972,7 +4965,7 @@ msgstr "S'ha inserit una fila."
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1924
+#: ../src/orca/scripts/apps/soffice/script.py:1936
 msgid "Presentation Wizard"
 msgstr "Auxiliar de presentació"
 
@@ -4981,13 +4974,13 @@ msgstr "Auxiliar de presentació"
 #. has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2058
+#: ../src/orca/scripts/apps/soffice/script.py:2070
 msgid "has formula"
 msgstr "conté una fórmula"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2081
+#: ../src/orca/scripts/apps/soffice/script.py:2093
 #, python-format
 msgid "Cell %s"
 msgstr "Cel·la %s"
@@ -5026,8 +5019,8 @@ msgstr "Fila %(row)d, columna %(column)d."
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:594
-#: ../src/orca/scripts/apps/Thunderbird/script.py:611
+#: ../src/orca/scripts/apps/Thunderbird/script.py:599
+#: ../src/orca/scripts/apps/Thunderbird/script.py:616
 #, python-format
 msgid "%s panel"
 msgstr "quadre %s"
@@ -5842,7 +5835,7 @@ msgstr "Passa l'orde següent a l'aplicació actual."
 #. along to the current application, bypassing Orca's
 #. interception of it.
 #.
-#: ../src/orca/scripts/default.py:1530
+#: ../src/orca/scripts/default.py:1534
 msgid "Bypass mode enabled."
 msgstr "S'ha habilitat el mode d'omissió."
 
@@ -5854,7 +5847,7 @@ msgstr "S'ha habilitat el mode d'omissió."
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/scripts/default.py:1553
+#: ../src/orca/scripts/default.py:1557
 msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
@@ -5871,7 +5864,7 @@ msgstr ""
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/scripts/default.py:1565
+#: ../src/orca/scripts/default.py:1569
 msgid "Learn mode.  Press escape to exit."
 msgstr "Mode d'aprenentatge. Premeu la tecla d'escapament per eixir."
 
@@ -5884,7 +5877,7 @@ msgstr "Mode d'aprenentatge. Premeu la tecla d'escapament per eixir."
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/scripts/default.py:1591
+#: ../src/orca/scripts/default.py:1595
 msgid "Exiting learn mode."
 msgstr "S'està eixint del mode d'aprenentatge."
 
@@ -5893,7 +5886,7 @@ msgstr "S'està eixint del mode d'aprenentatge."
 #. message that is presented to the user as confirmation that this
 #. mode has been entered.
 #.
-#: ../src/orca/scripts/default.py:1612
+#: ../src/orca/scripts/default.py:1616
 msgid "List shortcuts mode."
 msgstr "Mode de llista de dreceres."
 
@@ -5905,7 +5898,7 @@ msgstr "Mode de llista de dreceres."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/scripts/default.py:1651
+#: ../src/orca/scripts/default.py:1655
 msgid "Exiting list shortcuts mode."
 msgstr "S'està eixint del mode de llista de dreceres."
 
@@ -5924,8 +5917,8 @@ msgstr "S'està eixint del mode de llista de dreceres."
 #. detailed message which will be presented if for some
 #. reason Orca cannot identify/find the current location.
 #.
-#: ../src/orca/scripts/default.py:1932 ../src/orca/scripts/default.py:2075
-#: ../src/orca/scripts/default.py:2095
+#: ../src/orca/scripts/default.py:1936 ../src/orca/scripts/default.py:2079
+#: ../src/orca/scripts/default.py:2099
 msgid "Could not find current location."
 msgstr "No s'ha pogut determinar la ubicació actual."
 
@@ -5934,7 +5927,7 @@ msgstr "No s'ha pogut determinar la ubicació actual."
 #. brief message which will be presented if for some reason
 #. Orca cannot identify/find the current location.
 #.
-#: ../src/orca/scripts/default.py:1938 ../src/orca/scripts/default.py:2101
+#: ../src/orca/scripts/default.py:1942 ../src/orca/scripts/default.py:2105
 msgctxt "location"
 msgid "Not found"
 msgstr "No s'ha trobat"
@@ -5942,7 +5935,7 @@ msgstr "No s'ha trobat"
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/scripts/default.py:2159 ../src/orca/scripts/default.py:2424
+#: ../src/orca/scripts/default.py:2163 ../src/orca/scripts/default.py:2428
 msgid "white space"
 msgstr "espai en blanc"
 
@@ -5956,7 +5949,7 @@ msgstr "espai en blanc"
 #. {line,word,character}.  This message lets the user know
 #. they have left the flat review feature.
 #.
-#: ../src/orca/scripts/default.py:2614
+#: ../src/orca/scripts/default.py:2618
 msgid "Leaving flat review."
 msgstr "S'està eixint de la ressenya plana."
 
@@ -5970,28 +5963,28 @@ msgstr "S'està eixint de la ressenya plana."
 #. {line,word,character}.  This message lets the user know
 #. they have entered the flat review feature.
 #.
-#: ../src/orca/scripts/default.py:2630
+#: ../src/orca/scripts/default.py:2634
 msgid "Entering flat review."
 msgstr "S'està entrant a la ressenya plana."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/scripts/default.py:2650
+#: ../src/orca/scripts/default.py:2654
 msgid "Speech enabled."
 msgstr "S'ha habilitat la pronunciació."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/scripts/default.py:2655
+#: ../src/orca/scripts/default.py:2659
 msgid "Speech disabled."
 msgstr "S'ha inhabilitat la pronunciació."
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2668
+#: ../src/orca/scripts/default.py:2672
 msgid "Speaking of indentation and justification enabled."
 msgstr "S'ha habilitat la pronunciació del sagnat i la justificació."
 
@@ -5999,7 +5992,7 @@ msgstr "S'ha habilitat la pronunciació del sagnat i la justificació."
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
-#: ../src/orca/scripts/default.py:2673
+#: ../src/orca/scripts/default.py:2677
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "Habilitat"
@@ -6007,7 +6000,7 @@ msgstr "Habilitat"
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will not be spoken.
 #.
-#: ../src/orca/scripts/default.py:2678
+#: ../src/orca/scripts/default.py:2682
 msgid "Speaking of indentation and justification disabled."
 msgstr "S'ha inhabilitat la pronunciació del sagnat i la justificació."
 
@@ -6015,7 +6008,7 @@ msgstr "S'ha inhabilitat la pronunciació del sagnat i la justificació."
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
-#: ../src/orca/scripts/default.py:2683
+#: ../src/orca/scripts/default.py:2687
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "Inhabilitat"
@@ -6025,7 +6018,7 @@ msgstr "Inhabilitat"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2700
+#: ../src/orca/scripts/default.py:2704
 msgid "Punctuation level set to some."
 msgstr "S'ha establit el nivell de pronunciació de la puntuació a algunes."
 
@@ -6034,7 +6027,7 @@ msgstr "S'ha establit el nivell de pronunciació de la puntuació a algunes."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2706
+#: ../src/orca/scripts/default.py:2710
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Algunes"
@@ -6044,7 +6037,7 @@ msgstr "Algunes"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2714
+#: ../src/orca/scripts/default.py:2718
 msgid "Punctuation level set to most."
 msgstr "S'ha establit el nivell de pronunciació de la puntuació a la majoria."
 
@@ -6053,7 +6046,7 @@ msgstr "S'ha establit el nivell de pronunciació de la puntuació a la majoria."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2720
+#: ../src/orca/scripts/default.py:2724
 msgctxt "spoken punctuation"
 msgid "Most"
 msgstr "La majoria"
@@ -6063,7 +6056,7 @@ msgstr "La majoria"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2728
+#: ../src/orca/scripts/default.py:2732
 msgid "Punctuation level set to all."
 msgstr "S'ha establit el nivell de pronunciació de la puntuació a totes."
 
@@ -6072,7 +6065,7 @@ msgstr "S'ha establit el nivell de pronunciació de la puntuació a totes."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2734
+#: ../src/orca/scripts/default.py:2738
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "Totes"
@@ -6082,7 +6075,7 @@ msgstr "Totes"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2743
+#: ../src/orca/scripts/default.py:2747
 msgid "Punctuation level set to none."
 msgstr "S'ha establit el nivell de pronunciació de la puntuació a cap."
 
@@ -6091,7 +6084,7 @@ msgstr "S'ha establit el nivell de pronunciació de la puntuació a cap."
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2749
+#: ../src/orca/scripts/default.py:2753
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "Cap"
@@ -6108,7 +6101,7 @@ msgstr "Cap"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2778
+#: ../src/orca/scripts/default.py:2782
 msgid "Key echo set to key."
 msgstr "S'ha establit l'eco a la lletra."
 
@@ -6126,7 +6119,7 @@ msgstr "S'ha establit l'eco a la lletra."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2793
+#: ../src/orca/scripts/default.py:2797
 msgctxt "key echo"
 msgid "key"
 msgstr "lletra"
@@ -6143,7 +6136,7 @@ msgstr "lletra"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2811
+#: ../src/orca/scripts/default.py:2815
 msgid "Key echo set to word."
 msgstr "S'ha establit l'eco a la paraula."
 
@@ -6161,7 +6154,7 @@ msgstr "S'ha establit l'eco a la paraula."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2826
+#: ../src/orca/scripts/default.py:2830
 msgctxt "key echo"
 msgid "word"
 msgstr "paraula"
@@ -6178,7 +6171,7 @@ msgstr "paraula"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2844
+#: ../src/orca/scripts/default.py:2848
 msgid "Key echo set to sentence."
 msgstr "S'ha establit l'eco a la frase."
 
@@ -6196,7 +6189,7 @@ msgstr "S'ha establit l'eco a la frase."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2859
+#: ../src/orca/scripts/default.py:2863
 msgctxt "key echo"
 msgid "sentence"
 msgstr "frase"
@@ -6213,7 +6206,7 @@ msgstr "frase"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2877
+#: ../src/orca/scripts/default.py:2881
 msgid "Key echo set to key and word."
 msgstr "S'ha establit l'eco a la lletra i paraula."
 
@@ -6231,7 +6224,7 @@ msgstr "S'ha establit l'eco a la lletra i paraula."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2892
+#: ../src/orca/scripts/default.py:2896
 msgctxt "key echo"
 msgid "key and word"
 msgstr "lletra i paraula"
@@ -6248,7 +6241,7 @@ msgstr "lletra i paraula"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2910
+#: ../src/orca/scripts/default.py:2914
 msgid "Key echo set to word and sentence."
 msgstr "S'ha establit l'eco a la paraula i la frase."
 
@@ -6266,7 +6259,7 @@ msgstr "S'ha establit l'eco a la paraula i la frase."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2925
+#: ../src/orca/scripts/default.py:2929
 msgctxt "key echo"
 msgid "word and sentence"
 msgstr "paraula i frase"
@@ -6283,7 +6276,7 @@ msgstr "paraula i frase"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2943
+#: ../src/orca/scripts/default.py:2947
 msgid "Key echo set to None."
 msgstr "S'ha establit que no hi haurà eco."
 
@@ -6301,7 +6294,7 @@ msgstr "S'ha establit que no hi haurà eco."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2958
+#: ../src/orca/scripts/default.py:2962
 msgctxt "key echo"
 msgid "None"
 msgstr "Cap"
@@ -6310,7 +6303,7 @@ msgstr "Cap"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:2978
+#: ../src/orca/scripts/default.py:2982
 msgid "Speak row"
 msgstr "Pronuncia la fila"
 
@@ -6318,7 +6311,7 @@ msgstr "Pronuncia la fila"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:2984
+#: ../src/orca/scripts/default.py:2988
 msgid "Speak cell"
 msgstr "Pronuncia la cel·la"
 
@@ -6332,9 +6325,9 @@ msgstr "Pronuncia la cel·la"
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
 #.
-#: ../src/orca/scripts/default.py:3279 ../src/orca/scripts/default.py:3411
-#: ../src/orca/scripts/default.py:5423 ../src/orca/speech_generator.py:1167
-#: ../src/orca/speech_generator.py:1196
+#: ../src/orca/scripts/default.py:3283 ../src/orca/scripts/default.py:3414
+#: ../src/orca/scripts/default.py:5444 ../src/orca/speech_generator.py:1173
+#: ../src/orca/speech_generator.py:1202
 msgctxt "text"
 msgid "selected"
 msgstr "seleccionat"
@@ -6347,7 +6340,7 @@ msgstr "seleccionat"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/scripts/default.py:3417 ../src/orca/scripts/default.py:5429
+#: ../src/orca/scripts/default.py:3420 ../src/orca/scripts/default.py:5450
 msgctxt "text"
 msgid "unselected"
 msgstr "no seleccionat"
@@ -6356,7 +6349,7 @@ msgstr "no seleccionat"
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
 #.
-#: ../src/orca/scripts/default.py:3515 ../src/orca/scripts/default.py:5484
+#: ../src/orca/scripts/default.py:3518 ../src/orca/scripts/default.py:5505
 msgid "misspelled"
 msgstr "paraula mal escrita"
 
@@ -6364,14 +6357,14 @@ msgstr "paraula mal escrita"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/scripts/default.py:4427
+#: ../src/orca/scripts/default.py:4445
 #, python-format
 msgid "Progress bar %d."
 msgstr "Barra de progrés %d."
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/scripts/default.py:4463 ../src/orca/speech_generator.py:987
+#: ../src/orca/scripts/default.py:4481 ../src/orca/speech_generator.py:993
 msgid "bold"
 msgstr "negreta"
 
@@ -6382,7 +6375,7 @@ msgstr "negreta"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:4480 ../src/orca/scripts/default.py:4492
+#: ../src/orca/scripts/default.py:4498 ../src/orca/scripts/default.py:4510
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -6395,7 +6388,7 @@ msgstr[1] "%(key)s %(value)s píxels"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/scripts/default.py:4891
+#: ../src/orca/scripts/default.py:4909
 msgid "string not found"
 msgstr "no s'ha trobat la cadena"
 
@@ -6404,12 +6397,12 @@ msgstr "no s'ha trobat la cadena"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/scripts/default.py:4963
+#: ../src/orca/scripts/default.py:4981
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "Paraula mal escrita: %s"
 
-#: ../src/orca/scripts/default.py:4971
+#: ../src/orca/scripts/default.py:4989
 #, python-format
 msgid "Context is %s"
 msgstr " El context és %s"
@@ -6418,19 +6411,19 @@ msgstr " El context és %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5222
+#: ../src/orca/scripts/default.py:5243
 msgid "paragraph selected down from cursor position"
 msgstr "s'ha seleccionat el paràgraf des de la posició del cursor"
 
-#: ../src/orca/scripts/default.py:5223
+#: ../src/orca/scripts/default.py:5244
 msgid "paragraph unselected down from cursor position"
 msgstr "s'ha tret la selecció del paràgraf des de la posició del cursor"
 
-#: ../src/orca/scripts/default.py:5224
+#: ../src/orca/scripts/default.py:5245
 msgid "paragraph selected up from cursor position"
 msgstr "s'ha seleccionat el paràgraf fins a la posició del cursor"
 
-#: ../src/orca/scripts/default.py:5225
+#: ../src/orca/scripts/default.py:5246
 msgid "paragraph unselected up from cursor position"
 msgstr "s'ha tret la selecció del paràgraf fins a la posició del cursor"
 
@@ -6438,7 +6431,7 @@ msgstr "s'ha tret la selecció del paràgraf fins a la posició del cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5279
+#: ../src/orca/scripts/default.py:5300
 msgid "line selected to end from previous cursor position"
 msgstr "línia seleccionada fins al final de la línia on estava abans el cursor"
 
@@ -6446,7 +6439,7 @@ msgstr "línia seleccionada fins al final de la línia on estava abans el cursor
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5287
+#: ../src/orca/scripts/default.py:5308
 msgid "line selected from start to previous cursor position"
 msgstr ""
 "línia seleccionada des de l'inici fins a la posició on estava abans el cursor"
@@ -6455,14 +6448,14 @@ msgstr ""
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5296
+#: ../src/orca/scripts/default.py:5317
 msgid "page selected from cursor position"
 msgstr "pàgina seleccionada des de la posició del cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5301
+#: ../src/orca/scripts/default.py:5322
 msgid "page unselected from cursor position"
 msgstr "s'ha tret la selecció de la pàgina des de la posició del cursor"
 
@@ -6470,14 +6463,14 @@ msgstr "s'ha tret la selecció de la pàgina des de la posició del cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5310
+#: ../src/orca/scripts/default.py:5331
 msgid "page selected to cursor position"
 msgstr "pàgina seleccionada fins a la posició del cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5315
+#: ../src/orca/scripts/default.py:5336
 msgid "page unselected to cursor position"
 msgstr "s'ha tret la selecció fins a la posició del cursor"
 
@@ -6485,14 +6478,14 @@ msgstr "s'ha tret la selecció fins a la posició del cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5340
+#: ../src/orca/scripts/default.py:5361
 msgid "document selected to cursor position"
 msgstr "document seleccionat fins la posició del cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5345
+#: ../src/orca/scripts/default.py:5366
 msgid "document unselected to cursor position"
 msgstr "s'ha tret la selecció del document fins la posició del cursor"
 
@@ -6500,21 +6493,21 @@ msgstr "s'ha tret la selecció del document fins la posició del cursor"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5354
+#: ../src/orca/scripts/default.py:5375
 msgid "document selected from cursor position"
 msgstr "document seleccionat des de la posició del cursor"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5359
+#: ../src/orca/scripts/default.py:5380
 msgid "document unselected from cursor position"
 msgstr "s'ha tret la selecció del document des de la posició del cursor"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/scripts/default.py:5376
+#: ../src/orca/scripts/default.py:5397
 msgid "entire document selected"
 msgstr "seleccionat tot el document"
 
@@ -6522,7 +6515,7 @@ msgstr "seleccionat tot el document"
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/scripts/default.py:5939
+#: ../src/orca/scripts/default.py:5960
 #, python-format
 msgid "Unicode %s"
 msgstr "Unicode %s"
@@ -6807,14 +6800,14 @@ msgstr "s'ha tret la selecció de la línia per sobre de la posició del cursor"
 #. moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1420
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1445
 msgid "New item has been added"
 msgstr "S'ha afegit un element nou"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1713
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1745
 #: ../src/orca/scripts/toolkits/WebKitGtk/script.py:318
 #, python-format
 msgid "Finished loading %s."
@@ -6827,8 +6820,8 @@ msgstr "S'ha acabat de carregar el %s."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2217
-#: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:60
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2249
+#: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:58
 #, python-format
 msgid "h%d"
 msgstr "c%d"
@@ -6839,22 +6832,22 @@ msgstr "c%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5465
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5497
 msgid "Mouse over object not found."
 msgstr "No s'ha trobat l'objecte on plana el ratolí."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5949
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5981
 msgid "open"
 msgstr "obri"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6116
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6140
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6150
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6148
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6172
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6182
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "Les regions dinàmiques estan desactivades"
@@ -6862,11 +6855,11 @@ msgstr "Les regions dinàmiques estan desactivades"
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6124
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6156
 msgid "Live regions monitoring on"
 msgstr "S'està fent un seguiment de les regions dinàmiques"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6131
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6163
 msgid "Live regions monitoring off"
 msgstr "No s'està fent un seguiment de les regions dinàmiques"
 
@@ -6877,7 +6870,7 @@ msgstr "No s'està fent un seguiment de les regions dinàmiques"
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6166
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6198
 msgid "Gecko is controlling the caret."
 msgstr "El Gecko controla el cursor."
 
@@ -6888,7 +6881,7 @@ msgstr "El Gecko controla el cursor."
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6178
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6210
 msgid "Orca is controlling the caret."
 msgstr "L'Orca controla el cursor."
 
@@ -6898,7 +6891,7 @@ msgstr "L'Orca controla el cursor."
 #. translated rolename for the heading.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:260
-#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:117
+#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:93
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s nivell %(level)d"
@@ -6981,14 +6974,14 @@ msgstr[1] "s'ha llegit el %d per cent del document"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:898 ../src/orca/settings.py:975
+#: ../src/orca/settings.py:890 ../src/orca/settings.py:967
 msgid "required"
 msgstr "obligatori"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:903
+#: ../src/orca/settings.py:895
 msgctxt "text"
 msgid "read only"
 msgstr "només lectura"
@@ -6996,7 +6989,7 @@ msgstr "només lectura"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:908 ../src/orca/settings.py:986
+#: ../src/orca/settings.py:900 ../src/orca/settings.py:978
 msgid "grayed"
 msgstr "ombrejat"
 
@@ -7004,18 +6997,18 @@ msgstr "ombrejat"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:932 ../src/orca/settings.py:998
+#: ../src/orca/settings.py:924 ../src/orca/settings.py:990
 msgid "collapsed"
 msgstr "col·lapsat"
 
-#: ../src/orca/settings.py:932 ../src/orca/settings.py:998
+#: ../src/orca/settings.py:924 ../src/orca/settings.py:990
 msgid "expanded"
 msgstr "expandit"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:937
+#: ../src/orca/settings.py:929
 msgid "multi-select"
 msgstr "selecció múltiple"
 
@@ -7023,7 +7016,7 @@ msgstr "selecció múltiple"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:943
+#: ../src/orca/settings.py:935
 #, python-format
 msgid "tree level %d"
 msgstr "nivell de l'arbre %d"
@@ -7038,7 +7031,7 @@ msgstr "nivell de l'arbre %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:950 ../src/orca/structural_navigation.py:2950
+#: ../src/orca/settings.py:942 ../src/orca/structural_navigation.py:2950
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nivell d'imbricació %d"
@@ -7047,7 +7040,7 @@ msgstr "Nivell d'imbricació %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:956
+#: ../src/orca/settings.py:948
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "al %(index)d de %(total)d"
@@ -7056,7 +7049,7 @@ msgstr "al %(index)d de %(total)d"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:962
+#: ../src/orca/settings.py:954
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(index)d de %(total)d"
@@ -7065,7 +7058,7 @@ msgstr "%(index)d de %(total)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:981
+#: ../src/orca/settings.py:973
 msgctxt "text"
 msgid "rdonly"
 msgstr "lectura"
@@ -7074,7 +7067,7 @@ msgstr "lectura"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1004
+#: ../src/orca/settings.py:996
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "NIVELL DE L'ARBRE %d"
@@ -7085,7 +7078,7 @@ msgstr "NIVELL DE L'ARBRE %d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1012
+#: ../src/orca/settings.py:1004
 #, python-format
 msgid "LEVEL %d"
 msgstr "NIVELL %d"
@@ -7095,7 +7088,7 @@ msgstr "NIVELL %d"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1045
+#: ../src/orca/settings.py:1037
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H hores, %M minuts i %S segons."
 
@@ -7104,7 +7097,7 @@ msgstr "%H hores, %M minuts i %S segons."
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1052
+#: ../src/orca/settings.py:1044
 msgid "%H hours and %M minutes."
 msgstr "%H hores i %M minuts."
 
@@ -7163,14 +7156,14 @@ msgstr "més alt."
 #. and the second item the name of the file being linked
 #. to.
 #.
-#: ../src/orca/speech_generator.py:464
+#: ../src/orca/speech_generator.py:470
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)s enllaça a %(file)s"
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/speech_generator.py:470
+#: ../src/orca/speech_generator.py:476
 #, python-format
 msgid "%s link"
 msgstr "enllaç %s"
@@ -7178,7 +7171,7 @@ msgstr "enllaç %s"
 #. Translators: this is an indication that a given
 #. link points to an object that is on the same page.
 #.
-#: ../src/orca/speech_generator.py:506
+#: ../src/orca/speech_generator.py:512
 msgid "same page"
 msgstr "la mateixa pàgina"
 
@@ -7190,7 +7183,7 @@ msgstr "la mateixa pàgina"
 #. link points to an object that is at the same site
 #. (but not on the same page) as the link.
 #.
-#: ../src/orca/speech_generator.py:512 ../src/orca/speech_generator.py:525
+#: ../src/orca/speech_generator.py:518 ../src/orca/speech_generator.py:531
 msgid "same site"
 msgstr "el mateix lloc"
 
@@ -7198,13 +7191,13 @@ msgstr "el mateix lloc"
 #. link points to an object that is at a different
 #. site than that of the link.
 #.
-#: ../src/orca/speech_generator.py:531
+#: ../src/orca/speech_generator.py:537
 msgid "different site"
 msgstr "lloc diferent"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/speech_generator.py:561
+#: ../src/orca/speech_generator.py:567
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -7213,14 +7206,14 @@ msgstr[1] "%d bytes"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/speech_generator.py:565
+#: ../src/orca/speech_generator.py:571
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f kilobytes"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/speech_generator.py:569
+#: ../src/orca/speech_generator.py:575
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f megabytes"
@@ -7228,28 +7221,28 @@ msgstr "%.2f megabytes"
 #. Translators: this is in reference to a table cell being
 #. selected or not.
 #.
-#: ../src/orca/speech_generator.py:771
+#: ../src/orca/speech_generator.py:777
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "no seleccionada"
 
 #. Translators: this is in references to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:829
+#: ../src/orca/speech_generator.py:835
 #, python-format
 msgid "row %d"
 msgstr "fila %d"
 
 #. Translators: this is in references to a column in a
 #. table.
-#: ../src/orca/speech_generator.py:858
+#: ../src/orca/speech_generator.py:864
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "columna %(index)d de %(total)d"
 
 #. Translators: this is in reference to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:863
+#: ../src/orca/speech_generator.py:869
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "fila %(index)d de %(total)d"
@@ -7257,14 +7250,14 @@ msgstr "fila %(index)d de %(total)d"
 #. Translators: This is to indicate to the user that
 #. he/she is in the last cell of a table in a document.
 #.
-#: ../src/orca/speech_generator.py:899
+#: ../src/orca/speech_generator.py:905
 msgid "End of table"
 msgstr "Final de la taula"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1240
+#: ../src/orca/speech_generator.py:1246
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -7274,7 +7267,7 @@ msgstr[1] "%d espais"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1251
+#: ../src/orca/speech_generator.py:1257
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -7283,7 +7276,7 @@ msgstr[1] "%d tabulacions"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/speech_generator.py:1319
+#: ../src/orca/speech_generator.py:1325
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -7293,7 +7286,7 @@ msgstr[1] "%d per cent"
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/speech_generator.py:1418 ../src/orca/speech_generator.py:1439
+#: ../src/orca/speech_generator.py:1424 ../src/orca/speech_generator.py:1445
 msgid "0 items"
 msgstr "0 elements"
 
@@ -7301,7 +7294,7 @@ msgstr "0 elements"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/speech_generator.py:1474
+#: ../src/orca/speech_generator.py:1480
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -7311,7 +7304,7 @@ msgstr[1] "seleccionats %(index)d elements de %(total)d"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1527 ../src/orca/speech_generator.py:1821
+#: ../src/orca/speech_generator.py:1533 ../src/orca/speech_generator.py:1834
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -7321,7 +7314,7 @@ msgstr[1] "%d diàlegs sense focus"
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1612
+#: ../src/orca/speech_generator.py:1622
 msgid "Icon panel"
 msgstr "Icona del quadre"
 
@@ -7329,7 +7322,7 @@ msgstr "Icona del quadre"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1768
+#: ../src/orca/speech_generator.py:1781
 #, python-format
 msgid "Default button is %s"
 msgstr "El botó predeterminat és %s"
@@ -9016,7 +9009,7 @@ msgstr ""
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:350 ../src/orca/tutorialgenerator.py:500
+#: ../src/orca/tutorialgenerator.py:350 ../src/orca/tutorialgenerator.py:526
 msgid "To collapse, press shift plus left."
 msgstr "Per reduir, premeu majúscula i esquerra."
 
@@ -9024,31 +9017,37 @@ msgstr "Per reduir, premeu majúscula i esquerra."
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:356 ../src/orca/tutorialgenerator.py:506
+#: ../src/orca/tutorialgenerator.py:356 ../src/orca/tutorialgenerator.py:532
 msgid "To expand, press shift plus right."
 msgstr "Per expandir, premeu majúscula i dreta."
 
+#. Translators: this is the tutorial string for activating a menu item
+#: ../src/orca/tutorialgenerator.py:388
+#, fuzzy
+msgid "To activate press return."
+msgstr "Per activar-lo premeu la barra espaiadora."
+
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
-#: ../src/orca/tutorialgenerator.py:388
+#: ../src/orca/tutorialgenerator.py:414
 msgid "Type in text."
 msgstr "Escriviu text."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
-#: ../src/orca/tutorialgenerator.py:416
+#: ../src/orca/tutorialgenerator.py:442
 msgid "Use left and right to view other tabs."
 msgstr "Utilitzeu les tecles dreta i esquerra per veure altres pestanyes."
 
 #. Translators: this is the tutorial string for activating a push button.
-#: ../src/orca/tutorialgenerator.py:441
+#: ../src/orca/tutorialgenerator.py:467
 msgid "To activate press space."
 msgstr "Per activar-lo premeu la barra espaiadora."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
-#: ../src/orca/tutorialgenerator.py:469
+#: ../src/orca/tutorialgenerator.py:495
 msgid ""
 "Use up or down arrow to select value. Or type in the desired numerical value."
 msgstr ""
@@ -9056,12 +9055,12 @@ msgstr ""
 "teclegeu el valor numèric desitjat."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
-#: ../src/orca/tutorialgenerator.py:657
+#: ../src/orca/tutorialgenerator.py:683
 msgid "Use arrow keys to change."
 msgstr "Utilitzeu les tecles de cursor per canviar."
 
 #. Translators: this is a tip for the user, how to navigate menues.
-#: ../src/orca/tutorialgenerator.py:682
+#: ../src/orca/tutorialgenerator.py:708
 msgid ""
 "To navigate, press left or right arrow. To move through items press up or "
 "down arrow."
@@ -9072,13 +9071,13 @@ msgstr ""
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
-#: ../src/orca/tutorialgenerator.py:687
+#: ../src/orca/tutorialgenerator.py:713
 msgid "To enter sub menu, press right arrow."
 msgstr "Per entrar a un submenú, premeu la tecla de fletxa cap a la dreta."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
-#: ../src/orca/tutorialgenerator.py:719
+#: ../src/orca/tutorialgenerator.py:745
 msgid ""
 "To decrease press left arrow, to increase press right arrow. To go to "
 "minimum press home, and for maximum press end."
@@ -9086,6 +9085,9 @@ msgstr ""
 "Per retrocedir premeu la tecla cap a l'esquerra, per avançar premeu la tecla "
 "cap a la dreta. Per anar a l'inici premeu la tecla d'inici i per anar al "
 "final premeu la tecla de final."
+
+#~ msgid "Emacspeak Speech Services"
+#~ msgstr "Servei de pronunciació Emacspeak"
 
 #~ msgid "Enable locking keys?  Enter y or n: "
 #~ msgstr "Voleu habilitar el bloqueig de tecles? Teclegeu y (sí) o n (no): "
@@ -9154,10 +9156,10 @@ msgstr ""
 #~ msgstr "títol"
 
 #~ msgid "CheckBox"
-#~ msgstr "Quadre de verificació"
+#~ msgstr "Casella de selecció"
 
 #~ msgid "check box"
-#~ msgstr "quadre de verificació"
+#~ msgstr "casella de selecció"
 
 #~ msgid "CheckItem"
 #~ msgstr "Element de verificació"
