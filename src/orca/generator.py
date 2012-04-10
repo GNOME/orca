@@ -186,7 +186,7 @@ class Generator:
         try:
             globalsDict['role'] = args.get('role', obj.getRole())
         except:
-            msg = 'Cannot generate presentation for: %s. Aborting'
+            msg = 'Cannot generate presentation for: %s. Aborting' % obj
             debug.println(debug.LEVEL_FINEST, msg)
             return result
         try:
