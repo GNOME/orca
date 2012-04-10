@@ -1456,10 +1456,17 @@ class Script(default.Script):
             self.liveMngr.handleEvent(event)
             return
 
-        if event.type.startswith("object:children-changed:add") \
-           and event.any_data.getRole() == pyatspi.ROLE_ALERT \
-           and event.source.getRole() in [pyatspi.ROLE_SCROLL_PANE,
-                                          pyatspi.ROLE_FRAME]:
+        if event.type.startswith("object:children-changed:add"):
+            try:
+                role = event.source.getRole()
+                childRole = event.any_data.getRole()
+            except:
+                return
+
+            if not (childRole == pyatspi.ROLE_ALERT \
+               and role in [pyatspi.ROLE_SCROLL_PANE, pyatspi.ROLE_FRAME]):
+                return
+
             utterances = []
             utterances.append(
                 self.speechGenerator.getLocalizedRoleName(event.any_data))

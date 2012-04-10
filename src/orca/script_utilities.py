@@ -2870,7 +2870,7 @@ class Utilities:
         #
         try:
             bindingStrings = action.getKeyBinding(0).decode("UTF-8").split(';')
-        except AttributeError:
+        except:
             self._script.generatorCache[self.KEY_BINDING][obj] = ["", "", ""]
             return self._script.generatorCache[self.KEY_BINDING][obj]
 

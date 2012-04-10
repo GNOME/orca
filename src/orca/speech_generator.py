@@ -1650,7 +1650,10 @@ class SpeechGenerator(generator.Generator):
         position = -1
         total = -1
 
-        relations = obj.getRelationSet()
+        try:
+            relations = obj.getRelationSet()
+        except:
+            relations = []
         for relation in relations:
             if relation.getRelationType() == pyatspi.RELATION_MEMBER_OF:
                 total = 0
