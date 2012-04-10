@@ -84,8 +84,15 @@ class Script(default.Script):
         found = False
         for app in self.utilities.knownApplications():
             i = 0
-            while i < app.childCount:
-                win = app.getChildAtIndex(i)
+            try:
+                childCount = app.childCount
+            except:
+                continue
+            while i < childCount:
+                try:
+                    win = app.getChildAtIndex(i)
+                except:
+                    win = None
                 if win is None:
                     print "app error " + app.name
                 elif win.name == objName:

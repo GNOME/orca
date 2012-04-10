@@ -193,8 +193,11 @@ class BrailleGenerator(generator.Generator):
         I wonder if this string should be moved to settings.py.]]]
         """
         result = []
-        alertAndDialogCount = \
-            self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        try:
+            alertAndDialogCount = \
+                self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        except:
+            alertAndDialogCount = 0
         if alertAndDialogCount > 0:
             # Translators: this tells the user how many unfocused
             # alert and dialog windows plus the total number of
@@ -288,7 +291,10 @@ class BrailleGenerator(generator.Generator):
         details.
         """
         result = []
-        relations = obj.getRelationSet()
+        try:
+            relations = obj.getRelationSet()
+        except:
+            relations = []
         for relation in relations:
             if relation.getRelationType() ==  pyatspi.RELATION_LABELLED_BY:
                 labelledBy = relation.getTarget(0)
