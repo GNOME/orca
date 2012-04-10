@@ -1333,7 +1333,11 @@ class Script(script.Script):
 
             # [[[TODO: WDW - this should move to the generator.]]]
             #
-            if newLocusOfFocus.getRole() == pyatspi.ROLE_LINK:
+            try:
+                newRole = newLocusOfFocus.getRole()
+            except:
+                newRole = None
+            if newRole == pyatspi.ROLE_LINK:
                 voice = self.voices[settings.HYPERLINK_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
@@ -1347,7 +1351,7 @@ class Script(script.Script):
             # information in the table cell's table, so that we can use
             # it the next time.
             #
-            if newLocusOfFocus.getRole() == pyatspi.ROLE_TABLE_CELL:
+            if newRole == pyatspi.ROLE_TABLE_CELL:
                 try:
                     table = newParent.queryTable()
                 except:

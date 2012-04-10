@@ -644,7 +644,10 @@ class Generator:
 
         # Do not return yourself as a header.
         #
-        role = args.get('role', obj.getRole())
+        try:
+            role = args.get('role', obj.getRole())
+        except:
+            role = None
         if role in [pyatspi.ROLE_COLUMN_HEADER,
                     pyatspi.ROLE_TABLE_COLUMN_HEADER]:
             return result
