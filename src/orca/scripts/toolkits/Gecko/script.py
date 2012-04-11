@@ -2881,7 +2881,10 @@ class Script(default.Script):
         if not obj:
             return {}
 
-        return dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        try:
+            return dict([attr.split(':', 1) for attr in obj.getAttributes()])
+        except:
+            return {}
 
     def handleAsLiveRegion(self, event):
         """Returns True if the given event (object:children-changed, object:
