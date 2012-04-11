@@ -289,6 +289,9 @@ class SpeechGenerator(generator.Generator):
             except:
                 pass
 
+        if not role:
+            return ''
+
         nonlocalized = Atspi.role_get_name(role)
         atkRole = Atk.role_for_name(nonlocalized)
 

@@ -3306,10 +3306,14 @@ class Script(script.Script):
         # name doesn't change.  [[[TODO: WDW - I'm hesitant to rip the
         # above TODO out, though, because it's been in here for so long.]]]
         #
-        if self.pointOfReference.get('oldName', None) == event.source.name:
+        try:
+            name = event.source.name
+        except:
+            return
+        if self.pointOfReference.get('oldName', None) == name:
             return
 
-        self.pointOfReference['oldName'] = event.source.name
+        self.pointOfReference['oldName'] = name
         self.visualAppearanceChanged(event, event.source)
 
     def onSelectionChanged(self, event):
