@@ -287,7 +287,7 @@ class SpeechGenerator(generator.Generator):
             try:
                 return obj.getLocalizedRoleName()
             except:
-                pass
+                return ''
 
         if not role:
             return ''
@@ -1527,8 +1527,11 @@ class SpeechGenerator(generator.Generator):
         # dialog window, then speak '<m> unfocused dialogs'
         # to let the user know.
         #
-        alertAndDialogCount = \
-            self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        try:
+            alertAndDialogCount = \
+                self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        except:
+            alertAndDialogCount = 0
         if alertAndDialogCount > 0:
             # Translators: this tells the user how many unfocused
             # alert and dialog windows that this application has.
