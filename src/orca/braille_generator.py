@@ -156,7 +156,7 @@ class BrailleGenerator(generator.Generator):
             try:
                 return obj.getLocalizedRoleName()
             except:
-                pass
+                return ''
 
         if not role:
             return ''
