@@ -192,6 +192,21 @@ class Script(default.Script):
         - event: the Event
         """
 
+        # When entering overview with many open windows, we get quite
+        # a few state-changed:showing events for nameless panels. The
+        # act of processing these by the default script causes us to
+        # present nothing, and introduces a significant delay before
+        # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
+        if event.type.startswith("object:state-changed:showing"):
+            try:
+                role = event.source.getRole()
+                name = event.source.name
+            except:
+                pass
+            else:
+                if role == pyatspi.ROLE_PANEL and not name:
+                    return
+
         # We override the behaviour for the selection
         if event.type.startswith("object:state-changed:selected") \
            and event.detail1:
