@@ -217,8 +217,11 @@ class TutorialGenerator:
 
         # If this application has more than one unfocused alert or
         # dialog window, tell user how to give them focus.
-        alertAndDialogCount = \
-                    self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        try:
+            alertAndDialogCount = \
+                self._script.utilities.unfocusedAlertAndDialogCount(obj)
+        except:
+            alertAndDialogCount = 0
         if alertAndDialogCount > 0:
             utterances.append(childWindowsMsg)
 
