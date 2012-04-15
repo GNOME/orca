@@ -1422,7 +1422,7 @@ class Script(script.Script):
                     if target == orca_state.locusOfFocus:
                         self.updateBraille(target)
                         utterances = self.speechGenerator.generateSpeech(
-                            target, alreadyFocused=True)
+                            target, alreadyFocused=False)
                         utterances.extend(self.tutorialGenerator.getTutorial(
                                           target, True))
                         speech.speak(utterances)
