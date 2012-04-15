@@ -180,6 +180,33 @@ class Script(default.Script):
 
         return default.Script.checkKeyboardEventData(self, keyboardEvent)
 
+    def skipObjectEvent(self, event):
+        """Gives us, and scripts, the ability to decide an event isn't
+        worth taking the time to process under the current circumstances.
+
+        Arguments:
+        - event: the Event
+
+        Returns True if we shouldn't bother processing this object event.
+        """
+
+        try:
+            role = event.source.getRole()
+        except:
+            return default.Script.skipObjectEvent(self, event)
+
+        # Currently dialogs appearing do not result in window:activate events;
+        # instead, they claim focus. But often after that, a button within that
+        # dialog does the same thing before we have presented the dialog. Since
+        # we normally do not want to present things which are no longer focused,
+        # we normally skip the old event from the dialog (and never present it).
+        # That is bad.
+        if role == pyatspi.ROLE_DIALOG and event.detail1 \
+           and event.type.startswith('object:state-changed:focused'):
+            return False
+
+        return default.Script.skipObjectEvent(self, event)
+
     # NOTE: right now this is being redefined just for GNOME Shell, so
     # the proper place would be a GNOME Shell script. Anyway, as right
     # now GNOME Shell is the only Clutter application we care, for the
