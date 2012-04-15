@@ -428,6 +428,7 @@ class Script:
             skip = True
             reason = "more recent event of the same type in the same object"
         elif event.type in focus and event.source != cachedEvent.source \
+             and event.type == cachedEvent.type \
              and event.detail1 == cachedEvent.detail1:
             skip = True
             reason = "more recent event of the same type in a different object"
