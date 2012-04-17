@@ -1,6 +1,6 @@
 # translation of orca.HEAD.te.po to Telugu
 # Telugu translation of orca
-# Copyright (C) 2012 Swecha Telugu translations team 
+# Copyright (C) 2012 Swecha Telugu translations team <localization@swecha.net>
 # This file is distributed under the same license as the orca package.
 #
 # Krishna Babu K <kkrothap@redhat.com>, 2008, 2009, 2012.
@@ -11,11 +11,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.te\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2012-02-26 11:13+0000\n"
-"PO-Revision-Date: 2012-03-13 20:41+0530\n"
-"Last-Translator: Sasi bhushan Boddepalli <sasi@swecha.net>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
+"POT-Creation-Date: 2012-04-15 14:07+0000\n"
+"PO-Revision-Date: 2012-04-17 18:31+0530\n"
+"Last-Translator: Sasi Bhushan Boddepalli <sasi@swecha.net>\n"
 "Language-Team: Telugu <indlinux-telugu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,10 +23,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../orca.desktop.in.h:1 ../src/orca/app_gui_prefs.py:216
-#: ../src/orca/keybindings.py:104 ../src/orca/orca_gui_splash.py:49
-#: ../src/orca/orca_gui_main.py:155 ../src/orca/orca_gui_prefs.py:1967
-#: ../src/orca/orca_gui_prefs.py:2077
+#: ../orca.desktop.in.h:1
+#: ../src/orca/app_gui_prefs.py:215
+#: ../src/orca/keybindings.py:104
+#: ../src/orca/orca_gui_splash.py:49
+#: ../src/orca/orca_gui_main.py:155
+#: ../src/orca/orca_gui_prefs.py:1969
+#: ../src/orca/orca_gui_prefs.py:2079
 msgid "Orca"
 msgstr "ఓర్కా"
 
@@ -35,19 +37,16 @@ msgstr "ఓర్కా"
 msgid "Screen Reader"
 msgstr "తెర చదువరి"
 
-#: ../orca.desktop.in.h:3 ../src/orca/orca_gui_main.py:44
+#: ../orca.desktop.in.h:3
+#: ../src/orca/orca_gui_main.py:44
 msgid "Orca Screen Reader"
 msgstr "ఓర్కా తెరచదువరి"
 
 #: ../orca.desktop.in.h:4
-msgid ""
-"Provide access to graphical desktop environments via synthesized speech and/"
-"or refreshable braille"
-msgstr ""
-"గ్రాఫికల్ డెస్కటాప్ పరిసరములనకు సింతసైజ్డ్ భాషణము చేత మరియు/లేక పునశ్చరణచేయుగల బ్రైలీ ద్వారా అనుమతిని "
-"కలిగించుము"
+msgid "Provide access to graphical desktop environments via synthesized speech and/or refreshable braille"
+msgstr "గ్రాఫికల్ డెస్కటాప్ పరిసరములనకు సింతసైజ్డ్ భాషణము చేత మరియు/లేక పునశ్చరణచేయుగల బ్రైలీ ద్వారా అనుమతిని కలిగించుము"
 
-#: ../src/orca/app_gui_prefs.py:136
+#: ../src/orca/app_gui_prefs.py:135
 #, python-format
 msgid "Orca Preferences for %s"
 msgstr "%s కొరకు  ఓర్కా అభీష్టాలు"
@@ -55,11 +54,12 @@ msgstr "%s కొరకు  ఓర్కా అభీష్టాలు"
 #. Translators: this refers to commands that do not currently have
 #. an associated key binding.
 #.
-#: ../src/orca/app_gui_prefs.py:221 ../src/orca/orca_gui_prefs.py:2083
+#: ../src/orca/app_gui_prefs.py:220
+#: ../src/orca/orca_gui_prefs.py:2085
 msgid "Unbound"
 msgstr "బందనంకాని"
 
-#: ../src/orca/app_gui_prefs.py:314
+#: ../src/orca/app_gui_prefs.py:279
 msgid "No application has focus."
 msgstr "ఏ అనువర్తనం దృష్టీకరించబడలేదు."
 
@@ -67,7 +67,7 @@ msgstr "ఏ అనువర్తనం దృష్టీకరించబడ�
 #. for allowing users to set application specific settings from within
 #. Orca for the application that currently has focus.
 #.
-#: ../src/orca/app_gui_prefs.py:329
+#: ../src/orca/app_gui_prefs.py:294
 #, python-format
 msgid "Starting Orca Preferences for %s."
 msgstr "%s కొరకు ఓర్కా అభీష్టాలను ప్రారంభిస్తున్నది."
@@ -77,19 +77,19 @@ msgstr "%s కొరకు ఓర్కా అభీష్టాలను ప్
 #. application window and provides keystrokes for the user to jump to
 #. those spots.  These spots are known as 'bookmarks'.
 #.
-#: ../src/orca/bookmarks.py:79
+#: ../src/orca/bookmarks.py:80
 msgid "bookmark entered"
 msgstr "ఇష్టాంశము ప్రవేశపెట్టబడింది"
 
 #. Translators: this announces that the current object is the same
 #. object pointed to by the bookmark.
 #.
-#: ../src/orca/bookmarks.py:103
+#: ../src/orca/bookmarks.py:104
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:107
 msgid "bookmark is current object"
 msgstr "ఇష్టాంశము ప్రస్తుత ఆబ్జక్ట్‍"
 
-#: ../src/orca/bookmarks.py:111
+#: ../src/orca/bookmarks.py:112
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:115
 msgid "bookmark and current object have same parent"
 msgstr "ఇష్టాంశము మరియు ప్రస్తుత ఆబ్జక్టు ఒకే మాత్రుకను కలిగిఉన్నాయి"
@@ -97,7 +97,7 @@ msgstr "ఇష్టాంశము మరియు ప్రస్తుత ఆ
 #. Translators: this announces that the bookmark and the current
 #. object share a common ancestor
 #.
-#: ../src/orca/bookmarks.py:129
+#: ../src/orca/bookmarks.py:130
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:133
 #, python-format
 msgid "shared ancestor %s"
@@ -106,7 +106,7 @@ msgstr "భాగస్వామిత పూర్విక %s"
 #. Translators: This announces that a comparison between the bookmark
 #. and the current object can not be determined.
 #.
-#: ../src/orca/bookmarks.py:136
+#: ../src/orca/bookmarks.py:137
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:140
 msgid "comparison unknown"
 msgstr "పోలిక తెలియనిది"
@@ -114,7 +114,7 @@ msgstr "పోలిక తెలియనిది"
 #. Translators: this announces that a bookmark has been saved to
 #. disk
 #.
-#: ../src/orca/bookmarks.py:145
+#: ../src/orca/bookmarks.py:146
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:155
 msgid "bookmarks saved"
 msgstr "ఇష్టాంశములు దాయబడినవి"
@@ -122,7 +122,7 @@ msgstr "ఇష్టాంశములు దాయబడినవి"
 #. Translators: this announces that a bookmark could not be saved to
 #. disk
 #.
-#: ../src/orca/bookmarks.py:150
+#: ../src/orca/bookmarks.py:151
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:160
 msgid "bookmarks could not be saved"
 msgstr "ఇష్టాంశములు దాయబడలేవు"
@@ -131,7 +131,7 @@ msgstr "ఇష్టాంశములు దాయబడలేవు"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls to the left.
 #.
-#: ../src/orca/braille.py:117
+#: ../src/orca/braille.py:119
 msgid "Line Left"
 msgstr "వరుస ఎడమ"
 
@@ -139,7 +139,7 @@ msgstr "వరుస ఎడమ"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls to the right.
 #.
-#: ../src/orca/braille.py:123
+#: ../src/orca/braille.py:125
 msgid "Line Right"
 msgstr "వరుస కుడి"
 
@@ -147,7 +147,7 @@ msgstr "వరుస కుడి"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls up.
 #.
-#: ../src/orca/braille.py:129
+#: ../src/orca/braille.py:131
 msgid "Line Up"
 msgstr "వరుస పైన"
 
@@ -155,7 +155,7 @@ msgstr "వరుస పైన"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, the display scrolls down.
 #.
-#: ../src/orca/braille.py:135
+#: ../src/orca/braille.py:137
 msgid "Line Down"
 msgstr "వరుస క్రింద"
 
@@ -163,7 +163,7 @@ msgstr "వరుస క్రింద"
 #. display (an external hardware device used by people who are blind).
 #. When pressing the button, it instructs the braille display to freeze.
 #.
-#: ../src/orca/braille.py:141
+#: ../src/orca/braille.py:143
 msgid "Freeze"
 msgstr "Freeze"
 
@@ -172,7 +172,7 @@ msgstr "Freeze"
 #. When pressing the button, the display scrolls to the top left of the
 #. window.
 #.
-#: ../src/orca/braille.py:148
+#: ../src/orca/braille.py:150
 msgid "Top Left"
 msgstr "పైన ఎడమ"
 
@@ -181,7 +181,7 @@ msgstr "పైన ఎడమ"
 #. When pressing the button, the display scrolls to the bottom right of
 #. the window.
 #.
-#: ../src/orca/braille.py:155
+#: ../src/orca/braille.py:157
 msgid "Bottom Right"
 msgstr "క్రింద కుడి"
 
@@ -190,7 +190,7 @@ msgstr "క్రింద కుడి"
 #. When pressing the button, the display scrolls to position containing
 #. the cursor.
 #.
-#: ../src/orca/braille.py:162
+#: ../src/orca/braille.py:164
 msgid "Cursor Position"
 msgstr "కర్సర్ స్థానము"
 
@@ -199,7 +199,7 @@ msgstr "కర్సర్ స్థానము"
 #. When pressing the button, the display toggles between contracted and
 #. contracted braille.
 #.
-#: ../src/orca/braille.py:169
+#: ../src/orca/braille.py:171
 msgid "Six Dots"
 msgstr "ఆరు డాట్‌లు"
 
@@ -209,7 +209,7 @@ msgstr "ఆరు డాట్‌లు"
 #. routings keys and are a way for a user to tell the machine they are
 #. interested in a particular character on the display.
 #.
-#: ../src/orca/braille.py:177
+#: ../src/orca/braille.py:179
 msgid "Cursor Routing"
 msgstr "కర్సర్ దారిచూపుట"
 
@@ -220,7 +220,7 @@ msgstr "కర్సర్ దారిచూపుట"
 #. character cell mode operation on virtual consoles, the act of copying
 #. text is erroneously called a "cut" operation.
 #.
-#: ../src/orca/braille.py:186
+#: ../src/orca/braille.py:188
 msgid "Cut Begin"
 msgstr "తెంచుట మొదలయ్యను"
 
@@ -231,7 +231,7 @@ msgstr "తెంచుట మొదలయ్యను"
 #. character cell mode operation on virtual consoles, the act of copying
 #. text is erroneously called a "cut" operation.
 #.
-#: ../src/orca/braille.py:195
+#: ../src/orca/braille.py:197
 msgid "Cut Line"
 msgstr "విరిగిన వరుస"
 
@@ -239,119 +239,119 @@ msgstr "విరిగిన వరుస"
 #. languages. You could read about braille tables at:
 #. http://en.wikipedia.org/wiki/Braille
 #.
-#: ../src/orca/braille.py:261
+#: ../src/orca/braille.py:263
 msgid "Czech Grade 1"
 msgstr "సిజెక్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:262
+#: ../src/orca/braille.py:264
 msgid "Spanish Grade 1"
 msgstr "స్పానిష్ గ్రేడు"
 
-#: ../src/orca/braille.py:263
+#: ../src/orca/braille.py:265
 msgid "Canada French Grade 2"
 msgstr "కెనడా ఫ్రెంట్ గ్రేడు 2"
 
-#: ../src/orca/braille.py:264
+#: ../src/orca/braille.py:266
 msgid "France French Grade 2"
 msgstr "ఫ్రాన్స్‍ ఫ్రెంచ్ గ్రేడు 2"
 
-#: ../src/orca/braille.py:265
+#: ../src/orca/braille.py:267
 msgid "Latvian Grade 1"
 msgstr "లాట్విన్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:266
+#: ../src/orca/braille.py:268
 msgid "Netherlands Dutch Grade 1"
 msgstr "నెదర్లాండ్స్‍ డచ్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:267
+#: ../src/orca/braille.py:269
 msgid "Norwegian Grade 0"
 msgstr "నార్వేజియన్ గ్రేడు 0"
 
-#: ../src/orca/braille.py:268
+#: ../src/orca/braille.py:270
 msgid "Norwegian Grade 1"
 msgstr "నార్వేజియన్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:269
+#: ../src/orca/braille.py:271
 msgid "Norwegian Grade 2"
 msgstr "నార్వేజియన్ గ్రేడు 2"
 
-#: ../src/orca/braille.py:270
+#: ../src/orca/braille.py:272
 msgid "Norwegian Grade 3"
 msgstr "నార్వేజియన్ గ్రేడు 3"
 
-#: ../src/orca/braille.py:271
+#: ../src/orca/braille.py:273
 msgid "Polish Grade 1"
 msgstr "పాలిష్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:272
+#: ../src/orca/braille.py:274
 msgid "Portuguese Grade 1"
 msgstr "పోర్చుగీస్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:273
+#: ../src/orca/braille.py:275
 msgid "Swedish Grade 1"
 msgstr "స్వీడిష్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:274
+#: ../src/orca/braille.py:276
 msgid "Arabic Grade 1"
 msgstr "అరబిక్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:275
+#: ../src/orca/braille.py:277
 msgid "Welsh Grade 1"
 msgstr "వెల్ష్‍ గ్రేడు 1"
 
-#: ../src/orca/braille.py:276
+#: ../src/orca/braille.py:278
 msgid "Welsh Grade 2"
 msgstr "వెల్ష్‍ గ్రేడు 2"
 
-#: ../src/orca/braille.py:277
+#: ../src/orca/braille.py:279
 msgid "German Grade 0"
 msgstr "జెర్మన్ గ్రేడు 0"
 
-#: ../src/orca/braille.py:278
+#: ../src/orca/braille.py:280
 msgid "German Grade 1"
 msgstr "జెర్మన్ గ్రేడ్ 1"
 
-#: ../src/orca/braille.py:279
+#: ../src/orca/braille.py:281
 msgid "German Grade 2"
 msgstr "జెర్మన్ గ్రేడు 2"
 
-#: ../src/orca/braille.py:280
+#: ../src/orca/braille.py:282
 msgid "U.K. English Grade 2"
 msgstr "U.K. ఇంగ్లీష్ గ్రేడు 2"
 
-#: ../src/orca/braille.py:281
+#: ../src/orca/braille.py:283
 msgid "U.K. English Grade 1"
 msgstr "U.K. ఇంగ్లీష్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:282
+#: ../src/orca/braille.py:284
 msgid "U.S. English Grade 1"
 msgstr "U.S. ఇంగ్లీష్ గ్రేడు 1"
 
-#: ../src/orca/braille.py:283
+#: ../src/orca/braille.py:285
 msgid "U.S. English Grade 2"
 msgstr "U.S. ఇంగ్లీష్ గ్రేడు 2"
 
-#: ../src/orca/braille.py:284
+#: ../src/orca/braille.py:286
 msgid "Canada French Grade 1"
 msgstr "కెనడా ఫ్రెంచ్ గ్రేడ్ 1"
 
-#: ../src/orca/braille.py:285
+#: ../src/orca/braille.py:287
 msgid "France French Grade 1"
 msgstr "ఫ్రాన్స్‍ ఫ్రెంచ్ గ్రేడ్ 1"
 
-#: ../src/orca/braille.py:286
+#: ../src/orca/braille.py:288
 msgid "Greek Grade 1"
 msgstr "గ్రీక్ గ్రేడ్ 1"
 
-#: ../src/orca/braille.py:287
+#: ../src/orca/braille.py:289
 msgid "Hindi Grade 1"
 msgstr "హింది గ్రేడ్ 1"
 
-#: ../src/orca/braille.py:288
+#: ../src/orca/braille.py:290
 msgid "Italian Grade 1"
 msgstr "ఇటాలియన్ గ్రేడ్ 1"
 
-#: ../src/orca/braille.py:289
+#: ../src/orca/braille.py:291
 msgid "Belgium Dutch Grade 1"
 msgstr "బెల్జియమ్ డచ్ గ్రేడ్ 1"
 
@@ -359,7 +359,7 @@ msgstr "బెల్జియమ్ డచ్ గ్రేడ్ 1"
 #. alert and dialog windows plus the total number of
 #. windows that this application has.
 #.
-#: ../src/orca/braille_generator.py:199
+#: ../src/orca/braille_generator.py:209
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -409,7 +409,8 @@ msgstr "cptn"
 
 #. Translators: short braille for the rolename of a checkbox.
 #. Translators: short braille for the rolename of a check menu item.
-#: ../src/orca/braille_rolenames.py:62 ../src/orca/braille_rolenames.py:65
+#: ../src/orca/braille_rolenames.py:62
+#: ../src/orca/braille_rolenames.py:65
 msgid "chk"
 msgstr "chk"
 
@@ -420,7 +421,8 @@ msgstr "clrchsr"
 
 #. Translators: short braille for the rolename of a column header.
 #. Translators: short braille for the rolename of a table column header.
-#: ../src/orca/braille_rolenames.py:71 ../src/orca/braille_rolenames.py:230
+#: ../src/orca/braille_rolenames.py:71
+#: ../src/orca/braille_rolenames.py:230
 msgid "colhdr"
 msgstr "colhdr"
 
@@ -436,13 +438,15 @@ msgstr "dat"
 
 #. Translators: short braille for the rolename of a desktop icon.
 #. Translators: short braille for the rolename of a icon.
-#: ../src/orca/braille_rolenames.py:80 ../src/orca/braille_rolenames.py:131
+#: ../src/orca/braille_rolenames.py:80
+#: ../src/orca/braille_rolenames.py:131
 msgid "icn"
 msgstr "icn"
 
 #. Translators: short braille for the rolename of a desktop frame.
 #. Translators: short braille for the rolename of a frame.
-#: ../src/orca/braille_rolenames.py:83 ../src/orca/braille_rolenames.py:119
+#: ../src/orca/braille_rolenames.py:83
+#: ../src/orca/braille_rolenames.py:119
 msgid "frm"
 msgstr "frm"
 
@@ -467,7 +471,8 @@ msgstr "dip"
 
 #. Translators: short braille for the rolename of an HTML document frame.
 #. Translators: short braille for the rolename of an html container.
-#: ../src/orca/braille_rolenames.py:98 ../src/orca/braille_rolenames.py:128
+#: ../src/orca/braille_rolenames.py:98
+#: ../src/orca/braille_rolenames.py:128
 msgid "html"
 msgstr "html"
 
@@ -617,7 +622,8 @@ msgstr "rtpn"
 
 #. Translators: short braille for the rolename of a row header.
 #. Translators: short braille for the rolename of a table row header.
-#: ../src/orca/braille_rolenames.py:197 ../src/orca/braille_rolenames.py:233
+#: ../src/orca/braille_rolenames.py:197
+#: ../src/orca/braille_rolenames.py:233
 msgid "rwhdr"
 msgstr "rwhdr"
 
@@ -762,8 +768,7 @@ msgid "emb"
 msgstr "emb"
 
 #: ../src/orca/chat.py:337
-msgid ""
-"Toggle whether we prefix chat room messages with the name of the chat room."
+msgid "Toggle whether we prefix chat room messages with the name of the chat room."
 msgstr "చాట్ రూమ్ పేరుతో మనము చాట్ రూమ్ సందేశాలతో తిరిగిసిద్దపరిస్తే మార్చుము."
 
 #: ../src/orca/chat.py:343
@@ -863,8 +868,9 @@ msgstr "చాట్ రూమ్ %s నుండి సందేశం"
 
 #. Translators: this is the spoken word for the space character
 #.
-#: ../src/orca/chnames.py:39 ../src/orca/keynames.py:146
-#: ../src/orca/script_utilities.py:2818
+#: ../src/orca/chnames.py:39
+#: ../src/orca/keynames.py:146
+#: ../src/orca/script_utilities.py:2835
 msgid "space"
 msgstr "ఖాళి"
 
@@ -878,7 +884,8 @@ msgstr "కొత్తవరుస"
 #.
 #. Translators: this is how someone would speak the name of the tab key
 #.
-#: ../src/orca/chnames.py:47 ../src/orca/keynames.py:130
+#: ../src/orca/chnames.py:47
+#: ../src/orca/keynames.py:130
 msgid "tab"
 msgstr "టాబ్"
 
@@ -1049,7 +1056,8 @@ msgstr "క్రిందిగీత"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the grave glyph
 #.
-#: ../src/orca/chnames.py:159 ../src/orca/keynames.py:263
+#: ../src/orca/chnames.py:159
+#: ../src/orca/keynames.py:263
 msgid "grave"
 msgstr "గ్రేవ్"
 
@@ -1076,7 +1084,8 @@ msgstr "కుడి బ్రేస్"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the tilde glyph
 #.
-#: ../src/orca/chnames.py:175 ../src/orca/keynames.py:278
+#: ../src/orca/chnames.py:175
+#: ../src/orca/keynames.py:278
 msgid "tilde"
 msgstr "టిల్డ్‍"
 
@@ -1230,7 +1239,8 @@ msgstr "మద్య చుక్క"
 #. Translators: this is how someone would speak the name of the
 #. non-spacing diacritical key for the cedilla glyph
 #.
-#: ../src/orca/chnames.py:276 ../src/orca/keynames.py:293
+#: ../src/orca/chnames.py:276
+#: ../src/orca/keynames.py:293
 msgid "cedilla"
 msgstr "సెడిల్లా"
 
@@ -1837,7 +1847,8 @@ msgstr "అనంతం"
 #. as a bullet which looks like the black square: ■ (U+25A0).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:679 ../src/orca/chnames.py:854
+#: ../src/orca/chnames.py:679
+#: ../src/orca/chnames.py:854
 msgid "black square"
 msgstr "నలుపు వర్గం"
 
@@ -1855,7 +1866,8 @@ msgstr "శ్వేత వర్గం"
 #. as a bullet which looks like the black diamond: ◆ (U+25C6).  Therefore,
 #. please use the same translation for this character.
 #.
-#: ../src/orca/chnames.py:689 ../src/orca/chnames.py:860
+#: ../src/orca/chnames.py:689
+#: ../src/orca/chnames.py:860
 msgid "black diamond"
 msgstr "నలుపు వజ్రం"
 
@@ -2090,19 +2102,11 @@ msgstr "సబ్‌స్క్రిప్టు కుడి పారెన�
 msgid "right-pointing arrowhead"
 msgstr "కుడి-సూచిక బాణపుతల"
 
-#. Translators: this refers to the speech synthesis services
-#. provided by the separate emacspeak utility available at
-#. http://emacspeak.sourceforge.net/.
-#.
-#: ../src/orca/espeechfactory.py:104
-msgid "Emacspeak Speech Services"
-msgstr "ఈమాక్స్‍‌స్పీక్ ఉపన్యాసం సేవలు"
-
 #. Translators: this is intended to be a short phrase to
 #. speak and braille to tell the user that no component
 #. has keyboard focus.
 #.
-#: ../src/orca/event_manager.py:244
+#: ../src/orca/event_manager.py:251
 msgid "No focus"
 msgstr "దృష్టీకరించలేదు"
 
@@ -2134,13 +2138,15 @@ msgstr "పైకి మలుస్తోంది"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:355 ../src/orca/settings.py:915
+#: ../src/orca/flat_review.py:355
+#: ../src/orca/settings.py:907
 msgid "partially checked"
 msgstr "పాక్షికంగా పరిశీలించబడింది"
 
 #. Translators: this represents the state of a checkbox.
 #.
-#: ../src/orca/flat_review.py:359 ../src/orca/settings.py:914
+#: ../src/orca/flat_review.py:359
+#: ../src/orca/settings.py:906
 msgid "checked"
 msgstr "పరిశీలించబడింది"
 
@@ -2149,13 +2155,15 @@ msgstr "పరిశీలించబడింది"
 #. Translators: this represents the state of a checkbox.  It is meant
 #. to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:363 ../src/orca/settings.py:913
+#: ../src/orca/flat_review.py:363
+#: ../src/orca/settings.py:905
 msgid "not checked"
 msgstr "పరిశీలించబడలేదు"
 
 #. Translators: the state of a toggle button.
 #.
-#: ../src/orca/flat_review.py:370 ../src/orca/settings.py:926
+#: ../src/orca/flat_review.py:370
+#: ../src/orca/settings.py:918
 msgid "pressed"
 msgstr "వత్తబడింది"
 
@@ -2164,14 +2172,16 @@ msgstr "వత్తబడింది"
 #. Translators: this represents the state of a toggle button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:374 ../src/orca/settings.py:926
+#: ../src/orca/flat_review.py:374
+#: ../src/orca/settings.py:918
 msgid "not pressed"
 msgstr "వత్తబడలేదు"
 
 #. Translators: this is in reference to a radio button being
 #. selected or not.
 #.
-#: ../src/orca/flat_review.py:382 ../src/orca/settings.py:921
+#: ../src/orca/flat_review.py:382
+#: ../src/orca/settings.py:913
 msgctxt "radiobutton"
 msgid "selected"
 msgstr "ఎంపికకాబడినది"
@@ -2182,7 +2192,8 @@ msgstr "ఎంపికకాబడినది"
 #. Translators: this represents the state of a radio button.  It is
 #. meant to be spoken to the user.
 #.
-#: ../src/orca/flat_review.py:387 ../src/orca/settings.py:920
+#: ../src/orca/flat_review.py:387
+#: ../src/orca/settings.py:912
 msgctxt "radiobutton"
 msgid "not selected"
 msgstr "ఎంపికకాబడలేదు"
@@ -2214,13 +2225,16 @@ msgstr[1] "%d శాతం."
 #. the 'toggle' action. It must be the same
 #. string used in the *.po file for gail.
 #.
-#: ../src/orca/flat_review.py:1086 ../src/orca/generator.py:470
-#: ../src/orca/generator.py:713 ../src/orca/generator.py:755
-#: ../src/orca/generator.py:801
+#: ../src/orca/flat_review.py:1090
+#: ../src/orca/generator.py:478
+#: ../src/orca/generator.py:727
+#: ../src/orca/generator.py:769
+#: ../src/orca/generator.py:815
 #: ../src/orca/scripts/apps/evolution/script.py:450
 #: ../src/orca/scripts/apps/evolution/speech_generator.py:122
 #: ../src/orca/scripts/apps/packagemanager/script.py:640
-#: ../src/orca/tutorialgenerator.py:529 ../src/orca/tutorialgenerator.py:569
+#: ../src/orca/tutorialgenerator.py:558
+#: ../src/orca/tutorialgenerator.py:598
 msgid "toggle"
 msgstr "మార్పు"
 
@@ -2299,7 +2313,7 @@ msgstr "Shift"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/keybindings.py:155 ../src/orca/orca.py:1122
+#: ../src/orca/keybindings.py:155
 msgid "double click"
 msgstr "రెండు నొక్కులు"
 
@@ -2307,11 +2321,11 @@ msgstr "రెండు నొక్కులు"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/keybindings.py:161 ../src/orca/orca.py:1128
+#: ../src/orca/keybindings.py:161
 msgid "triple click"
 msgstr "మూడు నొక్కులు"
 
-#: ../src/orca/keybindings.py:225 ../src/orca/orca.py:1115
+#: ../src/orca/keybindings.py:225
 msgid "keypad "
 msgstr "కీపాడ్ "
 
@@ -2404,15 +2418,19 @@ msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
 #.
-#: ../src/orca/keynames.py:98 ../src/orca/keynames.py:102
-#: ../src/orca/keynames.py:106 ../src/orca/keynames.py:110
+#: ../src/orca/keynames.py:98
+#: ../src/orca/keynames.py:102
+#: ../src/orca/keynames.py:106
+#: ../src/orca/keynames.py:110
 msgid "page up"
 msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
 #.
-#: ../src/orca/keynames.py:114 ../src/orca/keynames.py:118
-#: ../src/orca/keynames.py:122 ../src/orca/keynames.py:126
+#: ../src/orca/keynames.py:114
+#: ../src/orca/keynames.py:118
+#: ../src/orca/keynames.py:122
+#: ../src/orca/keynames.py:126
 msgid "page down"
 msgstr "page down"
 
@@ -2454,25 +2472,29 @@ msgstr "ప్రవేశించుము"
 
 #. Translators: this is how someone would speak the name of the up arrow key
 #.
-#: ../src/orca/keynames.py:162 ../src/orca/keynames.py:166
+#: ../src/orca/keynames.py:162
+#: ../src/orca/keynames.py:166
 msgid "up"
 msgstr "పైన"
 
 #. Translators: this is how someone would speak the name of the down arrow key
 #.
-#: ../src/orca/keynames.py:170 ../src/orca/keynames.py:174
+#: ../src/orca/keynames.py:170
+#: ../src/orca/keynames.py:174
 msgid "down"
 msgstr "పైన"
 
 #. Translators: this is how someone would speak the name of the left arrow key
 #.
-#: ../src/orca/keynames.py:178 ../src/orca/keynames.py:182
+#: ../src/orca/keynames.py:178
+#: ../src/orca/keynames.py:182
 msgid "left"
 msgstr "ఎడమ"
 
 #. Translators: this is how someone would speak the name of the right arrow key
 #.
-#: ../src/orca/keynames.py:186 ../src/orca/keynames.py:190
+#: ../src/orca/keynames.py:186
+#: ../src/orca/keynames.py:190
 msgid "right"
 msgstr "కుడి"
 
@@ -2526,25 +2548,29 @@ msgstr "తప్పించుకొను"
 
 #. Translators: this is how someone would speak the name of the insert key
 #.
-#: ../src/orca/keynames.py:226 ../src/orca/keynames.py:230
+#: ../src/orca/keynames.py:226
+#: ../src/orca/keynames.py:230
 msgid "insert"
 msgstr "చొప్పించు"
 
 #. Translators: this is how someone would speak the name of the delete key
 #.
-#: ../src/orca/keynames.py:234 ../src/orca/keynames.py:238
+#: ../src/orca/keynames.py:234
+#: ../src/orca/keynames.py:238
 msgid "delete"
 msgstr "తొలగించు"
 
 #. Translators: this is how someone would speak the name of the home key
 #.
-#: ../src/orca/keynames.py:242 ../src/orca/keynames.py:246
+#: ../src/orca/keynames.py:242
+#: ../src/orca/keynames.py:246
 msgid "home"
 msgstr "హోమ్"
 
 #. Translators: this is how someone would speak the name of the end key
 #.
-#: ../src/orca/keynames.py:250 ../src/orca/keynames.py:254
+#: ../src/orca/keynames.py:250
+#: ../src/orca/keynames.py:254
 msgid "end"
 msgstr "ముగింపు"
 
@@ -2640,35 +2666,35 @@ msgstr "మర్యాద స్థాయి %s"
 #. Translators: Orca can present the last notification message
 #. to the user when the user presses a shortcut key.
 #.
-#: ../src/orca/notification_messages.py:82
+#: ../src/orca/notification_messages.py:81
 msgid "Present last notification message."
 msgstr "ప్రస్తుత ఆఖరి ప్ర్కటన సందేశం."
 
 #. Translators: Orca can present the previous notification message
 #. to the user when the user presses a shortcut key.
 #.
-#: ../src/orca/notification_messages.py:90
+#: ../src/orca/notification_messages.py:89
 msgid "Present previous notification message."
 msgstr "ప్రస్తుతము మునుపు ప్రకటన సందేశము."
 
 #. Translators: Orca can enable the notification messages
 #. list mode when the user presses a shortcut key.
 #.
-#: ../src/orca/notification_messages.py:98
+#: ../src/orca/notification_messages.py:97
 msgid "Present notification messages list"
 msgstr "ప్రస్తుత ప్రకటన సందేశముల జాబితా"
 
 #. Translators: This is a brief message presented to the user
 #. the list of notifications is empty.
 #.
-#: ../src/orca/notification_messages.py:128
+#: ../src/orca/notification_messages.py:125
 msgid "No notification messages"
 msgstr "ఎలాంటి ప్రకటన సందేశములు లేవు"
 
 #. Translators: This is a brief message presented to the user when
 #. when the top of a list of notifications is reached.
 #.
-#: ../src/orca/notification_messages.py:159
+#: ../src/orca/notification_messages.py:156
 msgctxt "notification"
 msgid "Top"
 msgstr "పైన"
@@ -2676,7 +2702,7 @@ msgstr "పైన"
 #. Translators: This is a brief message presented to the user when
 #. when the bottom of a list of notifications is reached.
 #.
-#: ../src/orca/notification_messages.py:166
+#: ../src/orca/notification_messages.py:163
 msgctxt "notification"
 msgid "Bottom"
 msgstr "క్రింద"
@@ -2687,13 +2713,13 @@ msgstr "క్రింద"
 #. This string is the prompt which will be presented to the user
 #. in both speech and braille upon exiting this mode.
 #.
-#: ../src/orca/notification_messages.py:189
+#: ../src/orca/notification_messages.py:186
 msgid "Exiting list notification messages mode."
 msgstr "ప్రకటన సందేశముల జాబితా మోడ్ నుండి బయటకు వచ్చుచున్నది."
 
 #. Translators: This message inform to the user the number of
 #. messages in the list.
-#: ../src/orca/notification_messages.py:243
+#: ../src/orca/notification_messages.py:240
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -2701,7 +2727,7 @@ msgstr[0] "%d ఖాళి.\n"
 msgstr[1] "%d ఖాళీలు.\n"
 
 #. Translators: This is a help message.
-#: ../src/orca/notification_messages.py:245
+#: ../src/orca/notification_messages.py:242
 msgid "Press h for help.\n"
 msgstr "సహాయము కొఱకు hని నొక్కుము.\n"
 
@@ -2709,7 +2735,7 @@ msgstr "సహాయము కొఱకు hని నొక్కుము.\n"
 #. amongst the list of commands presented in list notification
 #. messages mode as well as how to exit the list.
 #.
-#: ../src/orca/notification_messages.py:252
+#: ../src/orca/notification_messages.py:249
 msgid ""
 "Use Up, Down, Home or End to navigate in the list.\n"
 "Press Escape to exit.\n"
@@ -2748,7 +2774,8 @@ msgstr "^[Nn0]"
 #. Translators: this means speech synthesis (i.e., the machine
 #. speaks to you from its speakers) is not installed or working.
 #.
-#: ../src/orca/orca_console_prefs.py:141 ../src/orca/orca_console_prefs.py:150
+#: ../src/orca/orca_console_prefs.py:141
+#: ../src/orca/orca_console_prefs.py:150
 #: ../src/orca/orca_console_prefs.py:168
 msgid "Speech is unavailable."
 msgstr "ఉపన్యాసం అందుబాటులో లేదు."
@@ -2768,8 +2795,10 @@ msgstr "కావలిసిన ఉపన్యాసం వ్యవస్థ�
 
 #. Translators: this is prompting for a numerical choice.
 #.
-#: ../src/orca/orca_console_prefs.py:189 ../src/orca/orca_console_prefs.py:230
-#: ../src/orca/orca_console_prefs.py:282 ../src/orca/orca_console_prefs.py:470
+#: ../src/orca/orca_console_prefs.py:189
+#: ../src/orca/orca_console_prefs.py:230
+#: ../src/orca/orca_console_prefs.py:282
+#: ../src/orca/orca_console_prefs.py:470
 msgid "Enter choice: "
 msgstr "అభీష్టాన్ని ప్రవేశపెట్టుము: "
 
@@ -2777,16 +2806,20 @@ msgstr "అభీష్టాన్ని ప్రవేశపెట్టు�
 #. invalid integer value on the command line and is
 #. also requesting they enter a valid integer value.
 #.
-#: ../src/orca/orca_console_prefs.py:196 ../src/orca/orca_console_prefs.py:233
-#: ../src/orca/orca_console_prefs.py:288 ../src/orca/orca_console_prefs.py:485
+#: ../src/orca/orca_console_prefs.py:196
+#: ../src/orca/orca_console_prefs.py:233
+#: ../src/orca/orca_console_prefs.py:288
+#: ../src/orca/orca_console_prefs.py:485
 #: ../src/orca/orca_console_prefs.py:487
 msgid "Please enter a valid number."
 msgstr "దయచేసి ఒక చెల్లిన సంఖ్యను ప్రవేశపెట్టుము."
 
 #. Translators: this means speech synthesis will not be used.
 #.
-#: ../src/orca/orca_console_prefs.py:200 ../src/orca/orca_console_prefs.py:211
-#: ../src/orca/orca_console_prefs.py:237 ../src/orca/orca_console_prefs.py:253
+#: ../src/orca/orca_console_prefs.py:200
+#: ../src/orca/orca_console_prefs.py:211
+#: ../src/orca/orca_console_prefs.py:237
+#: ../src/orca/orca_console_prefs.py:253
 #: ../src/orca/orca_console_prefs.py:292
 msgid "Speech will not be used.\n"
 msgstr "ఉపన్యాసం ఉపయోగించబడబోదు.\n"
@@ -2829,10 +2862,14 @@ msgstr "కావలిసిన ద్వనిని ఎంపికచేయ�
 msgid "Enable echo by word?  Enter y or n: "
 msgstr "ఎకోను పదముద్వారా చైతన్యంచేయాలా?  y లేదా n ను ప్రవేశపెట్టండి: "
 
-#: ../src/orca/orca_console_prefs.py:341 ../src/orca/orca_console_prefs.py:360
-#: ../src/orca/orca_console_prefs.py:386 ../src/orca/orca_console_prefs.py:403
-#: ../src/orca/orca_console_prefs.py:420 ../src/orca/orca_console_prefs.py:438
-#: ../src/orca/orca_console_prefs.py:528 ../src/orca/orca_console_prefs.py:547
+#: ../src/orca/orca_console_prefs.py:341
+#: ../src/orca/orca_console_prefs.py:360
+#: ../src/orca/orca_console_prefs.py:386
+#: ../src/orca/orca_console_prefs.py:403
+#: ../src/orca/orca_console_prefs.py:420
+#: ../src/orca/orca_console_prefs.py:438
+#: ../src/orca/orca_console_prefs.py:528
+#: ../src/orca/orca_console_prefs.py:547
 #: ../src/orca/orca_console_prefs.py:593
 msgid "Please enter y or n."
 msgstr "దయచేసి y లేదా n ను ప్రవేశపెట్టండి."
@@ -2916,11 +2953,13 @@ msgstr "బ్రెయిలిని చేతనం చేస్తోంద�
 msgid "Enable Braille Monitor?  Enter y or n: "
 msgstr "బ్రెయిలీ మానిటర్‌ను చైతన్యం చేస్తోంది?  y లేదా n ను ప్రవేశపెట్టండి: "
 
-#: ../src/orca/orca_console_prefs.py:561 ../src/orca/orca_gui_prefs.py:403
+#: ../src/orca/orca_console_prefs.py:561
+#: ../src/orca/orca_gui_prefs.py:405
 msgid "Accessibility support for GNOME has just been enabled."
 msgstr "GNOME కొరకు అందుబాటు మద్దతు చైతన్యం చేయబడింది."
 
-#: ../src/orca/orca_console_prefs.py:567 ../src/orca/orca_gui_prefs.py:405
+#: ../src/orca/orca_console_prefs.py:567
+#: ../src/orca/orca_gui_prefs.py:407
 msgid "You need to log out and log back in for the change to take effect."
 msgstr "మార్పు ప్రభావితంకావుటకు మీరు లాగ్అవుట్ అయ్యి మరియు లాగ్‌బ్యాక్ కావలెను."
 
@@ -2946,7 +2985,8 @@ msgstr "అమర్పు పూర్తైనది.  కొనసాగి�
 #. is using.  We hate keying off stuff like this, but we're forced
 #. to do so in this case.
 #.
-#: ../src/orca/orca-find.ui.h:1 ../src/orca/scripts/apps/gedit/script.py:319
+#: ../src/orca/orca-find.ui.h:1
+#: ../src/orca/scripts/apps/gedit/script.py:319
 #: ../src/orca/scripts/apps/gedit/script.py:321
 #: ../src/orca/scripts/apps/gnome-search-tool/script.py:164
 msgid "Find"
@@ -2968,7 +3008,8 @@ msgstr "కొరకు (_S):"
 msgid "Search for:"
 msgstr "కొరకు అన్వేషించు:"
 
-#: ../src/orca/orca-find.ui.h:6 ../src/orca/orca_gui_find.py:134
+#: ../src/orca/orca-find.ui.h:6
+#: ../src/orca/orca_gui_find.py:134
 msgid "C_urrent location"
 msgstr "ప్రస్తుత స్థానము(_u)"
 
@@ -3021,12 +3062,8 @@ msgstr "ఓర్కా జట్టు"
 #. Translators: This text is used in the Orca About dialog.
 #.
 #: ../src/orca/orca_gui_main.py:108
-msgid ""
-"A free, open source scriptable screen reader, which provides access to "
-"applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
-msgstr ""
-"ఒక ఉచితమైన, తెరవబడిన వనరములో స్క్రిప్ట్ చేయదగిన తెర చదువరి AT-SPIను అనుకరించు కార్యక్షేత్రములలో "
-"మరియుసాధనములపెట్టెలలోకి(ఉదాహరణకు GNOME డెస్క్ టాప్)ప్రవేశించుటకు అనుమతి పొందుపరుచుతుంది."
+msgid "A free, open source scriptable screen reader, which provides access to applications and toolkits that support AT-SPI (e.g., the GNOME desktop)."
+msgstr "ఒక ఉచితమైన, తెరవబడిన వనరములో స్క్రిప్ట్ చేయదగిన తెర చదువరి AT-SPIను అనుకరించు కార్యక్షేత్రములలో మరియుసాధనములపెట్టెలలోకి(ఉదాహరణకు GNOME డెస్క్ టాప్)ప్రవేశించుటకు అనుమతి పొందుపరుచుతుంది."
 
 #. Translators: This text is used in the Orca About dialog.
 #.
@@ -3129,7 +3166,7 @@ msgstr "సవరించిన"
 #. by Orca when presenting the content of the screen and other
 #. messages.
 #.
-#: ../src/orca/orca_gui_prefs.py:675
+#: ../src/orca/orca_gui_prefs.py:677
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "అప్రమేయం"
@@ -3137,7 +3174,7 @@ msgstr "అప్రమేయం"
 #. Translators: This refers to the voice used by Orca when
 #. presenting one or more characters which is in uppercase.
 #.
-#: ../src/orca/orca_gui_prefs.py:679
+#: ../src/orca/orca_gui_prefs.py:681
 msgctxt "VoiceType"
 msgid "Uppercase"
 msgstr "అప్పర్‌కేస్"
@@ -3146,7 +3183,7 @@ msgstr "అప్పర్‌కేస్"
 #. presenting one or more characters which is part of a
 #. hyperlink.
 #.
-#: ../src/orca/orca_gui_prefs.py:684
+#: ../src/orca/orca_gui_prefs.py:686
 msgctxt "VoiceType"
 msgid "Hyperlink"
 msgstr "హైపర్‌లింకు"
@@ -3160,7 +3197,7 @@ msgstr "హైపర్‌లింకు"
 #. user Tabs into a list of six items and the third item is
 #. selected. And so on.
 #.
-#: ../src/orca/orca_gui_prefs.py:694
+#: ../src/orca/orca_gui_prefs.py:696
 msgctxt "VoiceType"
 msgid "System"
 msgstr "వ్యవస్థ"
@@ -3170,7 +3207,7 @@ msgstr "వ్యవస్థ"
 #. Translators: Attribute here refers to text attributes such
 #. as bold, underline, family-name, etc.
 #.
-#: ../src/orca/orca_gui_prefs.py:1137
+#: ../src/orca/orca_gui_prefs.py:1139
 msgid "Attribute Name"
 msgstr "యాట్రిబ్యూట్‌ పేరు"
 
@@ -3181,7 +3218,7 @@ msgstr "యాట్రిబ్యూట్‌ పేరు"
 #. will speak that attribute, if it is present, when the user
 #. presses Orca_Modifier+F.
 #.
-#: ../src/orca/orca_gui_prefs.py:1152
+#: ../src/orca/orca_gui_prefs.py:1154
 msgid "Speak"
 msgstr "మాట్లాడు"
 
@@ -3192,7 +3229,7 @@ msgstr "మాట్లాడు"
 #. Orca will "underline" that attribute, if it is present, on
 #. the refreshable braille display.
 #.
-#: ../src/orca/orca_gui_prefs.py:1170
+#: ../src/orca/orca_gui_prefs.py:1172
 msgid "Mark in braille"
 msgstr "బ్రైయిలీనందు గుర్తుంచుము"
 
@@ -3211,7 +3248,7 @@ msgstr "బ్రైయిలీనందు గుర్తుంచుము"
 #. value of underline is none (i.e. when it's not underlined).
 #. "Present" here is being used as a verb.
 #.
-#: ../src/orca/orca_gui_prefs.py:1196
+#: ../src/orca/orca_gui_prefs.py:1198
 msgid "Present Unless"
 msgstr "ప్రస్తుతం తప్ప"
 
@@ -3222,7 +3259,7 @@ msgstr "ప్రస్తుతం తప్ప"
 #. or a particular word that is pronounced differently then the way
 #. that it looks.
 #.
-#: ../src/orca/orca_gui_prefs.py:1319
+#: ../src/orca/orca_gui_prefs.py:1321
 msgid "Actual String"
 msgstr "వాస్తవ స్ట్రింగ్"
 
@@ -3233,7 +3270,7 @@ msgstr "వాస్తవ స్ట్రింగ్"
 #. For example: if the actual string was "MHz", then the replacement
 #. (spoken) string would be "megahertz".
 #.
-#: ../src/orca/orca_gui_prefs.py:1336
+#: ../src/orca/orca_gui_prefs.py:1338
 msgid "Replacement String"
 msgstr "పునఃస్థాపన స్ట్రింగ్"
 
@@ -3246,7 +3283,8 @@ msgstr "పునఃస్థాపన స్ట్రింగ్"
 #. of utterances has been calculated.
 #.
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
-#: ../src/orca/orca_gui_prefs.py:1415 ../src/orca/orca-setup.ui.h:41
+#: ../src/orca/orca_gui_prefs.py:1417
+#: ../src/orca/orca-setup.ui.h:41
 msgid "Break speech into ch_unks between pauses"
 msgstr "ఉపణ్యాశమును విరామము మథ్యలో ముక్కలుగా  చేయుము(_u)"
 
@@ -3254,7 +3292,8 @@ msgstr "ఉపణ్యాశమును విరామము మథ్యల�
 #. over an entire document, Orca will pause at the end of each
 #. line.
 #.
-#: ../src/orca/orca_gui_prefs.py:1427 ../src/orca/orca_gui_prefs.py:2578
+#: ../src/orca/orca_gui_prefs.py:1429
+#: ../src/orca/orca_gui_prefs.py:2580
 #: ../src/orca/orca-setup.ui.h:5
 msgid "Line"
 msgstr "వరుస"
@@ -3263,7 +3302,8 @@ msgstr "వరుస"
 #. over an entire document, Orca will pause at the end of each
 #. sentence.
 #.
-#: ../src/orca/orca_gui_prefs.py:1427 ../src/orca/orca_gui_prefs.py:2584
+#: ../src/orca/orca_gui_prefs.py:1429
+#: ../src/orca/orca_gui_prefs.py:2586
 #: ../src/orca/orca-setup.ui.h:6
 msgid "Sentence"
 msgstr "వాక్యము"
@@ -3274,7 +3314,8 @@ msgstr "వాక్యము"
 #. and window they happen to be in.
 #.
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
-#: ../src/orca/orca_gui_prefs.py:1528 ../src/orca/orca_gui_prefs.py:2540
+#: ../src/orca/orca_gui_prefs.py:1530
+#: ../src/orca/orca_gui_prefs.py:2542
 #: ../src/orca/orca-setup.ui.h:8
 msgctxt "ProgressBar"
 msgid "All"
@@ -3286,7 +3327,7 @@ msgstr "అన్ని"
 #. progress bar is in the active application (but not necessarily
 #. in the current window).
 #.
-#: ../src/orca/orca_gui_prefs.py:1535
+#: ../src/orca/orca_gui_prefs.py:1537
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "అనువర్తనము"
@@ -3296,7 +3337,8 @@ msgstr "అనువర్తనము"
 #. Orca will present progress bar updates as long as the progress
 #. bar is in the active window.
 #.
-#: ../src/orca/orca_gui_prefs.py:1541 ../src/orca/orca_gui_prefs.py:2548
+#: ../src/orca/orca_gui_prefs.py:1543
+#: ../src/orca/orca_gui_prefs.py:2550
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "విండో"
@@ -3305,7 +3347,8 @@ msgstr "విండో"
 #. announced when pressed.
 #.
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
-#: ../src/orca/orca_gui_prefs.py:1647 ../src/orca/orca-setup.ui.h:104
+#: ../src/orca/orca_gui_prefs.py:1649
+#: ../src/orca/orca-setup.ui.h:105
 msgid "Enable non-spacing _diacritical keys"
 msgstr "ఖాళీలేని డైయాక్రిటికల్ కీలను చైతన్యంచేయుము(_n)"
 
@@ -3316,7 +3359,8 @@ msgstr "ఖాళీలేని డైయాక్రిటికల్ కీ�
 #. 1 is spoken.
 #.
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
-#: ../src/orca/orca_gui_prefs.py:1655 ../src/orca/orca-setup.ui.h:106
+#: ../src/orca/orca_gui_prefs.py:1657
+#: ../src/orca/orca-setup.ui.h:107
 msgid "Enable echo by cha_racter"
 msgstr "ఎకోను అక్షరము ద్వారా చైతన్యంచేయుము(_r)"
 
@@ -3324,7 +3368,7 @@ msgstr "ఎకోను అక్షరము ద్వారా చైతన్
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:1942
+#: ../src/orca/orca_gui_prefs.py:1944
 msgid "(double click)"
 msgstr "(రెండు నొక్కులు)"
 
@@ -3332,7 +3376,7 @@ msgstr "(రెండు నొక్కులు)"
 #. and triple "clicks" or key presses, similar to
 #. using a mouse.
 #.
-#: ../src/orca/orca_gui_prefs.py:1948
+#: ../src/orca/orca_gui_prefs.py:1950
 msgid "(triple click)"
 msgstr "(మూడు నొక్కులు)"
 
@@ -3341,7 +3385,8 @@ msgstr "(మూడు నొక్కులు)"
 #. The braille bindings are what determine the actions Orca will
 #. take when the user presses these buttons.
 #.
-#: ../src/orca/orca_gui_prefs.py:2022 ../src/orca/orca_gui_prefs.py:2114
+#: ../src/orca/orca_gui_prefs.py:2024
+#: ../src/orca/orca_gui_prefs.py:2116
 msgid "Braille Bindings"
 msgstr "బ్రైయిలీ బంధనములు"
 
@@ -3350,8 +3395,10 @@ msgstr "బ్రైయిలీ బంధనములు"
 #. chooses this setting, the dot in the bottom left
 #. corner will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2369 ../src/orca/orca_gui_prefs.py:2410
-#: ../src/orca/orca_gui_prefs.py:2450 ../src/orca/orca-setup.ui.h:91
+#: ../src/orca/orca_gui_prefs.py:2371
+#: ../src/orca/orca_gui_prefs.py:2412
+#: ../src/orca/orca_gui_prefs.py:2452
+#: ../src/orca/orca-setup.ui.h:92
 msgid "Dot _7"
 msgstr "చుక్క _7"
 
@@ -3359,8 +3406,10 @@ msgstr "చుక్క _7"
 #. dot in the bottom right corner of the braille cell
 #. will be used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2376 ../src/orca/orca_gui_prefs.py:2417
-#: ../src/orca/orca_gui_prefs.py:2457 ../src/orca/orca-setup.ui.h:92
+#: ../src/orca/orca_gui_prefs.py:2378
+#: ../src/orca/orca_gui_prefs.py:2419
+#: ../src/orca/orca_gui_prefs.py:2459
+#: ../src/orca/orca-setup.ui.h:93
 msgid "Dot _8"
 msgstr "చుక్క _8"
 
@@ -3368,8 +3417,10 @@ msgstr "చుక్క _8"
 #. two dots at the bottom of the braille cell will be
 #. used to 'underline' text of interest.
 #.
-#: ../src/orca/orca_gui_prefs.py:2383 ../src/orca/orca_gui_prefs.py:2424
-#: ../src/orca/orca_gui_prefs.py:2464 ../src/orca/orca-setup.ui.h:93
+#: ../src/orca/orca_gui_prefs.py:2385
+#: ../src/orca/orca_gui_prefs.py:2426
+#: ../src/orca/orca_gui_prefs.py:2466
+#: ../src/orca/orca-setup.ui.h:94
 msgid "Dots 7 an_d 8"
 msgstr "చుక్కలు 7 మరియు 8(_d)"
 
@@ -3377,7 +3428,8 @@ msgstr "చుక్కలు 7 మరియు 8(_d)"
 #. symbols will be spoken as a user reads a document.
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
-#: ../src/orca/orca_gui_prefs.py:2487 ../src/orca/orca-setup.ui.h:59
+#: ../src/orca/orca_gui_prefs.py:2489
+#: ../src/orca/orca-setup.ui.h:59
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "ఏదీకాదు(_N)"
@@ -3387,7 +3439,8 @@ msgstr "ఏదీకాదు(_N)"
 #. spoken as a user reads a document, but less common symbols
 #. (such as #, @, $) will.
 #.
-#: ../src/orca/orca_gui_prefs.py:2495 ../src/orca/orca-setup.ui.h:60
+#: ../src/orca/orca_gui_prefs.py:2497
+#: ../src/orca/orca-setup.ui.h:60
 msgid "So_me"
 msgstr "కొన్ని(_m)"
 
@@ -3395,7 +3448,8 @@ msgstr "కొన్ని(_m)"
 #. punctuation symbols will be spoken as a user reads a
 #. document.
 #.
-#: ../src/orca/orca_gui_prefs.py:2502 ../src/orca/orca-setup.ui.h:61
+#: ../src/orca/orca_gui_prefs.py:2504
+#: ../src/orca/orca-setup.ui.h:61
 msgid "M_ost"
 msgstr "ఎక్కువ(_o)"
 
@@ -3403,7 +3457,8 @@ msgstr "ఎక్కువ(_o)"
 #. Orca provides about a particular object that receives
 #. focus.
 #.
-#: ../src/orca/orca_gui_prefs.py:2670 ../src/orca/orca_gui_prefs.py:2758
+#: ../src/orca/orca_gui_prefs.py:2672
+#: ../src/orca/orca_gui_prefs.py:2760
 #: ../src/orca/orca-setup.ui.h:49
 msgid "Brie_f"
 msgstr "టూకీగా(_f)"
@@ -3413,7 +3468,8 @@ msgstr "టూకీగా(_f)"
 #. they just want the current cell to be presented to them.
 #.
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
-#: ../src/orca/orca_gui_prefs.py:2694 ../src/orca/orca-setup.ui.h:53
+#: ../src/orca/orca_gui_prefs.py:2696
+#: ../src/orca/orca-setup.ui.h:53
 msgid "Speak _cell"
 msgstr "మాట్లాడు అర(_c)"
 
@@ -3421,11 +3477,11 @@ msgstr "మాట్లాడు అర(_c)"
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
 #. key bindings.
 #.
-#: ../src/orca/orca_gui_prefs.py:2778
+#: ../src/orca/orca_gui_prefs.py:2780
 msgid "enter new key"
 msgstr "కొత్త కీను ప్రవేశపెట్టుము"
 
-#: ../src/orca/orca_gui_prefs.py:2859
+#: ../src/orca/orca_gui_prefs.py:2861
 msgid "Key binding deleted. Press enter to confirm."
 msgstr "కీ బందనము తొలగించబడినది. నిర్ధారించుటకు ప్రవేశంను వత్తుము."
 
@@ -3433,7 +3489,7 @@ msgstr "కీ బందనము తొలగించబడినది. న�
 #. that the key combination (e.g., Ctrl+Alt+f) they just
 #. entered has already been bound to another command.
 #.
-#: ../src/orca/orca_gui_prefs.py:2888
+#: ../src/orca/orca_gui_prefs.py:2890
 #, python-format
 msgid "The key entered is already bound to %s"
 msgstr "ప్రవేశపెట్టిన కీ ఇప్పటికే %s కు బంధనం అయిఉంది"
@@ -3442,7 +3498,7 @@ msgstr "ప్రవేశపెట్టిన కీ ఇప్పటికే 
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:2895
+#: ../src/orca/orca_gui_prefs.py:2897
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "కీ లోబరచబడింది: %s. నిర్ధారించుటకు ప్రవేశంను వత్తుము."
@@ -3451,7 +3507,7 @@ msgstr "కీ లోబరచబడింది: %s. నిర్ధారి�
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:2943
+#: ../src/orca/orca_gui_prefs.py:2945
 #, python-format
 msgid "The new key is: %s"
 msgstr "కొత్త కీ: %s"
@@ -3460,21 +3516,22 @@ msgstr "కొత్త కీ: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:2951
+#: ../src/orca/orca_gui_prefs.py:2953
 msgid "The keybinding has been removed."
 msgstr "కీబంధనం తీసివేయబడింది."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:2989 ../src/orca/orca-setup.ui.h:12
+#: ../src/orca/orca_gui_prefs.py:2991
+#: ../src/orca/orca-setup.ui.h:12
 msgid "_Desktop"
 msgstr "డెస్కుటాప్(_D)"
 
 #. We're here because given profile name exists, so we have
 #. to give that info to the user and give him the chance
 #. to continue, or not saving the profile
-#: ../src/orca/orca_gui_prefs.py:3359
+#: ../src/orca/orca_gui_prefs.py:3361
 #, python-format
 msgid ""
 "Profile <b>%s</b> already exists.\n"
@@ -3483,16 +3540,16 @@ msgstr ""
 "<b>%s</b> అను వివరము ముందుగానే కలదు.\n"
 "ఈ సరిక్రొత్త మార్పులతో ప్రస్తుత వివరములను అప్డేట్ చేయవలెనా?"
 
-#: ../src/orca/orca_gui_prefs.py:3368
+#: ../src/orca/orca_gui_prefs.py:3370
 msgid "<b>User Profile Conflict!</b>"
 msgstr "<b>వాడుకరి వివరాల  సంఘర్షణ!</b>"
 
-#: ../src/orca/orca_gui_prefs.py:3370
+#: ../src/orca/orca_gui_prefs.py:3372
 msgid "Save Profile As Conflict"
 msgstr "వివరములను విరుద్దముగా భద్రపరుచుము"
 
 #. First of all, we give a chance of cancel profile change
-#: ../src/orca/orca_gui_prefs.py:3387
+#: ../src/orca/orca_gui_prefs.py:3389
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -3506,15 +3563,15 @@ msgstr ""
 "\n"
 "వివరములలో పూర్వపు మార్పులను వ్వతిరేకించటమును కొనసాగించవలనా లేదా?"
 
-#: ../src/orca/orca_gui_prefs.py:3397
+#: ../src/orca/orca_gui_prefs.py:3399
 msgid "<b>Load user profile info</b>"
 msgstr "<b>వాడుకరి వివరముల సమాచారమును బర్తీచేయుము</b>"
 
-#: ../src/orca/orca_gui_prefs.py:3399
+#: ../src/orca/orca_gui_prefs.py:3401
 msgid "Load User Profile"
 msgstr "వాడుకరి వివరములను బర్తీచేయుము"
 
-#: ../src/orca/orca_gui_prefs.py:3437
+#: ../src/orca/orca_gui_prefs.py:3439
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -3524,7 +3581,7 @@ msgstr ""
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:3471
+#: ../src/orca/orca_gui_prefs.py:3473
 msgid "Starting Orca Preferences."
 msgstr "ఓర్కా అభీష్టాలను మొదలుపెట్టుము."
 
@@ -3568,7 +3625,7 @@ msgstr "ఇది అన్ని సంభాషణములను మరియ
 #. splash-window. These items are not localized and are
 #. presented in a list after this message.
 #.
-#: ../src/orca/orca.py:221
+#: ../src/orca/orca.py:225
 msgid "The following items can be enabled or disabled:"
 msgstr "ఈ మొదలగు అంశములు ఉపయోగపరుచవచ్చు లేక నిరుపయోగపరుచవచ్చు:"
 
@@ -3576,23 +3633,18 @@ msgstr "ఈ మొదలగు అంశములు ఉపయోగపరుచ
 #. Orca and includes an invalid option as an argument. After the message,
 #. the list of arguments, as typed by the user, is displayed.
 #.
-#: ../src/orca/orca.py:241
+#: ../src/orca/orca.py:245
 msgid "The following arguments are not valid: "
 msgstr "ఈ ముదలగు సమాచారాత్మక విలువలు చెల్లవు: "
 
-#: ../src/orca/orca.py:248
-#| msgid "Orca Screen Reader and Magnifier"
+#: ../src/orca/orca.py:252
 msgid "orca - scriptable screen reader and magnifier"
 msgstr "ఓర్కా - స్క్రిప్ట్ తో తెరపైచదువునది మరియు పెద్దదిచేయునది"
 
 #. Translators: this is text being sent to a terminal and we want to keep
 #. the text lines within terminal boundaries.
 #.
-#: ../src/orca/orca.py:252
-#| msgid ""
-#| "If Orca has not been previously set up by the user, Orca\n"
-#| "will automatically launch the preferences set up unless\n"
-#| "the -n or --no-setup option is used."
+#: ../src/orca/orca.py:256
 msgid ""
 "If Orca has not been previously set up by the user, Orca\n"
 "will automatically launch the preferences set up unless\n"
@@ -3609,7 +3661,7 @@ msgstr ""
 #. Translators: this is the description of the command line option
 #. '-?, --help' that is used to display usage information.
 #.
-#: ../src/orca/orca.py:263
+#: ../src/orca/orca.py:267
 msgid "Show this help message"
 msgstr "ఈ సహయక సందేశంను చూపుము"
 
@@ -3617,7 +3669,7 @@ msgstr "ఈ సహయక సందేశంను చూపుము"
 #. the names of applications known to the accessibility infrastructure
 #. to stdout and then exits.
 #.
-#: ../src/orca/orca.py:275
+#: ../src/orca/orca.py:279
 msgid "Print the known running applications"
 msgstr "తెలిసిన నడుస్తున్న కార్యక్షేత్రములను ముద్రించుము"
 
@@ -3628,7 +3680,7 @@ msgstr "తెలిసిన నడుస్తున్న కార్యక�
 #. should not be translated (i.e., it will always start with 'debug' and end
 #. with '.out', regardless of the locale.).
 #.
-#: ../src/orca/orca.py:286
+#: ../src/orca/orca.py:290
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr "debug-YYYY-MM-DD-HH:MM:SS.outనకు దిద్దుబాటు ఫలితాంశమును పంపించుము"
 
@@ -3636,7 +3688,7 @@ msgstr "debug-YYYY-MM-DD-HH:MM:SS.outనకు దిద్దుబాటు �
 #. of the debug file Orca will use for debug output if the --debug option
 #. is used.
 #.
-#: ../src/orca/orca.py:295
+#: ../src/orca/orca.py:299
 msgid "Send debug output to the specified file"
 msgstr "నిర్దేశించబడిన ఫైలునకు దిద్దుబాటు ఫలితాంశమును పంపించుము"
 
@@ -3644,7 +3696,7 @@ msgstr "నిర్దేశించబడిన ఫైలునకు ది�
 #. '-s, --setup, --gui-setup' that will initially display a GUI dialog that
 #. would allow the user to set their Orca preferences.
 #.
-#: ../src/orca/orca.py:304
+#: ../src/orca/orca.py:308
 msgid "Set up user preferences"
 msgstr "వాడుకరి అభీష్టాలను అమర్చుము"
 
@@ -3654,7 +3706,7 @@ msgstr "వాడుకరి అభీష్టాలను అమర్చు�
 #. For this to happen properly, Orca will need to be run from a terminal
 #. window.
 #.
-#: ../src/orca/orca.py:315
+#: ../src/orca/orca.py:319
 msgid "Set up user preferences (text version)"
 msgstr "వాడుకరి అభిష్టాలను అమర్చుము (పాఠము వర్షన్)"
 
@@ -3662,7 +3714,7 @@ msgstr "వాడుకరి అభిష్టాలను అమర్చు�
 #. '-n, --no-setup' that means that Orca will startup without setting up any
 #. user preferences.
 #.
-#: ../src/orca/orca.py:323
+#: ../src/orca/orca.py:327
 msgid "Skip set up of user preferences"
 msgstr "వాడుకరి అభీష్టాల యొక్క అమర్పును వదిలివేయుము"
 
@@ -3670,28 +3722,28 @@ msgstr "వాడుకరి అభీష్టాల యొక్క అమర
 #. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
 #. location for the user preferences.
 #.
-#: ../src/orca/orca.py:331
+#: ../src/orca/orca.py:335
 msgid "Use alternate directory for user preferences"
 msgstr "వాడుకరి అభీష్టముల కొరకు వైకల్పిక సంచయంను ఉపయోగించుము"
 
 #. Translators: if the user supplies an option via the '-e, --enable'
 #. command line option, it will be automatically enabled as Orca is started.
 #.
-#: ../src/orca/orca.py:339
+#: ../src/orca/orca.py:343
 msgid "Force use of option"
 msgstr "ఐచ్చికం యొక్క బలవంతపు ఉపయోగం"
 
 #. Translators: if the user supplies an option via the '-d, --disable'
 #. command line option, it will be automatically disabled as Orca is started.
 #.
-#: ../src/orca/orca.py:347
+#: ../src/orca/orca.py:351
 msgid "Prevent use of option"
 msgstr "ఐచ్చికం యొక్క ఉపయోగంను నిరోధించుము"
 
 #. Translators: this is the Orca command line option to import to Orca a user
 #. profile from a given file
 #.
-#: ../src/orca/orca.py:354
+#: ../src/orca/orca.py:358
 msgid "Import a profile from a given orca profile file"
 msgstr "ఇచ్చిన ఓర్కా వివరముల ఫైలు నుండి వివరములను తెచ్చుకొనుము"
 
@@ -3700,7 +3752,7 @@ msgstr "ఇచ్చిన ఓర్కా వివరముల ఫైలు �
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:363
+#: ../src/orca/orca.py:367
 msgid "Quits Orca (if shell script used)"
 msgstr "ఓర్కాను నిష్క్రమించుము (షెల్ స్క్రిప్టు ఉపయోగిస్తుంటే)"
 
@@ -3710,14 +3762,14 @@ msgstr "ఓర్కాను నిష్క్రమించుము (షె
 #. If this command line option is specified, the script will quit any
 #. instances of Orca that are already running.
 #.
-#: ../src/orca/orca.py:373
+#: ../src/orca/orca.py:377
 msgid "Forces orca to be terminated immediately."
 msgstr "ఓర్కాను బలవంతముగా మూయుచున్నది. "
 
 #. Translators: this is the Orca command line option to tell Orca to replace
 #. any existing Orca process(es) that might be running.
 #.
-#: ../src/orca/orca.py:380
+#: ../src/orca/orca.py:384
 msgid "Replace a currently running Orca"
 msgstr "ప్రస్తుతం నడుస్తున్న ఆర్కా పునఃస్థాపన చేయుము"
 
@@ -3725,7 +3777,7 @@ msgstr "ప్రస్తుతం నడుస్తున్న ఆర్క�
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:790
+#: ../src/orca/orca.py:791
 msgid "Orca user settings reloaded."
 msgstr "ఓర్కా అమరికలు తిరిగినింపబడినవి."
 
@@ -3733,7 +3785,7 @@ msgstr "ఓర్కా అమరికలు తిరిగినింపబ�
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:954
+#: ../src/orca/orca.py:957
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr "Up and Down Arrowలను జాబితాలో విహరించుటకు ఉపయోగించుము.బయటకు Escapeని నొక్కుము."
 
@@ -3741,7 +3793,7 @@ msgstr "Up and Down Arrowలను జాబితాలో విహరిం�
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:967
+#: ../src/orca/orca.py:970
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3752,7 +3804,7 @@ msgstr[1] "%d అను ఓర్కా అప్రమేయపు షార్
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:989
+#: ../src/orca/orca.py:992
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3764,7 +3816,7 @@ msgstr[1] "%(count)dఅను ఓర్కా షార్ట్ కట్‌ల
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:1007
+#: ../src/orca/orca.py:1010
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "%sనకు ఎలాంటి షార్ట్ కట్‌లు లేవు."
@@ -3787,7 +3839,8 @@ msgstr "%sనకు ఎలాంటి షార్ట్ కట్‌లు ల
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:1025 ../src/orca/scripts/toolkits/Gecko/script.py:6022
+#: ../src/orca/orca.py:1028
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6057
 #: ../src/orca/structural_navigation.py:885
 msgid "Wrapping to bottom."
 msgstr "క్రిందకు మడుచుచున్నది."
@@ -3810,7 +3863,8 @@ msgstr "క్రిందకు మడుచుచున్నది."
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:1046 ../src/orca/scripts/toolkits/Gecko/script.py:6090
+#: ../src/orca/orca.py:1049
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6125
 #: ../src/orca/structural_navigation.py:893
 msgid "Wrapping to top."
 msgstr "పైకి మడుచుచున్నది."
@@ -3823,17 +3877,14 @@ msgstr "పైకి మడుచుచున్నది."
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:1065 ../src/orca/scripts/default.py:1622
-msgid ""
-"Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
-"current application. Press escape to exit."
-msgstr ""
-"ఓర్కా అప్రమేయము షార్ట్ కట్‌ల కొఱకు 1ని నొక్కుము. ప్రస్తుత కార్యక్షేత్రము యొక్క ఓర్కా షార్ట్ కట్‌ల కొఱకు 2ని "
-"నొక్కుము."
+#: ../src/orca/orca.py:1068
+#: ../src/orca/scripts/default.py:1626
+msgid "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the current application. Press escape to exit."
+msgstr "ఓర్కా అప్రమేయము షార్ట్ కట్‌ల కొఱకు 1ని నొక్కుము. ప్రస్తుత కార్యక్షేత్రము యొక్క ఓర్కా షార్ట్ కట్‌ల కొఱకు 2ని నొక్కుము."
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:1322
+#: ../src/orca/orca.py:1293
 msgid "Goodbye."
 msgstr "ఇకశెలవు."
 
@@ -3841,14 +3892,14 @@ msgstr "ఇకశెలవు."
 #. when he/she attempts to import a settings profile, but the
 #. import failed for some reason.
 #.
-#: ../src/orca/orca.py:1446
+#: ../src/orca/orca.py:1448
 msgid "Unable to import profile."
 msgstr "వివరములను తెచ్చుకొనుట సాధ్యపడలేదు."
 
 #. Translators: This message is what is presented to the user
 #. when he/she successfully imports a settings profile.
 #.
-#: ../src/orca/orca.py:1452
+#: ../src/orca/orca.py:1454
 msgid "Profile import success."
 msgstr "వివరములను తెచ్చుకొనుట సాధ్యపడినది."
 
@@ -3856,12 +3907,12 @@ msgstr "వివరములను తెచ్చుకొనుట సాధ�
 #. when he/she attempts to import a settings profile but the
 #. import failed due to a bad key.
 #.
-#: ../src/orca/orca.py:1458
+#: ../src/orca/orca.py:1460
 #, python-format
 msgid "Import failed due to an unrecognized key: %s"
 msgstr "%s అను గుర్తింపులేని కీ వలన దిగుమతి చేయుట విఫలమైనది"
 
-#: ../src/orca/orca.py:1518
+#: ../src/orca/orca.py:1488
 msgid "Welcome to Orca."
 msgstr "ఓర్కాకు స్వాగతం."
 
@@ -4116,129 +4167,130 @@ msgstr "వరుస గుర్తు చివరిని నిరుపయ
 msgid "_Enable Contracted Braille"
 msgstr "సంకుచిత బ్రెయిలిని చైతన్యంచేయుము(_E)"
 
-#: ../src/orca/orca-setup.ui.h:87
+#. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille 'contractions' get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for 'ing' (dots 3-4-6), and the letter 'e' (dots 1-5) all by itself means 'every'. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in liblouis' tables.
+#: ../src/orca/orca-setup.ui.h:88
 msgid "Contraction _Table:"
 msgstr "సంకుచితత్వ పట్టిక(_T):"
 
-#: ../src/orca/orca-setup.ui.h:88
+#: ../src/orca/orca-setup.ui.h:89
 msgid "<b>Display Settings</b>"
 msgstr "<b>ప్రదర్శన అమరికలు</b>"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
-#: ../src/orca/orca-setup.ui.h:90
+#: ../src/orca/orca-setup.ui.h:91
 msgctxt "braille dots"
 msgid "_None"
 msgstr "ఏదీకాదు(_N)"
 
-#: ../src/orca/orca-setup.ui.h:94
+#: ../src/orca/orca-setup.ui.h:95
 msgid "<b>Selection Indicator</b>"
 msgstr "<b>ఎంపిక సూచకి</b>"
 
-#: ../src/orca/orca-setup.ui.h:95
+#: ../src/orca/orca-setup.ui.h:96
 msgid "<b>Hyperlink Indicator</b>"
 msgstr "<b>హైపర్‌లింక్ సూచకి</b>"
 
-#: ../src/orca/orca-setup.ui.h:96
+#: ../src/orca/orca-setup.ui.h:97
 msgid "Braille"
 msgstr "బ్రెయిలి"
 
-#: ../src/orca/orca-setup.ui.h:97
+#: ../src/orca/orca-setup.ui.h:98
 msgid "Enable _key echo"
 msgstr "కీ ఎకో చైతన్యం చేయుము(_k)"
 
-#: ../src/orca/orca-setup.ui.h:98
+#: ../src/orca/orca-setup.ui.h:99
 msgid "Enable _alphanumeric and punctuation keys"
 msgstr "సంఖ్యాఅక్షరము మరియు పంక్చ్యయేషన్ కీలను చైతన్యం చేయుము(_a)"
 
-#: ../src/orca/orca-setup.ui.h:99
+#: ../src/orca/orca-setup.ui.h:100
 msgid "Enable _modifier keys"
 msgstr "సవరణి కీలను చైతన్యంచేయుము(_m)"
 
-#: ../src/orca/orca-setup.ui.h:100
+#: ../src/orca/orca-setup.ui.h:101
 msgid "Enable _function keys"
 msgstr "కార్యక్రమము కీలను చైతన్యంచేయుము(_f)"
 
-#: ../src/orca/orca-setup.ui.h:101
+#: ../src/orca/orca-setup.ui.h:102
 msgid "Enable ac_tion keys"
 msgstr "చర్యా కీలను చైతన్యంచేయుము(_t)"
 
-#: ../src/orca/orca-setup.ui.h:102
+#: ../src/orca/orca-setup.ui.h:103
 msgid "Enable _navigation keys"
 msgstr "నావిగేషన్ కీలను చైతన్యంచేయుము(_n)"
 
-#: ../src/orca/orca-setup.ui.h:107
+#: ../src/orca/orca-setup.ui.h:108
 msgid "Enable echo by _word"
 msgstr "ఎకోను పదము ద్వారా చైతన్యంచేయుము(_w)"
 
-#: ../src/orca/orca-setup.ui.h:108
+#: ../src/orca/orca-setup.ui.h:109
 msgid "Enable echo by _sentence"
 msgstr "ఎకోను వాఖ్యము ద్వారా చైతన్యంచేయుము(_s)"
 
-#: ../src/orca/orca-setup.ui.h:109
+#: ../src/orca/orca-setup.ui.h:110
 msgid "Key Echo"
 msgstr "కీ ఎకో"
 
-#: ../src/orca/orca-setup.ui.h:110
+#: ../src/orca/orca-setup.ui.h:111
 msgid "Orca _Modifier Key(s):"
 msgstr "ఓర్కా నవరణి కీ(లు)(_M):"
 
-#: ../src/orca/orca-setup.ui.h:111
+#: ../src/orca/orca-setup.ui.h:112
 msgid "Key Bindings"
 msgstr "కీ బందనములు"
 
-#: ../src/orca/orca-setup.ui.h:112
+#: ../src/orca/orca-setup.ui.h:113
 msgid "<b>Pronunciation Dictionary</b>"
 msgstr "<b>ఉచ్ఛారణా పదకోశం</b>"
 
-#: ../src/orca/orca-setup.ui.h:113
+#: ../src/orca/orca-setup.ui.h:114
 msgid "_New entry"
 msgstr "కొత్త ప్రవేశం (_N)"
 
-#: ../src/orca/orca-setup.ui.h:114
+#: ../src/orca/orca-setup.ui.h:115
 msgid "_Delete"
 msgstr "తొలగించు (_D)"
 
-#: ../src/orca/orca-setup.ui.h:115
+#: ../src/orca/orca-setup.ui.h:116
 msgid "Pronunciation"
 msgstr "పంక్చ్యుయేషన్"
 
-#: ../src/orca/orca-setup.ui.h:116
+#: ../src/orca/orca-setup.ui.h:117
 msgid "_Speak all"
 msgstr "అన్నిటిని మాట్లాడుము(_S)"
 
-#: ../src/orca/orca-setup.ui.h:117
+#: ../src/orca/orca-setup.ui.h:118
 msgid "Speak _none"
 msgstr "ఏదీ మాట్లాడవద్దు(_n)"
 
-#: ../src/orca/orca-setup.ui.h:118
+#: ../src/orca/orca-setup.ui.h:119
 msgid "_Reset"
 msgstr "తిరిగిఉంచు(_R)"
 
-#: ../src/orca/orca-setup.ui.h:119
+#: ../src/orca/orca-setup.ui.h:120
 msgid "<b>Text attributes</b>"
 msgstr "<b>పాఠము యాట్రిబ్యూట్స్‍</b>"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:121
+#: ../src/orca/orca-setup.ui.h:122
 msgid "Move to _bottom"
 msgstr "క్రిందకు కదుల్చుము(_b)"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:123
+#: ../src/orca/orca-setup.ui.h:124
 msgid "Move _down one"
 msgstr "ఒకటి క్రిందకు కదుల్చుము(_d)"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:125
+#: ../src/orca/orca-setup.ui.h:126
 msgid "Move _up one"
 msgstr "ఒకటి పైకి కదుల్చుము(_u)"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
-#: ../src/orca/orca-setup.ui.h:127
+#: ../src/orca/orca-setup.ui.h:128
 msgid "Move to _top"
 msgstr "పైకి కదుల్చుము(_t)"
 
-#: ../src/orca/orca-setup.ui.h:128
+#: ../src/orca/orca-setup.ui.h:129
 msgid ""
 "<b>Adjust selected\n"
 "attributes</b>"
@@ -4246,11 +4298,11 @@ msgstr ""
 "<b>ఎంపికచేసిన యాట్రిబ్యూట్‌లను\n"
 "సర్దండి</b>"
 
-#: ../src/orca/orca-setup.ui.h:130
+#: ../src/orca/orca-setup.ui.h:131
 msgid "<b>Braille Indicator</b>"
 msgstr "<b>బ్రెయిలి సూచకి</b>"
 
-#: ../src/orca/orca-setup.ui.h:131
+#: ../src/orca/orca-setup.ui.h:132
 msgid "Text Attributes"
 msgstr "పాఠము యాట్రిబ్యూట్స్‍"
 
@@ -4278,23 +4330,15 @@ msgstr "పాఠము యాట్రిబ్యూట్స్‍"
 #. "Additions in German, Danish and Norwegian" and "Variants".
 #.
 #: ../src/orca/phonnames.py:53
-msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
-msgstr ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+msgid "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+msgstr "a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
 
 #. Translators: Orca will tell you how many characters
 #. are repeated on a line of text.  For example: "22
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2429
+#: ../src/orca/script_utilities.py:2444
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -4304,9 +4348,10 @@ msgstr[1] "%(count)d %(repeatChar)s అక్షరాలు"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/script_utilities.py:2522
+#: ../src/orca/script_utilities.py:2537
 #: ../src/orca/scripts/apps/soffice/script.py:1144
-#: ../src/orca/scripts/default.py:2047 ../src/orca/speech_generator.py:1007
+#: ../src/orca/scripts/default.py:2051
+#: ../src/orca/speech_generator.py:1016
 msgid "link"
 msgstr "లింకు"
 
@@ -4315,7 +4360,7 @@ msgstr "లింకు"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2649
+#: ../src/orca/script_utilities.py:2664
 #, python-format
 msgid " superscript %s"
 msgstr "సూపర్‌స్క్రిప్టు %s"
@@ -4325,7 +4370,7 @@ msgstr "సూపర్‌స్క్రిప్టు %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2659
+#: ../src/orca/script_utilities.py:2674
 #, python-format
 msgid " subscript %s"
 msgstr "సూబ్‌స్క్రిప్టు %s"
@@ -4389,7 +4434,7 @@ msgstr "అడ్డువరుస %(row)d, నిలువువరుస %(co
 #. Translators: this is in references to a column in a
 #. table.
 #: ../src/orca/scripts/apps/acroread/script.py:293
-#: ../src/orca/speech_generator.py:800
+#: ../src/orca/speech_generator.py:809
 #, python-format
 msgid "column %d"
 msgstr "నిలువువరుస %d"
@@ -4492,13 +4537,17 @@ msgstr "సంచయాల బటన్"
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:430
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:544
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
-#: ../src/orca/scripts/default.py:2146 ../src/orca/scripts/default.py:2154
-#: ../src/orca/scripts/default.py:2275 ../src/orca/scripts/default.py:2283
-#: ../src/orca/scripts/default.py:2419 ../src/orca/scripts/default.py:4582
-#: ../src/orca/scripts/default.py:4592
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5299
-#: ../src/orca/settings.py:890 ../src/orca/speech_generator.py:718
-#: ../src/orca/speech_generator.py:1071
+#: ../src/orca/scripts/default.py:2150
+#: ../src/orca/scripts/default.py:2158
+#: ../src/orca/scripts/default.py:2279
+#: ../src/orca/scripts/default.py:2287
+#: ../src/orca/scripts/default.py:2423
+#: ../src/orca/scripts/default.py:4604
+#: ../src/orca/scripts/default.py:4614
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5334
+#: ../src/orca/settings.py:882
+#: ../src/orca/speech_generator.py:727
+#: ../src/orca/speech_generator.py:1080
 #: ../src/orca/structural_navigation.py:3597
 msgid "blank"
 msgstr "బ్లాంక్"
@@ -4572,8 +4621,8 @@ msgstr "టాబ్‌ను వత్తుము మరియు ముగి
 #: ../src/orca/scripts/apps/gedit/script.py:392
 #: ../src/orca/scripts/apps/gedit/script.py:469
 #: ../src/orca/scripts/apps/Thunderbird/script.py:176
-#: ../src/orca/scripts/apps/Thunderbird/script.py:324
-#: ../src/orca/scripts/apps/Thunderbird/script.py:556
+#: ../src/orca/scripts/apps/Thunderbird/script.py:325
+#: ../src/orca/scripts/apps/Thunderbird/script.py:561
 #: ../src/orca/scripts/apps/Thunderbird/speech_generator.py:100
 msgid "Check Spelling"
 msgstr "స్పెల్లింగ్ పరిశీలించుము"
@@ -4636,7 +4685,7 @@ msgstr "ఏ ఫైలులు కనబడలేదు."
 #. friendly to the assistive technology infrastructure.
 #.
 #: ../src/orca/scripts/apps/gtk-window-decorator/script.py:89
-#: ../src/orca/scripts/apps/metacity/script.py:110
+#: ../src/orca/scripts/apps/metacity/script.py:117
 msgid "inaccessible"
 msgstr "వాడుకొనలేని"
 
@@ -4650,11 +4699,11 @@ msgstr "అన్‌లైన్ / ఆఫ్‌లైన్ గా పనిచ�
 #. between workspaces.  The goal here is to find a match
 #. with that prefix.
 #.
-#: ../src/orca/scripts/apps/metacity/script.py:103
+#: ../src/orca/scripts/apps/metacity/script.py:110
 msgid "Workspace "
 msgstr "పనిస్థలం"
 
-#: ../src/orca/scripts/apps/metacity/script.py:103
+#: ../src/orca/scripts/apps/metacity/script.py:110
 msgid "Desk "
 msgstr "డెస్కు"
 
@@ -4662,7 +4711,7 @@ msgstr "డెస్కు"
 #. pane or table.
 #.
 #: ../src/orca/scripts/apps/nautilus/script.py:138
-#: ../src/orca/speech_generator.py:1390
+#: ../src/orca/speech_generator.py:1399
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -4697,7 +4746,7 @@ msgstr "దోషములు నమోదు అయినప్పుడు న
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:224
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1707
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1739
 #: ../src/orca/scripts/toolkits/WebKitGtk/script.py:313
 msgid "Loading.  Please wait."
 msgstr "నింపుతోంది.  దయచేసి వేచిఉండండి."
@@ -4706,7 +4755,7 @@ msgstr "నింపుతోంది.  దయచేసి వేచిఉం�
 #. or some other content.
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:233
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1720
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1752
 #: ../src/orca/scripts/toolkits/WebKitGtk/script.py:323
 msgid "Finished loading."
 msgstr "నింపుట పూర్తైంది."
@@ -4752,9 +4801,7 @@ msgstr "ఇన్‌పుట్ ఫైలు యొక్క విషయము
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:237
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr ""
-"calc అరలను మాట్లాడుతున్నప్పుడు అడ్డువరుసను యాంత్రిక నిలువువరుస యెగువ సూచీలలాగా ఉపయోగించునట్లు "
-"అమర్చుము."
+msgstr "calc అరలను మాట్లాడుతున్నప్పుడు అడ్డువరుసను యాంత్రిక నిలువువరుస యెగువ సూచీలలాగా ఉపయోగించునట్లు అమర్చుము."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
@@ -4767,11 +4814,8 @@ msgstr "యాంత్రిక నిలువువరుస యెగువ 
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:254
-msgid ""
-"Set the column to use as dynamic row headers to use when speaking calc cells."
-msgstr ""
-"calc అరలను మాట్లాడుతున్నప్పుడు నిలువువరుసను యాంత్రిక అడ్డువరుస యెగువ సూచీలలాగా ఉపయోగించునట్లు "
-"మార్చుము."
+msgid "Set the column to use as dynamic row headers to use when speaking calc cells."
+msgstr "calc అరలను మాట్లాడుతున్నప్పుడు నిలువువరుసను యాంత్రిక అడ్డువరుస యెగువ సూచీలలాగా ఉపయోగించునట్లు మార్చుము."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
@@ -4925,14 +4969,14 @@ msgstr "%(position)dఅను స్లైడ్ %(count)dనకు చెంద
 #. Translators: This message is to inform the user that
 #. the last row of a table in a document was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1873
+#: ../src/orca/scripts/apps/soffice/script.py:1876
 msgid "Last row deleted."
 msgstr "చివరి అడ్డ వరుసను తొలగించెను."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1877
+#: ../src/orca/scripts/apps/soffice/script.py:1880
 msgid "Row deleted."
 msgstr "అడ్డ వరుసను తొలగించెను"
 
@@ -4941,14 +4985,14 @@ msgstr "అడ్డ వరుసను తొలగించెను"
 #. table. This typically happens when the user presses Tab
 #. from within the last cell of the table.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1884
+#: ../src/orca/scripts/apps/soffice/script.py:1887
 msgid "Row inserted at the end of the table."
 msgstr "పట్టిక చివరిలో అడ్డవరుసను అమర్చుము."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just inserted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1888
+#: ../src/orca/scripts/apps/soffice/script.py:1891
 msgid "Row inserted."
 msgstr "అడ్డ వరుసను జతపరిచెను."
 
@@ -4959,7 +5003,7 @@ msgstr "అడ్డ వరుసను జతపరిచెను."
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1924
+#: ../src/orca/scripts/apps/soffice/script.py:1936
 msgid "Presentation Wizard"
 msgstr "సమర్పణ విజార్డు"
 
@@ -4968,13 +5012,13 @@ msgstr "సమర్పణ విజార్డు"
 #. has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2058
+#: ../src/orca/scripts/apps/soffice/script.py:2070
 msgid "has formula"
 msgstr "సూత్రమును కలిగిఉంది"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2081
+#: ../src/orca/scripts/apps/soffice/script.py:2093
 #, python-format
 msgid "Cell %s"
 msgstr "అర %s"
@@ -5013,8 +5057,8 @@ msgstr "అడ్డువరుస %(row)d, నిలువువరుస %(co
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
-#: ../src/orca/scripts/apps/Thunderbird/script.py:594
-#: ../src/orca/scripts/apps/Thunderbird/script.py:611
+#: ../src/orca/scripts/apps/Thunderbird/script.py:599
+#: ../src/orca/scripts/apps/Thunderbird/script.py:616
 #, python-format
 msgid "%s panel"
 msgstr "%s ఫలకం"
@@ -5690,9 +5734,7 @@ msgstr "తరువాత కీ ప్రతిధ్వని స్థాయ
 #. running on the desktop, to stdout.
 #.
 #: ../src/orca/scripts/default.py:903
-msgid ""
-"Prints a debug listing of all known applications to the console where Orca "
-"is running."
+msgid "Prints a debug listing of all known applications to the console where Orca is running."
 msgstr "ఓర్కా  జరుగుతున్నప్పుడు అన్ని తెలియబడిన కార్యక్షేత్త్రములను కంసోల్ పై ముద్రిస్తుంది."
 
 #. Translators: this is a debug message that Orca users
@@ -5820,7 +5862,7 @@ msgstr "ప్రస్తుత కార్యక్షేత్రమున�
 #. along to the current application, bypassing Orca's
 #. interception of it.
 #.
-#: ../src/orca/scripts/default.py:1530
+#: ../src/orca/scripts/default.py:1534
 msgid "Bypass mode enabled."
 msgstr "బైపాస్ మోడ్‌ని క్రియాశీలీకరించెను."
 
@@ -5832,13 +5874,9 @@ msgstr "బైపాస్ మోడ్‌ని క్రియాశీలీ�
 #. echo the name of the key if Orca doesn't have a handler.
 #. This text here is what is spoken to the user.
 #.
-#: ../src/orca/scripts/default.py:1553
-msgid ""
-"Entering learn mode.  Press any key to hear its function.  To exit learn "
-"mode, press the escape key."
-msgstr ""
-"అభ్యాసన రీతికి ప్రవేశిస్తోంది.  దీని కార్యక్రమమును వినుటకు ఏ కీనైనా వత్తుము.  అభ్యాసన రీతినుండి "
-"బయటకువచ్చుటకు, ఎస్కేప్ కీను వత్తుము."
+#: ../src/orca/scripts/default.py:1557
+msgid "Entering learn mode.  Press any key to hear its function.  To exit learn mode, press the escape key."
+msgstr "అభ్యాసన రీతికి ప్రవేశిస్తోంది.  దీని కార్యక్రమమును వినుటకు ఏ కీనైనా వత్తుము.  అభ్యాసన రీతినుండి బయటకువచ్చుటకు, ఎస్కేప్ కీను వత్తుము."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -5849,7 +5887,7 @@ msgstr ""
 #. This text here is what is to be presented on the braille
 #. display.
 #.
-#: ../src/orca/scripts/default.py:1565
+#: ../src/orca/scripts/default.py:1569
 msgid "Learn mode.  Press escape to exit."
 msgstr "అభ్యాసన రీతి.  బయటకు వచ్చుటకు ఎస్కేప్ ను వత్తుము."
 
@@ -5862,7 +5900,7 @@ msgstr "అభ్యాసన రీతి.  బయటకు వచ్చుట�
 #. Exiting learn mode puts the user back in normal operating
 #. mode.
 #.
-#: ../src/orca/scripts/default.py:1591
+#: ../src/orca/scripts/default.py:1595
 msgid "Exiting learn mode."
 msgstr "అభ్యాసన రీతినుండి బయటకువస్తోంది."
 
@@ -5871,7 +5909,7 @@ msgstr "అభ్యాసన రీతినుండి బయటకువస�
 #. message that is presented to the user as confirmation that this
 #. mode has been entered.
 #.
-#: ../src/orca/scripts/default.py:1612
+#: ../src/orca/scripts/default.py:1616
 msgid "List shortcuts mode."
 msgstr "షార్ట్ కట్‌ల మోడ్ జాబితా."
 
@@ -5883,7 +5921,7 @@ msgstr "షార్ట్ కట్‌ల మోడ్ జాబితా."
 #. is the prompt which will be presented to the user in both speech and
 #. braille upon exiting this mode.
 #.
-#: ../src/orca/scripts/default.py:1651
+#: ../src/orca/scripts/default.py:1655
 msgid "Exiting list shortcuts mode."
 msgstr "షార్ట్‌కట్‌ల జాబితా రీతినుండి బయటకువస్తోంది."
 
@@ -5902,8 +5940,9 @@ msgstr "షార్ట్‌కట్‌ల జాబితా రీతిన�
 #. detailed message which will be presented if for some
 #. reason Orca cannot identify/find the current location.
 #.
-#: ../src/orca/scripts/default.py:1932 ../src/orca/scripts/default.py:2075
-#: ../src/orca/scripts/default.py:2095
+#: ../src/orca/scripts/default.py:1936
+#: ../src/orca/scripts/default.py:2079
+#: ../src/orca/scripts/default.py:2099
 msgid "Could not find current location."
 msgstr "ప్రస్తుత స్థానము కనుగొనలేదు"
 
@@ -5912,7 +5951,8 @@ msgstr "ప్రస్తుత స్థానము కనుగొనలే�
 #. brief message which will be presented if for some reason
 #. Orca cannot identify/find the current location.
 #.
-#: ../src/orca/scripts/default.py:1938 ../src/orca/scripts/default.py:2101
+#: ../src/orca/scripts/default.py:1942
+#: ../src/orca/scripts/default.py:2105
 msgctxt "location"
 msgid "Not found"
 msgstr "దృష్టీకరించలేదు"
@@ -5920,7 +5960,8 @@ msgstr "దృష్టీకరించలేదు"
 #. Translators: "white space" is a short phrase to mean the
 #. user has navigated to a line with only whitespace on it.
 #.
-#: ../src/orca/scripts/default.py:2159 ../src/orca/scripts/default.py:2424
+#: ../src/orca/scripts/default.py:2163
+#: ../src/orca/scripts/default.py:2428
 msgid "white space"
 msgstr "శ్వేత ఖాళి"
 
@@ -5934,7 +5975,7 @@ msgstr "శ్వేత ఖాళి"
 #. {line,word,character}.  This message lets the user know
 #. they have left the flat review feature.
 #.
-#: ../src/orca/scripts/default.py:2614
+#: ../src/orca/scripts/default.py:2618
 msgid "Leaving flat review."
 msgstr "సమతల పరిఅన్వేషణ రీతి నుండి బయటకువస్తున్నది."
 
@@ -5948,28 +5989,28 @@ msgstr "సమతల పరిఅన్వేషణ రీతి నుండి
 #. {line,word,character}.  This message lets the user know
 #. they have entered the flat review feature.
 #.
-#: ../src/orca/scripts/default.py:2630
+#: ../src/orca/scripts/default.py:2634
 msgid "Entering flat review."
 msgstr "సమతల పరిఅన్వేషణ రీతిని ప్రవేశిస్తుంది."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
-#: ../src/orca/scripts/default.py:2650
+#: ../src/orca/scripts/default.py:2654
 msgid "Speech enabled."
 msgstr "ఉపన్యాసం చైతన్యం చేయబడింది."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
-#: ../src/orca/scripts/default.py:2655
+#: ../src/orca/scripts/default.py:2659
 msgid "Speech disabled."
 msgstr "ఉపన్యాసం అచేతనం చేయబడింది."
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2668
+#: ../src/orca/scripts/default.py:2672
 msgid "Speaking of indentation and justification enabled."
 msgstr "వరుసక్రమంను మరియు సర్దబాటును మాట్లాడుట సంభవించెను."
 
@@ -5977,7 +6018,7 @@ msgstr "వరుసక్రమంను మరియు సర్దబాట�
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
-#: ../src/orca/scripts/default.py:2673
+#: ../src/orca/scripts/default.py:2677
 msgctxt "indentation and justification"
 msgid "Enabled"
 msgstr "చైతన్యంచేయుము"
@@ -5985,7 +6026,7 @@ msgstr "చైతన్యంచేయుము"
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will not be spoken.
 #.
-#: ../src/orca/scripts/default.py:2678
+#: ../src/orca/scripts/default.py:2682
 msgid "Speaking of indentation and justification disabled."
 msgstr "వరుసక్రమంను మరియు సర్దబాటును మాట్లాడుట సంభవించలేదు."
 
@@ -5993,7 +6034,7 @@ msgstr "వరుసక్రమంను మరియు సర్దబాట�
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
-#: ../src/orca/scripts/default.py:2683
+#: ../src/orca/scripts/default.py:2687
 msgctxt "indentation and justification"
 msgid "Disabled"
 msgstr "నిస్సారమైనది"
@@ -6003,7 +6044,7 @@ msgstr "నిస్సారమైనది"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2700
+#: ../src/orca/scripts/default.py:2704
 msgid "Punctuation level set to some."
 msgstr "పంక్టువేషన్ స్థాయిని కొన్నిటికి అమర్చెను."
 
@@ -6012,7 +6053,7 @@ msgstr "పంక్టువేషన్ స్థాయిని కొన్�
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2706
+#: ../src/orca/scripts/default.py:2710
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "కొన్ని"
@@ -6022,7 +6063,7 @@ msgstr "కొన్ని"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2714
+#: ../src/orca/scripts/default.py:2718
 msgid "Punctuation level set to most."
 msgstr "పంక్టువేషన్ స్థాయిని చాలావాటికి అమర్చెను."
 
@@ -6031,7 +6072,7 @@ msgstr "పంక్టువేషన్ స్థాయిని చాలా�
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2720
+#: ../src/orca/scripts/default.py:2724
 msgctxt "spoken punctuation"
 msgid "Most"
 msgstr "ఎక్కువ"
@@ -6041,7 +6082,7 @@ msgstr "ఎక్కువ"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2728
+#: ../src/orca/scripts/default.py:2732
 msgid "Punctuation level set to all."
 msgstr "పంక్చ్యయేషన్ స్థాయిని అన్నిటికీ అమర్చెను."
 
@@ -6050,7 +6091,7 @@ msgstr "పంక్చ్యయేషన్ స్థాయిని అన్�
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2734
+#: ../src/orca/scripts/default.py:2738
 msgctxt "spoken punctuation"
 msgid "All"
 msgstr "అన్ని"
@@ -6060,7 +6101,7 @@ msgstr "అన్ని"
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2743
+#: ../src/orca/scripts/default.py:2747
 msgid "Punctuation level set to none."
 msgstr "పంక్టువేషన్ స్థాయిని దేనికి అమర్చలేదు."
 
@@ -6069,7 +6110,7 @@ msgstr "పంక్టువేషన్ స్థాయిని దేని�
 #. The options are: All puntuation marks will be spoken, None
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
-#: ../src/orca/scripts/default.py:2749
+#: ../src/orca/scripts/default.py:2753
 msgctxt "spoken punctuation"
 msgid "None"
 msgstr "ఏదీకాదు"
@@ -6086,7 +6127,7 @@ msgstr "ఏదీకాదు"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2778
+#: ../src/orca/scripts/default.py:2782
 msgid "Key echo set to key."
 msgstr "కీ ఎకోని కీకు అమర్చెను."
 
@@ -6104,7 +6145,7 @@ msgstr "కీ ఎకోని కీకు అమర్చెను."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2793
+#: ../src/orca/scripts/default.py:2797
 msgctxt "key echo"
 msgid "key"
 msgstr "కీ "
@@ -6121,7 +6162,7 @@ msgstr "కీ "
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2811
+#: ../src/orca/scripts/default.py:2815
 msgid "Key echo set to word."
 msgstr "కీ ప్రతిధ్వనిని పదమునకు అమర్చుము."
 
@@ -6139,7 +6180,7 @@ msgstr "కీ ప్రతిధ్వనిని పదమునకు అమ
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2826
+#: ../src/orca/scripts/default.py:2830
 msgctxt "key echo"
 msgid "word"
 msgstr "పదము"
@@ -6156,7 +6197,7 @@ msgstr "పదము"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2844
+#: ../src/orca/scripts/default.py:2848
 msgid "Key echo set to sentence."
 msgstr "కీ ఎకోని వాఖ్యమునకు అమర్చుము."
 
@@ -6174,7 +6215,7 @@ msgstr "కీ ఎకోని వాఖ్యమునకు అమర్చు
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2859
+#: ../src/orca/scripts/default.py:2863
 msgctxt "key echo"
 msgid "sentence"
 msgstr "వాక్యము"
@@ -6191,7 +6232,7 @@ msgstr "వాక్యము"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2877
+#: ../src/orca/scripts/default.py:2881
 msgid "Key echo set to key and word."
 msgstr "కీ ఎకోని  కీకు మరియు పదమునకు అమర్చెను ."
 
@@ -6209,7 +6250,7 @@ msgstr "కీ ఎకోని  కీకు మరియు పదమునక�
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2892
+#: ../src/orca/scripts/default.py:2896
 msgctxt "key echo"
 msgid "key and word"
 msgstr "కీ మరియు పదము"
@@ -6226,7 +6267,7 @@ msgstr "కీ మరియు పదము"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2910
+#: ../src/orca/scripts/default.py:2914
 msgid "Key echo set to word and sentence."
 msgstr "కీ ఎకోని పదము మరియు వాఖ్యమునకు అమర్చెను."
 
@@ -6244,7 +6285,7 @@ msgstr "కీ ఎకోని పదము మరియు వాఖ్యమ�
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2925
+#: ../src/orca/scripts/default.py:2929
 msgctxt "key echo"
 msgid "word and sentence"
 msgstr "పదము మరియువాఖ్యము"
@@ -6261,7 +6302,7 @@ msgstr "పదము మరియువాఖ్యము"
 #. multiple types of echo and can cycle through the various
 #. levels quickly via a command.
 #.
-#: ../src/orca/scripts/default.py:2943
+#: ../src/orca/scripts/default.py:2947
 msgid "Key echo set to None."
 msgstr "కీ ఎకోని దేనికి అమర్చలేదు."
 
@@ -6279,7 +6320,7 @@ msgstr "కీ ఎకోని దేనికి అమర్చలేదు."
 #. brief message which will be presented to the user who is
 #. cycling amongst the various echo options.
 #.
-#: ../src/orca/scripts/default.py:2958
+#: ../src/orca/scripts/default.py:2962
 msgctxt "key echo"
 msgid "None"
 msgstr "ఏదీకాదు"
@@ -6288,7 +6329,7 @@ msgstr "ఏదీకాదు"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:2978
+#: ../src/orca/scripts/default.py:2982
 msgid "Speak row"
 msgstr "మాట్లాడు అడ్డువరుస"
 
@@ -6296,7 +6337,7 @@ msgstr "మాట్లాడు అడ్డువరుస"
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
-#: ../src/orca/scripts/default.py:2984
+#: ../src/orca/scripts/default.py:2988
 msgid "Speak cell"
 msgstr "మాట్లాడు అర"
 
@@ -6310,9 +6351,11 @@ msgstr "మాట్లాడు అర"
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
 #.
-#: ../src/orca/scripts/default.py:3279 ../src/orca/scripts/default.py:3411
-#: ../src/orca/scripts/default.py:5423 ../src/orca/speech_generator.py:1167
-#: ../src/orca/speech_generator.py:1196
+#: ../src/orca/scripts/default.py:3283
+#: ../src/orca/scripts/default.py:3418
+#: ../src/orca/scripts/default.py:5448
+#: ../src/orca/speech_generator.py:1176
+#: ../src/orca/speech_generator.py:1205
 msgctxt "text"
 msgid "selected"
 msgstr "ఎంపికకాబడిన"
@@ -6325,7 +6368,8 @@ msgstr "ఎంపికకాబడిన"
 #. (unhighlights) text in a document, Orca lets
 #. them know this.
 #.
-#: ../src/orca/scripts/default.py:3417 ../src/orca/scripts/default.py:5429
+#: ../src/orca/scripts/default.py:3424
+#: ../src/orca/scripts/default.py:5454
 msgctxt "text"
 msgid "unselected"
 msgstr "ఎంపికకాని"
@@ -6334,7 +6378,8 @@ msgstr "ఎంపికకాని"
 #. of the red squiggly line which indicates that a given
 #. word is not spelled correctly.
 #.
-#: ../src/orca/scripts/default.py:3515 ../src/orca/scripts/default.py:5484
+#: ../src/orca/scripts/default.py:3522
+#: ../src/orca/scripts/default.py:5509
 msgid "misspelled"
 msgstr "తప్పుగా స్పెల్‌చేయబడినది"
 
@@ -6342,14 +6387,15 @@ msgstr "తప్పుగా స్పెల్‌చేయబడినది"
 #. so that we can tell which progress bar
 #. we are referring to.
 #.
-#: ../src/orca/scripts/default.py:4427
+#: ../src/orca/scripts/default.py:4449
 #, python-format
 msgid "Progress bar %d."
 msgstr "పురోగతి పట్టీ %d."
 
 #. Translators: bold as in the font sense.
 #.
-#: ../src/orca/scripts/default.py:4463 ../src/orca/speech_generator.py:987
+#: ../src/orca/scripts/default.py:4485
+#: ../src/orca/speech_generator.py:996
 msgid "bold"
 msgstr "మందమైన"
 
@@ -6360,7 +6406,8 @@ msgstr "మందమైన"
 #. application, so we leave things in plural form
 #. here.
 #.
-#: ../src/orca/scripts/default.py:4480 ../src/orca/scripts/default.py:4492
+#: ../src/orca/scripts/default.py:4502
+#: ../src/orca/scripts/default.py:4514
 #, python-format
 msgid "%(key)s %(value)s pixel"
 msgid_plural "%(key)s %(value)s pixels"
@@ -6373,7 +6420,7 @@ msgstr[1] "%(key)s %(value)s పిగ్జెల్స్‍"
 #. "OK" button.  This message lets them know a string
 #. they were searching for was not found.
 #.
-#: ../src/orca/scripts/default.py:4891
+#: ../src/orca/scripts/default.py:4913
 msgid "string not found"
 msgstr "స్ట్రింగ్ కనబడలేదు"
 
@@ -6382,12 +6429,12 @@ msgstr "స్ట్రింగ్ కనబడలేదు"
 #. thing it does is let them know what the misspelled word
 #. is.
 #.
-#: ../src/orca/scripts/default.py:4963
+#: ../src/orca/scripts/default.py:4985
 #, python-format
 msgid "Misspelled word: %s"
 msgstr "తప్పుగాఉచ్చరించిన పదం: %s"
 
-#: ../src/orca/scripts/default.py:4971
+#: ../src/orca/scripts/default.py:4993
 #, python-format
 msgid "Context is %s"
 msgstr "సందర్భం %s"
@@ -6396,19 +6443,19 @@ msgstr "సందర్భం %s"
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5222
+#: ../src/orca/scripts/default.py:5247
 msgid "paragraph selected down from cursor position"
 msgstr "కర్సర్ స్థానమునుండి పరిచ్ఛేదమును ఎంపికకాబడినది"
 
-#: ../src/orca/scripts/default.py:5223
+#: ../src/orca/scripts/default.py:5248
 msgid "paragraph unselected down from cursor position"
 msgstr "కర్సర్ స్థానమునుండి పరిచ్ఛేదమును ఎంపికకాబడలేదు"
 
-#: ../src/orca/scripts/default.py:5224
+#: ../src/orca/scripts/default.py:5249
 msgid "paragraph selected up from cursor position"
 msgstr "కర్సర్ స్థానమునుండి పరిచ్ఛేదమును ఎంపికకాబడినది"
 
-#: ../src/orca/scripts/default.py:5225
+#: ../src/orca/scripts/default.py:5250
 msgid "paragraph unselected up from cursor position"
 msgstr "కర్సర్ స్థానమునుండి పరిచ్ఛేదమును ఎంపికకాబడలేదు"
 
@@ -6416,7 +6463,7 @@ msgstr "కర్సర్ స్థానమునుండి పరిచ్�
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5279
+#: ../src/orca/scripts/default.py:5304
 msgid "line selected to end from previous cursor position"
 msgstr "కర్సర్ స్థానమునుండి వరుస చివరకు ఎంపికకాబడినది"
 
@@ -6424,7 +6471,7 @@ msgstr "కర్సర్ స్థానమునుండి వరుస చ
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5287
+#: ../src/orca/scripts/default.py:5312
 msgid "line selected from start to previous cursor position"
 msgstr "వరుసమొదలు నుండి కర్సర్ స్థానముకి ఎంపికకాబడినది"
 
@@ -6432,14 +6479,14 @@ msgstr "వరుసమొదలు నుండి కర్సర్ స్థ
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5296
+#: ../src/orca/scripts/default.py:5321
 msgid "page selected from cursor position"
 msgstr "కర్సర్ స్థానమునుండి పుట ఎంపికకాబడినది"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5301
+#: ../src/orca/scripts/default.py:5326
 msgid "page unselected from cursor position"
 msgstr "కర్సర్ స్థానమునుండి పుట ఎంపికకాబడలేదు"
 
@@ -6447,14 +6494,14 @@ msgstr "కర్సర్ స్థానమునుండి పుట ఎం
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5310
+#: ../src/orca/scripts/default.py:5335
 msgid "page selected to cursor position"
 msgstr "కర్సర్ స్థానమునుండి పుట ఎంపికకాబడినది"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5315
+#: ../src/orca/scripts/default.py:5340
 msgid "page unselected to cursor position"
 msgstr "కర్సర్ స్థానమునుండి పుట ఎంపికకాబడలేదు"
 
@@ -6462,14 +6509,14 @@ msgstr "కర్సర్ స్థానమునుండి పుట ఎం
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5340
+#: ../src/orca/scripts/default.py:5365
 msgid "document selected to cursor position"
 msgstr "కర్సర్ స్థానముకు పత్రము ఎంపికకాబడినది"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5345
+#: ../src/orca/scripts/default.py:5370
 msgid "document unselected to cursor position"
 msgstr "కర్సర్ స్థానముకు పత్రము ఎంపికకాబడలేదు"
 
@@ -6477,21 +6524,21 @@ msgstr "కర్సర్ స్థానముకు పత్రము ఎం
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
-#: ../src/orca/scripts/default.py:5354
+#: ../src/orca/scripts/default.py:5379
 msgid "document selected from cursor position"
 msgstr "కర్సర్ స్థానమునుండి పత్రము ఎంపికకాబడినది"
 
 #. Translators: when the user unselects text in a document,
 #. Orca will speak information about what they have unselected.
 #.
-#: ../src/orca/scripts/default.py:5359
+#: ../src/orca/scripts/default.py:5384
 msgid "document unselected from cursor position"
 msgstr "కర్సర్ స్థానమునుండి పత్రము ఎంపికకాబడలేదు"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
 #.
-#: ../src/orca/scripts/default.py:5376
+#: ../src/orca/scripts/default.py:5401
 msgid "entire document selected"
 msgstr "మొత్త పత్రము ఎంపికకాబడినది"
 
@@ -6499,7 +6546,7 @@ msgstr "మొత్త పత్రము ఎంపికకాబడినద�
 #. reported to the user.  The value is the unicode number value
 #. of this character in hex.
 #.
-#: ../src/orca/scripts/default.py:5939
+#: ../src/orca/scripts/default.py:5964
 #, python-format
 msgid "Unicode %s"
 msgstr "యూనికోడ్ %s"
@@ -6784,14 +6831,14 @@ msgstr "కర్సర్ స్థానమునుండి వరుసప�
 #. moving the mouse pointer caused an item to appear
 #. such as a pop-up menu, we want to present that fact.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1420
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1445
 msgid "New item has been added"
 msgstr "క్రొత్త అంశమును జతపరిచెను"
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:1713
+#: ../src/orca/scripts/toolkits/Gecko/script.py:1745
 #: ../src/orca/scripts/toolkits/WebKitGtk/script.py:318
 #, python-format
 msgid "Finished loading %s."
@@ -6804,8 +6851,8 @@ msgstr "%s నింపుట పూర్తైంది."
 #. heading level, where the single character is to indicate
 #. 'heading'.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:2217
-#: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:60
+#: ../src/orca/scripts/toolkits/Gecko/script.py:2249
+#: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:58
 #, python-format
 msgid "h%d"
 msgstr "h%d"
@@ -6816,22 +6863,22 @@ msgstr "h%d"
 #. which just appeared as a result of the user hovering the
 #. mouse. If this command fails, Orca will present this message.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5465
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5500
 msgid "Mouse over object not found."
 msgstr "మోస్ చూపించే అంశము దొరకలేదు."
 
 #. Translators: this is the action name for the 'open' action.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:5949
+#: ../src/orca/scripts/toolkits/Gecko/script.py:5984
 msgid "open"
 msgstr "తెరువుము"
 
 #. Translators: this announces to the user that live region
 #. support has been turned off.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6116
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6140
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6150
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6151
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6175
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6185
 #: ../src/orca/structural_navigation.py:396
 msgid "Live region support is off"
 msgstr "చేతన ప్రాతం మద్దతు ఆఫ్ చేయబడింది"
@@ -6839,11 +6886,11 @@ msgstr "చేతన ప్రాతం మద్దతు ఆఫ్ చేయ�
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6124
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6159
 msgid "Live regions monitoring on"
 msgstr "చేతన ప్రాంతాల మానిటరింగ్ ఆన్ చేయబడింది"
 
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6131
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6166
 msgid "Live regions monitoring off"
 msgstr "చేతన ప్రాంతాల మానిటరింగ్ ఆఫ్ చేయబడింది"
 
@@ -6854,7 +6901,7 @@ msgstr "చేతన ప్రాంతాల మానిటరింగ్ ఆ
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6166
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6201
 msgid "Gecko is controlling the caret."
 msgstr "కారెట్‌ను Gecko నియంత్రిస్తోంది."
 
@@ -6865,7 +6912,7 @@ msgstr "కారెట్‌ను Gecko నియంత్రిస్తో�
 #. the ability to switch between the Firefox mode and the
 #. Orca mode.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/script.py:6178
+#: ../src/orca/scripts/toolkits/Gecko/script.py:6213
 msgid "Orca is controlling the caret."
 msgstr "కారెట్‌ను ఓర్కా నియంత్రిస్తోంది."
 
@@ -6875,7 +6922,7 @@ msgstr "కారెట్‌ను ఓర్కా నియంత్రిస�
 #. translated rolename for the heading.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:260
-#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:117
+#: ../src/orca/scripts/toolkits/WebKitGtk/speech_generator.py:93
 #, python-format
 msgid "%(role)s level %(level)d"
 msgstr "%(role)s స్థాయి %(level)d"
@@ -6958,14 +7005,15 @@ msgstr[1] "%d శాతం పత్రము చదువబడినది"
 #. will be spoken and displayed in braille to indicate this state is
 #. present.
 #.
-#: ../src/orca/settings.py:898 ../src/orca/settings.py:975
+#: ../src/orca/settings.py:890
+#: ../src/orca/settings.py:967
 msgid "required"
 msgstr "అవసరమైనది"
 
 #. Translators: this is used to indicate the user is in a text
 #. area that is not editable.  It is meant to be spoken to the user.
 #.
-#: ../src/orca/settings.py:903
+#: ../src/orca/settings.py:895
 msgctxt "text"
 msgid "read only"
 msgstr "చదువుటకు మాత్రమే"
@@ -6973,7 +7021,8 @@ msgstr "చదువుటకు మాత్రమే"
 #. Translators: this represents an item on the screen that has
 #. been set insensitive (or grayed out).
 #.
-#: ../src/orca/settings.py:908 ../src/orca/settings.py:986
+#: ../src/orca/settings.py:900
+#: ../src/orca/settings.py:978
 msgid "grayed"
 msgstr "గ్రేయ్డ్‍"
 
@@ -6981,18 +7030,20 @@ msgstr "గ్రేయ్డ్‍"
 #. 'expanded' means the children are showing.  'collapsed' means the
 #. children are not showing.
 #.
-#: ../src/orca/settings.py:932 ../src/orca/settings.py:998
+#: ../src/orca/settings.py:924
+#: ../src/orca/settings.py:990
 msgid "collapsed"
 msgstr "కూలిన"
 
-#: ../src/orca/settings.py:932 ../src/orca/settings.py:998
+#: ../src/orca/settings.py:924
+#: ../src/orca/settings.py:990
 msgid "expanded"
 msgstr "విస్తరించిన"
 
 #. Translators: "multi-select" refers to a web form list
 #. in which more than one item can be selected at a time.
 #.
-#: ../src/orca/settings.py:937
+#: ../src/orca/settings.py:929
 msgid "multi-select"
 msgstr "బహుళ-ఎంపిక"
 
@@ -7000,7 +7051,7 @@ msgstr "బహుళ-ఎంపిక"
 #. view (i.e., how many ancestors a node has).  It is meant to be
 #. spoken.
 #.
-#: ../src/orca/settings.py:943
+#: ../src/orca/settings.py:935
 #, python-format
 msgid "tree level %d"
 msgstr "వృక్ష స్థాయి %d"
@@ -7015,7 +7066,8 @@ msgstr "వృక్ష స్థాయి %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:950 ../src/orca/structural_navigation.py:2950
+#: ../src/orca/settings.py:942
+#: ../src/orca/structural_navigation.py:2950
 #, python-format
 msgid "Nesting level %d"
 msgstr "తదుపరి స్థాయి %d"
@@ -7024,7 +7076,7 @@ msgstr "తదుపరి స్థాయి %d"
 #. count of the total number of icons within an icon panel. An
 #. example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/settings.py:956
+#: ../src/orca/settings.py:948
 #, python-format
 msgid "on %(index)d of %(total)d"
 msgstr "%(total)d యొక్క %(index)d పై ఉన్నది"
@@ -7033,7 +7085,7 @@ msgstr "%(total)d యొక్క %(index)d పై ఉన్నది"
 #. or group of objects, such as menu items in a menu, radio buttons
 #. in a radio button group, combobox item in a combobox, etc.
 #.
-#: ../src/orca/settings.py:962
+#: ../src/orca/settings.py:954
 #, python-format
 msgid "%(index)d of %(total)d"
 msgstr "%(total)d యొక్క %(index)d"
@@ -7042,7 +7094,7 @@ msgstr "%(total)d యొక్క %(index)d"
 #. area that is not editable.  It is meant to be a short abbreviation
 #. to be presented on the braille display.
 #.
-#: ../src/orca/settings.py:981
+#: ../src/orca/settings.py:973
 msgctxt "text"
 msgid "rdonly"
 msgstr "rdonly"
@@ -7051,7 +7103,7 @@ msgstr "rdonly"
 #. view (i.e., how many ancestors a node has).  It is meant to
 #. be presented on a braille display.
 #.
-#: ../src/orca/settings.py:1004
+#: ../src/orca/settings.py:996
 #, python-format
 msgid "TREE LEVEL %d"
 msgstr "వృక్ష స్థాయి%d"
@@ -7062,7 +7114,7 @@ msgstr "వృక్ష స్థాయి%d"
 #. inside another list).  It is meant to be presented on
 #. the braille display.
 #.
-#: ../src/orca/settings.py:1012
+#: ../src/orca/settings.py:1004
 #, python-format
 msgid "LEVEL %d"
 msgstr "స్థాయి %d"
@@ -7072,7 +7124,7 @@ msgstr "స్థాయి %d"
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1045
+#: ../src/orca/settings.py:1037
 msgid "%H hours, %M minutes and %S seconds."
 msgstr "%H గడియలు, %M నిముషములు మరియు %S సెకన్‌లు."
 
@@ -7081,7 +7133,7 @@ msgstr "%H గడియలు, %M నిముషములు మరియు %S
 #. This is one of the alternative formats that the
 #. user may wish to be presented with.
 #.
-#: ../src/orca/settings.py:1052
+#: ../src/orca/settings.py:1044
 msgid "%H hours and %M minutes."
 msgstr "%H గడియలు మరియు  %M నిముషములు."
 
@@ -7140,14 +7192,14 @@ msgstr "ఎక్కువ."
 #. and the second item the name of the file being linked
 #. to.
 #.
-#: ../src/orca/speech_generator.py:464
+#: ../src/orca/speech_generator.py:473
 #, python-format
 msgid "%(uri)s link to %(file)s"
 msgstr "%(uri)sలను %(file)sకు లింకుచేస్తుంది"
 
 #. Translators: this is the protocol of a link eg. http, mailto.
 #.
-#: ../src/orca/speech_generator.py:470
+#: ../src/orca/speech_generator.py:479
 #, python-format
 msgid "%s link"
 msgstr "%s లింకు"
@@ -7155,7 +7207,7 @@ msgstr "%s లింకు"
 #. Translators: this is an indication that a given
 #. link points to an object that is on the same page.
 #.
-#: ../src/orca/speech_generator.py:506
+#: ../src/orca/speech_generator.py:515
 msgid "same page"
 msgstr "అదే పుట"
 
@@ -7167,7 +7219,8 @@ msgstr "అదే పుట"
 #. link points to an object that is at the same site
 #. (but not on the same page) as the link.
 #.
-#: ../src/orca/speech_generator.py:512 ../src/orca/speech_generator.py:525
+#: ../src/orca/speech_generator.py:521
+#: ../src/orca/speech_generator.py:534
 msgid "same site"
 msgstr "అదే సైటు"
 
@@ -7175,13 +7228,13 @@ msgstr "అదే సైటు"
 #. link points to an object that is at a different
 #. site than that of the link.
 #.
-#: ../src/orca/speech_generator.py:531
+#: ../src/orca/speech_generator.py:540
 msgid "different site"
 msgstr "భిన్నమైన సైటు"
 
 #. Translators: This is the size of a file in bytes
 #.
-#: ../src/orca/speech_generator.py:561
+#: ../src/orca/speech_generator.py:570
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -7190,14 +7243,14 @@ msgstr[1] "%d బైట్స్‍"
 
 #. Translators: This is the size of a file in kilobytes
 #.
-#: ../src/orca/speech_generator.py:565
+#: ../src/orca/speech_generator.py:574
 #, python-format
 msgid "%.2f kilobytes"
 msgstr "%.2f కిలోబైట్స్‍"
 
 #. Translators: This is the size of a file in megabytes
 #.
-#: ../src/orca/speech_generator.py:569
+#: ../src/orca/speech_generator.py:578
 #, python-format
 msgid "%.2f megabytes"
 msgstr "%.2f మెగాబైట్స్‍"
@@ -7205,28 +7258,28 @@ msgstr "%.2f మెగాబైట్స్‍"
 #. Translators: this is in reference to a table cell being
 #. selected or not.
 #.
-#: ../src/orca/speech_generator.py:771
+#: ../src/orca/speech_generator.py:780
 msgctxt "tablecell"
 msgid "not selected"
 msgstr "ఎంపికచేయలేదు"
 
 #. Translators: this is in references to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:829
+#: ../src/orca/speech_generator.py:838
 #, python-format
 msgid "row %d"
 msgstr "అడ్డువరుస %d"
 
 #. Translators: this is in references to a column in a
 #. table.
-#: ../src/orca/speech_generator.py:858
+#: ../src/orca/speech_generator.py:867
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "నిలువువరుస %(index)d మొత్తం %(total)d"
 
 #. Translators: this is in reference to a row in a table.
 #.
-#: ../src/orca/speech_generator.py:863
+#: ../src/orca/speech_generator.py:872
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "అడ్డవరుస %(index)d మొత్తం %(total)d"
@@ -7234,14 +7287,14 @@ msgstr "అడ్డవరుస %(index)d మొత్తం %(total)d"
 #. Translators: This is to indicate to the user that
 #. he/she is in the last cell of a table in a document.
 #.
-#: ../src/orca/speech_generator.py:899
+#: ../src/orca/speech_generator.py:908
 msgid "End of table"
 msgstr "పట్టిక ముగియనున్నది"
 
 #. Translators: this is the number of space characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1240
+#: ../src/orca/speech_generator.py:1249
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -7251,7 +7304,7 @@ msgstr[1] "%d ఖాళీలు"
 #. Translators: this is the number of tab characters on a line
 #. of text.
 #.
-#: ../src/orca/speech_generator.py:1251
+#: ../src/orca/speech_generator.py:1260
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -7260,7 +7313,7 @@ msgstr[1] "%d టాబ్‌లు"
 
 #. Translators: this is the percentage value of a progress bar.
 #.
-#: ../src/orca/speech_generator.py:1319
+#: ../src/orca/speech_generator.py:1328
 #, python-format
 msgid "%d percent"
 msgid_plural "%d percent"
@@ -7270,7 +7323,8 @@ msgstr[1] "%d శాతం."
 #. Translators: this is the number of items in a layered pane
 #. or table.
 #.
-#: ../src/orca/speech_generator.py:1418 ../src/orca/speech_generator.py:1439
+#: ../src/orca/speech_generator.py:1427
+#: ../src/orca/speech_generator.py:1448
 msgid "0 items"
 msgstr "0 అంశములు"
 
@@ -7278,7 +7332,7 @@ msgstr "0 అంశములు"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/speech_generator.py:1474
+#: ../src/orca/speech_generator.py:1483
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -7288,7 +7342,8 @@ msgstr[1] "%(index)d అంశాలు ఎంపికచేయబడినవ�
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1527 ../src/orca/speech_generator.py:1821
+#: ../src/orca/speech_generator.py:1539
+#: ../src/orca/speech_generator.py:1840
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -7298,7 +7353,7 @@ msgstr[1] "%d కేంద్రీకరించలేని డైలాగ�
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1612
+#: ../src/orca/speech_generator.py:1628
 msgid "Icon panel"
 msgstr "ప్రతిమ ఫలకం"
 
@@ -7306,7 +7361,7 @@ msgstr "ప్రతిమ ఫలకం"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1768
+#: ../src/orca/speech_generator.py:1787
 #, python-format
 msgid "Default button is %s"
 msgstr "అప్రమేయ బటన్ %s"
@@ -8967,18 +9022,18 @@ msgstr "చిన్న విండోలను కేంద్రీకరి�
 
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
-#: ../src/orca/tutorialgenerator.py:277
+#: ../src/orca/tutorialgenerator.py:280
 msgid "To move to items, use either the arrow keys or type ahead searching."
 msgstr "అంశములకు వెళ్ళవలిసినచో సూచిక కీలునుగాని శోధించేదానిలో టైప్ చేయుము."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
-#: ../src/orca/tutorialgenerator.py:283
+#: ../src/orca/tutorialgenerator.py:286
 msgid "To get to the system menus press the alt+f1 key."
 msgstr "సిస్టమ్ జాబితాలలోకి పోవునచో alt+f1కీని నొక్కుము."
 
 #. Translators: this is the tutorial string when navigating lists.
-#: ../src/orca/tutorialgenerator.py:320
+#: ../src/orca/tutorialgenerator.py:323
 msgid "Use up and down to select an item."
 msgstr "ఒక అంశమును ఎంపికచేయవలనిచో up మరియు downని ఉపయోగించుము."
 
@@ -8986,7 +9041,8 @@ msgstr "ఒక అంశమును ఎంపికచేయవలనిచో 
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to collapse the node.
-#: ../src/orca/tutorialgenerator.py:350 ../src/orca/tutorialgenerator.py:500
+#: ../src/orca/tutorialgenerator.py:353
+#: ../src/orca/tutorialgenerator.py:529
 msgid "To collapse, press shift plus left."
 msgstr "నాశనము చేయుటకు shift plus left నొక్కుము."
 
@@ -8994,640 +9050,449 @@ msgstr "నాశనము చేయుటకు shift plus left నొక్క
 #. 'expanded' means the children are showing.
 #. 'collapsed' means the children are not showing.
 #. this string informs the user how to expand the node.
-#: ../src/orca/tutorialgenerator.py:356 ../src/orca/tutorialgenerator.py:506
+#: ../src/orca/tutorialgenerator.py:359
+#: ../src/orca/tutorialgenerator.py:535
 msgid "To expand, press shift plus right."
 msgstr "విస్తరించుటకు shift plus right నొక్కుము."
 
+#. Translators: this is the tutorial string for activating a menu item
+#: ../src/orca/tutorialgenerator.py:391
+#| msgid "To activate press space."
+msgid "To activate press return."
+msgstr "ఉత్తేజపరుచుటకు return ని  నొక్కుము."
+
 #. Translators: This is the tutorial string for when landing
 #. on text fields.
-#: ../src/orca/tutorialgenerator.py:388
+#: ../src/orca/tutorialgenerator.py:417
 msgid "Type in text."
 msgstr "పాఠములో టైప్ చేయుము."
 
 #. Translators: this is the tutorial string for landing
 #. on a page tab, we are informing the
 #. user how to navigate these.
-#: ../src/orca/tutorialgenerator.py:416
+#: ../src/orca/tutorialgenerator.py:445
 msgid "Use left and right to view other tabs."
 msgstr "ఇతర టాబ్‌లకు ఎడమ మరియు కుడిని ఉపయోగించుము."
 
 #. Translators: this is the tutorial string for activating a push button.
-#: ../src/orca/tutorialgenerator.py:441
+#: ../src/orca/tutorialgenerator.py:470
 msgid "To activate press space."
 msgstr "ఉత్తేజపరుచుటకు spaceని నొక్కుము."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
-#: ../src/orca/tutorialgenerator.py:469
-msgid ""
-"Use up or down arrow to select value. Or type in the desired numerical value."
-msgstr ""
-"విలువను ఎంపిక చేయవలసినచో up లేక downని ఉపయోగించుము.లేక ఆశించిన సంఖ్యపు విలువలో టైప్ చేయుము."
+#: ../src/orca/tutorialgenerator.py:498
+msgid "Use up or down arrow to select value. Or type in the desired numerical value."
+msgstr "విలువను ఎంపిక చేయవలసినచో up లేక downని ఉపయోగించుము.లేక ఆశించిన సంఖ్యపు విలువలో టైప్ చేయుము."
 
 #. Translators: this is a tip for the user, how to navigate radiobuttons.
-#: ../src/orca/tutorialgenerator.py:657
+#: ../src/orca/tutorialgenerator.py:686
 msgid "Use arrow keys to change."
 msgstr "మార్పునకు సూచిక కీలను ఉపయోగించుము."
 
 #. Translators: this is a tip for the user, how to navigate menues.
-#: ../src/orca/tutorialgenerator.py:682
-msgid ""
-"To navigate, press left or right arrow. To move through items press up or "
-"down arrow."
-msgstr ""
-"విహరించుటకు left లేక right సూచికలను నొక్కుము.అంశములలో తిరుగుటకు up లేక down సూచికలను "
-"ఎంపిక చేసుకొనుము."
+#: ../src/orca/tutorialgenerator.py:711
+msgid "To navigate, press left or right arrow. To move through items press up or down arrow."
+msgstr "విహరించుటకు left లేక right సూచికలను నొక్కుము.అంశములలో తిరుగుటకు up లేక down సూచికలను ఎంపిక చేసుకొనుము."
 
 #. Translators: this is a tip for the user, how to
 #. navigate into sub menues.
-#: ../src/orca/tutorialgenerator.py:687
+#: ../src/orca/tutorialgenerator.py:716
 msgid "To enter sub menu, press right arrow."
 msgstr "జాబితాలోపలికి పోవుటకు కుడి సూచికను నొక్కుము."
 
 #. Translators: this is the tutorial string for when landing
 #. on a slider.
-#: ../src/orca/tutorialgenerator.py:719
-msgid ""
-"To decrease press left arrow, to increase press right arrow. To go to "
-"minimum press home, and for maximum press end."
-msgstr ""
-"తగ్గించుటకు ఎడమ సూచికను, పెంచుటకు కుడి సూచికను నొక్కుము.చిన్నది చేయుటకు home పెద్దది చేయుటకు "
-"end నొక్కుము."
+#: ../src/orca/tutorialgenerator.py:748
+msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
+msgstr "తగ్గించుటకు ఎడమ సూచికను, పెంచుటకు కుడి సూచికను నొక్కుము.చిన్నది చేయుటకు home పెద్దది చేయుటకు end నొక్కుము."
 
+#~ msgid "Emacspeak Speech Services"
+#~ msgstr "ఈమాక్స్‍‌స్పీక్ ఉపన్యాసం సేవలు"
 #~ msgid "Usage: orca [OPTION...]"
 #~ msgstr "ఉపయోగం: ఓర్కా [ఐచ్చికం...]"
-
 #~ msgid "Report bugs to orca-list@gnome.org."
 #~ msgstr "బగ్‌లను orca-list@gnome.org. కు నివేదించండి."
-
 #~ msgid "Invalid"
 #~ msgstr "Invalid"
-
 #~ msgid "invalid"
 #~ msgstr "చెల్లని"
-
 #~ msgid "acc"
 #~ msgstr "acc"
-
 #~ msgid "Accelerator"
 #~ msgstr "Accelerator"
-
 #~ msgid "accelerator"
 #~ msgstr "త్వరుణం"
-
 #~ msgid "Alert"
 #~ msgstr "Alert"
-
 #~ msgid "alert"
 #~ msgstr "సంకేతం"
-
 #~ msgid "Animation"
 #~ msgstr "Animation"
-
 #~ msgid "animation"
 #~ msgstr "యానిమేషన్"
-
 #~ msgid "Arrow"
 #~ msgstr "Arrow"
-
 #~ msgid "arrow"
 #~ msgstr "బాణం"
-
 #~ msgid "Calendar"
 #~ msgstr "Calendar"
-
 #~ msgid "calendar"
 #~ msgstr "క్యాలెండర్"
-
 #~ msgid "Canvas"
 #~ msgstr "Canvas"
-
 #~ msgid "canvas"
 #~ msgstr "కాన్వాస్"
-
 #~ msgid "Caption"
 #~ msgstr "Caption"
-
 #~ msgid "caption"
 #~ msgstr "కాప్షన్"
-
 #~ msgid "CheckBox"
 #~ msgstr "CheckBox"
-
 #~ msgid "check box"
 #~ msgstr "చెక్ బాక్స్‍"
-
 #~ msgid "CheckItem"
 #~ msgstr "CheckItem"
-
 #~ msgid "check item"
 #~ msgstr "పరిశీలన అంశము"
-
 #~ msgid "ColorChooser"
 #~ msgstr "ColorChooser"
-
 #~ msgid "color chooser"
 #~ msgstr "వర్ణము ఎంపికచేయునది"
-
 #~ msgid "ColumnHeader"
 #~ msgstr "ColumnHeader"
-
 #~ msgid "column header"
 #~ msgstr "నిలువువరుస యెగువ సూచీ"
-
 #~ msgid "Combo"
 #~ msgstr "Combo"
-
 #~ msgid "combo box"
 #~ msgstr "కాంబో బాక్స్‍"
-
 #~ msgid "DateEditor"
 #~ msgstr "DateEditor"
-
 #~ msgid "date editor"
 #~ msgstr "తేది సరికూర్పరి"
-
 #~ msgid "DesktopIcon"
 #~ msgstr "DesktopIcon"
-
 #~ msgid "desktop icon"
 #~ msgstr "డెస్కుటాప్ ప్రతిమ"
-
 #~ msgid "DesktopFrame"
 #~ msgstr "DesktopFrame"
-
 #~ msgid "desktop frame"
 #~ msgstr "డెస్కుటాప్ చట్రము"
-
 #~ msgid "Dial"
 #~ msgstr "Dial"
-
 #~ msgid "dial"
 #~ msgstr "డైల్"
-
 #~ msgid "Dialog"
 #~ msgstr "Dialog"
-
 #~ msgid "dialog"
 #~ msgstr "డైలాగ్"
-
 #~ msgid "DirectoryPane"
 #~ msgstr "DirectoryPane"
-
 #~ msgid "directory pane"
 #~ msgstr "సంచయం ఫలకం"
-
 #~ msgid "HtmlPane"
 #~ msgstr "HtmlPane"
-
 #~ msgid "html content"
 #~ msgstr "html విషయము"
-
 #~ msgid "DrawingArea"
 #~ msgstr "DrawingArea"
-
 #~ msgid "drawing area"
 #~ msgstr "లేఖక ప్రదేశం"
-
 #~ msgid "FileChooser"
 #~ msgstr "FileChooser"
-
 #~ msgid "file chooser"
 #~ msgstr "ఫైలు ఎంపికచేయునది"
-
 #~ msgid "Filler"
 #~ msgstr "Filler"
-
 #~ msgid "filler"
 #~ msgstr "నింపునది"
-
 #~ msgid "FontChooser"
 #~ msgstr "FontChooser"
-
 #~ msgid "font chooser"
 #~ msgstr "ఫాంటు ఎంపికచేయునది"
-
 #~ msgid "Form"
 #~ msgstr "Form"
-
 #~ msgid "form"
 #~ msgstr "ఫారము"
-
 #~ msgid "Frame"
 #~ msgstr "Frame"
-
 #~ msgid "frame"
 #~ msgstr "చట్రము"
-
 #~ msgid "GlassPane"
 #~ msgstr "GlassPane"
-
 #~ msgid "glass pane"
 #~ msgstr "గాజు ఫలకం"
-
 #~ msgid "Heading"
 #~ msgstr "Heading"
-
 #~ msgid "heading"
 #~ msgstr "హెడ్డింగ్"
-
 #~ msgid "HtmlContainer"
 #~ msgstr "HtmlContainer"
-
 #~ msgid "h t m l container"
 #~ msgstr "h t m l కప్పిఉంచునది"
-
 #~ msgid "Icon"
 #~ msgstr "Icon"
-
 #~ msgid "icon"
 #~ msgstr "ప్రతిమ"
-
 #~ msgid "Image"
 #~ msgstr "Image"
-
 #~ msgid "image"
 #~ msgstr "చిత్రము"
-
 #~ msgid "InternalFrame"
 #~ msgstr "InternalFrame"
-
 #~ msgid "internal frame"
 #~ msgstr "అంతర్గత చట్రము"
-
 #~ msgid "Label"
 #~ msgstr "Label"
-
 #~ msgid "label"
 #~ msgstr "లేబుల్"
-
 #~ msgid "LayeredPane"
 #~ msgstr "LayeredPane"
-
 #~ msgid "layered pane"
 #~ msgstr "పోరరూపక ఫలకం"
-
 #~ msgid "Link"
 #~ msgstr "Link"
-
 #~ msgid "List"
 #~ msgstr "List"
-
 #~ msgid "list"
 #~ msgstr "జాబితా"
-
 #~ msgid "ListItem"
 #~ msgstr "ListItem"
-
 #~ msgid "list item"
 #~ msgstr "జాబితా అంశము"
-
 #~ msgid "Menu"
 #~ msgstr "Menu"
-
 #~ msgid "MenuBar"
 #~ msgstr "MenuBar"
-
 #~ msgid "menu bar"
 #~ msgstr "మెనూ పట్టీ"
-
 #~ msgid "MenuItem"
 #~ msgstr "MenuItem"
-
 #~ msgid "menu item"
 #~ msgstr "మెనూ అంశము"
-
 #~ msgid "OptionPane"
 #~ msgstr "OptionPane"
-
 #~ msgid "option pane"
 #~ msgstr "ఐచ్చిక ఫలకం"
-
 #~ msgid "Page"
 #~ msgstr "Page"
-
 #~ msgid "page"
 #~ msgstr "పుట"
-
 #~ msgid "TabList"
 #~ msgstr "TabList"
-
 #~ msgid "tab list"
 #~ msgstr "టాబ్ జాబితా"
-
 #~ msgid "Panel"
 #~ msgstr "Panel"
-
 #~ msgid "panel"
 #~ msgstr "ఫలకం"
-
 #~ msgid "Password"
 #~ msgstr "Password"
-
 #~ msgid "password"
 #~ msgstr "సంకేతపదము"
-
 #~ msgid "PopupMenu"
 #~ msgstr "PopupMenu"
-
 #~ msgid "popup menu"
 #~ msgstr "పాప్అప్ మెనూ"
-
 #~ msgid "Progress"
 #~ msgstr "Progress"
-
 #~ msgid "progress bar"
 #~ msgstr "పురోగతి పట్టీ"
-
 #~ msgid "Button"
 #~ msgstr "Button"
-
 #~ msgid "button"
 #~ msgstr "బటన్"
-
 #~ msgid "RadioButton"
 #~ msgstr "RadioButton"
-
 #~ msgid "radio button"
 #~ msgstr "రేడియా బటన్"
-
 #~ msgid "RadioItem"
 #~ msgstr "RadioItem"
-
 #~ msgid "radio menu item"
 #~ msgstr "రేడియో మెనూ అంశము"
-
 #~ msgid "RootPane"
 #~ msgstr "RootPane"
-
 #~ msgid "root pane"
 #~ msgstr "రూట్ ఫలకం"
-
 #~ msgid "RowHeader"
 #~ msgstr "RowHeader"
-
 #~ msgid "row header"
 #~ msgstr "అడ్డువరుస యెగువ సూచీ"
-
 #~ msgid "ScrollBar"
 #~ msgstr "ScrollBar"
-
 #~ msgid "scroll bar"
 #~ msgstr "స్క్రాల్ పట్టీ"
-
 #~ msgid "ScrollPane"
 #~ msgstr "ScrollPane"
-
 #~ msgid "scroll pane"
 #~ msgstr "స్క్రాల్ ఫలకం"
-
 #~ msgid "Section"
 #~ msgstr "Section"
-
 #~ msgid "Separator"
 #~ msgstr "Separator"
-
 #~ msgid "separator"
 #~ msgstr "విభజని"
-
 #~ msgid "Slider"
 #~ msgstr "Slider"
-
 #~ msgid "slider"
 #~ msgstr "స్లైడర్"
-
 #~ msgid "SplitPane"
 #~ msgstr "SplitPane"
-
 #~ msgid "split pane"
 #~ msgstr "విభజని ఫలకం"
-
 #~ msgid "SpinButton"
 #~ msgstr "SpinButton"
-
 #~ msgid "spin button"
 #~ msgstr "స్పిన్ బటన్"
-
 #~ msgid "StatusBar"
 #~ msgstr "StatusBar"
-
 #~ msgid "status bar"
 #~ msgstr "స్థితి పట్టీ"
-
 #~ msgid "Table"
 #~ msgstr "Table"
-
 #~ msgid "table"
 #~ msgstr "పట్టిక"
-
 #~ msgid "Cell"
 #~ msgstr "Cell"
-
 #~ msgid "cell"
 #~ msgstr "అర"
-
 #~ msgid "TearOffMenuItem"
 #~ msgstr "TearOffMenuItem"
-
 #~ msgid "tear off menu item"
 #~ msgstr "మెనూ అంశమును కత్తిరించుము"
-
 #~ msgid "Terminal"
 #~ msgstr "Terminal"
-
 #~ msgid "terminal"
 #~ msgstr "టెర్మినల్"
-
 #~ msgid "Text"
 #~ msgstr "Text"
-
 #~ msgid "text"
 #~ msgstr "పాఠము"
-
 #~ msgid "ToggleButton"
 #~ msgstr "ToggleButton"
-
 #~ msgid "toggle button"
 #~ msgstr "మార్పు బటన్"
-
 #~ msgid "ToolBar"
 #~ msgstr "ToolBar"
-
 #~ msgid "tool bar"
 #~ msgstr "సాధనము పట్టీ"
-
 #~ msgid "ToolTip"
 #~ msgstr "ToolTip"
-
 #~ msgid "tool tip"
 #~ msgstr "చిట్కా"
-
 #~ msgid "Tree"
 #~ msgstr "Tree"
-
 #~ msgid "tree"
 #~ msgstr "వృక్షము"
-
 #~ msgid "TreeTable"
 #~ msgstr "TreeTable"
-
 #~ msgid "tree table"
 #~ msgstr "వృక్షము పట్టిక"
-
 #~ msgid "Unknown"
 #~ msgstr "Unknown"
-
 #~ msgid "unknown"
 #~ msgstr "తెలియని"
-
 #~ msgid "Viewport"
 #~ msgstr "Viewport"
-
 #~ msgid "viewport"
 #~ msgstr "దర్శనంపోర్టు"
-
 #~ msgid "window"
 #~ msgstr "విండో"
-
 #~ msgid "Header"
 #~ msgstr "Header"
-
 #~ msgid "header"
 #~ msgstr "యెగువ సూచీ"
-
 #~ msgid "Footer"
 #~ msgstr "Footer"
-
 #~ msgid "footer"
 #~ msgstr "దిగువ సూచీ"
-
 #~ msgid "Paragraph"
 #~ msgstr "పరిచ్ఛేదము"
-
 #~ msgid "paragraph"
 #~ msgstr "పరిచ్ఛేదము"
-
 #~ msgid "application"
 #~ msgstr "అనువర్తనం"
-
 #~ msgid "AutoComplete"
 #~ msgstr "AutoComplete"
-
 #~ msgid "autocomplete"
 #~ msgstr "స్వయంచాలకముగింపు"
-
 #~ msgid "EditBar"
 #~ msgstr "EditBar"
-
 #~ msgid "edit bar"
 #~ msgstr "సరికూర్పరి పట్టీ"
-
 #~ msgid "EmbeddedComponent"
 #~ msgstr "EmbeddedComponent"
-
 #~ msgid "embedded component"
 #~ msgstr "పొదిగిఉన్న వస్తువు"
-
 #~ msgid "doc"
 #~ msgstr "doc"
-
 #~ msgid "Document"
 #~ msgstr "Document"
-
 #~ msgid "document"
 #~ msgstr "పత్రము"
-
 #~ msgid "calv"
 #~ msgstr "calv"
-
 #~ msgid "CalendarView"
 #~ msgstr "CalendarView"
-
 #~ msgid "calendar view"
 #~ msgstr "క్యాలెండర్ దర్శని"
-
 #~ msgid "cale"
 #~ msgstr "cale"
-
 #~ msgid "CalendarEvent"
 #~ msgstr "CalendarEvent"
-
 #~ msgid "calendar event"
 #~ msgstr "క్యాలెండర్ ఘటన"
-
 #~ msgid "Enable locking keys?  Enter y or n: "
 #~ msgstr "లాకింగ్ కీలను చైతన్యం చేయాలా?  y లేదా n ను ప్రవేశపెట్టండి: "
-
 #~ msgid "Alternate"
 #~ msgstr "వైకల్పిక"
-
 #~ msgid "Enable lockin_g keys"
 #~ msgstr "లాకింగ్ కీలను చైతన్యంచేయుము(_g)"
-
 #~ msgid ""
 #~ "Present on-screen information as speech or braille, or magnify the screen"
 #~ msgstr "ప్రస్తుత తెర-పై సమాచారం ఉపన్యసించుట లేదా బ్రెయిలీ, లేదా తెరను పెద్దదిచేయుము"
-
 #~ msgid "Toggles color enhancements."
 #~ msgstr "వర్ణపు విస్తరింపులను మార్చుతుంది."
-
 #~ msgid "Toggles mouse enhancements."
 #~ msgstr "మౌస్ విస్తరింపులను మార్చుతుంది."
-
 #~ msgid "Decreases the magnification level."
 #~ msgstr "పెద్దదిచేయు స్థాయిని తగ్గిస్తుంది."
-
 #~ msgid "Toggles the magnifier."
 #~ msgstr "పెద్దదిచేయుదానిని మార్చుతుంది."
-
 #~ msgctxt "tablecell"
 #~ msgid " not selected"
 #~ msgstr "ఎంపిక కాలేదు"
-
 #~ msgid "GNOME Speech Services"
 #~ msgstr "GNOME ఉపన్యాసం సేవలు"
-
 #~ msgid "minus"
 #~ msgstr "మైనస్"
-
 #~ msgid "Color enhancements disabled."
 #~ msgstr "వర్ణము విస్తరింపులు అచేతనంచేయబడినవి."
-
 #~ msgid "Color enhancements enabled."
 #~ msgstr "వర్ణము విస్తరింపులు చైతన్యంచేయుము."
-
 #~ msgid "Mouse enhancements disabled."
 #~ msgstr "మౌస్ విస్తరింపులు అచేతనంచేయబడినవి."
-
 #~ msgid "Mouse enhancements enabled."
 #~ msgstr "మౌస్ విస్తరింపులు చైతన్యంచేయబడినవి."
-
 #~ msgid "Magnifier enabled."
 #~ msgstr "పెద్దచేయునది చైతన్యంచేయబడింది."
-
 #~ msgid "Magnifier disabled."
 #~ msgstr "పెద్దచేయునది అచేతనంచేయబడింది."
-
 #~ msgid "Full Screen"
 #~ msgstr "పూర్తి తెర"
-
 #~ msgid "Full Screen mode unavailable"
 #~ msgstr "పూర్తి తెర రీతి అందుబాటులోలేదు"
-
 #~ msgid "Top Half"
 #~ msgstr "పై అర్దభాగం"
-
 #~ msgid "Bottom Half"
 #~ msgstr "క్రింది అర్దభాగం"
-
 #~ msgid "Left Half"
 #~ msgstr "ఎడమ అర్దభాగం"
-
 #~ msgid "Right Half"
 #~ msgstr "కుడి అర్దభాగం"
-
 #~ msgid "Custom"
 #~ msgstr "మలిచిన"
-
 #~ msgid "Invalid choice. Selecting desktop keyboard layout.\n"
 #~ msgstr "చెల్లని ఎంపిక. డెస్కుటాప్ కీబోర్డు వాస్తును ఎంపికచేయుచున్నది.\n"
+
