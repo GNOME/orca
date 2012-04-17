@@ -1,3 +1,100 @@
+3.4.1 - 16 April 2012
+
+GNOME 3
+
+  * Present the name change of the suspend/power off menu item
+
+  * Prevent nameless panels from delaying presentation of Top Bar button
+
+  * Prevent focused objects in gnome-shell dialogs from preempting
+    presentation of the dialog itself
+
+  * Fix for Empathy active descendant presentation getting incorrectly
+    interrupted
+
+  * Minor adjustments to get Orca working with Empathy 3.4
+
+  * Fix for bug 672461 - Orca now presents the full file list when the
+    file chooser is opened
+
+Unity
+
+  * Fix for bug 673397 - Using flat review while in Unity Greeter makes
+    Orca stop presenting screen contents
+
+  * Fix for bug 673157 - Unhandled exception when in Unity Greeter
+
+  * Fix for bug 673648 - Orca does not present Unity 2d indicators
+    correctly in braille
+
+Qt
+
+  * Fix for Orca incorrectly skipping certain menu item events in KMail
+
+  * Fix for bug 673142 - Unhandled exceptions (GError: No such object
+    path) when using Skype
+
+WebKitGtk
+
+  * Fix for bug 673540 - List and list item structural navigation
+    sometimes fails
+
+  * Prevent Orca from double-presenting focused links with structural
+    navigation in lists
+
+  * Fix for bug 672464 - Orca double presents headings which are links
+
+  * Fix braille rolename presentation
+
+  * Fix for bug 673757 - Pages with alt attribute present, but not
+    actually set, results in traceback
+
+  * Fix a UnicodeWarning
+
+Gecko
+
+  * Fix for bug 673715 - Orca double-echoes keys pressed in Thunderbird
+    address fields
+
+  * Fix for bug 673567 - List in Firefox preferences dialog not presented
+
+LibreOffice
+
+  * Fix for bug 672787 - Unhandled exceptions from dead accessibles in
+    Calc
+
+  * Fix for bug 673530 - Orca multi-presents the focused cell's contents
+    when arrowing in Calc
+
+  * Fix for bug 672953 - Orca is presenting extra "input line frame"
+    announcements in LibreOffice Calc
+
+Orca and AT-SPI
+
+  * Handle the new AT-SPI2 timeout errors
+
+  * Add additional debugging info to help track down hard-to-reproduce
+    issues
+
+  * Use os.makedirs instead of os.mkdir if the XDG data home directory
+    doesn't exist
+
+  * Disable braille monitor if the import fails
+
+  * Ensure 'orca -t' works even without a Desktop
+
+  * Fix for bug 673336 - Problems (re)binding commands with Caps_Lock
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ca            Catalan                Jordi Serratosa
+    ca            Catalan (Valencian)    Carles Ferrando
+    de            German                 Christian Kirbach
+    hu            Hungarian              Attila Hammer, Gabor Kelemen
+    lt            Lithuanian             Aurimas Černius
+
+=========
+
 3.4.0 - 26 March 2012
 
 New and updated translations (THANKS EVERYONE!!!):
