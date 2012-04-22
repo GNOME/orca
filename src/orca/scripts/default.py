@@ -4750,9 +4750,10 @@ class Script(script.Script):
         # be sure not to cut of the presentation of the name-change
         # event.
 
-        if orca_state.locusOfFocus == event.any_data and \
-           event.any_data.name == self.pointOfReference.get('oldName', ''):
-            return False
+        if orca_state.locusOfFocus == event.any_data:
+            oldName = self.pointOfReference.get('oldName', '')
+            if not oldName or event.any_data.name == oldName:
+                return False
 
         if event.source == orca_state.locusOfFocus == event.any_data.parent:
             return False
