@@ -4274,7 +4274,7 @@ msgstr "Číst pospojované slova jako je_dnotlivá"
 
 #: ../src/orca/orca-setup.ui.h:140
 msgid "Speak object under mo_use"
-msgstr "Vyslovit objekt pod k_urzorem"
+msgstr "Vyslovit objekt pod _ukazatelem"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
 #: ../src/orca/orca-setup.ui.h:142
@@ -4390,7 +4390,7 @@ msgstr "_Poloha:"
 
 #: ../src/orca/orca-setup.ui.h:172
 msgid "_Present tooltips"
-msgstr "Prezentovat _bublinovou nápovědu"
+msgstr "_Prezentovat vysvětlivky"
 
 #: ../src/orca/orca-setup.ui.h:173
 msgid "_Rate:"
@@ -5673,19 +5673,19 @@ msgstr "přepínač"
 #.
 #: ../src/orca/rolenames.py:1004
 msgid "tbar"
-msgstr "pannástr"
+msgstr "nástrpan"
 
 #. Translators: long braille for the rolename of a toolbar.
 #.
 #: ../src/orca/rolenames.py:1007
 msgid "ToolBar"
-msgstr "Lišta nástrojů"
+msgstr "Panel nástrojů"
 
 #. Translators: spoken words for the rolename of a toolbar.
 #.
 #: ../src/orca/rolenames.py:1010
 msgid "tool bar"
-msgstr "lišta nástrojů"
+msgstr "panel nástrojů"
 
 #. Translators: short braille for the rolename of a tooltip.
 #.
@@ -5697,13 +5697,13 @@ msgstr "tip"
 #.
 #: ../src/orca/rolenames.py:1019
 msgid "ToolTip"
-msgstr "Bublinová nápověda"
+msgstr "vysvětlivka"
 
 #. Translators: spoken words for the rolename of a tooltip.
 #.
 #: ../src/orca/rolenames.py:1022
 msgid "tool tip"
-msgstr "bublinová nápověda"
+msgstr "vysvětlivka"
 
 #. Translators: short braille for the rolename of a tree.
 #.
