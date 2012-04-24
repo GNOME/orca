@@ -3593,11 +3593,11 @@ msgstr "<b>Čas a datum</b>"
 
 #: ../src/orca/orca-setup.ui.h:26
 msgid "_Present tooltips"
-msgstr "Prezentovat _bublinovou nápovědu"
+msgstr "_Prezentovat vysvětlivky"
 
 #: ../src/orca/orca-setup.ui.h:27
 msgid "Speak object under mo_use"
-msgstr "Vyslovit objekt pod k_urzorem"
+msgstr "Vyslovit objekt pod _ukazatelem"
 
 #: ../src/orca/orca-setup.ui.h:28
 msgid "<b>Mouse</b>"
@@ -5145,19 +5145,19 @@ msgstr "přepínač"
 #.
 #: ../src/orca/rolenames.py:1004
 msgid "tbar"
-msgstr "pannástr"
+msgstr "nástrpan"
 
 #. Translators: long braille for the rolename of a toolbar.
 #.
 #: ../src/orca/rolenames.py:1007
 msgid "ToolBar"
-msgstr "Lišta nástrojů"
+msgstr "Panel nástrojů"
 
 #. Translators: spoken words for the rolename of a toolbar.
 #.
 #: ../src/orca/rolenames.py:1010
 msgid "tool bar"
-msgstr "lišta nástrojů"
+msgstr "panel nástrojů"
 
 #. Translators: short braille for the rolename of a tooltip.
 #.
@@ -5169,13 +5169,13 @@ msgstr "tip"
 #.
 #: ../src/orca/rolenames.py:1019
 msgid "ToolTip"
-msgstr "Bublinová nápověda"
+msgstr "Vysvětlivka"
 
 #. Translators: spoken words for the rolename of a tooltip.
 #.
 #: ../src/orca/rolenames.py:1022
 msgid "tool tip"
-msgstr "bublinová nápověda"
+msgstr "vysvětlivka"
 
 #. Translators: short braille for the rolename of a tree.
 #.
