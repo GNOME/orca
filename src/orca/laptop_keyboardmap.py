@@ -61,16 +61,16 @@ keymap = (
     "sayAllHandler"),
 
     ("Return", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "whereAmIBasicHandler",1),
+    "whereAmIBasicHandler", 1),
 
     ("Return", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "whereAmIDetailedHandler",2),
+    "whereAmIDetailedHandler", 2),
 
     ("slash", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "getTitleHandler",1),
+    "getTitleHandler", 1),
     
     ("slash", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "getStatusBarHandler",2),
+    "getStatusBarHandler", 2),
 
     ("bracketleft", defaultModifierMask, ORCA_MODIFIER_MASK,
     "findHandler"),
@@ -88,13 +88,13 @@ keymap = (
     "reviewHomeHandler"),
 
     ("i", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewCurrentLineHandler",1),
+    "reviewCurrentLineHandler", 1),
 
     ("i", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewSpellCurrentLineHandler",2),
+    "reviewSpellCurrentLineHandler", 2),
 
     ("i", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewPhoneticCurrentLineHandler",3),
+    "reviewPhoneticCurrentLineHandler", 3),
 
     ("o", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewNextLineHandler"),
@@ -109,13 +109,13 @@ keymap = (
     "reviewAboveHandler"), 
 
     ("k", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewCurrentItemHandler",1),
+    "reviewCurrentItemHandler", 1),
 
     ("k", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewSpellCurrentItemHandler",2),
+    "reviewSpellCurrentItemHandler", 2),
 
     ("k", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewPhoneticCurrentItemHandler",3),
+    "reviewPhoneticCurrentItemHandler", 3),
 
     ("k", defaultModifierMask, ORCA_CTRL_MODIFIER_MASK,
     "reviewCurrentAccessibleHandler"),
@@ -133,10 +133,10 @@ keymap = (
     "reviewEndOfLineHandler"),
 
     ("comma", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewCurrentCharacterHandler",1),
+    "reviewCurrentCharacterHandler", 1),
 
     ("comma", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "reviewSpellCurrentCharacterHandler",2),
+    "reviewSpellCurrentCharacterHandler", 2),
 
     ("comma", defaultModifierMask, ORCA_MODIFIER_MASK,
     "reviewUnicodeCurrentCharacterHandler", 3),

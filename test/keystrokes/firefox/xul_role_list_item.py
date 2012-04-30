@@ -20,7 +20,7 @@ sequence.append(KeyComboAction("<Alt>e"))
 sequence.append(PauseAction(3000))
 sequence.append(KeyComboAction("Up"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("",None))
+sequence.append(WaitForWindowActivate("", None))
 sequence.append(PauseAction(3000))
 
 ########################################################################

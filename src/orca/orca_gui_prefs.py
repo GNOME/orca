@@ -67,21 +67,21 @@ from orca_i18n import _  # for gettext support
 from orca_i18n import C_ # to provide qualified translatable strings
 
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, OLDTEXT1, \
- TEXT1, MODIF, EDITABLE) = range(10)
+ TEXT1, MODIF, EDITABLE) = list(range(10))
 
-(NAME, IS_SPOKEN, IS_BRAILLED, VALUE) = range(4)
+(NAME, IS_SPOKEN, IS_BRAILLED, VALUE) = list(range(4))
 
-(ACTUAL, REPLACEMENT) = range(2)
+(ACTUAL, REPLACEMENT) = list(range(2))
 
 # Must match the order of voice types in the GtkBuilder file.
 #
-(DEFAULT, UPPERCASE, HYPERLINK, SYSTEM) = range(4)
+(DEFAULT, UPPERCASE, HYPERLINK, SYSTEM) = list(range(4))
 
 # Must match the order that the timeFormatCombo is populated.
 #
 (TIME_FORMAT_LOCALE, TIME_FORMAT_24_HMS,
  TIME_FORMAT_24_HMS_WITH_WORDS, TIME_FORMAT_24_HM,
- TIME_FORMAT_24_HM_WITH_WORDS) = range(5)
+ TIME_FORMAT_24_HM_WITH_WORDS) = list(range(5))
 
 # Must match the order that the dateFormatCombo is populated.
 #
@@ -90,7 +90,7 @@ from orca_i18n import C_ # to provide qualified translatable strings
  DATE_FORMAT_FULL_DM, DATE_FORMAT_FULL_MD, DATE_FORMAT_FULL_DMY,
  DATE_FORMAT_FULL_MDY, DATE_FORMAT_FULL_YMD, DATE_FORMAT_ABBREVIATED_DM,
  DATE_FORMAT_ABBREVIATED_MD, DATE_FORMAT_ABBREVIATED_DMY,
- DATE_FORMAT_ABBREVIATED_MDY, DATE_FORMAT_ABBREVIATED_YMD) = range(16)
+ DATE_FORMAT_ABBREVIATED_MDY, DATE_FORMAT_ABBREVIATED_YMD) = list(range(16))
 
 class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
@@ -659,7 +659,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         # (usually the default one) is selected
         #
         selectedIndex = 0
-        if self.selectedFamilyChoices.has_key(self.speechServersChoice):
+        if self.speechServersChoice in self.selectedFamilyChoices:
             selectedIndex = self.selectedFamilyChoices[self.speechServersChoice]
 
         self.get_widget("speechFamilies").set_active(selectedIndex)
@@ -2053,7 +2053,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 while iterChild != None:
                     descrip = treeModel.get_value(iterChild, DESCRIP)
                     keyBind.handler = \
-                        input_event.InputEventHandler(None,descrip)
+                        input_event.InputEventHandler(None, descrip)
                     if keyBinds.hasKeyBinding(keyBind,
                                               typeOfSearch="description"):
                         treeModel.set_value(iterChild, MODIF, True)
@@ -3218,10 +3218,10 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if self.defaultVoice != None:
             self.prefsDict["voices"] = {
-                settings.DEFAULT_VOICE   : acss.ACSS(self.defaultVoice),
-                settings.UPPERCASE_VOICE : acss.ACSS(self.uppercaseVoice),
-                settings.HYPERLINK_VOICE : acss.ACSS(self.hyperlinkVoice),
-                settings.SYSTEM_VOICE    : acss.ACSS(self.systemVoice),
+                settings.DEFAULT_VOICE: acss.ACSS(self.defaultVoice),
+                settings.UPPERCASE_VOICE: acss.ACSS(self.uppercaseVoice),
+                settings.HYPERLINK_VOICE: acss.ACSS(self.hyperlinkVoice),
+                settings.SYSTEM_VOICE: acss.ACSS(self.systemVoice),
             }
 
     def applyButtonClicked(self, widget):
@@ -3334,7 +3334,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         if not profileToSaveLabel:
             return
-        profileToSave = profileToSaveLabel.replace(' ','_').lower()
+        profileToSave = profileToSaveLabel.replace(' ', '_').lower()
         profile = [profileToSaveLabel, profileToSave]
 
         def saveActiveProfile(newProfile = True):

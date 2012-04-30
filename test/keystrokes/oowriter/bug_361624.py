@@ -14,7 +14,7 @@ sequence = MacroSequence()
 # 1. Start oowriter. There is a bug_361624.params file that will
 #    automatically load column-example.odt.
 #
-sequence.append(WaitForWindowActivate("column-example " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("column-example " + utils.getOOoName("Writer"), None))
 
 ######################################################################
 # 2. Type Control-Home to position the text caret to the left of the

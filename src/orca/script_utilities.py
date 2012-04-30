@@ -456,7 +456,7 @@ class Utilities:
         try:
             return self._script.generatorCache[self.DISPLAYED_LABEL][obj]
         except:
-            if not self._script.generatorCache.has_key(self.DISPLAYED_LABEL):
+            if self.DISPLAYED_LABEL not in self._script.generatorCache:
                 self._script.generatorCache[self.DISPLAYED_LABEL] = {}
             labelString = None
 
@@ -557,7 +557,7 @@ class Utilities:
 
         if role == pyatspi.ROLE_COMBO_BOX:
             displayedText = self._displayedTextInComboBox(obj)
-            if not self._script.generatorCache.has_key(self.DISPLAYED_TEXT):
+            if self.DISPLAYED_TEXT not in self._script.generatorCache:
                 self._script.generatorCache[self.DISPLAYED_TEXT] = {}
             self._script.generatorCache[self.DISPLAYED_TEXT][obj] = \
                 displayedText
@@ -595,7 +595,7 @@ class Utilities:
                 # general case to handle this stuff and expand objects
                 # with EMBEDDED_OBJECT_CHARACTERs.]]]
                 #
-                for i in xrange(len(unicodeText)):
+                for i in range(len(unicodeText)):
                     if unicodeText[i] == self.EMBEDDED_OBJECT_CHARACTER:
                         displayedText = None
                         break
@@ -618,7 +618,7 @@ class Utilities:
                         displayedText = \
                             self.appendString(displayedText, childText)
 
-        if not self._script.generatorCache.has_key(self.DISPLAYED_TEXT):
+        if self.DISPLAYED_TEXT not in self._script.generatorCache:
             self._script.generatorCache[self.DISPLAYED_TEXT] = {}
 
         self._script.generatorCache[self.DISPLAYED_TEXT][obj] = displayedText
@@ -1145,7 +1145,7 @@ class Utilities:
         except NotImplementedError:
             return -1
 
-        for i in xrange(hypertext.getNLinks()):
+        for i in range(hypertext.getNLinks()):
             link = hypertext.getLink(i)
             if (characterIndex >= link.startIndex) \
                and (characterIndex <= link.endIndex):
@@ -1167,7 +1167,7 @@ class Utilities:
         try:
             return self._script.generatorCache[self.NESTING_LEVEL][obj]
         except:
-            if not self._script.generatorCache.has_key(self.NESTING_LEVEL):
+            if self.NESTING_LEVEL not in self._script.generatorCache:
                 self._script.generatorCache[self.NESTING_LEVEL] = {}
 
         nestingLevel = 0
@@ -1194,7 +1194,7 @@ class Utilities:
         try:
             return self._script.generatorCache[self.NODE_LEVEL][obj]
         except:
-            if not self._script.generatorCache.has_key(self.NODE_LEVEL):
+            if self.NODE_LEVEL not in self._script.generatorCache:
                 self._script.generatorCache[self.NODE_LEVEL] = {}
 
         nodes = []
@@ -1291,8 +1291,8 @@ class Utilities:
             return self._script.\
                 generatorCache[self.REAL_ACTIVE_DESCENDANT][obj]
         except:
-            if not self._script.\
-                    generatorCache.has_key(self.REAL_ACTIVE_DESCENDANT):
+            if self.REAL_ACTIVE_DESCENDANT not in self._script.\
+                    generatorCache:
                 self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT] = {}
             activeDescendant = None
 
@@ -1414,7 +1414,7 @@ class Utilities:
         currentY = parentExtents.y
         while currentY < (parentExtents.y + parentExtents.height):
             currentX = parentExtents.x
-            minHeight = sys.maxint
+            minHeight = sys.maxsize
             index = -1
             while currentX < (parentExtents.x + parentExtents.width):
                 child = \
@@ -1438,7 +1438,7 @@ class Utilities:
                     currentX += gridSize
                 else:
                     currentX = newX
-            if minHeight == sys.maxint:
+            if minHeight == sys.maxsize:
                 minHeight = gridSize
             currentY += minHeight
 
@@ -1718,7 +1718,7 @@ class Utilities:
             nSelections = text.getNSelections()
         except:
             nSelections = 0
-        for i in xrange(nSelections):
+        for i in range(nSelections):
             rv.append(text.getSelection(i))
 
         return rv
@@ -1767,7 +1767,7 @@ class Utilities:
         except:
             return
 
-        for i in xrange(text.getNSelections()):
+        for i in range(text.getNSelections()):
             text.removeSelection(0)
 
     def expandEOCs(self, obj, startOffset=0, endOffset=-1):
@@ -1798,7 +1798,7 @@ class Utilities:
 
                 toBuild = list(unicodeText)
                 count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
-                for i in xrange(count):
+                for i in range(count):
                     index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
                     child = obj[i + childOffset]
                     childText = self.expandEOCs(child)
@@ -1899,7 +1899,7 @@ class Utilities:
         except:
             return False
 
-        for i in xrange(text.getNSelections()):
+        for i in range(text.getNSelections()):
             [startSelOffset, endSelOffset] = text.getSelection(i)
             if (startOffset >= startSelOffset) and (endOffset <= endSelOffset):
                 return True
@@ -2264,7 +2264,7 @@ class Utilities:
             try:
                 if visitedObjs.index(referent):
                     if self._isInterestingObj(referent):
-                        print indent, "CYCLE!!!!", `referent`
+                        print indent, "CYCLE!!!!", repr(referent)
                     break
             except:
                 pass
@@ -2847,8 +2847,8 @@ class Utilities:
                 # Translators: this is the spoken word for the space character
                 #
                 sequence += _("space")
-            sequence = sequence.replace("<","")
-            sequence = sequence.replace(">"," ").strip()
+            sequence = sequence.replace("<", "")
+            sequence = sequence.replace(">", " ").strip()
 
         return keynames.localizeKeySequence(sequence)
 
@@ -2866,7 +2866,7 @@ class Utilities:
         try:
             return self._script.generatorCache[self.KEY_BINDING][obj]
         except:
-            if not self._script.generatorCache.has_key(self.KEY_BINDING):
+            if self.KEY_BINDING not in self._script.generatorCache:
                 self._script.generatorCache[self.KEY_BINDING] = {}
 
         try:
@@ -2904,7 +2904,7 @@ class Utilities:
             fullShortcut   = ""
             accelerator    = ""
 
-        fullShortcut = fullShortcut.replace(":"," ").strip()
+        fullShortcut = fullShortcut.replace(":", " ").strip()
         fullShortcut = self.labelFromKeySequence(fullShortcut)
         mnemonic = self.labelFromKeySequence(mnemonic)
         accelerator = self.labelFromKeySequence(accelerator)
@@ -2912,7 +2912,7 @@ class Utilities:
         debug.println(debug.LEVEL_FINEST, "script_utilities.getKeyBinding: " \
                       + repr([mnemonic, fullShortcut, accelerator]))
 
-        if not self._script.generatorCache.has_key(self.KEY_BINDING):
+        if self.KEY_BINDING not in self._script.generatorCache:
             self._script.generatorCache[self.KEY_BINDING] = {}
 
         self._script.generatorCache[self.KEY_BINDING][obj] = \

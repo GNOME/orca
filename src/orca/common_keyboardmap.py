@@ -183,7 +183,7 @@ keymap = (
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "panBrailleLeftHandler"),
 
-    ("",defaultModifierMask, NO_MODIFIER_MASK,
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "panBrailleRightHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,

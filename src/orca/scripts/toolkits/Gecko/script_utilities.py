@@ -482,7 +482,7 @@ class Utilities(script_utilities.Utilities):
         # by storing attributes.
         #
         attrsForObj = self._script.currentAttrs.get(hash(acc)) or {}
-        if attrsForObj.has_key(offset):
+        if offset in attrsForObj:
             return attrsForObj.get(offset)
 
         attrs = script_utilities.Utilities.textAttributes(

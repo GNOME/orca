@@ -552,7 +552,7 @@ def showPreferencesUI(commandLineSettings):
 
     # Sanity check for bug #642285
     #
-    if not prefsDict.has_key('profile'):
+    if 'profile' not in prefsDict:
         prefsDict['profile'] = settings.profile
 
 

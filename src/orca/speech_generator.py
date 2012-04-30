@@ -73,12 +73,12 @@ STATE          = "state" # Candidate for sound
 VALUE          = "value" # Candidate for sound
 
 voiceType = {
-    DEFAULT     : settings.DEFAULT_VOICE,
-    UPPERCASE   : settings.UPPERCASE_VOICE,
-    HYPERLINK   : settings.HYPERLINK_VOICE,
-    SYSTEM      : settings.SYSTEM_VOICE,
-    STATE       : settings.SYSTEM_VOICE, # Users may prefer DEFAULT_VOICE here
-    VALUE       : settings.SYSTEM_VOICE, # Users may prefer DEFAULT_VOICE here
+    DEFAULT: settings.DEFAULT_VOICE,
+    UPPERCASE: settings.UPPERCASE_VOICE,
+    HYPERLINK: settings.HYPERLINK_VOICE,
+    SYSTEM: settings.SYSTEM_VOICE,
+    STATE: settings.SYSTEM_VOICE, # Users may prefer DEFAULT_VOICE here
+    VALUE: settings.SYSTEM_VOICE, # Users may prefer DEFAULT_VOICE here
 }
 
 _settingsManager = getattr(orca, '_settingsManager')

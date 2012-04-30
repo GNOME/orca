@@ -18,7 +18,7 @@ sequence = MacroSequence()
 # SPEECH OUTPUT: 'root pane'
 # SPEECH OUTPUT: 'scroll pane'
 #
-sequence.append(WaitForWindowActivate("subtlewaves - OpenOffice.org Impress",None))
+sequence.append(WaitForWindowActivate("subtlewaves - OpenOffice.org Impress", None))
 
 ######################################################################
 # 2. Enter Alt-v, down arrow and Return to change to an Outline view.

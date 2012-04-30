@@ -13,7 +13,7 @@ sequence = MacroSequence()
 # 1. Start oowriter. There is a bug_435201.params file that will
 # automatically load spanish.odt
 #
-sequence.append(WaitForWindowActivate("spanish - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("spanish - " + utils.getOOoName("Writer"), None))
 
 ######################################################################
 # 2. Type Control-Home to position the text caret to the left of the

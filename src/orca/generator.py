@@ -36,6 +36,7 @@ import debug
 import settings
 
 from orca_i18n import _         # for gettext support
+import collections
 
 def _formatExceptionInfo(maxTBlevel=5):
     cla, exc, trbk = sys.exc_info()
@@ -71,7 +72,7 @@ class Generator:
         self._script = script
         self._methodsDict = {}
         for method in \
-            filter(lambda z: callable(z),
+            filter(lambda z: isinstance(z, collections.Callable),
                    map(lambda y: getattr(self, y).__get__(self, self.__class__),
                        filter(lambda x: x.startswith(METHOD_PREFIX),
                                         dir(self)))):
@@ -122,7 +123,7 @@ class Generator:
                             arg = info[1][0]
                             arg = arg.replace("name '", "")
                             arg = arg.replace("' is not defined", "")
-                            if not self._methodsDict.has_key(arg):
+                            if arg not in self._methodsDict:
                                 debug.printException(debug.LEVEL_SEVERE)
                                 debug.println(
                                     debug.LEVEL_SEVERE,
@@ -248,7 +249,7 @@ class Generator:
                     arg = info[1][0]
                     arg = arg.replace("name '", "")
                     arg = arg.replace("' is not defined", "")
-                    if not self._methodsDict.has_key(arg):
+                    if arg not in self._methodsDict:
                         debug.printException(debug.LEVEL_SEVERE)
                         debug.println(
                             debug.LEVEL_SEVERE,

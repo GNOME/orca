@@ -18,7 +18,7 @@ sequence = MacroSequence()
 # SPEECH OUTPUT: 'Presentation Wizard'
 # SPEECH OUTPUT: 'Next >> button'
 #
-sequence.append(WaitForWindowActivate("Presentation Wizard",None))
+sequence.append(WaitForWindowActivate("Presentation Wizard", None))
 sequence.append(WaitForFocus("Next", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 
 ######################################################################
@@ -51,7 +51,7 @@ sequence.append(WaitForFocus("Create", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 # SPEECH OUTPUT: 'scroll pane'
 #
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Impress",None))
+sequence.append(WaitForWindowActivate("Untitled1 - OpenOffice.org Impress", None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_SCROLL_PANE))
 
 ######################################################################

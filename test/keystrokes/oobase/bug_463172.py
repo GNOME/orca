@@ -12,7 +12,7 @@ sequence = MacroSequence()
 # 1. Start oobase. Wait for the first screen of the startup wizard to
 #    appear.
 #
-sequence.append(WaitForWindowActivate("Database Wizard",None))
+sequence.append(WaitForWindowActivate("Database Wizard", None))
 sequence.append(WaitForFocus("Select database", acc_role=pyatspi.ROLE_LABEL))
 
 ######################################################################
@@ -73,7 +73,7 @@ sequence.append(PauseAction(3000))
 # SPEECH OUTPUT: 'Forms label'
 #
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("New Database - OpenOffice.org Base",None))
+sequence.append(WaitForWindowActivate("New Database - OpenOffice.org Base", None))
 sequence.append(WaitForFocus("IconChoiceControl", acc_role=pyatspi.ROLE_TREE))
 
 ######################################################################

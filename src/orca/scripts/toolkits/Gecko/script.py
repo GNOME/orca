@@ -1061,7 +1061,7 @@ class Script(default.Script):
                 contents = self.getLineContentsAtOffset(obj, characterOffset)
             utterances = self.getUtterancesFromContents(contents)
             clumped = self.clumpUtterances(utterances)
-            for i in xrange(len(clumped)):
+            for i in range(len(clumped)):
                 [obj, startOffset, endOffset, text] = \
                                              contents[min(i, len(contents)-1)]
                 [element, voice] = clumped[i]
@@ -2643,7 +2643,7 @@ class Script(default.Script):
             else:
                 obj = obj.parent
 
-        if not self.generatorCache.has_key('inDocumentContent'):
+        if 'inDocumentContent' not in self.generatorCache:
             self.generatorCache['inDocumentContent'] = {}
 
         if obj:
@@ -2871,7 +2871,7 @@ class Script(default.Script):
             pass
         obj = obj or orca_state.locusOfFocus
         attrs = self._getAttrDictionary(obj)
-        if not self.generatorCache.has_key('isAria'):
+        if 'isAria' not in self.generatorCache:
             self.generatorCache['isAria'] = {}
         self.generatorCache['isAria'][obj] = \
             ('xml-roles' in attrs and 'live' not in attrs)

@@ -14,16 +14,16 @@ def exerciseBackendAPI(backendName, profile):
 
     # Getters
     preferences = settingsManager.getPreferences(profile)
-    print 'preferences: \n',preferences,'\n\n'
+    print 'preferences: \n', preferences, '\n\n'
 
     generalSettings = settingsManager.getGeneralSettings(profile)
-    print 'generalSettings: \n',generalSettings,'\n\n'
+    print 'generalSettings: \n', generalSettings, '\n\n'
 
     pronunciations = settingsManager.getPronunciations(profile)
-    print 'pronunciations: \n',pronunciations,'\n\n'
+    print 'pronunciations: \n', pronunciations, '\n\n'
 
     keybindings = settingsManager.getKeybindings(profile)
-    print 'keybindings: \n',keybindings,'\n\n'
+    print 'keybindings: \n', keybindings, '\n\n'
 
     # Adding new settings to the profile and merging them
     newGeneralSettings = getSettingsFromFile('general')

@@ -41,11 +41,11 @@ sequence.append(WaitForFocus(acc_role=pyatspi.ROLE_ENTRY))
 # SPEECH OUTPUT: 'entered bookmark'
 # SPEECH OUTPUT: 'Type something here: text '
 #
-sequence.append(KeyPressAction (0, None,"Alt_L"))     
-sequence.append(KeyPressAction (0, None,"Insert"))     
+sequence.append(KeyPressAction (0, None, "Alt_L"))
+sequence.append(KeyPressAction (0, None, "Insert"))
 sequence.append(TypeAction ("1"))
-sequence.append(KeyReleaseAction(150, None,"Insert"))  
-sequence.append(KeyReleaseAction(150, None,"Alt_L"))  
+sequence.append(KeyReleaseAction(150, None, "Insert"))
+sequence.append(KeyReleaseAction(150, None, "Alt_L"))
 
 ########################################################################
 # Tab to the first checkbox.  Irrelevant output ignored.
@@ -65,11 +65,11 @@ sequence.append(WaitForFocus("Red", acc_role=pyatspi.ROLE_CHECK_BOX))
 # SPEECH OUTPUT: 'entered bookmark'
 # SPEECH OUTPUT: 'Red check box not checked'
 #
-sequence.append(KeyPressAction (0, None,"Alt_L"))     
-sequence.append(KeyPressAction (0, None,"Insert"))     
+sequence.append(KeyPressAction (0, None, "Alt_L"))
+sequence.append(KeyPressAction (0, None, "Insert"))
 sequence.append(TypeAction ("2"))
-sequence.append(KeyReleaseAction(150, None,"Insert"))  
-sequence.append(KeyReleaseAction(150, None,"Alt_L"))  
+sequence.append(KeyReleaseAction(150, None, "Insert"))
+sequence.append(KeyReleaseAction(150, None, "Alt_L"))
 
 ########################################################################
 # Go to bookmark number 1.  The following will be presented.

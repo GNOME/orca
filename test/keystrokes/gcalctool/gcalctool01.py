@@ -8,7 +8,7 @@ sequence = MacroSequence()
 ###############################################################################
 # Use the 'Advanced' mode...
 #
-sequence.append(WaitForWindowActivate("Calculator",None))
+sequence.append(WaitForWindowActivate("Calculator", None))
 sequence.append(KeyComboAction("<Control>a"))
 sequence.append(WaitForFocus("Change Mode", acc_role=pyatspi.ROLE_PUSH_BUTTON))
 sequence.append(KeyComboAction("Return"))
@@ -16,7 +16,7 @@ sequence.append(KeyComboAction("Return"))
 ###############################################################################
 # Input the number 144 and find its square root.
 #
-sequence.append(WaitForWindowActivate("Calculator - Advanced",None))
+sequence.append(WaitForWindowActivate("Calculator - Advanced", None))
 sequence.append(TypeAction("s144)"))
 sequence.append(utils.StartRecordingAction())
 sequence.append(KeyComboAction("Return"))

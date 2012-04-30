@@ -50,31 +50,31 @@ formatting = {
     ####################################################################
 
     'strings' : {
-        'speech' : {
-            'required'     : settings.speechRequiredStateString,
-            'readonly'     : settings.speechReadOnlyString,
-            'insensitive'  : settings.speechInsensitiveString,
-            'checkbox'     : settings.speechCheckboxIndicators,
-            'radiobutton'  : settings.speechRadioButtonIndicators,
-            'togglebutton' : settings.speechToggleButtonIndicators,
-            'expansion'    : settings.speechExpansionIndicators,
-            'nodelevel'    : settings.speechNodeLevelString,
-            'nestinglevel' : settings.speechNestingLevelString,
-            'multiselect'  : settings.speechMultiSelectString,
-            'iconindex'    : settings.speechIconIndexString,
-            'groupindex'   : settings.speechGroupIndexString,
+        'speech': {
+            'required': settings.speechRequiredStateString,
+            'readonly': settings.speechReadOnlyString,
+            'insensitive': settings.speechInsensitiveString,
+            'checkbox': settings.speechCheckboxIndicators,
+            'radiobutton': settings.speechRadioButtonIndicators,
+            'togglebutton': settings.speechToggleButtonIndicators,
+            'expansion': settings.speechExpansionIndicators,
+            'nodelevel': settings.speechNodeLevelString,
+            'nestinglevel': settings.speechNestingLevelString,
+            'multiselect': settings.speechMultiSelectString,
+            'iconindex': settings.speechIconIndexString,
+            'groupindex': settings.speechGroupIndexString,
         },
-        'braille' : {
-            'eol'          : settings.brailleEOLIndicator,
-            'required'     : settings.brailleRequiredStateString,
-            'readonly'     : settings.brailleReadOnlyString,
-            'insensitive'  : settings.brailleInsensitiveString,
-            'checkbox'     : settings.brailleCheckBoxIndicators,
-            'radiobutton'  : settings.brailleRadioButtonIndicators,
-            'togglebutton' : settings.brailleToggleButtonIndicators,
-            'expansion'    : settings.brailleExpansionIndicators,
-            'nodelevel'    : settings.brailleNodeLevelString,
-            'nestinglevel' : settings.brailleNestingLevelString,
+        'braille': {
+            'eol': settings.brailleEOLIndicator,
+            'required': settings.brailleRequiredStateString,
+            'readonly': settings.brailleReadOnlyString,
+            'insensitive': settings.brailleInsensitiveString,
+            'checkbox': settings.brailleCheckBoxIndicators,
+            'radiobutton': settings.brailleRadioButtonIndicators,
+            'togglebutton': settings.brailleToggleButtonIndicators,
+            'expansion': settings.brailleExpansionIndicators,
+            'nodelevel': settings.brailleNodeLevelString,
+            'nestinglevel': settings.brailleNestingLevelString,
         },
     },
 
@@ -503,7 +503,7 @@ formatting = {
         pyatspi.ROLE_TABLE_CELL: {
             'unfocused': 'tableCellRow',
             },
-        'REAL_ROLE_TABLE_CELL' : {
+        'REAL_ROLE_TABLE_CELL': {
             'unfocused': '(tableCell2ChildToggle + tableCell2ChildLabel)\
                           or (cellCheckedState\
                               + (columnHeaderIfToggleAndNoText and [Region(" "), Component(obj, asString(columnHeaderIfToggleAndNoText))])\
@@ -617,7 +617,7 @@ class Formatting(dict):
 
     def update(self, newDict):
         for key, val in newDict.iteritems():
-            if self.has_key(key):
+            if key in self:
                 if isinstance(self[key], dict) and isinstance(val, dict):
                     self[key].update(val)
                 elif isinstance(self[key], basestring) \

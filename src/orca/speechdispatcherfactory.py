@@ -353,7 +353,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         """
         try:
-            context, acss = iterator.next()
+            context, acss = next(iterator)
         except StopIteration:
             pass
         else:

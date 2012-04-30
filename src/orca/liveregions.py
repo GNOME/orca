@@ -288,7 +288,7 @@ class LiveRegionManager:
             self._script.setCaretPosition(self.lastliveobj, 0)
             self._script.outlineAccessible(self.lastliveobj)
             self._script.speakContents(self._script.getObjectContentsAtOffset(\
-                                       self.lastliveobj,0))
+                                       self.lastliveobj, 0))
 
     def reviewLiveAnnouncement(self, msgnum):
         """Speak the given number cached message"""

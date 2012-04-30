@@ -18,7 +18,7 @@ sequence = MacroSequence()
 # 1. Start oowriter. There is a bug_435226.params file that will
 #    automatically load spanish.odt.
 #
-sequence.append(WaitForWindowActivate("spanish(.odt|) - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("spanish(.odt|) - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################

@@ -764,7 +764,7 @@ class Text(Region):
             while n < nLinks:
                 link = hyperText.getLink(n)
                 if self.lineOffset <= link.startIndex:
-                    for i in xrange(link.startIndex, link.endIndex):
+                    for i in range(link.startIndex, link.endIndex):
                         try:
                             regionMask[i] |= linkIndicator
                         except:
@@ -792,7 +792,7 @@ class Text(Region):
                 if mask != settings.TEXT_ATTR_BRAILLE_NONE:
                     maskStart = max(startOffset - self.lineOffset, 0)
                     maskEnd = min(endOffset - self.lineOffset, stringLength)
-                    for i in xrange(maskStart, maskEnd):
+                    for i in range(maskStart, maskEnd):
                         regionMask[i] |= attrIndicator
 
         if selIndicator:
@@ -800,7 +800,7 @@ class Text(Region):
             for startOffset, endOffset in selections:
                 maskStart = max(startOffset - self.lineOffset, 0)
                 maskEnd = min(endOffset - self.lineOffset, stringLength)
-                for i in xrange(maskStart, maskEnd):
+                for i in range(maskStart, maskEnd):
                     regionMask[i] |= selIndicator
 
         if self.contracted:

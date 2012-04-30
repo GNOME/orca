@@ -83,7 +83,7 @@ sequence.append(KeyComboAction("<Alt>F4"))
 ########################################################################
 # Wait for the focus to be back on the blank Firefox window.
 #
-sequence.append(WaitForWindowActivate("",None))
+sequence.append(WaitForWindowActivate("", None))
 
 # Just a little extra wait to let some events get through.
 #

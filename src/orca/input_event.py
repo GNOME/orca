@@ -231,7 +231,7 @@ class KeyboardEvent(InputEvent):
 
         return self.event_string in \
             ["F1", "F2", "F3", "F4", "F5", "F6",
-             "F7","F8", "F9", "F10", "F11", "F12"]
+             "F7", "F8", "F9", "F10", "F11", "F12"]
 
     def isLockingKey(self):
         """Return True if this is a locking key."""

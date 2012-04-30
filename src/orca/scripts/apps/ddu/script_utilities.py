@@ -95,8 +95,8 @@ class Utilities(script_utilities.Utilities):
             return self._script.\
                 generatorCache[self.REAL_ACTIVE_DESCENDANT][obj]
         except:
-            if not self._script.\
-                    generatorCache.has_key(self.REAL_ACTIVE_DESCENDANT):
+            if self.REAL_ACTIVE_DESCENDANT not in self._script.\
+                    generatorCache:
                 self._script.generatorCache[self.REAL_ACTIVE_DESCENDANT] = {}
             activeDescendant = None
 

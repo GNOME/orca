@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -32,7 +32,7 @@ sequence.append(WaitForFocus("Letter...", acc_role=pyatspi.ROLE_MENU_ITEM))
 #
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction("a"))
-sequence.append(WaitForWindowActivate("aw-5blue (read-only) - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("aw-5blue (read-only) - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("Page design", acc_role=pyatspi.ROLE_LABEL))
 sequence.append(utils.AssertPresentationAction(
     "Press 'a' to bring up the Agenda... wizard",

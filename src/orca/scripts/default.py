@@ -788,7 +788,7 @@ class Script(script.Script):
                 # and exit the "List Shortcuts Mode" by pressing Escape.
                 #
                 _("Enters list shortcuts mode.  Press escape to exit " \
-                  "list shortcuts mode."),False)
+                  "list shortcuts mode."), False)
                 # Do not enable learn mode for this action
 
         self.inputEventHandlers["decreaseSpeechRateHandler"] = \
@@ -5235,7 +5235,7 @@ class Script(script.Script):
         """
 
         self.pointOfReference["lastSelections"] = []
-        for i in xrange(text.getNSelections()):
+        for i in range(text.getNSelections()):
             self.pointOfReference["lastSelections"].append(
               text.getSelection(i))
 

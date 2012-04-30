@@ -338,10 +338,10 @@ voicesKeys = {
 
 
 voices = {
-    DEFAULT_VOICE   : ACSS({}),
-    UPPERCASE_VOICE : ACSS({ACSS.AVERAGE_PITCH : 5.6}),
-    HYPERLINK_VOICE : ACSS({}),
-    SYSTEM_VOICE    : ACSS({}),
+    DEFAULT_VOICE: ACSS({}),
+    UPPERCASE_VOICE: ACSS({ACSS.AVERAGE_PITCH : 5.6}),
+    HYPERLINK_VOICE: ACSS({}),
+    SYSTEM_VOICE: ACSS({}),
 }
 
 # If True, enable speaking of speech indentation and justification.

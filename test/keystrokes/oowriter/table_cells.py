@@ -11,7 +11,7 @@ sequence = MacroSequence()
 # Start oowriter. There is a table_cells.params file that will
 # automatically load table-sample.odt
 #
-sequence.append(WaitForWindowActivate("table-sample(.odt|) - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("table-sample(.odt|) - " + utils.getOOoName("Writer"), None))
 
 ######################################################################
 # Type Control-Home to move the text caret to the start of the document.

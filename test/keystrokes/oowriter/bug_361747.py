@@ -14,7 +14,7 @@ import utils
 #    automatically load empty_document.odt. This uses the FreeSerif 
 #    font as the default which should be available on all test systems.
 #
-sequence.append(WaitForWindowActivate("empty_document(.odt|) - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("empty_document(.odt|) - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################

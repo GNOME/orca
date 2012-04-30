@@ -12,7 +12,7 @@ sequence = MacroSequence()
 # 1. Start oobase. There is a bug_465109.params file that will
 # automatically load bug_465109.odb.
 #
-sequence.append(WaitForWindowActivate("bug_465109 - OpenOffice.org Base",None))
+sequence.append(WaitForWindowActivate("bug_465109 - OpenOffice.org Base", None))
 
 ######################################################################
 # 2. Enter Alt-v, right arrow and Return to select Tables from the
@@ -58,7 +58,7 @@ sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_TREE))
 #
 sequence.append(KeyComboAction("Down"))
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("bug_465109: NameAddrPhone",None))
+sequence.append(WaitForWindowActivate("bug_465109: NameAddrPhone", None))
 sequence.append(WaitForFocus("Data source table view", acc_role=pyatspi.ROLE_PANEL))
 
 ######################################################################

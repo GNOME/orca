@@ -51,7 +51,7 @@ sequence.append(utils.AssertPresentationAction(
 # to regain focus.
 #
 sequence.append(TypeAction("Escape"))
-sequence.append(WaitForWindowActivate("",None))
+sequence.append(WaitForWindowActivate("", None))
 
 # Just a little extra wait to let some events get through.
 #

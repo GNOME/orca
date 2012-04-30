@@ -412,7 +412,7 @@ class KeyBindings:
             except:
                 clickCount = 1
 
-            if handlers.has_key(handler):
+            if handler in handlers:
                 # add the keybinding
                 self.add(KeyBinding( \
                   keysymstring, modifierMask, modifiers, \

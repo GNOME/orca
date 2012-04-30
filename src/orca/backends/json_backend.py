@@ -117,7 +117,7 @@ class Backend:
         self._getSettings()
         pronunciations = self.pronunciations.copy()
         profileSettings = self.profiles[profile].copy()
-        if profileSettings.has_key('pronunciations'):
+        if 'pronunciations' in profileSettings:
             pronunciations = profileSettings['pronunciations']
         return pronunciations
 
@@ -127,7 +127,7 @@ class Backend:
         self._getSettings()
         keybindings = self.keybindings.copy()
         profileSettings = self.profiles[profile].copy()
-        if profileSettings.has_key('keybindings'):
+        if 'keybindings' in profileSettings:
             keybindings = profileSettings['keybindings']
         return keybindings
 

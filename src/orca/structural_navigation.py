@@ -1348,7 +1348,7 @@ class StructuralNavigation:
         except:
             pass
         else:
-            for i in xrange(obj.childCount):
+            for i in range(obj.childCount):
                 [isCell, row, col, rowExtents, colExtents, isSelected] = \
                                        table.getRowColumnExtentsAtIndex(i)
                 if (rowExtents > 1) or (colExtents > 1):
@@ -1659,7 +1659,7 @@ class StructuralNavigation:
 
             index = self._script.utilities.cellIndex(obj)
             row = table.getRowAtIndex(index)
-            for col in xrange(table.nColumns):
+            for col in range(table.nColumns):
                 cell = table.getAccessibleAt(row, col)
                 if not self._isHeader(cell):
                     return False
@@ -1683,7 +1683,7 @@ class StructuralNavigation:
 
             index = self._script.utilities.cellIndex(obj)
             col = table.getColumnAtIndex(index)
-            for row in xrange(table.nRows):
+            for row in range(table.nRows):
                 cell = table.getAccessibleAt(row, col)
                 if not self._isHeader(cell):
                     return False

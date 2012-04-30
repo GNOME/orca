@@ -79,9 +79,9 @@ sequence.append(utils.AssertPresentationAction(
 # Turn reading of rows off.
 #
 sequence.append(utils.StartRecordingAction())
-sequence.append(KeyPressAction(0, None,"KP_Insert"))
+sequence.append(KeyPressAction(0, None, "KP_Insert"))
 sequence.append(KeyComboAction("F11"))
-sequence.append(KeyReleaseAction(0, None,"KP_Insert"))
+sequence.append(KeyReleaseAction(0, None, "KP_Insert"))
 sequence.append(utils.AssertPresentationAction(
     "Turn row reading off",
     ["BRAILLE LINE:  'Speak cell'",

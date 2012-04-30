@@ -19,7 +19,7 @@ sequence = MacroSequence()
 # SPEECH OUTPUT: 'root pane'
 # SPEECH OUTPUT: 'scroll pane'
 #
-sequence.append(WaitForWindowActivate("subtlewaves - OpenOffice.org Impress",None))
+sequence.append(WaitForWindowActivate("subtlewaves - OpenOffice.org Impress", None))
 
 ######################################################################
 # 2. Enter Alt-f, Alt-c to close the presentation window.

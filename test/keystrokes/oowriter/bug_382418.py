@@ -12,7 +12,7 @@ sequence = MacroSequence()
 ######################################################################
 # 1. Start oowriter.
 #
-sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 1 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################
@@ -25,7 +25,7 @@ sequence.append(KeyComboAction("Right"))
 sequence.append(WaitForFocus("Text Document", acc_role=pyatspi.ROLE_MENU_ITEM))
 
 sequence.append(KeyComboAction("Return"))
-sequence.append(WaitForWindowActivate("Untitled 2 - " + utils.getOOoName("Writer"),None))
+sequence.append(WaitForWindowActivate("Untitled 2 - " + utils.getOOoName("Writer"), None))
 sequence.append(WaitForFocus("", acc_role=pyatspi.ROLE_PARAGRAPH))
 
 ######################################################################

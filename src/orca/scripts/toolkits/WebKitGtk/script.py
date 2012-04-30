@@ -482,7 +482,7 @@ class Script(default.Script):
 
         index = -1
         text = child.queryText()
-        for i in xrange(text.characterCount):
+        for i in range(text.characterCount):
             if text.setCaretOffset(i):
                 index = i
                 break

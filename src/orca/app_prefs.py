@@ -39,9 +39,9 @@ _settingsManager = getattr(orca, '_settingsManager')
 # The same fields than in orca_gui_prefs.py:
 #
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, OLDTEXT1, \
- TEXT1, MODIF, EDITABLE) = range(10)
+ TEXT1, MODIF, EDITABLE) = list(range(10))
 
-(ACTUAL, REPLACEMENT) = range(2)
+(ACTUAL, REPLACEMENT) = list(range(2))
 
 class OrcaPrefs:
 
@@ -137,7 +137,7 @@ class OrcaPrefs:
         while thisIter != None:
             iterChild = treeModel.iter_children(thisIter)
             while iterChild != None:
-                values = treeModel.get(iterChild, 0,1,2,3,4,5,6,7,8,9)
+                values = treeModel.get(iterChild, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
                 if values[MODIF]:
                     self._writeKeyBinding(prefs, values)
                 iterChild = treeModel.iter_next(iterChild)

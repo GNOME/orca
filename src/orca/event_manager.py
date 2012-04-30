@@ -361,7 +361,7 @@ class EventManager:
              % function)
 
         if mask == None:
-            mask = range(256)
+            mask = list(range(256))
 
         if kind == None:
             kind = (pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT)
@@ -377,7 +377,7 @@ class EventManager:
              % function)
 
         if mask == None:
-            mask = range(256)
+            mask = list(range(256))
 
         if kind == None:
             kind = (pyatspi.KEY_PRESSED_EVENT, pyatspi.KEY_RELEASED_EVENT)

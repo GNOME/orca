@@ -99,7 +99,7 @@ sequence.append(utils.AssertPresentationAction(
 sequence.append(utils.StartRecordingAction())
 sequence.append(TypeAction(' '))
 sequence.append(WaitAction("object:state-changed:checked", None,
-                           None, pyatspi.ROLE_CHECK_BOX,5000))
+                           None, pyatspi.ROLE_CHECK_BOX, 5000))
 sequence.append(utils.AssertPresentationAction(
     "One checkbox checked",
     ["BRAILLE LINE:  'SwingSet2 Application SwingSet2 Frame RootPane LayeredPane Button Demo TabList Button Demo Page Check Boxes TabList Check Boxes Page Text CheckBoxes Panel <x> One  CheckBox'",
