@@ -1536,6 +1536,13 @@ class Utilities:
         labels = filter(lambda x: x.parent and x.name != x.parent.name, labels)
         labels = filter(
             lambda x: x.getState().contains(pyatspi.STATE_SHOWING), labels)
+
+        # Eliminate duplicates
+        d = {}
+        for label in labels:
+            d[label.name] = label
+        labels = d.values()
+
         return sorted(labels, self.spatialComparison)
 
     def unfocusedAlertAndDialogCount(self, obj):
