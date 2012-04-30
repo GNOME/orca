@@ -99,7 +99,10 @@ class Script(default.Script):
                     found = True
                 i = i + 1
 
-        text = obj.name
+        try:
+            text = obj.name
+        except:
+            text = objName
 
         # Translators: the "Workspace " and "Desk " strings are
         # the prefix of what metacity shows when you press
