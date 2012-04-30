@@ -2662,6 +2662,10 @@ class Utilities:
             # 'superscript 3' should be presented as 'X superscript 23'.
             #
             newString = _(" superscript %s") % "".join(new)
+            try:
+                newString = newString.decode("UTF-8")
+            except UnicodeEncodeError:
+                pass
             uString = re.sub(number, newString, uString)
 
         for number in subscripted:
@@ -2673,7 +2677,10 @@ class Utilities:
             #
             newString = _(" subscript %s") % "".join(new)
             uString = re.sub(number, newString, uString)
-
+            try:
+                newString = newString.decode("UTF-8")
+            except UnicodeEncodeError:
+                pass
         try:
             uString = uString.encode("UTF-8")
         except UnicodeDecodeError:
