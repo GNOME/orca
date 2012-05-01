@@ -2264,7 +2264,7 @@ class Utilities:
             try:
                 if visitedObjs.index(referent):
                     if self._isInterestingObj(referent):
-                        print indent, "CYCLE!!!!", repr(referent)
+                        print(indent, "CYCLE!!!!", repr(referent))
                     break
             except:
                 pass
@@ -2288,7 +2288,7 @@ class Utilities:
             line = indent + "+- " + \
                 debug.getAccessibleDetails(debug.LEVEL_OFF, ancestor)
             debug.println(debug.LEVEL_OFF, line)
-            print line
+            print(line)
             indent += "  "
 
     def printApps(self):
@@ -2297,17 +2297,17 @@ class Utilities:
         apps = self.knownApplications()
         line = "There are %d Accessible applications" % len(apps)
         debug.println(debug.LEVEL_OFF, line)
-        print line
+        print(line)
         for app in apps:
             line = debug.getAccessibleDetails(
                 debug.LEVEL_OFF, app, "  App: ", False)
             debug.println(debug.LEVEL_OFF, line)
-            print line
+            print(line)
             for child in app:
                 line = debug.getAccessibleDetails(
                     debug.LEVEL_OFF, child, "    Window: ", False)
                 debug.println(debug.LEVEL_OFF, line)
-                print line
+                print(line)
                 if child.parent != app:
                     debug.println(debug.LEVEL_OFF,
                                   "      WARNING: child's parent is not app!!!")
@@ -2337,7 +2337,7 @@ class Utilities:
                 debug.LEVEL_OFF, root)
 
         debug.println(debug.LEVEL_OFF, line)
-        print line
+        print(line)
 
         rootManagesDescendants = root.getState().contains(
             pyatspi.STATE_MANAGES_DESCENDANTS)
@@ -2346,15 +2346,15 @@ class Utilities:
             if child == root:
                 line = indent + "  " + "WARNING CHILD == PARENT!!!"
                 debug.println(debug.LEVEL_OFF, line)
-                print line
+                print(line)
             elif not child:
                 line = indent + "  " + "WARNING Child IS NONE!!!"
                 debug.println(debug.LEVEL_OFF, line)
-                print line
+                print(line)
             elif self.validParent(child) != root:
                 line = indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
                 debug.println(debug.LEVEL_OFF, line)
-                print line
+                print(line)
             else:
                 paint = (not onlyShowing) or (onlyShowing and \
                          child.getState().contains(pyatspi.STATE_SHOWING))
@@ -2393,7 +2393,7 @@ class Utilities:
                 infoString += " Version unknown"
 
             debug.println(debug.LEVEL_OFF, infoString)
-            print infoString
+            print(infoString)
             self._script.speakMessage(infoString)
             self._script.displayBrailleMessage(infoString)
 

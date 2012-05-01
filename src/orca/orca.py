@@ -186,10 +186,10 @@ class Options(argparse.Namespace):
             os.waitpid(pid, 0)
             os._exit(0)
         else:
-            if type(msg) == MethodType:
+            if isinstance(msg, MethodType):
                 msg()
             else:
-                print msg
+                print(msg)
             os._exit(0)
 
     def convertToSettings(self):
@@ -243,7 +243,7 @@ def presentInvalidOptions(invalidOptions):
         # the list of arguments, as typed by the user, is displayed.
         #
         msg = _("The following arguments are not valid: ")
-        print(msg + " ".join(invalidOptions))
+        print((msg + " ".join(invalidOptions)))
         return True
 
     return False
@@ -394,7 +394,7 @@ options.validate()
 from settings_manager import SettingsManager
 _settingsManager = SettingsManager(prefsDir=options.userPrefsDir)
 if _settingsManager is None:
-    print "Could not load the settings manager. Exiting."
+    print("Could not load the settings manager. Exiting.")
     sys.exit(1)
 
 from event_manager import EventManager
@@ -1465,7 +1465,7 @@ def main():
         except:
             continue
 
-        print msg
+        print(msg)
         if multipleOrcas():
             die(0)
 
@@ -1476,9 +1476,9 @@ def main():
         _showPreferencesConsole()
 
     if not options.desktopRunning:
-        print "Cannot start Orca because it cannot connect"
-        print "to the Desktop.  Please make sure the DISPLAY"
-        print "environment variable has been set."
+        print("Cannot start Orca because it cannot connect")
+        print("to the Desktop.  Please make sure the DISPLAY")
+        print("environment variable has been set.")
         return 1
 
     sys.path.insert(0, _settingsManager.getPrefsDir())

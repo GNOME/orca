@@ -408,14 +408,14 @@ def test():
     import speechserver
     factories = getSpeechServerFactories()
     for factory in factories:
-        print factory.__name__
+        print(factory.__name__)
         servers = factory.SpeechServer.getSpeechServers()
         for server in servers:
             try:
-                print "    ", server.getInfo()
+                print("    ", server.getInfo())
                 for family in server.getVoiceFamilies():
                     name = family[speechserver.VoiceFamily.NAME]
-                    print "      ", name
+                    print("      ", name)
                     acss = ACSS({ACSS.FAMILY : family})
                     server.speak(name, acss)
                     server.speak("testing")

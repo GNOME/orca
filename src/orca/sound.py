@@ -59,7 +59,7 @@ class Sound:
             source = gst.element_factory_make("filesrc", "file-source")
             decoder = gst.element_factory_make("wavparse", "wav-decoder")
             sink = gst.element_factory_make("autoaudiosink", "audio-sink")
-            print source, decoder, sink
+            print(source, decoder, sink)
             player.add(source, decoder, sink)
             gst.element_link_many(source, decoder, sink)
             player.get_by_name("file-source").set_property(

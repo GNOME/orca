@@ -165,7 +165,7 @@ class SettingsManager(object):
         _createDir(orcaScriptDir)
         initFile = os.path.join(orcaScriptDir, "__init__.py")
         if not os.path.exists(initFile):
-            os.close(os.open(initFile, os.O_CREAT, 0700))
+            os.close(os.open(initFile, os.O_CREAT, 0o700))
 
         # Set up $XDG_DATA_HOME/orca/app-settings as a Python package.
         #
@@ -173,17 +173,17 @@ class SettingsManager(object):
         _createDir(orcaSettingsDir)
         initFile = os.path.join(orcaSettingsDir, "__init__.py")
         if not os.path.exists(initFile):
-            os.close(os.open(initFile, os.O_CREAT, 0700))
+            os.close(os.open(initFile, os.O_CREAT, 0o700))
 
         # Set up $XDG_DATA_HOME/orca/orca-customizations.py empty file and
         # define orcaDir as a Python package.
         initFile = os.path.join(orcaDir, "__init__.py")
         if not os.path.exists(initFile):
-            os.close(os.open(initFile, os.O_CREAT, 0700))
+            os.close(os.open(initFile, os.O_CREAT, 0o700))
 
         userCustomFile = os.path.join(orcaDir, "orca-customizations.py")
         if not os.path.exists(userCustomFile):
-            os.close(os.open(userCustomFile, os.O_CREAT, 0700))
+            os.close(os.open(userCustomFile, os.O_CREAT, 0o700))
 
         if self.isFirstStart():
             self._backend.saveDefaultSettings(self.defaultGeneral,
@@ -583,7 +583,7 @@ def getValueForKey(prefsDict, key):
 
     value = None
     if key in prefsDict:
-        if type(prefsDict[key]) is str:
+        if isinstance(prefsDict[key], str):
             if key in need2repr:
                 value = "\'%s\'" % prefsDict[key]
             elif key  == 'voices':

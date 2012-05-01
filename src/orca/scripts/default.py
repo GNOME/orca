@@ -3018,7 +3018,7 @@ class Script(script.Script):
 
     def printMemoryUsageHandler(self, inputEvent):
         """Prints memory usage information."""
-        print 'TODO: print something useful for memory debugging'
+        print('TODO: print something useful for memory debugging')
 
     def printAppsHandler(self, inputEvent=None):
         """Prints a list of all applications to stdout."""
@@ -5462,7 +5462,7 @@ class Script(script.Script):
         purpose of representing an error, event etc)
         """
 
-        print "\a"
+        print("\a")
 
     def speakWordUnderMouse(self, acc):
         """Determine if the speak-word-under-mouse capability applies to

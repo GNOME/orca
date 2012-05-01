@@ -86,15 +86,15 @@ class SearchQuery:
 
     def dumpContext(self, context):
         """Debug utility which prints out the context."""
-        print "DUMP"
+        print("DUMP")
         for i in range(0, len(context.lines)):
-            print "  Line %d" % i
+            print("  Line %d" % i)
             for j in range(0, len(context.lines[i].zones)):
-                print "    Zone: %d" % j
+                print("    Zone: %d" % j)
                 for k in range(0, len(context.lines[i].zones[j].words)):
-                    print "      Word %d = `%s` len(word): %d" % \
+                    print("      Word %d = `%s` len(word): %d" % \
                         (k, context.lines[i].zones[j].words[k].string, \
-                         len(context.lines[i].zones[j].words[k].string))
+                         len(context.lines[i].zones[j].words[k].string)))
 
     def findQuery(self, context, justEnteredFlatReview):
         """Performs a search on the string specified in searchQuery.

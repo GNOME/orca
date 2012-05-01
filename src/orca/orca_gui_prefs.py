@@ -1576,8 +1576,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                              braille.getDefaultTable()
             if tableDict:
                 tablesModel = Gtk.ListStore(str, str)
-                names = tableDict.keys()
-                names.sort()
+                names = sorted(tableDict.keys())
                 for name in names:
                     fname = tableDict[name]
                     it = tablesModel.append([name, fname])

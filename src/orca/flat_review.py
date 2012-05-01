@@ -1433,54 +1433,54 @@ class Context:
         return lines
 
     def _dumpCurrentState(self):
-        print "line=%d, zone=%d, word=%d, char=%d" \
+        print("line=%d, zone=%d, word=%d, char=%d" \
               % (self.lineIndex,
                  self.zoneIndex,
                  self.wordIndex,
-                 self.zoneIndex)
+                 self.zoneIndex))
 
         zone = self.lines[self.lineIndex].zones[self.zoneIndex]
         text = zone.accessible.queryText()
 
         if not text:
-            print "  Not Accessibility_Text"
+            print("  Not Accessibility_Text")
             return
 
-        print "  getTextBeforeOffset: %d" % text.caretOffset
+        print("  getTextBeforeOffset: %d" % text.caretOffset)
         [string, startOffset, endOffset] = text.getTextBeforeOffset(
             text.caretOffset,
             pyatspi.TEXT_BOUNDARY_WORD_START)
-        print "    WORD_START: start=%d end=%d string='%s'" \
-              % (startOffset, endOffset, string)
+        print("    WORD_START: start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string))
         [string, startOffset, endOffset] = text.getTextBeforeOffset(
             text.caretOffset,
             pyatspi.TEXT_BOUNDARY_WORD_END)
-        print "    WORD_END:   start=%d end=%d string='%s'" \
-              % (startOffset, endOffset, string)
+        print("    WORD_END:   start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string))
 
-        print "  getTextAtOffset: %d" % text.caretOffset
+        print("  getTextAtOffset: %d" % text.caretOffset)
         [string, startOffset, endOffset] = text.getTextAtOffset(
             text.caretOffset,
             pyatspi.TEXT_BOUNDARY_WORD_START)
-        print "    WORD_START: start=%d end=%d string='%s'" \
-              % (startOffset, endOffset, string)
+        print("    WORD_START: start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string))
         [string, startOffset, endOffset] = text.getTextAtOffset(
             text.caretOffset,
             pyatspi.TEXT_BOUNDARY_WORD_END)
-        print "    WORD_END:   start=%d end=%d string='%s'" \
-              % (startOffset, endOffset, string)
+        print("    WORD_END:   start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string))
 
-        print "  getTextAfterOffset: %d" % text.caretOffset
+        print("  getTextAfterOffset: %d" % text.caretOffset)
         [string, startOffset, endOffset] = text.getTextAfterOffset(
             text.caretOffset,
             pyatspi.TEXT_BOUNDARY_WORD_START)
-        print "    WORD_START: start=%d end=%d string='%s'" \
-              % (startOffset, endOffset, string)
+        print("    WORD_START: start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string))
         [string, startOffset, endOffset] = text.getTextAfterOffset(
             text.caretOffset,
             pyatspi.TEXT_BOUNDARY_WORD_END)
-        print "    WORD_END:   start=%d end=%d string='%s'" \
-              % (startOffset, endOffset, string)
+        print("    WORD_END:   start=%d end=%d string='%s'" \
+              % (startOffset, endOffset, string))
 
     def setCurrent(self, lineIndex, zoneIndex, wordIndex, charIndex):
         """Sets the current character of interest.

@@ -115,7 +115,7 @@ def sayAndPrint(text,
     if getInput:
         return raw_input(text)
     else:
-        print text
+        print(text)
 
 def setupSpeech(prefsDict):
     """Sets up speech support.  If speech setup is successful and the
@@ -138,7 +138,7 @@ def setupSpeech(prefsDict):
         # Translators: this means speech synthesis (i.e., the machine
         # speaks to you from its speakers) is not installed or working.
         #
-        print _("Speech is unavailable.")
+        print(_("Speech is unavailable."))
         return False
 
     try:
@@ -147,7 +147,7 @@ def setupSpeech(prefsDict):
         # Translators: this means speech synthesis (i.e., the machine
         # speaks to you from its speakers) is not installed or working.
         #
-        print _("Speech is unavailable.")
+        print(_("Speech is unavailable."))
         return False
 
     sayAndPrint(_("Welcome to Orca setup."))
@@ -165,7 +165,7 @@ def setupSpeech(prefsDict):
         # Translators: this means speech synthesis (i.e., the machine
         # speaks to you from its speakers) is not installed or working.
         #
-        print _("Speech is unavailable.")
+        print(_("Speech is unavailable."))
         return False
     elif len(workingFactories) > 1:
         # Translators: the speech system represents what general

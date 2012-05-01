@@ -588,7 +588,7 @@ class LiveRegionManager:
         to the document frame."""
         docframe = self._script.utilities.documentFrame()
         path = []
-        while 1:
+        while True:
             if obj.parent is None or obj == docframe:
                 path.reverse()
                 return tuple(path)

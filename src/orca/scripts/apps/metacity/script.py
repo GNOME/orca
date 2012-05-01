@@ -94,7 +94,7 @@ class Script(default.Script):
                 except:
                     win = None
                 if win is None:
-                    print "app error " + app.name
+                    print("app error " + app.name)
                 elif win.name == objName:
                     found = True
                 i = i + 1

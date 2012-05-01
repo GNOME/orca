@@ -159,8 +159,7 @@ class Bookmarks:
         selected, the first bookmark will be used.  """
 
         # get the hardware keys that have registered bookmarks
-        hwkeys = self._bookmarks.keys()
-        hwkeys.sort()
+        hwkeys = sorted(self._bookmarks.keys())
 
         # no bookmarks have been entered
         if len(hwkeys) == 0:
@@ -181,8 +180,7 @@ class Bookmarks:
 
     def goToPrevBookmark(self, inputEvent):
         # get the hardware keys that have registered bookmarks
-        hwkeys = self._bookmarks.keys()
-        hwkeys.sort()
+        hwkeys = sorted(self._bookmarks.keys())
 
         # no bookmarks have been entered
         if len(hwkeys) == 0:

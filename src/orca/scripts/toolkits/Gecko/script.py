@@ -2344,7 +2344,7 @@ class Script(default.Script):
             string = text.getText(0, -1)
             if characterOffset >= len(string) \
                and not obj.getState().contains(pyatspi.STATE_EDITABLE):
-                print "YIKES in Gecko.sayCharacter!"
+                print("YIKES in Gecko.sayCharacter!")
                 characterOffset -= 1
 
         if characterOffset >= 0:
@@ -2374,7 +2374,7 @@ class Script(default.Script):
             string = text.getText(0, -1)
             if characterOffset >= len(string) \
                and not obj.getState().contains(pyatspi.STATE_EDITABLE):
-                print "YIKES in Gecko.sayWord!"
+                print("YIKES in Gecko.sayWord!")
                 characterOffset -= 1
 
         # Ideally in an entry we would just let default.sayWord() handle
@@ -2415,7 +2415,7 @@ class Script(default.Script):
             string = text.getText(0, -1)
             if characterOffset >= len(string) \
                and not obj.getState().contains(pyatspi.STATE_EDITABLE):
-                print "YIKES in Gecko.sayLine!"
+                print("YIKES in Gecko.sayLine!")
                 characterOffset -= 1
 
         self.speakContents(self.getLineContentsAtOffset(obj, characterOffset))
@@ -2475,17 +2475,17 @@ class Script(default.Script):
         if obj.parent:
             self.dumpInfo(obj.parent)
 
-        print "---"
+        print("---")
         text = self.utilities.queryNonEmptyText(obj)
         if text and obj.getRole() != pyatspi.ROLE_DOCUMENT_FRAME:
             string = text.getText(0, -1)
         else:
             string = ""
-        print obj, obj.name, obj.getRole(), \
-              obj.accessible.getIndexInParent(), string
+        print(obj, obj.name, obj.getRole(), \
+              obj.accessible.getIndexInParent(), string)
         offset = self.utilities.characterOffsetInParent(obj)
         if offset >= 0:
-            print "  offset =", offset
+            print("  offset =", offset)
 
     def getDocumentContents(self):
         """Returns an ordered list where each element is composed of
@@ -2611,8 +2611,8 @@ class Script(default.Script):
                     string += "[%s] name='%s' " % (obj.getRole(), obj.name)
             else:
                 string += "\nNEWLINE\n"
-        print "==========================="
-        print string
+        print("===========================")
+        print(string)
         self.drawOutline(extents[0], extents[1], extents[2], extents[3])
 
     ####################################################################
