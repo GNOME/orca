@@ -156,7 +156,7 @@ class Word:
                 self.chars = None
             return self.chars
         elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError, attr
+            raise AttributeError(attr)
         else:
             return self.__dict__[attr]
 
@@ -211,7 +211,7 @@ class Zone:
 
             return self.words
         elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError, attr
+            raise AttributeError(attr)
         else:
             return self.__dict__[attr]
 
@@ -315,7 +315,7 @@ class TextZone(Zone):
             return self.words
 
         elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError, attr
+            raise AttributeError(attr)
         else:
             return self.__dict__[attr]
 
@@ -525,7 +525,7 @@ class Line:
             elif attr == "height":
                 return bounds[3] - bounds[1]
         elif attr.startswith('__') and attr.endswith('__'):
-            raise AttributeError, attr
+            raise AttributeError(attr)
         else:
             return self.__dict__[attr]
 
