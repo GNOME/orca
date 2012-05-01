@@ -1043,7 +1043,7 @@ class Script(script.Script):
         passed as argument
         """
 
-        for keyName, handler in self.inputEventHandlers.iteritems():
+        for keyName, handler in self.inputEventHandlers.items():
             if handler == inputEventHandler:
                 return keyName
 
@@ -1293,7 +1293,7 @@ class Script(script.Script):
         if oldParent is not None and oldParent == newParent and \
               newParent.getRole() in [pyatspi.ROLE_TABLE,
                                       pyatspi.ROLE_TREE_TABLE]:
-            for key in self.pointOfReference.keys():
+            for key in list(self.pointOfReference.keys()):
                 if key not in ('lastRow', 'lastColumn'):
                     del self.pointOfReference[key]
         else:
@@ -1470,7 +1470,7 @@ class Script(script.Script):
     def activate(self):
         """Called when this script is activated."""
 
-        braille.setupKeyRanges(self.brailleBindings.keys())
+        braille.setupKeyRanges(list(self.brailleBindings.keys()))
         speech.updatePunctuationLevel()
 
     def updateBraille(self, obj, extraRegion=None):
@@ -2017,7 +2017,7 @@ class Script(script.Script):
                 # attributes for this character returned by getAttributes().
                 #
                 if allAttributes:
-                    for key in charDict.keys():
+                    for key in list(charDict.keys()):
                         allAttributes[key] = charDict[key]
                 else:
                     allAttributes = charDict
@@ -4392,7 +4392,7 @@ class Script(script.Script):
                 #
                 defunctBars = 0
                 mostRecentUpdate = [obj, 0]
-                for key, value in self.lastProgressBarTime.items():
+                for key, value in list(self.lastProgressBarTime.items()):
                     if value > mostRecentUpdate[1]:
                         mostRecentUpdate = [key, value]
                     try:
@@ -4440,7 +4440,7 @@ class Script(script.Script):
                         #
                         if len(self.lastProgressBarTime) > 1:
                             index = 0
-                            for key in self.lastProgressBarTime.keys():
+                            for key in list(self.lastProgressBarTime.keys()):
                                 if key == obj and key != mostRecentUpdate[0]:
                                     # Translators: this is an index value
                                     # so that we can tell which progress bar
@@ -4786,7 +4786,7 @@ class Script(script.Script):
         otherwise.
         """
 
-        for key, value in self.attributeNamesDict.items():
+        for key, value in list(self.attributeNamesDict.items()):
             if value == attribName:
                 return key
 
@@ -5590,7 +5590,7 @@ class Script(script.Script):
             if isinstance(message[0], list):
                 message = message[0]
             if isinstance(message, list):
-                message = filter(lambda i: isinstance(i, str), message)
+                message = [i for i in message if isinstance(i, str)]
                 message = " ".join(message)
 
             if _settingsManager.getSetting('flashIsPersistent'):

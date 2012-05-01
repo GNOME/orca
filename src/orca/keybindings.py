@@ -329,7 +329,7 @@ class KeyBindings:
           filtered out (default: False)
         """
 
-        bound = filter(lambda kb: kb.keysymstring, self.keyBindings)
+        bound = [kb for kb in self.keyBindings if kb.keysymstring]
         if uniqueOnly:
             handlers = [kb.handler.description for kb in bound]
             bound = [bound[i] for i in map(handlers.index, set(handlers))]
@@ -339,7 +339,7 @@ class KeyBindings:
     def getBindingsForHandler(self, handler):
         """Returns the KeyBinding instances associated with handler."""
 
-        return filter(lambda kb: kb.handler == handler, self.keyBindings)
+        return [kb for kb in self.keyBindings if kb.handler == handler]
 
     def getInputHandler(self, keyboardEvent):
         """Returns the input handler of the key binding that matches the

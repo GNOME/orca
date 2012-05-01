@@ -758,7 +758,7 @@ def getTextAttributeKey(localizedTextAttr):
     if isinstance(localizedTextAttr, unicode):
         localizedTextAttr = localizedTextAttr.encode("UTF-8")
 
-    for key, value in _textAttributeTable.items():
+    for key, value in list(_textAttributeTable.items()):
         if value == localizedTextAttr:
             return key
 

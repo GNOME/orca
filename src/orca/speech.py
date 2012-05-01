@@ -169,7 +169,7 @@ def _speak(text, acss, interrupt):
 
     logLine = "SPEECH OUTPUT: '" + text + "'"
     extraDebug = ""
-    if acss in settings.voices.values():
+    if acss in list(settings.voices.values()):
         for key in settings.voices:
             if acss == settings.voices[key]:
                 if key != settings.DEFAULT_VOICE:

@@ -317,7 +317,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         items = [s.getSelectedChild(i) for i in range(s.nSelectedChildren)]
         if not items and obj.childCount:
             items.append(obj[0])
-        items = map(self._generateName, items)
+        items = list(map(self._generateName, items))
         for item in items:
             result.extend(item)
 

@@ -402,7 +402,7 @@ class Script(default.Script):
                 voice = self.voices[settings.DEFAULT_VOICE]
 
             phrase = self.utilities.adjustForRepeats(phrase)
-            links = filter(lambda x: x.getRole() == pyatspi.ROLE_LINK, obj)
+            links = [x for x in obj if x.getRole() == pyatspi.ROLE_LINK]
             if links:
                 phrase = self.utilities.adjustForLinks(obj, phrase, startOffset)
             speech.speak(phrase, voice)
@@ -535,7 +535,7 @@ class Script(default.Script):
         allTextObjs = utils.findAllDescendants(
             document, lambda x: 'Text' in utils.listInterfaces(x))
         allTextObjs = allTextObjs[allTextObjs.index(obj):len(allTextObjs)]
-        textObjs = filter(lambda x: x.parent not in allTextObjs, allTextObjs)
+        textObjs = [x for x in allTextObjs if x.parent not in allTextObjs]
         if not textObjs:
             return
 
@@ -583,7 +583,7 @@ class Script(default.Script):
         else:
             linkCount = hypertext.getNLinks()
             links = [hypertext.getLink(x) for x in range(linkCount)]
-            if filter(lambda l: l.startIndex <= offset <= l.endIndex, links):
+            if [l for l in links if l.startIndex <= offset <= l.endIndex]:
                 return
 
         text.setCaretOffset(offset)

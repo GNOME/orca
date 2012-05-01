@@ -140,7 +140,7 @@ class Options(argparse.Namespace):
             self._printMessageAndExit(parser.print_help)
 
         if self.listApps and self.desktopRunning:
-            apps = filter(lambda x: x != None, pyatspi.Registry.getDesktop(0))
+            apps = [x for x in pyatspi.Registry.getDesktop(0) if x != None]
             names = [app.name for app in apps]
             message = "\n".join(names)
             if message:
@@ -197,11 +197,11 @@ class Options(argparse.Namespace):
         or disabled), stores them in the self.settings dictionary and then
         returns that dictionary."""
 
-        toEnable = map(self.canEnable.get, self.enable)
+        toEnable = list(map(self.canEnable.get, self.enable))
         for item in toEnable:
             self.settings[item] = True
 
-        toDisable = map(self.canEnable.get, self.disable)
+        toDisable = list(map(self.canEnable.get, self.disable))
         for item in toDisable:
             self.settings[item] = False
 
@@ -1406,7 +1406,7 @@ def multipleOrcas():
 
     pid = os.getpid()
     ppid = os.getppid()
-    return len(filter(lambda p: p not in [pid, ppid], orcas)) > 0
+    return len([p for p in orcas if p not in [pid, ppid]]) > 0
 
 def cleanupGarbage():
     """Cleans up garbage on the heap."""

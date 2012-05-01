@@ -106,14 +106,14 @@ class ScriptManager:
         # Many python apps have an accessible name which ends in '.py'.
         # Sometimes OOo has 'soffice.bin' as its name.
         name = app.name.split('.')[0]
-        altNames = self._appNames.keys()
+        altNames = list(self._appNames.keys())
 
-        names = filter(lambda n: n.lower() == name.lower(), altNames)
+        names = [n for n in altNames if n.lower() == name.lower()]
         if names:
             name = self._appNames.get(names[0])
         else:
             for nameList in (self._appModules, self._toolkitModules):
-                names = filter(lambda n: n.lower() == name.lower(), nameList)
+                names = [n for n in nameList if n.lower() == name.lower()]
                 if names:
                     name = names[0]
                     break
@@ -145,8 +145,8 @@ class ScriptManager:
         if not (app and name):
             return None
 
-        altNames = self._toolkitNames.keys()
-        names = filter(lambda n: n.lower() == name.lower(), altNames)
+        altNames = list(self._toolkitNames.keys())
+        names = [n for n in altNames if n.lower() == name.lower()]
         if names:
             newName = self._toolkitNames.get(names[0])
             debug.println(debug.LEVEL_FINEST,
@@ -295,8 +295,8 @@ class ScriptManager:
             debug.printException(debug.LEVEL_FINEST)
             return
 
-        appList = self.appScripts.keys()
-        appList = filter(lambda a: a!= None and a not in desktop, appList)
+        appList = list(self.appScripts.keys())
+        appList = [a for a in appList if a!= None and a not in desktop]
         for app in appList:
             appScript = self.appScripts.pop(app)
             _eventManager.deregisterScriptListeners(appScript)
@@ -307,7 +307,7 @@ class ScriptManager:
             except KeyError:
                 pass
             else:
-                for toolkitScript in toolkitScripts.values():
+                for toolkitScript in list(toolkitScripts.values()):
                     _eventManager.deregisterScriptListeners(toolkitScript)
                     del toolkitScript
 

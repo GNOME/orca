@@ -371,7 +371,7 @@ def _shouldTraceIt():
         return False
 
     if TRACE_EVENTS and \
-       not filter(lambda x: x, map(objEvent.type.startswith, TRACE_EVENTS)):
+       not [x for x in map(objEvent.type.startswith, TRACE_EVENTS) if x]:
         return False
 
     return True
@@ -407,12 +407,12 @@ def traceit(frame, event, arg):
 
     if event == 'call':
         argvals = inspect.getargvalues(frame)
-        keys = filter(lambda x: x != 'self', argvals[0])
+        keys = [x for x in argvals[0] if x != 'self']
         try:
-            values = map(argvals[3].get, keys)
+            values = list(map(argvals[3].get, keys))
         except TypeError:
             if len(keys) == 1 and isinstance(keys[0], list):
-                values = map(argvals[3].get, keys[0])
+                values = list(map(argvals[3].get, keys[0]))
             else:
                 return traceit
         for i, key in enumerate(keys):

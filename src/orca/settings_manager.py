@@ -216,12 +216,12 @@ class SettingsManager(object):
             return self.customizedSettings
 
         originalSettings = {}
-        for key, value in settings.__dict__.items():
+        for key, value in list(settings.__dict__.items()):
             originalSettings[key] = value
 
         self._customizationCompleted = self._loadUserCustomizations()
 
-        for key, value in originalSettings.items():
+        for key, value in list(originalSettings.items()):
             customValue = settings.__dict__.get(key)
             if value != customValue:
                 self.customizedSettings[key] = customValue
@@ -358,10 +358,10 @@ class SettingsManager(object):
         return (general, pronunciations, keybindings)
 
     def _setSettingsRuntime(self, settingsDict):
-        for key, value in settingsDict.items():
+        for key, value in list(settingsDict.items()):
             setattr(settings, str(key), value)
         self._getCustomizedSettings()
-        for key, value in self.customizedSettings.items():
+        for key, value in list(self.customizedSettings.items()):
             setattr(settings, str(key), value)
         self._setPronunciationsRuntime()
 
@@ -397,7 +397,7 @@ class SettingsManager(object):
         as the profile's."""
         self.profileGeneral = {}
 
-        for key, value in general.items():
+        for key, value in list(general.items()):
             if isinstance(value, unicode):
                 value = value.encode('UTF-8')
             if key in settings.excludeKeys:
@@ -457,7 +457,7 @@ class SettingsManager(object):
 
     def overrideKeyBindings(self, script, scriptKeyBindings):
         keybindingsSettings = self.getKeybindings(self.profile)
-        for handlerString, bindingTuples in keybindingsSettings.items():
+        for handlerString, bindingTuples in list(keybindingsSettings.items()):
             handler = script.inputEventHandlers.get(handlerString)
             if not handler:
                 continue
@@ -496,7 +496,7 @@ class SettingsManager(object):
 
         general = {}
 
-        for key, value in prefs.items():
+        for key, value in list(prefs.items()):
             if key not in settings.excludeKeys:
                 general[key] = value
 
@@ -553,7 +553,7 @@ class SettingsManager(object):
         reload(self._knownAppSettings[name])
 
         appVoices = self.getSetting('voices')
-        for voiceType, voiceDef in appVoices.items():
+        for voiceType, voiceDef in list(appVoices.items()):
             script.voices[voiceType].update(voiceDef)
 
         keybindings = getattr(module, 'overrideAppKeyBindings', None)
@@ -569,7 +569,7 @@ class SettingsManager(object):
 
 def getVoiceKey(voice):
     voicesKeys = getattr(settings, 'voicesKeys')
-    for key in voicesKeys.keys():
+    for key in list(voicesKeys.keys()):
         if voicesKeys[key] == voice:
             return key
     return ""

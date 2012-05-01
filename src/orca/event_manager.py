@@ -67,7 +67,7 @@ class EventManager:
 
         # Tell BrlTTY which commands we care about.
         #
-        braille.setupKeyRanges(orca_state.activeScript.brailleBindings.keys())
+        braille.setupKeyRanges(list(orca_state.activeScript.brailleBindings.keys()))
 
         self._registerListener("window:activate")
         self._registerListener("window:deactivate")
@@ -79,7 +79,7 @@ class EventManager:
         """Called when this event manager is deactivated."""
 
         debug.println(debug.LEVEL_FINEST, 'INFO: Dectivating event manager')
-        for eventType in self._scriptListenerCounts.keys():
+        for eventType in list(self._scriptListenerCounts.keys()):
             self.registry.deregisterEventListener(self._enqueue, eventType)
         self._scriptListenerCounts = {}
         debug.println(debug.LEVEL_FINEST, 'INFO: Event manager deactivated')
@@ -93,7 +93,7 @@ class EventManager:
         ignoredList = ['object:state-changed:defunct',
                        'object:property-change:accessible-parent']
         ignoredList.extend(settings.ignoredEventsList)
-        if filter(event.type.startswith, ignoredList):
+        if list(filter(event.type.startswith, ignoredList)):
             return True
 
         # This should ultimately be changed as there are valid reasons
@@ -322,7 +322,7 @@ class EventManager:
                       'INFO: Event manager registering listeners for: %s' \
                        % script)
 
-        for eventType in script.listeners.keys():
+        for eventType in list(script.listeners.keys()):
             self._registerListener(eventType)
 
     def deregisterScriptListeners(self, script):
@@ -337,19 +337,19 @@ class EventManager:
                       'INFO: Event manager deregistering listeners for: %s' \
                        % script)
 
-        for eventType in script.listeners.keys():
+        for eventType in list(script.listeners.keys()):
             self._deregisterListener(eventType)
 
     def registerModuleListeners(self, listeners):
         """Register the listeners on behalf of the caller."""
 
-        for eventType, function in listeners.items():
+        for eventType, function in list(listeners.items()):
             self.registry.registerEventListener(function, eventType)
 
     def deregisterModuleListeners(self, listeners):
         """Deegister the listeners on behalf of the caller."""
 
-        for eventType, function in listeners.items():
+        for eventType, function in list(listeners.items()):
             self.registry.deregisterEventListener(function, eventType)
 
     def registerKeystrokeListener(self, function, mask=None, kind=None):

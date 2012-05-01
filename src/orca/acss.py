@@ -73,7 +73,7 @@ class ACSS(dict):
                     #
                     if k == ACSS.FAMILY:
                         self[k] = {}
-                        for j in props[k].keys():
+                        for j in list(props[k].keys()):
                             self[k][j] = props[k][j]
                     else:
                         self[k] = props[k]
@@ -94,7 +94,7 @@ class ACSS(dict):
 
     def name(self):
         _name = 'acss-'
-        names = self.keys()
+        names = list(self.keys())
         if names:
             names.sort()
             for  k in names:

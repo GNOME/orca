@@ -152,7 +152,7 @@ class Utilities(script_utilities.Utilities):
 
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
         offsets = [m.start(0) for m in re.finditer(pattern, string)]
-        offsets = filter(lambda x: start <= x < end, offsets)
+        offsets = [x for x in offsets if start <= x < end]
 
         objects = []
         try:
@@ -165,6 +165,6 @@ class Utilities(script_utilities.Utilities):
             objects.append((objs[i], first, last, ''))
             start = last
         objects.append((obj, start, end, string[start:end]))
-        objects = filter(lambda x: x[1] < x[2], objects)
+        objects = [x for x in objects if x[1] < x[2]]
 
         return objects

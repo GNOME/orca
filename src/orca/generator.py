@@ -72,10 +72,7 @@ class Generator:
         self._script = script
         self._methodsDict = {}
         for method in \
-            filter(lambda z: isinstance(z, collections.Callable),
-                   map(lambda y: getattr(self, y).__get__(self, self.__class__),
-                       filter(lambda x: x.startswith(METHOD_PREFIX),
-                                        dir(self)))):
+            [z for z in [getattr(self, y).__get__(self, self.__class__) for y in [x for x in dir(self) if x.startswith(METHOD_PREFIX)]] if isinstance(z, collections.Callable)]:
             name = method.__name__[len(METHOD_PREFIX):]
             name = name[0].lower() + name[1:]
             self._methodsDict[name] = method
@@ -98,7 +95,7 @@ class Generator:
         # for the results of all the legal method names.
         #
         globalsDict = {}
-        for key in self._methodsDict.keys():
+        for key in list(self._methodsDict.keys()):
             globalsDict[key] = []
         self._addGlobals(globalsDict)
 
@@ -331,10 +328,8 @@ class Generator:
         the assumption being that the user was able to see the text prior
         to giving the widget focus.
         """
-        result = filter(lambda x:
-                        x.startswith('placeholder-text:'),
-                        obj.getAttributes())
-        return map(lambda x: x.replace('placeholder-text:', ''), result)
+        result = [x for x in obj.getAttributes() if x.startswith('placeholder-text:')]
+        return [x.replace('placeholder-text:', '') for x in result]
 
     def _generateLabelAndName(self, obj, **args):
         """Returns the label and the name as an array of strings for speech

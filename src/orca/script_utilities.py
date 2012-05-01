@@ -439,7 +439,7 @@ class Utilities:
         """
 
         allObjs = Utilities.allDescendants(root, onlyShowing)
-        return filter(lambda o: o.getRole() == role, allObjs)
+        return [o for o in allObjs if o.getRole() == role]
 
     def displayedLabel(self, obj):
         """If there is an object labelling the given object, return the
@@ -936,8 +936,7 @@ class Utilities:
         debug.println(debug.LEVEL_FINEST,
                       "knownApplications...")
 
-        apps = filter(lambda x: x is not None,
-                      pyatspi.Registry.getDesktop(0))
+        apps = [x for x in pyatspi.Registry.getDesktop(0) if x is not None]
 
         debug.println(debug.LEVEL_FINEST,
                       "...knownApplications")
@@ -1532,16 +1531,15 @@ class Utilities:
         """
 
         allLabels = self.descendantsWithRole(root, pyatspi.ROLE_LABEL)
-        labels = filter(lambda x: not x.getRelationSet(), allLabels)
-        labels = filter(lambda x: x.parent and x.name != x.parent.name, labels)
-        labels = filter(
-            lambda x: x.getState().contains(pyatspi.STATE_SHOWING), labels)
+        labels = [x for x in allLabels if not x.getRelationSet()]
+        labels = [x for x in labels if x.parent and x.name != x.parent.name]
+        labels = [x for x in labels if x.getState().contains(pyatspi.STATE_SHOWING)]
 
         # Eliminate duplicates
         d = {}
         for label in labels:
             d[label.name] = label
-        labels = d.values()
+        labels = list(d.values())
 
         return sorted(labels, self.spatialComparison)
 
@@ -2662,7 +2660,7 @@ class Utilities:
         superscripted = set(re.findall(self.SUPERSCRIPTS_RE, uString))
 
         for number in superscripted:
-            new = map(lambda d: str(self.SUPERSCRIPT_DIGITS.index(d)), number)
+            new = [str(self.SUPERSCRIPT_DIGITS.index(d)) for d in number]
             # Translators: This string is part of the presentation of an
             # item that includes one or several consequtive superscripted
             # characters, e.g. 'X' followed by 'superscript 2' followed by
@@ -2676,7 +2674,7 @@ class Utilities:
             uString = re.sub(number, newString, uString)
 
         for number in subscripted:
-            new = map(lambda d: str(self.SUBSCRIPT_DIGITS.index(d)), number)
+            new = [str(self.SUBSCRIPT_DIGITS.index(d)) for d in number]
             # Translators: This string is part of the presentation of an
             # item that includes one or several consequtive subscripted
             # characters, e.g. 'X' followed by 'subscript 2' followed by
@@ -2936,9 +2934,9 @@ class Utilities:
 
         try:
             items = [s.strip() for s in string.split(";")]
-            items = filter(lambda item: len(item.split(':')) == 2, items)
-            keys = map(lambda item: item.split(':')[0].strip(), items)
-            dictionary = dict(map(lambda item: item.split(':'), items))
+            items = [item for item in items if len(item.split(':')) == 2]
+            keys = [item.split(':')[0].strip() for item in items]
+            dictionary = dict([item.split(':') for item in items])
         except:
             return [], {}
 

@@ -269,7 +269,7 @@ class KeyboardEvent(InputEvent):
 
         orcaMods = settings.orcaModifierKeys
         try:
-            orcaMods = map(lambda x: x.encode('UTF-8'), orcaMods)
+            orcaMods = [x.encode('UTF-8') for x in orcaMods]
         except (UnicodeDecodeError, UnicodeEncodeError):
             pass
 

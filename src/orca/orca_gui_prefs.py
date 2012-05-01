@@ -719,7 +719,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             serverInfo = speech.getInfo()
 
         try:
-            serverInfo = map(lambda x: x.encode('UTF-8'), serverInfo)
+            serverInfo = [x.encode('UTF-8') for x in serverInfo]
         except (UnicodeDecodeError, UnicodeEncodeError):
             pass
 
@@ -2114,7 +2114,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         iterBB = self._createNode(_("Braille Bindings"))
         self.bbindings = defScript.getBrailleBindings()
-        for com, inputEvHand in self.bbindings.iteritems():
+        for com, inputEvHand in self.bbindings.items():
             handl = defScript.getInputEventHandlerKey(inputEvHand)
             self._insertRowBraille(handl, com, inputEvHand, iterBB)
 
@@ -2806,7 +2806,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         orcaMods = settings.orcaModifierKeys
         try:
-            orcaMods = map(lambda x: x.encode('UTF-8'), orcaMods)
+            orcaMods = [x.encode('UTF-8') for x in orcaMods]
         except (UnicodeDecodeError, UnicodeEncodeError):
             pass
         if eventString in orcaMods:
@@ -2877,7 +2877,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                           and x.modifiers == modifiers \
                           and x.click_count == clickCount \
                           and x.handler
-            matches = filter(match, self.kbindings.keyBindings)
+            matches = list(filter(match, self.kbindings.keyBindings))
             if matches:
                 description = matches[0].handler.description
 

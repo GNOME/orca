@@ -137,7 +137,7 @@ class LabelInference:
             debug.println(debug.LEVEL_FINE, 'Dead Accessible in %s' % obj)
             return False
 
-        children = filter(lambda x: x.getRole() != pyatspi.ROLE_LINK, children)
+        children = [x for x in children if x.getRole() != pyatspi.ROLE_LINK]
         if len(children) > 1:
             return False
 
@@ -223,11 +223,11 @@ class LabelInference:
 
         contents = self._script.utilities.getObjectsFromEOCs(obj)
         objects = [content[0] for content in contents]
-        if filter(self._isWidget, objects):
+        if list(filter(self._isWidget, objects)):
             return ''
 
         strings = [content[3] or content[0].name for content in contents]
-        strings = map(lambda x: x.strip(), strings)
+        strings = [x.strip() for x in strings]
         return ' '.join(strings)
 
     def _getLineContents(self, obj):
@@ -277,14 +277,14 @@ class LabelInference:
 
         extents = self._getExtents(obj)
         contents = self._getLineContents(obj)
-        content = filter(lambda o: o[0] == obj, contents)
+        content = [o for o in contents if o[0] == obj]
         try:
             index = contents.index(content[0])
         except IndexError:
             index = len(contents)
 
         onLeft = contents[max(0, index-1):index]
-        onLeft = filter(lambda o: o[0] and not self._isWidget(o[0]), onLeft)
+        onLeft = [o for o in onLeft if o[0] and not self._isWidget(o[0])]
         if not onLeft:
             return None
 
@@ -314,14 +314,14 @@ class LabelInference:
 
         extents = self._getExtents(obj)
         contents = self._getLineContents(obj)
-        content = filter(lambda o: o[0] == obj, contents)
+        content = [o for o in contents if o[0] == obj]
         try:
             index = contents.index(content[0])
         except IndexError:
             index = len(contents)
 
         onRight = contents[min(len(contents), index+1):]
-        onRight = filter(lambda o: o[0] and not self._isWidget(o[0]), onRight)
+        onRight = [o for o in onRight if o[0] and not self._isWidget(o[0])]
         if not onRight:
             return None
 
@@ -486,14 +486,14 @@ class LabelInference:
         # as a functional label. Therefore, see if this table looks like a grid
         # of widgets with the functional labels in the first row.
         firstRow = [table.getAccessibleAt(0, i) for i in range(table.nColumns)]
-        if not firstRow or filter(self._isWidget, firstRow):
+        if not firstRow or list(filter(self._isWidget, firstRow)):
             return None
 
         cells = [table.getAccessibleAt(i, col) for i in range(1, table.nRows)]
-        if filter(lambda x: x == None, cells):
+        if [x for x in cells if x == None]:
             debug.println(debug.LEVEL_FINE, "INFER: Potentially broken table!")
             return None
-        if filter(lambda x: x[0] and x[0].getRole() != obj.getRole(), cells):
+        if [x for x in cells if x[0] and x[0].getRole() != obj.getRole()]:
             return None
 
         label = self._createLabelFromContents(firstRow[col])

@@ -313,7 +313,7 @@ class OrcaPrefs:
             # settings manager.
             voiceDict = voices[voice]
             newDict = {}
-            for key, value in voiceDict.items():
+            for key, value in list(voiceDict.items()):
                 newDict[str(key)] = value
             voicesStr += "'%s' : orca.acss.ACSS(" % voice
             voicesStr += pprint.pformat(newDict) + "),\n"

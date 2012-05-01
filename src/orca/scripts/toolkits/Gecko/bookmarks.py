@@ -144,7 +144,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         saved = {}
          
         # save obj as a path instead of an accessible
-        for index, bookmark in self._bookmarks.iteritems():
+        for index, bookmark in self._bookmarks.items():
             saved[index] = bookmark[0], bookmark[1]
             
         try:
@@ -170,7 +170,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         # offset by the difficulty in finding the next bookmark.  We will 
         # need to sort our keys to determine the next bookmark on a page by 
         # page basis.
-        bm_keys = self._bookmarks.keys()
+        bm_keys = list(self._bookmarks.keys())
         current_uri = self.getURIKey()
         
         # mine out the hardware keys for this page and sort them
@@ -203,7 +203,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
     def goToPrevBookmark(self, inputEvent):
         """ Go to the previous bookmark location.  If no bookmark has yet to be
         selected, the first bookmark will be used.  """
-        bm_keys = self._bookmarks.keys()
+        bm_keys = list(self._bookmarks.keys())
         current_uri = self.getURIKey()
         
         # mine out the hardware keys for this page and sort them

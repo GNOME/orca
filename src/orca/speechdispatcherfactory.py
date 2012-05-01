@@ -129,7 +129,7 @@ class SpeechServer(speechserver.SpeechServer):
     getSpeechServer = staticmethod(getSpeechServer)
 
     def shutdownActiveServers():
-        for server in SpeechServer._active_servers.values():
+        for server in list(SpeechServer._active_servers.values()):
             server.shutdown()
     shutdownActiveServers = staticmethod(shutdownActiveServers)
 
@@ -373,7 +373,7 @@ class SpeechServer(speechserver.SpeechServer):
                 if t == speechserver.SayAllContext.COMPLETED:
                     GObject.idle_add(self._say_all, iterator, orca_callback)
             self._speak(context.utterance, acss, callback=callback,
-                        event_types=self._CALLBACK_TYPE_MAP.keys())
+                        event_types=list(self._CALLBACK_TYPE_MAP.keys()))
         return False # to indicate, that we don't want to be called again.
 
     def _cancel(self):

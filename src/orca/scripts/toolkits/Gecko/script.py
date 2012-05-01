@@ -4129,7 +4129,7 @@ class Script(default.Script):
 
         # Maybe we've already made a guess and saved it.
         #
-        for field, label in self._guessedLabels.items():
+        for field, label in list(self._guessedLabels.items()):
             if self.utilities.isSameObject(field, obj):
                 return label
 
@@ -5111,7 +5111,7 @@ class Script(default.Script):
                and lastExtents != nextExtents \
                or nextExtents == (0, 0, 0, 0):
                 toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
-                toAdd = filter(lambda x: x not in objects, toAdd)
+                toAdd = [x for x in toAdd if x not in objects]
                 objects.extend(toAdd)
             elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
                                         pyatspi.ROLE_TABLE_CELL] \

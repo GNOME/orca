@@ -50,13 +50,13 @@ class PriorityQueue:
         time """
         currenttime = time.time()
         myfilter = lambda item: item[1] + MSG_KEEPALIVE_TIME > currenttime
-        self.queue = filter(myfilter, self.queue)
+        self.queue = list(filter(myfilter, self.queue))
 
     def purgeByPriority(self, priority):
         """ Purge items from the queue that have a lower than or equal priority
         than the given argument """
         myfilter = lambda item: item[0] > priority
-        self.queue = filter(myfilter, self.queue)
+        self.queue = list(filter(myfilter, self.queue))
 
     def clumpContents(self):
         """ Combines messages with the same 'label' by appending newer  
@@ -142,7 +142,7 @@ class LiveRegionManager:
         # objects that are not registered for this page
         newpoliteness = {}
         currenturi = self._script.bookmarks.getURIKey()
-        for key, value in self._politenessOverrides.iteritems():
+        for key, value in self._politenessOverrides.items():
             if key[0] == currenturi or value != LIVE_NONE:
                 newpoliteness[key] = value
         self._politenessOverrides = newpoliteness
@@ -320,7 +320,7 @@ class LiveRegionManager:
             self._restoreOverrides = copy.copy(self._politenessOverrides)
 
             # Set all politeness overrides to LIVE_OFF.
-            for override in self._politenessOverrides.keys():
+            for override in list(self._politenessOverrides.keys()):
                 self._politenessOverrides[override] = LIVE_OFF
 
             # look through all the objects on the page and set/add to
@@ -336,7 +336,7 @@ class LiveRegionManager:
 
         # The user wants to restore politeness levels
         else:
-            for key, value in self._restoreOverrides.iteritems():
+            for key, value in self._restoreOverrides.items():
                 self._politenessOverrides[key] = value
             # Translators: This lets the user know that all live regions
             # have been restored to their original politeness level.

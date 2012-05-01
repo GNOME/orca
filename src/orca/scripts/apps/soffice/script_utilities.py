@@ -224,7 +224,7 @@ class Utilities(script_utilities.Utilities):
         #
         docFrames = self.descendantsWithRole(
             self.topLevelObject(obj), pyatspi.ROLE_DOCUMENT_FRAME)
-        docFrame = filter(lambda o: ":" in o.name and "/" in o.name, docFrames)
+        docFrame = [o for o in docFrames if ":" in o.name and "/" in o.name]
         if docFrame:
             return docFrame[0]
 
