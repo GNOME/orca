@@ -3696,7 +3696,7 @@ msgstr "Číst pouze zobrazený text"
 
 #: ../src/orca/orca-setup.ui.h:66
 msgid "Speak blank lines"
-msgstr "Číst prázdný řádek"
+msgstr "Číst prázdné řádky"
 
 #: ../src/orca/orca-setup.ui.h:67
 msgid "Speak _indentation and justification"
