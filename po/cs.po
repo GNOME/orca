@@ -4260,7 +4260,7 @@ msgstr "_Nečíst nic"
 
 #: ../src/orca/orca-setup.ui.h:135
 msgid "Speak blank lines"
-msgstr "Číst prázdný řádek"
+msgstr "Číst prázdné řádky"
 
 #. Translators: This checkbox toggles whether or not Orca says the child position (e.g., 'item 6 of 7').
 #: ../src/orca/orca-setup.ui.h:137
