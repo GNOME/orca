@@ -124,7 +124,7 @@ class OrcaMainGUI(Gtk.Window):
         #
         translatorCredits = _("translator-credits")
         # Translators: This text is used in the Orca About dialog. Orca is
-        # licensed under GPL2+.
+        # licensed under LGPL2.1+.
         #
         licenseText = \
             _("Orca is free software; you can redistribute it and/or\n" \
