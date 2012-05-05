@@ -28,10 +28,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
-import dbus
 import os
 import imp
-from dbus.mainloop.glib import DBusGMainLoop
+from gi.repository import Gio, GLib
 from json import load
 from xdg.BaseDirectory import xdg_data_home
 
@@ -41,13 +40,16 @@ import settings
 import pronunciation_dict
 
 try:
-    _dbusLoop = DBusGMainLoop()
-    _bus = dbus.SessionBus(mainloop=_dbusLoop)
-    _proxy = _bus.get_object("org.a11y.Bus", "/org/a11y/bus")
-    _desktopProps = \
-        dbus.Interface(_proxy, dbus_interface='org.freedesktop.DBus.Properties')
+    _proxy = Gio.DBusProxy.new_for_bus_sync(
+        Gio.BusType.SESSION,
+        Gio.DBusCallFlags.NONE,
+        None,
+        'org.a11y.Bus',
+        '/org/a11y/bus',
+        'org.freedesktop.DBus.Properties',
+        None)
 except:
-    _desktopProps = None
+    _proxy = None
 
 class SettingsManager(object):
     """Settings backend manager. This class manages orca user's settings
@@ -315,27 +317,27 @@ class SettingsManager(object):
         return not alreadyEnabled
 
     def isAccessibilityEnabled(self):
-        if not _desktopProps:
+        if not _proxy:
             return False
 
-        return bool(_desktopProps.Get('org.a11y.Status', 'IsEnabled'))
+        return _proxy.Get('(ss)', 'org.a11y.Status', 'IsEnabled')
 
     def setAccessibility(self, enable):
-        if not _desktopProps:
+        if not _proxy:
             return False
 
-        _desktopProps.Set('org.a11y.Status', 'IsEnabled', enable)
-        return True
+        vEnable = GLib.Variant('b', enable)
+        _proxy.Set('(ssv)', 'org.a11y.Status', 'IsEnabled', vEnable)            
 
     def isScreenReaderServiceEnabled(self):
         """Returns True if the screen reader service is enabled. Note that
         this does not necessarily mean that Orca (or any other screen reader)
         is running at the moment."""
 
-        if not _desktopProps:
+        if not _proxy:
             return False
 
-        return bool(_desktopProps.Get('org.a11y.Status', 'ScreenReaderEnabled'))
+        return _proxy.Get('(ss)', 'org.a11y.Status', 'ScreenReaderEnabled')
 
     def setStartingProfile(self, profile=None):
         if profile is None:
