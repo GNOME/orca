@@ -409,10 +409,7 @@ try:
 except RuntimeError:
     pass
 
-print settings.useDBus
 if settings.useDBus:
-    import dbus.mainloop.glib
-    dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
     import dbusserver
 
 import braille

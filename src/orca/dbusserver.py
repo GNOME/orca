@@ -27,6 +27,8 @@ __license__   = "LGPL"
 
 import dbus
 import dbus.service
+import dbus.mainloop.glib
+dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
 import debug
 import settings
