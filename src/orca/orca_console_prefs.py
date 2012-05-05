@@ -27,6 +27,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import re
+import sys
 
 import acss
 import settings
@@ -488,15 +489,6 @@ def setupSpeech(prefsDict):
 
     return True
 
-def logoutUser():
-    """Log the user out of the desktop."""
-
-    import dbus
-    bus = dbus.SessionBus()
-    sessionManager = bus.get_object('org.gnome.SessionManager',
-                                    '/org/gnome/SessionManager')
-    sessionManager.Logout(dbus.types.UInt32(1))
-
 def showPreferencesUI(commandLineSettings):
     """Uses the console to query the user for Orca preferences."""
 
@@ -555,45 +547,9 @@ def showPreferencesUI(commandLineSettings):
     if 'profile' not in prefsDict:
         prefsDict['profile'] = settings.profile
 
-
-    logoutNeeded = _settingsManager.saveSettings(prefsDict, {}, {})
-    if logoutNeeded:
-        sayAndPrint(_("Accessibility support for GNOME has just been enabled."),
-                    logoutNeeded,
-                    False,
-                    speechServerChoice,
-                    speechVoiceChoice)
-        sayAndPrint( \
-        _("You need to log out and log back in for the change to take effect."),
-                    False,
-                    False,
-                    speechServerChoice,
-                    speechVoiceChoice)
-
-        if desktopRunning:
-            stop = True
-            while True:
-                answer = sayAndPrint( \
-                    _("Do you want to logout now?  Enter y or n: "),
-                                     False,
-                                     True,
-                                     speechServerChoice,
-                                     speechVoiceChoice)
-                try:
-                    if checkYes(answer):
-                        sayAndPrint(_("Setup complete. Logging out now."),
-                                    stop,
-                                    False,
-                                    speechServerChoice,
-                                    speechVoiceChoice)
-                        logoutUser()
-                    break
-                except:
-                    stop = False
-                    sayAndPrint(_("Please enter y or n."))
-
+    _settingsManager.saveSettings(prefsDict, {}, {})
     answer = sayAndPrint(_("Setup complete.  Press Return to continue."),
-                         not logoutNeeded,
+                         True,
                          True,
                          speechServerChoice,
                          speechVoiceChoice)
@@ -602,7 +558,7 @@ def showPreferencesUI(commandLineSettings):
         factory.SpeechServer.shutdownActiveServers()
 
 def main():
-    showPreferencesUI()
+    showPreferencesUI(sys.argv[1:])
 
 if __name__ == "__main__":
     main()
