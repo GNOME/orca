@@ -42,7 +42,7 @@ import pronunciation_dict
 try:
     _proxy = Gio.DBusProxy.new_for_bus_sync(
         Gio.BusType.SESSION,
-        Gio.DBusCallFlags.NONE,
+        Gio.DBusProxyFlags.NONE,
         None,
         'org.a11y.Bus',
         '/org/a11y/bus',
