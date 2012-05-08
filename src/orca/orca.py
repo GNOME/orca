@@ -413,7 +413,6 @@ if settings.useDBus:
     import dbusserver
 
 import braille
-import httpserver
 import orca_state
 import speech
 import notification_messages
@@ -745,7 +744,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     if settings.useDBus:
         dbusserver.shutdown()
 
-    httpserver.shutdown()
     speech.shutdown()
     braille.shutdown()
 
@@ -837,7 +835,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     #
     if settings.useDBus:
         dbusserver.init()
-    httpserver.init()
 
     debug.println(debug.LEVEL_FINEST, 'INFO: User Settings Loaded')
 

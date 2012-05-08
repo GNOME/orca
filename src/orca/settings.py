@@ -282,16 +282,6 @@ speechRateDelta         = 5
 #
 speechPitchDelta        = 0.5
 
-# The port to listen on if orca is to act as an HTTP server
-# (mainly as a speech server for self-voicing applications).
-#
-httpServerPort          = 0
-
-# The number of attempts to retry setting up an HTTP server
-# connection (each time incrementing the port number by 1).
-#
-maxHttpServerRetries    = 20
-
 # Whether or not to use DBUS.
 #
 if os.getenv("DBUS_SESSION_BUS_ADDRESS"):
