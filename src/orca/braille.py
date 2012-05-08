@@ -287,6 +287,8 @@ TABLE_NAMES = {"Cz-Cz-g1": _("Czech Grade 1"),
                "fr-fr-g1": _("France French Grade 1"),
                "gr-gr-g1": _("Greek Grade 1"),
                "hi-in-g1": _("Hindi Grade 1"),
+               "hu-hu-comp8": _("Hungarian 8 dot computer"),
+               "hu-hu-g1": _("Hungarian Grade 1"),
                "it-it-g1": _("Italian Grade 1"),
                "nl-be-g1": _("Belgium Dutch Grade 1")}
 
