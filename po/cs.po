@@ -2527,7 +2527,7 @@ msgstr "Povolit braillská zařízení? Zadejte A nebo N: "
 #.
 #: ../src/orca/orca_console_prefs.py:537
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Povolit braillský zobrazovač? Zadejte A nebo N: "
+msgstr "Povolit braillský monitor? Zadejte A nebo N: "
 
 #: ../src/orca/orca_console_prefs.py:561 ../src/orca/orca_gui_prefs.py:402
 msgid "Accessibility support for GNOME has just been enabled."
@@ -3751,7 +3751,7 @@ msgstr "Zapnout podpo_ru braillských zařízení"
 
 #: ../src/orca/orca-setup.ui.h:83
 msgid "Enable Braille _monitor"
-msgstr "Zapnout _braillský zobrazovač"
+msgstr "Zapnout _braillský monitor"
 
 #: ../src/orca/orca-setup.ui.h:84
 msgid "_Abbreviated role names"
