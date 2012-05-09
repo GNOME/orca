@@ -2816,7 +2816,7 @@ msgstr "Povolit braillská zařízení? Zadejte A nebo N: "
 #.
 #: ../src/orca/orca_console_prefs.py:558
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Povolit braillský zobrazovač? Zadejte A nebo N: "
+msgstr "Povolit braillský monitor? Zadejte A nebo N: "
 
 #. Translators: orca can be set up to automatically start when
 #. the user logs in.
@@ -4031,7 +4031,7 @@ msgstr "O_kraj:"
 
 #: ../src/orca/orca-setup.ui.h:49
 msgid "Enable Braille _monitor"
-msgstr "Zapnout _braillský zobrazovač"
+msgstr "Zapnout _braillský monitor"
 
 #: ../src/orca/orca-setup.ui.h:50
 msgid "Enable Braille _support"
