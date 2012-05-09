@@ -35,6 +35,7 @@ orca_python_PYTHON = \
 	label_inference.py \
 	laptop_keyboardmap.py \
 	liveregions.py \
+	logger.py \
 	mouse_review.py \
 	notification_messages.py \
 	orca.py \

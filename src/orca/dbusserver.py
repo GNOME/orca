@@ -31,12 +31,7 @@ import dbus.mainloop.glib
 dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
 import debug
-import settings
-
-# Handlers for logging speech and braille output.
-#
-loggingFileHandlers = {}
-loggingStreamHandlers = {}
+import logger
 
 # pylint: disable-msg=R0923
 # Server: Interface not implemented
@@ -49,99 +44,27 @@ class Server(dbus.service.Object):
 
     def __init__(self, object_path, bus_name):
         dbus.service.Object.__init__(self, None, object_path, bus_name)
+        self._logger = logger.Logger()
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Logging',
                          in_signature='si', out_signature='')
     def setDebug(self, debugFile, debugLevel):
-        """Sets the file to send detailed debug information."""
-        if not settings.enableRemoteLogging:
-            return
-        debug.println(debug.LEVEL_FINEST,
-                      "DBus Logging.setDebug(%s, %d)" \
-                      % (debugFile, debugLevel))
-        if debug.debugFile:
-            debug.debugFile.close()
-            debug.debugFile = None
-        if debugFile and len(debugFile):
-            debug.debugFile = open('%s.debug' % debugFile, 'w', 0)
-        debug.debugLevel = debugLevel
+        self._logger.setDebug(debugFile, debugLevel)
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Logging',
                          in_signature='s', out_signature='')
     def setLogFile(self, logFile):
-        """Sets the file to send speech and braille logging information."""
-        if not settings.enableRemoteLogging:
-            return
-        import logging
-        debug.println(debug.LEVEL_FINEST,
-                      "DBus Logging.setLogFile(%s)" % logFile)
-        for logger in ['braille', 'speech']:
-            log = logging.getLogger(logger)
-            formatter = logging.Formatter('%(message)s')
-            try:
-                loggingFileHandlers[logger].flush()
-                loggingFileHandlers[logger].close()
-                log.removeHandler(loggingFileHandlers[logger])
-            except:
-                pass
-            if logFile and len(logFile):
-                loggingFileHandlers[logger] = logging.FileHandler(
-                    '%s.%s' % (logFile, logger), 'w')
-                loggingFileHandlers[logger].setFormatter(formatter)
-                log.addHandler(loggingFileHandlers[logger])
-            log.setLevel(logging.INFO)
+        self._logger.setLogFile(logFile)
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Logging',
                          in_signature='', out_signature='')
     def startRecording(self):
-        """Tells Orca to start logging speech and braille output."""
-        if not settings.enableRemoteLogging:
-            return
-        debug.println(debug.LEVEL_FINEST, "DBus Logging.startRecording")
-        import logging
-        import StringIO
-        for logger in ['braille', 'speech']:
-            log = logging.getLogger(logger)
-            try:
-                [stringIO, handler] = loggingStreamHandlers[logger]
-                handler.close()
-                log.removeHandler(handler)
-                stringIO.close()
-            except:
-                pass
-            formatter = logging.Formatter('%(message)s')
-            stringIO = StringIO.StringIO()
-            handler = logging.StreamHandler(stringIO)
-            handler.setFormatter(formatter)
-            log.addHandler(handler)
-            loggingStreamHandlers[logger] = [stringIO, handler]
-            log.setLevel(logging.INFO)
+        self._logger.startRecording()
 
     @dbus.service.method(dbus_interface='org.gnome.Orca.Logging',
                          in_signature='', out_signature='s')
     def stopRecording(self):
-        """Tells Orca to stop logging speech and braille output and
-        to return whatever was recorded since the last call to
-        startRecording."""
-        if not settings.enableRemoteLogging:
-            return ""
-        debug.println(debug.LEVEL_FINEST, "DBus Logging.stopRecording")
-        import logging
-        import StringIO
-        result = ''
-        for logger in ['braille', 'speech']:
-            log = logging.getLogger(logger)
-            try:
-                [stringIO, handler] = loggingStreamHandlers[logger]
-                handler.flush()
-                handler.close()
-                log.removeHandler(handler)
-                result += stringIO.getvalue()
-                stringIO.close()
-            except:
-                debug.printException(debug.LEVEL_OFF)
-            stringIO = StringIO.StringIO()
-        return result
+        return self._logger.stopRecording()
 
 def init():
     """Sets up the Orca DBus service.  This will only take effect once

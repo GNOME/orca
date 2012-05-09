@@ -289,10 +289,6 @@ if os.getenv("DBUS_SESSION_BUS_ADDRESS"):
 else:
     useDBus = False
 
-# Whether or not recording is enabled via the HTTP server.
-#
-enableRemoteLogging     = False
-
 # If True, enable speech.
 #
 enableSpeech            = True
