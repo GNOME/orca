@@ -3,10 +3,8 @@ sure your PYTHONPATH includes the directory containing this
 file in order for the tests that use it to work.  The test
 harness does that automatically for you."""
 
-import dbus
-bus = dbus.SessionBus()
-dbusOrca = bus.get_object('org.gnome.Orca', '/')
-dbusOrcaLogging = dbus.Interface(dbusOrca, 'org.gnome.Orca.Logging')
+import orca.logger as logger
+testLogger = logger.Logger()
 
 # Where to find Dojo tests.
 #
@@ -98,7 +96,7 @@ class StartRecordingAction(AtomicAction):
             AtomicAction.__init__(self, 0, lambda: None)
 
     def _startRecording(self):
-        dbusOrcaLogging.startRecording()
+        testLogger.startRecording()
 
     def __str__(self):
         return 'Start Recording Action'
@@ -240,7 +238,7 @@ class AssertPresentationAction(AtomicAction):
         return knownIssue
 
     def _stopRecording(self):
-        result = dbusOrcaLogging.stopRecording()
+        result = testLogger.stopRecording()
         results = self._assertionPredicate(result, self._expectedResults)
         if not results:
             AssertPresentationAction.totalSucceed += 1

@@ -73,9 +73,6 @@ if not orca.debug.debugFile:
         log.addHandler(handler)
         log.setLevel(logging.INFO)
 
-import orca.dbusserver as dbusserver
-dbusserver.init()
-
 EOF
 
 # Set up our local user settings file for the output format we want.
