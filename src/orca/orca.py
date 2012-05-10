@@ -249,7 +249,7 @@ def presentInvalidOptions(invalidOptions):
     return False
 
 parser = argparse.ArgumentParser(
-    description = _("orca - scriptable screen reader and magnifier"),
+    description = _("orca - scriptable screen reader"),
     # Translators: this is text being sent to a terminal and we want to keep
     # the text lines within terminal boundaries.
     #
@@ -1416,8 +1416,17 @@ def main():
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
     signal.signal(signal.SIGSEGV, abortOnSignal)
 
-    if presentInvalidOptions(invalidOpts) and multipleOrcas():
-        die(0)
+    if multipleOrcas():
+        if not options.replace:
+            # Translators: This message is presented to the user when
+            # he/she tries to launch Orca, but Orca is already running.
+            print(_('Another Orca process is already running for this ' \
+                    'session.\n Run "orca --replace" to replace that ' \
+                    'process with a new one.'))
+            return 1
+        if presentInvalidOptions(invalidOpts):
+            die(0)
+
 
     _commandLineSettings.update(options.convertToSettings())
     for profile in options.profiles:
@@ -1454,9 +1463,10 @@ def main():
         _showPreferencesConsole()
 
     if not options.desktopRunning:
-        print("Cannot start Orca because it cannot connect")
-        print("to the Desktop.  Please make sure the DISPLAY")
-        print("environment variable has been set.")
+        # Translators: This message is presented to the user who attempts
+        # to launch Orca from some other environment than the graphical
+        # desktop.
+        print (_('Cannot start Orca because it cannot connect to the Desktop.'))
         return 1
 
     sys.path.insert(0, _settingsManager.getPrefsDir())

@@ -150,28 +150,5 @@ else
         WONT_EXIT=`echo $ARGS | egrep -c "\-s|\-t|\-n|\-u|\-e|\-d"`
     fi
 
-    # Do not run if another Orca is already running.
-    #
-    if [ "x$DBUS_SESSION_BUS_ADDRESS" != "x" ] && [ $WONT_EXIT -gt 0 ] ; then
-        IFS=:
-        DBUSSENDCMD=
-        for dir in $PATH:/usr/sfw/bin:/usr/local/bin; do
-            test -x "$dir/dbus-send" && {
-                DBUSSENDCMD="$dir/dbus-send"
-                break
-            }
-        done
-        if [ "x$DBUSSENDCMD" != "x" ] ; then
-            $DBUSSENDCMD --reply-timeout=5000 --print-reply \
-                --dest=org.gnome.Orca / org.freedesktop.DBus.Peer.Ping \
-                > /dev/null 2>&1
-            if [ "$?" -eq 0 ] ; then
-                echo "Another Orca process is already running for this session."
-                echo "Run \"orca --replace\" if you want to replace the current"
-                echo "process with a new one."
-                exit
-            fi
-        fi
-    fi
     runOrca
 fi
