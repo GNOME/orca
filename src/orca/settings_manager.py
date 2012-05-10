@@ -32,7 +32,6 @@ import os
 import imp
 from gi.repository import Gio, GLib
 from json import load
-from xdg.BaseDirectory import xdg_data_home
 
 import debug
 from keybindings import KeyBinding
@@ -75,7 +74,8 @@ class SettingsManager(object):
         self._backend = None
         self.profile = None
         self.backendName = backend
-        self._prefsDir = prefsDir or os.path.join(xdg_data_home, "orca")
+        self._prefsDir = prefsDir \
+            or os.path.join(GLib.get_user_data_dir(), "orca")
 
         # Dictionaries for store the default values
         # The keys and values are defined at orca.settings
