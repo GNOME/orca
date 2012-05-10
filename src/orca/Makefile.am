@@ -20,7 +20,6 @@ orca_python_PYTHON = \
 	chat.py \
 	chnames.py \
 	common_keyboardmap.py \
-	dbusserver.py \
 	debug.py \
 	desktop_keyboardmap.py \
 	event_manager.py \
