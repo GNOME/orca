@@ -409,9 +409,6 @@ try:
 except RuntimeError:
     pass
 
-if settings.useDBus:
-    import dbusserver
-
 import braille
 import orca_state
 import speech
@@ -737,13 +734,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     # Shutdown the output drivers and give them a chance to die.
 
-    # Only exit the D-Bus server if we're in an environment where there 
-    # is a D-Bus session bus already running.  This helps prevent nastiness
-    # on the login screen.
-    #
-    if settings.useDBus:
-        dbusserver.shutdown()
-
     speech.shutdown()
     braille.shutdown()
 
@@ -828,13 +818,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
 
     _scriptManager.activate()
     _eventManager.activate()
-
-    # Only start the D-Bus server if we're in an environment where there 
-    # is a D-Bus session bus already running.  This helps prevent nastiness
-    # on the login screen.
-    #
-    if settings.useDBus:
-        dbusserver.init()
 
     debug.println(debug.LEVEL_FINEST, 'INFO: User Settings Loaded')
 

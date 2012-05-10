@@ -282,13 +282,6 @@ speechRateDelta         = 5
 #
 speechPitchDelta        = 0.5
 
-# Whether or not to use DBUS.
-#
-if os.getenv("DBUS_SESSION_BUS_ADDRESS"):
-    useDBus = True
-else:
-    useDBus = False
-
 # If True, enable speech.
 #
 enableSpeech            = True
