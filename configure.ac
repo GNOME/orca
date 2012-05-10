@@ -45,7 +45,6 @@ AM_PATH_PYTHON(2.7)
 # Don't require the DISPLAY to be set - the gtk checking will fail 
 # if DISPLAY is not set, and we don't like that.
 
-AM_CHECK_PYMOD(dbus,,,[AC_MSG_ERROR(Could not find python module: dbus)])
 AM_CHECK_PYMOD(cairo,,,[AC_MSG_ERROR(Could not find python module: cairo)])
 AM_CHECK_PYMOD(json,,,[AC_MSG_ERROR(Could not find python module: json)])
 AM_CHECK_PYMOD(xdg,,,[AC_MSG_ERROR(Could not find python module: xdg)])
