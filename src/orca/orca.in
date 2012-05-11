@@ -19,9 +19,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# This script performs some clean up and will run Orca.  It will also
-# rerun Orca if it detects that Orca died an unnatural death.
-
 # __id__        = "$Id: orca.in,v 1.22 2006/12/08 16:21:25 wwalker Exp $"
 # __version__   = "$Revision: 1.22 $"
 # __date__      = "$Date: 2006/12/08 16:21:25 $"
@@ -37,53 +34,12 @@ export PATH
 #
 ARGS="$*"
 
-# Save away XMODMAP settings we might change.
-#
-saveXmodmap() 
-{
-    # We'll save and restore the Caps_Lock as a modifier just in case
-    # the user is using the Caps_Lock as the Orca modifier key.  We
-    # will also do so with the KP_Insert key since we want to make
-    # sure it only produces the keysyms we expect (it produces
-    # KP_Insert and KP_0 by default).  See the use of xmodmap in
-    # orca.py:loadUserSettings for the other part of what's going on.
-    # 
-    # [[[WDW: we probably should save/restore the autorepeat value of
-    # the Orca modifier key and turn the autorepeat off when Orca is
-    # running.  That can be done using the 'xset' utility, though
-    # turning it on/off is easy, but getting the current state is not
-    # straightforward.]]]
-    #
-    if [ "x$DISPLAY" != "x" ] ; then
-        CAPSLOCKSETTING=`xmodmap | grep Caps_Lock | cut -f1`
-        KPINSERTSETTING=`xmodmap -pke | grep KP_Insert`
-        INSERTSETTING=`xmodmap -pke | grep Insert | grep -v KP_`
-    fi
-}
-
-# Restore XMODMAP settings we may have changed.
-#
-restoreXmodmap()
-{
-    if [ "x$CAPSLOCKSETTING" != "x" ] ; then
-        xmodmap -e "add $CAPSLOCKSETTING = Caps_Lock" > /dev/null 2>&1
-    fi
-    if [ "x$KPINSERTSETTING" != "x" ] ; then
-        xmodmap -e "$KPINSERTSETTING" > /dev/null 2>&1
-    fi
-    if [ "x$INSERTSETTING" != "x" ] ; then
-        xmodmap -e "$INSERTSETTING" > /dev/null 2>&1
-    fi
-}
-
 runOrca()
 {
     exec_prefix=@prefix@
     PYTHONPATH=${PYTHONPATH}:@pyexecdir@
     export PYTHONPATH
-    saveXmodmap
     @PYTHON@ -c "import orca.orca; orca.orca.main()" "$ARGS"
-    restoreXmodmap
 }
 
 runOrca
