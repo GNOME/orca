@@ -19,5 +19,5 @@
 
 """Custom script for Acrobat Reader."""
 
-from script import Script
+from .script import Script
 

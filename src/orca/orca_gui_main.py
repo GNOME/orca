@@ -29,11 +29,11 @@ import locale
 import sys
 from gi.repository import Gtk
 
-import orca
-import orca_platform
-import orca_state
+from . import orca
+from . import orca_platform
+from . import orca_state
 
-from orca_i18n import _
+from .orca_i18n import _
 
 OS = None
 

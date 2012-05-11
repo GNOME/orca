@@ -19,5 +19,5 @@
 
 """ Custom script for Gnome System Monitor."""
 
-from script import Script
+from .script import Script
 

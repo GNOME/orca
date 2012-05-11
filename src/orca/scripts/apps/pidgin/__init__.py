@@ -17,4 +17,4 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-from script import Script
+from .script import Script

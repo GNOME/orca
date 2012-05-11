@@ -19,5 +19,5 @@
 
 """Custom script for gnome_segv2."""
 
-from script import Script
+from .script import Script
 

@@ -29,7 +29,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import debug
+from . import debug
 
 class LabelInference:
 

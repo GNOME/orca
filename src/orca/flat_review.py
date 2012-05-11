@@ -28,16 +28,16 @@ __license__   = "LGPL"
 import pyatspi
 import re
 
-import braille
-import debug
-import eventsynthesizer
-import orca_state
-import settings
+from . import braille
+from . import debug
+from . import eventsynthesizer
+from . import orca_state
+from . import settings
 
-from braille_generator import BrailleGenerator
-from orca_i18n import _         # for gettext support
-from orca_i18n import C_        # to provide qualified translatable strings
-from orca_i18n import ngettext
+from .braille_generator import BrailleGenerator
+from .orca_i18n import _
+from .orca_i18n import C_
+from .orca_i18n import ngettext
 
 # [[[WDW - HACK Regular expression to split strings on whitespace
 # boundaries, which is what we'll use for word dividers instead of

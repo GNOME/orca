@@ -19,5 +19,5 @@
 
 """Custom script for liferea."""
 
-from script import Script
+from .script import Script
 

@@ -34,8 +34,8 @@ import orca.orca_state as orca_state
 import orca.scripts.toolkits.Gecko as Gecko
 import orca.speech as speech
 
-from chat import Chat
-from script_utilities import Utilities
+from .chat import Chat
+from .script_utilities import Utilities
 
 _settingsManager = getattr(orca, '_settingsManager')
 

@@ -26,8 +26,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from orca_i18n import C_        # to provide qualified translatable strings
-import orca_state
+from .orca_i18n import C_
+from . import orca_state
 
 # Translators: this is a structure to assist in the generation of
 # localized strings for the various text attributes. 

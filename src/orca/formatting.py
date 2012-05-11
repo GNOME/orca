@@ -29,7 +29,7 @@ import copy
 
 import pyatspi
 
-import settings
+from . import settings
 
 # pylint: disable-msg=C0301
 
@@ -616,7 +616,7 @@ class Formatting(dict):
         self.update(copy.deepcopy(formatting))
 
     def update(self, newDict):
-        for key, val in newDict.items():
+        for key, val in list(newDict.items()):
             if key in self:
                 if isinstance(self[key], dict) and isinstance(val, dict):
                     self[key].update(val)

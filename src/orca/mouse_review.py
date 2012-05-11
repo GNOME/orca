@@ -25,7 +25,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2008 Eitan Isaacson"
 __license__   = "LGPL"
 
-import debug
+from . import debug
 
 try:
     from gi.repository import Wnck
@@ -39,10 +39,10 @@ import pyatspi
 from gi.repository import Gdk
 from gi.repository import GObject
 
-import orca
-import speech
-import braille
-import settings
+import orca # Deal with this during final Python 3 conversion
+from . import speech
+from . import braille
+from . import settings
 
 _scriptManager = getattr(orca, '_scriptManager')
 _eventManager = getattr(orca, '_eventManager')

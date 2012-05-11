@@ -40,9 +40,9 @@ import orca.settings as settings
 
 from orca.orca_i18n import _ # for gettext support
 
-from formatting import Formatting
-from speech_generator import SpeechGenerator
-from script_utilities import Utilities
+from .formatting import Formatting
+from .speech_generator import SpeechGenerator
+from .script_utilities import Utilities
 
 _settingsManager = getattr(orca, '_settingsManager')
 

@@ -19,5 +19,5 @@
 
 """Custom script for gnome-terminal."""
 
-from script import Script
+from .script import Script
 

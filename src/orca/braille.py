@@ -56,7 +56,7 @@ except:
     _brlAPIAvailable = False
     _brlAPIRunning = False
 
-import settings
+from . import settings
 
 try:
     # This can fail due to gtk not being available.  We want to
@@ -64,13 +64,13 @@ try:
     # for this is to allow "orca --text-setup" to work even if
     # the desktop is not running.
     #
-    import brlmon
+    from . import brlmon
 except:
     settings.enableBrailleMonitor = False
 
-import debug
-import eventsynthesizer
-import orca_state
+from . import debug
+from . import eventsynthesizer
+from . import orca_state
 
 # Right now, the orca autogen.sh/configure needs a priori knowledge of
 # where the liblouis tables are.  When running autogen.sh/configure,
@@ -81,7 +81,7 @@ import orca_state
 # liblouis bindings can give us the tablesdir information at runtime
 # http://code.google.com/p/liblouis/issues/detail?id=9]]
 #
-from orca_platform import tablesdir
+from .orca_platform import tablesdir
 if louis and not tablesdir:
     debug.println(debug.LEVEL_SEVERE,
                   "Contraction tables for liblouis cannot be found.")
@@ -93,7 +93,7 @@ if louis and not tablesdir:
                   "not be available.")
     louis = None
     
-from orca_i18n import _                          # for gettext support
+from .orca_i18n import _                          # for gettext support
 
 # The braille monitor
 #

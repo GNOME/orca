@@ -19,5 +19,5 @@
 
 """ Custom script for The notify-osd"""
 
-from script import Script
+from .script import Script
 

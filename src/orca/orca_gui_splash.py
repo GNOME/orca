@@ -27,15 +27,15 @@ __license__   = "LGPL"
 
 import os
 import sys
-import debug
+from . import debug
 from gi.repository import Gdk
 from gi.repository import Gtk
 from gi.repository import GObject
 import locale
 
-import orca_state
-import orca_platform
-from orca_i18n import _
+from . import orca_state
+from . import orca_platform
+from .orca_i18n import _
 
 OS = None
 

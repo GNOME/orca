@@ -33,9 +33,9 @@ import orca.speech as speech
 
 from orca.orca_i18n import _
 
-from chat import Chat
-from script_utilities import Utilities
-from speech_generator import SpeechGenerator
+from .chat import Chat
+from .script_utilities import Utilities
+from .speech_generator import SpeechGenerator
 
 ########################################################################
 #                                                                      #

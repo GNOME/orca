@@ -30,10 +30,10 @@ __copyright__ = "Copyright (c) 2008-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-import debug
-import settings
+from . import debug
+from . import settings
 
-from orca_i18n import _         # for gettext support
+from .orca_i18n import _         # for gettext support
 
 class TutorialGenerator:
     """Takes accessible objects and produces a tutorial string to speak

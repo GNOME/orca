@@ -28,7 +28,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010-2011 The Orca Team"
 __license__   = "LGPL"
 
-import settings
+from . import settings
 
 # Storing values 
 defaultModifierMask = settings.defaultModifierMask

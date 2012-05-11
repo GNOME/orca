@@ -1,12 +1,12 @@
 import bisect
 from gi.repository import GObject
-import orca_state
+from . import orca_state
 import pyatspi
-import speech
+from . import speech
 import copy
 import time
 
-from orca_i18n import _
+from .orca_i18n import _
 
 # define 'live' property types
 LIVE_OFF       = -1
@@ -142,7 +142,7 @@ class LiveRegionManager:
         # objects that are not registered for this page
         newpoliteness = {}
         currenturi = self._script.bookmarks.getURIKey()
-        for key, value in self._politenessOverrides.items():
+        for key, value in list(self._politenessOverrides.items()):
             if key[0] == currenturi or value != LIVE_NONE:
                 newpoliteness[key] = value
         self._politenessOverrides = newpoliteness
@@ -336,7 +336,7 @@ class LiveRegionManager:
 
         # The user wants to restore politeness levels
         else:
-            for key, value in self._restoreOverrides.items():
+            for key, value in list(self._restoreOverrides.items()):
                 self._politenessOverrides[key] = value
             # Translators: This lets the user know that all live regions
             # have been restored to their original politeness level.

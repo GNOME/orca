@@ -19,5 +19,5 @@
 
 """Custom script for metacity."""
 
-from script import Script
+from .script import Script
 

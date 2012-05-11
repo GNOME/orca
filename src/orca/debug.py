@@ -32,7 +32,7 @@ import traceback
 import pyatspi
 import sys
 
-import orca_state
+from . import orca_state
 
 # Used to turn off all debugging.
 #

@@ -27,7 +27,7 @@ __license__   = "LGPL"
 
 import orca.scripts.default as default
 import pyatspi
-from script_utilities import Utilities
+from .script_utilities import Utilities
 
 ########################################################################
 #                                                                      #

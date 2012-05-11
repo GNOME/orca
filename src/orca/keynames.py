@@ -26,10 +26,10 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import chnames
+from . import chnames
 
-from orca_i18n import _ # for gettext support
-from orca_i18n import C_
+from .orca_i18n import _
+from .orca_i18n import C_
 
 # __keynames is a dictionary where the keys represent a UTF-8
 # string for a keyboard key and the values represent the common

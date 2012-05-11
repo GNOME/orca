@@ -30,12 +30,12 @@ import sys
 from gi.repository import Gtk
 import locale
 
-import find
-import orca_gtkbuilder
-import orca_state
-import orca_platform
+from . import find
+from . import orca_gtkbuilder
+from . import orca_state
+from . import orca_platform
 
-from orca_i18n import _  # for gettext support
+from .orca_i18n import _
 
 OS = None
 

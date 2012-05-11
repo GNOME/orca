@@ -41,14 +41,14 @@ __license__   = "LGPL"
 from gi.repository import GObject
 import re
 
-import chnames
-import debug
-import speechserver
-import settings
-import orca_state
-import punctuation_settings
-from acss import ACSS
-from orca_i18n import _
+from . import chnames
+from . import debug
+from . import speechserver
+from . import settings
+from . import orca_state
+from . import punctuation_settings
+from .acss import ACSS
+from .orca_i18n import _
 
 try:
     import speechd

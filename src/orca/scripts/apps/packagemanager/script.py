@@ -38,12 +38,12 @@ import orca.speech as speech
 
 from orca.orca_i18n import _
 
-from braille_generator import BrailleGenerator
-from speech_generator import SpeechGenerator
-from tutorialgenerator import TutorialGenerator
-from script_utilities import Utilities
+from .braille_generator import BrailleGenerator
+from .speech_generator import SpeechGenerator
+from .tutorialgenerator import TutorialGenerator
+from .script_utilities import Utilities
 
-import script_settings
+from . import script_settings
 
 ########################################################################
 #                                                                      #

@@ -39,11 +39,11 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 from orca.orca_i18n import _
 
-import script_settings
-from structural_navigation import StructuralNavigation
-from braille_generator import BrailleGenerator
-from speech_generator import SpeechGenerator
-from script_utilities import Utilities
+from . import script_settings
+from .structural_navigation import StructuralNavigation
+from .braille_generator import BrailleGenerator
+from .speech_generator import SpeechGenerator
+from .script_utilities import Utilities
 
 _settingsManager = getattr(orca, '_settingsManager')
 

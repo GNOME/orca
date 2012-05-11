@@ -33,10 +33,10 @@ import imp
 from gi.repository import Gio, GLib
 from json import load
 
-import debug
-from keybindings import KeyBinding
-import settings
-import pronunciation_dict
+from . import debug
+from .keybindings import KeyBinding
+from . import settings
+from . import pronunciation_dict
 
 try:
     _proxy = Gio.DBusProxy.new_for_bus_sync(
@@ -521,7 +521,7 @@ class SettingsManager(object):
         self._loadProfileSettings()
         script.voices = self.getSetting('voices')
 
-        import orca
+        import orca # Deal with this during final Python 3 conversion
         _scriptManager = getattr(orca, '_scriptManager')
 
         app = script.app

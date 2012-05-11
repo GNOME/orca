@@ -32,14 +32,14 @@ log = logging.getLogger("speech")
 import re
 import time
 
-import chnames
-import debug
-import orca_state
-import settings
-import sound
-import speech_generator
+from . import chnames
+from . import debug
+from . import orca_state
+from . import settings
+from . import sound
+from . import speech_generator
 
-from acss import ACSS
+from .acss import ACSS
 
 # The speech server to use for all speech operations.
 #
@@ -405,7 +405,7 @@ def testNoSettingsInit():
     speak("this is normal")
 
 def test():
-    import speechserver
+    from . import speechserver
     factories = getSpeechServerFactories()
     for factory in factories:
         print(factory.__name__)

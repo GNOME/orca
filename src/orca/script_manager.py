@@ -24,11 +24,12 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
-import debug
-import orca
-import orca_state
+import orca # Deal with this during final Python 3 conversion
 
-from scripts import apps, toolkits
+from . import debug
+from . import orca_state
+
+from .scripts import apps, toolkits
 
 _settingsManager = getattr(orca, '_settingsManager')
 _eventManager = getattr(orca, '_eventManager')
@@ -211,7 +212,7 @@ class ScriptManager:
         if not app and self._defaultScript:
             return self._defaultScript
 
-        import scripts.default as default
+        from .scripts import default
         script = default.Script(app)
         _eventManager.registerScriptListeners(script)
 

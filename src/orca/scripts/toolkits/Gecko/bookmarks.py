@@ -144,7 +144,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         saved = {}
          
         # save obj as a path instead of an accessible
-        for index, bookmark in self._bookmarks.items():
+        for index, bookmark in list(self._bookmarks.items()):
             saved[index] = bookmark[0], bookmark[1]
             
         try:

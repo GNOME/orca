@@ -31,11 +31,11 @@ import traceback
 
 import pyatspi
 
-import braille
-import debug
-import settings
+from . import braille
+from . import debug
+from . import settings
 
-from orca_i18n import _         # for gettext support
+from .orca_i18n import _         # for gettext support
 import collections
 
 def _formatExceptionInfo(maxTBlevel=5):

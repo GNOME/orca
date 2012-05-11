@@ -27,8 +27,8 @@ __license__   = "LGPL"
 
 import orca.scripts.default as default
 
-from braille_generator import BrailleGenerator
-from speech_generator import SpeechGenerator
+from .braille_generator import BrailleGenerator
+from .speech_generator import SpeechGenerator
 
 ########################################################################
 #                                                                      #

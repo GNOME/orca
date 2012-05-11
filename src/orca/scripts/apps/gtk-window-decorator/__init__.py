@@ -19,5 +19,5 @@
 
 """Custom script for gtk-window-decorator."""
 
-from script import Script
+from .script import Script
 

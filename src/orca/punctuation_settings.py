@@ -45,7 +45,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import settings
+from . import settings
 
 #  Whether or not the spoken name for the symbol should replace the
 #  actual symbol or be inserted before the symbol.

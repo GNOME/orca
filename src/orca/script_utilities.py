@@ -32,15 +32,15 @@ import math
 import pyatspi
 import re
 
-import debug
-import keynames
-import input_event
-import mouse_review
-import orca_state
-import settings
+from . import debug
+from . import keynames
+from . import input_event
+from . import mouse_review
+from . import orca_state
+from . import settings
 
-from orca_i18n import _         # for gettext support
-from orca_i18n import ngettext  # for ngettext support
+from .orca_i18n import _
+from .orca_i18n import ngettext
 
 #############################################################################
 #                                                                           #
@@ -2416,8 +2416,8 @@ class Utilities:
         adjusting for repeat character counts and punctuation.
         """
 
-        import punctuation_settings
-        import chnames
+        from . import punctuation_settings
+        from . import chnames
 
         try:
             line = line.decode("UTF-8")
@@ -2479,7 +2479,7 @@ class Utilities:
         was no dictionary entry.
         """
 
-        import pronunciation_dict
+        from . import pronunciation_dict
 
         newSegment = pronunciation_dict.getPronunciation(
             segment, self._script.app_pronunciation_dict)
@@ -2506,7 +2506,7 @@ class Utilities:
         text which is also a link.
         """
 
-        import punctuation_settings
+        from . import punctuation_settings
 
         try:
             line = line.decode("UTF-8")

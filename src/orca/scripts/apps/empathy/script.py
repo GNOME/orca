@@ -30,7 +30,7 @@ import pyatspi
 import orca.chat as chat
 import orca.scripts.default as default
 
-from script_utilities import Utilities
+from .script_utilities import Utilities
 
 ########################################################################
 #                                                                      #

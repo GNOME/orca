@@ -41,20 +41,20 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import braille_generator
-import debug
-import flat_review
-import formatting
-import label_inference
-import keybindings
-import orca_state
-import script_utilities
-import settings
-import speech_generator
-import structural_navigation
-import where_am_I
-import bookmarks
-import tutorialgenerator
+from . import braille_generator
+from . import debug
+from . import flat_review
+from . import formatting
+from . import label_inference
+from . import keybindings
+from . import orca_state
+from . import script_utilities
+from . import settings
+from . import speech_generator
+from . import structural_navigation
+from . import where_am_I
+from . import bookmarks
+from . import tutorialgenerator
 
 class Script:
     """The specific focus tracking scripts for applications.
@@ -192,7 +192,7 @@ class Script:
         braille.py) that match the given inputEventHandler passed.
         """
         return [command
-                for command, handler in self.brailleBindings.items()
+                for command, handler in list(self.brailleBindings.items())
                 if inputEventHandler == handler]
 
     def getFormatting(self):
@@ -317,7 +317,7 @@ class Script:
         whether or not the script is active.
         """
 
-        import orca
+        import orca # Deal with this during final Python 3 conversion
         _scriptManager = getattr(orca, '_scriptManager')
         _settingsManager = getattr(orca, '_settingsManager')
 

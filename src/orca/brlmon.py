@@ -31,8 +31,8 @@ __license__   = "LGPL"
 import brlapi
 from gi.repository import Gtk
 
-import orca_state
-from input_event import BrailleEvent
+from . import orca_state
+from .input_event import BrailleEvent
 
 # Attribute/Selection mask strings:
 #

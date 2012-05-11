@@ -28,7 +28,7 @@ __license__   = "LGPL"
 import gettext
 from gi.repository import Gtk
 
-from orca_i18n import _
+from .orca_i18n import _
 
 class GtkBuilderWrapper:
     """

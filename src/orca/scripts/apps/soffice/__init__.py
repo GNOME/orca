@@ -1,2 +1,2 @@
-from script import Script
-import script_settings
+from .script import Script
+from . import script_settings

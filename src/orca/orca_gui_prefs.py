@@ -35,22 +35,22 @@ import locale
 import pyatspi
 import time
 
-import acss
-import debug
-import orca
-import orca_gtkbuilder
-import orca_state
-import orca_platform
-import settings
-import input_event
-import keybindings
-import pronunciation_dict
-import braille
-import speech
-import speechserver
-import text_attribute_names
+from . import acss
+from . import debug
+from . import orca
+from . import orca_gtkbuilder
+from . import orca_state
+from . import orca_platform
+from . import settings
+from . import input_event
+from . import keybindings
+from . import pronunciation_dict
+from . import braille
+from . import speech
+from . import speechserver
+from . import text_attribute_names
 
-import orca_gui_profile
+from . import orca_gui_profile
 
 _settingsManager = getattr(orca, '_settingsManager')
 _scriptManager = getattr(orca, '_scriptManager')
@@ -59,12 +59,12 @@ try:
     import louis
 except ImportError:
     louis = None
-from orca_platform import tablesdir
+from .orca_platform import tablesdir
 if louis and not tablesdir:
     louis = None
 
-from orca_i18n import _  # for gettext support
-from orca_i18n import C_ # to provide qualified translatable strings
+from .orca_i18n import _
+from .orca_i18n import C_
 
 (HANDLER, DESCRIP, MOD_MASK1, MOD_USED1, KEY1, CLICK_COUNT1, OLDTEXT1, \
  TEXT1, MODIF, EDITABLE) = list(range(10))
@@ -2114,7 +2114,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         iterBB = self._createNode(_("Braille Bindings"))
         self.bbindings = defScript.getBrailleBindings()
-        for com, inputEvHand in self.bbindings.items():
+        for com, inputEvHand in list(self.bbindings.items()):
             handl = defScript.getInputEventHandlerKey(inputEvHand)
             self._insertRowBraille(handl, com, inputEvHand, iterBB)
 

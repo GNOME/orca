@@ -70,11 +70,11 @@ except:
 # Importing anything that requires a functioning settings manager
 # instance should NOT be done here.
 #
-import debug
-import orca_platform
-import settings
-from orca_i18n import _
-from orca_i18n import ngettext
+from . import debug
+from . import orca_platform
+from . import settings
+from .orca_i18n import _
+from .orca_i18n import ngettext
 
 def onEnabledChanged(gsetting, key):
     try:
@@ -391,31 +391,31 @@ options.validate()
 # import anything which might expect to be able to use the Settings Manager
 # You have been warned.
 #
-from settings_manager import SettingsManager
+from .settings_manager import SettingsManager
 _settingsManager = SettingsManager(prefsDir=options.userPrefsDir)
 if _settingsManager is None:
     print("Could not load the settings manager. Exiting.")
     sys.exit(1)
 
-from event_manager import EventManager
+from .event_manager import EventManager
 _eventManager = EventManager()
 
-from script_manager import ScriptManager
+from .script_manager import ScriptManager
 _scriptManager = ScriptManager()
 
 try:
     # If we don't have an active desktop, we will get a RuntimeError.
-    import mouse_review
+    from . import mouse_review
 except RuntimeError:
     pass
 
-import braille
-import orca_state
-import speech
-import notification_messages
+from . import braille
+from . import orca_state
+from . import speech
+from . import notification_messages
 
-from input_event import BrailleEvent
-from input_event import KeyboardEvent
+from .input_event import BrailleEvent
+from .input_event import KeyboardEvent
 
 import gc
 if settings.debugMemoryUsage:

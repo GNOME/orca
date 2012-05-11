@@ -36,10 +36,10 @@ import orca.scripts.toolkits.Gecko as Gecko
 
 from orca.orca_i18n import _
 
-from formatting import Formatting
-from speech_generator import SpeechGenerator
-from script_utilities import Utilities
-import script_settings
+from .formatting import Formatting
+from .speech_generator import SpeechGenerator
+from .script_utilities import Utilities
+from . import script_settings
 
 _settingsManager = getattr(orca, '_settingsManager')
 

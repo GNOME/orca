@@ -31,8 +31,8 @@ import locale
 import sys
 from gi.repository import Gtk
 
-import orca_state
-from orca_i18n import _
+from . import orca_state
+from .orca_i18n import _
 
 OS = None
 newProfile = None

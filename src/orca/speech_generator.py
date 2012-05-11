@@ -29,16 +29,17 @@ import pyatspi
 import urlparse, urllib2
 from gi.repository import Atspi, Atk
 
-import debug
-import generator
-import orca
-import settings
-import sound
-import text_attribute_names
+import orca # Deal with this during final Python 3 conversion
 
-from orca_i18n import _         # for gettext support
-from orca_i18n import ngettext  # for ngettext support
-from orca_i18n import C_        # to provide qualified translatable strings
+from . import debug
+from . import generator
+from . import settings
+from . import sound
+from . import text_attribute_names
+
+from .orca_i18n import _
+from .orca_i18n import ngettext
+from .orca_i18n import C_
 
 class Pause:
     """A dummy class to indicate we want to insert a pause into an

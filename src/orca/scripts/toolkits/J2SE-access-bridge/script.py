@@ -32,9 +32,9 @@ import orca.input_event as input_event
 import orca.orca as orca
 import orca.orca_state as orca_state
 
-from script_utilities import Utilities
-from speech_generator import SpeechGenerator
-from formatting import Formatting
+from .script_utilities import Utilities
+from .speech_generator import SpeechGenerator
+from .formatting import Formatting
 
 ########################################################################
 #                                                                      #

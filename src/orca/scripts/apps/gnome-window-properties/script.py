@@ -27,7 +27,7 @@ __license__   = "LGPL"
 
 import orca.scripts.default as default
 
-from formatting import Formatting
+from .formatting import Formatting
 
 ########################################################################
 #                                                                      #

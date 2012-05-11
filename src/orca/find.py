@@ -29,11 +29,11 @@ __license__   = "LGPL"
 import copy
 import re
 
-import debug
-import flat_review
-import orca_state
+from . import debug
+from . import flat_review
+from . import orca_state
 
-from orca_i18n import _    # for gettext support
+from .orca_i18n import _
 
 class SearchQuery:
     """Represents a search that the user wants to perform."""

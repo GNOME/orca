@@ -31,11 +31,11 @@ import pyatspi
 import time
 import unicodedata
 
-import debug
-import keynames
-import orca_state
-import settings
-from orca_i18n import C_
+from . import debug
+from . import keynames
+from . import orca_state
+from . import settings
+from .orca_i18n import C_
 
 KEYBOARD_EVENT     = "keyboard"
 BRAILLE_EVENT      = "braille"

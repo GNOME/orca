@@ -31,7 +31,7 @@ import orca.debug as debug
 import orca.speech as speech
 import pyatspi
 
-from speech_generator import SpeechGenerator
+from .speech_generator import SpeechGenerator
 
 ########################################################################
 #                                                                      #

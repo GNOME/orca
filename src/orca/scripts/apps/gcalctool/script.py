@@ -31,7 +31,7 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import pyatspi
 
-from speech_generator import SpeechGenerator
+from .speech_generator import SpeechGenerator
 
 from orca.orca_i18n import _ # for gettext support
 

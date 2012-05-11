@@ -22,11 +22,12 @@
 import pickle
 import os
 
-import orca
-import speech
-import orca_state
+import orca # Deal with this during final Python 3 conversion
 
-from orca_i18n import _
+from . import speech
+from . import orca_state
+
+from .orca_i18n import _
 
 _settingsManager = getattr(orca, '_settingsManager')
 

@@ -29,8 +29,8 @@ import cairo
 from gi.repository import Gtk
 from gi.repository import Gdk
 
-import orca_state
-import settings
+from . import orca_state
+from . import settings
 
 display = Gdk.Display.get_default()
 screen = display.get_default_screen()

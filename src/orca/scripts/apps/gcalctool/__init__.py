@@ -19,4 +19,4 @@
 
 """Custom script for Evolution."""
 
-from script import Script
+from .script import Script

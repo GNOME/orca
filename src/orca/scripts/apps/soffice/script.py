@@ -52,12 +52,12 @@ import orca.settings as settings
 from orca.orca_i18n import _ # for gettext support
 from orca.orca_i18n import ngettext
 
-from speech_generator import SpeechGenerator
-from braille_generator import BrailleGenerator
-from formatting import Formatting
-from structural_navigation import StructuralNavigation
-from script_utilities import Utilities
-import script_settings
+from .speech_generator import SpeechGenerator
+from .braille_generator import BrailleGenerator
+from .formatting import Formatting
+from .structural_navigation import StructuralNavigation
+from .script_utilities import Utilities
+from . import script_settings
 
 _settingsManager = getattr(orca, '_settingsManager')
 

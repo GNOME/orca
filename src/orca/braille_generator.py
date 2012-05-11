@@ -28,14 +28,14 @@ __license__   = "LGPL"
 import pyatspi
 from gi.repository import Atspi, Atk
 
-import braille
-import generator
-import orca
-import orca_state
-import settings
+import orca # Deal with this during final Python 3 conversion
+from . import braille
+from . import generator
+from . import orca_state
+from . import settings
 
-from braille_rolenames import shortRoleNames
-from orca_i18n import ngettext  # for ngettext support
+from .braille_rolenames import shortRoleNames
+from .orca_i18n import ngettext
 
 _settingsManager = getattr(orca, '_settingsManager')
 

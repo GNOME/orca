@@ -33,7 +33,7 @@ import orca.scripts.default as default
 import orca.orca_state as orca_state
 import orca.speech as speech
 
-from script_utilities import Utilities
+from .script_utilities import Utilities
 
 ########################################################################
 #                                                                      #

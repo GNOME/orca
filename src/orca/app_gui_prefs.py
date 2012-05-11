@@ -30,19 +30,19 @@ import locale
 import os
 import sys
 
-import app_prefs
-import braille
-import debug
-import input_event
-import keybindings
-import orca
-import orca_gui_prefs
-import orca_state
-import orca_platform
-import settings
-import speech
+from . import app_prefs
+from . import braille
+from . import debug
+from . import input_event
+from . import keybindings
+from . import orca
+from . import orca_gui_prefs
+from . import orca_state
+from . import orca_platform
+from . import settings
+from . import speech
 
-from orca_i18n import _  # for gettext support
+from .orca_i18n import _
 
 _scriptManager = getattr(orca, '_scriptManager')
 _settingsManager = getattr(orca, '_settingsManager')

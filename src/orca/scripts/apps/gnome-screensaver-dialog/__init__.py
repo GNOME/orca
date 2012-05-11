@@ -18,5 +18,5 @@
 # Boston MA  02110-1301 USA.
 """Custom script for gnome-screensaver-dialog."""
 
-from script import Script
+from .script import Script
 

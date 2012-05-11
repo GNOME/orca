@@ -1,9 +1,9 @@
 import orca.scripts.default as default
 import orca.orca_state as orca_state
 
-from script_utilities import Utilities
-from speech_generator import SpeechGenerator
-from formatting import Formatting
+from .script_utilities import Utilities
+from .speech_generator import SpeechGenerator
+from .formatting import Formatting
 
 class Script(default.Script):
 

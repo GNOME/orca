@@ -60,14 +60,14 @@ import orca.settings as settings
 import orca.speech as speech
 import orca.speechserver as speechserver
 
-import keymaps
-import script_settings
-from braille_generator import BrailleGenerator
-from speech_generator import SpeechGenerator
-from formatting import Formatting
-from bookmarks import GeckoBookmarks
-from structural_navigation import GeckoStructuralNavigation
-from script_utilities import Utilities
+from . import keymaps
+from . import script_settings
+from .braille_generator import BrailleGenerator
+from .speech_generator import SpeechGenerator
+from .formatting import Formatting
+from .bookmarks import GeckoBookmarks
+from .structural_navigation import GeckoStructuralNavigation
+from .script_utilities import Utilities
 
 from orca.orca_i18n import _
 from orca.speech_generator import Pause

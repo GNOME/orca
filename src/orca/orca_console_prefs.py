@@ -29,11 +29,12 @@ __license__   = "LGPL"
 import re
 import sys
 
-import acss
-import settings
-import speech
-import speechserver
-import orca
+from . import acss
+from . import settings
+from . import speech
+from . import speechserver
+
+import orca # Deal with this during final Python 3 conversion
 
 desktopRunning = False
 try:
@@ -43,7 +44,7 @@ try:
 except:
     pass
 
-from orca_i18n import _  # for gettext support
+from .orca_i18n import _
 
 workingFactories   = []
 speechServerChoice = None

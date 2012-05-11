@@ -19,5 +19,5 @@
 
 """Custom script for Ekiga."""
 
-from script import Script
+from .script import Script
 

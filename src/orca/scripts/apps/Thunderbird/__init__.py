@@ -26,4 +26,4 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from script import Script
+from .script import Script

@@ -33,7 +33,7 @@ import orca.speech_generator as speech_generator
 from orca.orca_i18n import ngettext # for ngettext support
 from orca.orca_i18n import _ # for gettext support
 
-import script_settings
+from . import script_settings
 _settingsManager = getattr(orca, '_settingsManager')
 
 class SpeechGenerator(speech_generator.SpeechGenerator):

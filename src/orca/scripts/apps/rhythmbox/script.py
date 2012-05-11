@@ -33,9 +33,9 @@ import orca.scripts.default as default
 import orca.orca as orca
 import orca.orca_state as orca_state
 
-from speech_generator import SpeechGenerator
-from braille_generator import BrailleGenerator
-from formatting import Formatting
+from .speech_generator import SpeechGenerator
+from .braille_generator import BrailleGenerator
+from .formatting import Formatting
 
 class Script(default.Script):
 

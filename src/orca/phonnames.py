@@ -26,7 +26,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2006-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from orca_i18n import _ # for gettext support
+from .orca_i18n import _
 
 # Translators: this is a structure to assist in the generation of
 # spoken military-style spelling.  For example, 'abc' becomes 'alpha

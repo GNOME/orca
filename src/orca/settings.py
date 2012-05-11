@@ -52,9 +52,9 @@ except:
 
 import pyatspi
 
-from acss import ACSS
-from orca_i18n import _           # for gettext support
-from orca_i18n import C_          # to provide qualified translatable strings
+from .acss import ACSS
+from .orca_i18n import _
+from .orca_i18n import C_
 
 # These are the settings that Orca supports the user customizing.
 #
@@ -716,7 +716,7 @@ chatRoomHistories = False
 # Allow for the customization of key bindings.
 #
 def overrideKeyBindings(script, keyBindings):
-    import orca
+    import orca # Deal with this during final Python 3 conversion
     _settingsManager = getattr(orca, '_settingsManager')
 
     return _settingsManager.overrideKeyBindings(script, keyBindings)

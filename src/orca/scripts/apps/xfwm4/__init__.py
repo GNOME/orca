@@ -19,5 +19,5 @@
 
 """Custom script for xfwm4."""
 
-from script import Script
+from .script import Script
 

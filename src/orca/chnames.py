@@ -27,7 +27,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-from orca_i18n import _ # for gettext support
+from .orca_i18n import _
 
 # chnames is a dictionary where the keys represent a unicode character
 # and the values represent the common term used for the character.

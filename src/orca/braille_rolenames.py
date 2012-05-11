@@ -27,8 +27,8 @@ __license__   = "LGPL"
 
 import pyatspi
 
-from orca_i18n import _
-from orca_i18n import C_
+from .orca_i18n import _
+from .orca_i18n import C_
 
 shortRoleNames = {
     # Translators: short braille for the rolename of an invalid GUI object.

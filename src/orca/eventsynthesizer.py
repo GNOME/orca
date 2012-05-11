@@ -26,7 +26,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-import debug
+from . import debug
 
 def generateMouseEvent(x, y, eventName):
     """Synthesize a mouse event at a specific screen coordinate.

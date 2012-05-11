@@ -29,10 +29,10 @@ __license__   = "LGPL"
 from gi.repository import Gdk
 
 import pyatspi
-import debug
-import settings
+from . import debug
+from . import settings
 
-from orca_i18n import _
+from .orca_i18n import _
 
 _keysymsCache = {}
 _keycodeCache = {}

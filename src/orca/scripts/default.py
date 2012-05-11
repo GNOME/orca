@@ -1043,7 +1043,7 @@ class Script(script.Script):
         passed as argument
         """
 
-        for keyName, handler in self.inputEventHandlers.items():
+        for keyName, handler in list(self.inputEventHandlers.items()):
             if handler == inputEventHandler:
                 return keyName
 
