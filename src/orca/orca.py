@@ -45,13 +45,6 @@ try:
 except:
     a11yAppSettings = None
 
-# We're going to force the name of the app to "orca" so we
-# will end up showing us as "orca" to the AT-SPI.  If we don't
-# do this, the name can end up being "-c".  See bug 364452 at
-# http://bugzilla.gnome.org/show_bug.cgi?id=364452 for more
-# information.
-#
-sys.argv[0] = "orca"
 import pyatspi
 try:
     # This can fail due to gtk not being available.  We want to
@@ -383,7 +376,9 @@ parser.add_argument(
     #
     help = _("Replace a currently running Orca"))
 
-options, invalidOpts = parser.parse_known_args(sys.argv[1].split(),
+# temporary hack
+args = ''.join(sys.argv[1:])
+options, invalidOpts = parser.parse_known_args(args.split(),
                                                namespace = Options())
 options.validate()
 
@@ -1136,33 +1131,9 @@ def showSplashGUI(script=None, inputEvent=None):
 
     return True
 
-
 # If True, this module has been initialized.
 #
 _initialized = False
-
-def setProcessName():
-    """Attempts to set the process name to 'orca'."""
-
-    # Disabling the import error of setproctitle.
-    # pylint: disable-msg=F0401
-    try:
-        from setproctitle import setproctitle
-    except ImportError:
-        pass
-    else:
-        setproctitle('orca')
-        return True
-
-    try:
-        from ctypes import cdll
-        libc = cdll.LoadLibrary('libc.so.6')
-        libc.prctl(15, 'orca', 0, 0, 0)
-        return True
-    except:
-        pass
-
-    return False
 
 def init(registry):
     """Initialize the orca module, which initializes the speech and braille
@@ -1211,8 +1182,6 @@ def start(registry):
 
     if not _initialized:
         init(registry)
-
-    setProcessName()
 
     # Do not hang on startup if we can help it.
     #
