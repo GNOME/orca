@@ -29,7 +29,7 @@ __copyright__ = "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import logging
-import io
+import StringIO
 
 from . import debug
 
@@ -72,7 +72,7 @@ class Logger:
 
     def _createStreamHandlers(self):
         for logger in self._types:
-            stringIO = io.StringIO()
+            stringIO = StringIO.StringIO()
             handler = logging.StreamHandler(stringIO)
             self._streamHandlers[logger] = [stringIO, handler]
             log = logging.getLogger(logger)
