@@ -1373,9 +1373,8 @@ def examineProcesses():
         debug.println(
             debug.LEVEL_ALL, '%3i. %s (pid: %s) %s' % (i+1, name, pid, cmd))
 
-def multipleOrcas():
-    """Returns True if multiple instances of Orca are running
-    which are owned by the same user."""
+def otherOrcas():
+    """Returns the pid of any other instances of Orca owned by this user."""
 
     openFile = os.popen('pgrep -u %s orca' % os.getuid())
     pids = openFile.read()
@@ -1384,7 +1383,18 @@ def multipleOrcas():
 
     pid = os.getpid()
     ppid = os.getppid()
-    return len([p for p in orcas if p not in [pid, ppid]]) > 0
+    return [p for p in orcas if p not in [pid, ppid]]
+
+def multipleOrcas():
+    """Returns True if multiple instances of Orca are running which are
+    are owned by this user."""
+
+    return len(otherOrcas()) > 0
+
+def cleanup(sigval):
+    """Tries to clean up any other running Orca instances owned by this user."""
+
+    map(lambda x: os.kill(x, sigval), otherOrcas())
 
 def cleanupGarbage():
     """Cleans up garbage on the heap."""
@@ -1417,16 +1427,22 @@ def main():
     signal.signal(signal.SIGSEGV, abortOnSignal)
 
     if multipleOrcas():
-        if not options.replace:
+        if presentInvalidOptions(invalidOpts):
+            die(0)
+        elif options.replace or options.quit or options.forceQuit:
+            cleanup(signal.SIGKILL)
+        else:
             # Translators: This message is presented to the user when
             # he/she tries to launch Orca, but Orca is already running.
             print(_('Another Orca process is already running for this ' \
                     'session.\n Run "orca --replace" to replace that ' \
                     'process with a new one.'))
             return 1
-        if presentInvalidOptions(invalidOpts):
-            die(0)
 
+    if options.quit:
+        die(signal.SIGTERM)
+    elif options.forceQuit:
+        die(signal.SIGKILL)
 
     _commandLineSettings.update(options.convertToSettings())
     for profile in options.profiles:

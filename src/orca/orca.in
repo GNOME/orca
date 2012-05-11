@@ -76,39 +76,6 @@ restoreXmodmap()
     fi
 }
 
-# Cleans up any orca-related processes that might be running,
-# restricting it to those processes owned by the user. These include
-# orca itself, any speech synthesis drivers, and festival processes
-# running in server mode.
-#
-cleanup()
-{
-
-    # Check if we should force orca to quit, or just ask it nicely.
-    # kill -15, will give orca time to shutdown gracefully
-    # kill -9 will terminate immediately
-    if [ "$1" = "-f" ];then
-        KILLARG="-KILL"
-    else
-        KILLARG="-TERM"
-    fi
-    USERID=$(id -u)
-    PATTERN="orca[.]orca|festival [-][-]server"
-
-    pkill $KILLARG -U $USERID -f "$PATTERN"
-}
-
-waitForCleanup()
-{
-    while $(cleanup) ; do
-        sleep 0.5
-    done
-}
-
-trap cleanup HUP QUIT TERM INT ABRT
-
-# Runs orca.
-#
 runOrca()
 {
     exec_prefix=@prefix@
@@ -119,22 +86,4 @@ runOrca()
     restoreXmodmap
 }
 
-if [ `echo $ARGS | grep -c "\-q"` -gt 0 ] ; then
-    # If the user has done -q or --quit, that means to tell any
-    # existing orca process to quit.  So, we just do a cleanup.
-    #
-    cleanup
-elif [ `echo $ARGS | egrep -c " \-f|^\-f|\-\-forcequit"` -gt 0 ] ; then
-    # If the user has done -f or --forcequit, that means 
-    # that Orca has probably hung badly, and needs to be killed with force.
-    #
-    cleanup "-f"
-else
-    # Allow a --replace to kill other orca processes.
-    #
-    if [ `echo $ARGS | grep -c "\-\-replace"` -gt 0 ] ; then
-        waitForCleanup
-    fi
-
-    runOrca
-fi
+runOrca
