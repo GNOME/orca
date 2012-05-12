@@ -151,17 +151,6 @@
         </item>
         <item>
           <p>
-            <cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>
-          </p>
-        </item>
-        <item>
-          <p>
-            <cmd>-f</cmd>, <cmd>--forcequit</cmd>: Forces <app>Orca</app>
-            to be terminated immediately.
-          </p>
-        </item>
-        <item>
-          <p>
             <cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>
           </p>
         </item>

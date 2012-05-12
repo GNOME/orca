@@ -351,25 +351,6 @@ parser.add_argument(
     help = _("Import a profile from a given orca profile file"))
 
 parser.add_argument(
-    "-q", "--quit", action = "store_true", dest = "quit",
-    # Translators: this is the Orca command line option that will quit Orca.
-    # The user would run the Orca shell script again from a terminal window.
-    # If this command line option is specified, the script will quit any
-    # instances of Orca that are already running.
-    #
-    help = _("Quits Orca (if shell script used)"))
-
-parser.add_argument(
-    "-f", "--forcequit", action = "store_true", dest = "forceQuit",
-    # Translators: this is the Orca command line option that will force the
-    # termination of Orca.
-    # The user would run the Orca shell script again from a terminal window.
-    # If this command line option is specified, the script will quit any
-    # instances of Orca that are already running.
-    #
-    help = _("Forces orca to be terminated immediately."))
-
-parser.add_argument(
     "--replace", action = "store_true", dest = "replace",
     # Translators: this is the Orca command line option to tell Orca to replace
     # any existing Orca process(es) that might be running.
@@ -1398,7 +1379,7 @@ def main():
     if multipleOrcas():
         if presentInvalidOptions(invalidOpts):
             die(0)
-        elif options.replace or options.quit or options.forceQuit:
+        elif options.replace:
             cleanup(signal.SIGKILL)
         else:
             # Translators: This message is presented to the user when
@@ -1407,11 +1388,6 @@ def main():
                     'session.\n Run "orca --replace" to replace that ' \
                     'process with a new one.'))
             return 1
-
-    if options.quit:
-        die(signal.SIGTERM)
-    elif options.forceQuit:
-        die(signal.SIGKILL)
 
     _commandLineSettings.update(options.convertToSettings())
     for profile in options.profiles:
