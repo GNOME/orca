@@ -1452,19 +1452,9 @@ def main():
 
     # Check to see if the user wants the configuration GUI. It's
     # done here so that the user's existing preferences can be used
-    # to set the initial GUI state.  We'll also force the set to
-    # be run if the preferences file doesn't exist, unless the
-    # user has bypassed any setup via the --no-setup switch.
-    #
+    # to set the initial GUI state.
     if options.setupRequested and not options.bypassSetup and options.showGUI:
         showPreferencesGUI()
-    elif not options.bypassSetup \
-         and (not _userSettings or _settingsManager.isFirstStart()):
-        if options.desktopRunning:
-            showPreferencesGUI()
-        else:
-            _showPreferencesConsole()
-        _settingsManager.setFirstStart()
     elif options.bypassSetup:
         loadUserSettings(skipReloadMessage=True)
         _settingsManager.setFirstStart()
