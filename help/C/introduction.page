@@ -106,11 +106,6 @@
         </item>
         <item>
           <p>
-            <cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences
-          </p>
-        </item>
-        <item>
-          <p>
             <cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>:
             Use <em>dirname</em> as the alternate directory for user
             preferences

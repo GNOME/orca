@@ -312,14 +312,6 @@ parser.add_argument(
     help = _("Set up user preferences (text version)"))
 
 parser.add_argument(
-    "-n", "--no-setup", action = "store_true", dest = "bypassSetup",
-    # Translators: this is the description of the command line option
-    # '-n, --no-setup' that means that Orca will startup without setting up any
-    # user preferences.
-    #
-    help = _("Skip set up of user preferences"))
-
-parser.add_argument(
     "-u", "--user-prefs-dir", action = "store", dest = "userPrefsDir",
     # Translators: this is the description of the command line option
     # '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
@@ -358,7 +350,7 @@ parser.add_argument(
     help = _("Replace a currently running Orca"))
 
 # temporary hack
-args = ''.join(sys.argv[1:])
+args = ' '.join(sys.argv[1:])
 options, invalidOpts = parser.parse_known_args(args.split(),
                                                namespace = Options())
 options.validate()
@@ -1420,7 +1412,7 @@ def main():
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
 
-    if options.setupRequested and not (options.bypassSetup or options.showGUI):
+    if options.setupRequested and not options.showGUI:
         _showPreferencesConsole()
 
     if not options.desktopRunning:
@@ -1453,11 +1445,8 @@ def main():
     # Check to see if the user wants the configuration GUI. It's
     # done here so that the user's existing preferences can be used
     # to set the initial GUI state.
-    if options.setupRequested and not options.bypassSetup and options.showGUI:
+    if options.setupRequested and options.showGUI:
         showPreferencesGUI()
-    elif options.bypassSetup:
-        loadUserSettings(skipReloadMessage=True)
-        _settingsManager.setFirstStart()
 
     try:
         start(pyatspi.Registry) # waits until we stop the registry
