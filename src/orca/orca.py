@@ -1324,8 +1324,7 @@ def otherOrcas():
     orcas = [int(p) for p in pids.split()]
 
     pid = os.getpid()
-    ppid = os.getppid()
-    return [p for p in orcas if p not in [pid, ppid]]
+    return [p for p in orcas if p != pid]
 
 def multipleOrcas():
     """Returns True if multiple instances of Orca are running which are
@@ -1336,7 +1335,21 @@ def multipleOrcas():
 def cleanup(sigval):
     """Tries to clean up any other running Orca instances owned by this user."""
 
-    map(lambda x: os.kill(x, sigval), otherOrcas())
+    orcasToKill = otherOrcas()
+    debug.println(
+        debug.LEVEL_INFO, "INFO: Cleaning up these PIDs: %s" % orcasToKill)
+
+    def onTimeout(signum, frame):
+        orcasToKill = otherOrcas()
+        debug.println(
+            debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
+        map(lambda x: os.kill(x, signal.SIGKILL), orcasToKill)
+
+    map(lambda x: os.kill(x, sigval), orcasToKill)
+    signal.signal(signal.SIGALRM, onTimeout)
+    signal.alarm(2)
+    while otherOrcas():
+        time.sleep(0.5)
 
 def cleanupGarbage():
     """Cleans up garbage on the heap."""
