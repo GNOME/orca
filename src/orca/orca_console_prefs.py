@@ -34,23 +34,11 @@ from . import settings
 from . import speech
 from . import speechserver
 
-import orca # Deal with this during final Python 3 conversion
-
-desktopRunning = False
-try:
-    from gi.repository import Gdk
-    if Gdk.Display.get_default():
-        desktopRunning = True
-except:
-    pass
-
 from .orca_i18n import _
 
 workingFactories   = []
 speechServerChoice = None
 speechVoiceChoice  = None
-
-_settingsManager = getattr(orca, '_settingsManager')
 
 # Translators: this is a regular expression that is intended to match
 # a positive 'yes' response from a user at the command line.  The expression
@@ -541,14 +529,11 @@ def showPreferencesUI(commandLineSettings):
 
     stop = True
 
-    _settingsManager.setFirstStart(False)
-
     # Sanity check for bug #642285
     #
     if 'profile' not in prefsDict:
         prefsDict['profile'] = settings.profile
 
-    _settingsManager.saveSettings(prefsDict, {}, {})
     answer = sayAndPrint(_("Setup complete.  Press Return to continue."),
                          True,
                          True,
