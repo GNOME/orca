@@ -37,8 +37,6 @@ import signal
 import sys
 import time
 
-from types import MethodType
-
 try:
     from gi.repository.Gio import Settings
     a11yAppSettings = Settings('org.gnome.desktop.a11y.applications')
@@ -57,8 +55,9 @@ try:
     # Note: This last import is here due to bgo #673396.
     # See bgo#673397 for the rest of the story.
     from gi.repository.GdkX11 import X11Screen
+    desktopRunning = True
 except:
-    pass
+    desktopRunning = False
 
 # Importing anything that requires a functioning settings manager
 # instance should NOT be done here.
@@ -78,6 +77,17 @@ def onEnabledChanged(gsetting, key):
     if key == 'screen-reader-enabled' and not enabled:
         shutdown()
 
+class ListApps(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        try:
+            apps = filter(lambda x: x != None, pyatspi.Registry.getDesktop(0))
+            names = [app.name for app in apps]
+        except:
+            pass
+        else:
+            print("\n".join(names))
+        parser.exit()
+
 class Options(argparse.Namespace):
     """Class to handle getting run-time options."""
 
@@ -96,14 +106,6 @@ class Options(argparse.Namespace):
         """Initialize the Options class."""
 
         super(Options, self).__init__(**kwargs)
-
-        self.desktopRunning = False
-        try:
-            if Gdk.Display.get_default():
-                self.desktopRunning = True
-        except:
-            pass
-
         self.settings = {}
         self.cannotEnable = []
         self._validFeaturesPrinted = False
@@ -122,13 +124,6 @@ class Options(argparse.Namespace):
 
         if self.profiles == None:
             self.profiles = []
-
-        if self.listApps and self.desktopRunning:
-            apps = [x for x in pyatspi.Registry.getDesktop(0) if x != None]
-            names = [app.name for app in apps]
-            message = "\n".join(names)
-            if message:
-                self._printMessageAndExit(message)
 
         enable = []
 
@@ -156,25 +151,6 @@ class Options(argparse.Namespace):
             self.debug = True
         elif self.debug:
             self.debugFile = time.strftime('debug-%Y-%m-%d-%H:%M:%S.out')
-
-    def _printMessageAndExit(self, msg):
-        """Prints the specified message string and then exits."""
-
-        # The use of os._exit() to immediately kill a child process
-        # after a fork() is documented at docs.python.org.
-        #
-        # pylint: disable-msg=W0212
-        #
-        pid = os.fork()
-        if pid:
-            os.waitpid(pid, 0)
-            os._exit(0)
-        else:
-            if isinstance(msg, MethodType):
-                msg()
-            else:
-                print(msg)
-            os._exit(0)
 
     def convertToSettings(self):
         """Converts known items (currently just those which can be enabled
@@ -245,7 +221,7 @@ parser.add_argument(
     help = orca_platform.version)
 
 parser.add_argument(
-    "-l", "--list-apps", action = "store_true", dest = "listApps",
+    "-l", "--list-apps", action = ListApps, nargs=0,
     # Translators: this is a testing option for the command line.  It prints
     # the names of applications known to the accessibility infrastructure
     # to stdout and then exits.
@@ -1400,7 +1376,7 @@ def main():
     if options.textSetupRequested:
         _showPreferencesConsole()
 
-    if not options.desktopRunning:
+    if not desktopRunning:
         # Translators: This message is presented to the user who attempts
         # to launch Orca from some other environment than the graphical
         # desktop.
