@@ -88,17 +88,25 @@ class ListApps(argparse.Action):
             print("\n".join(names))
         parser.exit()
 
+class Settings(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        for value in values.split(','):
+            item = str.title(value).replace('-', '')
+            try:
+                test = 'enable%s' % item
+                eval('settings.%s' % test)
+            except AttributeError:
+                try:
+                    test = 'show%s' % item
+                    eval('settings.%s' % test)
+                except AttributeError:
+                    namespace.invalid.append(item)
+                    continue
+            namespace.settings[test] = self.const
+
 class Options(argparse.Namespace):
     """Class to handle getting run-time options."""
 
-    canEnable = {'speech':'enableSpeech',
-                 'braille':'enableBraille',
-                 'braille-monitor':'enableBrailleMonitor',
-                 'main-window':'showMainWindow',
-                 'splash-window':'showSplashWindow'}
-
-    enable = None
-    disable = None
     profiles = None
     userPrefsDir = None
 
@@ -107,7 +115,7 @@ class Options(argparse.Namespace):
 
         super(Options, self).__init__(**kwargs)
         self.settings = {}
-        self.cannotEnable = []
+        self.invalid = []
         self._validFeaturesPrinted = False
         self.debug = False
         self.debugFile = None
@@ -125,72 +133,10 @@ class Options(argparse.Namespace):
         if self.profiles == None:
             self.profiles = []
 
-        enable = []
-
-        if self.enable != None:
-            for i in self.enable.split(","):
-                if not i in self.canEnable:
-                    self.cannotEnable.append(i)
-                else:
-                    enable.append(i)
-
-        self.enable = enable
-
-        disable = []
-
-        if self.disable != None:
-            for i in self.disable.split(","):
-                if not i in self.canEnable:
-                    self.cannotEnable.append(i)
-                else:
-                    disable.append(i)
-
-        self.disable = disable
-
         if self.debugFile:
             self.debug = True
         elif self.debug:
             self.debugFile = time.strftime('debug-%Y-%m-%d-%H:%M:%S.out')
-
-    def convertToSettings(self):
-        """Converts known items (currently just those which can be enabled
-        or disabled), stores them in the self.settings dictionary and then
-        returns that dictionary."""
-
-        toEnable = list(map(self.canEnable.get, self.enable))
-        for item in toEnable:
-            self.settings[item] = True
-
-        toDisable = list(map(self.canEnable.get, self.disable))
-        for item in toDisable:
-            self.settings[item] = False
-
-        self.presentCannotEnable()
-
-        return self.settings
-
-    def presentCannotEnable(self):
-        """Presents any non-enable-able items which the user asked us to
-        enable/disable. Returns True if there were invalid items; otherwise
-        returns False."""
-
-        if self.cannotEnable:
-            # Translators: This message is displayed when the user
-            # tries to enable or disable a feature via an argument,
-            # but specified an invalid feature. Valid features are:
-            # speech, braille, braille-monitor, main-window, and
-            # splash-window. These items are not localized and are
-            # presented in a list after this message.
-            #
-            msg = _("The following items can be enabled or disabled:") \
-                  + ", ".join(self.canEnable)
-
-            if not self._validFeaturesPrinted:
-                print(msg)
-                self._validFeaturesPrinted = True
-            return True
-
-        return False
 
 def presentInvalidOptions(invalidOptions):
     """Presents any invalid options to the user. Returns True if there were
@@ -268,16 +214,14 @@ parser.add_argument(
     help = _("Use alternate directory for user preferences"))
 
 parser.add_argument(
-    "-e", "--enable", action = "store", dest = "enable",
-    metavar = "|".join(Options.canEnable),
+    "-e", "--enable", action = Settings, const=True,
     # Translators: if the user supplies an option via the '-e, --enable'
     # command line option, it will be automatically enabled as Orca is started.
     #
     help = _("Force use of option"))
 
 parser.add_argument(
-    "-d", "--disable", action = "store", dest = "disable",
-    metavar = "|".join(Options.canEnable),
+    "-d", "--disable", action = Settings, const=False,
     # Translators: if the user supplies an option via the '-d, --disable'
     # command line option, it will be automatically disabled as Orca is started.
     #
@@ -301,6 +245,7 @@ parser.add_argument(
 args = ' '.join(sys.argv[1:])
 options, invalidOpts = parser.parse_known_args(args.split(),
                                                namespace = Options())
+invalidOpts.extend(options.invalid)
 options.validate()
 
 # This needs to occur prior to our importing anything which might in turn
@@ -1329,8 +1274,10 @@ def main():
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
     signal.signal(signal.SIGSEGV, abortOnSignal)
 
+    invalidOptionsPresented = presentInvalidOptions(invalidOpts)
+
     if multipleOrcas():
-        if presentInvalidOptions(invalidOpts):
+        if invalidOptionsPresented:
             die(0)
         elif options.replace:
             cleanup(signal.SIGKILL)
@@ -1342,7 +1289,7 @@ def main():
                     'process with a new one.'))
             return 1
 
-    _commandLineSettings.update(options.convertToSettings())
+    _commandLineSettings.update(options.settings)
     for profile in options.profiles:
         # Translators: This message is what is presented to the user
         # when he/she attempts to import a settings profile, but the

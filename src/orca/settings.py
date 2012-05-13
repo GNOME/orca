@@ -425,6 +425,10 @@ enablePositionSpeaking = False
 #
 showMainWindow          = True
 
+# If True, show the splash window.
+#
+showSplashWindow          = True
+
 # If True, quit Orca without confirmation when the user presses
 # <Orca-modifier>-q.
 #
