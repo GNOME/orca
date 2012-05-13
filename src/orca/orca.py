@@ -107,8 +107,6 @@ class Options(argparse.Namespace):
         self.settings = {}
         self.cannotEnable = []
         self._validFeaturesPrinted = False
-        self.setupRequested = False
-        self.showGUI = False
         self.debug = False
         self.debugFile = None
 
@@ -124,10 +122,6 @@ class Options(argparse.Namespace):
 
         if self.profiles == None:
             self.profiles = []
-
-        if self.guiSetupRequested or self.textSetupRequested:
-            self.setupRequested = True
-            self.showGUI = self.desktopRunning and not self.textSetupRequested
 
         if self.showHelp:
             self._printMessageAndExit(parser.print_help)
@@ -290,15 +284,6 @@ parser.add_argument(
     # is used.
     #
     help = _("Send debug output to the specified file"))
-
-parser.add_argument(
-    "-s", "--setup", "--gui-setup", action = "store_true",
-    dest = "guiSetupRequested",
-    # Translators: this is the description of the command line option
-    # '-s, --setup, --gui-setup' that will initially display a GUI dialog that
-    # would allow the user to set their Orca preferences.
-    #
-    help = _("Set up user preferences"))
 
 parser.add_argument(
     "-t", "--text-setup", action = "store_true",
@@ -1425,7 +1410,7 @@ def main():
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
 
-    if options.setupRequested and not options.showGUI:
+    if options.textSetupRequested:
         _showPreferencesConsole()
 
     if not options.desktopRunning:
@@ -1454,12 +1439,6 @@ def main():
         window = script.utilities.activeWindow()
         if window and not orca_state.locusOfFocus:
             setLocusOfFocus(None, window)
-
-    # Check to see if the user wants the configuration GUI. It's
-    # done here so that the user's existing preferences can be used
-    # to set the initial GUI state.
-    if options.setupRequested and options.showGUI:
-        showPreferencesGUI()
 
     try:
         start(pyatspi.Registry) # waits until we stop the registry
