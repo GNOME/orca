@@ -123,9 +123,6 @@ class Options(argparse.Namespace):
         if self.profiles == None:
             self.profiles = []
 
-        if self.showHelp:
-            self._printMessageAndExit(parser.print_help)
-
         if self.listApps and self.desktopRunning:
             apps = [x for x in pyatspi.Registry.getDesktop(0) if x != None]
             names = [app.name for app in apps]
@@ -236,22 +233,12 @@ def presentInvalidOptions(invalidOptions):
     return False
 
 parser = argparse.ArgumentParser(
+    # Translators: this text is the description displayed when Orca is
+    # launched from the command line and the help text is displayed.
     description = _("orca - scriptable screen reader"),
-    # Translators: this is text being sent to a terminal and we want to keep
-    # the text lines within terminal boundaries.
-    #
-    epilog = _("If Orca has not been previously set up by the user, Orca\n"
-               "will automatically launch the preferences set up unless\n"
-               "the -n or --no-setup option is used.\n\n"
-               "Report bugs to orca-list@gnome.org."),
-    add_help = False, formatter_class = argparse.RawTextHelpFormatter)
-
-parser.add_argument(
-    "-?", "--help", action = "store_true", dest = "showHelp",
-    # Translators: this is the description of the command line option
-    # '-?, --help' that is used to display usage information.
-    #
-    help = _("Show this help message"))
+    # Translators: this text is the description displayed when Orca is
+    # launched from the command line and the help text is displayed.
+    epilog = _("Report bugs to orca-list@gnome.org."))
 
 parser.add_argument(
     "-v", "--version", action = "version", version = orca_platform.version,

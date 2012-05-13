@@ -84,7 +84,7 @@
       </p>
       <list>
         <item>
-          <p><cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message</p>
+          <p><cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message</p>
         </item>
         <item>
           <p>
