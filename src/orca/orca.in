@@ -57,6 +57,10 @@ def setProcessName():
 def main():
     setProcessName()
 
+    sys.prefix = '@prefix@'
+    pyexecdir = '@pyexecdir@'.replace('${exec_prefix}', '@prefix@')
+    sys.path.insert(1, pyexecdir)
+
     from orca import orca
     return orca.main()
 
