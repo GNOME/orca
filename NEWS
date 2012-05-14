@@ -1,3 +1,21 @@
+3.4.2 - 14 May 2012
+
+General
+
+  * Fix for bug 675522 - incorrect comment for translators
+
+  * Prevent gnome-shell notifications from being double-presented
+
+  * Try to handle metacity timeouts more gracefully
+
+  * Fix for bug 674237 - More unicode errors found with hungarian locale
+
+  * Fix for bug 674693 - Modifier keys pressed alone should interrupt speech
+
+  * Prevent Orca from interrupting speech in Anaconda trees
+
+=========
+
 3.4.1 - 16 April 2012
 
 GNOME 3
