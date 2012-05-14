@@ -8,20 +8,20 @@
 # 
 # Gonzalo <gonzalo.sanhueza.r@gmail.com>, 2011.
 # Gonzalo Sanhueza <gonzalo.sanhueza.r@gmail.com>, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2010, 2011., 2011.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2010, 2011., 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2011-10-13 19:38+0000\n"
-"PO-Revision-Date: 2011-09-05 20:33+0200\n"
-"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
-"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
+"POT-Creation-Date: 2012-05-13 03:45+0000\n"
+"PO-Revision-Date: 2012-05-14 11:25+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #. When image changes, this message will be marked fuzzy or untranslated for you.
@@ -2670,8 +2670,9 @@ msgstr ""
 "Al lanzar <app>Orca</app> se pueden especificar las siguientes opciones:"
 
 #: C/introduction.page:87(p)
-msgid "<cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message"
-msgstr "<cmd>-?</cmd>, <cmd>--help</cmd>: mostrar el mensaje de ayuda"
+#| msgid "<cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message"
+msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
+msgstr "<cmd>-h</cmd>, <cmd>--help</cmd>: mostrar el mensaje de ayuda"
 
 #: C/introduction.page:90(p)
 msgid ""
@@ -2681,27 +2682,13 @@ msgstr ""
 
 #: C/introduction.page:96(p)
 msgid ""
-"<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: Set up user "
-"preferences"
-msgstr ""
-"<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: configurar las "
-"preferencias de usuario"
-
-#: C/introduction.page:102(p)
-msgid ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
 "version)"
 msgstr ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: configurar las preferencias de "
 "usuario (versión texto)"
 
-#: C/introduction.page:108(p)
-msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
-msgstr ""
-"<cmd>-n</cmd>, <cmd>--no-setup</cmd>: omitir la configuración de las "
-"preferencias del usuario"
-
-#: C/introduction.page:113(p)
+#: C/introduction.page:102(p)
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
 "<em>dirname</em> as the alternate directory for user preferences"
@@ -2710,7 +2697,7 @@ msgstr ""
 "<em>carpeta</em> como la carpeta alternativa para las preferencias del "
 "usuario"
 
-#: C/introduction.page:120(p)
+#: C/introduction.page:109(p)
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -2718,27 +2705,27 @@ msgstr ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>opción</em></cmd>: forzar el uso de una "
 "opción, donde <em>opción</em> puede ser una de las siguientes:"
 
-#: C/introduction.page:125(cmd) C/introduction.page:139(cmd)
+#: C/introduction.page:114(cmd) C/introduction.page:128(cmd)
 msgid "speech"
 msgstr "voz"
 
-#: C/introduction.page:126(cmd) C/introduction.page:140(cmd)
+#: C/introduction.page:115(cmd) C/introduction.page:129(cmd)
 msgid "braille"
 msgstr "braille"
 
-#: C/introduction.page:127(cmd) C/introduction.page:141(cmd)
+#: C/introduction.page:116(cmd) C/introduction.page:130(cmd)
 msgid "braille-monitor"
 msgstr "braille-monitor"
 
-#: C/introduction.page:128(cmd) C/introduction.page:142(cmd)
+#: C/introduction.page:117(cmd) C/introduction.page:131(cmd)
 msgid "main-window"
 msgstr "main-window"
 
-#: C/introduction.page:129(cmd) C/introduction.page:143(cmd)
+#: C/introduction.page:118(cmd) C/introduction.page:132(cmd)
 msgid "splash-window"
 msgstr "splash-window"
 
-#: C/introduction.page:133(p)
+#: C/introduction.page:122(p)
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -2746,7 +2733,7 @@ msgstr ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>opción</em></cmd>: evitar el uso de una "
 "opción, donde la <em>opción</em> puede ser una de las siguientes:"
 
-#: C/introduction.page:147(p)
+#: C/introduction.page:136(p)
 msgid ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
 "from a given <app>Orca</app> profile file"
@@ -2754,37 +2741,25 @@ msgstr ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>nombre de archivo</em></cmd>: importar "
 "un archivo desde un perfil de <app>Orca</app> dado"
 
-#: C/introduction.page:153(p)
-msgid "<cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>"
-msgstr "<cmd>-q</cmd>, <cmd>--quit</cmd>: salir de <app>Orca</app>"
-
-#: C/introduction.page:158(p)
-msgid ""
-"<cmd>-f</cmd>, <cmd>--forcequit</cmd>: Forces <app>Orca</app> to be "
-"terminated immediately."
-msgstr ""
-"<cmd>-f</cmd>, <cmd>--forcequit</cmd>: forzar a <app>Orca</app> a terminar "
-"inmediatamente."
-
-#: C/introduction.page:164(p)
+#: C/introduction.page:142(p)
 msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgstr ""
 "<cmd>--replace</cmd>: reemplazar una instancia <app>Orca</app> en ejecución"
 
-#: C/introduction.page:169(p)
+#: C/introduction.page:147(p)
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: imprimir las aplicaciones conocidas "
 "en ejecución"
 
-#: C/introduction.page:175(p)
+#: C/introduction.page:153(p)
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd>: enviar información de depurado a debug-YYYY-MM-DD-HH:MM:"
 "SS.out"
 
-#: C/introduction.page:180(p)
+#: C/introduction.page:158(p)
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
@@ -6871,6 +6846,28 @@ msgid "translator-credits"
 msgstr ""
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2011\n"
 "Jorge González <jorgegonz@svn.gnome.org>, 2011"
+
+#~ msgid ""
+#~ "<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: Set up user "
+#~ "preferences"
+#~ msgstr ""
+#~ "<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: configurar las "
+#~ "preferencias de usuario"
+
+#~ msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
+#~ msgstr ""
+#~ "<cmd>-n</cmd>, <cmd>--no-setup</cmd>: omitir la configuración de las "
+#~ "preferencias del usuario"
+
+#~ msgid "<cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>"
+#~ msgstr "<cmd>-q</cmd>, <cmd>--quit</cmd>: salir de <app>Orca</app>"
+
+#~ msgid ""
+#~ "<cmd>-f</cmd>, <cmd>--forcequit</cmd>: Forces <app>Orca</app> to be "
+#~ "terminated immediately."
+#~ msgstr ""
+#~ "<cmd>-f</cmd>, <cmd>--forcequit</cmd>: forzar a <app>Orca</app> a "
+#~ "terminar inmediatamente."
 
 #~ msgid ""
 #~ "@@image: 'figures/preferences_enable_magnifier.png'; "
