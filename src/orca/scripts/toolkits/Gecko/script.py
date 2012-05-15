@@ -479,24 +479,55 @@ class Script(default.Script):
         self.inputEventHandlers["advanceLivePoliteness"] = \
             input_event.InputEventHandler(
                 Script.advanceLivePoliteness,
-                # Translators: this is for advancing the live regions
-                # politeness setting
+                # Translators: this string refers to an Orca command which
+                # advances the live region "politeness" setting from one
+                # level to the next.
+                #
+                # The term "live region" refers to dynamically updated
+                # content, typically on a web page, about which a user
+                # likely wants to be notified. For instance, a stock
+                # ticker on a financial site or a table of updated scores
+                # on a sports site. In contast, a countdown timer or clock
+                # on a web site is NOT a live region.
+                #
+                # The "politeness" level is an indication of when the user
+                # wishes to be notified about a change to live region content,
+                # e.g. never ("off"), when idle ("polite"), or when there is
+                # a change ("assertive").
                 #
                 _("Advance live region politeness setting."))
 
         self.inputEventHandlers["setLivePolitenessOff"] = \
             input_event.InputEventHandler(
                 Script.setLivePolitenessOff,
-                # Translators: this is for setting all live regions
-                # to 'off' politeness.
+                # Translators: this string refers to an Orca command which
+                # turns changes the live region "politness" level to "off."
+                #
+                # The term "live region" refers to dynamically updated
+                # content, typically on a web page, about which a user
+                # likely wants to be notified. For instance, a stock
+                # ticker on a financial site or a table of updated scores
+                # on a sports site. In contast, a countdown timer or clock
+                # on a web site is NOT a live region.
+                #
+                # The "politeness" level is an indication of when the user
+                # wishes to be notified about a change to live region content,
+                # e.g. never ("off"), when idle ("polite"), or when there is
+                # a change ("assertive").
                 #
                 _("Set default live region politeness level to off."))
 
         self.inputEventHandlers["monitorLiveRegions"] = \
             input_event.InputEventHandler(
                 Script.monitorLiveRegions,
-                # Translators: this is a toggle to monitor live regions
-                # or not.
+                # Translators: this string refers to an Orca command which
+                # allows the user to toggle whether or not Orca pays attention
+                # to changes in live regions. Note that turning off monitoring
+                # of live events is NOT the same as turning the politeness level
+                # to "off". The user can opt to have no notifications presented
+                # (politeness level of "off") and still manually review recent
+                # updates to live regions via Orca commands for doing so -- as
+                # long as the monitoring of live regions is enabled.
                 #
                 _("Monitor live regions."))
 
@@ -504,7 +535,8 @@ class Script(default.Script):
             input_event.InputEventHandler(
                 Script.reviewLiveAnnouncement,
                 # Translators: this is for reviewing up to nine stored
-                # previous live messages.
+                # previous live messages. Please see previous translator
+                # notes for more information on live regions.
                 #
                 _("Review live region announcement."))
 

@@ -332,24 +332,48 @@ class Chat:
         """Defines InputEventHandler fields for chat functions which
         will be used by the script associated with this chat instance."""
 
+        # Translators: In chat applcations, Orca automatically presents incoming
+        # messages in speech and braille. If a user is in multiple conversations
+        # or channels at the same time, it can be confusing to know what room or
+        # channel a given message came from just from hearing/reading it. For
+        # For this reason, Orca has an option to present the name of the room
+        # first ( "#a11y <joanie> hello!" instead of "<joanie> hello world!".
+        # This string to be translated is associated with the command to toggle
+        # room name presentation on or off.
+        # 
         self.inputEventHandlers["togglePrefixHandler"] = \
             input_event.InputEventHandler(
                 self.togglePrefix,
                 _("Toggle whether we prefix chat room messages with " \
                   "the name of the chat room."))
 
+        # Translators: In chat applications, it is often possible to see that
+        # a "buddy" is typing currently (e.g. via a keyboard icon or status
+        # text). Some users like to have this typing status announced by Orca;
+        # others find that announcment unpleasant. Therefore, it is a setting
+        # in Orca. This string to be translated is associated with the command
+        # to toggle typing status presentation on or off.
         self.inputEventHandlers["toggleBuddyTypingHandler"] = \
             input_event.InputEventHandler(
                 self.toggleBuddyTyping,
                 _("Toggle whether we announce when our buddies are typing."))
 
+        # Translators: Orca has a command to review previous chat room messages
+        # in speech and braille. Some users prefer to have this message history
+        # combined (e.g. the last ten messages which came in, no matter what
+        # room they came from). Other users prefer to have specific room history
+        # (e.g. the last ten messages from #a11y). Therefore, this is a setting
+        # in Orca. This string to be translated is associated with the command
+        # to toggle specific room history on or off.
         self.inputEventHandlers["toggleMessageHistoriesHandler"] = \
             input_event.InputEventHandler(
                 self.toggleMessageHistories,
                 _("Toggle whether we provide chat room specific message " \
                   "histories."))
 
-        # Add the chat room message history event handler.
+        # Translators: Orca has a command to review previous chat room messages
+        # in speech and braille. This string to be translated is associated
+        # with the keyboard commands used to review those previous messages.
         #
         self.inputEventHandlers["reviewMessage"] = \
             input_event.InputEventHandler(
@@ -408,7 +432,7 @@ class Chat:
         grid.set_border_width(12)
 
         # Translators: If this checkbox is checked, then Orca will speak
-        # the name of the chat room.
+        # the name of the chat room prior to presenting an incoming message.
         #
         label = _("_Speak Chat Room name")
         value = _settingsManager.getSetting('chatSpeakRoomName')
