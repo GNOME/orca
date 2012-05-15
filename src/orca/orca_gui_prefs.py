@@ -3354,20 +3354,36 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             saveActiveProfile()
         else:
             if profileToSave != None:
-                # We're here because given profile name exists, so we have
-                # to give that info to the user and give him the chance
-                # to continue, or not saving the profile
-                message = _("Profile <b>%s</b> already exists.\n" \
+                # Translators: This text is shown in a message dialog informing
+                # the user that he/she attempted to save a new user profile
+                # under a name which already exists. A "user profile" is a
+                # collection of settings which apply to a given task, such as
+                # a "Spanish" profile which would use Spanish text-to-speech
+                # and Spanish braille and selected when reading Spanish content.
+                message = _("Profile %s already exists.\n" \
                             "Continue updating the existing profile with " \
-                            "these new changes?") % profileToSaveLabel
+                            "these new changes?") % \
+                            ("<b>%s</b>" % profileToSaveLabel)
 
                 dialog = Gtk.MessageDialog(None,
                         Gtk.DialogFlags.MODAL,
                         type=Gtk.MessageType.INFO,
                         buttons=Gtk.ButtonsType.YES_NO)
 
-                dialog.set_markup(_("<b>User Profile Conflict!</b>"))
+                # Translators: This is a label in a message dialog informing
+                # the user that he/she attempted to save a new user profile
+                # under a name which already exists. A "user profile" is a
+                # collection of settings which apply to a given task, such as
+                # a "Spanish" profile which would use Spanish text-to-speech
+                # and Spanish braille and selected when reading Spanish content.
+                dialog.set_markup("<b>%s</b>" % _("User Profile Conflict!"))
                 dialog.format_secondary_markup(message)
+                # Translators: This is the title of a message dialog informing
+                # the user that he/she attempted to save a new user profile
+                # under a name which already exists. A "user profile" is a
+                # collection of settings which apply to a given task, such as
+                # a "Spanish" profile which would use Spanish text-to-speech
+                # and Spanish braille and selected when reading Spanish content.
                 dialog.set_title(_("Save Profile As Conflict"))
                 response = dialog.run()
 
@@ -3384,7 +3400,12 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if self._isInitialSetup:
             return
 
-        # First of all, we give a chance of cancel profile change
+        # Translators: This text is displayed in a message dialog when a user
+        # indicates he/she wants to switch to a new user profile and, in the
+        # process, lose settings which have been altered but not yet saved. A
+        # "user profile" is a collection of settings which apply to a given task
+        # such as a "Spanish" profile which would use Spanish text-to-speech and
+        # Spanish braille and selected when reading Spanish content.
         message = _("You are about to change the active profile. If you\n" \
                     "have just made changes in your preferences, they will\n" \
                     "be dropped at profile load.\n\n" \
@@ -3395,9 +3416,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
                 type=Gtk.MessageType.INFO,
                 buttons=Gtk.ButtonsType.YES_NO)
 
-        dialog.set_markup(_("<b>Load user profile info</b>"))
+        # Translators: This text is displayed in a message dialog when a user
+        # indicates he/she wants to switch to a new user profile and, in the
+        # process, lose settings which have been altered but not yet saved. A
+        # "user profile" is a collection of settings which apply to a given task
+        # such as a "Spanish" profile which would use Spanish text-to-speech and
+        # Spanish braille and selected when reading Spanish content.
+        dialog.set_markup("<b>%s</b>" % _("Load user profile"))
         dialog.format_secondary_markup(message)
-        dialog.set_title(_("Load User Profile"))
         response = dialog.run()
 
         if response == Gtk.ResponseType.YES:

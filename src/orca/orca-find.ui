@@ -220,13 +220,16 @@
                       <object class="GtkLabel" id="startFromLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Start from:&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
+                        <property name="label" translatable="yes">Start from:</property>
+                        <property name="use_markup">False</property>
                         <child internal-child="accessible">
                           <object class="AtkObject" id="startFromLabel-atkobject">
                             <property name="AtkObject::accessible-name" translatable="yes">Start from:</property>
                           </object>
                         </child>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
                       </object>
                     </child>
                   </object>
@@ -299,8 +302,11 @@
                       <object class="GtkLabel" id="searchDirectionLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Search direction:&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
+                        <property name="label" translatable="yes">Search direction:</property>
+                        <property name="use_markup">False</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
                       </object>
                     </child>
                   </object>
@@ -372,8 +378,11 @@
                       <object class="GtkLabel" id="resultsMustLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Results must:&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
+                        <property name="label" translatable="yes">Results must:</property>
+                        <property name="use_markup">False</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
                       </object>
                     </child>
                   </object>
