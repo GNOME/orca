@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkDialog" id="findDialog">
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
@@ -27,6 +27,7 @@
             <child>
               <object class="GtkButton" id="closeButton">
                 <property name="label">gtk-close</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -50,6 +51,7 @@
             <child>
               <object class="GtkButton" id="findButton">
                 <property name="label">gtk-find</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can_focus">True</property>
@@ -131,9 +133,6 @@
                     <property name="height">1</property>
                   </packing>
                 </child>
-                <child>
-                  <placeholder/>
-                </child>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -170,6 +169,7 @@
                             <child>
                               <object class="GtkRadioButton" id="currentLocationRadioButton">
                                 <property name="label" translatable="yes">C_urrent location</property>
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -190,6 +190,7 @@
                             <child>
                               <object class="GtkRadioButton" id="topRadioButton">
                                 <property name="label" translatable="yes">_Top of window</property>
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -221,7 +222,6 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Start from:</property>
-                        <property name="use_markup">False</property>
                         <child internal-child="accessible">
                           <object class="AtkObject" id="startFromLabel-atkobject">
                             <property name="AtkObject::accessible-name" translatable="yes">Start from:</property>
@@ -258,6 +258,7 @@
                             <child>
                               <object class="GtkCheckButton" id="wrapAroundCheckbox">
                                 <property name="label" translatable="yes">_Wrap around</property>
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -278,6 +279,7 @@
                             <child>
                               <object class="GtkCheckButton" id="searchBackwardsCheckbox">
                                 <property name="label" translatable="yes">Search _backwards</property>
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -303,7 +305,6 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Search direction:</property>
-                        <property name="use_markup">False</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
@@ -335,6 +336,7 @@
                             <child>
                               <object class="GtkCheckButton" id="matchCaseCheckbox">
                                 <property name="label" translatable="yes">_Match case</property>
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -354,6 +356,7 @@
                             <child>
                               <object class="GtkCheckButton" id="matchEntireWordCheckbox">
                                 <property name="label" translatable="yes">Match _entire word only</property>
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -379,7 +382,6 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Results must:</property>
-                        <property name="use_markup">False</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
                         </attributes>
