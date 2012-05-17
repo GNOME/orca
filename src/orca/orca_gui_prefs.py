@@ -3246,8 +3246,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.prefsDict['startingProfile'] = startingProfile
         _settingsManager.setStartingProfile(startingProfile)
 
-        self.prefsDict['firstStart'] = False
-
         self.writeUserPreferences()
 
         orca.loadUserSettings()

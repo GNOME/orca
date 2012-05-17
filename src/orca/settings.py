@@ -27,8 +27,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-import os
-
 tty = 7
 
 try:
@@ -134,14 +132,12 @@ userCustomizableSettings = [
     "presentTimeFormat",
     "activeProfile",
     "startingProfile",
-    "firstStart"
 ]
 
 excludeKeys = ["pronunciations",
                "keybindings",
                "startingProfile",
-               "activeProfile",
-               "firstStart"]
+               "activeProfile"]
 
 # The name of the module that hold the user interface for the main window
 # for Orca. This module is expected to have two methods, showMainUI and
@@ -177,10 +173,6 @@ splashModule = "orca_gui_splash"
 startingProfile = ['Default', 'default']
 activeProfile = ['Default', 'default']
 profile = ['Default', 'default']
-
-# First start?
-#
-firstStart = True
 
 # A list of keys that can serve as the Orca modifier key.  The list is
 # so we can provide better cross platform support (e.g., Sun keyboard

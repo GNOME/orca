@@ -134,11 +134,7 @@ class Backend:
     def isFirstStart(self):
         """ Check if we're in first start. """
  
-        if not os.path.exists(self.settingsFile):
-            return True
-
-        self._getSettings()
-        return self.general.get('firstStart', True)
+        return not os.path.exists(self.settingsFile)
 
     def _setProfileKey(self, key, value):
         self.general[key] = value
