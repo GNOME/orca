@@ -382,7 +382,10 @@ class SpeechServer(speechserver.SpeechServer):
     def _change_default_speech_rate(self, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
         delta = settings.speechRateDelta * (decrease and -1 or +1)
-        rate = acss[ACSS.RATE]
+        try:
+            rate = acss[ACSS.RATE]
+        except KeyError:
+            rate = 50
         acss[ACSS.RATE] = max(0, min(99, rate + delta))
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech rate is now %d" % rate)
@@ -392,7 +395,10 @@ class SpeechServer(speechserver.SpeechServer):
     def _change_default_speech_pitch(self, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
         delta = settings.speechPitchDelta * (decrease and -1 or +1)
-        pitch = acss[ACSS.AVERAGE_PITCH]
+        try:
+            pitch = acss[ACSS.AVERAGE_PITCH]
+        except KeyError:
+            pitch = 5
         acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech pitch is now %d" % pitch)
