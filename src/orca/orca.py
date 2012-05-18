@@ -107,9 +107,6 @@ class Settings(argparse.Action):
 class Options(argparse.Namespace):
     """Class to handle getting run-time options."""
 
-    profiles = None
-    userPrefsDir = None
-
     def __init__(self, **kwargs):
         """Initialize the Options class."""
 
@@ -122,16 +119,6 @@ class Options(argparse.Namespace):
 
     def validate(self):
         """Validate the commandline options."""
-
-        if self.userPrefsDir != None:
-            try:
-                os.chdir(self.userPrefsDir)
-            except:
-                debug.printException(debug.LEVEL_FINEST)
-                self.userPrefsDir = None
-
-        if self.profiles == None:
-            self.profiles = []
 
         if self.debugFile:
             self.debug = True
@@ -228,7 +215,7 @@ parser.add_argument(
     help = _("Prevent use of option"))
 
 parser.add_argument(
-    "-i", "--import-file", action = "append", dest = "profiles",
+    "-i", "--import-file", action = "append", dest = "profiles", default = [],
     # Translators: this is the Orca command line option to import to Orca a user
     # profile from a given file
     #
@@ -241,10 +228,7 @@ parser.add_argument(
     #
     help = _("Replace a currently running Orca"))
 
-# temporary hack
-args = ' '.join(sys.argv[1:])
-options, invalidOpts = parser.parse_known_args(args.split(),
-                                               namespace = Options())
+options, invalidOpts = parser.parse_known_args(namespace = Options())
 invalidOpts.extend(options.invalid)
 options.validate()
 
