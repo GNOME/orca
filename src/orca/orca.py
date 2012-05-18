@@ -237,7 +237,8 @@ options.validate()
 # You have been warned.
 #
 from .settings_manager import SettingsManager
-_settingsManager = SettingsManager(prefsDir=options.userPrefsDir)
+_settingsManager = SettingsManager()
+_settingsManager.activate(options.userPrefsDir)
 if _settingsManager is None:
     print("Could not load the settings manager. Exiting.")
     sys.exit(1)

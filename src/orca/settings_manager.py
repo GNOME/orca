@@ -60,7 +60,7 @@ class SettingsManager(object):
             cls.__instance = object.__new__(cls, *args, **kwargs)
         return cls.__instance
 
-    def __init__(self, backend='json', prefsDir=None):
+    def __init__(self, backend='json'):
         """Initialize a SettingsManager Object.
         If backend isn't defined then uses default backend, in this
         case json-backend.
@@ -74,8 +74,7 @@ class SettingsManager(object):
         self._backend = None
         self.profile = None
         self.backendName = backend
-        self._prefsDir = prefsDir \
-            or os.path.join(GLib.get_user_data_dir(), "orca")
+        self._prefsDir = None
 
         # Dictionaries for store the default values
         # The keys and values are defined at orca.settings
@@ -102,10 +101,22 @@ class SettingsManager(object):
         self.keybindings = {}
 
         if not self._loadBackend():
-            raise Exception('SettingsManager::_loadBackend fails.')
+            raise Exception('SettingsManager._loadBackend failed.')
 
         self.customizedSettings = {}
         self._customizationCompleted = False
+
+        # For handling the currently-"classic" application settings
+        self.settingsPackages = ["app-settings"]
+        self._knownAppSettings = {}
+
+        debug.println(debug.LEVEL_FINEST, 'INFO: Settings manager initialized')
+
+    def activate(self, prefsDir=None):
+        debug.println(debug.LEVEL_FINEST, 'INFO: Activating settings manager')
+
+        self._prefsDir = prefsDir \
+            or os.path.join(GLib.get_user_data_dir(), "orca")
 
         # Load the backend and the default values
         self._backend = self.backendModule.Backend(self._prefsDir)
@@ -125,16 +136,12 @@ class SettingsManager(object):
         #
         self._createDefaults()
 
+        debug.println(debug.LEVEL_FINEST, 'INFO: Settings manager activated')
+
         # Set the active profile and load its stored settings
         if self.profile is None:
             self.profile = self.general.get('startingProfile')[1]
         self.setProfile(self.profile)
-
-        # For handling the currently-"classic" application settings
-        self.settingsPackages = ["app-settings"]
-        self._knownAppSettings = {}
-
-        debug.println(debug.LEVEL_FINEST, 'INFO: Settings manager initialized')
 
     def _loadBackend(self):
         """Load specific backend for manage user settings"""
