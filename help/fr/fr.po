@@ -1,5 +1,5 @@
 # French translation for orca.
-# Copyright (C) 2011 orca's COPYRIGHT HOLDER
+# Copyright (C) 2011-2012 orca's COPYRIGHT HOLDER
 # This file is distributed under the same license as the orca package.
 #
 #
@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2011-11-30 11:34+0000\n"
-"PO-Revision-Date: 2012-01-02 10:48+0100\n"
+"POT-Creation-Date: 2012-05-13 03:45+0000\n"
+"PO-Revision-Date: 2012-05-20 14:22+0200\n"
 "Last-Translator: Bruno Brouard <annoa.b@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -2698,8 +2698,8 @@ msgstr ""
 "app> :"
 
 #: C/introduction.page:87(p)
-msgid "<cmd>-?</cmd>, <cmd>--help</cmd>: Show the help message"
-msgstr "<cmd>-?</cmd>, <cmd>--help</cmd> : affiche le message d'aide"
+msgid "<cmd>-h</cmd>, <cmd>--help</cmd>: Show the help message"
+msgstr "<cmd>-h</cmd>, <cmd>--help</cmd> : affiche le message d'aide"
 
 #: C/introduction.page:90(p)
 msgid ""
@@ -2709,26 +2709,13 @@ msgstr ""
 
 #: C/introduction.page:96(p)
 msgid ""
-"<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd>: Set up user "
-"preferences"
-msgstr ""
-"<cmd>-s</cmd>, <cmd>--setup</cmd>, <cmd>--gui-setup</cmd> : définit les "
-"préférences utilisateur"
-
-#: C/introduction.page:102(p)
-msgid ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd>: Set up user preferences (text "
 "version)"
 msgstr ""
 "<cmd>-t</cmd>, <cmd>--text-setup</cmd> : définit les préférences utilisateur "
 "(en mode texte)"
 
-#: C/introduction.page:108(p)
-msgid "<cmd>-n</cmd>, <cmd>--no-setup</cmd>Skip set up of user preferences"
-msgstr ""
-"<cmd>-n</cmd>, <cmd>--no-setup</cmd> : ignore les préférences utilisateur"
-
-#: C/introduction.page:113(p)
+#: C/introduction.page:102(p)
 msgid ""
 "<cmd>-u</cmd>, <cmd>--user-prefs-dir=<em>dirname</em></cmd>: Use "
 "<em>dirname</em> as the alternate directory for user preferences"
@@ -2737,7 +2724,7 @@ msgstr ""
 "<em>nomrepertoire</em> comme répertoire alternatif pour les préférences "
 "utilisateur"
 
-#: C/introduction.page:120(p)
+#: C/introduction.page:109(p)
 msgid ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd>: Force use of option, "
 "where the <em>option</em> can be one of the following:"
@@ -2745,27 +2732,27 @@ msgstr ""
 "<cmd>-e</cmd>, <cmd>--enable=<em>option</em></cmd> : force l'utilisation de "
 "l'option, où <em>option</em> peut être l'un des termes suivants :"
 
-#: C/introduction.page:125(cmd) C/introduction.page:139(cmd)
+#: C/introduction.page:114(cmd) C/introduction.page:128(cmd)
 msgid "speech"
 msgstr "speech"
 
-#: C/introduction.page:126(cmd) C/introduction.page:140(cmd)
+#: C/introduction.page:115(cmd) C/introduction.page:129(cmd)
 msgid "braille"
 msgstr "braille"
 
-#: C/introduction.page:127(cmd) C/introduction.page:141(cmd)
+#: C/introduction.page:116(cmd) C/introduction.page:130(cmd)
 msgid "braille-monitor"
 msgstr "braille-monitor"
 
-#: C/introduction.page:128(cmd) C/introduction.page:142(cmd)
+#: C/introduction.page:117(cmd) C/introduction.page:131(cmd)
 msgid "main-window"
 msgstr "main-window"
 
-#: C/introduction.page:129(cmd) C/introduction.page:143(cmd)
+#: C/introduction.page:118(cmd) C/introduction.page:132(cmd)
 msgid "splash-window"
 msgstr "splash-window"
 
-#: C/introduction.page:133(p)
+#: C/introduction.page:122(p)
 msgid ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd>: Prevent the use of an "
 "option, where the <em>option</em> can be one of the following:"
@@ -2773,7 +2760,7 @@ msgstr ""
 "<cmd>-d</cmd>, <cmd>--disable=<em>option</em></cmd> : empêche l'utilisation "
 "de l'option, où <em>option</em> peut être l'un des termes suivants :"
 
-#: C/introduction.page:147(p)
+#: C/introduction.page:136(p)
 msgid ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>filename</em></cmd>: Import a profile "
 "from a given <app>Orca</app> profile file"
@@ -2781,36 +2768,24 @@ msgstr ""
 "<cmd>-i</cmd>, <cmd>--import-file=<em>nom2fichier</em></cmd> : importe un "
 "profil depuis un fichier de profil <app>Orca</app> donné"
 
-#: C/introduction.page:153(p)
-msgid "<cmd>-q</cmd>, <cmd>--quit</cmd>: Quits <app>Orca</app>"
-msgstr "<cmd>-q</cmd>, <cmd>--quit</cmd> : quitte <app>Orca</app>"
-
-#: C/introduction.page:158(p)
-msgid ""
-"<cmd>-f</cmd>, <cmd>--forcequit</cmd>: Forces <app>Orca</app> to be "
-"terminated immediately."
-msgstr ""
-"<cmd>-f</cmd>, <cmd>--forcequit</cmd> : force l'arrêt immédiat d'<app>Orca</"
-"app>."
-
-#: C/introduction.page:164(p)
+#: C/introduction.page:142(p)
 msgid "<cmd>--replace</cmd>: Replace a currently-running <app>Orca</app>"
 msgstr "<cmd>--replace</cmd> : remplace la session actuelle d'<app>Orca</app>"
 
-#: C/introduction.page:169(p)
+#: C/introduction.page:147(p)
 msgid ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd>: Print the known running applications"
 msgstr ""
 "<cmd>-l</cmd>, <cmd>--list-apps</cmd> : affiche les applications lancées "
 "connues"
 
-#: C/introduction.page:175(p)
+#: C/introduction.page:153(p)
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
 "<cmd>--debug</cmd> : envoie la sortie de débogage dans le fichier debug-AAAA-"
 "MM-JJ-HH:MM:SS.out"
 
-#: C/introduction.page:180(p)
+#: C/introduction.page:158(p)
 msgid ""
 "<cmd>--debug-file=<em>filename</em></cmd>: Send debug output to the "
 "specified file"
