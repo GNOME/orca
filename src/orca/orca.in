@@ -62,15 +62,6 @@ def main():
     sys.path.insert(1, pyexecdir)
 
     from orca import orca
-    from orca.orca_i18n import _
-
-    # Translators: This is a test string which you should not actually
-    # translate. It is here so we can sort out whatever silly mistake
-    # I am making which is preventing this translator note from showing
-    # up in the .pot file. Sorry and thanks for your help!
-    # https://mail.gnome.org/archives/gnome-i18n/2012-May/msg00085.html
-    string = _("Why won't the translator note appear like it normally does?")
-
     return orca.main()
 
 if __name__ == "__main__":
