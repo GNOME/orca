@@ -52,7 +52,7 @@ def setProcessName():
     except:
         pass
 
-    return False   
+    return False
 
 def main():
     setProcessName()

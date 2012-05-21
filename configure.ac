@@ -122,10 +122,10 @@ src/orca/scripts/toolkits/J2SE-access-bridge/Makefile
 src/orca/scripts/toolkits/CALLY/Makefile
 src/orca/scripts/toolkits/WebKitGtk/Makefile
 src/orca/backends/Makefile
-src/orca/orca
+src/orca/orca_bin.py
 src/orca/orca_i18n.py
 src/orca/orca_platform.py
-],[chmod +x run_pylint.sh])
+],[chmod +x run_pylint.sh ; cp src/orca/orca_bin.py src/orca/orca])
 
 if test "x$brlapi_available" = "xno" ; then
 echo

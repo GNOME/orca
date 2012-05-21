@@ -19,6 +19,7 @@ src/orca/keybindings.py
 src/orca/keynames.py
 src/orca/liveregions.py
 src/orca/notification_messages.py
+src/orca/orca_bin.py.in
 src/orca/orca_console_prefs.py
 [type: gettext/glade]src/orca/orca-find.ui
 src/orca/orca_gui_splash.py
@@ -27,7 +28,6 @@ src/orca/orca_gui_main.py
 src/orca/orca_gui_prefs.py
 src/orca/orca_gui_profile.py
 src/orca/orca_gui_quit.py
-src/orca/orca.in
 src/orca/orca.py
 [type: gettext/glade]src/orca/orca-setup.ui
 src/orca/phonnames.py
