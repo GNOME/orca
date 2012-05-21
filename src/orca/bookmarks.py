@@ -213,6 +213,9 @@ class Bookmarks:
         that represents a bookmark """
         filename = filename or self._script.name.split(' ')[0]
         orcaDir = _settingsManager.getPrefsDir()
+        if not orcaDir:
+            return
+
         orcaBookmarksDir = os.path.join(orcaDir, "bookmarks")
         try:
             inputFile = open( os.path.join( orcaBookmarksDir, \

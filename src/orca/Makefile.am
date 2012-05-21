@@ -84,3 +84,15 @@ gfx_DATA = \
 EXTRA_DIST = \
 	$(ui_DATA) \
 	$(gfx_DATA)
+
+CLEANFILES = \
+	orca \
+	orca_bin.py \
+	orca_i18n.py \
+	orca_platform.py
+
+DISTCLEANFILES = \
+	orca \
+	orca_bin.py \
+	orca_i18n.py \
+	orca_platform.py

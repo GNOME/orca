@@ -31,7 +31,6 @@ __license__   = "LGPL"
 import os
 import imp
 from gi.repository import Gio, GLib
-from json import load
 
 from . import debug
 from .keybindings import KeyBinding
@@ -494,26 +493,6 @@ class SettingsManager(object):
         """Get available profiles from active backend"""
 
         return self._backend.availableProfiles()
-
-
-    def importProfile(self, fileName):
-        """Import profile from a given filename"""
-
-        prefs = {}
-        with open(fileName) as settingsFile:
-            prefs = load(settingsFile)
-
-        general = {}
-
-        for key, value in list(prefs.items()):
-            if key not in settings.excludeKeys:
-                general[key] = value
-
-        pronunciations = prefs.get('pronunciations', {})
-        keybindings = prefs.get('keybindings', {})
-
-        self.saveSettings(general, pronunciations, keybindings)
-        return True
 
     def loadAppSettings(self, script):
         """Load the users application specific settings for an app.

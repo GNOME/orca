@@ -29,13 +29,13 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
-import argparse
+import gc
 import os
-import subprocess
+import pyatspi
 import re
 import signal
+import subprocess
 import sys
-import time
 
 try:
     from gi.repository.Gio import Settings
@@ -43,7 +43,6 @@ try:
 except:
     a11yAppSettings = None
 
-import pyatspi
 try:
     # This can fail due to gtk not being available.  We want to
     # be able to recover from that if possible.  The main driver
@@ -55,18 +54,34 @@ try:
     # Note: This last import is here due to bgo #673396.
     # See bgo#673397 for the rest of the story.
     from gi.repository.GdkX11 import X11Screen
-    desktopRunning = True
 except:
-    desktopRunning = False
+    pass
 
-# Importing anything that requires a functioning settings manager
-# instance should NOT be done here.
-#
+from .settings_manager import SettingsManager
+_settingsManager = SettingsManager()
+
+from .event_manager import EventManager
+_eventManager = EventManager()
+
+from .script_manager import ScriptManager
+_scriptManager = ScriptManager()
+
+from . import braille
 from . import debug
-from . import orca_platform
+from . import notification_messages
+from . import orca_state
 from . import settings
+from . import speech
+from .input_event import BrailleEvent
+from .input_event import KeyboardEvent
 from .orca_i18n import _
 from .orca_i18n import ngettext
+
+try:
+    # If we don't have an active desktop, we will get a RuntimeError.
+    from . import mouse_review
+except RuntimeError:
+    pass
 
 def onEnabledChanged(gsetting, key):
     try:
@@ -77,193 +92,9 @@ def onEnabledChanged(gsetting, key):
     if key == 'screen-reader-enabled' and not enabled:
         shutdown()
 
-class ListApps(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        try:
-            apps = filter(lambda x: x != None, pyatspi.Registry.getDesktop(0))
-            names = [app.name for app in apps]
-        except:
-            pass
-        else:
-            print("\n".join(names))
-        parser.exit()
+def getSettingsManager():
+    return _settingsManager
 
-class Settings(argparse.Action):
-    def __call__(self, parser, namespace, values, option_string=None):
-        for value in values.split(','):
-            item = str.title(value).replace('-', '')
-            try:
-                test = 'enable%s' % item
-                eval('settings.%s' % test)
-            except AttributeError:
-                try:
-                    test = 'show%s' % item
-                    eval('settings.%s' % test)
-                except AttributeError:
-                    namespace.invalid.append(item)
-                    continue
-            namespace.settings[test] = self.const
-
-class Options(argparse.Namespace):
-    """Class to handle getting run-time options."""
-
-    def __init__(self, **kwargs):
-        """Initialize the Options class."""
-
-        super(Options, self).__init__(**kwargs)
-        self.settings = {}
-        self.invalid = []
-        self._validFeaturesPrinted = False
-        self.debug = False
-        self.debugFile = None
-
-    def validate(self):
-        """Validate the commandline options."""
-
-        if self.debugFile:
-            self.debug = True
-        elif self.debug:
-            self.debugFile = time.strftime('debug-%Y-%m-%d-%H:%M:%S.out')
-
-def presentInvalidOptions(invalidOptions):
-    """Presents any invalid options to the user. Returns True if there were
-    invalid options to present and a message printed; otherwise returns False.
-    """
-
-    if invalidOptions:
-        # Translators: This message is displayed when the user tries to start
-        # Orca and includes an invalid option as an argument. After the message,
-        # the list of arguments, as typed by the user, is displayed.
-        #
-        msg = _("The following arguments are not valid: ")
-        print((msg + " ".join(invalidOptions)))
-        return True
-
-    return False
-
-parser = argparse.ArgumentParser(
-    # Translators: this text is the description displayed when Orca is
-    # launched from the command line and the help text is displayed.
-    description = _("orca - scriptable screen reader"),
-    # Translators: this text is the description displayed when Orca is
-    # launched from the command line and the help text is displayed.
-    epilog = _("Report bugs to orca-list@gnome.org."))
-
-parser.add_argument(
-    "-v", "--version", action = "version", version = orca_platform.version,
-    help = orca_platform.version)
-
-parser.add_argument(
-    "-l", "--list-apps", action = ListApps, nargs=0,
-    # Translators: this is a testing option for the command line.  It prints
-    # the names of applications known to the accessibility infrastructure
-    # to stdout and then exits.
-    #
-    help = _("Print the known running applications"))
-
-parser.add_argument(
-    "--debug", action = "store_true", dest = "debug",
-    # Translators: this enables debug output for Orca.  The
-    # YYYY-MM-DD-HH:MM:SS portion is a shorthand way of saying that the file
-    # name will be formed from the current date and time with 'debug' in front
-    # and '.out' at the end.  The 'debug' and '.out' portions of this string
-    # should not be translated (i.e., it will always start with 'debug' and end
-    # with '.out', regardless of the locale.).
-    #
-    help = _("Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"))
-
-parser.add_argument(
-    "--debug-file", action = "store", dest = "debugFile",
-    default = time.strftime("debug-%Y-%m-%d-%H:%M:%S.out"),
-    # Translators: this enables debug output for Orca and overrides the name
-    # of the debug file Orca will use for debug output if the --debug option
-    # is used.
-    #
-    help = _("Send debug output to the specified file"))
-
-parser.add_argument(
-    "-t", "--text-setup", action = "store_true",
-    dest = "textSetupRequested",
-    # Translators: this is the description of the command line option
-    # '-t, --text-setup' that will initially display a list of questions in
-    # text form, that the user will need to answer, before Orca will startup.
-    # For this to happen properly, Orca will need to be run from a terminal
-    # window.
-    #
-    help = _("Set up user preferences (text version)"))
-
-parser.add_argument(
-    "-u", "--user-prefs-dir", action = "store", dest = "userPrefsDir",
-    # Translators: this is the description of the command line option
-    # '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
-    # location for the user preferences.
-    #
-    help = _("Use alternate directory for user preferences"))
-
-parser.add_argument(
-    "-e", "--enable", action = Settings, const=True,
-    # Translators: if the user supplies an option via the '-e, --enable'
-    # command line option, it will be automatically enabled as Orca is started.
-    #
-    help = _("Force use of option"))
-
-parser.add_argument(
-    "-d", "--disable", action = Settings, const=False,
-    # Translators: if the user supplies an option via the '-d, --disable'
-    # command line option, it will be automatically disabled as Orca is started.
-    #
-    help = _("Prevent use of option"))
-
-parser.add_argument(
-    "-i", "--import-file", action = "append", dest = "profiles", default = [],
-    # Translators: this is the Orca command line option to import to Orca a user
-    # profile from a given file
-    #
-    help = _("Import a profile from a given orca profile file"))
-
-parser.add_argument(
-    "--replace", action = "store_true", dest = "replace",
-    # Translators: this is the Orca command line option to tell Orca to replace
-    # any existing Orca process(es) that might be running.
-    #
-    help = _("Replace a currently running Orca"))
-
-options, invalidOpts = parser.parse_known_args(namespace = Options())
-invalidOpts.extend(options.invalid)
-options.validate()
-
-# This needs to occur prior to our importing anything which might in turn
-# import anything which might expect to be able to use the Settings Manager
-# You have been warned.
-#
-from .settings_manager import SettingsManager
-_settingsManager = SettingsManager()
-_settingsManager.activate(options.userPrefsDir)
-if _settingsManager is None:
-    print("Could not load the settings manager. Exiting.")
-    sys.exit(1)
-
-from .event_manager import EventManager
-_eventManager = EventManager()
-
-from .script_manager import ScriptManager
-_scriptManager = ScriptManager()
-
-try:
-    # If we don't have an active desktop, we will get a RuntimeError.
-    from . import mouse_review
-except RuntimeError:
-    pass
-
-from . import braille
-from . import orca_state
-from . import speech
-from . import notification_messages
-
-from .input_event import BrailleEvent
-from .input_event import KeyboardEvent
-
-import gc
 if settings.debugMemoryUsage:
     gc.set_debug(gc.DEBUG_UNCOLLECTABLE
                  | gc.DEBUG_COLLECTABLE
@@ -599,10 +430,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         _profile = _settingsManager.profile
         try:
             _userSettings = _settingsManager.getGeneralSettings(_profile)
-            if options.debug:
-                debug.debugLevel = debug.LEVEL_ALL
-                debug.eventDebugLevel = debug.LEVEL_OFF
-                debug.debugFile = open(options.debugFile, 'w', 0)
         except ImportError:
             debug.printException(debug.LEVEL_FINEST)
         except:
@@ -721,24 +548,6 @@ def showMainWindowGUI(script=None, inputEvent=None):
             module.showMainUI()
         else:
             module.hideMainUI()
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-
-    return True
-
-def _showPreferencesConsole(script=None, inputEvent=None):
-    """Displays the user interace to configure Orca and set up
-    user preferences via a command line interface.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    try:
-        module = __import__(settings.consolePreferencesModule,
-                            globals(),
-                            locals(),
-                            [''])
-        module.showPreferencesUI(_commandLineSettings)
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
@@ -1193,42 +1002,6 @@ def examineProcesses():
         debug.println(
             debug.LEVEL_ALL, '%3i. %s (pid: %s) %s' % (i+1, name, pid, cmd))
 
-def otherOrcas():
-    """Returns the pid of any other instances of Orca owned by this user."""
-
-    openFile = os.popen('pgrep -u %s orca' % os.getuid())
-    pids = openFile.read()
-    openFile.close()
-    orcas = [int(p) for p in pids.split()]
-
-    pid = os.getpid()
-    return [p for p in orcas if p != pid]
-
-def multipleOrcas():
-    """Returns True if multiple instances of Orca are running which are
-    are owned by this user."""
-
-    return len(otherOrcas()) > 0
-
-def cleanup(sigval):
-    """Tries to clean up any other running Orca instances owned by this user."""
-
-    orcasToKill = otherOrcas()
-    debug.println(
-        debug.LEVEL_INFO, "INFO: Cleaning up these PIDs: %s" % orcasToKill)
-
-    def onTimeout(signum, frame):
-        orcasToKill = otherOrcas()
-        debug.println(
-            debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
-        map(lambda x: os.kill(x, signal.SIGKILL), orcasToKill)
-
-    map(lambda x: os.kill(x, sigval), orcasToKill)
-    signal.signal(signal.SIGALRM, onTimeout)
-    signal.alarm(2)
-    while otherOrcas():
-        time.sleep(0.5)
-
 def cleanupGarbage():
     """Cleans up garbage on the heap."""
     gc.collect()
@@ -1240,7 +1013,7 @@ def cleanupGarbage():
         except:
             pass
 
-def main():
+def main(settingsDict={}):
     """The main entry point for Orca.  The exit codes for Orca will
     loosely be based on signals, where the exit code will be the
     signal used to terminate Orca (if a signal was used).  Otherwise,
@@ -1259,64 +1032,10 @@ def main():
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
     signal.signal(signal.SIGSEGV, abortOnSignal)
 
-    invalidOptionsPresented = presentInvalidOptions(invalidOpts)
-
-    if multipleOrcas():
-        if invalidOptionsPresented:
-            die(0)
-        elif options.replace:
-            cleanup(signal.SIGKILL)
-        else:
-            # Translators: This message is presented to the user when
-            # he/she tries to launch Orca, but Orca is already running.
-            print(_('Another Orca process is already running for this ' \
-                    'session.\n Run "orca --replace" to replace that ' \
-                    'process with a new one.'))
-            return 1
-
-    _commandLineSettings.update(options.settings)
-    for profile in options.profiles:
-        # Translators: This message is what is presented to the user
-        # when he/she attempts to import a settings profile, but the
-        # import failed for some reason.
-        #
-        msg = _("Unable to import profile.")
-        try:
-            if _settingsManager.importProfile(profile):
-                # Translators: This message is what is presented to the user
-                # when he/she successfully imports a settings profile.
-                #
-                msg = _("Profile import success.")
-        except KeyError as ex:
-            # Translators: This message is what is presented to the user
-            # when he/she attempts to import a settings profile but the
-            # import failed due to a bad key.
-            #
-            msg = _("Import failed due to an unrecognized key: %s") % ex
-        except IOError as ex:
-            msg = "%s: %s" % (ex.strerror, ex.filename)
-        except:
-            continue
-
-        print(msg)
-        if multipleOrcas():
-            die(0)
+    _commandLineSettings.update(settingsDict)
 
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
-
-    if options.textSetupRequested:
-        _showPreferencesConsole()
-
-    if not desktopRunning:
-        # Translators: This message is presented to the user who attempts
-        # to launch Orca from some other environment than the graphical
-        # desktop.
-        print (_('Cannot start Orca because it cannot connect to the Desktop.'))
-        return 1
-
-    sys.path.insert(0, _settingsManager.getPrefsDir())
-    sys.path.insert(0, '') # current directory
 
     init(pyatspi.Registry)
 

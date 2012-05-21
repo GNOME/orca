@@ -27,7 +27,188 @@ __copyright__ = "Copyright (c) 2010-2012 The Orca Team" \
                 "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import argparse
+import os
+import signal
 import sys
+import time
+
+sys.prefix = '@prefix@'
+pyexecdir = '@pyexecdir@'.replace('${exec_prefix}', '@prefix@')
+sys.path.insert(1, pyexecdir)
+
+from orca import debug
+from orca import orca
+from orca import orca_console_prefs
+from orca import settings
+from orca.orca_i18n import _
+from orca.orca_platform import version
+
+class ListApps(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        try:
+            apps = filter(lambda x: x != None, pyatspi.Registry.getDesktop(0))
+            names = [app.name for app in apps]
+        except:
+            pass
+        else:
+            print("\n".join(names))
+        parser.exit()
+
+class Settings(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        settingsDict = getattr(namespace, 'settings', {})
+        invalid = getattr(namespace, 'invalid', [])
+        for value in values.split(','):
+            item = str.title(value).replace('-', '')
+            try:
+                test = 'enable%s' % item
+                eval('settings.%s' % test)
+            except AttributeError:
+                try:
+                    test = 'show%s' % item
+                    eval('settings.%s' % test)
+                except AttributeError:
+                    invalid.append(item)
+                    continue
+            settingsDict[test] = self.const
+            setattr(namespace, 'settings', settingsDict)
+            setattr(namespace, 'invalid', invalid)
+
+class HelpFormatter(argparse.HelpFormatter):
+    def __init__(self, prog, indent_increment=2, max_help_position=32,
+                 width=None):
+
+        super(HelpFormatter, self).__init__(
+            prog, indent_increment, max_help_position, width)
+
+class Parser(argparse.ArgumentParser):
+    def __init__(self, *args, **kwargs):
+        # Translators: this text is the description displayed when Orca is
+        # launched from the command line and the help text is displayed.
+        description = _("orca - scriptable screen reader")
+        # Translators: this text is the description displayed when Orca is
+        # launched from the command line and the help text is displayed.
+        epilog = _("Report bugs to orca-list@gnome.org.")
+        super(Parser, self).__init__(
+            description=description,
+            epilog=epilog,
+            formatter_class=HelpFormatter)
+
+        self.add_argument(
+            "-v", "--version", action="version", version=version, help=version)
+
+        self.add_argument(
+            "-r", "--replace", action="store_true",
+            # Translators: this is the description of the command line option
+            # '-r, --replace' which tells Orca to replace any existing Orca
+            # process(es) that might be running.
+            help=_("Replace a currently running Orca"))
+
+        self.add_argument(
+            "-t", "--text-setup", action="store_true",
+            # Translators: this is the description of the command line option
+            # '-t, --text-setup' that will initially display a list of questions
+            # in text form, that the user will need to answer, before Orca will
+            # startup. For this to happen properly, Orca will need to be run
+            # from a terminal window.
+            help=_("Set up user preferences (text version)"))
+
+        self.add_argument(
+            "-l", "--list-apps", action=ListApps, nargs=0,
+            # Translators: this is the description of the command line option
+            # '-l, --list-apps' which prints the names of running applications
+            # which can be seen by assistive technologies such as Orca and
+            # Accercser.
+            help=_("Print the known running applications"))
+
+        self.add_argument(
+            "-e", "--enable", action=Settings, const=True,
+            # Translators: this is the description of the command line option
+            # '-e, --enable' which allows the user to specify an option to
+            # enable as Orca is started.
+            help=_("Force use of option"),
+            # Translators: this string indicates to the user what should be
+            # provided when using the '-e, --enable' or '-d, --disable' command
+            # line option.
+            metavar=_("OPTION"))
+
+        self.add_argument(
+            "-d", "--disable", action=Settings, const=False,
+            # Translators: this is the description of the command line option
+            # '-d, --disable' which allows the user to specify an option to
+            # enable as Orca is started.
+            help=_("Prevent use of option"),
+            # Translators: this string indicates to the user what should be
+            # provided when using the '-e, --enable' or '-d, --disable' command
+            # line option.
+            metavar=_("OPTION"))
+
+        self.add_argument(
+            "-p", "--profile", action="store",
+            # Translators: this is the description of the command line option
+            # '-p, --profile' which allows you to specify a profile to be
+            # loaded. A profile stores a group of Orca settings configured by
+            # the user for a particular purpose, such as a 'Spanish' profile
+            # which would include Spanish braille and Spanish text-to-speech.
+            # An Orca settings file contains one or more profiles.
+            help=_("Load profile"),
+            # Translators: this string indicates to the user what should be
+            # provided when using the '-p, --profile' command line option.
+            metavar=_("NAME"))
+
+        self.add_argument(
+            "-u", "--user-prefs", action="store",
+            # Translators: this is the description of the command line option
+            # '-u, --user-prefs' that allows you to specify an alternate
+            # location from which to loadr the user preferences.
+            help=_("Use alternate directory for user preferences"),
+            # Translators: this string indicates to the user what should be
+            # provided when using the 'u, --user-prefs' command line option.
+            metavar=_("DIR"))
+
+        self.add_argument(
+            "--debug-file", action="store",
+            # Translators: this is the description of the command line option
+            # '--debug-file' which allows the user to override the default,
+            # date-based name of the debugging output file.
+            help=_("Send debug output to the specified file"),
+            # Translators: this string indicates to the user what should be
+            # provided when using the '--debug-file' command line option.
+            metavar=_("FILE"))
+
+        self.add_argument(
+            "--debug", action="store_true",
+            # Translators: this is the description of the command line option
+            # '--debug' which enables debugging output for Orca to be sent to
+            # a file. The YYYY-MM-DD-HH:MM:SS portion of the string indicates
+            # the file name will be formed from the current date and time with
+            # 'debug' in front and '.out' at the end. The 'debug' and '.out'
+            # portions of this string should not be translated (i.e., it will
+            # always start with 'debug' and end with '.out', regardless of the
+            # locale.).
+            help=_("Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"))
+
+    def parse_known_args(self, *args, **kwargs):
+        opts, invalid = super(Parser, self).parse_known_args(*args, **kwargs)
+        try:
+            invalid.extend(opts.invalid)
+        except:
+            pass
+        if invalid:
+            # Translators: This message is displayed when the user starts Orca
+            # from the command line and includes an invalid option or argument.
+            # After the message, the list of invalid items, as typed by the
+            # user, is displayed.
+            msg = _("The following are not valid: ")
+            print((msg + " ".join(invalid)))
+
+        if opts.debug_file:
+            opts.debug = True
+        elif opts.debug:
+            opts.debug_file = time.strftime('debug-%Y-%m-%d-%H:%M:%S.out')
+
+        return opts, invalid
 
 def setProcessName():
     """Attempts to set the process name to 'orca'."""
@@ -54,15 +235,102 @@ def setProcessName():
 
     return False
 
+def inGraphicalDesktop():
+    """Returns True if we are in a graphical desktop."""
+
+    # TODO - JD: Make this desktop environment agnostic
+    try:
+        from gi.repository import Gtk
+    except:
+        return False
+
+    return True
+
+def otherOrcas():
+    """Returns the pid of any other instances of Orca owned by this user."""
+
+    openFile = os.popen('pgrep -u %s orca' % os.getuid())
+    pids = openFile.read()
+    openFile.close()
+    orcas = [int(p) for p in pids.split()]
+
+    pid = os.getpid()
+    return [p for p in orcas if p != pid]
+
+def cleanup(sigval):
+    """Tries to clean up any other running Orca instances owned by this user."""
+
+    orcasToKill = otherOrcas()
+    debug.println(
+        debug.LEVEL_INFO, "INFO: Cleaning up these PIDs: %s" % orcasToKill)
+
+    def onTimeout(signum, frame):
+        orcasToKill = otherOrcas()
+        debug.println(
+            debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
+        map(lambda x: os.kill(x, signal.SIGKILL), orcasToKill)
+
+    map(lambda x: os.kill(x, sigval), orcasToKill)
+    signal.signal(signal.SIGALRM, onTimeout)
+    signal.alarm(2)
+    while otherOrcas():
+        time.sleep(0.5)
+
 def main():
     setProcessName()
 
-    sys.prefix = '@prefix@'
-    pyexecdir = '@pyexecdir@'.replace('${exec_prefix}', '@prefix@')
-    sys.path.insert(1, pyexecdir)
+    if not inGraphicalDesktop():
+        # Translators: This message is presented to the user who attempts
+        # to launch Orca from some other environment than the graphical
+        # desktop.
+        msg = _('Cannot start Orca because it cannot connect to the Desktop.')
+        print (msg)
+        return 1
 
-    from orca import orca
-    return orca.main()
+    parser = Parser()
+    args, invalid = parser.parse_known_args()
+
+    if args.debug:
+        debug.debugLevel = debug.LEVEL_ALL
+        debug.eventDebugLevel = debug.LEVEL_OFF
+        debug.debugFile = open(args.debug_file, 'w')
+
+    if args.replace:
+        cleanup(signal.SIGKILL)
+
+    settingsDict = getattr(args, 'settings', {})
+    if args.text_setup:
+        orca_console_prefs.showPreferencesUI(settingsDict)
+
+    manager = orca.getSettingsManager()
+    if not manager:
+        print("Could not activate the settings manager. Exiting.")
+        return 1
+
+    manager.activate(args.user_prefs)
+    sys.path.insert(0, manager.getPrefsDir())
+
+    if args.profile:
+        try:
+            manager.setProfile(args.profile)
+        except:
+            # Translators: This message is presented to the user when
+            # the specified profile could not be loaded. A profile stores
+            # a group of Orca settings configured for a particular purpose,
+            # such as a Spanish profile which would include Spanish braille
+            # and Spanish text-to-speech.
+            print(_("Profile could not be loaded: %s") % args.profile)
+            manager.setProfile()
+
+    if otherOrcas():
+        # Translators: This message is presented to the user when
+        # he/she tries to launch Orca, but Orca is already running.
+        print(_('Another Orca process is already running for this ' \
+                'session.\nRun "orca --replace" to replace that ' \
+                'process with a new one.'))
+        return 1
+
+    return orca.main(settingsDict)
 
 if __name__ == "__main__":
     sys.exit(main())
