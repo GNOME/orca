@@ -111,9 +111,10 @@ class SettingsManager(object):
 
         debug.println(debug.LEVEL_FINEST, 'INFO: Settings manager initialized')
 
-    def activate(self, prefsDir=None):
+    def activate(self, prefsDir=None, customSettings={}):
         debug.println(debug.LEVEL_FINEST, 'INFO: Activating settings manager')
 
+        self.customizedSettings.update(customSettings)
         self._prefsDir = prefsDir \
             or os.path.join(GLib.get_user_data_dir(), "orca")
 

@@ -307,7 +307,7 @@ def main():
         print("Could not activate the settings manager. Exiting.")
         return 1
 
-    manager.activate(args.user_prefs)
+    manager.activate(args.user_prefs, settingsDict)
     sys.path.insert(0, manager.getPrefsDir())
 
     if args.profile:
@@ -330,7 +330,7 @@ def main():
                 'process with a new one.'))
         return 1
 
-    return orca.main(settingsDict)
+    return orca.main()
 
 if __name__ == "__main__":
     sys.exit(main())

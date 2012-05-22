@@ -109,10 +109,6 @@ EXIT_CODE_HANG = 50
 #
 _userSettings = None
 
-# Command line options that override any other settings.
-#
-_commandLineSettings = {}
-
 # A subset of the original Xmodmap info prior to our stomping on it.
 # Right now, this is just for the user's chosen Orca modifier(s).
 #
@@ -435,13 +431,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         except:
             debug.printException(debug.LEVEL_SEVERE)
 
-    # If any settings were added to the command line, they take
-    # precedence over everything else.
-    #
-    for key in _commandLineSettings:
-        setattr(settings, key, _commandLineSettings[key])
-
-    if settings.enableSpeech:
+    if _settingsManager.getSetting('enableSpeech'):
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
@@ -461,7 +451,7 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech module has NOT been initialized.")
 
-    if settings.enableBraille:
+    if _settingsManager.getSetting('enableBraille'):
         try:
             braille.init(_processBrailleEvent, settings.tty)
         except:
@@ -741,7 +731,7 @@ def quitOrca(script=None, inputEvent=None):
     Returns True to indicate the input event has been consumed.
     """
 
-    if settings.quitOrcaNoConfirmation:
+    if _settingsManager.getSetting("quitOrcaNoConfirmation"):
         shutdown()
     else:
         try:
@@ -781,7 +771,7 @@ def showSplashGUI(script=None, inputEvent=None):
                             globals(),
                             locals(),
                             [''])
-        if _commandLineSettings.get("showSplashWindow", True):
+        if _settingsManager.getSetting("showSplashWindow"):
             module.showSplashUI()
         else:
             module.hideSplashUI()
@@ -1013,7 +1003,7 @@ def cleanupGarbage():
         except:
             pass
 
-def main(settingsDict={}):
+def main():
     """The main entry point for Orca.  The exit codes for Orca will
     loosely be based on signals, where the exit code will be the
     signal used to terminate Orca (if a signal was used).  Otherwise,
@@ -1031,8 +1021,6 @@ def main(settingsDict={}):
     signal.signal(signal.SIGTERM, shutdownOnSignal)
     signal.signal(signal.SIGQUIT, shutdownOnSignal)
     signal.signal(signal.SIGSEGV, abortOnSignal)
-
-    _commandLineSettings.update(settingsDict)
 
     if not _settingsManager.isAccessibilityEnabled():
         _settingsManager.setAccessibility(True)
