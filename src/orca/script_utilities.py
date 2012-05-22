@@ -2838,7 +2838,8 @@ class Utilities:
             from gi.repository import Gtk
             key, mods = Gtk.accelerator_parse(sequence)
             newSequence = Gtk.accelerator_get_label(key, mods)
-            if newSequence and not newSequence.endswith('+'):
+            if newSequence and \
+               (not newSequence.endswith('+') or newSequence.endswith('++')):
                 sequence = newSequence
         except:
             if sequence.endswith(" "):

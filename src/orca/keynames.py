@@ -330,12 +330,12 @@ def localizeKeySequence(keys):
     for key in keyList:
         keyName = getKeyName(key)
         try:
-            key = key.decode("UTF-8")
-        except UnicodeEncodeError:
+            key = key.encode("UTF-8")
+        except UnicodeDecodeError:
             pass
         try:
-            keyName = keyName.decode("UTF-8")
-        except UnicodeEncodeError:
+            keyName = keyName.encode("UTF-8")
+        except UnicodeDecodeError:
             pass
         keys = keys.replace(key, keyName)
 
