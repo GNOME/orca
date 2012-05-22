@@ -69,11 +69,11 @@ class Settings(argparse.Action):
                     test = 'show%s' % item
                     eval('settings.%s' % test)
                 except AttributeError:
-                    invalid.append(item)
+                    invalid.append(value)
                     continue
             settingsDict[test] = self.const
-            setattr(namespace, 'settings', settingsDict)
-            setattr(namespace, 'invalid', invalid)
+        setattr(namespace, 'settings', settingsDict)
+        setattr(namespace, 'invalid', invalid)
 
 class HelpFormatter(argparse.HelpFormatter):
     def __init__(self, prog, indent_increment=2, max_help_position=32,
@@ -164,7 +164,7 @@ class Parser(argparse.ArgumentParser):
             # location from which to loadr the user preferences.
             help=_("Use alternate directory for user preferences"),
             # Translators: this string indicates to the user what should be
-            # provided when using the 'u, --user-prefs' command line option.
+            # provided when using the '-u, --user-prefs' command line option.
             metavar=_("DIR"))
 
         self.add_argument(
