@@ -28,6 +28,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import inspect
 import traceback
 import pyatspi
 import sys
@@ -215,6 +216,39 @@ def println(level, text = ""):
                 text = "UnicodeDecodeError when trying to write text"
                 debugFile.writelines([text, "\n"])
 
+def printResult(level, result=None):
+    """Prints the return result, along with information about the
+    method, arguments, and any errors encountered."""
+
+    if level < debugLevel:
+        return
+
+    stack = inspect.stack()
+    current, prev = stack[1], stack[2]
+    frame = current[0]
+
+    # If we handled it, just note it in the log.
+    if frame.f_exc_type:
+        prefix = 'ERROR: '
+        suffix = '(%s:%s)' % (frame.f_exc_type.__name__, frame.f_exc_value)
+    else:
+        prefix = 'RESULT:'
+        suffix = ''
+
+    # To better print arguments which are accessible objects
+    args = inspect.getargvalues(frame)
+    for key, value in args.locals.items():
+        args.locals[key] = str(value)
+    fArgs = str.replace(inspect.formatargvalues(*args), "'", "")
+
+    callString = 'CALL:   %s.%s (line %s) -> %s.%s%s' % (
+        inspect.getmodulename(prev[1]), prev[3], prev[2],
+        inspect.getmodulename(current[1]), current[3], fArgs)
+    string = '%s\n%s %s %s' \
+        % (callString, prefix, result, suffix)
+
+    println(level, '%s' % string)
+
 def printObjectEvent(level, event, sourceInfo=None):
     """Prints out an Python Event object.  The given level may be
     overridden if the eventDebugLevel is greater.  Furthermore, only
@@ -335,7 +369,6 @@ def getAccessibleDetails(level, acc, indent="", includeApp=True):
 # http://www.dalkescientific.com/writings/diary/archive/ \
 #                                     2005/04/20/tracing_python_code.html
 #
-import inspect
 import linecache
 
 def _getFileAndModule(frame):
