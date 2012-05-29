@@ -253,7 +253,7 @@ def _processKeyboardEvent(event):
         script.exitLearnMode(keyboardEvent)
     if orca_state.capturingKeys:
         return False
-    if settings.listShortcutsModeEnabled:
+    if orca_state.listShortcutsModeEnabled:
         return listShortcuts(keyboardEvent)
     if notification_messages.listNotificationMessagesModeEnabled:
         return notification_messages.listNotificationMessages(keyboardEvent)
@@ -275,7 +275,7 @@ def _processKeyboardEvent(event):
     elif not keyboardEvent.isModifierKey():
         orca_state.bypassNextCommand = False
  
-    return isOrcaModifier or settings.learnModeEnabled
+    return isOrcaModifier or orca_state.learnModeEnabled
 
 ########################################################################
 #                                                                      #
@@ -306,7 +306,7 @@ def _processBrailleEvent(event):
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
-    if (not consumed) and settings.learnModeEnabled:
+    if (not consumed) and orca_state.learnModeEnabled:
         consumed = True
 
     return consumed

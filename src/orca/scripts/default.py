@@ -1542,7 +1542,7 @@ class Script(script.Script):
         Returns True to indicate the input event has been consumed.
         """
 
-        if _settingsManager.getSetting('learnModeEnabled'):
+        if orca_state.learnModeEnabled:
             return True
 
         self.speakMessage(
@@ -1567,7 +1567,7 @@ class Script(script.Script):
         # display.
         #
         self.displayBrailleMessage(_("Learn mode.  Press escape to exit."))
-        _settingsManager.setSetting('learnModeEnabled', True)
+        orca_state.learnModeEnabled = True
         return True
 
     def exitLearnMode(self, inputEvent=None):
@@ -1576,7 +1576,7 @@ class Script(script.Script):
         Returns True to indicate the input event has been consumed.
         """
 
-        if not _settingsManager.getSetting('learnModeEnabled'):
+        if not orca_state.learnModeEnabled:
             return False
 
         if isinstance(inputEvent, input_event.KeyboardEvent) \
@@ -1593,7 +1593,7 @@ class Script(script.Script):
         # mode.
         #
         self.presentMessage(_("Exiting learn mode."))
-        settings.learnModeEnabled = False
+        orca_state.learnModeEnabled = False
 
     def enterListShortcutsMode(self, inputEvent):
         """Turns list shortcuts mode on.  The user must press the escape key to
@@ -1604,8 +1604,8 @@ class Script(script.Script):
 
         Returns True to indicate the input event has been consumed.
         """
-        _settingsManager.setSetting('learnModeEnabled', False)
-        if _settingsManager.getSetting('listShortcutsModeEnabled'):
+        orca_state.learnModeEnabled = False
+        if orca_state.listShortcutsModeEnabled:
             return True
 
         # Translators: Orca has a 'List Shortcuts' mode by which a user can
@@ -1630,7 +1630,7 @@ class Script(script.Script):
         message = mode + " " + message
         self.speakMessage(message)
         self.displayBrailleMessage(message, -1, -1)
-        _settingsManager.setSetting('listShortcutsModeEnabled', True)
+        orca_state.listShortcutsModeEnabled = True
         return True
 
     def exitListShortcutsMode(self, inputEvent=None):
@@ -1642,7 +1642,7 @@ class Script(script.Script):
         orca_state.listOfShortcuts = []
         orca_state.typeOfShortcuts = ""
         orca_state.ptrToShortcut = -1
-        settings.listShortcutsModeEnabled = False
+        orca_state.listShortcutsModeEnabled = False
 
         # Translators: Orca has a "List Shortcuts Mode" that allows the user to
         # list a group of keyboard shortcuts. Pressing 1 makes it possible for
@@ -3916,10 +3916,10 @@ class Script(script.Script):
         notification_messages.listNotificationMessagesModeEnabled = False
 
         # disable learn mode
-        _settingsManager.setSetting('learnModeEnabled', False)
+        orca_state.learnModeEnabled = False
 
         # disable list shortcuts mode
-        _settingsManager.setSetting('listShortcutsModeEnabled', False)
+        orca_state.listShortcutsModeEnabled = False
         orca_state.listOfShortcuts = []
         orca_state.typeOfShortcuts = ""
 
@@ -5536,7 +5536,7 @@ class Script(script.Script):
         orcaModifierPressed = event.isOrcaModifier() and event.isPressedKey()
         if event.isCharacterEchoable() and not orcaModifierPressed:
             return False
-        if settings.learnModeEnabled:
+        if orca_state.learnModeEnabled:
             if event.isPrintableKey() and event.getClickCount() == 2:
                 self.phoneticSpellCurrentItem(event.event_string)
                 return True

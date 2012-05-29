@@ -27,27 +27,6 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
-tty = 7
-
-try:
-    # This can fail due to gtk not being available.  We want to
-    # be able to recover from that if possible.  The main driver
-    # for this is to allow "orca --text-setup" to work even if
-    # the desktop is not running.
-    #
-    from gi.repository import Gdk
-    _display = Gdk.Display.get_default()
-    _screen = _display.get_default_screen()
-    _root_window = _screen.get_root_window()
-
-    # We want to know what the tty is so we can send it to BrlAPI
-    # if possible.
-    #
-    (atom, format, data) = _root_window.property_get("XFree86_VT")
-    tty = data[0]
-except:
-    pass
-
 import pyatspi
 
 from .acss import ACSS
@@ -619,16 +598,6 @@ cacheDescriptions       = True
 #
 cacheAccessibles        = True
 
-# Assists with learn mode (what you enter when you press Insert+F1
-# and exit when you press escape.
-#
-learnModeEnabled        = False
-
-# Assists with list shortcuts mode (what you enter when you press 
-# Insert + H (double click) and exit when you press escape.
-#
-listShortcutsModeEnabled = False
-
 # If non-zero, we use time.sleep() in various places to attempt to
 # free up the global interpreter lock.  Take a look at the following
 # URLs for more information:
@@ -1049,3 +1018,6 @@ DATE_FORMAT_WITH_LONG_NAMES = DATE_FORMAT_FULL_DMY
 DATE_FORMAT_WITH_SHORT_NAMES = DATE_FORMAT_ABBREVIATED_DMY
 
 presentDateFormat = DATE_FORMAT_LOCALE
+
+# Default tty to pass along to brlapi.
+tty = 7

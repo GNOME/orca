@@ -97,6 +97,16 @@ lastWordCheckedForSpelling = ""
 #
 searchQuery = None
 
+# Assists with learn mode (what you enter when you press Insert+F1
+# and exit when you press escape.
+#
+learnModeEnabled = False
+
+# Assists with list shortcuts mode (what you enter when you press 
+# Insert + H (double click) and exit when you press escape.
+#
+listShortcutsModeEnabled = False
+
 # Assists in list shortcuts mode 
 listOfShortcuts = []
 typeOfShortcuts = ''
@@ -124,4 +134,3 @@ orcaWD = None
 # Handle to the Orca Preferences Glade file.
 #
 prefsGladeFile = None
-

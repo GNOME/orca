@@ -318,7 +318,7 @@ class KeyboardEvent(InputEvent):
         if not self.isPrintableKey():
             return False
 
-        if settings.learnModeEnabled:
+        if orca_state.learnModeEnabled:
             return False
 
         script = orca_state.activeScript
@@ -395,7 +395,7 @@ class KeyboardEvent(InputEvent):
         if we presented the event. False if there was some reason the event
         was not worthy of presentation."""
 
-        if not settings.learnModeEnabled:
+        if not orca_state.learnModeEnabled:
             if self.shouldEcho == False or self.isOrcaModified():
                 return False
 
@@ -422,7 +422,7 @@ class KeyboardEvent(InputEvent):
                 else:
                     if not self.event_string in [string, 'space']:
                         return False
-            elif not (settings.learnModeEnabled or self.isLockingKey()):
+            elif not (orca_state.learnModeEnabled or self.isLockingKey()):
                 return False
 
         elif not self.isPressedKey():
@@ -489,11 +489,11 @@ class InputEventHandler:
         return (self.function == other.function)
 
     def processInputEvent(self, script, inputEvent):
-        """Processes an input event.  If settings.learnModeEnabled is True,
-        this will merely report the description of the input event to braille
-        and speech.  If settings.learnModeEnabled is False, this will call the
-        function bound to this InputEventHandler instance, passing the
-        inputEvent as the sole argument to the function.
+        """Processes an input event.  If learnModeEnabled is True,
+        this will merely present the description of the input event via
+        If learnModeEnabled is False, this will call the function bound
+        to this InputEventHandler instance, passing the inputEvent as
+        the sole argument to the function.
 
         This function is expected to return True if it consumes the
         event; otherwise it is expected to return False.
@@ -506,7 +506,7 @@ class InputEventHandler:
 
         consumed = False
 
-        if settings.learnModeEnabled and self._learnModeEnabled:
+        if orca_state.learnModeEnabled and self._learnModeEnabled:
             if self.description:
                 script.presentMessage(self.description)
                 consumed = True
