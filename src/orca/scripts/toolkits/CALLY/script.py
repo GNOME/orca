@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright (C) 2010 Igalia, S.L.
+# Copyright (C) 2010-2012 Igalia, S.L.
 #
 # Author: Alejandro Pinheiro Iglesias <apinheiro@igalia.com>
 #
@@ -22,7 +22,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010 Igalia, S.L."
+__copyright__ = "Copyright (c) 2010-2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -33,11 +33,9 @@ import orca.orca as orca
 import orca.scripts.default as default
 import orca.debug as debug
 
-
 # Set with non printable unicode categories. Full table:
 # http://www.fileformat.info/info/unicode/category/index.htm
 #
-
 non_printable_set = ('Cc', 'Cf', 'Cn', 'Co', 'Cs')
 
 ########################################################################
