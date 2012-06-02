@@ -3,6 +3,7 @@
 # Copyright (C) 2010-2012 Igalia, S.L.
 #
 # Author: Alejandro Pinheiro Iglesias <apinheiro@igalia.com>
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -26,7 +27,7 @@ __copyright__ = "Copyright (c) 2010-2012 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
-
+import time
 from gi.repository import Gdk
 
 import orca.orca as orca
@@ -40,11 +41,11 @@ non_printable_set = ('Cc', 'Cf', 'Cn', 'Co', 'Cs')
 
 ########################################################################
 #                                                                      #
-# Utility string methods.                                              #
+# Utility methods.                                                     #
 #                                                                      #
 ########################################################################
 
-def _unicharIsPrint (unichar):
+def _unicharIsPrint(unichar):
     """ Checks if the unichar is printable
 
     Equivalent to g_unichar_isprint
@@ -64,7 +65,7 @@ def _unicharIsPrint (unichar):
 
     return result
 
-def _computeIsText (string):
+def _computeIsText(string):
     """Decides if the string representation of a keyboard event is
     text or not
 
@@ -86,6 +87,19 @@ def _computeIsText (string):
 
     return is_text
 
+def _parentDialog(obj):
+    """Looks for an object of ROLE_DIALOG in the ancestry of obj.
+
+    Arguments:
+    - obj: an accessible object
+
+    Returns the accessible object if found; otherwise None.
+    """
+
+    isDialog = lambda x: x and x.getRole() == pyatspi.ROLE_DIALOG
+
+    return pyatspi.utils.findAncestor(obj, isDialog)
+
 ########################################################################
 #                                                                      #
 # The Cally script class.                                              #
@@ -102,7 +116,8 @@ class Script(default.Script):
         """
 
         default.Script.__init__(self, app)
-
+        self._activeDialog = (None, 0) # (Accessible, Timestamp)
+        self._activeDialogLabels = {}  # key == hash(obj), value == name
 
     def checkKeyboardEventData(self, keyboardEvent):
         """Processes the given keyboard event.
@@ -193,24 +208,46 @@ class Script(default.Script):
         try:
             role = event.source.getRole()
         except:
-            return default.Script.skipObjectEvent(self, event)
-
-        # Currently dialogs appearing do not result in window:activate events;
-        # instead, they claim focus. But often after that, a button within that
-        # dialog does the same thing before we have presented the dialog. Since
-        # we normally do not want to present things which are no longer focused,
-        # we normally skip the old event from the dialog (and never present it).
-        # That is bad.
-        if role == pyatspi.ROLE_DIALOG and event.detail1 \
-           and event.type.startswith('object:state-changed:focused'):
-            return False
+            pass
+        else:
+            # We must handle all dialogs ourselves in this script.
+            if role == pyatspi.ROLE_DIALOG:
+                return False
 
         return default.Script.skipObjectEvent(self, event)
 
-    # NOTE: right now this is being redefined just for GNOME Shell, so
-    # the proper place would be a GNOME Shell script. Anyway, as right
-    # now GNOME Shell is the only Clutter application we care, for the
-    # moment this is a proper place
+    def onNameChanged(self, event):
+        """Called whenever a property on an object changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        try:
+            role = event.source.getRole()
+            name = event.source.name
+        except:
+            return
+
+        activeDialog, timestamp = self._activeDialog
+        if not activeDialog or role != pyatspi.ROLE_LABEL:
+            default.Script.onNameChanged(self, event)
+            return
+
+        # This seems to get us the labels which appear (bad password)
+        # and changes (will log out in 50... 40... seconds). But we
+        # also see these events when the dialog first becomes active.
+        # And we also seem to get duplicate events.
+        obj = hash(event.source)
+        if name == self._activeDialogLabels.get(obj):
+            return
+
+        if activeDialog == _parentDialog(event.source):
+            self.presentMessage(name)
+            self._activeDialogLabels[obj] = name
+            return
+
+        default.Script.onNameChanged(self, event)
 
     def onStateChanged(self, event):
         """Called whenever an object's state changes.
@@ -219,32 +256,68 @@ class Script(default.Script):
         - event: the Event
         """
 
-        # When entering overview with many open windows, we get quite
-        # a few state-changed:showing events for nameless panels. The
-        # act of processing these by the default script causes us to
-        # present nothing, and introduces a significant delay before
-        # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
-        if event.type.startswith("object:state-changed:showing"):
-            try:
-                role = event.source.getRole()
-                name = event.source.name
-            except:
-                pass
-            else:
-                if role == pyatspi.ROLE_PANEL and not name:
+        try:
+            role = event.source.getRole()
+            name = event.source.name
+            state = event.source.getState()
+        except:
+            return
+
+        activeDialog, timestamp = self._activeDialog
+        eType = event.type
+        if eType.startswith("object:state-changed:showing"):
+            # When entering overview with many open windows, we get quite
+            # a few state-changed:showing events for nameless panels. The
+            # act of processing these by the default script causes us to
+            # present nothing, and introduces a significant delay before
+            # presenting the Top Bar button when Ctrl+Alt+Tab was pressed.
+            if role == pyatspi.ROLE_PANEL and not name:
+                return
+
+            # We cannot count on events or their order from dialog boxes.
+            # Therefore, the only way to reliably present a dialog is by
+            # ignoring the events of the dialog itself and keeping track
+            # of the current dialog.
+            if not event.detail1 and event.source == activeDialog:
+                self._activeDialog = (None, 0)
+                self._activeDialogLabels = {}
+                return
+
+            # This is to minimize chattiness. So far it seems that labels
+            # which pop up (wrong password) or change (50 seconds to log
+            # out) cause name-changed events. If we later find out that
+            # we care about a state-showing label in the current dialog, we
+            # should add a timestamp check into the new heuristic.
+            if activeDialog and role == pyatspi.ROLE_LABEL and event.detail1:
+                if activeDialog == _parentDialog(event.source):
                     return
 
-        # We override the behaviour for the selection
-        if event.type.startswith("object:state-changed:selected") \
-           and event.detail1:
-            # For the moment we announce any selection change
+        elif eType.startswith("object:state-changed:focused") and event.detail1:
+            # The dialog will get presented when its first child gets focus.
+            if role == pyatspi.ROLE_DIALOG:
+                return
 
-            if event.source is not None:
-                debug.println(debug.LEVEL_FINE,
-                              "[cally] new locus_of_focus: %s" \
-                                  % event.source.name)
+            # This is to present dialog boxes which are, to the user, newly
+            # activated. And if something is claiming to be focused that is
+            # not in a dialog, that's good to know as well, so update our
+            # state regardless.
+            if not activeDialog:
+                dialog = _parentDialog(event.source)
+                self._activeDialog = (dialog, time.time())
+                if dialog:
+                    orca.setLocusOfFocus(None, dialog)
+                    labels = self.utilities.unrelatedLabels(dialog)
+                    for label in labels:
+                        self._activeDialogLabels[hash(label)] = label.name
 
-                orca.setLocusOfFocus (event, event.source)
+        elif eType.startswith("object:state-changed:selected") and event.detail1:
+            # Some buttons, like the Wikipedia button, claim to be selected but
+            # lack STATE_SELECTED. The other buttons, such as in the Dash and
+            # event switcher, seem to have the right state. Since the ones with
+            # the wrong state seem to be things we don't want to present anyway
+            # we'll stop doing so and hope we are right.
+            if state.contains(pyatspi.STATE_SELECTED):
+                orca.setLocusOfFocus(event, event.source)
+                return
 
-        else: #in any other case, we use the default behaviour
-            default.Script.onStateChanged(self, event)
+        default.Script.onStateChanged(self, event)
