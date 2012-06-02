@@ -676,7 +676,10 @@ class Text(Region):
         [string, caretOffset, lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible,
                                                             self.startOffset)
-        string = string.decode("UTF-8")
+        try:
+            string = string.decode("UTF-8")
+        except:
+            pass
 
         cursorOffset = min(caretOffset - lineOffset, len(string))
 
