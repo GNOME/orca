@@ -1,3 +1,69 @@
+3.5.2 - 4 June 2012
+
+For users:
+
+  * Improve Orca's presentation of gnome-shell/clutter dialog boxes
+
+  * Handle traceback seen with embedded object chars in Yelp
+
+  * Fix a bug in the state change notifiers
+
+  * Don't ignore MouseButtonEvent instances due to timestamp
+
+  * Fix for Orca saying "Primary" for mnemonic Ctrl++
+
+  * Fix for bug 659588, Orca presents Ctrl+Plus and Ctrl+Minus
+    accelerators partially-translated
+
+  * Fix for speech keybindings failing when no speech settings have
+    been saved
+
+  * Remove the now-redundant 'orca -q/--quit' and 'orca -f/--forcequit'
+    (pkill works reliably)
+
+  * Ensure we eliminate replaced Orca processes
+
+  * Handle multiple and alternate installations better
+
+  * Eliminate the Orca shell script and cause Orca to run as a single
+    process rather than two
+
+For translators (whom we love):
+
+  * GNOME Goal: Remove markup in messages
+
+  * Add translator notes; provide more detail for vague ones
+
+  * Workaround for intltool not including translator notes for orca.in
+
+  * Fix for bug 675522 - incorrect comment for translators
+
+Other:
+
+  * Much work towards the Python 3 migration
+
+  * Fix for bug 658834 - Use GDbus via gobject-introspection instead
+    dbus-python
+
+  * Revert "Interim fix for bug 672242"
+
+  * Fix for bug 669813 - Remove pyxdg dependency
+
+  * Get rid of the forced-qui-prefs when there are no settings.
+
+  * Continued general code cleanup
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    cs            Czech                  Marek Černocký
+    es            Spanish                Daniel Mustieles
+    fr            French                 Bruno Brouard
+    gl            Galician               Fran Diéguez
+    ja            Japanese               Jiro Matsuzawa
+    sl            Slovenian              Matej Urbančič
+
+=========
+
 3.5.1 - 30 April 2012
 
 General
