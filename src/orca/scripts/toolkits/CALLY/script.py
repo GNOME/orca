@@ -216,6 +216,32 @@ class Script(default.Script):
 
         return default.Script.skipObjectEvent(self, event)
 
+    def presentDialogLabel(self, event):
+        """Examines and, if appropriate, presents a new or changed label
+        found in a dialog box. Returns True if we handled the presentation
+        here."""
+
+        try:
+            role = event.source.getRole()
+            name = event.source.name
+        except:
+            return False
+
+        activeDialog, timestamp = self._activeDialog
+        if not activeDialog or role != pyatspi.ROLE_LABEL:
+            return False
+
+        obj = hash(event.source)
+        if name == self._activeDialogLabels.get(obj):
+            return True
+
+        if activeDialog == _parentDialog(event.source):
+            self.presentMessage(name)
+            self._activeDialogLabels[obj] = name
+            return True
+
+        return False
+
     def onNameChanged(self, event):
         """Called whenever a property on an object changes.
 
@@ -223,28 +249,7 @@ class Script(default.Script):
         - event: the Event
         """
 
-        try:
-            role = event.source.getRole()
-            name = event.source.name
-        except:
-            return
-
-        activeDialog, timestamp = self._activeDialog
-        if not activeDialog or role != pyatspi.ROLE_LABEL:
-            default.Script.onNameChanged(self, event)
-            return
-
-        # This seems to get us the labels which appear (bad password)
-        # and changes (will log out in 50... 40... seconds). But we
-        # also see these events when the dialog first becomes active.
-        # And we also seem to get duplicate events.
-        obj = hash(event.source)
-        if name == self._activeDialogLabels.get(obj):
-            return
-
-        if activeDialog == _parentDialog(event.source):
-            self.presentMessage(name)
-            self._activeDialogLabels[obj] = name
+        if self.presentDialogLabel(event):
             return
 
         default.Script.onNameChanged(self, event)
@@ -283,13 +288,8 @@ class Script(default.Script):
                 self._activeDialogLabels = {}
                 return
 
-            # This is to minimize chattiness. So far it seems that labels
-            # which pop up (wrong password) or change (50 seconds to log
-            # out) cause name-changed events. If we later find out that
-            # we care about a state-showing label in the current dialog, we
-            # should add a timestamp check into the new heuristic.
             if activeDialog and role == pyatspi.ROLE_LABEL and event.detail1:
-                if activeDialog == _parentDialog(event.source):
+                if self.presentDialogLabel(event):
                     return
 
         elif eType.startswith("object:state-changed:focused") and event.detail1:
