@@ -321,3 +321,24 @@ class Script(default.Script):
                 return
 
         default.Script.onStateChanged(self, event)
+
+    def getTextLineAtCaret(self, obj, offset=None):
+        """Gets the line of text where the caret is."""
+
+        # TODO - JD/API: This is to work around the braille issue reported
+        # in bgo 677221. When that is resolved, this workaround can be
+        # removed.
+        string, caretOffset, startOffset = \
+            default.Script.getTextLineAtCaret(self, obj, offset)
+
+        if string:
+            return [string, caretOffset, startOffset]
+
+        try:
+            text = obj.queryText()
+        except:
+            pass
+        else:
+            string = text.getText(0, -1)
+
+        return [string, caretOffset, startOffset]
