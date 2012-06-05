@@ -5168,6 +5168,8 @@ class Script(script.Script):
                 lineString = text.getText(caretOffset, caretOffset + 1)
                 startOffset = caretOffset
             else:
+                if caretOffset == -1:
+                    caretOffset = text.characterCount
                 try:
                     [lineString, startOffset, endOffset] = text.getTextAtOffset(
                         caretOffset, pyatspi.TEXT_BOUNDARY_LINE_START)
