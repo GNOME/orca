@@ -48,8 +48,8 @@ import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.settings as settings
-
-from orca.orca_i18n import _ # for gettext support
+import orca.settings_manager as settings_manager
+from orca.orca_i18n import _
 from orca.orca_i18n import ngettext
 
 from .speech_generator import SpeechGenerator
@@ -59,7 +59,7 @@ from .structural_navigation import StructuralNavigation
 from .script_utilities import Utilities
 from . import script_settings
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 class Script(default.Script):
 

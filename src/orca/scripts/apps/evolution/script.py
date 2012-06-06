@@ -37,14 +37,14 @@ import orca.orca_state as orca_state
 import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.settings as settings
-
-from orca.orca_i18n import _ # for gettext support
+import orca.settings_manager as settings_manager
+from orca.orca_i18n import _
 
 from .formatting import Formatting
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #

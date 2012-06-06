@@ -39,13 +39,14 @@ import pyatspi
 from gi.repository import Gdk
 from gi.repository import GObject
 
-import orca # Deal with this during final Python 3 conversion
+from . import event_manager
+from . import script_manager
 from . import speech
 from . import braille
 from . import settings
 
-_scriptManager = getattr(orca, '_scriptManager')
-_eventManager = getattr(orca, '_eventManager')
+_eventManager = event_manager.getManager()
+_scriptManager = script_manager.getManager()
 
 class BoundingBox:
     """A bounding box, currently it is used to test if a given point is

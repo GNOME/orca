@@ -22,14 +22,12 @@
 import pickle
 import os
 
-import orca # Deal with this during final Python 3 conversion
-
 from . import speech
 from . import orca_state
-
+from . import settings_manager
 from .orca_i18n import _
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 class Bookmarks:
     """Represents a default bookmark handler."""

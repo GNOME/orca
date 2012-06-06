@@ -32,13 +32,12 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.orca as orca
+import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
-
 from orca.orca_i18n import _
-from orca.orca_i18n import ngettext # for ngettext support
+from orca.orca_i18n import ngettext
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #

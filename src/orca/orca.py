@@ -57,25 +57,23 @@ try:
 except:
     pass
 
-from .settings_manager import SettingsManager
-_settingsManager = SettingsManager()
-
-from .event_manager import EventManager
-_eventManager = EventManager()
-
-from .script_manager import ScriptManager
-_scriptManager = ScriptManager()
-
 from . import braille
 from . import debug
+from . import event_manager
 from . import notification_messages
 from . import orca_state
+from . import script_manager
 from . import settings
+from . import settings_manager
 from . import speech
 from .input_event import BrailleEvent
 from .input_event import KeyboardEvent
 from .orca_i18n import _
 from .orca_i18n import ngettext
+
+_eventManager = event_manager.getManager()
+_scriptManager = script_manager.getManager()
+_settingsManager = settings_manager.getManager()
 
 try:
     # If we don't have an active desktop, we will get a RuntimeError.

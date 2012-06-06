@@ -24,15 +24,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
-import orca # Deal with this during final Python 3 conversion
-
 from . import debug
 from . import orca_state
-
 from .scripts import apps, toolkits
-
-_settingsManager = getattr(orca, '_settingsManager')
-_eventManager = getattr(orca, '_eventManager')
 
 class ScriptManager:
 
@@ -214,7 +208,7 @@ class ScriptManager:
 
         from .scripts import default
         script = default.Script(app)
-        _eventManager.registerScriptListeners(script)
+        script.registerEventListeners()
 
         if not app:
             self._defaultScript = script
@@ -241,7 +235,7 @@ class ScriptManager:
             if not toolkitScript:
                 toolkitScript = self._createScript(app, obj)
                 toolkitScripts[objToolkit] = toolkitScript
-                _eventManager.registerScriptListeners(toolkitScript)
+                toolkitScript.registerEventListeners()
             self.toolkitScripts[app] = toolkitScripts
 
         if not app:
@@ -251,7 +245,7 @@ class ScriptManager:
         else:
             appScript = self._createScript(app, None)
             self.appScripts[app] = appScript
-            _eventManager.registerScriptListeners(appScript)
+            appScript.registerEventListeners()
 
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.
@@ -278,7 +272,6 @@ class ScriptManager:
         if not newScript:
             return
 
-        _settingsManager.loadAppSettings(newScript)
         newScript.activate()
         debug.println(debug.LEVEL_FINE, "ACTIVE SCRIPT: %s (reason=%s)" \
                           % (newScript.name, reason))
@@ -297,10 +290,10 @@ class ScriptManager:
             return
 
         appList = list(self.appScripts.keys())
-        appList = [a for a in appList if a!= None and a not in desktop]
+        appList = [a for a in appList if a != None and a not in desktop]
         for app in appList:
             appScript = self.appScripts.pop(app)
-            _eventManager.deregisterScriptListeners(appScript)
+            appScript.deregisterEventListeners()
             del appScript
 
             try:
@@ -309,7 +302,12 @@ class ScriptManager:
                 pass
             else:
                 for toolkitScript in list(toolkitScripts.values()):
-                    _eventManager.deregisterScriptListeners(toolkitScript)
+                    toolkitScript.deregisterEventListeners()
                     del toolkitScript
 
             del app
+
+_manager = ScriptManager()
+
+def getManager():
+    return _manager

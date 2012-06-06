@@ -30,11 +30,11 @@ __license__   = "LGPL"
 import os
 import pprint
 
-import orca # Deal with this during final Python 3 conversion
 from . import debug
 from . import settings
+from . import settings_manager
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 # The same fields than in orca_gui_prefs.py:
 #

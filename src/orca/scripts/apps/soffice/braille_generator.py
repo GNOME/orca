@@ -29,9 +29,9 @@ import pyatspi
 
 import orca.braille as braille
 import orca.braille_generator as braille_generator
-import orca.orca as orca
+import orca.settings_manager as settings_manager
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 class BrailleGenerator(braille_generator.BrailleGenerator):
 

@@ -33,9 +33,6 @@ __license__   = "LGPL"
 import locale
 import time
 
-import orca.orca as orca
-_settingsManager = getattr(orca, '_settingsManager')
-
 import pyatspi
 import orca.braille as braille
 import orca.debug as debug
@@ -45,19 +42,23 @@ import orca.flat_review as flat_review
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.outline as outline
+import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.phonnames as phonnames
 import orca.script as script
 import orca.settings as settings
+import orca.settings_manager as settings_manager
 import orca.speech as speech
 import orca.speechserver as speechserver
 import orca.mouse_review as mouse_review
 import orca.text_attribute_names as text_attribute_names
 import orca.notification_messages as notification_messages
 
-from orca.orca_i18n import _         # for gettext support
-from orca.orca_i18n import ngettext  # for ngettext support
-from orca.orca_i18n import C_        # to provide qualified translatable strings
+from orca.orca_i18n import _
+from orca.orca_i18n import ngettext
+from orca.orca_i18n import C_
+
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -1470,6 +1471,7 @@ class Script(script.Script):
     def activate(self):
         """Called when this script is activated."""
 
+        _settingsManager.loadAppSettings(self)
         braille.setupKeyRanges(list(self.brailleBindings.keys()))
         speech.updatePunctuationLevel()
 

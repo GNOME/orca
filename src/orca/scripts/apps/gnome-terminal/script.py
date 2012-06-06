@@ -30,12 +30,12 @@ __license__   = "LGPL"
 import pyatspi
 
 import orca.scripts.default as default
-import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
+import orca.settings_manager as settings_manager
 import orca.speech as speech
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #
@@ -87,20 +87,6 @@ class Script(default.Script):
 
         default.Script.locusOfFocusChanged(self, event, 
                                            oldLocusOfFocus, newLocusOfFocus)
-
-    #def onWindowActivated(self, event):
-    #    # Sets the context to the top level window first, so we can
-    #    # get information about it the window we just moved to.
-    #    #
-    #    orca.setLocusOfFocus(event, event.source)
-    #
-    #    # Now we find the focused object and set the locus of focus to it.
-    #    #
-    #    obj = self.findFocusedObject(self.app)
-    #    if obj:
-    #        orca.setLocusOfFocus(event, obj)
-    #    else:
-    #        default.Script.onWindowActivated(self, event)
 
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.

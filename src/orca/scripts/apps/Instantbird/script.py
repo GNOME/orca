@@ -30,6 +30,7 @@ import pyatspi
 import orca.bookmarks as bookmarks
 import orca.scripts.default as default
 import orca.orca as orca
+import orca.settings_manager as settings_manager
 import orca.orca_state as orca_state
 import orca.scripts.toolkits.Gecko as Gecko
 import orca.speech as speech
@@ -37,7 +38,7 @@ import orca.speech as speech
 from .chat import Chat
 from .script_utilities import Utilities
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #

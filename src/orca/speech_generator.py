@@ -29,11 +29,10 @@ import pyatspi
 import urlparse, urllib2
 from gi.repository import Atspi, Atk
 
-import orca # Deal with this during final Python 3 conversion
-
 from . import debug
 from . import generator
 from . import settings
+from . import settings_manager
 from . import sound
 from . import text_attribute_names
 
@@ -82,7 +81,7 @@ voiceType = {
     VALUE: settings.SYSTEM_VOICE, # Users may prefer DEFAULT_VOICE here
 }
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 class SpeechGenerator(generator.Generator):
     """Takes accessible objects and produces a string to speak for

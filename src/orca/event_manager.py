@@ -32,21 +32,19 @@ import time
 
 import orca # Deal with this during final Python 3 conversion
 
-from . import braille
 from . import debug
 from . import input_event
 from . import orca_state
+from . import script_manager
 from . import settings
-from . import speech
 
 from .orca_i18n import _
 
-_scriptManager = None
+_scriptManager = script_manager.getManager()
 
 class EventManager:
 
     def __init__(self):
-
         debug.println(debug.LEVEL_FINEST, 'INFO: Initializing event manager')
         self._scriptListenerCounts = {}
         self.registry = pyatspi.Registry
@@ -62,14 +60,6 @@ class EventManager:
         """Called when this presentation manager is activated."""
 
         debug.println(debug.LEVEL_FINEST, 'INFO: Activating event manager')
-
-        global _scriptManager
-        _scriptManager = getattr(orca, '_scriptManager')
-
-        # Tell BrlTTY which commands we care about.
-        #
-        braille.setupKeyRanges(list(orca_state.activeScript.brailleBindings.keys()))
-
         self._registerListener("window:activate")
         self._registerListener("window:deactivate")
         self._registerListener("object:children-changed")
@@ -249,13 +239,9 @@ class EventManager:
                     # speak and braille to tell the user that no component
                     # has keyboard focus.
                     #
-                    message = _("No focus")
-                    if settings.brailleVerbosityLevel == \
-                            settings.VERBOSITY_LEVEL_VERBOSE:
-                        braille.displayMessage(message)
-                    if settings.speechVerbosityLevel == \
-                            settings.VERBOSITY_LEVEL_VERBOSE:
-                        speech.speak(message)
+                    fullMessage = _("No focus")
+                    defaultScript = _scriptManager.getDefaultScript()
+                    defaultScript.presentMessage(fullMessage, '')
                     self.noFocusTimestamp = orca_state.noFocusTimestamp
                 self._gidleId = 0
                 rerun = False # destroy and don't call again
@@ -603,3 +589,8 @@ class EventManager:
             return True
         else:
             return False
+
+_manager = EventManager()
+
+def getManager():
+    return _manager

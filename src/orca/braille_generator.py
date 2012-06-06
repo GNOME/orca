@@ -28,16 +28,15 @@ __license__   = "LGPL"
 import pyatspi
 from gi.repository import Atspi, Atk
 
-import orca # Deal with this during final Python 3 conversion
 from . import braille
 from . import generator
 from . import orca_state
 from . import settings
-
+from . import settings_manager
 from .braille_rolenames import shortRoleNames
 from .orca_i18n import ngettext
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 class Space:
     """A dummy class to indicate we want to insert a space into an

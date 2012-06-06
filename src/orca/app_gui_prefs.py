@@ -35,17 +35,17 @@ from . import braille
 from . import debug
 from . import input_event
 from . import keybindings
-from . import orca
 from . import orca_gui_prefs
 from . import orca_state
 from . import orca_platform
+from . import script_manager
+from . import settings_manager
 from . import settings
 from . import speech
-
 from .orca_i18n import _
 
-_scriptManager = getattr(orca, '_scriptManager')
-_settingsManager = getattr(orca, '_settingsManager')
+_scriptManager = script_manager.getManager()
+_settingsManager = settings_manager.getManager()
 
 applicationName = None
 appScript = None

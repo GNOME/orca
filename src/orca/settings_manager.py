@@ -33,9 +33,10 @@ import imp
 from gi.repository import Gio, GLib
 
 from . import debug
-from .keybindings import KeyBinding
+from . import script_manager
 from . import settings
 from . import pronunciation_dict
+from .keybindings import KeyBinding
 
 try:
     _proxy = Gio.DBusProxy.new_for_bus_sync(
@@ -48,6 +49,8 @@ try:
         None)
 except:
     _proxy = None
+
+_scriptManager = script_manager.getManager()
 
 class SettingsManager(object):
     """Settings backend manager. This class manages orca user's settings
@@ -508,9 +511,6 @@ class SettingsManager(object):
         self._loadProfileSettings()
         script.voices = self.getSetting('voices')
 
-        import orca # Deal with this during final Python 3 conversion
-        _scriptManager = getattr(orca, '_scriptManager')
-
         app = script.app
         moduleName = _scriptManager.getModuleName(app)
         if not moduleName:
@@ -597,3 +597,8 @@ def getRealValues(prefs):
     #for key in prefs.keys():
     #    prefs[key] = getValueForKey(prefs, key)
     return prefs
+
+_manager = SettingsManager()
+
+def getManager():
+    return _manager

@@ -43,18 +43,25 @@ import pyatspi
 
 from . import braille_generator
 from . import debug
+from . import event_manager
 from . import flat_review
 from . import formatting
 from . import label_inference
 from . import keybindings
 from . import orca_state
+from . import script_manager
 from . import script_utilities
 from . import settings
+from . import settings_manager
 from . import speech_generator
 from . import structural_navigation
 from . import where_am_I
 from . import bookmarks
 from . import tutorialgenerator
+
+_eventManager = event_manager.getManager()
+_scriptManager = script_manager.getManager()
+_settingsManager = settings_manager.getManager()
 
 class Script:
     """The specific focus tracking scripts for applications.
@@ -312,14 +319,30 @@ class Script:
         """
         return
 
+    def registerEventListeners(self):
+        """Tells the event manager to start listening for all the event types
+        of interest to the script.
+
+        Arguments:
+        - script: the script.
+        """
+
+        _eventManager.registerScriptListeners(self)
+
+    def deregisterEventListeners(self):
+        """Tells the event manager to stop listening for all the event types
+        of interest to the script.
+
+        Arguments:
+        - script: the script.
+        """
+
+        _eventManager.deregisterScriptListeners(self)
+
     def getSettings(self):
         """Returns the settings associated with this script, regardless of
         whether or not the script is active.
         """
-
-        import orca # Deal with this during final Python 3 conversion
-        _scriptManager = getattr(orca, '_scriptManager')
-        _settingsManager = getattr(orca, '_settingsManager')
 
         scriptSettings = settings
         if orca_state.activeScript != self:

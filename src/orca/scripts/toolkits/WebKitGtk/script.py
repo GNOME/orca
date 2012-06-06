@@ -34,6 +34,7 @@ import orca.scripts.default as default
 import orca.input_event as input_event
 import orca.orca as orca
 import orca.settings as settings
+import orca.settings_manager as settings_manager
 import orca.speechserver as speechserver
 import orca.orca_state as orca_state
 import orca.speech as speech
@@ -45,7 +46,7 @@ from .braille_generator import BrailleGenerator
 from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #

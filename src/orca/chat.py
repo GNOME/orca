@@ -27,17 +27,15 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca # Deal with this during final Python 3 conversion
-
 from . import input_event
 from . import keybindings
 from . import orca_state
 from . import settings
+from . import settings_manager
 from . import speech
-
 from .orca_i18n import _
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 #############################################################################
 #                                                                           #

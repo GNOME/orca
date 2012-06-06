@@ -57,6 +57,7 @@ import orca.liveregions as liveregions
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
+import orca.settings_manager as settings_manager
 import orca.speech as speech
 import orca.speechserver as speechserver
 
@@ -73,7 +74,7 @@ from orca.orca_i18n import _
 from orca.speech_generator import Pause
 from orca.acss import ACSS
 
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 ########################################################################
 #                                                                      #

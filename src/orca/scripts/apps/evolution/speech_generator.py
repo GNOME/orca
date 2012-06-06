@@ -27,12 +27,11 @@ __license__   = "LGPL"
 
 import pyatspi
 
-import orca.orca as orca
+import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
+from orca.orca_i18n import _
 
-from orca.orca_i18n import _ # for gettext support
-
-_settingsManager = getattr(orca, '_settingsManager')
+_settingsManager = settings_manager.getManager()
 
 class SpeechGenerator(speech_generator.SpeechGenerator):
     """Overrides _generateSpeechForTableCell so that, if this is an

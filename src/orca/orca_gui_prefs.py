@@ -39,9 +39,12 @@ from . import acss
 from . import debug
 from . import orca
 from . import orca_gtkbuilder
+from . import orca_gui_profile
 from . import orca_state
 from . import orca_platform
+from . import script_manager
 from . import settings
+from . import settings_manager
 from . import input_event
 from . import keybindings
 from . import pronunciation_dict
@@ -50,10 +53,8 @@ from . import speech
 from . import speechserver
 from . import text_attribute_names
 
-from . import orca_gui_profile
-
-_settingsManager = getattr(orca, '_settingsManager')
-_scriptManager = getattr(orca, '_scriptManager')
+_scriptManager = script_manager.getManager()
+_settingsManager = settings_manager.getManager()
 
 try:
     import louis
