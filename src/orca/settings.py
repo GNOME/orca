@@ -636,12 +636,6 @@ synchronousToolkits     = ['VCL']
 #
 debugEventQueue         = False
 
-# If True, we collect information regarding memory usage and provide
-# keystrokes to dump the usage information to the console:
-# Orca+Ctrl+F8 for brief, Orca+Shift+Ctrl+F8 for detailed.
-#
-debugMemoryUsage        = False
-
 # The timeout value (in seconds) and callback used to determine if
 # Orca has hung or not.  The only setting one should muck with here is
 # the timeoutTime unless you want to create a custom callback handler

@@ -93,14 +93,6 @@ def onEnabledChanged(gsetting, key):
 def getSettingsManager():
     return _settingsManager
 
-if settings.debugMemoryUsage:
-    gc.set_debug(gc.DEBUG_UNCOLLECTABLE
-                 | gc.DEBUG_COLLECTABLE
-                 | gc.DEBUG_INSTANCES
-                 | gc.DEBUG_OBJECTS
-                 | gc.DEBUG_SAVEALL)
-
-
 EXIT_CODE_HANG = 50
 
 # The user-settings module (see loadUserSettings).

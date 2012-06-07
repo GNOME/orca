@@ -490,8 +490,6 @@ class EventManager:
             try:
                 if event.source == self.registry.getDesktop(0):
                     _scriptManager.reclaimScripts()
-                    if settings.debugMemoryUsage:
-                        orca.cleanupGarbage()
                     if not event.source.childCount:
                         orca.shutdown()
                     return

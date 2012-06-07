@@ -940,15 +940,6 @@ class Script(script.Script):
                 #
                 _("Prints debug information about the application with focus."))
 
-        self.inputEventHandlers["printMemoryUsageHandler"] = \
-            input_event.InputEventHandler(
-                Script.printMemoryUsageHandler,
-                # Translators: this is a debug message that Orca users
-                # will not normally see. It describes a debug routine
-                # that will print Orca memory usage information.
-                #
-                _("Prints memory usage information."))
-
         self.inputEventHandlers["bookmarkCurrentWhereAmI"] = \
             input_event.InputEventHandler(
                 Script.bookmarkCurrentWhereAmI,
@@ -1165,14 +1156,6 @@ class Script(script.Script):
 
         import orca.common_keyboardmap as common_keyboardmap
         keyBindings.load(common_keyboardmap.keymap, self.inputEventHandlers)
-
-        if _settingsManager.getSetting('debugMemoryUsage'):
-            keyBindings.add(
-                keybindings.KeyBinding(
-                    "",
-                    settings.defaultModifierMask,
-                    settings.NO_MODIFIER_MASK,
-                    self.inputEventHandlers["printMemoryUsageHandler"]))
 
         try:
             keyBindings = settings.overrideKeyBindings(self, keyBindings)
@@ -3017,10 +3000,6 @@ class Script(script.Script):
         """
 
         self.doWhereAmI(inputEvent, False)
-
-    def printMemoryUsageHandler(self, inputEvent):
-        """Prints memory usage information."""
-        print('TODO: print something useful for memory debugging')
 
     def printAppsHandler(self, inputEvent=None):
         """Prints a list of all applications to stdout."""
