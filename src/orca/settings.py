@@ -681,9 +681,8 @@ chatRoomHistories = False
 # Allow for the customization of key bindings.
 #
 def overrideKeyBindings(script, keyBindings):
-    import orca.settings_manager as settings_manager
+    from . import settings_manager
     _settingsManager = settings_manager.getManager()
-
     return _settingsManager.overrideKeyBindings(script, keyBindings)
 
 # Allow for user customization of pronunciations.
