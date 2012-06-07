@@ -30,8 +30,6 @@ import Queue
 import threading
 import time
 
-import orca # Deal with this during final Python 3 conversion
-
 from . import debug
 from . import input_event
 from . import orca_state
@@ -490,8 +488,6 @@ class EventManager:
             try:
                 if event.source == self.registry.getDesktop(0):
                     _scriptManager.reclaimScripts()
-                    if not event.source.childCount:
-                        orca.shutdown()
                     return
             except (LookupError, RuntimeError):
                 # If we got this error here, we'll get it again when we
@@ -517,7 +513,7 @@ class EventManager:
             debug.println(debug.LEVEL_WARNING,
                           "Error while processing event: %s" % eType)
             if eType.startswith("window:deactivate"):
-                orca.setLocusOfFocus(event, None)
+                orca_state.locusOfFocus = None
                 orca_state.activeWindow = None
             return
         except:
@@ -527,7 +523,7 @@ class EventManager:
         if state and state.contains(pyatspi.STATE_DEFUNCT):
             debug.println(debug.LEVEL_FINEST, "IGNORING DEFUNCT OBJECT")
             if eType.startswith("window:deactivate"):
-                orca.setLocusOfFocus(event, None)
+                orca_state.locusOfFocus = None
                 orca_state.activeWindow = None
             return
 
