@@ -29,7 +29,6 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
-import gc
 import os
 import pyatspi
 import re
@@ -981,17 +980,6 @@ def examineProcesses():
                 name = 'WARNING: Possible hang'
         debug.println(
             debug.LEVEL_ALL, '%3i. %s (pid: %s) %s' % (i+1, name, pid, cmd))
-
-def cleanupGarbage():
-    """Cleans up garbage on the heap."""
-    gc.collect()
-    for obj in gc.garbage:
-        try:
-            if isinstance(obj, pyatspi.Accessibility.Accessible):
-                gc.garbage.remove(obj)
-                obj.__del__()
-        except:
-            pass
 
 def main():
     """The main entry point for Orca.  The exit codes for Orca will
