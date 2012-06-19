@@ -5,6 +5,7 @@ app_icons = \
 	orca-24x24.png	\
 	orca-32x32.png	\
 	orca-48x48.png	\
+	orca-256x256.png\
 	orca-scalable.svg
 
 install-data-local:
