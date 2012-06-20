@@ -755,9 +755,6 @@ def getTextAttributeKey(localizedTextAttr):
     localized text attribute.
     """
 
-    if isinstance(localizedTextAttr, unicode):
-        localizedTextAttr = localizedTextAttr.encode("UTF-8")
-
     for key, value in list(_textAttributeTable.items()):
         if value == localizedTextAttr:
             return key
@@ -774,16 +771,9 @@ def getTextAttributeName(textAttr):
     attribute.
     """
 
-    if isinstance(textAttr, unicode):
-        textAttr = textAttr.encode("UTF-8")
-
     # Normalize the name to an Atk name before attempting to look it up.
     #
     if orca_state.activeScript:
         textAttr = orca_state.activeScript.getAtkNameForAttribute(textAttr)
 
-    try:
-        return _textAttributeTable[textAttr]
-    except:
-        return textAttr
-
+    return _textAttributeTable.get(textAttr, textAttr)

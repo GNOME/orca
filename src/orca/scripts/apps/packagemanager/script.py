@@ -457,7 +457,7 @@ class Script(default.Script):
             isLink = self.utilities.isLink(child)
 
             if len(line) and line != "\n":
-                if line.decode("UTF-8").isupper():
+                if line.isupper():
                     voice = self.voices[settings.UPPERCASE_VOICE]
                 elif isLink:
                     voice = self.voices[settings.HYPERLINK_VOICE]

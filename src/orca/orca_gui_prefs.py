@@ -607,9 +607,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if len(self.speechFamiliesChoices) == 0:
             return
 
-        if isinstance(familyName, unicode):
-            familyName = familyName.encode('UTF-8')
-
         valueSet = False
         i = 0
         for family in self.speechFamiliesChoices:
@@ -718,11 +715,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         #
         if not serverInfo:
             serverInfo = speech.getInfo()
-
-        try:
-            serverInfo = [x.encode('UTF-8') for x in serverInfo]
-        except (UnicodeDecodeError, UnicodeEncodeError):
-            pass
 
         valueSet = False
         i = 0
@@ -1497,8 +1489,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
            sdtime(settings.TIME_FORMAT_24_HM_WITH_WORDS, ltime())])
         indextime = TIME_FORMAT_LOCALE
         timeFormat = self.prefsDict["presentTimeFormat"]
-        if isinstance(timeFormat, unicode):
-            timeFormat = timeFormat.encode('UTF-8')
         if timeFormat == settings.TIME_FORMAT_LOCALE:
             indextime = TIME_FORMAT_LOCALE
         elif timeFormat == settings.TIME_FORMAT_24_HMS:
@@ -1975,10 +1965,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             else:
                 clickCount = self._clickCountToString(kb.click_count)
                 modifierNames = keybindings.getModifierNames(kb.modifiers)
-                try:
-                    keysymstring = kb.keysymstring.encode('UTF-8')
-                except (UnicodeDecodeError, UnicodeEncodeError):
-                    keysymstring = kb.keysymstring
+                keysymstring = kb.keysymstring
                 text = keybindings.getModifierNames(kb.modifiers) \
                        + keysymstring \
                        + clickCount
@@ -2806,10 +2793,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         eventState = keyPressedEvent.state
 
         orcaMods = settings.orcaModifierKeys
-        try:
-            orcaMods = [x.encode('UTF-8') for x in orcaMods]
-        except (UnicodeDecodeError, UnicodeEncodeError):
-            pass
         if eventString in orcaMods:
             self._capturedKey = ['', settings.ORCA_MODIFIER_MASK, 0]
             return False

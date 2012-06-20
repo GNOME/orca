@@ -110,7 +110,7 @@ class Script(default.Script):
            and len(keyboardEvent.event_string) > 1:
             keyval = Gdk.keyval_from_name(keyboardEvent.keyval_name)
             if 0 < keyval < 256:
-                keyboardEvent.event_string = unichr(keyval).encode("UTF-8")
+                keyboardEvent.event_string = chr(keyval)
 
     def onFocus(self, event):
         """Called whenever an object gets focus.

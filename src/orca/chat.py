@@ -753,7 +753,7 @@ class Chat:
 
         elif self.isAutoCompletedTextEvent(event):
             text = event.any_data
-            if text.decode("UTF-8").isupper():
+            if text.isupper():
                 speech.speak(text,
                              self._script.voices[settings.UPPERCASE_VOICE])
             else:

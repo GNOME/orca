@@ -44,8 +44,8 @@ class BrlDot(Gtk.Alignment):
     """A single braille dot."""
 
     MARKUP_NORMAL  = '<tt><small>%s</small></tt>'
-    SYMBOL_LOWERED = u'\u25CB' # '○'
-    SYMBOL_RAISED  = u'\u25CF' # '●'
+    SYMBOL_LOWERED = '\u25CB' # '○'
+    SYMBOL_RAISED  = '\u25CF' # '●'
 
     def __init__(self, dotNumber, isRaised=False):
         """Create a new BrlDot.
@@ -213,12 +213,6 @@ class BrlMon(Gtk.Window):
         """
 
         self.clear()
-
-        try:
-            string = string.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
         length = min(len(string), len(self.cells))
         for i in range(length):
             isCursorCell = i == cursorCell - 1

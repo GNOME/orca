@@ -28,6 +28,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
+import functools
 import math
 import pyatspi
 import re
@@ -50,13 +51,13 @@ from .orca_i18n import ngettext
 
 class Utilities:
 
-    EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
+    EMBEDDED_OBJECT_CHARACTER = '\ufffc'
     SUPERSCRIPT_DIGITS = \
-        [u'\u2070', u'\u00b9', u'\u00b2', u'\u00b3', u'\u2074',
-         u'\u2075', u'\u2076', u'\u2077', u'\u2078', u'\u2079']
+        ['\u2070', '\u00b9', '\u00b2', '\u00b3', '\u2074',
+         '\u2075', '\u2076', '\u2077', '\u2078', '\u2079']
     SUBSCRIPT_DIGITS = \
-        [u'\u2080', u'\u2081', u'\u2082', u'\u2083', u'\u2084',
-         u'\u2085', u'\u2086', u'\u2087', u'\u2088', u'\u2089']
+        ['\u2080', '\u2081', '\u2082', '\u2083', '\u2084',
+         '\u2085', '\u2086', '\u2087', '\u2088', '\u2089']
 
     flags = re.UNICODE
     WORDS_RE = re.compile("(\W+)", flags)
@@ -169,20 +170,24 @@ class Utilities:
         Returns: a list of all objects under the specified object
         """
 
-        if root.childCount <= 0:
+        if root and root.childCount <= 0:
             return []
 
         objlist = []
         for i, child in enumerate(root):
             debug.println(debug.LEVEL_FINEST,
                           "Script.allDescendants looking at child %d" % i)
-            if child \
-               and ((not onlyShowing) or (onlyShowing and \
-                    (child.getState().contains(pyatspi.STATE_SHOWING)))):
+            try:
+                state = child.getState()
+            except:
+                debug.println(debug.LEVEL_FINEST, "Error getting state")
+                continue
+
+            if not onlyShowing \
+               or (onlyShowing and state.contains(pyatspi.STATE_SHOWING)):
                 objlist.append(child)
-                if (child.getState().contains( \
-                    pyatspi.STATE_MANAGES_DESCENDANTS) == 0) \
-                    and (child.childCount > 0):
+                if not state.contains(pyatspi.STATE_MANAGES_DESCENDANTS) \
+                   and child.childCount > 0:
                     objlist.extend(Utilities.allDescendants(child, onlyShowing))
 
         return objlist
@@ -580,23 +585,21 @@ class Utilities:
             # current object is a single EMBEDDED_OBJECT_CHARACTER.  In
             # this case, we look to the child for the real text.]]]
             #
-            unicodeText = displayedText.decode("UTF-8")
-            if unicodeText \
-               and len(unicodeText) == 1 \
-               and unicodeText[0] == self.EMBEDDED_OBJECT_CHARACTER \
+            if len(displayedText) == 1 \
+               and displayedText[0] == self.EMBEDDED_OBJECT_CHARACTER \
                and obj.childCount > 0:
                 try:
                     displayedText = self.displayedText(obj[0])
                 except:
                     debug.printException(debug.LEVEL_WARNING)
-            elif unicodeText:
+            else:
                 # [[[TODO: HACK - Welll.....we'll just plain ignore any
                 # text with EMBEDDED_OBJECT_CHARACTERs here.  We still need a
                 # general case to handle this stuff and expand objects
                 # with EMBEDDED_OBJECT_CHARACTERs.]]]
                 #
-                for i in range(len(unicodeText)):
-                    if unicodeText[i] == self.EMBEDDED_OBJECT_CHARACTER:
+                for i in range(len(displayedText)):
+                    if displayedText[i] == self.EMBEDDED_OBJECT_CHARACTER:
                         displayedText = None
                         break
 
@@ -1531,9 +1534,12 @@ class Utilities:
         """
 
         allLabels = self.descendantsWithRole(root, pyatspi.ROLE_LABEL)
-        labels = [x for x in allLabels if not x.getRelationSet()]
-        labels = [x for x in labels if x.parent and x.name != x.parent.name]
-        labels = [x for x in labels if x.getState().contains(pyatspi.STATE_SHOWING)]
+        try:
+            labels = [x for x in allLabels if not x.getRelationSet()]
+            labels = [x for x in labels if x.parent and x.name != x.parent.name]
+            labels = [x for x in labels if x.getState().contains(pyatspi.STATE_SHOWING)]
+        except:
+            return []
 
         # Eliminate duplicates
         d = {}
@@ -1541,7 +1547,7 @@ class Utilities:
             d[label.name] = label
         labels = list(d.values())
 
-        return sorted(labels, self.spatialComparison)
+        return sorted(labels, key=functools.cmp_to_key(self.spatialComparison))
 
     def unfocusedAlertAndDialogCount(self, obj):
         """If the current application has one or more alert or dialog
@@ -1781,32 +1787,28 @@ class Utilities:
         """
 
         string = self.substring(obj, startOffset, endOffset)
-        if string:
-            unicodeText = string.decode("UTF-8")
-            if unicodeText and self.EMBEDDED_OBJECT_CHARACTER in unicodeText:
-                # If we're not getting the full text of this object, but
-                # rather a substring, we need to figure out the offset of
-                # the first child within this substring.
-                #
-                childOffset = 0
-                for child in obj:
-                    if Utilities.characterOffsetInParent(child) >= startOffset:
-                        break
-                    childOffset += 1
+        if self.EMBEDDED_OBJECT_CHARACTER in string:
+            # If we're not getting the full text of this object, but
+            # rather a substring, we need to figure out the offset of
+            # the first child within this substring.
+            #
+            childOffset = 0
+            for child in obj:
+                if Utilities.characterOffsetInParent(child) >= startOffset:
+                    break
+                childOffset += 1
 
-                toBuild = list(unicodeText)
-                count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
-                for i in range(count):
-                    index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
-                    child = obj[i + childOffset]
-                    childText = self.expandEOCs(child)
-                    if not childText:
-                        childText = ""
-                    try:
-                        toBuild[index] = childText.decode("UTF-8")
-                    except UnicodeEncodeError:
-                        toBuild[index] = childText
-                string = "".join(toBuild)
+            toBuild = list(string)
+            count = toBuild.count(self.EMBEDDED_OBJECT_CHARACTER)
+            for i in range(count):
+                index = toBuild.index(self.EMBEDDED_OBJECT_CHARACTER)
+                child = obj[i + childOffset]
+                childText = self.expandEOCs(child)
+                if not childText:
+                    childText = ""
+                toBuild[index] = childText
+
+            string = "".join(toBuild)
 
         return string
 
@@ -2114,13 +2116,13 @@ class Utilities:
         doesn't implement the accessible text specialization.
         """
 
+        # TODO: eliminate calls to this now-redundant method
+
         text = self.queryNonEmptyText(obj)
         if text:
-            unicodeText = text.getText(0, -1).decode("UTF-8")
-        else:
-            unicodeText = None
+            return text.getText(0, -1)
 
-        return unicodeText
+        return None
 
     def willEchoCharacter(self, event):
         """Given a keyboard event containing an alphanumeric key,
@@ -2419,16 +2421,6 @@ class Utilities:
         from . import punctuation_settings
         from . import chnames
 
-        try:
-            line = line.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
-        try:
-            segment = segment.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
         style = settings.verbalizePunctuationStyle
         isPunctChar = True
         try:
@@ -2450,12 +2442,6 @@ class Utilities:
                                 "%(count)d %(repeatChar)s characters",
                                  count) \
                                  % {"count" : count, "repeatChar": repeatChar}
-
-                try:
-                    repeatSegment = repeatSegment.decode("UTF-8")
-                except UnicodeEncodeError:
-                    pass
-
                 line = "%s %s" % (line, repeatSegment)
             else:
                 line += segment
@@ -2483,12 +2469,6 @@ class Utilities:
 
         newSegment = pronunciation_dict.getPronunciation(
             segment, self._script.app_pronunciation_dict)
-
-        if isinstance(segment, unicode):
-            segment = segment.encode('UTF-8')
-        if isinstance(newSegment, unicode):
-            newSegment = newSegment.encode('UTF-8')
-
         if newSegment == segment:
             newSegment = pronunciation_dict.getPronunciation(segment)
 
@@ -2508,13 +2488,7 @@ class Utilities:
 
         from . import punctuation_settings
 
-        try:
-            line = line.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
         endOffset = startOffset + len(line)
-
         try:
             hyperText = obj.queryHypertext()
             nLinks = hyperText.getNLinks()
@@ -2539,7 +2513,7 @@ class Utilities:
             # Translators: this indicates that this piece of
             # text is a hypertext link.
             #
-            linkString = " " + _("link").decode("UTF-8")
+            linkString = " " + _("link")
 
             # If the link was not followed by a whitespace or punctuation
             # character, then add in a space to make it more presentable.
@@ -2552,7 +2526,7 @@ class Utilities:
                 linkString += " "
             adjustedLine[index:index] = linkString
 
-        return "".join(adjustedLine).encode("UTF-8")
+        return "".join(adjustedLine)
 
     def adjustForPronunciation(self, line):
         """Adjust the line to replace words in the pronunciation dictionary,
@@ -2566,18 +2540,8 @@ class Utilities:
         """
 
         newLine = ""
-        try:
-            line = line.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
         words = self.WORDS_RE.split(line)
         newLine = ''.join(map(self._pronunciationForSegment, words))
-
-        try:
-            newLine = newLine.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
 
         return newLine
 
@@ -2600,15 +2564,10 @@ class Utilities:
         Returns: a new line adjusted for repeat character counts (if enabled).
         """
 
-        try:
-            line = line.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
         if (len(line) < 4) or (settings.repeatCharacterLimit < 4):
-            return line.encode("UTF-8")
+            return line
 
-        newLine = u''
+        newLine = ''
         segment = lastChar = line[0]
 
         multipleChars = False
@@ -2622,24 +2581,7 @@ class Utilities:
 
             lastChar = line[i]
 
-        newLine = self._addRepeatSegment(segment, newLine, multipleChars)
-
-        # Pylint is confused and flags this with the following error:
-        #
-        # E1103:5188:Script.adjustForRepeats: Instance of 'True' has
-        # no 'encode' member (but some types could not be inferred)
-        #
-        # We know newLine is a unicode string, so we'll just tell pylint
-        # that we know what we are doing.
-        #
-        # pylint: disable-msg=E1103
-
-        try:
-            newLine = newLine.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
-
-        return newLine
+        return self._addRepeatSegment(segment, newLine, multipleChars)
 
     def adjustForDigits(self, string):
         """Adjusts the string to convert digit-like text, such as subscript
@@ -2651,13 +2593,8 @@ class Utilities:
         Returns: a new string which contains actual digits.
         """
 
-        try:
-            uString = string.decode("UTF-8")
-        except UnicodeEncodeError:
-            uString = string
-
-        subscripted = set(re.findall(self.SUBSCRIPTS_RE, uString))
-        superscripted = set(re.findall(self.SUPERSCRIPTS_RE, uString))
+        subscripted = set(re.findall(self.SUBSCRIPTS_RE, string))
+        superscripted = set(re.findall(self.SUPERSCRIPTS_RE, string))
 
         for number in superscripted:
             new = [str(self.SUPERSCRIPT_DIGITS.index(d)) for d in number]
@@ -2667,11 +2604,7 @@ class Utilities:
             # 'superscript 3' should be presented as 'X superscript 23'.
             #
             newString = _(" superscript %s") % "".join(new)
-            try:
-                newString = newString.decode("UTF-8")
-            except UnicodeEncodeError:
-                pass
-            uString = re.sub(number, newString, uString)
+            string = re.sub(number, newString, string)
 
         for number in subscripted:
             new = [str(self.SUBSCRIPT_DIGITS.index(d)) for d in number]
@@ -2681,17 +2614,9 @@ class Utilities:
             # 'subscript 3', should be presented as 'X subscript 23.'
             #
             newString = _(" subscript %s") % "".join(new)
-            uString = re.sub(number, newString, uString)
-            try:
-                newString = newString.decode("UTF-8")
-            except UnicodeEncodeError:
-                pass
-        try:
-            uString = uString.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
+            string = re.sub(number, newString, string)
 
-        return uString
+        return string
 
     @staticmethod
     def absoluteMouseCoordinates():
@@ -2713,16 +2638,6 @@ class Utilities:
             return text
         if not text:
             return newText
-
-        try:
-            text = text.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
-        try:
-            newText = newText.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
 
         return text + delimiter + newText
 
@@ -2763,12 +2678,6 @@ class Utilities:
         Returns True if the given character is a sentence delimiter.
         """
 
-        if not isinstance(currentChar, unicode):
-            currentChar = currentChar.decode("UTF-8")
-
-        if not isinstance(previousChar, unicode):
-            previousChar = previousChar.decode("UTF-8")
-
         if currentChar == '\r' or currentChar == '\n':
             return True
 
@@ -2783,9 +2692,6 @@ class Utilities:
 
         Returns True if the given character is a word delimiter.
         """
-
-        if not isinstance(character, unicode):
-            character = character.decode("UTF-8")
 
         return character in self._script.whitespace \
                or character in '!*+,-./:;<=>?@[\]^_{|}' \
@@ -2882,7 +2788,7 @@ class Utilities:
         # The keybindings in <full-path> should be separated by ":"
         #
         try:
-            bindingStrings = action.getKeyBinding(0).decode("UTF-8").split(';')
+            bindingStrings = action.getKeyBinding(0).split(';')
         except:
             self._script.generatorCache[self.KEY_BINDING][obj] = ["", "", ""]
             return self._script.generatorCache[self.KEY_BINDING][obj]
@@ -3009,8 +2915,6 @@ class Utilities:
         """
 
         try:
-            if not isinstance(character, unicode):
-                character = character.decode('UTF-8')
             return "%04x" % ord(character)
         except:
             debug.printException(debug.LEVEL_WARNING)

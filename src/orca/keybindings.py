@@ -28,7 +28,9 @@ __license__   = "LGPL"
 
 from gi.repository import Gdk
 
+import functools
 import pyatspi
+
 from . import debug
 from . import settings
 
@@ -367,8 +369,8 @@ class KeyBindings:
         # the one whose click count is closest to, but does not exceed,
         # the actual click count.
         #
-        candidates.sort(cmp=lambda x, y: x.click_count - y.click_count,
-                        reverse=True)
+        comparison = lambda x, y: y.click_count - x.click_count
+        candidates.sort(key=functools.cmp_to_key(comparison))
         for candidate in candidates:
             if candidate.click_count <= clickCount:
                 return candidate.handler

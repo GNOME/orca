@@ -43,10 +43,7 @@ def getPronunciation(word, pronunciations=None):
     the word if there is no representation.
     """
 
-    if isinstance(word, unicode):
-        word = word.encode("UTF-8")
-
-    lowerWord = word.decode("UTF-8").lower().encode("UTF-8")
+    lowerWord = word.lower()
     dictionary = pronunciations or pronunciation_dict
     entry = dictionary.get(lowerWord, [word, word])
 
@@ -63,7 +60,7 @@ def setPronunciation(word, replacementString, pronunciations=None):
       into.
     """
 
-    key = word.decode("UTF-8").lower().encode("UTF-8")
+    key = word.lower()
     if pronunciations != None:
         pronunciations[key] = [ word, replacementString ]
     else:

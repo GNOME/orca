@@ -26,7 +26,7 @@ __license__   = "LGPL"
 
 from gi.repository import GObject
 import pyatspi
-import Queue
+import queue
 import threading
 import time
 
@@ -48,7 +48,7 @@ class EventManager:
         self.registry = pyatspi.Registry
         self._enqueueCount = 0
         self._dequeueCount = 0
-        self._eventQueue     = Queue.Queue(0)
+        self._eventQueue     = queue.Queue(0)
         self._gidleId        = 0
         self._gidleLock      = threading.Lock()
         self.noFocusTimestamp = 0.0
@@ -75,9 +75,6 @@ class EventManager:
 
     def _ignore(self, event):
         """Returns True if this event should be ignored."""
-
-        if not event or not event.source:
-            return True
 
         ignoredList = ['object:state-changed:defunct',
                        'object:property-change:accessible-parent']
@@ -223,10 +220,13 @@ class EventManager:
             # some reason if done inside an acquire/release block for a
             # lock.  So...we do it here.]]]
             #
-            noFocus = \
-                not orca_state.activeScript \
-                or (not orca_state.locusOfFocus \
-                    and self.noFocusTimestamp != orca_state.noFocusTimestamp)
+            try:
+                noFocus = \
+                    not orca_state.activeScript \
+                    or (not orca_state.locusOfFocus and \
+                        self.noFocusTimestamp != orca_state.noFocusTimestamp)
+            except:
+                noFocus = True
 
             self._gidleLock.acquire()
             if self._eventQueue.empty():
@@ -244,7 +244,7 @@ class EventManager:
                 self._gidleId = 0
                 rerun = False # destroy and don't call again
             self._gidleLock.release()
-        except Queue.Empty:
+        except queue.Empty:
             debug.println(debug.LEVEL_SEVERE,
                           "event_manager._dequeue: the event queue is empty!")
             self._gidleId = 0
@@ -416,7 +416,8 @@ class EventManager:
                 debug.println(debug.LEVEL_WARNING, msg)
                 return None
         except:
-            debug.printException(debug.LEVEL_WARNING)
+            msg = 'WARNING: Exception when getting script for event.'
+            debug.println(debug.LEVEL_WARNING, msg)
         else:
             script = _scriptManager.getScript(app, event.source)
 
@@ -517,7 +518,6 @@ class EventManager:
                 orca_state.activeWindow = None
             return
         except:
-            debug.printException(debug.LEVEL_WARNING)
             return
 
         if state and state.contains(pyatspi.STATE_DEFUNCT):

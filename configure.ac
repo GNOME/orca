@@ -4,9 +4,9 @@ m4_define([orca_micro_version], [3pre])
 m4_define([orca_version],
           [orca_major_version.orca_minor_version.orca_micro_version])
 
-m4_define(gtk_required_version, 3.1.91)
-m4_define(pygobject_required_version, 3.0.2)
-m4_define(atspi_required_version, 2.3.5)
+m4_define(gtk_required_version, 3.4)
+m4_define(pygobject_required_version, 3.2.2)
+m4_define(atspi_required_version, 2.5.2)
 
 AC_INIT([orca],
         [orca_version],
@@ -40,8 +40,8 @@ AC_PROG_INSTALL
 dnl Check for python and python modules needed by Orca
 dnl TODO: check for incompatibilities between Orca and liblouis
 dnl per http://live.gnome.org/Orca/Braille
-AM_PATH_PYTHON(2.7)
-#AM_CHECK_PYMOD(gobject,,,[AC_MSG_ERROR(Could not find python module: gobject)])
+AM_PATH_PYTHON(3.2.3)
+
 # Don't require the DISPLAY to be set - the gtk checking will fail 
 # if DISPLAY is not set, and we don't like that.
 
@@ -135,6 +135,12 @@ if test "x$wnck_available" = "xno" ; then
 echo
 echo "NOTE: Mouse review requires wnck, which was not found."
 fi
+
+if test "x$speechd_available" = "xno" ; then
+echo
+echo "NOTE: Speech support requires speech-dispatcher >= 0.8."
+fi
+
 echo
 echo Use speech-dispatcher: $speechd_available
 echo Use brltty: $brlapi_available

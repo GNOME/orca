@@ -267,17 +267,7 @@ class KeyboardEvent(InputEvent):
         if orca_state.bypassNextCommand:
             return False
 
-        orcaMods = settings.orcaModifierKeys
-        try:
-            orcaMods = [x.encode('UTF-8') for x in orcaMods]
-        except (UnicodeDecodeError, UnicodeEncodeError):
-            pass
-
-        string = self.event_string
-        if isinstance(string, unicode):
-            string = string.encode('UTF-8')
-
-        return string in orcaMods
+        return self.event_string in settings.orcaModifierKeys
 
     def isOrcaModified(self):
         """Return True if this key is Orca modified."""
@@ -296,14 +286,13 @@ class KeyboardEvent(InputEvent):
         if self.event_string in ["space", " "]:
             return True
 
-        unicodeString = self.event_string.decode("UTF-8")
-        if not len(unicodeString) == 1:
+        if not len(self.event_string) == 1:
             return False
 
-        if unicodeString.isalnum() or unicodeString.isspace():
+        if self.event_string.isalnum() or self.event_string.isspace():
             return True
 
-        return unicodedata.category(unicodeString)[0] in ('P', 'S')
+        return unicodedata.category(self.event_string)[0] in ('P', 'S')
 
     def isPressedKey(self):
         """Returns True if the key is pressed"""
@@ -486,6 +475,10 @@ class InputEventHandler:
 
     def __eq__(self, other):
         """Compares one input handler to another."""
+
+        if not other:
+            return False
+
         return (self.function == other.function)
 
     def processInputEvent(self, script, inputEvent):

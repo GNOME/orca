@@ -387,7 +387,7 @@ class BrailleGenerator(generator.Generator):
     def asString(self, content, delimiter=" "):
         combined = ""
         prior = None
-        if isinstance(content, basestring):
+        if isinstance(content, str):
             combined = content
         elif content and isinstance(content, list):
             # Strip off leading and trailing spaces.
@@ -397,11 +397,6 @@ class BrailleGenerator(generator.Generator):
             while content and isinstance(content[-1], Space):
                 content = content[0:-1]
             for element in content:
-                try:
-                    element = element.decode("UTF-8")
-                except UnicodeEncodeError:
-                    pass
-
                 if isinstance(element, Space) and prior:
                     combined += element.delimiter
                     prior = None

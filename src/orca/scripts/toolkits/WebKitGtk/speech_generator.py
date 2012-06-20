@@ -51,7 +51,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     def getVoiceForString(self, obj, string, **args):
         voice = settings.voices[settings.DEFAULT_VOICE]
-        if string.decode("UTF-8").isupper():
+        if string.isupper():
             voice = settings.voices[settings.UPPERCASE_VOICE]
 
         return voice

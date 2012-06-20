@@ -176,11 +176,6 @@ def _speak(text, acss, interrupt):
                     extraDebug = " voice=%s" % key
                 break
 
-    try:
-        extraDebug = extraDebug.encode("UTF-8")
-    except UnicodeDecodeError:
-        pass
-
     debug.println(debug.LEVEL_INFO, logLine + extraDebug)
     log.info(logLine + extraDebug)
 
@@ -200,7 +195,7 @@ def speak(content, acss=None, interrupt=True):
     if settings.silenceSpeech:
         return
 
-    validTypes = (basestring, list, sound.Sound, speech_generator.Pause,
+    validTypes = (str, list, sound.Sound, speech_generator.Pause,
                   speech_generator.LineBreak, ACSS)
     error = "bad content sent to speech.speak: '%s'"
     if not isinstance(content, validTypes):
@@ -214,7 +209,7 @@ def speak(content, acss=None, interrupt=True):
         interrupt = interrupt \
             and ((time.time() - orca_state.lastKeyEchoTime) > 0.5)
 
-    if isinstance(content, basestring):
+    if isinstance(content, str):
         _speak(content, acss, interrupt)
     elif isinstance(content, sound.Sound):
         content.play()
@@ -228,7 +223,7 @@ def speak(content, acss=None, interrupt=True):
             debug.println(debug.LEVEL_WARNING, error % element)
         elif isinstance(element, list):
             speak(element, acss, interrupt)
-        elif isinstance(element, basestring):
+        elif isinstance(element, str):
             if len(element):
                 toSpeak.append(element)
         elif toSpeak:
@@ -246,12 +241,6 @@ def speak(content, acss=None, interrupt=True):
                 newItemsToSpeak.append(toSpeak.pop())
 
             if toSpeak:
-                for i, item in enumerate(toSpeak):
-                    try:
-                        toSpeak[i] = item.decode("UTF-8")
-                    except UnicodeEncodeError:
-                        pass
-
                 string = " ".join(toSpeak)
                 _speak(string, activeVoice, interrupt)
             activeVoice = newVoice
@@ -261,12 +250,6 @@ def speak(content, acss=None, interrupt=True):
             element.play()
 
     if toSpeak:
-        for i, item in enumerate(toSpeak):
-            try:
-                toSpeak[i] = item.decode("UTF-8")
-            except UnicodeEncodeError:
-                pass
-
         string = " ".join(toSpeak)
         _speak(string, activeVoice, interrupt)
 

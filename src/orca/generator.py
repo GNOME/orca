@@ -912,11 +912,6 @@ class Generator:
         if not displayedText:
             return []
 
-        try:
-            displayedText = displayedText.decode('UTF-8')
-        except (UnicodeDecodeError, UnicodeEncodeError):
-            pass
-
         return [displayedText]
 
     #####################################################################

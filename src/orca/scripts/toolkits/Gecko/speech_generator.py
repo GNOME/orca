@@ -396,7 +396,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             #
             parentText = self._script.utilities.queryNonEmptyText(parent)
             if parentText:
-                unicodeText = parentText.getText(0, -1).decode("UTF-8")
+                unicodeText = parentText.getText(0, -1)
                 if self._script.EMBEDDED_OBJECT_CHARACTER in unicodeText \
                    and (len(unicodeText) == 1 \
                         or role == pyatspi.ROLE_TABLE_CELL):

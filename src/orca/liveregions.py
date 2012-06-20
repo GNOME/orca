@@ -436,10 +436,6 @@ class LiveRegionManager:
             # We found an embed character.  We can expect a children-changed
             # event, which we will act on, so just return.
             txt = sourceitext.getText(0, -1)
-            try:
-                txt = txt.decode("UTF-8")
-            except UnicodeEncodeError:
-                pass
             if txt.count(self._script.EMBEDDED_OBJECT_CHARACTER) > 0:
                 return None
 

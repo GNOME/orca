@@ -397,7 +397,7 @@ class Script(default.Script):
 
         phrase = self.utilities.substring(obj, startOffset, endOffset)
         if len(phrase) and phrase != "\n":
-            if phrase.decode("UTF-8").isupper():
+            if phrase.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
@@ -605,7 +605,7 @@ class Script(default.Script):
         # TODO - JD: Piece together the full line for braille
 
         textLine = default.Script.getTextLineAtCaret(self, obj, offset)
-        string = textLine[0].decode('UTF-8')
+        string = textLine[0]
         if string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
             return textLine
 

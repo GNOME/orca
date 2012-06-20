@@ -187,8 +187,7 @@ class SpeechServer(object):
         Arguments:
         - event: the input_event.KeyboardEvent.
         """
-        if event.isPrintableKey() \
-           and event.event_string.decode("UTF-8").isupper():
+        if event.isPrintableKey() and event.event_string.isupper():
             voice = ACSS(settings.voices[settings.UPPERCASE_VOICE])
         else:
             voice = ACSS(settings.voices[settings.DEFAULT_VOICE])

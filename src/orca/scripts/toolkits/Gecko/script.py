@@ -45,7 +45,7 @@ from gi.repository import Gtk
 import pyatspi
 import re
 import time
-import urlparse
+import urllib.parse
 
 import orca.braille as braille
 import orca.debug as debug
@@ -1098,7 +1098,7 @@ class Script(default.Script):
                 [obj, startOffset, endOffset, text] = \
                                              contents[min(i, len(contents)-1)]
                 [element, voice] = clumped[i]
-                if isinstance(element, basestring):
+                if isinstance(element, str):
                     element = self.utilities.adjustForRepeats(element)
                 if isinstance(element, (Pause, ACSS)):
                     # At the moment, SayAllContext is expecting a string; not
@@ -1293,7 +1293,7 @@ class Script(default.Script):
                     # scheme://netloc/path;parameters?query#fragment.
                     try:
                         uri = self.utilities.uri(orca_state.locusOfFocus)
-                        uriInfo = urlparse.urlparse(uri)
+                        uriInfo = urllib.parse.urlparse(uri)
                     except:
                         pass
                     else:
@@ -3206,7 +3206,7 @@ class Script(default.Script):
         """
 
         text = self.utilities.displayedText(obj)
-        if text and text != u'\u00A0':
+        if text and text != '\u00A0':
             return False
         else:
             for child in obj:
@@ -3302,7 +3302,7 @@ class Script(default.Script):
                             textObj = \
                                 self.utilities.queryNonEmptyText(obj.parent)
                             if textObj:
-                                text = textObj.getText(0, -1).decode("UTF-8")
+                                text = textObj.getText(0, -1)
                                 text = text.replace(\
                                     self.EMBEDDED_OBJECT_CHARACTER, "").strip()
                                 if not text:
@@ -3374,10 +3374,6 @@ class Script(default.Script):
         text = self.utilities.queryNonEmptyText(documentFrame)
         if text:
             char = text.getText(text.characterCount - 1, text.characterCount)
-            try:
-                char = char.decode("UTF-8")
-            except UnicodeEncodeError:
-                pass
             if char != self.EMBEDDED_OBJECT_CHARACTER:
                 return [documentFrame, text.characterCount - 1]
 
@@ -3392,10 +3388,6 @@ class Script(default.Script):
             if text:
                 char = text.getText(text.characterCount - 1,
                                     text.characterCount)
-                try:
-                    char = char.decode("UTF-8")
-                except UnicodeEncodeError:
-                    pass
                 if char != self.EMBEDDED_OBJECT_CHARACTER:
                     return [obj.parent, text.characterCount - 1]
 
@@ -3553,7 +3545,7 @@ class Script(default.Script):
             start = 0
             end = 1
 
-        unicodeText = string.decode("UTF-8")
+        unicodeText = string
         objects.append([obj, start, end, unicodeText])
 
         pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
@@ -3650,7 +3642,7 @@ class Script(default.Script):
             else:
                 text = self.utilities.queryNonEmptyText(item[0])
                 if text:
-                    string = text.getText(item[1], item[2]).decode("UTF-8")
+                    string = text.getText(item[1], item[2])
                     if not len(string.strip()):
                         continue
 
@@ -4246,8 +4238,7 @@ class Script(default.Script):
                     #
                     return [obj, characterOffset]
 
-            character = text.getText(characterOffset,
-                                     characterOffset + 1).decode("UTF-8")
+            character = text.getText(characterOffset, characterOffset + 1)
             if character == self.EMBEDDED_OBJECT_CHARACTER:
                 if obj.childCount <= 0:
                     return self.findFirstCaretContext(obj, characterOffset + 1)
@@ -4797,7 +4788,7 @@ class Script(default.Script):
             candidate, startOffset, endOffset, string = content
             if self.utilities.isSameObject(candidate, obj) \
                and (offset is None or (startOffset <= offset <= endOffset)):
-                return string.encode("UTF-8"), caretOffset, startOffset
+                return string, caretOffset, startOffset
 
         # If we're still here, obj presumably is not on this line. This
         # shouldn't happen, but if it does we'll let the default script
@@ -4866,19 +4857,6 @@ class Script(default.Script):
         [obj, caretOffset] = \
             self._documentFrameCaretContext[hash(documentFrame)]
 
-        # Yelp is seemingly fond of killing children for sport. Better
-        # check for that.
-        #
-        try:
-            state = obj.getState()
-        except:
-            return [None, -1]
-        else:
-            if state.contains(pyatspi.STATE_DEFUNCT):
-                #print "getCaretContext: defunct object", obj
-                debug.printStack(debug.LEVEL_WARNING)
-                [obj, caretOffset] = [None, -1]
-
         return [obj, caretOffset]
 
     def getCharacterAtOffset(self, obj, characterOffset):
@@ -4889,7 +4867,7 @@ class Script(default.Script):
 
         try:
             unicodeText = self.utilities.unicodeText(obj)
-            return unicodeText[characterOffset].encode("UTF-8")
+            return unicodeText[characterOffset]
         except:
             return None
 
@@ -5185,14 +5163,9 @@ class Script(default.Script):
     def getACSS(self, obj, string):
         """Returns the ACSS to speak anything for the given obj."""
 
-        try:
-            string = string.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
         if obj.getRole() == pyatspi.ROLE_LINK:
             acss = self.voices[settings.HYPERLINK_VOICE]
-        elif string and isinstance(string, basestring) \
+        elif string and isinstance(string, str) \
             and string.isupper() \
             and string.strip().isalpha():
             acss = self.voices[settings.UPPERCASE_VOICE]
@@ -5298,7 +5271,7 @@ class Script(default.Script):
                 # kill them. (They don't deal well with what the speech
                 # generator provides.)
                 for item in rv:
-                    if isinstance(item, basestring):
+                    if isinstance(item, str):
                         utterances.append([item, self.getACSS(obj, item)])
             else:
                 utterances.append([string, self.getACSS(obj, string)])
@@ -5344,17 +5317,9 @@ class Script(default.Script):
             if len(clumped) == 0:
                 clumped = [[element, acss]]
             elif acss == clumped[-1][1] \
-                 and isinstance(element, basestring) \
-                 and isinstance(clumped[-1][0], basestring):
+                 and isinstance(element, str) \
+                 and isinstance(clumped[-1][0], str):
                 clumped[-1][0] = clumped[-1][0].rstrip(" ")
-                try:
-                    clumped[-1][0] = clumped[-1][0].decode("UTF-8")
-                except UnicodeEncodeError:
-                    pass
-                try:
-                    element = element.decode("UTF-8")
-                except UnicodeEncodeError:
-                    pass
                 clumped[-1][0] += " " + element
             else:
                 clumped.append([element, acss])
@@ -5366,7 +5331,7 @@ class Script(default.Script):
                 #
                 return [[_("blank"), self.voices[settings.SYSTEM_VOICE]]]
 
-        if len(clumped) and isinstance(clumped[-1][0], basestring):
+        if len(clumped) and isinstance(clumped[-1][0], str):
             clumped[-1][0] = clumped[-1][0].rstrip(" ")
 
         return clumped
@@ -5376,7 +5341,7 @@ class Script(default.Script):
         utterances = self.getUtterancesFromContents(contents, speakRole)
         clumped = self.clumpUtterances(utterances)
         for [element, acss] in clumped:
-            if isinstance(element, basestring):
+            if isinstance(element, str):
                 element = self.utilities.adjustForRepeats(element)
             speech.speak(element, acss, False)
 

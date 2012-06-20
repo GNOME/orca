@@ -316,13 +316,7 @@ def getKeyName(key):
     Returns a string representing the name for the key
     """
 
-    if isinstance(key, unicode):
-        key = key.encode("UTF-8")
-
-    try:
-        return __keynames[key]
-    except:
-        return chnames.getCharacterName(key)
+    return __keynames.get(key, chnames.getCharacterName(key))
 
 def localizeKeySequence(keys):
     """Given a sequence of keys, such as 'Shift Control A', localize the
@@ -338,14 +332,6 @@ def localizeKeySequence(keys):
     keyList = keys.split()
     for key in keyList:
         keyName = getKeyName(key)
-        try:
-            key = key.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
-        try:
-            keyName = keyName.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
         keys = keys.replace(key, keyName)
 
     return keys

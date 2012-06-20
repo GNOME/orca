@@ -68,8 +68,8 @@ _settingsManager = settings_manager.getManager()
 
 class Script(script.Script):
 
-    EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
-    NO_BREAK_SPACE_CHARACTER  = u'\u00a0'
+    EMBEDDED_OBJECT_CHARACTER = '\ufffc'
+    NO_BREAK_SPACE_CHARACTER  = '\u00a0'
 
     # generatorCache
     #
@@ -1198,6 +1198,9 @@ class Script(script.Script):
                 self.inputEventHandlers["processBrailleCutBeginHandler"]
             brailleBindings[braille.brlapi.KEY_CMD_CUTLINE] = \
                 self.inputEventHandlers["processBrailleCutLineHandler"]
+        except AttributeError:
+            debug.println(debug.LEVEL_CONFIGURATION,
+                          "WARNING: braille bindings unavailable:")
         except:
             debug.println(debug.LEVEL_CONFIGURATION,
                           "WARNING: braille bindings unavailable:")
@@ -2099,12 +2102,12 @@ class Script(script.Script):
         - itemString: the string to spell.
         """
 
-        for (charIndex, character) in enumerate(itemString.decode("UTF-8")):
+        for (charIndex, character) in enumerate(itemString):
             if character.isupper():
-                speech.speak(character.encode("UTF-8"),
+                speech.speak(character,
                              self.voices[settings.UPPERCASE_VOICE])
             else:
-                speech.speak(character.encode("UTF-8"))
+                speech.speak(character)
 
     def _reviewCurrentItem(self, inputEvent, targetCursorCell=0,
                            speechType=1):
@@ -2146,7 +2149,7 @@ class Script(script.Script):
                     # user has navigated to a line with only whitespace on it.
                     #
                     speech.speak(_("white space"))
-                elif wordString.decode("UTF-8").isupper() and speechType == 1:
+                elif wordString.isupper() and speechType == 1:
                     speech.speak(wordString,
                                  self.voices[settings.UPPERCASE_VOICE])
                 elif speechType == 2:
@@ -2274,7 +2277,7 @@ class Script(script.Script):
                     self.speakUnicodeCharacter(charString)
                 elif speechType == 2:
                     self.phoneticSpellCurrentItem(charString)
-                elif charString.decode("UTF-8").isupper():
+                elif charString.isupper():
                     speech.speakCharacter(charString,
                                           self.voices[settings.UPPERCASE_VOICE])
                 else:
@@ -2411,7 +2414,7 @@ class Script(script.Script):
                 # user has navigated to a line with only whitespace on it.
                 #
                 speech.speak(_("white space"))
-            elif lineString.decode("UTF-8").isupper() \
+            elif lineString.isupper() \
                  and (speechType < 2 or speechType > 3):
                 speech.speak(lineString, self.voices[settings.UPPERCASE_VOICE])
             elif speechType == 2:
@@ -3566,7 +3569,7 @@ class Script(script.Script):
 
         if self.utilities.linkIndex(event.source, text.caretOffset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif character.decode("UTF-8").isupper():
+        elif character.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -3575,7 +3578,7 @@ class Script(script.Script):
         # right now because it is typically something else
         # related to this event.
         #
-        if len(character.decode('utf-8')) == 1:
+        if len(character) == 1:
             speech.speakCharacter(character, voice)
         else:
             speech.speak(character, voice, False)
@@ -3677,10 +3680,10 @@ class Script(script.Script):
                     or (_settingsManager.getSetting('enableEchoByCharacter') \
                         and string \
                         and role != pyatspi.ROLE_PASSWORD_TEXT \
-                        and len(string.decode("UTF-8")) == 1)
+                        and len(string) == 1)
 
         if speakThis:
-            if string.decode("UTF-8").isupper():
+            if string.isupper():
                 speech.speak(string, self.voices[settings.UPPERCASE_VOICE])
             else:
                 speech.speak(string)
@@ -4247,7 +4250,7 @@ class Script(script.Script):
 
         if self.utilities.linkIndex(obj, sentenceStartOffset + 1) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif sentence.decode("UTF-8").isupper():
+        elif sentence.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -4324,7 +4327,7 @@ class Script(script.Script):
 
         if self.utilities.linkIndex(obj, wordStartOffset + 1) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif word.decode("UTF-8").isupper():
+        elif word.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -4559,7 +4562,7 @@ class Script(script.Script):
 
         if self.utilities.linkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif character.decode("UTF-8").isupper():
+        elif character.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -4618,7 +4621,7 @@ class Script(script.Script):
             (caretOffset, _settingsManager.getSetting('speakBlankLines')))
 
         if len(line) and line != "\n":
-            if line.decode("UTF-8").isupper():
+            if line.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
@@ -4649,7 +4652,7 @@ class Script(script.Script):
         phrase = self.utilities.substring(obj, startOffset, endOffset)
 
         if len(phrase) and phrase != "\n":
-            if phrase.decode("UTF-8").isupper():
+            if phrase.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]
@@ -4699,7 +4702,7 @@ class Script(script.Script):
 
         if self.utilities.linkIndex(obj, offset) >= 0:
             voice = self.voices[settings.HYPERLINK_VOICE]
-        elif word.decode("UTF-8").isupper():
+        elif word.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
@@ -4849,7 +4852,7 @@ class Script(script.Script):
         context = self.getFlatReviewContext()
         [regions, regionWithFocus] = context.getCurrentBrailleRegions()
         for region in regions:
-            if ((region.brailleOffset + len(region.string.decode("UTF-8"))) \
+            if ((region.brailleOffset + len(region.string)) \
                    > braille.viewport[0]) \
                 and (isinstance(region, braille.ReviewText) \
                      or isinstance(region, braille.ReviewComponent)):
@@ -4909,31 +4912,31 @@ class Script(script.Script):
 
         if not self._unicodeCurrencySymbols:
             self._unicodeCurrencySymbols = [ \
-                u'\u0024',     # dollar sign
-                u'\u00A2',     # cent sign
-                u'\u00A3',     # pound sign
-                u'\u00A4',     # currency sign
-                u'\u00A5',     # yen sign
-                u'\u0192',     # latin small letter f with hook
-                u'\u060B',     # afghani sign
-                u'\u09F2',     # bengali rupee mark
-                u'\u09F3',     # bengali rupee sign
-                u'\u0AF1',     # gujarati rupee sign
-                u'\u0BF9',     # tamil rupee sign
-                u'\u0E3F',     # thai currency symbol baht
-                u'\u17DB',     # khmer currency symbol riel
-                u'\u2133',     # script capital m
-                u'\u5143',     # cjk unified ideograph-5143
-                u'\u5186',     # cjk unified ideograph-5186
-                u'\u5706',     # cjk unified ideograph-5706
-                u'\u5713',     # cjk unified ideograph-5713
-                u'\uFDFC',     # rial sign
+                '\u0024',     # dollar sign
+                '\u00A2',     # cent sign
+                '\u00A3',     # pound sign
+                '\u00A4',     # currency sign
+                '\u00A5',     # yen sign
+                '\u0192',     # latin small letter f with hook
+                '\u060B',     # afghani sign
+                '\u09F2',     # bengali rupee mark
+                '\u09F3',     # bengali rupee sign
+                '\u0AF1',     # gujarati rupee sign
+                '\u0BF9',     # tamil rupee sign
+                '\u0E3F',     # thai currency symbol baht
+                '\u17DB',     # khmer currency symbol riel
+                '\u2133',     # script capital m
+                '\u5143',     # cjk unified ideograph-5143
+                '\u5186',     # cjk unified ideograph-5186
+                '\u5706',     # cjk unified ideograph-5706
+                '\u5713',     # cjk unified ideograph-5713
+                '\uFDFC',     # rial sign
             ]
 
             # Add 20A0 (EURO-CURRENCY SIGN) to 20B5 (CEDI SIGN)
             #
-            for ordChar in range(ord(u'\u20A0'), ord(u'\u20B5') + 1):
-                self._unicodeCurrencySymbols.append(unichr(ordChar))
+            for ordChar in range(ord('\u20A0'), ord('\u20B5') + 1):
+                self._unicodeCurrencySymbols.append(chr(ordChar))
 
         return self._unicodeCurrencySymbols
 
@@ -5052,7 +5055,7 @@ class Script(script.Script):
                 offset = endOffset
 
                 lineString = self.utilities.adjustForRepeats(lineString)
-                if lineString.decode("UTF-8").isupper():
+                if lineString.isupper():
                     voice = settings.voices[settings.UPPERCASE_VOICE]
                 else:
                     voice = settings.voices[settings.DEFAULT_VOICE]
@@ -5129,8 +5132,7 @@ class Script(script.Script):
         #
         if text.caretOffset == text.characterCount:
             caretOffset = max(0, text.caretOffset - 1)
-            character = text.getText(caretOffset,
-                                     caretOffset + 1).decode("UTF-8")
+            character = text.getText(caretOffset, caretOffset + 1)
         else:
             caretOffset = text.caretOffset
             character = None
@@ -5158,19 +5160,16 @@ class Script(script.Script):
                     return ["", 0, 0]
 
             # Sometimes we get the trailing line-feed-- remove it
-            #
-            content = lineString.decode("UTF-8")
-
             # It is important that these are in order.
             # In some circumstances we might get:
             # word word\r\n
             # so remove \n, and then remove \r.
             # See bgo#619332.
             #
-            content = content.rstrip('\n')
-            content = content.rstrip('\r')
+            lineString = lineString.rstrip('\n')
+            lineString = lineString.rstrip('\r')
 
-        return [content.encode("UTF-8"), text.caretOffset, startOffset]
+        return [lineString, text.caretOffset, startOffset]
 
     def phoneticSpellCurrentItem(self, itemString):
         """Phonetically spell the current flat review word or line.
@@ -5179,7 +5178,7 @@ class Script(script.Script):
         - itemString: the string to phonetically spell.
         """
 
-        for (charIndex, character) in enumerate(itemString.decode("UTF-8")):
+        for (charIndex, character) in enumerate(itemString):
             if character.isupper():
                 voice = settings.voices[settings.UPPERCASE_VOICE]
                 character = character.lower()
@@ -5396,10 +5395,9 @@ class Script(script.Script):
             # the startOffset and endOffset to exclude them.
             #
             try:
-                tmpStr = text.getText(startOffset,
-                                      endOffset).decode("UTF-8")
+                tmpStr = text.getText(startOffset, endOffset)
             except:
-                tmpStr = u''
+                tmpStr = ''
             n = len(tmpStr)
 
             # Don't strip whitespace if string length is one (might be a
@@ -5951,11 +5949,6 @@ class Script(script.Script):
     def presentTime(self, inputEvent):
         """ Presents the current time. """
         timeFormat = _settingsManager.getSetting('presentTimeFormat')
-        try:
-            timeFormat = timeFormat.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
-
         message = time.strftime(timeFormat, time.localtime())
         self.presentMessage(message)
         return True
@@ -5963,11 +5956,6 @@ class Script(script.Script):
     def presentDate(self, inputEvent):
         """ Presents the current date. """
         dateFormat = _settingsManager.getSetting('presentDateFormat')
-        try:
-            dateFormat = dateFormat.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
-
         message = time.strftime(dateFormat, time.localtime())
         self.presentMessage(message)
         return True

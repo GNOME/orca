@@ -381,11 +381,6 @@ class Script:
         - event: the Event
         """
 
-        if not event.source:
-            msg = 'script.processObjectEvent: event.source went away'
-            debug.println(debug.LEVEL_FINE, msg)
-            return
-
         try:
             role = event.source.getRole()
         except (LookupError, RuntimeError):

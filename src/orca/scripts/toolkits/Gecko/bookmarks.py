@@ -30,7 +30,7 @@ __copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-import urlparse
+import urllib.parse
 
 import orca.speech as speech
 import orca.bookmarks as bookmarks
@@ -287,7 +287,7 @@ class GeckoBookmarks(bookmarks.Bookmarks):
         parameters?query#fragment as seen in urlparse."""
         uri = self._script.utilities.documentFrameURI()
         if uri:
-            parsed_uri = urlparse.urlparse(uri)
+            parsed_uri = urllib.parse.urlparse(uri)
             return ''.join(parsed_uri[0:3])
         else:
             return None

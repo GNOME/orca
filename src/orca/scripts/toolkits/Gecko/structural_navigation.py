@@ -229,15 +229,13 @@ class GeckoStructuralNavigation(structural_navigation.StructuralNavigation):
                 return False
             if text \
                and text.characterCount > settings.largeObjectTextLength:
-                string = text.getText(0, -1).decode("UTF-8")
+                string = text.getText(0, -1)
                 eocs = float(string.count(embeddedObjectChar))
                 if eocs/text.characterCount < 0.05:
-                    # print "Guess #1", string, eocs/text.characterCount
                     return True
                 else:
                     string = string[0:settings.largeObjectTextLength]
                     eocs = float(string.count(embeddedObjectChar))
-                    # print "Guess #2", string, eocs/len(string)
                     return eocs/len(string) < 0.005
 
     ########################

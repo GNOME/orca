@@ -1134,7 +1134,7 @@ class Script(default.Script):
             if self.utilities.linkIndex(obj, i) >= 0:
                 voice = voices[settings.HYPERLINK_VOICE]
                 break
-            elif word.decode("UTF-8").isupper():
+            elif word.isupper():
                 voice = voices[settings.UPPERCASE_VOICE]
             else:
                 voice = voices[settings.DEFAULT_VOICE]
@@ -1274,12 +1274,12 @@ class Script(default.Script):
             hypertext = None
 
         if not hypertext or (hypertext.getNLinks() == 0):
-            result = self.speechGenerator.generateTextIndentation( \
-              event.source, line=textToSpeak.encode("UTF-8"))
+            result = self.speechGenerator.generateTextIndentation(
+              event.source, line=textToSpeak)
             if result:
                 speech.speak(result[0])
 
-            speech.speak(textToSpeak.encode("UTF-8"), None, False)
+            speech.speak(textToSpeak, None, False)
         else:
             started = False
             startOffset = 0
@@ -1288,8 +1288,7 @@ class Script(default.Script):
                     if started:
                         endOffset = i
                         self.sayWriterWord(event.source,
-                            textToSpeak[startOffset:endOffset+1].encode( \
-                                                                "UTF-8"),
+                            textToSpeak[startOffset:endOffset+1],
                             startOffset, endOffset)
                         startOffset = i
                         started = False
@@ -1301,8 +1300,7 @@ class Script(default.Script):
             if started:
                 endOffset = len(textToSpeak)
                 self.sayWriterWord(event.source,
-                    textToSpeak[startOffset:endOffset].encode("UTF-8"),
-                    startOffset, endOffset)
+                    textToSpeak[startOffset:endOffset], startOffset, endOffset)
 
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
@@ -1353,7 +1351,7 @@ class Script(default.Script):
                    "StarOffice.locusOfFocusChanged - Writer: text paragraph.")
 
                 result = self.getTextLineAtCaret(event.source)
-                textToSpeak = result[0].decode("UTF-8")
+                textToSpeak = result[0]
                 self._speakWriterText(event, textToSpeak)
                 self.displayBrailleForObject(event.source)
                 return
@@ -1643,7 +1641,8 @@ class Script(default.Script):
             # If it is, we want to speak the misspelled word and context
             # after we've spoken the window name.
             #
-            if event.source.getRole() == pyatspi.ROLE_DIALOG \
+            if event.source \
+               and event.source.getRole() == pyatspi.ROLE_DIALOG \
                and event.source.childCount \
                and event.source[0].getRole() == pyatspi.ROLE_OPTION_PANE:
                 self.readMisspeltWord(event, event.source)
@@ -2145,8 +2144,7 @@ class Script(default.Script):
                 focusRole = orca_state.locusOfFocus.getRole()
                 if focusRole != pyatspi.ROLE_UNKNOWN and keyString == "Return":
                     result = self.utilities.substring(event.source, 0, -1)
-                    line = result.decode("UTF-8")
-                    self.echoPreviousWord(event.source, len(line))
+                    self.echoPreviousWord(event.source, len(result))
                     return
 
         # Otherwise, if the object is losing focus, then just ignore this event.
@@ -2193,8 +2191,7 @@ class Script(default.Script):
                 return
 
             result = self.utilities.substring(event.source, 0, -1)
-            textToSpeak = result.decode("UTF-8")
-            self._speakWriterText(event, textToSpeak)
+            self._speakWriterText(event, result)
             self.displayBrailleForObject(event.source)
         else:
             # The lists and combo boxes in the Formatting toolbar emit
@@ -2256,7 +2253,7 @@ class Script(default.Script):
         if isinstance(orca_state.lastInputEvent,
                         input_event.MouseButtonEvent) and \
              orca_state.lastInputEvent.button == "2":
-            if text.decode("UTF-8").isupper():
+            if text.isupper():
                 speech.speak(text, self.voices[settings.UPPERCASE_VOICE])
             else:
                 speech.speak(text)
@@ -2290,10 +2287,9 @@ class Script(default.Script):
 
                 # Sometimes we get the trailing line-feed -- remove it
                 #
-                content = lineString.decode("UTF-8")
-                if content[-1:] == "\n":
-                    content = content[:-1]
+                if lineString[-1:] == "\n":
+                    lineString = lineString[:-1]
 
-                return [content.encode("UTF-8"), 0, startOffset]
+                return [lineString, 0, startOffset]
 
         return default.Script.getTextLineAtCaret(self, obj, offset)

@@ -118,12 +118,12 @@ class Script(default.Script):
         # Speak the character that has just been deleted.
         #
         character = event.any_data
-        if character.decode("UTF-8").isupper():
+        if character.isupper():
             voice = self.voices[settings.UPPERCASE_VOICE]
         else:
             voice = self.voices[settings.DEFAULT_VOICE]
 
-        if len(character.decode('utf-8')) == 1:
+        if len(character) == 1:
             speech.speakCharacter(character, voice)
         else:
             speech.speak(character, voice, False)

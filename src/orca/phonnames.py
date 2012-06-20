@@ -76,10 +76,4 @@ def getPhoneticName(character):
     Returns a string representing the military name for the character
     """
 
-    if isinstance(character, unicode):
-        character = character.encode("UTF-8")
-
-    try:
-        return __phonnames[character]
-    except:
-        return character
+    return __phonnames.get(character, character)

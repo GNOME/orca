@@ -103,7 +103,7 @@ def sayAndPrint(text,
         speech.speak(text, voice)
 
     if getInput:
-        return raw_input(text)
+        return input(text)
     else:
         print(text)
 

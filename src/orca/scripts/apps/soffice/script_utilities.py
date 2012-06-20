@@ -356,7 +356,7 @@ class Utilities(script_utilities.Utilities):
         - endOffset: the ending character position
         """
 
-        text = obj.queryText().getText(0, -1).decode("UTF-8")
+        text = obj.queryText().getText(0, -1)
         if startOffset >= len(text):
             startOffset = len(text) - 1
         if endOffset == -1:
@@ -364,7 +364,6 @@ class Utilities(script_utilities.Utilities):
         elif startOffset >= endOffset:
             endOffset = startOffset + 1
         string = text[max(0, startOffset):min(len(text), endOffset)]
-        string = string.encode("UTF-8")
 
         return string
 

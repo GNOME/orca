@@ -620,8 +620,8 @@ class Formatting(dict):
             if key in self:
                 if isinstance(self[key], dict) and isinstance(val, dict):
                     self[key].update(val)
-                elif isinstance(self[key], basestring) \
-                     and isinstance(val, basestring):
+                elif isinstance(self[key], str) \
+                     and isinstance(val, str):
                     self[key] = val
                 else:
                     # exception or such like, we are trying to murge

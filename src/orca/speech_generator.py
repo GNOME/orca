@@ -26,7 +26,7 @@ __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
 import pyatspi
-import urlparse, urllib2
+import urllib.parse, urllib.request, urllib.error, urllib.parse
 from gi.repository import Atspi, Atk
 
 from . import debug
@@ -111,7 +111,7 @@ class SpeechGenerator(generator.Generator):
         try:
             soundBite = sound.Sound(sounds[key])
         except:
-            if isinstance(key, basestring):
+            if isinstance(key, str):
                 soundBite = sound.Sound(key)
             else:
                 soundBite = None
@@ -462,7 +462,7 @@ class SpeechGenerator(generator.Generator):
             result.extend(self._generateRoleName(obj))
             result.append(self._script.utilities.displayedText(obj))
         else:
-            link_uri_info = urlparse.urlparse(link_uri)
+            link_uri_info = urllib.parse.urlparse(link_uri)
             if link_uri_info[0] in ["ftp", "ftps", "file"]:
                 fileName = link_uri_info[2].split('/')
                 # Translators: this refers to a link to a file, where
@@ -501,12 +501,12 @@ class SpeechGenerator(generator.Generator):
         acss = self.voice(HYPERLINK)
         link_uri = self._script.utilities.uri(obj)
         if link_uri:
-            link_uri_info = urlparse.urlparse(link_uri)
+            link_uri_info = urllib.parse.urlparse(link_uri)
         else:
             return result
         doc_uri = self._script.utilities.documentFrameURI()
         if doc_uri:
-            doc_uri_info = urlparse.urlparse(doc_uri)
+            doc_uri_info = urllib.parse.urlparse(doc_uri)
             if link_uri_info[1] == doc_uri_info[1]:
                 if link_uri_info[2] == doc_uri_info[2]:
                     # Translators: this is an indication that a given
@@ -555,12 +555,12 @@ class SpeechGenerator(generator.Generator):
         if not uri:
             return result
         try:
-            x = urllib2.urlopen(uri)
+            x = urllib.request.urlopen(uri)
             try:
                 sizeString = x.info()['Content-length']
             except KeyError:
                 pass
-        except (ValueError, urllib2.URLError, OSError):
+        except (ValueError, urllib.error.URLError, OSError):
             pass
         if sizeString:
             size = int(sizeString)
@@ -1063,8 +1063,7 @@ class SpeechGenerator(generator.Generator):
                 # characters). Until we do, this expansion is better than
                 # presenting the actual embedded object character.
                 #
-                unicodeText = line.decode("UTF-8")
-                if self._script.EMBEDDED_OBJECT_CHARACTER in unicodeText:
+                if self._script.EMBEDDED_OBJECT_CHARACTER in line:
                     line = self._script.utilities.expandEOCs(
                         obj, startOffset, endOffset)
                 line = self._script.utilities.adjustForRepeats(line)
@@ -1227,13 +1226,10 @@ class SpeechGenerator(generator.Generator):
         if not line:
             [line, caretOffset, startOffset] = \
               self._script.getTextLineAtCaret(obj)
-        # For the purpose of speaking the text indentation, replace
-        # occurances of UTF-8 '\302\240' (non breaking space) with
-        # spaces.
-        #
-        line = line.replace("\302\240",  " ")
-        line = line.decode("UTF-8")
 
+        # For the purpose of speaking the text indentation, replace
+        # occurances the non breaking space character with spaces.
+        line = line.replace("\u00a0", " ")
         spaceCount = 0
         tabCount = 0
         utterance = ""

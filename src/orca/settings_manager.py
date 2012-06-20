@@ -410,8 +410,6 @@ class SettingsManager(object):
         self.profileGeneral = {}
 
         for key, value in list(general.items()):
-            if isinstance(value, unicode):
-                value = value.encode('UTF-8')
             if key in settings.excludeKeys:
                 continue
             elif key == 'profile':

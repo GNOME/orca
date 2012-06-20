@@ -353,11 +353,6 @@ class Region:
 
         self.expandOnCursor = expandOnCursor
 
-        try:
-            string = string.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
         # The uncontracted string for the line.
         #
         self.rawLine = string.strip("\n")
@@ -397,7 +392,7 @@ class Region:
 
         # Double check for ellipses.
         #
-        maskSize = len(self.string) + (2 * self.string.count(u'\u2026'))
+        maskSize = len(self.string) + (2 * self.string.count('\u2026'))
 
         # Create an empty mask.
         #
@@ -610,21 +605,6 @@ class Text(Region):
             self.lineOffset = 0
 
         try:
-            string = string.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-        if label:
-            try:
-                label = label.decode("UTF-8")
-            except UnicodeEncodeError:
-                pass
-        if eol:
-            try:
-                eol = eol.decode("UTF-8")
-            except UnicodeEncodeError:
-                pass
-
-        try:
             endOffset = endOffset - self.lineOffset
         except TypeError:
             pass
@@ -676,10 +656,6 @@ class Text(Region):
         [string, caretOffset, lineOffset] = \
                  orca_state.activeScript.getTextLineAtCaret(self.accessible,
                                                             self.startOffset)
-        try:
-            string = string.decode("UTF-8")
-        except:
-            pass
 
         cursorOffset = min(caretOffset - lineOffset, len(string))
 
@@ -952,7 +928,7 @@ class Line:
                 # The ultimate solution is to get i18n support into
                 # BrlTTY.]]]
                 #
-                string += region.string.replace(u'\u2026', "...")
+                string += region.string.replace('\u2026', "...")
             mask = region.getAttributeMask(getLinkMask)
             attributeMask += mask
 
@@ -1386,21 +1362,11 @@ def refresh(panToCursor=True,
         cursorCell += 1 # Normalize to 1-based offset
 
     logLine = "BRAILLE LINE:  '%s'" % string
-    try:
-        logLine = logLine.encode("UTF-8")
-    except UnicodeDecodeError:
-        pass
-
     debug.println(debug.LEVEL_INFO, logLine)
     log.info(logLine)
 
     logLine = "     VISIBLE:  '%s', cursor=%d" % \
                     (string[startPos:endPos], cursorCell)
-    try:
-        logLine = logLine.encode("UTF-8")
-    except UnicodeDecodeError:
-        pass
-
     debug.println(debug.LEVEL_INFO, logLine)
     log.info(logLine)
 
@@ -1830,6 +1796,9 @@ def init(callback=None, tty=7):
         _brlAPISourceId = GObject.io_add_watch(_brlAPI.fileDescriptor,
                                                GObject.IO_IN,
                                                _brlAPIKeyReader)
+    except NameError:
+        debug.println(debug.LEVEL_CONFIGURATION, "BrlApi is not defined")
+        return False
     except:
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Could not initialize BrlTTY:")

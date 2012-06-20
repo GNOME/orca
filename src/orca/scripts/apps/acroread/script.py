@@ -659,7 +659,7 @@ class Script(default.Script):
 
             if self.utilities.linkIndex(obj, offset) >= 0:
                 voice = self.voices[settings.HYPERLINK_VOICE]
-            elif word.decode("UTF-8").isupper():
+            elif word.isupper():
                 voice = self.voices[settings.UPPERCASE_VOICE]
             else:
                 voice = self.voices[settings.DEFAULT_VOICE]

@@ -46,7 +46,7 @@ from .orca_i18n import ngettext
 #
 whitespace_re = re.compile(r'(\s+)', re.DOTALL | re.IGNORECASE | re.M)
 
-EMBEDDED_OBJECT_CHARACTER = u'\ufffc'
+EMBEDDED_OBJECT_CHARACTER = '\ufffc'
 
 class Char:
     """Represents a single char of an Accessibility_Text object."""
@@ -100,7 +100,7 @@ class Word:
         self.index = index
         self.startOffset = startOffset
         self.string = string
-        self.length = len(string.decode("UTF-8"))
+        self.length = len(string)
         self.x = x
         self.y = y
         self.width = width
@@ -142,7 +142,7 @@ class Word:
                     # Bug #495303. We can try to correct this.
                     #
                     if len(char):
-                        char = char.decode("UTF-8")[0].encode("UTF-8")
+                        char[0]
                     [x, y, width, height] = text.getRangeExtents(
                         startOffset,
                         startOffset + 1,
@@ -180,7 +180,7 @@ class Zone:
 
         self.accessible = accessible
         self.string = string
-        self.length = len(string.decode("UTF-8"))
+        self.length = len(string)
         self.x = x
         self.y = y
         self.width = width
@@ -236,7 +236,7 @@ class Zone:
         wordAtOffset = None
         offset = 0
         for word in self.words:
-            nextOffset = offset + len(word.string.decode("UTF-8"))
+            nextOffset = offset + len(word.string)
             wordAtOffset = word
             if nextOffset > charOffset:
                 return [wordAtOffset, charOffset - offset]
@@ -298,7 +298,7 @@ class TextZone(Zone):
             offset = self.startOffset
             for string in whitespace_re.split(self.string):
                 if len(string):
-                    endOffset = offset + len(string.decode("UTF-8"))
+                    endOffset = offset + len(string)
                     [x, y, width, height] = text.getRangeExtents(
                         offset,
                         endOffset,
@@ -577,10 +577,7 @@ class Line:
                 region.brailleOffset = brailleOffset
                 self.brailleRegions.append(region)
 
-                try:
-                    regionString = region.string.decode("UTF-8")
-                except UnicodeEncodeError:
-                    regionString = region.string
+                regionString = region.string
                 brailleOffset += len(regionString)
 
             if not settings.disableBrailleEOL:
@@ -791,7 +788,7 @@ class Context:
         substringStartOffset = startOffset
         substringEndOffset   = startOffset
         unicodeStartOffset   = 0
-        unicodeString = string.decode("UTF-8")
+        unicodeString = string
         #print "LOOKING AT '%s'" % unicodeString
         for i in range(0, len(unicodeString) + 1):
             if (i != len(unicodeString)) \
@@ -840,7 +837,7 @@ class Context:
                     #print " SUBSTRING '%s'" % substring
                     zones.append(TextZone(accessible,
                                           substringStartOffset,
-                                          substring.encode("UTF-8"),
+                                          substring.
                                           clipping[0],
                                           clipping[1],
                                           clipping[2],
@@ -918,16 +915,6 @@ class Context:
             [string, startOffset, endOffset] = text.getTextAtOffset(
                 offset,
                 pyatspi.TEXT_BOUNDARY_LINE_START)
-
-            #NEED TO SKIP OVER EMBEDDED_OBJECT_CHARACTERS
-
-            #print "STRING at %d is (start=%d end=%d): '%s'" \
-            #      % (offset, startOffset, endOffset, string)
-            #if startOffset > offset:
-            #    embedded = text.getText(offset, offset + 1).decode("UTF-8")
-            #    if embedded[0] == \
-            #            orca_state.activeScript.EMBEDDED_OBJECT_CHARACTER:
-            #        offset = startOffset
 
             debug.println(debug.LEVEL_FINEST,
                           "    line at %d is (start=%d end=%d): '%s'" \
@@ -1640,7 +1627,7 @@ class Context:
                 if zone.words:
                     for wordIndex in range(0, self.wordIndex):
                         regionWithFocus.cursorOffset += \
-                            len(zone.words[wordIndex].string.decode("UTF-8"))
+                            len(zone.words[wordIndex].string)
                 regionWithFocus.cursorOffset += self.charIndex
                 regionWithFocus.repositionCursor()
                 break

@@ -177,11 +177,6 @@ class SpeechServer(speechserver.SpeechServer):
         # the list will contain the names of all available "real"
         # voices provided by the speech engine.
         #
-        try:
-            serverId = serverId.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
-
         self._default_voice_name = _("%s default voice") % serverId
         
         try:
@@ -249,8 +244,6 @@ class SpeechServer(speechserver.SpeechServer):
             pass
         else:
             name = acss_family.get(speechserver.VoiceFamily.NAME)
-            if isinstance(name, unicode):
-                name = name.encode('UTF-8')
             if name != self._default_voice_name:
                 self._send_command(set_synthesis_voice, name)
             
@@ -293,11 +286,6 @@ class SpeechServer(speechserver.SpeechServer):
         #
         spokenEllipsis = _(" dot dot dot") + " "
         newText = re.sub(ELLIPSIS, spokenEllipsis, oldText)
-        try:
-            newText = newText.decode("UTF-8")
-        except UnicodeEncodeError:
-            pass
-
         symbols = set(re.findall(PUNCTUATION, newText))
         for symbol in symbols:
             try:
@@ -313,19 +301,10 @@ class SpeechServer(speechserver.SpeechServer):
             charName = " %s " % chnames.getCharacterName(symbol)
             if action == punctuation_settings.PUNCTUATION_INSERT:
                 charName += symbol
-            try:
-                charName = charName.decode("UTF-8")
-            except UnicodeEncodeError:
-                pass
             newText = re.sub(symbol, charName, newText)
 
         if orca_state.activeScript:
             newText = orca_state.activeScript.utilities.adjustForDigits(newText)
-
-        try:
-            newText = newText.encode("UTF-8")
-        except UnicodeDecodeError:
-            pass
 
         return newText
 
@@ -336,7 +315,7 @@ class SpeechServer(speechserver.SpeechServer):
         # Replace no break space characters with plain spaces since some
         # synthesizers cannot handle them.  See bug #591734.
         #
-        text = text.decode("UTF-8").replace(u'\u00a0', ' ').encode("UTF-8")
+        text = text.replace('\u00a0', ' ')
 
         # Replace newline followed by full stop, since
         # this seems to crash sd, see bgo#618334.
@@ -474,7 +453,7 @@ class SpeechServer(speechserver.SpeechServer):
             # We currently only handle printable characters by Speech
             # Dispatcher's KEY command.  For other keys, such as Ctrl, Shift
             # etc. we prefer Orca's verbalization.
-            if event.event_string.decode("UTF-8").isupper():
+            if event.event_string.isupper():
                 acss = settings.voices[settings.UPPERCASE_VOICE]
             else:
                 acss = None

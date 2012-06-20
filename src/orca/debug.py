@@ -203,18 +203,12 @@ def println(level, text = ""):
             except TypeError:
                 text = "TypeError when trying to write text"
                 debugFile.writelines([text, "\n"])
-            except UnicodeDecodeError:
-                text = "UnicodeDecodeError when trying to write text"
-                debugFile.writelines([text, "\n"])
         else:
             try:
                 sys.stderr.writelines([text, "\n"])
             except TypeError:
                 text = "TypeError when trying to write text"
                 sys.stderr.writelines([text, "\n"])
-            except UnicodeDecodeError:
-                text = "UnicodeDecodeError when trying to write text"
-                debugFile.writelines([text, "\n"])
 
 def printResult(level, result=None):
     """Prints the return result, along with information about the
@@ -237,7 +231,7 @@ def printResult(level, result=None):
 
     # To better print arguments which are accessible objects
     args = inspect.getargvalues(frame)
-    for key, value in args.locals.items():
+    for key, value in list(args.locals.items()):
         args.locals[key] = str(value)
     fArgs = str.replace(inspect.formatargvalues(*args), "'", "")
 

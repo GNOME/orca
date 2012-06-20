@@ -193,7 +193,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             desc = obj.description.replace(text, "")
             for item in obj.name.split():
                 desc = desc.replace(item, "")
-            for char in desc.decode("UTF-8").strip():
+            for char in desc.strip():
                 if char.isalnum():
                     result.append(obj.description)
                     break
@@ -387,7 +387,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         try:
             text = obj.queryText()
             objectText = \
-                self._script.utilities.substring(obj, 0, -1).decode("UTF-8")
+                self._script.utilities.substring(obj, 0, -1)
             extents = obj.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
         except NotImplementedError:
             pass
@@ -443,7 +443,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             # digit.
             #
             for name in nameList:
-                for char in name.decode("UTF-8"):
+                for char in name:
                     if char.isdigit():
                         result.append(name)
                         break

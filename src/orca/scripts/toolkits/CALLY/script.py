@@ -76,14 +76,11 @@ def _computeIsText(string):
     """
     is_text = False
 
-    if (string):
-        char = unicode (string, "UTF-8")
-        if (char > 0 and  _unicharIsPrint (char)):
+    if string:
+        if _unicharIsPrint(string):
             is_text = True
         else:
             is_text = False
-    else:
-        is_text = False
 
     return is_text
 

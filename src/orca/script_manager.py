@@ -238,14 +238,19 @@ class ScriptManager:
                 toolkitScript.registerEventListeners()
             self.toolkitScripts[app] = toolkitScripts
 
-        if not app:
+        try:
+            if not app:
+                appScript = self.getDefaultScript()
+            elif app in self.appScripts:
+                appScript = self.appScripts[app]
+            else:
+                appScript = self._createScript(app, None)
+                self.appScripts[app] = appScript
+                appScript.registerEventListeners()
+        except:
+            msg = "WARNING: Exception getting app script."
+            debug.printException(debug.LEVEL_WARNING, msg)
             appScript = self.getDefaultScript()
-        elif app in self.appScripts:
-            appScript = self.appScripts[app]
-        else:
-            appScript = self._createScript(app, None)
-            self.appScripts[app] = appScript
-            appScript.registerEventListeners()
 
         # Only defer to the toolkit script for this object if the app script
         # is based on a different toolkit.

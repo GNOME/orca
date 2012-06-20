@@ -275,7 +275,7 @@ class OrcaPrefs:
 
         if not factory:
             return None
-        elif isinstance(factory, basestring):
+        elif isinstance(factory, str):
             return "'%s'" % factory
         else:
             return "'%s'" % factory.__name__
