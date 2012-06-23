@@ -5139,7 +5139,7 @@ class Script(script.Script):
 
         if (text.caretOffset == text.characterCount) \
             and (character == "\n"):
-            content = ""
+            lineString = ""
             startOffset = caretOffset
         else:
             # Get the line containing the caret.  [[[TODO: HACK WDW - If
