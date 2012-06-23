@@ -837,7 +837,7 @@ class Context:
                     #print " SUBSTRING '%s'" % substring
                     zones.append(TextZone(accessible,
                                           substringStartOffset,
-                                          substring.
+                                          substring,
                                           clipping[0],
                                           clipping[1],
                                           clipping[2],
