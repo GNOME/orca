@@ -1,4 +1,4 @@
-Orca v3.5.3pre
+Orca v3.7.0.3
 
 Introduction
 ========================================================================
@@ -23,7 +23,7 @@ requests.
 Dependencies
 ========================================================================
 
-Orca v3.5.x is supported on GNOME 3.5.x only.  We highly suggest you
+Orca v3.7.x is supported on GNOME 3.7.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 

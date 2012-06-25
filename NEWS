@@ -1,3 +1,31 @@
+3.7.0.3 - 25 June 2012
+
+General
+
+  * Python 3 migration has been completed
+
+  * Fix for bug 677748 - Launcher icon needs 256x256 variant
+
+  * Fix for Orca not presenting the 'Command not found' label in the
+    gnome-shell run dialog
+
+  * Work around for Orca not presenting the gnome-shell run dialog text
+    in braille
+
+  * Handle text implementations which report a caret offset of -1 when
+    at the end
+
+  * Eliminate unneeded and/or problematic imports
+
+  * Remove more old, no-longer-used/needed code
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                  Tom Tryfonidis
+    fr            French                 Bruno Brouard
+
+=========
+
 3.5.2 - 4 June 2012
 
 For users:
