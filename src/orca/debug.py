@@ -221,14 +221,6 @@ def printResult(level, result=None):
     current, prev = stack[1], stack[2]
     frame = current[0]
 
-    # If we handled it, just note it in the log.
-    if frame.f_exc_type:
-        prefix = 'ERROR: '
-        suffix = '(%s:%s)' % (frame.f_exc_type.__name__, frame.f_exc_value)
-    else:
-        prefix = 'RESULT:'
-        suffix = ''
-
     # To better print arguments which are accessible objects
     args = inspect.getargvalues(frame)
     for key, value in list(args.locals.items()):
@@ -238,9 +230,7 @@ def printResult(level, result=None):
     callString = 'CALL:   %s.%s (line %s) -> %s.%s%s' % (
         inspect.getmodulename(prev[1]), prev[3], prev[2],
         inspect.getmodulename(current[1]), current[3], fArgs)
-    string = '%s\n%s %s %s' \
-        % (callString, prefix, result, suffix)
-
+    string = '%s\n%s %s' % (callString, 'RESULT:', result)
     println(level, '%s' % string)
 
 def printObjectEvent(level, event, sourceInfo=None):
