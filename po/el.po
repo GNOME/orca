@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2012-06-07 01:15+0000\n"
-"PO-Revision-Date: 2012-06-17 13:56+0200\n"
+"POT-Creation-Date: 2012-06-25 18:52+0000\n"
+"PO-Revision-Date: 2012-06-29 12:09+0200\n"
 "Last-Translator: Tom Tryfonidis <tomtryf@gmail.com>\n"
 "Language-Team: Greek <team@gnome.gr>\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgstr "Εφαρμογής ανάγνωσης οθόνης Orca"
 
 #: ../orca.desktop.in.h:4
 msgid "Provide access to graphical desktop environments via synthesized speech and/or refreshable braille"
-msgstr ""
+msgstr "Παρέχει πρόσβαση σε γραφικά περιβάλλοντα επιαφ. εργασίας μέσω συνθετικής ομιλίας και/ή πινακίδων μπράιγ"
 
 #: ../src/orca/app_gui_prefs.py:135
 #, python-format
@@ -3821,7 +3821,7 @@ msgstr "Έξοδος από το Orca"
 
 #: ../src/orca/orca_gui_quit.py:47
 msgid "This will stop all speech and braille output."
-msgstr ""
+msgstr "Αυτό θα σταματήσει όλα τα αποτελέσματα εκφώνησης και τη μεγέθυνση οθόνης."
 
 #. Translators: there is a keystroke to reload the user
 #. preferences.  This is a spoken prompt to let the user
@@ -4145,9 +4145,8 @@ msgid "Speak tutorial messages"
 msgstr "Εκφώνηση των μηνυμάτων των οδηγών εκμάθησης"
 
 #: ../src/orca/orca-setup.ui.h:72
-#, fuzzy
 msgid "Spoken Context"
-msgstr "Σχετική _βοήθεια"
+msgstr "Προφορικά συμφραζόμενα"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
 #: ../src/orca/orca-setup.ui.h:74
