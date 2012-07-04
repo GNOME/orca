@@ -1506,16 +1506,18 @@ class Utilities:
         place as, or is after obj2."""
 
         try:
-            extents1 = obj1.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            bbox = obj1.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            x1, y1 = bbox.x, bbox.y
         except:
-            extents1 = 0, 0, 0, 0
+            x1, y1 = 0, 0
 
         try:
-            extents2 = obj2.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            bbox = obj2.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            x2, y2 = bbox.x, bbox.y
         except:
-            extents2 = 0, 0, 0, 0
+            x2, y2 = 0, 0
 
-        rv = extents1[1] - extents2[1] or extents1[0] - extents2[0]
+        rv = y1 - y2 or x1 - x2
         rv = max(rv, -1)
         rv = min(rv, 1)
 
