@@ -448,9 +448,12 @@ class Script(default.Script):
         if not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
             return False
 
+        states = orca_state.locusOfFocus.getState()
+        if states.contains(pyatspi.STATE_EDITABLE):
+            return False
+
         role = orca_state.locusOfFocus.getRole()
         if role in doNotHandleRoles:
-            states = orca_state.locusOfFocus.getState()
             if role == pyatspi.ROLE_LIST_ITEM:
                 return not states.contains(pyatspi.STATE_SELECTABLE)
 
