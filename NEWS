@@ -1,3 +1,22 @@
+3.7.0.4 - 16 July 2012
+
+General
+
+  * Structural navigation should not kick in when in editable WebKitGtk
+    objects
+
+  * Access object extents as a bounding box
+
+  * Fix for bug 679514 - settings_test.py script fails because of some
+    still remaining yaml files
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                  Tom Tryfonidis
+    nb            Norwegian bokmål       Kjartan Maraas
+
+=========
+
 3.7.0.3 - 25 June 2012
 
 General
