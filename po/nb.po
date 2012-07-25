@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca 3.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-10 08:27+0200\n"
-"PO-Revision-Date: 2012-07-10 08:26+0200\n"
+"POT-Creation-Date: 2012-07-25 16:40+0200\n"
+"PO-Revision-Date: 2012-07-25 16:41+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: \n"
@@ -2841,7 +2841,7 @@ msgstr "Følgende er ikke gyldige: "
 #. desktop.
 #: ../src/orca/orca_bin.py.in:286
 msgid "Cannot start Orca because it cannot connect to the Desktop."
-msgstr ""
+msgstr "Kan ikke starte Orca fordi programmet ikke kan koble til skrivebordet."
 
 #. Translators: This message is presented to the user when
 #. the specified profile could not be loaded. A profile stores
@@ -2860,6 +2860,8 @@ msgid ""
 "Another Orca process is already running for this session.\n"
 "Run \"orca --replace\" to replace that process with a new one."
 msgstr ""
+"En annen Orca-prosess kjører allerede i denne økten.\n"
+"Kjør «orca --replace» for å erstatte denne prosessen med en ny."
 
 #. Translators: this is a regular expression that is intended to match
 #. a positive 'yes' response from a user at the command line.  The expression
