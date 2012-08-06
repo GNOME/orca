@@ -371,7 +371,8 @@ class KeyboardEvent(InputEvent):
             return False
         if not orca_state.lastInputEvent:
             return False
-        if isinstance(self, MouseButtonEvent):
+        if isinstance(self, MouseButtonEvent) \
+           or isinstance(orca_state.lastInputEvent, MouseButtonEvent):
             return False
         if self.hw_code == orca_state.lastInputEvent.hw_code \
            and self.type == orca_state.lastInputEvent.type:
