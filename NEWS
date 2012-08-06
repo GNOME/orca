@@ -1,3 +1,26 @@
+3.7.0.5 - 6 August 2012
+
+WebKitGtk
+
+  * Fix for bug 677320 - Cannot perform braille scrolling amongst
+    objects in WebKitGtk content
+
+  * Fix for bug 681294 - SayAll does not work as expected when focus
+    is on a link in WebKitGtk content
+
+  * Fix for traceback when determining whether a MouseButtonEvent
+    should be ignored
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                             Dimitris Spingos
+    hi            Hindi                             chandankumar
+    nb            Norwegian bokmål                  Kjartan Maraas
+    zh_HK         Traditional Chinese (Hong Kong)   Chao-Hsiung Liao
+    zh_TW         Traditional Chinese (Taiwan)      Chao-Hsiung Liao
+
+=========
+
 3.7.0.4 - 16 July 2012
 
 General
