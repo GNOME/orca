@@ -88,8 +88,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         previous object with focus.
         """
 
-        role = args.get('role', obj.getRole())
-        if role == pyatspi.ROLE_LINK:
+        if self._script.utilities.isWebKitGtk(obj):
             return []
 
         return braille_generator.BrailleGenerator._generateAncestors(

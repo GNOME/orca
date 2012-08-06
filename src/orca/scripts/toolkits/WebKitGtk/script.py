@@ -108,6 +108,36 @@ class Script(default.Script):
                 #
                 _("Speaks entire document."))
 
+        self.inputEventHandlers["panBrailleLeftHandler"] = \
+            input_event.InputEventHandler(
+                Script.panBrailleLeft,
+                # Translators: a refreshable braille display is an
+                # external hardware device that presents braille
+                # character to the user.  There are a limited number
+                # of cells on the display (typically 40 cells).  Orca
+                # provides the feature to build up a longer logical
+                # line and allow the user to press buttons on the
+                # braille display so they can pan left and right over
+                # this line.
+                #
+                _("Pans the braille display to the left."),
+                False) # Do not enable learn mode for this action
+
+        self.inputEventHandlers["panBrailleRightHandler"] = \
+            input_event.InputEventHandler(
+                Script.panBrailleRight,
+                # Translators: a refreshable braille display is an
+                # external hardware device that presents braille
+                # character to the user.  There are a limited number
+                # of cells on the display (typically 40 cells).  Orca
+                # provides the feature to build up a longer logical
+                # line and allow the user to press buttons on the
+                # braille display so they can pan left and right over
+                # this line.
+                #
+                _("Pans the braille display to the right."),
+                False) # Do not enable learn mode for this action
+
     def getToolkitKeyBindings(self):
         """Returns the toolkit-specific keybindings for this script."""
 
@@ -492,6 +522,38 @@ class Script(default.Script):
                 break
 
         return child, index
+
+    def panBrailleLeft(self, inputEvent=None, panAmount=0):
+        """In document content, we want to use the panning keys to browse the
+        entire document.
+        """
+
+        if self.flatReviewContext \
+           or not self.isBrailleBeginningShowing() \
+           or not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
+            return default.Script.panBrailleLeft(self, inputEvent, panAmount)
+
+        obj = self.utilities.findPreviousObject(orca_state.locusOfFocus)
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        self.updateBraille(obj)
+
+        return True
+
+    def panBrailleRight(self, inputEvent=None, panAmount=0):
+        """In document content, we want to use the panning keys to browse the
+        entire document.
+        """
+
+        if self.flatReviewContext \
+           or not self.isBrailleEndShowing() \
+           or not self.utilities.isWebKitGtk(orca_state.locusOfFocus):
+            return default.Script.panBrailleRight(self, inputEvent, panAmount)
+
+        obj = self.utilities.findNextObject(orca_state.locusOfFocus)
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        self.updateBraille(obj)
+
+        return True
 
     def sayAll(self, inputEvent):
         """Speaks the contents of the document beginning with the present
