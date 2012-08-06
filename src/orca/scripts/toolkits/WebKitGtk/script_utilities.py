@@ -168,3 +168,45 @@ class Utilities(script_utilities.Utilities):
         objects = [x for x in objects if x[1] < x[2]]
 
         return objects
+
+    def findPreviousObject(self, obj):
+        """Finds the object before this one."""
+
+        if not obj:
+            return None
+
+        if obj.getRole() == pyatspi.ROLE_LINK:
+            obj = obj.parent
+
+        index = obj.getIndexInParent() - 1
+        if not (0 <= index < obj.parent.childCount - 1):
+            obj = obj.parent
+            index = obj.childCount - 1
+
+        try:
+            prevObj = obj.parent[index]
+        except:
+            prevObj = obj
+
+        return prevObj
+
+    def findNextObject(self, obj):
+        """Finds the object after this one."""
+
+        if not obj:
+            return None
+
+        if obj.getRole() == pyatspi.ROLE_LINK:
+            obj = obj.parent
+
+        index = obj.getIndexInParent() + 1
+        if not (0 < index < obj.parent.childCount):
+            obj = obj.parent
+            index = obj.getIndexInParent() + 1
+
+        try:
+            nextObj = obj.parent[index]
+        except:
+            nextObj = None
+
+        return nextObj
