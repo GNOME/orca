@@ -534,8 +534,17 @@ class Script(default.Script):
         spoken and acss is an ACSS instance for speaking the text.
         """
 
+        if not obj:
+            return
+
+        if obj.getRole() == pyatspi.ROLE_LINK:
+            obj = obj.parent
+
         document = utils.findAncestor(
             obj, lambda x: x.getRole() == pyatspi.ROLE_DOCUMENT_FRAME)
+        if not document:
+            return
+
         allTextObjs = utils.findAllDescendants(
             document, lambda x: 'Text' in utils.listInterfaces(x))
         allTextObjs = allTextObjs[allTextObjs.index(obj):len(allTextObjs)]
