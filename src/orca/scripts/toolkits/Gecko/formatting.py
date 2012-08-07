@@ -64,10 +64,6 @@ formatting = {
         pyatspi.ROLE_DOCUMENT_FRAME: {
             'unfocused': 'name + roleName'
             },
-        pyatspi.ROLE_LIST: {
-            'focused': 'focusedItem',
-            'unfocused': 'labelOrName + focusedItem + multiselectableState + numberOfChildren'
-            },
         # [[[TODO: JD - We should decide if we want to provide
         # information about the table dimensions, whether or not
         # this is a layout table versus a data table, etc.  For now,
@@ -116,11 +112,6 @@ formatting = {
                                      or asString(displayedText)\
                                      or asString(name))]',
         },
-        pyatspi.ROLE_LIST: {
-            'unfocused': '[Component(obj,\
-                                     asString(label + focusedItem + roleName),\
-                                     asString(label) and (len(asString(label)) + 1) or 0)]'
-        },
         # If we're in document content, we present the indicator followed
         # immediately by the role, followed by the label/displayed text,
         # etc. The label/displayed text is obtained as part of the line
@@ -136,10 +127,6 @@ formatting = {
         }
     }
 }
-
-if orca.settings.useExperimentalSpeechProsody:
-    formatting['speech'][pyatspi.ROLE_LIST]['unfocused'] = \
-        'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
 
 class Formatting(orca.formatting.Formatting):
 

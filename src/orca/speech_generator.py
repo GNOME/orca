@@ -1449,6 +1449,22 @@ class SpeechGenerator(generator.Generator):
             result.extend(acss)
         return result
 
+    def _generateFocusedItem(self, obj, **args):
+        result = []
+        role = args.get('role', obj.getRole())
+        if role != pyatspi.ROLE_LIST:
+            return result
+
+        s = obj.querySelection()
+        items = [s.getSelectedChild(i) for i in range(s.nSelectedChildren)]
+        if not items and obj.childCount:
+            items.append(obj[0])
+        items = list(map(self._generateName, items))
+        for item in items:
+            result.extend(item)
+
+        return result
+
     def _generateSelectedItemCount(self, obj, **args):
         """Returns an array of strings (and possibly voice and audio
         specifications) indicating how many items are selected in this

@@ -173,6 +173,10 @@ formatting = {
             'unfocused': 'labelAndName + roleName + availability + ' + MNEMONIC,
             'basicWhereAmI': 'linkInfo + siteDescription + fileSize + ' + MNEMONIC
             },
+        pyatspi.ROLE_LIST: {
+            'focused': 'focusedItem',
+            'unfocused': 'labelOrName + focusedItem + multiselectableState + numberOfChildren'
+            },
         pyatspi.ROLE_LIST_ITEM: {
             'focused': 'expandableState + availability',
             'unfocused': 'labelAndName + allTextSelection + expandableState + availability + positionInList',
@@ -424,7 +428,11 @@ formatting = {
                                      or asString(displayedText)\
                                      or asString(name))]',
         },
-        #pyatspi.ROLE_LIST: 'default'
+        pyatspi.ROLE_LIST: {
+            'unfocused': '[Component(obj,\
+                                     asString(label + focusedItem + roleName),\
+                                     asString(label) and (len(asString(label)) + 1) or 0)]'
+        },
         pyatspi.ROLE_LIST_ITEM: {
             'focused':   '[Component(obj,\
                                      asString(label + displayedText + expandableState + roleName + availability) + asString(accelerator))]\
@@ -563,6 +571,8 @@ if settings.useExperimentalSpeechProsody:
         'labelAndName + pause + roleName + pause + selectedItemCount + pause+ selectedItems + pause'
     formatting['speech'][pyatspi.ROLE_LINK]['basicWhereAmI'] = \
         'linkInfo + pause + siteDescription + pause + fileSize + pause + ' + MNEMONIC
+    formatting['speech'][pyatspi.ROLE_LIST]['unfocused'] = \
+        'labelOrName + pause + focusedItem + pause + multiselectableState + numberOfChildren + pause'
     formatting['speech'][pyatspi.ROLE_LIST_ITEM]['unfocused'] = \
         'labelAndName + allTextSelection + pause + expandableState + pause + availability + positionInList'
     formatting['speech'][pyatspi.ROLE_LIST_ITEM]['basicWhereAmI'] = \

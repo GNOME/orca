@@ -306,22 +306,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     self, obj, **args))
         return result
 
-    def _generateFocusedItem(self, obj, **args):
-        result = []
-        role = args.get('role', obj.getRole())
-        if role != pyatspi.ROLE_LIST:
-            return result
-
-        s = obj.querySelection()
-        items = [s.getSelectedChild(i) for i in range(s.nSelectedChildren)]
-        if not items and obj.childCount:
-            items.append(obj[0])
-        items = list(map(self._generateName, items))
-        for item in items:
-            result.extend(item)
-
-        return result
-
     def _generateAncestors(self, obj, **args):
         result = []
         priorObj = args.get('priorObj', None)
