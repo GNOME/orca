@@ -289,11 +289,14 @@ class BrailleGenerator(generator.Generator):
         try:
             s = obj.querySelection()
         except NotImplementedError:
-            return result
+            isFocused = \
+                lambda x: x and x.getState().contains(pyatspi.STATE_FOCUSED)
+            items = pyatspi.utils.findAllDescendants(obj, isFocused)
+        else:
+            items = [s.getSelectedChild(i) for i in range(s.nSelectedChildren)]
+            if not items and obj.childCount:
+                items.append(obj[0])
 
-        items = [s.getSelectedChild(i) for i in range(s.nSelectedChildren)]
-        if not items and obj.childCount:
-            items.append(obj[0])
         items = list(map(self._generateName, items))
         for item in items:
             result.extend(item)
