@@ -1171,7 +1171,7 @@ class Utilities:
 
         nestingLevel = 0
         parent = obj.parent
-        while parent.parent.getRole() == pyatspi.ROLE_LIST:
+        while parent.parent and parent.parent.getRole() == pyatspi.ROLE_LIST:
             nestingLevel += 1
             parent = parent.parent
 
