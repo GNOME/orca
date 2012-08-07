@@ -333,6 +333,10 @@ class SpeechServer(speechserver.SpeechServer):
         if isinstance(text, ACSS):
             text = ''
         text = self.__addVerbalizedPunctuation(text)
+        if orca_state.activeScript and orca_state.usePronunciationDictionary:
+            text = orca_state.activeScript.\
+                utilities.adjustForPronunciation(text)
+
         # Replace no break space characters with plain spaces since some
         # synthesizers cannot handle them.  See bug #591734.
         #
