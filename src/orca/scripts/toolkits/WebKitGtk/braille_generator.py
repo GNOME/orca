@@ -62,13 +62,19 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
     def _generateRoleName(self, obj, **args):
         """Prevents some roles from being displayed."""
 
+        doNotDisplay = [pyatspi.ROLE_FORM,
+                        pyatspi.ROLE_SECTION,
+                        pyatspi.ROLE_UNKNOWN]
+        if not obj.getState().contains(pyatspi.STATE_FOCUSABLE):
+            doNotDisplay.extend([pyatspi.ROLE_LIST,
+                                 pyatspi.ROLE_LIST_ITEM,
+                                 pyatspi.ROLE_PANEL])
+
         result = []
         role = args.get('role', obj.getRole())
         if role == pyatspi.ROLE_HEADING:
             result.extend(self.__generateHeadingRole(obj))
-        elif not role in [pyatspi.ROLE_SECTION,
-                          pyatspi.ROLE_FORM,
-                          pyatspi.ROLE_UNKNOWN]:
+        elif not role in doNotDisplay:
             result.extend(braille_generator.BrailleGenerator._generateRoleName(
                 self, obj, **args))
             if obj.parent and obj.parent.getRole() == pyatspi.ROLE_HEADING:
