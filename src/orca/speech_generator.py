@@ -1451,7 +1451,11 @@ class SpeechGenerator(generator.Generator):
         if role != pyatspi.ROLE_LIST:
             return result
 
-        s = obj.querySelection()
+        try:
+            s = obj.querySelection()
+        except NotImplementedError:
+            return result
+
         items = [s.getSelectedChild(i) for i in range(s.nSelectedChildren)]
         if not items and obj.childCount:
             items.append(obj[0])
