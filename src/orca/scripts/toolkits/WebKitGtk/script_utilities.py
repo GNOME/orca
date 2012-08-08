@@ -211,6 +211,14 @@ class Utilities(script_utilities.Utilities):
 
         return nextObj
 
+    def isTextListItem(self, obj):
+        """Returns True if obj is an item in a non-selectable list."""
+
+        if obj.getRole() != pyatspi.ROLE_LIST_ITEM:
+            return False
+
+        return not obj.parent.getState().contains(pyatspi.STATE_FOCUSABLE)
+
     def isInlineContainer(self, obj):
         """Returns True if obj is an inline/non-wrapped container."""
 

@@ -697,7 +697,8 @@ class Script(default.Script):
             return
 
         if not self.utilities.isWebKitGtk(obj) \
-           or not self.utilities.isInlineContainer(obj):
+           or (not self.utilities.isInlineContainer(obj) \
+               and not self.utilities.isTextListItem(obj)):
             default.Script.updateBraille(self, obj, extraRegion)
             return
 
@@ -711,7 +712,8 @@ class Script(default.Script):
         if not brailleLine.regions:
             [regions, fRegion] = self.brailleGenerator.generateBraille(
                 obj, role=pyatspi.ROLE_PARAGRAPH)
-            self.addBrailleRegionsToLine(regions, brailleLine)            
+            self.addBrailleRegionsToLine(regions, brailleLine)
+            self.setBrailleFocus(fRegion)
 
         if extraRegion:
             self.addBrailleRegionToLine(extraRegion, brailleLine)
