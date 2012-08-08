@@ -1,4 +1,4 @@
-
+# Orca
 #
 # Copyright 2010 Joanmarie Diggs.
 #
@@ -1495,6 +1495,21 @@ class Utilities:
             obj = None
 
         return obj
+
+    @staticmethod
+    def onSameLine(obj1, obj2, delta=0):
+        """Determines if obj1 and obj2 are on the same line."""
+
+        try:
+            bbox1 = obj1.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+            bbox2 = obj2.queryComponent().getExtents(pyatspi.DESKTOP_COORDS)
+        except:
+            return False
+
+        center1 = bbox1.y + bbox1.height / 2
+        center2 = bbox2.y + bbox2.height / 2
+
+        return abs(center1 - center2) <= delta
 
     @staticmethod
     def spatialComparison(obj1, obj2):
