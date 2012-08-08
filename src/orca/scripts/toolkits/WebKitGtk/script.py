@@ -708,6 +708,11 @@ class Script(default.Script):
             [regions, fRegion] = self.brailleGenerator.generateBraille(child)
             self.addBrailleRegionsToLine(regions, brailleLine)
 
+        if not brailleLine.regions:
+            [regions, fRegion] = self.brailleGenerator.generateBraille(
+                obj, role=pyatspi.ROLE_PARAGRAPH)
+            self.addBrailleRegionsToLine(regions, brailleLine)            
+
         if extraRegion:
             self.addBrailleRegionToLine(extraRegion, brailleLine)
 
