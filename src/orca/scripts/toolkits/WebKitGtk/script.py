@@ -676,8 +676,6 @@ class Script(default.Script):
         where the caret is.
         """
 
-        # TODO - JD: Piece together the full line for braille
-
         textLine = default.Script.getTextLineAtCaret(self, obj, offset)
         string = textLine[0]
         if string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
@@ -686,3 +684,31 @@ class Script(default.Script):
         textLine[0] = self.utilities.displayedText(obj)
 
         return textLine
+
+    def updateBraille(self, obj, extraRegion=None):
+        """Updates the braille display to show the given object.
+
+        Arguments:
+        - obj: the Accessible
+        - extra: extra Region to add to the end
+        """
+
+        if not obj:
+            return
+
+        if not self.utilities.isWebKitGtk(obj) \
+           or not self.utilities.isInlineContainer(obj):
+            default.Script.updateBraille(self, obj, extraRegion)
+            return
+
+        brailleLine = self.getNewBrailleLine(clearBraille=True, addLine=True)
+        for child in obj:
+            if not self.utilities.onSameLine(child, obj[0]):
+                break
+            [regions, fRegion] = self.brailleGenerator.generateBraille(child)
+            self.addBrailleRegionsToLine(regions, brailleLine)
+
+        if extraRegion:
+            self.addBrailleRegionToLine(extraRegion, brailleLine)
+
+        self.refreshBraille()

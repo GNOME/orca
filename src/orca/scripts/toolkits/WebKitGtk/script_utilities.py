@@ -206,3 +206,13 @@ class Utilities(script_utilities.Utilities):
             nextObj = None
 
         return nextObj
+
+    def isInlineContainer(self, obj):
+        """Returns True if obj is an inline/non-wrapped container."""
+
+        if not obj.getRole() == pyatspi.ROLE_LIST \
+           or obj.getState().contains(pyatspi.STATE_FOCUSABLE) \
+           or obj.childCount <= 1:
+            return False
+
+        return self.onSameLine(obj[0], obj[1])
