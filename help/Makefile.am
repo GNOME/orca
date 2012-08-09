@@ -1,7 +1,7 @@
-include $(top_srcdir)/gnome-doc-utils.make
+@YELP_HELP_RULES@
 
-DOC_ID = orca
-DOC_FIGURES = \
+HELP_ID = orca
+HELP_MEDIA = \
 	figures/main_window.png \
 	figures/orca_find.png \
 	figures/orca-logo.png \
@@ -49,7 +49,7 @@ DOC_FIGURES = \
 	figures/profiles_load.png \
 	figures/profiles_save_as.png
 
-DOC_PAGES = \
+HELP_FILES = \
 	commands_bookmarks.page \
 	commands_braille.page \
 	commands_chat.page \
@@ -101,5 +101,4 @@ DOC_PAGES = \
 	preferences_table_navigation.page \
 	preferences_text_attributes.page
 
-DOC_LINGUAS = de el es fr gl hu sl
-dist-hook: doc-dist-hook
+HELP_LINGUAS = de el es fr gl hu sl

@@ -28,7 +28,8 @@ GETTEXT_PACKAGE=AC_PACKAGE_TARNAME
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [gettext package])
 
-GNOME_DOC_INIT([0.17.3])
+# User Documentation
+YELP_HELP_INIT
 
 PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= gtk_required_version])
 PKG_CHECK_MODULES([PYGOBJECT], [pygobject-3.0 >= pygobject_required_version])
