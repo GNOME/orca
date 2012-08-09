@@ -537,7 +537,7 @@ def helpForOrca(script=None, inputEvent=None, page=""):
 
     Returns True to indicate the input event has been consumed.
     """
-    uri = "ghelp:orca"
+    uri = "help:orca"
     if page:
         uri += "?%s" % page
     Gtk.show_uri(Gdk.Screen.get_default(),

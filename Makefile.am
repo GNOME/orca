@@ -7,7 +7,6 @@ DISTCHECK_CONFIGURE_FLAGS =     \
 	--disable-scrollkeeper
 
 DISTCLEANFILES =                \
-	gnome-doc-utils.make	\
 	orca-autostart.desktop  \
 	orca.desktop
 
@@ -38,7 +37,6 @@ EXTRA_DIST =                \
 	$(autostart_in_files) \
 	$(desktop_in_files) \
 	$(icon_DATA)        \
-	gnome-doc-utils.make \
 	ChangeLog           \
 	MAINTAINERS
 
