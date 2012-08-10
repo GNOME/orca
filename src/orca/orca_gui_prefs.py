@@ -2888,7 +2888,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             # entered has already been bound to another command.
             #
             msg = _("The key entered is already bound to %s") % description
-            self._capturedKey = []
+            delay = int(1000 * settings.doubleClickTimeout)
+            GObject.timeout_add(delay, self._presentMessage, msg)
         else:
             # Translators: this is a spoken prompt letting the user know Orca
             # know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
@@ -2896,8 +2897,8 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             #
             msg = _("Key captured: %s. Press enter to confirm.") % newString
             editable.set_text(newString)
+            self._presentMessage(msg)
 
-        self._presentMessage(msg)
         return True
 
     def editedKey(self, cell, path, new_text, treeModel,
