@@ -181,12 +181,16 @@ class Utilities(script_utilities.Utilities):
         index = obj.getIndexInParent() - 1
         if not (0 <= index < obj.parent.childCount - 1):
             obj = obj.parent
-            index = obj.childCount - 1
+            index = obj.getIndexInParent() - 1
 
         try:
             prevObj = obj.parent[index]
         except:
             prevObj = obj
+        else:
+            if prevObj.getRole() == pyatspi.ROLE_LIST and prevObj.childCount:
+                if self.isTextListItem(prevObj[0]):
+                    prevObj = prevObj[-1]
 
         return prevObj
 
@@ -208,6 +212,10 @@ class Utilities(script_utilities.Utilities):
             nextObj = obj.parent[index]
         except:
             nextObj = None
+        else:
+            if nextObj.getRole() == pyatspi.ROLE_LIST and nextObj.childCount:
+                if self.isTextListItem(nextObj[0]):
+                    nextObj = nextObj[0]
 
         return nextObj
 
