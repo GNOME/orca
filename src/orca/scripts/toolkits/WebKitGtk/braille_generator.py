@@ -99,3 +99,12 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         return braille_generator.BrailleGenerator._generateAncestors(
             self, obj, **args)
+
+    def _generateEol(self, obj, **args):
+        if self._script.utilities.isWebKitGtk(obj) \
+           and obj.getRole() == pyatspi.ROLE_PARAGRAPH \
+           and not obj.getState().contains(pyatspi.STATE_EDITABLE):
+            return []
+
+        return braille_generator.BrailleGenerator._generateEol(
+            self, obj, **args)
