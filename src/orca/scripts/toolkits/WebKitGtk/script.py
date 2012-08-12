@@ -682,6 +682,12 @@ class Script(default.Script):
             return textLine
 
         textLine[0] = self.utilities.displayedText(obj)
+        try:
+            text = obj.queryText()
+        except:
+            pass
+        else:
+            textLine[1] = min(textLine[1], text.characterCount)
 
         return textLine
 
