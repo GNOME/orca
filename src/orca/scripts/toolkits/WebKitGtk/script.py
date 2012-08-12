@@ -678,7 +678,7 @@ class Script(default.Script):
 
         textLine = default.Script.getTextLineAtCaret(self, obj, offset)
         string = textLine[0].decode('UTF-8')
-        if string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
+        if string and string.find(self.EMBEDDED_OBJECT_CHARACTER) == -1:
             return textLine
 
         textLine[0] = self.utilities.displayedText(obj)
