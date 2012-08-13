@@ -322,7 +322,7 @@ def _setCapsLockAsOrcaModifier(enable):
         r'^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Lock\s*\)\s*;\s*$', re.I)
     normalCapsLine = '        action= LockMods(modifiers=Lock);'
     capsModLine =    '        action= SetMods(modifiers=Lock,clearLocks);'
-    lines = _originalXmodmap.split('\n')
+    lines = _originalXmodmap.decode('UTF-8').split('\n')
     foundCapsInterpretSection = False
     for i in range(len(lines)):
         line = lines[i]
@@ -333,12 +333,12 @@ def _setCapsLockAsOrcaModifier(enable):
             if enable:
                 if normalCapsLineProg.match(line):
                     lines[i] = capsModLine
-                    _setXmodmap('\n'.join(lines))
+                    _setXmodmap(bytes('\n'.join(lines), 'UTF-8'))
                     return
             else:
                 if capsModLineProg.match(line):
                     lines[i] = normalCapsLine
-                    _setXmodmap('\n'.join(lines))
+                    _setXmodmap(bytes('\n'.join(lines), 'UTF-8'))
                     return
             if line.find('}'):
                 # Failed to find the line we need to change
