@@ -537,6 +537,13 @@ class Script(default.Script):
         orca.setLocusOfFocus(None, obj, notifyScript=False)
         self.updateBraille(obj)
 
+        # Hack: When panning to the left in a document, we want to start at
+        # the right/bottom of each new object. For now, we'll pan there.
+        # When time permits, we'll give our braille code some smarts.
+        while self.panBrailleInDirection(panToLeft=False):
+            pass
+        self.refreshBraille(False)
+
         return True
 
     def panBrailleRight(self, inputEvent=None, panAmount=0):
@@ -552,6 +559,13 @@ class Script(default.Script):
         obj = self.utilities.findNextObject(orca_state.locusOfFocus)
         orca.setLocusOfFocus(None, obj, notifyScript=False)
         self.updateBraille(obj)
+
+        # Hack: When panning to the right in a document, we want to start at
+        # the left/top of each new object. For now, we'll pan there. When time
+        # permits, we'll give our braille code some smarts.
+        while self.panBrailleInDirection(panToLeft=True):
+            pass
+        self.refreshBraille(False)
 
         return True
 
