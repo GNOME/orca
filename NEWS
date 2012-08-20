@@ -1,3 +1,58 @@
+3.5.90 - 20 August 2012
+
+WebKitGtk - Braille Presentation
+
+  * Make WebKitGtk content fully braille scrollable without having to
+    use caret navigation
+
+  * Fixes for Orca failing to display certain text-only inline WebKitGtk
+    lists and sections
+
+  * Work around the bogus caretOffset we get for WebKitGtk content which
+    doesn't have the caret
+
+  * Don't display the braille EOL indicator for non-editable WebKitGtk
+    paragraphs
+
+  * Handle cases where the default script returns an empty string for
+    WebKitGtk content
+
+  * Fix for Orca skipping over WebKitGtk list items when scrolling in
+    braille
+
+  * Fix for bug 664557 - Orca does not always reflect the caret location
+    in braille for WebKitGtk content
+
+  * Fix for bug 681441 - Orca should present inline lists and sections
+    from WebKitGtk on the same line in braille
+
+  * Fix for bug 681387 - Orca displays no braille when lists which are
+    not listboxes claim focus in WebKitGtk content
+
+  * Fix for bug 681363 - Do not display roles for non-widget lists, list
+    items, and panels in WebKitGtk content
+
+General
+
+  * Fix for bug 681569 - Unable to bind double-click keybinding if there
+    is a duplicate single-click keybinding
+
+  * Use new documentation infrastructure
+
+  * Fix for bug 626032 - substitutions from the pronunciation dictionary
+    are not being applied when performing say all
+
+  * Move Gecko list presentation code into general presentation code
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    hu            Hungarian              Attila Hammer
+    in            Indonesian             Andika Triwidada
+    sr            Serbian                Мирослав Николић
+    sr@latin      Serbian                Miroslav Nikolić
+
+=========
+
 3.5.5 - 6 August 2012
 
 WebKitGtk
