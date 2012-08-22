@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca 3.5.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-10 08:22+0200\n"
-"PO-Revision-Date: 2012-07-10 08:26+0200\n"
+"POT-Creation-Date: 2012-08-22 10:59+0200\n"
+"PO-Revision-Date: 2012-08-22 11:00+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian bokmål <i18n-nb@lister.ping.uio.no>\n"
 "Language: \n"
@@ -860,7 +860,7 @@ msgstr "Melding fra samtalerom %s"
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:146
-#: ../src/orca/script_utilities.py:2756
+#: ../src/orca/script_utilities.py:2771
 msgid "space"
 msgstr "mellomrom"
 
@@ -2841,7 +2841,7 @@ msgstr "Følgende er ikke gyldige: "
 #. desktop.
 #: ../src/orca/orca_bin.py.in:286
 msgid "Cannot start Orca because it cannot connect to the Desktop."
-msgstr ""
+msgstr "Kan ikke starte Orca fordi det ikke kan koble til skrivebordet."
 
 #. Translators: This message is presented to the user when
 #. the specified profile could not be loaded. A profile stores
@@ -2860,6 +2860,8 @@ msgid ""
 "Another Orca process is already running for this session.\n"
 "Run \"orca --replace\" to replace that process with a new one."
 msgstr ""
+"En annen Orca-prosess kjører allerede for denne økten.\n"
+"Kjør «orca --replace» for å erstatte den prosessen med en ny."
 
 #. Translators: this is a regular expression that is intended to match
 #. a positive 'yes' response from a user at the command line.  The expression
@@ -3565,7 +3567,7 @@ msgstr "Tasten som ble oppgitt er allerede bundet til %s"
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
 #. based upon their input.
 #.
-#: ../src/orca/orca_gui_prefs.py:2880
+#: ../src/orca/orca_gui_prefs.py:2881
 #, python-format
 msgid "Key captured: %s. Press enter to confirm."
 msgstr "Tast fanget: %s. Trykk linjeskift for å bekrefte."
@@ -3574,7 +3576,7 @@ msgstr "Tast fanget: %s. Trykk linjeskift for å bekrefte."
 #. combination (e.g., Ctrl+Alt+f) the user just typed when
 #. creating a new key binding.
 #.
-#: ../src/orca/orca_gui_prefs.py:2928
+#: ../src/orca/orca_gui_prefs.py:2929
 #, python-format
 msgid "The new key is: %s"
 msgstr "Den nye tasten er: %s"
@@ -3583,14 +3585,14 @@ msgstr "Den nye tasten er: %s"
 #. existing key combination (e.g., Ctrl+Alt+f) that was
 #. associated with a command has been deleted.
 #.
-#: ../src/orca/orca_gui_prefs.py:2936
+#: ../src/orca/orca_gui_prefs.py:2937
 msgid "The keybinding has been removed."
 msgstr "Tastaturbindingen ble fjernet."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
 #.
-#: ../src/orca/orca_gui_prefs.py:2974 ../src/orca/orca-setup.ui.h:12
+#: ../src/orca/orca_gui_prefs.py:2975 ../src/orca/orca-setup.ui.h:12
 msgid "_Desktop"
 msgstr "_Skrivebord"
 
@@ -3600,7 +3602,7 @@ msgstr "_Skrivebord"
 #. collection of settings which apply to a given task, such as
 #. a "Spanish" profile which would use Spanish text-to-speech
 #. and Spanish braille and selected when reading Spanish content.
-#: ../src/orca/orca_gui_prefs.py:3345
+#: ../src/orca/orca_gui_prefs.py:3346
 #, python-format
 msgid ""
 "Profile %s already exists.\n"
@@ -3615,7 +3617,7 @@ msgstr ""
 #. collection of settings which apply to a given task, such as
 #. a "Spanish" profile which would use Spanish text-to-speech
 #. and Spanish braille and selected when reading Spanish content.
-#: ../src/orca/orca_gui_prefs.py:3361
+#: ../src/orca/orca_gui_prefs.py:3362
 msgid "User Profile Conflict!"
 msgstr "Konflikt i brukerprofil!"
 
@@ -3625,7 +3627,7 @@ msgstr "Konflikt i brukerprofil!"
 #. collection of settings which apply to a given task, such as
 #. a "Spanish" profile which would use Spanish text-to-speech
 #. and Spanish braille and selected when reading Spanish content.
-#: ../src/orca/orca_gui_prefs.py:3369
+#: ../src/orca/orca_gui_prefs.py:3370
 msgid "Save Profile As Conflict"
 msgstr "Lagre profil som konflikt"
 
@@ -3635,7 +3637,7 @@ msgstr "Lagre profil som konflikt"
 #. "user profile" is a collection of settings which apply to a given task
 #. such as a "Spanish" profile which would use Spanish text-to-speech and
 #. Spanish braille and selected when reading Spanish content.
-#: ../src/orca/orca_gui_prefs.py:3391
+#: ../src/orca/orca_gui_prefs.py:3392
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -3655,11 +3657,11 @@ msgstr ""
 #. "user profile" is a collection of settings which apply to a given task
 #. such as a "Spanish" profile which would use Spanish text-to-speech and
 #. Spanish braille and selected when reading Spanish content.
-#: ../src/orca/orca_gui_prefs.py:3407
+#: ../src/orca/orca_gui_prefs.py:3408
 msgid "Load user profile"
 msgstr "Last brukerprofil"
 
-#: ../src/orca/orca_gui_prefs.py:3446
+#: ../src/orca/orca_gui_prefs.py:3447
 msgid ""
 "You already have an instance of an Orca preferences dialog open.\n"
 "Please close it before opening a new one."
@@ -3670,7 +3672,7 @@ msgstr ""
 
 #. Translators: Orca Preferences is the configuration GUI for Orca.
 #.
-#: ../src/orca/orca_gui_prefs.py:3480
+#: ../src/orca/orca_gui_prefs.py:3481
 msgid "Starting Orca Preferences."
 msgstr "Starter brukervalg for Orca."
 
@@ -4257,7 +4259,7 @@ msgstr ""
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2443
+#: ../src/orca/script_utilities.py:2458
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
@@ -4267,7 +4269,7 @@ msgstr[1] " %(count)d %(repeatChar)s tegn"
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/script_utilities.py:2518
+#: ../src/orca/script_utilities.py:2533
 #: ../src/orca/scripts/apps/soffice/script.py:1144
 #: ../src/orca/scripts/default.py:2039 ../src/orca/speech_generator.py:1016
 msgid "link"
@@ -4278,7 +4280,7 @@ msgstr "lenke"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2608
+#: ../src/orca/script_utilities.py:2623
 #, python-format
 msgid " superscript %s"
 msgstr " superskript %s"
@@ -4288,7 +4290,7 @@ msgstr " superskript %s"
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2618
+#: ../src/orca/script_utilities.py:2633
 #, python-format
 msgid " subscript %s"
 msgstr " subskript %s"
@@ -4662,7 +4664,7 @@ msgstr "Varsle meg når feil er logget."
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:224
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1772
-#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:314
+#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:344
 msgid "Loading.  Please wait."
 msgstr "Laster. Vennligst vent."
 
@@ -4671,7 +4673,7 @@ msgstr "Laster. Vennligst vent."
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:233
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1785
-#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:324
+#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:354
 msgid "Finished loading."
 msgstr "Fullført lasting."
 
@@ -5456,6 +5458,7 @@ msgstr "Rapporterer informasjon om aktivt skript."
 #.
 #: ../src/orca/scripts/default.py:679
 #: ../src/orca/scripts/toolkits/Gecko/script.py:597
+#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:123
 msgid "Pans the braille display to the left."
 msgstr "Forskyver braillevisningen til venstre."
 
@@ -5470,6 +5473,7 @@ msgstr "Forskyver braillevisningen til venstre."
 #.
 #: ../src/orca/scripts/default.py:694
 #: ../src/orca/scripts/toolkits/Gecko/script.py:612
+#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:138
 msgid "Pans the braille display to the right."
 msgstr "Forskyver braillevisningen til høyre."
 
@@ -6717,7 +6721,7 @@ msgstr "_Plasser markøren ved starten av linjen ved vertikal navigering"
 #. page from beginning to end.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:772
-#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:130
+#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:160
 msgid "Automatically start speaking a page when it is first _loaded"
 msgstr "Start uttale av en side automatisk når den _lastes første gang"
 
@@ -6786,7 +6790,7 @@ msgstr "Ny oppføring er lagt til"
 #. or some other content.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1778
-#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:319
+#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:349
 #, python-format
 msgid "Finished loading %s."
 msgstr "Fullført lasting av %s."
@@ -6887,7 +6891,7 @@ msgstr[1] "Liste med %d oppføringer"
 #. Translators: Announces the number of headings in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:488
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:472
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -6897,7 +6901,7 @@ msgstr[1] "%d overskrifter"
 #. Translators: Announces the number of forms in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:493
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:477
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -6907,7 +6911,7 @@ msgstr[1] "%d skjema"
 #. Translators: Announces the number of non-layout tables in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:498
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:482
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -6917,7 +6921,7 @@ msgstr[1] "%d tabeller"
 #. Translators: Announces the number of visited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:504
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:488
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
@@ -6927,7 +6931,7 @@ msgstr[1] "%d besøkte lenker"
 #. Translators: Announces the number of unvisited links in the
 #. web page that is currently being displayed.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:510
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:494
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -6939,7 +6943,7 @@ msgstr[1] "%d lenker som ikke er besøkt"
 #. current position divided by the total number of objects on the
 #. page.
 #.
-#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:518
+#: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:502
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -7121,20 +7125,20 @@ msgid " dot dot dot"
 msgstr " prikk prikk prikk"
 
 #. Translators: This string announces speech rate change.
-#: ../src/orca/speechdispatcherfactory.py:372
+#: ../src/orca/speechdispatcherfactory.py:376
 msgid "slower."
 msgstr "saktere."
 
-#: ../src/orca/speechdispatcherfactory.py:372
+#: ../src/orca/speechdispatcherfactory.py:376
 msgid "faster."
 msgstr "raskere."
 
 #. Translators: This string announces speech pitch change.
-#: ../src/orca/speechdispatcherfactory.py:385
+#: ../src/orca/speechdispatcherfactory.py:389
 msgid "lower."
 msgstr "lavere."
 
-#: ../src/orca/speechdispatcherfactory.py:385
+#: ../src/orca/speechdispatcherfactory.py:389
 msgid "higher."
 msgstr "høyere."
 
@@ -7281,7 +7285,7 @@ msgstr "0 oppføringer"
 #. and the count of the total number of icons within an icon panel.
 #. An example of an icon panel is the Nautilus folder view.
 #.
-#: ../src/orca/speech_generator.py:1479
+#: ../src/orca/speech_generator.py:1502
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
@@ -7291,7 +7295,7 @@ msgstr[1] "%(index)d av %(total)d oppføringer valgt"
 #. Translators: this tells the user how many unfocused
 #. alert and dialog windows that this application has.
 #.
-#: ../src/orca/speech_generator.py:1535 ../src/orca/speech_generator.py:1836
+#: ../src/orca/speech_generator.py:1558 ../src/orca/speech_generator.py:1859
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -7301,7 +7305,7 @@ msgstr[1] "%d dialoger uten fokus"
 #. Translators: this is an alternative name for the
 #. parent object of a series of icons.
 #.
-#: ../src/orca/speech_generator.py:1624
+#: ../src/orca/speech_generator.py:1647
 msgid "Icon panel"
 msgstr "Ikonpanel"
 
@@ -7309,7 +7313,7 @@ msgstr "Ikonpanel"
 #. button that gets activated when Enter is pressed anywhere
 #. within that dialog box.
 #.
-#: ../src/orca/speech_generator.py:1783
+#: ../src/orca/speech_generator.py:1806
 #, python-format
 msgid "Default button is %s"
 msgstr "Forvalgt knapp er %s"
