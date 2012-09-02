@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2012-08-04 22:34+0000\n"
-"PO-Revision-Date: 2012-08-13 19:16+0700\n"
+"PO-Revision-Date: 2012-09-02 09:16+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -2833,7 +2833,7 @@ msgstr "Kirim keluaran debug ke debug-YYYY-MM-DD-HH:MM:SS.out"
 #. user, is displayed.
 #: ../src/orca/orca_bin.py.in:203
 msgid "The following are not valid: "
-msgstr "Yang berikut tak valid:"
+msgstr "Yang berikut tak valid: "
 
 #. Translators: This message is presented to the user who attempts
 #. to launch Orca from some other environment than the graphical
@@ -2914,7 +2914,7 @@ msgstr "Pilih sistem pengucapan yang diinginkan:"
 #: ../src/orca/orca_console_prefs.py:179 ../src/orca/orca_console_prefs.py:220
 #: ../src/orca/orca_console_prefs.py:272 ../src/orca/orca_console_prefs.py:460
 msgid "Enter choice: "
-msgstr "Masukkan pilihan:"
+msgstr "Masukkan pilihan: "
 
 #. Translators: this is letting the user they input an
 #. invalid integer value on the command line and is
@@ -2970,7 +2970,7 @@ msgstr "Pilih suara yang diinginkan:"
 #.
 #: ../src/orca/orca_console_prefs.py:321
 msgid "Enable echo by word?  Enter y or n: "
-msgstr "Aktifkan pengucapan per kata? Masukkan y atau t:"
+msgstr "Aktifkan pengucapan per kata? Masukkan y atau t: "
 
 #: ../src/orca/orca_console_prefs.py:331 ../src/orca/orca_console_prefs.py:350
 #: ../src/orca/orca_console_prefs.py:376 ../src/orca/orca_console_prefs.py:393
@@ -2986,28 +2986,28 @@ msgstr "Silakan masukkan y atau t."
 #.
 #: ../src/orca/orca_console_prefs.py:340
 msgid "Enable key echo?  Enter y or n: "
-msgstr "Aktifkan pengucapan tombol? Masukkan y atau t:"
+msgstr "Aktifkan pengucapan tombol? Masukkan y atau t: "
 
 #. Translators: this is in reference to key echo for
 #. normal text entry keys.
 #.
 #: ../src/orca/orca_console_prefs.py:366
 msgid "Enable alphanumeric and punctuation keys?  Enter y or n: "
-msgstr "Aktifkan tombol alfanumerik dan tanda baca? Masukkan y atau t:"
+msgstr "Aktifkan tombol alfanumerik dan tanda baca? Masukkan y atau t: "
 
 #. Translators: this is in reference to key echo for
 #. CTRL, ALT, Shift, Insert, and "Fn" on laptops.
 #.
 #: ../src/orca/orca_console_prefs.py:383
 msgid "Enable modifier keys?  Enter y or n: "
-msgstr "Aktifkan tombol pengubah? Masukkan y atau t:"
+msgstr "Aktifkan tombol pengubah? Masukkan y atau t: "
 
 #. Translators: this is in reference to key echo for
 #. the keys at the top of the keyboard.
 #.
 #: ../src/orca/orca_console_prefs.py:400
 msgid "Enable function keys?  Enter y or n: "
-msgstr "Aktifkan tombol fungsi? Masukkan y atau t:"
+msgstr "Aktifkan tombol fungsi? Masukkan y atau t: "
 
 #. Translators: this is in reference to key echo for
 #. space, enter, escape, tab, backspace, delete, arrow
@@ -3015,7 +3015,7 @@ msgstr "Aktifkan tombol fungsi? Masukkan y atau t:"
 #.
 #: ../src/orca/orca_console_prefs.py:418
 msgid "Enable action keys?  Enter y or n: "
-msgstr "Aktifka tombol aksi? Masukkan y atau t:"
+msgstr "Aktifka tombol aksi? Masukkan y atau t: "
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -3047,7 +3047,7 @@ msgstr "2. Laptop"
 #.
 #: ../src/orca/orca_console_prefs.py:499
 msgid "Enable Braille?  Enter y or n: "
-msgstr "Aktifkan Braille? Masukkan y atau t:"
+msgstr "Aktifkan Braille? Masukkan y atau t: "
 
 #. Translators: the braille monitor is a graphical display on
 #. the screen that is used for debugging and demoing purposes.
@@ -3056,7 +3056,7 @@ msgstr "Aktifkan Braille? Masukkan y atau t:"
 #.
 #: ../src/orca/orca_console_prefs.py:518
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Aktifkan Monitor Braille? Masukkan y atau t:"
+msgstr "Aktifkan Monitor Braille? Masukkan y atau t: "
 
 #: ../src/orca/orca_console_prefs.py:537
 msgid "Setup complete.  Press Return to continue."
@@ -3092,7 +3092,7 @@ msgstr "_Mencari:"
 
 #: ../src/orca/orca-find.ui.h:5
 msgid "Search for:"
-msgstr "Mencari: "
+msgstr "Mencari:"
 
 #: ../src/orca/orca-find.ui.h:6 ../src/orca/orca_gui_find.py:134
 msgid "C_urrent location"
@@ -3133,8 +3133,8 @@ msgstr "Cocokkan s_eluruhan kata"
 
 #: ../src/orca/orca-find.ui.h:15
 #| msgid "<b>Results must:</b>"
-msgid "Results must:"
-msgstr "Hasil harus:"
+msgid "Results must: "
+msgstr "Hasil harus: "
 
 #. Translators: This is used in the Orca About dialog.
 #.
@@ -3215,6 +3215,19 @@ msgid ""
 "Free Software Foundation, Inc., Franklin Street, Fifth Floor,\n"
 "Boston MA  02110-1301 USA."
 msgstr ""
+"Orca adalah perangkat lunak bebas, Anda dapat mendistribusikan ulang\n"
+"dan/atau mengubahnya di bawah syarat GNU Lesser General Public License\n"
+"sebagaimana dipublikasikan oleh Free Software Foundation; entah Lisensi\n"
+"versi 2.1, atau (terserah Anda) sebarang versi setelahnya.\n"
+"\n"
+"Orca didistribusikan dengan harapan akan berguna, tapi TANPA JAMINAN\n"
+"APAPUN; bahkan tanpa jaminan tersirat atas KETERDAGANGAN atau\n"
+"KECOCOKAN UNTUK TUJUAN TERTENTU. Lihat GNU Lesser General Public\n"
+"License untuk rincian lebih lanjut.\n"
+"\n"
+"Anda mesti menerima salinan dari GNU Lesser General Public License\n"
+"bersama dengan Orca; bila tidak, tulislah ke Free Software Foundation,\n"
+"Inc., Franklin Street, Fifth Floor, Boston MA  02110-1301 USA."
 
 #. DESCRIP
 #.
@@ -3319,9 +3332,8 @@ msgstr "Bicara"
 #. the refreshable braille display.
 #.
 #: ../src/orca/orca_gui_prefs.py:1173
-#, fuzzy
 msgid "Mark in braille"
-msgstr "Baca layar dalam Braille"
+msgstr "Tandai dalam Braille"
 
 #. Attribute Value column (VALUE)
 #.
@@ -3339,9 +3351,8 @@ msgstr "Baca layar dalam Braille"
 #. "Present" here is being used as a verb.
 #.
 #: ../src/orca/orca_gui_prefs.py:1199
-#, fuzzy
 msgid "Present Unless"
-msgstr "Nilai _Sekarang"
+msgstr "Ada Kecuali"
 
 #. Pronunciation Dictionary actual string (word) column (ACTUAL).
 #.
@@ -3435,7 +3446,7 @@ msgstr "Jendela"
 #. Translators: When this option is enabled, dead keys will be announced when pressed.
 #: ../src/orca/orca_gui_prefs.py:1649 ../src/orca/orca-setup.ui.h:105
 msgid "Enable non-spacing _diacritical keys"
-msgstr ""
+msgstr "Fungsikan tombol _diakritis bukan spasi"
 
 #. TODO - JD: I did the above because GtkBuilder translator notes
 #. (which we have for the above string) are not getting sucked in
@@ -3897,12 +3908,12 @@ msgid "Profiles"
 msgstr "Profil"
 
 #: ../src/orca/orca-setup.ui.h:23
-msgid "_Time format:"
-msgstr "Format wak_tu:"
+msgid "_Time format: "
+msgstr "Format wak_tu: "
 
 #: ../src/orca/orca-setup.ui.h:24
-msgid "Dat_e format:"
-msgstr "Format _tanggal:"
+msgid "Dat_e format: "
+msgstr "Format _tanggal: "
 
 #: ../src/orca/orca-setup.ui.h:25
 msgid "Time and Date"
@@ -3933,24 +3944,20 @@ msgid "Pi_tch:"
 msgstr "Pi_tch:"
 
 #: ../src/orca/orca-setup.ui.h:32
-#, fuzzy
 msgid "_Rate:"
 msgstr "_Laju:"
 
 #: ../src/orca/orca-setup.ui.h:33
-#, fuzzy
 msgid "_Person:"
-msgstr "Orang tidak dikenal"
+msgstr "_Orang:"
 
 #: ../src/orca/orca-setup.ui.h:34
-#, fuzzy
 msgid "Speech synthesi_zer:"
-msgstr "Pengucapan tak tersedia."
+msgstr "Synthesi_zer ucapan:"
 
 #: ../src/orca/orca-setup.ui.h:35
-#, fuzzy
 msgid "Speech _system:"
-msgstr "Pilih sistem pengucapan yang diinginkan:"
+msgstr "_Sistem ucapan:"
 
 #. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
 #: ../src/orca/orca-setup.ui.h:37
@@ -3965,38 +3972,32 @@ msgstr "Pengaturan Tipe Suara"
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: ../src/orca/orca-setup.ui.h:43
 msgid "Speak multicase strings as wor_ds"
-msgstr ""
+msgstr "Ucapkan string multi huruf besar kecil sebagai _kata-kata"
 
 #. Translators: Say all by refers to the way that Orca will say (speak) an amount of text -- in particular, where Orca where insert pauses. There are currently two choices (supplied by a combo box to the right of this label): say all by sentence and  say all by line.  If Orca were speaking a work of fiction, it's probably best to do say all by sentence so it sound more natural. If Orca were speaking something like a page of computer commands, doing a say all by line would work better.
 #: ../src/orca/orca-setup.ui.h:45
-#, fuzzy
 msgid "Say All B_y:"
-msgstr "Pilih Semua"
+msgstr "Ucapkan Semua _Menurut:"
 
 #: ../src/orca/orca-setup.ui.h:46
-#, fuzzy
 msgid "Global Voice Settings"
-msgstr "Pengaturan Tipe Suara"
+msgstr "Pengaturan Suara Global"
 
 #: ../src/orca/orca-setup.ui.h:47
-#, fuzzy
 msgid "Voice"
-msgstr "suara"
+msgstr "Suara"
 
 #: ../src/orca/orca-setup.ui.h:48
-#, fuzzy
 msgid "_Enable speech"
-msgstr "Fungsik_an semua"
+msgstr "Fungsik_an ucapan"
 
 #: ../src/orca/orca-setup.ui.h:50
-#, fuzzy
 msgid "Ver_bose"
-msgstr "Step Lewat"
+msgstr "Te_rrinci"
 
 #: ../src/orca/orca-setup.ui.h:51
-#, fuzzy
 msgid "Verbosity"
-msgstr "Tingkat rincian log"
+msgstr "Tingkat rincian"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
 #: ../src/orca/orca-setup.ui.h:55
@@ -4043,9 +4044,8 @@ msgid "Speak tutorial messages"
 msgstr "Ucapkan pesan tutorial"
 
 #: ../src/orca/orca-setup.ui.h:72
-#, fuzzy
 msgid "Spoken Context"
-msgstr "Bantuan _Konteks"
+msgstr "Konteks Yang Diucapkan"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
 #: ../src/orca/orca-setup.ui.h:74
@@ -4070,19 +4070,16 @@ msgid "Progress Bar Updates"
 msgstr "Pemutakhiran Batang Kemajuan"
 
 #: ../src/orca/orca-setup.ui.h:81
-#, fuzzy
 msgid "Speech"
 msgstr "Bicara"
 
 #: ../src/orca/orca-setup.ui.h:82
-#, fuzzy
 msgid "Enable Braille _support"
-msgstr "Aktifkan dukungan XInput"
+msgstr "_Aktifkan dukungan Braille"
 
 #: ../src/orca/orca-setup.ui.h:83
-#, fuzzy
 msgid "Enable Braille _monitor"
-msgstr "Aktifkan Monitor Braille? Masukkan y atau t:"
+msgstr "Aktifkan _monitor Braille"
 
 #: ../src/orca/orca-setup.ui.h:84
 msgid "_Abbreviated role names"
@@ -4093,15 +4090,13 @@ msgid "Disable _end of line symbol"
 msgstr "Nonaktifkan simbol _akhir baris"
 
 #: ../src/orca/orca-setup.ui.h:86
-#, fuzzy
 msgid "_Enable Contracted Braille"
-msgstr "Aktifkan Braille? Masukkan y atau t:"
+msgstr "Aktifkan Braille Terkontraksi"
 
 #. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille 'contractions' get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for 'ing' (dots 3-4-6), and the letter 'e' (dots 1-5) all by itself means 'every'. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in liblouis' tables.
 #: ../src/orca/orca-setup.ui.h:88
-#, fuzzy
 msgid "Contraction _Table:"
-msgstr "Informasi Tabel"
+msgstr "_Tabel Kontraksi:"
 
 #: ../src/orca/orca-setup.ui.h:89
 msgid "Display Settings"
@@ -4126,50 +4121,44 @@ msgid "Braille"
 msgstr "Braille"
 
 #: ../src/orca/orca-setup.ui.h:98
-#, fuzzy
 msgid "Enable _key echo"
-msgstr "Aktifkan pengucapan tombol? Masukkan y atau t:"
+msgstr "Fungsi_kan gaung tombol"
 
 #: ../src/orca/orca-setup.ui.h:99
-#, fuzzy
 msgid "Enable _alphanumeric and punctuation keys"
-msgstr "Aktifkan tombol alfanumerik dan tanda baca? Masukkan y atau t:"
+msgstr "Fungsikan tombol _alfanumerik dan tanda baca"
 
 #: ../src/orca/orca-setup.ui.h:100
-#, fuzzy
 msgid "Enable _modifier keys"
-msgstr "Aktifkan tombol pengubah? Masukkan y atau t:"
+msgstr "Fungsikan to_mbol pengubah"
 
 #: ../src/orca/orca-setup.ui.h:101
 msgid "Enable _function keys"
-msgstr "Aktifkan tombol _fungsi"
+msgstr "Fungsikan tombol _fungsi"
 
 #: ../src/orca/orca-setup.ui.h:102
 msgid "Enable ac_tion keys"
-msgstr "Aktifkan _tombol aksi"
+msgstr "Fungsikan _tombol aksi"
 
 #: ../src/orca/orca-setup.ui.h:103
 msgid "Enable _navigation keys"
-msgstr "Aktifkan tombol _navigasi"
+msgstr "Fungsikan tombol _navigasi"
 
 #: ../src/orca/orca-setup.ui.h:108
-#, fuzzy
 msgid "Enable echo by _word"
-msgstr "Aktifkan pengucapan per kata? Masukkan y atau t:"
+msgstr "Fungsikan gema per _kata"
 
 #: ../src/orca/orca-setup.ui.h:109
-#, fuzzy
 msgid "Enable echo by _sentence"
-msgstr "Aktifkan gema per hu_ruf"
+msgstr "Fungsikan gema per kali_mat"
 
 #: ../src/orca/orca-setup.ui.h:110
 msgid "Key Echo"
 msgstr "Gema Tombol"
 
 #: ../src/orca/orca-setup.ui.h:111
-#, fuzzy
 msgid "Orca _Modifier Key(s):"
-msgstr "Kunci record tak valid"
+msgstr "To_mbol Pengubah Orca:"
 
 #: ../src/orca/orca-setup.ui.h:112
 msgid "Key Bindings"
@@ -4382,6 +4371,8 @@ msgstr "kolom %d"
 #: ../src/orca/scripts/apps/evolution/script.py:134
 msgid "Toggle whether we present new mail if we are not the active script."
 msgstr ""
+"Jungkitkan apakah kami menyajikan surel baru bila kami bukan skrip yang "
+"aktif."
 
 #. Translators: this tells Orca to act like 'biff', or let
 #. the user know when new mail has arrived, even if Evolution
@@ -4577,7 +4568,7 @@ msgstr "Frasa ditemukan."
 
 #: ../src/orca/scripts/apps/gnome-mud/script.py:119
 msgid "Read the latest n messages in the incoming messages text area."
-msgstr ""
+msgstr "Baca n pesan terakhir dalam area teks pesan masuk."
 
 #: ../src/orca/scripts/apps/gnome-search-tool/script.py:99
 msgid "Searching."
@@ -4632,11 +4623,11 @@ msgstr "Bekerja daring / luring"
 #.
 #: ../src/orca/scripts/apps/metacity/script.py:113
 msgid "Workspace "
-msgstr "Ruang kerja"
+msgstr "Ruang kerja "
 
 #: ../src/orca/scripts/apps/metacity/script.py:113
 msgid "Desk "
-msgstr "Meja"
+msgstr "Meja "
 
 #. Translators: this is the number of items in a layered
 #. pane or table.
@@ -4730,9 +4721,10 @@ msgstr "Menyajikan isi baris masukan."
 #. row of a spreadsheet or table counts as column headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:237
-#, fuzzy
 msgid "Set the row to use as dynamic column headers when speaking calc cells."
-msgstr "Gunakan baris sebagai tajuk kolom dinamis ketika mengucapkan sel calc."
+msgstr ""
+"Menata baris yang dipakai sebagai tajuk kolom dinamis ketika mengucapkan sel "
+"calc."
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
@@ -4748,13 +4740,15 @@ msgstr "Bersihkan tajuk kolom dinamis."
 msgid ""
 "Set the column to use as dynamic row headers to use when speaking calc cells."
 msgstr ""
+"Menata kolom yang dipakai sebagai tajuk baris dinamis ketika mengucapkan sel "
+"calc."
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:263
 msgid "Clears the dynamic row headers"
-msgstr "Bersihkan tajuk baris dinamis."
+msgstr "Bersihkan tajuk baris dinamis"
 
 #. Translators: If checked, then Orca will speak the coordinates
 #. of the current spread sheet cell. Coordinates are the row and
@@ -4762,7 +4756,7 @@ msgstr "Bersihkan tajuk baris dinamis."
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:326
 msgid "Speak spread sheet cell coordinates"
-msgstr ""
+msgstr "Ucapkan koordinat sel lembar kerja"
 
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in document content.
@@ -4786,9 +4780,8 @@ msgstr "U_capkan koordinat sel"
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:363
 #: ../src/orca/scripts/toolkits/Gecko/script.py:808
-#, fuzzy
 msgid "Speak _multiple cell spans"
-msgstr "Nilai berganda dalam sel yang sama"
+msgstr "_Ucapkan bentangan sel berganda"
 
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in document content.
@@ -4866,7 +4859,7 @@ msgstr "Ruas yang tersedia"
 
 #: ../src/orca/scripts/apps/soffice/script.py:1378
 msgid "Note that the Scroll Down button has to be pressed numerous times."
-msgstr ""
+msgstr "Catat bahwa tombol Gulung Turung mesti ditekan berkali-kali."
 
 #: ../src/orca/scripts/apps/soffice/script.py:1394
 msgid "License Agreement Accept button now has focus."
@@ -4999,9 +4992,8 @@ msgstr "panel %s"
 #. to the current item without clicking on it.
 #.
 #: ../src/orca/scripts/default.py:151
-#, fuzzy
 msgid "Routes the pointer to the current item."
-msgstr "Butir saat ini untuk ditambahkan ke projek"
+msgstr "Arahkan penunjuk ke butir kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5015,7 +5007,7 @@ msgstr "Butir saat ini untuk ditambahkan ke projek"
 #.
 #: ../src/orca/scripts/default.py:166
 msgid "Performs left click on current flat review item."
-msgstr ""
+msgstr "Lakukan klik kiri pada butir tinjau rata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5029,7 +5021,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:181
 msgid "Performs right click on current flat review item."
-msgstr ""
+msgstr "Lakukan klik kanani pada butir tinjau rata kini."
 
 #. Translators: the "Where am I" feature of Orca allows
 #. a user to press a key and then have information
@@ -5050,9 +5042,8 @@ msgstr "Laksanakan operasi dasar saya ada dimana."
 #. its mnemonic.
 #.
 #: ../src/orca/scripts/default.py:218
-#, fuzzy
 msgid "Performs the detailed where am I operation."
-msgstr "Laksanakan operasi dasar saya ada dimana."
+msgstr "Laksanakan operasi terrinci saya ada dimana."
 
 #. Translators: This command will cause the window's
 #. title to be spoken.
@@ -5105,7 +5096,7 @@ msgstr "Temukan kemunculan string pencarian sebelumnya."
 #.
 #: ../src/orca/scripts/default.py:287
 msgid "Paints and prints the visible zones in the active window."
-msgstr ""
+msgstr "Cat dan cetak zona nampak pada jendela aktif."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5118,7 +5109,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:301
 msgid "Enters and exits flat review mode."
-msgstr ""
+msgstr "Masuk dan keluar mode tinjau rata."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5131,7 +5122,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:315
 msgid "Moves flat review to the beginning of the previous line."
-msgstr ""
+msgstr "Pindahkan tinjau rata ke awal baris sebelumnya."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5145,7 +5136,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:330
 msgid "Moves flat review to the home position."
-msgstr ""
+msgstr "Pindahkan tinjau rata ke posisi rumah."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5158,9 +5149,8 @@ msgstr ""
 #. cause Orca to speak the current line.
 #.
 #: ../src/orca/scripts/default.py:345
-#, fuzzy
 msgid "Speaks the current flat review line."
-msgstr "Apakah menandai baris yang ada"
+msgstr "Ucapkan baris tinjau rata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5173,9 +5163,8 @@ msgstr "Apakah menandai baris yang ada"
 #. cause Orca to spell the current line.
 #.
 #: ../src/orca/scripts/default.py:360
-#, fuzzy
 msgid "Spells the current flat review line."
-msgstr "Apakah menandai baris yang ada"
+msgstr "Eja baris tinjau rata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5190,7 +5179,7 @@ msgstr "Apakah menandai baris yang ada"
 #.
 #: ../src/orca/scripts/default.py:376
 msgid "Phonetically spells the current flat review line."
-msgstr ""
+msgstr "Eja secara fonetik baris tinjau rata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5203,7 +5192,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:390
 msgid "Moves flat review to the beginning of the next line."
-msgstr ""
+msgstr "Pindahkan tinjau rata ke awal baris berikutnya."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5216,9 +5205,8 @@ msgstr ""
 #. bit of information in the window.
 #.
 #: ../src/orca/scripts/default.py:405
-#, fuzzy
 msgid "Moves flat review to the end position."
-msgstr "Pion putih bergerak dari %(start)s ke %(end)s"
+msgstr "Pindahkan tinjau rata ke posisi akhir."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5233,7 +5221,7 @@ msgstr "Pion putih bergerak dari %(start)s ke %(end)s"
 #.
 #: ../src/orca/scripts/default.py:421
 msgid "Moves flat review to the previous item or word."
-msgstr ""
+msgstr "Pindahkan tinjau rata ke butir atau kata sebelumnya."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5248,7 +5236,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:437
 msgid "Moves flat review to the word above the current word."
-msgstr ""
+msgstr "Pindahkan tinjau rata ke kata di atas kata ini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5262,7 +5250,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:452
 msgid "Speaks the current flat review item or word."
-msgstr ""
+msgstr "Ucapkan tinjau rata butir atau kata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5276,7 +5264,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:467
 msgid "Spells the current flat review item or word."
-msgstr ""
+msgstr "Eja tinjau rata butir atau kata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5291,7 +5279,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:483
 msgid "Phonetically spells the current flat review item or word."
-msgstr ""
+msgstr "Eja secara fonetik tinjau rata butir atau kata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5306,9 +5294,8 @@ msgstr ""
 #. speak the text associated with the object.
 #.
 #: ../src/orca/scripts/default.py:500
-#, fuzzy
 msgid "Speaks the current flat review object."
-msgstr "Posisi kini menampung '%s' dan bukan suatu objek"
+msgstr "Ucapkan objek tinjau rata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5323,7 +5310,7 @@ msgstr "Posisi kini menampung '%s' dan bukan suatu objek"
 #.
 #: ../src/orca/scripts/default.py:516
 msgid "Moves flat review to the next item or word."
-msgstr ""
+msgstr "Pindahkan tinjau rate ke butir atau kata selanjutnya."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5338,7 +5325,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:532
 msgid "Moves flat review to the word below the current word."
-msgstr ""
+msgstr "Pindahkan tinjau rata ke kata di bawah kata ini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5353,7 +5340,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:548
 msgid "Moves flat review to the previous character."
-msgstr ""
+msgstr "Pindahkan tinjau rata ke karakter sebelumnya."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5365,9 +5352,8 @@ msgstr ""
 #. {line,word,character}.
 #.
 #: ../src/orca/scripts/default.py:562
-#, fuzzy
 msgid "Moves flat review to the end of the line."
-msgstr "Pion putih bergerak dari %(start)s ke %(end)s"
+msgstr "Pindahkan tinjau rata ke ujung baris."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5384,7 +5370,7 @@ msgstr "Pion putih bergerak dari %(start)s ke %(end)s"
 #.
 #: ../src/orca/scripts/default.py:580
 msgid "Speaks the current flat review character."
-msgstr ""
+msgstr "Ucapkan karakter tinjau rata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5402,7 +5388,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:599
 msgid "Phonetically speaks the current flat review character."
-msgstr ""
+msgstr "Ucapkan secara fonetik karakter tinjau rata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5419,7 +5405,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:617
 msgid "Speaks unicode value of the current flat review character."
-msgstr ""
+msgstr "Ucapkan nilai unicode karakter tinjau rata kini."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5434,7 +5420,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:634
 msgid "Moves flat review to the next character."
-msgstr ""
+msgstr "Pindahkan tinjau rata ke karakter berikutnya."
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -5442,7 +5428,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:643
 msgid "Toggles whether to read just the current table cell or the whole row."
-msgstr ""
+msgstr "Menjungkit apakah membaca hanya sel tabel kini atau seluruh baris."
 
 #. Translators: the attributes being presented are the
 #. text attributes, such as bold, italic, font name,
@@ -5450,7 +5436,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:653
 msgid "Reads the attributes associated with the current text character."
-msgstr ""
+msgstr "Membaca atribut yang terkait dengan karakter teks kini."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -5473,9 +5459,8 @@ msgstr "Laporkan informasi pada skrip kini."
 #.
 #: ../src/orca/scripts/default.py:679
 #: ../src/orca/scripts/toolkits/Gecko/script.py:597
-#, fuzzy
 msgid "Pans the braille display to the left."
-msgstr "Pindah tab ini ke kiri"
+msgstr "Geser tampilan braille ini ke kiri."
 
 #. Translators: a refreshable braille display is an
 #. external hardware device that presents braille
@@ -5488,9 +5473,8 @@ msgstr "Pindah tab ini ke kiri"
 #.
 #: ../src/orca/scripts/default.py:694
 #: ../src/orca/scripts/toolkits/Gecko/script.py:612
-#, fuzzy
 msgid "Pans the braille display to the right."
-msgstr "Apakah menampilkan batas kanan"
+msgstr "Geser tampilan braille ini ke kanan."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5503,9 +5487,8 @@ msgstr "Apakah menampilkan batas kanan"
 #. left of the window currently being reviewed.
 #.
 #: ../src/orca/scripts/default.py:710
-#, fuzzy
 msgid "Moves flat review to the bottom left."
-msgstr "Pindahkan jendela ke pojok kiri bawah"
+msgstr "Pindahkan tinjau rata ke kiri bawah."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5531,9 +5514,8 @@ msgstr "Kembali ke objek yang memiliki fokus papan tik."
 #. contracted and uncontracted.
 #.
 #: ../src/orca/scripts/default.py:739
-#, fuzzy
 msgid "Turns contracted braille on and off."
-msgstr "Nyala/matikan dukungan suara bagi notifikasi."
+msgstr "Nyalakan dan matikan braille terkontraksi."
 
 #. Translators: hardware braille displays often have
 #. buttons near each braille cell.  These are called
@@ -5542,9 +5524,8 @@ msgstr "Nyala/matikan dukungan suara bagi notifikasi."
 #. character on the display.
 #.
 #: ../src/orca/scripts/default.py:750
-#, fuzzy
 msgid "Processes a cursor routing key."
-msgstr "ID kunci penyandian basis data"
+msgstr "Memroses tombol pengaturan route kursor."
 
 #. Translators: this is used to indicate the start point
 #. of a text selection.
@@ -5568,9 +5549,8 @@ msgstr "Tandai akhir pilihan teks."
 #. echo the name of the key if Orca doesn't have a handler.
 #.
 #: ../src/orca/scripts/default.py:778
-#, fuzzy
 msgid "Enters learn mode.  Press escape to exit learn mode."
-msgstr "Dalam mode pemilihan keyboard, tekan F7 untuk keluar"
+msgstr "Masuk ke mode belajar. Tekan escape untuk keluar dari mode belajar."
 
 #. Translators: Orca has a "List Shortcuts Mode" that will allow
 #. the user to list a group of keyboard shortcuts. The Orca
@@ -5583,40 +5563,38 @@ msgstr "Dalam mode pemilihan keyboard, tekan F7 untuk keluar"
 #: ../src/orca/scripts/default.py:791
 msgid "Enters list shortcuts mode.  Press escape to exit list shortcuts mode."
 msgstr ""
+"Masuk ke mode pintasan daftar. Tekan escape untuk keluar dari mode pintasan "
+"daftar."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
 #: ../src/orca/scripts/default.py:801
-#, fuzzy
 msgid "Decreases the speech rate."
-msgstr "Laju frame baku"
+msgstr "Turunkan laju ucapan."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
 #: ../src/orca/scripts/default.py:809
-#, fuzzy
 msgid "Increases the speech rate."
-msgstr "Laju frame baku"
+msgstr "Naikkan laju ucapan."
 
 #. Translators: the speech pitch is how high or low in
 #. pitch/frequency the speech synthesis engine will
 #. generate speech.
 #.
 #: ../src/orca/scripts/default.py:818
-#, fuzzy
 msgid "Decreases the speech pitch."
-msgstr "Pengucapan tak tersedia."
+msgstr "Turunkan pitch ucapan."
 
 #. Translators: the speech pitch is how high or low in
 #. pitch/frequency the speech synthesis engine will
 #. generate speech.
 #.
 #: ../src/orca/scripts/default.py:827
-#, fuzzy
 msgid "Increases the speech pitch."
-msgstr "Pengucapan tak tersedia."
+msgstr "Naikkan pitch ucapan."
 
 #: ../src/orca/scripts/default.py:832
 msgid "Quits Orca"
@@ -5642,17 +5620,15 @@ msgstr "Tampilkan dialog konfigurasi preferensi aplikasi."
 #. on or off.  We call it 'silencing'.
 #.
 #: ../src/orca/scripts/default.py:858
-#, fuzzy
 msgid "Toggles the silencing of speech."
-msgstr "Pengucapan tak tersedia."
+msgstr "Jungkitkan pembisuan ucapan."
 
 #. Translators: Orca allows the user to enable/disable
 #. the speaking of indentation and justification.
 #.
 #: ../src/orca/scripts/default.py:867
-#, fuzzy
 msgid "Toggles the speaking of indentation and justification."
-msgstr "Opsi indentasi dan pembentukan otomatis"
+msgstr "Jungkitkan pengucapan indentasi dan perataan."
 
 #. Translators: Orca allows users to cycle through
 #. punctuation levels.
@@ -5660,7 +5636,7 @@ msgstr "Opsi indentasi dan pembentukan otomatis"
 #.
 #: ../src/orca/scripts/default.py:876
 msgid "Cycles to the next speaking of punctuation level."
-msgstr ""
+msgstr "Memutar ke tingkat pengucapan tanda baca selanjutnya."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -5677,7 +5653,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:894
 msgid "Cycles to the next key echo level."
-msgstr ""
+msgstr "Memutar ke tingkat gaung tombol selanjutnya."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -5689,6 +5665,8 @@ msgid ""
 "Prints a debug listing of all known applications to the console where Orca "
 "is running."
 msgstr ""
+"Cetak daftar awakutu dari semua aplikasi yang dikenal ke konsol diman Orca "
+"sedang berjalan."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -5697,7 +5675,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:915
 msgid "Cycles the debug level at run time."
-msgstr ""
+msgstr "Memutar tingkat awakutu saat runtime."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -5709,7 +5687,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:928
 msgid "Prints debug information about the ancestry of the object with focus."
-msgstr ""
+msgstr "Cetak informasi awakutu tentang nenek moyang objek dengan fokus."
 
 #. Translators: this is a debug message that Orca users
 #. will not normally see. It describes a debug routine
@@ -5720,7 +5698,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:941
 msgid "Prints debug information about the application with focus."
-msgstr ""
+msgstr "Cetak informasi awakutu tentang aplikasi dengan fokus."
 
 #. Translators: this command announces information regarding
 #. the relationship of the given bookmark to the current
@@ -5770,9 +5748,8 @@ msgstr "Ke lokasi penanda taut sebelumnya."
 #. be spoken. This toggles the feature.
 #.
 #: ../src/orca/scripts/default.py:999
-#, fuzzy
 msgid "Toggle mouse review mode."
-msgstr "Ubah mode main/istirahat"
+msgstr "Jungkitkan mode tinjau tetikus."
 
 #. Translators: Orca can present the current time to the
 #. user when the user presses
@@ -5799,7 +5776,7 @@ msgstr "Sajikan tanggal saat ini."
 #.
 #: ../src/orca/scripts/default.py:1029
 msgid "Passes the next command on to the current application."
-msgstr ""
+msgstr "Mengangsurkan perintah selanjutnya ke aplikasi kini."
 
 #. Translators: Orca normally intercepts all keyboard
 #. commands and only passes them along to the current
@@ -5809,9 +5786,8 @@ msgstr ""
 #. interception of it.
 #.
 #: ../src/orca/scripts/default.py:1519
-#, fuzzy
 msgid "Bypass mode enabled."
-msgstr "Pemeriksaan ejaan diaktifkan?"
+msgstr "Mode bypass difungsikan."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -5826,6 +5802,8 @@ msgid ""
 "Entering learn mode.  Press any key to hear its function.  To exit learn "
 "mode, press the escape key."
 msgstr ""
+"Memasuki mode belajar. Tekan sebarang tombol untuk mendengar fungsinya. "
+"Untuk keluar dari mode belajar, tekan tombol escape."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -5837,9 +5815,8 @@ msgstr ""
 #. display.
 #.
 #: ../src/orca/scripts/default.py:1554
-#, fuzzy
 msgid "Learn mode.  Press escape to exit."
-msgstr "Akhir presentasi. Tekan Escape untuk keluar."
+msgstr "Mode belajar. Tekan escape untuk keluar."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -5851,9 +5828,8 @@ msgstr "Akhir presentasi. Tekan Escape untuk keluar."
 #. mode.
 #.
 #: ../src/orca/scripts/default.py:1580
-#, fuzzy
 msgid "Exiting learn mode."
-msgstr "Keluar dari mode daftar pesan pemberitahuan."
+msgstr "Keluar dari mode belajar."
 
 #. Translators: Orca has a 'List Shortcuts' mode by which a user can
 #. navigate through a list of the bound commands in Orca. This is the
@@ -5861,9 +5837,8 @@ msgstr "Keluar dari mode daftar pesan pemberitahuan."
 #. mode has been entered.
 #.
 #: ../src/orca/scripts/default.py:1601
-#, fuzzy
 msgid "List shortcuts mode."
-msgstr "Keluar dari mode daftar pesan pemberitahuan."
+msgstr "Mode pintasan daftar."
 
 #. Translators: Orca has a "List Shortcuts Mode" that allows the user to
 #. list a group of keyboard shortcuts. Pressing 1 makes it possible for
@@ -5874,9 +5849,8 @@ msgstr "Keluar dari mode daftar pesan pemberitahuan."
 #. braille upon exiting this mode.
 #.
 #: ../src/orca/scripts/default.py:1640
-#, fuzzy
 msgid "Exiting list shortcuts mode."
-msgstr "Keluar dari mode daftar pesan pemberitahuan."
+msgstr "Keluar dari mode pintasan daftar."
 
 #. Translators: Orca has a command that allows the user to
 #. move the mouse pointer to the current object. This is a
@@ -5912,9 +5886,8 @@ msgstr "Tak ditemukan"
 #. user has navigated to a line with only whitespace on it.
 #.
 #: ../src/orca/scripts/default.py:2148 ../src/orca/scripts/default.py:2413
-#, fuzzy
 msgid "white space"
-msgstr "_White Space"
+msgstr "white space"
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5927,9 +5900,8 @@ msgstr "_White Space"
 #. they have left the flat review feature.
 #.
 #: ../src/orca/scripts/default.py:2603
-#, fuzzy
 msgid "Leaving flat review."
-msgstr "Berikutnya - Periksa akun"
+msgstr "Meninggalkan tinjau rata."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5942,51 +5914,45 @@ msgstr "Berikutnya - Periksa akun"
 #. they have entered the flat review feature.
 #.
 #: ../src/orca/scripts/default.py:2619
-#, fuzzy
 msgid "Entering flat review."
-msgstr "Berikutnya - Periksa akun"
+msgstr "Memasuki tinjau rata."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been turned back on.
 #.
 #: ../src/orca/scripts/default.py:2639
-#, fuzzy
 msgid "Speech enabled."
-msgstr "Tak Diaktifkan"
+msgstr "Ucapan difungsikan."
 
 #. Translators: this is a spoken prompt letting the user know
 #. that speech synthesis has been temporarily turned off.
 #.
 #: ../src/orca/scripts/default.py:2644
-#, fuzzy
 msgid "Speech disabled."
-msgstr "Buku dimatikan"
+msgstr "Ucapan dimatikan."
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will be spoken.
 #.
 #: ../src/orca/scripts/default.py:2657
-#, fuzzy
 msgid "Speaking of indentation and justification enabled."
-msgstr "Ditemukan %i sumber yang diaktifkan dan %i dimatikan."
+msgstr "Pengucapan indentasi dan perataan difungsikan."
 
 #. Translators: This is a brief message that will be presented
 #. to the user who has just enabled/disabled the speaking of
 #. indentation and justification information.
 #.
 #: ../src/orca/scripts/default.py:2662
-#, fuzzy
 msgctxt "indentation and justification"
 msgid "Enabled"
-msgstr "Diaktifkan"
+msgstr "Difungsikan"
 
 #. Translators: This is a detailed message indicating that
 #. indentation and justification will not be spoken.
 #.
 #: ../src/orca/scripts/default.py:2667
-#, fuzzy
 msgid "Speaking of indentation and justification disabled."
-msgstr "Ditemukan %i sumber yang diaktifkan dan %i dimatikan."
+msgstr "Pengucapan indentasi dan perataan dimatikan."
 
 #. Translators: This is a brief message that will be presented
 #. to the user who has just enabled/disabled the speaking of
@@ -6012,7 +5978,6 @@ msgstr "Tingkat tanda baca ditata ke sebagian."
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/scripts/default.py:2695
-#, fuzzy
 msgctxt "spoken punctuation"
 msgid "Some"
 msgstr "Beberapa"
@@ -6032,10 +5997,9 @@ msgstr "Tingkat tanda baca ditata ke kebanyakan."
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/scripts/default.py:2709
-#, fuzzy
 msgctxt "spoken punctuation"
 msgid "Most"
-msgstr "paling banyak"
+msgstr "Kebanyakan"
 
 #. Translators: This detailed message will be presented as the
 #. user cycles through the different levels of spoken punctuation.
@@ -6043,9 +6007,8 @@ msgstr "paling banyak"
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/scripts/default.py:2717
-#, fuzzy
 msgid "Punctuation level set to all."
-msgstr "Tingkat tanda baca ditata ke sebagian."
+msgstr "Tingkat tanda baca ditata ke semua."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different levels of spoken punctuation.
@@ -6063,9 +6026,8 @@ msgstr "Semua"
 #. will be spoken, Most will be spoken, or Some will be spoken.
 #.
 #: ../src/orca/scripts/default.py:2732
-#, fuzzy
 msgid "Punctuation level set to none."
-msgstr "Tingkat tanda baca ditata ke sebagian."
+msgstr "Tingkat tanda baca ditata ke nihil."
 
 #. Translators: This brief message will be presented as the user
 #. cycles through the different levels of spoken punctuation.
@@ -6090,9 +6052,8 @@ msgstr "Tak ada"
 #. levels quickly via a command.
 #.
 #: ../src/orca/scripts/default.py:2767
-#, fuzzy
 msgid "Key echo set to key."
-msgstr "Menata nilai KUNCI ke NILAI"
+msgstr "Gaung tombol ditata ke tombol."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -6126,9 +6087,8 @@ msgstr "tombol"
 #. levels quickly via a command.
 #.
 #: ../src/orca/scripts/default.py:2800
-#, fuzzy
 msgid "Key echo set to word."
-msgstr "Menetapkan nilai kunci yang dipilih memiliki wajib"
+msgstr "Gaung tombol ditata ke kata."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -6162,9 +6122,8 @@ msgstr "kata"
 #. levels quickly via a command.
 #.
 #: ../src/orca/scripts/default.py:2833
-#, fuzzy
 msgid "Key echo set to sentence."
-msgstr "Menetapkan nilai kunci yang dipilih memiliki wajib"
+msgstr "Gaung tombol ditata ke kalimat."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -6198,10 +6157,8 @@ msgstr "kalimat"
 #. levels quickly via a command.
 #.
 #: ../src/orca/scripts/default.py:2866
-#, fuzzy
 msgid "Key echo set to key and word."
-msgstr ""
-"Memberikan nilai pada kunci dan lakukan sinkronisasi. Gunakan dengan --type"
+msgstr "Gaung tombol ditata ke tombol dan kata."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -6235,10 +6192,8 @@ msgstr "tombol dan kata"
 #. levels quickly via a command.
 #.
 #: ../src/orca/scripts/default.py:2899
-#, fuzzy
 msgid "Key echo set to word and sentence."
-msgstr ""
-"Memberikan nilai pada kunci dan lakukan sinkronisasi. Gunakan dengan --type"
+msgstr "Gaung tombol ditata ke kata dan kalimat."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -6255,10 +6210,9 @@ msgstr ""
 #. cycling amongst the various echo options.
 #.
 #: ../src/orca/scripts/default.py:2914
-#, fuzzy
 msgctxt "key echo"
 msgid "word and sentence"
-msgstr "tombol dan kata"
+msgstr "kata dan kalimat"
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -6273,9 +6227,8 @@ msgstr "tombol dan kata"
 #. levels quickly via a command.
 #.
 #: ../src/orca/scripts/default.py:2932
-#, fuzzy
 msgid "Key echo set to None."
-msgstr "Menetapkan nilai kunci yang dipilih memiliki wajib"
+msgstr "Gaung tombol ditata ke nihil."
 
 #. Translators: Orca has an "echo" setting which allows
 #. the user to configure what is spoken in response to a
@@ -6301,18 +6254,16 @@ msgstr "Tak ada"
 #. they just want the current cell to be presented to them.
 #.
 #: ../src/orca/scripts/default.py:2967
-#, fuzzy
 msgid "Speak row"
-msgstr "kepala baris"
+msgstr "Ucapkan baris"
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
 #. they just want the current cell to be presented to them.
 #.
 #: ../src/orca/scripts/default.py:2973
-#, fuzzy
 msgid "Speak cell"
-msgstr "U_capkan sel"
+msgstr "Ucapkan sel"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca lets them know this.
@@ -6340,10 +6291,9 @@ msgstr "dipilih"
 #. them know this.
 #.
 #: ../src/orca/scripts/default.py:3405 ../src/orca/scripts/default.py:5438
-#, fuzzy
 msgctxt "text"
 msgid "unselected"
-msgstr "Kolum Tak Terpilih"
+msgstr "tak dipilih"
 
 #. Translators: this is to inform the user of the presence
 #. of the red squiggly line which indicates that a given
@@ -6358,9 +6308,9 @@ msgstr "salah eja"
 #. we are referring to.
 #.
 #: ../src/orca/scripts/default.py:4430
-#, fuzzy, python-format
+#, python-format
 msgid "Progress bar %d."
-msgstr "indikator kemajuan"
+msgstr "Bilah kemajuan %d."
 
 #. Translators: bold as in the font sense.
 #.
@@ -6415,18 +6365,16 @@ msgid "paragraph selected down from cursor position"
 msgstr "paragraf dipilih ke bawah dari posisi kursor"
 
 #: ../src/orca/scripts/default.py:5232
-#, fuzzy
 msgid "paragraph unselected down from cursor position"
-msgstr "paragraf dipilih ke bawah dari posisi kursor"
+msgstr "paragraf tak dipilih ke bawah dari posisi kursor"
 
 #: ../src/orca/scripts/default.py:5233
 msgid "paragraph selected up from cursor position"
 msgstr "paragraf dipilih ke atas dari posisi kursor"
 
 #: ../src/orca/scripts/default.py:5234
-#, fuzzy
 msgid "paragraph unselected up from cursor position"
-msgstr "paragraf dipilih ke atas dari posisi kursor"
+msgstr "paragraf tak dipilih ke atas dari posisi kursor"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -6434,7 +6382,7 @@ msgstr "paragraf dipilih ke atas dari posisi kursor"
 #.
 #: ../src/orca/scripts/default.py:5288
 msgid "line selected to end from previous cursor position"
-msgstr ""
+msgstr "baris dipilih sampai akhir dari posisi kursor sebelumnya"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -6442,7 +6390,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:5296
 msgid "line selected from start to previous cursor position"
-msgstr ""
+msgstr "baris dipilih dari awal dari posisi kursor sebelumnya"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -6456,9 +6404,8 @@ msgstr "halaman dipilih dari posisi kursor"
 #. Orca will speak information about what they have unselected.
 #.
 #: ../src/orca/scripts/default.py:5310
-#, fuzzy
 msgid "page unselected from cursor position"
-msgstr "halaman dipilih dari posisi kursor"
+msgstr "halaman tak dipilih dari posisi kursor"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -6472,9 +6419,8 @@ msgstr "halaman dipilih sampai posisi kursor"
 #. Orca will speak information about what they have unselected.
 #.
 #: ../src/orca/scripts/default.py:5324
-#, fuzzy
 msgid "page unselected to cursor position"
-msgstr "halaman dipilih sampai posisi kursor"
+msgstr "halaman tak dipilih sampai posisi kursor"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -6488,9 +6434,8 @@ msgstr "dokumen dipilih sampai posisi kursor"
 #. Orca will speak information about what they have unselected.
 #.
 #: ../src/orca/scripts/default.py:5354
-#, fuzzy
 msgid "document unselected to cursor position"
-msgstr "dokumen dipilih sampai posisi kursor"
+msgstr "dokumen tak dipilih sampai posisi kursor"
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
@@ -6504,9 +6449,8 @@ msgstr "dokumen dipilih dari posisi kursor"
 #. Orca will speak information about what they have unselected.
 #.
 #: ../src/orca/scripts/default.py:5368
-#, fuzzy
 msgid "document unselected from cursor position"
-msgstr "dokumen dipilih dari posisi kursor"
+msgstr "dokumen tak dipilih dari posisi kursor"
 
 #. Translators: this means the user has selected
 #. all the text in a document (e.g., Ctrl+a in gedit).
@@ -6527,9 +6471,8 @@ msgstr "Unicode %s"
 #. Translators: this announces that a bookmark has been entered
 #.
 #: ../src/orca/scripts/toolkits/Gecko/bookmarks.py:62
-#, fuzzy
 msgid "entered bookmark"
-msgstr "memasuki penanda"
+msgstr "memasuki penanda taut"
 
 #. Translators: The following string is spoken to let the user
 #. know that he/she is on a link within an image map. An image
@@ -6540,9 +6483,8 @@ msgstr "memasuki penanda"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/braille_generator.py:149
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:136
-#, fuzzy
 msgid "image map link"
-msgstr "Daerah peta gambar"
+msgstr "taut peta gambar"
 
 #. Translators: this is for navigating HTML content one
 #. character at a time.
@@ -6563,14 +6505,14 @@ msgstr "Ke karakter sebelumnya."
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:414
 msgid "Goes to next word."
-msgstr "Ke kata selanjutnya"
+msgstr "Ke kata selanjutnya."
 
 #. Translators: this is for navigating HTML content one
 #. word at a time.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:422
 msgid "Goes to previous word."
-msgstr "Ke kata sebelumnya"
+msgstr "Ke kata sebelumnya."
 
 #. Translators: this is for navigating HTML content one
 #. line at a time.
@@ -6638,9 +6580,8 @@ msgstr "Menyebabkan kotak kombo saat ini dikembangkan."
 #. a change ("assertive").
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:499
-#, fuzzy
 msgid "Advance live region politeness setting."
-msgstr "menata wilayah aktif menjadi sopan"
+msgstr "Tingkatkan pengaturan kesopanan wilayah aktif."
 
 #. Translators: this string refers to an Orca command which
 #. turns changes the live region "politness" level to "off."
@@ -6659,7 +6600,7 @@ msgstr "menata wilayah aktif menjadi sopan"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:519
 msgid "Set default live region politeness level to off."
-msgstr ""
+msgstr "Tata kesopanan wilayah aktif baku ke mati."
 
 #. Translators: this string refers to an Orca command which
 #. allows the user to toggle whether or not Orca pays attention
@@ -6671,18 +6612,16 @@ msgstr ""
 #. long as the monitoring of live regions is enabled.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:533
-#, fuzzy
 msgid "Monitor live regions."
-msgstr "tingkat kesopanan wilayah aktif dikembalikan"
+msgstr "Pantau wilayah aktif."
 
 #. Translators: this is for reviewing up to nine stored
 #. previous live messages. Please see previous translator
 #. notes for more information on live regions.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:542
-#, fuzzy
 msgid "Review live region announcement."
-msgstr "menata wilayah aktif menjadi sopan"
+msgstr "Tinjau pengumuman wilayah aktif."
 
 #. Translators: this is for navigating between objects
 #. (regardless of type) in HTML
@@ -6707,7 +6646,7 @@ msgstr "Ke objek selanjutnya."
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:570
 msgid "Switches between Gecko native and Orca caret navigation."
-msgstr ""
+msgstr "Bertukar antara navigasi native Gecko dan karet Orca."
 
 #. Translators: hovering the mouse over certain objects
 #. on a web page causes a new object to appear such as
@@ -6719,7 +6658,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:626
 msgid "Moves focus into and away from the current mouse over."
-msgstr ""
+msgstr "Pindahkan fokus ke dalam dan menjauh dari tetikus lewat kini."
 
 #. Translators: this is the title of a panel holding options for
 #. how to navigate HTML content (e.g., Orca caret navigation,
@@ -6737,18 +6676,16 @@ msgstr "Navigasi Halaman"
 #. Orca mode.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:719
-#, fuzzy
 msgid "Use _Orca Caret Navigation"
-msgstr "Pabrik Aplet Navigasi Jendela"
+msgstr "Gunakan Navigasi Karet _Orca"
 
 #. Translators: Orca provides keystrokes to navigate HTML content
 #. in a structural manner: go to previous/next header, list item,
 #. table, etc.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:730
-#, fuzzy
 msgid "Use Orca _Structural Navigation"
-msgstr "Pabrik Aplet Navigasi Jendela"
+msgstr "Gunakan Navigasi _Struktural Orca"
 
 #. Translators: Orca has had to implement its own caret navigation
 #. model to work around issues in Gecko/Firefox. In certain versions
@@ -6761,7 +6698,7 @@ msgstr "Pabrik Aplet Navigasi Jendela"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:746
 msgid "_Grab focus on objects when navigating"
-msgstr ""
+msgstr "Pe_gang fokus pada objek ketika menavigasi"
 
 #. Translators: when the user arrows up and down in HTML content,
 #. it is some times beneficial to always position the cursor at the
@@ -6771,7 +6708,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:760
 msgid "_Position cursor at start of line when navigating vertically"
-msgstr ""
+msgstr "_Posisikan kursor di awal baris ketika menavigasi secara vertikal"
 
 #. Translators: when the user loads a new page in Firefox, they
 #. can optionally tell Orca to automatically start reading a
@@ -6798,9 +6735,8 @@ msgstr "Opsi Pencarian"
 #. the user is still in Firefox's Find toolbar.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:855
-#, fuzzy
 msgid "Speak results during _find"
-msgstr "Ulangi perintah Cari yang lalu"
+msgstr "Ucapkan hasil selaman pen_carian"
 
 #. Translators: this is an option which dictates whether the line
 #. that contains the match from the Find toolbar should always
@@ -6809,40 +6745,35 @@ msgstr "Ulangi perintah Cari yang lalu"
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:867
 msgid "Onl_y speak changed lines during find"
-msgstr ""
+msgstr "Han_ya ucapkan baris yang diubah selama pencarian"
 
 #. Translators: this option allows the user to specify the number
 #. of matched characters that must be present before Orca speaks
 #. the line that contains the results from the Find toolbar.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:882
-#, fuzzy
-msgid "Minimum length of matched text:"
-msgstr "Panjang maksimal dari daerah teks"
+msgid "Minimum length of matched text: "
+msgstr "Panjang minimum dari daerah teks yang cocok: "
 
 #. Translators: when the user selects (highlights) text in
 #. a document, Orca will speak information about what they
 #. have selected.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1407
-#, fuzzy
 msgid "line selected down from cursor position"
-msgstr "paragraf dipilih ke bawah dari posisi kursor"
+msgstr "baris dipilih ke bawah dari posisi kursor"
 
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1408
-#, fuzzy
 msgid "line unselected down from cursor position"
-msgstr "paragraf dipilih ke bawah dari posisi kursor"
+msgstr "baris tak dipilih ke bawah dari posisi kursor"
 
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1409
-#, fuzzy
 msgid "line selected up from cursor position"
-msgstr "paragraf dipilih ke atas dari posisi kursor"
+msgstr "baris dipilih ke atas dari posisi kursor"
 
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1410
-#, fuzzy
 msgid "line unselected up from cursor position"
-msgstr "paragraf dipilih ke atas dari posisi kursor"
+msgstr "baris tak dipilih ke atas dari posisi kursor"
 
 #. Translators: Orca has a command that moves the mouse
 #. pointer to the current location on a web page. If
@@ -6873,7 +6804,7 @@ msgstr "Selesai memuat %s."
 #: ../src/orca/scripts/toolkits/WebKitGtk/braille_generator.py:58
 #, python-format
 msgid "h%d"
-msgstr ""
+msgstr "h%d"
 
 #. Translators: hovering the mouse over certain objects on a
 #. web page causes a new object to appear such as a pop-up
@@ -6882,9 +6813,8 @@ msgstr ""
 #. mouse. If this command fails, Orca will present this message.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5533
-#, fuzzy
 msgid "Mouse over object not found."
-msgstr "Obyek tidak ada pada tempat penyimpanan"
+msgstr "Objek tetikus lewat tak ditemukan."
 
 #. Translators: this is the action name for the 'open' action.
 #.
@@ -6899,22 +6829,19 @@ msgstr "buka"
 #: ../src/orca/scripts/toolkits/Gecko/script.py:6208
 #: ../src/orca/scripts/toolkits/Gecko/script.py:6218
 #: ../src/orca/structural_navigation.py:395
-#, fuzzy
 msgid "Live region support is off"
-msgstr "menata wilayah aktif menjadi mati"
+msgstr "Dukungan wilayah aktif mati"
 
 #. Translators: this announces to the user that live region
 #. are being monitored.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:6192
-#, fuzzy
 msgid "Live regions monitoring on"
-msgstr "tingkat kesopanan wilayah aktif dikembalikan"
+msgstr "Pemantauan wilayah aktif menyala"
 
 #: ../src/orca/scripts/toolkits/Gecko/script.py:6199
-#, fuzzy
 msgid "Live regions monitoring off"
-msgstr "Semua wilayah aktif dimatikan"
+msgstr "Pemantauan wilayah aktif mati"
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -6924,9 +6851,8 @@ msgstr "Semua wilayah aktif dimatikan"
 #. Orca mode.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:6234
-#, fuzzy
 msgid "Gecko is controlling the caret."
-msgstr "'%s' sedang mengendalikan desktop Anda jarak jauh."
+msgstr "Gecko sedang mengendalikan karet."
 
 #. Translators: Gecko native caret navigation is where
 #. Firefox itself controls how the arrow keys move the caret
@@ -6936,9 +6862,8 @@ msgstr "'%s' sedang mengendalikan desktop Anda jarak jauh."
 #. Orca mode.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/script.py:6246
-#, fuzzy
 msgid "Orca is controlling the caret."
-msgstr "'%s' sedang mengendalikan desktop Anda jarak jauh."
+msgstr "Orca sedang mengendalikan karet."
 
 #. Translators: the %(level)d is in reference to a heading
 #. level in HTML (e.g., For <h3>, the level is 3)
@@ -7039,7 +6964,7 @@ msgstr "hanya baca"
 #.
 #: ../src/orca/settings.py:837 ../src/orca/settings.py:915
 msgid "grayed"
-msgstr ""
+msgstr "dijadikan kelabu"
 
 #. Translators: this represents the state of a node in a tree.
 #. 'expanded' means the children are showing.  'collapsed' means the
@@ -7109,7 +7034,7 @@ msgstr "%(index)d dari %(total)d"
 #: ../src/orca/settings.py:910
 msgctxt "text"
 msgid "rdonly"
-msgstr ""
+msgstr "bacasaja"
 
 #. Translators: this represents the depth of a node in a tree
 #. view (i.e., how many ancestors a node has).  It is meant to
@@ -7163,9 +7088,8 @@ msgstr "Synthesizer Baku"
 #. called "Speech Dispatcher".
 #.
 #: ../src/orca/speechdispatcherfactory.py:96
-#, fuzzy
 msgid "Speech Dispatcher"
-msgstr "Pengucapan tak tersedia."
+msgstr "Speech Dispatcher"
 
 #: ../src/orca/speechdispatcherfactory.py:185
 #, python-format
@@ -7378,9 +7302,8 @@ msgstr "Tombol baku adalah %s"
 #. interfere with normal writing functions.
 #.
 #: ../src/orca/structural_navigation.py:590
-#, fuzzy
 msgid "Toggles structural navigation keys."
-msgstr "Tampilkan tombol pintas Evolution"
+msgstr "Jungkitkan tombol navigasi struktural."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around document content by object type.
@@ -7393,9 +7316,8 @@ msgstr "Tampilkan tombol pintas Evolution"
 #. It should be a brief informative message.
 #.
 #: ../src/orca/structural_navigation.py:644
-#, fuzzy
 msgid "Structural navigation keys on."
-msgstr "Tombol Lambat Dinyalakan"
+msgstr "Tombol navigasi struktural menyala."
 
 #. Translators: the structural navigation keys are designed
 #. to move the caret around document content by object type.
@@ -7408,9 +7330,8 @@ msgstr "Tombol Lambat Dinyalakan"
 #. It should be a brief informative message.
 #.
 #: ../src/orca/structural_navigation.py:656
-#, fuzzy
 msgid "Structural navigation keys off."
-msgstr "Tombol Lambat Dimatikan"
+msgstr "Tombol navigasi struktural mati."
 
 #. Translators: this is for navigating document content by
 #. moving from table cell to table cell. If the user gives a
@@ -7503,17 +7424,15 @@ msgstr[0] "Sel melingkupi %d kolom"
 #. An anchor is a named spot that one can jump to.
 #.
 #: ../src/orca/structural_navigation.py:1862
-#, fuzzy
 msgid "Goes to previous anchor."
-msgstr "Ke kata sebelumnya"
+msgstr "Ke jangkar sebelumnya."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
 #: ../src/orca/structural_navigation.py:1867
-#, fuzzy
 msgid "Goes to next anchor."
-msgstr "Ke karakter selanjutnya."
+msgstr "Ke jangkar selanjutnya."
 
 #. Translators: this is for navigating document content by
 #. moving from anchor to anchor. (An anchor is a named spot
@@ -7521,9 +7440,8 @@ msgstr "Ke karakter selanjutnya."
 #. will be presented to the user if no more anchors can be found.
 #.
 #: ../src/orca/structural_navigation.py:1924
-#, fuzzy
 msgid "No more anchors."
-msgstr "Tak ada daftar lagi."
+msgstr "Tak ada jangkar lagi."
 
 #. Translators: Orca has a command that allows the user to move
 #. to the next structural navigation object. In Orca, "structural
@@ -7562,17 +7480,15 @@ msgstr "Tak ditemukan"
 #. document.
 #.
 #: ../src/orca/structural_navigation.py:1952
-#, fuzzy
 msgid "Goes to previous blockquote."
-msgstr "Ke kata sebelumnya"
+msgstr "Ke blok kutipan sebelumnya."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
 #: ../src/orca/structural_navigation.py:1957
-#, fuzzy
 msgid "Goes to next blockquote."
-msgstr "Ke karakter selanjutnya."
+msgstr "Ke blok kutipan selanjutnya."
 
 #. Translators: this is for navigating document content by
 #. moving from blockquote to blockquote. This is a detailed
@@ -7580,9 +7496,8 @@ msgstr "Ke karakter selanjutnya."
 #. blockquotes can be found.
 #.
 #: ../src/orca/structural_navigation.py:2018
-#, fuzzy
 msgid "No more blockquotes."
-msgstr "Tak ada daftar lagi."
+msgstr "Tak ada blok kutipan lagi."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
@@ -7627,27 +7542,24 @@ msgstr "Ke kotak contreng selanjutnya."
 #. no more checkboxes can be found.
 #.
 #: ../src/orca/structural_navigation.py:2198
-#, fuzzy
 msgid "No more check boxes."
-msgstr "Tidak melakukan penggantian lagi"
+msgstr "Tak ada kotak contreng lagi."
 
 #. Translators: this is for navigating a document in a
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
 #: ../src/orca/structural_navigation.py:2227
-#, fuzzy
 msgid "Goes to previous large object."
-msgstr "Ke kotak contreng sebelumnya."
+msgstr "Ke objek besar sebelumnya."
 
 #. Translators: this is for navigating a document in a
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
 #: ../src/orca/structural_navigation.py:2233
-#, fuzzy
 msgid "Goes to next large object."
-msgstr "Ke kotak contreng selanjutnya."
+msgstr "Ke objek besar selanjutnya."
 
 #. Translators: this is for navigating document content by
 #. moving from 'large object' to 'large object'. A 'large
@@ -7657,9 +7569,8 @@ msgstr "Ke kotak contreng selanjutnya."
 #. can be found.
 #.
 #: ../src/orca/structural_navigation.py:2303
-#, fuzzy
 msgid "No more large objects."
-msgstr "Tidak melakukan penggantian lagi"
+msgstr "Tak ada objek besar lagi."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
@@ -7681,25 +7592,22 @@ msgstr "Ke kotak kombo selanjutnya."
 #. no more checkboxes can be found.
 #.
 #: ../src/orca/structural_navigation.py:2393
-#, fuzzy
 msgid "No more combo boxes."
-msgstr "Tidak melakukan penggantian lagi"
+msgstr "Tak ada kotak kombo lagi."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
 #: ../src/orca/structural_navigation.py:2421
-#, fuzzy
 msgid "Goes to previous entry."
-msgstr "Ke kata sebelumnya"
+msgstr "Ke entri sebelumnya."
 
 #. Translators: this is for navigating among text entries
 #. in a form.
 #.
 #: ../src/orca/structural_navigation.py:2426
-#, fuzzy
 msgid "Goes to next entry."
-msgstr "Ke karakter selanjutnya."
+msgstr "Ke entri selanjutnya."
 
 #. Translators: this is for navigating document content by
 #. moving from text entry to text entry in a form. This is
@@ -7707,9 +7615,8 @@ msgstr "Ke karakter selanjutnya."
 #. no more text entries can be found.
 #.
 #: ../src/orca/structural_navigation.py:2495
-#, fuzzy
 msgid "No more entries."
-msgstr "Tak ada daftar lagi."
+msgstr "Tak ada entri lagi."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
@@ -7731,25 +7638,22 @@ msgstr "Ke ruas formulir selanjutnya."
 #. field can be found.
 #.
 #: ../src/orca/structural_navigation.py:2592
-#, fuzzy
 msgid "No more form fields."
-msgstr "Tidak melakukan penggantian lagi"
+msgstr "Tak ada ruas formulir lagi."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1>)
 #.
 #: ../src/orca/structural_navigation.py:2620
-#, fuzzy
 msgid "Goes to previous heading."
-msgstr "Ke kata sebelumnya"
+msgstr "Ke heading sebelumnya."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g., <h1>)
 #.
 #: ../src/orca/structural_navigation.py:2625
-#, fuzzy
 msgid "Goes to next heading."
-msgstr "Ke karakter selanjutnya."
+msgstr "Ke heading selanjutnya."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
@@ -7757,15 +7661,15 @@ msgstr "Ke karakter selanjutnya."
 #: ../src/orca/structural_navigation.py:2635
 #, python-format
 msgid "Goes to previous heading at level %d."
-msgstr ""
+msgstr "Ke heading sebelumnya pada tingkat %d."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
 #: ../src/orca/structural_navigation.py:2642
-#, fuzzy, python-format
+#, python-format
 msgid "Goes to next heading at level %d."
-msgstr "Untuk ditata saat log masuk berikutnya"
+msgstr "Ke heading selanjutnya pada tingkat %d."
 
 #. Translators: this is for navigating HTML content by moving from
 #. heading to heading (e.g. <h1>, <h2>, etc). This string is the
@@ -7773,9 +7677,8 @@ msgstr "Untuk ditata saat log masuk berikutnya"
 #. headings found.
 #.
 #: ../src/orca/structural_navigation.py:2714
-#, fuzzy
 msgid "No more headings."
-msgstr "Tak ada daftar lagi."
+msgstr "Tak ada heading lagi."
 
 #. Translators: this is for navigating HTML content by moving from
 #. heading to heading at a particular level (i.e. only <h1> or only
@@ -7783,9 +7686,9 @@ msgstr "Tak ada daftar lagi."
 #. present if there are no more headings found at the desired level.
 #.
 #: ../src/orca/structural_navigation.py:2732
-#, fuzzy, python-format
+#, python-format
 msgid "No more headings at level %d."
-msgstr "Tombol spasi biasa pada semua level"
+msgstr "Tak ada heading lagi pada tingkat %d."
 
 #. Translators: this is for navigating to the previous ARIA
 #. role landmark.  ARIA role landmarks are the W3C defined
@@ -7793,9 +7696,8 @@ msgstr "Tombol spasi biasa pada semua level"
 #. of webpage like banners, main context, search etc.
 #.
 #: ../src/orca/structural_navigation.py:2762
-#, fuzzy
 msgid "Goes to previous landmark."
-msgstr "Ke kata sebelumnya"
+msgstr "Ke landmark sebelumnya."
 
 #. Translators: this is for navigating to the next ARIA
 #. role landmark.  ARIA role landmarks are the W3C defined
@@ -7803,9 +7705,8 @@ msgstr "Ke kata sebelumnya"
 #. of webpage like banners, main context, search etc.
 #.
 #: ../src/orca/structural_navigation.py:2769
-#, fuzzy
 msgid "Goes to next landmark."
-msgstr "Ke karakter selanjutnya."
+msgstr "Ke landmark selanjutnya."
 
 #. Translators: this is for navigating to the previous ARIA
 #. role landmark.  ARIA role landmarks are the W3C defined
@@ -7814,17 +7715,15 @@ msgstr "Ke karakter selanjutnya."
 #. is an indication that one was not found.
 #.
 #: ../src/orca/structural_navigation.py:2842
-#, fuzzy
 msgid "No landmark found."
-msgstr "Butir tak ditemukan"
+msgstr "Tak ditemukan landmark."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
 #: ../src/orca/structural_navigation.py:2870
-#, fuzzy
 msgid "Goes to previous list."
-msgstr "Ke daftar selanjutnya."
+msgstr "Ke daftar sebelumnya."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
@@ -7846,17 +7745,15 @@ msgstr "Tak ada daftar lagi."
 #. items in a document.
 #.
 #: ../src/orca/structural_navigation.py:2988
-#, fuzzy
 msgid "Goes to previous list item."
-msgstr "Ke kotak contreng sebelumnya."
+msgstr "Ke butir daftar sebelumnya."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
 #: ../src/orca/structural_navigation.py:2993
-#, fuzzy
 msgid "Goes to next list item."
-msgstr "Ke kotak contreng selanjutnya."
+msgstr "Ke butir daftar selanjutnya."
 
 #. Translators: this is for navigating document content by
 #. moving from bulleted/numbered list item to  bulleted/
@@ -7864,52 +7761,47 @@ msgstr "Ke kotak contreng selanjutnya."
 #. which Orca will present if there are no more list items found.
 #.
 #: ../src/orca/structural_navigation.py:3056
-#, fuzzy
 msgid "No more list items."
-msgstr "Pilih obyek dari daftar"
+msgstr "Tak ada butir daftar lagi."
 
 #. Translators: this is for navigating between live regions
 #.
 #: ../src/orca/structural_navigation.py:3083
-#, fuzzy
 msgid "Goes to previous live region."
-msgstr "menata wilayah aktif menjadi sopan"
+msgstr "Ke wilayah aktif sebelumnya."
 
 #. Translators: this is for navigating between live regions
 #.
 #: ../src/orca/structural_navigation.py:3087
-#, fuzzy
 msgid "Goes to next live region."
-msgstr "menata wilayah aktif menjadi sopan"
+msgstr "Ke wilayah aktif selanjutnya."
 
 #. Translators: this is for navigating to the last live region
 #. which made an announcement.
 #.
 #: ../src/orca/structural_navigation.py:3092
 msgid "Goes to the last live region which made an announcement."
-msgstr ""
+msgstr "Ke wilayah aktif terakhir yang membuat pengumuman."
 
 #. Translators: this is for navigating HTML in a structural
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
 #: ../src/orca/structural_navigation.py:3141
-#, fuzzy
 msgid "No more live regions."
-msgstr "tidak ada pesan aktif yang disimpan"
+msgstr "Tak ada wilayah aktif lagi."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
 #: ../src/orca/structural_navigation.py:3168
-#, fuzzy
 msgid "Goes to previous paragraph."
-msgstr "Ke paragraf berikutnya."
+msgstr "Ke paragraf sebelumnya."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
 #: ../src/orca/structural_navigation.py:3172
 msgid "Goes to next paragraph."
-msgstr "Ke paragraf berikutnya."
+msgstr "Ke paragraf selanjutnya."
 
 #. Translators: this is for navigating document content by moving
 #. from paragraph to paragraph. This string is the detailed message
@@ -8025,16 +7917,15 @@ msgstr "Ke sel terakhir dalam tabel."
 #. document.
 #.
 #: ../src/orca/structural_navigation.py:3625
-#, fuzzy
 msgid "Goes to previous unvisited link."
-msgstr "Ke taut berikutnya yang belum dikunjungi."
+msgstr "Ke taut sebelumnya yang belum dikunjungi."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
 #: ../src/orca/structural_navigation.py:3630
 msgid "Goes to next unvisited link."
-msgstr "Ke taut berikutnya yang belum dikunjungi."
+msgstr "Ke taut senlajutnya yang belum dikunjungi."
 
 #. Translators: this is for navigating document content by moving
 #. from unvisited link to unvisited link. This string is the
@@ -8042,24 +7933,22 @@ msgstr "Ke taut berikutnya yang belum dikunjungi."
 #. unvisited links found.
 #.
 #: ../src/orca/structural_navigation.py:3693
-#, fuzzy
 msgid "No more unvisited links."
-msgstr "Tidak melakukan penggantian lagi"
+msgstr "Tak ada taut yang belum dikunjungi lagi."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
 #: ../src/orca/structural_navigation.py:3721
-#, fuzzy
 msgid "Goes to previous visited link."
-msgstr "Ke taut berikutnya yang telah dikunjungi."
+msgstr "Ke taut sebelumnya yang telah dikunjungi."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
 #: ../src/orca/structural_navigation.py:3726
 msgid "Goes to next visited link."
-msgstr "Ke taut berikutnya yang telah dikunjungi."
+msgstr "Ke taut selanjutnya yang telah dikunjungi."
 
 #. Translators: this is for navigating document content by moving
 #. from visited link to visited link. This string is the detailed
@@ -8067,9 +7956,8 @@ msgstr "Ke taut berikutnya yang telah dikunjungi."
 #. links found.
 #.
 #: ../src/orca/structural_navigation.py:3782
-#, fuzzy
 msgid "No more visited links."
-msgstr "Tidak melakukan penggantian lagi"
+msgstr "Tak ada taut yang telah dikunjungi lagi."
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -8148,10 +8036,9 @@ msgstr "warna depan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:112
-#, fuzzy
 msgctxt "textattr"
 msgid "foreground stipple"
-msgstr "Mask latar depan titik-titik"
+msgstr "latar depan titik-titik"
 
 #. Translators: this attribute specifies the effect applied to the font
 #. used by the text.
@@ -8255,10 +8142,9 @@ msgstr "gaya paragraf"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:188
-#, fuzzy
 msgctxt "textattr"
 msgid "pixels above lines"
-msgstr "Piksel di atas tulisan"
+msgstr "piksel di atas baris"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave below each newline-terminated line.
@@ -8266,10 +8152,9 @@ msgstr "Piksel di atas tulisan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:195
-#, fuzzy
 msgctxt "textattr"
 msgid "pixels below lines"
-msgstr "Piksel di bawah tulisan"
+msgstr "piksel di bawah baris"
 
 #. Translators: this attribute specifies the pixels of blank space to
 #. leave between wrapped lines inside the same newline-terminated line
@@ -8278,10 +8163,9 @@ msgstr "Piksel di bawah tulisan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:203
-#, fuzzy
 msgctxt "textattr"
 msgid "pixels inside wrap"
-msgstr "Piksel dalam potongan"
+msgstr "piksel dalam lipatan"
 
 #. Translators: this attribute specifies the pixel width of the right margin.
 #. See:
@@ -8298,10 +8182,9 @@ msgstr "marjin kanan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:216
-#, fuzzy
 msgctxt "textattr"
 msgid "rise"
-msgstr "Angkat"
+msgstr "naik"
 
 #. Translators: this attribute specifies the scale of the characters. The
 #. value is a string representation of a double.
@@ -8433,10 +8316,9 @@ msgstr "bobot"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:311
-#, fuzzy
 msgctxt "textattr"
 msgid "wrap mode"
-msgstr "Mode potong"
+msgstr "mode lipat"
 
 #. Translators: this attribute specifies the way the text is written.
 #. Values are "lr-tb", "rl-tb", "tb-rl", "tb-lr", "bt-rl", "bt-lr", "lr",
@@ -8446,10 +8328,9 @@ msgstr "Mode potong"
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:320
-#, fuzzy
 msgctxt "textattr"
 msgid "writing mode"
-msgstr "_Moda impor:"
+msgstr "mode menulis"
 
 #. The following are the known values of some of these text attributes.
 #. These values were found in the Atk documentation at:
@@ -8499,7 +8380,7 @@ msgstr "tak ada"
 #: ../src/orca/text_attribute_names.py:360
 msgctxt "textattr"
 msgid "engrave"
-msgstr ""
+msgstr "gravir"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -8509,7 +8390,7 @@ msgstr ""
 #: ../src/orca/text_attribute_names.py:367
 msgctxt "textattr"
 msgid "emboss"
-msgstr ""
+msgstr "ukir timbul"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "font-effect".
@@ -8517,10 +8398,9 @@ msgstr ""
 #. http://wiki.services.openoffice.org/wiki/Accessibility/TextAttributes
 #.
 #: ../src/orca/text_attribute_names.py:374
-#, fuzzy
 msgctxt "textattr"
 msgid "outline"
-msgstr "Garis Besar"
+msgstr "garis luar"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8530,7 +8410,7 @@ msgstr "Garis Besar"
 #: ../src/orca/text_attribute_names.py:381
 msgctxt "textattr"
 msgid "overline"
-msgstr ""
+msgstr "overline"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "text-decoration".
@@ -8588,7 +8468,6 @@ msgstr "ganda"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:423
-#, fuzzy
 msgctxt "textattr"
 msgid "low"
 msgstr "rendah"
@@ -8622,10 +8501,9 @@ msgstr "kata"
 #. http://library.gnome.org/devel/gtk/stable/GtkTextTag.html#GtkWrapMode
 #.
 #: ../src/orca/text_attribute_names.py:447
-#, fuzzy
 msgctxt "textattr"
 msgid "word char"
-msgstr "sel karakter"
+msgstr "kata karakter"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "direction".
@@ -8692,10 +8570,9 @@ msgstr "tanpa rataan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:495
-#, fuzzy
 msgctxt "textattr"
 msgid "fill"
-msgstr "_Isi"
+msgstr "isi"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8703,10 +8580,9 @@ msgstr "_Isi"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:502
-#, fuzzy
 msgctxt "textattr"
 msgid "ultra condensed"
-msgstr "Termampat Ultra"
+msgstr "termampat ultra"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8714,10 +8590,9 @@ msgstr "Termampat Ultra"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:509
-#, fuzzy
 msgctxt "textattr"
 msgid "extra condensed"
-msgstr "Ekstra Dimampatkan"
+msgstr "ekstra dimampatkan"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8725,10 +8600,9 @@ msgstr "Ekstra Dimampatkan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:516
-#, fuzzy
 msgctxt "textattr"
 msgid "condensed"
-msgstr "Dimampatkan"
+msgstr "dimampatkan"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8736,10 +8610,9 @@ msgstr "Dimampatkan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:523
-#, fuzzy
 msgctxt "textattr"
 msgid "semi condensed"
-msgstr "Agak Dimampatkan"
+msgstr "agak dimampatkan"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch" and "variant".
@@ -8757,10 +8630,9 @@ msgstr "normal"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:537
-#, fuzzy
 msgctxt "textattr"
 msgid "semi expanded"
-msgstr "Agak Terkembang"
+msgstr "agak terkembang"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8768,7 +8640,6 @@ msgstr "Agak Terkembang"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:544
-#, fuzzy
 msgctxt "textattr"
 msgid "expanded"
 msgstr "dikembangkan"
@@ -8779,10 +8650,9 @@ msgstr "dikembangkan"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:551
-#, fuzzy
 msgctxt "textattr"
 msgid "extra expanded"
-msgstr "Terkembang Ekstra"
+msgstr "terkembang ekstra"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "stretch".
@@ -8790,10 +8660,9 @@ msgstr "Terkembang Ekstra"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:558
-#, fuzzy
 msgctxt "textattr"
 msgid "ultra expanded"
-msgstr "Terkembang Ultra"
+msgstr "terkembang ultra"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "variant".
@@ -8811,10 +8680,9 @@ msgstr "huruf kecil"
 #. http://library.gnome.org/devel/atk/1.22/AtkText.html#AtkTextAttribute
 #.
 #: ../src/orca/text_attribute_names.py:572
-#, fuzzy
 msgctxt "textattr"
 msgid "oblique"
-msgstr "Miring"
+msgstr "miring"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "style".
@@ -9042,10 +8910,9 @@ msgstr "tb"
 #. text attributes: "strikethrough." It refers to the line style.
 #.
 #: ../src/orca/text_attribute_names.py:733
-#, fuzzy
 msgctxt "textattr"
 msgid "solid"
-msgstr "Solid"
+msgstr "padat"
 
 #. Translators: this is one of the text attribute values for the following
 #. text attributes: "invalid". It is an indication that the text is not
@@ -9083,11 +8950,8 @@ msgstr "Tekan alt+f6 untuk memberikan fokus ke jendela anak."
 #. Translators: this gives tips on how to navigate items in a
 #. layered pane.
 #: ../src/orca/tutorialgenerator.py:280
-#, fuzzy
 msgid "To move to items, use either the arrow keys or type ahead searching."
-msgstr ""
-"Untuk berpindah ke butir, gunakan tombol panah atau pencarian berbasis "
-"ketikan."
+msgstr "Untuk memindah butir, pakai tombol panah atau pencarian type ahead."
 
 #. Translators: this is the tutorial string for when first landing
 #. on the desktop, describing how to access the system menus.
@@ -9137,7 +9001,7 @@ msgstr "Pakai kiri dan kanan untuk melihat tab lain."
 #. Translators: this is the tutorial string for activating a push button.
 #: ../src/orca/tutorialgenerator.py:470
 msgid "To activate press space."
-msgstr "Tekan spasi untuk mengaktifkan"
+msgstr "Tekan spasi untuk mengaktifkan."
 
 #. Translators: this is the tutorial string for when landing
 #. on a spin button.
