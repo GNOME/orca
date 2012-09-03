@@ -1,3 +1,19 @@
+3.5.91 - 3 September 2012
+
+General
+
+  * Fix for bug 681892 - More UnicodeDecodeErrors
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    el            Greek                   Tom Tryfonidis
+    id            Indonesian              Andika Triwidada
+    lt            Lithuanian              Aurimas Černius
+    pl            Polish                  Piotr Drąg
+    ru            Russian                 Yuri Myasoedov
+
+=========
+
 3.5.90 - 20 August 2012
 
 WebKitGtk - Braille Presentation
