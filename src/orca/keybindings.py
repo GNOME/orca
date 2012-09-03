@@ -225,6 +225,11 @@ class KeyBinding:
             keysym = keysym.replace('KP_', _('keypad ')).title()
         string = '%s%s %s' % (mods, keysym, clickCount)
 
+        try:
+            string = string.encode("UTF-8")
+        except UnicodeDecodeError:
+            pass
+
         return string.strip()
 
 class KeyBindings:

@@ -346,6 +346,9 @@ def localizeKeySequence(keys):
             keyName = keyName.encode("UTF-8")
         except UnicodeDecodeError:
             pass
-        keys = keys.replace(key, keyName)
+        try:
+            keys = keys.replace(key, keyName)
+        except UnicodeDecodeError:
+            pass
 
     return keys
