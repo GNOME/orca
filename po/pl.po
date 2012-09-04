@@ -4,12 +4,18 @@
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Stanisław Małolepszy <smalolepszy@aviary.pl>, 2007.
+# Piotr Leszczyński <piotr@kontury.pl>, 2008-2009.
+# Tomasz Dominikowski <dominikowski@gmail.com>, 2009.
+# Wadim Dziedzic <wdziedzic@aviary.pl>, 2009.
+# Piotr Drąg <piotrdrag@gmail.com>, 2010-2012.
+# Aviary.pl <gnomepl@aviary.pl>, 2007-2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-23 01:25+0200\n"
-"PO-Revision-Date: 2012-08-23 01:27+0200\n"
+"POT-Creation-Date: 2012-09-04 20:24+0200\n"
+"PO-Revision-Date: 2012-09-04 20:25+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -3192,7 +3198,13 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_main.py:125
 msgid "translator-credits"
-msgstr "Aviary.pl <gnomepl@aviary.pl>, 2009, 2010, 2011, 2012"
+msgstr ""
+"Stanisław Małolepszy <smalolepszy@aviary.pl>, 2007\n"
+"Piotr Leszczyński <piotr@kontury.pl>, 2008-2009\n"
+"Tomasz Dominikowski <dominikowski@gmail.com>, 2009\n"
+"Wadim Dziedzic <wdziedzic@aviary.pl>, 2009\n"
+"Piotr Drąg <piotrdrag@gmail.com>, 2010-2012\n"
+"Aviary.pl <gnomepl@aviary.pl>, 2007-2012"
 
 #. Translators: This text is used in the Orca About dialog. Orca is
 #. licensed under LGPL2.1+.
