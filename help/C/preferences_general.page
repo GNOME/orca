@@ -105,23 +105,6 @@
       Default value: checked
     </p>
   </section>
-  <section id="autolaunch">
-    <info>
-      <desc>
-        Preferences dialog box option to cause <app>Orca</app> to automatically
-        start when you log in.
-      </desc>
-    </info>
-    <title>Start Orca When You Login</title>
-    <media type="image" mime="image/png" src="figures/preferences_start_Orca_when_you_login.png"/>
-    <p>
-      When checked, this option will tell the system to automatically launch
-      <app>Orca</app> when you log in.
-    </p>
-    <p>
-      Default value: not checked
-    </p>
-  </section>
   <section id="objectundermouse">
     <info>
       <desc>
