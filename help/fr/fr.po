@@ -4652,7 +4652,7 @@ msgstr "<cmd>speech</cmd>"
 
 #: C/introduction.page:115(item/p) C/introduction.page:129(item/p)
 msgid "<cmd>braille</cmd>"
-msgstr "cmd>braille</cmd>"
+msgstr "<cmd>braille</cmd>"
 
 #: C/introduction.page:116(item/p) C/introduction.page:130(item/p)
 msgid "<cmd>braille-monitor</cmd>"
