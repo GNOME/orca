@@ -262,6 +262,36 @@ class Script(default.Script):
                 #
                 _("Clears the dynamic row headers"))
 
+        self.inputEventHandlers["panBrailleLeftHandler"] = \
+            input_event.InputEventHandler(
+                Script.panBrailleLeft,
+                # Translators: a refreshable braille display is an
+                # external hardware device that presents braille
+                # character to the user.  There are a limited number
+                # of cells on the display (typically 40 cells).  Orca
+                # provides the feature to build up a longer logical
+                # line and allow the user to press buttons on the
+                # braille display so they can pan left and right over
+                # this line.
+                #
+                _("Pans the braille display to the left."),
+                False) # Do not enable learn mode for this action
+
+        self.inputEventHandlers["panBrailleRightHandler"] = \
+            input_event.InputEventHandler(
+                Script.panBrailleRight,
+                # Translators: a refreshable braille display is an
+                # external hardware device that presents braille
+                # character to the user.  There are a limited number
+                # of cells on the display (typically 40 cells).  Orca
+                # provides the feature to build up a longer logical
+                # line and allow the user to press buttons on the
+                # braille display so they can pan left and right over
+                # this line.
+                #
+                _("Pans the braille display to the right."),
+                False) # Do not enable learn mode for this action
+
     def getAppKeyBindings(self):
         """Returns the application-specific keybindings for this script."""
 
@@ -775,6 +805,52 @@ class Script(default.Script):
         self.pointOfReference['lastColumn'] = column
         row = newTable.getRowAtIndex(index)
         self.pointOfReference['lastRow'] = row
+
+        return True
+
+    def panBrailleLeft(self, inputEvent=None, panAmount=0):
+        """In document content, we want to use the panning keys to browse the
+        entire document.
+        """
+
+        if self.flatReviewContext \
+           or not self.isBrailleBeginningShowing() \
+           or self.isSpreadSheetCell(orca_state.locusOfFocus):
+            return default.Script.panBrailleLeft(self, inputEvent, panAmount)
+
+        obj = self.utilities.findPreviousObject(orca_state.locusOfFocus)
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        self.updateBraille(obj)
+
+        # Hack: When panning to the left in a document, we want to start at
+        # the right/bottom of each new object. For now, we'll pan there.
+        # When time permits, we'll give our braille code some smarts.
+        while self.panBrailleInDirection(panToLeft=False):
+            pass
+        self.refreshBraille(False)
+
+        return True
+
+    def panBrailleRight(self, inputEvent=None, panAmount=0):
+        """In document content, we want to use the panning keys to browse the
+        entire document.
+        """
+
+        if self.flatReviewContext \
+           or not self.isBrailleEndShowing() \
+           or self.isSpreadSheetCell(orca_state.locusOfFocus):
+            return default.Script.panBrailleRight(self, inputEvent, panAmount)
+
+        obj = self.utilities.findNextObject(orca_state.locusOfFocus)
+        orca.setLocusOfFocus(None, obj, notifyScript=False)
+        self.updateBraille(obj)
+
+        # Hack: When panning to the right in a document, we want to start at
+        # the left/top of each new object. For now, we'll pan there. When time
+        # permits, we'll give our braille code some smarts.
+        while self.panBrailleInDirection(panToLeft=True):
+            pass
+        self.refreshBraille(False)
 
         return True
 
@@ -2296,4 +2372,9 @@ class Script(default.Script):
 
                 return [content.encode("UTF-8"), 0, startOffset]
 
-        return default.Script.getTextLineAtCaret(self, obj, offset)
+        textLine = default.Script.getTextLineAtCaret(self, obj, offset)
+        if not obj.getState().contains(pyatspi.STATE_FOCUSED):
+            textLine[0] = self.utilities.displayedText(obj)
+
+        return textLine
+
