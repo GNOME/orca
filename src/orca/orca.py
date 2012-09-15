@@ -262,6 +262,7 @@ def _processKeyboardEvent(event):
             _createOrcaXmodmap()
             _restoreOrcaKeys = False
     elif not keyboardEvent.isModifierKey():
+        _orcaModifierPressed = False
         orca_state.bypassNextCommand = False
  
     return isOrcaModifier or orca_state.learnModeEnabled
