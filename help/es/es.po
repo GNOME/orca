@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca.help.master\n"
-"POT-Creation-Date: 2012-08-10 17:25+0000\n"
+"POT-Creation-Date: 2012-09-16 21:06+0000\n"
 "PO-Revision-Date: 2012-08-13 10:19+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
@@ -26,7 +26,6 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
-#| msgid "translator-credits"
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
@@ -43,8 +42,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/index.page:14(media)
-#| msgid ""
-#| "@@image: 'figures/orca-logo.png'; md5=d8759cff4f184e7134cc5bcd6d32d839"
 msgctxt "_"
 msgid ""
 "external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
@@ -52,13 +49,11 @@ msgstr ""
 "external ref='figures/orca-logo.png' md5='d8759cff4f184e7134cc5bcd6d32d839'"
 
 #: C/index.page:3(info/title)
-#| msgid "Orca Screen Reader"
 msgctxt "text"
 msgid "Orca Screen Reader"
 msgstr "Lector de pantalla Orca"
 
 #: C/index.page:4(info/title)
-#| msgid "Introduction to the <app>Orca</app> Screen Reader"
 msgctxt "link"
 msgid "Introduction to the <app>Orca</app> Screen Reader"
 msgstr "Introducción al lector de pantalla <app>Orca</app>"
@@ -156,9 +151,6 @@ msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons Compartir Igual 3.0"
 
 #: C/index.page:13(page/title)
-#| msgid ""
-#| "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png"
-#| "\"><app>Orca</app>'s logo </media><app>Orca</app> Screen Reader"
 msgid ""
 "<media type=\"image\" mime=\"image/png\" src=\"figures/orca-logo.png\"> "
 "<app>Orca</app>'s logo </media> <app>Orca</app> Screen Reader"
@@ -171,8 +163,6 @@ msgid "Before You Begin"
 msgstr "Antes de comenzar"
 
 #: C/index.page:21(note/p)
-#| msgid ""
-#| "Read the <link href=\"ghelp:gnome-help#a11y\">Universal Access Help</link>"
 msgid ""
 "Read the <link href=\"help:gnome-help#a11y\">Universal Access Help</link>"
 msgstr ""
@@ -196,13 +186,11 @@ msgid "Quick Reference"
 msgstr "Referencia rápida"
 
 #: C/commands_bookmarks.page:6(info/title)
-#| msgid "4. Bookmarks"
 msgctxt "sort"
 msgid "4. Bookmarks"
 msgstr "4. Marcadores"
 
 #: C/commands_bookmarks.page:7(info/title)
-#| msgid "Bookmarks"
 msgctxt "link"
 msgid "Bookmarks"
 msgstr "Marcadores"
@@ -216,9 +204,6 @@ msgid "Bookmark Commands"
 msgstr "Comandos de marcadores"
 
 #: C/commands_bookmarks.page:22(item/p)
-#| msgid ""
-#| "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</"
-#| "key><key>Alt</key><key>1</key></keyseq>-<key>6</key>"
 msgid ""
 "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
 "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
@@ -235,9 +220,6 @@ msgstr ""
 "<keyseq><key>Modificador de Orca</key><key>Alt</key><key>B</key></keyseq>"
 
 #: C/commands_bookmarks.page:34(item/p)
-#| msgid ""
-#| "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</"
-#| "key><key>1</key></keyseq>-<key>6</key>"
 msgid ""
 "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
 "<key>1</key></keyseq>-<key>6</key>"
@@ -246,9 +228,6 @@ msgstr ""
 "key><key>1</key></keyseq>-<key>6</key>"
 
 #: C/commands_bookmarks.page:40(item/p)
-#| msgid ""
-#| "Go to the previous bookmark for the application or page: "
-#| "<keyseq><key>Orca Modifier</key><key>Shift</key><key>B</key></keyseq>"
 msgid ""
 "Go to the previous bookmark for the application or page: <keyseq><key>Orca "
 "Modifier</key><key>Shift</key><key>B</key> </keyseq>"
@@ -265,10 +244,6 @@ msgstr ""
 "<keyseq><key>Modificador de Orca</key><key>B</key></keyseq>"
 
 #: C/commands_bookmarks.page:53(item/p)
-#| msgid ""
-#| "\"Where am I\" information for this bookmark relative to the current "
-#| "pointer location: <keyseq><key>Alt</key><key>Shift</key><key>1</key></"
-#| "keyseq>-<key>6</key>"
 msgid ""
 "\"Where am I\" information for this bookmark relative to the current pointer "
 "location: <keyseq><key>Alt</key><key>Shift</key><key>1</key> </keyseq>-"
@@ -279,14 +254,12 @@ msgstr ""
 "<key>6</key>"
 
 #: C/commands_braille.page:6(info/title)
-#| msgid "2. Braille"
 msgctxt "sort"
 msgid "2. Braille"
 msgstr "2. Braille"
 
 #: C/commands_braille.page:7(info/title)
 #: C/preferences_braille.page:4(info/title)
-#| msgid "Braille"
 msgctxt "link"
 msgid "Braille"
 msgstr "Braille"
@@ -357,13 +330,11 @@ msgid "Returns to object with keyboard focus: Cursor Position"
 msgstr "Devuelve el objeto con el foco del teclado: la posición del cursor"
 
 #: C/commands_chat.page:6(info/title)
-#| msgid "2. Chat"
 msgctxt "sort"
 msgid "2. Chat"
 msgstr "2. Chat"
 
 #: C/commands_chat.page:7(info/title) C/preferences_chat.page:5(info/title)
-#| msgid "Chat"
 msgctxt "link"
 msgid "Chat"
 msgstr "Chat"
@@ -415,13 +386,11 @@ msgid "Enable/disable room-specific histories: (Unbound)"
 msgstr "Activar/desactivar los historiales de salas específicas: (sin asociar)"
 
 #: C/commands_controlling_orca.page:5(info/title)
-#| msgid "1. Controlling and Learning to Use Orca"
 msgctxt "sort"
 msgid "1. Controlling and Learning to Use Orca"
 msgstr "1. Controlar y aprender a usar Orca"
 
 #: C/commands_controlling_orca.page:6(info/title)
-#| msgid "Controlling and Learning to Use Orca"
 msgctxt "link"
 msgid "Controlling and Learning to Use Orca"
 msgstr "Controlar y aprender a usar Orca"
@@ -520,13 +489,11 @@ msgid "Exit either mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Salir de cualquiera de los modos: <keyseq><key>Esc</key></keyseq>"
 
 #: C/commands_debugging.page:4(info/title)
-#| msgid "1. Debugging"
 msgctxt "sort"
 msgid "1. Debugging"
 msgstr "1. Depurado"
 
 #: C/commands_debugging.page:5(info/title)
-#| msgid "Debugging"
 msgctxt "link"
 msgid "Debugging"
 msgstr "Depurar"
@@ -540,9 +507,6 @@ msgid "Debugging Commands"
 msgstr "Comandos de depurado"
 
 #: C/commands_debugging.page:20(item/p)
-#| msgid ""
-#| "Report information on the currently active script: <keyseq><key>Ctrl</"
-#| "key><key>Alt</key><key>Orca Modifier</key><key>Home</key></keyseq>"
 msgid ""
 "Report information on the currently active script: <keyseq><key>Ctrl</"
 "key><key>Alt</key><key>Orca Modifier</key> <key>Home</key></keyseq>"
@@ -563,10 +527,6 @@ msgstr ""
 "envía ni a la locución ni a Braille)."
 
 #: C/commands_debugging.page:36(item/p)
-#| msgid ""
-#| "Print a debug listing of all known applications to the console where "
-#| "<app>Orca</app> is running: <keyseq><key>Ctrl</key><key>Alt</"
-#| "key><key>Orca Modifier</key><key>End</key></keyseq>"
 msgid ""
 "Print a debug listing of all known applications to the console where "
 "<app>Orca</app> is running: <keyseq> <key>Ctrl</key><key>Alt</key><key>Orca "
@@ -577,10 +537,6 @@ msgstr ""
 "key><key>Alt</key><key>Modificador de Orca</key><key>Fin</key></keyseq>"
 
 #: C/commands_debugging.page:45(item/p)
-#| msgid ""
-#| "Print debug information about the ancestry of the object with focus: "
-#| "<keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page "
-#| "Up</key></keyseq>"
 msgid ""
 "Print debug information about the ancestry of the object with focus: "
 "<keyseq> <key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page Up</"
@@ -591,10 +547,6 @@ msgstr ""
 "key><key>Re Pág</key></keyseq>"
 
 #: C/commands_debugging.page:53(item/p)
-#| msgid ""
-#| "Print debug information about the hierarchy of the application with "
-#| "focus: <keyseq><key>Ctrl</key><key>Alt</key><key>Orca Modifier</"
-#| "key><key>Page Down</key></keyseq>"
 msgid ""
 "Print debug information about the hierarchy of the application with focus: "
 "<keyseq> <key>Ctrl</key><key>Alt</key><key>Orca Modifier</key><key>Page "
@@ -605,13 +557,11 @@ msgstr ""
 "Orca</key><key>Av Pág</key></keyseq>"
 
 #: C/commands_find.page:6(info/title)
-#| msgid "2. Orca Find"
 msgctxt "sort"
 msgid "2. Orca Find"
 msgstr "2. Búsqueda de Orca"
 
 #: C/commands_find.page:7(info/title)
-#| msgid "Orca Find"
 msgctxt "link"
 msgid "Orca Find"
 msgstr "Búsqueda de Orca"
@@ -666,9 +616,6 @@ msgid "Move flat review to the previous instance of a string:"
 msgstr "Mover la revisión a la anterior instancia de una cadena:"
 
 #: C/commands_find.page:58(item/p)
-#| msgid ""
-#| "Desktop: <keyseq><key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
-#| "key></keyseq>"
 msgid ""
 "Desktop: <keyseq> <key>Orca Modifier</key><key>Shift</key><key>KP Delete</"
 "key> </keyseq>"
@@ -677,9 +624,6 @@ msgstr ""
 "Supr</key></keyseq>"
 
 #: C/commands_find.page:66(item/p)
-#| msgid ""
-#| "Laptop: <keyseq><key>Orca Modifier</key><key>Ctrl</key><key>Right "
-#| "Bracket</key></keyseq>"
 msgid ""
 "Laptop: <keyseq> <key>Orca Modifier</key><key>Ctrl</key><key>Right Bracket</"
 "key> </keyseq>"
@@ -688,13 +632,11 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_flat_review.page:6(info/title)
-#| msgid "1. Flat Review"
 msgctxt "sort"
 msgid "1. Flat Review"
 msgstr "1. Revisión"
 
 #: C/commands_flat_review.page:7(info/title)
-#| msgid "Flat Review"
 msgctxt "link"
 msgid "Flat Review"
 msgstr "Revisión"
@@ -1050,13 +992,11 @@ msgstr ""
 "keyseq>"
 
 #: C/commands_live_regions.page:6(info/title)
-#| msgid "1. Live Region"
 msgctxt "sort"
 msgid "1. Live Region"
 msgstr "1. Región activa"
 
 #: C/commands_live_regions.page:7(info/title)
-#| msgid "Live Regions"
 msgctxt "link"
 msgid "Live Regions"
 msgstr "Regiones activas"
@@ -1116,13 +1056,11 @@ msgstr ""
 "key><key>F1</key></keyseq> pulsando <key>F9</key>"
 
 #: C/commands_mouse.page:5(info/title)
-#| msgid "3. Mouse/Pointer-Related"
 msgctxt "sort"
 msgid "3. Mouse/Pointer-Related"
 msgstr "3. Relacionado con el ratón/puntero"
 
 #: C/commands_mouse.page:6(info/title)
-#| msgid "Mouse/Pointer-Related"
 msgctxt "link"
 msgid "Mouse/Pointer-Related"
 msgstr "Relacionado con ratón/puntero"
@@ -1226,13 +1164,11 @@ msgid "Enable/disable mouse review mode: (Unbound)"
 msgstr "Activar/desactivar el modo de revisión del ratón: (sin asociar)"
 
 #: C/commands.page:5(info/title)
-#| msgid "4. <app>Orca</app>'s Commands"
 msgctxt "sort"
 msgid "4. <app>Orca</app>'s Commands"
 msgstr "4. Comandos de <app>Orca</app>"
 
 #: C/commands.page:6(info/title)
-#| msgid "Commands"
 msgctxt "link"
 msgid "Commands"
 msgstr "Comandos"
@@ -1258,13 +1194,11 @@ msgid "Troubleshooting"
 msgstr "Resolución de problemas"
 
 #: C/commands_reading.page:8(info/title)
-#| msgid "1. Reading"
 msgctxt "sort"
 msgid "1. Reading"
 msgstr "1. Lectura"
 
 #: C/commands_reading.page:9(info/title)
-#| msgid "Reading"
 msgctxt "link"
 msgid "Reading"
 msgstr "Lectura"
@@ -1310,9 +1244,6 @@ msgid "Reading Your Current Location"
 msgstr "Leer su ubicación actual"
 
 #: C/commands_reading.page:40(section/p)
-#| msgid ""
-#| "The following <app>Orca</app><link xref=\"commands_flat_review\">Flat "
-#| "Review Commands</link> can be used to read your current location:"
 msgid ""
 "The following <app>Orca</app> <link xref=\"commands_flat_review\">Flat "
 "Review Commands</link> can be used to read your current location:"
@@ -1380,9 +1311,9 @@ msgid ""
 "<app>Orca</app> will announce the selected text."
 msgstr ""
 "Orca ha dedicado un comando para obtener los atributos del texto en la "
-"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de <app>Orca</"
-"app> desde un objeto de texto en el que se ha seleccionado texto, <app>Orca</"
-"app> hablará el texto seleccionado."
+"ubicación del cursor. Además, si usa los comandos «Dónde estoy» de "
+"<app>Orca</app> desde un objeto de texto en el que se ha seleccionado texto, "
+"<app>Orca</app> hablará el texto seleccionado."
 
 #: C/commands_reading.page:183(item/p)
 msgid ""
@@ -1422,14 +1353,12 @@ msgstr ""
 "(doble pulsación)"
 
 #: C/commands_speech_settings.page:6(info/title)
-#| msgid "2. Speech Settings"
 msgctxt "sort"
 msgid "2. Speech Settings"
 msgstr "2. Configuración de voz"
 
 #: C/commands_speech_settings.page:7(info/title)
 #: C/preferences_speech.page:6(info/title)
-#| msgid "Speech"
 msgctxt "link"
 msgid "Speech"
 msgstr "Voz"
@@ -1500,13 +1429,11 @@ msgid "Increase the pitch: (Unbound)"
 msgstr "Aumentar el tono: (sin asociar)"
 
 #: C/commands_structural_navigation.page:6(info/title)
-#| msgid "2. Structural Navigation"
 msgctxt "sort"
 msgid "2. Structural Navigation"
 msgstr "2. Navegación estructural"
 
 #: C/commands_structural_navigation.page:7(info/title)
-#| msgid "Structural Navigation"
 msgctxt "link"
 msgid "Structural Navigation"
 msgstr "Navegación estructural"
@@ -1817,14 +1744,12 @@ msgstr ""
 "<keyseq><key>Mayús</key><key>A</key></keyseq>"
 
 #: C/commands_table.page:6(info/title)
-#| msgid "3. Table Navigation"
 msgctxt "sort"
 msgid "3. Table Navigation"
 msgstr "3. Navegación por tablas"
 
 #: C/commands_table.page:7(info/title)
 #: C/preferences_table_navigation.page:9(info/title)
-#| msgid "Table Navigation"
 msgctxt "link"
 msgid "Table Navigation"
 msgstr "Navegación por tablas"
@@ -1880,13 +1805,11 @@ msgstr ""
 "Orca</key><key>R</key></keyseq> (doble pulsación)"
 
 #: C/commands_time_date_notifications.page:6(info/title)
-#| msgid "4. Time, Date, and Notification"
 msgctxt "sort"
 msgid "4. Time, Date, and Notification"
 msgstr "4. Fecha, hora y notificación"
 
 #: C/commands_time_date_notifications.page:7(info/title)
-#| msgid "Time, Date, and Notification"
 msgctxt "link"
 msgid "Time, Date, and Notification"
 msgstr "Fecha, hora y notificación"
@@ -1957,13 +1880,11 @@ msgstr ""
 "Presentar una lista de todos los mensajes de notificación: (sin asociar)"
 
 #: C/commands_where_am_i.page:6(info/title)
-#| msgid "3. Where Am I"
 msgctxt "sort"
 msgid "3. Where Am I"
 msgstr "3. ¿Dónde estoy?"
 
 #: C/commands_where_am_i.page:7(info/title)
-#| msgid "Where Am I"
 msgctxt "link"
 msgid "Where Am I"
 msgstr "¿Dónde estoy?"
@@ -2039,7 +1960,6 @@ msgstr ""
 "pulsación)"
 
 #: C/howto_bookmarks.page:4(info/title)
-#| msgid "6. Bookmarks"
 msgctxt "sort"
 msgid "6. Bookmarks"
 msgstr "6. Marcadores"
@@ -2082,7 +2002,7 @@ msgstr ""
 "Una vez que ha definido un marcador, puede navegar a este más tarde y puede "
 "hacerlo sin importar si ha elegido o no guardar de manera permanente los "
 "marcadores asociados a su entorno actual. La navegación se puede basar en el "
-"número del marcador si desea saltar directamente a un elemento específico. O "
+"número del marcador si quiere saltar directamente a un elemento específico. O "
 "bien, puede navegar hacia el marcador siguiente o anterior del mismo modo "
 "que con un objeto de <link xref=\"howto_structural_navigation\">navegación "
 "estructural</link>"
@@ -2123,7 +2043,6 @@ msgstr ""
 "\">Comandos de marcadores</link>."
 
 #: C/howto_documents.page:5(info/title)
-#| msgid "1. Documents"
 msgctxt "sort"
 msgid "1. Documents"
 msgstr "1. Documentos"
@@ -2213,7 +2132,6 @@ msgstr ""
 "\">comandos de lectura</link>."
 
 #: C/howto_flat_review.page:5(info/title)
-#| msgid "2. Flat Review"
 msgctxt "sort"
 msgid "2. Flat Review"
 msgstr "2. Revisión"
@@ -2289,7 +2207,6 @@ msgstr ""
 "automáticamente la revisión."
 
 #: C/howto_forms.page:5(info/title)
-#| msgid "5. Filling out forms"
 msgctxt "sort"
 msgid "5. Filling out forms"
 msgstr "5. Rellenar formularios"
@@ -2377,11 +2294,6 @@ msgstr ""
 "enfocable siguiente/anterior, sin importar lo que ese objeto resulte ser."
 
 #: C/howto_forms.page:70(item/p)
-#| msgid ""
-#| "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms"
-#| "\"> structural navigation</link> to move to the next/previous form field: "
-#| "<keyseq><key>Orca Modifier</key><key>Tab</key></keyseq>/<keyseq><key>Orca "
-#| "Modifier</key><key>Shift</key><key>Tab</key></keyseq>."
 msgid ""
 "Use <app>Orca</app>'s <link xref=\"commands_structural_navigation#forms\"> "
 "structural navigation</link> to move to the next/previous form field: "
@@ -2395,10 +2307,6 @@ msgstr ""
 "key></keyseq>."
 
 #: C/howto_forms.page:78(item/p)
-#| msgid ""
-#| "Use <app>Orca</app>'s commands for moving to the next/previous object or "
-#| "chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key></keyseq>/"
-#| "<keyseq><key>Orca Modifier</key><key>Left</key></keyseq>."
 msgid ""
 "Use <app>Orca</app>'s commands for moving to the next/previous object or "
 "chunk of text: <keyseq><key>Orca Modifier</key><key>Right</key> </keyseq>/"
@@ -2420,7 +2328,6 @@ msgstr ""
 "<app>Orca</app> esté controlando el cursor."
 
 #: C/howto_key_bindings.page:5(info/title)
-#| msgid "8. Keybindings"
 msgctxt "sort"
 msgid "8. Keybindings"
 msgstr "8. Asociaciones de teclas"
@@ -2519,9 +2426,6 @@ msgid "Restoring Original Bindings"
 msgstr "Restaurar las asociaciones originales"
 
 #: C/howto_key_bindings.page:92(item/p) C/howto_key_bindings.page:114(item/p)
-#| msgid ""
-#| "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
-#| "pressing <keyseq><key>Orca Modifier</key><key>Space</key></keyseq>."
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
 "pressing <keyseq><key>Orca Modifier</key><key>Space</key> </keyseq>."
@@ -2564,7 +2468,6 @@ msgid "Press <key>Return</key> to confirm."
 msgstr "Pulse <key>Intro</key> para confirmar."
 
 #: C/howto_keyboard_layout.page:5(info/title)
-#| msgid "6. Keyboard Layout"
 msgctxt "sort"
 msgid "6. Keyboard Layout"
 msgstr "6. Distribución del teclado"
@@ -2630,7 +2533,6 @@ msgid "Arrow to the desired layout."
 msgstr "Seleccione la distribución que quiere."
 
 #: C/howto_learn_modes.page:5(info/title)
-#| msgid "5. The \"Learn\" Modes"
 msgctxt "sort"
 msgid "5. The \"Learn\" Modes"
 msgstr "5. Los modos de «aprendizaje»"
@@ -2648,9 +2550,6 @@ msgid "Using Learn Mode"
 msgstr "Usar el modo de aprendizaje"
 
 #: C/howto_learn_modes.page:29(item/p)
-#| msgid ""
-#| "Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key><key>H</"
-#| "key></keyseq>."
 msgid ""
 "Get into Learn Mode by pressing <keyseq><key>Orca Modifier</key> <key>H</"
 "key></keyseq>."
@@ -2675,9 +2574,6 @@ msgid "Using List Shortcuts Mode"
 msgstr "Usar el modo de lista de atajos"
 
 #: C/howto_learn_modes.page:47(item/p)
-#| msgid ""
-#| "Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</"
-#| "key><key>H</key></keyseq> twice quickly."
 msgid ""
 "Get into List Shortcuts Mode by pressing <keyseq><key>Orca Modifier</key> "
 "<key>H</key></keyseq> twice quickly."
@@ -2707,7 +2603,6 @@ msgid "Press <key>Esc</key> to exit List Shortcuts Mode."
 msgstr "Pulse <key>Esc</key> para salir del modo de lista de atajos."
 
 #: C/howto_live_regions.page:5(info/title)
-#| msgid "6. Live Regions"
 msgctxt "sort"
 msgid "6. Live Regions"
 msgstr "6. Regiones activas"
@@ -2749,12 +2644,12 @@ msgid ""
 "within that region. Live regions can be \"off\", \"polite\", or \"aggressive"
 "\" to the point of being \"rude.\""
 msgstr ""
-"Las regiones activas tienen un nivel de «comportamiento» asociado establecido "
-"por el autor como un medio para transmitir la importancia de la información "
-"y para sugerir cuándo las tecnologías de asistencia deberían informar a los "
-"usuarios sobre las actualizaciones realizadas en esa región. Las regiones "
-"activas pueden ser «desactivada», «cortés» o «agresiva» hasta el punto de ser "
-"«grosera»."
+"Las regiones activas tienen un nivel de «comportamiento» asociado "
+"establecido por el autor como un medio para transmitir la importancia de la "
+"información y para sugerir cuándo las tecnologías de asistencia deberían "
+"informar a los usuarios sobre las actualizaciones realizadas en esa región. "
+"Las regiones activas pueden ser «desactivada», «cortés» o «agresiva» hasta "
+"el punto de ser «grosera»."
 
 #: C/howto_live_regions.page:37(section/title)
 msgid "<app>Orca</app>'s Support for Live Regions"
@@ -2792,7 +2687,6 @@ msgstr ""
 "Revisar los nueve últimos mensajes de las regiones activas que se mostraron"
 
 #: C/howto_mouse_review.page:5(info/title)
-#| msgid "4. Mouse Review"
 msgctxt "sort"
 msgid "4. Mouse Review"
 msgstr "4. Revisión del ratón"
@@ -2816,9 +2710,9 @@ msgid ""
 "with information to present, <app>Orca</app> will present that object and "
 "its information to you."
 msgstr ""
-"La característica «Revisión del ratón» de <app>Orca</app> hace que <app>Orca</"
-"app> muestre el objeto bajo el puntero del ratón. A diferencia de la "
-"característica <link xref=\"howto_flat_review\">revisión</link> de "
+"La característica «Revisión del ratón» de <app>Orca</app> hace que "
+"<app>Orca</app> muestre el objeto bajo el puntero del ratón. A diferencia de "
+"la característica <link xref=\"howto_flat_review\">revisión</link> de "
 "<app>Orca</app>, la revisión del ratón no se limita a la ventana activa; en "
 "lugar de eso, <app>Orca</app> tratará de identificar qué objeto accesible, "
 "si existe alguno, se encuentra visualmente bajo el puntero cuando mueve el "
@@ -2871,7 +2765,6 @@ msgstr ""
 "teclas son independientes entre sí."
 
 #: C/howto_notifications.page:5(info/title)
-#| msgid "5. Notifications"
 msgctxt "sort"
 msgid "5. Notifications"
 msgstr "5. Notificaciones"
@@ -2992,8 +2885,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/howto_orca_find.page:50(media)
-#| msgid ""
-#| "@@image: 'figures/orca_find.png'; md5=c57e798757d41146c96c263865c68610"
 msgctxt "_"
 msgid ""
 "external ref='figures/orca_find.png' md5='c57e798757d41146c96c263865c68610'"
@@ -3001,7 +2892,6 @@ msgstr ""
 "external ref='figures/orca_find.png' md5='c57e798757d41146c96c263865c68610'"
 
 #: C/howto_orca_find.page:5(info/title)
-#| msgid "3. Orca Find"
 msgctxt "sort"
 msgid "3. Orca Find"
 msgstr "3. Búsqueda de Orca"
@@ -3106,8 +2996,8 @@ msgid ""
 "Whether Find should look down and/or to the right for the next match or up "
 "and/or to the left."
 msgstr ""
-"Indica si «Buscar» debe buscar hacia abajo y/o a la derecha o arriba y/o a la "
-"izquierda para la siguiente coincidencia"
+"Indica si «Buscar» debe buscar hacia abajo y/o a la derecha o arriba y/o a "
+"la izquierda para la siguiente coincidencia"
 
 #: C/howto_orca_find.page:91(item/p)
 msgid "Default value of <gui>Search backwards</gui>: not checked"
@@ -3162,10 +3052,7 @@ msgstr ""
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/howto_profiles.page:28(media) C/preferences_general.page:169(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_profiles.png'; "
-#| "md5=9c4666e94c98347f5f4efc24c74c9458"
+#: C/howto_profiles.page:28(media) C/preferences_general.page:152(media)
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_profiles.png' "
@@ -3179,9 +3066,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/howto_profiles.page:51(media)
-#| msgid ""
-#| "@@image: 'figures/profiles_save_as.png'; "
-#| "md5=e900250869a33ea0030fb42d4bf1da4e"
 msgctxt "_"
 msgid ""
 "external ref='figures/profiles_save_as.png' "
@@ -3195,8 +3079,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/howto_profiles.page:82(media)
-#| msgid ""
-#| "@@image: 'figures/profiles_load.png'; md5=4d8fc078d263c5cebc07ed8cb60e63a8"
 msgctxt "_"
 msgid ""
 "external ref='figures/profiles_load.png' "
@@ -3210,9 +3092,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/howto_profiles.page:106(media)
-#| msgid ""
-#| "@@image: 'figures/profiles_conflict.png'; "
-#| "md5=0da0839b41fce88a4c177e5fb52b3e6b"
 msgctxt "_"
 msgid ""
 "external ref='figures/profiles_conflict.png' "
@@ -3222,7 +3101,6 @@ msgstr ""
 "md5='0da0839b41fce88a4c177e5fb52b3e6b'"
 
 #: C/howto_profiles.page:5(info/title)
-#| msgid "9. Profiles"
 msgctxt "sort"
 msgid "9. Profiles"
 msgstr "9. Perfiles"
@@ -3232,7 +3110,7 @@ msgid "Maintaining multiple configurations"
 msgstr "Mantener varias configuraciones"
 
 #: C/howto_profiles.page:15(page/title)
-#: C/preferences_general.page:168(section/title)
+#: C/preferences_general.page:151(section/title)
 msgid "Profiles"
 msgstr "Perfiles"
 
@@ -3371,13 +3249,11 @@ msgstr ""
 "app>, se usará el perfil recientemente seleccionado."
 
 #: C/howto_setting_up_orca.page:6(info/title)
-#| msgid "3. Orca Configuration"
 msgctxt "sort"
 msgid "3. Orca Configuration"
 msgstr "3. Configuración de Orca"
 
 #: C/howto_setting_up_orca.page:7(info/title)
-#| msgid "Configuration"
 msgctxt "link"
 msgid "Configuration"
 msgstr "Configuración"
@@ -3405,11 +3281,6 @@ msgstr ""
 "de sus sesión activa, ocurrirá una de dos cosas:"
 
 #: C/howto_setting_up_orca.page:29(item/p)
-#| msgid ""
-#| "If accessibility support has already been enabled for your session, you "
-#| "will be placed in the <app>Orca</app><link xref=\"preferences"
-#| "\">Preferences</link> dialog box where you can customize <app>Orca</app> "
-#| "completely and then use it immediately."
 msgid ""
 "If accessibility support has already been enabled for your session, you will "
 "be placed in the <app>Orca</app> <link xref=\"preferences\">Preferences</"
@@ -3467,11 +3338,6 @@ msgstr ""
 "<app>Orca</app>."
 
 #: C/howto_setting_up_orca.page:71(item/p)
-#| msgid ""
-#| "Get into the <link xref=\"preferences\">Preferences</link> dialog box by "
-#| "pressing the <gui>Preferences</gui> button in the <app>Orca</app> main "
-#| "window or by pressing <keyseq><key>Orca Modifier</key><key>Space</key></"
-#| "keyseq> from within any accessible application."
 msgid ""
 "Get into the <link xref=\"preferences\">Preferences</link> dialog box by "
 "pressing the <gui>Preferences</gui> button in the <app>Orca</app> main "
@@ -3484,7 +3350,6 @@ msgstr ""
 "key><key>Espacio</key></keyseq> desde cualquier aplicación accesible."
 
 #: C/howto_structural_navigation.page:7(info/title)
-#| msgid "3. Structural Navigation"
 msgctxt "sort"
 msgid "3. Structural Navigation"
 msgstr "3. Navegación estructural"
@@ -3643,10 +3508,6 @@ msgstr ""
 "navegación estructural."
 
 #: C/howto_structural_navigation.page:97(item/p)
-#| msgid ""
-#| "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog "
-#| "box for the current application by pressing: <keyseq><key>Ctrl</"
-#| "key><key>Orca Modifier</key><key>Space</key></keyseq>"
 msgid ""
 "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog box "
 "for the current application by pressing: <keyseq> <key>Ctrl</key><key>Orca "
@@ -3669,7 +3530,6 @@ msgid "Examine and change the settings as you see fit."
 msgstr "Examine y cambie la configuración como considere conveniente."
 
 #: C/howto_tables.page:5(info/title)
-#| msgid "4. Tables"
 msgctxt "sort"
 msgid "4. Tables"
 msgstr "4. Tablas"
@@ -3714,14 +3574,6 @@ msgstr ""
 "foco. Ocurren situaciones similares en las tablas de documento."
 
 #: C/howto_tables.page:36(section/p)
-#| msgid ""
-#| "<app>Orca</app> allows you to customize whether only the cell should be "
-#| "read, or if the full row should be. You can set this preference Orca wide "
-#| "as well as on an application-by-application basis. How to do each is "
-#| "described in the guide on <link xref=\"preferences\"><app>Orca</app>'s "
-#| "preferences dialogs</link>. The setting can be found in the <gui>Table "
-#| "Rows</gui> radio button group on the <link xref=\"preferences_speech"
-#| "\"><gui>Speech</gui> page</link>."
 msgid ""
 "<app>Orca</app> allows you to customize whether only the cell should be "
 "read, or if the full row should be. You can set this preference Orca wide as "
@@ -3740,10 +3592,6 @@ msgstr ""
 "gui> <link xref=\"preferences_speech\"><gui>página de</gui> Voz</link>."
 
 #: C/howto_tables.page:45(section/p)
-#| msgid ""
-#| "In addition, there is an <app>Orca</app> command which allows you to "
-#| "toggle this setting on the fly: <keyseq><key>Orca Modifier</key><key>F11</"
-#| "key></keyseq>."
 msgid ""
 "In addition, there is an <app>Orca</app> command which allows you to toggle "
 "this setting on the fly: <keyseq><key>Orca Modifier</key> <key>F11</key></"
@@ -3901,7 +3749,6 @@ msgstr ""
 "<app>Orca</app> que no hay cabeceras de fila."
 
 #: C/howto_text_attributes.page:5(info/title)
-#| msgid "2. Text Attributes"
 msgctxt "sort"
 msgid "2. Text Attributes"
 msgstr "2. Atributos de texto"
@@ -3929,11 +3776,6 @@ msgid "Obtaining Formatting Information"
 msgstr "Obtener Información de Formato"
 
 #: C/howto_text_attributes.page:25(section/p)
-#| msgid ""
-#| "When you press <keyseq><key>Orca Modifier</key><key>F</key></keyseq>, "
-#| "<app>Orca</app> will speak known text attribute information about an "
-#| "object. In addition, <app>Orca</app> will optionally indicate text "
-#| "attributes in braille by \"underlining\" them as you navigate a document."
 msgid ""
 "When you press <keyseq><key>Orca Modifier</key><key>F</key> </keyseq>, "
 "<app>Orca</app> will speak known text attribute information about an object. "
@@ -4073,7 +3915,7 @@ msgstr "Se le harán algunas preguntas:"
 
 #: C/howto_text_setup.page:39(item/p)
 msgid "Select desired speech system"
-msgstr "Seleccione el sistema de voz deseado"
+msgstr "Seleccione el sistema de voz que quiere"
 
 #: C/howto_text_setup.page:40(item/p)
 msgid ""
@@ -4082,12 +3924,12 @@ msgid ""
 "speech system and press <key>Return</key>."
 msgstr ""
 "Las siguientes opciones dependerán de qué sistemas de voz tenga instalados "
-"en su sistema. Escriba el número asociado a su sistema de voz deseado y "
+"en su sistema. Escriba el número asociado a su sistema de voz elegido y "
 "pulse <key>Intro</key>."
 
 #: C/howto_text_setup.page:47(item/p)
 msgid "Select desired speech server"
-msgstr "Seleccione el servidor de voz deseado"
+msgstr "Seleccione el servidor de voz que quiere"
 
 #: C/howto_text_setup.page:48(item/p)
 msgid ""
@@ -4097,11 +3939,11 @@ msgid ""
 msgstr ""
 "Las siguientes opciones dependerán de qué sintetizadores de voz tenga "
 "instalados en su sistema. Escriba el número asociado a su servidor de voz "
-"deseado y pulse <key>Intro</key>."
+"elegido y pulse <key>Intro</key>."
 
 #: C/howto_text_setup.page:55(item/p)
 msgid "Select desired voice"
-msgstr "Seleccione la voz deseada"
+msgstr "Seleccione la voz que quiere"
 
 #: C/howto_text_setup.page:56(item/p)
 msgid ""
@@ -4231,7 +4073,7 @@ msgstr ""
 
 #: C/howto_text_setup.page:129(item/p)
 msgid "Select desired keyboard layout."
-msgstr "Seleccione la distribución de teclado deseada."
+msgstr "Seleccione la distribución de teclado que quiere."
 
 #: C/howto_text_setup.page:130(item/p)
 msgid ""
@@ -4315,7 +4157,6 @@ msgstr ""
 "app> se ejecutará."
 
 #: C/howto_the_orca_modifier.page:5(info/title)
-#| msgid "4. The Orca Modifier"
 msgctxt "sort"
 msgid "4. The Orca Modifier"
 msgstr "4. El modificador de Orca"
@@ -4391,7 +4232,6 @@ msgid "Caps_Lock"
 msgstr "Bloqueo_mayúscula"
 
 #: C/howto_toggling_caps_lock.page:5(info/title)
-#| msgid "7. CapsLock in Laptop Layout"
 msgctxt "sort"
 msgid "7. CapsLock in Laptop Layout"
 msgstr "7. Bloq Mayús en distribución de portátil"
@@ -4424,10 +4264,6 @@ msgid "Toggling CapsLock in Laptop Layout"
 msgstr "Alternar el «Bloq Mayús» en la distribución de portátil"
 
 #: C/howto_toggling_caps_lock.page:26(item/p)
-#| msgid ""
-#| "Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</"
-#| "key></keyseq>, to tell <app>Orca</app> that the next command should be "
-#| "ignored."
 msgid ""
 "Press the Bypass command, <keyseq><key>Orca Modifier</key><key>BackSpace</"
 "key> </keyseq>, to tell <app>Orca</app> that the next command should be "
@@ -4442,7 +4278,6 @@ msgid "Press <key>CapsLock</key> to toggle its locked state."
 msgstr "Pulse <key>Bloq Mayús</key> para cambiar su estado de bloqueo."
 
 #: C/howto_whereami.page:5(info/title)
-#| msgid "1. WhereAmI"
 msgctxt "sort"
 msgid "1. WhereAmI"
 msgstr "1. ¿Dónde estoy?"
@@ -4469,7 +4304,7 @@ msgstr ""
 "contexto: ¿Dónde estoy? básico y ¿Dónde estoy? detallado. ¿Dónde estoy? "
 "básico se aplica a todos los objetos. ¿Dónde estoy? detallado se aplica sólo "
 "a aquellos objetos para los cuales existe una gran cantidad de información "
-"que podría desear saber, pero que probablemente no querrá saber todo el "
+"que podría querer saber, pero que probablemente no querrá saber todo el "
 "tiempo."
 
 #: C/howto_whereami.page:26(page/p)
@@ -4586,7 +4421,6 @@ msgstr ""
 "\"commands_where_am_i\">comandos ¿Dónde estoy?</link>."
 
 #: C/introduction.page:5(info/title)
-#| msgid "1. Welcome to Orca"
 msgctxt "sort"
 msgid "1. Welcome to Orca"
 msgstr "1. Bienvenido a Orca"
@@ -4737,17 +4571,14 @@ msgid "<cmd>braille</cmd>"
 msgstr "<cmd>braille</cmd>"
 
 #: C/introduction.page:116(item/p) C/introduction.page:130(item/p)
-#| msgid "braille-monitor"
 msgid "<cmd>braille-monitor</cmd>"
 msgstr "<cmd>braille-monitor</cmd>"
 
 #: C/introduction.page:117(item/p) C/introduction.page:131(item/p)
-#| msgid "main-window"
 msgid "<cmd>main-window</cmd>"
 msgstr "<cmd>main-window</cmd>"
 
 #: C/introduction.page:118(item/p) C/introduction.page:132(item/p)
-#| msgid "splash-window"
 msgid "<cmd>splash-window</cmd>"
 msgstr "<cmd>splash-window</cmd>"
 
@@ -4798,9 +4629,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:21(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_enable_braille_support.png'; "
-#| "md5=f08627f0177c20df349ab87fde697f1f"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_enable_braille_support.png' "
@@ -4814,9 +4642,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:40(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_enable_braille_monitor.png'; "
-#| "md5=2dead5fbf717ce30339e2248e4f61aed"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_enable_braille_monitor.png' "
@@ -4830,9 +4655,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:53(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_braille_contracted.png'; "
-#| "md5=81d80b6854847656862fe4ea167d29f8"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_braille_contracted.png' "
@@ -4846,9 +4668,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:71(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_abbreviated_role_names.png'; "
-#| "md5=f26a6ef63ff0d1b40514830de7788c8b"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_abbreviated_role_names.png' "
@@ -4862,9 +4681,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:85(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_disable_eol_symbol.png'; "
-#| "md5=c43c2b7dff5efd265a40a260c2bc0d73"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_disable_eol_symbol.png' "
@@ -4878,9 +4694,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:96(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_braille_verbosity.png'; "
-#| "md5=18969c222b3e1ea91cc75d47bb0fe48d"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_braille_verbosity.png' "
@@ -4894,9 +4707,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_braille.page:109(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_braille_indicators.png'; "
-#| "md5=719cd227dee9df85de633c4e2417301b"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_braille_indicators.png' "
@@ -4906,7 +4716,6 @@ msgstr ""
 "md5='719cd227dee9df85de633c4e2417301b'"
 
 #: C/preferences_braille.page:3(info/title)
-#| msgid "3. Braille"
 msgctxt "sort"
 msgid "3. Braille"
 msgstr "3. Braille"
@@ -4945,8 +4754,7 @@ msgstr ""
 #: C/preferences_gecko.page:118(section/p)
 #: C/preferences_general.page:53(section/p)
 #: C/preferences_general.page:73(section/p)
-#: C/preferences_general.page:121(section/p)
-#: C/preferences_general.page:140(section/p)
+#: C/preferences_general.page:123(section/p)
 #: C/preferences_key_echo.page:94(section/p)
 #: C/preferences_key_echo.page:104(section/p)
 #: C/preferences_key_echo.page:140(section/p)
@@ -5071,8 +4879,8 @@ msgstr ""
 "<gui>Indicador de hiperenlace</gui> le permiten configurar el comportamiento "
 "de <app>Orca</app> cuando se muestra texto seleccionado e hiperenlaces. De "
 "forma predeterminada, cuando encuentre alguno de ellos, <app>Orca</app> "
-"«subrayará» dicho texto en su línea braille con los puntos  7 y 8. Si lo "
-"desea, puede cambiar el indicador para que sea solo punto 7, solo punto 8 o "
+"«subrayará» dicho texto en su línea braille con los puntos  7 y 8. Si "
+"quiere, puede cambiar el indicador para que sea solo punto 7, solo punto 8 o "
 "no se presente ningún indicador."
 
 #: C/preferences_braille.page:119(section/p)
@@ -5084,11 +4892,6 @@ msgid "Text Attribute Indicators"
 msgstr "Indicadores de atributos del texto"
 
 #: C/preferences_braille.page:124(note/p)
-#| msgid ""
-#| "You can also optionally have text attributes indicated in braille. "
-#| "Enabling this feature and choosing which attributes are of interest is "
-#| "done on the <link xref=\"preferences_text_attributes\"><gui>Text "
-#| "Attributes</gui> page</link> of the preferences dialog."
 msgid ""
 "You can also optionally have text attributes indicated in braille. Enabling "
 "this feature and choosing which attributes are of interest is done on the "
@@ -5105,9 +4908,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_chat.page:18(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_chat.png'; "
-#| "md5=f77f2387185d7498ae9842104a7ae5c0"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_chat.png' "
@@ -5117,7 +4917,6 @@ msgstr ""
 "md5='f77f2387185d7498ae9842104a7ae5c0'"
 
 #: C/preferences_chat.page:4(info/title)
-#| msgid "3. Chat"
 msgctxt "sort"
 msgid "3. Chat"
 msgstr "3. Chat"
@@ -5196,17 +4995,14 @@ msgstr ""
 "<app>Orca</app> le presenta un mensaje. Sus opciones son:"
 
 #: C/preferences_chat.page:66(item/p)
-#| msgid "All channels"
 msgid "<gui>All channels</gui>"
 msgstr "<gui>Todos los canales</gui>"
 
 #: C/preferences_chat.page:69(item/p)
-#| msgid "A channel only if its window is active"
 msgid "<gui>A channel only if its window is active</gui>"
 msgstr "<gui>Un canal sólo si su ventana está activa</gui>"
 
 #: C/preferences_chat.page:72(item/p)
-#| msgid "All channels when any chat window is active"
 msgid "<gui>All channels when any chat window is active</gui>"
 msgstr ""
 "<gui>Todos los canales cuando cualquier ventana de chat está activa</gui>"
@@ -5220,9 +5016,6 @@ msgstr "Valor predeterminado: todos los canales"
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_gecko.page:22(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_gecko_page_navigation.png'; "
-#| "md5=882c3f79d6d26636c42b9e6351a3cbbe"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_gecko_page_navigation.png' "
@@ -5236,9 +5029,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_gecko.page:94(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_gecko_find_options.png'; "
-#| "md5=641af19881288848ba7f8fdc6d4db02e"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_gecko_find_options.png' "
@@ -5248,13 +5038,11 @@ msgstr ""
 "md5='641af19881288848ba7f8fdc6d4db02e'"
 
 #: C/preferences_gecko.page:5(info/title)
-#| msgid "1. Gecko Navigation"
 msgctxt "sort"
 msgid "1. Gecko Navigation"
 msgstr "1. Navegación Gecko"
 
 #: C/preferences_gecko.page:6(info/title)
-#| msgid "Gecko Navigation"
 msgctxt "link"
 msgid "Gecko Navigation"
 msgstr "Navegación Gecko"
@@ -5444,9 +5232,9 @@ msgid ""
 msgstr ""
 "Este botón contador editable es donde puede especificar el número de "
 "caracteres que deben coincidir al menos antes que <app>Orca</app> anuncie la "
-"línea coincidente. Esta opción también está diseñada para prevenir «ruido» ya "
-"que al principio cuando comienza a teclear la cadena de búsqueda hay muchas "
-"coincidencias."
+"línea coincidente. Esta opción también está diseñada para prevenir «ruido» "
+"ya que al principio cuando comienza a teclear la cadena de búsqueda hay "
+"muchas coincidencias."
 
 #: C/preferences_gecko.page:131(section/p)
 msgid "Default value: 4"
@@ -5457,9 +5245,6 @@ msgstr "Valor predeterminado: 4"
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_general.page:27(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_keyboard_layout.png'; "
-#| "md5=87362e2a6c4530f1a7928a84eb2a4fb2"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_keyboard_layout.png' "
@@ -5473,9 +5258,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_general.page:46(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_quit_Orca_without_confirmation.png'; "
-#| "md5=b79e1083ad179abaa45fafaf5d80cdd7"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_quit_Orca_without_confirmation.png' "
@@ -5489,9 +5271,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_general.page:65(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_present_tooltips.png'; "
-#| "md5=a6e33e8bb91b375f1432bcd41d271f5f"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_present_tooltips.png' "
@@ -5505,9 +5284,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_general.page:85(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_show_Orca_main_window.png'; "
-#| "md5=f9dcacd77f6dbe80f5c70575212a8717"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_show_Orca_main_window.png' "
@@ -5521,8 +5297,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_general.page:90(media)
-#| msgid ""
-#| "@@image: 'figures/main_window.png'; md5=dc40a43400b81aa8611d4111a65be6e5"
 msgctxt "_"
 msgid ""
 "external ref='figures/main_window.png' md5='dc40a43400b81aa8611d4111a65be6e5'"
@@ -5534,25 +5308,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_general.page:116(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=THIS "
-#| "FILE DOESN'T EXIST"
-msgctxt "_"
-msgid ""
-"external ref='figures/preferences_start_Orca_when_you_login.png' "
-"md5='__failed__'"
-msgstr ""
-"external ref='figures/preferences_start_Orca_when_you_login.png' "
-"md5='__failed__'"
-
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/preferences_general.page:133(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_speak_object_under_mouse.png'; "
-#| "md5=e1a7682e7ee6427a47a7900f45b37387"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_speak_object_under_mouse.png' "
@@ -5565,10 +5320,7 @@ msgstr ""
 #. the file changes, the md5 hash will change to let you know you need to
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
-#: C/preferences_general.page:152(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_date_and_time.png'; "
-#| "md5=931f4814b0e41379a06eeae11cd88c1b"
+#: C/preferences_general.page:135(media)
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_date_and_time.png' "
@@ -5578,13 +5330,11 @@ msgstr ""
 "md5='931f4814b0e41379a06eeae11cd88c1b'"
 
 #: C/preferences_general.page:3(info/title)
-#| msgid "1. General"
 msgctxt "sort"
 msgid "1. General"
 msgstr "1. General"
 
 #: C/preferences_general.page:4(info/title)
-#| msgid "General"
 msgctxt "link"
 msgid "General"
 msgstr "General"
@@ -5660,13 +5410,6 @@ msgid "Present Tooltips"
 msgstr "Mostrar consejos"
 
 #: C/preferences_general.page:66(section/p)
-#| msgid ""
-#| "When checked, this option will tell <app>Orca</app> to present "
-#| "information about tooltips when they appear as the result of mouse "
-#| "hovering. Specific actions to force tooltips to appear, such as pressing "
-#| "<keyseq><key>Ctrl</key><key>F1</key></keyseq> when an object has focus, "
-#| "will always result in tooltips being presented, regardless of this "
-#| "setting."
 msgid ""
 "When checked, this option will tell <app>Orca</app> to present information "
 "about tooltips when they appear as the result of mouse hovering. Specific "
@@ -5709,12 +5452,6 @@ msgstr ""
 "salir de <app>Orca</app>."
 
 #: C/preferences_general.page:97(section/p)
-#| msgid ""
-#| "Many users do not like the <app>Orca</app> main window because it shows "
-#| "up in the window manager's Tab order when you press <keyseq><key>Alt</"
-#| "key><key>Tab</key></keyseq> to switch windows. By unchecking the "
-#| "<gui>Show <app>Orca</app> main window</gui> checkbox, you can tell "
-#| "<app>Orca</app> to not show <app>Orca</app>'s main window."
 msgid ""
 "Many users do not like the <app>Orca</app> main window because it shows up "
 "in the window manager's Tab order when you press <keyseq> <key>Alt</"
@@ -5731,37 +5468,17 @@ msgstr ""
 
 #: C/preferences_general.page:110(info/desc)
 msgid ""
-"Preferences dialog box option to cause <app>Orca</app> to automatically "
-"start when you log in."
-msgstr ""
-"Opción del cuadro de diálogo de preferencias para hacer que <app>Orca</app> "
-"se ejecute automáticamente al iniciar sesión."
-
-#: C/preferences_general.page:115(section/title)
-msgid "Start Orca When You Login"
-msgstr "Ejecutar Orca al iniciar sesión"
-
-#: C/preferences_general.page:117(section/p)
-msgid ""
-"When checked, this option will tell the system to automatically launch "
-"<app>Orca</app> when you log in."
-msgstr ""
-"Cuando está activada, esta opción le dice al sistema que lance <app>Orca</"
-"app> automáticamente cuando inicia la sesión."
-
-#: C/preferences_general.page:127(info/desc)
-msgid ""
 "Preferences dialog box option to enable presentation of the object under the "
 "mouse pointer."
 msgstr ""
 "Opción del cuadro de diálogo de preferencias para activar la presentación "
 "del objeto de debajo del puntero del ratón."
 
-#: C/preferences_general.page:132(section/title)
+#: C/preferences_general.page:115(section/title)
 msgid "Speak Object Under Mouse"
 msgstr "Leer el objeto de debajo del ratón"
 
-#: C/preferences_general.page:134(section/p)
+#: C/preferences_general.page:117(section/p)
 msgid ""
 "When checked, this option will tell <app>Orca</app> to present information "
 "about the object under the mouse pointer as you move it around the screen "
@@ -5773,7 +5490,7 @@ msgstr ""
 "alrededor de la pantalla, usando la característica <link xref="
 "\"howto_mouse_review\">Revisión del ratón</link> de <app>Orca</app>."
 
-#: C/preferences_general.page:146(info/desc)
+#: C/preferences_general.page:129(info/desc)
 msgid ""
 "Preferences dialog box options for customizing the time and date formats "
 "used by <app>Orca</app>."
@@ -5781,11 +5498,11 @@ msgstr ""
 "Opciones del cuadro de diálogo de preferencias para personalizar los "
 "formatos de fecha y hora usados por <app>Orca</app>."
 
-#: C/preferences_general.page:151(section/title)
+#: C/preferences_general.page:134(section/title)
 msgid "Time Format and Date Format"
 msgstr "Formato de fecha y hora"
 
-#: C/preferences_general.page:153(section/p)
+#: C/preferences_general.page:136(section/p)
 msgid ""
 "The <gui>Time Format</gui> and <gui>Date Format</gui> combo boxes allow you "
 "to specify how <app>Orca</app> will speak and braille the time and the date."
@@ -5794,19 +5511,19 @@ msgstr ""
 "gui> le permite especificar cómo leerá y mostrará <app>Orca</app> en Braille "
 "la hora y la fecha."
 
-#: C/preferences_general.page:158(section/p)
+#: C/preferences_general.page:141(section/p)
 msgid "Default value: use the system locale's format for each"
 msgstr ""
 "Valor predeterminado: utilizar el formato de la configuración regional del "
 "sistema para cada uno"
 
-#: C/preferences_general.page:164(info/desc)
+#: C/preferences_general.page:147(info/desc)
 msgid "Preferences dialog box options for managing settings profiles."
 msgstr ""
 "Opciones del cuadro de diálogo de preferencias para gestionar perfiles de "
 "configuración."
 
-#: C/preferences_general.page:170(section/p)
+#: C/preferences_general.page:153(section/p)
 msgid ""
 "The <gui>Profiles</gui> group of controls, which appear at the bottom of the "
 "<gui>General</gui> page, make it possible for you to maintain and use "
@@ -5816,7 +5533,7 @@ msgstr ""
 "de la página <gui>General</gui>, le permite mantener y usar varias "
 "configuraciones."
 
-#: C/preferences_general.page:177(item/p)
+#: C/preferences_general.page:160(item/p)
 msgid ""
 "The <gui>Active Profile</gui> combo box displays the current profile and "
 "allows you to select a different profile to load."
@@ -5824,7 +5541,7 @@ msgstr ""
 "El cuadro combinado <gui>Perfil activo</gui> muestra el perfil actual y le "
 "permite seleccionar un perfil diferente que cargar."
 
-#: C/preferences_general.page:183(item/p)
+#: C/preferences_general.page:166(item/p)
 msgid ""
 "The <gui>Load</gui> button will cause <app>Orca</app> to load the profile "
 "indicated in the <gui>Active Profile</gui> combo box."
@@ -5832,7 +5549,7 @@ msgstr ""
 "El botón <gui>Cargar</gui> hará que <app>Orca</app> cargue el perfil "
 "indicado en el cuadro combinado <gui>Perfil activo</gui>."
 
-#: C/preferences_general.page:189(item/p)
+#: C/preferences_general.page:172(item/p)
 msgid ""
 "The <gui>Save As</gui> button allows you to save the current set of options "
 "from the preferences dialog box to a named profile."
@@ -5840,7 +5557,7 @@ msgstr ""
 "El botón <gui>Guardar como</gui> le permite guardar el conjunto actual de "
 "opciones desde el cuadro de diálogo de preferencias a un perfil con nombre."
 
-#: C/preferences_general.page:195(item/p)
+#: C/preferences_general.page:178(item/p)
 msgid ""
 "The <gui>Start-up Profile</gui> combo box allows you to select the profile "
 "which should be automatically loaded each time you launch <app>Orca</app>."
@@ -5849,13 +5566,11 @@ msgstr ""
 "perfil se cargará automáticamente cada vez que ejecute <app>Orca</app>."
 
 #: C/preferences_introduction.page:3(info/title)
-#| msgid "0. Introduction to <app>Orca</app>'s Preferences"
 msgctxt "sort"
 msgid "0. Introduction to <app>Orca</app>'s Preferences"
 msgstr "0. Introducción a las preferencias de <app>Orca</app>"
 
 #: C/preferences_introduction.page:4(info/title)
-#| msgid "Introduction to <app>Orca</app>'s Preferences"
 msgctxt "link"
 msgid "Introduction to <app>Orca</app>'s Preferences"
 msgstr "Introducción a las preferencias de <app>Orca</app>"
@@ -5906,9 +5621,6 @@ msgstr ""
 "preferencias de <app>Orca</app>"
 
 #: C/preferences_introduction.page:39(item/p)
-#| msgid ""
-#| "<keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key></keyseq>: "
-#| "<app>Orca</app>'s Preferences for the current application"
 msgid ""
 "<keyseq><key>Ctrl</key><key>Orca Modifier</key><key>Space</key> </keyseq>: "
 "<app>Orca</app>'s Preferences for the current application"
@@ -5943,9 +5655,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_key_bindings.page:22(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_Orca_modifier_keys.png'; "
-#| "md5=e7f8a86f1476d63486769af2fdf34a9a"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_Orca_modifier_keys.png' "
@@ -5959,9 +5668,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_key_bindings.page:40(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_key_bindings_table.png'; "
-#| "md5=87f1b17b497b7c34c9d88cacb2c3046c"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_key_bindings_table.png' "
@@ -5971,13 +5677,11 @@ msgstr ""
 "md5='87f1b17b497b7c34c9d88cacb2c3046c'"
 
 #: C/preferences_key_bindings.page:6(info/title)
-#| msgid "6. Key Bindings"
 msgctxt "sort"
 msgid "6. Key Bindings"
 msgstr "6. Asociaciones de teclas"
 
 #: C/preferences_key_bindings.page:7(info/title)
-#| msgid "Key Bindings"
 msgctxt "link"
 msgid "Key Bindings"
 msgstr "Asociaciones de teclas"
@@ -6014,12 +5718,10 @@ msgid "<gui>Insert</gui>"
 msgstr "<gui>Insertar</gui>"
 
 #: C/preferences_key_bindings.page:34(item/p)
-#| msgid "Insert, KP_Insert"
 msgid "<gui>Insert, KP_Insert</gui>"
 msgstr "<gui>Ins, TN_Ins</gui>"
 
 #: C/preferences_key_bindings.page:35(item/p)
-#| msgid "Caps_Lock"
 msgid "<gui>Caps_Lock</gui>"
 msgstr "<gui>Bloq. Mayús.</gui>"
 
@@ -6103,9 +5805,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_key_echo.page:21(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_key_echo.png'; "
-#| "md5=8a24d33dfd2f274ce4da3e756e866d65"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_key_echo.png' "
@@ -6119,9 +5818,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_key_echo.page:111(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_character_echo.png'; "
-#| "md5=ae0f0f530ed8a742d08df4d388561847"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_character_echo.png' "
@@ -6135,9 +5831,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_key_echo.page:156(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_word_and_sentence_echo.png'; "
-#| "md5=d31bd26801793b290e740fcabe7ba86d"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_word_and_sentence_echo.png' "
@@ -6147,13 +5840,11 @@ msgstr ""
 "md5='d31bd26801793b290e740fcabe7ba86d'"
 
 #: C/preferences_key_echo.page:3(info/title)
-#| msgid "Key Echo"
 msgctxt "link"
 msgid "Key Echo"
 msgstr "Eco de teclas"
 
 #: C/preferences_key_echo.page:4(info/title)
-#| msgid "4. Key Echo"
 msgctxt "sort"
 msgid "4. Key Echo"
 msgstr "4. Eco de teclas"
@@ -6322,7 +6013,6 @@ msgstr ""
 "que <app>Orca</app> lea la frase que acaba de escribir."
 
 #: C/preferences.page:5(info/title)
-#| msgid "Preferences"
 msgctxt "link"
 msgid "Preferences"
 msgstr "Preferencias"
@@ -6336,9 +6026,6 @@ msgstr "Diálogos de preferencias de <app>Orca</app>"
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_pronunciation.page:31(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_pronunciation.png'; "
-#| "md5=a4fa07be0148dfa9ddc12d7c40f4c864"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_pronunciation.png' "
@@ -6348,13 +6035,11 @@ msgstr ""
 "md5='a4fa07be0148dfa9ddc12d7c40f4c864'"
 
 #: C/preferences_pronunciation.page:6(info/title)
-#| msgid "7. Pronunciation"
 msgctxt "sort"
 msgid "7. Pronunciation"
 msgstr "7. Pronunciación"
 
 #: C/preferences_pronunciation.page:7(info/title)
-#| msgid "Pronunciation"
 msgctxt "link"
 msgid "Pronunciation"
 msgstr "Pronunciación"
@@ -6468,9 +6153,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:21(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_enable_speech.png'; "
-#| "md5=66fff525659d9e3db4130f58f962f82e"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_enable_speech.png' "
@@ -6484,9 +6166,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:30(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_tts_options.png'; "
-#| "md5=ce951b70b7a1d6dc00f3b5b2cf4dcc2e"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_tts_options.png' "
@@ -6500,9 +6179,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:75(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_rate_pitch_volume.png'; "
-#| "md5=98d310294cb4c7b945ecf81fda0df1f7"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_rate_pitch_volume.png' "
@@ -6516,9 +6192,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:84(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_punctuation_level.png'; "
-#| "md5=2578236bb97ab0109675417fcdb8dd4b"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_punctuation_level.png' "
@@ -6532,9 +6205,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:132(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_speech_verbosity.png'; "
-#| "md5=d689e49513907f75e54b3635b7419247"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_speech_verbosity.png' "
@@ -6548,9 +6218,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:146(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_table_rows.png'; "
-#| "md5=736ba1cf57c3cdc79de019160f3636ab"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_table_rows.png' "
@@ -6564,9 +6231,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:166(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_progress_bar_updates.png'; "
-#| "md5=65ae433495a3efd95cd5259f10865c98"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_progress_bar_updates.png' "
@@ -6580,9 +6244,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:215(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_only_speak_displayed_text.png'; "
-#| "md5=4636b63366ca45dd7f2679821e8e0099"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_only_speak_displayed_text.png' "
@@ -6596,9 +6257,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:224(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_speak_multicase_strings_as_words.png'; "
-#| "md5=ac2c1da480acd938209d7f29b5ce12f1"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_speak_multicase_strings_as_words.png' "
@@ -6612,9 +6270,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:236(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_break_speech_into_chunks.png'; "
-#| "md5=c2193d97d780a2a9349dcff4a64a3135"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_break_speech_into_chunks.png' "
@@ -6628,9 +6283,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:248(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_say_all_by.png'; "
-#| "md5=f50f4ec56b3048c7cdc961a14ff1fb2f"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_say_all_by.png' "
@@ -6644,9 +6296,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_speech.page:258(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_system_voice_options.png'; "
-#| "md5=15083bf706ad1b905332746300f206a9"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_system_voice_options.png' "
@@ -6656,7 +6305,6 @@ msgstr ""
 "md5='15083bf706ad1b905332746300f206a9'"
 
 #: C/preferences_speech.page:5(info/title)
-#| msgid "2. Speech"
 msgctxt "sort"
 msgid "2. Speech"
 msgstr "2. Voz"
@@ -6752,11 +6400,12 @@ msgid ""
 "find in the <gui>Person</gui> combo box will depend on which speech "
 "synthesizers you have installed."
 msgstr ""
-"Este cuadro combinado le permite elegir qué «persona» o «hablante» se debería "
-"usar con la voz seleccionada. Por ejemplo, podría querer tener a David para "
-"hablar de manera predeterminada, pero tener a Alicia para hablar los "
-"hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro combinado "
-"<gui>Persona</gui> dependerá de qué sintetizador de voz tenga instalado."
+"Este cuadro combinado le permite elegir qué «persona» o «hablante» se "
+"debería usar con la voz seleccionada. Por ejemplo, podría querer tener a "
+"David para hablar de manera predeterminada, pero tener a Alicia para hablar "
+"los hiperenlaces. Tenga en cuenta que lo que encuentre en el cuadro "
+"combinado <gui>Persona</gui> dependerá de qué sintetizador de voz tenga "
+"instalado."
 
 #: C/preferences_speech.page:74(section/title)
 msgid "Rate, Pitch, and Volume"
@@ -6816,8 +6465,8 @@ msgid ""
 msgstr ""
 "Seleccionar nivel de puntuación <gui>Alguna</gui> hace que se hablen todos "
 "los símbolos mencionados anteriormente. Por otro lado, <app>Orca</app> "
-"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», «/», "
-"«&amp;», «#»."
+"hablará los símbolos matemáticos conocidos, símbolos de moneda y «^», «@», "
+"«/», «&amp;», «#»."
 
 #: C/preferences_speech.page:111(section/title)
 msgid "Most"
@@ -7107,11 +6756,6 @@ msgid "Speak object mnemonics"
 msgstr "Leer las teclas de acceso del objeto"
 
 #: C/preferences_speech.page:292(section/p)
-#| msgid ""
-#| "If the <gui>Speak object mnemonics</gui> checkbox is checked, <app>Orca</"
-#| "app> will announce the mnemonic associated with the object with focus "
-#| "(such as <keyseq><key>Alt</key><key>O</key></keyseq> for an <gui>OK</gui> "
-#| "button)."
 msgid ""
 "If the <gui>Speak object mnemonics</gui> checkbox is checked, <app>Orca</"
 "app> will announce the mnemonic associated with the object with focus (such "
@@ -7155,9 +6799,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_table_navigation.page:22(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_table_navigation.png'; "
-#| "md5=a97b98bd9e3499e06844d56156419a7d"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_table_navigation.png' "
@@ -7167,7 +6808,6 @@ msgstr ""
 "md5='a97b98bd9e3499e06844d56156419a7d'"
 
 #: C/preferences_table_navigation.page:8(info/title)
-#| msgid "2. Table Navigation"
 msgctxt "sort"
 msgid "2. Table Navigation"
 msgstr "2. Navegación por tablas"
@@ -7245,9 +6885,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_text_attributes.page:31(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_text_attributes_table.png'; "
-#| "md5=067627aeb9adfd314523903f408bb977"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_text_attributes_table.png' "
@@ -7261,9 +6898,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_text_attributes.page:93(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_text_attributes_rearranging.png'; "
-#| "md5=0834c9af2a15c3d08be77f3a963ad245"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_text_attributes_rearranging.png' "
@@ -7277,9 +6911,6 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/preferences_text_attributes.page:131(media)
-#| msgid ""
-#| "@@image: 'figures/preferences_text_attributes_braille.png'; "
-#| "md5=3482a961cc9d30db5537ccb998bb7c71"
 msgctxt "_"
 msgid ""
 "external ref='figures/preferences_text_attributes_braille.png' "
@@ -7289,13 +6920,11 @@ msgstr ""
 "md5='3482a961cc9d30db5537ccb998bb7c71'"
 
 #: C/preferences_text_attributes.page:7(info/title)
-#| msgid "8. Text Attributes"
 msgctxt "sort"
 msgid "8. Text Attributes"
 msgstr "8. Atributos de texto"
 
 #: C/preferences_text_attributes.page:8(info/title)
-#| msgid "Text Attributes"
 msgctxt "link"
 msgid "Text Attributes"
 msgstr "Atributos de texto"
@@ -7376,13 +7005,13 @@ msgid ""
 "<gui>Present unless</gui> column should be empty for underline. In addition, "
 "you should be sure that the <gui>Speak</gui> column for underline is checked."
 msgstr ""
-"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de «none». "
-"Esto hace que <app>Orca</app> le informe acerca del texto subrayado siempre "
-"y cuando el texto esté actualmente subrayado. Si quiere que este atributo se "
-"hable siempre independientemente de que el texto esté subrayado o no, "
-"entonces el atributo debería estar marcado y el valor de <gui>Presentar a "
-"menos que</gui> en blanco. Además, debería asegurarse de que la columna "
-"<gui>Hablar</gui> para el subrayado está marcada."
+"Por ejemplo, el atributo «subrayado» tiene un valor predeterminado de "
+"«none». Esto hace que <app>Orca</app> le informe acerca del texto subrayado "
+"siempre y cuando el texto esté actualmente subrayado. Si quiere que este "
+"atributo se hable siempre independientemente de que el texto esté subrayado "
+"o no, entonces el atributo debería estar marcado y el valor de "
+"<gui>Presentar a menos que</gui> en blanco. Además, debería asegurarse de "
+"que la columna <gui>Hablar</gui> para el subrayado está marcada."
 
 #: C/preferences_text_attributes.page:75(section/title)
 msgid "Undoing changes"
@@ -7493,6 +7122,34 @@ msgid ""
 msgstr ""
 "<gui>Puntos 7 y 8</gui>: subrayar los atributos de texto con ambos puntos 7 "
 "y puntos 8"
+
+#~| msgid ""
+#~| "@@image: 'figures/preferences_start_Orca_when_you_login.png'; md5=THIS "
+#~| "FILE DOESN'T EXIST"
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='figures/preferences_start_Orca_when_you_login.png' "
+#~ "md5='__failed__'"
+#~ msgstr ""
+#~ "external ref='figures/preferences_start_Orca_when_you_login.png' "
+#~ "md5='__failed__'"
+
+#~ msgid ""
+#~ "Preferences dialog box option to cause <app>Orca</app> to automatically "
+#~ "start when you log in."
+#~ msgstr ""
+#~ "Opción del cuadro de diálogo de preferencias para hacer que <app>Orca</"
+#~ "app> se ejecute automáticamente al iniciar sesión."
+
+#~ msgid "Start Orca When You Login"
+#~ msgstr "Ejecutar Orca al iniciar sesión"
+
+#~ msgid ""
+#~ "When checked, this option will tell the system to automatically launch "
+#~ "<app>Orca</app> when you log in."
+#~ msgstr ""
+#~ "Cuando está activada, esta opción le dice al sistema que lance <app>Orca</"
+#~ "app> automáticamente cuando inicia la sesión."
 
 #~ msgid "joanied@gnome.org"
 #~ msgstr "joanied@gnome.org"
@@ -8071,8 +7728,9 @@ msgstr ""
 #~ "gnome-mag."
 #~ msgstr ""
 #~ "<gui>Filtro del color</gui>: le permite usar uno de los filtros de "
-#~ "«colorblind» disponibles a través de «libcolorblind». Para beneficiarse de "
-#~ "esta característica deberá instalar «libcolorblind» reconstruir «gnome-mag»."
+#~ "«colorblind» disponibles a través de «libcolorblind». Para beneficiarse "
+#~ "de esta característica deberá instalar «libcolorblind» reconstruir «gnome-"
+#~ "mag»."
 
 #~ msgid ""
 #~ "<gui>Multi-Monitor Settings - Source Display</gui>: X Window System "
@@ -8090,8 +7748,8 @@ msgstr ""
 #~ msgstr ""
 #~ "<gui>Configuración multi-monitor - Pantalla destino</gui>: pantalla del "
 #~ "sistema de X Window donde se desea poner la ventana del ampliador. En la "
-#~ "forma de «:0.y» donde y es el número de pantalla donde debería aparecer la "
-#~ "pantalla del ampliador."
+#~ "forma de «:0.y» donde y es el número de pantalla donde debería aparecer "
+#~ "la pantalla del ampliador."
 
 #~ msgid ""
 #~ "@@image: 'figures/preferences_disable_gksu_keyboard_grab.png'; "
@@ -8121,12 +7779,12 @@ msgstr ""
 #~ "Cuando se ejecutan comandos desde el menú, muchas distribuciones usan una "
 #~ "aplicación conocida como «gksu» para autorizar al usuario para ejecutar "
 #~ "estos comandos; gksu es el IGU que le pregunta por su contraseña. Cuando "
-#~ "se ejecuta, gksu activa lo que se conoce como una «captura de teclado», la "
-#~ "cual es una característica que previene cualquier acción de teclado vaya "
-#~ "a cualquier otra aplicación del escritorio, incluyendo <app>Orca</app>. "
-#~ "El resultado de una captura de teclado es que <app>Orca</app> no recibirá "
-#~ "ningún evento de teclado, previniendo que <app>Orca</app> funcione "
-#~ "normalmente."
+#~ "se ejecuta, gksu activa lo que se conoce como una «captura de teclado», "
+#~ "la cual es una característica que previene cualquier acción de teclado "
+#~ "vaya a cualquier otra aplicación del escritorio, incluyendo <app>Orca</"
+#~ "app>. El resultado de una captura de teclado es que <app>Orca</app> no "
+#~ "recibirá ningún evento de teclado, previniendo que <app>Orca</app> "
+#~ "funcione normalmente."
 
 #~ msgid ""
 #~ "By checking the <gui>Disable gksu keyboard grab</gui> checkbox, you will "
