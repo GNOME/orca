@@ -1,3 +1,32 @@
+3.5.92 - 17 September 2012
+
+General
+
+  * LibreOffice Writer documents should be fully readable and navigable
+    via the braille display
+
+  * Fix for bug 683795 - Orca modifier gets stuck on in Bypass Mode
+
+  * Fix for bug 683447 - Outdated documentation needs to be removed
+
+  * Fix for broken tag in several help translations (Thanks Piotr Drąg!)
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    be            Belarusian              Ihar Hrachyshka
+    da            Danish                  Kenneth Nielsen
+    de            German                  Mario Blättermann
+    en_GB         British English         Bruce Cowan
+    es            Spanish                 Daniel Mustieles
+    fr            French                  Alexandre Franke
+    fi            Finnish                 Jiri Grönroos
+    id            Indonesian              Andika Triwidada
+    pl            Polish                  Piotr Drąg
+    pt_BR         Brazilian Portuguese    Rafael Ferreira
+    zh_CN         Simplified Chinese      TeliuTe
+
+=========
+
 3.5.91 - 3 September 2012
 
 General
