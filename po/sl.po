@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
 "POT-Creation-Date: 2012-05-22 14:21+0000\n"
-"PO-Revision-Date: 2012-05-29 08:34+0100\n"
+"PO-Revision-Date: 2012-09-21 14:04+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: \n"
@@ -43,7 +43,7 @@ msgstr "Bralnik zaslona Orka"
 
 #: ../orca.desktop.in.h:4
 msgid "Provide access to graphical desktop environments via synthesized speech and/or refreshable braille"
-msgstr "Omogoči dostop do grafičnega okolja namizja preko sintetiziranega zvoka in odvoda braillove pisave"
+msgstr "Omogoči dostop do grafičnega okolja namizja preko sintetiziranega zvoka in odvoda brajice"
 
 #: ../src/orca/app_gui_prefs.py:135
 #, python-format
@@ -770,7 +770,7 @@ msgstr "vgr"
 
 #: ../src/orca/chat.py:347
 msgid "Toggle whether we prefix chat room messages with the name of the chat room."
-msgstr "Preklopi predpone sporočil pogovorov z imenom pogovorne sobe."
+msgstr "Preklopi predpone sporočil pogovorov z imenom klepetalnice."
 
 #: ../src/orca/chat.py:359
 msgid "Toggle whether we announce when our buddies are typing."
@@ -782,14 +782,14 @@ msgstr "Preklopi med podporo zgodovini določenih sporočil v klepetalnicah."
 
 #: ../src/orca/chat.py:381
 msgid "Speak and braille a previous chat room message."
-msgstr "Izgovori in z Braillovo pisavo izpiši sporočilo pogovorne sobe."
+msgstr "Izgovori in z brajico izpiši predhodno sporočilo iz klepetalnice."
 
 #. Translators: If this checkbox is checked, then Orca will speak
 #. the name of the chat room prior to presenting an incoming message.
 #.
 #: ../src/orca/chat.py:437
 msgid "_Speak Chat Room name"
-msgstr "_Izgovori ime pogovorne sobe."
+msgstr "_Izgovori ime klepetalnice."
 
 #. Translators: If this checkbox is checked, then Orca will tell
 #. you when one of your buddies is typing a message.
@@ -840,11 +840,11 @@ msgstr "Vsi kanali kadar je dejavno _katerokoli %s okno programa"
 
 #: ../src/orca/chat.py:574
 msgid "speak chat room name."
-msgstr "izgovori ime pogovorne sobe."
+msgstr "izgovori ime klepetalnice."
 
 #: ../src/orca/chat.py:578
 msgid "Do not speak chat room name."
-msgstr "Ne izgovori imena pogovorne sobe."
+msgstr "Ne izgovori imena klepetalnice."
 
 #: ../src/orca/chat.py:591
 msgid "announce when your buddies are typing."
@@ -3102,7 +3102,7 @@ msgstr "2. prenosnik"
 #.
 #: ../src/orca/orca_console_prefs.py:499
 msgid "Enable Braille?  Enter y or n: "
-msgstr "Ali želite omogočiti Braillovo pisavo? Vnesite d (da) ali n (ne):"
+msgstr "Ali želite omogočiti Brajevo pisavo (brajico)? Vnesite d (da) ali n (ne):"
 
 #. Translators: the braille monitor is a graphical display on
 #. the screen that is used for debugging and demoing purposes.
@@ -3111,7 +3111,7 @@ msgstr "Ali želite omogočiti Braillovo pisavo? Vnesite d (da) ali n (ne):"
 #.
 #: ../src/orca/orca_console_prefs.py:518
 msgid "Enable Braille Monitor?  Enter y or n: "
-msgstr "Ali želite omogočiti Braillov monitor? Vnesite d (da) ali n (ne):"
+msgstr "Ali želite omogočiti Brajev zaslon? Vnesite d (da) ali n (ne):"
 
 #: ../src/orca/orca_console_prefs.py:537
 msgid "Setup complete.  Press Return to continue."
@@ -3379,7 +3379,7 @@ msgstr "Izgovori"
 #.
 #: ../src/orca/orca_gui_prefs.py:1172
 msgid "Mark in braille"
-msgstr "Označi v braillovi pisavi"
+msgstr "Označi v Brajevi pisavi"
 
 #. Attribute Value column (VALUE)
 #.
@@ -3536,7 +3536,7 @@ msgstr "(trojni klik)"
 #: ../src/orca/orca_gui_prefs.py:2023
 #: ../src/orca/orca_gui_prefs.py:2115
 msgid "Braille Bindings"
-msgstr "Braillove tipke"
+msgstr "Brajeve vezi"
 
 #. Translators: A single braille cell on a refreshable
 #. braille display consists of 8 dots.  If the user
@@ -3786,7 +3786,7 @@ msgstr "Ali naj se program Orka konča?"
 
 #: ../src/orca/orca_gui_quit.py:47
 msgid "This will stop all speech and braille output."
-msgstr "S tem dejanjem se bodo zaustavile vse izgovorjave in odvod braillove pisave."
+msgstr "S tem dejanjem se bodo zaustavile vse izgovorjave in odvod brajice."
 
 #. Translators: there is a keystroke to reload the user
 #. preferences.  This is a spoken prompt to let the user
@@ -4144,11 +4144,11 @@ msgstr "Govor"
 
 #: ../src/orca/orca-setup.ui.h:82
 msgid "Enable Braille _support"
-msgstr "Omogoči podporo _Braillovi pisavi"
+msgstr "Omogoči podporo _brajici"
 
 #: ../src/orca/orca-setup.ui.h:83
 msgid "Enable Braille _monitor"
-msgstr "Omogoči Braillov_monitor"
+msgstr "Omogoči Brajev _zaslon"
 
 #: ../src/orca/orca-setup.ui.h:84
 msgid "_Abbreviated role names"
@@ -4160,7 +4160,7 @@ msgstr "Onemogoči simbol za _konec vrstice"
 
 #: ../src/orca/orca-setup.ui.h:86
 msgid "_Enable Contracted Braille"
-msgstr "_Omogoči skrčeni zapis braille"
+msgstr "_Omogoči skrčeni zapis brajice"
 
 #. Translators: This string is associated with a combo box which allows the user to select the set of symbols to be used when Orca presents print strings on a refreshable braille display. Braille symbols vary from language to language due in part to what print letters exist for that language. The other reason braille symbols vary is due to which braille 'contractions' get used. Contractions are shorter forms of commonly-used letter combinations and words. For instance in English there is a single braille symbol for 'ing' (dots 3-4-6), and the letter 'e' (dots 1-5) all by itself means 'every'. The list of rules which dictate what contractions should be used and whether or not they can be used in a particular context are stored in liblouis' tables.
 #: ../src/orca/orca-setup.ui.h:88
@@ -4187,7 +4187,7 @@ msgstr "Kazalnik hiperpovezav"
 
 #: ../src/orca/orca-setup.ui.h:97
 msgid "Braille"
-msgstr "Braillova pisava"
+msgstr "Brajeva pisava"
 
 #: ../src/orca/orca-setup.ui.h:98
 msgid "Enable _key echo"
@@ -4291,7 +4291,7 @@ msgstr "Prilagodi izbrane atribute"
 
 #: ../src/orca/orca-setup.ui.h:130
 msgid "Braille Indicator"
-msgstr "Braillov kazalnik"
+msgstr "Brajev kazalnik"
 
 #: ../src/orca/orca-setup.ui.h:131
 msgid "Text Attributes"
@@ -5537,7 +5537,7 @@ msgstr "Pošlje podrobnosti trenutnega skripta."
 #: ../src/orca/scripts/default.py:678
 #: ../src/orca/scripts/toolkits/Gecko/script.py:596
 msgid "Pans the braille display to the left."
-msgstr "Postavi Braillov zaslon levo."
+msgstr "Postavi Brajev zaslon levo."
 
 #. Translators: a refreshable braille display is an
 #. external hardware device that presents braille
@@ -5551,7 +5551,7 @@ msgstr "Postavi Braillov zaslon levo."
 #: ../src/orca/scripts/default.py:693
 #: ../src/orca/scripts/toolkits/Gecko/script.py:611
 msgid "Pans the braille display to the right."
-msgstr "Postavi Braillov zaslon desno."
+msgstr "Postavi Brajev zaslon desno."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
@@ -5592,7 +5592,7 @@ msgstr "Vrne se na predmet s tipkovnico."
 #.
 #: ../src/orca/scripts/default.py:738
 msgid "Turns contracted braille on and off."
-msgstr "Preklopi skrčeno obliko braillove pisave"
+msgstr "Preklopi skrčeno obliko Brajeve pisave."
 
 #. Translators: hardware braille displays often have
 #. buttons near each braille cell.  These are called
