@@ -242,19 +242,9 @@ formatting = {
             'detailedWhereAmI': 'label + readOnly + textRole + textContentWithAttributes + anyTextSelection + ' + MNEMONIC + ' + ' + TUTORIAL
             },
         pyatspi.ROLE_SLIDER: {
-            # Ignore the text on the slider.  See bug 340559
-            # (http://bugzilla.gnome.org/show_bug.cgi?id=340559): the
-            # implementors of the slider support decided to put in a
-            # Unicode left-to-right character as part of the text,
-            # even though that is not painted on the screen.
-            #
-            # In Java, however, there are sliders without a label. In
-            # this case, we'll add to presentation the slider name if
-            # it exists and we haven't found anything yet.
-            #
             'focused': 'value',
-            'unfocused': 'label + roleName + value + required + availability + ' + MNEMONIC,
-            'basicWhereAmI': 'label + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
+            'unfocused': 'labelOrName + roleName + value + required + availability + ' + MNEMONIC,
+            'basicWhereAmI': 'labelOrName + roleName + value + percentage + ' + MNEMONIC + ' + accelerator + required'
             },
         pyatspi.ROLE_SPIN_BUTTON: {
             'focused': 'name',
@@ -499,7 +489,7 @@ formatting = {
         #'REAL_ROLE_SCROLL_PANE': 'default'
         pyatspi.ROLE_SLIDER: {
             'unfocused': '[Component(obj,\
-                                     asString(label + value + roleName + required))]'
+                                     asString(labelOrName + value + roleName + required))]'
             },
         pyatspi.ROLE_SPIN_BUTTON: {
             'unfocused': '[Text(obj, asString(label), asString(eol))]\
