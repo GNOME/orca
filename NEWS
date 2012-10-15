@@ -1,3 +1,35 @@
+3.7.0.93 - 15 October 2012
+
+General
+
+  * Fix for bug 675288 - Orca doesn't always announce selection changes
+    in Nautilus 3.6's icon view
+
+  * Fix for bug 680228 - In Thunderbird 14.0 e-mail address auto
+    completion results are not spoken
+
+  * Fix for bug 684838 - Orca should present the accessible name of
+    sliders
+
+  * Fix for bug 675656 - Mark Hungarian 8 dot computer braille for
+    translation
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg            Bulgarian               Alexander Shopov
+    ca            Catalan                 Gil Forcada
+    ca            Catalan (Valencian)     Carles Ferrando
+    cs            Czech                   Lucas Lommer
+    de            German                  Simon Bienlein, Mario Blättermann
+    it            Italian                 Milo Casagrande
+    lv            Latvian                 Rudolfs Mazurs
+    sl            Slovenian               Matej Urbančič
+    pt            Portuguese              Rui Batista
+    ta            Tamil                   Dr.T.Vasudevan
+    uk            Ukranian                Daniel Korostil
+
+=========
+
 3.7.0.92 - 17 September 2012
 
 General
@@ -27,7 +59,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 New and updated translations (THANKS EVERYONE!!!):
 
-    de            German                  Simon Bienlein
+    de            German                  Simon Bienlein 
     el            Greek                   Tom Tryfonidis
     id            Indonesian              Andika Triwidada
     nb            Norwegian bokmål        Kjartan Maraas
