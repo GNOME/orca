@@ -30,7 +30,8 @@ import orca.debug as debug
 import orca.scripts.default as default
 import orca.speech as speech
 
-from orca.orca_i18n import ngettext  # for ngettext support
+from orca.orca_i18n import ngettext
+from orca.orca_i18n import C_
 
 ########################################################################
 #                                                                      #
@@ -250,3 +251,24 @@ class Script(default.Script):
                 return
 
         default.Script.onStateChanged(self, event)
+
+    def onSelectionChanged(self, event):
+        """Called when an object's selection changes.
+
+        Arguments:
+        - event: the Event
+        """
+
+        try:
+            role = event.source.getRole()
+        except:
+            return
+
+        # We present the selection changes in the layered pane as a result
+        # of the child announcing emitting an event for the state change.
+        # And the default script will update the locusOfFocus to the layered
+        # pane if nothing is selected.
+        if role == pyatspi.ROLE_LAYERED_PANE:
+            return
+
+        default.Script.onSelectionChanged(self, event)

@@ -109,6 +109,12 @@ formatting = {
         pyatspi.ROLE_ANIMATION: {
             'unfocused': 'labelAndName'
             },
+        pyatspi.ROLE_CANVAS: {
+            'focused': 'labelAndName + imageDescription + roleName + positionInList',
+            'unfocused': 'labelAndName + imageDescription + roleName + positionInList',
+            'basicWhereAmI': 'parentRoleName + labelAndName + selectedItemCount',
+            'detailedWhereAmI': 'parentRoleName + labelAndName + selectedItemCount + selectedItems'
+            },
         pyatspi.ROLE_CHECK_BOX: {
             'focused': 'checkedState',
             'unfocused': 'labelAndName + roleName + checkedState + required + availability + ' + MNEMONIC + ' + accelerator',
@@ -359,6 +365,10 @@ formatting = {
                                      asString(label + displayedText + roleName + (description and space(": ") + description)))]',
             },
         #pyatspi.ROLE_ARROW: 'default'
+        pyatspi.ROLE_CANVAS: {
+            'unfocused': '[Component(obj,\
+                                     asString(((label + displayedText + imageDescription) or name) + roleName))]'
+            },
         pyatspi.ROLE_CHECK_BOX: {
             'unfocused': '[Component(obj,\
                                      asString(label + displayedText + roleName),\
@@ -537,6 +547,12 @@ formatting = {
 }
 
 if settings.useExperimentalSpeechProsody:
+    formatting['speech'][pyatspi.ROLE_CANVAS]['focused'] = 'labelAndName + imageDescription + roleName + pause + positionInList'
+    formatting['speech'][pyatspi.ROLE_CANVAS]['unfocused'] = 'labelAndName + imageDescription + roleName + pause + positionInList'
+    formatting['speech'][pyatspi.ROLE_CANVAS]['basicWhereAmI'] = \
+        'parentRoleName + pause + labelAndName + pause + selectedItemCount + pause'
+    formatting['speech'][pyatspi.ROLE_CANVAS]['detailedWhereAmI'] = \
+        'parentRoleName + pause + labelAndName + pause + selectedItemCount + pause + selectedItems + pause'
     formatting['speech'][pyatspi.ROLE_CHECK_MENU_ITEM]['unfocused'] = \
         'labelAndName + roleName + checkedState + required + availability + ' + MNEMONIC + ' + accelerator + pause + positionInList'
     formatting['speech'][pyatspi.ROLE_CHECK_MENU_ITEM]['basicWhereAmI'] = \
