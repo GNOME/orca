@@ -1482,7 +1482,8 @@ class SpeechGenerator(generator.Generator):
         # TODO - JD: Is there a better way to do this other than
         # hard-coding it in?
         #
-        if args.get('role', obj.getRole()) == pyatspi.ROLE_ICON:
+        if args.get('role', obj.getRole()) \
+                in [pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS]:
             obj = obj.parent
         childCount = obj.childCount
         selectedItems = []
