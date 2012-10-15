@@ -485,7 +485,16 @@ class Script(Gecko.Script):
                 default.Script.onTextInserted(self, event)
                 return
 
-            if event.type.endswith("system") and event.any_data:
+            # Mozilla cannot seem to get their ":system" suffix right
+            # to save their lives, so we'll add yet another sad hack.
+            try:
+                text = event.source.queryText()
+            except:
+                hasSelection = False
+            else:
+                hasSelection = text.getNSelections() > 0
+
+            if (hasSelection or event.type.endswith("system")) and event.any_data:
                 # The autocompleted address may start with the name,
                 # or it might start with the text typed by the user
                 # followed by ">>" followed by the address. Therefore
