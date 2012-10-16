@@ -505,7 +505,6 @@ class Script(Gecko.Script):
                 if self._lastAutoComplete != address:
                     speech.speak(address)
                 self._lastAutoComplete = address
-                return
 
         Gecko.Script.onTextInserted(self, event)
 
