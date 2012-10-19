@@ -14,8 +14,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca gnome-3-0\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2012-05-05 02:22+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-20 02:56+0900\n"
 "PO-Revision-Date: 2012-01-01 23:26+0900\n"
 "Last-Translator: Jiro Matsuzawa <jmatsuzawa@src.gnome.org>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -631,7 +631,7 @@ msgid "Speak and braille a previous chat room message."
 msgstr "Speak and braille a previous chat room message."
 
 #. Translators: If this checkbox is checked, then Orca will speak
-#. the name of the chat room.
+#. the name of the chat room prior to presenting an incoming message.
 #.
 msgid "_Speak Chat Room name"
 msgstr "チャット部屋の名前を読み上げる(_S)"
@@ -767,6 +767,8 @@ msgid "star"
 msgstr "star"
 
 #. Translators: this is the spoken word for the character '+' (U+002b)
+#.
+#. Translators: this is how someone would speak the name of the plus key
 #.
 msgid "plus"
 msgstr "plus"
@@ -2176,6 +2178,11 @@ msgstr "ring"
 msgid "stroke"
 msgstr "stroke"
 
+#. Translators: this is how someone would speak the name of the minus key
+#.
+msgid "minus"
+msgstr "minus"
+
 #. Translators:  sets the live region politeness level to polite
 #.
 msgid "setting live region to polite"
@@ -2286,6 +2293,132 @@ msgid ""
 "Press Escape to exit.\n"
 "Press Space to repeat the last message read.\n"
 "Press one digit to read a specific message.\n"
+msgstr ""
+
+#. Translators: this text is the description displayed when Orca is
+#. launched from the command line and the help text is displayed.
+#, fuzzy
+msgid "orca - scriptable screen reader"
+msgstr "Orca スクリーン・リーダと拡大鏡"
+
+#. Translators: this text is the description displayed when Orca is
+#. launched from the command line and the help text is displayed.
+msgid "Report bugs to orca-list@gnome.org."
+msgstr "バグの報告は orca-list@gnome.org まで"
+
+#. Translators: this is the description of the command line option
+#. '-r, --replace' which tells Orca to replace any existing Orca
+#. process(es) that might be running.
+msgid "Replace a currently running Orca"
+msgstr "現在起動中の Orca を置き換える"
+
+#. Translators: this is the description of the command line option
+#. '-t, --text-setup' that will initially display a list of questions
+#. in text form, that the user will need to answer, before Orca will
+#. startup. For this to happen properly, Orca will need to be run
+#. from a terminal window.
+msgid "Set up user preferences (text version)"
+msgstr "ユーザーの設定を変更する (端末から)"
+
+#. Translators: this is the description of the command line option
+#. '-l, --list-apps' which prints the names of running applications
+#. which can be seen by assistive technologies such as Orca and
+#. Accercser.
+msgid "Print the known running applications"
+msgstr "実行中のアプリの一覧を表示する"
+
+#. Translators: this is the description of the command line option
+#. '-e, --enable' which allows the user to specify an option to
+#. enable as Orca is started.
+msgid "Force use of option"
+msgstr "利用するオプションを指定する"
+
+#. Translators: this string indicates to the user what should be
+#. provided when using the '-e, --enable' or '-d, --disable' command
+#. line option.
+msgid "OPTION"
+msgstr ""
+
+#. Translators: this is the description of the command line option
+#. '-d, --disable' which allows the user to specify an option to
+#. enable as Orca is started.
+msgid "Prevent use of option"
+msgstr "利用しないオプションを指定する"
+
+#. Translators: this is the description of the command line option
+#. '-p, --profile' which allows you to specify a profile to be
+#. loaded. A profile stores a group of Orca settings configured by
+#. the user for a particular purpose, such as a 'Spanish' profile
+#. which would include Spanish braille and Spanish text-to-speech.
+#. An Orca settings file contains one or more profiles.
+msgid "Load profile"
+msgstr ""
+
+#. Translators: this string indicates to the user what should be
+#. provided when using the '-p, --profile' command line option.
+msgid "NAME"
+msgstr ""
+
+#. Translators: this is the description of the command line option
+#. '-u, --user-prefs' that allows you to specify an alternate
+#. location from which to loadr the user preferences.
+msgid "Use alternate directory for user preferences"
+msgstr "ユーザー設定のフォルダーを指定する"
+
+#. Translators: this string indicates to the user what should be
+#. provided when using the '-u, --user-prefs' command line option.
+msgid "DIR"
+msgstr ""
+
+#. Translators: this is the description of the command line option
+#. '--debug-file' which allows the user to override the default,
+#. date-based name of the debugging output file.
+msgid "Send debug output to the specified file"
+msgstr "指定したファイルにデバッグ情報を出力する"
+
+#. Translators: this string indicates to the user what should be
+#. provided when using the '--debug-file' command line option.
+msgid "FILE"
+msgstr ""
+
+#. Translators: this is the description of the command line option
+#. '--debug' which enables debugging output for Orca to be sent to
+#. a file. The YYYY-MM-DD-HH:MM:SS portion of the string indicates
+#. the file name will be formed from the current date and time with
+#. 'debug' in front and '.out' at the end. The 'debug' and '.out'
+#. portions of this string should not be translated (i.e., it will
+#. always start with 'debug' and end with '.out', regardless of the
+#. locale.).
+msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
+msgstr "debug-YYYY-MM-DD-HH:MM:SS.outにデバッグ情報を出力する"
+
+#. Translators: This message is displayed when the user starts Orca
+#. from the command line and includes an invalid option or argument.
+#. After the message, the list of invalid items, as typed by the
+#. user, is displayed.
+msgid "The following are not valid: "
+msgstr ""
+
+#. Translators: This message is presented to the user who attempts
+#. to launch Orca from some other environment than the graphical
+#. desktop.
+msgid "Cannot start Orca because it cannot connect to the Desktop."
+msgstr ""
+
+#. Translators: This message is presented to the user when
+#. the specified profile could not be loaded. A profile stores
+#. a group of Orca settings configured for a particular purpose,
+#. such as a Spanish profile which would include Spanish braille
+#. and Spanish text-to-speech.
+#, fuzzy, python-format
+msgid "Profile could not be loaded: %s"
+msgstr "ブックマーク・オブジェクトを保存できませんでした"
+
+#. Translators: This message is presented to the user when
+#. he/she tries to launch Orca, but Orca is already running.
+msgid ""
+"Another Orca process is already running for this session.\n"
+"Run \"orca --replace\" to replace that process with a new one."
 msgstr ""
 
 #. Translators: this is a regular expression that is intended to match
@@ -2486,9 +2619,6 @@ msgstr "ウィンドウのトップ(_T)"
 msgid "Top of window"
 msgstr "ウィンドウのトップ"
 
-msgid "<b>Start from:</b>"
-msgstr "<b>検索を開始する場所:</b>"
-
 msgid "Start from:"
 msgstr "検索の開始:"
 
@@ -2499,7 +2629,7 @@ msgid "Search _backwards"
 msgstr "降順で検索する(_B)"
 
 #, fuzzy
-msgid "<b>Search direction:</b>"
+msgid "Search direction:"
 msgstr "<b>検索を開始する場所:</b>"
 
 msgid "_Match case"
@@ -2508,7 +2638,7 @@ msgstr "大小文字を区別する(_M)"
 msgid "Match _entire word only"
 msgstr "単語全体と一致するものだけ(_E)"
 
-msgid "<b>Results must:</b>"
+msgid "Results must:"
 msgstr ""
 
 #. Translators: This is used in the Orca About dialog.
@@ -2552,7 +2682,7 @@ msgstr ""
 "日本GNOMEユーザー会 <http://www.gnome.gr.jp/>"
 
 #. Translators: This text is used in the Orca About dialog. Orca is
-#. licensed under GPL2+.
+#. licensed under LGPL2.1+.
 #.
 #, fuzzy
 msgid ""
@@ -2922,23 +3052,43 @@ msgstr "キー・バインドが削除されています"
 msgid "_Desktop"
 msgstr "デスクトップ型(_D)"
 
-#. We're here because given profile name exists, so we have
-#. to give that info to the user and give him the chance
-#. to continue, or not saving the profile
+#. Translators: This text is shown in a message dialog informing
+#. the user that he/she attempted to save a new user profile
+#. under a name which already exists. A "user profile" is a
+#. collection of settings which apply to a given task, such as
+#. a "Spanish" profile which would use Spanish text-to-speech
+#. and Spanish braille and selected when reading Spanish content.
 #, python-format
 msgid ""
-"Profile <b>%s</b> already exists.\n"
+"Profile %s already exists.\n"
 "Continue updating the existing profile with these new changes?"
 msgstr ""
 
+#. Translators: This is a label in a message dialog informing
+#. the user that he/she attempted to save a new user profile
+#. under a name which already exists. A "user profile" is a
+#. collection of settings which apply to a given task, such as
+#. a "Spanish" profile which would use Spanish text-to-speech
+#. and Spanish braille and selected when reading Spanish content.
 #, fuzzy
-msgid "<b>User Profile Conflict!</b>"
+msgid "User Profile Conflict!"
 msgstr "<b>点字の表示方法</b>"
 
+#. Translators: This is the title of a message dialog informing
+#. the user that he/she attempted to save a new user profile
+#. under a name which already exists. A "user profile" is a
+#. collection of settings which apply to a given task, such as
+#. a "Spanish" profile which would use Spanish text-to-speech
+#. and Spanish braille and selected when reading Spanish content.
 msgid "Save Profile As Conflict"
 msgstr ""
 
-#. First of all, we give a chance of cancel profile change
+#. Translators: This text is displayed in a message dialog when a user
+#. indicates he/she wants to switch to a new user profile and, in the
+#. process, lose settings which have been altered but not yet saved. A
+#. "user profile" is a collection of settings which apply to a given task
+#. such as a "Spanish" profile which would use Spanish text-to-speech and
+#. Spanish braille and selected when reading Spanish content.
 msgid ""
 "You are about to change the active profile. If you\n"
 "have just made changes in your preferences, they will\n"
@@ -2947,10 +3097,13 @@ msgid ""
 "Continue loading profile discarding previous changes?"
 msgstr ""
 
-msgid "<b>Load user profile info</b>"
-msgstr ""
-
-msgid "Load User Profile"
+#. Translators: This text is displayed in a message dialog when a user
+#. indicates he/she wants to switch to a new user profile and, in the
+#. process, lose settings which have been altered but not yet saved. A
+#. "user profile" is a collection of settings which apply to a given task
+#. such as a "Spanish" profile which would use Spanish text-to-speech and
+#. Spanish braille and selected when reading Spanish content.
+msgid "Load user profile"
 msgstr ""
 
 #, fuzzy
@@ -2996,148 +3149,6 @@ msgstr "Orca を終了する"
 
 msgid "This will stop all speech and braille output."
 msgstr ""
-
-#. Translators: This message is displayed when the user
-#. tries to enable or disable a feature via an argument,
-#. but specified an invalid feature. Valid features are:
-#. speech, braille, braille-monitor, main-window, and
-#. splash-window. These items are not localized and are
-#. presented in a list after this message.
-#.
-msgid "The following items can be enabled or disabled:"
-msgstr ""
-
-#. Translators: This message is displayed when the user tries to start
-#. Orca and includes an invalid option as an argument. After the message,
-#. the list of arguments, as typed by the user, is displayed.
-#.
-msgid "The following arguments are not valid: "
-msgstr ""
-
-#, fuzzy
-#| msgid "Orca Screen Reader and Magnifier"
-msgid "orca - scriptable screen reader and magnifier"
-msgstr "Orca スクリーン・リーダと拡大鏡"
-
-#. Translators: this is text being sent to a terminal and we want to keep
-#. the text lines within terminal boundaries.
-#.
-#, fuzzy
-#| msgid ""
-#| "If Orca has not been previously set up by the user, Orca\n"
-#| "will automatically launch the preferences set up unless\n"
-#| "the -n or --no-setup option is used."
-msgid ""
-"If Orca has not been previously set up by the user, Orca\n"
-"will automatically launch the preferences set up unless\n"
-"the -n or --no-setup option is used.\n"
-"\n"
-"Report bugs to orca-list@gnome.org."
-msgstr ""
-"未だ設定が完了していない場合は\n"
-"-n または --no-setup を指定しない限り\n"
-"常に設定ダイアログを表示します"
-
-#. Translators: this is the description of the command line option
-#. '-?, --help' that is used to display usage information.
-#.
-msgid "Show this help message"
-msgstr "このヘルプを表示する"
-
-#. Translators: this is a testing option for the command line.  It prints
-#. the names of applications known to the accessibility infrastructure
-#. to stdout and then exits.
-#.
-msgid "Print the known running applications"
-msgstr "実行中のアプリの一覧を表示する"
-
-#. Translators: this enables debug output for Orca.  The
-#. YYYY-MM-DD-HH:MM:SS portion is a shorthand way of saying that the file
-#. name will be formed from the current date and time with 'debug' in front
-#. and '.out' at the end.  The 'debug' and '.out' portions of this string
-#. should not be translated (i.e., it will always start with 'debug' and end
-#. with '.out', regardless of the locale.).
-#.
-msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr "debug-YYYY-MM-DD-HH:MM:SS.outにデバッグ情報を出力する"
-
-#. Translators: this enables debug output for Orca and overrides the name
-#. of the debug file Orca will use for debug output if the --debug option
-#. is used.
-#.
-msgid "Send debug output to the specified file"
-msgstr "指定したファイルにデバッグ情報を出力する"
-
-#. Translators: this is the description of the command line option
-#. '-s, --setup, --gui-setup' that will initially display a GUI dialog that
-#. would allow the user to set their Orca preferences.
-#.
-msgid "Set up user preferences"
-msgstr "ユーザーの設定を変更する"
-
-#. Translators: this is the description of the command line option
-#. '-t, --text-setup' that will initially display a list of questions in
-#. text form, that the user will need to answer, before Orca will startup.
-#. For this to happen properly, Orca will need to be run from a terminal
-#. window.
-#.
-msgid "Set up user preferences (text version)"
-msgstr "ユーザーの設定を変更する (端末から)"
-
-#. Translators: this is the description of the command line option
-#. '-n, --no-setup' that means that Orca will startup without setting up any
-#. user preferences.
-#.
-msgid "Skip set up of user preferences"
-msgstr "ユーザー設定の変更をスキップする"
-
-#. Translators: this is the description of the command line option
-#. '-u, --user-prefs-dir=dirname' that allows you to specify an alternate
-#. location for the user preferences.
-#.
-msgid "Use alternate directory for user preferences"
-msgstr "ユーザー設定のフォルダーを指定する"
-
-#. Translators: if the user supplies an option via the '-e, --enable'
-#. command line option, it will be automatically enabled as Orca is started.
-#.
-msgid "Force use of option"
-msgstr "利用するオプションを指定する"
-
-#. Translators: if the user supplies an option via the '-d, --disable'
-#. command line option, it will be automatically disabled as Orca is started.
-#.
-msgid "Prevent use of option"
-msgstr "利用しないオプションを指定する"
-
-#. Translators: this is the Orca command line option to import to Orca a user
-#. profile from a given file
-#.
-msgid "Import a profile from a given orca profile file"
-msgstr ""
-
-#. Translators: this is the Orca command line option that will quit Orca.
-#. The user would run the Orca shell script again from a terminal window.
-#. If this command line option is specified, the script will quit any
-#. instances of Orca that are already running.
-#.
-msgid "Quits Orca (if shell script used)"
-msgstr "Orca を強制終了する (Shell スクリプトから)"
-
-#. Translators: this is the Orca command line option that will force the
-#. termination of Orca.
-#. The user would run the Orca shell script again from a terminal window.
-#. If this command line option is specified, the script will quit any
-#. instances of Orca that are already running.
-#.
-msgid "Forces orca to be terminated immediately."
-msgstr ""
-
-#. Translators: this is the Orca command line option to tell Orca to replace
-#. any existing Orca process(es) that might be running.
-#.
-msgid "Replace a currently running Orca"
-msgstr "現在起動中の Orca を置き換える"
 
 #. Translators: there is a keystroke to reload the user
 #. preferences.  This is a spoken prompt to let the user
@@ -3238,27 +3249,6 @@ msgstr ""
 msgid "Goodbye."
 msgstr "Goodbye."
 
-#. Translators: This message is what is presented to the user
-#. when he/she attempts to import a settings profile, but the
-#. import failed for some reason.
-#.
-msgid "Unable to import profile."
-msgstr ""
-
-#. Translators: This message is what is presented to the user
-#. when he/she successfully imports a settings profile.
-#.
-msgid "Profile import success."
-msgstr ""
-
-#. Translators: This message is what is presented to the user
-#. when he/she attempts to import a settings profile but the
-#. import failed due to a bad key.
-#.
-#, python-format
-msgid "Import failed due to an unrecognized key: %s"
-msgstr ""
-
 msgid "Welcome to Orca."
 msgstr "Orca へようこそ"
 
@@ -3287,7 +3277,8 @@ msgstr "Orca の設定"
 msgid "_Laptop"
 msgstr "ラップトップ型(_L)"
 
-msgid "<b>Keyboard Layout</b>"
+#, fuzzy
+msgid "Keyboard Layout"
 msgstr "<b>キーボードの種類</b>"
 
 msgid "Show Orca _main window"
@@ -3297,7 +3288,7 @@ msgid "Quit Orca _without confirmation"
 msgstr "終了時に確認ウィンドウを表示しない(_W)"
 
 #, fuzzy
-msgid "<b>User Interface</b>"
+msgid "User Interface"
 msgstr "<b>コントラスト</b>"
 
 msgid "Active _Profile:"
@@ -3312,7 +3303,7 @@ msgid "_Load"
 msgstr ""
 
 #, fuzzy
-msgid "<b>Profiles</b>"
+msgid "Profiles"
 msgstr "<b>明るさ</b>"
 
 msgid "_Time format:"
@@ -3322,7 +3313,7 @@ msgid "Dat_e format:"
 msgstr ""
 
 #, fuzzy
-msgid "<b>Time and Date</b>"
+msgid "Time and Date"
 msgstr "<b>点字の表示方法</b>"
 
 msgid "_Present tooltips"
@@ -3331,9 +3322,8 @@ msgstr "ツールチップを有効にする(_P)"
 msgid "Speak object under mo_use"
 msgstr "ポインターが指しているオブジェクトを読み上げる(_U)"
 
-#, fuzzy
-msgid "<b>Mouse</b>"
-msgstr "<b>境界線</b>"
+msgid "Mouse"
+msgstr ""
 
 msgid "General"
 msgstr "全般"
@@ -3363,7 +3353,7 @@ msgstr "音声の設定(_V):"
 
 #. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
 #, fuzzy
-msgid "<b>Voice Type Settings</b>"
+msgid "Voice Type Settings"
 msgstr "<b>複数のモニターの設定</b>"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
@@ -3375,7 +3365,7 @@ msgid "Say All B_y:"
 msgstr "読み上げの単位(_Y):"
 
 #, fuzzy
-msgid "<b>Global Voice Settings</b>"
+msgid "Global Voice Settings"
 msgstr "<b>複数のモニターの設定</b>"
 
 #, fuzzy
@@ -3388,7 +3378,8 @@ msgstr "読み上げを有効にする(_E)"
 msgid "Ver_bose"
 msgstr "冗長にする(_B)"
 
-msgid "<b>Verbosity</b>"
+#, fuzzy
+msgid "Verbosity"
 msgstr "<b>冗長の度合い</b>"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
@@ -3396,13 +3387,15 @@ msgid "Speak ro_w"
 msgstr "列を読み上げる(_W)"
 
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
-msgid "<b>Table Rows</b>"
+#, fuzzy
+msgid "Table Rows"
 msgstr "<b>表の中の読み上げ</b>"
 
 msgid "_All"
 msgstr "すべて(_A)"
 
-msgid "<b>Punctuation Level</b>"
+#, fuzzy
+msgid "Punctuation Level"
 msgstr "<b>句読点の読み上げ</b>"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
@@ -3426,7 +3419,7 @@ msgid "Speak tutorial messages"
 msgstr "チュートリアルのメッセージを読み上げる"
 
 #, fuzzy
-msgid "<b>Spoken Context</b>"
+msgid "Spoken Context"
 msgstr "<b>コントラスト</b>"
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
@@ -3446,7 +3439,8 @@ msgid "Restrict to:"
 msgstr "次のいずれかに限定する"
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
-msgid "<b>Progress Bar Updates</b>"
+#, fuzzy
+msgid "Progress Bar Updates"
 msgstr "<b>プログレスバーの更新</b>"
 
 msgid "Speech"
@@ -3472,7 +3466,7 @@ msgid "Contraction _Table:"
 msgstr "短縮テーブル(_T):"
 
 #, fuzzy
-msgid "<b>Display Settings</b>"
+msgid "Display Settings"
 msgstr "<b>複数のモニターの設定</b>"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
@@ -3481,10 +3475,12 @@ msgctxt "braille dots"
 msgid "_None"
 msgstr "なし(_N)"
 
-msgid "<b>Selection Indicator</b>"
+#, fuzzy
+msgid "Selection Indicator"
 msgstr "<b>選択範囲の表示</b>"
 
-msgid "<b>Hyperlink Indicator</b>"
+#, fuzzy
+msgid "Hyperlink Indicator"
 msgstr "<b>ハイパーリンクの表示</b>"
 
 msgid "Braille"
@@ -3523,7 +3519,8 @@ msgstr "Orca の修飾キー(_M):"
 msgid "Key Bindings"
 msgstr "キーの割り当て"
 
-msgid "<b>Pronunciation Dictionary</b>"
+#, fuzzy
+msgid "Pronunciation Dictionary"
 msgstr "<b>発音用の辞書</b>"
 
 msgid "_New entry"
@@ -3544,8 +3541,9 @@ msgstr "読み上げない(_N)"
 msgid "_Reset"
 msgstr "リセット(_R)"
 
-msgid "<b>Text attributes</b>"
-msgstr "<b>文字の属性</b>"
+#, fuzzy
+msgid "Text attributes"
+msgstr "文字の属性"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _bottom button, move that attribute to the bottom of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 msgid "Move to _bottom"
@@ -3563,20 +3561,19 @@ msgstr "上げる(_U)"
 msgid "Move to _top"
 msgstr "先頭へ(_T)"
 
-msgid ""
-"<b>Adjust selected\n"
-"attributes</b>"
+#, fuzzy
+msgid "Adjust selected attributes"
 msgstr ""
 "<b>選択した属性\n"
 "の調整</b>"
 
-msgid "<b>Braille Indicator</b>"
+#, fuzzy
+msgid "Braille Indicator"
 msgstr "<b>点字の表示方法</b>"
 
 msgid "Text Attributes"
 msgstr "文字の属性"
 
-#. for gettext support
 #. Translators: this is a structure to assist in the generation of
 #. spoken military-style spelling.  For example, 'abc' becomes 'alpha
 #. bravo charlie'.
@@ -3990,6 +3987,30 @@ msgstr "Set the column to use as dynamic row headers to use when speaking calc c
 #.
 msgid "Clears the dynamic row headers"
 msgstr "Clears the dynamic row headers"
+
+#. Translators: a refreshable braille display is an
+#. external hardware device that presents braille
+#. character to the user.  There are a limited number
+#. of cells on the display (typically 40 cells).  Orca
+#. provides the feature to build up a longer logical
+#. line and allow the user to press buttons on the
+#. braille display so they can pan left and right over
+#. this line.
+#.
+msgid "Pans the braille display to the left."
+msgstr "点字モニターを左側にずらす"
+
+#. Translators: a refreshable braille display is an
+#. external hardware device that presents braille
+#. character to the user.  There are a limited number
+#. of cells on the display (typically 40 cells).  Orca
+#. provides the feature to build up a longer logical
+#. line and allow the user to press buttons on the
+#. braille display so they can pan left and right over
+#. this line.
+#.
+msgid "Pans the braille display to the right."
+msgstr "点字モニターを右側にずらす"
 
 #. Translators: If checked, then Orca will speak the coordinates
 #. of the current spread sheet cell. Coordinates are the row and
@@ -4619,30 +4640,6 @@ msgstr "現在の文字列に付与されている属性を読み上げる"
 msgid "Reports information on current script."
 msgstr "現在のスクリプトの情報を報告する (デバッグ用)"
 
-#. Translators: a refreshable braille display is an
-#. external hardware device that presents braille
-#. character to the user.  There are a limited number
-#. of cells on the display (typically 40 cells).  Orca
-#. provides the feature to build up a longer logical
-#. line and allow the user to press buttons on the
-#. braille display so they can pan left and right over
-#. this line.
-#.
-msgid "Pans the braille display to the left."
-msgstr "点字モニターを左側にずらす"
-
-#. Translators: a refreshable braille display is an
-#. external hardware device that presents braille
-#. character to the user.  There are a limited number
-#. of cells on the display (typically 40 cells).  Orca
-#. provides the feature to build up a longer logical
-#. line and allow the user to press buttons on the
-#. braille display so they can pan left and right over
-#. this line.
-#.
-msgid "Pans the braille display to the right."
-msgstr "点字モニターを右側にずらす"
-
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
 #. window in a 2D fashion.  That is, Orca treats all
@@ -4840,13 +4837,6 @@ msgstr "現在フォーカスを持ったオブジェクトの先祖に関する
 #.
 msgid "Prints debug information about the application with focus."
 msgstr "現在フォーカスを持ったアプリ関するデバッグ情報を表示する"
-
-#. Translators: this is a debug message that Orca users
-#. will not normally see. It describes a debug routine
-#. that will print Orca memory usage information.
-#.
-msgid "Prints memory usage information."
-msgstr "メモリの使用量に関する情報を表示する"
 
 #. Translators: this command announces information regarding
 #. the relationship of the given bookmark to the current
@@ -5626,26 +5616,58 @@ msgstr "Goes to the end of the line."
 msgid "Causes the current combo box to be expanded."
 msgstr "Causes the current combo box to be expanded."
 
-#. Translators: this is for advancing the live regions
-#. politeness setting
+#. Translators: this string refers to an Orca command which
+#. advances the live region "politeness" setting from one
+#. level to the next.
+#.
+#. The term "live region" refers to dynamically updated
+#. content, typically on a web page, about which a user
+#. likely wants to be notified. For instance, a stock
+#. ticker on a financial site or a table of updated scores
+#. on a sports site. In contast, a countdown timer or clock
+#. on a web site is NOT a live region.
+#.
+#. The "politeness" level is an indication of when the user
+#. wishes to be notified about a change to live region content,
+#. e.g. never ("off"), when idle ("polite"), or when there is
+#. a change ("assertive").
 #.
 msgid "Advance live region politeness setting."
 msgstr "Advance live region politeness setting."
 
-#. Translators: this is for setting all live regions
-#. to 'off' politeness.
+#. Translators: this string refers to an Orca command which
+#. turns changes the live region "politness" level to "off."
+#.
+#. The term "live region" refers to dynamically updated
+#. content, typically on a web page, about which a user
+#. likely wants to be notified. For instance, a stock
+#. ticker on a financial site or a table of updated scores
+#. on a sports site. In contast, a countdown timer or clock
+#. on a web site is NOT a live region.
+#.
+#. The "politeness" level is an indication of when the user
+#. wishes to be notified about a change to live region content,
+#. e.g. never ("off"), when idle ("polite"), or when there is
+#. a change ("assertive").
 #.
 msgid "Set default live region politeness level to off."
 msgstr "Set default live region politeness level to off."
 
-#. Translators: this is a toggle to monitor live regions
-#. or not.
+#. Translators: this string refers to an Orca command which
+#. allows the user to toggle whether or not Orca pays attention
+#. to changes in live regions. Note that turning off monitoring
+#. of live events is NOT the same as turning the politeness level
+#. to "off". The user can opt to have no notifications presented
+#. (politeness level of "off") and still manually review recent
+#. updates to live regions via Orca commands for doing so -- as
+#. long as the monitoring of live regions is enabled.
 #.
 msgid "Monitor live regions."
 msgstr "Monitor live regions."
 
 #. Translators: this is for reviewing up to nine stored
-#. previous live messages.
+#. previous live messages. Please see previous translator
+#. notes for more information on live regions.
 #.
 msgid "Review live region announcement."
 msgstr "Review live region announcement."
@@ -7718,7 +7740,6 @@ msgstr "To expand, press shift plus right."
 
 #. Translators: this is the tutorial string for activating a menu item
 #, fuzzy
-#| msgid "To activate press space."
 msgid "To activate press return."
 msgstr "To activate press space."
 
@@ -7760,6 +7781,47 @@ msgstr "To enter sub menu, press right arrow."
 msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
 msgstr "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
 
+#~ msgid "<b>Start from:</b>"
+#~ msgstr "<b>検索を開始する場所:</b>"
+
+#, fuzzy
+#~| msgid ""
+#~| "If Orca has not been previously set up by the user, Orca\n"
+#~| "will automatically launch the preferences set up unless\n"
+#~| "the -n or --no-setup option is used."
+#~ msgid ""
+#~ "If Orca has not been previously set up by the user, Orca\n"
+#~ "will automatically launch the preferences set up unless\n"
+#~ "the -n or --no-setup option is used.\n"
+#~ "\n"
+#~ "Report bugs to orca-list@gnome.org."
+#~ msgstr ""
+#~ "未だ設定が完了していない場合は\n"
+#~ "-n または --no-setup を指定しない限り\n"
+#~ "常に設定ダイアログを表示します"
+
+#~ msgid "Show this help message"
+#~ msgstr "このヘルプを表示する"
+
+#~ msgid "Set up user preferences"
+#~ msgstr "ユーザーの設定を変更する"
+
+#~ msgid "Skip set up of user preferences"
+#~ msgstr "ユーザー設定の変更をスキップする"
+
+#~ msgid "Quits Orca (if shell script used)"
+#~ msgstr "Orca を強制終了する (Shell スクリプトから)"
+
+#, fuzzy
+#~ msgid "<b>Mouse</b>"
+#~ msgstr "<b>境界線</b>"
+
+#~ msgid "<b>Text attributes</b>"
+#~ msgstr "<b>文字の属性</b>"
+
+#~ msgid "Prints memory usage information."
+#~ msgstr "メモリの使用量に関する情報を表示する"
+
 #~ msgid "Emacspeak Speech Services"
 #~ msgstr "Emacspeak Speech サービス"
 
@@ -7771,9 +7833,6 @@ msgstr "To decrease press left arrow, to increase press right arrow. To go to mi
 
 #~ msgid "Usage: orca [OPTION...]"
 #~ msgstr "用法: orca [オプション...]"
-
-#~ msgid "Report bugs to orca-list@gnome.org."
-#~ msgstr "バグの報告は orca-list@gnome.org まで"
 
 #~ msgid "Invalid"
 #~ msgstr "無効"
@@ -8284,9 +8343,6 @@ msgstr "To decrease press left arrow, to increase press right arrow. To go to mi
 
 #~ msgid "GNOME Speech Services"
 #~ msgstr "GNOME 読み上げサービス"
-
-#~ msgid "minus"
-#~ msgstr "minus"
 
 #~ msgid "Magnifier enabled."
 #~ msgstr "Magnifier enabled."
