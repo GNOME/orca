@@ -26,6 +26,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import importlib
 import logging
 log = logging.getLogger("speech")
 
@@ -62,10 +63,7 @@ def getSpeechServerFactories():
     moduleNames = settings.speechFactoryModules
     for moduleName in moduleNames:
         try:
-            module =  __import__(moduleName,
-                                 globals(),
-                                 locals(),
-                                 [''])
+            module = importlib.import_module('orca.%s' % moduleName)
             factories.append(module)
         except:
             debug.printException(debug.LEVEL_CONFIGURATION)
@@ -84,19 +82,9 @@ def _initSpeechServer(moduleName, speechServerInfo):
 
     factory = None
     try:
-        factory =  __import__(moduleName,
-                              globals(),
-                              locals(),
-                              [''])
+        factory = importlib.import_module(moduleName)
     except:
-        try:
-            moduleName = moduleName.replace("orca.", "", 1)
-            factory =  __import__(moduleName,
-                                  globals(),
-                                  locals(),
-                                  [''])
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+        debug.printException(debug.LEVEL_SEVERE)
 
     # Now, get the speech server we care about.
     #

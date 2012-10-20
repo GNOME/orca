@@ -24,6 +24,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
+import importlib
+
 from . import debug
 from . import orca_state
 from .scripts import apps, toolkits
@@ -39,9 +41,9 @@ class ScriptManager:
         self._defaultScript = None
         self._scriptPackages = \
             ["orca-scripts",
-             "scripts",
-             "scripts.apps",
-             "scripts.toolkits"]
+             "orca.scripts",
+             "orca.scripts.apps",
+             "orca.scripts.toolkits"]
         self._appNames = \
             {'Bon Echo':         'Mozilla',
              'Deer Park':        'Mozilla',
@@ -153,7 +155,7 @@ class ScriptManager:
             moduleName = '.'.join((package, name))
             debug.println(debug.LEVEL_FINE, "Looking for %s.py" % moduleName)
             try:
-                module = __import__(moduleName, globals(), locals(), [''])
+                module = importlib.import_module(moduleName)
             except ImportError:
                 debug.println(
                     debug.LEVEL_FINE, "Could not import %s.py" % moduleName)

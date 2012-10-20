@@ -118,35 +118,6 @@ excludeKeys = ["pronunciations",
                "startingProfile",
                "activeProfile"]
 
-# The name of the module that hold the user interface for the main window
-# for Orca. This module is expected to have two methods, showMainUI and
-# hideMainUI, which will show and hide the main window GUI.
-#
-mainWindowModule = "orca_gui_main"
-
-# The name of the modules that hold the user interface for setting
-# Orca preferences.  Each module is expected to have the method,
-# showPreferencesUI, which will prompt the user for preferences.
-#
-guiPreferencesModule     = "orca_gui_prefs"
-consolePreferencesModule = "orca_console_prefs"
-appGuiPreferencesModule  = "app_gui_prefs"
-
-# The name of the module that hold the user interface for quitting Orca.
-# This module is expected to have the method, showQuitUI, which will
-# display the quit GUI.
-#
-quitModule = "orca_gui_quit"
-
-# The name of the module that holds the user interface for performing a
-# flat review find.
-#
-findModule = "orca_gui_find"
-
-# The name of the module that holds the splash screen.
-#
-splashModule = "orca_gui_splash"
-
 # Profiles
 #
 startingProfile = ['Default', 'default']

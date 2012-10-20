@@ -245,6 +245,7 @@ class OrcaPrefs:
         prefs.writelines( \
                  "# be overwritten, edit %s-customizations.py.\n" % appName)
         prefs.writelines("#\n")
+        prefs.writelines("import importlib\n")
         prefs.writelines("import orca.settings\n")
         prefs.writelines("import orca.acss\n")
         prefs.writelines("\n")
@@ -260,7 +261,7 @@ class OrcaPrefs:
 
         prefs.writelines("\ntry:\n")
         prefs.writelines( \
-           "    __import__(\"app-settings.%s-customizations\")\n" % appName)
+           "    importlib.import_module(\"app-settings.%s-customizations\")\n" % appName)
         prefs.writelines("except ImportError:\n")
         prefs.writelines("    pass\n")
 
