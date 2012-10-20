@@ -39,6 +39,8 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2005-2009 Sun Microsystems Inc."
 __license__   = "LGPL"
 
+import imp
+import importlib
 import pyatspi
 
 from . import braille_generator
@@ -351,8 +353,8 @@ class Script:
                 for package in _settingsManager.settingsPackages:
                     name = package + "." + name
                     try:
-                        module = __import__(name, globals(), locals(), [''])
-                        reload(module)
+                        module = importlib.import_module(name)
+                        imp.reload(module)
                         scriptSettings = module.orca.settings
                     except:
                         pass

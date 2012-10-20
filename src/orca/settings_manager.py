@@ -28,8 +28,9 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2010 Consorcio Fernando de los Rios."
 __license__   = "LGPL"
 
-import os
 import imp
+import importlib
+import os
 from gi.repository import Gio, GLib
 
 from . import debug
@@ -150,9 +151,8 @@ class SettingsManager(object):
         """Load specific backend for manage user settings"""
 
         try:
-            backend = 'backends.%s_backend' % self.backendName
-            self.backendModule = __import__(backend, globals(), locals(),
-                                            backend, -1)
+            backend = '.backends.%s_backend' % self.backendName
+            self.backendModule = importlib.import_module(backend, 'orca')
             return True
         except:
             return False
@@ -519,13 +519,13 @@ class SettingsManager(object):
             name = '.'.join((package, moduleName))
             debug.println(debug.LEVEL_FINEST, "Looking for %s.py" % name)
             try:
-                module = __import__(name, globals(), locals(), [''])
+                module = importlib.import_module(name)
             except ImportError:
                 debug.println(
                     debug.LEVEL_FINEST, "Could not import %s.py" % name)
                 continue
             try:
-                reload(module)
+                imp.reload(module)
             except:
                 debug.println(debug.LEVEL_FINEST, "Could not load %s.py" % name)
                 module = None
@@ -537,7 +537,7 @@ class SettingsManager(object):
             return
 
         self._knownAppSettings[name] = module
-        reload(self._knownAppSettings[name])
+        imp.reload(self._knownAppSettings[name])
 
         appVoices = self.getSetting('voices')
         for voiceType, voiceDef in list(appVoices.items()):

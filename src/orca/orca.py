@@ -29,6 +29,7 @@ __copyright__ = "Copyright (c) 2004-2009 Sun Microsystems Inc." \
                 "Copyright (c) 2012 Igalia, S.L."
 __license__   = "LGPL"
 
+import importlib
 import os
 import pyatspi
 import re
@@ -485,10 +486,7 @@ def showAppPreferencesGUI(script=None, inputEvent=None):
     """
 
     try:
-        module = __import__(settings.appGuiPreferencesModule,
-                            globals(),
-                            locals(),
-                            [''])
+        module = importlib.import_module('.app_gui_prefs', 'orca')
         module.showPreferencesUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
@@ -503,10 +501,7 @@ def showPreferencesGUI(script=None, inputEvent=None):
     """
 
     try:
-        module = __import__(settings.guiPreferencesModule,
-                            globals(),
-                            locals(),
-                            [''])
+        module = importlib.import_module('.orca_gui_prefs', 'orca')
         module.showPreferencesUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
@@ -520,10 +515,7 @@ def showMainWindowGUI(script=None, inputEvent=None):
     """
 
     try:
-        module = __import__(settings.mainWindowModule,
-                            globals(),
-                            locals(),
-                            [''])
+        module = importlib.import_module('.orca_gui_main', 'orca')
         if settings.showMainWindow or settings.overrideDisabledMainWindow:
             module.showMainUI()
         else:
@@ -725,10 +717,7 @@ def quitOrca(script=None, inputEvent=None):
         shutdown()
     else:
         try:
-            module = __import__(settings.quitModule,
-                                globals(),
-                                locals(),
-                                [''])
+            module = importlib.import_module('.orca_gui_quit', 'orca')
             module.showQuitUI()
         except:
             debug.printException(debug.LEVEL_SEVERE)
@@ -742,10 +731,7 @@ def showFindGUI(script=None, inputEvent=None):
     """
 
     try:
-        module = __import__(settings.findModule,
-                            globals(),
-                            locals(),
-                            [''])
+        module = importlib.import_module('.orca_gui_find', 'orca')
         module.showFindUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
@@ -757,10 +743,7 @@ def showSplashGUI(script=None, inputEvent=None):
     """
 
     try:
-        module = __import__(settings.splashModule,
-                            globals(),
-                            locals(),
-                            [''])
+        module = importlib.import_module('.orca_gui_splash', 'orca')
         if _settingsManager.getSetting("showSplashWindow"):
             module.showSplashUI()
         else:
