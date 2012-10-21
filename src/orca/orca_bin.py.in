@@ -30,6 +30,7 @@ __license__   = "LGPL"
 import argparse
 import os
 import signal
+import subprocess
 import sys
 import time
 
@@ -251,7 +252,9 @@ def inGraphicalDesktop():
 def otherOrcas():
     """Returns the pid of any other instances of Orca owned by this user."""
 
-    openFile = os.popen('pgrep -u %s orca' % os.getuid())
+    openFile = subprocess.Popen('pgrep -u %s orca' % os.getuid(),
+                                shell=True,
+                                stdout=subprocess.PIPE).stdout
     pids = openFile.read()
     openFile.close()
     orcas = [int(p) for p in pids.split()]
