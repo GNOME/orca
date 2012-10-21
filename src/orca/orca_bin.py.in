@@ -210,7 +210,7 @@ class Parser(argparse.ArgumentParser):
 
         return opts, invalid
 
-def setProcessName():
+def setProcessName(name):
     """Attempts to set the process name to 'orca'."""
 
     sys.argv[0] = 'orca'
@@ -222,13 +222,15 @@ def setProcessName():
     except ImportError:
         pass
     else:
-        setproctitle('orca')
+        setproctitle(name)
         return True
 
     try:
-        from ctypes import cdll
+        from ctypes import cdll, byref, create_string_buffer
         libc = cdll.LoadLibrary('libc.so.6')
-        libc.prctl(15, 'orca', 0, 0, 0)
+        stringBuffer = create_string_buffer(len(name) + 1)
+        stringBuffer.value = bytes(name, 'UTF-8')
+        libc.prctl(15, byref(stringBuffer), 0, 0, 0)
         return True
     except:
         pass
@@ -277,7 +279,7 @@ def cleanup(sigval):
         time.sleep(0.5)
 
 def main():
-    setProcessName()
+    setProcessName('orca')
 
     if not inGraphicalDesktop():
         # Translators: This message is presented to the user who attempts
