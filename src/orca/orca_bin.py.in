@@ -268,9 +268,11 @@ def cleanup(sigval):
         orcasToKill = otherOrcas()
         debug.println(
             debug.LEVEL_INFO, "INFO: Timeout cleaning up: %s" % orcasToKill)
-        map(lambda x: os.kill(x, signal.SIGKILL), orcasToKill)
+        for pid in orcasToKill:
+            os.kill(pid, signal.SIGKILL)
 
-    map(lambda x: os.kill(x, sigval), orcasToKill)
+    for pid in orcasToKill:
+        os.kill(pid, sigval)
     signal.signal(signal.SIGALRM, onTimeout)
     signal.alarm(2)
     while otherOrcas():
