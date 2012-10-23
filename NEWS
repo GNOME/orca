@@ -1,3 +1,22 @@
+3.7.1 - 22 October 2012
+
+General
+
+  * Use subprocess.Popen() instead of the deprecated os.popen()
+
+  * Use for() instead of map() in cleanup()
+
+  * Fix for bug 686189 - Use importlib.import_module() instead of
+    __import__() and imp.reload() instead of reload()
+
+  * Fix for braille email address auto completions in Thunderbird
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    ja           Japanese            OKANO Takayoshi, Yasumichi Akahoshi
+
+=========
+
 3.6.1 - 15 October 2012
 
 General

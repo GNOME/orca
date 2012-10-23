@@ -1,4 +1,4 @@
-Orca v3.6.2pre
+Orca v3.7.1 - Python 2
 
 Introduction
 ========================================================================
@@ -23,7 +23,7 @@ requests.
 Dependencies
 ========================================================================
 
-Orca v3.6.x is supported on GNOME 3.6.x only.  We highly suggest you
+Orca v3.7.x is supported on GNOME 3.7.x only.  We highly suggest you
 use the latest releases of GNOME because they contain accessibility
 infrastructure and application bug fixes that help Orca work better.
 
