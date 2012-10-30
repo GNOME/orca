@@ -6,9 +6,9 @@ m4_define([orca_version],
 
 m4_define(gtk_required_version, 3.5.16)
 m4_define(pygobject_required_version, 3.2.2)
-m4_define(atspi_required_version, 2.5.91)
-m4_define(atkbridge_required_version, 2.5.91)
-m4_define(atk_required_version, 2.5.91)
+m4_define(atspi_required_version, 2.6)
+m4_define(atkbridge_required_version, 2.6)
+m4_define(atk_required_version, 2.6)
 
 AC_INIT([orca],
         [orca_version],
@@ -45,7 +45,7 @@ AC_PROG_INSTALL
 dnl Check for python and python modules needed by Orca
 dnl TODO: check for incompatibilities between Orca and liblouis
 dnl per http://live.gnome.org/Orca/Braille
-AM_PATH_PYTHON(3.2.3)
+AM_PATH_PYTHON(3.3)
 
 # Don't require the DISPLAY to be set - the gtk checking will fail 
 # if DISPLAY is not set, and we don't like that.

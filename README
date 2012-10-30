@@ -29,7 +29,7 @@ infrastructure and application bug fixes that help Orca work better.
 
 Orca also has the following dependencies:
 
-* Python           - Python platform (minimum version 3.2.3)
+* Python           - Python platform (minimum version 3.3)
 * pygobject-3.0    - Python bindings for the GObject library
 * gtk+-3.0         - Gtk+ toolkit
 * json-py          - a JSON (http://json.org) reader and writer in Python
