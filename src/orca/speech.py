@@ -84,7 +84,10 @@ def _initSpeechServer(moduleName, speechServerInfo):
     try:
         factory = importlib.import_module('orca.%s' % moduleName)
     except:
-        debug.printException(debug.LEVEL_SEVERE)
+        try:
+            factory = importlib.import_module(moduleName)
+        except:
+            debug.printException(debug.LEVEL_SEVERE)
 
     # Now, get the speech server we care about.
     #
