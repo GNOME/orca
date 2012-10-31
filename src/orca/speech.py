@@ -82,7 +82,7 @@ def _initSpeechServer(moduleName, speechServerInfo):
 
     factory = None
     try:
-        factory = importlib.import_module(moduleName)
+        factory = importlib.import_module('orca.%s' % moduleName)
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
