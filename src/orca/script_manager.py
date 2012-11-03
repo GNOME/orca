@@ -251,7 +251,7 @@ class ScriptManager:
                 appScript.registerEventListeners()
         except:
             msg = "WARNING: Exception getting app script."
-            debug.printException(debug.LEVEL_WARNING, msg)
+            debug.println(debug.LEVEL_WARNING, msg)
             appScript = self.getDefaultScript()
 
         # Only defer to the toolkit script for this object if the app script
