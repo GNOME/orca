@@ -2913,10 +2913,15 @@ class Utilities:
             debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
                           "Error accessing minimumIncrement for %s" % obj)
 
-        try:
-            decimalPlaces = math.ceil(max(0, -math.log10(minIncrement)))
-        except ValueError:
-            return ""
+        if minIncrement != 0.0:
+            try:
+                decimalPlaces = math.ceil(max(0, -math.log10(minIncrement)))
+            except ValueError:
+                debug.println(debug.LEVEL_FINEST, "VALUE WARNING: " \
+                    "Error calculating decimal places for %s" % obj)
+                return ""
+        else:
+            decimalPlaces = 0
 
         formatter = "%%.%df" % decimalPlaces
         return formatter % currentValue
