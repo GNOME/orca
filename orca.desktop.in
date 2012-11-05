@@ -3,6 +3,7 @@ _Name=Orca
 _GenericName=Screen Reader
 _X-GNOME-FullName=Orca Screen Reader
 _Comment=Provide access to graphical desktop environments via synthesized speech and/or refreshable braille
+_Keywords=screen reader;speech;braille;
 Exec=orca --replace
 Icon=orca
 Terminal=false
