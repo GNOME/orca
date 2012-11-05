@@ -1384,7 +1384,7 @@ def refresh(panToCursor=True,
             if attributeMask:
                 attributeMask += '\x00'
             writeStruct.regionSize += 1
-        writeStruct.text = substring
+        writeStruct.text = bytes(substring, 'UTF-8')
         writeStruct.cursor = cursorCell
 
         # [[[WDW - if you want to muck around with the dots on the
@@ -1403,7 +1403,7 @@ def refresh(panToCursor=True,
         #writeStruct.attrOr = myUnderline
 
         if attributeMask:
-            writeStruct.attrOr = attributeMask[startPos:endPos]
+            writeStruct.attrOr = bytes(attributeMask[startPos:endPos], 'UTF-8')
 
         if not _brlAPIRunning:
             init(_callback, settings.tty)
