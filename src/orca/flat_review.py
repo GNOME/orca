@@ -877,7 +877,7 @@ class Context:
         offset = 0
         lastEndOffset = -1
         upperMax = lowerMax = text.characterCount
-        upperMid = lowerMid = upperMax /2
+        upperMid = lowerMid = int(upperMax / 2)
         upperMin = lowerMin = 0
         upperY = lowerY = 0
         oldMid = 0
@@ -893,7 +893,7 @@ class Context:
                 upperMax = upperMid
             else:
                 upperMin = upperMid
-            upperMid = (upperMax - upperMin) /2 + upperMin
+            upperMid = int((upperMax - upperMin) / 2) + upperMin
 
         # performing binary search to locate last line inside clipped area
         oldMid = 0
@@ -908,7 +908,7 @@ class Context:
                 lowerMax = lowerMid
             else:
                 lowerMin = lowerMid
-            lowerMid = (lowerMax - lowerMin) /2 + lowerMin
+            lowerMid = int((lowerMax - lowerMin) / 2) + lowerMin
 
         # finding out the zones
         offset = upperMin
