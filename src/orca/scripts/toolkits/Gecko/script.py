@@ -3424,7 +3424,7 @@ class Script(default.Script):
             lastChild = documentFrame
         while lastChild:
             lastObj = self.findNextObject(lastChild, documentFrame)
-            if lastObj:
+            if lastObj and lastObj != lastChild:
                 lastChild = lastObj
             else:
                 break
@@ -4656,7 +4656,7 @@ class Script(default.Script):
         # [[[TODO: HACK - WDW Gecko's broken hierarchies make this
         # a bit of a challenge.]]]
         #
-        if not nextObj:
+        if not nextObj and obj.getIndexInParent() != -1:
             index = obj.getIndexInParent() + 1
             while index < obj.parent.childCount:
                 child = obj.parent[index]
