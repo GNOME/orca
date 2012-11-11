@@ -2011,7 +2011,10 @@ class Script(default.Script):
         # is really busy first and also that the event is not coming
         # from an object within a dialog box or alert.
         #
-        documentFrame = self.utilities.documentFrame()
+        if self.inDocumentContent(event.source):
+            documentFrame = self.utilities.documentFrame()
+        else:
+            documentFrame = None
         if documentFrame:
             self._loadingDocumentContent = \
                 documentFrame.getState().contains(pyatspi.STATE_BUSY)
