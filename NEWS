@@ -1,3 +1,36 @@
+3.6.2 - 12 November 2012
+
+General
+
+  * Fix for bug 674526 - Orca sometimes fails to present download
+    "dialog" widgets
+
+  * Fix for bug 688057 - A page that hangs orca
+
+  * Fix for Orca continuing to speak when speech is disabled via
+    the preferences dialog
+
+  * Improve performance of building flat review context
+
+  * Fix for bug 687527 - Handle applications returning 0 in
+    minimalIncrement for Value
+
+  * Use subprocess.Popen() instead of the deprecated os.popen()
+
+  * Use for() instead of map() in cleanup()
+
+  * Fix for bug 686189 - Use importlib.import_module() instead of
+    __import__() and imp.reload() instead of reload()
+
+  * Fix to braille email address auto completions in Thunderbird
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German             Hendrik Knackstedt
+    ja            Japanese           OKANO Takayoshi, Yasumichi Akahoshi
+
+=========
+
 3.6.1 - 15 October 2012
 
 General
