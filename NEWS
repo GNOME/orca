@@ -1,3 +1,12 @@
+3.6.3 - 14 November 2012
+
+General
+
+  * Fix for bug 687239 - Traceback seen in Python 3.3 when there are
+    no settings saved (turns out it impacts Python 2.x as well).
+
+=========
+
 3.6.2 - 12 November 2012
 
 General
