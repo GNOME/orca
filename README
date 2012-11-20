@@ -1,4 +1,4 @@
-Orca v3.7.0.200pre
+Orca v3.7.2
 
 Introduction
 ========================================================================
@@ -45,11 +45,11 @@ NOTE: If you have multiple versions of the python interpreter installed
 on your machine, you should set the PYTHON environment variable when 
 configuring Orca.  For example:
 
-   PYTHON=/usr/bin/python3.2 ./autogen.sh
+   PYTHON=/usr/bin/python3.3 ./autogen.sh
 
 or
 
-   PYTHON=/usr/bin/python3.2 ./configure
+   PYTHON=/usr/bin/python3.3 ./configure
 
 NOTE FOR BRLTTY USERS:
 ========================================================================

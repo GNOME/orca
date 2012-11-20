@@ -1,3 +1,46 @@
+3.7.2 - 19 November 2012
+
+NOTE: This is the first real/official Python 3 release of Orca.
+
+General
+
+  * Replace deprecated GObject functions with their GLib equivalents
+
+  * Improve performance of building flat review context
+
+  * Add keywords to the desktop file
+
+  * Python 3 compatibility fixes for brlapi
+
+  * Fix for bug 687526 - Patch: Orca excepts trying to output exceptions
+
+  * Fix for bug 687527 - Handle applications returning 0 as the Value's
+    minimalIncrement
+
+Gecko
+
+  * Fix for bug 674526 - Orca sometimes fails to present download dialog
+    widgets in Firefox
+
+  * Fix for bug 688057 - A page that hangs Orca.
+
+Speech
+
+  * Most of the fix for bug 688172 - Orca gets stuck in uppercase pitch
+
+  * Fix for Orca continuing to speak when speech is disabled via the
+    Preferences dialog
+
+  * Fix for bug 687239 - Traceback seen in Python 3.3 when there are no
+    settings saved
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    de            German                 Hendrik Knackstedt
+    hu            Hungarian              Attila Hammer
+
+=========
+
 3.7.0.100 - 22 October 2012
 
 General
