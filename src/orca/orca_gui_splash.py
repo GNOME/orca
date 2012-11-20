@@ -30,7 +30,7 @@ import sys
 from . import debug
 from gi.repository import Gdk
 from gi.repository import Gtk
-from gi.repository import GObject
+from gi.repository import GLib
 import locale
 
 from . import orca_state
@@ -82,7 +82,7 @@ class OrcaSplashGUI(Gtk.Window):
         self.grab_focus()
         self.show_all()
 
-        GObject.timeout_add(3000, self.hideGUI)
+        GLib.timeout_add(3000, self.hideGUI)
 
         while Gtk.events_pending():
             Gtk.main_iteration()

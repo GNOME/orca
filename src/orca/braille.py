@@ -37,6 +37,7 @@ log = logging.getLogger("braille")
 import signal
 import os
 
+from gi.repository import GLib
 from gi.repository import GObject
 GObject.threads_init()
 
@@ -1478,7 +1479,7 @@ def resetFlashTimer():
     if _flashEventSourceId > 0:
         GObject.source_remove(_flashEventSourceId)
         flashTime = _saved[3]
-        _flashEventSourceId = GObject.timeout_add(flashTime, _flashCallback)
+        _flashEventSourceId = GLib.timeout_add(flashTime, _flashCallback)
 
 def _initFlash(flashTime):
     """Sets up the state needed to flash a message or clears any existing
@@ -1503,7 +1504,7 @@ def _initFlash(flashTime):
         _saved = (_lines, _regionWithFocus, viewport, flashTime)
 
     if flashTime > 0:
-        _flashEventSourceId = GObject.timeout_add(flashTime, _flashCallback)
+        _flashEventSourceId = GLib.timeout_add(flashTime, _flashCallback)
     elif flashTime < 0:
         _flashEventSourceId = -666
 

@@ -24,7 +24,7 @@ __date__      = "$Date$"
 __copyright__ = "Copyright (c) 2011. Orca Team."
 __license__   = "LGPL"
 
-from gi.repository import GObject
+from gi.repository import GLib
 import pyatspi
 import queue
 import threading
@@ -109,7 +109,7 @@ class EventManager:
         if asyncMode and not self._gidleId:
             if settings.gilSleepTime:
                 time.sleep(settings.gilSleepTime)
-            self._gidleId = GObject.idle_add(self._dequeue)
+            self._gidleId = GLib.idle_add(self._dequeue)
 
         if debugging:
             debug.println(debug.LEVEL_ALL, "           releasing lock...")

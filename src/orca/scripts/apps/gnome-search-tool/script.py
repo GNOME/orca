@@ -33,6 +33,7 @@ from orca.orca_i18n import ngettext # for gettext support
 
 import pyatspi
 import time
+from gi.repository import GLib
 from gi.repository import GObject
 GObject.threads_init()
 
@@ -148,7 +149,7 @@ class Script(default.Script):
                     frame, pyatspi.ROLE_TABLE)
                 self.fileTable = allTables[0]
 
-            GObject.idle_add(self._speakSearching)
+            GLib.idle_add(self._speakSearching)
 
         # Check to see if we have just had an "object:state-changed:showing"
         # event for the Find button. If the name is "Find", and one of its

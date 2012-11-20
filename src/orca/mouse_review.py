@@ -37,7 +37,7 @@ except:
 
 import pyatspi
 from gi.repository import Gdk
-from gi.repository import GObject
+from gi.repository import GLib
 
 from . import event_manager
 from . import script_manager
@@ -184,10 +184,10 @@ class MouseReviewer:
         - event: The event we recieved.
         """
         if settings.mouseDwellDelay:
-            GObject.timeout_add(settings.mouseDwellDelay,
-                                self._mouseDwellTimeout,
-                                event.detail1,
-                                event.detail2)
+            GLib.timeout_add(settings.mouseDwellDelay,
+                             self._mouseDwellTimeout,
+                             event.detail1,
+                             event.detail2)
         else:
             self._mouseDwellTimeout(event.detail1, event.detail2)
 

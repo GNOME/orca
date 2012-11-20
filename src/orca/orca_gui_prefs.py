@@ -28,6 +28,7 @@ __license__   = "LGPL"
 import os
 import sys
 from gi.repository import Gdk
+from gi.repository import GLib
 from gi.repository import Gtk
 from gi.repository import GObject
 from gi.repository import Pango
@@ -2872,7 +2873,7 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             #
             msg = _("The key entered is already bound to %s") % description
             delay = int(1000 * settings.doubleClickTimeout)
-            GObject.timeout_add(delay, self._presentMessage, msg)
+            GLib.timeout_add(delay, self._presentMessage, msg)
         else:
             # Translators: this is a spoken prompt letting the user know Orca
             # know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)

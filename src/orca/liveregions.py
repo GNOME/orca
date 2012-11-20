@@ -1,5 +1,5 @@
 import bisect
-from gi.repository import GObject
+from gi.repository import GLib
 from . import orca_state
 import pyatspi
 from . import speech
@@ -182,7 +182,7 @@ class LiveRegionManager:
         message = self._getMessage(event)
         if message:
             if len(self.msg_queue) == 0:
-                GObject.timeout_add(100, self.pumpMessages)
+                GLib.timeout_add(100, self.pumpMessages)
             self.msg_queue.enqueue(message, politeness, event.source)
 
     def pumpMessages(self):
