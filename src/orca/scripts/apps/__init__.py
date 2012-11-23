@@ -1,5 +1,4 @@
-__all__ = ['acroread',
-           'Banshee',
+__all__ = ['Banshee',
            'ddu',
            'Eclipse',
            'ekiga',

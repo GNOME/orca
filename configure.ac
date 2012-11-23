@@ -86,7 +86,6 @@ src/Makefile
 src/orca/Makefile
 src/orca/scripts/Makefile
 src/orca/scripts/apps/Makefile
-src/orca/scripts/apps/acroread/Makefile
 src/orca/scripts/apps/Banshee/Makefile
 src/orca/scripts/apps/ddu/Makefile
 src/orca/scripts/apps/Eclipse/Makefile

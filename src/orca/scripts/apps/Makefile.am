@@ -1,5 +1,4 @@
 SUBDIRS = \
-	acroread \
 	Banshee \
 	ddu \
 	Eclipse \
