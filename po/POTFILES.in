@@ -32,7 +32,6 @@ src/orca/orca.py
 [type: gettext/glade]src/orca/orca-setup.ui
 src/orca/phonnames.py
 src/orca/script_utilities.py
-src/orca/scripts/apps/acroread/script.py
 src/orca/scripts/apps/evolution/script.py
 src/orca/scripts/apps/evolution/speech_generator.py
 src/orca/scripts/apps/gcalctool/script.py
