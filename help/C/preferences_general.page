@@ -74,37 +74,6 @@
       Default value: not checked
     </p>
   </section>
-  <section id="showmainwindow">
-    <info>
-      <desc>
-        Preferences dialog box option for showing or hiding the <app>Orca</app>
-        main window.
-      </desc>
-    </info>
-    <title>Show Orca Main Window</title>
-    <media type="image" mime="image/png" src="figures/preferences_show_Orca_main_window.png"/>
-    <figure>
-      <title>
-        The Orca Main Window
-      </title>
-      <media type="image" mime="image/png" src="figures/main_window.png"/>
-      <desc>
-        <app>Orca</app>'s main window provides you with a graphical way to
-        display the <link xref="preferences">Orca Preferences</link> dialog,
-        access help content, bring up the About dialog, and quit <app>Orca</app>.
-      </desc>
-    </figure>
-    <p>
-      Many users do not like the <app>Orca</app> main window because it shows
-      up in the window manager's Tab order when you press <keyseq>
-      <key>Alt</key><key>Tab</key></keyseq> to switch windows. By unchecking
-      the <gui>Show <app>Orca</app> main window</gui> checkbox, you can tell
-      <app>Orca</app> to not show <app>Orca</app>'s main window.
-    </p>
-    <p>
-      Default value: checked
-    </p>
-  </section>
   <section id="objectundermouse">
     <info>
       <desc>

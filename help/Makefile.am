@@ -2,7 +2,6 @@
 
 HELP_ID = orca
 HELP_MEDIA = \
-	figures/main_window.png \
 	figures/orca_find.png \
 	figures/orca-logo.png \
 	figures/perferences_table_navigation.png \

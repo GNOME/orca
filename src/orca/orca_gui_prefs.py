@@ -1669,8 +1669,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # General pane.
         #
-        self.get_widget("showMainWindowCheckButton").set_active(
-            prefs["showMainWindow"])
         self.get_widget("quitOrcaNoConfirmationCheckButton").set_active(
             prefs["quitOrcaNoConfirmation"])        
         self.get_widget("presentToolTipsCheckButton").set_active(
@@ -3292,9 +3290,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         - widget: the component that generated the signal.
         """
 
-        if settings.showMainWindow:
-            orca.showMainWindowGUI()
-
         self.keyBindView.set_model(None)
         self.getTextAttributesView.set_model(None)
         self.pronunciationView.set_model(None)
@@ -3425,10 +3420,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         self.prefsDict['activeProfile'] = activeProfile
         _settingsManager.setProfile(activeProfile[1])
         self.prefsDict = _settingsManager.getGeneralSettings(activeProfile[1])
-
-        orca.showMainWindowGUI()
-        if _settingsManager.getSetting('showMainWindow'):
-            self.window.present()
 
         orca.loadUserSettings(skipReloadMessage=True)
 

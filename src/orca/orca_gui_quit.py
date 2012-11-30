@@ -72,8 +72,6 @@ class OrcaQuitGUI(Gtk.MessageDialog):
 
         if response in [Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT]:
             self.hide()
-            if settings.showMainWindow:
-                orca.showMainWindowGUI()
 
     def onDestroy(self, widget):
         """Signal handler for the 'destroy' signal of the dialog."""

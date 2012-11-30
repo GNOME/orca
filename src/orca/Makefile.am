@@ -41,7 +41,6 @@ orca_python_PYTHON = \
 	orca_console_prefs.py \
 	orca_gtkbuilder.py \
 	orca_gui_find.py \
-	orca_gui_main.py \
 	orca_gui_prefs.py \
 	orca_gui_profile.py \
 	orca_gui_quit.py \

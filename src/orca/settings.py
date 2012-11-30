@@ -71,7 +71,6 @@ userCustomizableSettings = [
     "brailleAlignmentStyle",
     "enableBrailleMonitor",
     "verbalizePunctuationStyle",
-    "showMainWindow",
     "quitOrcaNoConfirmation",
     "presentToolTips",
     "sayAllStyle",
@@ -362,10 +361,6 @@ enableMnemonicSpeaking = False
 # If true, position indexes  will be spoken automaticaly
 #
 enablePositionSpeaking = False
-
-# If True, show the main Orca window.
-#
-showMainWindow          = True
 
 # If True, show the splash window.
 #

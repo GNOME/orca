@@ -468,8 +468,6 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
     _storeXmodmap(_orcaModifiers)
     _createOrcaXmodmap()
 
-    showMainWindowGUI()
-
     _scriptManager.activate()
     _eventManager.activate()
 
@@ -503,23 +501,6 @@ def showPreferencesGUI(script=None, inputEvent=None):
     try:
         module = importlib.import_module('.orca_gui_prefs', 'orca')
         module.showPreferencesUI()
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-
-    return True
-
-def showMainWindowGUI(script=None, inputEvent=None):
-    """Displays the Orca main window.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    try:
-        module = importlib.import_module('.orca_gui_main', 'orca')
-        if settings.showMainWindow or settings.overrideDisabledMainWindow:
-            module.showMainUI()
-        else:
-            module.hideMainUI()
     except:
         debug.printException(debug.LEVEL_SEVERE)
 

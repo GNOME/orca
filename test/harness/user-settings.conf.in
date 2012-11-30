@@ -45,7 +45,6 @@
         "magCursorSize": 32, 
         "magSmoothingMode": 0, 
         "magZoomerLeft": 1200, 
-        "showMainWindow": true, 
         "sayAllStyle": 1, 
         "brailleSelectorIndicator": 192, 
         "presentDateFormat": "%x", 
