@@ -210,6 +210,13 @@ SAYALL_STYLE_LINE     = 0
 SAYALL_STYLE_SENTENCE = 1
 sayAllStyle = SAYALL_STYLE_SENTENCE
 
+# Speech Dispatcher capitalization styles.
+CAPITALIZATION_STYLE_NONE  = "none"
+CAPITALIZATION_STYLE_SPELL = "spell"
+CAPITALIZATION_STYLE_ICON = "icon"
+capitalizationStyle = CAPITALIZATION_STYLE_NONE
+
+
 # The absolue amount to change the speech rate when
 # increasing or decreasing speech.  This is a numerical
 # value that represents an ACSS rate value.

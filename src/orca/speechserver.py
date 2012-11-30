@@ -280,6 +280,10 @@ class SpeechServer(object):
         """
         pass
 
+    def updateCapitalizationStyle(self):
+        """Updates the capitalization style used by the speech server."""
+        pass
+
     def updatePunctuationLevel(self):
         """Punctuation level changed, inform this speechServer."""
         pass

@@ -875,6 +875,21 @@ class Script(script.Script):
                 #
                 _("Cycles to the next speaking of punctuation level."))
 
+        self.inputEventHandlers["cycleCapitalizationStyleHandler"] = \
+            input_event.InputEventHandler(
+                Script.cycleCapitalizationStyle,
+                # Translators: Orca uses Speech Dispatcher to present content
+                # to users via text-to-speech. Speech Dispatcher has a feature
+                # to control how capital letters are presented: Do nothing at
+                # all, say the word 'capital' prior to presenting a capital
+                # letter, or play a tone which Speech Dispatcher refers to as
+                # a sound 'icon'. This string to be translated refers to an
+                # Orca command which makes it possible for users to quickly
+                # cycle amongst these alternatives without having to get into
+                # a GUI.
+                #
+                _("Cycles to the next capitalization style."))
+
         self.inputEventHandlers["cycleKeyEchoHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleKeyEcho,
@@ -2743,6 +2758,94 @@ class Script(script.Script):
         _settingsManager.setSetting('verbalizePunctuationStyle', newLevel)
         self.presentMessage(full, brief)
         speech.updatePunctuationLevel()
+        return True
+
+    def cycleCapitalizationStyle(self, inputEvent=None):
+        """ Cycle through the speech-dispatcher capitalization styles. """
+
+        currentStyle = _settingsManager.getSetting('capitalizationStyle')
+        if currentStyle == settings.CAPITALIZATION_STYLE_NONE:
+            newStyle = settings.CAPITALIZATION_STYLE_SPELL
+            # Translators: Orca uses Speech Dispatcher to present content
+            # to users via text-to-speech. Speech Dispatcher has a feature
+            # to control how capital letters are presented: Do nothing at
+            # all, say the word 'capital' prior to presenting a capital
+            # letter, or play a tone which Speech Dispatcher refers to as
+            # a sound 'icon'. This string to be translated refers to the
+            # full/verbose output presented in response to the use of an
+            # Orca command which makes it possible for users to quickly
+            # cycle amongst these alternatives without having to get into
+            # a GUI.
+            #
+            full = _("Capitalization style set to spell.")
+            # Translators: Orca uses Speech Dispatcher to present content
+            # to users via text-to-speech. Speech Dispatcher has a feature
+            # to control how capital letters are presented: Do nothing at
+            # all, say the word 'capital' prior to presenting a capital
+            # letter, or play a tone which Speech Dispatcher refers to as
+            # a sound 'icon'. This string to be translated refers to the
+            # brief/non-verbose output presented in response to the use of
+            # an Orca command which makes it possible for users to quickly
+            # cycle amongst these alternatives without having to get into
+            # a GUI.
+            #
+            brief = C_("capitalization style", "spell")
+        elif currentStyle == settings.CAPITALIZATION_STYLE_SPELL:
+            newStyle = settings.CAPITALIZATION_STYLE_ICON
+            # Translators: Orca uses Speech Dispatcher to present content
+            # to users via text-to-speech. Speech Dispatcher has a feature
+            # to control how capital letters are presented: Do nothing at
+            # all, say the word 'capital' prior to presenting a capital
+            # letter, or play a tone which Speech Dispatcher refers to as
+            # a sound 'icon'. This string to be translated refers to the
+            # full/verbose output presented in response to the use of an
+            # Orca command which makes it possible for users to quickly
+            # cycle amongst these alternatives without having to get into
+            # a GUI.
+            #
+            full = _("Capitalization style set to icon.")
+            # Translators: Orca uses Speech Dispatcher to present content
+            # to users via text-to-speech. Speech Dispatcher has a feature
+            # to control how capital letters are presented: Do nothing at
+            # all, say the word 'capital' prior to presenting a capital
+            # letter, or play a tone which Speech Dispatcher refers to as
+            # a sound 'icon'. This string to be translated refers to the
+            # brief/non-verbose output presented in response to the use of
+            # an Orca command which makes it possible for users to quickly
+            # cycle amongst these alternatives without having to get into
+            # a GUI.
+            #
+            brief = C_("capitalization style", "icon")
+        else:
+            newStyle = settings.CAPITALIZATION_STYLE_NONE
+            # Translators: Orca uses Speech Dispatcher to present content
+            # to users via text-to-speech. Speech Dispatcher has a feature
+            # to control how capital letters are presented: Do nothing at
+            # all, say the word 'capital' prior to presenting a capital
+            # letter, or play a tone which Speech Dispatcher refers to as
+            # a sound 'icon'. This string to be translated refers to the
+            # full/verbose output presented in response to the use of an
+            # Orca command which makes it possible for users to quickly
+            # cycle amongst these alternatives without having to get into
+            # a GUI.
+            #
+            full = _("Capitalization style set to none.")
+            # Translators: Orca uses Speech Dispatcher to present content
+            # to users via text-to-speech. Speech Dispatcher has a feature
+            # to control how capital letters are presented: Do nothing at
+            # all, say the word 'capital' prior to presenting a capital
+            # letter, or play a tone which Speech Dispatcher refers to as
+            # a sound 'icon'. This string to be translated refers to the
+            # brief/non-verbose output presented in response to the use of
+            # an Orca command which makes it possible for users to quickly
+            # cycle amongst these alternatives without having to get into
+            # a GUI.
+            #
+            brief = C_("capitalization style", "none")
+
+        _settingsManager.setSetting('capitalizationStyle', newStyle)
+        self.presentMessage(full, brief)
+        speech.updateCapitalizationStyle()
         return True
 
     def cycleKeyEcho(self, inputEvent=None):
@@ -5548,6 +5651,11 @@ class Script(script.Script):
             briefMessage = fullMessage
 
         if _settingsManager.getSetting('enableSpeech'):
+            currentCapStyle = _settingsManager.getSetting('capitalizationStyle')
+            _settingsManager.setSetting(
+                'capitalizationStyle', settings.CAPITALIZATION_STYLE_NONE)
+            speech.updateCapitalizationStyle()
+
             if _settingsManager.getSetting('messageVerbosityLevel') \
                     == settings.VERBOSITY_LEVEL_BRIEF:
                 message = briefMessage
@@ -5556,6 +5664,9 @@ class Script(script.Script):
             if message:
                 voice = voice or self.voices.get(settings.SYSTEM_VOICE)
                 speech.speak(message, voice)
+
+            _settingsManager.setSetting('capitalizationStyle', currentCapStyle)
+            speech.updateCapitalizationStyle()
 
         if (_settingsManager.getSetting('enableBraille') \
              or _settingsManager.getSetting('enableBrailleMonitor')) \

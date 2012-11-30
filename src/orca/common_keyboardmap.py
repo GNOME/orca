@@ -164,6 +164,8 @@ keymap = (
     #                                                                   #
     #####################################################################
 
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "cycleCapitalizationStyleHandler"),
 
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "cycleDebugLevelHandler"),

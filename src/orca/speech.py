@@ -304,7 +304,15 @@ def stop():
     if _speechserver:
         _speechserver.stop()
 
+def updateCapitalizationStyle(script=None, inputEvent=None):
+    if _speechserver:
+        _speechserver.updateCapitalizationStyle()
+    else:
+        logLine = "SPEECH OUTPUT: 'capitalization style' updated"
+        debug.println(debug.LEVEL_INFO, logLine)
+        log.info(logLine)
 
+    return True
 
 def updatePunctuationLevel(script=None, inputEvent=None):
     """ Punctuation level changed, inform this speechServer. """

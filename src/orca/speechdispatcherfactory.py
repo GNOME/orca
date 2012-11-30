@@ -197,6 +197,10 @@ class SpeechServer(speechserver.SpeechServer):
         mode = self._PUNCTUATION_MODE_MAP[settings.verbalizePunctuationStyle]
         client.set_punctuation(mode)
 
+    def updateCapitalizationStyle(self):
+        """Updates the capitalization style used by the speech server."""
+        self._client.set_cap_let_recogn(settings.capitalizationStyle)
+
     def updatePunctuationLevel(self):
         """ Punctuation level changed, inform this speechServer. """
         mode = self._PUNCTUATION_MODE_MAP[settings.verbalizePunctuationStyle]
