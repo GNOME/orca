@@ -29,10 +29,8 @@ HELP_MEDIA = \
 	figures/preferences_progress_bar_updates.png \
 	figures/preferences_pronunciation.png \
 	figures/preferences_punctuation_level.png \
-	figures/preferences_quit_Orca_without_confirmation.png \
 	figures/preferences_rate_pitch_volume.png \
 	figures/preferences_say_all_by.png \
-	figures/preferences_show_Orca_main_window.png \
 	figures/preferences_speak_multicase_strings_as_words.png \
 	figures/preferences_speak_object_under_mouse.png \
 	figures/preferences_speech_verbosity.png \

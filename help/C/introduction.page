@@ -57,22 +57,9 @@
       <list>
         <item>
           <p>
-            Press the <gui>Quit</gui> button in the <app>Orca</app> main
-            window.
-          </p>
-        </item>
-        <item>
-          <p>
             Press <keyseq><key>Orca Modifier</key><key>Q</key></keyseq>.
             This command works whether the <app>Orca</app> main window is
             enabled or not.
-          </p>
-        </item>
-        <item>
-          <p>
-            Type <cmd>orca -q</cmd> or <cmd>orca --quit</cmd> in a terminal
-            window or within the <gui>Run</gui> dialog and then press
-            <key>Return</key>.
           </p>
         </item>
       </list>
@@ -114,7 +101,6 @@
             <item><p><cmd>speech</cmd></p></item>
             <item><p><cmd>braille</cmd></p></item>
             <item><p><cmd>braille-monitor</cmd></p></item>
-            <item><p><cmd>main-window</cmd></p></item>
             <item><p><cmd>splash-window</cmd></p></item>
           </list>
         </item>

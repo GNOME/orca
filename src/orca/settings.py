@@ -71,7 +71,6 @@ userCustomizableSettings = [
     "brailleAlignmentStyle",
     "enableBrailleMonitor",
     "verbalizePunctuationStyle",
-    "quitOrcaNoConfirmation",
     "presentToolTips",
     "sayAllStyle",
     "keyboardLayout",
@@ -365,11 +364,6 @@ enablePositionSpeaking = False
 # If True, show the splash window.
 #
 showSplashWindow          = True
-
-# If True, quit Orca without confirmation when the user presses
-# <Orca-modifier>-q.
-#
-quitOrcaNoConfirmation  = False
 
 # If True, always present locking key state changes; if False, never present
 # locking key state changes. If None, make the decision based on Orca's normal

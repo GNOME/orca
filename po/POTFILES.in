@@ -26,7 +26,6 @@ src/orca/orca_gui_splash.py
 src/orca/orca_gui_find.py
 src/orca/orca_gui_prefs.py
 src/orca/orca_gui_profile.py
-src/orca/orca_gui_quit.py
 src/orca/orca.py
 [type: gettext/glade]src/orca/orca-setup.ui
 src/orca/phonnames.py

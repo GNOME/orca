@@ -1669,8 +1669,6 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         # General pane.
         #
-        self.get_widget("quitOrcaNoConfirmationCheckButton").set_active(
-            prefs["quitOrcaNoConfirmation"])        
         self.get_widget("presentToolTipsCheckButton").set_active(
             prefs["presentToolTips"])
 

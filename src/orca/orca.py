@@ -694,14 +694,7 @@ def quitOrca(script=None, inputEvent=None):
     Returns True to indicate the input event has been consumed.
     """
 
-    if _settingsManager.getSetting("quitOrcaNoConfirmation"):
-        shutdown()
-    else:
-        try:
-            module = importlib.import_module('.orca_gui_quit', 'orca')
-            module.showQuitUI()
-        except:
-            debug.printException(debug.LEVEL_SEVERE)
+    shutdown()
 
     return True
 
