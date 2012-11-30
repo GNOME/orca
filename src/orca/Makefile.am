@@ -43,7 +43,6 @@ orca_python_PYTHON = \
 	orca_gui_find.py \
 	orca_gui_prefs.py \
 	orca_gui_profile.py \
-	orca_gui_splash.py \
 	orca_i18n.py \
 	orca_state.py \
 	outline.py \
@@ -75,9 +74,6 @@ SUBDIRS = \
 ui_DATA = \
 	orca-find.ui \
 	orca-setup.ui
-
-gfx_DATA = \
-	orca-splash.png
 
 EXTRA_DIST = \
 	$(ui_DATA) \

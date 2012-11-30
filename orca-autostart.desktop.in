@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Orca screen reader
-Exec=orca --disable splash-window --enable speech,braille
+Exec=orca --enable speech,braille
 NoDisplay=true
 AutostartCondition=GSettings org.gnome.desktop.a11y.applications screen-reader-enabled
 X-GNOME-AutoRestart=true

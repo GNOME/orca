@@ -361,10 +361,6 @@ enableMnemonicSpeaking = False
 #
 enablePositionSpeaking = False
 
-# If True, show the splash window.
-#
-showSplashWindow          = True
-
 # If True, always present locking key state changes; if False, never present
 # locking key state changes. If None, make the decision based on Orca's normal
 # behavior.

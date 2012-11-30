@@ -101,7 +101,6 @@
             <item><p><cmd>speech</cmd></p></item>
             <item><p><cmd>braille</cmd></p></item>
             <item><p><cmd>braille-monitor</cmd></p></item>
-            <item><p><cmd>splash-window</cmd></p></item>
           </list>
         </item>
         <item>
@@ -114,8 +113,6 @@
             <item><p><cmd>speech</cmd></p></item>
             <item><p><cmd>braille</cmd></p></item>
             <item><p><cmd>braille-monitor</cmd></p></item>
-            <item><p><cmd>main-window</cmd></p></item>
-            <item><p><cmd>splash-window</cmd></p></item>
           </list>
         </item>
         <item>

@@ -710,24 +710,6 @@ def showFindGUI(script=None, inputEvent=None):
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
-def showSplashGUI(script=None, inputEvent=None):
-    """Displays a splash screen.
-
-    Returns True to indicate the input event has been consumed.
-    """
-
-    try:
-        module = importlib.import_module('.orca_gui_splash', 'orca')
-        if _settingsManager.getSetting("showSplashWindow"):
-            module.showSplashUI()
-        else:
-            module.hideSplashUI()
-
-    except:
-        debug.printException(debug.LEVEL_SEVERE)
-
-    return True
-
 # If True, this module has been initialized.
 #
 _initialized = False
@@ -971,7 +953,6 @@ def main():
     except:
         debug.printException(debug.LEVEL_SEVERE)
 
-    showSplashGUI()
     script = orca_state.activeScript
     if script:
         window = script.utilities.activeWindow()
