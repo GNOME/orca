@@ -241,6 +241,10 @@ def _processKeyboardEvent(event):
     # Special modes.
     if not isPressedEvent and keyboardEvent.event_string == "Escape":
         script.exitLearnMode(keyboardEvent)
+    if orca_state.learnModeEnabled and keyboardEvent.event_string == "F1" \
+       and not keyboardEvent.modifiers:
+        orca_state.learnModeEnabled = False
+        return helpForOrca()
     if orca_state.capturingKeys:
         return False
     if orca_state.listShortcutsModeEnabled:

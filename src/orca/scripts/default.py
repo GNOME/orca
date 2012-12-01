@@ -1558,6 +1558,8 @@ class Script(script.Script):
             # This text here is what is spoken to the user.
             #
             _("Entering learn mode.  Press any key to hear its function.  " \
+              "To get a list of Orca shortcuts, press the Orca modifier " \
+              "plus H twice quickly. To view the documentation, press F1. " \
               "To exit learn mode, press the escape key."))
 
         # Translators: Orca has a "Learn Mode" that will allow
