@@ -759,6 +759,30 @@ class StructuralNavigation:
             arg = [rowDiff, colDiff, oldRowHeaders, oldColHeaders]
             structuralNavigationObject.present(cell, arg)
 
+    def _getAll(self, structuralNavigationObject, arg=None):
+        """Returns all the instances of structuralNavigationObject."""
+        if not structuralNavigationObject.criteria:
+            return []
+
+        document = self._getDocument()
+        col = document.queryCollection()
+        criteria = structuralNavigationObject.criteria(col, arg)
+        rule = col.createMatchRule(criteria.states.raw(),
+                                   criteria.matchStates,
+                                   criteria.objAttrs,
+                                   criteria.matchObjAttrs,
+                                   criteria.roles,
+                                   criteria.matchRoles,
+                                   criteria.interfaces,
+                                   criteria.matchInterfaces,
+                                   criteria.invert)
+        rv = col.getMatches(rule, col.SORT_ORDER_CANONICAL, 0, True)
+        col.freeMatchRule(rule)
+        if criteria.applyPredicate:
+            rv = list(filter(structuralNavigationObject.predicate, rv))
+
+        return rv
+
     def goObject(self, structuralNavigationObject, isNext, obj=None, arg=None):
         """The method used for navigation among StructuralNavigationObjects
         which are not table cells.
