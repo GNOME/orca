@@ -146,7 +146,7 @@ class LabelInference:
         except NotImplementedError:
             return True
 
-        string = text.getText(0, -1).decode('UTF-8').strip()
+        string = text.getText(0, -1).strip()
         if string.find(self._script.EMBEDDED_OBJECT_CHARACTER) > -1:
             return len(string) == 1
 
