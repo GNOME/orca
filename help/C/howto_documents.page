@@ -45,10 +45,11 @@
       </p>
     </item>
   </list>
-  <p>
-    For a complete listing of GNOME's caret navigation commands, see the
-    <link href="help:gnome-help/a11y">Universal Access Help</link>.
-  </p>
+    <p>
+      If you are not yet familiar with the caret navigation commands provided by
+      the applications you wish to use, you are encouraged to read that documentation
+      first.
+    </p>
   <p>
     In addition to reading a document by caret navigation, you may find it helpful
     to read, spell, and obtain the Unicode value for the current text. You can do

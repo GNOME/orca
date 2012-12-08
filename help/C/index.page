@@ -19,7 +19,9 @@
   <note style="important">
     <title>Before You Begin</title>
     <p>
-      Read the <link href="help:gnome-help/a11y">Universal Access Help</link>
+      If you are not yet familiar with the navigation commands provided by
+      your desktop environment, you are encouraged to read that documentation
+      first.
     </p>
   </note>
   <section id="getting_started" style="2column">
