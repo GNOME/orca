@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca.HEAD.ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-02 21:02+0530\n"
+"POT-Creation-Date: 2012-09-19 21:40+0530\n"
 "PO-Revision-Date: 2012-09-01 10:23+0530\n"
 "Last-Translator: Dr.T.Vasudevan <agnihot3@gmail.com>\n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
@@ -3721,7 +3721,7 @@ msgstr "இது எல்லா பேச்சு மற்றும் ப�
 #. preferences.  This is a spoken prompt to let the user
 #. know when the preferences has been reloaded.
 #.
-#: ../src/orca/orca.py:431
+#: ../src/orca/orca.py:432
 msgid "Orca user settings reloaded."
 msgstr "ஆர்கா பயனர் அமைவுகள் மீண்டும் ஏற்றப்பட்டது."
 
@@ -3729,7 +3729,7 @@ msgstr "ஆர்கா பயனர் அமைவுகள் மீண்ட
 #. amongst the list of commands presented in 'list shortcuts' mode as
 #. well as how to exit the list when finished.
 #.
-#: ../src/orca/orca.py:571
+#: ../src/orca/orca.py:572
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
 msgstr ""
 "பட்டியலில் மேலே கீழே போக மேலே, கீழே அம்புக்குறிகளை பயன்படுத்துக. வெளியேற விடுபடு "
@@ -3739,7 +3739,7 @@ msgstr ""
 #. 'list of shortcuts mode'. In this messsage, we present the
 #. number of shortcuts found.
 #.
-#: ../src/orca/orca.py:584
+#: ../src/orca/orca.py:585
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
@@ -3750,7 +3750,7 @@ msgstr[1] "%d ஆர்கா சுருக்கு வழிகள் மு
 #. 'list of shortcuts mode'. In this message, we present the
 #. number of shortcuts found for the named application.
 #.
-#: ../src/orca/orca.py:606
+#: ../src/orca/orca.py:607
 #, python-format
 msgid "%(count)d Orca shortcut for %(application)s found."
 msgid_plural "%(count)d Orca shortcuts for %(application)s found."
@@ -3762,7 +3762,7 @@ msgstr[1] "%(count)d ஆர்கா சுருக்கு விசைகள
 #. when the user requested a list of application-specific
 #. shortcuts, but none could be found for that application.
 #.
-#: ../src/orca/orca.py:624
+#: ../src/orca/orca.py:625
 #, python-format
 msgid "No Orca shortcuts for %s found."
 msgstr "%s க்கு ஆர்கா சுருக்கு வழி ஏதும் இல்லை"
@@ -3785,7 +3785,7 @@ msgstr "%s க்கு ஆர்கா சுருக்கு வழி ஏ�
 #. the bottom and continue looking upwards. We need to
 #. inform the user when this is taking place.
 #.
-#: ../src/orca/orca.py:642 ../src/orca/scripts/toolkits/Gecko/script.py:6055
+#: ../src/orca/orca.py:643 ../src/orca/scripts/toolkits/Gecko/script.py:6055
 #: ../src/orca/structural_navigation.py:884
 msgid "Wrapping to bottom."
 msgstr "கீழுக்கு மடிகிறது  "
@@ -3808,7 +3808,7 @@ msgstr "கீழுக்கு மடிகிறது  "
 #. top and continue looking downwards. We need to inform the
 #. user when this is taking place.
 #.
-#: ../src/orca/orca.py:663 ../src/orca/scripts/toolkits/Gecko/script.py:6123
+#: ../src/orca/orca.py:664 ../src/orca/scripts/toolkits/Gecko/script.py:6123
 #: ../src/orca/structural_navigation.py:892
 msgid "Wrapping to top."
 msgstr "மேலுக்கு மடிகிறது  "
@@ -3821,7 +3821,7 @@ msgstr "மேலுக்கு மடிகிறது  "
 #. The following message is presented to the user upon entering this
 #. mode.
 #.
-#: ../src/orca/orca.py:682 ../src/orca/scripts/default.py:1614
+#: ../src/orca/orca.py:683 ../src/orca/scripts/default.py:1614
 msgid ""
 "Press 1 for Orca's default shortcuts. Press 2 for Orca's shortcuts for the "
 "current application. Press escape to exit."
@@ -3831,11 +3831,11 @@ msgstr ""
 
 #. Translators: this is what Orca speaks and brailles when it quits.
 #.
-#: ../src/orca/orca.py:881
+#: ../src/orca/orca.py:882
 msgid "Goodbye."
 msgstr "நன்றி."
 
-#: ../src/orca/orca.py:1009
+#: ../src/orca/orca.py:1010
 msgid "Welcome to Orca."
 msgstr "Orca உங்களை வரவேற்கிறது."
 
@@ -4275,7 +4275,7 @@ msgstr[1] "%(count)d %(repeatChar)s எழுத்துருக்கள்"
 #. text is a hypertext link.
 #.
 #: ../src/orca/script_utilities.py:2533
-#: ../src/orca/scripts/apps/soffice/script.py:1144
+#: ../src/orca/scripts/apps/soffice/script.py:1220
 #: ../src/orca/scripts/default.py:2039 ../src/orca/speech_generator.py:1016
 msgid "link"
 msgstr "இணைப்பு"
@@ -4319,7 +4319,7 @@ msgstr "முழு ஆவணத்திற்கும் பேசுகி�
 #. Translators: this represents the number of rows in a table.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:253
-#: ../src/orca/scripts/apps/soffice/script.py:730
+#: ../src/orca/scripts/apps/soffice/script.py:760
 #: ../src/orca/structural_navigation.py:1326
 #, python-format
 msgid "table with %d row"
@@ -4330,7 +4330,7 @@ msgstr[1] "%d வரிகளுடன் அட்டவணை"
 #. Translators: this represents the number of columns in a table.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:258
-#: ../src/orca/scripts/apps/soffice/script.py:735
+#: ../src/orca/scripts/apps/soffice/script.py:765
 #: ../src/orca/structural_navigation.py:1331
 #, python-format
 msgid "%d column"
@@ -4341,7 +4341,7 @@ msgstr[1] "%d பத்தி "
 #. We've left a table.  Announce this fact.
 #.
 #: ../src/orca/scripts/apps/acroread/script.py:268
-#: ../src/orca/scripts/apps/soffice/script.py:724
+#: ../src/orca/scripts/apps/soffice/script.py:754
 msgid "leaving table."
 msgstr "அட்டவணையை விட்டு வெளியேறுகிறது."
 
@@ -4459,7 +4459,7 @@ msgstr "அடைவுகள் பொத்தான்"
 #. user has navigated to an empty line.
 #.
 #: ../src/orca/scripts/apps/evolution/script.py:1098
-#: ../src/orca/scripts/apps/soffice/script.py:1264
+#: ../src/orca/scripts/apps/soffice/script.py:1340
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:430
 #: ../src/orca/scripts/apps/soffice/speech_generator.py:544
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:116
@@ -4748,18 +4748,50 @@ msgstr "கால்க் அறைகளின் உள்ளடக்கத�
 msgid "Clears the dynamic row headers"
 msgstr "இயங்கு வரி தலைப்புகளை நீக்குகிறது"
 
+#. Translators: a refreshable braille display is an
+#. external hardware device that presents braille
+#. character to the user.  There are a limited number
+#. of cells on the display (typically 40 cells).  Orca
+#. provides the feature to build up a longer logical
+#. line and allow the user to press buttons on the
+#. braille display so they can pan left and right over
+#. this line.
+#.
+#: ../src/orca/scripts/apps/soffice/script.py:277
+#: ../src/orca/scripts/default.py:679
+#: ../src/orca/scripts/toolkits/Gecko/script.py:597
+#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:123
+msgid "Pans the braille display to the left."
+msgstr "ப்ரெய்ல் காட்சியை இடது பக்கத்துக்கு நகர்த்துகிறது."
+
+#. Translators: a refreshable braille display is an
+#. external hardware device that presents braille
+#. character to the user.  There are a limited number
+#. of cells on the display (typically 40 cells).  Orca
+#. provides the feature to build up a longer logical
+#. line and allow the user to press buttons on the
+#. braille display so they can pan left and right over
+#. this line.
+#.
+#: ../src/orca/scripts/apps/soffice/script.py:292
+#: ../src/orca/scripts/default.py:694
+#: ../src/orca/scripts/toolkits/Gecko/script.py:612
+#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:138
+msgid "Pans the braille display to the right."
+msgstr "ப்ரெய்ல் காட்சியை வலது பக்கத்துக்கு நகர்த்துகிறது."
+
 #. Translators: If checked, then Orca will speak the coordinates
 #. of the current spread sheet cell. Coordinates are the row and
 #. column position within the spread sheet (i.e. A1, B1, C2 ...)
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:326
+#: ../src/orca/scripts/apps/soffice/script.py:356
 msgid "Speak spread sheet cell coordinates"
 msgstr "ஸ்பெரட் ஷீட் அறை ஆயத்தொலவுகளை கூறுக"
 
 #. Translators: this is the title of a panel containing options
 #. for specifying how to navigate tables in document content.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:339
+#: ../src/orca/scripts/apps/soffice/script.py:369
 #: ../src/orca/scripts/toolkits/Gecko/script.py:784
 msgid "Table Navigation"
 msgstr "அட்டவணை உலாவல்"
@@ -4767,7 +4799,7 @@ msgstr "அட்டவணை உலாவல்"
 #. Translators: this is an option to tell Orca whether or not it
 #. should speak table cell coordinates in document content.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:352
+#: ../src/orca/scripts/apps/soffice/script.py:382
 #: ../src/orca/scripts/toolkits/Gecko/script.py:797
 msgid "Speak _cell coordinates"
 msgstr "(_c) அறையின் ஆயத்தொலைவுகளை கூறு"
@@ -4776,7 +4808,7 @@ msgstr "(_c) அறையின் ஆயத்தொலைவுகளை க�
 #. should speak the span size of a table cell (e.g., how many
 #. rows and columns a particular table cell spans in a table).
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:363
+#: ../src/orca/scripts/apps/soffice/script.py:393
 #: ../src/orca/scripts/toolkits/Gecko/script.py:808
 msgid "Speak _multiple cell spans"
 msgstr "(_m) பல அறை வீச்சை கூறு"
@@ -4784,7 +4816,7 @@ msgstr "(_m) பல அறை வீச்சை கூறு"
 #. Translators: this is an option for whether or not to speak
 #. the header of a table cell in document content.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:373
+#: ../src/orca/scripts/apps/soffice/script.py:403
 #: ../src/orca/scripts/toolkits/Gecko/script.py:818
 msgid "Announce cell _header"
 msgstr "(_h) அறை தலைப்பை அறிவிக்க"
@@ -4792,7 +4824,7 @@ msgstr "(_h) அறை தலைப்பை அறிவிக்க"
 #. Translators: this is an option to allow users to skip over
 #. empty/blank cells when navigating tables in document content.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:383
+#: ../src/orca/scripts/apps/soffice/script.py:413
 #: ../src/orca/scripts/toolkits/Gecko/script.py:828
 msgid "Skip _blank cells"
 msgstr "(_b) வெற்று அறைகளை தவிர்க்கவும்"
@@ -4800,14 +4832,14 @@ msgstr "(_b) வெற்று அறைகளை தவிர்க்கவ�
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:806
+#: ../src/orca/scripts/apps/soffice/script.py:882
 msgid "empty"
 msgstr "வெற்று"
 
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:886
+#: ../src/orca/scripts/apps/soffice/script.py:962
 #, python-format
 msgid "Dynamic column header set for row %d"
 msgstr "இயங்கு பத்தி %d க்கு வரி தலைப்பு  அமை  "
@@ -4815,14 +4847,14 @@ msgstr "இயங்கு பத்தி %d க்கு வரி தலை�
 #. Translators: Orca allows you to dynamically define which
 #. row of a spreadsheet or table counts as column headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:908
+#: ../src/orca/scripts/apps/soffice/script.py:984
 msgid "Dynamic column header cleared."
 msgstr "இயங்கு பத்தி  தலைப்பு நிரல் நீக்கப்பட்டது"
 
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:960
+#: ../src/orca/scripts/apps/soffice/script.py:1036
 #, python-format
 msgid "Dynamic row header set for column %s"
 msgstr "இயங்கு வரி தலைப்பு பத்தி %s க்கு அமைக்கப்பட்டது"
@@ -4830,7 +4862,7 @@ msgstr "இயங்கு வரி தலைப்பு பத்தி %s �
 #. Translators: Orca allows you to dynamically define which
 #. column of a spreadsheet or table counts as row headers.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:983
+#: ../src/orca/scripts/apps/soffice/script.py:1059
 msgid "Dynamic row header cleared."
 msgstr "இயங்கு வரி தலைப்பு சுத்தப்படுத்தப்பட்டது"
 
@@ -4840,7 +4872,7 @@ msgstr "இயங்கு வரி தலைப்பு சுத்தப்
 #. using.  We hate keying off stuff like this, but
 #. we're forced to do so in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1168
+#: ../src/orca/scripts/apps/soffice/script.py:1244
 msgid "Welcome to StarOffice"
 msgstr "ஸ்டார் ஆபீஸ்  உங்களை வரவேற்கிறது"
 
@@ -4851,15 +4883,15 @@ msgstr "ஸ்டார் ஆபீஸ்  உங்களை வரவேற�
 #. We really try to avoid doing this kind of thing, but
 #. sometimes it is necessary and we apologize.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1216
+#: ../src/orca/scripts/apps/soffice/script.py:1292
 msgid "Available fields"
 msgstr "இருப்பில் புலங்கள்"
 
-#: ../src/orca/scripts/apps/soffice/script.py:1376
+#: ../src/orca/scripts/apps/soffice/script.py:1452
 msgid "Note that the Scroll Down button has to be pressed numerous times."
 msgstr "கீழ் உருள் பொத்தானை பல முறை அழுத்த வேண்டும் என்பதை குறிக்க"
 
-#: ../src/orca/scripts/apps/soffice/script.py:1392
+#: ../src/orca/scripts/apps/soffice/script.py:1468
 msgid "License Agreement Accept button now has focus."
 msgstr "அங்கீகார ஒப்பந்தம் ஏற்பு பொத்தான் இப்போது முன்னிலைப்படுத்தப்படுகிறது."
 
@@ -4869,7 +4901,7 @@ msgstr "அங்கீகார ஒப்பந்தம் ஏற்பு ப
 #. is using.  We hate keying off stuff like this, but we're
 #. forced to in this case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1421
+#: ../src/orca/scripts/apps/soffice/script.py:1497
 msgid "First name"
 msgstr "முதல் பெயர்"
 
@@ -4877,7 +4909,7 @@ msgstr "முதல் பெயர்"
 #. in StarOffice/OpenOffice calc that allows you to type in a
 #. cell coordinate (e.g., A4) and then move to it.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1496
+#: ../src/orca/scripts/apps/soffice/script.py:1572
 msgid "Move to cell"
 msgstr "அறைக்கு நகர்த்து"
 
@@ -4885,7 +4917,7 @@ msgstr "அறைக்கு நகர்த்து"
 #. focused Impress slide and the total number of slides in the
 #. presentation.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1689
+#: ../src/orca/scripts/apps/soffice/script.py:1765
 #, python-format
 msgid "slide %(position)d of %(count)d"
 msgstr "காட்சிவில்லை %(position)d  %(count)d இல்"
@@ -4893,14 +4925,14 @@ msgstr "காட்சிவில்லை %(position)d  %(count)d இல்"
 #. Translators: This message is to inform the user that
 #. the last row of a table in a document was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1875
+#: ../src/orca/scripts/apps/soffice/script.py:1951
 msgid "Last row deleted."
 msgstr "கடைசி வரி நீக்கப்பட்டது."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just deleted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1879
+#: ../src/orca/scripts/apps/soffice/script.py:1955
 msgid "Row deleted."
 msgstr "வரி நீக்கப்பட்டது."
 
@@ -4909,14 +4941,14 @@ msgstr "வரி நீக்கப்பட்டது."
 #. table. This typically happens when the user presses Tab
 #. from within the last cell of the table.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1886
+#: ../src/orca/scripts/apps/soffice/script.py:1962
 msgid "Row inserted at the end of the table."
 msgstr "பட்டியலின் இறுதியில் வரி சொருகப்பட்டது."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just inserted.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1890
+#: ../src/orca/scripts/apps/soffice/script.py:1966
 msgid "Row inserted."
 msgstr "வரி செருகப்பட்டது."
 
@@ -4927,7 +4959,7 @@ msgstr "வரி செருகப்பட்டது."
 #. stuff like this, but we're forced to do so in this
 #. case.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:1935
+#: ../src/orca/scripts/apps/soffice/script.py:2011
 msgid "Presentation Wizard"
 msgstr "முன்வைப்பு வழிகாட்டி"
 
@@ -4936,13 +4968,13 @@ msgstr "முன்வைப்பு வழிகாட்டி"
 #. has a formula
 #. (e.g., "=sum(a1:d1)")
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2069
+#: ../src/orca/scripts/apps/soffice/script.py:2145
 msgid "has formula"
 msgstr "சூத்திரத்தை கொண்டுள்ளது"
 
 #. Translators: this is the name of a cell in a spreadsheet.
 #.
-#: ../src/orca/scripts/apps/soffice/script.py:2092
+#: ../src/orca/scripts/apps/soffice/script.py:2168
 #, python-format
 msgid "Cell %s"
 msgstr "அறை %s"
@@ -5446,36 +5478,6 @@ msgstr "தற்போதைய உரை எழுதுருவுடன் 
 #: ../src/orca/scripts/default.py:665
 msgid "Reports information on current script."
 msgstr "தற்போதைய நிரலின் தகவலை அறிவிக்கிறது."
-
-#. Translators: a refreshable braille display is an
-#. external hardware device that presents braille
-#. character to the user.  There are a limited number
-#. of cells on the display (typically 40 cells).  Orca
-#. provides the feature to build up a longer logical
-#. line and allow the user to press buttons on the
-#. braille display so they can pan left and right over
-#. this line.
-#.
-#: ../src/orca/scripts/default.py:679
-#: ../src/orca/scripts/toolkits/Gecko/script.py:597
-#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:123
-msgid "Pans the braille display to the left."
-msgstr "ப்ரெய்ல் காட்சியை இடது பக்கத்துக்கு நகர்த்துகிறது."
-
-#. Translators: a refreshable braille display is an
-#. external hardware device that presents braille
-#. character to the user.  There are a limited number
-#. of cells on the display (typically 40 cells).  Orca
-#. provides the feature to build up a longer logical
-#. line and allow the user to press buttons on the
-#. braille display so they can pan left and right over
-#. this line.
-#.
-#: ../src/orca/scripts/default.py:694
-#: ../src/orca/scripts/toolkits/Gecko/script.py:612
-#: ../src/orca/scripts/toolkits/WebKitGtk/script.py:138
-msgid "Pans the braille display to the right."
-msgstr "ப்ரெய்ல் காட்சியை வலது பக்கத்துக்கு நகர்த்துகிறது."
 
 #. Translators: the 'flat review' feature of Orca
 #. allows the blind user to explore the text in a
