@@ -23,6 +23,7 @@ src/orca/orca_bin.py.in
 src/orca/orca_console_prefs.py
 [type: gettext/glade]src/orca/orca-find.ui
 src/orca/orca_gui_find.py
+src/orca/orca_gui_navlist.py
 src/orca/orca_gui_prefs.py
 src/orca/orca_gui_profile.py
 src/orca/orca.py
