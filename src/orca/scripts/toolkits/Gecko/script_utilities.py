@@ -29,6 +29,7 @@ __copyright__ = "Copyright (c) 2010 Joanmarie Diggs."
 __license__   = "LGPL"
 
 import pyatspi
+import re
 
 import orca.debug as debug
 import orca.orca_state as orca_state
@@ -496,3 +497,98 @@ class Utilities(script_utilities.Utilities):
     # Miscellaneous Utilities                                               #
     #                                                                       #
     #########################################################################
+
+    def getObjectsFromEOCs(self, obj, offset, boundary=None):
+        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
+        with [obj, startOffset, endOffset, string] tuples.
+
+        Arguments
+        - obj: the object whose EOCs we need to expand into tuples
+        - offset: the character offset after which
+        - boundary: the pyatspi text boundary type
+
+        Returns a list of object tuples.
+        """
+
+        if not obj:
+            return []
+
+        elif boundary and obj.getRole() == pyatspi.ROLE_TABLE:
+            if obj[0] and obj[0].getRole() in [pyatspi.ROLE_CAPTION,
+                                               pyatspi.ROLE_LIST]:
+                obj = obj[0]
+            else:
+                obj = obj.queryTable().getAccessibleAt(0, 0)
+
+            if not obj:
+                debug.printStack(debug.LEVEL_WARNING)
+                return []
+
+        objects = []
+        text = self.queryNonEmptyText(obj)
+        if text:
+            if boundary:
+                [string, start, end] = \
+                    text.getTextAfterOffset(offset, boundary)
+            else:
+                start = offset
+                end = text.characterCount
+                string = text.getText(start, end)
+        else:
+            string = ""
+            start = 0
+            end = 1
+
+        unicodeText = string
+        objects.append([obj, start, end, unicodeText])
+
+        pattern = re.compile(self._script.EMBEDDED_OBJECT_CHARACTER)
+        matches = re.finditer(pattern, unicodeText)
+
+        offset = 0
+        for m in matches:
+            # Adjust the last object's endOffset to the last character
+            # before the EOC.
+            #
+            childOffset = m.start(0) + start
+            lastObj = objects[-1]
+            lastObj[2] = childOffset
+            if lastObj[1] == lastObj[2]:
+                # A zero-length object is an indication of something
+                # whose sole contents was an EOC.  Delete it from the
+                # list.
+                #
+                objects.pop()
+            else:
+                # Adjust the string to reflect just this segment.
+                #
+                lastObj[3] = unicodeText[offset:m.start(0)]
+
+            offset = m.start(0) + 1
+ 
+            # Recursively tack on the child's objects.
+            #
+            childIndex = self._script.getChildIndex(obj, childOffset)
+            child = obj[childIndex]
+            objects.extend(self.getObjectsFromEOCs(child, 0, boundary))
+
+            # Tack on the remainder of the original object, if any.
+            #
+            if end > childOffset + 1:
+                restOfText = unicodeText[offset:len(unicodeText)]
+                objects.append([obj, childOffset + 1, end, restOfText])
+ 
+        if obj.getRole() in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_TABLE]:
+            # Imagemaps that don't have alternative text won't implement
+            # the text interface, but they will have children (essentially
+            # EOCs) that we need to get. The same is true for tables.
+            #
+            toAdd = []
+            for child in obj:
+                toAdd.extend(self.getObjectsFromEOCs(child, 0, boundary))
+            if len(toAdd):
+                if self.isSameObject(objects[-1][0], obj):
+                    objects.pop()
+                objects.extend(toAdd)
+
+        return objects

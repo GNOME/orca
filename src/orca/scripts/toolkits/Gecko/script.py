@@ -43,7 +43,6 @@ __license__   = "LGPL"
 
 from gi.repository import Gtk
 import pyatspi
-import re
 import time
 import urllib.parse
 
@@ -3472,7 +3471,7 @@ class Script(default.Script):
             nextCell = (row + rowspan, col)
         if nextCell:
             newCell = table.getAccessibleAt(nextCell[0], nextCell[1])
-            objects = self.getObjectsFromEOCs(newCell, 0)
+            objects = self.utilities.getObjectsFromEOCs(newCell, 0)
             if len(objects):
                 extents = self.getExtents(objects[0][0], 
                                           objects[0][1],
@@ -3490,117 +3489,6 @@ class Script(default.Script):
                     break
 
         return [newCell, text, extents, isField]
-
-    def getObjectsFromEOCs(self, obj, offset, boundary=None):
-        """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
-        with [obj, startOffset, endOffset, string] tuples.
-
-        Arguments
-        - obj: the object whose EOCs we need to expand into tuples
-        - offset: the character offset after which
-        - boundary: the pyatspi text boundary type
-
-        Returns a list of object tuples.
-        """
-
-        if not obj:
-            return []
-
-        elif boundary and obj.getRole() == pyatspi.ROLE_TABLE:
-            # If this is a table, move to the first cell -- or the caption,
-            # if present.
-            # [[[TODOS - JD:
-            #    1) It might be nice to announce the fact that we've just
-            #       found a table, what its dimensions are, etc.
-            #    2) It seems that down arrow moves us to the table, but up
-            #       arrow moves us to the last row.  Possible side effect
-            #       of our existing caret browsing implementation??]]]
-            #    3) Figure out why the heck the table of contents for at
-            #       least some Yelp content consists of a table whose sole
-            #       child is a list!!!
-            if obj[0] and obj[0].getRole() in [pyatspi.ROLE_CAPTION,
-                                               pyatspi.ROLE_LIST]:
-                obj = obj[0]
-            else:
-                obj = obj.queryTable().getAccessibleAt(0, 0)
-
-            if not obj:
-                # Yelp (or perhaps the work-in-progress a11y patch) seems
-                # to be guilty of this. Although that may have been the
-                # table of contents thing (see #3 above).
-                #
-                #print "getObjectsFromEOCs - in Table, missing an accessible"
-                debug.printStack(debug.LEVEL_WARNING)
-                return []
-
-        objects = []
-        text = self.utilities.queryNonEmptyText(obj)
-        if text:
-            if boundary:
-                [string, start, end] = \
-                    text.getTextAfterOffset(offset, boundary)
-            else:
-                start = offset
-                end = text.characterCount
-                string = text.getText(start, end)
-        else:
-            string = ""
-            start = 0
-            end = 1
-
-        unicodeText = string
-        objects.append([obj, start, end, unicodeText])
-
-        pattern = re.compile(self.EMBEDDED_OBJECT_CHARACTER)
-        matches = re.finditer(pattern, unicodeText)
-
-        offset = 0
-        for m in matches:
-            # Adjust the last object's endOffset to the last character
-            # before the EOC.
-            #
-            childOffset = m.start(0) + start
-            lastObj = objects[-1]
-            lastObj[2] = childOffset
-            if lastObj[1] == lastObj[2]:
-                # A zero-length object is an indication of something
-                # whose sole contents was an EOC.  Delete it from the
-                # list.
-                #
-                objects.pop()
-            else:
-                # Adjust the string to reflect just this segment.
-                #
-                lastObj[3] = unicodeText[offset:m.start(0)]
-
-            offset = m.start(0) + 1
- 
-            # Recursively tack on the child's objects.
-            #
-            childIndex = self.getChildIndex(obj, childOffset)
-            child = obj[childIndex]
-            objects.extend(self.getObjectsFromEOCs(child, 0, boundary))
-
-            # Tack on the remainder of the original object, if any.
-            #
-            if end > childOffset + 1:
-                restOfText = unicodeText[offset:len(unicodeText)]
-                objects.append([obj, childOffset + 1, end, restOfText])
- 
-        if obj.getRole() in [pyatspi.ROLE_IMAGE, pyatspi.ROLE_TABLE]:
-            # Imagemaps that don't have alternative text won't implement
-            # the text interface, but they will have children (essentially
-            # EOCs) that we need to get. The same is true for tables.
-            #
-            toAdd = []
-            for child in obj:
-                toAdd.extend(self.getObjectsFromEOCs(child, 0, boundary))
-            if len(toAdd):
-                if self.utilities.isSameObject(objects[-1][0], obj):
-                    objects.pop()
-                objects.extend(toAdd)
-
-        return objects
 
     def getMeaningfulObjectsFromLine(self, line):
         """Attempts to strip a list of (obj, start, end) tuples into one
@@ -4899,7 +4787,7 @@ class Script(default.Script):
             if word[1] < characterOffset <= word[2]:
                 characterOffset = word[1]
 
-        contents = self.getObjectsFromEOCs(obj, characterOffset, boundary)
+        contents = self.utilities.getObjectsFromEOCs(obj, characterOffset, boundary)
         if len(contents) > 1 \
            and contents[0][0].getRole() == pyatspi.ROLE_LIST_ITEM:
             contents = [contents[0]]
@@ -5051,7 +4939,7 @@ class Script(default.Script):
 
         # Get the objects on this line.
         #
-        objects = self.getObjectsFromEOCs(obj, offset, boundary)
+        objects = self.utilities.getObjectsFromEOCs(obj, offset, boundary)
 
         # Check for things on the left.
         #
@@ -5078,7 +4966,7 @@ class Script(default.Script):
             if self.onSameLine(extents, prevExtents) \
                and extents != prevExtents \
                and lastExtents != prevExtents:
-                toAdd = self.getObjectsFromEOCs(prevObj, pOffset, boundary)
+                toAdd = self.utilities.getObjectsFromEOCs(prevObj, pOffset, boundary)
                 # Depending on the line, there's a chance that we got our
                 # current object as part of toAdd. Check for dupes and just
                 # add up to the current object if we find them.
@@ -5124,13 +5012,13 @@ class Script(default.Script):
                and extents != nextExtents \
                and lastExtents != nextExtents \
                or nextExtents == (0, 0, 0, 0):
-                toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
+                toAdd = self.utilities.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 toAdd = [x for x in toAdd if x not in objects]
                 objects.extend(toAdd)
             elif (nextObj.getRole() in [pyatspi.ROLE_SECTION,
                                         pyatspi.ROLE_TABLE_CELL] \
                   and self.isUselessObject(nextObj)):
-                toAdd = self.getObjectsFromEOCs(nextObj, nOffset, boundary)
+                toAdd = self.utilities.getObjectsFromEOCs(nextObj, nOffset, boundary)
                 done = True
                 for item in toAdd:
                     itemExtents = self.getExtents(item[0], item[1], item[2])
@@ -5153,7 +5041,7 @@ class Script(default.Script):
         starting and stopping at the given object.
         """
 
-        return self.getObjectsFromEOCs(obj, characterOffset)
+        return self.utilities.getObjectsFromEOCs(obj, characterOffset)
 
     ####################################################################
     #                                                                  #
