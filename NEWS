@@ -1,3 +1,35 @@
+3.7.3 - 18 December 2012
+
+General
+
+  * Provide support to cycle amongst speech-dispatcher's capitalization
+    presentation options
+
+  * Create a generic UI which can be used in element navigation lists
+
+  * Add a _getAll() method to structural_navigation.py
+
+  * Fix for bug 689486 - Broken links to gnome-user-docs in the orca help
+
+  * Remove a missed call to str.decode()
+
+  * Make viewing Orca help in Yelp activatable via Learn Mode
+
+  * Eliminate the Splash window, Main window, and Quit window
+
+  * Increase the default uppercase pitch to 7.0
+
+  * Use GLib.source_remove() instead of the deprecated GObject equivalent
+
+  * Delete the acroread script
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    es            Spanish                 Daniel Mustieles
+    ta            Tamil                   Dr.T.Vasudevan
+
+=========
+
 3.7.2 - 19 November 2012
 
 NOTE: This is the first real/official Python 3 release of Orca.
