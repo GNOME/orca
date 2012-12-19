@@ -112,14 +112,14 @@ class Utilities(script_utilities.Utilities):
 
         return text
 
-    def getObjectsFromEOCs(self, obj, boundary=None, offset=None):
+    def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
         """Breaks the string containing a mixture of text and embedded object
         characters into a list of (obj, startOffset, endOffset, string) tuples.
 
         Arguments
         - obj: the object whose EOCs we need to expand into tuples
-        - boundary: the pyatspi text boundary type. If None, get all text.
         - offset: the character offset. If None, use the current offset.
+        - boundary: the pyatspi text boundary type. If None, get all text.
 
         Returns a list of (obj, startOffset, endOffset, string) tuples.
         """

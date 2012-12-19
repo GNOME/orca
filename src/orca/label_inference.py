@@ -245,7 +245,7 @@ class LabelInference:
             obj = obj.parent
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        rv = self._script.utilities.getObjectsFromEOCs(obj, boundary, start)
+        rv = self._script.utilities.getObjectsFromEOCs(obj, start, boundary)
         self._lineCache[key] = rv
 
         return rv

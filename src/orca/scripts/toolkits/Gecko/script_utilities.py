@@ -498,7 +498,7 @@ class Utilities(script_utilities.Utilities):
     #                                                                       #
     #########################################################################
 
-    def getObjectsFromEOCs(self, obj, offset, boundary=None):
+    def getObjectsFromEOCs(self, obj, offset=None, boundary=None):
         """Expands the current object replacing EMBEDDED_OBJECT_CHARACTERS
         with [obj, startOffset, endOffset, string] tuples.
 
@@ -527,6 +527,9 @@ class Utilities(script_utilities.Utilities):
         objects = []
         text = self.queryNonEmptyText(obj)
         if text:
+            if offset == None:
+                offset = text.caretOffset
+
             if boundary:
                 [string, start, end] = \
                     text.getTextAfterOffset(offset, boundary)

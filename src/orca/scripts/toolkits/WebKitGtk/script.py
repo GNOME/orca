@@ -376,7 +376,7 @@ class Script(default.Script):
         """
 
         boundary = pyatspi.TEXT_BOUNDARY_CHAR
-        objects = self.utilities.getObjectsFromEOCs(obj, boundary)
+        objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             if string:
                 speech.speakCharacter(string)
@@ -391,7 +391,7 @@ class Script(default.Script):
         """
 
         boundary = pyatspi.TEXT_BOUNDARY_WORD_START
-        objects = self.utilities.getObjectsFromEOCs(obj, boundary)
+        objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             self.sayPhrase(obj, start, end)
 
@@ -403,7 +403,7 @@ class Script(default.Script):
         """
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        objects = self.utilities.getObjectsFromEOCs(obj, boundary)
+        objects = self.utilities.getObjectsFromEOCs(obj, boundary=boundary)
         for (obj, start, end, string) in objects:
             self.sayPhrase(obj, start, end)
 
