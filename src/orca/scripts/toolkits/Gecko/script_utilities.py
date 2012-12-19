@@ -528,7 +528,7 @@ class Utilities(script_utilities.Utilities):
         text = self.queryNonEmptyText(obj)
         if text:
             if offset == None:
-                offset = text.caretOffset
+                offset = max(0, text.caretOffset)
 
             if boundary:
                 [string, start, end] = \
