@@ -443,6 +443,9 @@ class LabelInference:
         if not self._isSimpleObject(cell):
             return None
 
+        if not cell in [obj.parent, obj.parent.parent]:
+            return None
+
         pred = lambda x: x.getRole() == pyatspi.ROLE_TABLE
         grid = pyatspi.utils.findAncestor(cell, pred)
         if not grid:
