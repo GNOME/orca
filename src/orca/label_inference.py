@@ -147,8 +147,8 @@ class LabelInference:
             return True
 
         string = text.getText(0, -1).strip()
-        if string.find(self._script.EMBEDDED_OBJECT_CHARACTER) > -1:
-            return len(string) == 1
+        if string.count(self._script.EMBEDDED_OBJECT_CHARACTER) > 1:
+            return False
 
         return True
 
@@ -227,8 +227,7 @@ class LabelInference:
             return ''
 
         strings = [content[3] or content[0].name for content in contents]
-        strings = [x.strip() for x in strings]
-        return ' '.join(strings)
+        return ''.join(strings)
 
     def _getLineContents(self, obj):
         """Get the (obj, startOffset, endOffset, string) tuples for the line
@@ -490,10 +489,8 @@ class LabelInference:
             return None
 
         cells = [table.getAccessibleAt(i, col) for i in range(1, table.nRows)]
-        if [x for x in cells if x == None]:
-            debug.println(debug.LEVEL_FINE, "INFER: Potentially broken table!")
-            return None
-        if [x for x in cells if x[0] and x[0].getRole() != obj.getRole()]:
+        cells = [x for x in cells if x != None]
+        if [x for x in cells if x.childCount and x[0].getRole() != obj.getRole()]:
             return None
 
         label = self._createLabelFromContents(firstRow[col])
