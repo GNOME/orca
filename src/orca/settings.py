@@ -665,10 +665,6 @@ enableContractedBraille = False
 #
 brailleContractionTable = ''
 
-# Use Collection Interface?
-#
-useCollection = True
-
 # Whether or not to speak the cell's coordinates when navigating
 # from cell to cell in a table.
 #

@@ -450,13 +450,6 @@ class StructuralNavigation:
     UNVISITED_LINK  = "unvisitedLink"
     VISITED_LINK    = "visitedLink"
 
-    # Whether or not to attempt to use collection.  There's no point
-    # in bothering if we know that the collection interface has not
-    # been implemented in a given app (e.g. StarOffice/OOo) so this
-    # variable can be overridden.
-    #
-    collectionEnabled = settings.useCollection
-
     # Roles which are recognized as being a form field. Note that this
     # is for the purpose of match rules and predicates and refers to
     # AT-SPI roles. 
@@ -542,19 +535,9 @@ class StructuralNavigation:
         # class for examples of each.)
         #
         bindings = eval("self._%sBindings()" % name)
+        criteria = eval("self._%sCriteria" % name)
         predicate = eval("self._%sPredicate" % name)
         presentation = eval("self._%sPresentation" % name)
-
-        # We won't make this assumption for match criteria because
-        # the collection interface might not be implemented (e.g.
-        # StarOffice/OpenOffice) and/or its use might not be possible
-        # or practical for a given StructuralNavigationObject (e.g.
-        # matching by text attributes, spatial navigation within tables).
-        #
-        try:
-            criteria = eval("self._%sCriteria" % name)
-        except:
-            criteria = None
 
         return StructuralNavigationObject(self, name, bindings, predicate,
                                           criteria, presentation)
@@ -802,101 +785,60 @@ class StructuralNavigation:
 
         obj = obj or self.getCurrentObject()
 
-        # Yelp is seemingly fond of killing children for sport. Better
-        # check for that.
-        #
         try:
             state = obj.getState()
         except:
             return [None, False]
         else:
             if state.contains(pyatspi.STATE_DEFUNCT):
-                #print "goObject: defunct object", obj
                 debug.printException(debug.LEVEL_SEVERE)
                 return [None, False]
 
-        success = False
         wrap = settings.wrappedStructuralNavigation
-        # Try to find it using Collection first.  But don't do this with form
-        # fields for now.  It's a bit faster moving to the next form field,
-        # but not on pages with huge forms (e.g. bugzilla's advanced search
-        # page).  And due to bug #538680, we definitely don't want to use
-        # collection to go to the previous chunk or form field.
+        document = self._getDocument()
+        collection = document.queryCollection()
+        criteria = structuralNavigationObject.criteria(collection, arg)
+
+        # If the document frame itself contains content and that is
+        # our current object, querying the collection interface will
+        # result in our starting at the top when looking for the next
+        # object rather than the current caret offset. See bug 567984.
         #
-        formObjects = [self.BUTTON, self.CHECK_BOX, self.COMBO_BOX,
-                       self.ENTRY, self.FORM_FIELD, self.RADIO_BUTTON]
+        if isNext and self._script.utilities.isSameObject(obj, document):
+            pred = self.isAfterDocumentOffset
+            if criteria.applyPredicate:
+                pred = pred and structuralNavigationObject.predicate
+            criteria.applyPredicate = True
+            structuralNavigationObject.predicate = pred
 
-        criteria = None
-        objType = structuralNavigationObject.objType
-        if self.collectionEnabled \
-           and not objType in formObjects \
-           and (isNext or objType != self.CHUNK):
-            try:
-                document = self._getDocument()
-                collection = document.queryCollection()
-                if structuralNavigationObject.criteria:
-                    criteria = structuralNavigationObject.criteria(collection,
-                                                                   arg)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-            else:
-                # If the document frame itself contains content and that is
-                # our current object, querying the collection interface will
-                # result in our starting at the top when looking for the next
-                # object rather than the current caret offset. See bug 567984.
-                #
-                if isNext \
-                   and self._script.utilities.isSameObject(obj, document):
-                    criteria = None
+        rule = collection.createMatchRule(criteria.states.raw(),
+                                          criteria.matchStates,
+                                          criteria.objAttrs,
+                                          criteria.matchObjAttrs,
+                                          criteria.roles,
+                                          criteria.matchRoles,
+                                          criteria.interfaces,
+                                          criteria.matchInterfaces,
+                                          criteria.invert)
+        if criteria.applyPredicate:
+            predicate = structuralNavigationObject.predicate
+        else:
+            predicate = None
 
-        if criteria:
-            try:
-                rule = collection.createMatchRule(criteria.states.raw(),
-                                                  criteria.matchStates,
-                                                  criteria.objAttrs,
-                                                  criteria.matchObjAttrs,
-                                                  criteria.roles,
-                                                  criteria.matchRoles,
-                                                  criteria.interfaces,
-                                                  criteria.matchInterfaces,
-                                                  criteria.invert)
-                if criteria.applyPredicate:
-                    predicate = structuralNavigationObject.predicate
-                else:
-                    predicate = None
+        if not isNext:
+            [obj, wrapped] = self._findPrevByMatchRule(collection,
+                                                       rule,
+                                                       wrap,
+                                                       obj,
+                                                       predicate)
+        else:
+            [obj, wrapped] = self._findNextByMatchRule(collection,
+                                                       rule,
+                                                       wrap,
+                                                       obj,
+                                                       predicate)
+            collection.freeMatchRule(rule)
 
-                if not isNext:
-                    [obj, wrapped] = self._findPrevByMatchRule(collection,
-                                                               rule,
-                                                               wrap,
-                                                               obj,
-                                                               predicate)
-                else:
-                    [obj, wrapped] = self._findNextByMatchRule(collection,
-                                                               rule,
-                                                               wrap,
-                                                               obj,
-                                                               predicate)
-                success = True
-                collection.freeMatchRule(rule)
-                # print "collection", structuralNavigationObject.objType
-            except NotImplementedError:
-                debug.printException(debug.LEVEL_SEVERE)
-            except:
-                debug.printException(debug.LEVEL_SEVERE)
-                collection.freeMatchRule(rule)
-
-        # Do it iteratively when Collection failed or is disabled
-        #
-        if not success:
-            pred = structuralNavigationObject.predicate
-            if not isNext:
-                [obj, wrapped] = self._findPrevByPredicate(pred, wrap,
-                                                           obj, arg)
-            else:
-                [obj, wrapped] = self._findNextByPredicate(pred, wrap,
-                                                           obj, arg)
-            # print "predicate", structuralNavigationObject.objType
         if wrapped:
             if not isNext:
                 # Translators: when the user is attempting to locate a
@@ -929,6 +871,26 @@ class StructuralNavigation:
         """
 
         return orca_state.locusOfFocus
+
+    def isAfterDocumentOffset(self, obj, arg=None):
+        """Returns True if obj is after the document's caret offset."""
+        document = self._getDocument()
+        try:
+            offset = document.queryText().caretOffset
+        except:
+            return False
+
+        start, end = self._script.utilities.getHyperlinkRange(obj)
+        if start > offset:
+            return True
+
+        try:
+            hypertext = document.queryHypertext()
+            hyperlink = hypertext.getLink(hypertext.getNLinks() - 1)
+        except:
+            return False
+
+        return offset > hyperlink.startIndex
 
     def _findPrevByMatchRule(self, collection, matchRule, wrap, currentObj,
                              predicate=None):
@@ -1070,110 +1032,6 @@ class StructuralNavigation:
                 currentObj = self._getDocument()
             else:
                 break
-
-        return [match, wrapped]
-
-    def _findPrevByPredicate(self, pred, wrap, currentObj=None, arg=None):
-        """Finds the caret offset at the beginning of the previous object
-        using the given predicate as a pattern to match.
-
-        Arguments:
-        -pred: a python callable that takes an accessible argument and
-               returns true/false based on some match criteria
-        -wrap: if True and the top of the document is reached, move
-               to the bottom and keep looking.
-        -currentObj: the object from which the search should begin
-        -arg:  an additional value to be passed to the predicate
-
-        Returns: [obj, wrapped] where wrapped is a boolean reflecting
-        whether wrapping took place.
-        """
-
-        currentObj = currentObj or self.getCurrentObject()
-        document = self._getDocument()
-
-        # If the current object is the document itself, find an actual
-        # object to use as the starting point. Otherwise we're in
-        # danger of skipping over the objects in between our present
-        # location and top of the document.
-        #
-        if self._script.utilities.isSameObject(currentObj, document):
-            currentObj = self._findNextObject(currentObj, document)
-
-        ancestors = []
-        nestableRoles = [pyatspi.ROLE_LIST, pyatspi.ROLE_TABLE]
-        obj = currentObj.parent
-        while obj:
-            ancestors.append(obj)
-            obj = obj.parent
-
-        obj = self._findPreviousObject(currentObj, document)
-        wrapped = obj is None
-        match = None
-
-        if wrapped:
-            obj = self._findLastObject(document)
-
-        while obj and not match:
-            isNested = (obj != currentObj.parent \
-                        and currentObj.parent.getRole() == obj.getRole() \
-                        and obj.getRole() in nestableRoles)
-            if (not obj in ancestors or isNested) and pred(obj):
-                if wrapped \
-                   and self._script.utilities.isSameObject(currentObj, obj):
-                    break
-                else:
-                    match = obj
-            else:
-                obj = self._findPreviousObject(obj, document)
-                if not obj and wrap and not wrapped:
-                    obj = self._findLastObject(document)
-                    wrapped = True
-
-        return [match, wrapped]
-
-    def _findNextByPredicate(self, pred, wrap, currentObj=None, arg=None):
-        """Finds the caret offset at the beginning of the next object
-        using the given predicate as a pattern to match or not match.
-
-        Arguments:
-        -pred: a python callable that takes an accessible argument and
-               returns true/false based on some match criteria
-        -wrap: if True and the bottom of the document is reached, move
-               to the top and keep looking.
-        -currentObj: the object from which the search should begin
-        -arg:  an additional value to be passed to the predicate
-
-        Returns: [obj, wrapped] where wrapped is a boolean reflecting
-        whether wrapping took place.
-        """
-        currentObj = currentObj or self.getCurrentObject()
-        ancestors = []
-        obj = currentObj.parent
-        while obj:
-            ancestors.append(obj)
-            obj = obj.parent
-
-        document = self._getDocument()
-        obj = self._findNextObject(currentObj, document)
-        wrapped = obj is None
-        match = None
-
-        if wrapped:
-            [obj, offset] = self._getCaretPosition(document)
-
-        while obj and not match:
-            if (not obj in ancestors) and pred(obj, arg):
-                if wrapped \
-                   and self._script.utilities.isSameObject(currentObj, obj):
-                    break
-                else:
-                    match = obj
-            else:
-                obj = self._findNextObject(obj, document)
-                if not obj and wrap and not wrapped:
-                    [obj, offset] = self._getCaretPosition(document)
-                    wrapped = True
 
         return [match, wrapped]
 

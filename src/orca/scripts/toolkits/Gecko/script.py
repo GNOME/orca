@@ -3546,26 +3546,8 @@ class Script(default.Script):
         and unvisited links on the page containing obj.
         """
 
-        if _settingsManager.getSetting('useCollection'):
-            try:
-                summary = self._collectionPageSummary()
-            except:
-                summary = self._iterativePageSummary(obj)
-        else:
-            summary = self._iterativePageSummary(obj)
-
-        return summary
-
-    def _collectionPageSummary(self):
-        """Uses the Collection interface to get the quantity of headings,
-        forms, tables, visited and unvisited links.
-        """
-
         docframe = self.utilities.documentFrame()
         col = docframe.queryCollection()
-        # We will initialize these after the queryCollection() call in case
-        # Collection is not supported
-        #
         headings = 0
         forms = 0
         tables = 0
@@ -3598,51 +3580,6 @@ class Script(default.Script):
                     vlinks += 1
                 else:
                     uvlinks += 1
-
-        return [headings, forms, tables, vlinks, uvlinks, percentRead]
-
-    def _iterativePageSummary(self, obj):
-        """Reads the quantity of headings, forms, tables, visited and
-        unvisited links.
-        """
-
-        headings = 0
-        forms = 0
-        tables = 0
-        vlinks = 0
-        uvlinks = 0
-        percentRead = None
-        nodetotal = 0
-        obj_index = None
-        currentobj = obj
-
-        # Start at the first object after document frame.
-        #
-        obj = self.utilities.documentFrame()[0]
-        while obj:
-            nodetotal += 1
-            if obj == currentobj:
-                obj_index = nodetotal
-            role = obj.getRole()
-            if role == pyatspi.ROLE_HEADING:
-                headings += 1
-            elif role == pyatspi.ROLE_FORM:
-                forms += 1
-            elif role == pyatspi.ROLE_TABLE \
-                      and not self.utilities.isLayoutOnly(obj):
-                tables += 1
-            elif role == pyatspi.ROLE_LINK:
-                if obj.getState().contains(pyatspi.STATE_VISITED):
-                    vlinks += 1
-                else:
-                    uvlinks += 1
-
-            obj = self.findNextObject(obj)
-
-        # Calculate the percentage of the document that has been read.
-        #
-        if obj_index:
-            percentRead = int(obj_index*100/nodetotal)
 
         return [headings, forms, tables, vlinks, uvlinks, percentRead]
 

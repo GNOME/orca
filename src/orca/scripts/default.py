@@ -1233,6 +1233,17 @@ class Script(script.Script):
 
         return script.Script.processKeyboardEvent(self, keyboardEvent)
 
+    def getCaretContext(self):
+        obj = orca_state.locusOfFocus
+        try:
+            offset = obj.queryText().caretOffset
+        except NotImplementedError:
+            offset = 0
+        except:
+            offset = -1
+
+        return obj, offset        
+
     def locusOfFocusChanged(self, event, oldLocusOfFocus, newLocusOfFocus):
         """Called when the visual object with focus changes.
 
