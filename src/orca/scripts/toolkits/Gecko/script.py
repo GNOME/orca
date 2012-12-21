@@ -3035,27 +3035,6 @@ class Script(default.Script):
             extents = [ext.x, ext.y, ext.width, ext.height]
         return extents
 
-    def getBoundary(self, a, b):
-        """Returns the smallest [x, y, width, height] that encompasses
-        both extents a and b.
-
-        Arguments:
-        -a: [x, y, width, height]
-        -b: [x, y, width, height]
-        """
-        if not a:
-            return b
-        if not b:
-            return a
-        smallestX1 = min(a[0], b[0])
-        smallestY1 = min(a[1], b[1])
-        largestX2  = max(a[0] + a[2], b[0] + b[2])
-        largestY2  = max(a[1] + a[3], b[1] + b[3])
-        return [smallestX1,
-                smallestY1,
-                largestX2 - smallestX1,
-                largestY2 - smallestY1]
-
     def onSameLine(self, a, b, pixelDelta=5):
         """Determine if extents a and b are on the same line.
 
