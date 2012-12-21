@@ -3117,6 +3117,22 @@ class StructuralNavigation:
         bindings["last"] = ["y", settings.NO_MODIFIER_MASK, desc]
         return bindings
 
+    def _liveRegionCriteria(self, collection, arg=None):
+        """Returns the MatchCriteria to be used for locating live regions
+        by collection.
+
+        Arguments:
+        - collection: the collection interface for the document
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        # Matches based on object attributes assume unique name-value pairs
+        # because pyatspi creates a dictionary from the list. In addition,
+        # wildcard matching is not possible. As a result, we cannot search
+        # for any object which has an attribute named container-live.
+        return MatchCriteria(collection, applyPredicate=True)
+
     def _liveRegionPredicate(self, obj, arg=None):
         """The predicate to be used for verifying that the object
         obj is a live region.
