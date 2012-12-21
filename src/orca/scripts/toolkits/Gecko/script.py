@@ -2993,7 +2993,7 @@ class Script(default.Script):
         else:
             return False
 
-    def getChilIdndex(self, obj, characterOffset):
+    def getChildIndex(self, obj, characterOffset):
         """Given an object that implements accessible text, determine
         the index of the child that is represented by an
         EMBEDDED_OBJECT_CHARACTER at characterOffset in the object's
