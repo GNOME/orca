@@ -2578,41 +2578,6 @@ class Script(default.Script):
 
         return contents
 
-    def getDocumentString(self):
-        """Trivial debug utility to stringify the document contents
-        showing on the screen."""
-
-        contents = ""
-        lastObj = None
-        lastCharacterExtents = None
-        [obj, characterOffset] = self.getCaretContext()
-        while obj:
-            if obj and obj.getState().contains(pyatspi.STATE_SHOWING):
-                characterExtents = self.getExtents(
-                    obj, characterOffset, characterOffset + 1)
-                if lastObj and (lastObj != obj):
-                    if obj.getRole() == pyatspi.ROLE_LIST_ITEM:
-                        contents += "\n"
-                    if lastObj.getRole() == pyatspi.ROLE_LINK:
-                        contents += ">"
-                    elif (lastCharacterExtents[1] < characterExtents[1]):
-                        contents += "\n"
-                    elif obj.getRole() == pyatspi.ROLE_TABLE_CELL:
-                        parent = obj.parent
-                        index = self.utilities.cellIndex(obj)
-                        if parent.queryTable().getColumnAtIndex(index) != 0:
-                            contents += " "
-                    elif obj.getRole() == pyatspi.ROLE_LINK:
-                        contents += "<"
-                contents += self.getCharacterAtOffset(obj, characterOffset)
-                lastObj = obj
-                lastCharacterExtents = characterExtents
-            [obj, characterOffset] = self.findNextCaretInOrder(obj,
-                                                               characterOffset)
-        if lastObj and lastObj.getRole() == pyatspi.ROLE_LINK:
-            contents += ">"
-        return contents
-
     ####################################################################
     #                                                                  #
     # Utility Methods                                                  #
