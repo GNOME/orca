@@ -199,6 +199,7 @@ class LiveRegionManager:
         # parameters such as rate,expanded text and others must be considered.
         if len(self.msg_queue) > 0 \
                   and not speech.isSpeaking() \
+                  and orca_state.lastInputEvent \
                   and time.time() - orca_state.lastInputEvent.time > 1:
             # House cleaning on the message queue.  
             # First we will purge the queue of old messages
