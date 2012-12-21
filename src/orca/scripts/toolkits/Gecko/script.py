@@ -381,13 +381,6 @@ class Script(default.Script):
         self.inputEventHandlers.update(\
             self.structuralNavigation.inputEventHandlers)
 
-        # Debug only.
-        #
-        self.inputEventHandlers["dumpContentsHandler"] = \
-            input_event.InputEventHandler(
-                Script.dumpContents,
-                "Dumps document content to stdout.")
-
         self.inputEventHandlers["goNextCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.goNextCharacter,
@@ -2620,36 +2613,6 @@ class Script(default.Script):
             contents += ">"
         return contents
 
-    def dumpContents(self, inputEvent, contents=None):
-        """Dumps the document frame content to stdout.
-
-        Arguments:
-        -inputEvent: the input event that caused this to be called
-        -contents: an ordered list of [obj, startOffset, endOffset] tuples
-        """
-        if not contents:
-            contents = self.getDocumentContents()
-        string = ""
-        extents = None
-        for content in contents:
-            [obj, startOffset, endOffset] = content
-            if obj:
-                extents = self.getBoundary(
-                    self.getExtents(obj, startOffset, endOffset),
-                    extents)
-                text = self.utilities.queryNonEmptyText(obj)
-                if text:
-                    string += "[%s] text='%s' " % (obj.getRole(),
-                                                   text.getText(startOffset,
-                                                                endOffset))
-                else:
-                    string += "[%s] name='%s' " % (obj.getRole(), obj.name)
-            else:
-                string += "\nNEWLINE\n"
-        print("===========================")
-        print(string)
-        self.drawOutline(extents[0], extents[1], extents[2], extents[3])
-
     ####################################################################
     #                                                                  #
     # Utility Methods                                                  #
@@ -3030,7 +2993,7 @@ class Script(default.Script):
         else:
             return False
 
-    def getChildIndex(self, obj, characterOffset):
+    def getChilIdndex(self, obj, characterOffset):
         """Given an object that implements accessible text, determine
         the index of the child that is represented by an
         EMBEDDED_OBJECT_CHARACTER at characterOffset in the object's
@@ -5708,12 +5671,6 @@ class Script(default.Script):
         self.setCaretPosition(previousObj, previousCharOffset)
         self.presentLine(previousObj, previousCharOffset)
 
-        # Debug...
-        #
-        #contents = self.getLineContentsAtOffset(previousObj,
-        #                                        previousCharOffset)
-        #self.dumpContents(inputEvent, contents)
-
         return True
 
     def goNextLine(self, inputEvent):
@@ -5731,11 +5688,6 @@ class Script(default.Script):
 
         self.setCaretPosition(nextObj, nextCharOffset)
         self.presentLine(nextObj, nextCharOffset)
-
-        # Debug...
-        #
-        #contents = self.getLineContentsAtOffset(nextObj, nextCharOffset)
-        #self.dumpContents(inputEvent, contents)
 
         return True
 
