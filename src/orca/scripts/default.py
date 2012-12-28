@@ -875,6 +875,19 @@ class Script(script.Script):
                 #
                 _("Cycles to the next speaking of punctuation level."))
 
+        self.inputEventHandlers["cycleSettingsProfileHandler"] = \
+            input_event.InputEventHandler(
+                Script.cycleSettingsProfile,
+                # Translators: Orca has a feature whereby users can set up
+                # different "profiles," which are collection of settings which
+                # apply to a given task, such as a "Spanish" profile which would
+                # use Spanish text-to-speech and Spanish braille and selected
+                # when reading Spanish content. This string to be translated
+                # refers to an Orca command which makes it possible for users
+                # to quickly cycle amongst their saved profiles without having
+                # to get into a GUI.
+                _("Cycles to the next settings profile."))
+
         self.inputEventHandlers["cycleCapitalizationStyleHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleCapitalizationStyle,
@@ -2771,6 +2784,39 @@ class Script(script.Script):
         _settingsManager.setSetting('verbalizePunctuationStyle', newLevel)
         self.presentMessage(full, brief)
         speech.updatePunctuationLevel()
+        return True
+
+    def cycleSettingsProfile(self, inputEvent=None):
+        """Cycle through the user's existing settings profiles."""
+
+        profiles = _settingsManager.availableProfiles()
+        if not (profiles and profiles[0]):
+            # Translators: This is an error message presented when the user
+            # attempts to cycle among his/her saved profiles, but no profiles
+            # can be found. A profile is a collection of settings which apply
+            # to a given task, such as a "Spanish" profile which would use
+            # Spanish text-to-speech and Spanish braille and selected when
+            # reading Spanish content.
+            #
+            self.presentMessage(_("No profiles found."))
+            return True
+
+        isMatch = lambda x: x[1] == _settingsManager.getProfile()
+        current = list(filter(isMatch, profiles))[0]
+        try:
+            name, profileID = profiles[profiles.index(current) + 1]
+        except IndexError:
+            name, profileID = profiles[0]
+
+        _settingsManager.setProfile(profileID)
+        # Translators: This is a detailed message which will be presented
+        # as the user cycles amongst his/her saved profiles. A "profile"
+        # is a collection of settings which apply to a given task, such
+        # as a "Spanish" profile which would use Spanish text-to-speech
+        # and Spanish braille and selected when reading Spanish content.
+        # The string representing the profile name is something created
+        # by the user.
+        self.presentMessage(_("Profile set to %s.") % name, name)
         return True
 
     def cycleCapitalizationStyle(self, inputEvent=None):

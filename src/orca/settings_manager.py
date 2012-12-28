@@ -354,6 +354,9 @@ class SettingsManager(object):
             profile = settings.profile
         self._backend._setProfileKey('startingProfile', profile)
 
+    def getProfile(self):
+        return self.profile
+
     def setProfile(self, profile='default'):
         """Set a specific profile as the active one.
         Also the settings from that profile will be loading
