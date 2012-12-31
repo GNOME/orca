@@ -90,23 +90,12 @@ class Script(script.Script):
 
         self.flatReviewContext  = None
         self.windowActivateTime = None
-        self.exitLearnModeKeyBinding = None
         self.targetCursorCell = None
 
         self.justEnteredFlatReviewMode = False
 
         self.digits = '0123456789'
         self.whitespace = ' \t\n\r\v\f'
-
-        # Used to determine whether the used double clicked on the
-        # "where am I" key.
-        #
-        self.lastWhereAmIEvent = None
-
-        # Used to determine whether the used double clicked on the
-        # "say all" key.
-        #
-        self.lastSayAllEvent = None
 
         # Unicode currency symbols (populated by the
         # getUnicodeCurrencySymbols() routine).
@@ -2495,7 +2484,6 @@ class Script(script.Script):
         except:
             clickCount = 1
         doubleClick = clickCount == 2
-        self.lastSayAllEvent = inputEvent
 
         if doubleClick:
             # Try to "say all" for the current dialog/window by flat
