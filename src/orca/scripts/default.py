@@ -90,7 +90,6 @@ class Script(script.Script):
 
         self.flatReviewContext  = None
         self.windowActivateTime = None
-        self.lastReviewCurrentEvent = None
         self.exitLearnModeKeyBinding = None
         self.targetCursorCell = None
 
@@ -2190,7 +2189,6 @@ class Script(script.Script):
         """Brailles and speaks the current flat review character."""
 
         self._reviewCurrentCharacter(inputEvent, 1)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
@@ -2200,7 +2198,6 @@ class Script(script.Script):
         """
 
         self._reviewCurrentCharacter(inputEvent, 2)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
@@ -2210,7 +2207,6 @@ class Script(script.Script):
         """
 
         self._reviewCurrentCharacter(inputEvent, 3)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
@@ -2338,7 +2334,6 @@ class Script(script.Script):
         """Brailles and speaks the current flat review line."""
 
         self._reviewCurrentLine(inputEvent, 1)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
@@ -2346,7 +2341,6 @@ class Script(script.Script):
         """Brailles and spells the current flat review line."""
 
         self._reviewCurrentLine(inputEvent, 2)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
@@ -2354,7 +2348,6 @@ class Script(script.Script):
         """Brailles and phonetically spells the current flat review line."""
 
         self._reviewCurrentLine(inputEvent, 3)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
@@ -2479,7 +2472,6 @@ class Script(script.Script):
         """Brailles and speaks the current item to the user."""
 
         self._reviewCurrentItem(inputEvent, targetCursorCell, 1)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
@@ -2487,7 +2479,6 @@ class Script(script.Script):
         """Brailles and spells the current item to the user."""
 
         self._reviewCurrentItem(inputEvent, targetCursorCell, 2)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
@@ -2495,7 +2486,6 @@ class Script(script.Script):
         """Brailles and phonetically spells the current item to the user."""
 
         self._reviewCurrentItem(inputEvent, targetCursorCell, 3)
-        self.lastReviewCurrentEvent = inputEvent
 
         return True
 
