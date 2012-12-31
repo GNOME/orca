@@ -275,17 +275,6 @@ class Script(script.Script):
                 #
                 _("Searches for the previous instance of a string."))
 
-        self.inputEventHandlers["showZonesHandler"] = \
-            input_event.InputEventHandler(
-                Script.showZones,
-                # Translators: this is a debug message that Orca users
-                # will not normally see. It describes a debug routine that
-                # paints rectangles around the interesting (e.g., text)
-                # zones in the active window for the application that
-                # currently has focus.
-                #
-                _("Paints and prints the visible zones in the active window."))
-
         self.inputEventHandlers["toggleFlatReviewModeHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleFlatReviewMode,
@@ -653,17 +642,6 @@ class Script(script.Script):
                 _("Reads the attributes associated with the current text " \
                   "character."))
 
-        self.inputEventHandlers["reportScriptInfoHandler"] = \
-            input_event.InputEventHandler(
-                Script.reportScriptInfo,
-                # Translators: this is a debug message that Orca users
-                # will not normally see. It describes a debug routine
-                # that outputs useful information on the current script
-                #  via speech and braille. This information will be
-                # helpful to script writers.
-                #
-                _("Reports information on current script."))
-
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
@@ -921,17 +899,6 @@ class Script(script.Script):
                 #
                 _("Cycles to the next key echo level."))
 
-        self.inputEventHandlers["listAppsHandler"] = \
-            input_event.InputEventHandler(
-                Script.printAppsHandler,
-                # Translators: this is a debug message that Orca users
-                # will not normally see. It describes a debug routine
-                # that prints a list of all known applications currently
-                # running on the desktop, to stdout.
-                #
-                _("Prints a debug listing of all known applications to the " \
-                "console where Orca is running."))
-
         self.inputEventHandlers["cycleDebugLevelHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleDebugLevel,
@@ -941,32 +908,6 @@ class Script(script.Script):
                 # information that Orca generates at run time.
                 #
                 _("Cycles the debug level at run time."))
-
-        self.inputEventHandlers["printAncestryHandler"] = \
-            input_event.InputEventHandler(
-                Script.printAncestryHandler,
-                # Translators: this is a debug message that Orca users
-                # will not normally see. It describes a debug routine
-                # that will take the component in the currently running
-                # application that has focus, and print debug information
-                # to the console giving its component ancestry (i.e. all
-                # the components that are its descendants in the component
-                # tree).
-                #
-                _("Prints debug information about the ancestry of the object " \
-                "with focus."))
-
-        self.inputEventHandlers["printHierarchyHandler"] = \
-            input_event.InputEventHandler(
-                Script.printHierarchyHandler,
-                # Translators: this is a debug message that Orca users
-                # will not normally see. It describes a debug routine
-                # that will take the currently running application, and
-                # print debug information to the console giving its
-                # component hierarchy (i.e. all the components and all
-                # their descendants in the component tree).
-                #
-                _("Prints debug information about the application with focus."))
 
         self.inputEventHandlers["bookmarkCurrentWhereAmI"] = \
             input_event.InputEventHandler(
@@ -2081,13 +2022,6 @@ class Script(script.Script):
 
         return True
 
-    def reportScriptInfo(self, inputEvent=None):
-        """Output useful information on the current script via speech
-        and braille.  This information will be helpful to script writers.
-        """
-
-        return self.utilities.scriptInfo()
-
     def leftClickReviewItem(self, inputEvent=None):
         """Performs a left mouse button click on the current item."""
 
@@ -2564,22 +2498,6 @@ class Script(script.Script):
         self.lastReviewCurrentEvent = inputEvent
 
         return True
-
-    def showZones(self, inputEvent):
-        """Debug routine to paint rectangles around the discrete
-        interesting (e.g., text)  zones in the active window for
-        this application.
-        """
-
-        flatReviewContext = self.getFlatReviewContext()
-        lines = flatReviewContext.lines
-        for line in lines:
-            lineString = ""
-            for zone in line.zones:
-                lineString += " '%s' [%s]" % \
-                          (zone.string, zone.accessible.getRoleName())
-            debug.println(debug.LEVEL_OFF, lineString)
-        self.flatReviewContext = None
 
     def sayAll(self, inputEvent):
         try:
@@ -3170,22 +3088,6 @@ class Script(script.Script):
         """Prints a list of all applications to stdout."""
 
         self.utilities.printApps()
-        return True
-
-    def printAncestryHandler(self, inputEvent=None):
-        """Prints the ancestry for the current locusOfFocus"""
-
-        self.utilities.printAncestry(orca_state.locusOfFocus)
-        return True
-
-    def printHierarchyHandler(self, inputEvent=None):
-        """Prints the application for the current locusOfFocus"""
-
-        if orca_state.locusOfFocus:
-            self.utilities.printHierarchy(
-                orca_state.locusOfFocus.getApplication(),
-                orca_state.locusOfFocus)
-
         return True
 
     def cycleDebugLevel(self, inputEvent=None):

@@ -112,8 +112,6 @@ class Script(default.Script):
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
 
-        # self.printAncestry(event.source)
-
         rolesList = [pyatspi.ROLE_PUSH_BUTTON, \
                     pyatspi.ROLE_FILLER, \
                     pyatspi.ROLE_FILLER, \

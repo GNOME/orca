@@ -2288,26 +2288,6 @@ class Utilities:
             self._detectCycle(referent, visitedObjs, " " + indent)
         visitedObjs.remove(obj)
 
-    def printAncestry(self, child):
-        """Prints a hierarchical view of a child's ancestry."""
-
-        if not child:
-            return
-
-        ancestorList = [child]
-        parent = child.parent
-        while parent and (parent.parent != parent):
-            ancestorList.insert(0, parent)
-            parent = parent.parent
-
-        indent = ""
-        for ancestor in ancestorList:
-            line = indent + "+- " + \
-                debug.getAccessibleDetails(debug.LEVEL_OFF, ancestor)
-            debug.println(debug.LEVEL_OFF, line)
-            print(line)
-            indent += "  "
-
     def printApps(self):
         """Prints a list of all applications to stdout."""
 
@@ -2330,61 +2310,6 @@ class Utilities:
                                   "      WARNING: child's parent is not app!!!")
 
         return True
-
-    def printHierarchy(self, root, ooi, indent="",
-                       onlyShowing=True, omitManaged=True):
-        """Prints the accessible hierarchy of all children
-
-        Arguments:
-        -indent:      Indentation string
-        -root:        Accessible where to start
-        -ooi:         Accessible object of interest
-        -onlyShowing: If True, only show children painted on the screen
-        -omitManaged: If True, omit children that are managed descendants
-        """
-
-        if not root:
-            return
-
-        if root == ooi:
-            line = indent + "(*) " + debug.getAccessibleDetails(
-                debug.LEVEL_OFF, root)
-        else:
-            line = indent + "+- " + debug.getAccessibleDetails(
-                debug.LEVEL_OFF, root)
-
-        debug.println(debug.LEVEL_OFF, line)
-        print(line)
-
-        rootManagesDescendants = root.getState().contains(
-            pyatspi.STATE_MANAGES_DESCENDANTS)
-
-        for child in root:
-            if child == root:
-                line = indent + "  " + "WARNING CHILD == PARENT!!!"
-                debug.println(debug.LEVEL_OFF, line)
-                print(line)
-            elif not child:
-                line = indent + "  " + "WARNING Child IS NONE!!!"
-                debug.println(debug.LEVEL_OFF, line)
-                print(line)
-            elif self.validParent(child) != root:
-                line = indent + "  " + "WARNING CHILD.PARENT != PARENT!!!"
-                debug.println(debug.LEVEL_OFF, line)
-                print(line)
-            else:
-                paint = (not onlyShowing) or (onlyShowing and \
-                         child.getState().contains(pyatspi.STATE_SHOWING))
-                paint = paint \
-                        and ((not omitManaged) \
-                             or (omitManaged and not rootManagesDescendants))
-
-                if paint:
-                    self.printHierarchy(child,
-                                        ooi,
-                                        indent + "  ",
-                                        onlyShowing,
-                                        omitManaged)
 
     def scriptInfo(self):
         """Output useful information on the current script via speech

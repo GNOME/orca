@@ -236,8 +236,6 @@ class Script(default.Script):
         if self.flatReviewContext:
             self.toggleFlatReviewMode()
 
-        # self.printAncestry(event.source)
-
         # 1) Mail view: current message pane: individual lines of text.
         #
         # When the focus is in the pane containing the lines of an

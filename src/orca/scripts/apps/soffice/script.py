@@ -1391,8 +1391,6 @@ class Script(default.Script):
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
 
-        # self.printAncestry(event.source)
-
         # Check to see if this is this is for the find command. See
         # comment #18 of bug #354463.
         #
@@ -1683,8 +1681,6 @@ class Script(default.Script):
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
 
-        # self.printAncestry(event.source)
-
         # Check to see if the Setup dialog window has just been activated.
         # If it has, then find the panel within it that has no name and
         # speak all the labels within that panel.
@@ -1732,8 +1728,6 @@ class Script(default.Script):
 
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
-
-        # self.printAncestry(event.source)
 
         # Check to see if if we've had a property-change event for the
         # accessible name for the option pane in the spell check dialog.
@@ -2096,8 +2090,6 @@ class Script(default.Script):
 
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
-
-        # self.printAncestry(event.source)
 
         # If this "object:selection-changed" is for the spread sheet Name
         # Box, then check to see if the current locus of focus is a spread

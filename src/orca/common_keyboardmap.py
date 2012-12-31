@@ -41,8 +41,6 @@ ORCA_CTRL_ALT_MODIFIER_MASK = settings.ORCA_CTRL_ALT_MODIFIER_MASK
 SHIFT_ALT_MODIFIER_MASK = settings.SHIFT_ALT_MODIFIER_MASK
 
 keymap = (
-    ("Num_Lock", defaultModifierMask, ORCA_MODIFIER_MASK,
-    "showZonesHandler"),
 
     ("F11", defaultModifierMask, ORCA_MODIFIER_MASK,
     "toggleTableCellReadModeHandler"),
@@ -76,18 +74,6 @@ keymap = (
 
     ("t", defaultModifierMask, ORCA_MODIFIER_MASK,
     "presentDateHandler", 2),
-
-    ("End", defaultModifierMask, ORCA_CTRL_ALT_MODIFIER_MASK,
-    "listAppsHandler"),
-    ("Home", defaultModifierMask, ORCA_CTRL_ALT_MODIFIER_MASK,
-    "reportScriptInfoHandler"),
-
-
-    ("Page_Up", defaultModifierMask, ORCA_CTRL_ALT_MODIFIER_MASK,
-    "printAncestryHandler"),
-
-    ("Page_Down", defaultModifierMask, ORCA_CTRL_ALT_MODIFIER_MASK,
-    "printHierarchyHandler"),
 
     #####################################################################
     #                                                                   #

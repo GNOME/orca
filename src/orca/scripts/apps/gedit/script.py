@@ -339,8 +339,6 @@ class Script(default.Script):
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
 
-        # self.printAncestry(event.source)
-
         # 1) Text area (for caching handle for spell checking purposes).
         #
         # This works in conjunction with code in section 2). Check to see if
@@ -438,8 +436,6 @@ class Script(default.Script):
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
 
-        # self.printAncestry(event.source)
-
         # 1) check spelling dialog.
         #
         # Check to see if if we've had a property-change event for the
@@ -536,8 +532,6 @@ class Script(default.Script):
 
         details = debug.getAccessibleDetails(self.debugLevel, event.source)
         debug.printObjectEvent(self.debugLevel, event, details)
-
-        # self.printAncestry(event.source)
 
         # If we've received a text caret moved event and the current locus
         # of focus is on the Find button on the Find dialog or the combo
