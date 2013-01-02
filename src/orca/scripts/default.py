@@ -33,6 +33,8 @@ __license__   = "LGPL"
 import locale
 import time
 
+from gi.repository import Gtk, Gdk
+
 import pyatspi
 import orca.braille as braille
 import orca.debug as debug
@@ -125,6 +127,11 @@ class Script(script.Script):
         # the pointer elsewhere.
         #
         self.oldMouseCoordinates = [0, 0]
+
+        # Used to copy/append the current flat review contents to the
+        # clipboard.
+        #
+        self.currentReviewContents = ""
 
     def setupInputEventHandlers(self):
         """Defines InputEventHandler fields for this script that can be
@@ -593,7 +600,6 @@ class Script(script.Script):
                 #
                 _("Speaks unicode value of the current flat review character."))
 
-
         self.inputEventHandlers["reviewNextCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewNextCharacter,
@@ -609,6 +615,38 @@ class Script(script.Script):
                 # wrap across lines if necessary).
                 #
                 _("Moves flat review to the next character."))
+
+        self.inputEventHandlers["flatReviewCopyHandler"] = \
+            input_event.InputEventHandler(
+                Script.flatReviewCopy,
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  This command lets the user
+                # copy the contents currently being reviewed to the
+                # clipboard.
+                #
+                _("Copies the contents under flat review to the clipboard."))
+
+        self.inputEventHandlers["flatReviewAppendHandler"] = \
+            input_event.InputEventHandler(
+                Script.flatReviewAppend,
+                # Translators: the 'flat review' feature of Orca
+                # allows the blind user to explore the text in a
+                # window in a 2D fashion.  That is, Orca treats all
+                # the text from all objects in a window (e.g.,
+                # buttons, labels, etc.) as a sequence of words in a
+                # sequence of lines.  The flat review feature allows
+                # the user to explore this text by the {previous,next}
+                # {line,word,character}.  This command lets the user
+                # append the contents currently being reviewed to
+                # the existing contents of the clipboard.
+                #
+                _("Appends the contents under flat review to the clipboard."))
 
         self.inputEventHandlers["toggleTableCellReadModeHandler"] = \
             input_event.InputEventHandler(
@@ -1863,9 +1901,9 @@ class Script(script.Script):
             self.utilities.adjustTextSelection(obj, caretOffset)
             texti = obj.queryText()
             startOffset, endOffset = texti.getSelection(0)
-            from gi.repository import Gtk
-            clipboard = Gtk.clipboard_get()
-            clipboard.set_text(texti.getText(startOffset, endOffset))
+            string = texti.getText(startOffset, endOffset)
+            clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+            clipboard.set_text(string, len(string))
 
         return True
 
@@ -2124,6 +2162,7 @@ class Script(script.Script):
                     speech.speak(wordString)
 
         self.updateBrailleReview(targetCursorCell)
+        self.currentReviewContents = wordString
 
         return True
 
@@ -2244,6 +2283,7 @@ class Script(script.Script):
                     speech.speakCharacter(charString)
 
         self.updateBrailleReview()
+        self.currentReviewContents = charString
 
         return True
 
@@ -2383,6 +2423,7 @@ class Script(script.Script):
                 speech.speak(lineString)
 
         self.updateBrailleReview()
+        self.currentReviewContents = lineString
 
         return True
 
@@ -2475,6 +2516,82 @@ class Script(script.Script):
         """Brailles and phonetically spells the current item to the user."""
 
         self._reviewCurrentItem(inputEvent, targetCursorCell, 3)
+
+        return True
+
+    def flatReviewCopy(self, inputEvent):
+        """Copies the contents of the item under flat review to and places
+        them in the clipboard."""
+
+        if self.flatReviewContext:
+            clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+            clipboard.set_text(
+                self.currentReviewContents, len(self.currentReviewContents))
+            # Translators: the 'flat review' feature of Orca
+            # allows the blind user to explore the text in a
+            # window in a 2D fashion.  That is, Orca treats all
+            # the text from all objects in a window (e.g.,
+            # buttons, labels, etc.) as a sequence of words in a
+            # sequence of lines.  This message is spoken to let
+            # the user to know that they have successfully copied
+            # the contents under flat review to the clipboard.
+            #
+            self.presentMessage(_("Copied contents to clipboard."))
+        else:
+            # Translators: the 'flat review' feature of Orca
+            # allows the blind user to explore the text in a
+            # window in a 2D fashion.  That is, Orca treats all
+            # the text from all objects in a window (e.g.,
+            # buttons, labels, etc.) as a sequence of words in a
+            # sequence of lines. If this error message is spoken,
+            # it means that the user attempted to use a flat review
+            # command when not using flat review.
+            #
+            self.presentMessage(_("Not using flat review."))
+
+        return True
+
+    def _appendToClipboard(self, clipboard, text, newText):
+        """Appends newText to text and places the results in the 
+        clipboard."""
+
+        text = text.rstrip("\n")
+        text = "%s\n%s" % (text, newText)
+        if clipboard:
+            clipboard.set_text(text, len(text))
+
+        return True
+
+    def flatReviewAppend(self, inputEvent):
+        """Appends the contents of the item under flat review to
+        the clipboard."""
+
+        if self.flatReviewContext:
+            clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
+            clipboard.request_text(
+                self._appendToClipboard, self.currentReviewContents)
+            # Translators: the 'flat review' feature of Orca
+            # allows the blind user to explore the text in a
+            # window in a 2D fashion.  That is, Orca treats all
+            # the text from all objects in a window (e.g.,
+            # buttons, labels, etc.) as a sequence of words in a
+            # sequence of lines.  This message is spoken to let
+            # the user to know that they have successfully appended
+            # the contents under flat review onto the existing contents
+            # of the clipboard.
+            #
+            self.presentMessage(_("Appended contents to clipboard."))
+        else:
+            # Translators: the 'flat review' feature of Orca
+            # allows the blind user to explore the text in a
+            # window in a 2D fashion.  That is, Orca treats all
+            # the text from all objects in a window (e.g.,
+            # buttons, labels, etc.) as a sequence of words in a
+            # sequence of lines. If this error message is spoken,
+            # it means that the user attempted to use a flat review
+            # command when not using flat review.
+            #
+            self.presentMessage(_("Not using flat review."))
 
         return True
 

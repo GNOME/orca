@@ -198,4 +198,10 @@ keymap = (
     ("", defaultModifierMask, NO_MODIFIER_MASK,
     "enableNotificationMessageListModeHandler"),
 
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "flatReviewCopyHandler"),
+
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
+    "flatReviewAppendHandler"),
+
 )
