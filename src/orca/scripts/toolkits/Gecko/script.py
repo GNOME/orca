@@ -1997,29 +1997,6 @@ class Script(default.Script):
         if newLocusOfFocus and self.utilities.inFindToolbar(newLocusOfFocus):
             self.madeFindAnnouncement = False
 
-        # We'll ignore focus changes when the document frame is busy.
-        # This will keep Orca from chatting too much while a page is
-        # loading. But we should check to be sure the document frame
-        # is really busy first and also that the event is not coming
-        # from an object within a dialog box or alert.
-        #
-        if self.inDocumentContent(event.source):
-            documentFrame = self.utilities.documentFrame()
-        else:
-            documentFrame = None
-        if documentFrame:
-            self._loadingDocumentContent = \
-                documentFrame.getState().contains(pyatspi.STATE_BUSY)
-
-            if self._loadingDocumentContent and event and event.source:
-                dialogRoles = [pyatspi.ROLE_DIALOG, pyatspi.ROLE_ALERT]
-                inDialog = event.source.getRole() in dialogRoles \
-                    or self.utilities.ancestorWithRole(
-                    event.source, dialogRoles, [pyatspi.ROLE_DOCUMENT_FRAME])
-
-                if not inDialog:
-                    return
-
         default.Script.locusOfFocusChanged(self,
                                            event,
                                            oldLocusOfFocus,
