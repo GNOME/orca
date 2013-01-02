@@ -1800,6 +1800,12 @@ class Context:
                     or (len(zone.words) \
                         and zone.words[self.wordIndex].string.isspace())):
 
+                hasMoreText = False
+                if self.lineIndex > 0 and isinstance(zone, TextZone):
+                    prevZone = self.lines[self.lineIndex - 1].zones[-1]
+                    if prevZone.accessible == zone.accessible:
+                        hasMoreText = True
+
                 # If we're on whitespace in the same zone, then let's
                 # try to move on.  If not, we've definitely moved
                 # across accessibles.  If that's the case, let's try
@@ -1808,7 +1814,7 @@ class Context:
                 # with no words and we should do our best to announce
                 # this to the user (e.g., "whitespace" or "blank").
                 #
-                if zone.accessible == accessible:
+                if zone.accessible == accessible or hasMoreText:
                     moved = self.goPrevious(Context.WORD, wrap)
                 else:
                     wordIndex = self.wordIndex - 1
