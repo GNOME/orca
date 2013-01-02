@@ -2020,22 +2020,6 @@ class Script(default.Script):
                 if not inDialog:
                     return
 
-        # Don't bother speaking all the information about the HTML
-        # container - it's duplicated all over the place.  So, we
-        # just speak the role.
-        #
-        if newLocusOfFocus \
-           and newLocusOfFocus.getRole() == pyatspi.ROLE_HTML_CONTAINER:
-            # We always automatically go back to focus tracking mode when
-            # the focus changes.
-            #
-            if self.flatReviewContext:
-                self.toggleFlatReviewMode()
-            self.updateBraille(newLocusOfFocus)
-            speech.speak(
-                self.speechGenerator.getLocalizedRoleName(newLocusOfFocus))
-            return
-
         default.Script.locusOfFocusChanged(self,
                                            event,
                                            oldLocusOfFocus,
