@@ -145,7 +145,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                                                                  obj,
                                                                  **args)
         role = args.get('role', obj.getRole())
-        # We'll attempt to guess the label under some circumstances.
+        # We'll attempt to infer the label under some circumstances.
         #
         if not len(result) \
            and role in [pyatspi.ROLE_CHECK_BOX,
@@ -158,7 +158,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         pyatspi.ROLE_TEXT] \
            and self._script.inDocumentContent() \
            and not self._script.isAriaWidget(obj):
-            label = self._script.guessTheLabel(obj)
+            label = self._script.labelInference.infer(obj)
             if label:
                 result.append(label)
 

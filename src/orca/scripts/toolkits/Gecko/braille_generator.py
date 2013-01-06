@@ -178,7 +178,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                         pyatspi.ROLE_TEXT] \
            and self._script.inDocumentContent(obj) \
            and not self._script.isAriaWidget(obj):
-            label = self._script.guessTheLabel(obj)
+            label = self._script.labelInference.infer(obj)
             if label:
                 result.append(label)
 

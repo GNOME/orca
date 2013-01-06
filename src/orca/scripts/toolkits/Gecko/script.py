@@ -185,13 +185,6 @@ class Script(default.Script):
         self.currentLineContents = None
         self._nextLineContents = None
 
-        # guessTheLabel() is an expensive method. If we cache the guessed
-        # labels, we'll see a performance improvement when a form field
-        # is Tab/Shift+Tab'ed/Arrowed back to. In addition, we can check
-        # for non-label labels when looking at line content.
-        #
-        self._guessedLabels = {}
-
         # For really large objects, a call to getAttributes can take up to
         # two seconds! This is a Firefox bug. We'll try to improve things
         # by storing attributes.
@@ -1352,13 +1345,7 @@ class Script(default.Script):
         """
 
         self._destroyLineCache()
-
-        # If text is removed from something which is not editable, trash our
-        # saved guessed labels to be on the safe side.
-        #
         if not event.source.getState().contains(pyatspi.STATE_EDITABLE):
-            self._guessedLabels = {}
-
             if self.inMouseOverObject:
                 obj = self.lastMouseOverObject
                 while obj and (obj != obj.parent):
@@ -1377,13 +1364,6 @@ class Script(default.Script):
         """
         self._destroyLineCache()
 
-        # If text is inserted into something which is not editable, trash our
-        # saved guessed labels to be on the safe side.
-        #
-        if not event.source.getState().contains(pyatspi.STATE_EDITABLE):
-            self._guessedLabels = {}
-
-        # handle live region events
         if self.handleAsLiveRegion(event):
             self.liveMngr.handleEvent(event)
             return
@@ -1445,11 +1425,6 @@ class Script(default.Script):
         for addition events often associated with Javascipt insertion.  One such
         such example would be the programmatic insertion of a tooltip or alert
         dialog."""
-
-        # If children are being added or removed, trash our saved guessed
-        # labels to be on the safe side.
-        #
-        self._guessedLabels = {}
 
         # no need moving forward if we don't have our target.
         if event.any_data is None:
@@ -1738,10 +1713,6 @@ class Script(default.Script):
             if event.source \
                 and (event.source.getRole() == pyatspi.ROLE_DOCUMENT_FRAME):
 
-                # If content is changing, trash our saved guessed labels.
-                #
-                self._guessedLabels = {}
-
                 finishedLoading = False
                 if orca_state.locusOfFocus \
                     and (orca_state.locusOfFocus.getRole() \
@@ -1980,16 +1951,6 @@ class Script(default.Script):
             [obj, characterOffset] = \
                   self.findFirstCaretContext(newLocusOfFocus, caretOffset)
             self.setCaretContext(obj, characterOffset)
-
-        else:
-            # If the newLocusOfFocus is not in document content, trash
-            # our stored guessed labels. This will hopefully maximize
-            # performance and accuracy when navigating amongst form 
-            # fields while minimizing the cache size (Gecko creates and
-            # destroys accessibles so frequently that hashing is of no
-            # use).
-            #
-            self._guessedLabels = {}
 
         # If we've just landed in the Find toolbar, reset
         # self.madeFindAnnouncement.
@@ -3199,66 +3160,6 @@ class Script(default.Script):
 
         return lastChild
 
-    def getNextCellInfo(self, cell, direction):
-        """Given a cell from which to start and a direction in which to
-        search locates the next cell and returns it, along with its
-        text, extents (as a tuple), and whether or not the cell contents
-        consist of a form field.
-
-        Arguments
-        - cell: the table cell from which to start
-        - direction: a string which can be one of four options: 'left',
-                     'right', 'up', 'down'
-
-        Returns [nextCell, text, extents, isField]
-        """
-
-        newCell = None
-        text = ""
-        extents = (0, 0, 0, 0)
-        isField = False
-        parentTable = self.utilities.ancestorWithRole(
-            cell, [pyatspi.ROLE_TABLE], [pyatspi.ROLE_DOCUMENT_FRAME])
-        if not cell or cell.getRole() != pyatspi.ROLE_TABLE_CELL \
-           or not parentTable:
-            return [newCell, text, extents, isField]
-
-        [row, col] = self.getCellCoordinates(cell)
-        table = parentTable.queryTable()
-        rowspan = table.getRowExtentAt(row, col)
-        colspan = table.getColumnExtentAt(row, col)
-        nextCell = None
-        if direction == "left" and col > 0:
-            nextCell = (row, col - 1)
-        elif direction == "right" \
-             and (col + colspan <= table.nColumns - 1):
-            nextCell = (row, col + colspan)
-        elif direction == "up" and row > 0:
-            nextCell = (row - 1, col)
-        elif direction == "down" \
-             and (row + rowspan <= table.nRows - 1):
-            nextCell = (row + rowspan, col)
-        if nextCell:
-            newCell = table.getAccessibleAt(nextCell[0], nextCell[1])
-            objects = self.utilities.getObjectsFromEOCs(newCell, 0)
-            if len(objects):
-                extents = self.getExtents(objects[0][0], 
-                                          objects[0][1],
-                                          objects[0][2])
-            for obj in objects:
-                if obj[0].getRole() == pyatspi.ROLE_IMAGE:
-                    text += obj[0].name
-                elif not self.isFormField(obj[0]):
-                    text += obj[3]
-                else:
-                    isField = True
-                    text = ""
-                    exts = obj[0].queryComponent().getExtents(0)
-                    extents = [exts.x, exts.y, exts.width, exts.height]
-                    break
-
-        return [newCell, text, extents, isField]
-
     def getMeaningfulObjectsFromLine(self, line):
         """Attempts to strip a list of (obj, start, end) tuples into one
         that contains only meaningful objects."""
@@ -3277,24 +3178,26 @@ class Script(default.Script):
                and self.isLabellingContents(item[0], line):
                 continue
 
-            # Rather than do a brute force label guess, we'll focus on
+            # Rather than do a brute force label infer, we'll focus on
             # entries as they are the most common and their label is
             # likely on this line.  The functional label may be made up
             # of several objects, so we'll examine the strings of what
             # we've got and pop off the ones that match.
             #
             elif self.utilities.isEntry(item[0]):
-                labelGuess = self.guessLabelFromLine(item[0])
+                label = \
+                    self.labelInference.inferFromTextLeft(item[0]) \
+                    or self.labelInference.inferFromTextRight(item[0]) 
                 index = len(lineContents) - 1
-                while labelGuess and index >= 0:
+                while label and index >= 0:
                     prevItem = lineContents[index]
                     prevText = self.utilities.queryNonEmptyText(prevItem[0])
                     if prevText:
                         string = prevText.getText(prevItem[1], prevItem[2])
-                        if labelGuess.endswith(string):
+                        if label.endswith(string):
                             lineContents.pop()
-                            length = len(labelGuess) - len(string)
-                            labelGuess = labelGuess[0:length]
+                            length = len(label) - len(string)
+                            label = label[0:length]
                         else:
                             break
                     index -= 1
@@ -3351,453 +3254,6 @@ class Script(default.Script):
                     uvlinks += 1
 
         return [headings, forms, tables, vlinks, uvlinks, percentRead]
-
-    def guessLabelFromLine(self, obj):
-        """Attempts to guess what the label of an unlabeled form control
-        might be by looking at surrounding contents from the same line.
-
-        Arguments
-        - obj: the form field about which to take a guess
-
-        Returns the text which we think might be the label or None if we
-        give up.
-        """
-
-        # Based on Tom Brunet's comments on how Home Page Reader
-        # approached the task of guessing labels.  Please see:
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
-        #
-        #  1. Text/img that precedes control in same item.
-        #  2. Text/img that follows control in same item (nothing between
-        #     end of text and item)
-        #
-        # Reverse this order for radio buttons and check boxes
-        #
-        lineContents = self.currentLineContents
-        ourIndex = self.findObjectOnLine(obj, 0, lineContents)
-        if ourIndex < 0:
-            lineContents = self.getLineContentsAtOffset(obj, 0)
-            ourIndex = self.findObjectOnLine(obj, 0, lineContents)
-
-        thisObj = lineContents[ourIndex]
-        objExtents = self.getExtents(thisObj[0], thisObj[1], thisObj[2])
-
-        leftGuess = ""
-        extents = objExtents
-        for i in range (ourIndex - 1, -1, -1):
-            candidate, start, end, string = lineContents[i]
-            if self.isFormField(candidate):
-                break
-
-            prevExtents = self.getExtents(candidate, start, end)
-            if -1 <= extents[0] - (prevExtents[0] + prevExtents[2]) < 75:
-                # The candidate might be an image with alternative text.
-                #
-                string = string or candidate.name
-                leftGuess = string + leftGuess
-                extents = prevExtents
-
-        # Normally we prefer what's on the left given a choice.  Reasons
-        # to prefer what's on the right include looking at a radio button
-        # or a checkbox. [[[TODO - JD: Language direction should also be
-        # taken into account.]]]
-        #
-        preferRight = obj.getRole() in [pyatspi.ROLE_CHECK_BOX,
-                                        pyatspi.ROLE_RADIO_BUTTON]
-
-        # Sometimes we don't want the text on the right -- at least not
-        # until we are able to present labels on the right after the
-        # object we believe they are labeling, rather than before.
-        #
-        preventRight = obj.getRole() == pyatspi.ROLE_COMBO_BOX
-
-        rightGuess = ""
-        extents = objExtents
-        if not preventRight and (preferRight or not leftGuess):
-            for i in range (ourIndex + 1, len(lineContents)):
-                candidate, start, end, string = lineContents[i]
-                # If we're looking on the right and find text, and then
-                # find another nearby form field, the text we've found
-                # might be the label for that field rather than for this
-                # one. We'll assume that for now and bail under these
-                # conditions.
-                #
-                if self.isFormField(candidate):
-                    if not preferRight:
-                        rightGuess = ""
-                    break
-
-                nextExtents = self.getExtents(candidate, start, end)
-                if -1 <= nextExtents[0] - (extents[0] + extents[2]) < 75:
-                    # The candidate might be an image with alternative text.
-                    #
-                    string = string or candidate.name
-                    rightGuess += string
-                    extents = nextExtents
-
-        guess = rightGuess or leftGuess
-        return guess.strip()
-
-    def guessLabelFromOtherLines(self, obj):
-        """Attempts to guess what the label of an unlabeled form control
-        might be by looking at nearby contents from neighboring lines.
-
-        Arguments
-        - obj: the form field about which to take a guess
-
-        Returns the text which we think might be the label or None if we
-        give up.
-        """
-
-        # Based on Tom Brunet's comments on how Home Page Reader
-        # approached the task of guessing labels.  Please see:
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
-        #
-        guess = None
-        extents = obj.queryComponent().getExtents(0)
-        objExtents = \
-               [extents.x, extents.y, extents.width, extents.height]
-
-        index = self.findObjectOnLine(obj, 0, self.currentLineContents)
-        if index > 0 and self._previousLineContents:
-            prevLineContents = self._previousLineContents
-            prevObj = prevLineContents[0][0]
-            prevOffset = prevLineContents[0][1]
-        else:
-            [prevObj, prevOffset] = self.findPreviousLine(obj, 0, False)
-            prevLineContents = self.getLineContentsAtOffset(prevObj,
-                                                            prevOffset)
-
-        # The labels for combo boxes won't be found below the combo box
-        # because expanding the combo box will cover up the label. Labels
-        # for lists probably won't be below the list either.
-        #
-        if obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
-                             pyatspi.ROLE_MENU,
-                             pyatspi.ROLE_MENU_ITEM,
-                             pyatspi.ROLE_LIST,
-                             pyatspi.ROLE_LIST_ITEM]:
-            [nextObj, nextOffset] = [None, 0]
-            nextLineContents = []
-        else:
-            nextLineContents = self._nextLineContents
-            if index > 0 and nextLineContents:
-                nextObj = nextLineContents[0][0]
-                nextOffset = nextLineContents[0][1]
-            else:
-                [nextObj, nextOffset] = self.findNextLine(obj, 0, False)
-                nextLineContents = self.getLineContentsAtOffset(nextObj,
-                                                                nextOffset)
-        above = None
-        lastExtents = (0, 0, 0, 0)
-        for content in prevLineContents:
-            aboveExtents = self.getExtents(content[0], content[1], content[2])
-
-            # [[[TODO: Grayed out buttons don't pass the isFormField()
-            # test because they are neither focusable nor showing -- and
-            # thus something we don't want to navigate to via structural
-            # navigation. We may need to rethink our definition of
-            # isFormField().  In the meantime, let's not used grayed out
-            # buttons as labels. As an example, see the Search entry on
-            # live.gnome.org. We want to ignore menu items as well.]]]
-            #
-            aboveIsFormField = self.isFormField(content[0]) \
-                        or content[0].getRole() in [pyatspi.ROLE_PUSH_BUTTON,
-                                                    pyatspi.ROLE_MENU_ITEM,
-                                                    pyatspi.ROLE_LIST]
-
-            # If the horizontal starting point of the object is the
-            # same as the horizontal starting point of the text
-            # above it, the text above it is probably serving as the
-            # label. We'll allow for a 2 pixel difference.  If that
-            # fails, and the text above starts within 50 pixels to
-            # the left and ends somewhere above or beyond the current
-            # form field, we'll give it the benefit of the doubt.
-            # For an example of the latter case, see Bugzilla's Advanced
-            # search page, Bug Changes section.
-            #
-            if not above:
-                if (objExtents != aboveExtents) and not aboveIsFormField:
-                    xDiff = objExtents[0] - aboveExtents[0]
-                    guessThis = (0 <= abs(xDiff) <= 2)
-                    if not guessThis and (0 <= xDiff <= 50):
-                        guessThis = \
-                            (aboveExtents[0] + aboveExtents[2] > objExtents[0])
-                    if guessThis:
-                        above = content[0]
-                        guessAbove = content[3]
-            else:
-                # The "label" might be comprised of several objects (e.g.
-                # text with links).
-                #
-                lastEnd = lastExtents[0] + lastExtents[2]
-                if lastEnd - aboveExtents[0] < 10 and not aboveIsFormField:
-                    guessAbove += content[3]
-                else:
-                    break
-
-            lastExtents = aboveExtents
-
-        below = None
-        lastExtents = (0, 0, 0, 0)
-        for content in nextLineContents:
-            belowExtents = self.getExtents(content[0], content[1], content[2])
-
-            # [[[TODO: Grayed out buttons don't pass the isFormField()
-            # test because they are neither focusable nor showing -- and
-            # thus something we don't want to navigate to via structural
-            # navigation. We may need to rethink our definition of
-            # isFormField().  In the meantime, let's not used grayed out
-            # buttons as labels. As an example, see the Search entry on
-            # live.gnome.org. We want to ignore menu items as well.]]]
-            #
-            belowIsFormField = self.isFormField(content[0]) \
-                        or content[0].getRole() in [pyatspi.ROLE_PUSH_BUTTON,
-                                                    pyatspi.ROLE_MENU_ITEM,
-                                                    pyatspi.ROLE_LIST]
-
-            # If the horizontal starting point of the object is the
-            # same as the horizontal starting point of the text
-            # below it, the text below it is probably serving as the
-            # label. We'll allow for a 2 pixel difference.
-            #
-            if not below:
-                if (objExtents != belowExtents) and not belowIsFormField \
-                   and 0 <= abs(objExtents[0] - belowExtents[0]) <= 2:
-                    below = content[0]
-                    guessBelow = content[3]
-            else:
-                # The "label" might be comprised of several objects (e.g.
-                # text with links).
-                #
-                lastEnd = lastExtents[0] + lastExtents[2]
-                if lastEnd - belowExtents[0] < 10 and not belowIsFormField:
-                    guessBelow += content[3]
-                else:
-                    break
-
-            lastExtents = belowExtents
-
-        if above:
-            if not below:
-                guess = guessAbove
-            else:
-                # We'll guess the nearest text.
-                #
-                bottomOfAbove = aboveExtents[1] + aboveExtents[3]
-                topOfBelow = belowExtents[1]
-                bottomOfObj = objExtents[1] + objExtents[3]
-                topOfObject = objExtents[1]
-                aboveProximity = topOfObject - bottomOfAbove
-                belowProximity = topOfBelow - bottomOfObj
-                if aboveProximity <=  belowProximity \
-                   or belowProximity < 0:
-                    guess = guessAbove
-                else:
-                    guess = guessBelow
-        elif below:
-            guess = guessBelow
-
-        return guess
-
-    def guessLabelFromTable(self, obj):
-        """Attempts to guess what the label of an unlabeled form control
-        might be by looking at surrounding table cells.
-
-        Arguments
-        - obj: the form field about which to take a guess
-
-        Returns the text which we think might be the label or None if we
-        give up.
-        """
-
-        # Based on Tom Brunet's comments on how Home Page Reader
-        # approached the task of guessing labels.  Please see:
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
-        #
-        # "3. Text/img that precedes control in previous item/cell
-        #     not another control in that item)..."
-        #
-        #  4. Text/img in cell above without other controls in this
-        #     cell above."
-        #
-        # If that fails, we might as well look to the cell below. If the
-        # text is immediately below the entry and nothing else looks like
-        # a label, that text might be it. Given both text above and below
-        # the control, the most likely label is probably the text that is
-        # vertically nearest it. This theory will, of course, require
-        # testing "in the wild."
-        #
-        guess = None
-
-        # If we're not the sole occupant of a table cell, we're either
-        # not in a table at all or are in a more complex layout table
-        # than this approach can handle.
-        #
-        containingCell = self.utilities.ancestorWithRole(
-            obj, [pyatspi.ROLE_TABLE_CELL], [pyatspi.ROLE_DOCUMENT_FRAME])
-        if not containingCell or containingCell.childCount > 1:
-            return guess
-
-        extents = obj.queryComponent().getExtents(0)
-        objExtents = [extents.x, extents.y, extents.width, extents.height]
-
-        [cellLeft, leftText, leftExtents, leftIsField] = \
-                   self.getNextCellInfo(containingCell, "left")
-        [cellRight, rightText, rightExtents, rightIsField] = \
-                   self.getNextCellInfo(containingCell, "right")
-        [cellAbove, aboveText, aboveExtents, aboveIsField] = \
-                   self.getNextCellInfo(containingCell, "up")
-
-        # The labels for combo boxes won't be found below the combo box
-        # because expanding the combo box will cover up the label. Labels
-        # for lists probably won't be below the list either.
-        #
-        if obj.getRole() in [pyatspi.ROLE_COMBO_BOX,
-                             pyatspi.ROLE_MENU,
-                             pyatspi.ROLE_MENU_ITEM,
-                             pyatspi.ROLE_LIST,
-                             pyatspi.ROLE_LIST_ITEM]:
-            [cellBelow, belowText, belowExtents, belowIsField] = \
-                    [None, "", (0, 0, 0, 0), False]
-        else:
-            [cellBelow, belowText, belowExtents, belowIsField] = \
-                   self.getNextCellInfo(containingCell, "down")
-
-        if rightText:
-            # The object's horizontal position plus its width tells us
-            # where the text on the right can begin. For now, define
-            # "immediately after" as  within 50 pixels.
-            #
-            canStartAt = objExtents[0] + objExtents[2]
-            rightCloseEnough = rightExtents[0] - canStartAt <= 50
-
-        if leftText and not leftIsField:
-            guess = leftText
-        elif rightText and rightCloseEnough and not rightIsField:
-            guess = rightText
-        elif aboveText and not aboveIsField:
-            if not belowText or belowIsField:
-                guess = aboveText
-            else:
-                # We'll guess the nearest text.
-                #
-                bottomOfAbove = aboveExtents[1] + aboveExtents[3]
-                topOfBelow = belowExtents[1]
-                bottomOfObj = objExtents[1] + objExtents[3]
-                topOfObject = objExtents[1]
-                aboveProximity = topOfObject - bottomOfAbove
-                belowProximity = topOfBelow - bottomOfObj
-                if aboveProximity <=  belowProximity:
-                    guess = aboveText
-                else:
-                    guess = belowText
-        elif belowText and not belowIsField:
-            guess = belowText
-        elif aboveIsField:
-            # Given the lack of potential labels and the fact that
-            # there's a form field immediately above us, there's
-            # a reasonable chance that we're in a series of form
-            # fields arranged grid-style.  It's even more likely
-            # if the form fields above us are all of the same type
-            # and size (say, within 1 pixel).
-            #
-            nextCell = containingCell
-            while nextCell:
-                [nextCell, text, extents, isField] = \
-                        self.getNextCellInfo(nextCell, "up")
-                if nextCell:
-                    dWidth = abs(objExtents[2] - extents[2])
-                    dHeight = abs(objExtents[3] - extents[3])
-                    if (dWidth > 1 or dHeight > 1):
-                        if not isField:
-                            [row, col] = self.getCellCoordinates(nextCell)
-                            if row == 0:
-                                guess = text
-                        break
-
-        return guess
-
-    def guessTheLabel(self, obj, focusedOnly=True):
-        """Attempts to guess what the label of an unlabeled form control
-        might be.
-
-        Arguments
-        - obj: the form field about which to take a guess
-        - focusedOnly: If True, only take guesses about the form field
-          with focus.
-
-        Returns the text which we think might be the label or None if we
-        give up.
-        """
-
-        # The initial stab at this is based on Tom Brunet's comments
-        # on how Home Page Reader approached this task.  His comments
-        # can be found at the RFE for Mozilla to do this work for us:
-        # https://bugzilla.mozilla.org/show_bug.cgi?id=376481#c15
-        # N.B. If you see a comment in quotes, it's taken directly from
-        # Tom.
-        #
-        guess = None
-
-        # If we're not in the document frame, we don't want to be guessing.
-        # We also don't want to be guessing if the item doesn't have focus.
-        #
-        isFocused = obj.getState().contains(pyatspi.STATE_FOCUSED)
-        if not self.inDocumentContent() \
-           or (focusedOnly and not isFocused) \
-           or self.isAriaWidget(obj):
-            return guess
-
-        # Maybe we've already made a guess and saved it.
-        #
-        for field, label in list(self._guessedLabels.items()):
-            if self.utilities.isSameObject(field, obj):
-                return label
-
-        parent = obj.parent
-        text = self.utilities.queryNonEmptyText(parent)
-
-        # Because the guesswork is based upon spatial relations, if we're
-        # in a list, look from the perspective of the first list item rather
-        # than from the list as a whole.
-        #
-        if obj.getRole() == pyatspi.ROLE_LIST:
-            obj = obj[0]
-
-        guess = self.guessLabelFromLine(obj)
-        # print "guess from line: ", guess
-        if not guess:
-            # Maybe it's in a table cell.
-            #
-            guess = self.guessLabelFromTable(obj)
-            # print "guess from table: ", guess
-        if not guess:
-            # Maybe the text is above or below us, but not in a table
-            # cell -- or in a table cell which contains multiple items
-            # and/or line breaks.
-            #
-            if parent.getRole() != pyatspi.ROLE_TABLE_CELL \
-               or parent.childCount > 1 \
-               or (text and text.getText(0, -1).find("\n") >= 0):
-                guess = self.guessLabelFromOtherLines(obj)
-                #print "guess from other lines: ", guess
-        if not guess:
-            # We've pretty much run out of options.  From Tom's overview
-            # of the approach for all controls:
-            # "... 4. title attribute."
-            # The title attribute seems to be exposed as the name.
-            #
-            guess = obj.name
-            #print "Guessing the name: ", guess
-
-        if obj.parent.getRole() == pyatspi.ROLE_LIST:
-            obj = obj.parent
-
-        guess = guess.strip()
-        self._guessedLabels[obj] = guess
-
-        return guess.strip()
 
     ####################################################################
     #                                                                  #
@@ -4830,7 +4286,7 @@ class Script(default.Script):
                 continue
 
             # If the focused item is a checkbox or a radio button for which
-            # we had to guess the label, odds are that the guessed label is
+            # we had to infer the label, odds are that the inferred label is
             # immediately to the right. Under these circumstances, we'll
             # double speak the "label". It would be nice to avoid that.
             # [[[TODO - JD: This is the simple version. It does not handle
@@ -4841,12 +4297,12 @@ class Script(default.Script):
                and prevObj.getRole() in [pyatspi.ROLE_CHECK_BOX,
                                          pyatspi.ROLE_RADIO_BUTTON] \
                and prevObj.getState().contains(pyatspi.STATE_FOCUSED):
-                if self.guessTheLabel(prevObj) == string.strip():
+                if self.labelInference.infer(prevObj) == string.strip():
                     continue
 
             # The radio button's label gets added to the context in
             # default.locusOfFocusChanged() and not through the speech
-            # generator -- unless we wind up having to guess the label.
+            # generator -- unless we wind up having to infer the label.
             # Therefore, if we have a valid label for a radio button,
             # we need to add it here.
             #
