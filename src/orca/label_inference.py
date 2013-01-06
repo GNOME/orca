@@ -203,6 +203,8 @@ class LabelInference:
         else:
             skipTextExtents = [pyatspi.ROLE_ENTRY, pyatspi.ROLE_PASSWORD_TEXT]
             if not obj.getRole() in skipTextExtents:
+                if endOffset == -1:
+                    endOffset = text.characterCount
                 extents = text.getRangeExtents(startOffset, endOffset, 0)
 
         if not (extents[2] and extents[3]):
@@ -244,6 +246,20 @@ class LabelInference:
             obj = obj.parent
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
+
+        try:
+            text = obj.queryText()
+        except NotImplementedError:
+            pass
+        except AttributeError:
+            debug.println(debug.LEVEL_FINE, "INFER _getLineContents: no obj")
+        else:
+            if start == None:
+                start = max(0, text.caretOffset)
+            else:
+                start = max(0, start - 1)                
+            string, start, end = text.getTextAtOffset(start, boundary)
+
         rv = self._script.utilities.getObjectsFromEOCs(obj, start, boundary)
         self._lineCache[key] = rv
 
@@ -282,8 +298,11 @@ class LabelInference:
         except IndexError:
             index = len(contents)
 
-        onLeft = contents[max(0, index-1):index]
-        onLeft = [o for o in onLeft if o[0] and not self._isWidget(o[0])]
+        onLeft = contents[0:index]
+        for i in range(len(onLeft) - 1, -1, -1):
+            if self._isWidget(onLeft[i][0]):
+                onLeft = onLeft[(i+1):]
+
         if not onLeft:
             return None
 
@@ -295,7 +314,8 @@ class LabelInference:
         lExtents = self._getExtents(lObj, start, end)
         distance = extents[0] - (lExtents[0] + lExtents[2])
         if distance <= proximity:
-            return string
+            strings = [content[3] or content[0].name for content in onLeft]
+            return ''.join(strings)
 
         return None
 
@@ -332,7 +352,8 @@ class LabelInference:
         rExtents = self._getExtents(rObj, start, end)
         distance = rExtents[0] - (extents[0] + extents[2])
         if distance <= proximity or self._preferRight(obj):
-            return string
+            strings = [content[3] or content[0].name for content in onRight]
+            return ''.join(strings)
 
         return None
 
@@ -349,6 +370,9 @@ class LabelInference:
         """
 
         thisLine = self._getLineContents(obj)
+        if not thisLine and thisLine[0]:
+            return None
+
         prevObj, start, end, string = thisLine[0]
         if obj == prevObj:
             start, end = self._script.utilities.getHyperlinkRange(prevObj)
@@ -378,6 +402,9 @@ class LabelInference:
             distance = objY - (y + height)
             if distance > proximity:
                 return None
+            if prevObj.getRole() == pyatspi.ROLE_TABLE_CELL \
+               and not prevObj in [obj.parent, obj.parent.parent]:
+                return None
             if distance < 1:
                 continue
             if x + 150 < objX:
@@ -401,27 +428,29 @@ class LabelInference:
         """
 
         thisLine = self._getLineContents(obj)
-        nextObj, start, end, string = thisLine[-1]
-        if obj == nextObj:
-            start, end = self._script.utilities.getHyperlinkRange(nextObj)
-            nextObj = nextObj.parent
-
-        try:
-            text = nextObj.queryText()
-        except (AttributeError, NotImplementedError):
+        if not thisLine and thisLine[0]:
             return None
+
+        lastObj, start, end, string = thisLine[-1]
+        if obj == lastObj:
+            start, end = self._script.utilities.getHyperlinkRange(obj)
+            lastObj = lastObj.parent
 
         objX, objY, objWidth, objHeight = self._getExtents(obj)
         if not (objWidth and objHeight):
             return None
 
         boundary = pyatspi.TEXT_BOUNDARY_LINE_START
-        line = text.getTextAfterOffset(end - 1, boundary)
-        string = line[0].strip()
-        if string:
+        nextLine = self._script.utilities.getObjectsFromEOCs(
+            lastObj, end + 1, boundary)
+        if not (nextLine and nextLine[0]):
+            return None
+
+        nextObj, start, end, string = nextLine[0]
+        if string.strip():
             x, y, width, height = self._getExtents(nextObj, start, end)
             distance = y - (objY + objHeight)
-            if distance <= proximity:
+            if 0 <= distance <= proximity:
                 return string
 
         return None
@@ -472,17 +501,28 @@ class LabelInference:
             if label:
                 return label
 
+        cellAbove = cellBelow = labelAbove = labelBelow = None
         if row > 0:
-            candidate = table.getAccessibleAt(row - 1, col)
-            label = self._createLabelFromContents(candidate)
-            if label:
-                return label
-
+            cellAbove = table.getAccessibleAt(row - 1, col)
+            labelAbove = self._createLabelFromContents(cellAbove)
         if row < table.nRows and not self._preferTop(obj):
-            candidate = table.getAccessibleAt(row + 1, col)
-            label = self._createLabelFromContents(candidate)
-            if label:
-                return label
+            cellBelow = table.getAccessibleAt(row + 1, col)
+            labelBelow = self._createLabelFromContents(cellBelow)
+
+        if labelAbove and labelBelow:
+            objX, objY, objWidth, objHeight = self._getExtents(obj)
+            aboveX, aboveY, aboveWidth, aboveHeight = self._getExtents(cellAbove)
+            belowX, belowY, belowWidth, belowHeight = self._getExtents(cellBelow)
+            dAbove = objY - (aboveY + aboveHeight)
+            dBelow = belowY - (objY + objHeight)
+            if dAbove <= dBelow:
+                return labelAbove
+            return labelBelow
+
+        if labelAbove:
+            return labelAbove
+        if labelBelow:
+            return labelBelow
 
         # None of the cells immediately surrounding this cell seem to be serving
         # as a functional label. Therefore, see if this table looks like a grid
