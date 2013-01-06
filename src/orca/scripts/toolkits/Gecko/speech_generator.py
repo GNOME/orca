@@ -184,7 +184,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         #
         if role == pyatspi.ROLE_RADIO_BUTTON \
            and self._script.utilities.displayedLabel(obj):
-            pass
+            result.extend(
+                speech_generator.SpeechGenerator._generateName(
+                    self, obj, **args))
         else:
             result.extend(
                 speech_generator.SpeechGenerator._generateLabelAndName(
