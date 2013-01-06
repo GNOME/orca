@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright (C) 2011 Igalia, S.L.
+# Copyright (C) 2011-2013 Igalia, S.L.
 #
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
 #
@@ -24,7 +24,7 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (C) 2011 Igalia, S.L."
+__copyright__ = "Copyright (C) 2011-2013 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -68,7 +68,7 @@ class LabelInference:
             result = self.inferFromTextLeft(obj)
             debug.println(debug.LEVEL_FINE, "INFER - Text Left: %s" % result)
         if not result or self._preferRight(obj):
-            result = self.inferFromTextRight(obj)
+            result = self.inferFromTextRight(obj) or result
             debug.println(debug.LEVEL_FINE, "INFER - Text Right: %s" % result)
         if not result:
             result = self.inferFromTable(obj)
@@ -110,17 +110,33 @@ class LabelInference:
         onRightRoles = [pyatspi.ROLE_CHECK_BOX, pyatspi.ROLE_RADIO_BUTTON]
         return obj.getRole() in onRightRoles
 
+    def _preventRight(self, obj):
+        """Returns True if we should not permit inference based on text to
+        the right for the object obj."""
+
+        roles = [pyatspi.ROLE_COMBO_BOX,
+                 pyatspi.ROLE_LIST,
+                 pyatspi.ROLE_LIST_BOX]
+
+        return obj.getRole() in roles
+
     def _preferTop(self, obj):
         """Returns True if we should prefer text above, rather than below for
         the object obj."""
 
-        roles = [pyatspi.ROLE_COMBO_BOX, pyatspi.ROLE_LIST]
+        roles = [pyatspi.ROLE_COMBO_BOX,
+                 pyatspi.ROLE_LIST,
+                 pyatspi.ROLE_LIST_BOX]
 
-        # Put new-to-pyatspi roles here.
-        try:
-            roles.append(pyatspi.ROLE_LIST_BOX)
-        except:
-            pass
+        return obj.getRole() in roles
+
+    def _preventBelow(self, obj):
+        """Returns True if we should not permit inference based on text below
+        the object obj."""
+
+        roles = [pyatspi.ROLE_COMBO_BOX,
+                 pyatspi.ROLE_LIST,
+                 pyatspi.ROLE_LIST_BOX]
 
         return obj.getRole() in roles
 
@@ -332,6 +348,9 @@ class LabelInference:
         Returns the text which we think is the label, or None.
         """
 
+        if self._preventRight(obj):
+            return None
+
         extents = self._getExtents(obj)
         contents = self._getLineContents(obj)
         content = [o for o in contents if o[0] == obj]
@@ -431,6 +450,9 @@ class LabelInference:
         Returns the text which we think is the label, or None.
         """
 
+        if self._preventBelow(obj):
+            return None
+
         thisLine = self._getLineContents(obj)
         if not thisLine and thisLine[0]:
             return None
@@ -499,7 +521,7 @@ class LabelInference:
             if label:
                 return label
 
-        if col < table.nColumns:
+        if col < table.nColumns and not self._preventRight(obj):
             candidate = table.getAccessibleAt(row, col + 1)
             label = self._createLabelFromContents(candidate)
             if label:
@@ -509,7 +531,10 @@ class LabelInference:
         if row > 0:
             cellAbove = table.getAccessibleAt(row - 1, col)
             labelAbove = self._createLabelFromContents(cellAbove)
-        if row < table.nRows and not self._preferTop(obj):
+            if labelAbove and self._preferTop(obj):
+                return labelAbove
+
+        if row < table.nRows and not self._preventBelow(obj):
             cellBelow = table.getAccessibleAt(row + 1, col)
             labelBelow = self._createLabelFromContents(cellBelow)
 
