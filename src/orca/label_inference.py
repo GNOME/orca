@@ -360,9 +360,12 @@ class LabelInference:
             index = len(contents)
 
         onRight = contents[min(len(contents), index+1):]
-        for item in onRight:
+        for i, item in enumerate(onRight):
             if self._isWidget(item[0]):
-                return None
+                if not self._preferRight(obj):
+                    return None
+                onRight = onRight[0:i]
+                break
 
         if not (onRight and onRight[0]):
             return None
