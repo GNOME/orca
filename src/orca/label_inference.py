@@ -302,8 +302,9 @@ class LabelInference:
         for i in range(len(onLeft) - 1, -1, -1):
             if self._isWidget(onLeft[i][0]):
                 onLeft = onLeft[(i+1):]
+                break
 
-        if not onLeft:
+        if not (onLeft and onLeft[0]):
             return None
 
         lObj, start, end, string = onLeft[-1]
@@ -340,8 +341,11 @@ class LabelInference:
             index = len(contents)
 
         onRight = contents[min(len(contents), index+1):]
-        onRight = [o for o in onRight if o[0] and not self._isWidget(o[0])]
-        if not onRight:
+        for item in onRight:
+            if self._isWidget(item[0]):
+                return None
+
+        if not (onRight and onRight[0]):
             return None
 
         rObj, start, end, string = onRight[0]
@@ -405,7 +409,7 @@ class LabelInference:
             if prevObj.getRole() == pyatspi.ROLE_TABLE_CELL \
                and not prevObj in [obj.parent, obj.parent.parent]:
                 return None
-            if distance < 1:
+            if distance < 0:
                 continue
             if x + 150 < objX:
                 continue
