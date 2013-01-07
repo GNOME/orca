@@ -58,10 +58,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generateRoleName(self, obj, **args):
         result = []
         role = args.get('role', obj.getRole())
-        if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON] \
+        if role == pyatspi.ROLE_TOGGLE_BUTTON \
            and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
-            # We don't speak roles for the objects in the toolbar.
-            #
             pass
         else:
             # Treat a paragraph which is serving as a text entry in a dialog
@@ -203,13 +201,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generateToggleState(self, obj, **args):
-        """Treat push buttons (which act like toggle buttons) and toggle
-        buttons in the toolbar specially.  This is so we can have more
-        natural sounding speech such as "bold on", "bold off", etc."""
+        """Treat toggle buttons in the toolbar specially. This is so we can
+        have more natural sounding speech such as "bold on", "bold off", etc."""
         acss = self.voice(speech_generator.SYSTEM)
         result = []
         role = args.get('role', obj.getRole())
-        if role in [pyatspi.ROLE_PUSH_BUTTON, pyatspi.ROLE_TOGGLE_BUTTON] \
+        if role == pyatspi.ROLE_TOGGLE_BUTTON \
            and obj.parent.getRole() == pyatspi.ROLE_TOOL_BAR:
             if obj.getState().contains(pyatspi.STATE_CHECKED):
                 # Translators: this represents the state of a check box
