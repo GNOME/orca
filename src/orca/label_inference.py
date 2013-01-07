@@ -273,8 +273,10 @@ class LabelInference:
             if start == None:
                 start = max(0, text.caretOffset)
             else:
-                start = max(0, start - 1)                
+                start = max(0, start - 1)
             string, start, end = text.getTextAtOffset(start, boundary)
+            if string.endswith('\n'):
+                start = end
 
         rv = self._script.utilities.getObjectsFromEOCs(obj, start, boundary)
         self._lineCache[key] = rv
@@ -330,7 +332,7 @@ class LabelInference:
 
         lExtents = self._getExtents(lObj, start, end)
         distance = extents[0] - (lExtents[0] + lExtents[2])
-        if distance <= proximity:
+        if 0 <= distance <= proximity:
             strings = [content[3] or content[0].name for content in onLeft]
             return ''.join(strings)
 
