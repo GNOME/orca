@@ -94,7 +94,7 @@ class ScriptManager:
             appAndNameExist = app != None and app.name != ''
         except (LookupError, RuntimeError):
             appAndNameExist = False
-            debug.println(debug.LEVEL_SEVERE,
+            debug.println(debug.LEVEL_FINEST,
                           "getModuleName: %s no longer exists" % app)
 
         if not appAndNameExist:
@@ -127,7 +127,7 @@ class ScriptManager:
             try:
                 attributes = obj.getAttributes()
             except (LookupError, RuntimeError):
-                debug.println(debug.LEVEL_SEVERE,
+                debug.println(debug.LEVEL_FINEST,
                               "_toolkitForObject: %s no longer exists" % obj)
             else:
                 attrs = dict([attr.split(':', 1) for attr in attributes])
@@ -170,9 +170,9 @@ class ScriptManager:
                 debug.println(debug.LEVEL_FINE, "Loaded %s.py" % moduleName)
                 break
             except:
-                debug.printException(debug.LEVEL_SEVERE)
+                debug.printException(debug.LEVEL_FINEST)
                 debug.println(
-                    debug.LEVEL_SEVERE, "Could not load %s.py" % moduleName)
+                    debug.LEVEL_FINEST, "Could not load %s.py" % moduleName)
 
         return script
 
