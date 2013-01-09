@@ -1216,6 +1216,10 @@ class Script(default.Script):
         accessible text specialization, the characterOffset value
         is meaningless (and typically -1)."""
 
+        text = self.utilities.queryNonEmptyText(event.source)
+        if not text:
+            return
+
         eventSourceRole = event.source.getRole()
         eventSourceState = event.source.getState()
         eventSourceInDocument = self.inDocumentContent(event.source)
@@ -3297,7 +3301,14 @@ class Script(default.Script):
                     return self.findFirstCaretContext(obj, characterOffset + 1)
                 try:
                     childIndex = self.getChildIndex(obj, characterOffset)
-                    return self.findFirstCaretContext(obj[childIndex], 0)
+
+                    # Handle bogus empty paragraphs.
+                    child = obj[childIndex]
+                    if child.getRole() == pyatspi.ROLE_PARAGRAPH \
+                       and not self.utilities.queryNonEmptyText(child):
+                        return self.findFirstCaretContext(obj, characterOffset + 1)
+
+                    return self.findFirstCaretContext(child, 0)
                 except:
                     return [obj, -1]
             else:
