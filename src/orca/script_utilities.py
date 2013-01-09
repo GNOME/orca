@@ -377,12 +377,6 @@ class Utilities:
 
         container = parent
         while True:
-            if container.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
-                try:
-                    si = container.querySelection()
-                    container = si.getSelectedChild(0)[0]
-                except NotImplementedError:
-                    pass
             try:
                 ci = container.queryComponent()
             except:
@@ -392,6 +386,9 @@ class Utilities:
             container =  ci.getAccessibleAtPoint(x, y, pyatspi.DESKTOP_COORDS)
             if not container or container.queryComponent() == ci:
                 break
+            if inner_container.getRole() == pyatspi.ROLE_PAGE_TAB_LIST:
+                return container
+
         if inner_container == parent:
             return None
         else:
