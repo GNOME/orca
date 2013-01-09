@@ -423,8 +423,8 @@ class SpeechServer(speechserver.SpeechServer):
         return families
 
     def speak(self, text=None, acss=None, interrupt=True):
-        #if interrupt:
-        #    self._cancel()
+        if interrupt:
+            self._cancel()
 
         if text:
             self._speak(text, acss)
@@ -434,8 +434,8 @@ class SpeechServer(speechserver.SpeechServer):
             self._speak(text, acss)
 
     def speakUtterances(self, utteranceList, acss=None, interrupt=True):
-        #if interrupt:
-        #    self._cancel()
+        if interrupt:
+            self._cancel()
         for utterance in utteranceList:
             if utterance:
                 self._speak(utterance, acss)
