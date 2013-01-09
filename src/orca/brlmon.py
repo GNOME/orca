@@ -218,6 +218,6 @@ class BrlMon(Gtk.Window):
             isCursorCell = i == cursorCell - 1
             try:
                 cellMask = mask[i]
-            except IndexError:
+            except (IndexError, TypeError):
                 cellMask = None
             self.cells[i].display(string[i], cellMask, isCursorCell)
