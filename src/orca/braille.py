@@ -38,8 +38,7 @@ import signal
 import os
 
 from gi.repository import GLib
-from gi.repository import GObject
-GObject.threads_init()
+GLib.threads_init()
 
 try:
     import louis
@@ -1796,9 +1795,10 @@ def init(callback=None, tty=7):
             debug.println(\
                 debug.LEVEL_CONFIGURATION,
                 "Braille module has been initialized using tty=%d" % tty)
-        _brlAPISourceId = GObject.io_add_watch(_brlAPI.fileDescriptor,
-                                               GObject.IO_IN,
-                                               _brlAPIKeyReader)
+        _brlAPISourceId = GLib.io_add_watch(_brlAPI.fileDescriptor,
+                                            GLib.PRIORITY_DEFAULT,
+                                            GLib.IO_IN,
+                                            _brlAPIKeyReader)
     except NameError:
         debug.println(debug.LEVEL_CONFIGURATION, "BrlApi is not defined")
         return False
