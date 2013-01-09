@@ -126,11 +126,16 @@ class BrailleGenerator(generator.Generator):
         """
         result = []
         role = args.get('role', obj.getRole())
+        verbosityLevel = _settingsManager.getSetting('brailleVerbosityLevel')
+
+        doNotPresent = [pyatspi.ROLE_UNKNOWN]
+        if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
+            doNotPresent.extend([pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS])
+
         if (role in _settingsManager.getSetting('brailleForceRoles'))\
-           or ((_settingsManager.getSetting('brailleVerbosityLevel') \
-                == settings.VERBOSITY_LEVEL_VERBOSE)\
+           or (verbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE\
                and not args.get('readingRow', False)\
-               and (role != pyatspi.ROLE_UNKNOWN)):
+               and role not in doNotPresent):
             result.append(self.getLocalizedRoleName(obj, role))
         return result
 
