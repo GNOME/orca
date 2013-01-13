@@ -122,30 +122,6 @@ class Script(default.Script):
                 Script.sayAll,
                 _("Speaks entire document."))
 
-        self.inputEventHandlers["toggleReadMailHandler"] = \
-            input_event.InputEventHandler(
-                Script.toggleReadMail,
-                # Translators: this tells Orca to act like 'biff', or let
-                # the user know when new mail has arrived, even if Evolution
-                # doesn't have focus.
-                #
-                _("Toggle whether we present new mail " \
-                  "if we are not the active script."))
-
-    def getAppKeyBindings(self):
-        """Returns the application-specific keybindings for this script."""
-
-        keyBindings = keybindings.KeyBindings()
-
-        keyBindings.add(
-            keybindings.KeyBinding(
-                "n",
-                settings.defaultModifierMask,
-                settings.ORCA_MODIFIER_MASK,
-                self.inputEventHandlers["toggleReadMailHandler"]))
-
-        return keyBindings
-
     def isActivatableEvent(self, event):
         """Returns True if the given event is one that should cause this
         script to become the active script.  This is only a hint to
@@ -161,31 +137,6 @@ class Script(default.Script):
         window = self.utilities.topLevelObject(event.source)
         if window and not window.getState().contains(pyatspi.STATE_ACTIVE):
             return False
-
-        return True
-
-    def toggleReadMail(self, inputEvent):
-        """ Toggle whether we present new mail if we not not the active script.+
-        Arguments:
-        - inputEvent: if not None, the input event that caused this action.
-        """
-
-        debug.println(self.debugLevel, "Evolution.toggleReadMail.")
-
-        # Translators: this tells Orca to act like 'biff', or let
-        # the user know when new mail has arrived, even if Evolution
-        # doesn't have focus.
-        #
-        line = _("present new mail if this script is not active.")
-        self.presentIfInactive = not self.presentIfInactive
-        if not self.presentIfInactive:
-            # Translators: this tells Orca to act like 'biff', or let
-            # the user know when new mail has arrived, even if Evolution
-            # doesn't have focus.
-            #
-            line = _("do not present new mail if this script is not active.")
-
-        self.presentMessage(line)
 
         return True
 
