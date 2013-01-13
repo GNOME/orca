@@ -975,6 +975,14 @@ class Script(default.Script):
             if self.utilities.spatialComparison(event.source, focusedObj) >= 0:
                 return
 
+            # TODO - JD: The very last screen results in a crazy-huge number
+            # of events, and they come in an order that is not good for this
+            # approach. So we'll need to handle this particular case elsewhere.
+            if focusedObj.getRole() == pyatspi.ROLE_CHECK_BOX:
+                labels = self.utilities.unrelatedLabels(window)
+                if len(labels) > 15:
+                    return
+
             voice = self.voices.get(settings.DEFAULT_VOICE)
             text = self.utilities.displayedText(event.source)
             self.presentMessage(text, voice=voice)
