@@ -1,6 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2013 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,7 +23,8 @@
 __id__        = "$Id$"
 __version__   = "$Revision$"
 __date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
+__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc." \
+                "Copyright (c) 2013 Igalia, S.L."
 __license__   = "LGPL"
 
 import pyatspi
@@ -75,10 +77,6 @@ class Script(default.Script):
         # A handle to the Spellcheck dialog.
         #
         self.spellCheckDialog = None
-
-        # Last Setup Assistant panel spoken.
-        #
-        self.lastSetupPanel = None
 
         # The last row and column we were on in the mail message header list.
 
@@ -148,16 +146,6 @@ class Script(default.Script):
 
         return keyBindings
 
-    def getListeners(self):
-        """Sets up the AT-SPI event listeners for this script.
-        """
-        listeners = default.Script.getListeners(self)
-
-        listeners["object:state-changed:showing"]           = \
-            self.onStateChanged
-
-        return listeners
-
     def isActivatableEvent(self, event):
         """Returns True if the given event is one that should cause this
         script to become the active script.  This is only a hint to
@@ -226,9 +214,6 @@ class Script(default.Script):
 
         brailleGen = self.brailleGenerator
         speechGen = self.speechGenerator
-
-        details = debug.getAccessibleDetails(self.debugLevel, event.source)
-        debug.printObjectEvent(self.debugLevel, event, details)
 
         # We always automatically go back to focus tracking mode when
         # the focus changes.
@@ -1012,24 +997,38 @@ class Script(default.Script):
         default.Script.onFocus(self, event)
 
     def onStateChanged(self, event):
-        """Called whenever an object's state changes.  We are only
-        interested in "object:state-changed:showing" events for any
-        object in the Setup Assistant.
+        """Called whenever an object's state changes.
 
         Arguments:
         - event: the Event
         """
 
-        if self.utilities.isWizardNewInfoEvent(event):
-            if event.source.getRole() == pyatspi.ROLE_PANEL:
-                self.lastSetupPanel = event.source
-            self.presentWizardNewInfo(
-                self.utilities.topLevelObject(event.source))
+        if not event.detail1:
+            default.Script.onStateChanged(self, event)
             return
 
-        # For everything else, pass the event onto the parent class
-        # to be handled in the default way.
-        #
+        # Present text in the Account Assistant
+        if event.type.startswith("object:state-changed:showing"):
+            try:
+                role = event.source.getRole()
+                relationSet = event.source.getRelationSet()
+            except:
+                return
+
+            if role != pyatspi.ROLE_LABEL or relationSet:
+                default.Script.onStateChanged(self, event)
+                return
+
+            window = self.utilities.topLevelObject(event.source)
+            focusedObj = self.utilities.focusedObject(window)
+            if self.utilities.spatialComparison(event.source, focusedObj) >= 0:
+                return
+
+            voice = self.voices.get(settings.DEFAULT_VOICE)
+            text = self.utilities.displayedText(event.source)
+            self.presentMessage(text, voice=voice)
+            return
+
         default.Script.onStateChanged(self, event)
 
     def onTextInserted(self, event):
@@ -1096,39 +1095,6 @@ class Script(default.Script):
             speech.speak(_("blank"), None, False)
         else:
             speech.speak(line, None, False)
-
-    def presentWizardNewInfo(self, obj):
-        """Causes the new information displayed in a wizard to be presented
-        to the user.
-
-        Arguments:
-        - obj: the Accessible object
-        """
-
-        if not obj:
-            return
-
-        # TODO - JD: Presenting the Setup Assistant (or any Wizard) as a
-        # dialog means that we will repeat the dialog's name for each new
-        # "screen". We should consider a 'ROLE_WIZARD' or some other means
-        # for presenting these objects.
-        #
-        utterances = \
-            self.speechGenerator.generateSpeech(obj, role=pyatspi.ROLE_DIALOG)
-
-        # The following falls under the heading of "suck it and see." The
-        # worst case scenario is that we present the push button and then
-        # process a focus:/object:state-changed:focused event and present
-        # it.
-        #
-        if orca_state.locusOfFocus \
-           and orca_state.locusOfFocus.getRole() == pyatspi.ROLE_PUSH_BUTTON \
-           and orca_state.locusOfFocus.getState().\
-               contains(pyatspi.STATE_FOCUSED):
-            utterances.append(
-                self.speechGenerator.generateSpeech(orca_state.locusOfFocus))
-
-        speech.speak(utterances)
 
     def readPageTab(self, tab):
         """Speak/Braille the given page tab. The speech verbosity is set

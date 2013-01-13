@@ -139,39 +139,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(acss)
         return result
 
-    def _generateUnrelatedLabels(self, obj, **args):
-        """Returns, as an array of strings (and possibly voice
-        specifications), all the labels which are underneath the obj's
-        hierarchy and which are not in a label for or labelled by
-        relation.
-        """
-
-        if not self._script.utilities.isWizard(obj):
-            return speech_generator.SpeechGenerator.\
-                _generateUnrelatedLabels(self, obj, **args)
-
+    def generateSpeech(self, obj, **args):
         result = []
-        acss = self.voice(speech_generator.DEFAULT)
-        labels = self._script.utilities.unrelatedLabels(obj)
-        for label in labels:
-            name = self._generateName(label, **args)
-            try:
-                text = label.queryText()
-            except:
-                pass
-            else:
-                attr = text.getAttributes(0)
-                if attr[0]:
-                    [charKeys, charDict] = \
-                        self._script.utilities.stringToKeysAndDict(attr[0])
-                    if charDict.get('weight', '400') == '800':
-                        # It's a new "screen" in the Setup Assistant.
-                        #
-                        name = self._script.utilities.displayedText(label)
-                        # Translators: this is the name of a setup
-                        # assistant window/screen in Evolution.
-                        #
-                        name = [_("%s screen") % name]
-            result.extend(name)
-            result.extend(acss)
-        return result
+        if obj.getRole() == pyatspi.ROLE_FRAME:
+            focusedObj = self._script.utilities.focusedObject(obj)
+            if focusedObj and focusedObj.getRole() == pyatspi.ROLE_PUSH_BUTTON:
+                args['role'] = pyatspi.ROLE_DIALOG
+
+        return speech_generator.SpeechGenerator.generateSpeech(self, obj, **args)
+
