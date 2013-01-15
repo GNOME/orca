@@ -1,3 +1,89 @@
+3.7.4 - 14 January 2013
+
+New Commands (Unbound keybindings)
+
+  * Cycle amongst saved settings profiles
+
+  * Copy and append text from flat review to the clipboard
+
+Web Related
+
+  * Fix for bug 677615 - In Firefox www.google.com links not presented in
+    braille
+
+  * Fix for bug 675362 - Orca doesn't speak certain radio button labels in
+    Firefox
+
+  * Fix for bug 669377 - Cannot read web pages while file download dialog
+    present
+
+  * Always use the Collection interface for structural navigation and page
+    summary
+
+  * Do not try to infer labels from widgets deeply buried in table cells
+
+  * Changes to make Orca's generic label inference code work better with
+    Gecko
+
+  * Move the Gecko script to use Orca's label inference code
+
+  * When Gecko reports the end offset is -1, use the characterCount instead
+
+  * Be sure we have a last input event before checking its time for live
+    region presentation
+
+Other Bug Fixes
+
+  * Fix for bug 684951 - Do not present 'icon' and 'canvas' rolenames if
+    verbosity is brief
+
+  * Fix for bug 591871 - Orca says "off" for all push buttons on the
+    LibreOffice toolbars and doesn't say "on" when it should
+
+  * Fix for bug 515817 - Flat review lands on blank line at end of text
+    area when navigating by previous word
+
+  * Get Orca doing a better job of presenting the Evolution Account
+    Assistant
+
+  * Handle caret offset of -1 when getting text for non-focused objects
+
+  * Fix for bug 600204 - Mouse Review Errors
+
+  * Fix a traceback in the braille monitor
+
+  * Change the debug level the script manager prints dead accessible
+    warnings
+
+Miscellaneous Cruft Removal
+
+  * Remove the GNOME2ish locusOfFocusChanged() method from the Evolution
+    script
+
+  * Remove the non-funcutioning Evolution new mail announcement
+
+  * Fix another GObject deprecation
+
+  * Remove several variables whose value we aren't using
+
+  * Remove some obsolete debugging methods
+
+  * Remove a check related to ROLE_HTML_CONTAINER from the Gecko script
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    an            Aragonese             Jorge Pérez Pérez
+    ar            Arabic                Khaled Hosny
+    el            Greek                 Dimitris Spingos
+    es            Spanish               Daniel Mustieles
+    gl            Galician              Fran Diéguez
+    lt            Lithuanian            Aurimas Černius
+    pl            Polish                Piotr Drąg
+    ru            Russian               Yuri Myasoedov
+    sl            Slovenian             Martin Srebotnjak, Matej Urbančič
+
+=========
+
 3.7.3 - 18 December 2012
 
 General
