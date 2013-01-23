@@ -525,15 +525,14 @@ class Script(default.Script):
         isn't in a table.
         """
 
-        table = None
         obj = self.adjustForWriterTable(obj)
         if obj.getRole() == pyatspi.ROLE_TABLE_CELL and obj.parent:
             try:
-                table = obj.parent.queryTable()
+                obj.parent.queryTable()
             except NotImplementedError:
-                pass
+                return None
 
-        return table
+        return obj.parent
 
     def getDynamicColumnHeaderCell(self, obj, column):
         """Given a table cell, return the dynamic column header cell
@@ -955,7 +954,7 @@ class Script(default.Script):
         table = self.getTable(orca_state.locusOfFocus)
         if table:
             row = self.getTableRow(orca_state.locusOfFocus)
-            self.dynamicColumnHeaders[table] = row
+            self.dynamicColumnHeaders[hash(table)] = row
             # Translators: Orca allows you to dynamically define which
             # row of a spreadsheet or table counts as column headers.
             #
@@ -977,7 +976,7 @@ class Script(default.Script):
         if table:
             row = self.getTableRow(orca_state.locusOfFocus)
             try:
-                del self.dynamicColumnHeaders[table]
+                del self.dynamicColumnHeaders[hash(table)]
                 # Translators: Orca allows you to dynamically define which
                 # row of a spreadsheet or table counts as column headers.
                 #
@@ -1029,7 +1028,7 @@ class Script(default.Script):
         table = self.getTable(orca_state.locusOfFocus)
         if table:
             column = self.getTableColumn(orca_state.locusOfFocus)
-            self.dynamicRowHeaders[table] = column
+            self.dynamicRowHeaders[hash(table)] = column
             # Translators: Orca allows you to dynamically define which
             # column of a spreadsheet or table counts as row headers.
             #
@@ -1052,7 +1051,7 @@ class Script(default.Script):
         if table:
             column = self.getTableColumn(orca_state.locusOfFocus)
             try:
-                del self.dynamicRowHeaders[table]
+                del self.dynamicRowHeaders[hash(table)]
                 # Translators: Orca allows you to dynamically define which
                 # column of a spreadsheet or table counts as row headers.
                 #

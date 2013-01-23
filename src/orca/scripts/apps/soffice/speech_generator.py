@@ -239,8 +239,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             index = self._script.utilities.cellIndex(obj)
             rowIndex = table.getRowAtIndex(index)
             if rowIndex >= 0 \
-               and table in self._script.dynamicRowHeaders:
-                column = self._script.dynamicRowHeaders[table]
+               and hash(obj.parent) in self._script.dynamicRowHeaders:
+                column = self._script.dynamicRowHeaders[hash(obj.parent)]
                 header = self._script.getDynamicColumnHeaderCell(obj, column)
                 try:
                     headerText = header.queryText()
@@ -275,8 +275,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if "lastRow" in self._script.pointOfReference and parentTable \
            and self._script.pointOfReference["lastRow"] != \
            parentTable.getRowAtIndex(index):
-            if table in self._script.dynamicRowHeaders:
-                column = self._script.dynamicRowHeaders[table]
+            if hash(parent) in self._script.dynamicRowHeaders:
+                column = self._script.dynamicRowHeaders[hash(parent)]
                 header = self._script.getDynamicColumnHeaderCell(obj, column)
                 try:
                     headerText = header.queryText()
@@ -312,8 +312,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             index = self._script.utilities.cellIndex(obj)
             columnIndex = table.getColumnAtIndex(index)
             if columnIndex >= 0 \
-               and table in self._script.dynamicColumnHeaders:
-                row = self._script.dynamicColumnHeaders[table]
+               and hash(obj.parent) in self._script.dynamicColumnHeaders:
+                row = self._script.dynamicColumnHeaders[hash(obj.parent)]
                 header = self._script.getDynamicRowHeaderCell(obj, row)
                 try:
                     headerText = header.queryText()
@@ -348,8 +348,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if parentTable and "lastColumn" in self._script.pointOfReference \
            and self._script.pointOfReference["lastColumn"] != \
            parentTable.getColumnAtIndex(index):
-            if table in self._script.dynamicColumnHeaders:
-                row = self._script.dynamicColumnHeaders[table]
+            if hash(parent) in self._script.dynamicColumnHeaders:
+                row = self._script.dynamicColumnHeaders[hash(parent)]
                 header = self._script.getDynamicRowHeaderCell(obj, row)
                 try:
                     headerText = header.queryText()

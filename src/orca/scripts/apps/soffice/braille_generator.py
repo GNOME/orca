@@ -63,8 +63,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             index = self._script.utilities.cellIndex(obj)
             rowIndex = table.getRowAtIndex(index)
             if rowIndex >= 0 \
-               and table in self._script.dynamicRowHeaders:
-                column = self._script.dynamicRowHeaders[table]
+               and hash(obj.parent) in self._script.dynamicRowHeaders:
+                column = self._script.dynamicRowHeaders[hash(obj.parent)]
                 header = self._script.getDynamicColumnHeaderCell(obj, column)
                 try:
                     headerText = header.queryText()
@@ -96,8 +96,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             index = self._script.utilities.cellIndex(obj)
             columnIndex = table.getColumnAtIndex(index)
             if columnIndex >= 0 \
-               and table in self._script.dynamicColumnHeaders:
-                row = self._script.dynamicColumnHeaders[table]
+               and hash(obj.parent) in self._script.dynamicColumnHeaders:
+                row = self._script.dynamicColumnHeaders[hash(obj.parent)]
                 header = self._script.getDynamicRowHeaderCell(obj, row)
                 try:
                     headerText = header.queryText()
