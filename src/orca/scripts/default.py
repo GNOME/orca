@@ -3808,7 +3808,8 @@ class Script(script.Script):
             keyString, mods = self.utilities.lastKeyAndModifiers()
             wasCommand = mods & settings.COMMAND_MODIFIER_MASK
             if not wasCommand and keyString in ["Return", "Tab", "space"] \
-               and role == pyatspi.ROLE_TERMINAL:
+               and role == pyatspi.ROLE_TERMINAL \
+               and event.any_data.strip():
                 wasCommand = True
             try:
                 selections = event.source.queryText().getNSelections()
