@@ -724,6 +724,8 @@ ORCA_SHIFT_MODIFIER_MASK      = (1 << MODIFIER_ORCA |
 SHIFT_MODIFIER_MASK           =  1 << pyatspi.MODIFIER_SHIFT
 SHIFT_ALT_MODIFIER_MASK       = (1 << pyatspi.MODIFIER_SHIFT |
                                  1 << pyatspi.MODIFIER_ALT)
+CTRL_ALT_MODIFIER_MASK        = (1 << pyatspi.MODIFIER_CONTROL |
+                                 1 << pyatspi.MODIFIER_ALT)
 COMMAND_MODIFIER_MASK         = (1 << pyatspi.MODIFIER_ALT |
                                  1 << pyatspi.MODIFIER_CONTROL |
                                  1 << pyatspi.MODIFIER_META2 |
