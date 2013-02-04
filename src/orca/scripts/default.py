@@ -3333,6 +3333,14 @@ class Script(script.Script):
             except:
                 pass
 
+        # When tabbing into an egg-list-box, we get a focus: event after the
+        # object:active-descendant-changed event. We already presented the
+        # list box from its object:state-changed:focused event, so we can and
+        # should ignore this event.
+        if role == pyatspi.ROLE_LIST_BOX and orca_state.locusOfFocus \
+                and orca_state.locusOfFocus.parent == event.source:
+            return
+
         # [[[TODO: WDW - HACK to deal with the fact that active cells
         # may or may not get focus.  Their parents, however, do tend to
         # get focus, but when the parent gets focus, it really means
