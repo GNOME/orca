@@ -33,6 +33,7 @@ from . import debug
 from . import input_event
 from . import keybindings
 from . import orca
+from . import orca_gui_navlist
 from . import orca_state
 from . import settings
 from . import speech
@@ -127,7 +128,7 @@ class StructuralNavigationObject:
     """
 
     def __init__(self, structuralNavigation, objType, bindings, predicate,
-                 criteria, presentation):
+                 criteria, presentation, dialogData):
 
         """Creates a new structural navigation object.
 
@@ -148,6 +149,9 @@ class StructuralNavigationObject:
           via collection.
         - presentation: the method which should be called after performing
           the search for the structural navigation object.
+        - dialogData: the method which returns the title, column headers,
+          and row data which should be included in the "list of" dialog for
+          the structural navigation object.
         """
 
         self.structuralNavigation = structuralNavigation
@@ -156,6 +160,7 @@ class StructuralNavigationObject:
         self.predicate = predicate
         self.criteria = criteria
         self.present = presentation
+        self._dialogData = dialogData
 
         self.inputEventHandlers = {}
         self.keyBindings = keybindings.KeyBindings()
@@ -200,6 +205,22 @@ class StructuralNavigationObject:
 
             self.functions.append(self.goNext)
 
+        listBinding = self.bindings.get("list")
+        if listBinding:
+            [keysymstring, modifiers, description] = listBinding
+            handlerName = "%sShowList" % self.objType
+            self.inputEventHandlers[handlerName] = \
+                input_event.InputEventHandler(self.showList, description)
+
+            self.keyBindings.add(
+                keybindings.KeyBinding(
+                    keysymstring,
+                    settings.defaultModifierMask,
+                    modifiers,
+                    self.inputEventHandlers[handlerName]))
+
+            self.functions.append(self.showList)
+
         # Set up the "at level" handlers (e.g. to navigate among headings
         # at the specified level).
         #
@@ -227,6 +248,25 @@ class StructuralNavigationObject:
             level = i + 1
             handler = self.goNextAtLevelFactory(level)
             handlerName = "%sGoNextLevel%dHandler" % (self.objType, level)
+            keysymstring, modifiers, description = binding
+
+            self.inputEventHandlers[handlerName] = \
+                input_event.InputEventHandler(handler, description)
+
+            self.keyBindings.add(
+                keybindings.KeyBinding(
+                    keysymstring,
+                    settings.defaultModifierMask,
+                    modifiers,
+                    self.inputEventHandlers[handlerName]))
+
+            self.functions.append(handler)
+
+        listAtLevel = self.bindings.get("listAtLevel") or []
+        for i, binding in enumerate(listAtLevel):
+            level = i + 1
+            handler = self.showListAtLevelFactory(level)
+            handlerName = "%sShowListAtLevel%dHandler" % (self.objType, level)
             keysymstring, modifiers, description = binding
 
             self.inputEventHandlers[handlerName] = \
@@ -311,6 +351,14 @@ class StructuralNavigationObject:
         """Go to the next object."""
         self.structuralNavigation.goObject(self, True)
 
+    def showList(self, script, inputEvent):
+        """Show a list of all the items with this object type."""
+
+        objects = self.structuralNavigation._getAll(self)
+        title, columnHeaders, rowData = self._dialogData()
+        rows = [[obj] + rowData(obj) for obj in objects]
+        orca_gui_navlist.showUI(title, columnHeaders, rows)
+
     def goPreviousAtLevelFactory(self, level):
         """Generates a goPrevious method for the specified level. Right
         now, this is just for headings, but it may have applicability
@@ -339,6 +387,24 @@ class StructuralNavigationObject:
         def goNextAtLevel(script, inputEvent):
             self.structuralNavigation.goObject(self, True, arg=level)
         return goNextAtLevel
+
+    def showListAtLevelFactory(self, level):
+        """Generates a showList method for the specified level. Right
+        now, this is just for headings, but it may have applicability
+        for other objects such as list items (i.e. for level-based
+        navigation in an outline or other multi-tiered list.
+
+        Arguments:
+        - level: the desired level of the object as an int.
+        """
+
+        def showListAtLevel(script, inputEvent):
+            objects = self.structuralNavigation._getAll(self, arg=level)
+            title, columnHeaders, rowData = self._dialogData(arg=level)
+            rows = [[obj] + rowData(obj) for obj in objects]
+            orca_gui_navlist.showUI(title, columnHeaders, rows)
+
+        return showListAtLevel
 
     def goDirectionFactory(self, direction):
         """Generates the methods for navigation in a particular direction
@@ -539,8 +605,13 @@ class StructuralNavigation:
         predicate = eval("self._%sPredicate" % name)
         presentation = eval("self._%sPresentation" % name)
 
+        try:
+            dialogData = eval("self._%sDialogData" % name)
+        except:
+            dialogData = None
+
         return StructuralNavigationObject(self, name, bindings, predicate,
-                                          criteria, presentation)
+                                          criteria, presentation, dialogData)
 
     def addObject(self, objType, structuralNavigationObject):
         """Adds structuralNavigationObject to the dictionary of enabled
