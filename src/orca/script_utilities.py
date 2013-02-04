@@ -606,6 +606,11 @@ class Utilities:
             except (LookupError, RuntimeError):
                 pass
 
+        # egg-list-box, e.g. privacy panel in gnome-control-center
+        if not displayedText and role == pyatspi.ROLE_FILLER:
+            labels = self.unrelatedLabels(obj)
+            displayedText = " ".join(map(self.displayedText, labels))
+
         # [[[WDW - HACK because push buttons can have labels as their
         # children.  An example of this is the Font: button on the General
         # tab in the Editing Profile dialog in gnome-terminal.

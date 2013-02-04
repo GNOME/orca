@@ -129,6 +129,11 @@ class BrailleGenerator(generator.Generator):
         verbosityLevel = _settingsManager.getSetting('brailleVerbosityLevel')
 
         doNotPresent = [pyatspi.ROLE_UNKNOWN]
+
+        # egg-list-box, e.g. privacy panel in gnome-control-center
+        if obj.parent and obj.parent.getRole() == pyatspi.ROLE_LIST_BOX:
+            doNotPresent.append(pyatspi.ROLE_FILLER)
+
         if verbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
             doNotPresent.extend([pyatspi.ROLE_ICON, pyatspi.ROLE_CANVAS])
 
