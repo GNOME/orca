@@ -354,7 +354,18 @@ class StructuralNavigationObject:
     def showList(self, script, inputEvent):
         """Show a list of all the items with this object type."""
 
-        objects = self.structuralNavigation._getAll(self)
+        try:
+            objects = self.structuralNavigation._getAll(self)
+        except:
+            # Translators: Orca has a command that presents a list of
+            # structural navigation objects in a dialog box so that users
+            # can navigate more quickly than they could with native keyboard
+            # navigation. This is a message that will be presented to the
+            # user when an error (such as the operation timing out) kept us
+            # from getting these objects.
+            script.presentMessage(_("Error: Could not create list of objects."))
+            return
+
         title, columnHeaders, rowData = self._dialogData()
         rows = [[obj] + rowData(obj) for obj in objects]
         orca_gui_navlist.showUI(title, columnHeaders, rows)
@@ -399,7 +410,18 @@ class StructuralNavigationObject:
         """
 
         def showListAtLevel(script, inputEvent):
-            objects = self.structuralNavigation._getAll(self, arg=level)
+            try:
+                objects = self.structuralNavigation._getAll(self, arg=level)
+            except:
+                # Translators: Orca has a command that presents a list of
+                # structural navigation objects in a dialog box so that users
+                # can navigate more quickly than they could with native keyboard
+                # navigation. This is a message that will be presented to the
+                # user when an error (such as the operation timing out) kept us
+                # from getting these objects.
+                script.presentMessage(_("Error: Could not create list of objects."))
+                return
+
             title, columnHeaders, rowData = self._dialogData(arg=level)
             rows = [[obj] + rowData(obj) for obj in objects]
             orca_gui_navlist.showUI(title, columnHeaders, rows)
