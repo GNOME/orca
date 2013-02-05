@@ -126,17 +126,17 @@ keymap = (
 
     # key binding for WhereAmI information with respect to root acc
 
-    ("1", defaultModifierMask, SHIFT_ALT_MODIFIER_MASK,
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "bookmarkCurrentWhereAmI"),
-    ("2", defaultModifierMask, SHIFT_ALT_MODIFIER_MASK,
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "bookmarkCurrentWhereAmI"),
-    ("3", defaultModifierMask, SHIFT_ALT_MODIFIER_MASK,
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "bookmarkCurrentWhereAmI"),
-    ("4", defaultModifierMask, SHIFT_ALT_MODIFIER_MASK,
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "bookmarkCurrentWhereAmI"),
-    ("5", defaultModifierMask, SHIFT_ALT_MODIFIER_MASK,
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "bookmarkCurrentWhereAmI"),
-    ("6", defaultModifierMask, SHIFT_ALT_MODIFIER_MASK,
+    ("", defaultModifierMask, NO_MODIFIER_MASK,
     "bookmarkCurrentWhereAmI"),
 
 

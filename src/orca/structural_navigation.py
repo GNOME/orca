@@ -2007,7 +2007,7 @@ class StructuralNavigation:
         # document.
         #
         listDesc = _("Displays a list of blockquotes.")
-        bindings["list"] = ["q", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["q", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _blockquoteCriteria(self, collection, arg=None):
@@ -2124,7 +2124,7 @@ class StructuralNavigation:
         # within a document.
         #
         listDesc = _("Displays a list of buttons.")
-        bindings["list"] = ["b", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["b", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _buttonCriteria(self, collection, arg=None):
@@ -2237,7 +2237,7 @@ class StructuralNavigation:
         # within a document.
         #
         listDesc = _("Displays a list of check boxes.")
-        bindings["list"] = ["x", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["x", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _checkBoxCriteria(self, collection, arg=None):
@@ -2360,7 +2360,7 @@ class StructuralNavigation:
         # chunk of text, such as a paragraph, a list, a table, etc.
         #
         listDesc = _("Displays a list of large objects.")
-        bindings["list"] = ["o", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["o", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _chunkCriteria(self, collection, arg=None):
@@ -2490,7 +2490,7 @@ class StructuralNavigation:
         # within a document.
         #
         listDesc = _("Displays a list of combo boxes.")
-        bindings["list"] = ["c", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["c", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _comboBoxCriteria(self, collection, arg=None):
@@ -2609,7 +2609,7 @@ class StructuralNavigation:
         # within a document.
         #
         listDesc = _("Displays a list of entries.")
-        bindings["list"] = ["e", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["e", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _entryCriteria(self, collection, arg=None):
@@ -2740,7 +2740,7 @@ class StructuralNavigation:
         bindings["next"] = ["Tab", settings.ORCA_MODIFIER_MASK, nextDesc]
 
         listDesc = _("Displays a list of form fields.")
-        bindings["list"] = ["f", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["f", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _formFieldCriteria(self, collection, arg=None):
@@ -2873,7 +2873,7 @@ class StructuralNavigation:
         # (e.g., <h1>) in a document as an alternative means of navigation.
         #
         listDesc = _("Displays a list of headings.")
-        bindings["list"] = ["h", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["h", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         prevAtLevelBindings = []
         nextAtLevelBindings = []
@@ -2900,7 +2900,7 @@ class StructuralNavigation:
             #
             listDesc = _("Displays a list of headings at level %d.") %i
             listAtLevelBindings.append([str(i),
-                                        settings.CTRL_ALT_MODIFIER_MASK,
+                                        settings.SHIFT_ALT_MODIFIER_MASK,
                                         listDesc])
 
         bindings["previousAtLevel"] = prevAtLevelBindings
@@ -3177,8 +3177,7 @@ class StructuralNavigation:
         # lists in a document.
         #
         listDesc = _("Displays a list of lists.")
-        # Ctrl + Alt + L conflicts with the lock shortcut.
-        bindings["list"] = ["", settings.NO_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["l", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _listCriteria(self, collection, arg=None):
@@ -3320,7 +3319,7 @@ class StructuralNavigation:
         # lists in a document.
         #
         listDesc = _("Displays a list of list items.")
-        bindings["list"] = ["i", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["i", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _listItemCriteria(self, collection, arg=None):
@@ -3537,7 +3536,7 @@ class StructuralNavigation:
         # Translators: this is for navigating among paragraphs in a document.
         #
         listDesc = _("Displays a list of paragraphs.")
-        bindings["list"] = ["p", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["p", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _paragraphCriteria(self, collection, arg=None):
@@ -3653,7 +3652,7 @@ class StructuralNavigation:
         # form within a document.
         #
         listDesc = _("Displays a list of radio buttons.")
-        bindings["list"] = ["r", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["r", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _radioButtonCriteria(self, collection, arg=None):
@@ -4048,7 +4047,7 @@ class StructuralNavigation:
         # document.
         #
         listDesc = _("Displays a list of unvisited links.")
-        bindings["list"] = ["u", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["u", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         return bindings
 
@@ -4174,7 +4173,7 @@ class StructuralNavigation:
         # document.
         #
         listDesc = _("Displays a list of visited links.")
-        bindings["list"] = ["v", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["v", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
 
         return bindings
 
@@ -4281,7 +4280,7 @@ class StructuralNavigation:
         bindings = {}
         # Translators: this is for navigating among links in a document.
         listDesc = _("Displays a list of links.")
-        bindings["list"] = ["", settings.NO_MODIFIER_MASK, listDesc]
+        bindings["list"] = ["k", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _linkCriteria(self, collection, arg=None):
