@@ -1839,6 +1839,14 @@ class StructuralNavigation:
                 return selected
             return unselected
 
+        if role == pyatspi.ROLE_LINK:
+            if state.contains(pyatspi.STATE_VISITED):
+                # Translators: this is a state which applies to a link.
+                return C_("link state", "visited")
+            else:
+                # Translators: this is a state which applies to a link.
+                return C_("link state", "unvisited")            
+
         return ''
 
     def _getValue(self, obj):
@@ -2070,6 +2078,24 @@ class StructuralNavigation:
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
 
+    def _blockquoteDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Blockquotes")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of a blockquote element.
+        columnHeaders = [C_("structural navigation", "Blockquote")]
+
+        def rowData(obj):
+            return [self._getText(obj)]
+
+        return title, columnHeaders, rowData
+
     ########################
     #                      #
     # Buttons              #
@@ -2160,6 +2186,24 @@ class StructuralNavigation:
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
 
+    def _buttonDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Buttons")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of a button.
+        columnHeaders = [C_("structural navigation", "Button")]
+
+        def rowData(obj):
+            return [self._getText(obj)]
+
+        return title, columnHeaders, rowData
+
     ########################
     #                      #
     # Check boxes          #
@@ -2249,6 +2293,31 @@ class StructuralNavigation:
             #
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
+
+    def _checkBoxDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Check Boxes")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the label of a check box.
+        columnHeaders = [C_("structural navigation", "Check Box")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the state of a widget. Examples
+        # of state include "checked"/"not checked", "selected"/"not selected"
+        columnHeaders.append(C_("structural navigation", "State"))
+
+        def rowData(obj):
+            return [self._getLabel(obj), self._getState(obj)]
+
+        return title, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2355,6 +2424,31 @@ class StructuralNavigation:
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
 
+    def _chunkDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Large Objects")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of an object.
+        columnHeaders = [C_("structural navigation", "Object")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the state of a widget. Examples
+        # of roles include "heading", "paragraph", "table", "combo box", etc.
+        columnHeaders.append(C_("structural navigation", "Role"))
+
+        def rowData(obj):
+            return [self._getText(obj), self._getRoleName(obj)]
+
+        return title, columnHeaders, rowData
+
     ########################
     #                      #
     # Combo Boxes          #
@@ -2444,6 +2538,30 @@ class StructuralNavigation:
             #
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
+
+    def _comboBoxDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Combo Boxes")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the label of a combo box.
+        columnHeaders = [C_("structural navigation", "Combo Box")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the selected item of a combo box.
+        columnHeaders.append(C_("structural navigation", "Selected Item"))
+
+        def rowData(obj):
+            return [self._getLabel(obj), self._getText(obj)]
+
+        return title, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2547,6 +2665,30 @@ class StructuralNavigation:
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
 
+    def _entryDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Entries")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the label of an entry.
+        columnHeaders = [C_("structural navigation", "Label")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of an entry.
+        columnHeaders.append(C_("structural navigation", "Text"))
+
+        def rowData(obj):
+            return [self._getLabel(obj), self._getText(obj)]
+
+        return title, columnHeaders, rowData
+
     ########################
     #                      #
     # Form Fields          #
@@ -2643,6 +2785,39 @@ class StructuralNavigation:
             #
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
+
+    def _formFieldDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Form Fields")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the label of a form field.
+        columnHeaders = [C_("structural navigation", "Label")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the state of a widget. Examples
+        # of roles include "heading", "paragraph", "table", "combo box", etc.
+        columnHeaders.append(C_("structural navigation", "Role"))
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the value of a form field.
+        columnHeaders.append(C_("structural navigation", "Value"))
+
+        def rowData(obj):
+            return [self._getLabel(obj),
+                    self._getRoleName(obj),
+                    self._getValue(obj)]
+
+        return title, columnHeaders, rowData
 
     ########################
     #                      #
@@ -2783,6 +2958,43 @@ class StructuralNavigation:
             #
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
+
+    def _headingDialogData(self, arg=None):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of document headings.
+        columnHeaders = [C_("structural navigation", "Heading")]
+
+        if not arg:
+            # Translators: Orca has a command that presents a list of structural
+            # navigation objects in a dialog box so that users can navigate more
+            # quickly than they could with native keyboard navigation. This is
+            # the title of one such dialog box.
+            title = C_("structural navigation", "Headings")
+
+            # Translators: Orca has a command that presents a list of structural
+            # navigation objects in a dialog box so that users can navigate more
+            # quickly than they could with native keyboard navigation. This is
+            # the title for a column containing the level of document headings,
+            # e.g. "1" for an <h1>, "2" for an <h2>, and so on.
+            columnHeaders.append(C_("structural navigation", "Level"))
+
+            def rowData(obj):
+                return [self._getText(obj), str(self._getHeadingLevel(obj))]
+
+        else:
+            # Translators: Orca has a command that presents a list of structural
+            # navigation objects in a dialog box so that users can navigate more
+            # quickly than they could with native keyboard navigation. This is
+            # the title of one such dialog box. Level will be a "1" for <h1>,
+            # a "2" for <h2>, and so on.
+            title = C_("structural navigation", "Headings at Level %d") % arg
+
+            def rowData(obj):
+                return [self._getText(obj)]
+
+        return title, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3012,6 +3224,24 @@ class StructuralNavigation:
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
 
+    def _listDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Lists")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of a list element.
+        columnHeaders = [C_("structural navigation", "List")]
+
+        def rowData(obj):
+            return [self._getText(obj)]
+
+        return title, columnHeaders, rowData
+
     ########################
     #                      #
     # List Items           #
@@ -3107,6 +3337,24 @@ class StructuralNavigation:
             #
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
+
+    def _listItemDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "List Items")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of a list item.
+        columnHeaders = [C_("structural navigation", "List Item")]
+
+        def rowData(obj):
+            return [self._getText(obj)]
+
+        return title, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3300,6 +3548,24 @@ class StructuralNavigation:
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
 
+    def _paragraphDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Paragraphs")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of a paragraph element.
+        columnHeaders = [C_("structural navigation", "Paragraph")]
+
+        def rowData(obj):
+            return [self._getText(obj)]
+
+        return title, columnHeaders, rowData
+
     ########################
     #                      #
     # Radio Buttons        #
@@ -3389,6 +3655,31 @@ class StructuralNavigation:
             #
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
+
+    def _radioButtonDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Radio Buttons")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the label of a check box.
+        columnHeaders = [C_("structural navigation", "Radio Button")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the state of a widget. Examples
+        # of state include "checked"/"not checked", "selected"/"not selected"
+        columnHeaders.append(C_("structural navigation", "State"))
+
+        def rowData(obj):
+            return [self._getLabel(obj), self._getState(obj)]
+
+        return title, columnHeaders, rowData
 
     ########################
     #                      #
@@ -3761,6 +4052,30 @@ class StructuralNavigation:
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
 
+    def _unvisitedLinkDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Unvisited Links")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of a link.
+        columnHeaders = [C_("structural navigation", "Link")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the URI of a link.
+        columnHeaders.append(C_("structural navigation", "URI"))
+
+        def rowData(obj):
+            return [self._getText(obj), self._script.utilities.uri(obj)]
+
+        return title, columnHeaders, rowData
+
     ########################
     #                      #
     # Visited Links        #
@@ -3849,3 +4164,135 @@ class StructuralNavigation:
             #
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
+
+    def _visitedLinkDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Visited Links")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of a link.
+        columnHeaders = [C_("structural navigation", "Link")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the URI of a link.
+        columnHeaders.append(C_("structural navigation", "URI"))
+
+        def rowData(obj):
+            return [self._getText(obj), self._script.utilities.uri(obj)]
+
+        return title, columnHeaders, rowData
+
+    ########################
+    #                      #
+    # Plain ol' Links      #
+    #                      #
+    ########################
+
+    def _linkBindings(self):
+        """Returns a dictionary of [keysymstring, modifiers, description]
+        lists for navigating amongst links.
+        """
+
+        bindings = {}
+        return bindings
+
+    def _linkCriteria(self, collection, arg=None):
+        """Returns the MatchCriteria to be used for locating unvisited links
+        by collection.
+
+        Arguments:
+        - collection: the collection interface for the document
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        role = [pyatspi.ROLE_LINK]
+        return MatchCriteria(collection, roles=role)
+
+    def _linkPredicate(self, obj, arg=None):
+        """The predicate to be used for verifying that the object
+        obj is an link.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        return obj and obj.getRole() == pyatspi.ROLE_LINK
+
+    def _linkPresentation(self, obj, arg=None):
+        """Presents the link or indicates that one was not found.
+
+        Arguments:
+        - obj: the accessible object under consideration.
+        - arg: an optional argument which may need to be included in
+          the criteria (e.g. the level of a heading).
+        """
+
+        if obj:
+            # We were counting on the Gecko script's setCaretPosition
+            # to do the focus grab. It turns out that we do not always
+            # want setCaretPosition to grab focus on a link (e.g. when
+            # arrowing in the text of a paragraph which is a child of
+            # a link. Therefore, we need to grab focus here.
+            #
+            obj.queryComponent().grabFocus()
+        else:
+            # Translators: this is for navigating document content by moving
+            # from unvisited link to unvisited link. This string is the 
+            # detailed message which Orca will present if there are no more
+            # links found.
+            #
+            full = _("No more links.")
+            # Translators: Orca has a command that allows the user to move
+            # to the next structural navigation object. In Orca, "structural
+            # navigation" refers to quickly moving through a document by
+            # jumping amongst objects of a given type, such as from link to
+            # link, or from heading to heading, or from form field to form
+            # field. This is a brief message which will be presented to the
+            # user if the desired structural navigation object could not be
+            # found.
+            #
+            brief = C_("structural navigation", "Not found")
+            self._script.presentMessage(full, brief)
+
+    def _linkDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Links")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the text of a link.
+        columnHeaders = [C_("structural navigation", "Link")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the URI of a link.
+        columnHeaders.append(C_("structural navigation", "URI"))
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the state of a widget. Examples
+        # of state include "checked"/"not checked", "selected"/"not selected"
+        columnHeaders.append(C_("structural navigation", "State"))
+
+        def rowData(obj):
+            return [self._getText(obj),
+                    self._script.utilities.uri(obj),
+                    self._getState(obj)]
+
+        return title, columnHeaders, rowData
