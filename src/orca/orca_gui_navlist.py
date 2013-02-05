@@ -62,7 +62,6 @@ class OrcaNavListGUI:
         cols = [GObject.TYPE_OBJECT]
         cols.extend(len(columnHeaders) * [GObject.TYPE_STRING])
         model = Gtk.ListStore(*cols)
-        self._tree.set_model(model)
 
         cell = Gtk.CellRendererText()
         column = Gtk.TreeViewColumn("Accessible", cell, text=0)
@@ -75,11 +74,12 @@ class OrcaNavListGUI:
             column.set_sort_column_id(i+1)
             self._tree.append_column(column)
 
-        model = self._tree.get_model()
         for row in rows:
             rowIter = model.append(None)
             for i, cell in enumerate(row):
                 model.set_value(rowIter, i, cell)
+
+        self._tree.set_model(model)
 
         btn = dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         btn.connect('clicked', self._onCancelClicked)
