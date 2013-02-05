@@ -345,6 +345,7 @@ class Script(default.Script):
                         GeckoStructuralNavigation.FORM_FIELD,
                         GeckoStructuralNavigation.HEADING,
                         GeckoStructuralNavigation.LANDMARK,
+                        GeckoStructuralNavigation.LINK,
                         GeckoStructuralNavigation.LIST,
                         GeckoStructuralNavigation.LIST_ITEM,
                         GeckoStructuralNavigation.LIVE_REGION,

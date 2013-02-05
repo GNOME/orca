@@ -219,8 +219,6 @@ class StructuralNavigationObject:
                     modifiers,
                     self.inputEventHandlers[handlerName]))
 
-            self.functions.append(self.showList)
-
         # Set up the "at level" handlers (e.g. to navigate among headings
         # at the specified level).
         #
@@ -278,8 +276,6 @@ class StructuralNavigationObject:
                     settings.defaultModifierMask,
                     modifiers,
                     self.inputEventHandlers[handlerName]))
-
-            self.functions.append(handler)
 
         # Set up the "directional" handlers (e.g. for table cells. Live
         # region support has a handler to go to the last live region,
@@ -527,6 +523,7 @@ class StructuralNavigation:
     FORM_FIELD      = "formField"
     HEADING         = "heading"
     LANDMARK        = "landmark"
+    LINK            = "link"
     LIST            = "list"        # Bulleted/numbered lists
     LIST_ITEM       = "listItem"    # Bulleted/numbered list items
     LIVE_REGION     = "liveRegion"
@@ -2006,6 +2003,11 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next blockquote.")
         bindings["next"] = ["q", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among blockquotes in a
+        # document.
+        #
+        listDesc = _("Displays a list of blockquotes.")
+        bindings["list"] = ["q", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _blockquoteCriteria(self, collection, arg=None):
@@ -2118,6 +2120,11 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next button.")
         bindings["next"] = ["b", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among buttons in a form
+        # within a document.
+        #
+        listDesc = _("Displays a list of buttons.")
+        bindings["list"] = ["b", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _buttonCriteria(self, collection, arg=None):
@@ -2226,6 +2233,11 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next check box.")
         bindings["next"] = ["x", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among check boxes in a form
+        # within a document.
+        #
+        listDesc = _("Displays a list of check boxes.")
+        bindings["list"] = ["x", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _checkBoxCriteria(self, collection, arg=None):
@@ -2343,9 +2355,12 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next large object.")
         bindings["next"] = ["o", settings.NO_MODIFIER_MASK, nextDesc]
-        # I don't think it makes sense to add support for a list
-        # of chunks.  But one could always change that here.
+        # Translators: this is for navigating a document in a
+        # structural manner, where a 'large object' is a logical
+        # chunk of text, such as a paragraph, a list, a table, etc.
         #
+        listDesc = _("Displays a list of large objects.")
+        bindings["list"] = ["o", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _chunkCriteria(self, collection, arg=None):
@@ -2471,6 +2486,11 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next combo box.")
         bindings["next"] = ["c", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among combo boxes in a form
+        # within a document.
+        #
+        listDesc = _("Displays a list of combo boxes.")
+        bindings["list"] = ["c", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _comboBoxCriteria(self, collection, arg=None):
@@ -2580,11 +2600,16 @@ class StructuralNavigation:
         #
         prevDesc = _("Goes to previous entry.")
         bindings["previous"] = ["e", settings.SHIFT_MODIFIER_MASK, prevDesc]
-        # Translators: this is for navigating among text entries
-        # in a form.
+        # Translators: this is for navigating among text entries in a form
+        # within a document.
         #
         nextDesc = _("Goes to next entry.")
         bindings["next"] = ["e", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among text entries in a form
+        # within a document.
+        #
+        listDesc = _("Displays a list of entries.")
+        bindings["list"] = ["e", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _entryCriteria(self, collection, arg=None):
@@ -2713,6 +2738,9 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next form field.")
         bindings["next"] = ["Tab", settings.ORCA_MODIFIER_MASK, nextDesc]
+
+        listDesc = _("Displays a list of form fields.")
+        bindings["list"] = ["f", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _formFieldCriteria(self, collection, arg=None):
@@ -2841,9 +2869,15 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next heading.")
         bindings["next"] = ["h", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for creating a list of all of the headings
+        # (e.g., <h1>) in a document as an alternative means of navigation.
+        #
+        listDesc = _("Displays a list of headings.")
+        bindings["list"] = ["h", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
 
         prevAtLevelBindings = []
         nextAtLevelBindings = []
+        listAtLevelBindings = []
         minLevel, maxLevel = self._headingLevels()
         for i in range(minLevel, maxLevel + 1):
             # Translators: this is for navigating in a document by heading.
@@ -2860,8 +2894,19 @@ class StructuralNavigation:
             nextAtLevelBindings.append([str(i),
                                         settings.NO_MODIFIER_MASK,
                                         nextDesc])
+            # Translators: this is for creating a list of all of the headings
+            # at a particular level (e.g. <h1> is a heading at level 1) in a
+            #document as an alternative means of navigation.
+            #
+            listDesc = _("Displays a list of headings at level %d.") %i
+            listAtLevelBindings.append([str(i),
+                                        settings.CTRL_ALT_MODIFIER_MASK,
+                                        listDesc])
+
         bindings["previousAtLevel"] = prevAtLevelBindings
         bindings["nextAtLevel"] = nextAtLevelBindings
+        bindings["listAtLevel"] = listAtLevelBindings
+
         return bindings
 
     def _headingLevels(self):
@@ -3128,6 +3173,12 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next list.")
         bindings["next"] = ["l", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among bulleted/numbered
+        # lists in a document.
+        #
+        listDesc = _("Displays a list of lists.")
+        # Ctrl + Alt + L conflicts with the lock shortcut.
+        bindings["list"] = ["", settings.NO_MODIFIER_MASK, listDesc]
         return bindings
 
     def _listCriteria(self, collection, arg=None):
@@ -3264,6 +3315,12 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next list item.")
         bindings["next"] = ["i", settings.NO_MODIFIER_MASK, nextDesc]
+
+        # Translators: this is for navigating among bulleted/numbered
+        # lists in a document.
+        #
+        listDesc = _("Displays a list of list items.")
+        bindings["list"] = ["i", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _listItemCriteria(self, collection, arg=None):
@@ -3477,6 +3534,10 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next paragraph.")
         bindings["next"] = ["p", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among paragraphs in a document.
+        #
+        listDesc = _("Displays a list of paragraphs.")
+        bindings["list"] = ["p", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _paragraphCriteria(self, collection, arg=None):
@@ -3588,6 +3649,11 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next radio button.")
         bindings["next"] = ["r", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among radio buttons in a
+        # form within a document.
+        #
+        listDesc = _("Displays a list of radio buttons.")
+        bindings["list"] = ["r", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _radioButtonCriteria(self, collection, arg=None):
@@ -3978,6 +4044,12 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next unvisited link.")
         bindings["next"] = ["u", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among visited links in a
+        # document.
+        #
+        listDesc = _("Displays a list of unvisited links.")
+        bindings["list"] = ["u", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+
         return bindings
 
     def _unvisitedLinkCriteria(self, collection, arg=None):
@@ -4098,6 +4170,12 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next visited link.")
         bindings["next"] = ["v", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among visited links in a
+        # document.
+        #
+        listDesc = _("Displays a list of visited links.")
+        bindings["list"] = ["v", settings.CTRL_ALT_MODIFIER_MASK, listDesc]
+
         return bindings
 
     def _visitedLinkCriteria(self, collection, arg=None):
@@ -4201,6 +4279,9 @@ class StructuralNavigation:
         """
 
         bindings = {}
+        # Translators: this is for navigating among links in a document.
+        listDesc = _("Displays a list of links.")
+        bindings["list"] = ["", settings.NO_MODIFIER_MASK, listDesc]
         return bindings
 
     def _linkCriteria(self, collection, arg=None):

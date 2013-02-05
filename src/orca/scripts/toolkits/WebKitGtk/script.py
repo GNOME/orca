@@ -213,6 +213,7 @@ class Script(default.Script):
                         StructuralNavigation.FORM_FIELD,
                         StructuralNavigation.HEADING,
                         StructuralNavigation.LANDMARK,
+                        StructuralNavigation.LINK,
                         StructuralNavigation.LIST,
                         StructuralNavigation.LIST_ITEM,
                         StructuralNavigation.LIVE_REGION,
