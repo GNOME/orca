@@ -1,3 +1,32 @@
+3.7.5 - 5 February 2013
+
+New Feature
+
+  * Structural navigation objects are now navigable by "list of" dialogs
+
+Bug Fixes
+
+  * Much better handling of egg-list-box for the new panels in
+    gnome-control-center
+
+  * Fix for bug 693159 - Orca doesnt echo words in gnome-terminal
+
+  * Do not attempt to store an AtspiTable in a dictionary (fixes the
+    presentation of cells when navigating in LibreOffice Calc)
+
+New and updated translations (THANKS EVERYONE!!!):
+
+    bg            Bulgarian             Alexander Shopov
+    eu            Basque                Inaki Larranaga Murgoitio
+    nb            Norwegian bokmål      Kjartan Maraas
+    ne            Nepali                Him Prasad Gautam
+    pl            Polish                Piotr Drąg
+    sr            Serbian               Мирослав Николић
+    sr@latin      Serbian               Miroslav Nikolić
+    ug            Uyghur                Sahran, Gheyret Kenji 
+
+=========
+
 3.7.4 - 14 January 2013
 
 New Commands (Unbound keybindings)
