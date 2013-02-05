@@ -1766,10 +1766,6 @@ class StructuralNavigation:
         """
 
         self._script.updateBraille(obj)
-
-        # [[[TODO: WDW - move the voice selection to formatting.py
-        # at some point.]]]
-        #
         voices = self._script.voices
         if obj.getRole() == pyatspi.ROLE_LINK:
             voice = voices[settings.HYPERLINK_VOICE]
@@ -1778,6 +1774,77 @@ class StructuralNavigation:
 
         utterances = self._script.speechGenerator.generateSpeech(obj)
         speech.speak(utterances, voice)
+
+    def _getRoleName(self, obj):
+        # Another case where we'll do this for now, and clean it up when
+        # object presentation is refactored.
+        return self._script.speechGenerator.getLocalizedRoleName(obj)
+
+    def _getSelectedItem(self, obj):
+        # Another case where we'll do this for now, and clean it up when
+        # object presentation is refactored.
+        if obj.getRole() == pyatspi.ROLE_COMBO_BOX:
+            obj = obj[0]
+        try:
+            selection = obj.querySelection()
+        except NotImplementedError:
+            return None
+
+        return selection.getSelectedChild(0)
+
+    def _getText(self, obj):
+        # Another case where we'll do this for now, and clean it up when
+        # object presentation is refactored.
+        text = self._script.utilities.displayedText(obj)
+        if not text:
+            text = self._script.utilities.expandEOCs(obj)
+        if not text:
+            item = self._getSelectedItem(obj)
+            if item:
+                text = item.name
+
+        return text
+
+    def _getLabel(self, obj):
+        # Another case where we'll do this for now, and clean it up when
+        # object presentation is refactored.
+        label = self._script.utilities.displayedLabel(obj)
+        if not label:
+            label = self._script.labelInference.infer(obj, focusedOnly=False)
+
+        return label
+
+    def _getState(self, obj):
+        # Another case where we'll do this for now, and clean it up when
+        # object presentation is refactored.
+        try:
+            state = obj.getState()
+            role = obj.getRole()
+        except RuntimeError:
+            return ''
+
+        # For now, we'll just grab the spoken indicator from settings.
+        # When object presentation is refactored, we can clean this up.
+        if role == pyatspi.ROLE_CHECK_BOX:
+            unchecked, checked, partially = settings.speechCheckboxIndicators
+            if state.contains(pyatspi.STATE_INDETERMINATE):
+                return partially
+            if state.contains(pyatspi.STATE_CHECKED):
+                return checked
+            return unchecked
+
+        if role == pyatspi.ROLE_RADIO_BUTTON:
+            unselected, selected = settings.speechRadioButtonIndicators
+            if state.contains(pyatspi.STATE_CHECKED):
+                return selected
+            return unselected
+
+        return ''
+
+    def _getValue(self, obj):
+        # Another case where we'll do this for now, and clean it up when
+        # object presentation is refactored.
+        return self._getState(obj) or self._getText(obj)
 
     #########################################################################
     #                                                                       #
