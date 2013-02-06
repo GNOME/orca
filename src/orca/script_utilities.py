@@ -608,7 +608,7 @@ class Utilities:
 
         # egg-list-box, e.g. privacy panel in gnome-control-center
         if not displayedText and role == pyatspi.ROLE_FILLER:
-            labels = self.unrelatedLabels(obj)
+            labels = self.unrelatedLabels(obj, onlyShowing=False)
             displayedText = " ".join(map(self.displayedText, labels))
 
         # [[[WDW - HACK because push buttons can have labels as their
@@ -1540,23 +1540,25 @@ class Utilities:
 
         return rv
 
-    def unrelatedLabels(self, root):
+    def unrelatedLabels(self, root, onlyShowing=True):
         """Returns a list containing all the unrelated (i.e., have no
         relations to anything and are not a fundamental element of a
         more atomic component like a combo box) labels under the given
         root.  Note that the labels must also be showing on the display.
 
         Arguments:
-        - root the Accessible object to traverse
+        - root: the Accessible object to traverse
+        - onlyShowing: if True, only return labels with STATE_SHOWING
 
         Returns a list of unrelated labels under the given root.
         """
 
-        allLabels = self.descendantsWithRole(root, pyatspi.ROLE_LABEL)
+        allLabels = self.descendantsWithRole(root, pyatspi.ROLE_LABEL, onlyShowing)
         try:
             labels = [x for x in allLabels if not x.getRelationSet()]
             labels = [x for x in labels if x.parent and x.name != x.parent.name]
-            labels = [x for x in labels if x.getState().contains(pyatspi.STATE_SHOWING)]
+            if onlyShowing:
+                labels = [x for x in labels if x.getState().contains(pyatspi.STATE_SHOWING)]
         except:
             return []
 
