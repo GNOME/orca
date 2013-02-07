@@ -363,6 +363,18 @@ class StructuralNavigationObject:
             return
 
         title, columnHeaders, rowData = self._dialogData()
+        count = len(objects)
+        # Translators: Orca has a command that presents a list of
+        # structural navigation objects in a dialog box so that users
+        # can navigate more quickly than they could with native keyboard
+        # navigation. This is a message that will be presented to the
+        # user to indicate how many items were found.
+        result = ngettext("%d item found", "%d items found", count) % count
+        title = "%s: %s" % (title, result)
+        if not count:
+            script.presentMessage(title)
+            return
+
         rows = [[obj] + rowData(obj) for obj in objects]
         orca_gui_navlist.showUI(title, columnHeaders, rows)
 
@@ -419,6 +431,18 @@ class StructuralNavigationObject:
                 return
 
             title, columnHeaders, rowData = self._dialogData(arg=level)
+            count = len(objects)
+            # Translators: Orca has a command that presents a list of
+            # structural navigation objects in a dialog box so that users
+            # can navigate more quickly than they could with native keyboard
+            # navigation. This is a message that will be presented to the
+            # user to indicate how many items were found.
+            result = ngettext("%d item found", "%d items found", count) % count
+            title = "%s: %s" % (title, result)
+            if not count:
+                script.presentMessage(title)
+                return
+
             rows = [[obj] + rowData(obj) for obj in objects]
             orca_gui_navlist.showUI(title, columnHeaders, rows)
 
