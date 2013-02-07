@@ -1084,6 +1084,10 @@ class Script(script.Script):
             self.onValueChanged
         listeners["object:value-changed"]                   = \
             self.onValueChanged
+        listeners["object:column-reordered"]                = \
+            self.onColumnReordered
+        listeners["object:row-reordered"]                   = \
+            self.onRowReordered
         listeners["window:activate"]                        = \
             self.onWindowActivated
         listeners["window:deactivate"]                      = \
@@ -3968,6 +3972,39 @@ class Script(script.Script):
                         break
 
         self.speakTextSelectionState(obj, startOffset, endOffset)
+
+    def onColumnReordered(self, event):
+        """Called whenever the columns in a table are reordered.
+
+        Arguments:
+        - event: the Event
+        """
+
+        parentTable = self.utilities.ancestorWithRole(
+            orca_state.locusOfFocus, [pyatspi.ROLE_TABLE], [pyatspi.ROLE_FRAME])
+        if event.source != parentTable:
+            return
+
+        # Translators: This is a message presented to users when the
+        # columns in a table have been reordered.
+        self.presentMessage(_("Columns reordered"))
+
+    def onRowReordered(self, event):
+        """Called whenever the rows in a table are reordered.
+
+        Arguments:
+        - event: the Event
+        """
+
+        parentTable = self.utilities.ancestorWithRole(
+            orca_state.locusOfFocus, [pyatspi.ROLE_TABLE], [pyatspi.ROLE_FRAME])
+        if event.source != parentTable:
+            return
+
+        # Translators: This is a message presented to users when the
+        # rows in a table have been reordered, as would happen when
+        # re-sorting the table by clicking on its header.
+        self.presentMessage(_("Rows reordered"))
 
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
