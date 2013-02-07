@@ -375,8 +375,14 @@ class StructuralNavigationObject:
             script.presentMessage(title)
             return
 
+        currentObject = self.structuralNavigation.getCurrentObject()
+        try:
+            index = objects.index(currentObject)
+        except:
+            index = 0
+
         rows = [[obj] + rowData(obj) for obj in objects]
-        orca_gui_navlist.showUI(title, columnHeaders, rows)
+        orca_gui_navlist.showUI(title, columnHeaders, rows, index)
 
     def goPreviousAtLevelFactory(self, level):
         """Generates a goPrevious method for the specified level. Right
@@ -443,8 +449,14 @@ class StructuralNavigationObject:
                 script.presentMessage(title)
                 return
 
+            currentObject = self.structuralNavigation.getCurrentObject()
+            try:
+                index = objects.index(currentObject)
+            except:
+                index = 0
+
             rows = [[obj] + rowData(obj) for obj in objects]
-            orca_gui_navlist.showUI(title, columnHeaders, rows)
+            orca_gui_navlist.showUI(title, columnHeaders, rows, index)
 
         return showListAtLevel
 

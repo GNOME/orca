@@ -35,15 +35,15 @@ from .orca_i18n import _
 
 class OrcaNavListGUI:
 
-    def __init__(self, title, columnHeaders, rows):
+    def __init__(self, title, columnHeaders, rows, selectedRow):
         self._tree = None
         self._activateButton = None
-        self._gui = self._createNavListDialog(columnHeaders, rows)
+        self._gui = self._createNavListDialog(columnHeaders, rows, selectedRow)
         self._gui.set_title(title)
         self._gui.set_modal(True)
         self.showGUI()
 
-    def _createNavListDialog(self, columnHeaders, rows):
+    def _createNavListDialog(self, columnHeaders, rows, selectedRow):
         dialog = Gtk.Dialog()
         dialog.set_default_size(500, 400)
 
@@ -80,6 +80,8 @@ class OrcaNavListGUI:
                 model.set_value(rowIter, i, cell)
 
         self._tree.set_model(model)
+        selection = self._tree.get_selection()
+        selection.select_path(selectedRow)
 
         btn = dialog.add_button(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL)
         btn.connect('clicked', self._onCancelClicked)
@@ -168,6 +170,6 @@ class OrcaNavListGUI:
 
         return model.get_value(model.get_iter(paths[0]), 0)
 
-def showUI(title='', columnHeaders=[], rows=[()]):
-    gui = OrcaNavListGUI(title, columnHeaders, rows)
+def showUI(title='', columnHeaders=[], rows=[()], selectedRow=0):
+    gui = OrcaNavListGUI(title, columnHeaders, rows, selectedRow)
     gui.showGUI()
