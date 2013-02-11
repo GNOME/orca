@@ -143,7 +143,15 @@ class OrcaNavListGUI:
             text = obj.queryText()
             text.setCaretOffset(0)
         except NotImplementedError:
-            pass
+            while obj.childCount:
+                obj = obj[0]
+                try:
+                    text = obj.queryText()
+                    text.setCaretOffset(0)
+                except NotImplementedError:
+                    pass
+                else:
+                    break
 
     def _onActivateClicked(self, widget):
         obj = self._getSelectedAccessible()
