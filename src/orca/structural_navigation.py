@@ -4133,7 +4133,8 @@ class StructuralNavigation:
         return MatchCriteria(collection,
                              states=state,
                              matchStates=stateMatch,
-                             roles=role)
+                             roles=role,
+                             applyPredicate=True)
 
     def _unvisitedLinkPredicate(self, obj, arg=None):
         """The predicate to be used for verifying that the object
@@ -4148,7 +4149,9 @@ class StructuralNavigation:
         isMatch = False
 
         if obj and obj.getRole() == pyatspi.ROLE_LINK:
-            isMatch = not obj.getState().contains(pyatspi.STATE_VISITED)
+            state = obj.getState()
+            isMatch = not state.contains(pyatspi.STATE_VISITED) \
+                and state.contains(pyatspi.STATE_FOCUSABLE)
 
         return isMatch
 
@@ -4254,8 +4257,8 @@ class StructuralNavigation:
         """
 
         role = [pyatspi.ROLE_LINK]
-        state = [pyatspi.STATE_VISITED]
-        stateMatch = collection.MATCH_ANY
+        state = [pyatspi.STATE_VISITED, pyatspi.STATE_FOCUSABLE]
+        stateMatch = collection.MATCH_ALL
         return MatchCriteria(collection,
                              states=state,
                              matchStates=stateMatch,
@@ -4274,7 +4277,9 @@ class StructuralNavigation:
         isMatch = False
 
         if obj and obj.getRole() == pyatspi.ROLE_LINK:
-            isMatch = obj.getState().contains(pyatspi.STATE_VISITED)
+            state = obj.getState()
+            isMatch = state.contains(pyatspi.STATE_VISITED) \
+                and state.contains(pyatspi.STATE_FOCUSABLE)
 
         return isMatch
 
@@ -4360,7 +4365,12 @@ class StructuralNavigation:
         """
 
         role = [pyatspi.ROLE_LINK]
-        return MatchCriteria(collection, roles=role)
+        state = [pyatspi.STATE_FOCUSABLE]
+        stateMatch = collection.MATCH_ALL
+        return MatchCriteria(collection,
+                             states=state,
+                             matchStates=stateMatch,
+                             roles=role)
 
     def _linkPredicate(self, obj, arg=None):
         """The predicate to be used for verifying that the object
@@ -4372,7 +4382,11 @@ class StructuralNavigation:
           the criteria (e.g. the level of a heading).
         """
 
-        return obj and obj.getRole() == pyatspi.ROLE_LINK
+        isMatch = False
+        if obj and obj.getRole() == pyatspi.ROLE_LINK:
+            state = obj.getState()
+            isMatch = not state.contains(pyatspi.STATE_FOCUSABLE)
+        return isMatch
 
     def _linkPresentation(self, obj, arg=None):
         """Presents the link or indicates that one was not found.
