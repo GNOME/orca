@@ -3883,6 +3883,10 @@ class StructuralNavigation:
         #
         nextDesc = _("Goes to next table.")
         bindings["next"] = ["t", settings.NO_MODIFIER_MASK, nextDesc]
+        # Translators: this is for navigating among tables in a document.
+        #
+        listDesc = _("Displays a list of tables.")
+        bindings["list"] = ["t", settings.SHIFT_ALT_MODIFIER_MASK, listDesc]
         return bindings
 
     def _tableCriteria(self, collection, arg=None):
@@ -3952,6 +3956,32 @@ class StructuralNavigation:
             #
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
+
+    def _tableDialogData(self):
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title of one such dialog box.
+        title = C_("structural navigation", "Tables")
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the caption of a table.
+        columnHeaders = [C_("structural navigation", "Caption")]
+
+        # Translators: Orca has a command that presents a list of structural
+        # navigation objects in a dialog box so that users can navigate more
+        # quickly than they could with native keyboard navigation. This is
+        # the title for a column containing the type of a table element. The
+        # type can be "layout" or "data".
+        columnHeaders.append(C_("structural navigation", "Description"))
+
+        def rowData(obj):
+            return [self._getTableCaption(obj) or '',
+                    self._getTableDescription(obj)]
+
+        return title, columnHeaders, rowData
 
     ########################
     #                      #
