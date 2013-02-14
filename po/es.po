@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: orca.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-02-07 21:13+0000\n"
-"PO-Revision-Date: 2013-02-11 13:44+0100\n"
+"POT-Creation-Date: 2013-02-11 15:51+0000\n"
+"PO-Revision-Date: 2013-02-14 14:11+0100\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: \n"
@@ -3157,7 +3157,7 @@ msgstr "Los resultados deben:"
 #. is a link, activating it will bring you to a new page. If the object
 #. is a button, activating it will press the button. If the object is a
 #. combobox, activating it will expand it to show all of its contents.
-#: ../src/orca/orca_gui_navlist.py:97
+#: ../src/orca/orca_gui_navlist.py:99
 msgid "_Activate"
 msgstr "Activar"
 
@@ -3717,7 +3717,7 @@ msgstr "No se encontraron atajos de Orca para %s"
 #. inform the user when this is taking place.
 #.
 #: ../src/orca/orca.py:620 ../src/orca/scripts/toolkits/Gecko/script.py:5109
-#: ../src/orca/structural_navigation.py:964
+#: ../src/orca/structural_navigation.py:976
 msgid "Wrapping to bottom."
 msgstr "Saltando al final."
 
@@ -3740,7 +3740,7 @@ msgstr "Saltando al final."
 #. user when this is taking place.
 #.
 #: ../src/orca/orca.py:641 ../src/orca/scripts/toolkits/Gecko/script.py:5177
-#: ../src/orca/structural_navigation.py:972
+#: ../src/orca/structural_navigation.py:984
 msgid "Wrapping to top."
 msgstr "Saltando al principio."
 
@@ -4263,7 +4263,7 @@ msgstr "Lee todo el documento."
 #: ../src/orca/scripts/toolkits/Gecko/script.py:4397
 #: ../src/orca/settings.py:780 ../src/orca/speech_generator.py:738
 #: ../src/orca/speech_generator.py:1090
-#: ../src/orca/structural_navigation.py:4034
+#: ../src/orca/structural_navigation.py:4076
 msgid "blank"
 msgstr "en blanco"
 
@@ -4627,7 +4627,7 @@ msgstr "dejando la tabla."
 #. Translators: this represents the number of rows in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:759
-#: ../src/orca/structural_navigation.py:1322
+#: ../src/orca/structural_navigation.py:1334
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -4637,7 +4637,7 @@ msgstr[1] "tabla con %d filas"
 #. Translators: this represents the number of columns in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:764
-#: ../src/orca/structural_navigation.py:1327
+#: ../src/orca/structural_navigation.py:1339
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -4823,7 +4823,7 @@ msgstr[1] "%d caracteres demasiado grandes"
 #. a cell in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:123
-#: ../src/orca/structural_navigation.py:4041
+#: ../src/orca/structural_navigation.py:4083
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "Fila %(row)d, columna %(column)d."
@@ -6290,7 +6290,6 @@ msgstr "mal escrita"
 #. Translators: This is a message presented to users when the
 #. columns in a table have been reordered.
 #: ../src/orca/scripts/default.py:3990
-#| msgid "ColumnHeader"
 msgid "Columns reordered"
 msgstr "Columnas reordenadas"
 
@@ -6834,7 +6833,7 @@ msgstr "abrir"
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5203
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5227
 #: ../src/orca/scripts/toolkits/Gecko/script.py:5237
-#: ../src/orca/structural_navigation.py:503
+#: ../src/orca/structural_navigation.py:515
 msgid "Live region support is off"
 msgstr "El soporte de regiones activas está desactivado"
 
@@ -6885,7 +6884,7 @@ msgstr "%(role)s nivel %(level)d"
 #. Translators: this represents a list in HTML.
 #.
 #: ../src/orca/scripts/toolkits/Gecko/speech_generator.py:301
-#: ../src/orca/structural_navigation.py:3262
+#: ../src/orca/structural_navigation.py:3274
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -7017,7 +7016,7 @@ msgstr "nivel de árbol %d"
 #. level of 2 represents a list item inside a list that's
 #. inside another list).
 #.
-#: ../src/orca/settings.py:840 ../src/orca/structural_navigation.py:3277
+#: ../src/orca/settings.py:840 ../src/orca/structural_navigation.py:3289
 #, python-format
 msgid "Nesting level %d"
 msgstr "Nivel de anidamiento %d"
@@ -7336,7 +7335,7 @@ msgstr "El botón predeterminado es %s"
 #. user when an error (such as the operation timing out) kept us
 #. from getting these objects.
 #: ../src/orca/structural_navigation.py:362
-#: ../src/orca/structural_navigation.py:430
+#: ../src/orca/structural_navigation.py:436
 msgid "Error: Could not create list of objects."
 msgstr "Error: no se pudo crear la lista de objetos."
 
@@ -7346,10 +7345,8 @@ msgstr "Error: no se pudo crear la lista de objetos."
 #. navigation. This is a message that will be presented to the
 #. user to indicate how many items were found.
 #: ../src/orca/structural_navigation.py:372
-#: ../src/orca/structural_navigation.py:440
+#: ../src/orca/structural_navigation.py:446
 #, python-format
-#| msgid "%d file found"
-#| msgid_plural "%d files found"
 msgid "%d item found"
 msgid_plural "%d items found"
 msgstr[0] "%d elemento encontrado"
@@ -7362,7 +7359,7 @@ msgstr[1] "%d elementos encontrados"
 #. This feature needs to be toggle-able so that it does not
 #. interfere with normal writing functions.
 #.
-#: ../src/orca/structural_navigation.py:687
+#: ../src/orca/structural_navigation.py:699
 msgid "Toggles structural navigation keys."
 msgstr "Activa o desactiva las teclas de navegación estructural."
 
@@ -7376,7 +7373,7 @@ msgstr "Activa o desactiva las teclas de navegación estructural."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/structural_navigation.py:741
+#: ../src/orca/structural_navigation.py:753
 msgid "Structural navigation keys on."
 msgstr "Teclas de navegación estructural activadas."
 
@@ -7390,7 +7387,7 @@ msgstr "Teclas de navegación estructural activadas."
 #. toggles the structural navigation feature of Orca.
 #. It should be a brief informative message.
 #.
-#: ../src/orca/structural_navigation.py:753
+#: ../src/orca/structural_navigation.py:765
 msgid "Structural navigation keys off."
 msgstr "Teclas de navegación estructural desactivadas."
 
@@ -7399,7 +7396,7 @@ msgstr "Teclas de navegación estructural desactivadas."
 #. table navigation command but is not in a table, Orca speaks
 #. this message.
 #.
-#: ../src/orca/structural_navigation.py:792
+#: ../src/orca/structural_navigation.py:804
 msgid "Not in a table."
 msgstr "No está en una tabla."
 
@@ -7409,7 +7406,7 @@ msgstr "No está en una tabla."
 #. to move to the left of the current cell and is
 #. already in the first column.
 #.
-#: ../src/orca/structural_navigation.py:812
+#: ../src/orca/structural_navigation.py:824
 msgid "Beginning of row."
 msgstr "Comienzo de la fila."
 
@@ -7419,7 +7416,7 @@ msgstr "Comienzo de la fila."
 #. to move to the right of the current cell and is
 #. already in the last column.
 #.
-#: ../src/orca/structural_navigation.py:821
+#: ../src/orca/structural_navigation.py:833
 msgid "End of row."
 msgstr "Final de la fila."
 
@@ -7429,7 +7426,7 @@ msgstr "Final de la fila."
 #. to move to the cell above the current cell and is
 #. already in the first row.
 #.
-#: ../src/orca/structural_navigation.py:830
+#: ../src/orca/structural_navigation.py:842
 msgid "Top of column."
 msgstr "Inicio de la columna."
 
@@ -7439,7 +7436,7 @@ msgstr "Inicio de la columna."
 #. to move to the cell below the current cell and is
 #. already in the last row.
 #.
-#: ../src/orca/structural_navigation.py:839
+#: ../src/orca/structural_navigation.py:851
 msgid "Bottom of column."
 msgstr "Final de la columna."
 
@@ -7448,7 +7445,7 @@ msgstr "Final de la columna."
 #. In contrast, a non-uniform table is one in which at least
 #. one table cell occupies more than one row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1315
+#: ../src/orca/structural_navigation.py:1327
 msgid "Non-uniform"
 msgstr "No-uniforme"
 
@@ -7456,8 +7453,8 @@ msgstr "No-uniforme"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1482
-#: ../src/orca/structural_navigation.py:1504
+#: ../src/orca/structural_navigation.py:1494
+#: ../src/orca/structural_navigation.py:1516
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -7466,7 +7463,7 @@ msgstr[1] "Celda abarca %d filas"
 
 #. Translators: this represents the number of columns in a table.
 #.
-#: ../src/orca/structural_navigation.py:1488
+#: ../src/orca/structural_navigation.py:1500
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -7477,7 +7474,7 @@ msgstr[1] " %d columnas"
 #. within a document.  We need to announce when the cell occupies
 #. or "spans" more than a single row and/or column.
 #.
-#: ../src/orca/structural_navigation.py:1496
+#: ../src/orca/structural_navigation.py:1508
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -7485,13 +7482,13 @@ msgstr[0] "Celda abarca %d columnas"
 msgstr[1] "Celda abarca %d columnas"
 
 #. Translators: this is a state which applies to a link.
-#: ../src/orca/structural_navigation.py:1866
+#: ../src/orca/structural_navigation.py:1878
 msgctxt "link state"
 msgid "visited"
 msgstr "visitado"
 
 #. Translators: this is a state which applies to a link.
-#: ../src/orca/structural_navigation.py:1869
+#: ../src/orca/structural_navigation.py:1881
 msgctxt "link state"
 msgid "unvisited"
 msgstr "no visitado"
@@ -7499,14 +7496,14 @@ msgstr "no visitado"
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1933
+#: ../src/orca/structural_navigation.py:1945
 msgid "Goes to previous anchor."
 msgstr "Va al ancla anterior."
 
 #. Translators: this is for navigating among anchors in a document.
 #. An anchor is a named spot that one can jump to.
 #.
-#: ../src/orca/structural_navigation.py:1938
+#: ../src/orca/structural_navigation.py:1950
 msgid "Goes to next anchor."
 msgstr "Va al siguiente ancla."
 
@@ -7515,7 +7512,7 @@ msgstr "Va al siguiente ancla."
 #. that one can jump to.) This is a detailed message which
 #. will be presented to the user if no more anchors can be found.
 #.
-#: ../src/orca/structural_navigation.py:1995
+#: ../src/orca/structural_navigation.py:2007
 msgid "No more anchors."
 msgstr "No hay más ancla."
 
@@ -7528,27 +7525,27 @@ msgstr "No hay más ancla."
 #. user if the desired structural navigation object could not be
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:2005
-#: ../src/orca/structural_navigation.py:2104
-#: ../src/orca/structural_navigation.py:2217
-#: ../src/orca/structural_navigation.py:2330
-#: ../src/orca/structural_navigation.py:2463
-#: ../src/orca/structural_navigation.py:2583
-#: ../src/orca/structural_navigation.py:2714
-#: ../src/orca/structural_navigation.py:2838
-#: ../src/orca/structural_navigation.py:3010
-#: ../src/orca/structural_navigation.py:3028
-#: ../src/orca/structural_navigation.py:3175
-#: ../src/orca/structural_navigation.py:3298
-#: ../src/orca/structural_navigation.py:3418
-#: ../src/orca/structural_navigation.py:3537
-#: ../src/orca/structural_navigation.py:3632
-#: ../src/orca/structural_navigation.py:3745
-#: ../src/orca/structural_navigation.py:3851
-#: ../src/orca/structural_navigation.py:3941
-#: ../src/orca/structural_navigation.py:4147
-#: ../src/orca/structural_navigation.py:4266
-#: ../src/orca/structural_navigation.py:4368
+#: ../src/orca/structural_navigation.py:2017
+#: ../src/orca/structural_navigation.py:2116
+#: ../src/orca/structural_navigation.py:2229
+#: ../src/orca/structural_navigation.py:2342
+#: ../src/orca/structural_navigation.py:2475
+#: ../src/orca/structural_navigation.py:2595
+#: ../src/orca/structural_navigation.py:2726
+#: ../src/orca/structural_navigation.py:2850
+#: ../src/orca/structural_navigation.py:3022
+#: ../src/orca/structural_navigation.py:3040
+#: ../src/orca/structural_navigation.py:3187
+#: ../src/orca/structural_navigation.py:3310
+#: ../src/orca/structural_navigation.py:3430
+#: ../src/orca/structural_navigation.py:3549
+#: ../src/orca/structural_navigation.py:3644
+#: ../src/orca/structural_navigation.py:3757
+#: ../src/orca/structural_navigation.py:3863
+#: ../src/orca/structural_navigation.py:3957
+#: ../src/orca/structural_navigation.py:4189
+#: ../src/orca/structural_navigation.py:4308
+#: ../src/orca/structural_navigation.py:4410
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "No encontrado"
@@ -7556,21 +7553,21 @@ msgstr "No encontrado"
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:2023
+#: ../src/orca/structural_navigation.py:2035
 msgid "Goes to previous blockquote."
 msgstr "Va a la cita anterior."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:2028
+#: ../src/orca/structural_navigation.py:2040
 msgid "Goes to next blockquote."
 msgstr "Va a la siguiente cita."
 
 #. Translators: this is for navigating among blockquotes in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:2033
+#: ../src/orca/structural_navigation.py:2045
 msgid "Displays a list of blockquotes."
 msgstr "Muestra una lista de bloques."
 
@@ -7579,7 +7576,7 @@ msgstr "Muestra una lista de bloques."
 #. message which will be presented to the user if no more
 #. blockquotes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2094
+#: ../src/orca/structural_navigation.py:2106
 msgid "No more blockquotes."
 msgstr "No hay más citas."
 
@@ -7587,7 +7584,7 @@ msgstr "No hay más citas."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:2112
+#: ../src/orca/structural_navigation.py:2124
 msgctxt "structural navigation"
 msgid "Blockquotes"
 msgstr "Bloques"
@@ -7596,7 +7593,7 @@ msgstr "Bloques"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of a blockquote element.
-#: ../src/orca/structural_navigation.py:2118
+#: ../src/orca/structural_navigation.py:2130
 msgctxt "structural navigation"
 msgid "Blockquote"
 msgstr "Bloque"
@@ -7604,21 +7601,21 @@ msgstr "Bloque"
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2140
+#: ../src/orca/structural_navigation.py:2152
 msgid "Goes to previous button."
 msgstr "Va al botón anterior."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2145
+#: ../src/orca/structural_navigation.py:2157
 msgid "Goes to next button."
 msgstr "Va al siguiente botón."
 
 #. Translators: this is for navigating among buttons in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2150
+#: ../src/orca/structural_navigation.py:2162
 msgid "Displays a list of buttons."
 msgstr "Muestra una lista de botones."
 
@@ -7627,7 +7624,7 @@ msgstr "Muestra una lista de botones."
 #. a detailed message which will be presented to the user if
 #. no more push buttons can be found.
 #.
-#: ../src/orca/structural_navigation.py:2207
+#: ../src/orca/structural_navigation.py:2219
 msgid "No more buttons."
 msgstr "No hay más botones."
 
@@ -7635,7 +7632,7 @@ msgstr "No hay más botones."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:2225
+#: ../src/orca/structural_navigation.py:2237
 msgctxt "structural navigation"
 msgid "Buttons"
 msgstr "Botones"
@@ -7644,7 +7641,7 @@ msgstr "Botones"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of a button.
-#: ../src/orca/structural_navigation.py:2231
+#: ../src/orca/structural_navigation.py:2243
 msgctxt "structural navigation"
 msgid "Button"
 msgstr "Botón"
@@ -7652,21 +7649,21 @@ msgstr "Botón"
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2253
+#: ../src/orca/structural_navigation.py:2265
 msgid "Goes to previous check box."
 msgstr "Va a la casilla anterior."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2258
+#: ../src/orca/structural_navigation.py:2270
 msgid "Goes to next check box."
 msgstr "Va a la siguiente casilla."
 
 #. Translators: this is for navigating among check boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2263
+#: ../src/orca/structural_navigation.py:2275
 msgid "Displays a list of check boxes."
 msgstr "Muestra una lista de casillas."
 
@@ -7675,7 +7672,7 @@ msgstr "Muestra una lista de casillas."
 #. detailed message which will be presented to the user if
 #. no more checkboxes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2320
+#: ../src/orca/structural_navigation.py:2332
 msgid "No more check boxes."
 msgstr "No hay más casillas."
 
@@ -7683,7 +7680,7 @@ msgstr "No hay más casillas."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:2338
+#: ../src/orca/structural_navigation.py:2350
 msgctxt "structural navigation"
 msgid "Check Boxes"
 msgstr "Casillas"
@@ -7692,7 +7689,7 @@ msgstr "Casillas"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the label of a check box.
-#: ../src/orca/structural_navigation.py:2344
+#: ../src/orca/structural_navigation.py:2356
 msgctxt "structural navigation"
 msgid "Check Box"
 msgstr "Casilla"
@@ -7702,9 +7699,9 @@ msgstr "Casilla"
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the state of a widget. Examples
 #. of state include "checked"/"not checked", "selected"/"not selected"
-#: ../src/orca/structural_navigation.py:2351
-#: ../src/orca/structural_navigation.py:3766
-#: ../src/orca/structural_navigation.py:4395
+#: ../src/orca/structural_navigation.py:2363
+#: ../src/orca/structural_navigation.py:3778
+#: ../src/orca/structural_navigation.py:4437
 msgctxt "structural navigation"
 msgid "State"
 msgstr "Estado"
@@ -7713,7 +7710,7 @@ msgstr "Estado"
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2374
+#: ../src/orca/structural_navigation.py:2386
 msgid "Goes to previous large object."
 msgstr "Va al objeto grande anterior."
 
@@ -7721,7 +7718,7 @@ msgstr "Va al objeto grande anterior."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2380
+#: ../src/orca/structural_navigation.py:2392
 msgid "Goes to next large object."
 msgstr "Va al siguiente objeto grande."
 
@@ -7729,7 +7726,7 @@ msgstr "Va al siguiente objeto grande."
 #. structural manner, where a 'large object' is a logical
 #. chunk of text, such as a paragraph, a list, a table, etc.
 #.
-#: ../src/orca/structural_navigation.py:2386
+#: ../src/orca/structural_navigation.py:2398
 msgid "Displays a list of large objects."
 msgstr "Muestra una lista de objetos grandes."
 
@@ -7740,7 +7737,7 @@ msgstr "Muestra una lista de objetos grandes."
 #. will be presented to the user if no more large objects
 #. can be found.
 #.
-#: ../src/orca/structural_navigation.py:2453
+#: ../src/orca/structural_navigation.py:2465
 msgid "No more large objects."
 msgstr "No hay más objetos grandes."
 
@@ -7748,7 +7745,7 @@ msgstr "No hay más objetos grandes."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:2471
+#: ../src/orca/structural_navigation.py:2483
 msgctxt "structural navigation"
 msgid "Large Objects"
 msgstr "Objetos grandes"
@@ -7757,7 +7754,7 @@ msgstr "Objetos grandes"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of an object.
-#: ../src/orca/structural_navigation.py:2477
+#: ../src/orca/structural_navigation.py:2489
 msgctxt "structural navigation"
 msgid "Object"
 msgstr "Objeto"
@@ -7767,8 +7764,8 @@ msgstr "Objeto"
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the state of a widget. Examples
 #. of roles include "heading", "paragraph", "table", "combo box", etc.
-#: ../src/orca/structural_navigation.py:2484
-#: ../src/orca/structural_navigation.py:2859
+#: ../src/orca/structural_navigation.py:2496
+#: ../src/orca/structural_navigation.py:2871
 msgctxt "structural navigation"
 msgid "Role"
 msgstr "Rol"
@@ -7776,21 +7773,21 @@ msgstr "Rol"
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2506
+#: ../src/orca/structural_navigation.py:2518
 msgid "Goes to previous combo box."
 msgstr "Va al cuadro combinado anterior."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2511
+#: ../src/orca/structural_navigation.py:2523
 msgid "Goes to next combo box."
 msgstr "Va al siguiente cuadro combinado."
 
 #. Translators: this is for navigating among combo boxes in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2516
+#: ../src/orca/structural_navigation.py:2528
 msgid "Displays a list of combo boxes."
 msgstr "Muestra una lista de cajas combinadas."
 
@@ -7799,7 +7796,7 @@ msgstr "Muestra una lista de cajas combinadas."
 #. detailed message which will be presented to the user if
 #. no more checkboxes can be found.
 #.
-#: ../src/orca/structural_navigation.py:2573
+#: ../src/orca/structural_navigation.py:2585
 msgid "No more combo boxes."
 msgstr "No hay más cuadros combinados."
 
@@ -7807,7 +7804,7 @@ msgstr "No hay más cuadros combinados."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:2591
+#: ../src/orca/structural_navigation.py:2603
 msgctxt "structural navigation"
 msgid "Combo Boxes"
 msgstr "Cajas combinadas"
@@ -7816,7 +7813,7 @@ msgstr "Cajas combinadas"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the label of a combo box.
-#: ../src/orca/structural_navigation.py:2597
+#: ../src/orca/structural_navigation.py:2609
 msgctxt "structural navigation"
 msgid "Combo Box"
 msgstr "Caja combinada"
@@ -7825,7 +7822,7 @@ msgstr "Caja combinada"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the selected item of a combo box.
-#: ../src/orca/structural_navigation.py:2603
+#: ../src/orca/structural_navigation.py:2615
 msgctxt "structural navigation"
 msgid "Selected Item"
 msgstr "Elemento seleccionado"
@@ -7833,21 +7830,21 @@ msgstr "Elemento seleccionado"
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2625
+#: ../src/orca/structural_navigation.py:2637
 msgid "Goes to previous entry."
 msgstr "Va a la entrada anterior."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2630
+#: ../src/orca/structural_navigation.py:2642
 msgid "Goes to next entry."
 msgstr "Va a la siguiente entrada."
 
 #. Translators: this is for navigating among text entries in a form
 #. within a document.
 #.
-#: ../src/orca/structural_navigation.py:2635
+#: ../src/orca/structural_navigation.py:2647
 msgid "Displays a list of entries."
 msgstr "Muestra una lista de entradas."
 
@@ -7856,7 +7853,7 @@ msgstr "Muestra una lista de entradas."
 #. a detailed message which will be presented to the user if
 #. no more text entries can be found.
 #.
-#: ../src/orca/structural_navigation.py:2704
+#: ../src/orca/structural_navigation.py:2716
 msgid "No more entries."
 msgstr "No hay más entradas."
 
@@ -7864,7 +7861,7 @@ msgstr "No hay más entradas."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:2722
+#: ../src/orca/structural_navigation.py:2734
 msgctxt "structural navigation"
 msgid "Entries"
 msgstr "Entradas"
@@ -7877,8 +7874,8 @@ msgstr "Entradas"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the label of a form field.
-#: ../src/orca/structural_navigation.py:2728
-#: ../src/orca/structural_navigation.py:2852
+#: ../src/orca/structural_navigation.py:2740
+#: ../src/orca/structural_navigation.py:2864
 msgctxt "structural navigation"
 msgid "Label"
 msgstr "Etiqueta"
@@ -7887,7 +7884,7 @@ msgstr "Etiqueta"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of an entry.
-#: ../src/orca/structural_navigation.py:2734
+#: ../src/orca/structural_navigation.py:2746
 msgctxt "structural navigation"
 msgid "Text"
 msgstr "Texto"
@@ -7895,18 +7892,18 @@ msgstr "Texto"
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2756
+#: ../src/orca/structural_navigation.py:2768
 msgid "Goes to previous form field."
 msgstr "Va al campo de formulario anterior."
 
 #. Translators: this is for navigating among fields in a form within
 #. a document.
 #.
-#: ../src/orca/structural_navigation.py:2763
+#: ../src/orca/structural_navigation.py:2775
 msgid "Goes to next form field."
 msgstr "Va al siguiente campo de formulario."
 
-#: ../src/orca/structural_navigation.py:2766
+#: ../src/orca/structural_navigation.py:2778
 msgid "Displays a list of form fields."
 msgstr "Muestra una lista de campos de un formulario."
 
@@ -7915,7 +7912,7 @@ msgstr "Muestra una lista de campos de un formulario."
 #. message which will be presented to the user if no more form
 #. field can be found.
 #.
-#: ../src/orca/structural_navigation.py:2828
+#: ../src/orca/structural_navigation.py:2840
 msgid "No more form fields."
 msgstr "No hay más campos de formulario."
 
@@ -7923,7 +7920,7 @@ msgstr "No hay más campos de formulario."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:2846
+#: ../src/orca/structural_navigation.py:2858
 msgctxt "structural navigation"
 msgid "Form Fields"
 msgstr "Campos de un formulario"
@@ -7932,7 +7929,7 @@ msgstr "Campos de un formulario"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the value of a form field.
-#: ../src/orca/structural_navigation.py:2865
+#: ../src/orca/structural_navigation.py:2877
 msgctxt "structural navigation"
 msgid "Value"
 msgstr "Valor"
@@ -7940,28 +7937,28 @@ msgstr "Valor"
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2889
+#: ../src/orca/structural_navigation.py:2901
 msgid "Goes to previous heading."
 msgstr "Va al encabezado anterior."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g., <h1>)
 #.
-#: ../src/orca/structural_navigation.py:2894
+#: ../src/orca/structural_navigation.py:2906
 msgid "Goes to next heading."
 msgstr "Va al siguiente encabezado."
 
 #. Translators: this is for creating a list of all of the headings
 #. (e.g., <h1>) in a document as an alternative means of navigation.
 #.
-#: ../src/orca/structural_navigation.py:2899
+#: ../src/orca/structural_navigation.py:2911
 msgid "Displays a list of headings."
 msgstr "Muestra una lista de encabezados."
 
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2910
+#: ../src/orca/structural_navigation.py:2922
 #, python-format
 msgid "Goes to previous heading at level %d."
 msgstr "Va al encabezado anterior de nivel %d."
@@ -7969,7 +7966,7 @@ msgstr "Va al encabezado anterior de nivel %d."
 #. Translators: this is for navigating in a document by heading.
 #. (e.g. <h1> is a heading at level 1).
 #.
-#: ../src/orca/structural_navigation.py:2917
+#: ../src/orca/structural_navigation.py:2929
 #, python-format
 msgid "Goes to next heading at level %d."
 msgstr "Va al siguiente encabezado de nivel %d."
@@ -7978,7 +7975,7 @@ msgstr "Va al siguiente encabezado de nivel %d."
 #. at a particular level (e.g. <h1> is a heading at level 1) in a
 #. document as an alternative means of navigation.
 #.
-#: ../src/orca/structural_navigation.py:2925
+#: ../src/orca/structural_navigation.py:2937
 #, python-format
 msgid "Displays a list of headings at level %d."
 msgstr "Muestra una lista de encabezados de nivel %d."
@@ -7988,7 +7985,7 @@ msgstr "Muestra una lista de encabezados de nivel %d."
 #. detailed message which Orca will present if there are no more
 #. headings found.
 #.
-#: ../src/orca/structural_navigation.py:3000
+#: ../src/orca/structural_navigation.py:3012
 msgid "No more headings."
 msgstr "No hay más encabezados."
 
@@ -7997,7 +7994,7 @@ msgstr "No hay más encabezados."
 #. <h2>, etc.) This string is the detailed message which Orca will
 #. present if there are no more headings found at the desired level.
 #.
-#: ../src/orca/structural_navigation.py:3018
+#: ../src/orca/structural_navigation.py:3030
 #, python-format
 msgid "No more headings at level %d."
 msgstr "No hay más encabezados de nivel %d."
@@ -8006,7 +8003,7 @@ msgstr "No hay más encabezados de nivel %d."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of document headings.
-#: ../src/orca/structural_navigation.py:3036
+#: ../src/orca/structural_navigation.py:3048
 msgctxt "structural navigation"
 msgid "Heading"
 msgstr "Encabezado"
@@ -8015,7 +8012,7 @@ msgstr "Encabezado"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:3043
+#: ../src/orca/structural_navigation.py:3055
 msgctxt "structural navigation"
 msgid "Headings"
 msgstr "Encabezados"
@@ -8025,7 +8022,7 @@ msgstr "Encabezados"
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the level of document headings,
 #. e.g. "1" for an <h1>, "2" for an <h2>, and so on.
-#: ../src/orca/structural_navigation.py:3050
+#: ../src/orca/structural_navigation.py:3062
 msgctxt "structural navigation"
 msgid "Level"
 msgstr "Nivel"
@@ -8035,7 +8032,7 @@ msgstr "Nivel"
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box. Level will be a "1" for <h1>,
 #. a "2" for <h2>, and so on.
-#: ../src/orca/structural_navigation.py:3061
+#: ../src/orca/structural_navigation.py:3073
 #, python-format
 msgctxt "structural navigation"
 msgid "Headings at Level %d"
@@ -8046,7 +8043,7 @@ msgstr "Encabezados de nivel %d"
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:3085
+#: ../src/orca/structural_navigation.py:3097
 msgid "Goes to previous landmark."
 msgstr "Va al anterior punto de referencia."
 
@@ -8055,7 +8052,7 @@ msgstr "Va al anterior punto de referencia."
 #. HTML tag attribute 'role' used to identify important part
 #. of webpage like banners, main context, search etc.
 #.
-#: ../src/orca/structural_navigation.py:3092
+#: ../src/orca/structural_navigation.py:3104
 msgid "Goes to next landmark."
 msgstr "Va al siguiente punto de referencia."
 
@@ -8065,28 +8062,28 @@ msgstr "Va al siguiente punto de referencia."
 #. of webpage like banners, main context, search etc.  This
 #. is an indication that one was not found.
 #.
-#: ../src/orca/structural_navigation.py:3165
+#: ../src/orca/structural_navigation.py:3177
 msgid "No landmark found."
 msgstr "No se encontraron puntos de referencia."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:3193
+#: ../src/orca/structural_navigation.py:3205
 msgid "Goes to previous list."
 msgstr "Va a la lista anterior."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:3198
+#: ../src/orca/structural_navigation.py:3210
 msgid "Goes to next list."
 msgstr "Va a la siguiente lista."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:3203
+#: ../src/orca/structural_navigation.py:3215
 msgid "Displays a list of lists."
 msgstr "Muestra una lista de listas."
 
@@ -8095,7 +8092,7 @@ msgstr "Muestra una lista de listas."
 #. string is the detailed message which Orca will present if there
 #. are no more lists found.
 #.
-#: ../src/orca/structural_navigation.py:3288
+#: ../src/orca/structural_navigation.py:3300
 msgid "No more lists."
 msgstr "No hay más listas."
 
@@ -8103,7 +8100,7 @@ msgstr "No hay más listas."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:3306
+#: ../src/orca/structural_navigation.py:3318
 msgctxt "structural navigation"
 msgid "Lists"
 msgstr "Listas"
@@ -8112,7 +8109,7 @@ msgstr "Listas"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of a list element.
-#: ../src/orca/structural_navigation.py:3312
+#: ../src/orca/structural_navigation.py:3324
 msgctxt "structural navigation"
 msgid "List"
 msgstr "Lista"
@@ -8120,21 +8117,21 @@ msgstr "Lista"
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:3334
+#: ../src/orca/structural_navigation.py:3346
 msgid "Goes to previous list item."
 msgstr "Va al anterior elemento de lista."
 
 #. Translators: this is for navigating among bulleted/numbered list
 #. items in a document.
 #.
-#: ../src/orca/structural_navigation.py:3339
+#: ../src/orca/structural_navigation.py:3351
 msgid "Goes to next list item."
 msgstr "Va al siguiente elemento de lista."
 
 #. Translators: this is for navigating among bulleted/numbered
 #. lists in a document.
 #.
-#: ../src/orca/structural_navigation.py:3345
+#: ../src/orca/structural_navigation.py:3357
 msgid "Displays a list of list items."
 msgstr "Muestra una lista de elementos de lista."
 
@@ -8143,7 +8140,7 @@ msgstr "Muestra una lista de elementos de lista."
 #. numbered list item.  This string is the detailed message
 #. which Orca will present if there are no more list items found.
 #.
-#: ../src/orca/structural_navigation.py:3408
+#: ../src/orca/structural_navigation.py:3420
 msgid "No more list items."
 msgstr "No hay más elementos de lista."
 
@@ -8151,7 +8148,7 @@ msgstr "No hay más elementos de lista."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:3426
+#: ../src/orca/structural_navigation.py:3438
 msgctxt "structural navigation"
 msgid "List Items"
 msgstr "Elementos de lista"
@@ -8160,27 +8157,27 @@ msgstr "Elementos de lista"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of a list item.
-#: ../src/orca/structural_navigation.py:3432
+#: ../src/orca/structural_navigation.py:3444
 msgctxt "structural navigation"
 msgid "List Item"
 msgstr "Elemento de lista"
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:3453
+#: ../src/orca/structural_navigation.py:3465
 msgid "Goes to previous live region."
 msgstr "Va a la anterior región activa."
 
 #. Translators: this is for navigating between live regions
 #.
-#: ../src/orca/structural_navigation.py:3457
+#: ../src/orca/structural_navigation.py:3469
 msgid "Goes to next live region."
 msgstr "Va a la siguiente región activa."
 
 #. Translators: this is for navigating to the last live region
 #. which made an announcement.
 #.
-#: ../src/orca/structural_navigation.py:3462
+#: ../src/orca/structural_navigation.py:3474
 msgid "Goes to the last live region which made an announcement."
 msgstr "Va a la última región activa que hizo un anuncio."
 
@@ -8188,25 +8185,25 @@ msgstr "Va a la última región activa que hizo un anuncio."
 #. manner, where a 'live region' is a location in a web page
 #. that are updated without having to refresh the entire page.
 #.
-#: ../src/orca/structural_navigation.py:3527
+#: ../src/orca/structural_navigation.py:3539
 msgid "No more live regions."
 msgstr "No hay más regiones activas."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3554
+#: ../src/orca/structural_navigation.py:3566
 msgid "Goes to previous paragraph."
 msgstr "Va al párrafo anterior.."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3558
+#: ../src/orca/structural_navigation.py:3570
 msgid "Goes to next paragraph."
 msgstr "Va al siguiente párrafo."
 
 #. Translators: this is for navigating among paragraphs in a document.
 #.
-#: ../src/orca/structural_navigation.py:3562
+#: ../src/orca/structural_navigation.py:3574
 msgid "Displays a list of paragraphs."
 msgstr "Muestra una lista de párrafos."
 
@@ -8214,7 +8211,7 @@ msgstr "Muestra una lista de párrafos."
 #. from paragraph to paragraph. This string is the detailed message
 #. which Orca will present if there are no more paragraphs found.
 #.
-#: ../src/orca/structural_navigation.py:3622
+#: ../src/orca/structural_navigation.py:3634
 msgid "No more paragraphs."
 msgstr "No hay más párrafos."
 
@@ -8222,7 +8219,7 @@ msgstr "No hay más párrafos."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:3640
+#: ../src/orca/structural_navigation.py:3652
 msgctxt "structural navigation"
 msgid "Paragraphs"
 msgstr "Párrafos"
@@ -8231,7 +8228,7 @@ msgstr "Párrafos"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of a paragraph element.
-#: ../src/orca/structural_navigation.py:3646
+#: ../src/orca/structural_navigation.py:3658
 msgctxt "structural navigation"
 msgid "Paragraph"
 msgstr "Párrafo"
@@ -8239,21 +8236,21 @@ msgstr "Párrafo"
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3668
+#: ../src/orca/structural_navigation.py:3680
 msgid "Goes to previous radio button."
 msgstr "Va al botón de radio anterior."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3673
+#: ../src/orca/structural_navigation.py:3685
 msgid "Goes to next radio button."
 msgstr "Va al siguiente botón de radio."
 
 #. Translators: this is for navigating among radio buttons in a
 #. form within a document.
 #.
-#: ../src/orca/structural_navigation.py:3678
+#: ../src/orca/structural_navigation.py:3690
 msgid "Displays a list of radio buttons."
 msgstr "Muestra una lista de botones de radio."
 
@@ -8262,7 +8259,7 @@ msgstr "Muestra una lista de botones de radio."
 #. detailed message which Orca will present if there are no more
 #. radio buttons found.
 #.
-#: ../src/orca/structural_navigation.py:3735
+#: ../src/orca/structural_navigation.py:3747
 msgid "No more radio buttons."
 msgstr "No hay más botones de radio."
 
@@ -8270,7 +8267,7 @@ msgstr "No hay más botones de radio."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:3753
+#: ../src/orca/structural_navigation.py:3765
 msgctxt "structural navigation"
 msgid "Radio Buttons"
 msgstr "Botones de radio"
@@ -8279,7 +8276,7 @@ msgstr "Botones de radio"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the label of a check box.
-#: ../src/orca/structural_navigation.py:3759
+#: ../src/orca/structural_navigation.py:3771
 msgctxt "structural navigation"
 msgid "Radio Button"
 msgstr "Botón de radio"
@@ -8287,14 +8284,14 @@ msgstr "Botón de radio"
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
-#: ../src/orca/structural_navigation.py:3788
+#: ../src/orca/structural_navigation.py:3800
 msgid "Goes to previous separator."
 msgstr "Va al separador anterior."
 
 #. Translators: this is for navigating among separators, such as the
 #. <hr> tag, in a document.
 #.
-#: ../src/orca/structural_navigation.py:3793
+#: ../src/orca/structural_navigation.py:3805
 msgid "Goes to next separator."
 msgstr "Va al siguiente separador."
 
@@ -8303,84 +8300,122 @@ msgstr "Va al siguiente separador."
 #. message which Orca will present if there are no more separators
 #. found.
 #.
-#: ../src/orca/structural_navigation.py:3841
+#: ../src/orca/structural_navigation.py:3853
 msgid "No more separators."
 msgstr "No hay más separadores."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3868
+#: ../src/orca/structural_navigation.py:3880
 msgid "Goes to previous table."
 msgstr "Va a la tabla anterior."
 
 #. Translators: this is for navigating among tables in a document.
 #.
-#: ../src/orca/structural_navigation.py:3872
+#: ../src/orca/structural_navigation.py:3884
 msgid "Goes to next table."
 msgstr "Va a la siguiente tabla."
+
+#. Translators: this is for navigating among tables in a document.
+#.
+#: ../src/orca/structural_navigation.py:3888
+#| msgid "Displays a list of entries."
+msgid "Displays a list of tables."
+msgstr "Muestra una lista de tablas."
 
 #. Translators: this is for navigating document content by moving
 #. from table to table.  This string is the detailed message which
 #. Orca will present if there are no more tables found.
 #.
-#: ../src/orca/structural_navigation.py:3931
+#: ../src/orca/structural_navigation.py:3947
 msgid "No more tables."
 msgstr "No hay más tablas."
 
+#. Translators: Orca has a command that presents a list of structural
+#. navigation objects in a dialog box so that users can navigate more
+#. quickly than they could with native keyboard navigation. This is
+#. the title of one such dialog box.
+#: ../src/orca/structural_navigation.py:3965
+#| msgid "Table"
+msgctxt "structural navigation"
+msgid "Tables"
+msgstr "Tablas"
+
+#. Translators: Orca has a command that presents a list of structural
+#. navigation objects in a dialog box so that users can navigate more
+#. quickly than they could with native keyboard navigation. This is
+#. the title for a column containing the caption of a table.
+#: ../src/orca/structural_navigation.py:3971
+#| msgid "Caption"
+msgctxt "structural navigation"
+msgid "Caption"
+msgstr "Leyenda"
+
+#. Translators: Orca has a command that presents a list of structural
+#. navigation objects in a dialog box so that users can navigate more
+#. quickly than they could with native keyboard navigation. This is
+#. the title for a column containing the type of a table element. The
+#. type can be "layout" or "data".
+#: ../src/orca/structural_navigation.py:3978
+#| msgid "superscript n"
+msgctxt "structural navigation"
+msgid "Description"
+msgstr "Descripción"
+
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3958
+#: ../src/orca/structural_navigation.py:4000
 msgid "Goes left one cell."
 msgstr "Va una celda a la izquierda."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3962
+#: ../src/orca/structural_navigation.py:4004
 msgid "Goes right one cell."
 msgstr "Va una celda a la derecha."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3966
+#: ../src/orca/structural_navigation.py:4008
 msgid "Goes up one cell."
 msgstr "Va una celda arriba."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3970
+#: ../src/orca/structural_navigation.py:4012
 msgid "Goes down one cell."
 msgstr "Va una celda abajo."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3974
+#: ../src/orca/structural_navigation.py:4016
 msgid "Goes to the first cell in a table."
 msgstr "Va a la primera celda de una tabla."
 
 #. Translators: this is for navigating among table cells in a document.
 #.
-#: ../src/orca/structural_navigation.py:3978
+#: ../src/orca/structural_navigation.py:4020
 msgid "Goes to the last cell in a table."
 msgstr "Va a la última celda de una tabla."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:4063
+#: ../src/orca/structural_navigation.py:4105
 msgid "Goes to previous unvisited link."
 msgstr "Va al anterior enlace no visitado."
 
 #. Translators: this is for navigating among unvisited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:4068
+#: ../src/orca/structural_navigation.py:4110
 msgid "Goes to next unvisited link."
 msgstr "Va al siguiente enlace no visitado."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:4073
+#: ../src/orca/structural_navigation.py:4115
 msgid "Displays a list of unvisited links."
 msgstr "Muestra una lista de enlaces no visitados."
 
@@ -8389,7 +8424,7 @@ msgstr "Muestra una lista de enlaces no visitados."
 #. detailed message which Orca will present if there are no more
 #. unvisited links found.
 #.
-#: ../src/orca/structural_navigation.py:4137
+#: ../src/orca/structural_navigation.py:4179
 msgid "No more unvisited links."
 msgstr "No hay más enlaces no visitados."
 
@@ -8397,7 +8432,7 @@ msgstr "No hay más enlaces no visitados."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:4155
+#: ../src/orca/structural_navigation.py:4197
 msgctxt "structural navigation"
 msgid "Unvisited Links"
 msgstr "Enlace no visitados"
@@ -8406,9 +8441,9 @@ msgstr "Enlace no visitados"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the text of a link.
-#: ../src/orca/structural_navigation.py:4161
-#: ../src/orca/structural_navigation.py:4280
-#: ../src/orca/structural_navigation.py:4382
+#: ../src/orca/structural_navigation.py:4203
+#: ../src/orca/structural_navigation.py:4322
+#: ../src/orca/structural_navigation.py:4424
 msgctxt "structural navigation"
 msgid "Link"
 msgstr "Enlace"
@@ -8417,9 +8452,9 @@ msgstr "Enlace"
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title for a column containing the URI of a link.
-#: ../src/orca/structural_navigation.py:4167
-#: ../src/orca/structural_navigation.py:4286
-#: ../src/orca/structural_navigation.py:4388
+#: ../src/orca/structural_navigation.py:4209
+#: ../src/orca/structural_navigation.py:4328
+#: ../src/orca/structural_navigation.py:4430
 msgctxt "structural navigation"
 msgid "URI"
 msgstr "URI"
@@ -8427,21 +8462,21 @@ msgstr "URI"
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:4189
+#: ../src/orca/structural_navigation.py:4231
 msgid "Goes to previous visited link."
 msgstr "Va al anterior enlace visitado."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:4194
+#: ../src/orca/structural_navigation.py:4236
 msgid "Goes to next visited link."
 msgstr "Va al siguiente enlace visitado."
 
 #. Translators: this is for navigating among visited links in a
 #. document.
 #.
-#: ../src/orca/structural_navigation.py:4199
+#: ../src/orca/structural_navigation.py:4241
 msgid "Displays a list of visited links."
 msgstr "Muestra una lista de enlaces visitados."
 
@@ -8450,7 +8485,7 @@ msgstr "Muestra una lista de enlaces visitados."
 #. message which Orca will present if there are no more visited
 #. links found.
 #.
-#: ../src/orca/structural_navigation.py:4256
+#: ../src/orca/structural_navigation.py:4298
 msgid "No more visited links."
 msgstr "No hay más enlaces visitados."
 
@@ -8458,13 +8493,13 @@ msgstr "No hay más enlaces visitados."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:4274
+#: ../src/orca/structural_navigation.py:4316
 msgctxt "structural navigation"
 msgid "Visited Links"
 msgstr "Enlaces visitados"
 
 #. Translators: this is for navigating among links in a document.
-#: ../src/orca/structural_navigation.py:4306
+#: ../src/orca/structural_navigation.py:4348
 msgid "Displays a list of links."
 msgstr "Muestra una lista de enlaces."
 
@@ -8473,7 +8508,7 @@ msgstr "Muestra una lista de enlaces."
 #. detailed message which Orca will present if there are no more
 #. links found.
 #.
-#: ../src/orca/structural_navigation.py:4358
+#: ../src/orca/structural_navigation.py:4400
 msgid "No more links."
 msgstr "No hay más enlaces."
 
@@ -8481,7 +8516,7 @@ msgstr "No hay más enlaces."
 #. navigation objects in a dialog box so that users can navigate more
 #. quickly than they could with native keyboard navigation. This is
 #. the title of one such dialog box.
-#: ../src/orca/structural_navigation.py:4376
+#: ../src/orca/structural_navigation.py:4418
 msgctxt "structural navigation"
 msgid "Links"
 msgstr "Enlaces"
@@ -9829,9 +9864,6 @@ msgstr ""
 #~ msgid "canvas"
 #~ msgstr "lienzo"
 
-#~ msgid "Caption"
-#~ msgstr "Descripción"
-
 #~ msgid "caption"
 #~ msgstr "descripción"
 
@@ -10104,9 +10136,6 @@ msgstr ""
 
 #~ msgid "status bar"
 #~ msgstr "barra de estado"
-
-#~ msgid "Table"
-#~ msgstr "Tabla"
 
 #~ msgid "table"
 #~ msgstr "tabla"
