@@ -871,8 +871,13 @@ class Generator:
                          and pointOfReference["lastColumn"] == column))
             if presentAll:
                 args['readingRow'] = True
-                for i in range(0, parentTable.nColumns):
-                    cell = parentTable.getAccessibleAt(row, i)
+                if self._script.utilities.isTableRow(obj):
+                    cells = [x for x in obj]
+                else:
+                    cells = [parentTable.getAccessibleAt(row, i) \
+                                 for i in range(parentTable.nColumns)]
+
+                for cell in cells:
                     if not cell:
                         continue
                     state = cell.getState()

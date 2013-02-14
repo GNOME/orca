@@ -1281,6 +1281,25 @@ class Utilities:
         else:
             return state.contains(pyatspi.STATE_SHOWING)
 
+    @staticmethod
+    def isTableRow(obj):
+        """Determines if obj is a table row -- real or functionally."""
+        if not (obj and obj.parent and obj.childCount):
+            return False
+
+        if obj.getRole() == pyatspi.ROLE_TABLE_ROW:
+            return True
+
+        if not obj.parent.getRole() == pyatspi.ROLE_TABLE:
+            return False
+
+        isCell = lambda x: x and x.getRole() == pyatspi.ROLE_TABLE_CELL
+        cellChildren = list(filter(isCell, [x for x in obj]))
+        if len(cellChildren) == obj.childCount:
+            return True        
+
+        return False
+
     def realActiveDescendant(self, obj):
         """Given an object that should be a child of an object that
         manages its descendants, return the child that is the real
