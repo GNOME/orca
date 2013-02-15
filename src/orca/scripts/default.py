@@ -1545,7 +1545,7 @@ class Script(script.Script):
             return True
 
         # Translators: This message presents the Orca version number.
-        self.presentMessage(_("Orca version %s." % version))
+        self.presentMessage(_("Orca version %s.") % version)
 
         self.speakMessage(
             # Translators: Orca has a "Learn Mode" that will allow
