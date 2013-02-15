@@ -243,11 +243,12 @@ def inGraphicalDesktop():
 
     # TODO - JD: Make this desktop environment agnostic
     try:
-        from gi.repository import Gtk
+        from gi.repository import Gdk
+        display = Gdk.Display.get_default()
     except:
         return False
 
-    return True
+    return display != None
 
 def otherOrcas():
     """Returns the pid of any other instances of Orca owned by this user."""
@@ -286,14 +287,6 @@ def cleanup(sigval):
 def main():
     setProcessName('orca')
 
-    if not inGraphicalDesktop():
-        # Translators: This message is presented to the user who attempts
-        # to launch Orca from some other environment than the graphical
-        # desktop.
-        msg = _('Cannot start Orca because it cannot connect to the Desktop.')
-        print (msg)
-        return 1
-
     parser = Parser()
     args, invalid = parser.parse_known_args()
 
@@ -308,6 +301,14 @@ def main():
     settingsDict = getattr(args, 'settings', {})
     if args.text_setup:
         orca_console_prefs.showPreferencesUI(settingsDict)
+
+    if not inGraphicalDesktop():
+        # Translators: This message is presented to the user who attempts
+        # to launch Orca from some other environment than the graphical
+        # desktop.
+        msg = _('Cannot start Orca because it cannot connect to the Desktop.')
+        print (msg)
+        return 1
 
     manager = orca.getSettingsManager()
     if not manager:
