@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: orca.HEAD.ml\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-02-13 11:37+0000\n"
-"PO-Revision-Date: 2013-02-14 02:42+0530\n"
+"POT-Creation-Date: 2013-02-15 01:07+0000\n"
+"PO-Revision-Date: 2013-02-16 00:48+0530\n"
 "Last-Translator: Anish A <aneesh.nl@gmail.com>\n"
 "Language-Team: Swatantra Malayalam Computing\n"
 "Language: ml\n"
@@ -875,7 +875,7 @@ msgstr "%s ചാറ്റ് മുറിയില്‍ നിന്നുമ�
 #. Translators: this is the spoken word for the space character
 #.
 #: ../src/orca/chnames.py:39 ../src/orca/keynames.py:146
-#: ../src/orca/script_utilities.py:2700
+#: ../src/orca/script_utilities.py:2698
 msgid "space"
 msgstr "space"
 
@@ -2122,7 +2122,7 @@ msgstr "ഒന്നിലും ശ്രദ്ധയില്ല"
 #.
 #: ../src/orca/find.py:266
 msgid "Wrapping to Bottom"
-msgstr ""
+msgstr "താഴോട്ട് പോകല്‍"
 
 #. Translators: the Orca "Find" dialog
 #. allows a user to search for text in a
@@ -2135,13 +2135,13 @@ msgstr ""
 #.
 #: ../src/orca/find.py:281
 msgid "Wrapping to Top"
-msgstr ""
+msgstr "മുകളിലേക്ക് പോകല്‍"
 
 #. Translators: this represents the state of a checkbox.
 #.
 #: ../src/orca/flat_review.py:355 ../src/orca/settings.py:805
 msgid "partially checked"
-msgstr "പകുതി പരിശോധിച്ചവ"
+msgstr "പകുതി തെരഞ്ഞെടുത്തവ"
 
 #. Translators: this represents the state of a checkbox.
 #.
@@ -2775,7 +2775,7 @@ msgstr ""
 #. line option.
 #: ../src/orca/orca_bin.py.in:135 ../src/orca/orca_bin.py.in:146
 msgid "OPTION"
-msgstr ""
+msgstr "OPTION"
 
 #. Translators: this is the description of the command line option
 #. '-d, --disable' which allows the user to specify an option to
@@ -2798,7 +2798,7 @@ msgstr ""
 #. provided when using the '-p, --profile' command line option.
 #: ../src/orca/orca_bin.py.in:159
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 #. Translators: this is the description of the command line option
 #. '-u, --user-prefs' that allows you to specify an alternate
@@ -2811,7 +2811,7 @@ msgstr ""
 #. provided when using the '-u, --user-prefs' command line option.
 #: ../src/orca/orca_bin.py.in:169
 msgid "DIR"
-msgstr ""
+msgstr "DIR"
 
 #. Translators: this is the description of the command line option
 #. '--debug-file' which allows the user to override the default,
@@ -2824,7 +2824,7 @@ msgstr ""
 #. provided when using the '--debug-file' command line option.
 #: ../src/orca/orca_bin.py.in:179
 msgid "FILE"
-msgstr ""
+msgstr "FILE"
 
 #. Translators: this is the description of the command line option
 #. '--debug' which enables debugging output for Orca to be sent to
@@ -2849,7 +2849,7 @@ msgstr ""
 #. Translators: This message is presented to the user who attempts
 #. to launch Orca from some other environment than the graphical
 #. desktop.
-#: ../src/orca/orca_bin.py.in:293
+#: ../src/orca/orca_bin.py.in:309
 msgid "Cannot start Orca because it cannot connect to the Desktop."
 msgstr ""
 
@@ -2858,7 +2858,7 @@ msgstr ""
 #. a group of Orca settings configured for a particular purpose,
 #. such as a Spanish profile which would include Spanish braille
 #. and Spanish text-to-speech.
-#: ../src/orca/orca_bin.py.in:329
+#: ../src/orca/orca_bin.py.in:330
 #, fuzzy, python-format
 #| msgid "bookmarks could not be saved"
 msgid "Profile could not be loaded: %s"
@@ -2866,7 +2866,7 @@ msgstr "ഓര്‍മ്മക്കുറിപ്പുകള്‍ സൂ�
 
 #. Translators: This message is presented to the user when
 #. he/she tries to launch Orca, but Orca is already running.
-#: ../src/orca/orca_bin.py.in:335
+#: ../src/orca/orca_bin.py.in:336
 msgid ""
 "Another Orca process is already running for this session.\n"
 "Run \"orca --replace\" to replace that process with a new one."
@@ -2984,10 +2984,8 @@ msgstr ""
 #: ../src/orca/orca_console_prefs.py:376 ../src/orca/orca_console_prefs.py:393
 #: ../src/orca/orca_console_prefs.py:410 ../src/orca/orca_console_prefs.py:428
 #: ../src/orca/orca_console_prefs.py:509 ../src/orca/orca_console_prefs.py:528
-#, fuzzy
-#| msgid "Enable Braille?  Enter y or n: "
 msgid "Please enter y or n."
-msgstr "Braille സജ്ജമാക്കണമോ? y അല്ലെങ്കില്‍ n നല്‍കുക: "
+msgstr "y അല്ലെങ്കില്‍ n നല്‍കുക."
 
 #. Translators: if key echo is enabled, Orca will speak the
 #. name of a key as the user types on the keyboard.  If the
@@ -3041,7 +3039,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_console_prefs.py:446
 msgid "1. Desktop"
-msgstr ""
+msgstr "1. ഡസ്ക്ടോപ്പ്"
 
 #. Translators: we allow the user to choose between the desktop (i.e.,
 #. has a numeric keypad) and laptop (i.e., small and compact) keyboard
@@ -3049,7 +3047,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_console_prefs.py:453
 msgid "2. Laptop"
-msgstr ""
+msgstr "2. ലാപ്പ്ടോപ്പ്"
 
 #. Translators: this is prompting for whether the user wants to
 #. use a refreshable braille display (an external hardware
@@ -3092,23 +3090,23 @@ msgstr "കണ്ടുപിടിക്കുക"
 
 #: ../src/orca/orca-find.ui.h:2
 msgid "Orca Find Dialog"
-msgstr ""
+msgstr "ഓര്‍ക്ക തിരയല്‍ ജാലകം"
 
 #: ../src/orca/orca-find.ui.h:3
 msgid "Close"
-msgstr ""
+msgstr "അടക്കുക"
 
 #: ../src/orca/orca-find.ui.h:4
 msgid "_Search for:"
-msgstr ""
+msgstr "ഇതു് _തെരയുക:"
 
 #: ../src/orca/orca-find.ui.h:5
 msgid "Search for:"
-msgstr ""
+msgstr "ഇതു് തെരയുക:"
 
 #: ../src/orca/orca-find.ui.h:6 ../src/orca/orca_gui_find.py:134
 msgid "C_urrent location"
-msgstr ""
+msgstr "നി_ലവിലെ സ്ഥലം"
 
 #: ../src/orca/orca-find.ui.h:7
 msgid "_Top of window"
@@ -3120,31 +3118,31 @@ msgstr "ജാലകത്തിന്റെ മുകള്‍ഭാഗം"
 
 #: ../src/orca/orca-find.ui.h:9
 msgid "Start from:"
-msgstr ""
+msgstr "തുടങ്ങേണ്ടത്:"
 
 #: ../src/orca/orca-find.ui.h:10
 msgid "_Wrap around"
-msgstr ""
+msgstr "ചുറ്റും _ഒതുക്കുക"
 
 #: ../src/orca/orca-find.ui.h:11
 msgid "Search _backwards"
-msgstr ""
+msgstr "_പുറകോട്ട് തെരയുക"
 
 #: ../src/orca/orca-find.ui.h:12
 msgid "Search direction:"
-msgstr ""
+msgstr "തെരച്ചില്‍ ദിശ:"
 
 #: ../src/orca/orca-find.ui.h:13
 msgid "_Match case"
-msgstr ""
+msgstr "വലിയചെറിയക്ഷരവ്യത്യാസം _കണക്കിലെടുക്കുക (ഇംഗ്ലീഷിന് മാത്രം)"
 
 #: ../src/orca/orca-find.ui.h:14
 msgid "Match _entire word only"
-msgstr ""
+msgstr "വാക്ക് _പൂര്‍ണ്ണമായുണ്ടെങ്കില്‍ മാത്രം"
 
 #: ../src/orca/orca-find.ui.h:15
 msgid "Results must:"
-msgstr ""
+msgstr "ഫലങ്ങള്‍ ആയിരിക്കണം:"
 
 #. Translators: This string appears on a button in a dialog. "Activating"
 #. the selected item will perform the action that one would expect to
@@ -3154,7 +3152,7 @@ msgstr ""
 #. combobox, activating it will expand it to show all of its contents.
 #: ../src/orca/orca_gui_navlist.py:99
 msgid "_Activate"
-msgstr ""
+msgstr "_സജീവമാക്കുക"
 
 #. DESCRIP
 #.
@@ -3173,7 +3171,7 @@ msgstr "ഫംഗ്ഷന്‍"
 #.
 #: ../src/orca/orca_gui_prefs.py:312
 msgid "Key Binding"
-msgstr ""
+msgstr "കീ ബന്ധങ്ങള്‍"
 
 #. Translators: Modified is a table column header where the
 #. cells represent whether a key binding has been modified
@@ -3181,7 +3179,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:333
 msgid "Modified"
-msgstr ""
+msgstr "മാറ്റം വരുത്തിയവ"
 
 #: ../src/orca/orca_gui_prefs.py:407
 msgid "Accessibility support for GNOME has just been enabled."
@@ -3198,9 +3196,6 @@ msgstr ""
 #. messages.
 #.
 #: ../src/orca/orca_gui_prefs.py:676
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "Default"
 msgctxt "VoiceType"
 msgid "Default"
 msgstr "സാധാരണ"
@@ -3209,22 +3204,18 @@ msgstr "സാധാരണ"
 #. presenting one or more characters which is in uppercase.
 #.
 #: ../src/orca/orca_gui_prefs.py:680
-#, fuzzy
-#| msgid "percent"
 msgctxt "VoiceType"
 msgid "Uppercase"
-msgstr "ശതമാനം (%)"
+msgstr "വലിയ അക്ഷരം"
 
 #. Translators: This refers to the voice used by Orca when
 #. presenting one or more characters which is part of a
 #. hyperlink.
 #.
 #: ../src/orca/orca_gui_prefs.py:685
-#, fuzzy
-#| msgid "link"
 msgctxt "VoiceType"
 msgid "Hyperlink"
-msgstr "ലിങ്ക്"
+msgstr "കണ്ണി"
 
 #. Translators: This refers to the voice used by Orca when
 #. presenting information which is not displayed on the screen
@@ -3238,7 +3229,7 @@ msgstr "ലിങ്ക്"
 #: ../src/orca/orca_gui_prefs.py:695
 msgctxt "VoiceType"
 msgid "System"
-msgstr ""
+msgstr "സിസ്റ്റം"
 
 #. Attribute Name column (NAME).
 #.
@@ -3247,7 +3238,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1133
 msgid "Attribute Name"
-msgstr ""
+msgstr "സവിഷേതയുടെ പേരു്"
 
 #. Attribute Speak column (IS_SPOKEN).
 #.
@@ -3258,7 +3249,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1148
 msgid "Speak"
-msgstr ""
+msgstr "സംസാരിക്കുക"
 
 #. Attribute Mark in Braille column (IS_BRAILLED).
 #.
@@ -3269,7 +3260,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1166
 msgid "Mark in braille"
-msgstr ""
+msgstr "ബ്രൈലിയില്‍ അടയാളപ്പെടുത്തുക"
 
 #. Attribute Value column (VALUE)
 #.
@@ -3299,7 +3290,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1315
 msgid "Actual String"
-msgstr ""
+msgstr "ശരിക്കുള്ള വാചകം"
 
 #. Pronunciation Dictionary replacement string column (REPLACEMENT)
 #.
@@ -3310,7 +3301,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1332
 msgid "Replacement String"
-msgstr ""
+msgstr "മാറ്റിയ വാചകം"
 
 #. Translators: different speech systems and speech engines work
 #. differently when it comes to handling pauses (e.g., sentence
@@ -3323,7 +3314,7 @@ msgstr ""
 #. Translators: different speech systems and speech engines work differently when it comes to handling pauses (e.g., sentence boundaries).  This property allows the user to specify whether speech should be sent to the speech synthesis system immediately when a pause directive is enountered or if it should be queued up and sent to the speech synthesis system once the entire set of utterances has been calculated.
 #: ../src/orca/orca_gui_prefs.py:1411 ../src/orca/orca-setup.ui.h:38
 msgid "Break speech into ch_unks between pauses"
-msgstr ""
+msgstr "ചെറുതായി നിര്‍ത്തുമ്പോള്‍ സംസാരത്തെ മു_റിക്കുക"
 
 #. Translators: If this setting is chosen and the user is reading
 #. over an entire document, Orca will pause at the end of each
@@ -3351,11 +3342,9 @@ msgstr "വാചകം"
 #. Translators: Orca has a setting which determines which progress bar updates should be announced. Choosing All means that Orca will present progress bar updates regardless of what application and window they happen to be in.
 #: ../src/orca/orca_gui_prefs.py:1522 ../src/orca/orca_gui_prefs.py:2526
 #: ../src/orca/orca-setup.ui.h:8
-#, fuzzy
-#| msgid "_All"
 msgctxt "ProgressBar"
 msgid "All"
-msgstr "എല്ലാം (_A)"
+msgstr "എല്ലാം"
 
 #. Translators: Orca has a setting which determines which progress
 #. bar updates should be announced. Choosing "Application" means
@@ -3364,8 +3353,6 @@ msgstr "എല്ലാം (_A)"
 #. in the current window).
 #.
 #: ../src/orca/orca_gui_prefs.py:1529
-#, fuzzy
-#| msgid "Application"
 msgctxt "ProgressBar"
 msgid "Application"
 msgstr "പ്രയോഗം"
@@ -3376,8 +3363,6 @@ msgstr "പ്രയോഗം"
 #. bar is in the active window.
 #.
 #: ../src/orca/orca_gui_prefs.py:1535 ../src/orca/orca_gui_prefs.py:2534
-#, fuzzy
-#| msgid "Window"
 msgctxt "ProgressBar"
 msgid "Window"
 msgstr "ജാലകം"
@@ -3399,7 +3384,7 @@ msgstr ""
 #. Translators: When this option is enabled, inserted text of length 1 is spoken.
 #: ../src/orca/orca_gui_prefs.py:1648 ../src/orca/orca-setup.ui.h:104
 msgid "Enable echo by cha_racter"
-msgstr ""
+msgstr "അ_ക്ഷരം പ്രതി പറയുക"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -3407,7 +3392,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1931
 msgid "(double click)"
-msgstr ""
+msgstr "(ഇരട്ട ക്ലിക്ക്)"
 
 #. Translators: Orca keybindings support double
 #. and triple "clicks" or key presses, similar to
@@ -3415,7 +3400,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:1937
 msgid "(triple click)"
-msgstr ""
+msgstr "(മൂന്ന് ക്ലിക്ക്)"
 
 #. Translators: an external braille device has buttons on it that
 #. permit the user to create input gestures from the braille device.
@@ -3434,7 +3419,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:2355 ../src/orca/orca_gui_prefs.py:2396
 #: ../src/orca/orca_gui_prefs.py:2436 ../src/orca/orca-setup.ui.h:89
 msgid "Dot _7"
-msgstr ""
+msgstr "കുത്ത് _7"
 
 #. Translators: If the user chooses this setting, the
 #. dot in the bottom right corner of the braille cell
@@ -3443,7 +3428,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:2362 ../src/orca/orca_gui_prefs.py:2403
 #: ../src/orca/orca_gui_prefs.py:2443 ../src/orca/orca-setup.ui.h:90
 msgid "Dot _8"
-msgstr ""
+msgstr "കുത്ത് _8"
 
 #. Translators: If the user chooses this setting, the
 #. two dots at the bottom of the braille cell will be
@@ -3452,15 +3437,13 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:2369 ../src/orca/orca_gui_prefs.py:2410
 #: ../src/orca/orca_gui_prefs.py:2450 ../src/orca/orca-setup.ui.h:91
 msgid "Dots 7 an_d 8"
-msgstr ""
+msgstr "കുത്തുകള്‍ 7 _ഉം 8ഉം"
 
 #. Translators: If this setting is chosen, no punctuation
 #. symbols will be spoken as a user reads a document.
 #.
 #. Translators: this refers to how much punctuation will be spoken by Orca when presenting text on the screen.
 #: ../src/orca/orca_gui_prefs.py:2473 ../src/orca/orca-setup.ui.h:56
-#, fuzzy
-#| msgid "_None"
 msgctxt "punctuation level"
 msgid "_None"
 msgstr "ഒന്നുമില്ല (_N)"
@@ -3480,7 +3463,7 @@ msgstr "ചിലത് (_m)"
 #.
 #: ../src/orca/orca_gui_prefs.py:2488 ../src/orca/orca-setup.ui.h:58
 msgid "M_ost"
-msgstr ""
+msgstr "മി_ക്കവാറും"
 
 #. Translators: This refers to the amount of information
 #. Orca provides about a particular object that receives
@@ -3489,7 +3472,7 @@ msgstr ""
 #: ../src/orca/orca_gui_prefs.py:2656 ../src/orca/orca_gui_prefs.py:2744
 #: ../src/orca/orca-setup.ui.h:46
 msgid "Brie_f"
-msgstr ""
+msgstr "ചെറു_താക്കി"
 
 #. Translators: when users are navigating a table, they
 #. sometimes want the entire row of a table read, or
@@ -3498,7 +3481,7 @@ msgstr ""
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak just the new cell when the user arrows Up or Down in a table.
 #: ../src/orca/orca_gui_prefs.py:2680 ../src/orca/orca-setup.ui.h:50
 msgid "Speak _cell"
-msgstr ""
+msgstr "_കളം സംസാരിക്കുക"
 
 #. Translators: this is a spoken prompt asking the user to press
 #. a new key combination (e.g., Alt+Ctrl+g) to create a new
@@ -3519,7 +3502,7 @@ msgstr "കീ ബൈന്‍ഡിങ് നീക്കം ചെയ്തി
 #: ../src/orca/orca_gui_prefs.py:2870
 #, python-format
 msgid "The key entered is already bound to %s"
-msgstr ""
+msgstr "ഇപ്പോള്‍ തന്ന കീ %s ന് കൊടുത്തതാണ്"
 
 #. Translators: this is a spoken prompt letting the user know Orca
 #. know Orca has recorded a new key combination (e.g., Alt+Ctrl+g)
@@ -3545,7 +3528,7 @@ msgstr "പുതിയ കീ: %s"
 #.
 #: ../src/orca/orca_gui_prefs.py:2934
 msgid "The keybinding has been removed."
-msgstr ""
+msgstr "കീ ബൈന്‍ഡിങ് നീക്കം ചെയ്തിരിക്കുന്നു."
 
 #. Translators: this refers to the keyboard layout (desktop
 #. or laptop).
@@ -3610,7 +3593,7 @@ msgstr ""
 #. Spanish braille and selected when reading Spanish content.
 #: ../src/orca/orca_gui_prefs.py:3402
 msgid "Load user profile"
-msgstr ""
+msgstr "ഉപയോക്താവിന്റെ പ്രൊഫൈല്‍ എടുക്കുക"
 
 #: ../src/orca/orca_gui_prefs.py:3437
 msgid ""
@@ -3622,7 +3605,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_prefs.py:3471
 msgid "Starting Orca Preferences."
-msgstr ""
+msgstr "ഓര്‍ക്കാ മുന്‍ഗണനകള്‍ തുടങ്ങുന്നു."
 
 #. Translators: Profiles in Orca make it possible for users to
 #. quickly switch amongst a group of pre-defined settings (e.g.
@@ -3634,7 +3617,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_profile.py:55
 msgid "Save Profile As"
-msgstr ""
+msgstr "പ്രൊഫൈല്‍ ഇങ്ങനെ സൂക്ഷിക്കുക"
 
 #. Translators: Profiles in Orca make it possible for users to
 #. quickly switch amongst a group of pre-defined settings (e.g.
@@ -3647,7 +3630,7 @@ msgstr ""
 #.
 #: ../src/orca/orca_gui_profile.py:85
 msgid "_Profile Name:"
-msgstr ""
+msgstr "_പ്രൊഫൈലിന്റെ പേരു്:"
 
 #. Translators: there is a keystroke to reload the user
 #. preferences.  This is a spoken prompt to let the user
@@ -3663,7 +3646,7 @@ msgstr "Orca യൂസര്‍ ക്രമീകരണങ്ങള്‍ വ�
 #.
 #: ../src/orca/orca.py:549
 msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
-msgstr ""
+msgstr "മുകള്‍, താഴെ ആരോ കീ ഉപയോഗിച്ച് പട്ടിക നോക്കുക. എസ്കേപ്പ് ഉപയോഗിച്ച് പുറത്ത് കടക്കാം."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. In this messsage, we present the
@@ -3673,8 +3656,8 @@ msgstr ""
 #, python-format
 msgid "%d Orca default shortcut found."
 msgid_plural "%d Orca default shortcuts found."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d സ്വതവേയുള്ള ഓര്‍ക്ക കുറുക്കുവഴി കണ്ടെത്തി."
+msgstr[1] "%d സ്വതവേയുള്ള ഓര്‍ക്ക കുറുക്കുവഴികള്‍ കണ്ടെത്തി."
 
 #. Translators: This message is presented when the user is in
 #. 'list of shortcuts mode'. In this message, we present the
@@ -3695,7 +3678,7 @@ msgstr[1] ""
 #: ../src/orca/orca.py:602
 #, python-format
 msgid "No Orca shortcuts for %s found."
-msgstr ""
+msgstr "%s ന് ഓര്‍ക്ക കുറുക്കുവഴികളില്ല."
 
 #. Translators: when the user is attempting to locate a
 #. particular object and the top of a page or list is
@@ -3718,7 +3701,7 @@ msgstr ""
 #: ../src/orca/orca.py:620 ../src/orca/scripts/toolkits/Gecko/script.py:5109
 #: ../src/orca/structural_navigation.py:976
 msgid "Wrapping to bottom."
-msgstr ""
+msgstr "താഴോട്ട് പോകല്‍."
 
 #. Translators: when the user is attempting to locate a
 #. particular object and the bottom of a page or list is
@@ -3741,7 +3724,7 @@ msgstr ""
 #: ../src/orca/orca.py:641 ../src/orca/scripts/toolkits/Gecko/script.py:5177
 #: ../src/orca/structural_navigation.py:984
 msgid "Wrapping to top."
-msgstr ""
+msgstr "മുകളിലേക്ക് പോകല്‍."
 
 #. Translators: Orca has a 'List Shortcuts' mode by which a user can
 #. navigate through a list of the bound commands in Orca. Pressing 1
@@ -3768,27 +3751,20 @@ msgid "Welcome to Orca."
 msgstr "Orca-യിലേക്ക് സ്വാഗതം."
 
 #: ../src/orca/orca-setup.ui.h:1
-#, fuzzy
-#| msgctxt "textattr"
-#| msgid "Default"
 msgid "Default"
 msgstr "സാധാരണ"
 
 #: ../src/orca/orca-setup.ui.h:2
-#, fuzzy
-#| msgid "percent"
 msgid "Uppercase"
-msgstr "ശതമാനം (%)"
+msgstr "വലിയ അക്ഷരം"
 
 #: ../src/orca/orca-setup.ui.h:3
-#, fuzzy
-#| msgid "link"
 msgid "Hyperlink"
-msgstr "ലിങ്ക്"
+msgstr "കണ്ണി"
 
 #: ../src/orca/orca-setup.ui.h:4
 msgid "System"
-msgstr ""
+msgstr "സിസ്റ്റം"
 
 #: ../src/orca/orca-setup.ui.h:9
 msgid "Application"
@@ -3807,14 +3783,12 @@ msgid "_Laptop"
 msgstr "_ലാപ്ടോപ്പ്"
 
 #: ../src/orca/orca-setup.ui.h:14
-#, fuzzy
-#| msgid "<b>Keyboard Layout</b>"
 msgid "Keyboard Layout"
-msgstr "<b>കീബോര്‍ഡ് ശൈലി</b>"
+msgstr "കീബോര്‍ഡ് വിന്യാസം"
 
 #: ../src/orca/orca-setup.ui.h:15
 msgid "Active _Profile:"
-msgstr ""
+msgstr "സജീവ _പ്രൊഫൈല്‍:"
 
 #: ../src/orca/orca-setup.ui.h:16
 msgid "Start-up Profile:"
@@ -3823,35 +3797,35 @@ msgstr ""
 #. This button will load the selected settings profile in the application.
 #: ../src/orca/orca-setup.ui.h:18
 msgid "_Load"
-msgstr ""
+msgstr "_ലോഡ്"
 
 #: ../src/orca/orca-setup.ui.h:19
 msgid "Profiles"
-msgstr ""
+msgstr "പ്രൊഫൈലുകള്‍"
 
 #: ../src/orca/orca-setup.ui.h:20
 msgid "_Time format:"
-msgstr ""
+msgstr "_സമയ രീതി:"
 
 #: ../src/orca/orca-setup.ui.h:21
 msgid "Dat_e format:"
-msgstr ""
+msgstr "_തിയതി രീതി:"
 
 #: ../src/orca/orca-setup.ui.h:22
 msgid "Time and Date"
-msgstr ""
+msgstr "സമയവും തീയതിയും"
 
 #: ../src/orca/orca-setup.ui.h:23
 msgid "_Present tooltips"
-msgstr ""
+msgstr "_ഉള്ള സൂചനകള്‍"
 
 #: ../src/orca/orca-setup.ui.h:24
 msgid "Speak object under mo_use"
-msgstr ""
+msgstr "_മൌസിനടിയിലെ കാര്യം പറയുക"
 
 #: ../src/orca/orca-setup.ui.h:25
 msgid "Mouse"
-msgstr ""
+msgstr "മൌസ്"
 
 #: ../src/orca/orca-setup.ui.h:26
 msgid "General"
@@ -3879,21 +3853,17 @@ msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:32
 msgid "Speech _system:"
-msgstr ""
+msgstr "സംസാര _സിസ്റ്റം:"
 
 #. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the combo box in which the user selects a voice type to configure.
 #: ../src/orca/orca-setup.ui.h:34
-#, fuzzy
-#| msgid "_Voice settings:"
 msgid "_Voice type:"
-msgstr "ശബ്ദ ക്രമീകരണങ്ങള്‍: (_V)"
+msgstr "ശബ്ദ തരം: (_V)"
 
 #. Translators: Having multiple 'voice types' in Orca makes it possible for the user to more quickly identify properties of text non-visually, such as the fact that text is written in capital letters or is a link; or that text is actually visible on the screen as opposed to an Orca-specific message. The available 'voice types' in Orca include 'default', 'uppercase', 'hyperlink', and 'system' -- each of which can be configured by the user to sound the way he/she finds most helpful. This string is displayed in the label for the group of all of the controls associated with configuring a particular voice type.
 #: ../src/orca/orca-setup.ui.h:36
-#, fuzzy
-#| msgid "_Voice settings:"
 msgid "Voice Type Settings"
-msgstr "ശബ്ദ ക്രമീകരണങ്ങള്‍: (_V)"
+msgstr "ശബ്ദ തരം ക്രമീകരണങ്ങള്‍: (_V)"
 
 #. Translators: multicase strings are StringsWithWordsMashedTogetherLikeThis.
 #: ../src/orca/orca-setup.ui.h:40
@@ -3906,18 +3876,16 @@ msgid "Say All B_y:"
 msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:43
-#, fuzzy
-#| msgid "_Voice settings:"
 msgid "Global Voice Settings"
-msgstr "ശബ്ദ ക്രമീകരണങ്ങള്‍: (_V)"
+msgstr "ആഗോള ശബ്ദ ക്രമീകരണങ്ങള്‍: (_V)"
 
 #: ../src/orca/orca-setup.ui.h:44
 msgid "Voice"
-msgstr ""
+msgstr "ശബ്ദം"
 
 #: ../src/orca/orca-setup.ui.h:45
 msgid "_Enable speech"
-msgstr ""
+msgstr "സംസാരം _ലഭ്യമാക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:47
 msgid "Ver_bose"
@@ -3925,38 +3893,34 @@ msgstr "വെര്‍ബോസ് (_b)"
 
 #: ../src/orca/orca-setup.ui.h:48
 msgid "Verbosity"
-msgstr ""
+msgstr "വെര്‍ബോസിറ്റി"
 
 #. Translators: This is one of two options available in the Preferences dialog for the Table Rows setting. If chosen, Orca will speak the entire row when the user arrows Up or Down in a table.
 #: ../src/orca/orca-setup.ui.h:52
 msgid "Speak ro_w"
-msgstr ""
+msgstr "_വരി സംസാരിക്കുക"
 
 #. Translators: This is label in the Preferences dialog box. It refers to what Orca will speak when the user arrows Up or Down in a table. The choices are to speak just the new cell or to speak the entire row.
 #: ../src/orca/orca-setup.ui.h:54
-#, fuzzy
-#| msgid "Table"
 msgid "Table Rows"
-msgstr "ടേബിള്‍"
+msgstr "ടേബിള്‍ നിരകള്‍"
 
 #: ../src/orca/orca-setup.ui.h:59
 msgid "_All"
 msgstr "എല്ലാം (_A)"
 
 #: ../src/orca/orca-setup.ui.h:60
-#, fuzzy
-#| msgid "Pronunciation"
 msgid "Punctuation Level"
-msgstr "ഉച്ചാരണം"
+msgstr "ഉച്ചാരണ നില"
 
 #. Translators: If this setting is enabled, Orca will only speak text which is actually displayed on the screen. It will NOT speak things like the role of an item (e.g. 'checkbox') or its state (e.g. 'not checked') or say 'mispelled' to indicate the presence of red squiggly spelling error lines -- things which Orca normally speaks. This setting is primarily intended for low vision users and sighted users with a learning disability.
 #: ../src/orca/orca-setup.ui.h:62
 msgid "Only speak displayed text"
-msgstr ""
+msgstr "കാണുന്നത് മാത്രം പറയുക"
 
 #: ../src/orca/orca-setup.ui.h:63
 msgid "Speak blank lines"
-msgstr ""
+msgstr "ഒഴിഞ്ഞ വരികള്‍ പറയുക"
 
 #: ../src/orca/orca-setup.ui.h:64
 msgid "Speak _indentation and justification"
@@ -3973,7 +3937,7 @@ msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:68
 msgid "Speak tutorial messages"
-msgstr ""
+msgstr "ടൂട്ടോറിയല്‍ സന്ദേശങ്ങള്‍ പറയുക"
 
 #: ../src/orca/orca-setup.ui.h:69
 msgid "Spoken Context"
@@ -3981,11 +3945,9 @@ msgstr ""
 
 #. Translators: This is an option in the Preferences dialog box related to the speaking of progress bar information. If checked, Orca will speak progress bar information.
 #: ../src/orca/orca-setup.ui.h:71
-#, fuzzy
-#| msgid "Table"
 msgctxt "ProgressBarUpdates"
 msgid "Enable_d"
-msgstr "ടേബിള്‍"
+msgstr "പ്രവര്‍ത്തന _സജ്ജം"
 
 #. Translators: Here this is a label for a spin button through which a user can customize the frequency in seconds an announcement should be made regarding the current value of a progress bar.
 #: ../src/orca/orca-setup.ui.h:73
@@ -4000,10 +3962,8 @@ msgstr ""
 
 #. Translators: This is a label in the Preferences dialog box. It applies to several options related to which progress bars Orca should speak and how often Orca should speak them.
 #: ../src/orca/orca-setup.ui.h:77
-#, fuzzy
-#| msgid "progress bar"
 msgid "Progress Bar Updates"
-msgstr "പുരോഗതി കാണിക്കുന്ന ബാര്‍"
+msgstr "പുരോഗതി കാണിക്കുന്ന ബാറിന്റെ പുതുക്കിയ വിവരങ്ങള്‍"
 
 #: ../src/orca/orca-setup.ui.h:78
 msgid "Speech"
@@ -4011,11 +3971,11 @@ msgstr "സംഭാഷണം"
 
 #: ../src/orca/orca-setup.ui.h:79
 msgid "Enable Braille _support"
-msgstr ""
+msgstr "ബ്രൈലി _പിന്‍തുണ ലഭ്യമാക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:80
 msgid "Enable Braille _monitor"
-msgstr ""
+msgstr "ബ്രൈലി _മോണിറ്റര്‍ ലഭ്യമാക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:81
 msgid "_Abbreviated role names"
@@ -4035,26 +3995,22 @@ msgid "Contraction _Table:"
 msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:86
-#, fuzzy
-#| msgid "Display more options"
 msgid "Display Settings"
-msgstr "കൂടുതല്‍ ഉപാധികള്‍ കാണിക്കുക"
+msgstr "ഡിസ്‌പ്ലെ ക്രമീകരണങ്ങള്‍"
 
 #. Translators: This option refers to the dot or dots in braille which will be used to 'underline' certain characters.
 #: ../src/orca/orca-setup.ui.h:88
-#, fuzzy
-#| msgid "_None"
 msgctxt "braille dots"
 msgid "_None"
-msgstr "ഒന്നുമില്ല (_N)"
+msgstr "_ഒന്നുമില്ല"
 
 #: ../src/orca/orca-setup.ui.h:92
 msgid "Selection Indicator"
-msgstr ""
+msgstr "തെരഞ്ഞെടുക്കല്‍ സൂചന"
 
 #: ../src/orca/orca-setup.ui.h:93
 msgid "Hyperlink Indicator"
-msgstr ""
+msgstr "കണ്ണി സൂചന"
 
 #: ../src/orca/orca-setup.ui.h:94
 msgid "Braille"
@@ -4066,49 +4022,47 @@ msgstr ""
 
 #: ../src/orca/orca-setup.ui.h:96
 msgid "Enable _alphanumeric and punctuation keys"
-msgstr ""
+msgstr "_ആല്‍ഫാ ന്യൂമറിക്ക്, ചിഹ്ന കീകള്‍ ലഭ്യമാക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:97
 msgid "Enable _modifier keys"
-msgstr ""
+msgstr "_മോഡിഫയര്‍ കീകള്‍ ലഭ്യമാക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:98
 msgid "Enable _function keys"
-msgstr ""
+msgstr "_ഫങ്ഷന്‍ കീകള്‍ ലഭ്യമാക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:99
 msgid "Enable ac_tion keys"
-msgstr ""
+msgstr "_പ്രവര്‍ത്തന കീകള്‍ ലഭ്യമാക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:100
 msgid "Enable _navigation keys"
-msgstr ""
+msgstr "_നാവിഗേഷന്‍ കീകള്‍ ലഭ്യമാക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:105
 msgid "Enable echo by _word"
-msgstr ""
+msgstr "_വാക്ക് വെച്ച് പറയുക"
 
 #: ../src/orca/orca-setup.ui.h:106
 msgid "Enable echo by _sentence"
-msgstr ""
+msgstr "_വാക്യം വെച്ച് പറയുക"
 
 #: ../src/orca/orca-setup.ui.h:107
 msgid "Key Echo"
-msgstr ""
+msgstr "കീ പറയല്‍"
 
 #: ../src/orca/orca-setup.ui.h:108
 msgid "Orca _Modifier Key(s):"
-msgstr ""
+msgstr "ഓര്‍ക്ക മോഡിഫയര്‍ കീകള്‍:"
 
 #: ../src/orca/orca-setup.ui.h:109
 msgid "Key Bindings"
-msgstr ""
+msgstr "കീ ബന്ധങ്ങള്‍"
 
 #: ../src/orca/orca-setup.ui.h:110
-#, fuzzy
-#| msgid "Pronunciation"
 msgid "Pronunciation Dictionary"
-msgstr "ഉച്ചാരണം"
+msgstr "ഉച്ചാരണ നിഘണ്ടു"
 
 #: ../src/orca/orca-setup.ui.h:111
 msgid "_New entry"
@@ -4124,19 +4078,17 @@ msgstr "ഉച്ചാരണം"
 
 #: ../src/orca/orca-setup.ui.h:114
 msgid "_Speak all"
-msgstr ""
+msgstr "എല്ലാം _പറയു"
 
 #: ../src/orca/orca-setup.ui.h:115
 msgid "Speak _none"
-msgstr ""
+msgstr "_ഒന്നും പറയണ്ട"
 
 #: ../src/orca/orca-setup.ui.h:116
 msgid "_Reset"
 msgstr "_വീണ്ടും ക്രമികരിക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:117
-#, fuzzy
-#| msgid "Text Attributes"
 msgid "Text attributes"
 msgstr "ടെക്സ്റ്റ് സവിശേഷതകള്‍"
 
@@ -4148,12 +4100,12 @@ msgstr "_താഴേക്ക് നീങ്ങുക"
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _down one button, move that attribute down one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:121
 msgid "Move _down one"
-msgstr ""
+msgstr "ഒന്ന് _താഴേക്ക് നീക്കുക"
 
 #. Translators: This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move _up one button, move that attribute up one line in the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:123
 msgid "Move _up one"
-msgstr ""
+msgstr "ഒന്ന് _മുകളിലേക്ക് നീക്കുക"
 
 #. Translators:  This label is on a button on the Text Attributes pane of the Orca Preferences dialog. On that pane there is a long list of possible text attributes. The user can select one and then, by using the Move to _top button, move that attribute to the top of the list. The ordering in the list is important as Orca will speak the selected text attributes in the given order.
 #: ../src/orca/orca-setup.ui.h:125
@@ -4162,11 +4114,11 @@ msgstr "_മുകളിലേക്ക് നീങ്ങുക"
 
 #: ../src/orca/orca-setup.ui.h:126
 msgid "Adjust selected attributes"
-msgstr ""
+msgstr "തെരഞ്ഞെടുത്ത സവിശേഷതകള്‍ ക്രമീകരിക്കുക"
 
 #: ../src/orca/orca-setup.ui.h:127
 msgid "Braille Indicator"
-msgstr ""
+msgstr "ബ്രൈലി സൂചന"
 
 #: ../src/orca/orca-setup.ui.h:128
 msgid "Text Attributes"
@@ -4211,17 +4163,17 @@ msgstr ""
 #. space characters".  The %d is the number and the %s
 #. is the spoken word for the character.
 #.
-#: ../src/orca/script_utilities.py:2387
+#: ../src/orca/script_utilities.py:2385
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)d %(repeatChar)s അക്ഷരം"
+msgstr[1] "%(count)d %(repeatChar)s അക്ഷരങ്ങള്‍"
 
 #. Translators: this indicates that this piece of
 #. text is a hypertext link.
 #.
-#: ../src/orca/script_utilities.py:2462
+#: ../src/orca/script_utilities.py:2460
 #: ../src/orca/scripts/apps/soffice/script.py:1219
 #: ../src/orca/scripts/default.py:2051 ../src/orca/speech_generator.py:1027
 msgid "link"
@@ -4232,22 +4184,20 @@ msgstr "ലിങ്ക്"
 #. characters, e.g. 'X' followed by 'superscript 2' followed by
 #. 'superscript 3' should be presented as 'X superscript 23'.
 #.
-#: ../src/orca/script_utilities.py:2552
-#, fuzzy, python-format
-#| msgid "superscript a"
+#: ../src/orca/script_utilities.py:2550
+#, python-format
 msgid " superscript %s"
-msgstr "സൂപര്‍സ്ക്രിപ്ട് a  ('ª' (U+00aa) എന്ന അക്ഷരം)"
+msgstr " സൂപര്‍സ്ക്രിപ്ട് %s"
 
 #. Translators: This string is part of the presentation of an
 #. item that includes one or several consequtive subscripted
 #. characters, e.g. 'X' followed by 'subscript 2' followed by
 #. 'subscript 3', should be presented as 'X subscript 23.'
 #.
-#: ../src/orca/script_utilities.py:2562
-#, fuzzy, python-format
-#| msgid "superscript a"
+#: ../src/orca/script_utilities.py:2560
+#, python-format
 msgid " subscript %s"
-msgstr "സൂപര്‍സ്ക്രിപ്ട് a  ('ª' (U+00aa) എന്ന അക്ഷരം)"
+msgstr " സബ്സ്ക്രിപ്റ്റ് %s"
 
 #. Translators: the Orca "SayAll" command allows the
 #. user to press a key and have the entire document in
@@ -4310,7 +4260,7 @@ msgstr "വായിച്ചത്"
 #.
 #: ../src/orca/scripts/apps/gcalctool/script.py:86
 msgid "Unable to get calculator display"
-msgstr ""
+msgstr "ഗണനി ഡിസ്പ്ലേ കിട്ടിയില്ല"
 
 #. Translators: these are labels from the gedit spell checking
 #. dialog and must be the same strings gedit uses.  We hate
@@ -4465,10 +4415,8 @@ msgstr "അറിയിപ്പ് %s"
 #. Translators: This denotes a notification to the user of some sort.
 #.
 #: ../src/orca/scripts/apps/notify-osd/script.py:85
-#, fuzzy
-#| msgid "Notification %s"
 msgid "Notification"
-msgstr "അറിയിപ്പ് %s"
+msgstr "അറിയിപ്പ്"
 
 #. Translators: The Package Manager application notifies the
 #. user of minor errors by displaying an icon in the status
@@ -4479,7 +4427,7 @@ msgstr "അറിയിപ്പ് %s"
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:114
 msgid "Notify me when errors have been logged."
-msgstr ""
+msgstr "പിഴവുകള്‍ കണക്കാക്കുമ്പേള്‍ എന്നെ അറിയിക്കുക."
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
@@ -4488,7 +4436,7 @@ msgstr ""
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1740
 #: ../src/orca/scripts/toolkits/WebKitGtk/script.py:345
 msgid "Loading.  Please wait."
-msgstr ""
+msgstr "ലഭ്യമാക്കുന്നു.  ദയവായി കാത്തിരിക്കുക."
 
 #. Translators: this is in reference to loading a web page
 #. or some other content.
@@ -4497,7 +4445,7 @@ msgstr ""
 #: ../src/orca/scripts/toolkits/Gecko/script.py:1753
 #: ../src/orca/scripts/toolkits/WebKitGtk/script.py:355
 msgid "Finished loading."
-msgstr ""
+msgstr "ലഭ്യമാക്കി കഴിഞ്ഞു."
 
 #. Translators: The Package Manager application notifies the
 #. user of minor errors by displaying an icon in the status
@@ -4507,7 +4455,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/apps/packagemanager/script.py:255
 msgid "An error occurred. View the error log for details."
-msgstr ""
+msgstr "ഒരു പിഴവ് ഉണ്ടായി. വിശദ വിവരങ്ങള്‍ക്കായി പിഴവ് ലോഗ് കാണുക."
 
 #. Translators: This is the tutorial string associated with a
 #. specific search field in the Packagemanager application.
@@ -4516,7 +4464,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/apps/packagemanager/tutorialgenerator.py:60
 msgid "Use Ctrl+L to move focus to the results."
-msgstr ""
+msgstr "Ctrl+L ഉപയോഗിച്ച് നേരിട്ട് ഫലത്തിലേക്ക് ശ്രദ്ധ തിരിക്കുക."
 
 #: ../src/orca/scripts/apps/pidgin/script.py:144
 #, python-format
@@ -4655,12 +4603,11 @@ msgstr "ടേബിളില്‍ നിന്നും പുറത്ത് 
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:759
 #: ../src/orca/structural_navigation.py:1334
-#, fuzzy, python-format
-#| msgid "table with %d rows and %d columns."
+#, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
-msgstr[0] "%d വരികളും %d നിരകളും ഉള്ള ടേബിള്‍."
-msgstr[1] "%d വരികളും %d നിരകളും ഉള്ള ടേബിള്‍."
+msgstr[0] "%d വരി ഉള്ള പട്ടിക"
+msgstr[1] "%d വരികള്‍ ഉള്ള പട്ടിക"
 
 #. Translators: this represents the number of columns in a table.
 #.
@@ -4669,8 +4616,8 @@ msgstr[1] "%d വരികളും %d നിരകളും ഉള്ള ടേ
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d നിര"
+msgstr[1] "%d നിരകള്‍"
 
 #. Translators: this is used to announce that the
 #. current input line in a spreadsheet is blank/empty.
@@ -4770,16 +4717,14 @@ msgstr ""
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1944
 msgid "Last row deleted."
-msgstr ""
+msgstr "അവസാം വരി നീക്കി."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just deleted.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1948
-#, fuzzy
-#| msgid "delete"
 msgid "Row deleted."
-msgstr "delete"
+msgstr "നിര നീക്കി."
 
 #. Translators: This message is to inform the user that a
 #. new table row was inserted at the end of the existing
@@ -4788,16 +4733,14 @@ msgstr "delete"
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1955
 msgid "Row inserted at the end of the table."
-msgstr ""
+msgstr "പട്ടികയുടെ അവസാനം നിര ചേര്‍ത്തു."
 
 #. Translators: This message is to inform the user that
 #. a row in a table was just inserted.
 #.
 #: ../src/orca/scripts/apps/soffice/script.py:1959
-#, fuzzy
-#| msgid "insert"
 msgid "Row inserted."
-msgstr "insert"
+msgstr "നിര ചേര്‍ത്തു."
 
 #. Translators: this is the title of the window that
 #. you get when using StarOffice Presentation Wizard. The
@@ -4846,18 +4789,17 @@ msgstr "ഓഫ് ചെയ്തിരിക്കുന്നു"
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d അക്ഷരം വളരെ വലുത്"
+msgstr[1] "%d അക്ഷരങ്ങള്‍ വളരെ വലുത്"
 
 #. Translators: this represents the (row, col) position of
 #. a cell in a table.
 #.
 #: ../src/orca/scripts/apps/soffice/structural_navigation.py:123
 #: ../src/orca/structural_navigation.py:4083
-#, fuzzy, python-format
-#| msgid "row %d, column %d"
+#, python-format
 msgid "Row %(row)d, column %(column)d."
-msgstr "വരി %d, നിര %d"
+msgstr "നിര %(row)d, വരി %(column)d."
 
 #. Translators: this is the name of a panel in Thunderbird.
 #.
@@ -5393,14 +5335,14 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:762
 msgid "Marks the beginning of a text selection."
-msgstr ""
+msgstr "ടെക്സ്റ്റ് തെരഞ്ഞെടുക്കലിന്റെ തുടക്കം അടയാളപ്പെടുത്തുന്നു."
 
 #. Translators: this is used to indicate the end point
 #. of a text selection.
 #.
 #: ../src/orca/scripts/default.py:770
 msgid "Marks the end of a text selection."
-msgstr ""
+msgstr "ടെക്സ്റ്റ് തെരഞ്ഞെടുക്കലിന്റെ ഒടുക്കം അടയാളപ്പെടുത്തുന്നു."
 
 #. Translators: Orca has a "Learn Mode" that will allow
 #. the user to type any key on the keyboard and hear what
@@ -5430,14 +5372,14 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:805
 msgid "Decreases the speech rate."
-msgstr ""
+msgstr "സംസാര വേഗം കുറയ്ക്കുക."
 
 #. Translators: the speech rate is how fast the speech
 #. synthesis engine will generate speech.
 #.
 #: ../src/orca/scripts/default.py:813
 msgid "Increases the speech rate."
-msgstr ""
+msgstr "സംസാര വേഗം കൂട്ടുക."
 
 #. Translators: the speech pitch is how high or low in
 #. pitch/frequency the speech synthesis engine will
@@ -5445,7 +5387,7 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:822
 msgid "Decreases the speech pitch."
-msgstr ""
+msgstr "സംസാര ആവൃത്തി കുറയ്ക്കുക."
 
 #. Translators: the speech pitch is how high or low in
 #. pitch/frequency the speech synthesis engine will
@@ -5453,11 +5395,11 @@ msgstr ""
 #.
 #: ../src/orca/scripts/default.py:831
 msgid "Increases the speech pitch."
-msgstr ""
+msgstr "സംസാര ആവൃത്തി കൂട്ടുക."
 
 #: ../src/orca/scripts/default.py:836
 msgid "Quits Orca"
-msgstr ""
+msgstr "ഓര്‍ക്ക അവസാനിപ്പിക്കുക"
 
 #. Translators: the preferences configuration dialog is
 #. the dialog that allows users to set their preferences
