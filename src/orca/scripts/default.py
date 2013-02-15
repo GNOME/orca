@@ -59,6 +59,7 @@ import orca.notification_messages as notification_messages
 from orca.orca_i18n import _
 from orca.orca_i18n import ngettext
 from orca.orca_i18n import C_
+from orca.orca_platform import version
 
 _settingsManager = settings_manager.getManager()
 
@@ -1542,6 +1543,9 @@ class Script(script.Script):
 
         if orca_state.learnModeEnabled:
             return True
+
+        # Translators: This message presents the Orca version number.
+        self.presentMessage(_("Orca version %s." % version))
 
         self.speakMessage(
             # Translators: Orca has a "Learn Mode" that will allow
