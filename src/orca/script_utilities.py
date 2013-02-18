@@ -272,7 +272,9 @@ class Utilities:
                 if relation.getRelationType() == \
                         pyatspi.RELATION_NODE_PARENT_OF:
                     for target in range(relation.getNTargets()):
-                        nodes.append(relation.getTarget(target))
+                        node = relation.getTarget(target)
+                        if node and node.getIndexInParent() != -1:
+                            nodes.append(node)
                     return nodes
         except:
             pass
