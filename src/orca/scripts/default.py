@@ -45,6 +45,7 @@ import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.outline as outline
 import orca.orca as orca
+import orca.orca_i18n as orca_i18n
 import orca.orca_state as orca_state
 import orca.phonnames as phonnames
 import orca.script as script
@@ -2829,7 +2830,17 @@ class Script(script.Script):
         except IndexError:
             name, profileID = profiles[0]
 
+        oldVoiceLocale = _settingsManager.getVoiceLocale('default')
         _settingsManager.setProfile(profileID)
+        newVoiceLocale = _settingsManager.getVoiceLocale('default')
+
+        # Once we sort out all of the language changing details, this
+        # code probably should go somewhere else.
+        if oldVoiceLocale != newVoiceLocale:
+            modules = ['orca.chnames']
+            for module in modules:
+                orca_i18n.setModuleLocale(module, newVoiceLocale)
+
         # Translators: This is a detailed message which will be presented
         # as the user cycles amongst his/her saved profiles. A "profile"
         # is a collection of settings which apply to a given task, such

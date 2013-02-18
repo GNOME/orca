@@ -23,8 +23,10 @@ maps to the gettext.gettext function.  This function will accept a
 string and return a localized string for that string.
 """
 
-import os       # to get localdir path
-import gettext  # to get gettext (i18n) support
+import gettext
+import imp
+import os
+import sys
 
 # Alias gettext.gettext to _ and gettext.ngettext to ngettext
 #
@@ -50,3 +52,18 @@ def C_(ctx, s):
         # no translation found, return input string
         return s
     return translated
+
+def setModuleLocale(moduleName, newLocale=None):
+    global _, ngettext
+
+    if not newLocale:
+        _ = gettext.gettext
+        ngettext = gettext.ngettext
+    else:
+        translation = gettext.translation('orca', languages=[newLocale])
+        _ = translation.gettext
+        ngettext = translation.ngettext
+
+    module = sys.modules.get(moduleName)
+    if module:
+        imp.reload(module)

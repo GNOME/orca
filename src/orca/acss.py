@@ -101,3 +101,7 @@ class ACSS(dict):
                 _name += "%s-%s:" % (k, self[k])
         _name = _name[:-1]
         return _name
+
+    def getLocale(self):
+        family = self.get(ACSS.FAMILY, {})
+        return family.get('locale')

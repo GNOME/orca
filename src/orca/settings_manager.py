@@ -272,6 +272,11 @@ class SettingsManager(object):
     def getSetting(self, settingName):
         return getattr(settings, settingName)
 
+    def getVoiceLocale(self, voice='default'):
+        voices = self.getSetting('voices')
+        v = voices.get(voice, {})
+        return v.getLocale()
+
     def _getGeneral(self, profile=None):
         """Get from the active backend the general settings for
         the current profile"""
