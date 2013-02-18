@@ -44,6 +44,7 @@ import orca.debug as debug
 import orca.scripts.default as default
 import orca.keybindings as keybindings
 import orca.input_event as input_event
+import orca.messages as messages
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
@@ -875,10 +876,7 @@ class Script(default.Script):
                     inputLine = \
                         self.utilities.substring(self.inputLineForCell, 0, -1)
                     if not inputLine:
-                        # Translators: this is used to announce that the
-                        # current input line in a spreadsheet is blank/empty.
-                        #
-                        inputLine = _("empty")
+                        inputLine = messages.EMPTY
                     debug.println(self.debugLevel,
                         "StarOffice.speakInputLine: contents: %s" % inputLine)
                     self.displayBrailleMessage(inputLine, \
@@ -955,10 +953,7 @@ class Script(default.Script):
         if table:
             row = self.getTableRow(orca_state.locusOfFocus)
             self.dynamicColumnHeaders[hash(table)] = row
-            # Translators: Orca allows you to dynamically define which
-            # row of a spreadsheet or table counts as column headers.
-            #
-            line = _("Dynamic column header set for row %d") % (row+1)
+            line = messages.DYNAMIC_COLUMN_HEADER_SET % (row+1)
             self.presentMessage(line)
 
         return True
@@ -977,10 +972,7 @@ class Script(default.Script):
             row = self.getTableRow(orca_state.locusOfFocus)
             try:
                 del self.dynamicColumnHeaders[hash(table)]
-                # Translators: Orca allows you to dynamically define which
-                # row of a spreadsheet or table counts as column headers.
-                #
-                line = _("Dynamic column header cleared.")
+                line = messages.DYNAMIC_COLUMN_HEADER_CLEARED
                 speech.stop()
                 self.presentMessage(line)
             except:
@@ -1029,11 +1021,7 @@ class Script(default.Script):
         if table:
             column = self.getTableColumn(orca_state.locusOfFocus)
             self.dynamicRowHeaders[hash(table)] = column
-            # Translators: Orca allows you to dynamically define which
-            # column of a spreadsheet or table counts as row headers.
-            #
-            line = _("Dynamic row header set for column %s") \
-                   % self.columnConvert(column+1)
+            line = messages.DYNAMIC_ROW_HEADER_SET % self.columnConvert(column+1)
             self.presentMessage(line)
 
         return True
@@ -1052,10 +1040,7 @@ class Script(default.Script):
             column = self.getTableColumn(orca_state.locusOfFocus)
             try:
                 del self.dynamicRowHeaders[hash(table)]
-                # Translators: Orca allows you to dynamically define which
-                # column of a spreadsheet or table counts as row headers.
-                #
-                line = _("Dynamic row header cleared.")
+                line = messages.DYNAMIC_ROW_HEADER_CLEARED
                 speech.stop()
                 self.presentMessage(line)
             except:
@@ -1333,10 +1318,7 @@ class Script(default.Script):
         """
 
         if not textToSpeak and event and self.speakBlankLine(event.source):
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"), None, False)
+            speech.speak(messages.BLANK, None, False)
 
         # Check to see if there are any hypertext links in this paragraph.
         # If no, then just speak the whole line. Otherwise, split the text
@@ -1938,25 +1920,11 @@ class Script(default.Script):
                 fullMessage = briefMessage = ""
                 voice = self.voices.get(settings.SYSTEM_VOICE)
                 if activeRow == itable.nRows:
-                    # Translators: This message is to inform the user that
-                    # the last row of a table in a document was just deleted.
-                    #
-                    fullMessage = _("Last row deleted.")
-                    # Translators: This message is to inform the user that
-                    # a row in a table was just deleted.
-                    #
-                    briefMessage = _("Row deleted.")
+                    fullMessage = messages.TABLE_ROW_DELETED_FROM_END
+                    briefMessage = messages.TABLE_ROW_DELETED
                 else:
-                    # Translators: This message is to inform the user that a
-                    # new table row was inserted at the end of the existing
-                    # table. This typically happens when the user presses Tab
-                    # from within the last cell of the table.
-                    #
-                    fullMessage = _("Row inserted at the end of the table.")
-                    # Translators: This message is to inform the user that
-                    # a row in a table was just inserted.
-                    #
-                    briefMessage = _("Row inserted.")
+                    fullMessage =  messages.TABLE_ROW_INSERTED_AT_END
+                    briefMessage = messages.TABLE_ROW_INSERTED
                 if fullMessage:
                     self.presentMessage(fullMessage, briefMessage, voice)
 
@@ -2128,12 +2096,7 @@ class Script(default.Script):
                                                  self.inputLineForCell, 0, -1)
                                         if inputLine and (len(inputLine) > 1) \
                                             and (inputLine[0] == "="):
-                                            # Translators: this means a
-                                            # particular cell in a spreadsheet
-                                            # has a formula
-                                            # (e.g., "=sum(a1:d1)")
-                                            #
-                                            hf = _("has formula")
+                                            hf = messages.HAS_FORMULA
                                             speech.speak(" %s" % hf,
                                                          None, False)
                                             self.presentItemsInBraille([hf])
@@ -2154,9 +2117,7 @@ class Script(default.Script):
         - name: the name of the cell
         """
 
-        # Translators: this is the name of a cell in a spreadsheet.
-        #
-        line = _("Cell %s") % name
+        line = messages.CELL % name
         speech.speak(line)
 
     def onCaretMoved(self, event):

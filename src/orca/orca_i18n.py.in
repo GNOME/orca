@@ -32,6 +32,7 @@ import sys
 #
 _ = gettext.gettext
 ngettext = gettext.ngettext
+cgettext = gettext.gettext
 
 # Tell gettext where to find localized strings.
 #
@@ -47,22 +48,24 @@ gettext.textdomain("orca")
 
 def C_(ctx, s):
     """Provide qualified translatable strings via context."""
-    translated = gettext.gettext('%s\x04%s' % (ctx, s))
+    translated = cgettext('%s\x04%s' % (ctx, s))
     if '\x04' in translated:
         # no translation found, return input string
         return s
     return translated
 
 def setModuleLocale(moduleName, newLocale=None):
-    global _, ngettext
+    global _, ngettext, cgettext
 
     if not newLocale:
         _ = gettext.gettext
         ngettext = gettext.ngettext
+        cgettext = gettext.gettext
     else:
-        translation = gettext.translation('orca', languages=[newLocale])
+        translation = gettext.translation('orca', localedir, languages=[newLocale])
         _ = translation.gettext
         ngettext = translation.ngettext
+        cgettext = translation.gettext
 
     module = sys.modules.get(moduleName)
     if module:

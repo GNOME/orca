@@ -18,6 +18,7 @@ src/orca/input_event.py
 src/orca/keybindings.py
 src/orca/keynames.py
 src/orca/liveregions.py
+src/orca/messages.py
 src/orca/notification_messages.py
 src/orca/orca_bin.py.in
 src/orca/orca_console_prefs.py

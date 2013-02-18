@@ -26,10 +26,7 @@
 #
 # pylint: disable-msg=W0142
 
-"""Provides an Orca speech server for Speech Dispatcher backend.
-
-NOTE: THIS IS EXPERIMENTAL ONLY AND IS NOT A SUPPORTED COMPONENT OF ORCA.
-"""
+"""Provides an Orca speech server for Speech Dispatcher backend."""
 
 __id__ = "$Id$"
 __version__   = "$Revision$"
@@ -43,6 +40,7 @@ import re
 
 from . import chnames
 from . import debug
+from . import messages
 from . import speechserver
 from . import settings
 from . import orca_state
@@ -379,8 +377,9 @@ class SpeechServer(speechserver.SpeechServer):
         acss[ACSS.RATE] = max(0, min(99, rate + delta))
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech rate is now %d" % rate)
-        # Translators: This string announces speech rate change.
-        self.speak(decrease and _("slower.") or _("faster."), acss=acss)
+
+        self.speak(decrease and messages.SPEECH_SLOWER \
+                   or messages.SPEECH_FASTER, acss=acss)
 
     def _change_default_speech_pitch(self, decrease=False):
         acss = settings.voices[settings.DEFAULT_VOICE]
@@ -392,8 +391,9 @@ class SpeechServer(speechserver.SpeechServer):
         acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
         debug.println(debug.LEVEL_CONFIGURATION,
                       "Speech pitch is now %d" % pitch)
-        # Translators: This string announces speech pitch change.
-        self.speak(decrease and _("lower.") or _("higher."), acss=acss)
+
+        self.speak(decrease and messages.SPEECH_LOWER \
+                   or messages.SPEECH_HIGHER, acss=acss)
 
     def getInfo(self):
         return [self._SERVER_NAMES.get(self._id, self._id), self._id]

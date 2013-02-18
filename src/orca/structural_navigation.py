@@ -32,6 +32,7 @@ import pyatspi
 from . import debug
 from . import input_event
 from . import keybindings
+from . import messages
 from . import orca
 from . import orca_gui_navlist
 from . import orca_state
@@ -353,13 +354,7 @@ class StructuralNavigationObject:
         try:
             objects = self.structuralNavigation._getAll(self)
         except:
-            # Translators: Orca has a command that presents a list of
-            # structural navigation objects in a dialog box so that users
-            # can navigate more quickly than they could with native keyboard
-            # navigation. This is a message that will be presented to the
-            # user when an error (such as the operation timing out) kept us
-            # from getting these objects.
-            script.presentMessage(_("Error: Could not create list of objects."))
+            script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
             return
 
         title, columnHeaders, rowData = self._dialogData()
@@ -427,13 +422,7 @@ class StructuralNavigationObject:
             try:
                 objects = self.structuralNavigation._getAll(self, arg=level)
             except:
-                # Translators: Orca has a command that presents a list of
-                # structural navigation objects in a dialog box so that users
-                # can navigate more quickly than they could with native keyboard
-                # navigation. This is a message that will be presented to the
-                # user when an error (such as the operation timing out) kept us
-                # from getting these objects.
-                script.presentMessage(_("Error: Could not create list of objects."))
+                script.presentMessage(messages.NAVIGATION_DIALOG_ERROR)
                 return
 
             title, columnHeaders, rowData = self._dialogData(arg=level)
@@ -509,10 +498,7 @@ class StructuralNavigationObject:
             if settings.inferLiveRegions:
                 script.liveMngr.goLastLiveRegion()
             else:
-                # Translators: this announces to the user that live region
-                # support has been turned off.
-                #
-                script.presentMessage(_("Live region support is off"))
+                script.presentMessage(messages.LIVE_REGIONS_OFF)
 
         if self.objType == StructuralNavigation.TABLE_CELL:
             return goCell
@@ -740,29 +726,9 @@ class StructuralNavigation:
         self.enabled = not self.enabled
 
         if self.enabled:
-            # Translators: the structural navigation keys are designed
-            # to move the caret around document content by object type.
-            # Thus H moves you to the next heading, Shift H to the
-            # previous heading, T to the next table, and so on. Some
-            # users prefer to turn this off to use Firefox's search
-            # when typing feature.  This message is sent to both the
-            # braille display and the speech synthesizer when the user
-            # toggles the structural navigation feature of Orca.
-            # It should be a brief informative message.
-            #
-            string = _("Structural navigation keys on.")
+            string = messages.STRUCTURAL_NAVIGATION_KEYS_ON
         else:
-            # Translators: the structural navigation keys are designed
-            # to move the caret around document content by object type.
-            # Thus H moves you to the next heading, Shift H to the
-            # previous heading, T to the next table, and so on. Some
-            # users prefer to turn this off to use Firefox's search
-            # when typing feature.  This message is sent to both the
-            # braille display and the speech synthesizer when the user
-            # toggles the structural navigation feature of Orca.
-            # It should be a brief informative message.
-            #
-            string = _("Structural navigation keys off.")
+            string = messages.STRUCTURAL_NAVIGATION_KEYS_OFF
 
         debug.println(debug.LEVEL_CONFIGURATION, string)
         self._script.presentMessage(string)
@@ -796,12 +762,7 @@ class StructuralNavigation:
         try:
             iTable = table.queryTable()
         except:
-            # Translators: this is for navigating document content by
-            # moving from table cell to table cell. If the user gives a
-            # table navigation command but is not in a table, Orca speaks
-            # this message.
-            #
-            self._script.presentMessage(_("Not in a table."))
+            self._script.presentMessage(messages.TABLE_NOT_IN_A)
             return None
 
         currentRow, currentCol = currentCoordinates
@@ -815,40 +776,16 @@ class StructuralNavigation:
             cell = iTable.getAccessibleAt(desiredRow, desiredCol)
             if not cell:
                 if desiredCol < 0:
-                    # Translators: this is for navigating document
-                    # content by moving from table cell to table cell.
-                    # This is the message spoken when the user attempts
-                    # to move to the left of the current cell and is
-                    # already in the first column.
-                    #
-                    self._script.presentMessage(_("Beginning of row."))
+                    self._script.presentMessage(messages.TABLE_ROW_BEGINNING)
                     desiredCol = 0
                 elif desiredCol > iTable.nColumns - 1:
-                    # Translators: this is for navigating document
-                    # content by moving from table cell to table cell.
-                    # This is the message spoken when the user attempts
-                    # to move to the right of the current cell and is
-                    # already in the last column.
-                    #
-                    self._script.presentMessage(_("End of row."))
+                    self._script.presentMessage(messages.TABLE_ROW_END)
                     desiredCol = iTable.nColumns - 1
                 if desiredRow < 0:
-                    # Translators: this is for navigating document
-                    # content by moving from table cell to table cell.
-                    # This is the message spoken when the user attempts
-                    # to move to the cell above the current cell and is
-                    # already in the first row.
-                    #
-                    self._script.presentMessage(_("Top of column."))
+                    self._script.presentMessage(messages.TABLE_COLUMN_TOP)
                     desiredRow = 0
                 elif desiredRow > iTable.nRows - 1:
-                    # Translators: this is for navigating document
-                    # content by moving from table cell to table cell.
-                    # This is the message spoken when the user attempts
-                    # to move to the cell below the current cell and is
-                    # already in the last row.
-                    #
-                    self._script.presentMessage(_("Bottom of column."))
+                    self._script.presentMessage(messages.TABLE_COLUMN_BOTTOM)
                     desiredRow = iTable.nRows - 1
             elif self._script.utilities.isSameObject(thisCell, cell) \
                  or settings.skipBlankCells and self._isBlankCell(cell):
@@ -967,21 +904,9 @@ class StructuralNavigation:
 
         if wrapped:
             if not isNext:
-                # Translators: when the user is attempting to locate a
-                # particular object and the top of a page or list is
-                # reached without that object being found, we "wrap" to
-                # the bottom and continue looking upwards. We need to
-                # inform the user when this is taking place.
-                #
-                self._script.presentMessage(_("Wrapping to bottom."))
+                self._script.presentMessage(messages.WRAPPING_TO_BOTTOM)
             else:
-                # Translators: when the user is attempting to locate a
-                # particular object and the bottom of a page or list is
-                # reached without that object being found, we "wrap" to the
-                # top and continue looking downwards. We need to inform the
-                # user when this is taking place.
-                #
-                self._script.presentMessage(_("Wrapping to top."))
+                self._script.presentMessage(messages.WRAPPING_TO_TOP)
 
         structuralNavigationObject.present(obj, arg)
 
@@ -1999,21 +1924,7 @@ class StructuralNavigation:
             self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
-            # Translators: this is for navigating document content by
-            # moving from anchor to anchor. (An anchor is a named spot
-            # that one can jump to.) This is a detailed message which
-            # will be presented to the user if no more anchors can be found.
-            #
-            full = _("No more anchors.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
+            full = messages.NO_MORE_ANCHORS
             brief = C_("structural navigation", "Not found")
             self._script.presentMessage(full, brief)
 
@@ -2098,22 +2009,8 @@ class StructuralNavigation:
             #
             self._presentLine(obj, characterOffset)
         else:
-            # Translators: this is for navigating document content by
-            # moving from blockquote to blockquote. This is a detailed
-            # message which will be presented to the user if no more
-            # blockquotes can be found.
-            #
-            full = _("No more blockquotes.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_BLOCKQUOTES
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _blockquoteDialogData(self):
@@ -2211,22 +2108,8 @@ class StructuralNavigation:
         if obj:
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating document content by
-            # moving from push button to push button in a form. This is
-            # a detailed message which will be presented to the user if
-            # no more push buttons can be found.
-            #
-            full = _("No more buttons.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_BUTTONS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _buttonDialogData(self):
@@ -2324,22 +2207,8 @@ class StructuralNavigation:
         if obj:
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating document content by
-            # moving from checkbox to checkbox in a form. This is a
-            # detailed message which will be presented to the user if
-            # no more checkboxes can be found.
-            #
-            full = _("No more check boxes.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_CHECK_BOXES
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _checkBoxDialogData(self):
@@ -2455,24 +2324,8 @@ class StructuralNavigation:
             self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
         else:
-            # Translators: this is for navigating document content by
-            # moving from 'large object' to 'large object'. A 'large
-            # object' is a logical chunk of text, such as a paragraph,
-            # a list, a table, etc. This is a detailed message which
-            # will be presented to the user if no more large objects
-            # can be found.
-            #
-            full = _("No more large objects.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_CHUNKS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _chunkDialogData(self):
@@ -2577,22 +2430,8 @@ class StructuralNavigation:
         if obj:
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating document content by
-            # moving from combo box to combo box in a form. This is a
-            # detailed message which will be presented to the user if
-            # no more checkboxes can be found.
-            #
-            full = _("No more combo boxes.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_COMBO_BOXES
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _comboBoxDialogData(self):
@@ -2708,22 +2547,8 @@ class StructuralNavigation:
         if obj:
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating document content by
-            # moving from text entry to text entry in a form. This is
-            # a detailed message which will be presented to the user if
-            # no more text entries can be found.
-            #
-            full = _("No more entries.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_ENTRIES
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _entryDialogData(self):
@@ -2832,22 +2657,8 @@ class StructuralNavigation:
                 obj = obj[0]
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating document content by
-            # moving from form field to form filed. This is a detailed
-            # message which will be presented to the user if no more form
-            # field can be found.
-            #
-            full = _("No more form fields.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_FORM_FIELDS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _formFieldDialogData(self):
@@ -3004,40 +2815,12 @@ class StructuralNavigation:
             self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         elif not arg:
-            # Translators: this is for navigating HTML content by moving from
-            # heading to heading (e.g. <h1>, <h2>, etc). This string is the
-            # detailed message which Orca will present if there are no more
-            # headings found.
-            #
-            full = _("No more headings.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_HEADINGS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
         else:
-            # Translators: this is for navigating HTML content by moving from
-            # heading to heading at a particular level (i.e. only <h1> or only
-            # <h2>, etc.) This string is the detailed message which Orca will
-            # present if there are no more headings found at the desired level.
-            #
-            full = _("No more headings at level %d.") % arg
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_HEADINGS_AT_LEVEL % arg
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _headingDialogData(self, arg=None):
@@ -3168,23 +2951,8 @@ class StructuralNavigation:
             self._setCaretPosition(obj, characterOffset)
             self._presentObject(obj, characterOffset)
         else:
-            # Translators: this is for navigating to the previous ARIA
-            # role landmark.  ARIA role landmarks are the W3C defined
-            # HTML tag attribute 'role' used to identify important part
-            # of webpage like banners, main context, search etc.  This
-            # is an indication that one was not found.
-            #
-            full = _("No landmark found.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_LANDMARK_FOUND
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     ########################
@@ -3292,22 +3060,8 @@ class StructuralNavigation:
             self._setCaretPosition(obj, characterOffset)
             self._presentLine(obj, characterOffset)
         else:
-            # Translators: this is for navigating document content by moving
-            # from bulleted/numbered list to bulleted/numbered list. This
-            # string is the detailed message which Orca will present if there
-            # are no more lists found.
-            #
-            full = _("No more lists.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_LISTS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _listDialogData(self):
@@ -3412,22 +3166,8 @@ class StructuralNavigation:
             #
             self._presentLine(obj, characterOffset)
         else:
-            # Translators: this is for navigating document content by
-            # moving from bulleted/numbered list item to  bulleted/
-            # numbered list item.  This string is the detailed message
-            # which Orca will present if there are no more list items found.
-            #
-            full = _("No more list items.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_LIST_ITEMS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _listItemDialogData(self):
@@ -3532,21 +3272,8 @@ class StructuralNavigation:
             #
             self._script.outlineAccessible(obj)
         else:
-            # Translators: this is for navigating HTML in a structural
-            # manner, where a 'live region' is a location in a web page
-            # that are updated without having to refresh the entire page.
-            #
-            full = _("No more live regions.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_LIVE_REGIONS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     ########################
@@ -3627,21 +3354,8 @@ class StructuralNavigation:
             self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
         else:
-            # Translators: this is for navigating document content by moving
-            # from paragraph to paragraph. This string is the detailed message
-            # which Orca will present if there are no more paragraphs found.
-            #
-            full = _("No more paragraphs.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_PARAGRAPHS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _paragraphDialogData(self):
@@ -3739,22 +3453,8 @@ class StructuralNavigation:
         if obj:
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating in document content by moving
-            # from radio button to radio button in a form. This string is the
-            # detailed message which Orca will present if there are no more
-            # radio buttons found.
-            #
-            full = _("No more radio buttons.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_RADIO_BUTTONS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _radioButtonDialogData(self):
@@ -3845,22 +3545,8 @@ class StructuralNavigation:
             self._setCaretPosition(newObj, characterOffset)
             self._presentObject(obj, 0)
         else:
-            # Translators: this is for navigating document content by moving
-            # amongst separators (e.g. <hr> tags). This string is the detailed
-            # message which Orca will present if there are no more separators
-            # found.
-            #
-            full = _("No more separators.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_SEPARATORS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     ########################
@@ -3940,21 +3626,8 @@ class StructuralNavigation:
             self._setCaretPosition(cell, characterOffset)
             self._presentObject(cell, characterOffset)
         else:
-            # Translators: this is for navigating document content by moving
-            # from table to table.  This string is the detailed message which
-            # Orca will present if there are no more tables found.
-            #
-            full = _("No more tables.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_TABLES
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _tableDialogData(self):
@@ -4174,22 +3847,8 @@ class StructuralNavigation:
             #
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating document content by moving
-            # from unvisited link to unvisited link. This string is the 
-            # detailed message which Orca will present if there are no more
-            # unvisited links found.
-            #
-            full = _("No more unvisited links.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_UNVISITED_LINKS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _unvisitedLinkDialogData(self):
@@ -4295,22 +3954,8 @@ class StructuralNavigation:
         if obj:
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating document content by moving
-            # from visited link to visited link. This string is the detailed
-            # message which Orca will present if there are no more visited
-            # links found.
-            #
-            full = _("No more visited links.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_VISITED_LINKS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _visitedLinkDialogData(self):
@@ -4406,22 +4051,8 @@ class StructuralNavigation:
             #
             obj.queryComponent().grabFocus()
         else:
-            # Translators: this is for navigating document content by moving
-            # from unvisited link to unvisited link. This string is the 
-            # detailed message which Orca will present if there are no more
-            # links found.
-            #
-            full = _("No more links.")
-            # Translators: Orca has a command that allows the user to move
-            # to the next structural navigation object. In Orca, "structural
-            # navigation" refers to quickly moving through a document by
-            # jumping amongst objects of a given type, such as from link to
-            # link, or from heading to heading, or from form field to form
-            # field. This is a brief message which will be presented to the
-            # user if the desired structural navigation object could not be
-            # found.
-            #
-            brief = C_("structural navigation", "Not found")
+            full = messages.NO_MORE_LINKS
+            brief = messages.STRUCTURAL_NAVIGATION_NOT_FOUND
             self._script.presentMessage(full, brief)
 
     def _linkDialogData(self):

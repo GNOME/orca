@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.messages as messages
 import orca.structural_navigation as structural_navigation
 import orca.settings as settings
 import orca.speech as speech
@@ -110,10 +111,7 @@ class StructuralNavigation(structural_navigation.StructuralNavigation):
             for child in cell:
                 speech.speak(self._script.utilities.displayedText(child))
         else:
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"))
+            speech.speak(messages.BLANK)
 
         if settings.speakCellCoordinates:
             [row, col] = self.getCellCoordinates(cell)

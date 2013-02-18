@@ -60,6 +60,7 @@ except:
 from . import braille
 from . import debug
 from . import event_manager
+from . import messages
 from . import notification_messages
 from . import orca_state
 from . import script_manager
@@ -68,7 +69,6 @@ from . import settings_manager
 from . import speech
 from .input_event import BrailleEvent
 from .input_event import KeyboardEvent
-from .orca_i18n import _
 from .orca_i18n import ngettext
 
 _eventManager = event_manager.getManager()
@@ -430,12 +430,8 @@ def loadUserSettings(script=None, inputEvent=None, skipReloadMessage=False):
         try:
             speech.init()
             if reloaded and not skipReloadMessage:
-                # Translators: there is a keystroke to reload the user
-                # preferences.  This is a spoken prompt to let the user
-                # know when the preferences has been reloaded.
-                #
-                msg = _("Orca user settings reloaded.")
-                speech.speak(msg, settings.voices.get(settings.SYSTEM_VOICE))
+                speech.speak(messages.SETTINGS_RELOADED,
+                             settings.voices.get(settings.SYSTEM_VOICE))
             debug.println(debug.LEVEL_CONFIGURATION,
                           "Speech module has been initialized.")
         except:
@@ -541,13 +537,7 @@ def listShortcuts(event):
     consumed = False
     message = ""
 
-    # Translators: The following string instructs the user how to navigate
-    # amongst the list of commands presented in 'list shortcuts' mode as
-    # well as how to exit the list when finished.
-    #
-    navigation = \
-        _("Use Up and Down Arrow to navigate the list. Press Escape to exit.")
-
+    navigation = messages.LIST_SHORTCUTS_MODE_NAVIGATION
     if event.type == pyatspi.KEY_PRESSED_EVENT:
         if (event.event_string == "1"):
             if not numShortcuts or orca_state.typeOfShortcuts != "default":
@@ -594,13 +584,8 @@ def listShortcuts(event):
                 orca_state.activeScript.speakMessage(message)
                 orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             else:
-                # Translators: This message is presented when the user is in
-                # 'list of shortcuts mode'. This is the message we present
-                # when the user requested a list of application-specific
-                # shortcuts, but none could be found for that application.
-                #
-                message = _("No Orca shortcuts for %s found.") % \
-                    (orca_state.activeScript.app.name)
+                message = messages.LIST_SHORTCUTS_MODE_NO_RESULTS % \
+                    orca_state.activeScript.app.name
                 orca_state.activeScript.speakMessage(message)
                 orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
@@ -609,16 +594,9 @@ def listShortcuts(event):
                 if orca_state.ptrToShortcut > 0: 
                     orca_state.ptrToShortcut = orca_state.ptrToShortcut-1
                 else:
-                    orca_state.ptrToShortcut = numShortcuts-1 
-                    # Translators: when the user is attempting to locate a
-                    # particular object and the top of a page or list is
-                    # reached without that object being found, we "wrap" to
-                    # the bottom and continue looking upwards. We need to
-                    # inform the user when this is taking place.
-                    #
-                    orca_state.activeScript.\
-                        presentMessage(_("Wrapping to bottom."))
-
+                    orca_state.ptrToShortcut = numShortcuts-1
+                    orca_state.activeScript.presentMessage(
+                        messages.WRAPPING_TO_BOTTOM)
                 message = \
                   orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
                   " " + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
@@ -631,14 +609,7 @@ def listShortcuts(event):
                     orca_state.ptrToShortcut = orca_state.ptrToShortcut+1
                 else:
                     orca_state.ptrToShortcut = 0 
-                    # Translators: when the user is attempting to locate a
-                    # particular object and the bottom of a page or list is
-                    # reached without that object being found, we "wrap" to the
-                    # top and continue looking downwards. We need to inform the
-                    # user when this is taking place.
-                    #
-                    orca_state.activeScript.\
-                        presentMessage(_("Wrapping to top."))
+                    orca_state.activeScript.presentMessage(messages.WRAPPING_TO_TOP)
                 message = \
                   orca_state.listOfShortcuts[orca_state.ptrToShortcut][0] + \
                   " " + orca_state.listOfShortcuts[orca_state.ptrToShortcut][1]
@@ -649,17 +620,7 @@ def listShortcuts(event):
             orca_state.activeScript.exitListShortcutsMode(event)
             consumed = True 
         else:
-            # Translators: Orca has a 'List Shortcuts' mode by which a user can
-            # navigate through a list of the bound commands in Orca. Pressing 1
-            # presents the commands/shortcuts available for all applications.
-            # These are the "default" commands/shortcuts. Pressing 2 presents
-            # commands/shortcuts Orca provides for the application with focus.
-            # The following message is presented to the user upon entering this
-            # mode.
-            #
-            message = _("Press 1 for Orca's default shortcuts. Press 2 for " \
-                        "Orca's shortcuts for the current application. " \
-                        "Press escape to exit.")
+            message = messages.LIST_SHORTCUTS_MODE_TUTORIAL
             orca_state.activeScript.speakMessage(message)
             orca_state.activeScript.displayBrailleMessage(message, -1, -1)
             consumed = True
@@ -820,9 +781,7 @@ def shutdown(script=None, inputEvent=None):
         signal.signal(signal.SIGALRM, settings.timeoutCallback)
         signal.alarm(settings.timeoutTime)
 
-    # Translators: this is what Orca speaks and brailles when it quits.
-    #
-    orca_state.activeScript.presentMessage(_("Goodbye."))
+    orca_state.activeScript.presentMessage(messages.STOP_ORCA)
 
     _eventManager.deactivate()
     _scriptManager.deactivate()
@@ -950,7 +909,7 @@ def main():
     init(pyatspi.Registry)
 
     try:
-        message = _("Welcome to Orca.")
+        message = messages.START_ORCA
         if not _settingsManager.getSetting('onlySpeakDisplayedText'):
             speech.speak(message, settings.voices.get(settings.SYSTEM_VOICE))
         braille.displayMessage(message)

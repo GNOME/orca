@@ -43,6 +43,7 @@ import orca.find as find
 import orca.flat_review as flat_review
 import orca.input_event as input_event
 import orca.keybindings as keybindings
+import orca.messages as messages
 import orca.outline as outline
 import orca.orca as orca
 import orca.orca_i18n as orca_i18n
@@ -60,7 +61,6 @@ import orca.notification_messages as notification_messages
 from orca.orca_i18n import _
 from orca.orca_i18n import ngettext
 from orca.orca_i18n import C_
-from orca.orca_platform import version
 
 _settingsManager = settings_manager.getManager()
 
@@ -1524,14 +1524,7 @@ class Script(script.Script):
         Returns True to indicate the input event has been consumed.
         """
 
-        # Translators: Orca normally intercepts all keyboard
-        # commands and only passes them along to the current
-        # application when they are not Orca commands.  This
-        # command causes the next command issued to be passed
-        # along to the current application, bypassing Orca's
-        # interception of it.
-        #
-        self.presentMessage(_("Bypass mode enabled."))
+        self.presentMessage(messages.BYPASS_MODE_ENABLED)
         orca_state.bypassNextCommand = True
         return True
 
@@ -1545,33 +1538,9 @@ class Script(script.Script):
         if orca_state.learnModeEnabled:
             return True
 
-        # Translators: This message presents the Orca version number.
-        self.presentMessage(_("Orca version %s.") % version)
-
-        self.speakMessage(
-            # Translators: Orca has a "Learn Mode" that will allow
-            # the user to type any key on the keyboard and hear what
-            # the effects of that key would be.  The effects might
-            # be what Orca would do if it had a handler for the
-            # particular key combination, or they might just be to
-            # echo the name of the key if Orca doesn't have a handler.
-            # This text here is what is spoken to the user.
-            #
-            _("Entering learn mode.  Press any key to hear its function.  " \
-              "To get a list of Orca shortcuts, press the Orca modifier " \
-              "plus H twice quickly. To view the documentation, press F1. " \
-              "To exit learn mode, press the escape key."))
-
-        # Translators: Orca has a "Learn Mode" that will allow
-        # the user to type any key on the keyboard and hear what
-        # the effects of that key would be.  The effects might
-        # be what Orca would do if it had a handler for the
-        # particular key combination, or they might just be to
-        # echo the name of the key if Orca doesn't have a handler.
-        # This text here is what is to be presented on the braille
-        # display.
-        #
-        self.displayBrailleMessage(_("Learn mode.  Press escape to exit."))
+        self.presentMessage(messages.VERSION)
+        self.speakMessage(messages.LEARN_MODE_START_SPEECH)
+        self.displayBrailleMessage(messages.LEARN_MODE_START_BRAILLE)
         orca_state.learnModeEnabled = True
         return True
 
@@ -1588,16 +1557,7 @@ class Script(script.Script):
            and not inputEvent.event_string == 'Escape':
             return False
 
-        # Translators: Orca has a "Learn Mode" that will allow
-        # the user to type any key on the keyboard and hear what
-        # the effects of that key would be.  The effects might
-        # be what Orca would do if it had a handler for the
-        # particular key combination, or they might just be to
-        # echo the name of the key if Orca doesn't have a handler.
-        # Exiting learn mode puts the user back in normal operating
-        # mode.
-        #
-        self.presentMessage(_("Exiting learn mode."))
+        self.presentMessage(messages.LEARN_MODE_STOP)
         orca_state.learnModeEnabled = False
 
     def enterListShortcutsMode(self, inputEvent):
@@ -1613,26 +1573,8 @@ class Script(script.Script):
         if orca_state.listShortcutsModeEnabled:
             return True
 
-        # Translators: Orca has a 'List Shortcuts' mode by which a user can
-        # navigate through a list of the bound commands in Orca. This is the
-        # message that is presented to the user as confirmation that this
-        # mode has been entered.
-        #
-        mode = _("List shortcuts mode.")
-
-        # Translators: Orca has a 'List Shortcuts' mode by which a user can
-        # navigate through a list of the bound commands in Orca. Pressing 1
-        # presents the commands/shortcuts available for all applications.
-        # These are the "default" commands/shortcuts. Pressing 2 presents
-        # commands/shortcuts Orca provides for the application with focus.
-        # The following message is presented to the user upon entering this
-        # mode.
-        #
-        message = _("Press 1 for Orca's default shortcuts. Press 2 for " \
-                    "Orca's shortcuts for the current application. " \
-                    "Press escape to exit.")
-
-        message = mode + " " + message
+        message = "%s %s" % (messages.LIST_SHORTCUTS_MODE_START,
+                             messages.LIST_SHORTCUTS_MODE_TUTORIAL)
         self.speakMessage(message)
         self.displayBrailleMessage(message, -1, -1)
         orca_state.listShortcutsModeEnabled = True
@@ -1648,17 +1590,7 @@ class Script(script.Script):
         orca_state.typeOfShortcuts = ""
         orca_state.ptrToShortcut = -1
         orca_state.listShortcutsModeEnabled = False
-
-        # Translators: Orca has a "List Shortcuts Mode" that allows the user to
-        # list a group of keyboard shortcuts. Pressing 1 makes it possible for
-        # the user to navigate amongst a list of global ("default") commands.
-        # Pressing 2 allows the user to navigate amongst Orca commands specific
-        # to the application with focus. Escape exists this mode. This string
-        # is the prompt which will be presented to the user in both speech and
-        # braille upon exiting this mode.
-        #
-        message = _("Exiting list shortcuts mode.")
-        self.presentMessage(message)
+        self.presentMessage(messages.LIST_SHORTCUTS_MODE_STOP)
         return True
 
     def findNext(self, inputEvent):
@@ -1933,18 +1865,8 @@ class Script(script.Script):
                 try:
                     eventsynthesizer.routeToObject(orca_state.locusOfFocus)
                 except:
-                    # Translators: Orca has a command that allows the user to
-                    # move the mouse pointer to the current object. This is a
-                    # detailed message which will be presented if for some
-                    # reason Orca cannot identify/find the current location.
-                    #
-                    full = _("Could not find current location.")
-                    # Translators: Orca has a command that allows the user to
-                    # move the mouse pointer to the current object. This is a
-                    # brief message which will be presented if for some reason
-                    # Orca cannot identify/find the current location.
-                    #
-                    brief = C_("location", "Not found")
+                    full = messages.LOCATION_NOT_FOUND_FULL
+                    brief = messages.LOCATION_NOT_FOUND_BRIEF
                     self.presentMessage(full, brief)
 
         return True
@@ -2046,14 +1968,9 @@ class Script(script.Script):
 
             self.outputCharAttributes(userAttrList, attributes)
 
-            # If this is a hypertext link, then let the user know:
-            #
             if self.utilities.linkIndex(
                 orca_state.locusOfFocus, caretOffset) >= 0:
-                # Translators: this indicates that this piece of
-                # text is a hypertext link.
-                #
-                speech.speak(_("link"))
+                speech.speak(messages.LINK)
 
         return True
 
@@ -2069,12 +1986,7 @@ class Script(script.Script):
                 try:
                     eventsynthesizer.clickObject(orca_state.locusOfFocus, 1)
                 except:
-                    # Translators: Orca has a command that allows the user
-                    # to move the mouse pointer to the current object. If
-                    # for some reason Orca cannot identify the current
-                    # location, it will speak this message.
-                    #
-                    self.speakMessage(_("Could not find current location."))
+                    self.speakMessage(messages.LOCATION_NOT_FOUND_FULL)
         return True
 
     def rightClickReviewItem(self, inputEvent=None):
@@ -2089,18 +2001,8 @@ class Script(script.Script):
                 try:
                     eventsynthesizer.clickObject(orca_state.locusOfFocus, 3)
                 except:
-                    # Translators: Orca has a command that allows the user to
-                    # move the mouse pointer to the current object. This is a
-                    # detailed message which will be presented if for some
-                    # reason Orca cannot identify/find the current location.
-                    #
-                    full = _("Could not find current location.")
-                    # Translators: Orca has a command that allows the user to
-                    # move the mouse pointer to the current object. This is a
-                    # brief message which will be presented if for some reason
-                    # Orca cannot identify/find the current location.
-                    #
-                    brief = C_("location", "Not found")
+                    full = messages.LOCATION_NOT_FOUND_FULL
+                    brief = messages.LOCATION_NOT_FOUND_BRIEF
                     self.presentMessage(full, brief)
 
         return True
@@ -2142,23 +2044,14 @@ class Script(script.Script):
             if (not wordString) \
                or (not len(wordString)) \
                or (wordString == "\n"):
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"))
+                speech.speak(messages.BLANK)
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n":
-                    # Translators: "blank" is a short word to mean the
-                    # user has navigated to an empty line.
-                    #
-                    speech.speak(_("blank"))
+                    speech.speak(messages.BLANK)
                 elif wordString.isspace():
-                    # Translators: "white space" is a short phrase to mean the
-                    # user has navigated to a line with only whitespace on it.
-                    #
-                    speech.speak(_("white space"))
+                    speech.speak(messages.WHITE_SPACE)
                 elif wordString.isupper() and speechType == 1:
                     speech.speak(wordString,
                                  self.voices[settings.UPPERCASE_VOICE])
@@ -2269,18 +2162,12 @@ class Script(script.Script):
         #
         if not isinstance(inputEvent, input_event.BrailleEvent):
             if (not charString) or (not len(charString)):
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"))
+                speech.speak(messages.BLANK)
             else:
                 [lineString, x, y, width, height] = \
                          context.getCurrent(flat_review.Context.LINE)
                 if lineString == "\n" and speechType != 3:
-                    # Translators: "blank" is a short word to mean the
-                    # user has navigated to an empty line.
-                    #
-                    speech.speak(_("blank"))
+                    speech.speak(messages.BLANK)
                 elif speechType == 3:
                     self.speakUnicodeCharacter(charString)
                 elif speechType == 2:
@@ -2411,15 +2298,9 @@ class Script(script.Script):
             if (not lineString) \
                or (not len(lineString)) \
                or (lineString == "\n"):
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                speech.speak(_("blank"))
+                speech.speak(messages.BLANK)
             elif lineString.isspace():
-                # Translators: "white space" is a short phrase to mean the
-                # user has navigated to a line with only whitespace on it.
-                #
-                speech.speak(_("white space"))
+                speech.speak(messages.WHITE_SPACE)
             elif lineString.isupper() \
                  and (speechType < 2 or speechType > 3):
                 speech.speak(lineString, self.voices[settings.UPPERCASE_VOICE])
@@ -2536,27 +2417,9 @@ class Script(script.Script):
             clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
             clipboard.set_text(
                 self.currentReviewContents, len(self.currentReviewContents))
-            # Translators: the 'flat review' feature of Orca
-            # allows the blind user to explore the text in a
-            # window in a 2D fashion.  That is, Orca treats all
-            # the text from all objects in a window (e.g.,
-            # buttons, labels, etc.) as a sequence of words in a
-            # sequence of lines.  This message is spoken to let
-            # the user to know that they have successfully copied
-            # the contents under flat review to the clipboard.
-            #
-            self.presentMessage(_("Copied contents to clipboard."))
+            self.presentMessage(messages.FLAT_REVIEW_COPIED)
         else:
-            # Translators: the 'flat review' feature of Orca
-            # allows the blind user to explore the text in a
-            # window in a 2D fashion.  That is, Orca treats all
-            # the text from all objects in a window (e.g.,
-            # buttons, labels, etc.) as a sequence of words in a
-            # sequence of lines. If this error message is spoken,
-            # it means that the user attempted to use a flat review
-            # command when not using flat review.
-            #
-            self.presentMessage(_("Not using flat review."))
+            self.presentMessage(messages.FLAT_REVIEW_NOT_IN)
 
         return True
 
@@ -2579,28 +2442,9 @@ class Script(script.Script):
             clipboard = Gtk.Clipboard.get(Gdk.Atom.intern("CLIPBOARD", False))
             clipboard.request_text(
                 self._appendToClipboard, self.currentReviewContents)
-            # Translators: the 'flat review' feature of Orca
-            # allows the blind user to explore the text in a
-            # window in a 2D fashion.  That is, Orca treats all
-            # the text from all objects in a window (e.g.,
-            # buttons, labels, etc.) as a sequence of words in a
-            # sequence of lines.  This message is spoken to let
-            # the user to know that they have successfully appended
-            # the contents under flat review onto the existing contents
-            # of the clipboard.
-            #
-            self.presentMessage(_("Appended contents to clipboard."))
+            self.presentMessage(messages.FLAT_REVIEW_APPENDED)
         else:
-            # Translators: the 'flat review' feature of Orca
-            # allows the blind user to explore the text in a
-            # window in a 2D fashion.  That is, Orca treats all
-            # the text from all objects in a window (e.g.,
-            # buttons, labels, etc.) as a sequence of words in a
-            # sequence of lines. If this error message is spoken,
-            # it means that the user attempted to use a flat review
-            # command when not using flat review.
-            #
-            self.presentMessage(_("Not using flat review."))
+            self.presentMessage(messages.FLAT_REVIEW_NOT_IN)
 
         return True
 
@@ -2656,33 +2500,13 @@ class Script(script.Script):
         verbosity = _settingsManager.getSetting('speechVerbosityLevel')
         if self.flatReviewContext:
             if inputEvent and verbosity != settings.VERBOSITY_LEVEL_BRIEF:
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  This message lets the user know
-                # they have left the flat review feature.
-                #
-                self.presentMessage(_("Leaving flat review."))
+                self.presentMessage(messages.FLAT_REVIEW_STOP)
             self.drawOutline(-1, 0, 0, 0)
             self.flatReviewContext = None
             self.updateBraille(orca_state.locusOfFocus)
         else:
             if inputEvent and verbosity != settings.VERBOSITY_LEVEL_BRIEF:
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  This message lets the user know
-                # they have entered the flat review feature.
-                #
-                self.presentMessage(_("Entering flat review."))
+                self.presentMessage(messages.FLAT_REVIEW_START)
             context = self.getFlatReviewContext()
             [wordString, x, y, width, height] = \
                      context.getCurrent(flat_review.Context.WORD)
@@ -2699,15 +2523,9 @@ class Script(script.Script):
         speech.stop()
         if _settingsManager.getSetting('silenceSpeech'):
             _settingsManager.setSetting('silenceSpeech', False)
-            # Translators: this is a spoken prompt letting the user know
-            # that speech synthesis has been turned back on.
-            #
-            self.presentMessage(_("Speech enabled."))
+            self.presentMessage(messages.SPEECH_ENABLED)
         else:
-            # Translators: this is a spoken prompt letting the user know
-            # that speech synthesis has been temporarily turned off.
-            #
-            self.presentMessage(_("Speech disabled."))
+            self.presentMessage(messages.SPEECH_DISABLED)
             _settingsManager.setSetting('silenceSpeech', True)
         return True
 
@@ -2717,26 +2535,11 @@ class Script(script.Script):
         value = _settingsManager.getSetting('enableSpeechIndentation')
         _settingsManager.setSetting('enableSpeechIndentation', not value)
         if _settingsManager.getSetting('enableSpeechIndentation'):
-            # Translators: This is a detailed message indicating that
-            # indentation and justification will be spoken.
-            #
-            full = _("Speaking of indentation and justification enabled.")
-            # Translators: This is a brief message that will be presented
-            # to the user who has just enabled/disabled the speaking of
-            # indentation and justification information.
-            #
-            brief = C_("indentation and justification", "Enabled")
+            full = messages.INDENTATION_JUSTIFICATION_ON_FULL
+            brief = messages.INDENTATION_JUSTIFICATION_ON_BRIEF
         else:
-            # Translators: This is a detailed message indicating that
-            # indentation and justification will not be spoken.
-            #
-            full = _("Speaking of indentation and justification disabled.")
-            # Translators: This is a brief message that will be presented
-            # to the user who has just enabled/disabled the speaking of
-            # indentation and justification information.
-            #
-            brief = C_("indentation and justification", "Disabled")
-
+            full = messages.INDENTATION_JUSTIFICATION_OFF_FULL
+            brief = messages.INDENTATION_JUSTIFICATION_OFF_BRIEF
         self.presentMessage(full, brief)
 
         return True
@@ -2747,61 +2550,20 @@ class Script(script.Script):
         currentLevel = _settingsManager.getSetting('verbalizePunctuationStyle')
         if currentLevel == settings.PUNCTUATION_STYLE_NONE:
             newLevel = settings.PUNCTUATION_STYLE_SOME
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different levels of spoken punctuation.
-            # The options are: All puntuation marks will be spoken, None
-            # will be spoken, Most will be spoken, or Some will be spoken.
-            #
-            full = _("Punctuation level set to some.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different levels of spoken punctuation.
-            # The options are: All puntuation marks will be spoken, None
-            # will be spoken, Most will be spoken, or Some will be spoken.
-            #
-            brief = C_("spoken punctuation", "Some")
+            full = messages.PUNCTUATION_SOME_FULL
+            brief = messages.PUNCTUATION_SOME_BRIEF
         elif currentLevel == settings.PUNCTUATION_STYLE_SOME:
             newLevel = settings.PUNCTUATION_STYLE_MOST
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different levels of spoken punctuation.
-            # The options are: All puntuation marks will be spoken, None
-            # will be spoken, Most will be spoken, or Some will be spoken.
-            #
-            full = _("Punctuation level set to most.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different levels of spoken punctuation.
-            # The options are: All puntuation marks will be spoken, None
-            # will be spoken, Most will be spoken, or Some will be spoken.
-            #
-            brief = C_("spoken punctuation", "Most")
+            full = messages.PUNCTUATION_MOST_FULL
+            brief = messages.PUNCTUATION_MOST_BRIEF
         elif currentLevel == settings.PUNCTUATION_STYLE_MOST:
             newLevel = settings.PUNCTUATION_STYLE_ALL
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different levels of spoken punctuation.
-            # The options are: All puntuation marks will be spoken, None
-            # will be spoken, Most will be spoken, or Some will be spoken.
-            #
-            full = _("Punctuation level set to all.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different levels of spoken punctuation.
-            # The options are: All puntuation marks will be spoken, None
-            # will be spoken, Most will be spoken, or Some will be spoken.
-            #
-            brief = C_("spoken punctuation", "All")
+            full = messages.PUNCTUATION_ALL_FULL
+            brief = messages.PUNCTUATION_ALL_BRIEF
         else:
-            # the all case, so cycle to none.
             newLevel = settings.PUNCTUATION_STYLE_NONE
-            # Translators: This detailed message will be presented as the
-            # user cycles through the different levels of spoken punctuation.
-            # The options are: All puntuation marks will be spoken, None
-            # will be spoken, Most will be spoken, or Some will be spoken.
-            #
-            full = _("Punctuation level set to none.")
-            # Translators: This brief message will be presented as the user
-            # cycles through the different levels of spoken punctuation.
-            # The options are: All puntuation marks will be spoken, None
-            # will be spoken, Most will be spoken, or Some will be spoken.
-            #
-            brief = C_("spoken punctuation", "None")
+            full = messages.PUNCTUATION_NONE_FULL
+            brief = messages.PUNCTUATION_NONE_BRIEF
 
         _settingsManager.setSetting('verbalizePunctuationStyle', newLevel)
         self.presentMessage(full, brief)
@@ -2813,14 +2575,7 @@ class Script(script.Script):
 
         profiles = _settingsManager.availableProfiles()
         if not (profiles and profiles[0]):
-            # Translators: This is an error message presented when the user
-            # attempts to cycle among his/her saved profiles, but no profiles
-            # can be found. A profile is a collection of settings which apply
-            # to a given task, such as a "Spanish" profile which would use
-            # Spanish text-to-speech and Spanish braille and selected when
-            # reading Spanish content.
-            #
-            self.presentMessage(_("No profiles found."))
+            self.presentMessage(messages.PROFILE_NOT_FOUND)
             return True
 
         isMatch = lambda x: x[1] == _settingsManager.getProfile()
@@ -2837,18 +2592,12 @@ class Script(script.Script):
         # Once we sort out all of the language changing details, this
         # code probably should go somewhere else.
         if oldVoiceLocale != newVoiceLocale:
-            modules = ['orca.chnames']
+            modules = ['orca.chnames', 'orca.keynames', 'orca.phonnames',
+                       'orca.text_attribute_names.py', 'orca.messages']
             for module in modules:
                 orca_i18n.setModuleLocale(module, newVoiceLocale)
 
-        # Translators: This is a detailed message which will be presented
-        # as the user cycles amongst his/her saved profiles. A "profile"
-        # is a collection of settings which apply to a given task, such
-        # as a "Spanish" profile which would use Spanish text-to-speech
-        # and Spanish braille and selected when reading Spanish content.
-        # The string representing the profile name is something created
-        # by the user.
-        self.presentMessage(_("Profile set to %s.") % name, name)
+        self.presentMessage(messages.PROFILE_CHANGED % name, name)
         return True
 
     def cycleCapitalizationStyle(self, inputEvent=None):
@@ -2857,82 +2606,16 @@ class Script(script.Script):
         currentStyle = _settingsManager.getSetting('capitalizationStyle')
         if currentStyle == settings.CAPITALIZATION_STYLE_NONE:
             newStyle = settings.CAPITALIZATION_STYLE_SPELL
-            # Translators: Orca uses Speech Dispatcher to present content
-            # to users via text-to-speech. Speech Dispatcher has a feature
-            # to control how capital letters are presented: Do nothing at
-            # all, say the word 'capital' prior to presenting a capital
-            # letter, or play a tone which Speech Dispatcher refers to as
-            # a sound 'icon'. This string to be translated refers to the
-            # full/verbose output presented in response to the use of an
-            # Orca command which makes it possible for users to quickly
-            # cycle amongst these alternatives without having to get into
-            # a GUI.
-            #
-            full = _("Capitalization style set to spell.")
-            # Translators: Orca uses Speech Dispatcher to present content
-            # to users via text-to-speech. Speech Dispatcher has a feature
-            # to control how capital letters are presented: Do nothing at
-            # all, say the word 'capital' prior to presenting a capital
-            # letter, or play a tone which Speech Dispatcher refers to as
-            # a sound 'icon'. This string to be translated refers to the
-            # brief/non-verbose output presented in response to the use of
-            # an Orca command which makes it possible for users to quickly
-            # cycle amongst these alternatives without having to get into
-            # a GUI.
-            #
-            brief = C_("capitalization style", "spell")
+            full = messages.CAPITALIZATION_SPELL_FULL
+            brief = messages.CAPITALIZATION_SPELL_BRIEF
         elif currentStyle == settings.CAPITALIZATION_STYLE_SPELL:
             newStyle = settings.CAPITALIZATION_STYLE_ICON
-            # Translators: Orca uses Speech Dispatcher to present content
-            # to users via text-to-speech. Speech Dispatcher has a feature
-            # to control how capital letters are presented: Do nothing at
-            # all, say the word 'capital' prior to presenting a capital
-            # letter, or play a tone which Speech Dispatcher refers to as
-            # a sound 'icon'. This string to be translated refers to the
-            # full/verbose output presented in response to the use of an
-            # Orca command which makes it possible for users to quickly
-            # cycle amongst these alternatives without having to get into
-            # a GUI.
-            #
-            full = _("Capitalization style set to icon.")
-            # Translators: Orca uses Speech Dispatcher to present content
-            # to users via text-to-speech. Speech Dispatcher has a feature
-            # to control how capital letters are presented: Do nothing at
-            # all, say the word 'capital' prior to presenting a capital
-            # letter, or play a tone which Speech Dispatcher refers to as
-            # a sound 'icon'. This string to be translated refers to the
-            # brief/non-verbose output presented in response to the use of
-            # an Orca command which makes it possible for users to quickly
-            # cycle amongst these alternatives without having to get into
-            # a GUI.
-            #
-            brief = C_("capitalization style", "icon")
+            full = messages.CAPITALIZATION_ICON_FULL
+            brief = messages.CAPITALIZATION_ICON_BRIEF
         else:
             newStyle = settings.CAPITALIZATION_STYLE_NONE
-            # Translators: Orca uses Speech Dispatcher to present content
-            # to users via text-to-speech. Speech Dispatcher has a feature
-            # to control how capital letters are presented: Do nothing at
-            # all, say the word 'capital' prior to presenting a capital
-            # letter, or play a tone which Speech Dispatcher refers to as
-            # a sound 'icon'. This string to be translated refers to the
-            # full/verbose output presented in response to the use of an
-            # Orca command which makes it possible for users to quickly
-            # cycle amongst these alternatives without having to get into
-            # a GUI.
-            #
-            full = _("Capitalization style set to none.")
-            # Translators: Orca uses Speech Dispatcher to present content
-            # to users via text-to-speech. Speech Dispatcher has a feature
-            # to control how capital letters are presented: Do nothing at
-            # all, say the word 'capital' prior to presenting a capital
-            # letter, or play a tone which Speech Dispatcher refers to as
-            # a sound 'icon'. This string to be translated refers to the
-            # brief/non-verbose output presented in response to the use of
-            # an Orca command which makes it possible for users to quickly
-            # cycle amongst these alternatives without having to get into
-            # a GUI.
-            #
-            brief = C_("capitalization style", "none")
+            full = messages.CAPITALIZATION_NONE_FULL
+            brief = messages.CAPITALIZATION_NONE_BRIEF
 
         _settingsManager.setSetting('capitalizationStyle', newStyle)
         self.presentMessage(full, brief)
@@ -2945,210 +2628,36 @@ class Script(script.Script):
         word = _settingsManager.getSetting('enableEchoByWord')
         sentence = _settingsManager.getSetting('enableEchoBySentence')
 
-        # check if we are in the none case.
         if (key, word, sentence) == (False, False, False):
-            # cycle to key echo
             (newKey, newWord, newSentence) = (True, False, False)
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command.
-            #
-            full = _("Key echo set to key.")
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command. The following string is a
-            # brief message which will be presented to the user who is
-            # cycling amongst the various echo options.
-            #
-            brief = C_("key echo", "key")
-
-        # The key echo only case
+            full = messages.KEY_ECHO_KEY_FULL
+            brief = messages.KEY_ECHO_KEY_BRIEF
         elif (key, word, sentence) == (True, False, False):
-            # cycle to word echo
             (newKey, newWord, newSentence) = (False, True, False)
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command.
-            #
-            full = _("Key echo set to word.")
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command. The following string is a
-            # brief message which will be presented to the user who is
-            # cycling amongst the various echo options.
-            #
-            brief = C_("key echo", "word")
-
-        # the word only case
+            full = messages.KEY_ECHO_WORD_FULL
+            brief = messages.KEY_ECHO_WORD_BRIEF
         elif (key, word, sentence) == (False, True, False):
-            # cycle to sentence echo
             (newKey, newWord, newSentence) = (False, False, True)
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command.
-            #
-            full = _("Key echo set to sentence.")
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command. The following string is a
-            # brief message which will be presented to the user who is
-            # cycling amongst the various echo options.
-            #
-            brief = C_("key echo", "sentence")
-
-        # the sentence only case
+            full = messages.KEY_ECHO_SENTENCE_FULL
+            brief = messages.KEY_ECHO_SENTENCE_BRIEF
         elif (key, word, sentence) == (False, False, True):
-            # cycle to word and key echo
             (newKey, newWord, newSentence) = (True, True, False)
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command.
-            #
-            full = _("Key echo set to key and word.")
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command. The following string is a
-            # brief message which will be presented to the user who is
-            # cycling amongst the various echo options.
-            #
-            brief = C_("key echo", "key and word")
-
-        # the key and word case
+            full = messages.KEY_ECHO_KEY_AND_WORD_FULL
+            brief = messages.KEY_ECHO_KEY_AND_WORD_BRIEF
         elif (key, word, sentence) == (True, True, False):
-            # cycle to word and sentence echo
             (newKey, newWord, newSentence) = (False, True, True)
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command.
-            #
-            full = _("Key echo set to word and sentence.")
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command. The following string is a
-            # brief message which will be presented to the user who is
-            # cycling amongst the various echo options.
-            #
-            brief = C_("key echo", "word and sentence")
-
-        # cycle round
+            full = messages.KEY_ECHO_WORD_AND_SENTENCE_FULL
+            brief = messages.KEY_ECHO_WORD_AND_SENTENCE_BRIEF
         else:
-            # cycle to none
             (newKey, newWord, newSentence) = (False, False, False)
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command.
-            #
-            full = _("Key echo set to None.")
-            # Translators: Orca has an "echo" setting which allows
-            # the user to configure what is spoken in response to a
-            # key press. Given a user who typed "Hello world.":
-            # - key echo: "H e l l o space w o r l d period"
-            # - word echo: "Hello" spoken when the space is pressed;
-            #   "world" spoken when the period is pressed.
-            # - sentence echo: "Hello world" spoken when the period
-            #   is pressed.
-            # A user can choose to have no echo, one type of echo, or
-            # multiple types of echo and can cycle through the various
-            # levels quickly via a command. The following string is a
-            # brief message which will be presented to the user who is
-            # cycling amongst the various echo options.
-            #
-            brief = C_("key echo", "None")
+            full = messages.KEY_ECHO_NONE_FULL
+            brief = messages.KEY_ECHO_NONE_BRIEF
 
         _settingsManager.setSetting('enableKeyEcho', newKey)
         _settingsManager.setSetting('enableEchoByWord', newWord)
         _settingsManager.setSetting('enableEchoBySentence', newSentence)
         self.presentMessage(full, brief)
         return True
-
 
     def toggleTableCellReadMode(self, inputEvent=None):
         """Toggles an indicator for whether we should just read the current
@@ -3157,17 +2666,9 @@ class Script(script.Script):
         speakRow = _settingsManager.getSetting('readTableCellRow')
         _settingsManager.setSetting('readTableCellRow', not speakRow)
         if not speakRow:
-            # Translators: when users are navigating a table, they
-            # sometimes want the entire row of a table read, or
-            # they just want the current cell to be presented to them.
-            #
-            line = _("Speak row")
+            line = messages.TABLE_MODE_ROW
         else:
-            # Translators: when users are navigating a table, they
-            # sometimes want the entire row of a table read, or
-            # they just want the current cell to be presented to them.
-            #
-            line = _("Speak cell")
+            line = messages.TABLE_MODE_CELL
 
         self.presentMessage(line)
 
@@ -3446,11 +2947,7 @@ class Script(script.Script):
 
         utterances = []
         utterances.append(textContents)
-
-        # Translators: when the user selects (highlights) text in
-        # a document, Orca lets them know this.
-        #
-        utterances.append(C_("text", "selected"))
+        utterances.append(messages.TEXT_SELECTED)
         speech.speak(utterances)
 
     def onNameChanged(self, event):
@@ -3581,17 +3078,9 @@ class Script(script.Script):
             if announceState:
                 voice = self.voices.get(settings.SYSTEM_VOICE)
                 if event.detail1:
-                    # Translators: this object is now selected.
-                    # Let the user know this.
-                    #
-                    #
-                    speech.speak(C_("text", "selected"), voice, False)
+                    speech.speak(messages.TEXT_SELECTED, voice, False)
                 else:
-                    # Translators: this object is now unselected.
-                    # Let the user know this.
-                    #
-                    #
-                    speech.speak(C_("text", "unselected"), voice, False)
+                    speech.speak(messages.TEXT_UNSELECTED, voice, False)
                 return
 
         if event.type.startswith("object:state-changed:focused"):
@@ -3685,11 +3174,7 @@ class Script(script.Script):
                     event.source, prevWordAndOffsets[1] ) \
                or self.utilities.isWordMisspelled(
                     event.source, nextWordAndOffsets[1]):
-                # Translators: this is to inform the user of the presence
-                # of the red squiggly line which indicates that a given
-                # word is not spelled correctly.
-                #
-                self.speakMessage(_("misspelled"))
+                self.speakMessage(messages.MISSPELLED)
 
     def onTextDeleted(self, event):
         """Called whenever text is deleted from an object.
@@ -4000,9 +3485,7 @@ class Script(script.Script):
         if event.source != parentTable:
             return
 
-        # Translators: This is a message presented to users when the
-        # columns in a table have been reordered.
-        self.presentMessage(_("Columns reordered"))
+        self.presentMessage(messages.TABLE_REORDERED_COLUMNS)
 
     def onRowReordered(self, event):
         """Called whenever the rows in a table are reordered.
@@ -4016,10 +3499,7 @@ class Script(script.Script):
         if event.source != parentTable:
             return
 
-        # Translators: This is a message presented to users when the
-        # rows in a table have been reordered, as would happen when
-        # re-sorting the table by clicking on its header.
-        self.presentMessage(_("Rows reordered"))
+        self.presentMessage(messages.TABLE_REORDERED_ROWS)
 
     def onValueChanged(self, event):
         """Called whenever an object's value changes.  Currently, the
@@ -4646,11 +4126,7 @@ class Script(script.Script):
                             index = 0
                             for key in list(self.lastProgressBarTime.keys()):
                                 if key == obj and key != mostRecentUpdate[0]:
-                                    # Translators: this is an index value
-                                    # so that we can tell which progress bar
-                                    # we are referring to.
-                                    #
-                                    label = _("Progress bar %d.") % (index + 1)
+                                    label = messages.PROGRESS_BAR_NUMBER % (index + 1)
                                     utterances.append(label)
                                 else:
                                     index += 1
@@ -4684,9 +4160,7 @@ class Script(script.Script):
                     #
                     if key == "weight" \
                        and (attribute == "bold" or int(attribute) > 400):
-                        # Translators: bold as in the font sense.
-                        #
-                        line = _("bold")
+                        line = messages.BOLD
                     elif key in ["left-margin", "right-margin"]:
                         # We need to test if we are getting a margin value
                         # that includes unit information (OOo now provides
@@ -4802,20 +4276,14 @@ class Script(script.Script):
                 # This is a blank line. Announce it if the user requested
                 # that blank lines be spoken.
                 if speakBlankLines:
-                    # Translators: "blank" is a short word to mean the
-                    # user has navigated to an empty line.
-                    #
-                    self.speakMessage(_("blank"), interrupt=False)
+                    self.speakMessage(messages.BLANK, interrupt=False)
                 return
 
         if character in ["\n", "\r\n"]:
             # This is a blank line. Announce it if the user requested
             # that blank lines be spoken.
             if speakBlankLines:
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                self.speakMessage(_("blank"), interrupt=False)
+                self.speakMessage(messages.BLANK, interrupt=False)
             return
         else:
             self.speakMisspelledIndicator(obj, offset)
@@ -5109,14 +4577,8 @@ class Script(script.Script):
             context = self.getFlatReviewContext()
             location = query.findQuery(context, self.justEnteredFlatReviewMode)
             if not location:
-                # Translators: the Orca "Find" dialog allows a user to
-                # search for text in a window and then move focus to
-                # that text.  For example, they may want to find the
-                # "OK" button.  This message lets them know a string
-                # they were searching for was not found.
-                #
                 message = _("string not found")
-                self.presentMessage(message)
+                self.presentMessage(messages.STRING_NOT_FOUND)
             else:
                 context.setCurrent(location.lineIndex, location.zoneIndex, \
                                    location.wordIndex, location.charIndex)
@@ -5182,20 +4644,9 @@ class Script(script.Script):
                 if maxIndex > (len(allTokens) - 1):
                     maxIndex = len(allTokens) - 1
 
-                # Translators: Orca will provide more compelling output of
-                # the spell checking dialog in some applications.  The first
-                # thing it does is let them know what the misspelled word
-                # is.
-                #
-                utterances = [_("Misspelled word: %s") % badWord]
-
-                # Translators: Orca will provide more compelling output of
-                # the spell checking dialog in some applications.  The second
-                # thing it does is give the phrase containing the misspelled
-                # word in the document.  This is known as the context.
-                #
+                utterances = [messages.MISSPELLED_WORD % badWord]
                 contextPhrase = " ".join(allTokens[minIndex:maxIndex+1])
-                utterances.append(_("Context is %s") % contextPhrase)
+                utterances.append(messages.MISSPELLED_WORD_CONTEXT % contextPhrase)
 
                 # Turn the list of utterances into a string.
                 text = " ".join(utterances)
@@ -5442,16 +4893,10 @@ class Script(script.Script):
               text.getSelection(i))
 
     def _getCtrlShiftSelectionsStrings(self):
-        return [
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            _("paragraph selected down from cursor position"),
-            _("paragraph unselected down from cursor position"),
-            _("paragraph selected up from cursor position"),
-            _("paragraph unselected up from cursor position"),
-        ]
+        return [messages.PARAGRAPH_SELECTED_DOWN,
+                messages.PARAGRAPH_UNSELECTED_DOWN,
+                messages.PARAGRAPH_SELECTED_UP,
+                messages.PARAGRAPH_UNSELECTED_UP]
 
     def speakTextSelectionState(self, obj, startOffset, endOffset):
         """Speak "selected" if the text was just selected, "unselected" if
@@ -5500,47 +4945,24 @@ class Script(script.Script):
         specialCaseFound = False
         if (eventStr == "Page_Down") and isShiftKey and isControlKey:
             specialCaseFound = True
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            line = _("line selected to end from previous cursor position")
-
+            line = messages.LINE_SELECTED_RIGHT
         elif (eventStr == "Page_Up") and isShiftKey and isControlKey:
             specialCaseFound = True
-            # Translators: when the user selects (highlights) text in
-            # a document, Orca will speak information about what they
-            # have selected.
-            #
-            line = _("line selected from start to previous cursor position")
+            line = messages.LINE_SELECTED_LEFT
 
         elif (eventStr == "Page_Down") and isShiftKey and not isControlKey:
             specialCaseFound = True
             if selectedText:
-                # Translators: when the user selects (highlights) text in
-                # a document, Orca will speak information about what they
-                # have selected.
-                #
-                line = _("page selected from cursor position")
+                line = messages.PAGE_SELECTED_DOWN
             else:
-                # Translators: when the user unselects text in a document,
-                # Orca will speak information about what they have unselected.
-                #
-                line = _("page unselected from cursor position")
+                line = messages.PAGE_UNSELECTED_DOWN
 
         elif (eventStr == "Page_Up") and isShiftKey and not isControlKey:
             specialCaseFound = True
             if selectedText:
-                # Translators: when the user selects (highlights) text in
-                # a document, Orca will speak information about what they
-                # have selected.
-                #
-                line = _("page selected to cursor position")
+                line = messages.PAGE_SELECTED_UP
             else:
-                # Translators: when the user unselects text in a document,
-                # Orca will speak information about what they have unselected.
-                #
-                line = _("page unselected to cursor position")
+                line = messages.PAGE_UNSELECTED_UP
 
         elif (eventStr == "Down") and isShiftKey and isControlKey:
             specialCaseFound = True
@@ -5561,30 +4983,16 @@ class Script(script.Script):
         elif (eventStr == "Home") and isShiftKey and isControlKey:
             specialCaseFound = True
             if selectedText:
-                # Translators: when the user selects (highlights) text in
-                # a document, Orca will speak information about what they
-                # have selected.
-                #
-                line = _("document selected to cursor position")
+                line = messages.DOCUMENT_SELECTED_UP
             else:
-                # Translators: when the user unselects text in a document,
-                # Orca will speak information about what they have unselected.
-                #
-                line = _("document unselected to cursor position")
+                line = messages.DOCUMENT_UNSELECTED_UP
 
         elif (eventStr == "End") and isShiftKey and isControlKey:
             specialCaseFound = True
             if selectedText:
-                # Translators: when the user selects (highlights) text in
-                # a document, Orca will speak information about what they
-                # have selected.
-                #
-                line = _("document selected from cursor position")
+                line = messages.DOCUMENT_SELECTED_DOWN
             else:
-                # Translators: when the user unselects text in a document,
-                # Orca will speak information about what they have unselected.
-                #
-                line = _("document unselected from cursor position")
+                line = messages.DOCUMENT_SELECTED_UP
 
         elif (eventStr == "A") and isControlKey:
             # The user has typed Control-A. Check to see if the entire
@@ -5597,11 +5005,7 @@ class Script(script.Script):
                    startOffset == 0 and endOffset == charCount:
                     specialCaseFound = True
                     self.updateBraille(obj)
-
-                    # Translators: this means the user has selected
-                    # all the text in a document (e.g., Ctrl+a in gedit).
-                    #
-                    line = _("entire document selected")
+                    line = messages.DOCUMENT_SELECTED_ALL
 
         if specialCaseFound:
             speech.speak(line, None, False)
@@ -5644,16 +5048,9 @@ class Script(script.Script):
         if not _settingsManager.getSetting('onlySpeakDisplayedText'):
             voice = self.voices.get(settings.SYSTEM_VOICE)
             if self.utilities.isTextSelected(obj, startOffset, endOffset):
-                # Translators: when the user selects (highlights) text in
-                # a document, Orca lets them know this.
-                #
-                speech.speak(C_("text", "selected"), voice, False)
+                speech.speak(messages.TEXT_SELECTED, voice, False)
             elif len(text.getText(startOffset, endOffset)):
-                # Translators: when the user unselects
-                # (unhighlights) text in a document, Orca lets
-                # them know this.
-                #
-                speech.speak(C_("text", "unselected"), voice, False)
+                speech.speak(messages.TEXT_UNSELECTED, voice, False)
 
         self._saveLastTextSelections(text)
 
@@ -5704,11 +5101,7 @@ class Script(script.Script):
                 text.getTextAtOffset(offset, pyatspi.TEXT_BOUNDARY_WORD_START)
             if self.utilities.isWordMisspelled(obj, offset) \
                and wordAndOffsets[0] != orca_state.lastWordCheckedForSpelling:
-                # Translators: this is to inform the user of the presence
-                # of the red squiggly line which indicates that a given
-                # word is not spelled correctly.
-                #
-                self.speakMessage(_("misspelled"))
+                self.speakMessage(messages.MISSPELLED)
             # Store this word so that we do not continue to present the
             # presence of the red squiggly as the user arrows amongst
             # the characters.
@@ -6167,11 +5560,7 @@ class Script(script.Script):
         Arguments:
         - character: the character to speak information of
         """
-        # Translators: this is information about a unicode character
-        # reported to the user.  The value is the unicode number value
-        # of this character in hex.
-        #
-        speech.speak(_("Unicode %s") % \
+        speech.speak(messages.UNICODE % \
                          self.utilities.unicodeValueString(character))
 
     def presentTime(self, inputEvent):
