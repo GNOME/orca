@@ -372,15 +372,6 @@ PROCESS_BRAILLE_CUT_LINE = _("Marks the end of a text selection.")
 # have a handler.
 ENTER_LEARN_MODE = _("Enters learn mode.  Press escape to exit learn mode.")
 
-# Translators: Orca has a "List Shortcuts" mode that will allow the user to list
-# a group of keyboard shortcuts. The Orca default shortcuts can be listed by
-# pressing 1, and Orca shortcuts for the application under focus can be listed
-# by pressing 2. User can press Up/ Down to navigate and hear the list, change
-# to another list by pressing 1/2, and exit the "List Shortcuts" Mode by
-# pressing Escape.
-ENTER_LIST_SHORTCUTS_MODE = \
-    _("Enters list shortcuts mode.  Press escape to exit list shortcuts mode.")
-
 # Translators: the speech rate is how fast the speech synthesis engine will
 # generate speech.
 DECREASE_SPEECH_RATE = _("Decreases the speech rate.")

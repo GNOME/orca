@@ -102,16 +102,6 @@ searchQuery = None
 #
 learnModeEnabled = False
 
-# Assists with list shortcuts mode (what you enter when you press 
-# Insert + H (double click) and exit when you press escape.
-#
-listShortcutsModeEnabled = False
-
-# Assists in list shortcuts mode 
-listOfShortcuts = []
-typeOfShortcuts = ''
-ptrToShortcut = -1
-
 # Whether we should use the pronunciation dictionary to help speak 
 # certain words. This will be True everywhere except when focus is 
 # in the Pronunciation Dictionary in the Orca Preferences dialog.

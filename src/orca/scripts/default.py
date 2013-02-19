@@ -47,6 +47,7 @@ import orca.keybindings as keybindings
 import orca.messages as messages
 import orca.outline as outline
 import orca.orca as orca
+import orca.orca_gui_commandlist as commandlist
 import orca.orca_i18n as orca_i18n
 import orca.orca_state as orca_state
 import orca.phonnames as phonnames
@@ -372,9 +373,9 @@ class Script(script.Script):
                 Script.enterLearnMode,
                 cmdnames.ENTER_LEARN_MODE)
 
-        self.inputEventHandlers["enterListShortcutsModeHandler"] = \
+        self.inputEventHandlers["listShortcutsHandler"] = \
             input_event.InputEventHandler(
-                Script.enterListShortcutsMode,
+                Script.listOrcaShortcuts,
                 cmdnames.ENTER_LEARN_MODE,
                 False) # Do not enable learn mode for this action
 
@@ -1034,37 +1035,57 @@ class Script(script.Script):
         self.presentMessage(messages.LEARN_MODE_STOP)
         orca_state.learnModeEnabled = False
 
-    def enterListShortcutsMode(self, inputEvent):
-        """Turns list shortcuts mode on.  The user must press the escape key to
-        exit list shortcuts mode. Key bindings for learn mode & list shortcuts
-        mode are Orca+H & Orca+H(double click) respectively. So, while enabling
-        list shortcuts mode, learn mode is enabled as a side effect. We start by
-        disabling it.
+    def listOrcaShortcuts(self, inputEvent=None):
+        """Shows a simple gui listing Orca's bound commands."""
 
-        Returns True to indicate the input event has been consumed.
-        """
-        orca_state.learnModeEnabled = False
-        if orca_state.listShortcutsModeEnabled:
+        if not inputEvent or inputEvent.event_string == "1":
+            bound = self.getDefaultKeyBindings().getBoundBindings()
+            # Translators: This message is presented when the user is in a list
+            # of shortcuts associated with Orca commands which are not specific
+            # to the current application. It appears as the title of the dialog
+            # which contains the list.
+            title = ngettext("%d Orca default shortcut found.",
+                             "%d Orca default shortcuts found.",
+                             len(bound)) % len(bound)
+        else:
+            try:
+                appName = self.app.name
+            except AttributeError:
+                appName = messages.APPLICATION_NO_NAME
+
+            bound = self.getAppKeyBindings().getBoundBindings()
+            bound.extend(self.getToolkitKeyBindings().getBoundBindings())
+            # Translators: This message is presented when the user is in a list
+            # of shortcuts associated with Orca commands specific to the current
+            # application. It appears at the title of the dialog which contains
+            # the list.
+            title = ngettext("%(count)d Orca shortcut for %(application)s found.",
+                             "%(count)d Orca shortcuts for %(application)s found.",
+                             len(bound)) % \
+                             {"count" : len(bound), "application" : appName}
+
+        if not bound:
+            self.presentMessage(title)
+            self.presentMessage(messages.LEARN_MODE_START_SPEECH)
             return True
 
-        message = "%s %s" % (messages.LIST_SHORTCUTS_MODE_START,
-                             messages.LIST_SHORTCUTS_MODE_TUTORIAL)
-        self.speakMessage(message)
-        self.displayBrailleMessage(message, -1, -1)
-        orca_state.listShortcutsModeEnabled = True
-        return True
+        self.exitLearnMode()
 
-    def exitListShortcutsMode(self, inputEvent=None):
-        """Turns list shortcuts mode off.
+        rows = [(kb.handler.function,
+                 kb.handler.description,
+                 kb.asString(True)) for kb in bound]
+        sorted(rows, key=lambda cmd: cmd[2])
 
-        Returns True to indicate the input event has been consumed.
-        """
+        # Translators: Function is a table column header where the cells in the
+        # column are a sentence that briefly describes what action Orca will 
+        # take if and when the user invokes that keyboard command.
+        header1 = _("Function")
 
-        orca_state.listOfShortcuts = []
-        orca_state.typeOfShortcuts = ""
-        orca_state.ptrToShortcut = -1
-        orca_state.listShortcutsModeEnabled = False
-        self.presentMessage(messages.LIST_SHORTCUTS_MODE_STOP)
+        # Translators: Key Binding is a table column header where the cells in the
+        # column represent keyboard combinations the user can press to invoke Orca
+        # commands.
+        header2 = _("Key Binding")
+        commandlist.showUI(title, ("", header1, header2), rows, False)
         return True
 
     def findNext(self, inputEvent):
@@ -3077,11 +3098,6 @@ class Script(script.Script):
 
         # disable learn mode
         orca_state.learnModeEnabled = False
-
-        # disable list shortcuts mode
-        orca_state.listShortcutsModeEnabled = False
-        orca_state.listOfShortcuts = []
-        orca_state.typeOfShortcuts = ""
 
     ########################################################################
     #                                                                      #

@@ -33,6 +33,12 @@ __license__   = "LGPL"
 from .orca_i18n import _, C_, ngettext
 from .orca_platform import version
 
+# Translators: Sometimes when we attempt to get the name of an accessible
+# software application, we fail because the app or one of its elements is
+# defunct. This is a generic name so that we can still refer to this element
+# in messages.
+APPLICATION_NO_NAME = C_("generic name", "application")
+
 # Translators: This is presented when the user has navigated to an empty line.
 BLANK = _("blank")
 
@@ -399,8 +405,9 @@ LEARN_MODE_START_BRAILLE = _("Learn mode.  Press escape to exit.")
 # Mode.
 LEARN_MODE_START_SPEECH = \
     _("Entering learn mode.  Press any key to hear its function.  " \
-      "To get a list of Orca shortcuts, press the Orca modifier " \
-      "plus H twice quickly. To view the documentation, press F1. " \
+      "To get a list of Orca's default shortcuts, press 1. " \
+      "To get a list of Orca's shortcuts for the current application, " \
+      "press 2. To view Orca's documentation, press F1. " \
       "To exit learn mode, press the escape key.")
 
 # Translators: Orca has a "Learn Mode" that will allow the user to type any key
@@ -427,36 +434,10 @@ LINE_SELECTED_RIGHT = _("line selected to end from previous cursor position")
 LINK = _("link")
 
 # Translators: The following string instructs the user how to navigate amongst
-# the list of commands presented in 'list shortcuts' mode as well as how to exit
-# the list when finished.
-LIST_SHORTCUTS_MODE_NAVIGATION = \
+# the list of commands presented in learn mode, as well as how to exit the list
+# when finished.
+LIST_SHORTCUTS_NAVIGATION = \
     _("Use Up and Down Arrow to navigate the list. Press Escape to exit.")
-
-# Translators: This message is presented when the user is in 'list shortcuts'
-# mode. This is the message we present when the user requested a list of
-# application-specific shortcuts, but none could be found for that application.
-LIST_SHORTCUTS_MODE_NO_RESULTS = _("No Orca shortcuts for %s found.")
-
-# Translators: Orca has a 'List Shortcuts' mode by which a user can navigate
-# through a list of the bound commands in Orca. This is the message that is
-# presented to the user as confirmation that this mode has been entered.
-LIST_SHORTCUTS_MODE_START = _("List shortcuts mode.")
-
-# Translators: Orca has a 'List Shortcuts' mode by which a user can navigate
-# through a list of the bound commands in Orca. This is the message that is
-# presented to the user as confirmation that this mode has been exited.
-LIST_SHORTCUTS_MODE_STOP = _("Exiting list shortcuts mode.")
-
-# Translators: Orca has a 'List Shortcuts' mode by which a user can navigate
-# through a list of the bound commands in Orca. Pressing 1 presents the
-# commands/shortcuts available for all applications. These are the "default"
-# commands/shortcuts. Pressing 2 presents commands/shortcuts Orca provides for
-# the application with focus. The following message is presented to the user
-# upon entering this  mode.
-LIST_SHORTCUTS_MODE_TUTORIAL = \
-    _("Press 1 for Orca's default shortcuts. Press 2 for " \
-      "Orca's shortcuts for the current application. " \
-      "Press escape to exit.")
 
 # Translators: A live region is an area of a web page that is periodically
 # updated, e.g. stock ticker. http://www.w3.org/TR/wai-aria/terms#def_liveregion
