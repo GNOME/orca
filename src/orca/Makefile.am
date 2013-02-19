@@ -19,6 +19,7 @@ orca_python_PYTHON = \
 	brlmon.py \
 	chat.py \
 	chnames.py \
+	cmdnames.py \
 	common_keyboardmap.py \
 	debug.py \
 	desktop_keyboardmap.py \

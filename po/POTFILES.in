@@ -10,6 +10,7 @@ src/orca/braille_generator.py
 src/orca/braille_rolenames.py
 src/orca/chat.py
 src/orca/chnames.py
+src/orca/cmdnames.py
 src/orca/event_manager.py
 src/orca/find.py
 src/orca/flat_review.py

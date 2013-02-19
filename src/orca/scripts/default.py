@@ -37,6 +37,7 @@ from gi.repository import Gtk, Gdk
 
 import pyatspi
 import orca.braille as braille
+import orca.cmdnames as cmdnames
 import orca.debug as debug
 import orca.eventsynthesizer as eventsynthesizer
 import orca.find as find
@@ -142,888 +143,361 @@ class Script(script.Script):
         self.inputEventHandlers["routePointerToItemHandler"] = \
             input_event.InputEventHandler(
                 Script.routePointerToItem,
-                # Translators: this command will move the mouse pointer
-                # to the current item without clicking on it.
-                #
-                _("Routes the pointer to the current item."))
+                cmdnames.ROUTE_POINTER_TO_ITEM)
 
         self.inputEventHandlers["leftClickReviewItemHandler"] = \
             input_event.InputEventHandler(
                 Script.leftClickReviewItem,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  A left click means to generate
-                # a left mouse button click on the current item.
-                #
-                _("Performs left click on current flat review item."))
+                cmdnames.LEFT_CLICK_REVIEW_ITEM)
 
         self.inputEventHandlers["rightClickReviewItemHandler"] = \
              input_event.InputEventHandler(
                 Script.rightClickReviewItem,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  A right click means to generate
-                # a right mouse button click on the current item.
-                #
-                _("Performs right click on current flat review item."))
+                cmdnames.RIGHT_CLICK_REVIEW_ITEM)
 
         self.inputEventHandlers["sayAllHandler"] = \
             input_event.InputEventHandler(
                 Script.sayAll,
-                # Translators: the Orca "SayAll" command allows the
-                # user to press a key and have the entire document in
-                # a window be automatically spoken to the user.  If
-                # the user presses any key during a SayAll operation,
-                # the speech will be interrupted and the cursor will
-                # be positioned at the point where the speech was
-                # interrupted.
-                #
-                _("Speaks entire document."))
+                cmdnames.SAY_ALL)
 
         self.inputEventHandlers["whereAmIBasicHandler"] = \
             input_event.InputEventHandler(
                 Script.whereAmIBasic,
-                # Translators: the "Where am I" feature of Orca allows
-                # a user to press a key and then have information
-                # about their current context spoken and brailled to
-                # them.  For example, the information may include the
-                # name of the current pushbutton with focus as well as
-                # its mnemonic.
-                #
-                _("Performs the basic where am I operation."))
+                cmdnames.WHERE_AM_I_BASIC)
 
         self.inputEventHandlers["whereAmIDetailedHandler"] = \
             input_event.InputEventHandler(
                 Script.whereAmIDetailed,
-                # Translators: the "Where am I" feature of Orca allows
-                # a user to press a key and then have information
-                # about their current context spoken and brailled to
-                # them.  For example, the information may include the
-                # name of the current pushbutton with focus as well as
-                # its mnemonic.
-                #
-                _("Performs the detailed where am I operation."))
+                cmdnames.WHERE_AM_I_DETAILED)
 
-        # [[[WDW - I'd prefer to call this presentTitleHandler, but
-        # we're keeping it at getTitleHandler for backwards
-        # compatibility for people who have customized their key
-        # bindings.]]]
-        #
         self.inputEventHandlers["getTitleHandler"] = \
             input_event.InputEventHandler(
                 Script.presentTitle,
-                # Translators: This command will cause the window's
-                # title to be spoken.
-                #
-                _("Speaks the title bar."))
+                cmdnames.PRESENT_TITLE)
 
-        # [[[WDW - I'd prefer to call this presentStatusBarHandler,
-        # but we're keeping it at getStatusBarHandler for backwards
-        # compatibility for people who have customized their key
-        # bindings.]]]
-        #
         self.inputEventHandlers["getStatusBarHandler"] = \
             input_event.InputEventHandler(
                 Script.presentStatusBar,
-                # Translators: This command will cause the window's
-                # status bar contents to be spoken.
-                #
-                _("Speaks the status bar."))
+                cmdnames.PRESENT_STATUS_BAR)
 
         self.inputEventHandlers["findHandler"] = \
             input_event.InputEventHandler(
                 orca.showFindGUI,
-                # Translators: the Orca "Find" dialog allows a user to
-                # search for text in a window and then move focus to
-                # that text.  For example, they may want to find the
-                # "OK" button.
-                #
-                _("Opens the Orca Find dialog."))
+                cmdnames.SHOW_FIND_GUI)
 
         self.inputEventHandlers["findNextHandler"] = \
             input_event.InputEventHandler(
                 Script.findNext,
-                # Translators: the Orca "Find" dialog allows a user to
-                # search for text in a window and then move focus to
-                # that text.  For example, they may want to find the
-                # "OK" button.  This string is used for finding the
-                # next occurence of a string.
-                #
-                _("Searches for the next instance of a string."))
+                cmdnames.FIND_NEXT)
 
         self.inputEventHandlers["findPreviousHandler"] = \
             input_event.InputEventHandler(
                 Script.findPrevious,
-                # Translators: the Orca "Find" dialog allows a user to
-                # search for text in a window and then move focus to
-                # that text.  For example, they may want to find the
-                # "OK" button.  This string is used for finding the
-                # previous occurence of a string.
-                #
-                _("Searches for the previous instance of a string."))
+                cmdnames.FIND_PREVIOUS)
 
         self.inputEventHandlers["toggleFlatReviewModeHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleFlatReviewMode,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.
-                #
-                _("Enters and exits flat review mode."))
+                cmdnames.TOGGLE_FLAT_REVIEW)
 
         self.inputEventHandlers["reviewPreviousLineHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewPreviousLine,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.
-                #
-                _("Moves flat review to the beginning of the previous line."))
+                cmdnames.REVIEW_PREVIOUS_LINE)
 
         self.inputEventHandlers["reviewHomeHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewHome,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  The home position is the
-                # beginning of the content in the window.
-                #
-                _("Moves flat review to the home position."))
+                cmdnames.REVIEW_HOME)
 
         self.inputEventHandlers["reviewCurrentLineHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewCurrentLine,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  This particular command will
-                # cause Orca to speak the current line.
-                #
-                _("Speaks the current flat review line."))
+                cmdnames.REVIEW_CURRENT_LINE)
 
         self.inputEventHandlers["reviewSpellCurrentLineHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewSpellCurrentLine,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}. This particular command will
-                # cause Orca to spell the current line.
-                #
-                _("Spells the current flat review line."))
+                cmdnames.REVIEW_SPELL_CURRENT_LINE)
 
         self.inputEventHandlers["reviewPhoneticCurrentLineHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewPhoneticCurrentLine,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}. This particular command will
-                # cause Orca to "phonetically spell" the current line,
-                # saying "Alpha" for "a", "Bravo" for "b" and so on.
-                #
-                _("Phonetically spells the current flat review line."))
+                cmdnames.REVIEW_PHONETIC_CURRENT_LINE)
 
         self.inputEventHandlers["reviewNextLineHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewNextLine,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.
-                #
-                _("Moves flat review to the beginning of the next line."))
+                cmdnames.REVIEW_NEXT_LINE)
 
         self.inputEventHandlers["reviewEndHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewEnd,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  The end position is the last
-                # bit of information in the window.
-                #
-                _("Moves flat review to the end position."))
+                cmdnames.REVIEW_END)
 
         self.inputEventHandlers["reviewPreviousItemHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewPreviousItem,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Previous will go backwards
-                # in the window until you reach the top (i.e., it will
-                # wrap across lines if necessary).
-                #
-                _("Moves flat review to the previous item or word."))
+                cmdnames.REVIEW_PREVIOUS_ITEM)
 
         self.inputEventHandlers["reviewAboveHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewAbove,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Above in this case means
-                # geographically above, as if you drew a vertical line
-                # in the window.
-                #
-                _("Moves flat review to the word above the current word."))
+                cmdnames.REVIEW_ABOVE)
 
         self.inputEventHandlers["reviewCurrentItemHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewCurrentItem,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  This command will speak the
-                # current word or item.
-                #
-                _("Speaks the current flat review item or word."))
+                cmdnames.REVIEW_CURRENT_ITEM)
 
         self.inputEventHandlers["reviewSpellCurrentItemHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewSpellCurrentItem,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  This command will spell out
-                # the current word or item letter by letter.
-                #
-                _("Spells the current flat review item or word."))
+                cmdnames.REVIEW_SPELL_CURRENT_ITEM)
 
         self.inputEventHandlers["reviewPhoneticCurrentItemHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewPhoneticCurrentItem,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  This command will spell out
-                # the current word or item phonetically, saying "Alpha"
-                # for "a", "Bravo" for "b" and so on.
-                #
-                _("Phonetically spells the current flat review item or word."))
-
-        self.inputEventHandlers["reviewCurrentAccessibleHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewCurrentAccessible,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  The flat review object is
-                # typically something like a pushbutton, a label, or
-                # some other GUI widget.  The 'speaks' means it will
-                # speak the text associated with the object.
-                #
-                _("Speaks the current flat review object."))
+                cmdnames.REVIEW_PHONETIC_CURRENT_ITEM)
 
         self.inputEventHandlers["reviewNextItemHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewNextItem,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Next will go forwards
-                # in the window until you reach the end (i.e., it will
-                # wrap across lines if necessary).
-                #
-                _("Moves flat review to the next item or word."))
+                cmdnames.REVIEW_NEXT_ITEM)
+
+        self.inputEventHandlers["reviewCurrentAccessibleHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewCurrentAccessible,
+                cmdnames.REVIEW_CURRENT_ACCESSIBLE)
 
         self.inputEventHandlers["reviewBelowHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewBelow,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Below in this case means
-                # geographically below, as if you drew a vertical line
-                # downward on the screen.
-                #
-                _("Moves flat review to the word below the current word."))
+                cmdnames.REVIEW_BELOW)
 
         self.inputEventHandlers["reviewPreviousCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewPreviousCharacter,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Previous will go backwards
-                # in the window until you reach the top (i.e., it will
-                # wrap across lines if necessary).
-                #
-                _("Moves flat review to the previous character."))
+                cmdnames.REVIEW_PREVIOUS_CHARACTER)
 
         self.inputEventHandlers["reviewEndOfLineHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewEndOfLine,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.
-                #
-                _("Moves flat review to the end of the line."))
+                cmdnames.REVIEW_END_OF_LINE)
+
+        self.inputEventHandlers["reviewBottomLeftHandler"] = \
+            input_event.InputEventHandler(
+                Script.reviewBottomLeft,
+                cmdnames.REVIEW_BOTTOM_LEFT)
 
         self.inputEventHandlers["reviewCurrentCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewCurrentCharacter,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Previous will go backwards
-                # in the window until you reach the top (i.e., it will
-                # wrap across lines if necessary).  The 'speaks' in
-                # this case will be the spoken language form of the
-                # character currently being reviewed.
-                #
-                _("Speaks the current flat review character."))
+                cmdnames.REVIEW_CURRENT_CHARACTER)
 
         self.inputEventHandlers["reviewSpellCurrentCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewSpellCurrentCharacter,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Previous will go backwards
-                # in the window until you reach the top (i.e., it will
-                # wrap across lines if necessary).  This command will
-                # cause Orca to speak a phonetic representation of the
-                # character currently being reviewed, saying "Alpha"
-                # for "a", "Bravo" for "b" and so on.
-                #
-                _("Phonetically speaks the current flat review character."))
+                cmdnames.REVIEW_SPELL_CURRENT_CHARACTER)
 
         self.inputEventHandlers["reviewUnicodeCurrentCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewUnicodeCurrentCharacter,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Previous will go backwards
-                # in the window until you reach the top (i.e., it will
-                # wrap across lines if necessary).  This command will
-                # cause Orca to speak information about the current character
-                # Like its unicode value and other relevant information
-                #
-                _("Speaks unicode value of the current flat review character."))
+                cmdnames.REVIEW_UNICODE_CURRENT_CHARACTER)
 
         self.inputEventHandlers["reviewNextCharacterHandler"] = \
             input_event.InputEventHandler(
                 Script.reviewNextCharacter,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Next will go forwards
-                # in the window until you reach the end (i.e., it will
-                # wrap across lines if necessary).
-                #
-                _("Moves flat review to the next character."))
+                cmdnames.REVIEW_NEXT_CHARACTER)
 
         self.inputEventHandlers["flatReviewCopyHandler"] = \
             input_event.InputEventHandler(
                 Script.flatReviewCopy,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  This command lets the user
-                # copy the contents currently being reviewed to the
-                # clipboard.
-                #
-                _("Copies the contents under flat review to the clipboard."))
+                cmdnames.FLAT_REVIEW_COPY)
 
         self.inputEventHandlers["flatReviewAppendHandler"] = \
             input_event.InputEventHandler(
                 Script.flatReviewAppend,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  This command lets the user
-                # append the contents currently being reviewed to
-                # the existing contents of the clipboard.
-                #
-                _("Appends the contents under flat review to the clipboard."))
+                cmdnames.FLAT_REVIEW_APPEND)
 
         self.inputEventHandlers["toggleTableCellReadModeHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleTableCellReadMode,
-                # Translators: when users are navigating a table, they
-                # sometimes want the entire row of a table read, or
-                # they just want the current cell to be presented to them.
-                #
-                _("Toggles whether to read just the current table cell " \
-                  "or the whole row."))
+                cmdnames.TOGGLE_TABLE_CELL_READ_MODE)
 
         self.inputEventHandlers["readCharAttributesHandler"] = \
             input_event.InputEventHandler(
                 Script.readCharAttributes,
-                # Translators: the attributes being presented are the
-                # text attributes, such as bold, italic, font name,
-                # font size, etc.
-                #
-                _("Reads the attributes associated with the current text " \
-                  "character."))
+                cmdnames.READ_CHAR_ATTRIBUTES)
 
         self.inputEventHandlers["panBrailleLeftHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleLeft,
-                # Translators: a refreshable braille display is an
-                # external hardware device that presents braille
-                # character to the user.  There are a limited number
-                # of cells on the display (typically 40 cells).  Orca
-                # provides the feature to build up a longer logical
-                # line and allow the user to press buttons on the
-                # braille display so they can pan left and right over
-                # this line.
-                #
-                _("Pans the braille display to the left."),
+                cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["panBrailleRightHandler"] = \
             input_event.InputEventHandler(
                 Script.panBrailleRight,
-                # Translators: a refreshable braille display is an
-                # external hardware device that presents braille
-                # character to the user.  There are a limited number
-                # of cells on the display (typically 40 cells).  Orca
-                # provides the feature to build up a longer logical
-                # line and allow the user to press buttons on the
-                # braille display so they can pan left and right over
-                # this line.
-                #
-                _("Pans the braille display to the right."),
+                cmdnames.PAN_BRAILLE_LEFT,
                 False) # Do not enable learn mode for this action
-
-        self.inputEventHandlers["reviewBottomLeftHandler"] = \
-            input_event.InputEventHandler(
-                Script.reviewBottomLeft,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  The bottom left is the bottom
-                # left of the window currently being reviewed.
-                #
-                _("Moves flat review to the bottom left."))
 
         self.inputEventHandlers["goBrailleHomeHandler"] = \
             input_event.InputEventHandler(
                 Script.goBrailleHome,
-                # Translators: the 'flat review' feature of Orca
-                # allows the blind user to explore the text in a
-                # window in a 2D fashion.  That is, Orca treats all
-                # the text from all objects in a window (e.g.,
-                # buttons, labels, etc.) as a sequence of words in a
-                # sequence of lines.  The flat review feature allows
-                # the user to explore this text by the {previous,next}
-                # {line,word,character}.  Flat review is modal, and
-                # the user can be exploring the window without changing
-                # which object in the window which has focus.  The
-                # feature used here will return the flat review to the
-                # object with focus.
-                #
-                _("Returns to object with keyboard focus."))
+                cmdnames.GO_BRAILLE_HOME)
 
         self.inputEventHandlers["contractedBrailleHandler"] = \
             input_event.InputEventHandler(
                 Script.setContractedBraille,
-                # Translators: braille can be displayed in many ways.
-                # Contracted braille provides a more efficient means
-                # to represent text, especially long documents.  The
-                # feature used here is an option to toggle between
-                # contracted and uncontracted.
-                #
-                _("Turns contracted braille on and off."))
+                cmdnames.SET_CONTRACTED_BRAILLE)
 
         self.inputEventHandlers["processRoutingKeyHandler"] = \
             input_event.InputEventHandler(
                 Script.processRoutingKey,
-                # Translators: hardware braille displays often have
-                # buttons near each braille cell.  These are called
-                # cursor routing keys and are a way for a user to
-                # tell the machine they are interested in a particular
-                # character on the display.
-                #
-                _("Processes a cursor routing key."))
+                cmdnames.PROCESS_ROUTING_KEY)
 
         self.inputEventHandlers["processBrailleCutBeginHandler"] = \
             input_event.InputEventHandler(
                 Script.processBrailleCutBegin,
-                # Translators: this is used to indicate the start point
-                # of a text selection.
-                #
-                _("Marks the beginning of a text selection."))
+                cmdnames.PROCESS_BRAILLE_CUT_BEGIN)
 
         self.inputEventHandlers["processBrailleCutLineHandler"] = \
             input_event.InputEventHandler(
                 Script.processBrailleCutLine,
-                # Translators: this is used to indicate the end point
-                # of a text selection.
-                #
-                _("Marks the end of a text selection."))
+                cmdnames.PROCESS_BRAILLE_CUT_LINE)
 
         self.inputEventHandlers["enterLearnModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enterLearnMode,
-                # Translators: Orca has a "Learn Mode" that will allow
-                # the user to type any key on the keyboard and hear what
-                # the effects of that key would be.  The effects might
-                # be what Orca would do if it had a handler for the
-                # particular key combination, or they might just be to
-                # echo the name of the key if Orca doesn't have a handler.
-                #
-                _("Enters learn mode.  Press escape to exit learn mode."))
+                cmdnames.ENTER_LEARN_MODE)
 
         self.inputEventHandlers["enterListShortcutsModeHandler"] = \
             input_event.InputEventHandler(
                 Script.enterListShortcutsMode,
-                # Translators: Orca has a "List Shortcuts Mode" that will allow
-                # the user to list a group of keyboard shortcuts. The Orca
-                # default shortcuts can be listed by pressing 1, and Orca
-                # shortcuts for the application under focus can be listed by
-                # pressing 2. User can press Up/ Down to navigate and hear
-                # the list, changeover to another list by pressing 1/2,
-                # and exit the "List Shortcuts Mode" by pressing Escape.
-                #
-                _("Enters list shortcuts mode.  Press escape to exit " \
-                  "list shortcuts mode."), False)
-                # Do not enable learn mode for this action
+                cmdnames.ENTER_LEARN_MODE,
+                False) # Do not enable learn mode for this action
 
         self.inputEventHandlers["decreaseSpeechRateHandler"] = \
             input_event.InputEventHandler(
                 speech.decreaseSpeechRate,
-                # Translators: the speech rate is how fast the speech
-                # synthesis engine will generate speech.
-                #
-                _("Decreases the speech rate."))
+                cmdnames.DECREASE_SPEECH_RATE)
 
         self.inputEventHandlers["increaseSpeechRateHandler"] = \
             input_event.InputEventHandler(
                 speech.increaseSpeechRate,
-                # Translators: the speech rate is how fast the speech
-                # synthesis engine will generate speech.
-                #
-                _("Increases the speech rate."))
+                cmdnames.INCREASE_SPEECH_RATE)
 
         self.inputEventHandlers["decreaseSpeechPitchHandler"] = \
             input_event.InputEventHandler(
                 speech.decreaseSpeechPitch,
-                # Translators: the speech pitch is how high or low in
-                # pitch/frequency the speech synthesis engine will
-                # generate speech.
-                #
-                _("Decreases the speech pitch."))
+                cmdnames.DECREASE_SPEECH_PITCH)
 
         self.inputEventHandlers["increaseSpeechPitchHandler"] = \
             input_event.InputEventHandler(
                 speech.increaseSpeechPitch,
-                # Translators: the speech pitch is how high or low in
-                # pitch/frequency the speech synthesis engine will
-                # generate speech.
-                #
-                _("Increases the speech pitch."))
+                cmdnames.INCREASE_SPEECH_PITCH)
 
         self.inputEventHandlers["shutdownHandler"] = \
             input_event.InputEventHandler(
                 orca.quitOrca,
-                _("Quits Orca"))
+                cmdnames.QUIT_ORCA)
 
         self.inputEventHandlers["preferencesSettingsHandler"] = \
             input_event.InputEventHandler(
                 orca.showPreferencesGUI,
-                # Translators: the preferences configuration dialog is
-                # the dialog that allows users to set their preferences
-                # for Orca.
-                #
-                _("Displays the preferences configuration dialog."))
+                cmdnames.SHOW_PREFERENCES_GUI)
 
         self.inputEventHandlers["appPreferencesSettingsHandler"] = \
             input_event.InputEventHandler(
                 orca.showAppPreferencesGUI,
-                # Translators: the application preferences configuration
-                # dialog is the dialog that allows users to set their
-                # preferences for a specific application within Orca.
-                #
-                _("Displays the application preferences configuration dialog."))
+                cmdnames.SHOW_APP_PREFERENCES_GUI)
 
         self.inputEventHandlers["toggleSilenceSpeechHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleSilenceSpeech,
-                # Translators: Orca allows the user to turn speech synthesis
-                # on or off.  We call it 'silencing'.
-                #
-                _("Toggles the silencing of speech."))
+                cmdnames.TOGGLE_SPEECH)
 
         self.inputEventHandlers[ \
           "toggleSpeakingIndentationJustificationHandler"] = \
             input_event.InputEventHandler(
                 Script.toggleSpeakingIndentationJustification,
-                # Translators: Orca allows the user to enable/disable
-                # the speaking of indentation and justification.
-                #
-                _("Toggles the speaking of indentation and justification."))
+                cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION)
 
         self.inputEventHandlers["cycleSpeakingPunctuationLevelHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleSpeakingPunctuationLevel,
-                # Translators: Orca allows users to cycle through
-                # punctuation levels.
-                # None, some, most, or all, punctuation will be spoken.
-                #
-                _("Cycles to the next speaking of punctuation level."))
+                cmdnames.CYCLE_PUNCTUATION_LEVEL)
 
         self.inputEventHandlers["cycleSettingsProfileHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleSettingsProfile,
-                # Translators: Orca has a feature whereby users can set up
-                # different "profiles," which are collection of settings which
-                # apply to a given task, such as a "Spanish" profile which would
-                # use Spanish text-to-speech and Spanish braille and selected
-                # when reading Spanish content. This string to be translated
-                # refers to an Orca command which makes it possible for users
-                # to quickly cycle amongst their saved profiles without having
-                # to get into a GUI.
-                _("Cycles to the next settings profile."))
+                cmdnames.CYCLE_SETTINGS_PROFILE)
 
         self.inputEventHandlers["cycleCapitalizationStyleHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleCapitalizationStyle,
-                # Translators: Orca uses Speech Dispatcher to present content
-                # to users via text-to-speech. Speech Dispatcher has a feature
-                # to control how capital letters are presented: Do nothing at
-                # all, say the word 'capital' prior to presenting a capital
-                # letter, or play a tone which Speech Dispatcher refers to as
-                # a sound 'icon'. This string to be translated refers to an
-                # Orca command which makes it possible for users to quickly
-                # cycle amongst these alternatives without having to get into
-                # a GUI.
-                #
-                _("Cycles to the next capitalization style."))
+                cmdnames.CYCLE_CAPITALIZATION_STYLE)
 
         self.inputEventHandlers["cycleKeyEchoHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleKeyEcho,
-                # Translators: Orca has an "echo" setting which allows
-                # the user to configure what is spoken in response to a
-                # key press. Given a user who typed "Hello world.":
-                # - key echo: "H e l l o space w o r l d period"
-                # - word echo: "Hello" spoken when the space is pressed;
-                #   "world" spoken when the period is pressed.
-                # - sentence echo: "Hello world" spoken when the period
-                #   is pressed.
-                # A user can choose to have no echo, one type of echo, or
-                # multiple types of echo.
-                # The following string refers to a command that allows the
-                # user to quickly choose which type of echo is being used.
-                #
-                _("Cycles to the next key echo level."))
+                cmdnames.CYCLE_KEY_ECHO)
 
         self.inputEventHandlers["cycleDebugLevelHandler"] = \
             input_event.InputEventHandler(
                 Script.cycleDebugLevel,
-                # Translators: this is a debug message that Orca users
-                # will not normally see. It describes a debug routine
-                # that allows the user to adjust the level of debug
-                # information that Orca generates at run time.
-                #
-                _("Cycles the debug level at run time."))
+                cmdnames.CYCLE_DEBUG_LEVEL)
 
         self.inputEventHandlers["bookmarkCurrentWhereAmI"] = \
             input_event.InputEventHandler(
                 Script.bookmarkCurrentWhereAmI,
-                # Translators: this command announces information regarding
-                # the relationship of the given bookmark to the current
-                # position
-                #
-                _("Bookmark where am I with respect to current position."))
-
-        self.inputEventHandlers["goToBookmark"] = \
-            input_event.InputEventHandler(
-                Script.goToBookmark,
-                # Translators: this command moves the current position to the
-                # location stored at the bookmark.
-                #
-                _("Go to bookmark."))
-
-        self.inputEventHandlers["addBookmark"] = \
-            input_event.InputEventHandler(
-                Script.addBookmark,
-                # Translators: this event handler binds an in-page accessible
-                # object location to the given input key command.
-                #
-                _("Add bookmark."))
-
-        self.inputEventHandlers["saveBookmarks"] = \
-            input_event.InputEventHandler(
-                Script.saveBookmarks,
-                # Translators: this event handler saves all bookmarks for the
-                # current application to disk.
-                #
-                _("Save bookmarks."))
-
-        self.inputEventHandlers["goToNextBookmark"] = \
-            input_event.InputEventHandler(
-                Script.goToNextBookmark,
-                # Translators: this event handler cycles through the registered
-                # bookmarks and takes the user to the next bookmark location.
-                #
-                _("Go to next bookmark location."))
+                cmdnames.BOOKMARK_CURRENT_WHERE_AM_I)
 
         self.inputEventHandlers["goToPrevBookmark"] = \
             input_event.InputEventHandler(
                 Script.goToPrevBookmark,
-                # Translators: this event handler cycles through the
-                # registered bookmarks and takes the user to the previous
-                # bookmark location.
-                #
-                _("Go to previous bookmark location."))
+                cmdnames.BOOKMARK_GO_TO_PREVIOUS)
+
+        self.inputEventHandlers["goToBookmark"] = \
+            input_event.InputEventHandler(
+                Script.goToBookmark,
+                cmdnames.BOOKMARK_GO_TO)
+
+        self.inputEventHandlers["goToNextBookmark"] = \
+            input_event.InputEventHandler(
+                Script.goToNextBookmark,
+                cmdnames.BOOKMARK_GO_TO_NEXT)
+
+        self.inputEventHandlers["addBookmark"] = \
+            input_event.InputEventHandler(
+                Script.addBookmark,
+                cmdnames.BOOKMARK_ADD)
+
+        self.inputEventHandlers["saveBookmarks"] = \
+            input_event.InputEventHandler(
+                Script.saveBookmarks,
+                cmdnames.BOOKMARK_SAVE)
 
         self.inputEventHandlers["toggleMouseReviewHandler"] = \
             input_event.InputEventHandler(
                 mouse_review.toggle,
-                # Translators: Orca allows the item under the pointer to
-                # be spoken. This toggles the feature.
-                #
-                _("Toggle mouse review mode."))
+                cmdnames.MOUSE_REVIEW_TOGGLE)
 
         self.inputEventHandlers["presentTimeHandler"] = \
             input_event.InputEventHandler(
                 Script.presentTime,
-                # Translators: Orca can present the current time to the
-                # user when the user presses
-                # a shortcut key.
-                #
-                _("Present current time."))
+                cmdnames.PRESENT_CURRENT_TIME)
 
         self.inputEventHandlers["presentDateHandler"] = \
             input_event.InputEventHandler(
                 Script.presentDate,
-                # Translators: Orca can present the current date to the
-                # user when the user presses
-                # a shortcut key.
-                #
-                _("Present current date."))
+                cmdnames.PRESENT_CURRENT_DATE)
 
         self.inputEventHandlers["bypassNextCommandHandler"] = \
             input_event.InputEventHandler(
                 Script.bypassNextCommand,
-                # Translators: Orca normally intercepts all keyboard
-                # commands and only passes them along to the current
-                # application when they are not Orca commands.  This
-                # command causes the next command issued to be passed
-                # along to the current application, bypassing Orca's
-                # interception of it.
-                #
-                _("Passes the next command on to the current application."))
+                cmdnames.BYPASS_NEXT_COMMAND)
 
         self.inputEventHandlers.update(notification_messages.inputEventHandlers)
 
