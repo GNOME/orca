@@ -750,6 +750,15 @@ SPEECH_LOWER  = _("lower.")
 # Translators: This message is presented to the user when Orca is launched.
 START_ORCA = _("Welcome to Orca.")
 
+# Translators: Orca Preferences is the configuration GUI for Orca. This message
+# is presented immediately before the GUI is shown.
+STARTING_ORCA_PREFS = _("Starting Orca Preferences.")
+
+# Translators: Orca Preferences in this case, is a configuration GUI for
+# allowing users to set application specific settings from within Orca for
+# the application that currently has focus.
+STARTING_ORCA_APP_PREFS = _("Starting Orca Preferences for %s.")
+
 # Translators: This message is presented to the user when Orca is quit.
 STOP_ORCA = _("Goodbye.")
 

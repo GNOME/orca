@@ -38,6 +38,7 @@ import time
 
 from . import acss
 from . import debug
+from . import messages
 from . import orca
 from . import orca_gtkbuilder
 from . import orca_gui_profile
@@ -3466,9 +3467,7 @@ class WarningDialogGUI(Gtk.MessageDialog):
 
 def showPreferencesUI():
     if not orca_state.appOS and not orca_state.orcaOS:
-        # Translators: Orca Preferences is the configuration GUI for Orca.
-        #
-        line = _("Starting Orca Preferences.")
+        line = messages.STARTING_ORCA_PREFS
         defScript = _scriptManager.getDefaultScript()
         defScript.speakMessage(line)
         try:

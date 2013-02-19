@@ -35,6 +35,7 @@ from . import braille
 from . import debug
 from . import input_event
 from . import keybindings
+from . import messages
 from . import orca_gui_prefs
 from . import orca_state
 from . import orca_platform
@@ -287,11 +288,7 @@ def showPreferencesUI():
     #
     applicationName = orca_state.activeScript.app.name
     if not orca_state.appOS and not orca_state.orcaOS:
-        # Translators: Orca Preferences in this case, is a configuration GUI
-        # for allowing users to set application specific settings from within
-        # Orca for the application that currently has focus.
-        #
-        line = _("Starting Orca Preferences for %s.") % applicationName
+        line = messages.STARTING_ORCA_APP_PREFS % applicationName
         appScript.presentMessage(line)
 
         prefsDict = {}
