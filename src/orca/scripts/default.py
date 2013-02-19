@@ -2593,7 +2593,8 @@ class Script(script.Script):
         # code probably should go somewhere else.
         if oldVoiceLocale != newVoiceLocale:
             modules = ['orca.chnames', 'orca.keynames', 'orca.phonnames',
-                       'orca.text_attribute_names.py', 'orca.messages']
+                       'orca.text_attribute_names.py', 'orca.tutorialgenerator',
+                       'orca.messages']
             for module in modules:
                 orca_i18n.setModuleLocale(module, newVoiceLocale)
 
