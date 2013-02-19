@@ -1,3 +1,63 @@
+3.7.90 - 19 February 2013
+
+New Features
+
+  * Much work and progress on profile-based, on-the-fly language
+    switching.
+
+  * Better "list shortcuts" and learn mode support and associated
+    hack removal.
+
+  * More refinements and additions to the new "list of" dialogs:
+
+    - Implement the "'list of' dialog" feature for tables.
+
+    - Try harder to position the caret when jumping to an object in
+      the navlist.
+
+    - Select the row associated with the locusOfFocus in the
+      "list of" dialogs.
+
+    - Present the number of results for the "list of" dialogs.
+
+    - Update Orca's keybindings related to bookmarks and "list of"
+      commands.
+
+  * Add event listeners for, and presentation of, table row and column
+    re-ordering.
+
+Bug Fixes
+
+  * Filter out dead childNodes from GtkTreeView.
+
+  * Present the Orca version upon first entering learn mode (to
+    compensate for there no longer being an About dialog).
+
+  * Handle attempts to start Orca from the console more gracefully.
+
+  * Get Orca to handle table rows which lack ROLE_TABLE_ROW.
+
+  * Get rid of "odd hacky thing... somewhat drawn from Gnopernicus" (!?!)
+
+  * Do not include anchors for structural navigation links.
+
+  * Do not filter out egg-list-box labels based on STATE_SHOWING.
+
+New and updated translations (THANKS EVERYONE!!!):
+    el            Greek                             Dimitris Spingos
+    es            Spanish                           Daniel Mustieles
+    gl            Galician                          Fran Diéguez
+    lt            Lithuanian                        Aurimas Černius
+    ml            Malayalam                         Anish A
+    pl            Polish                            Piotr Drąg
+    sr            Serbian                           Мирослав Николић
+    sr@latin      Serbian                           Miroslav Nikolić
+    ug            Uyghur                            Gheyret Kenji 
+    zh_HK         Traditional Chinese (Hong Kong)   Chao-Hsiung Liao
+    zh_TW         Traditional Chinese (Taiwan)      Chao-Hsiung Liao
+
+=========
+
 3.7.5 - 5 February 2013
 
 New Feature
