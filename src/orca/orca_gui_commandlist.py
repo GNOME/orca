@@ -29,7 +29,6 @@ __license__   = "LGPL"
 
 from gi.repository import GObject, Gdk, Gtk
 from . import orca_state
-from .orca_i18n import _
 
 class OrcaCommandListGUI:
 
