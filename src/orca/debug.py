@@ -30,7 +30,9 @@ __license__   = "LGPL"
 
 import inspect
 import traceback
+import os
 import pyatspi
+import subprocess
 import sys
 
 from . import orca_state
@@ -444,3 +446,60 @@ def traceit(frame, event, arg):
     println(LEVEL_ALL, output)
 
     return traceit
+
+def getOpenFDCount(pid):
+    procs = subprocess.check_output([ 'lsof', '-w', '-Ff', '-p', str(pid)])
+    procs = procs.decode('UTF-8').split('\n')
+    files = list(filter(lambda s: s and s[0] == 'f' and s[1:].isdigit(), procs))
+
+    return len(files)
+
+def getCmdline(pid):
+    try:
+        openFile = os.popen('cat /proc/%s/cmdline' % pid)
+        cmdline = openFile.read()
+        openFile.close()
+    except:
+        cmdline = '(Could not obtain cmdline)'
+    cmdline = cmdline.replace('\x00', ' ')
+
+    return cmdline
+
+def pidOf(procName):
+    openFile = subprocess.Popen('pgrep %s' % procName,
+                                shell=True,
+                                stdout=subprocess.PIPE).stdout
+    pids = openFile.read()
+    openFile.close()
+    return [int(p) for p in pids.split()]
+
+def examineProcesses():
+    desktop = pyatspi.Registry.getDesktop(0)
+    println(LEVEL_ALL, 'INFO: Desktop has %i apps:' % desktop.childCount)
+    for i, app in enumerate(desktop):
+        pid = app.get_process_id()
+        cmd = getCmdline(pid)
+        fds = getOpenFDCount(pid)
+        try:
+            name = app.name
+        except:
+            name = 'ERROR: Could not get name'
+        else:
+            if name == '':
+                name = 'WARNING: Possible hang'
+        println(LEVEL_ALL, '%3i. %s (pid: %s) %s file descriptors: %i' \
+                    % (i+1, name, pid, cmd, fds))
+
+    # Other 'suspect' processes which might not show up as accessible apps.
+    otherApps = ['apport']
+    for app in otherApps:
+        pids = pidOf(app)
+        if not pids:
+            println(LEVEL_ALL, 'INFO: no pid for %s' % app)
+            continue
+
+        for pid in pids:
+            cmd = getCmdline(pid)
+            fds = getOpenFDCount(pid)
+            println(LEVEL_ALL, 'INFO: %s (pid: %s) %s file descriptors: %i' \
+                        % (app, pid, cmd, fds))

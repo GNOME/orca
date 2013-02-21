@@ -160,6 +160,8 @@ class ScriptManager:
                 debug.println(
                     debug.LEVEL_FINE, "Could not import %s.py" % moduleName)
                 continue
+            except OSError:
+                debug.examineProcesses()
 
             debug.println(debug.LEVEL_FINE, "Found %s.py" % moduleName)
             try:
