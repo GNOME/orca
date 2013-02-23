@@ -105,3 +105,7 @@ class ACSS(dict):
     def getLocale(self):
         family = self.get(ACSS.FAMILY, {})
         return family.get('locale')
+
+    def getDialect(self):
+        family = self.get(ACSS.FAMILY, {})
+        return family.get('dialect')

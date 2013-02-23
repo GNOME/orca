@@ -470,13 +470,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
 
         return familyName
 
-    def _setFamilyNameForVoiceType(self, voiceType, name, language):
+    def _setFamilyNameForVoiceType(self, voiceType, name, language, dialect):
         """Sets the name of the voice family for the given voice type.
 
         Arguments:
         - voiceType: one of DEFAULT, UPPERCASE, HYPERLINK, SYSTEM
         - name: the name of the voice family to set.
         - language: the locale of the voice family to set.
+        - dialect: the dialect of the voice family to set.
         """
 
         family = self._getKeyValueForVoiceType(voiceType,
@@ -485,12 +486,14 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
         if family:
             family[speechserver.VoiceFamily.NAME] = name
             family[speechserver.VoiceFamily.LOCALE] = language
+            family[speechserver.VoiceFamily.DIALECT] = dialect
         else:
             voiceACSS = self._getACSSForVoiceType(voiceType)
             voiceACSS[acss.ACSS.FAMILY] = {}
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.NAME] = name
             voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.LOCALE] = \
                                                                      language
+            voiceACSS[acss.ACSS.FAMILY][speechserver.VoiceFamily.DIALECT] = dialect
 
         #voiceACSS = self._getACSSForVoiceType(voiceType)
         #settings.voices[voiceType] = voiceACSS
@@ -2222,8 +2225,9 @@ class OrcaSetupGUI(orca_gtkbuilder.GtkBuilderWrapper):
             family = self.speechFamiliesChoices[selectedIndex]
             name = family[speechserver.VoiceFamily.NAME]
             language = family[speechserver.VoiceFamily.LOCALE]
+            dialect = family[speechserver.VoiceFamily.DIALECT]
             voiceType = self.get_widget("voiceTypesCombo").get_active()
-            self._setFamilyNameForVoiceType(voiceType, name, language)
+            self._setFamilyNameForVoiceType(voiceType, name, language, dialect)
         except:
             debug.printException(debug.LEVEL_SEVERE)
 

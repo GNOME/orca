@@ -405,8 +405,9 @@ class SpeechServer(speechserver.SpeechServer):
         locale = getlocale(LC_MESSAGES)[0]
         if locale is None or locale == 'C':
             lang = None
+            dialect = None
         else:
-            lang = locale.split('_')[0]
+            lang, dialect = locale.split('_')
         voices = ((self._default_voice_name, lang, None),)
         try:
             # This command is not available with older SD versions.
@@ -418,6 +419,7 @@ class SpeechServer(speechserver.SpeechServer):
         families = [speechserver.VoiceFamily({ \
               speechserver.VoiceFamily.NAME: name,
               #speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
+              speechserver.VoiceFamily.DIALECT: dialect,
               speechserver.VoiceFamily.LOCALE: lang})
                     for name, lang, dialect in voices]
         return families

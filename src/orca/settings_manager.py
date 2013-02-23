@@ -275,7 +275,11 @@ class SettingsManager(object):
     def getVoiceLocale(self, voice='default'):
         voices = self.getSetting('voices')
         v = voices.get(voice, {})
-        return v.getLocale()
+        lang = v.getLocale()
+        dialect = v.getDialect()
+        if dialect and len(str(dialect)) == 2:
+            lang = "%s_%s" % (lang, dialect.upper())
+        return lang
 
     def _getGeneral(self, profile=None):
         """Get from the active backend the general settings for

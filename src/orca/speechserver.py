@@ -46,6 +46,7 @@ class VoiceFamily(dict):
     NAME   = "name"
     GENDER = "gender"
     LOCALE = "locale"
+    DIALECT = "dialect"
 
     MALE   = "male"
     FEMALE = "female"
@@ -53,7 +54,8 @@ class VoiceFamily(dict):
     settings = {
         NAME   : None,
         GENDER : None,
-        LOCALE : None
+        LOCALE : None,
+        DIALECT: None,
     }
 
     def __init__(self, props):
