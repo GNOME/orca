@@ -112,7 +112,6 @@ class SettingsManager(object):
 
         # For handling the currently-"classic" application settings
         self.settingsPackages = ["app-settings"]
-        self._knownAppSettings = {}
 
         debug.println(debug.LEVEL_FINEST, 'INFO: Settings manager initialized')
 
@@ -561,12 +560,12 @@ class SettingsManager(object):
         if not module:
             return
 
-        self._knownAppSettings[name] = module
-        imp.reload(self._knownAppSettings[name])
-
-        appVoices = self.getSetting('voices')
-        for voiceType, voiceDef in list(appVoices.items()):
-            script.voices[voiceType].update(voiceDef)
+        if self.profile == 'default':
+            appVoices = self.getSetting('voices')
+            for voiceType, voiceDef in list(appVoices.items()):
+                script.voices[voiceType].update(voiceDef)
+        else:
+            self.setSetting('voices', script.voices)
 
         keybindings = getattr(module, 'overrideAppKeyBindings', None)
         if keybindings:
