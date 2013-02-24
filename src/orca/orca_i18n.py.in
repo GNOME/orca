@@ -70,3 +70,20 @@ def setModuleLocale(moduleName, newLocale=None):
     module = sys.modules.get(moduleName)
     if module:
         imp.reload(module)
+
+def setLocaleForMessages(newLocale=None):
+    modules = ['orca.tutorialgenerator', 'orca.messages']
+    for module in modules:
+        setModuleLocale(module, newLocale)
+
+def setLocaleForNames(newLocale=None):
+    modules = ['orca.chnames', 'orca.keynames', 'orca.phonnames',
+               'orca.text_attribute_names']
+    for module in modules:
+        setModuleLocale(module, newLocale)
+
+def setLocaleForGUI(newLocale=None):
+    modules = ['orca.orca_gtkbuilder', 'orca.orca_gui_prefs',
+               'orca.app_gui_prefs']
+    for module in modules:
+        setModuleLocale(module, newLocale)

@@ -48,7 +48,6 @@ import orca.messages as messages
 import orca.outline as outline
 import orca.orca as orca
 import orca.orca_gui_commandlist as commandlist
-import orca.orca_i18n as orca_i18n
 import orca.orca_state as orca_state
 import orca.phonnames as phonnames
 import orca.script as script
@@ -2080,20 +2079,7 @@ class Script(script.Script):
         except IndexError:
             name, profileID = profiles[0]
 
-        oldVoiceLocale = _settingsManager.getVoiceLocale('default')
-        _settingsManager.setProfile(profileID)
-        newVoiceLocale = _settingsManager.getVoiceLocale('default')
-
-        # Once we sort out all of the language changing details, this
-        # code probably should go somewhere else.
-        if oldVoiceLocale != newVoiceLocale:
-            modules = ['orca.chnames', 'orca.keynames', 'orca.phonnames',
-                       'orca.text_attribute_names', 'orca.tutorialgenerator',
-                       'orca.orca_gtkbuilder', 'orca.orca_gui_prefs',
-                       'orca.app_gui_prefs', 'orca.messages']
-            for module in modules:
-                orca_i18n.setModuleLocale(module, newVoiceLocale)
-
+        _settingsManager.setProfile(profileID, updateLocale=True)
         self.presentMessage(messages.PROFILE_CHANGED % name, name)
         return True
 

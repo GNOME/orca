@@ -34,6 +34,7 @@ import os
 from gi.repository import Gio, GLib
 
 from . import debug
+from . import orca_i18n
 from . import script_manager
 from . import settings
 from . import pronunciation_dict
@@ -366,14 +367,26 @@ class SettingsManager(object):
     def getProfile(self):
         return self.profile
 
-    def setProfile(self, profile='default'):
+    def setProfile(self, profile='default', updateLocale=False):
         """Set a specific profile as the active one.
         Also the settings from that profile will be loading
         and updated the current settings with them."""
+
+        oldVoiceLocale = self.getVoiceLocale('default')
+
         self.profile = profile
         self._loadProfileSettings(profile)
         self._mergeSettings()
         self._setSettingsRuntime(self.general)
+
+        if not updateLocale:
+            return
+
+        newVoiceLocale = self.getVoiceLocale('default')
+        if oldVoiceLocale != newVoiceLocale:
+            orca_i18n.setLocaleForNames(newVoiceLocale)
+            orca_i18n.setLocaleForMessages(newVoiceLocale)
+            orca_i18n.setLocaleForGUI(newVoiceLocale)
 
     def getPreferences(self, profile='default'):
         general = self.getGeneralSettings(profile)
