@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=orca&keywords=I18N+L10N&component=i18n\n"
-"POT-Creation-Date: 2013-02-19 22:08+0000\n"
-"PO-Revision-Date: 2013-02-22 21:51+0900\n"
+"POT-Creation-Date: 2013-02-22 13:01+0000\n"
+"PO-Revision-Date: 2013-02-24 11:47+0900\n"
 "Last-Translator: Gheyret Kenji <gheyret@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: \n"
@@ -3262,7 +3262,6 @@ msgstr "ئەدەپلىك دەرىجىسى %s"
 #. defunct. This is a generic name so that we can still refer to this element
 #. in messages.
 #: ../src/orca/messages.py:40
-#| msgid "application"
 msgctxt "generic name"
 msgid "application"
 msgstr "پروگرامما"
@@ -4393,7 +4392,6 @@ msgstr "يۇنىكود %s"
 #. Translators: This message presents the Orca version number.
 #: ../src/orca/messages.py:849
 #, python-format
-#| msgid "Orca Preferences for %s"
 msgid "Orca version %s."
 msgstr "ئوركا(Orca)نىڭ نەشرى %s."
 
@@ -4519,7 +4517,7 @@ msgstr "يۇقىرىغا، تۆۋەنگە، Home ياكى End كۇنۇپكىسى
 #. launched from the command line and the help text is displayed.
 #: ../src/orca/orca_bin.py.in:90
 msgid "orca - scriptable screen reader"
-msgstr ""
+msgstr "ئوركا(orca) - پروگرامما يازغىلى بولىدىغان ئېكران ئوقۇغۇ"
 
 #. Translators: this text is the description displayed when Orca is
 #. launched from the command line and the help text is displayed.
