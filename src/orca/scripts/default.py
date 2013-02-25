@@ -2080,6 +2080,13 @@ class Script(script.Script):
             name, profileID = profiles[0]
 
         _settingsManager.setProfile(profileID, updateLocale=True)
+
+        # TODO: The right fix is to go find each and every case where we use
+        # self.voices directly and instead get the voices from the Settings
+        # Manager. But that's too big a change too close to code freeze. So
+        # for now we'll hack.
+        self.voices = _settingsManager.getSetting('voices')
+
         self.presentMessage(messages.PROFILE_CHANGED % name, name)
         return True
 
