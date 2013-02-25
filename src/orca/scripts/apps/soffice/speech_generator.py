@@ -27,6 +27,7 @@ __license__   = "LGPL"
 
 import pyatspi
 
+import orca.messages as messages
 import orca.settings_manager as settings_manager
 import orca.speech_generator as speech_generator
 from orca.orca_i18n import ngettext
@@ -421,10 +422,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if (not script_settings.speakSpreadsheetCoordinates \
                     or args.get('formatType', 'unfocused') == 'basicWhereAmI') \
                    and len(objectText) == 0:
-                    # Translators: this indicates an empty (blank) spread
-                    # sheet cell.
-                    #
-                    objectText = _("blank")
+                    objectText = messages.BLANK
                 result.append(objectText)
                 result.extend(acss)
         except NotImplementedError:
@@ -535,10 +533,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     self, obj, **args))
             if not len(result) \
                and _settingsManager.getSetting('speakBlankLines'):
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                result.append(_("blank"))
+                result.append(messages.BLANK)
         return result
 
     def _generateEndOfTableIndicator(self, obj, **args):

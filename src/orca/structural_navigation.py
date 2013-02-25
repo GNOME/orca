@@ -3743,10 +3743,7 @@ class StructuralNavigation:
         if not blank:
             self._presentObject(cell, 0)
         else:
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"))
+            speech.speak(messages.BLANK)
 
         if settings.speakCellCoordinates:
             [row, col] = self.getCellCoordinates(cell)

@@ -31,6 +31,7 @@ from gi.repository import Atspi, Atk
 
 from . import debug
 from . import generator
+from . import messages
 from . import settings
 from . import settings_manager
 from . import sound
@@ -732,10 +733,7 @@ class SpeechGenerator(generator.Generator):
         self._restoreRole(oldRole, args)
         if not result and _settingsManager.getSetting('speakBlankLines') \
            and not args.get('readingRow', False):
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            result.append(_("blank"))
+            result.append(messages.BLANK)
             if result:
                 result.extend(acss)
 
@@ -1084,10 +1082,7 @@ class SpeechGenerator(generator.Generator):
                     pyatspi.TEXT_BOUNDARY_CHAR)
                 if char[0] == "\n" and startOffset == caretOffset \
                        and _settingsManager.getSetting('speakBlankLines'):
-                    # Translators: "blank" is a short word to mean the
-                    # user has navigated to an empty line.
-                    #
-                    textContents = (_("blank"))
+                    textContents = (messages.BLANK)
 
         self._script.generatorCache['textInformation'] = \
             [textContents, startOffset, endOffset, selected]

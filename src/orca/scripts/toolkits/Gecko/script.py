@@ -53,6 +53,7 @@ import orca.eventsynthesizer as eventsynthesizer
 import orca.input_event as input_event
 import orca.keybindings as keybindings
 import orca.liveregions as liveregions
+import orca.messages as messages
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.settings as settings
@@ -4391,10 +4392,7 @@ class Script(default.Script):
 
         if (len(clumped) == 1) and (clumped[0][0] == "\n"):
             if _settingsManager.getSetting('speakBlankLines'):
-                # Translators: "blank" is a short word to mean the
-                # user has navigated to an empty line.
-                #
-                return [[_("blank"), self.voices[settings.SYSTEM_VOICE]]]
+                return [[messages.BLANK, self.voices[settings.SYSTEM_VOICE]]]
 
         if len(clumped) and isinstance(clumped[-1][0], str):
             clumped[-1][0] = clumped[-1][0].rstrip(" ")

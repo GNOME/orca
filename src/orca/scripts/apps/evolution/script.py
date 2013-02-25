@@ -34,6 +34,7 @@ import orca.scripts.default as default
 import orca.keybindings as keybindings
 import orca.input_event as input_event
 import orca.braille as braille
+import orca.messages as messages
 import orca.orca as orca
 import orca.orca_state as orca_state
 import orca.speech as speech
@@ -325,10 +326,7 @@ class Script(default.Script):
         line = self.utilities.adjustForRepeats(string)
 
         if self.utilities.speakBlankLine(obj):
-            # Translators: "blank" is a short word to mean the
-            # user has navigated to an empty line.
-            #
-            speech.speak(_("blank"), None, False)
+            speech.speak(messages.BLANK, None, False)
         else:
             speech.speak(line, None, False)
 
